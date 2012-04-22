@@ -1,7 +1,14 @@
 <% provide(:title, "Home") %>
 <div class="center hero-unit">
+ <div>
   <h1>Welcome to Open Debate</h1>
   <h2>Look around, learn new facts, sign up, get involved.</h2>
+  <%= link_to "Sign up", signup_path, class: "btn btn-large btn-primary" %>
+  <%= link_to "Learn more", learn_path, class: "btn btn-large btn-info" %>
+  </div>
   </br>
-  <a href="#" class="btn btn-large btn-primary">Sign up now!</a>
+  <div>
+    <iframe width="640" height="480" src="http://www.youtube.com/embed/OghccYtXBdI" frameborder="0" allowfullscreen></iframe>
+  </div>
+
 </div>

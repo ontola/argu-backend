@@ -4,9 +4,9 @@
       <%= link_to "Open Debate", "#", id: "logo" %>
       <nav>
         <ul class="nav pull-right">
-         <li><%= link_to "Home",    '#' %></li>
-         <li><%= link_to "Sign up", '#' %></li>
-         <li><%= link_to "Sign in", '#' %></li>
+         <li<%= yield(:title) == "Home" ? " class=active" : "" %>><%= link_to "Home",    root_path   %></li>
+         <li<%= yield(:title) == "Sign up" ? " class=active" : "" %>><%= link_to "Sign up", signup_path %></li>
+         <li<%= yield(:title) == "Sign in" ? " class=active" : "" %>><%= link_to "Sign in", '#'         %></li>
         </ul>
       </nav>
     </div>
