@@ -1,12 +1,12 @@
 <header class="navbar navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container">
-      <%= link_to "Open Debate", "#", id: "logo" %>
+      <%= link_to "Open Debate", root_path, id: "logo" %>
       <nav>
         <ul class="nav pull-right">
          <li<%= yield(:title) == "Home" ? " class=active" : "" %>><%= link_to "Home",    root_path   %></li>
          <li<%= yield(:title) == "Sign up" ? " class=active" : "" %>><%= link_to "Sign up", signup_path %></li>
-         <li<%= yield(:title) == "Sign in" ? " class=active" : "" %>><%= link_to "Sign in", '#'         %></li>
+         <li<%= yield(:title) == "Sign in" ? " class=active" : "" %>><%= link_to "Sign in", signin_path         %></li>
         </ul>
       </nav>
     </div>
