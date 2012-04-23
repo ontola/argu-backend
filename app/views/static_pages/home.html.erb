@@ -1,5 +1,8 @@
 <% provide(:title, "Home") %>
 <div class="center hero-unit">
+<% if signed_in? %>
+  
+<% else %>
  <div>
   <h1>Welcome to Open Debate</h1>
   <h2>Look around, learn new facts, sign up, get involved.</h2>
@@ -10,5 +13,5 @@
   <div>
     <iframe width="640" height="480" src="http://www.youtube.com/embed/OghccYtXBdI" frameborder="0" allowfullscreen></iframe>
   </div>
-
+<% end %>
 </div>
