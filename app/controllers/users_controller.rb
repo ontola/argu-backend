@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
-      flash[:success] = "Welcome to Open Debate!"
+      flash[:success] = "Welcome to " + t(:application_name) + "!"
       redirect_to @user
     else
       render 'new'

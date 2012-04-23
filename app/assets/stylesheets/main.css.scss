@@ -10,6 +10,10 @@ body {
   padding-top: 60px;
 }
 
+content {
+  height:100%;
+}
+
 section {
   overflow: auto;
 }
@@ -81,9 +85,6 @@ footer {
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
   color: #999;
-  position:absolute;
-  width:99%;
-  bottom:0;
 }
 
 footer a {

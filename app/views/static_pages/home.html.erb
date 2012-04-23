@@ -4,8 +4,9 @@
   
 <% else %>
  <div>
-  <h1>Welcome to Open Debate</h1>
-  <h2>Look around, learn new facts, sign up, get involved.</h2>
+  <h1>Welcome to <%= t(:application_name) %></h1>
+  <h2><%= t(:application_name_phonetic) %></h2>
+  <p>Look around, learn new facts, sign up, get involved.</p>
   <%= link_to "Sign up", signup_path, class: "btn btn-large btn-primary" %>
   <%= link_to "Learn more", learn_path, class: "btn btn-large btn-info" %>
   </div>
