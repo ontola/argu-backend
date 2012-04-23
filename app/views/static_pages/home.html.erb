@@ -1,18 +1,7 @@
-<% provide(:title, "Home") %>
-<div class="center hero-unit">
+<% provide(:title, t(:home_title)) %>
+
 <% if signed_in? %>
-  
+  <%= render 'static_pages/home'%>
 <% else %>
- <div>
-  <h1>Welcome to <%= t(:application_name) %></h1>
-  <h2><%= t(:application_name_phonetic) %></h2>
-  <p>Look around, learn new facts, sign up, get involved.</p>
-  <%= link_to "Sign up", signup_path, class: "btn btn-large btn-primary" %>
-  <%= link_to "Learn more", learn_path, class: "btn btn-large btn-info" %>
-  </div>
-  </br>
-  <div>
-    <iframe width="640" height="480" src="http://www.youtube.com/embed/OghccYtXBdI" frameborder="0" allowfullscreen></iframe>
-  </div>
+  <%= render 'static_pages/home_new' %>
 <% end %>
-</div>

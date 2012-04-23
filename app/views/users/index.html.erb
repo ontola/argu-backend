@@ -1,27 +1,38 @@
-<% provide(:title, "Users") %>
-<h1>Listing users</h1>
-
-<table>
+<% provide(:title, t(:users_title)) %>
+<header class="jumbotron subhead">
+  <h1><%= t(:users_header) %></h1>
+</header>
+<section>
+<div class="row">
+  <div class="span8">
+<table class="table table-striped">
+  <thread>
   <tr>
-    <th>Name</th>
+    <th>Username</th>
     <th>Email</th>
     <th></th>
     <th></th>
     <th></th>
   </tr>
-
+  </thread>
+  <tbody>
 <% @users.each do |user| %>
   <tr>
-    <td><%= user.name %></td>
+    <td><%= user.username %></td>
     <td><%= user.email %></td>
-    <td><%= link_to 'Show', user %></td>
-    <td><%= link_to 'Edit', edit_user_path(user) %></td>
-    <td><%= link_to 'Destroy', user, confirm: 'Are you sure?',
+    <td><%= link_to t(:users_show), user %></td>
+    <td><%= link_to t(:users_edit), edit_user_path(user) %></td>
+    <td><%= link_to t(:users_destroy), user, confirm: t(:users_destroy_confirmation),
                                      method: :delete %></td>
   </tr>
 <% end %>
+</tbody>
 </table>
-
-<br />
-
-<%= link_to 'New User', new_user_path %>
+</div>
+</div>
+<div class="row">
+  <div class="span8">
+    <%= link_to t(:users_newuser), new_user_path %>
+  </div>
+</div>
+</section>

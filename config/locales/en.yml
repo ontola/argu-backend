@@ -2,6 +2,72 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+#Application
   application_name: "Argu"
   application_name_phonetic: "\\\'är-(ˌ)gyü\\"
+  application_owner: "Thom van Kalkeren"
+  application_general_sign_in: "Sign in"
+  application_general_sign_up: "Sign up"
+  application_general_learn_more: "Learn more"
+#Controllers
+#Sessions
+  sessions_error_invalid: "Invalid username or password"
+#Users
+  users_success_welcome: "Welcome to "
+#Views
+#Header
+  header_logo_text: t(:application_name)
+  header_menuitem_home: "Home"
+  header_menuitem_sign_in: :application_general_sign_in
+  header_menuitem_sign_up: :application_general_sign_up
+  header_menuitem_sign_out: "Sign out"
+  header_menuitem_users: "Users"
+  header_menuitem_account: "Account"
+  header_menuitem_profile: "Profile"
+  header_menuitem_settings: "Settings"
+#Footer
+  footer_item_about: "About"
+  footer_item_home: :header_menuitem_home
+  footer_item_copyright: "Copyright 2012 - "
+#Home
+  home_title: "Home"
+  #Not logged in
+  home_new_header: "Welcome to "
+  home_new_text: "Look around, learn new facts, sign up, get involved."
+  home_new_content_link: "http://www.youtube.com/embed/OghccYtXBdI"
+  #Logged in
+  home_header: "Some corny header"
+  home_title_top: "Top stories"
+  home_title_follow: "Discussions you follow"
+#Login
+  login_new_user: "New user?"
+  login_title: :application_general_sign_in
+  login_header: :application_general_sign_in
+#About
+  about_title: "About"
+  about_header: "About"
+  about_text:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dolor eros, rutrum non fermentum ac, dictum |
+    sit amet arcu. Nulla faucibus gravida odio. Morbi consequat ligula vel velit euismod adipiscing. Nam at risus 
+    arcu, id pretium risus. Fusce auctor, dui in molestie sollicitudin, est nibh varius sapien, accumsan fermentum 
+    nisi eros eget elit. Cras nisl arcu, dapibus eget pretium eu, ullamcorper vel risus. Aenean pulvinar metus nec 
+    urna scelerisque porta eu vitae ante. Aenean aliquet ipsum vulputate nisi blandit tristique id id orci. 
+    Suspendisse gravida quam eu risus faucibus nec tempor nulla venenatis."
+#Users
+#index
+  users_title: "Users"
+  users_header: "Listing users"
+  users_show: "Show"
+  users_edit: "Edit"
+  users_destroy: "Destroy"
+  users_destroy_confirmation: "Are you sure?"
+  users_newuser: "New user"
+#new
+  users_new_title: "Sign up"
+  users_new_header: "Sign up"
+  users_new_confirmation: "Confirmation"
+  users_new_create: "Create account"
+#show
+  users_show_title: "User"
+  users_show_username: "Username"
+  users_show_email: "Email"
