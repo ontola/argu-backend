@@ -1,0 +1,27 @@
+<h1>Listing statements</h1>
+
+<table>
+  <tr>
+    <th>Content</th>
+    <th>Pros</th>
+    <th>Cons</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @statements.each do |statement| %>
+  <tr>
+    <td><%= statement.content %></td>
+    <td><%= statement.pros.nil? ? statement.pros : "No pros yet" %></td>
+    <td><%= statement.cons.nil? ? statement.cons : "No cons yet" %></td>
+    <td><%= link_to 'Show', statement %></td>
+    <td><%= link_to 'Edit', edit_statement_path(statement) %></td>
+    <td><%= link_to 'Destroy', statement, confirm: 'Are you sure?', method: :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Statement', new_statement_path %>

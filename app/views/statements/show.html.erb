@@ -1,0 +1,23 @@
+<header>
+<h1><%= @statement.title.nil? ? @statement.title : "Statement" %></h1>
+</header>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Content:</b>
+  <%= @statement.content %>
+</p>
+
+<p>
+  <b>Pros:</b>
+  <%= @statement.pros.nil? ? @statement.pros : "No pros yet" %>
+</p>
+
+<p>
+  <b>Cons:</b>
+  <%= @statement.cons.nil? ? @statement.cons : "No cons yet" %>
+</p>
+
+
+<%= link_to 'Edit', edit_statement_path(@statement) %> |
+<%= link_to 'Back', statements_path %>
