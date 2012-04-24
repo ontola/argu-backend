@@ -1,0 +1,39 @@
+<%= form_for(@argument, html: { class: "form-horizontal" }) do |f|%>
+  <% if @argument.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@argument.errors.count, "error") %> prohibited this argument from being saved:</h2>
+
+      <ul>
+      <% @argument.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+    <div class="span8">
+      <fieldset class="control-group">
+        <%= f.label :title, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :title, class: "input-xlarge" %>
+        </div>
+      </fieldset>
+      <fieldset class="control-group">
+        <%= f.label :content %>
+        <div class="controls">
+          <%= f.text_area :content, class: "input-xlarge", rows: "3" %>
+        </div>
+      </fieldset>
+      <fieldset class="control-group">
+        <%= f.label :argtype, t(:argument_type) %>
+        <div class="controls">
+          <%= f.text_field :argtype, class: "input-xlarge" %>
+        </div>
+      </fieldset>
+      <fieldset class="form-actions">
+        <%= link_to t(:application_general_back), argument_path, class: "btn btn-danger" %>
+        <%= f.submit nil, class: "btn btn-primary" %>
+      </fieldset>
+    </div>
+  </div>
+<% end %>

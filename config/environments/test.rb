@@ -1,6 +1,11 @@
 OpenDebate::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  ARGUMENT_TYPE_SCIENTIFIC = "scientific";
+  ARGUMENT_TYPE_AXIOMATIC = "axiomatic";
+  ARGUMENT_TYPE_OTHER = "other";
+  ARGUMENT_TYPE_DISCUSSION = "discussion";
+
   # The test environment is used exclusively to run your application's
   # test suite. You never need to work with it otherwise. Remember that
   # your test database is "scratch space" for the test suite and is wiped

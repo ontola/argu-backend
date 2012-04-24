@@ -1,0 +1,17 @@
+<% provide(:title, @argument.title.nil? ? t(:argument_title) : @argument.title) %>
+<header>
+	<h1><%= @argument.title %></h1>
+	<h2>  <%= getArgType(@argument) %></h2>
+</header>
+<div class="row">
+	<div class="span12">
+		<h3><%= t(:argument_content) %></h3>
+		<pre><%= @argument.content %></pre>
+	</div>
+</div>
+<div class="row">
+	<div class="span2">
+		<%= link_to t(:application_general_back), argument_path, class: "btn" %>
+		<%= link_to t(:application_general_edit), edit_argument_path(@argument), class: "btn btn-primary" %>
+	</div>
+</div>

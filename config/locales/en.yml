@@ -32,6 +32,8 @@ en:
   header_menuitem_account: "Account"
   header_menuitem_profile: "Profile"
   header_menuitem_settings: "Settings"
+  header_menuitem_statements: "Statements"
+  header_menuitem_arguments: "Arguments"
 #Footer
   footer_item_about: "About"
   footer_item_home: :header_menuitem_home
@@ -87,3 +89,11 @@ en:
   statement_no_pros: "No pros yet"
   statement_no_cons: "No cons yet"
   statement_newstatement: "New statement"
+#argument
+  argument_title: "Argument"
+  argument_type_scientific: "Scientific"
+  argument_type_axiomatic: "Axiomatic"
+  argument_type_other: "Other"
+  argument_type_discussion: "In discussion"
+  argument_content: "Description"
+  argument_type: "Type"

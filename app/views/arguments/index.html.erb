@@ -1,0 +1,32 @@
+<h1>Listing arguments</h1>
+
+<table class="table table-striped">
+<thead>
+  <tr>
+    <th>Title</th>
+    <th>Content</th>
+    <th>Type</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+<% @arguments.each do |argument| %>
+  <tr>
+    <td><%= argument.title %></td>
+    <td><%= argument.content %></td>
+    <td><%= getArgType(argument) %></td>
+    <td>
+      <div class="btn-group">
+        <%= link_to t(:application_general_show), argument, class: "btn btn-primary" %>
+        <%= link_to t(:application_general_edit), edit_argument_path(argument), class: "btn" %>
+        <%= link_to t(:application_general_destroy), argument, class: "btn btn-danger", confirm: t(:application_general_destroy_confirmation), method: :delete %>
+      </div>
+    </td>
+  </tr>
+<% end %>
+</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Argument', new_argument_path %>

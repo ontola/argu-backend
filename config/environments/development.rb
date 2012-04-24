@@ -1,6 +1,11 @@
 OpenDebate::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  ARGUMENT_TYPE_SCIENTIFIC = "scientific";
+  ARGUMENT_TYPE_AXIOMATIC = "axiomatic";
+  ARGUMENT_TYPE_OTHER = "other";
+  ARGUMENT_TYPE_DISCUSSION = "discussion";
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.

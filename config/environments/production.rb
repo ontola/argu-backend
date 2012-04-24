@@ -1,6 +1,12 @@
 OpenDebate::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  ARGUMENT_TYPE_SCIENTIFIC = "scientific";
+  ARGUMENT_TYPE_AXIOMATIC = "axiomatic";
+  ARGUMENT_TYPE_OTHER = "other";
+  ARGUMENT_TYPE_DISCUSSION = "discussion";
+
+  
   # Code is not reloaded between requests
   config.cache_classes = true
 
