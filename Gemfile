@@ -6,7 +6,8 @@ gem 'jquery-rails'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'bootstrap-sass', '~>2.0.1'
 gem 'rfc-822', '~> 0.3.0'
-
+gem 'foreigner'
+gem 'immigrant'
 
 # Gems used only for assets and not required
 # in production environments by default.

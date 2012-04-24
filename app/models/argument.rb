@@ -1,3 +1,4 @@
 class Argument < ActiveRecord::Base
-  attr_accessible :content, :title, :argtype
+	belongs_to :statement
+	attr_accessible :content, :title, :argtype
 end

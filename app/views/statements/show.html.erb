@@ -13,15 +13,13 @@
 		<div class="row">
 		<div class="span6">
 			<h3><%= t(:statement_pros) %></h3>
-			<pre>
-				<%= @statement.pros.nil? ? @statement.pros : "No pros yet" %>
-			</pre>
+			<pre><%= @statement.pros.nil? ? @statement.pros : "No pros yet" %>
+			<p><%= link_to t(:application_general_add), edit_statement_path(@statement), class: "btn btn-primary" %></p></pre>
 		</div>
 		<div class="span6">
 			<h3><%= t(:statement_cons) %></h3>
-			<pre>
-  				<%= @statement.cons.nil? ? @statement.cons : "No cons yet" %>
-			</pre>
+			<pre><%= @statement.cons.nil? ? @statement.cons : "No cons yet" %>
+			<p><%= link_to t(:application_general_add), edit_statement_path(@statement), class: "btn btn-primary" %></p></pre>
 		</div>
 		</div>
 		<div class="row">

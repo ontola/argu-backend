@@ -13,6 +13,7 @@ en:
   application_general_new: "New"
   application_general_back: "Back"
   application_general_show: "Show"
+  application_general_add: "Add"
   application_general_destroy: "Destroy"
   application_general_destroy_confirmation: "Are you sure?"
   application_general_not_allowed: "Action not allowed."
