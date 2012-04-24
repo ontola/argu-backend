@@ -15,9 +15,10 @@ class UsersController < ApplicationController
     @user = User.new(params[:user])
     if @user.save
       sign_in @user
-      flash.one[:success] = t(:users_success_welcome) + t(:application_name) + "!"
+      flash.now[:success] = t(:users_success_welcome) + t(:application_name) + "!"
       redirect_to @user
     else
+      flash.now[:error] = t(:users_new_failed) + "!"
       render 'new'
     end
   end

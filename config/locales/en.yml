@@ -9,6 +9,13 @@ en:
   application_general_sign_in: "Sign in"
   application_general_sign_up: "Sign up"
   application_general_learn_more: "Learn more"
+  application_general_edit: "Edit"
+  application_general_new: "New"
+  application_general_back: "Back"
+  application_general_show: "Show"
+  application_general_destroy: "Destroy"
+  application_general_destroy_confirmation: "Are you sure?"
+  application_general_not_allowed: "Action not allowed."
 #Controllers
 #Sessions
   sessions_error_invalid: "Invalid username or password"
@@ -67,7 +74,16 @@ en:
   users_new_header: "Sign up"
   users_new_confirmation: "Confirmation"
   users_new_create: "Create account"
+  users_new_failed: "Please check your input"
 #show
   users_show_title: "User"
   users_show_username: "Username"
   users_show_email: "Email"
+#statement
+  statement_title: "Statement"
+  statement_header: "Statement"
+  statement_pros: "Pros"
+  statement_cons: "Cons"
+  statement_no_pros: "No pros yet"
+  statement_no_cons: "No cons yet"
+  statement_newstatement: "New statement"

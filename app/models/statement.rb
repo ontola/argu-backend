@@ -6,7 +6,5 @@ class Statement < ActiveRecord::Base
  
   validates :content, presence: true, length: { minimum: 1, maximum: 140 }
   validates :title, presence: true, length: { minimum: 5, maximum: 50 }
-  validates :pros, presence: false, allow_nil: true, allow_blank: true
-  validates :cons, presence: false, allow_nil: true, allow_blank: true
   
 end

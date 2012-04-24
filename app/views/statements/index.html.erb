@@ -1,27 +1,35 @@
 <h1>Listing statements</h1>
 
-<table>
-  <tr>
-    <th>Content</th>
-    <th>Pros</th>
-    <th>Cons</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Pros</th>
+      <th>Cons</th>
+      <th></th>
+    </tr>
+  </thead>
 
+  <tbody>
 <% @statements.each do |statement| %>
-  <tr>
-    <td><%= statement.content %></td>
-    <td><%= statement.pros.nil? ? statement.pros : "No pros yet" %></td>
-    <td><%= statement.cons.nil? ? statement.cons : "No cons yet" %></td>
-    <td><%= link_to 'Show', statement %></td>
-    <td><%= link_to 'Edit', edit_statement_path(statement) %></td>
-    <td><%= link_to 'Destroy', statement, confirm: 'Are you sure?', method: :delete %></td>
-  </tr>
-<% end %>
+    <tr>
+      <td><%= link_to statement.title, statement %></td>
+      <td><%= statement.content %></td>
+      <td><%= statement.pros.nil? ? statement.pros : t(:statement_no_pros) %></td>
+      <td><%= statement.cons.nil? ? statement.cons : t(:statement_no_cons) %></td>
+      <td>
+        <div class="btn-group">
+          <%= link_to t(:application_general_show), statement, class: "btn btn-primary" %>
+          <%= link_to t(:application_general_edit), edit_statement_path(statement), class: "btn" %>
+          <%= link_to t(:application_general_destroy), statement, class: "btn btn-danger", confirm: t(:application_general_destroy_confirmation), method: :delete %>
+        </div>
+      </td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
 <br />
 
-<%= link_to 'New Statement', new_statement_path %>
+<%= link_to t(:statement_newstatement), new_statement_path %>

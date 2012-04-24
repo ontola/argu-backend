@@ -72,12 +72,20 @@ class StatementsController < ApplicationController
   # DELETE /statements/1
   # DELETE /statements/1.json
   def destroy
-    @statement = Statement.find(params[:id])
-    @statement.destroy
+    if signed_in?
+      @statement = Statement.find(params[:id])
+      @statement.destroy
 
-    respond_to do |format|
-      format.html { redirect_to statements_url }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to statements_url }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        flash.now[:error] = t(:application_general_not_allowed) + "!"
+        format.html { redirect_to statements_url}
+        format.json { head :no_content }
+      end
     end
   end
 end

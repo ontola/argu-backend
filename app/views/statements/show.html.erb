@@ -1,23 +1,33 @@
+<% provide(:title, @statement.title.nil? ? t(:statement_title) : @statement.title) %>
 <header>
-<h1><%= @statement.title.nil? ? @statement.title : "Statement" %></h1>
+	<h1><%= @statement.title.nil? ? @statement.title : @statement.title %></h1>
 </header>
-<p id="notice"><%= notice %></p>
-
-<p>
-  <b>Content:</b>
-  <%= @statement.content %>
-</p>
-
-<p>
-  <b>Pros:</b>
-  <%= @statement.pros.nil? ? @statement.pros : "No pros yet" %>
-</p>
-
-<p>
-  <b>Cons:</b>
-  <%= @statement.cons.nil? ? @statement.cons : "No cons yet" %>
-</p>
-
-
-<%= link_to 'Edit', edit_statement_path(@statement) %> |
-<%= link_to 'Back', statements_path %>
+<div class="row-fluid">
+	<p id="notice"><%= notice %></p>
+	<h2>
+		<%= @statement.content %>
+	</h2>
+</div>
+<div class="row">
+	<div class="span12">
+		<div class="row">
+		<div class="span6">
+			<h3><%= t(:statement_pros) %></h3>
+			<pre>
+				<%= @statement.pros.nil? ? @statement.pros : "No pros yet" %>
+			</pre>
+		</div>
+		<div class="span6">
+			<h3><%= t(:statement_cons) %></h3>
+			<pre>
+  				<%= @statement.cons.nil? ? @statement.cons : "No cons yet" %>
+			</pre>
+		</div>
+		</div>
+		<div class="row">
+			<div class="span2">
+				<%= link_to t(:application_general_edit), edit_statement_path(@statement), class: "btn btn-primary" %>
+			</div>
+		</div>
+	</div>
+</div>
