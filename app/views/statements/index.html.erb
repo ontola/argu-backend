@@ -16,8 +16,8 @@
     <tr>
       <td><%= link_to statement.title, statement %></td>
       <td><%= statement.content %></td>
-      <td><%= statement.pros.nil? ? statement.pros : t(:statement_no_pros) %></td>
-      <td><%= statement.cons.nil? ? statement.cons : t(:statement_no_cons) %></td>
+      <td><%= statement.arguments.nil? ? statement.arguments : t(:statement_no_pros) %></td>
+      <td><%= statement.arguments.nil? ? statement.arguments : t(:statement_no_cons) %></td>
       <td>
         <div class="btn-group">
           <%= link_to t(:application_general_show), statement, class: "btn btn-primary" %>

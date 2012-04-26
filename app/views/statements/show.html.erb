@@ -13,13 +13,19 @@
 		<div class="row">
 		<div class="span6">
 			<h3><%= t(:statement_pros) %></h3>
-			<pre><%= @statement.pros.nil? ? @statement.pros : "No pros yet" %>
-			<p><%= link_to t(:application_general_add), edit_statement_path(@statement), class: "btn btn-primary" %></p></pre>
+			<pre>
+				<% @statement.arguments.each do |argument| %>
+					<% if @statement.statementarguments.find_by_argument_id(argument.id).pro %>
+      					<%= link_to argument.title, argument %>
+      				<% end %>
+    			<% end %>
+    		</pre>
+			<p><%= link_to t(:application_general_add), '#addproargument', remote: true, class: "btn btn-primary", "data-toggle" => "modal", 'data-backdrop' => true, 'data-keyboard' => true %></p>
 		</div>
 		<div class="span6">
 			<h3><%= t(:statement_cons) %></h3>
-			<pre><%= @statement.cons.nil? ? @statement.cons : "No cons yet" %>
-			<p><%= link_to t(:application_general_add), edit_statement_path(@statement), class: "btn btn-primary" %></p></pre>
+			<pre>
+			<p><%= link_to t(:application_general_add), '#addconargument', class: "btn btn-primary", "data-toggle" => "modal", 'data-backdrop' => true, 'data-keyboard' => true %></p></pre>
 		</div>
 		</div>
 		<div class="row">
@@ -29,3 +35,5 @@
 		</div>
 	</div>
 </div>
+<%= render 'addproargument' %>
+<%= render 'addconargument' %>
