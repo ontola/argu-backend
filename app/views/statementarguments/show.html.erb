@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+<table>
+<thead>
+<tr>
+	<th>Statement</th>
+	<th>Argument</th>
+	<th>Pro/con</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+	<td><%= @statementargument.statement %></td>
+	<td><%= @statementargument.argument %></td>
+	<td><%= @statementargument.pro == true ? "Pro." : "Con" %></td>
+</tr>
+</tbody>
+</table>
+
+
+<%= link_to 'Edit', edit_statementargument_path(@statementargument) %> |
+<%= link_to 'Back', statementarguments_path %>

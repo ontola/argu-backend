@@ -13,7 +13,7 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
-    @statement = Statement.find(params[:id])
+    @statement = Statement.find(params[:argument_id, :statement_id, :pro])
     
     respond_to do |format|
       format.html # show.html.erb

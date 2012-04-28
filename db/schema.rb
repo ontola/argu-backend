@@ -45,5 +45,9 @@ ActiveRecord::Schema.define(:version => 20120426000304) do
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
+  add_index :statementarguments, [:argument_id, :statement_id, :pro]
+  add_index :arguments, [:title]
+  add_index :statements, [:title]
+  add_index :users, [:username, :email]
 
 end

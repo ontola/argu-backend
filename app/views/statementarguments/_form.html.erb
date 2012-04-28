@@ -1,0 +1,28 @@
+<%= form_for(@statementargument) do |f| %>
+  <% if @statementargument.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@statementargument.errors.count, "error") %> prohibited this statementargument from being saved:</h2>
+
+      <ul>
+      <% @statementargument.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :statement %><br />
+    <%= f.text_field :statement %>
+  </div>
+  <div class="field">
+    <%= f.label :argument %><br />
+    <%= f.text_field :argument %>
+  </div>
+  <div class="field">
+    <%= f.label :pro %><br />
+    <%= f.check_box :pro %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

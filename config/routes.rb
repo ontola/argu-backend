@@ -1,8 +1,11 @@
 OpenDebate::Application.routes.draw do
-  resources :arguments
+
+  resources :statementarguments
 
   resources :users
   resources :statements
+  resources :arguments
+  resources :statementarguments
   resources :sessions, only: [:new, :create, :destroy]
 
   get "users/new"
