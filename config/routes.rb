@@ -1,5 +1,4 @@
-OpenDebate::Application.routes.draw do
-
+Argu::Application.routes.draw do
   resources :users
   resources :statements
   resources :arguments

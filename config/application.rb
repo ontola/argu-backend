@@ -9,7 +9,7 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
-module OpenDebate
+module Argu
   class Application < Rails::Application
 
     config.active_record.whitelist_attributes = true

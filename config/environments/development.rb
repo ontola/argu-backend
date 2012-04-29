@@ -1,4 +1,4 @@
-OpenDebate::Application.configure do
+Argu::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   ARGUMENT_TYPE_SCIENTIFIC = "scientific";
