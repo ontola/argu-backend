@@ -1,7 +1,7 @@
 <h1>Listing statementarguments</h1>
 
 <p id="notice"><%= notice %></p>
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Statement</th>
@@ -11,6 +11,7 @@
     </tr>
   </thead>
   <tbody>
+  <% if @statementarguments.nil? %>
   <% @statementarguments.each do |statementargument| %>
     <tr>
       <td><%= Statement.find_by_id(statementargument.statement_id).title %></td>
@@ -21,8 +22,18 @@
           <%= link_to t(:application_general_show), statementargument, class: "btn btn-primary" %>
           <%= link_to t(:application_general_edit), edit_statementargument_path(statementargument), class: "btn" %>
           <%= link_to t(:application_general_destroy), statementargument, class: "btn btn-danger", confirm: t(:application_general_destroy_confirmation), method: :delete %>
-        ex</div>
+        </div>
       </td>
+    </tr>
+  <% end %>
+  <% elsif %>
+    <tr>
+      <td>
+        <%= t(:argument_non) %>
+      </td>
+      <td></td>
+      <td></td>
+      <td></td>
     </tr>
   <% end %>
   </tbody>

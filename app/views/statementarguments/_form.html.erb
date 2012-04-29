@@ -11,16 +11,16 @@
     </div>
   <% end %>
   <div class="field">
-    <%= f.label :statement %><br />
-    <%= f.text_field :statement %>
+    <%= f.label :statement_id %><br />
+    <%= f.text_field :statement_id, value: statement.id %>
   </div>
   <div class="field">
-    <%= f.label :argument %><br />
-    <%= f.text_field :argument %>
+    <%= f.label :argument_id %><br />
+    <%= f.text_field :argument_id %>
   </div>
   <div class="field">
     <%= f.label :pro %><br />
-    <%= f.check_box :pro %>
+    <%= f.select(:pro, options_for_select([[t(:application_general_pro), true], [t(:application_general_con), false]])) %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -12,43 +12,21 @@
 		<div class="row">
 		<div class="span6">
 			<h3><%= t(:statement_pros) %></h3>
-			<pre>
-				<% hasItems = nil %>
-				<% @statement.arguments.each do |argument| %>
-					<% if @statement.statementarguments.find_by_argument_id(argument.id).pro %>
-      					<%= link_to argument.title, argument %>
-      					<% hasItems = 1 %>
-      				<% end %>
-    			<% end %>
-    			<% if hasItems != 1 %>
-    				<%= "No pros yet." %>
-    			<% end %> 
-    		</pre>
-			<p><%= link_to t(:application_general_add), '#addproargument', remote: true, class: "btn btn-primary", "data-toggle" => "modal", 'data-backdrop' => true, 'data-keyboard' => true %></p>
+			<% hasItems = nil %><% @statement.arguments.each do |argument| %><% if @statement.statementarguments.find_by_argument_id(argument.id).pro %>
+				<%= render 'arguments/arguments', statementargument: @statement.statementarguments.find_by_argument_id(argument.id) %><% hasItems = 1 %><% end %><% end %><% if hasItems != 1 %><%= "No pros yet." %><% end %>
 		</div>
 		<div class="span6">
 			<h3><%= t(:statement_cons) %></h3>
-			<pre>
-				<% hasItems = nil %>
-				<% @statement.arguments.each do |argument| %>
-					<% if @statement.statementarguments.find_by_argument_id(argument.id).con %>
-    	  				<%= link_to argument.title, argument %>
-      					<% hasItems = 1 %>
-      				<% end %>
-      			<% end %>
-			    <% if hasItems != 1 %>
-    				<%= "No cons yet." %>
-    			<% end %>
-    			</pre>
-    			<p><%= link_to t(:application_general_add), '#addconargument', class: "btn btn-primary", "data-toggle" => "modal", 'data-backdrop' => true, 'data-keyboard' => true %></p>
+			<% hasItems = nil %><% @statement.arguments.each do |argument| %><% if !(@statement.statementarguments.find_by_argument_id(argument.id).pro) %>
+				<%= render 'arguments/arguments', statementargument: @statement.statementarguments.find_by_argument_id(argument.id) %><% hasItems = 1 %><% end %><% end %><% if hasItems != 1 %><%= "No pros yet." %><% end %>
 		</div>
 		</div>
 		<div class="row">
-			<div class="span2">
-				<%= link_to t(:application_general_edit), edit_statement_path(@statement), class: "btn btn-primary" %>
+			<div class="span3">
+				<p><%= link_to t(:argument_add), '#addargument', statement_id: @statement.id, remote: true, class: "btn btn-primary", "data-toggle" => "modal", 'data-backdrop' => true, 'data-keyboard' => true %>
+				<%= link_to t(:application_general_edit), edit_statement_path(@statement), class: "btn btn-primary" %></p>
 			</div>
 		</div>
 	</div>
 </div>
-<%= render 'addproargument' %>
-<%= render 'addconargument' %>
+<%= render 'addargument' %>

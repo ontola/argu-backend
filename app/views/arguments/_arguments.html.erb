@@ -1,6 +1,1 @@
-<li>
-  <span class="content"><%= argument.content %></span>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(argument.created_at) %> ago.
-  </span>
-</li>
+<pre><p class="content"><%= Argument.find_by_id(statementargument.argument_id).content %></p><p class="timestamp"><small>Posted <%= time_ago_in_words(Argument.find_by_id(statementargument.argument_id).created_at) %> ago.</small></p><%= link_to "x", Statementargument.find_by_id(statementargument.id),	class:"btn btn-danger", confirm: t(:application_general_destroy_confirmation), method: :delete %></pre>

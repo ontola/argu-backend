@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120426000304) do
+ActiveRecord::Schema.define(:version => 20120429014310) do
 
   create_table "arguments", :force => true do |t|
     t.string   "content"
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(:version => 20120426000304) do
     t.string   "title"
   end
 
-  create_table "statementarguments", :id => false, :force => true do |t|
+  create_table "statementarguments", :force => true do |t|
     t.integer "argument_id"
     t.integer "statement_id"
     t.boolean "pro"
@@ -45,9 +45,5 @@ ActiveRecord::Schema.define(:version => 20120426000304) do
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
-  add_index :statementarguments, [:argument_id, :statement_id, :pro]
-  add_index :arguments, [:title]
-  add_index :statements, [:title]
-  add_index :users, [:username, :email]
 
 end

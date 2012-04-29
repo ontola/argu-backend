@@ -1,14 +1,13 @@
 OpenDebate::Application.routes.draw do
 
-  resources :statementarguments
-
   resources :users
   resources :statements
   resources :arguments
-  resources :statementarguments
   resources :sessions, only: [:new, :create, :destroy]
+  resources :statementarguments
 
   get "users/new"
+  get "arguments/new"
 
   root to: 'static_pages#home'
 
