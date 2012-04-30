@@ -6,7 +6,6 @@ Argu::Application.routes.draw do
   resources :statementarguments
 
   get "users/new"
-  get "arguments/new"
 
   root to: 'static_pages#home'
 

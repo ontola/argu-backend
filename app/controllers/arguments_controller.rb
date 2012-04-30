@@ -24,7 +24,7 @@ class ArgumentsController < ApplicationController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    @argument = Argument.new
+    @argument = Argument.new	
 
     respond_to do |format|
       format.html # new.html.erb

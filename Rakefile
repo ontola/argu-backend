@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-OpenDebate::Application.load_tasks
+Argu::Application.load_tasks
