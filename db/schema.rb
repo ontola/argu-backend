@@ -15,7 +15,7 @@ ActiveRecord::Schema.define(:version => 20120429014310) do
 
   create_table "arguments", :force => true do |t|
     t.string   "content"
-    t.string   "argtype"
+    t.integer  "argtype"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "title"

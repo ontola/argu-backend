@@ -1,13 +1,13 @@
 module ArgumentsHelper
 private
 	def getArgType(argument)
-		if argument.argtype == "ARGUMENT_TYPE_SCIENTIFIC"
+		if argument.argtype == 0
 			t(:argument_type_scientific)
-		elsif argument.argtype == "ARGUMENT_TYPE_AXIOMATIC"
+		elsif argument.argtype == 1
 			t(:argument_type_axiomatic)
-		elsif argument.argtype == "ARGUMENT_TYPE_OTHER"
+		elsif argument.argtype == 2
 			t(:argument_type_other)
-		elsif argument.argtype == "ARGUMENT_TYPE_DISCUSSION"
+		elsif argument.argtype == 3
 			t(:argument_type_discussion)
 		else
 			t(:argument_type_unknown)

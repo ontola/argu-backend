@@ -19,15 +19,20 @@
         </div>
       </fieldset>
       <fieldset class="control-group">
-        <%= f.label :content %>
+        <%= f.label :content, class: "control-label" %>
         <div class="controls">
           <%= f.text_area :content, class: "input-xlarge", rows: "3" %>
         </div>
       </fieldset>
       <fieldset class="control-group">
-        <%= f.label :argtype, t(:argument_type) %>
+        <%= f.label :argtype, t(:argument_type), class: "control-label" %>
         <div class="controls">
-          <%= f.text_field :argtype, class: "input-xlarge" %>
+          <%= f.select(:argtype, options_for_select([
+            [t(:argument_type_scientific), 0],
+            [t(:argument_type_axiomatic), 1],
+            [t(:argument_type_other), 2],
+            [t(:argument_type_discussion), 3]
+            ])) %>
         </div>
       </fieldset>
       <fieldset class="form-actions">
