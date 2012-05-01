@@ -5,7 +5,8 @@
   </div>
   <div class="modal-body">
     <% @statementargument = Statementargument.new() %>
-    <%= render 'statementarguments/form', statement: @statement %>
+    <% @statementargument.statement = @statement %>
+    <%= render 'statementarguments/statementform', statement: @statement %>
   </div>
   <div class="modal-footer">
     <a href="#" class="btn primary"><%= t(:application_generic_add) %></a>

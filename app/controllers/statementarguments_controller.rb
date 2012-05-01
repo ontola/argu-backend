@@ -48,7 +48,8 @@ class StatementargumentsController < ApplicationController
         format.html { redirect_to Statement.find_by_id(@statementargument.statement_id), notice: 'Statementargument was successfully created.' }
         format.json { render json: @statementargument, status: :created, location: @statementargument }
       else
-        format.html { render action: "new" }
+        flash.now[:errors] = @statementargument.errors.to_a
+        format.html { redirect_to Statement.find_by_id(@statementargument.statement_id) } #render action: "new" }
         format.json { render json: @statementargument.errors, status: :unprocessable_entity }
       end
     end
