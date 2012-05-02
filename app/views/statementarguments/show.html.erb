@@ -1,5 +1,5 @@
 <p id="notice"><%= notice %></p>
-<table>
+<table class="table table-striped">
 <thead>
 <tr>
 	<th>Statement</th>
@@ -9,8 +9,8 @@
 </thead>
 <tbody>
 <tr>
-	<td><%= @statementargument.statement %></td>
-	<td><%= @statementargument.argument %></td>
+	<td><%= @statementargument.statement.title %></td>
+	<td><%= @statementargument.argument.title %></td>
 	<td><%= @statementargument.pro == true ? "Pro." : "Con" %></td>
 </tr>
 </tbody>
