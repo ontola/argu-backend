@@ -7,7 +7,7 @@ Argu::Application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
   resources :statementarguments
 
-  get "users/new"
+  #get "users/new"
 
   root to: 'static_pages#home'
 
