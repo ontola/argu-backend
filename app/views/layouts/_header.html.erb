@@ -25,6 +25,14 @@
          <% else %>
            <li<%= yield(:title) == t(:header_menuitem_sign_up) ? " class=active" : "" %>><%= link_to t(:header_menuitem_sign_up), signup_path %></li>
            <li<%= yield(:title) == t(:header_menuitem_sign_in) ? " class=active" : "" %>><%= link_to t(:header_menuitem_sign_in), signin_path %></li>
+           <li id="fat-menu" class="dropdown">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               <%= t(:header_menuitem_sign_in) %> <b class="caret"></b>
+             </a>
+             <ul class="dropdown-menu">
+               <li><%= render 'sessions/new' %></li>
+             </ul>
+           </li>
          <% end %>
         </ul>
       </nav>
