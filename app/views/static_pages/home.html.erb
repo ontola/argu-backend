@@ -6,7 +6,7 @@
       <div class="span6">
         <h2><%= t(:home_title_new) + ": " + t(:statement_title).pluralize %></h2>
         <span>
-          <% @newstatements.each do |statement| %>
+          <% @newstatements.first(4).each do |statement| %>
 		  	<%= render 'statements/statements', statement: statement %>
 		  <% end %>
         </span>
@@ -14,7 +14,7 @@
       <div class="span6">
         <h2><%= t(:home_title_new) + ": " + t(:argument_title).pluralize %></h2>
         <span>
-          <% @newarguments.each do |argument| %>
+          <% @newarguments.first(4).each do |argument| %>
 		  	<%= render 'arguments/arguments', argument: argument %>
 		  <% end %>
         </span>
