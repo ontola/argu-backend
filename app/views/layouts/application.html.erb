@@ -17,8 +17,9 @@
     <% end %>
     <%= yield %>
     <%= debug(params) if Rails.env.development? %>
-    <%= render 'layouts/footer'%>
+    <div class="push"></div>
   </div>
+  <%= render 'layouts/footer'%>
   <!-- It should load faster when placed in the bottom.. -->
   <%= javascript_include_tag "application" %>
 </body>

@@ -109,6 +109,25 @@ footer ul li {
   margin-left: 10px;
 }
 
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+.container {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -150px;
+}
+.footer, .push {
+  height: 150px;
+}
+/*Sticky Footer by ryanfait.com */
+
+/* Argument */
+
 .arghov {
   min-height: 25px;
   display: block;
@@ -141,3 +160,5 @@ footer ul li {
   position: relative;
   float: bottom;
 }
+
+
