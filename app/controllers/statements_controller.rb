@@ -1,4 +1,6 @@
 class StatementsController < ApplicationController
+  autocomplete :argument, :title, :full => true, :extra_data => [:id]
+
   # GET /statements
   # GET /statements.json
   def index

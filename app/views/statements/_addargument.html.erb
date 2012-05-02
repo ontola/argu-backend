@@ -6,7 +6,34 @@
   <div class="modal-body">
     <% @statementargument = Statementargument.new() %>
     <% @statementargument.statement = @statement %>
-    <%= render 'statementarguments/statementform', statement: @statement %>
+    <% #render 'statementarguments/statementform', statement: @statement %>
+    <%= form_for(@statementargument) do |f| %>
+  <% if @statementargument.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@statementargument.errors.count, "error") %> prohibited this statementargument from being saved:</h2>
+
+      <ul>
+      <% @statementargument.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="field">
+    <%= f.label :argument_id %><br />
+    <%= autocomplete_field :argument_title, '', autocomplete_argument_title_statements_path, :update_elements => { :id => "#statementargument_argument_id" } %>
+  </div>
+  <div class="field">
+    <%= f.label :pro %><br />
+    <%= f.select(:pro, options_for_select([[t(:application_general_pro), true], [t(:application_general_con), false]])) %>
+  </div>
+  <%= f.hidden_field(:statement_id, object: @statement.id ) %>
+  <%= f.hidden_field(:argument_id, object: @statementargument.argument_id ) %>
+  <div class="actions">
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>
+
   </div>
   <div class="modal-footer">
     <a href="#" class="btn primary"><%= t(:application_generic_add) %></a>

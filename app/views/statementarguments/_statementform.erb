@@ -12,7 +12,7 @@
   <% end %>
   <div class="field">
     <%= f.label :argument_id %><br />
-    <%= f.text_field :argument_id %>
+    <%= f.autocomplete_field :argument_id, arguments_autocomplete_argument_title_arguments_path %>
   </div>
   <div class="field">
     <%= f.label :pro %><br />

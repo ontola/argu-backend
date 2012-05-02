@@ -1,6 +1,8 @@
 Argu::Application.routes.draw do
   resources :users
-  resources :statements
+  resources :statements do 
+    get :autocomplete_argument_title, :on => :collection
+  end
   resources :arguments
   resources :sessions, only: [:new, :create, :destroy]
   resources :statementarguments
@@ -16,7 +18,6 @@ Argu::Application.routes.draw do
   match "/signout", to: "sessions#destroy", via: :delete
   match "/about", to: "static_pages#about"
   match "/learn", to: "static_pages#learn"
-
 
 
   # The priority is based upon order of creation:
