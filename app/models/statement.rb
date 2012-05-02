@@ -7,4 +7,9 @@ class Statement < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 140 }
   validates :title, presence: true, length: { minimum: 5, maximum: 50 }
   
+  scope :today, lambda { 
+    {
+      :conditions => ["created_at >= ?", Time.now.beginning_of_day]
+    }
+  }
 end

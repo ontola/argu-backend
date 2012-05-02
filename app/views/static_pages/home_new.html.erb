@@ -1,9 +1,10 @@
+<% provide(:title, t(:home_title)) %>
 <div class="center hero-unit">
  <div>
   <h1><%= t(:home_new_header) + t(:application_name) %></h1>
   <h2><%= t(:application_name_phonetic) %></h2>
   <p><%= t(:home_new_text) %></p>
-  <%= link_to t(:application_sign_up), signup_path, class: "btn btn-large btn-primary" %>
+  <%= link_to t(:application_general_sign_up), signup_path, class: "btn btn-large btn-primary" %>
   <%= link_to t(:application_general_learn_more), learn_path, class: "btn btn-large btn-info" %>
   </div>
   </br>

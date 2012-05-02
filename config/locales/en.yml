@@ -44,14 +44,14 @@ en:
   footer_item_copyright: "Copyright 2012 - "
 #Home
   home_title: "Home"
+  home_header: "What's going on"
+  home_title_top: "Top stories"
+  home_title_follow: "Discussions you follow"
+  home_title_new: "Just in"
   #Not logged in
   home_new_header: "Welcome to "
   home_new_text: "Look around, learn new facts, sign up, get involved."
   home_new_content_link: "http://www.youtube.com/embed/OghccYtXBdI"
-  #Logged in
-  home_header: "Some corny header"
-  home_title_top: "Top stories"
-  home_title_follow: "Discussions you follow"
 #Login
   login_new_user: "New user?"
   login_title: :application_general_sign_in

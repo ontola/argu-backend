@@ -13,12 +13,12 @@
 		<div class="span6">
 			<h3><%= t(:statement_pros) %></h3>
 			<% hasItems = nil %><% @statement.arguments.each do |argument| %><% if @statement.statementarguments.find_by_argument_id(argument.id).pro %>
-				<%= render 'arguments/arguments', statementargument: @statement.statementarguments.find_by_argument_id(argument.id) %><% hasItems = 1 %><% end %><% end %><% if hasItems != 1 %><%= "No pros yet." %><% end %>
+				<%= render 'arguments/sarguments', statementargument: @statement.statementarguments.find_by_argument_id(argument.id) %><% hasItems = 1 %><% end %><% end %><% if hasItems != 1 %><%= "No pros yet." %><% end %>
 		</div>
 		<div class="span6">
 			<h3><%= t(:statement_cons) %></h3>
 			<% hasItems = nil %><% @statement.arguments.each do |argument| %><% if !(@statement.statementarguments.find_by_argument_id(argument.id).pro) %>
-				<%= render 'arguments/arguments', statementargument: @statement.statementarguments.find_by_argument_id(argument.id) %><% hasItems = 1 %><% end %><% end %><% if hasItems != 1 %><%= "No pros yet." %><% end %>
+				<%= render 'arguments/sarguments', statementargument: @statement.statementarguments.find_by_argument_id(argument.id) %><% hasItems = 1 %><% end %><% end %><% if hasItems != 1 %><%= "No pros yet." %><% end %>
 		</div>
 		</div>
 		<div class="row">

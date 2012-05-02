@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:session][:email])
     if user && user.authenticate(params[:session][:password])
       sign_in user
-      redirect_to user
+      redirect_to home_path
     else
       flash.now[:error] = t(:sessions_error_invalid)
       render 'new'

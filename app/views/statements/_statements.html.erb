@@ -1,0 +1,2 @@
+<%= link_to(statement_path(statement)) do %><pre><div class="arghov"><h4 class="content arghead"><%= statement.title %></h4></div><span class="content"><%= statement.content[0,140] + ((statement.content.length < 140) ? "" : "...") %></span>
+<p class="timestamp argtime"><small>Posted <%= time_ago_in_words(statement.created_at) %> ago.</small></p></pre><% end %>
