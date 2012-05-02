@@ -1,15 +1,42 @@
-<div id="addargument" class="modal hide fade in",  hidden="true">
+<% @statementargument = Statementargument.new() %>
+<% @statementargument.statement = @statement %>
+  <% if @statementargument.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@statementargument.errors.count, "error") %> prohibited this statementargument from being saved:</h2>
+      <ul>
+      <% @statementargument.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<%= form_for(@statementargument) do |f| %>
+<div id="addargument" class="modal hide fade out">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
     <h3><%= t(:argument_add_title) %></h3>
   </div>
   <div class="modal-body">
-    <% @statementargument = Statementargument.new() %>
-    <% @statementargument.statement = @statement %>
-    <%= render 'statementarguments/statementform', statement: @statement %>
+    <fieldset class="control-group">
+      <%= f.label :argument_id, class: "control-label" %>
+      <div class="controls">
+        <%= autocomplete_field :argument_title, '', autocomplete_argument_title_statements_path, :update_elements => { :id => "#statementargument_argument_id" } %>
+      </div>
+    </fieldset>
+    <fieldset class="control-group">
+      <%= f.label :pro, class: "control-label" %>
+      <div class="controls">
+        <%= f.select(:pro, options_for_select([[t(:application_general_pro), true], [t(:application_general_con), false]])) %>
+      </div>
+    </fieldset>
+    <fieldset class="control-goup">
+      <%= f.hidden_field(:statement_id, object: @statement.id ) %>
+      <%= f.hidden_field(:argument_id, object: @statementargument.argument_id ) %>
+    </fieldset>
   </div>
-  <div class="modal-footer">
-    <a href="#" class="btn primary"><%= t(:application_generic_add) %></a>
-    <a href="#" class="btn danger" data-dismiss="modal"><%= t(:application_generic_cancel) %></a>
-  </div>
+  <fieldset class="modal-footer">
+    <a href="#" class="btn btn-danger" data-dismiss="modal", data-backdrop="false"><%= t(:application_general_cancel) %></a>
+    <%= f.submit t(:argument_add), :class => "btn btn-primary" %>
+  </fieldset>
 </div>
+<% end %>
