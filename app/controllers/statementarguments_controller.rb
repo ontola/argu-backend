@@ -78,7 +78,7 @@ class StatementargumentsController < ApplicationController
     @statementargument.destroy
 
     respond_to do |format|
-      format.html { redirect_to statementarguments_url }
+      format.html { redirect_to Statement.find_by_id(@statementargument.statement_id) }
       format.json { head :no_content }
     end
   end

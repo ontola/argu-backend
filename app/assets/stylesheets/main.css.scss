@@ -108,3 +108,36 @@ footer ul li {
   float: left;
   margin-left: 10px;
 }
+
+.arghov {
+  min-height: 25px;
+  display: block;
+  position: relative;
+}
+
+.argbtn {
+  float: right;
+  display: inline-block;
+}
+
+.arghov .argbtn{
+  display: none;
+}
+
+.arghov:hover .argbtn {
+  display: inline;
+}
+
+.arghead:hover .argbtn {
+  visibility: visible;
+}
+
+.arghead {
+  float: left;
+  position: left;
+}
+
+.argtime {
+  position: relative;
+  float: bottom;
+}
