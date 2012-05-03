@@ -40,15 +40,24 @@ class ArgumentsController < ApplicationController
   # POST /arguments
   # POST /arguments.json
   def create
-    @argument = Argument.new(params[:argument])
+    if signed_in?
+      raise PermissionViolation unless Argument.creatable_by?(current_user)
+      @argument = Argument.new(params[:argument])
 
-    respond_to do |format|
-      if @argument.save
-        format.html { redirect_to @argument, notice: 'Argument was successfully created.' }
-        format.json { render json: @argument, status: :created, location: @argument }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @argument.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @argument.save
+          format.html { redirect_to @argument, notice: 'Argument was successfully created.' }
+          format.json { render json: @argument, status: :created, location: @argument }
+        else
+          format.html { render action: "new" }
+          format.json { render json: @argument.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        flash.now[:error] = t(:application_general_not_allowed) + "!"
+        format.html { redirect_to statements_url}
+        format.json { head :no_content }
       end
     end
   end
@@ -56,15 +65,24 @@ class ArgumentsController < ApplicationController
   # PUT /arguments/1
   # PUT /arguments/1.json
   def update
-    @argument = Argument.find(params[:id])
+    if signed_in?
+      @argument = Argument.find(params[:id])
+      raise PermissionViolation unless @argument.updatable_by?(current_user)
 
-    respond_to do |format|
-      if @argument.update_attributes(params[:argument])
-        format.html { redirect_to @argument, notice: 'Argument was successfully updated.' }
+      respond_to do |format|
+        if @argument.update_attributes(params[:argument])
+          format.html { redirect_to @argument, notice: 'Argument was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @argument.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        flash.now[:error] = t(:application_general_not_allowed) + "!"
+        format.html { redirect_to statements_url}
         format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @argument.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -72,8 +90,10 @@ class ArgumentsController < ApplicationController
   # DELETE /arguments/1
   # DELETE /arguments/1.json
   def destroy
-    if signed_in? && current_user.id <= 3
+    if signed_in?
       @argument = Argument.find(params[:id])
+      raise PermissionViolation unless @argument.destroyable_by?(current_user)
+
       @argument.destroy
 
       respond_to do |format|

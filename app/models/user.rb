@@ -14,7 +14,9 @@ class User < ActiveRecord::Base
   attr_accessible :email, :name, :username, :password, :password_confirmation, :clearance
 
   has_secure_password
-
+  has_settings
+  has_restful_permissions
+  
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
   before_save { :clearance.nil? ? 4 : :clearance }
@@ -37,6 +39,32 @@ class User < ActiveRecord::Base
 		       format: { with: PASSWORD_FORMAT_REGEX }
   validates :password_confirmation, presence: true
   validates :clearance, presence: true, allow_blank: false
+
+  def creatable_by?(user)
+    case user.clearance
+    when 0
+      false
+    when 1
+      user.clearance <= Settings['permissions.create.administrator']
+    when 2
+      user.clearance <= Settings['permissions.create.moderator']
+    when 3
+      user.clearance <= Settings['permissions.create.trusted']
+    when 4
+      true
+    when 6..8
+      true
+      #TODO: special user policies
+    else
+      false
+    end
+  end
+  def updatable_by?(user)
+    user.clearance <= Settings['permissions.update.user'] || :id == self.id
+  end
+  def destroyable_by?(user)
+    user.clearance <= Settings['permissions.destroy.user'] || :id == self.id
+  end
 
   private
     def create_remember_token
