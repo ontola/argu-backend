@@ -9,7 +9,7 @@ class Argument < ActiveRecord::Base
 
   scope :today, lambda { 
     {
-      :conditions => ["created_at >= ?", Time.now.beginning_of_day]
+      :conditions => ["created_at >= ?", (Time.now - 1.days)]
     }
   }
 end

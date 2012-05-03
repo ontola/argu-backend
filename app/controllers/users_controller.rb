@@ -13,8 +13,12 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
+    raise SecurityTransgression unless @user.clearance >= 4 || (current_user.clearance < @user.clearance)
+    
     if @user.save
-      sign_in @user
+      if current_user.nil?
+        sign_in @user
+      end
       flash.now[:success] = t(:users_success_welcome) + t(:application_name) + "!"
       redirect_to @user
     else

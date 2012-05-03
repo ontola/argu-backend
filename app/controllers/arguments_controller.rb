@@ -72,12 +72,20 @@ class ArgumentsController < ApplicationController
   # DELETE /arguments/1
   # DELETE /arguments/1.json
   def destroy
-    @argument = Argument.find(params[:id])
-    @argument.destroy
+    if signed_in? && current_user.id <= 3
+      @argument = Argument.find(params[:id])
+      @argument.destroy
 
-    respond_to do |format|
-      format.html { redirect_to arguments_url }
-      format.json { head :no_content }
+      respond_to do |format|
+        format.html { redirect_to arguments_url }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        flash.now[:error] = t(:application_general_not_allowed) + "!"
+        format.html { redirect_to statements_url}
+        format.json { head :no_content }
+      end
     end
   end
 end

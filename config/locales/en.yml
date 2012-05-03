@@ -67,6 +67,15 @@ en:
     urna scelerisque porta eu vitae ante. Aenean aliquet fucking gay ipsum vulputate nisi blandit tristique id id orci. 
     Suspendisse gravida quam eu risus faucibus nec tempor nulla venenatis."
 #Users
+  users_clearance_0: "Coder"
+  users_clearance_1: "Administrator"
+  users_clearance_2: "Moderator"
+  users_clearance_3: "Trusted user"
+  users_clearance_4: "User"
+  users_clearance_5: "IP"
+  users_clearance_6: "Political party"
+  users_clearance_7: "Organization"
+  users_clearance_8: "Company"
 #index
   users_title: "Users"
   users_header: "Listing users"
@@ -85,6 +94,7 @@ en:
   users_show_title: "User"
   users_show_username: "Username"
   users_show_email: "Email"
+  users_show_clearance: "Type"
 #statement
   statement_title: "Statement"
   statement_header: "Statement"

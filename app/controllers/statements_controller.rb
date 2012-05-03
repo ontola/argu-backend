@@ -74,7 +74,7 @@ class StatementsController < ApplicationController
   # DELETE /statements/1
   # DELETE /statements/1.json
   def destroy
-    if signed_in?
+    if signed_in? && current_user.id <= 2
       @statement = Statement.find(params[:id])
       @statement.destroy
 
