@@ -1,6 +1,7 @@
 class Statementargument < ActiveRecord::Base
 	belongs_to :statement
 	belongs_to :argument
+	has_many :vote
 
 	has_restful_permissions
 
@@ -22,4 +23,7 @@ class Statementargument < ActiveRecord::Base
 		user.clearance <= Settings['permissions.destroy.statementargument']
 	end
 
+	def votes
+		self.vote.count
+	end
 end

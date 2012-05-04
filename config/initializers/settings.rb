@@ -24,5 +24,5 @@ Settings.defaults['permissions.create.trusted'] = 2
 Settings.defaults['permissions.update.statement'] = 4
 Settings.defaults['permissions.update.argument'] = 4
 Settings.defaults['permissions.update.statementargument'] = 2
-Settings.defaults['permissions.update.vote'] = 2
+Settings.defaults['permissions.update.vote'] = 4
 Settings.defaults['permissions.update.user'] = 2

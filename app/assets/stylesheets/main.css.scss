@@ -145,7 +145,7 @@ html, body {
   float: left;
 }
 
-.argbtn {
+.argheadright {
   float: right;
   display: inline-block;
 }
@@ -154,12 +154,24 @@ html, body {
   display: none;
 }
 
+.argvotes {
+  visibility: visible;
+}
+
 .arghov:hover .argbtn {
   display: inline;
 }
 
 .arghead:hover .argbtn {
   visibility: visible;
+}
+
+.arghead:hover .argvotes {
+    display: none;
+}
+
+.arghov:hover .argvotes {
+    display: none;
 }
 
 .arghead {

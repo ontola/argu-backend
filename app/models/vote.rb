@@ -1,6 +1,6 @@
 class Vote < ActiveRecord::Base
-  has_one :statemenarguments
-  has_one :users
+  has_one :statementargument
+  has_one :user
 
   has_restful_permissions
 

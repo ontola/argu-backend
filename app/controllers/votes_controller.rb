@@ -43,9 +43,12 @@ class VotesController < ApplicationController
     if signed_in?
       raise PermissionViolation unless Vote.creatable_by?(current_user)
       @vote = Vote.new(params[:vote])
+      @vote.user_id = params[:user_id] unless params[:user_id].nil?
+      @vote.statementargument_id = params[:statementargument_id] unless params[:statementargument_id].nil?
+
       respond_to do |format|
         if @vote.save
-          format.html { redirect_to @vote, notice: 'vote was successfully created.' }
+          format.html { redirect_to :back, notice: 'Successfully voted.' }
           format.json { render json: @vote, status: :created, location: @vote }
         else
           format.html { render action: "new" }
@@ -54,7 +57,7 @@ class VotesController < ApplicationController
       end
     else
       respond_to do |format|
-        flash.now[:error] = t(:application_general_not_allowed) + "!"
+        flash.now[:error] = t(:application_general_not_allowed) + " (Not signed in)!"
         format.html { redirect_to votes_url}
         format.json { head :no_content }
       end
