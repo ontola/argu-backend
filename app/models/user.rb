@@ -9,6 +9,7 @@
 #  created_at :datetime        not null
 #  updated_at :datetime        not null
 #
+require 'bcrypt'
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :username, :password, :password_confirmation, :clearance

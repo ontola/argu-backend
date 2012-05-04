@@ -24,9 +24,9 @@
     <td><%= user.email %></td>
     <td>x</td>
     <td><%= user_type(user.clearance) %></td>
-    <td><%= link_to t(:users_show), user %></td>
-    <% if current_user.clearance < 1 %><td><%= link_to t(:users_edit), edit_user_path(user) %></td>
-    <td><%= link_to t(:users_destroy), user, confirm: t(:users_destroy_confirmation),
+    <td><%= link_to t(:users_show), user, class: "btn btn-primary" %></td>
+    <% if user.updatable_by?(current_user) %><td><%= link_to t(:users_edit), edit_user_path(user), class: "btn" %></td> <% end %>
+    <% if user.destroyable_by?(current_user) %><td><%= link_to t(:users_destroy), user, class: "btn btn-danger", confirm: t(:users_destroy_confirmation),
                                    method: :delete %></td> <% end %>
   </tr>
 <% end %>

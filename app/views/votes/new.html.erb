@@ -1,0 +1,24 @@
+<h1>New statement</h1>
+
+<%= form_for(@vote, html: { class: "form-horizontal" }) do |f| %>
+  <div class="row">
+    <div class="span8">
+      <fieldset class="control-group">
+        <%= f.label :user_id, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :user_id, class: "input-xlarge" %>
+        </div>
+      </fieldset>
+      <fieldset class="control-group">
+        <%= f.label :statementargument_id, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :statementargument_id, class: "input-xlarge" %>
+        </div>
+      </fieldset>
+      <fieldset class="form-actions">
+        <%= f.submit nil, class: "btn btn-primary"  %>
+      </fieldset>
+    </div>
+  </div>
+<% end %>
+

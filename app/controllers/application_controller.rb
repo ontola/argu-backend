@@ -1,17 +1,12 @@
 class ApplicationController < ActionController::Base
-  require 'has_restful_permissions'
-  
   protect_from_forgery
+
+  require 'has_restful_permissions'
   include SessionsHelper
 
-   def rescue_action(exception)
-    case exception
-      when PermissionViolation
-        flash[:warning] = "You do not have permission for this action."
-        redirect_to :back
-      else
-        super
-    end
-  end
+  rescue_from PermissionViolation, with: lambda {
+    flash[:warning] = t(:application_system_not_allowed)
+    redirect_to :back
+  }
 
 end

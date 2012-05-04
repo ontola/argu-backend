@@ -6,6 +6,7 @@ Argu::Application.routes.draw do
   resources :arguments
   resources :sessions, only: [:new, :create, :destroy]
   resources :statementarguments
+  resources :votes
 
   #get "users/new"
 

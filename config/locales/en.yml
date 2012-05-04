@@ -6,6 +6,7 @@ en:
   application_name: "Argu"
   application_name_phonetic: "\\\'är-(ˌ)gyü\\"
   application_owner: "Thom van Kalkeren"
+  application_system_not_allowed: "You do not have permission for this action."
   application_general_sign_in: "Sign in"
   application_general_sign_up: "Sign up"
   application_general_learn_more: "Learn more"

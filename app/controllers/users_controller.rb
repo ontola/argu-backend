@@ -1,14 +1,29 @@
 class UsersController < ApplicationController
   def index
     @users = User.all
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @users }
+    end
   end
   
   def show
     @user = User.find(params[:id])
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @user }
+    end
   end
 
   def new
     @user = User.new
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @user }
+    end
   end
 
   def create
@@ -20,7 +35,10 @@ class UsersController < ApplicationController
         sign_in @user
       end
       flash.now[:success] = t(:users_success_welcome) + t(:application_name) + "!"
-      redirect_to @user
+      respond_to do |format|
+        format.html { redirect_to @user }
+        format.json { render json: @user }
+      end
     else
       flash.now[:error] = t(:users_new_failed) + "!"
       render 'new'

@@ -139,6 +139,12 @@ html, body {
   position: relative;
 }
 
+.argicon {
+  width: 20px;
+  height: 20px;
+  float: left;
+}
+
 .argbtn {
   float: right;
   display: inline-block;
@@ -159,11 +165,20 @@ html, body {
 .arghead {
   float: left;
   position: left;
+  font-size: 2.0em;
+}
+
+.content {
+  font-size: 1.3em;
+}
+
+.argtype {
+  float: left;
 }
 
 .argtime {
   position: relative;
-  float: bottom;
+  float: right;
 }
 
 

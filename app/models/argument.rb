@@ -2,6 +2,8 @@ class Argument < ActiveRecord::Base
   has_many :statementarguments, :dependent => :destroy
   has_many :statements, :through => :statementarguments
 
+  before_save :trim_data
+
   has_restful_permissions
 
   attr_accessible :id, :content, :title, :argtype, :statements
@@ -19,6 +21,10 @@ class Argument < ActiveRecord::Base
     user.clearance <= Settings['permissions.destroy.argument']
   end
 
+  def trim_data
+    self.title = title.strip
+    self.content = content.strip
+  end
 
   scope :today, lambda { 
     {

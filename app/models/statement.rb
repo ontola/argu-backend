@@ -2,6 +2,8 @@ class Statement < ActiveRecord::Base
   has_many :statementarguments, :dependent => :destroy
   has_many :arguments, :through => :statementarguments
 
+  before_save :trim_data
+
   has_restful_permissions
 
   attr_accessible :title, :content, :arguments, :statementarguments
@@ -17,6 +19,11 @@ class Statement < ActiveRecord::Base
   end
   def destroyable_by?(user)
     user.clearance <= Settings['permissions.destroy.statement']
+  end
+
+  def trim_data
+    self.title = title.strip
+    self.content = content.strip
   end
 
   scope :today, lambda { 
