@@ -13,13 +13,13 @@ class Statement < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5, maximum: 50 }
   
   def creatable_by?(user)
-    user.clearance <= Settings['permissions.create.statement']
+    Settings['permissions.create.statement'] >= user.clearance
   end
   def updatable_by?(user)
-    user.clearance <= Settings['permissions.update.statement']
+    Settings['permissions.update.statement'] >= user.clearance
   end
   def destroyable_by?(user)
-    user.clearance <= Settings['permissions.destroy.statement']
+    Settings['permissions.destroy.statement'] >= user.clearance
   end
 
   def trim_data

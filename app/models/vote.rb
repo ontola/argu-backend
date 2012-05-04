@@ -7,12 +7,12 @@ class Vote < ActiveRecord::Base
   attr_accessible :statementargument_id, :user_id, :vote_type
 
   def creatable_by?(user)
-    user.clearance <= Settings['permissions.create.vote']
+    Settings['permissions.create.vote'] >= user.clearance
   end
   def updatable_by?(user)
-    user.clearance <= Settings['permissions.update.vote']
+    Settings['permissions.update.vote'] >= user.clearance
   end
   def destroyable_by?(user)
-    user.clearance <= Settings['permissions.destroy.vote']
+    Settings['permissions.destroy.vote'] >= user.clearance
   end
 end

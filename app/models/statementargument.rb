@@ -14,10 +14,10 @@ class Statementargument < ActiveRecord::Base
 	validates_uniqueness_of :argument_id, :scope => [:statement_id]
 
 	def creatable_by?(user)
-    	user.clearance <= Settings['permissions.create.statementargument']
+    	Settings['permissions.create.statementargument'] >= user.clearance
 	end
 	def updatable_by?(user)
-		user.clearance <= Settings['permissions.update.statementargument']
+		Settings['permissions.update.statementargument'] >= user.clearance
 	end
 	def destroyable_by?(user)
 		Settings['permissions.destroy.statementargument'] >= user.clearance

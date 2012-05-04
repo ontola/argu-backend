@@ -46,11 +46,11 @@ class User < ActiveRecord::Base
     when 0
       false
     when 1
-      user.clearance <= Settings['permissions.create.administrator']
+      Settings['permissions.create.administrator'] >= user.clearance
     when 2
-      user.clearance <= Settings['permissions.create.moderator']
+      Settings['permissions.create.moderator'] >= user.clearance
     when 3
-      user.clearance <= Settings['permissions.create.trusted']
+      Settings['permissions.create.trusted'] >= user.clearance
     when 4
       true
     when 6..8
@@ -61,10 +61,10 @@ class User < ActiveRecord::Base
     end
   end
   def updatable_by?(user)
-    user.clearance <= Settings['permissions.update.user'] || :id == self.id
+    Settings['permissions.update.user'] >= user.clearance || :id == self.id
   end
   def destroyable_by?(user)
-    user.clearance <= Settings['permissions.destroy.user'] || :id == self.id
+    Settings['permissions.destroy.user'] >= user.clearance || :id == self.id
   end
 
   private
