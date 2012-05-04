@@ -29,6 +29,10 @@ module HasRestfulPermissions
     def viewable_by?(user)
       user.clearance < Settings['permissions.default.create']
     end
+
+    def user_creatable_by?(creating_user)
+      creating_user.clearance < Settings['permissions.default.create']
+    end
  
     def owned_by?(user)
       false

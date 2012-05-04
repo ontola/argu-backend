@@ -28,7 +28,8 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    raise SecurityTransgression unless @user.clearance >= 4 || (current_user.clearance < @user.clearance)
+    @user.clearance = (@user.clearance.nil? || @user.clearance == 0) ? 4 : @user.clearance
+    raise PermissionViolation unless @user.user_creatable_by?(current_user)
     
     if @user.save
       if current_user.nil?

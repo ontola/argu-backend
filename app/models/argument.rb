@@ -13,13 +13,13 @@ class Argument < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
 
   def creatable_by?(user)
-    Settings['permissions.create.argument'] >= user.clearance
+    Settings['permissions.create.argument'] >= user.clearance unless user.clearance.nil?
   end
   def updatable_by?(user)
-    Settings['permissions.update.argument'] >= user.clearance
+    Settings['permissions.update.argument'] >= user.clearance unless user.clearance.nil?
   end
   def destroyable_by?(user)
-    Settings['permissions.destroy.argument'] >= user.clearance
+    Settings['permissions.destroy.argument'] >= user.clearance unless user.clearance.nil?
   end
 
   def trim_data

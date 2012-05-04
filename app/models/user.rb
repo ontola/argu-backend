@@ -41,30 +41,36 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
   validates :clearance, presence: true, allow_blank: false
 
-  def creatable_by?(user)
-    case user.clearance
-    when 0
-      false
-    when 1
-      Settings['permissions.create.administrator'] >= user.clearance
-    when 2
-      Settings['permissions.create.moderator'] >= user.clearance
-    when 3
-      Settings['permissions.create.trusted'] >= user.clearance
-    when 4
-      true
-    when 6..8
-      true
-      #TODO: special user policies
-    else
-      false
+  def user_creatable_by?(creating_user)
+    if !creating_user.nil?
+      puts "---------------------"+creating_user.clearance.to_s+"-------------------" + self.clearance.to_s
+      case self.clearance
+      when 0
+        false
+      when 1
+        Settings['permissions.create.administrator'] >= creating_user.clearance unless creating_user.clearance.nil?
+      when 2
+        Settings['permissions.create.moderator'] >= creating_user.clearance unless creating_user.clearance.nil?
+      when 3
+        Settings['permissions.create.trusted'] >= creating_user.clearance unless creating_user.clearance.nil?
+      when 4
+        true
+      when 6..8
+        true
+        #TODO: special user policies
+      else
+        false
+      end
+    elsif creating_user.nil?
+      Settings['permissions.create.user'] >= self.clearance
     end
   end
+
   def updatable_by?(user)
-    Settings['permissions.update.user'] >= user.clearance || :id == self.id
+    Settings['permissions.update.user'] >= user.clearance  unless user.clearance.nil? || :id == self.id
   end
   def destroyable_by?(user)
-    Settings['permissions.destroy.user'] >= user.clearance || :id == self.id
+    Settings['permissions.destroy.user'] >= user.clearance  unless user.clearance.nil? || :id == self.id
   end
 
   private
