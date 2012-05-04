@@ -1,6 +1,6 @@
 module VoteHelper
 
-	def getimage(argument)
+	def getArgImage(argument)
 		case argument.argtype
 		when 0
 			"\\assets\\icon_sci.png"

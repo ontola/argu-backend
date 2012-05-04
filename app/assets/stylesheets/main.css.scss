@@ -131,64 +131,66 @@ html, body {
 }
 /*Sticky Footer by ryanfait.com */
 
-/* Argument */
+/* Show arg-/statement */
 
-.arghov {
+.showhov {
   min-height: 25px;
   display: block;
   position: relative;
 }
 
-.argicon {
+.showicon {
   width: 20px;
   height: 20px;
   float: left;
+  margin-right: 5px;
 }
 
-.argheadright {
+.showheadright {
   float: right;
   display: inline-block;
 }
 
-.arghov .argbtn{
+.showhov .argbtn{
   display: none;
 }
 
-.argvotes {
+.showvotes {
   visibility: visible;
 }
 
-.arghov:hover .argbtn {
+.showhov:hover .showbtn {
   display: inline;
 }
 
-.arghead:hover .argbtn {
+.showhead:hover .showbtn {
   visibility: visible;
 }
 
-.arghead:hover .argvotes {
+.showhead:hover .showvotes {
     display: none;
 }
 
-.arghov:hover .argvotes {
+.showhov:hover .showvotes {
     display: none;
 }
 
-.arghead {
+.showhead {
   float: left;
   position: left;
   font-size: 2.0em;
+  margin-top: 5px;
 }
 
 .content {
   font-size: 1.3em;
 }
 
-.argtype {
+.showtype {
   float: left;
 }
 
-.argtime {
+.showtime {
   position: relative;
   float: right;
 }

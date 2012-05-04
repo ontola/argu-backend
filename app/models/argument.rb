@@ -3,6 +3,7 @@ class Argument < ActiveRecord::Base
   has_many :statements, :through => :statementarguments
 
   before_save :trim_data
+  before_save :cap_title
 
   has_restful_permissions
 
@@ -24,6 +25,10 @@ class Argument < ActiveRecord::Base
   def trim_data
     self.title = title.strip
     self.content = content.strip
+  end
+
+  def cap_title 
+    self.title = self.title.capitalize
   end
 
   scope :today, lambda { 

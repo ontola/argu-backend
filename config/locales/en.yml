@@ -19,6 +19,7 @@ en:
   application_general_destroy: "Destroy"
   application_general_pro: "Pro"
   application_general_con: "Con"
+  application_general_edited: "Edited"
   application_general_clearance: "Clearance"
   application_general_destroy_confirmation: "Are you sure?"
   application_general_not_allowed: "Action not allowed."
