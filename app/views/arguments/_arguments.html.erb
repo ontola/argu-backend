@@ -1,3 +1,2 @@
-<%= link_to(argument_path(argument)) do %><pre><div class="arghov"><h4 class="content arghead"><%= argument.title %></h4></div><span class="content"><%= argument.content[0,140] + ((argument.content.length < 140) ? "" : "...") %></span>
-<p class="timestamp argtime"><small>Posted <%= time_ago_in_words(argument.created_at) %> ago.</small>
-</p></pre><% end %>
+<%= link_to(argument_path(argument)) do %><pre><div class="argicon"><img class="argicon" src="<%= getimage(argument) %>" alt="<%= getArgType(argument) %>" /></div><div class="arghov"><h4 class="content arghead"><%= argument.title %></h4></div><div class="content"><%= argument.content.strip[0,140] + ((argument.content.strip.length < 140) ? "" : "...") %></div>
+<p><small class="argtype">Type: <%= getArgType(argument) %></small><small class="timestamp argtime">Posted <%= time_ago_in_words(argument.created_at) %> ago.</small></p></pre><% end %>
