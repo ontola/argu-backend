@@ -20,7 +20,7 @@ class Statementargument < ActiveRecord::Base
 		user.clearance <= Settings['permissions.update.statementargument']
 	end
 	def destroyable_by?(user)
-		user.clearance <= Settings['permissions.destroy.statementargument']
+		Settings['permissions.destroy.statementargument'] >= user.clearance
 	end
 
 	def votes
