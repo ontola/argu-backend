@@ -1,16 +1,30 @@
 module ArgumentsHelper
 private
 	def getArgType(argument)
-		if argument.argtype == 0
+		case argument.argtype
+		when 0
 			t(:argument_type_scientific)
-		elsif argument.argtype == 1
+		when 1
 			t(:argument_type_axiomatic)
-		elsif argument.argtype == 2
+		when 2
 			t(:argument_type_other)
-		elsif argument.argtype == 3
+		when 3
 			t(:argument_type_discussion)
 		else
 			t(:argument_type_unknown)
+		end
+	end
+
+	def getArgImage(argument)
+		case argument.argtype
+		when 0
+			"\\assets\\icon_sci.png"
+		when 1
+			"\\assets\\icon_axi.png"
+		when 2
+			"\\assets\\icon_oth.png"
+		when 3
+			"\\assets\\icon_dis.png"
 		end
 	end
 end

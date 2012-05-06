@@ -2,7 +2,6 @@
   <% if @statement.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@statement.errors.count, "error") %> prohibited this statement from being saved:</h2>
-
       <ul>
       <% @statement.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -22,6 +21,21 @@
         <%= f.label :content, class: "control-label" %>
         <div class="controls">
           <%= f.text_field :content, class: "input-xlarge" %>
+        </div>
+      </fieldset>
+      <fieldset class="control-group">
+        <%= f.label :statetype, t(:statement_type), class: "control-label" %>
+        <div class="controls">
+          <%= f.select(:statetype, options_for_select([
+            [getStateType(0), 0],
+            [getStateType(1), 1],
+            [getStateType(2), 2],
+            [getStateType(3), 3],
+            [getStateType(4), 4],
+            [getStateType(5), 5],
+            [getStateType(6), 6],
+            [getStateType(7), 7],
+            ], @statement.statetype)) %>
         </div>
       </fieldset>
       <fieldset class="form-actions">

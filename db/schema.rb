@@ -39,10 +39,11 @@ ActiveRecord::Schema.define(:version => 20120503230559) do
   end
 
   create_table "statements", :force => true do |t|
+    t.string   "title", :unique => true, :null => false
     t.string   "content", :null => false
+    t.integer  "statetype", :default => 6
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "title", :unique => true, :null => false
   end
 
   create_table "users", :force => true do |t|

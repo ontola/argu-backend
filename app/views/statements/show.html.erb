@@ -1,6 +1,6 @@
 <% provide(:title, @statement.title.nil? ? t(:statement_title) : @statement.title) %>
 <header>
-	<h1><img class="stateicon" src="<%= getStateImage(@statement) %>" alt="<%= getStateType(@statement) %>" /><%= @statement.title %></h1>
+	<h1><img class="stateicon" src="<%= getStateImage(@statement.statetype) %>" alt="<%= getStateType(@statement.statetype) %>" /><%= @statement.title %></h1>
 </header>
 <div class="row-fluid">
 	<h2><%= @statement.content %></h2>
