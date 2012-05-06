@@ -30,6 +30,11 @@ textarea {
   margin-bottom: 10px;
 }
 
+.btn-primary:visited {
+  decoration: none;
+  color: #fff;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
@@ -157,6 +162,8 @@ html, body {
 
 .showvotes {
   visibility: visible;
+  margin-right: 11px;
+  margin-top: 2px;
 }
 
 .showhov:hover .showbtn {
@@ -195,4 +202,21 @@ html, body {
   float: right;
 }
 
+/* Statements */
 
+.stateicon {
+  width: 35px;
+  height: 35px;
+  margin-top: 4px;
+  float: left;
+  position: relative;
+}
+
+/* Arguments */
+.argicon {
+  width: 20px;
+  height: 20px;
+  vertical-align: middle;
+  margin-top: -8px;
+  margin-right: 5px;
+}

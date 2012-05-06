@@ -14,11 +14,11 @@
 ActiveRecord::Schema.define(:version => 20120503230559) do
 
   create_table "arguments", :force => true do |t|
-    t.string   "content"
-    t.integer  "argtype"
+    t.string   "content", :null => false
+    t.integer  "argtype", :default => 3, :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "title"
+    t.string   "title", :unique => true
   end
 
   create_table "settings", :force => true do |t|
@@ -33,37 +33,39 @@ ActiveRecord::Schema.define(:version => 20120503230559) do
   add_index "settings", ["target_type", "target_id", "var"], :name => "index_settings_on_target_type_and_target_id_and_var", :unique => true
 
   create_table "statementarguments", :force => true do |t|
-    t.integer "argument_id"
-    t.integer "statement_id"
-    t.boolean "pro"
+    t.integer "argument_id", :null => false
+    t.integer "statement_id", :null => false
+    t.boolean "pro", :default => true, :null => false
   end
 
   create_table "statements", :force => true do |t|
-    t.string   "content"
+    t.string   "content", :null => false
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
-    t.string   "title"
+    t.string   "title", :unique => true, :null => false
   end
 
   create_table "users", :force => true do |t|
     t.string   "username"
-    t.string   "email"
+    t.string   "email", :unique => true, :null => false
     t.string   "name"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.string   "password_digest"
     t.string   "remember_token"
-    t.integer  "clearance"
+    t.integer  "clearance", :default => 4
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
 
   create_table "votes", :force => true do |t|
-    t.integer  "statementargument_id"
-    t.integer  "user_id"
+    t.integer  "statementargument_id", :null => false
+    t.integer  "user_id",              :null => false
     t.integer  "vote_type"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end
+
+  add_index("votes", ["statementargument_id", "user_id"], :unique => true)
 
 end

@@ -1,3 +1,5 @@
+include HasRestfulPermissions
+
 class Vote < ActiveRecord::Base
   has_one :statementargument
   has_one :user
@@ -13,6 +15,10 @@ class Vote < ActiveRecord::Base
     Settings['permissions.update.vote'] >= user.clearance unless user.clearance.nil?
   end
   def destroyable_by?(user)
-    Settings['permissions.destroy.vote'] >= user.clearance unless user.clearance.nil?
+    if user.id == :user_id
+      true
+    else
+      Settings['permissions.destroy.vote'] >= user.clearance unless user.clearance.nil?
+    end
   end
 end

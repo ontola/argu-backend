@@ -10,6 +10,7 @@
 #  updated_at :datetime        not null
 #
 require 'bcrypt'
+include HasRestfulPermissions
 
 class User < ActiveRecord::Base
   attr_accessible :email, :name, :username, :password, :password_confirmation, :clearance
@@ -42,8 +43,7 @@ class User < ActiveRecord::Base
   validates :clearance, presence: true, allow_blank: false
 
   def user_creatable_by?(creating_user)
-    if !creating_user.nil?
-      puts "---------------------"+creating_user.clearance.to_s+"-------------------" + self.clearance.to_s
+    unless creating_user.nil?
       case self.clearance
       when 0
         false
@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
       else
         false
       end
-    elsif creating_user.nil?
+    else
       Settings['permissions.create.user'] >= self.clearance
     end
   end

@@ -20,6 +20,7 @@ Settings.defaults['permissions.create.vote'] = 4
 Settings.defaults['permissions.create.administrator'] = 0
 Settings.defaults['permissions.create.moderator'] = 1
 Settings.defaults['permissions.create.trusted'] = 2
+Settings.defaults['permissions.create.user'] = 4
 
 Settings.defaults['permissions.update.statement'] = 4
 Settings.defaults['permissions.update.argument'] = 4

@@ -9,4 +9,9 @@ class ApplicationController < ActionController::Base
     redirect_to :back
   }
 
+  rescue_from ActiveRecord::RecordNotUnique, with: lambda {
+    flash[:warning] = t(:vote_same_twice_warning)
+    redirect_to :back
+  }
+
 end

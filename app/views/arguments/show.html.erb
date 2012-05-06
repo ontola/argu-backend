@@ -1,7 +1,7 @@
 <% provide(:title, @argument.title.nil? ? t(:argument_title) : @argument.title) %>
 <header>
 	<h1><%= @argument.title %></h1>
-	<h2>  <%= getArgType(@argument) %></h2>
+	<h2><img class="argicon" src="<%= getArgImage(@argument) %>" alt="<%= getArgType(@argument) %>" /><%= getArgType(@argument) %></h2>
 </header>
 <div class="row">
 	<div class="span12">

@@ -117,3 +117,5 @@ en:
   argument_non: "No arguments yet"
   argument_add: "Add argument"
   argument_add_title: "Add an argument"
+#vote
+  vote_same_twice_warning: "You already voted on this item."
