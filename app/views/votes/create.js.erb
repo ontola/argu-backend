@@ -1,0 +1,1 @@
+$(".showvotes#<%= @statementargument.id %>").replaceWith("<h4 id=\"4\" class=\"showvotes\"><%= escape_javascript((@statementargument.votes >= 1 ? "+" : "") + @statementargument.votes.to_s) %></h4>");

@@ -8,12 +8,12 @@
 <div class="row">
 	<div class="span12">
 		<div class="row">
-		<div class="span6">
+		<div id="pro" class="span6">
 			<h3><%= t(:statement_pros) %></h3>
 			<% hasItems = nil %><% @statement.arguments.where("pro = :pro", pro: true).each do |argument| %>
 				<%= render 'arguments/sarguments', statementargument: @statement.statementarguments.find_by_argument_id(argument.id) %><% hasItems = 1 %><% end %><% if hasItems != 1 %><pre><%= t(:statement_no_pros) %></pre><% end %>
 		</div>
-		<div class="span6">
+		<div id="con" class="span6">
 			<h3><%= t(:statement_cons) %></h3>
 			<% hasItems = nil %><% @statement.arguments.where("pro = :pro", pro: false).each do |argument| %>
 				<%= render 'arguments/sarguments', statementargument: @statement.statementarguments.find_by_argument_id(argument.id) %><% hasItems = 1 %><% end %><% if hasItems != 1 %><pre><%= t(:statement_no_cons) %></pre><% end %>

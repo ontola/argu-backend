@@ -10,7 +10,7 @@
       </ul>
     </div>
   <% end %>
-<%= form_for(@statementargument) do |f| %>
+<%= form_for(@statementargument, :remote => true) do |f| %>
 <div id="addargument" class="modal hide fade out">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
