@@ -3,7 +3,7 @@
 
 en:
 #Application
-  application_name: "Argu"
+  application_name: "Argu|α"
   application_name_phonetic: "\\\'är-(ˌ)gyü\\"
   application_owner: "Thom van Kalkeren"
   application_system_not_allowed: "You do not have permission for this action."
