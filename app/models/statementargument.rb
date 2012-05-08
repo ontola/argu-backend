@@ -2,7 +2,7 @@ include HasRestfulPermissions
 
 class Statementargument < ActiveRecord::Base
 	belongs_to :statement
-	belongs_to :argument
+	belongs_to :argument, :counter_cache => :votes_count
 	has_many :votes
 
 	has_restful_permissions

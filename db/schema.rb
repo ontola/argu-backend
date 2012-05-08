@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120503230559) do
+ActiveRecord::Schema.define(:version => 20120508172307) do
 
   create_table "arguments", :force => true do |t|
     t.string   "content",                   :null => false
@@ -33,9 +33,10 @@ ActiveRecord::Schema.define(:version => 20120503230559) do
   add_index "settings", ["target_type", "target_id", "var"], :name => "index_settings_on_target_type_and_target_id_and_var", :unique => true
 
   create_table "statementarguments", :force => true do |t|
-    t.integer "argument_id",                    :null => false
-    t.integer "statement_id",                   :null => false
-    t.boolean "pro",          :default => true, :null => false
+    t.integer "argument_id",                        :null => false
+    t.integer "statement_id",                       :null => false
+    t.boolean "pro",              :default => true, :null => false
+    t.integer "vote_count_cache", :default => 0
   end
 
   create_table "statements", :force => true do |t|

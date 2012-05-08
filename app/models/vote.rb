@@ -1,7 +1,7 @@
 include HasRestfulPermissions
 
 class Vote < ActiveRecord::Base
-  has_one :statementargument
+  belongs_to :statementargument, counter_cache: true
   has_one :user
 
   has_restful_permissions

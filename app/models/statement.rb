@@ -1,5 +1,7 @@
+include HasRestfulPermissions
+
 class Statement < ActiveRecord::Base
-  has_many :statementarguments, :dependent => :destroy
+  has_many :statementarguments, :dependent => :destroy, order: "votes_count DESC"
   has_many :arguments, :through => :statementarguments
 
   before_save :trim_data
@@ -7,7 +9,7 @@ class Statement < ActiveRecord::Base
 
   has_restful_permissions
 
-  attr_accessible :title, :content, :arguments, :statementarguments, :statetype
+  attr_accessible :id, :title, :content, :arguments, :statementarguments, :statetype
  
   validates :content, presence: true, length: { minimum: 5, maximum: 140 }
   validates :title, presence: true, length: { minimum: 5, maximum: 50 }

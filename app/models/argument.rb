@@ -1,3 +1,5 @@
+include HasRestfulPermissions
+
 class Argument < ActiveRecord::Base
   has_many :statementarguments, :dependent => :destroy
   has_many :statements, :through => :statementarguments
