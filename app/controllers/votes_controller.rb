@@ -99,15 +99,18 @@ class VotesController < ApplicationController
       @vote = Vote.find(params[:id])
       raise PermissionViolation unless @vote.destroyable_by?(current_user)
       @vote.destroy
+      @statementargument = Statementargument.find_by_id(@vote.statementargument_id)
 
       respond_to do |format|
         format.html { redirect_to votes_url }
+        format.js
         format.json { head :no_content }
       end
     else
       respond_to do |format|
         flash.now[:error] = t(:application_general_not_allowed) + "!"
         format.html { redirect_to votes_url}
+        format.js
         format.json { head :no_content }
       end
     end

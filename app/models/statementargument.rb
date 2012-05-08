@@ -3,11 +3,11 @@ include HasRestfulPermissions
 class Statementargument < ActiveRecord::Base
 	belongs_to :statement
 	belongs_to :argument
-	has_many :vote
+	has_many :votes
 
 	has_restful_permissions
 
-	attr_accessible :pro, :statement_id, :argument_id
+	attr_accessible :pro, :statement_id, :argument_id, :votes
 
 	validates_presence_of :statement
 	validates_presence_of :argument
@@ -25,7 +25,15 @@ class Statementargument < ActiveRecord::Base
 		Settings['permissions.destroy.statementargument'] >= user.clearance unless user.clearance.nil?
 	end
 
-	def votes
-		self.vote.count
+	def voted_by?(user)
+		!(self.votes.find_by_user_id(user.id).nil?)
+	end
+
+	def get_vote(user)
+		self.votes.find_by_user_id(user.id) unless user.nil?
+	end
+
+	def num_of_votes
+		self.votes.count
 	end
 end

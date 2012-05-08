@@ -14,11 +14,11 @@
 ActiveRecord::Schema.define(:version => 20120503230559) do
 
   create_table "arguments", :force => true do |t|
-    t.string   "content", :null => false
-    t.integer  "argtype", :default => 3, :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "title", :unique => true
+    t.string   "content",                   :null => false
+    t.integer  "argtype",    :default => 3, :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.string   "title"
   end
 
   create_table "settings", :force => true do |t|
@@ -33,28 +33,28 @@ ActiveRecord::Schema.define(:version => 20120503230559) do
   add_index "settings", ["target_type", "target_id", "var"], :name => "index_settings_on_target_type_and_target_id_and_var", :unique => true
 
   create_table "statementarguments", :force => true do |t|
-    t.integer "argument_id", :null => false
-    t.integer "statement_id", :null => false
-    t.boolean "pro", :default => true, :null => false
+    t.integer "argument_id",                    :null => false
+    t.integer "statement_id",                   :null => false
+    t.boolean "pro",          :default => true, :null => false
   end
 
   create_table "statements", :force => true do |t|
-    t.string   "title", :unique => true, :null => false
-    t.string   "content", :null => false
-    t.integer  "statetype", :default => 6
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "title",                     :null => false
+    t.string   "content",                   :null => false
+    t.integer  "statetype",  :default => 6
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
   end
 
   create_table "users", :force => true do |t|
     t.string   "username"
-    t.string   "email", :unique => true, :null => false
+    t.string   "email",                          :null => false
     t.string   "name"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "password_digest"
     t.string   "remember_token"
-    t.integer  "clearance", :default => 4
+    t.integer  "clearance",       :default => 4
   end
 
   add_index "users", ["remember_token"], :name => "index_users_on_remember_token"
@@ -67,6 +67,6 @@ ActiveRecord::Schema.define(:version => 20120503230559) do
     t.datetime "updated_at",           :null => false
   end
 
-  add_index("votes", ["statementargument_id", "user_id"], :unique => true)
+  add_index "votes", ["statementargument_id", "user_id"], :name => "index_votes_on_statementargument_id_and_user_id", :unique => true
 
 end

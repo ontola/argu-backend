@@ -1,1 +1,0 @@
-<%= link_to "+1", {:controller => :votes, :remote => true, :action => :create, :statementargument_id => statementargument.id, :user_id => (signed_in? ? current_user.id : nil) }, :method => :post, class:"btn btn-primary showbtn" %>
