@@ -15,17 +15,17 @@ module HasRestfulPermissions
       Settings['permissions.default.create'] >= user.clearance unless user.clearance.nil?
     end
  
-    # Returns true if actor can destroy this resource.
+    # Returns true if user can destroy this resource.
     def destroyable_by?(user)
       Settings['permissions.default.create'] >= user.clearance unless user.clearance.nil?
     end
  
-    # Returns true if actor can update this resource.
+    # Returns true if user can update this resource.
     def updatable_by?(user)
       Settings['permissions.default.create'] >= user.clearance unless user.clearance.nil?
     end
  
-    # Returns true if actor can view this resource.
+    # Returns true if user can view this resource.
     def viewable_by?(user)
       Settings['permissions.default.create'] >= user.clearance unless user.clearance.nil?
     end
@@ -41,7 +41,7 @@ module HasRestfulPermissions
   end
  
   module ClassMethods
-    # Returns true if actor can view a list of resources of this class.
+    # Returns true if user can view a list of resources of this class.
     def listable_by?(user)
       Settings['permissions.default.listable'] >= user.clearance unless user.clearance.nil?
     end

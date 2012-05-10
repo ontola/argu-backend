@@ -13,9 +13,11 @@ class Statement < ActiveRecord::Base
  
   validates :content, presence: true, length: { minimum: 5, maximum: 140 }
   validates :title, presence: true, length: { minimum: 5, maximum: 50 }
-  
-  def creatable_by?(user)
-    Settings['permissions.create.statement'] >= user.clearance unless user.clearance.nil?
+
+  class << self
+    def creatable_by?(user)
+      Settings['permissions.create.statement'] >= user.clearance unless user.clearance.nil?
+    end
   end
   def updatable_by?(user)
     Settings['permissions.update.statement'] >= user.clearance unless user.clearance.nil?

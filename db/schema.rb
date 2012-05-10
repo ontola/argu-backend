@@ -35,14 +35,14 @@ ActiveRecord::Schema.define(:version => 20120508172307) do
   create_table "statementarguments", :force => true do |t|
     t.integer "argument_id",                        :null => false
     t.integer "statement_id",                       :null => false
-    t.boolean "pro",              :default => true, :null => false
-    t.integer "vote_count_cache", :default => 0
+    t.boolean "pro",          :default => true,     :null => false
+    t.integer "votes_count",  :default => 0
   end
 
   create_table "statements", :force => true do |t|
     t.string   "title",                     :null => false
     t.string   "content",                   :null => false
-    t.integer  "statetype",  :default => 6
+    t.integer  "statetype",   :default => 6
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
   end

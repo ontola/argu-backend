@@ -14,8 +14,10 @@ class Argument < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
 
-  def creatable_by?(user)
-    Settings['permissions.create.argument'] >= user.clearance unless user.clearance.nil?
+  class << self
+    def creatable_by?(user)
+      Settings['permissions.create.argument'] >= user.clearance unless user.clearance.nil?
+    end
   end
   def updatable_by?(user)
     Settings['permissions.update.argument'] >= user.clearance unless user.clearance.nil?

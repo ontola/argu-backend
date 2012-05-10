@@ -98,8 +98,8 @@ class VotesController < ApplicationController
     if signed_in?
       @vote = Vote.find(params[:id])
       raise PermissionViolation unless @vote.destroyable_by?(current_user)
-      @vote.destroy
       @statementargument = Statementargument.find_by_id(@vote.statementargument_id)
+      @vote.destroy
 
       respond_to do |format|
         format.html { redirect_to votes_url }
