@@ -42,6 +42,11 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
   validates :clearance, presence: true, allow_blank: false
 
+class << self
+  def creatable_by?(user)
+    false #Should use user_creatable_by(creating_user)
+  end
+end
   def user_creatable_by?(creating_user)
     unless creating_user.nil?
       case self.clearance

@@ -2,7 +2,7 @@ include HasRestfulPermissions
 
 class Statementargument < ActiveRecord::Base
 	belongs_to :statement
-	belongs_to :argument, :counter_cache => :votes_count
+	belongs_to :argument
 	has_many :votes
 
 	has_restful_permissions
@@ -15,8 +15,11 @@ class Statementargument < ActiveRecord::Base
 	validates_uniqueness_of :statement_id, :scope => [:argument_id]
 	validates_uniqueness_of :argument_id, :scope => [:statement_id]
 
-	def creatable_by?(user)
-    	Settings['permissions.create.statementargument'] >= user.clearance unless user.clearance.nil?
+public
+	class << self
+		def creatable_by?(user)
+	    	Settings['permissions.create.statementargument'] >= user.clearance unless user.clearance.nil?
+		end
 	end
 	def updatable_by?(user)
 		Settings['permissions.update.statementargument'] >= user.clearance unless user.clearance.nil?
@@ -26,7 +29,7 @@ class Statementargument < ActiveRecord::Base
 	end
 
 	def voted_by?(user)
-		!(self.votes.find_by_user_id(user.id).nil?)
+		!(self.votes.find_by_user_id(user.id).nil?) unless user.nil?
 	end
 
 	def get_vote(user)
