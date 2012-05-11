@@ -1,0 +1,131 @@
+#Dutch localisation file
+
+
+nl:
+#Application
+  application_name: "Argu|α"
+  application_name_phonetic: "\\\'är-(ˌ)gyü\\"
+  application_owner: "Thom van Kalkeren"
+  application_system_not_allowed: "Je hebt geen toestemming voor deze actie."
+  application_general_sign_in: "Inloggen"
+  application_general_sign_up: "Aanmelden"
+  application_general_learn_more: "Meer info"
+  application_general_edit: "Bewerken"
+  application_general_new: "Nieuw"
+  application_general_back: "Terug"
+  application_general_cancel: "Annuleren"
+  application_general_show: "Tonen"
+  application_general_add: "Toevoegen"
+  application_general_destroy: "Verwijderen"
+  application_general_pro: "Voor"
+  application_general_con: "Tegen"
+  application_general_edited: "Bewerkt"
+  application_general_clearance: "Clearance"
+  application_general_destroy_confirmation: "Weet je het zeker?"
+  application_general_not_allowed: "Actie niet toegestaan."
+#Controllers
+#Sessions
+  sessions_error_invalid: "Foutieve gebruikersnaam of wachtwoord"
+#Users
+  users_success_welcome: "Welkom bij "
+#Views
+#Header
+  header_logo_text: t(:application_name)
+  header_menuitem_home: "Home"
+  header_menuitem_sign_in: :application_general_sign_in
+  header_menuitem_sign_up: :application_general_sign_up
+  header_menuitem_sign_out: "Uitloggen"
+  header_menuitem_users: "Gebruikers"
+  header_menuitem_account: "Lidmaatschap"
+  header_menuitem_profile: "Profiel"
+  header_menuitem_settings: "Instellingen"
+  header_menuitem_statements: "Stellingen"
+  header_menuitem_arguments: "Argumenten"
+#Footer
+  footer_item_about: "Over"
+  footer_item_home: :header_menuitem_home
+  footer_item_copyright: "Copyright 2012 - "
+#Home
+  home_title: "Home"
+  home_header: "Wat gebeurdt er"
+  home_title_top: "Top stories"
+  home_title_follow: "Discussies die je volgt"
+  home_title_new: "Net binnen"
+  #Not logged in
+  home_new_header: "Welkom bij "
+  home_new_text: "Nederlands awesome slogan."
+  home_new_content_link: "http://www.youtube.com/embed/OghccYtXBdI"
+#Login
+  login_new_user: "Nieuwe gebruiker?"
+  login_title: :application_general_sign_in
+  login_header: :application_general_sign_in
+#About
+  about_title: "Over"
+  about_header: "Over"
+  about_text:
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dolor eros, rutrum non fermentum ac, dictum |
+    sit amet arcu. Nulla faucibus gravida odio. Morbi consequat ligula vel velit euismod adipiscing. Nam at risus 
+    arcu, id pretium risus. Fusce auctor, dui in molestie sollicitudin, est nibh varius sapien, accumsan fermentum 
+    nisi eros eget elit. Cras nisl arcu, dapibus eget pretium eu, ullamcorper vel risus. Aenean pulvinar metus nec 
+    urna scelerisque porta eu vitae ante. Aenean aliquet fucking gay ipsum vulputate nisi blandit tristique id id orci. 
+    Suspendisse gravida quam eu risus faucibus nec tempor nulla venenatis."
+#Users
+  users_clearance_0: "Coder"
+  users_clearance_1: "Administrator"
+  users_clearance_2: "Moderator"
+  users_clearance_3: "Vertrouwde gebruiker"
+  users_clearance_4: "Gebruiker"
+  users_clearance_5: "IP"
+  users_clearance_6: "Politieke partij"
+  users_clearance_7: "Organisatie"
+  users_clearance_8: "Bedrijf"
+#index
+  users_title: "Gebruikers"
+  users_header: "Gebruikers"
+  users_show: :application_general_show
+  users_edit: :application_general_edit
+  users_destroy: :application_general_destroy
+  users_destroy_confirmation: :application_general_destroy_confirmation
+  users_newuser: "Nieuwe gebruiker"
+#new
+  users_new_title: "Aanmelden"
+  users_new_header: "Aanmelden"
+  users_new_confirmation: "Confirmation"
+  users_new_create: "Account aanmaken"
+  users_new_failed: "Controleer je invoer"
+#show
+  users_show_title: "Gebruiker"
+  users_show_username: "gebruikersnaam"
+  users_show_email: "E-mail"
+#statement
+  statement_title: "Stelling"
+  statement_header: "Stelling"
+  statement_pros: "Voors"
+  statement_cons: "Tegens"
+  statement_no_pros: "Nog niets voor"
+  statement_no_cons: "Nog niets tegen"
+  statement_newstatement: "Nieuwe stelling"
+  statement_type: "Type"
+  #statement types
+  statement_type_social: "Maatschappelijk"
+  statement_type_political: "Politiek"
+  statement_type_jurisdictional: "Juridisch"
+  statement_type_ecological: "Ecologisch"
+  statement_type_economical: "Economisch"
+  statement_type_technological: "Technologisch"
+  statement_type_discussion: "In discussie"
+  statement_type_other: "Overig"
+#argument
+  argument_title: "Argument"
+  argument_type_scientific: "Wetenschappelijk"
+  argument_type_axiomatic: "Axiomatisch"
+  argument_type_other: "Overig"
+  argument_type_discussion: "In discussie"
+  argument_type_unknown: "Onbekend"
+  argument_content: "Beschrijving"
+  argument_type: "Type"
+  argument_non: "Nog geen argumenten"
+  argument_add: "Argument toevoegen"
+  argument_add_title: "Voeg een argument toe"
+#vote
+  vote_same_twice_warning: "Je hebt al op dit item gestemd."

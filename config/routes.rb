@@ -9,6 +9,8 @@ Argu::Application.routes.draw do
   resources :votes
 
   #get "users/new"
+  get "/users/:id/settings" => "users#settings"
+  post "/users/:id/settings" => "users#settingsUpdate"
 
   root to: 'static_pages#home'
 

@@ -72,7 +72,11 @@ end
   end
 
   def updatable_by?(user)
-    Settings['permissions.update.user'] >= user.clearance  unless user.clearance.nil? || :id == self.id
+      if user.id == self.id
+        true
+      else 
+        Settings['permissions.update.user'] >= user.clearance  unless user.clearance.nil?
+      end
   end
   def destroyable_by?(user)
     Settings['permissions.destroy.user'] >= user.clearance  unless user.clearance.nil? || :id == self.id

@@ -15,7 +15,7 @@
               </a>
               <ul class="dropdown-menu">
                 <li><%= link_to t(:header_menuitem_profile), current_user %></li>
-                <li><%= link_to t(:header_menuitem_settings), '#' %></li>
+                <li><%= link_to t(:header_menuitem_settings), '/users/' + current_user.id.to_s + '/settings' %></li>
                 <li class="divider"></li>
                 <li>
                   <%= link_to t(:header_menuitem_sign_out), signout_path, method: "delete" %>

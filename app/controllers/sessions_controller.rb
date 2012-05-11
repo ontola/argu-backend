@@ -6,6 +6,9 @@ class SessionsController < ApplicationController
     user = User.find_by_email(params[:session][:email])
     if user && user.authenticate(params[:session][:password])
       sign_in user
+      if user.email.eql?("thom@wthex.com")
+        I18n.locale = :nl
+      end
       redirect_to home_path
     else
       flash.now[:error] = t(:sessions_error_invalid)

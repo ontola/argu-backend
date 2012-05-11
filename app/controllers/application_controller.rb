@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
 
   require 'has_restful_permissions'
   include SessionsHelper
+  before_filter :set_locale
 
   rescue_from PermissionViolation, with: lambda {
     flash[:warning] = t(:application_system_not_allowed)
@@ -14,4 +15,9 @@ class ApplicationController < ActionController::Base
     redirect_to :back
   }
 
+  def set_locale
+    unless current_user.nil?
+      I18n.locale = current_user.settings.locale || I18n.default_locale
+    end
+  end
 end

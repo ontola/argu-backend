@@ -1,4 +1,5 @@
 #Default settings file
+Settings.defaults['locale'] = :en
 
 #permissions
 Settings.defaults['permissions.default.create'] = 3

@@ -21,4 +21,14 @@ module UsersHelper
 			t(:users_clearance_8)
 		end
 	end
+
+	def settingsTabCheck(tab)
+		if("account".eql?(tab))
+			"account"
+		elsif("settings".eql?(tab))
+			"settings"
+		else
+			"account"
+		end
+	end
 end
