@@ -87,6 +87,7 @@ en:
   users_clearance: "Clearance"
   users_password: "Password"
   users_password_confirmation: "Confirmation"
+  users_password_old: "Old password"
   #index
   users_title: "Users"
   users_header: "Listing users"

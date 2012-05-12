@@ -53,14 +53,13 @@ class UsersController < ApplicationController
     if signed_in?
       @user = User.find(params[:id])
       raise PermissionViolation unless @user.updatable_by?(current_user)
-      puts "-----------------------------" + @user.update_attributes(params[:user]).to_s + "==============================="
+
       respond_to do |format|
         if @user.update_attributes(params[:user])
           sign_in @user
           format.html { redirect_to :back, notice: 'User was successfully updated.' }
           format.json { head :no_content }
         else
-          Rails.logger.info(@user.errors.messages.inspect)
           format.html { redirect_to :back, notice: 'Error while updating user.' }
           format.json { render json: @user.errors, status: :unprocessable_entity }
         end

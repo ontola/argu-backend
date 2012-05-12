@@ -87,6 +87,7 @@ nl:
   users_clearance: "Clearance"
   users_password: "Wachtwoord"
   users_password_confirmation: "Herhaling"
+  users_password_old: "Oud wachtwoord"
   #index
   users_title: "Gebruikers"
   users_header: "Gebruikers"

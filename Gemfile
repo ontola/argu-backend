@@ -27,15 +27,3 @@ group :development do
   gem 'rspec-rails', '2.9.0'
   gem 'annotate','~> 2.4.1beta1'
 end
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
