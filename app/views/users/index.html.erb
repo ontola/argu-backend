@@ -4,39 +4,29 @@
 </header>
 <section>
 <div class="row">
-  <div class="span8">
+  <div class="span10">
 <table class="table table-striped">
   <thread>
   <tr>
-    <th>Username</th>
-    <th>Email</th>
-    <th>Votes</th>
-    <th>Clearance</th>
+    <th><%= t(:users_username) %></th>
+    <th><%= t(:users_email) %></th>
+    <th><%= t(:users_votes) %></th>
+    <th><%= t(:users_clearance) %></th>
     <th></th>
-    <% if 2 >= current_user.clearance %><th></th>
-    <th></th><% end %>
   </tr>
   </thread>
   <tbody>
 <% @users.each do |user| %>
-  <tr>
-    <td><a href="<%= user_path(user) %>"><%= user.username %></a></td>
-    <td><%= user.email %></td>
-    <td>x</td>
-    <td><%= user_type(user.clearance) %></td>
-    <td><%= link_to t(:users_show), user, class: "btn btn-primary" %></td>
-    <% if user.updatable_by?(current_user) %><td><%= link_to t(:users_edit), edit_user_path(user), class: "btn" %></td> <% end %>
-    <% if user.destroyable_by?(current_user) %><td><%= link_to t(:users_destroy), user, class: "btn btn-danger", confirm: t(:users_destroy_confirmation),
-                                   method: :delete %></td> <% end %>
+  <tr onclick="document.location.href = '<%= user_path(user) %>'">
+      <td><%= user.username %></td>
+      <td><%= user.email %></td>
+      <td>x</td>
+      <td><%= user_type(user.clearance) %></td>
+      <td><%= link_to t(:users_show), user, class: "btn btn-primary" %></td>
   </tr>
 <% end %>
 </tbody>
 </table>
 </div>
-</div>
-<div class="row">
-  <div class="span8">
-    <%= link_to t(:users_newuser), new_user_path %>
-  </div>
 </div>
 </section>

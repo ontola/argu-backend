@@ -11,6 +11,7 @@ en:
   application_general_sign_up: "Sign up"
   application_general_learn_more: "Learn more"
   application_general_edit: "Edit"
+  application_general_update: "Update"
   application_general_new: "New"
   application_general_back: "Back"
   application_general_cancel: "Cancel"
@@ -79,7 +80,14 @@ en:
   users_clearance_6: "Political party"
   users_clearance_7: "Organization"
   users_clearance_8: "Company"
-#index
+  users_username: "Username"
+  users_name: "Name"
+  users_email: "Email"
+  users_votes: "Votes"
+  users_clearance: "Clearance"
+  users_password: "Password"
+  users_password_confirmation: "Confirmation"
+  #index
   users_title: "Users"
   users_header: "Listing users"
   users_show: "Show"
@@ -87,16 +95,20 @@ en:
   users_destroy: "Destroy"
   users_destroy_confirmation: "Are you sure?"
   users_newuser: "New user"
-#new
+  #new
   users_new_title: "Sign up"
   users_new_header: "Sign up"
   users_new_confirmation: "Confirmation"
   users_new_create: "Create account"
   users_new_failed: "Please check your input"
-#show
+  #show
   users_show_title: "User"
   users_show_username: "Username"
   users_show_email: "Email"
+#settings
+  settings_locale: "Language"
+  settings_item_account: "Account"
+  settings_item_settings: "Settings"
 #statement
   statement_title: "Statement"
   statement_header: "Statement"
@@ -106,6 +118,7 @@ en:
   statement_no_cons: "No cons yet"
   statement_newstatement: "New statement"
   statement_type: "Type"
+  statement_content: "Content"
   #statement types
   statement_type_social: "Social"
   statement_type_political: "Politics"
@@ -129,3 +142,6 @@ en:
   argument_add_title: "Add an argument"
 #vote
   vote_same_twice_warning: "You already voted on this item."
+
+#datetime
+  datetime_ago: "datetime_ago"

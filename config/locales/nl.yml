@@ -11,6 +11,7 @@ nl:
   application_general_sign_up: "Aanmelden"
   application_general_learn_more: "Meer info"
   application_general_edit: "Bewerken"
+  application_general_update: "Bijwerken"
   application_general_new: "Nieuw"
   application_general_back: "Terug"
   application_general_cancel: "Annuleren"
@@ -47,7 +48,7 @@ nl:
   footer_item_copyright: "Copyright 2012 - "
 #Home
   home_title: "Home"
-  home_header: "Wat gebeurdt er"
+  home_header: "Wat gebeurd er"
   home_title_top: "Top stories"
   home_title_follow: "Discussies die je volgt"
   home_title_new: "Net binnen"
@@ -79,7 +80,14 @@ nl:
   users_clearance_6: "Politieke partij"
   users_clearance_7: "Organisatie"
   users_clearance_8: "Bedrijf"
-#index
+  users_username: "Gebruikersnaam"
+  users_name: "Naam"
+  users_email: "E-mail"
+  users_votes: "Stemmen"
+  users_clearance: "Clearance"
+  users_password: "Wachtwoord"
+  users_password_confirmation: "Herhaling"
+  #index
   users_title: "Gebruikers"
   users_header: "Gebruikers"
   users_show: :application_general_show
@@ -87,16 +95,20 @@ nl:
   users_destroy: :application_general_destroy
   users_destroy_confirmation: :application_general_destroy_confirmation
   users_newuser: "Nieuwe gebruiker"
-#new
+  #new
   users_new_title: "Aanmelden"
   users_new_header: "Aanmelden"
   users_new_confirmation: "Confirmation"
   users_new_create: "Account aanmaken"
   users_new_failed: "Controleer je invoer"
-#show
+  #show
   users_show_title: "Gebruiker"
-  users_show_username: "gebruikersnaam"
+  users_show_username: "Gebruikersnaam"
   users_show_email: "E-mail"
+#settings
+  settings_locale: "Taal"
+  settings_item_account: "Account"
+  settings_item_settings: "Instellingen"
 #statement
   statement_title: "Stelling"
   statement_header: "Stelling"
@@ -106,6 +118,7 @@ nl:
   statement_no_cons: "Nog niets tegen"
   statement_newstatement: "Nieuwe stelling"
   statement_type: "Type"
+  statement_content: "Inhoud"
   #statement types
   statement_type_social: "Maatschappelijk"
   statement_type_political: "Politiek"
@@ -129,3 +142,14 @@ nl:
   argument_add_title: "Voeg een argument toe"
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
+
+#datetime
+  datetime_ago: "geleden"
+  datetime:
+    distance_in_words:
+      x_days:
+        one: '1 dag geleden'
+        other: '%{count} dagen geleden'
+      about_x_hours:
+        one: '%{count} uur geleden'
+        other: '%{count} uur geleden'

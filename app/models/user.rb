@@ -24,7 +24,6 @@ class User < ActiveRecord::Base
   before_save { :clearance.nil? ? 4 : :clearance }
 
   USERNAME_FORMAT_REGEX = /^[a-z0-9_-]/i
-#  EMAIL_FORMAT_REGEX = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z]{2,6})$/i
   NAME_FORMAT_REGEX =  /^[a-z]{1,50}/i
   PASSWORD_FORMAT_REGEX = /^[a-z0-9_]{6,50}/i
 
@@ -36,10 +35,11 @@ class User < ActiveRecord::Base
 		    format: { with: RFC822::EMAIL },
 		    uniqueness: { case_sensetive: false }
   validates :name, allow_blank:true, format: { with: NAME_FORMAT_REGEX }
-  validates :password, presence: true,
+  validates :password,
 		       length: { minimum: 6, maximum: 50 },
-		       format: { with: PASSWORD_FORMAT_REGEX }
-  validates :password_confirmation, presence: true
+		       format: { with: PASSWORD_FORMAT_REGEX },
+           presence: true, :if => lambda { new_record? || !password.blank? }
+  validates :password_confirmation, presence: true, :if => lambda { new_record? || !password.blank? }
   validates :clearance, presence: true, allow_blank: false
 
 class << self

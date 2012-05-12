@@ -51,18 +51,20 @@ class UsersController < ApplicationController
  
   def update
     if signed_in?
-    @user = User.find(params[:id])
-    raise PermissionViolation unless @user.updatable_by?(current_user)
-    
-    respond_to do |format|
-      if @user.update_attributes(params[:user])
-        format.html { redirect_to :back, notice: 'User was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { redirect_to :back, notice: 'Error while updating user.' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+      @user = User.find(params[:id])
+      raise PermissionViolation unless @user.updatable_by?(current_user)
+      puts "-----------------------------" + @user.update_attributes(params[:user]).to_s + "==============================="
+      respond_to do |format|
+        if @user.update_attributes(params[:user])
+          sign_in @user
+          format.html { redirect_to :back, notice: 'User was successfully updated.' }
+          format.json { head :no_content }
+        else
+          Rails.logger.info(@user.errors.messages.inspect)
+          format.html { redirect_to :back, notice: 'Error while updating user.' }
+          format.json { render json: @user.errors, status: :unprocessable_entity }
+        end
       end
-    end
     else
       respond_to do |format|
         flash.now[:error] = t(:application_general_not_allowed) + "!"
@@ -85,8 +87,9 @@ class UsersController < ApplicationController
   end
 
   def settingsUpdate
-    current_user.settings.locale = params['locale'] unless current_user.nil?
-
+    unless current_user.nil?
+      current_user.settings.locale = params['locale']
+    end
     respond_to do |format|
       unless current_user.nil?
         @success = true;
