@@ -77,11 +77,17 @@ class UsersController < ApplicationController
   end
 
   def settings
-    @user = User.find(params[:id])
-    @tab = params[:tab]
+    unless current_user.nil?
+      @user = User.find(params[:id])
+      @tab = params[:tab]
+    
+      raise PermissionViolation unless @user.id == current_user.id
 
-    respond_to do |format|
-      format.html
+      respond_to do |format|
+        format.html
+      end
+    else
+      redirect_to root_path
     end
   end
 

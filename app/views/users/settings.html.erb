@@ -1,12 +1,12 @@
 <% provide(:menu_class, 'profile') %>
 <div class="row">
-	<div class="span4">
-		<ul class="nav nav-tabs nav-stacked">
-			<li><%= link_to t(:settings_item_account), tab: :account %></li>
-			<li><%= link_to t(:settings_item_settings), tab: :settings %></li>
+	<div class="span3">
+		<ul class="nav nav-pills nav-stacked">
+			<li <%= settingsTabCheck(@tab)=='account' ? 'class=active' : '' %>><%= link_to t(:settings_item_account), tab: :account %></li>
+			<li <%= settingsTabCheck(@tab)=='settings' ? 'class=active' : '' %>><%= link_to t(:settings_item_settings), tab: :settings %></li>
 		</ul>
 	</div>
-	<div class="span8">
+	<div class="span9">
 		<%= render ('/users/settings/' + settingsTabCheck(@tab)), user: @user %>
 	</div>
 </div>
