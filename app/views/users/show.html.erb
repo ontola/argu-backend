@@ -1,4 +1,10 @@
 <% provide(:title, @user.username || t(:users_show_title)) %>
+<% unless current_user.nil? %>
+  <% @title = ((current_user.id == @user.id)  ? 'profile' : 'users') %>
+<% else %>
+  <% @title = 'users' %>
+<% end %>
+<% provide(:menu_class, @title) %>
 <h2><%= t(:users_show_title) %></h2>
   <% if @user.errors.any? %>
     <div id="error_explanation">

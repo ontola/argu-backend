@@ -4,27 +4,27 @@
       <%= link_to t(:application_name), root_path, class: "brand", id: "logo" %>
       <nav>
         <ul class="nav pull-right">
-         <li<%= yield(:title) == t(:header_menuitem_home) ? " class=active" : "" %>><%= link_to t(:header_menuitem_home),    root_path   %></li>
+         <li<%= yield(:menu_class) == 'home' ? " class=active" : "" %>><%= link_to t(:header_menuitem_home), root_path %></li>
          <% if signed_in? %>
-           <li><%= link_to t(:header_menuitem_users), users_path %></li>
-           <li><%= link_to t(:header_menuitem_statements), statements_path %></li>
-           <li><%= link_to t(:header_menuitem_arguments), arguments_path %></li>
-            <li id="fat-menu" class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <%= current_user.nil? ? t(:header_menuitem_account) : current_user.username %> <b class="caret"></b>
-              </a>
-              <ul class="dropdown-menu">
-                <li><%= link_to t(:header_menuitem_profile), current_user %></li>
-                <li><%= link_to t(:header_menuitem_settings), '/users/' + current_user.id.to_s + '/settings' %></li>
-                <li class="divider"></li>
-                <li>
-                  <%= link_to t(:header_menuitem_sign_out), signout_path, method: "delete" %>
-                </li>
-              </ul>
-            </li>
+          <li<%= yield(:menu_class) == 'users' ? " class=active" : "" %>><%= link_to t(:header_menuitem_users), users_path %></li>
+          <li<%= yield(:menu_class) == 'statements' ? " class=active" : "" %>><%= link_to t(:header_menuitem_statements), statements_path %></li>
+          <li<%= yield(:menu_class) == 'arguments' ? " class=active" : "" %>><%= link_to t(:header_menuitem_arguments), arguments_path %></li>
+          <li id="fat-menu" <%= yield(:menu_class) == 'profile' ? " class='dropdown active'" : "class=dropdown" %>>
+            <a href="#" <%= yield(:menu_class) == 'profile' ? " class='dropdown-toggle active'" : "class=dropdown-toggle" %> data-toggle="dropdown">
+              <%= current_user.nil? ? t(:header_menuitem_account) : current_user.username %> <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <li><%= link_to t(:header_menuitem_profile), current_user %></li>
+              <li><%= link_to t(:header_menuitem_settings), '/users/' + current_user.id.to_s + '/settings' %></li>
+              <li class="divider"></li>
+              <li>
+                <%= link_to t(:header_menuitem_sign_out), signout_path, method: "delete" %>
+              </li>
+            </ul>
+          </li>
          <% else %>
-           <li<%= yield(:title) == t(:header_menuitem_sign_up) ? " class=active" : "" %>><%= link_to t(:header_menuitem_sign_up), signup_path %></li>
-           <li<%= yield(:title) == t(:header_menuitem_sign_in) ? " class=active" : "" %>><%= link_to t(:header_menuitem_sign_in), signin_path %></li>
+           <li<%= yield(:menu_class) == 'signup' ? " class=active" : "" %>><%= link_to t(:header_menuitem_sign_up), signup_path %></li>
+           <li<%= yield(:menu_class) == 'signin' ? " class=active" : "" %>><%= link_to t(:header_menuitem_sign_in), signin_path %></li>
            <li id="fat-menu" class="dropdown">
              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                <%= t(:header_menuitem_sign_in) %> <b class="caret"></b>
