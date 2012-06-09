@@ -6,6 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 ua = User.create(username: 'thom', email:'thom@wthex.com', password:'foobar', password_confirmation:'foobar', clearance: 0)
+ua = User.create(username: 'admin', email:'admin@argu.com', password:'foobar', password_confirmation:'foobar', clearance: 0)
 
 sa = Statement.create(title:'Free education', content: 'Education should be free')
 sb = Statement.create(title:'Statement2', content: 'Another statement')
