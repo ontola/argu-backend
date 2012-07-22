@@ -8,6 +8,7 @@ class Statement < ActiveRecord::Base
   before_save :cap_title
 
   has_restful_permissions
+  has_paper_trail
 
   attr_accessible :id, :title, :content, :arguments, :statementarguments, :statetype
  

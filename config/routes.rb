@@ -2,7 +2,10 @@ Argu::Application.routes.draw do
   resources :users
   resources :statements do 
     get :autocomplete_argument_title, :on => :collection
+
   end
+  get "/statements/:id/revisions" => "statements#revisions"
+
   resources :arguments
   resources :sessions, only: [:new, :create, :destroy]
   resources :statementarguments

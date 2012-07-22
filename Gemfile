@@ -10,6 +10,7 @@ gem "rails3-jquery-autocomplete", "~> 1.0.7"
 gem 'ledermann-rails-settings', :require => 'rails-settings'
 gem 'foreigner'
 gem 'immigrant'
+gem 'paper_trail'
 
 # Gems used only for assets and not required
 # in production environments by default.
