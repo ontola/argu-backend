@@ -4,9 +4,12 @@ Argu::Application.routes.draw do
     get :autocomplete_argument_title, :on => :collection
   end
   resources :arguments
+  post "/arguments/:id/placeComment" => "arguments#placeComment"
+  
   resources :sessions, only: [:new, :create, :destroy]
   resources :statementarguments
   resources :votes
+  resources :comments
 
   #get "users/new"
   get "/users/:id/settings" => "users#settings"

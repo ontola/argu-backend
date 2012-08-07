@@ -8,6 +8,7 @@ class Argument < ActiveRecord::Base
   before_save :cap_title
 
   has_restful_permissions
+  acts_as_commentable
 
   attr_accessible :id, :content, :title, :argtype, :statements
 

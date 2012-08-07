@@ -14,6 +14,7 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1.json
   def show
     @argument = Argument.find(params[:id])
+    @comments = @argument.root_comments
 
     respond_to do |format|
       format.html # show.html.erb
@@ -108,4 +109,12 @@ class ArgumentsController < ApplicationController
       end
     end
   end
+
+  def placeComment 
+    @comment = params[:comment]
+    @comment = Comment.build_from( Argument.find(params[:id]), @current_user.id, @comment )
+    @comment.save!
+    redirect_to request.referrer
+  end
+
 end
