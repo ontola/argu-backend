@@ -1,0 +1,401 @@
+
+@font-face 
+{
+	font-family: lane;
+	src: url("/assets/fonts/LANENAR_.ttf") format("opentype");
+}
+
+body
+{
+	margin: 0px; padding: 0px;
+	background-color: #F2F2F2;
+}
+
+.pargument
+{
+	background-color: white;
+	overflow:hidden;
+	border-style: solid;
+	border-color: #468783;
+	border-width: 1px;
+}
+
+.cargument
+{
+	background-color: white;
+	overflow:hidden;
+	border-style: solid;
+	border-color: #468783;
+	border-width: 1px;
+}
+
+.prosbox
+{
+	width:475px;
+	margin-right: 5px;
+	float:left;
+}		
+
+.consbox
+{
+	width:475px;
+	margin:0px;
+	margin-left: 5px;
+	float:left;
+	padding: 0px;
+}		
+
+#speech-bubble:before {
+   content:"";
+   position: absolute;
+   width: 0;
+   height: 0;
+   border-top: 13px solid transparent;
+   border-right: 26px solid blue;
+   border-bottom: 13px solid transparent;
+   margin: 13px 0 0 -25px;
+}
+
+div#navbar
+{
+	width: 100%;
+	height:45px;
+	margin:0px auto;
+	padding: 0px;
+	background-color:#468783;
+	float: left;
+	text-align: center;
+	overflow: hidden;
+}
+
+
+div#navbar ul
+{
+	margin:0px auto;
+	padding: 0px;
+	width: 960px;
+}
+
+div#navbar li
+{
+	list-style-type: none;
+	display: inline-block;
+	float: left;
+}
+
+div#navbar li a
+{
+	display: block;
+	height: 45px;
+	width: 92px;
+	margin:0px;
+	padding: 0px;
+	border-right-style: solid;
+	border-width: 1px;
+	border-color: white;
+	text-decoration: none;
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+div#navbar li a#argulogo
+{
+	background:url(images/spriteb.png) no-repeat 0px 0px;
+	border-left-style:solid;
+}
+
+div#navbar li a#argulogo:hover
+{
+	background:url(images/spriteb.png) no-repeat 0px -45px;
+}
+
+div#navbar li #search
+{
+	width: 622px;
+	padding: 5px;
+	height: 25px;
+	background-color: #529E99;
+	margin: 5px;
+	border-right-style: none;
+	border: none;
+	color: white;
+	font-size: 17px;
+	padding-left: 8px;
+}
+
+textarea:focus, input:focus{
+	outline: solid;
+	outline-color: white;
+	outline-width: 1px;
+}
+div#navbar li a#account
+{
+	background:url(images/spriteb.png) no-repeat -184px 0px;
+	border-left-style: solid;
+	width: 121px;
+}
+
+div#navbar li a#account:hover
+{
+	background:url(images/spriteb.png) no-repeat -184px -45px;
+}
+
+div#navbar li a#info
+{
+	background:url(images/spriteb.png) no-repeat -92px 0px;
+}
+
+div#navbar li a#info:hover
+{
+	background:url(images/spriteb.png) no-repeat -92px -45px;
+}
+
+.subtopic
+{
+	width: 960px;
+	margin:0px auto;
+}
+
+/*Dit zijn info en account buttons in de navbar OUD MOET WEG!*/
+b.logo
+{
+	display: block;
+	color: white;
+	background-color: #468783;
+	font-family: 'lane', sans-serif;
+	font-size: 33px;
+	width: 92px;
+	height: 45px;
+	text-align: center;
+	padding: 0;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	border-right-style: solid;
+	border-width: 1px;
+	border-color: white;
+	text-decoration: none;
+}
+
+hr
+{
+	background-color: #F2F2F2;
+	color: #468783;
+	height: 1px;
+	border: 0px;
+	clear: both;
+	margin: 5px;
+}		
+
+hr.streep 
+{
+	background-color: #468783;
+	margin: 0px;
+}
+
+hr.invis
+{
+	margin: 0px;
+	height: 0px;
+	background-color: #F2F2F2;
+}
+
+
+
+/*Dit is de opmaak van gewone text, waaronder de toelichting van een argument + beschrijving van onderwerp*/
+p
+{
+	text-align:justify;
+	color:black;
+	font-family: Verdana,arial,sans-serif;
+	font-size:13px;
+	line-height:135%;
+	margin:0px;
+	padding: 10px;	
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/*Dit is de opmaak van een comment*/
+p.pcomment
+{
+	border-style:solid;
+	border-width:1px;
+	border-color:#468783;
+	border-radius:7px;
+	margin-left:10px;
+	margin-right:27px;
+	margin-top:5px;
+	margin-bottom: 21px;
+	background-color: #F0F3FC;
+	padding: 7px;
+}
+
+p.ccomment
+{
+	border-style:solid;
+	border-width:1px;
+	border-color:#468783;
+	border-radius:7px;
+	margin-left:27px;
+	margin-right:10px;
+	margin-top:5px;
+	margin-bottom: 21px;
+	background-color: #E9F2DD;
+	padding: 7px;
+}
+
+p.intro
+{
+	background-color: white;
+	border-style:solid;
+	border-width:1px;
+	border-color:#468783;
+}
+
+.imgpcomment
+{
+	float:right;
+	margin-top: -32px;
+	margin-bottom: 0px;
+	padding:0px;
+}
+
+.imgccomment
+{
+	float:left;
+	margin-top: -32px;
+	margin-bottom: 0px;
+	padding:0px;
+}
+/*Dit is de opmaak van een onderwerpstitel */
+h1
+{
+	text-align:center;
+	color:#468783;
+	font-family: 'lane', sans-serif;
+	font-size:36px;
+	padding-bottom: 2px;
+	margin: 0px;
+	padding: 0px;
+	margin-bottom: 5px;
+}
+
+/*Dit is de opmaak van een deelonderwerp*/
+div.subtitle
+{
+	display: block;
+	background-color: #468783;
+	width:100%;
+	height: 45px;
+	overflow: hidden;
+}
+
+div.subtitle ul
+{
+	margin:0px auto;
+	padding: 0px;
+	width: 960px;
+}
+
+div.subtitle li
+{
+	list-style-type: none;
+	display: inline-block;
+	float: left;
+}
+
+div.subtitletitle
+{
+	width: 772px;
+	border-left-style: solid;
+	border-right-style: solid;
+	border-width:1px;
+	border-color:white;
+}
+
+.voor
+{
+	display: block;
+	height: 45px;
+	width: 92px;
+	background-image: url(images/spriteb.png);
+	background-position: 0px -90px;
+	background-repeat: no-repeat;
+}
+
+.tegen
+{
+	display: block;
+	height: 45px;
+	width: 90px;
+	background-image: url(images/spriteb.png);
+	background-position: -92px -90px;
+	background-repeat: no-repeat;
+}
+
+h2
+{
+	text-align:center;
+	color:white;
+	font-family: 'lane', sans-serif;
+	font-size:36px;
+	margin:0px;
+	padding: 0px;
+	padding-bottom: 2px;
+	clear: both;
+	position:relative;
+	top:0px;
+}
+
+/*Dit is de opmaak van een argument*/
+h3
+{
+	text-align:justify;
+	color:#468783;
+	font-family: Verdana, arial, sans-serif;
+	font-size:16px;
+	margin: 0px;
+	padding: 5px;
+	padding-left: 8px;
+	padding-bottom: 0px;
+	margin-bottom: -5px;
+	font-weight:normal;
+}
+
+a.pargtitle
+{
+	display: block;
+	text-align:justify;
+	color:#295E59;
+	font-family: Verdana, arial, sans-serif;
+	font-size:16px;
+	font-weight:normal;
+	text-decoration: none;
+	padding: 10px;
+	background-color: #E9F2DD;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: #468783;
+}
+
+a.cargtitle
+{
+	display: block;
+	text-align:justify;
+	color:#295E59;
+	font-family: Verdana, arial, sans-serif;
+	font-size:16px;
+	font-weight:normal;
+	text-decoration: none;
+	padding: 10px;
+	background-color: #F0F3FC;
+	border-bottom-style: solid;
+	border-width: 1px;
+	border-color: #468783;
+}
+
+a:hover
+{
+	color: black;
+}

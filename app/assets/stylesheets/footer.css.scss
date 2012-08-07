@@ -1,0 +1,53 @@
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #999;
+}
+
+footer a {
+  color: #555;
+}  
+
+footer a:hover { 
+  color: #222;
+}
+
+footer small {
+  float: left;
+}
+
+footer ul {
+  float: right;
+  list-style: none;
+}
+
+footer ul li {
+  float: left;
+  margin-left: 10px;
+}
+
+.techs {
+  text-align: center;
+  margin-top: 40px;
+}
+
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+.container {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -150px;
+}
+.footer, .push {
+  height: 150px;
+}
+/*Sticky Footer by ryanfait.com */
