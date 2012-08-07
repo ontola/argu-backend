@@ -1,10 +1,3 @@
-
-@font-face 
-{
-	font-family: lane;
-	src: url("/assets/fonts/LANENAR_.ttf") format("opentype");
-}
-
 body
 {
 	margin: 0px; padding: 0px;
@@ -101,13 +94,13 @@ div#navbar li a
 
 div#navbar li a#argulogo
 {
-	background:url(images/spriteb.png) no-repeat 0px 0px;
+	background:url(spriteb.png) no-repeat 0px 0px;
 	border-left-style:solid;
 }
 
 div#navbar li a#argulogo:hover
 {
-	background:url(images/spriteb.png) no-repeat 0px -45px;
+	background:url(spriteb.png) no-repeat 0px -45px;
 }
 
 div#navbar li #search
@@ -131,24 +124,24 @@ textarea:focus, input:focus{
 }
 div#navbar li a#account
 {
-	background:url(images/spriteb.png) no-repeat -184px 0px;
+	background:url(spriteb.png) no-repeat -184px 0px;
 	border-left-style: solid;
 	width: 121px;
 }
 
 div#navbar li a#account:hover
 {
-	background:url(images/spriteb.png) no-repeat -184px -45px;
+	background:url(spriteb.png) no-repeat -184px -45px;
 }
 
 div#navbar li a#info
 {
-	background:url(images/spriteb.png) no-repeat -92px 0px;
+	background:url(spriteb.png) no-repeat -92px 0px;
 }
 
 div#navbar li a#info:hover
 {
-	background:url(images/spriteb.png) no-repeat -92px -45px;
+	background:url(spriteb.png) no-repeat -92px -45px;
 }
 
 .subtopic
@@ -163,7 +156,7 @@ b.logo
 	display: block;
 	color: white;
 	background-color: #468783;
-	font-family: 'lane', sans-serif;
+	font-family: 'quicksand', sans-serif;
 	font-size: 33px;
 	width: 92px;
 	height: 45px;
@@ -273,7 +266,7 @@ h1
 {
 	text-align:center;
 	color:#468783;
-	font-family: 'lane', sans-serif;
+	font-family: 'quicksand', sans-serif;
 	font-size:36px;
 	padding-bottom: 2px;
 	margin: 0px;
@@ -319,7 +312,7 @@ div.subtitletitle
 	display: block;
 	height: 45px;
 	width: 92px;
-	background-image: url(images/spriteb.png);
+	background-image: url(spriteb.png);
 	background-position: 0px -90px;
 	background-repeat: no-repeat;
 }
@@ -329,7 +322,7 @@ div.subtitletitle
 	display: block;
 	height: 45px;
 	width: 90px;
-	background-image: url(images/spriteb.png);
+	background-image: url(spriteb.png);
 	background-position: -92px -90px;
 	background-repeat: no-repeat;
 }
@@ -338,7 +331,7 @@ h2
 {
 	text-align:center;
 	color:white;
-	font-family: 'lane', sans-serif;
+	font-family: 'quicksand', sans-serif;
 	font-size:36px;
 	margin:0px;
 	padding: 0px;
