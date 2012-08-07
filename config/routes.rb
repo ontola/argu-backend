@@ -21,6 +21,7 @@ Argu::Application.routes.draw do
   match "/signout", to: "sessions#destroy", via: :delete
   match "/about", to: "static_pages#about"
   match "/learn", to: "static_pages#learn"
+  match "/newpage", to: "static_pages#newlayout"
 
 
   # The priority is based upon order of creation:
