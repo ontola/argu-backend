@@ -1,31 +1,37 @@
 <% provide(:title, @statement.title.nil? ? t(:statement_title) : @statement.title) %>
 <% provide(:menu_class, 'statements') %>
+<hr class="invis"></hr>
 <header>
-	<h1><img class="stateicon" src="<%= getStateImage(@statement.statetype) %>" alt="<%= getStateType(@statement.statetype) %>" /><%= @statement.title %></h1>
+	<h1><%= @statement.title %></h1>
+	<p class= "intro"><%= @statement.content %></p>
+	<hr></hr>
 </header>
-<div class="row-fluid">
-	<h2><%= @statement.content %></h2>
+<div class="subtitle">
+	<ul>
+		<li><div class="voor"></div></li>
+		<li><div class="subtitletitle"><h2>Argumenten</h2></div></li>
+		<li><div class="tegen"></div></li>
+	</ul>
 </div>
-<div class="row">
-	<div class="span12">
-		<div class="row">
-		<div id="pro" class="span6">
-			<h3><%= t(:statement_pros) %></h3>
-			<% hasItems = nil %><% @statement.statementarguments.where("pro = :pro", pro: true).each do |statementargument| %>
-				<%= render 'arguments/sarguments', statementargument: statementargument %><% hasItems = 1 %><% end %><% if hasItems != 1 %><pre><%= t(:statement_no_pros) %></pre><% end %>
-		</div>
-		<div id="con" class="span6">
-			<h3><%= t(:statement_cons) %></h3>
-			<% hasItems = nil %><% @statement.statementarguments.where("pro = :pro", pro: false).each do |statementargument| %>
-				<%= render 'arguments/sarguments', statementargument: statementargument %><% hasItems = 1 %><% end %><% if hasItems != 1 %><pre><%= t(:statement_no_cons) %></pre><% end %>
-		</div>
-		</div>
-		<div class="row">
-			<div class="span3">
-				<p><%= link_to t(:argument_add), '#addargument', statement_id: @statement.id, remote: true, class: "btn btn-primary", "data-toggle" => "modal", 'data-backdrop' => true, 'data-keyboard' => true %>
-				<%= link_to t(:application_general_edit), edit_statement_path(@statement), class: "btn btn-primary" %></p>
-			</div>
-		</div>
-	</div>
+<div class="prosbox">
+	<hr></hr>
+	<% hasItems = nil %><% @statement.statementarguments.where("pro = :pro", pro: true).each do |statementargument| %>
+		<%= render 'arguments/sarguments', statementargument: statementargument %><hr></hr>
+		<% hasItems = 1 %><% end %><% if hasItems != 1 %><pre><%= t(:statement_no_pros) %></pre>
+	<% end %>
 </div>
+<div class="consbox">
+	<hr></hr>
+	<% hasItems = nil %><% @statement.statementarguments.where("pro = :pro", pro: false).each do |statementargument| %>
+		<%= render 'arguments/sarguments', statementargument: statementargument %><hr></hr>
+		<% hasItems = 1 %><% end %><% if hasItems != 1 %><pre><%= t(:statement_no_cons) %></pre>
+	<% end %>
+</div>
+
+
+<div>
+	<p><%= link_to t(:argument_add), '#addargument', statement_id: @statement.id, remote: true, class: "btn btn-primary", "data-toggle" => "modal", 'data-backdrop' => true, 'data-keyboard' => true %>
+	<%= link_to t(:application_general_edit), edit_statement_path(@statement), class: "btn btn-primary" %></p>
+</div>
+
 <%= render 'addargument' %>

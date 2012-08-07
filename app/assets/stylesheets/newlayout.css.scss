@@ -1,3 +1,4 @@
+@import "bootstrap";
 body
 {
 	margin: 0px; padding: 0px;
@@ -105,7 +106,7 @@ div#navbar li a#argulogo:hover
 
 div#navbar li #search
 {
-	width: 622px;
+	width: auto;
 	padding: 5px;
 	height: 25px;
 	background-color: #529E99;
@@ -144,7 +145,12 @@ div#navbar li a#info:hover
 	background:url(spriteb.png) no-repeat -92px -45px;
 }
 
-.subtopic
+div#navr
+{
+	float: right;
+}
+
+.container
 {
 	width: 960px;
 	margin:0px auto;
@@ -301,10 +307,6 @@ div.subtitle li
 div.subtitletitle
 {
 	width: 772px;
-	border-left-style: solid;
-	border-right-style: solid;
-	border-width:1px;
-	border-color:white;
 }
 
 .voor
@@ -315,6 +317,9 @@ div.subtitletitle
 	background-image: url(spriteb.png);
 	background-position: 0px -90px;
 	background-repeat: no-repeat;
+	border-right-style: solid;
+	border-width:1px;
+	border-color:white;
 }
 
 .tegen
@@ -325,6 +330,9 @@ div.subtitletitle
 	background-image: url(spriteb.png);
 	background-position: -92px -90px;
 	background-repeat: no-repeat;
+	border-left-style: solid;
+	border-width:1px;
+	border-color:white;
 }
 
 h2
