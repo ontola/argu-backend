@@ -43,7 +43,13 @@ class ArgumentsController < ApplicationController
   def create
     if signed_in?
       raise PermissionViolation unless Argument.creatable_by?(current_user)
+      if !params[:statement_id].nil?
+        @sa = Statementargument.create(Statement.find_by_id(params[:statement_id]), @argument)
+      end
       @argument = Argument.new(params[:argument])
+      if !params[:content].nil?
+        @argument.content = params[:content]
+      end
 
       respond_to do |format|
         if @argument.save

@@ -1,0 +1,7 @@
+<div class=<%= (pro ? "pargument" : "cargument") %>>
+	<%= form_tag("/arguments", method: "post", statement_id: @statement.id) do %>
+		<%= text_field_tag(:title, "title", class: (pro ? "pargtitle" : "cargtitle")) %>
+		<%= text_area(:content, "Content", size: "56x4") %><br />
+		<%= submit_tag("Plaats") %>
+	<% end %>
+</div>

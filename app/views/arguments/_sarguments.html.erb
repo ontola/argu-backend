@@ -1,9 +1,10 @@
 <% @argument = Argument.find_by_id(statementargument.argument_id) %>
 <% @pro = statementargument.pro %>
+<% @comment = getBestComment(@argument) %>
 <div class=<%= (@pro ? "pargument" : "cargument") %>>
 	<%= link_to @argument.title, argument_path(@argument), class: (@pro ? "pargtitle" : "cargtitle") %>
 	<p><%= @argument.content.strip[0,140] + ((@argument.content.strip.length < 140) ? "" : "...") %><p>
-	<p class=<%= (@pro ? "pcomment" : "ccomment") %>>Ja dat zal wel, maar ik eet liever spaghetti! En nog meer tekst om uit te 
-		testen of alles mooi "scaled", zoals dat heet. Tot dusver ben ik tevreden.</p>
-	<%= image_tag((@pro ? "pcmnt.png" : "ccmnt.png"), class: (@pro ? "imgpcomment" : "imgccomment")) %>
+	<% if (!@comment.nil?)%>
+	<p class=<%= (@pro ? "pcomment" : "ccomment") %>><%= @comment.body %></p>
+	<%= image_tag((@pro ? "pcmnt.png" : "ccmnt.png"), class: (@pro ? "imgpcomment" : "imgccomment")) %><% end %>
 </div>

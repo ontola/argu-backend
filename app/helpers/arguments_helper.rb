@@ -1,5 +1,10 @@
 module ArgumentsHelper
 private
+	def getBestComment(argument)
+		@comment = argument.root_comments[0]
+	end
+
+
 	def getArgType(argument)
 		case argument.argtype
 		when 0

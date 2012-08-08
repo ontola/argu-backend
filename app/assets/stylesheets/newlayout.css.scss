@@ -93,13 +93,13 @@ div#navbar li a
 	overflow: hidden;
 }
 
-div#navbar li a#argulogo
+div#navbar li #argulogo
 {
 	background:url(spriteb.png) no-repeat 0px 0px;
 	border-left-style:solid;
 }
 
-div#navbar li a#argulogo:hover
+div#navbar li #argulogo:hover
 {
 	background:url(spriteb.png) no-repeat 0px -45px;
 }
@@ -118,11 +118,18 @@ div#navbar li #search
 	padding-left: 8px;
 }
 
-textarea:focus, input:focus{
+#search textarea:focus, input:focus{
 	outline: solid;
 	outline-color: white;
 	outline-width: 1px;
 }
+
+textarea
+{
+	resize: none;
+}
+
+
 div#navbar li a#account
 {
 	background:url(spriteb.png) no-repeat -184px 0px;
@@ -364,7 +371,7 @@ h3
 	font-weight:normal;
 }
 
-a.pargtitle
+.pargtitle
 {
 	display: block;
 	text-align:justify;
@@ -378,9 +385,10 @@ a.pargtitle
 	border-bottom-style: solid;
 	border-width: 1px;
 	border-color: #468783;
+	width: 100%;
 }
 
-a.cargtitle
+.cargtitle
 {
 	display: block;
 	text-align:justify;
@@ -394,6 +402,12 @@ a.cargtitle
 	border-bottom-style: solid;
 	border-width: 1px;
 	border-color: #468783;
+	width: 100%;
+}
+
+#pnewargtitle
+{
+	border-bottom-style: none;
 }
 
 a:hover
