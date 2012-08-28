@@ -5,6 +5,7 @@
 #   gem 'sqlite3'
 development:
   adapter: postgresql
+  host: localhost
   encoding: utf8
   database: argu_development
   pool: 5
@@ -16,6 +17,7 @@ development:
 # Do not set this db to the same as development or production.
 test: &TEST
   adapter: postgresql
+  host: localhost
   encoding: utf8
   database: argu_test
   pool: 5

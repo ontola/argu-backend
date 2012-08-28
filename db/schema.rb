@@ -38,6 +38,15 @@ ActiveRecord::Schema.define(:version => 20120807205349) do
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "references", :force => true do |t|
+    t.string   "name"
+    t.string   "url"
+    t.integer  "reftype"
+    t.integer  "arguments"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "settings", :force => true do |t|
     t.string   "var",                       :null => false
     t.text     "value"
