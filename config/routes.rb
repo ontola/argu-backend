@@ -2,9 +2,10 @@ Argu::Application.routes.draw do
   resources :users
   resources :statements do 
     get :autocomplete_argument_title, :on => :collection
-
   end
-  get "/statements/:id/revisions" => "statements#revisions"
+  get "/statements/:id/revisions" => "statements#allrevisions", as: 'revisions_statement'
+  get "/statements/:id/revisions/:rev" => "statements#revisions", as: 'rev_revisions_statement'
+  put "/statements/:id/revisions/:rev" => "statements#setrevision", as: 'update_revision_statement'
 
   resources :arguments
   post "/arguments/:id/placeComment" => "arguments#placeComment"

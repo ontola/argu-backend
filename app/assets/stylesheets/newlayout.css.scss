@@ -116,6 +116,7 @@ div#navbar li #search
 	color: white;
 	font-size: 17px;
 	padding-left: 8px;
+	float: right;
 }
 
 #search textarea:focus, input:focus{
@@ -160,6 +161,7 @@ div#navr
 .container
 {
 	width: 960px;
+	margin-top: 45px;
 	margin:0px auto;
 }
 
@@ -251,7 +253,7 @@ p.ccomment
 	padding: 7px;
 }
 
-p.intro
+.intro
 {
 	background-color: white;
 	border-style:solid;
@@ -414,3 +416,30 @@ a:hover
 {
 	color: black;
 }
+
+div.pageconf
+{
+	float: right;
+	height: 25px;
+}
+
+div.pageconf ul
+{
+	list-style: none;
+}
+
+div.pageconf li a
+{
+	text-decoration: none;
+}
+
+/* Revisions table styling */
+.revtbl
+{
+	border: none;
+	font-family: Verdana,arial,sans-serif;
+	font-size:13px;
+}
+.revtbl tr:nth-child(even) {background: #E9F2DD}
+.revtbl tr:nth-child(odd) {background: #F0F3FC}
+.revtbl tr:nth-child(1) {background: #468783}

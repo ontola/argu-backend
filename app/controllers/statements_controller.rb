@@ -23,16 +23,75 @@ class StatementsController < ApplicationController
     end
   end
 
-  # GET /statements/1
-  # GET /statements/1.json
+  # GET /statements/1/revisions/:rev
+  # GET /statements/1/revisions/:rev.json
   def revisions
     @statement = Statement.find(params[:id])
+    @version = nil
+    @rev = params[:rev]
+
+    unless @rev.nil?
+      @version = @statement.versions.find_by_id(@rev);
+      @statement = @version.reify
+    end
     
+    if @statement.nil?
+      @statement = @statement.versions.last
+    end
+
     respond_to do |format|
-      format.html # show.html.erb
+      format.html # revisions.html.erb
       format.json { render json: @statement }
     end
   end
+
+  # GET /statements/1/revisions
+  # GET /statements/1/revisions.json
+  def allrevisions
+    @statement = Statement.find(params[:id])
+    @revisions = @statement.versions
+
+    respond_to do |format|
+      format.html # allrevisions.html.erb
+      format.json { render json: @statement }
+    end
+  end  
+
+  # PUT /statements/1/revisions
+  # PUT /statements/1/revisions.json
+  def setrevision
+      if signed_in?
+         @statement = Statement.find(params[:id])
+      @version = nil
+      @rev = params[:rev]
+
+      unless @rev.nil?
+        @version = @statement.versions.find_by_id(@rev);
+        @statement = @version.reify
+      end
+      
+      if @statement.nil?
+        @statement = @statement.versions.last
+      end
+      raise PermissionViolation unless @statement.updatable_by?(current_user)
+
+      respond_to do |format|
+        if @statement.save
+          format.html { redirect_to @statement, notice: 'Statement was successfully restored.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @statement.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        flash.now[:error] = t(:application_general_not_allowed) + "!"
+        format.html { redirect_to statements_url}
+        format.json { head :no_content }
+      end
+    end
+  end  
 
   # GET /statements/new
   # GET /statements/new.json
