@@ -11,6 +11,7 @@ gem 'ledermann-rails-settings', :require => 'rails-settings'
 gem 'foreigner'
 gem 'immigrant'
 gem 'acts_as_commentable_with_threading'
+gem 'paper_trail'
 
 # Gems used only for assets and not required
 # in production environments by default.

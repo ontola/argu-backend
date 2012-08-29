@@ -23,6 +23,17 @@ class StatementsController < ApplicationController
     end
   end
 
+  # GET /statements/1
+  # GET /statements/1.json
+  def revisions
+    @statement = Statement.find(params[:id])
+    
+    respond_to do |format|
+      format.html # show.html.erb
+      format.json { render json: @statement }
+    end
+  end
+
   # GET /statements/new
   # GET /statements/new.json
   def new
