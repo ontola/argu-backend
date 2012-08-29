@@ -9,6 +9,9 @@ Argu::Application.routes.draw do
 
   resources :arguments
   post "/arguments/:id/placeComment" => "arguments#placeComment"
+  get "/arguments/:id/revisions" => "arguments#allrevisions", as: 'revisions_argument'
+  get "/arguments/:id/revisions/:rev" => "arguments#revisions", as: 'rev_revisions_argument'
+  put "/arguments/:id/revisions/:rev" => "arguments#setrevision", as: 'update_revision_argument'
   
   resources :sessions, only: [:new, :create, :destroy]
   resources :statementarguments
