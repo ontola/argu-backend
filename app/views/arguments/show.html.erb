@@ -7,7 +7,7 @@
 </header>
 <hr class="streep" />
 <div id="commentstitle">
-	<h2>Reacties</h2>
+	<h2><%= t(:comment_title) %></h2>
 </div>
 <% @comments.each do |c| %>
 	<p class="pcomment"><%= c.body %></p>
