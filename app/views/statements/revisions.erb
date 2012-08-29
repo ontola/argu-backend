@@ -6,9 +6,12 @@
 	</ul>
 </div>
 <div>
-	<ul style="display:inline; list-style-type: none;">
-		<li style="display: inline;"><h3 style="display: inline;">Options:</h3></li>
-		<li style="display: inline;"><% if(@statement.live?)%><%= "Current" %><% else %> <%= link_to('Revert', update_revision_statement_url(@statement, @version), method: :put) %><% end %></li>
+	<ul class="revunderbar">
+		<% u = User.find_by_id(@statement.version.whodunnit) %>
+		<li>Edited by: <%= link_to(u.username, user_url(u)) %></li>
+    	<li>Created at: <%= @statement.version.created_at.to_s %></li>
+		<li><h3>Options:</h3></li>
+		<li><% if(@statement.live?)%><%= "Current" %><% else %> <%= link_to('Revert', update_revision_statement_url(@statement, @version), method: :put) %><% end %></li>
 
 	</ul>
 </div>

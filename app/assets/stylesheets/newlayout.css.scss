@@ -443,3 +443,18 @@ div.pageconf li a
 .revtbl tr:nth-child(even) {background: #E9F2DD}
 .revtbl tr:nth-child(odd) {background: #F0F3FC}
 .revtbl tr:nth-child(1) {background: #468783}
+
+.revunderbar
+{
+	list-style-type: none;
+	text-align: center;
+}
+.revunderbar li
+{
+	display: inline;
+}
+
+.revunderbar li h3
+{
+	display: inline;
+}
