@@ -3,9 +3,9 @@
 
 nl:
 #Application
-  application_name: "Argu|α"
+  application_name: "argu"
   application_name_phonetic: "\\\'är-(ˌ)gyü\\"
-  application_owner: "Thom van Kalkeren"
+  application_owner: "Thom van Kalkeren & Joep Meindertsma"
   application_system_not_allowed: "Je hebt geen toestemming voor deze actie."
   application_general_sign_in: "Inloggen"
   application_general_sign_up: "Aanmelden"
@@ -64,12 +64,7 @@ nl:
   about_title: "Over"
   about_header: "Over"
   about_text:
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dolor eros, rutrum non fermentum ac, dictum |
-    sit amet arcu. Nulla faucibus gravida odio. Morbi consequat ligula vel velit euismod adipiscing. Nam at risus 
-    arcu, id pretium risus. Fusce auctor, dui in molestie sollicitudin, est nibh varius sapien, accumsan fermentum 
-    nisi eros eget elit. Cras nisl arcu, dapibus eget pretium eu, ullamcorper vel risus. Aenean pulvinar metus nec 
-    urna scelerisque porta eu vitae ante. Aenean aliquet fucking gay ipsum vulputate nisi blandit tristique id id orci. 
-    Suspendisse gravida quam eu risus faucibus nec tempor nulla venenatis."
+    "Welkom op argu! Bij argu draait alles om discussie, opinie en bovenal: argumenten. Wij hebben argu gemaakt om mensen een platform te geven waardoor ze worden geprikkeld om een betere mening te krijgen. Of het nu gaat over belastingsverhoging, speciaal onderwijs, kernenergie of kilometerheffing: op argu worden de sterkste voor- en tegenargumenten verzameld en gesorteerd. Jij bepaalt welke argumenten en onderwerpen het meest belangrijk zijn. Mist er een belangrijk argument? Dan kan je die zelf gemakkelijk toevoegen. Ben je het ergens niet mee eens? Laat je stem horen door te reageren. De beste reacties kunnen zo dienen als tegenargument, zodat je al snel geordende en specifieke discussies krijgt."
 #Users
   users_clearance_0: "Coder"
   users_clearance_1: "Administrator"
@@ -84,9 +79,9 @@ nl:
   users_name: "Naam"
   users_email: "E-mail"
   users_votes: "Stemmen"
-  users_clearance: "Clearance"
+  users_clearance: "Bevoegdheid"
   users_password: "Wachtwoord"
-  users_password_confirmation: "Herhaling"
+  users_password_confirmation: "Wachtwoord bevestigen"
   users_password_old: "Oud wachtwoord"
   #index
   users_title: "Gebruikers"
@@ -99,7 +94,7 @@ nl:
   #new
   users_new_title: "Aanmelden"
   users_new_header: "Aanmelden"
-  users_new_confirmation: "Confirmation"
+  users_new_confirmation: "Bevestigen"
   users_new_create: "Account aanmaken"
   users_new_failed: "Controleer je invoer"
   #show
@@ -113,8 +108,8 @@ nl:
 #statement
   statement_title: "Stelling"
   statement_header: "Stelling"
-  statement_pros: "Voors"
-  statement_cons: "Tegens"
+  statement_pros: "Voor"
+  statement_cons: "Tegen"
   statement_no_pros: "Nog niets voor"
   statement_no_cons: "Nog niets tegen"
   statement_newstatement: "Nieuwe stelling"
@@ -141,6 +136,8 @@ nl:
   argument_non: "Nog geen argumenten"
   argument_add: "Argument toevoegen"
   argument_add_title: "Voeg een argument toe"
+#comment
+  comment_title: "Reacties"
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
 

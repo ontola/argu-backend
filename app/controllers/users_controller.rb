@@ -47,6 +47,12 @@ class UsersController < ApplicationController
   end
 
   def edit
+    @user = User.find(params[:id])
+      respond_to do |format|
+        format.js #{ render partital: 'form' }
+        format.html
+      end
+    
   end
  
   def update

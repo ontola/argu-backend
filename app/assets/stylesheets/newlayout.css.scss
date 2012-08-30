@@ -1,4 +1,3 @@
-@import "footer";
 
 body
 {
@@ -287,7 +286,7 @@ h1
 	padding-bottom: 2px;
 	margin: 0px;
 	padding: 0px;
-	margin-bottom: 5px;
+	margin-bottom: 3px;
 }
 
 /*Dit is de opmaak van een deelonderwerp*/
@@ -351,8 +350,8 @@ h2
 	color:white;
 	font-family: 'quicksand', sans-serif;
 	font-size:36px;
-	margin:0px;
-	padding: 0px;
+	margin: -3px;
+	padding: -1px;
 	padding-bottom: 2px;
 	clear: both;
 	position:relative;
@@ -413,9 +412,54 @@ h3
 	border-bottom-style: none;
 }
 
+a
+{
+	text-decoration: none;
+	color: #468783;
+}
+
 a:hover
 {
 	color: black;
+}
+
+.control-group
+{
+	border-style: none;
+	color: #468783;
+}
+
+.control-label
+{
+	font-family: verdana, arial, sans;
+}
+
+.form-actions
+{
+	border-style: none;
+}
+
+.form-horizontal
+{
+	width: 237px;
+	border-right-style: solid;
+	border-color: #468783;
+	border-width: 1px;
+	padding: 0px;
+	float: left;
+}
+
+/* Profile */
+.profile #head
+{
+	list-style-type: none;
+
+	#editbtn
+	{
+		float: right;
+		vertical-align: text-top;
+		padding-top: 7px;
+	}
 }
 
 div.pageconf
