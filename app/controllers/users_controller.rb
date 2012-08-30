@@ -48,11 +48,6 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
-      
-      if request.xhr?
-        puts "==============test============================"
-      end
-
       respond_to do |format|
         format.js #{ render partital: 'form' }
         format.html
