@@ -433,16 +433,46 @@ div.pageconf li a
 	text-decoration: none;
 }
 
-/* Revisions table styling */
-.revtbl
+/* Revisions styling */
+.revbar
 {
-	border: none;
-	font-family: Verdana,arial,sans-serif;
-	font-size:13px;
+	display: block;
+	background-color: #468783;
+	width:100%;
+	height: 45px;
+	overflow: hidden;
+	border-top: solid 1px white;
+
+	ul
+	{
+		margin:0px auto;
+		padding: 0px;
+		width: 960px;
+
+		li
+		{
+			list-style-type: none;
+			display: inline-block;
+			float: left;
+
+			h3
+			{
+				color: white;
+				a {text-decoration: none;}
+			}
+		}
+	}
+
+	#revheader
+			{ 
+				padding-left: 150px;
+			}
+
+			#revprev
+			{
+				float: right;
+			}
 }
-.revtbl tr:nth-child(even) {background: #E9F2DD}
-.revtbl tr:nth-child(odd) {background: #F0F3FC}
-.revtbl tr:nth-child(1) {background: #468783}
 
 .revunderbar
 {
@@ -451,13 +481,25 @@ div.pageconf li a
 	border: 1px;
 	border-style: solid;
 	border-color: #468783;
-}
-.revunderbar li
-{
-	display: inline;
+
+	li
+	{
+		display: inline;
+
+		h3
+		{
+			display: inline;
+		}
+	}
 }
 
-.revunderbar li h3
+.revtbl
 {
-	display: inline;
+	border: none;
+	font-family: Verdana,arial,sans-serif;
+	font-size:13px;
+
+	tr:nth-child(even) {background: #E9F2DD}
+	tr:nth-child(odd) {background: #F0F3FC}
+	tr:nth-child(1) {background: #468783}
 }

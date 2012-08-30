@@ -1,8 +1,8 @@
-<div class="subtitle">
+<div class="revbar">
 	<ul>
-		<li><h3 style="color: white;"><%= @version.next.nil? ? "Recenst" : link_to('Volgende', rev_revisions_statement_url(@statement, @version.next)) %></h3></li>
-		<li style="padding-left: 150px;"><h2><%= @version.created_at.to_s %></h2></li>
-		<li style="float: right;"><h3 style="color: white;"><%= @version.previous.nil? ? "Oudst" : link_to('Vorige', rev_revisions_statement_url(@statement, @version.previous)) %></h3></li>
+		<li><h3><%= @version.next.nil? ? "Recenst" : link_to('Volgende', rev_revisions_statement_url(@statement, @version.next)) %></h3></li>
+		<li id="revheader"><h2><%= @version.created_at.to_s %></h2></li>
+		<li id="revprev"><h3><%= @version.previous.nil? ? "Oudst" : link_to('Vorige', rev_revisions_statement_url(@statement, @version.previous)) %></h3></li>
 	</ul>
 </div>
 <div>
