@@ -1,0 +1,10 @@
+<div class="profile form-horizontal">
+	<ul id="head">
+		<li><%= link_to("edit", edit_user_url(@user), html_options = { remote: true, id: :editbtn }) %></li>
+		<li><h1 id="txt">Profiel</h1></li>
+	</ul>
+	<div id="profbody">
+		<h3><%= @user.username %></h3>
+		<p><%= mail_to(@user.email) %></p>
+	</div>
+</div>
