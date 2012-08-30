@@ -446,3 +446,16 @@ a:hover
 	padding: 0px;
 	float: left;
 }
+
+/* Profile */
+.profile #head
+{
+	list-style-type: none;
+
+	#editbtn
+	{
+		float: right;
+		vertical-align: text-top;
+		padding-top: 7px;
+	}
+}
