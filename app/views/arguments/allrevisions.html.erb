@@ -11,17 +11,29 @@
     	<th><%= "Page" %></th>
     	<th><%= "Make current" %></th>
   	</tr>
-<% @argument.versions.scoped.reverse.each do |v| %>
-	<tr>
-		<% a = v.reify %>
-		<% u = User.find_by_id(v.whodunnit) %>
-    	<td><%= v.id.to_s %></td>
-    	<td><%= a.title %></td>
-    	<td><%= a.content[0,140] + ((a.content.length < 140) ? "" : "...") %></td>
-    	<td><%= link_to(u.username, user_url(u)) %></td>
-    	<td><%= v.created_at.to_s %></td>
-    	<td><%= link_to('Goto', rev_revisions_argument_url(@argument, v)) %></td>
-    	<td><%= link_to('Revert', update_revision_argument_url(a, v), method: :put) %></td>
-  	</tr>
+<% unless @argument.versions.scoped.empty? %> 
+    <% @argument.versions.scoped.reverse.each do |v| %>
+    	<tr>
+    		<% a = v.reify %>
+    		<% u = User.find_by_id(v.whodunnit) %>
+        	<td><%= v.id.to_s %></td>
+        	<td><%= a.title %></td>
+        	<td><%= a.content[0,140] + ((a.content.length < 140) ? "" : "...") %></td>
+        	<td><%= link_to(u.username, user_url(u)) %></td>
+        	<td><%= v.created_at.to_s %></td>
+        	<td><%= link_to('Goto', rev_revisions_argument_url(@argument, v)) %></td>
+        	<td><%= link_to('Revert', update_revision_argument_url(a, v), method: :put) %></td>
+      	</tr>
+    <% end %>
+<% else %>
+    <tr>
+        <td><%= "No versions yet" %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
 <% end %>
 </table>

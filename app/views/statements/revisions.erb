@@ -1,15 +1,14 @@
 <div class="subtitle">
 	<ul>
-		<li><h3><%= link_to('Volgende', rev_revisions_statement_url(@statement, @version.next)) %></h3></li>
+		<li><h3 style="color: white;"><%= @version.next.nil? ? "Recenst" : link_to('Volgende', rev_revisions_statement_url(@statement, @version.next)) %></h3></li>
 		<li style="padding-left: 150px;"><h2><%= @version.created_at.to_s %></h2></li>
-		<li style="float: right;"><h3><%= link_to('Vorige', rev_revisions_statement_url(@statement, @version.previous)) %></h3></li>
+		<li style="float: right;"><h3 style="color: white;"><%= @version.previous.nil? ? "Oudst" : link_to('Vorige', rev_revisions_statement_url(@statement, @version.previous)) %></h3></li>
 	</ul>
 </div>
 <div>
 	<ul class="revunderbar">
 		<% u = User.find_by_id(@statement.version.whodunnit) %>
 		<li>Edited by: <%= link_to(u.username, user_url(u)) %></li>
-    	<li>Created at: <%= @statement.version.created_at.to_s %></li>
 		<li><h3>Options:</h3></li>
 		<li><% if(@statement.live?)%><%= "Current" %><% else %> <%= link_to('Revert', update_revision_statement_url(@statement, @version), method: :put) %><% end %></li>
 
