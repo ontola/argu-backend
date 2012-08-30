@@ -1,0 +1,39 @@
+<header>
+	<h1>Revisions</h1>
+</header>
+<table class="revtbl">
+	<tr>
+    	<th><%= "id" %></th>
+    	<th><%= "Title" %></th>
+    	<th><%= "Content" %></th>
+    	<th><%= "Edited by" %></th>
+    	<th><%= "Created on" %></th>
+    	<th><%= "Page" %></th>
+    	<th><%= "Make current" %></th>
+  	</tr>
+<% unless @statement.versions.scoped.empty? %> 
+    <% @statement.versions.scoped.reverse.each do |v| %>
+    	<tr>
+    		<% s = v.reify %>
+    		<% u = User.find_by_id(v.whodunnit) %>
+        	<td><%= v.id.to_s %></td>
+        	<td><%= s.title %></td>
+        	<td><%= s.content[0,140] + ((s.content.length < 140) ? "" : "...") %></td>
+        	<td><%= link_to(u.username, user_url(u)) %></td>
+        	<td><%= v.created_at.to_s %></td>
+        	<td><%= link_to('Goto', rev_revisions_statement_url(@statement, v)) %></td>
+        	<td><%= link_to('Revert', update_revision_statement_url(s, v), method: :put) %></td>
+      	</tr>
+    <% end %>
+<% else %>
+    <tr>
+        <td><%= "No versions yet" %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+<% end %>
+</table>

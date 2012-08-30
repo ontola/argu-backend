@@ -1,17 +1,11 @@
 <% provide(:title, @argument.title.nil? ? t(:argument_title) : @argument.title) %>
 <% provide(:menu_class, 'arguments') %>
-<header>
-	<h1><%= @argument.title %></h1>
-	<p class= "intro"><%= @argument.content %></p>
-	<hr />
-</header>
-<hr class="streep" />
-<div id="commentstitle">
-	<h2>Reacties</h2>
+<div class="pageconf">
+	<%= link_to('edit', edit_argument_path(@argument)) %>
+	<%= link_to('history', revisions_argument_path(@argument)) %>
 </div>
-<% @comments.each do |c| %>
-	<p class="pcomment"><%= c.body %></p>
-<% end %>
+<%= render 'argumentbody' %>
+<%= render 'argumentcomments' %>
 <%= form_tag(@argument.id.to_s + "/placeComment", :action => "placeComment", :method => "post", :id => @argument.id) %>
 <%= text_area_tag :comment,"", :rows => 5, :cols => 50 %>
 <%= submit_tag "Reageer" %>

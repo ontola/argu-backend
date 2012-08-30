@@ -6,6 +6,7 @@ class Statementargument < ActiveRecord::Base
 	has_many :votes
 
 	has_restful_permissions
+	has_paper_trail
 
 	attr_accessible :pro, :statement_id, :argument_id, :votes
 

@@ -22,6 +22,78 @@ class ArgumentsController < ApplicationController
     end
   end
 
+
+  # GET /arguments/1/revisions/:rev
+  # GET /arguments/1/revisions/:rev.json
+  def revisions
+    @argument = Argument.find(params[:id])
+    @version = nil
+    @rev = params[:rev]
+
+    unless @rev.nil?
+      @version = @argument.versions.find_by_id(@rev);
+      @argument = @version.reify
+    end
+    
+    if @argument.nil?
+      @argument = @argument.versions.last
+    end
+
+    respond_to do |format|
+      format.html # revisions.html.erb
+      format.json { render json: @argument }
+    end
+  end
+
+  # GET /arguments/1/revisions
+  # GET /arguments/1/revisions.json
+  def allrevisions
+    @argument = Argument.find(params[:id])
+    @revisions = @argument.versions
+
+    respond_to do |format|
+      format.html # allrevisions.html.erb
+      format.json { render json: @argument }
+    end
+  end  
+
+  # PUT /arguments/1/revisions
+  # PUT /arguments/1/revisions.json
+  def setrevision
+      if signed_in?
+         @argument = Argument.find(params[:id])
+      @version = nil
+      @rev = params[:rev]
+
+      unless @rev.nil?
+        @version = @argument.versions.find_by_id(@rev);
+        @argument = @version.reify
+      end
+      
+      if @argument.nil?
+        @argument = @argument.versions.last
+      end
+      raise PermissionViolation unless @argument.updatable_by?(current_user)
+
+      respond_to do |format|
+        if @argument.save
+          format.html { redirect_to @argument, notice: 'Argument was successfully restored.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @argument.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        flash.now[:error] = t(:application_general_not_allowed) + "!"
+        format.html { redirect_to arguments_url}
+        format.json { head :no_content }
+      end
+    end
+  end  
+
+
   # GET /arguments/new
   # GET /arguments/new.json
   def new

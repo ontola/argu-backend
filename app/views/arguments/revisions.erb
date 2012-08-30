@@ -1,0 +1,18 @@
+<div class="revbar">
+	<ul>
+		<li><h3><%= @version.next.nil? ? "Recenst" : link_to('Volgende', rev_revisions_argument_url(@argument, @version.next)) %></h3></li>
+		<li id="revheader"><h2><%= @version.created_at.to_s %></h2></li>
+		<li id="revprev"><h3><%= @version.next.nil? ? "Oudst" : link_to('Vorige', rev_revisions_argument_url(@argument, @version.previous)) %></h3></li>
+	</ul>
+</div>
+<div>
+	<ul class="revunderbar">
+		<% u = User.find_by_id(@argument.version.whodunnit) %>
+		<li>Edited by: <%= link_to(u.username, user_url(u)) %></li>
+		<li><h3>Options:</h3></li>
+		<li><% if(@argument.live?)%><%= "Current" %><% else %> <%= link_to('Revert', update_revision_argument_url(@argument, @version), method: :put) %><% end %></li>
+
+	</ul>
+</div>
+<%= render 'argumentbody' %>
+<% #render 'argumentarguments' #Not yet migrating with the trail %>
