@@ -2,7 +2,7 @@
 /* footer */
 
 footer {
-  margin-top: 45px;
+  margin-top: 0px;
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
   color: #999;
@@ -32,7 +32,7 @@ footer ul li {
 
 .techs {
   text-align: center;
-  margin-top: 40px;
+  margin-top: 0px;
 }
 
 * {
@@ -45,9 +45,15 @@ html, body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -150px;
+  margin: 0 auto -142px; /* the bottom margin is the negative value of the footer's height */
 }
 .footer, .push {
-  height: 150px;
+  height: 142px; /* .push must be the same height as .footer */
 }
-/*Sticky Footer by ryanfait.com */
+
+/*
+
+Sticky Footer by Ryan Fait
+http://ryanfait.com/
+
+*/

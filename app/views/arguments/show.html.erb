@@ -6,6 +6,7 @@
 </div>
 <%= render 'argumentbody' %>
 <%= render 'argumentcomments' %>
-<%= form_tag(@argument.id.to_s + "/placeComment", :action => "placeComment", :method => "post", :id => @argument.id) %>
+<%= form_tag(@argument.id.to_s + "/placeComment", :action => "placeComment", :method => "post", :id => @argument.id) do %>
 <%= text_area_tag :comment,"", :rows => 5, :cols => 50 %>
 <%= submit_tag "Reageer" %>
+<% end %>
