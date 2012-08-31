@@ -11,6 +11,7 @@
 </head>
 <body>
   <%= render 'layouts/header' %>
+  <div id="fb-root"></div>
   <div class="container">
     <% flash.each do |key,value| %>
         <div class="alert alert-block alert-<%= key.capitalize %>" data-dismiss="alert"><%= value.capitalize %>
@@ -23,5 +24,6 @@
   <%= render 'layouts/footer'%>
   <!-- It should load faster when placed in the bottom.. -->
   <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "fb" %>
 </body>
 </html>

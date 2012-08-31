@@ -28,7 +28,7 @@ Argu::Application.routes.draw do
   match "/home", to: "static_pages#home"
   match "/signup", to: "users#new"
   match "/signin", to: "sessions#new"
-  match "/signout", to: "sessions#destroy", via: :delete
+  get "/signout", to: "sessions#destroy", via: :delete
   match "/about", to: "static_pages#about"
   match "/learn", to: "static_pages#learn"
   match "/newpage", to: "static_pages#newlayout"

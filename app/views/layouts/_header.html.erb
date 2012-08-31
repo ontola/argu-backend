@@ -1,10 +1,13 @@
 <div id="navbar">
-  <ul>
+  <ul id="mainbar">
     <li><%= link_to "Home", '/', id: "argulogo" %></li>
     <li><input type="text" id="search"></li>
     <div id="navr">
       <% if !current_user.nil?%>
-        <li><%= link_to t(:header_menuitem_settings), '/users/' + current_user.id.to_s, id: "account" %></li>
+        <li><%= link_to t(:header_menuitem_settings), '/users/' + current_user.id.to_s, id: "account" %>
+          <ul class="dropdown">
+            <li>Test</li>
+          </ul></li>
       <% else %>
         <li><%= link_to t(:header_menuitem_settings), signin_path, id: "account" %></li>
       <% end %>
