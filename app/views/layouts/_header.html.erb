@@ -9,9 +9,16 @@
             <li>Test</li>
           </ul></li>
       <% else %>
-        <li><%= link_to t(:header_menuitem_settings), signin_path, id: "account" %></li>
+        <li><%= link_to t(:header_menuitem_settings), new_user_session_url, id: "account" %></li>
       <% end %>
       <li><%= link_to "Info", '/about', id: "info" %></li>
     </div>
+  </ul>
+</div>
+<div>
+  <ul class="revunderbar">
+    <li><%= link_to("Sign up", new_user_registration_url) %></li>
+    <li><%= link_to("Sign in", new_user_session_url) %></li>
+    <li><%= link_to("Sign out", destroy_user_session_url, method: :delete) %></li>
   </ul>
 </div>

@@ -1,5 +1,8 @@
 Argu::Application.routes.draw do
-  resources :users
+
+  devise_for :users
+
+  #resources :users
   resources :statements do 
     get :autocomplete_argument_title, :on => :collection
   end
@@ -13,22 +16,22 @@ Argu::Application.routes.draw do
   get "/arguments/:id/revisions/:rev" => "arguments#revisions", as: 'rev_revisions_argument'
   put "/arguments/:id/revisions/:rev" => "arguments#setrevision", as: 'update_revision_argument'
   
-  resources :sessions, only: [:new, :create, :destroy]
+  #resources :sessions #, only: [:new, :create, :destroy]
   resources :statementarguments
   resources :votes
   resources :comments
 
-  #get "users/new"
-  get "/users/:id/settings" => "users#settings"
-  post "/users/:id/settings" => "users#settingsUpdate"
+  ##get "users/new"
+  #get "/users/:id/settings" => "users#settings"
+  #post "/users/:id/settings" => "users#settingsUpdate"
 
   root to: 'static_pages#home'
 
   match "/", to: "static_pages#home"
   match "/home", to: "static_pages#home"
-  match "/signup", to: "users#new"
-  match "/signin", to: "sessions#new"
-  get "/signout", to: "sessions#destroy", via: :delete
+  #match "/signup", to: "users#new"
+  #match "/signin", to: "sessions#new"
+  #get "/signout", to: "sessions#destroy", via: :delete
   match "/about", to: "static_pages#about"
   match "/learn", to: "static_pages#learn"
   match "/newpage", to: "static_pages#newlayout"

@@ -8,7 +8,7 @@
 <div>
 	<ul class="revunderbar">
 		<% u = User.find_by_id(@statement.version.whodunnit) %>
-		<li>Edited by: <%= link_to(u.username, user_url(u)) %></li>
+		<li>Edited by: <%= u.username %></li>
 		<li><h3>Options:</h3></li>
 		<li><% if(@statement.live?)%><%= "Current" %><% else %> <%= link_to('Revert', update_revision_statement_url(@statement, @version), method: :put) %><% end %></li>
 
