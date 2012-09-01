@@ -1,5 +1,6 @@
 class StatementsController < ApplicationController
   autocomplete :argument, :title, :full => true, :extra_data => [:id]
+  before_filter :authenticate_user!, except: [:show, :index]
 
   # GET /statements
   # GET /statements.json

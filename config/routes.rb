@@ -1,6 +1,8 @@
 Argu::Application.routes.draw do
 
   devise_for :users
+  get "/users/:username" => "users#show", as: 'user'
+  resources :users, :only => [:show]
 
   #resources :users
   resources :statements do 

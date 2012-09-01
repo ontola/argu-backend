@@ -23,7 +23,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  # config.authentication_keys = [ :email ]
+  config.authentication_keys = [ :username ]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -35,7 +35,7 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [ :email ]
+  config.case_insensitive_keys = [ :email, :username ]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
@@ -82,7 +82,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "07c40570686a46d6169593fd3bf41a5f762240b8e848c5083590b8c6544a600f752b4f13952521622fa6b33f04c78ca8fce21ba6691f60119cfe6c55073fb837"
+  config.pepper = "07c40570686a46d6169593fd3bf41a5f762240b8e848c5083590b8c6544a600f752b4f13952521622fa6b33f04c78ca8fce21ba6691f60119cfe6c55073fb837"
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without

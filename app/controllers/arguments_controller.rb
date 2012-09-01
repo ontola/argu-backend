@@ -1,4 +1,6 @@
 class ArgumentsController < ApplicationController
+  before_filter :authenticate_user!, except: [:show, :index]
+  
   # GET /arguments
   # GET /arguments.json
   def index
