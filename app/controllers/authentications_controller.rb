@@ -14,7 +14,7 @@ class AuthenticationsController < ApplicationController
       flash[:notice] = "Authentication succesfull"
       redirect_to authentications_url
     else
-      user = User.new(:email => omniauth['info']['email'], :name => omniauth['info']['name'], :username => omniauth['info']['nickname'])
+      user = User.new(:email => omniauth['info']['email'], :name => omniauth['info']['name'], :username => omniauth['info']['nickname'], :password => Devise.friendly_token[0,20])
       user.apply_omniauth(omniauth)
       if user.save
         flash[:notice] = "Signed in succesfully"

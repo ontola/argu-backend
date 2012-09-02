@@ -17,10 +17,10 @@
 
   <div><%= f.label :password_confirmation %><br />
   <%= f.password_field :password_confirmation %></div>
-<% unless resource.password.blank? %>
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+
+  <div><%= f.label :current_password, raw("Current password<i>(For changing your password)<//i>") %><%= link_to('Forgot', new_user_password_url(resource)) %><br />
   <%= f.password_field :current_password %></div>
-<% end %>
+
   <div><%= f.submit "Update" %></div>
 <% end %>
 
