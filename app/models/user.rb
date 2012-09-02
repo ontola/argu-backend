@@ -16,7 +16,8 @@ class User < ActiveRecord::Base
 
   has_settings
 
-  before_save { |user| user.email = email.downcase }
+=begin
+ before_save { |user| user.email = email.downcase }
 
   USERNAME_FORMAT_REGEX = /^\d*[a-zA-Z][a-zA-Z0-9]*$/i
 
@@ -27,15 +28,15 @@ class User < ActiveRecord::Base
 		       length: { maximum:20, minimum: 3},
 		       format: { with: USERNAME_FORMAT_REGEX },
 		       uniqueness: { case_sensetive: false }
-  validates :email, presence: true,
+  validates :email,
 		    format: { with: RFC822::EMAIL },
 		    uniqueness: { case_sensetive: false }
   validates :name, allow_blank:true, format: { with: NAME_FORMAT_REGEX }
   validates :password,
 		       length: { minimum: 6, maximum: 128 },
-		       format: { with: PASSWORD_FORMAT_REGEX },
-           presence: true, :if => lambda { new_record? || !password.blank? }
+		       format: { with: PASSWORD_FORMAT_REGEX }
   validates :password_confirmation, presence: true, :if => lambda { new_record? || !password.blank? }
+=end
 
   def apply_omniauth(omniauth)
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
@@ -45,8 +46,13 @@ class User < ActiveRecord::Base
     (authentications.empty? || !password.blank?) && super
   end
 
+  def email_required?
+    (authentications.empty?) && super
+  end
+
   #Provides username or email login
   def self.find_first_by_auth_conditions(warden_conditions)
+    logger.debug "=================================================================================================================="
       conditions = warden_conditions.dup
       if login = conditions.delete(:login)
         where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
