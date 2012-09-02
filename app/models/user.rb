@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :name, :email, :password, :password_confirmation, :remember_me, :provider, :uid, :login
+  attr_accessible :username, :name, :email, :password, :password_confirmation, :remember_me, :unconfirmed_email, :provider, :uid, :login
   # attr_accessible :title, :body
   has_settings
 

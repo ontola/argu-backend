@@ -11,7 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120902111604) do
+ActiveRecord::Schema.define(:version => 20120902213418) do
+
+  create_table "activities", :force => true do |t|
+    t.integer  "trackable_id"
+    t.string   "trackable_type"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "key"
+    t.text     "parameters"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
 
   create_table "arguments", :force => true do |t|
     t.string   "content",                   :null => false
@@ -45,6 +56,20 @@ ActiveRecord::Schema.define(:version => 20120902111604) do
 
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
+
+  create_table "fb_users", :force => true do |t|
+    t.integer  "fb_id",      :limit => 8
+    t.integer  "user_id"
+    t.string   "email"
+    t.string   "picture"
+    t.string   "gender"
+    t.string   "locale"
+    t.datetime "created_at",              :null => false
+    t.datetime "updated_at",              :null => false
+  end
+
+  add_index "fb_users", ["email"], :name => "index_fb_users_on_email"
+  add_index "fb_users", ["id"], :name => "index_fb_users_on_id"
 
   create_table "settings", :force => true do |t|
     t.string   "var",                       :null => false
@@ -89,6 +114,7 @@ ActiveRecord::Schema.define(:version => 20120902111604) do
     t.string   "name"
     t.string   "provider"
     t.string   "uid"
+    t.string   "unconfirmed_email"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
