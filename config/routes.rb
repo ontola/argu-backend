@@ -3,7 +3,7 @@ Argu::Application.routes.draw do
   resources :authentications
   match 'auth/:provider/callback' => "authentications#create"
 
-  devise_for :users, :controllers => { :registrations => 'registrations' } #:omniauth_callbacks => "users/omniauth_callbacks"
+  devise_for :users, :controllers => { :registrations => 'registrations' }
   get "/users/:login" => "users#show", as: 'user'
   resources :users, :only => [:show]
 

@@ -5,7 +5,7 @@
       <div class="provider"><%= authentication.provider.titleize %></div>
       <div class="uid"><%= authentication.uid %></div>
       <% unless current_user.isOmniOnly && (current_user.authentications.size == 1) %>
-        <%= link_to "X", cancel_user_registration_url, :confirm => 'Are you sure you want to remove this authentication option?',
+        <%= link_to "X", authentication, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove",
           :class => "remove" %>
       <% else %>
         <%= link_to "X", cancel_user_registration_path(current_user), :confirm => ('Removing will result in account deletion. Create a username to use argu without ' + authentication.provider.titleize),
