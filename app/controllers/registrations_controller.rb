@@ -5,9 +5,19 @@ class RegistrationsController < Devise::RegistrationsController
 	end
 
 	def edit
+	  unless current_user.nil?
+    	@user = User.find(current_user.id)
+      	render "edit"
+      else
+      	flash[:error] = "You need to be signed in for this action"
+      	redirect_to root_path
+      end
+	end
+
+	def update
       @user = User.find(current_user.id)
-      email_changed = @user.email != params[:email]
-      password_changed = @user.encrypted_password.blank? ? false : !params[:password].empty? #if the pass's NULL, the user signed up via an auth service
+      email_changed = @user.email != params[:email] #if the pass's NULL, the user signed up via an auth service
+      password_changed = !params[:password].blank? #if the pass's NULL, the user signed up via an auth service
       successfully_updated = if email_changed or password_changed
         @user.update_with_password(params[:user])
       else
@@ -21,7 +31,7 @@ class RegistrationsController < Devise::RegistrationsController
       else
         render "edit"
       end
-	end
+    end
 
 	def cancel
 		unless current_user.nil?
