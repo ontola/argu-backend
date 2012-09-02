@@ -1,0 +1,12 @@
+<% provide(title: "Authentications") %>
+<% if @authentications %>
+  <% unless @authentications.empty? %>
+    <p><strong>You can sign in to this account using:</strong></p>
+    <%= render 'login_providers_connected' %>
+  <% end %>
+  </br>
+  <p><strong>Add another service to sign in with:</strong></p>
+<% else %>
+    <p><strong>Sign in through one of these services:</strong></p>
+<% end %>
+<%= render 'login_providers' %>

@@ -1,7 +1,10 @@
 Argu::Application.routes.draw do
 
-  devise_for :users
-  get "/users/:username" => "users#show", as: 'user'
+  resources :authentications
+  match 'auth/:provider/callback' => "authentications#create"
+
+  devise_for :users, :controllers => { :registrations => 'registrations' } #:omniauth_callbacks => "users/omniauth_callbacks"
+  get "/users/:login" => "users#show", as: 'user'
   resources :users, :only => [:show]
 
   #resources :users

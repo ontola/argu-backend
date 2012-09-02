@@ -12,6 +12,7 @@ end
 
 module Argu
   class Application < Rails::Application
+    #config.force_ssl = true
 
     config.active_record.whitelist_attributes = true
     config.autoload_paths += Dir["#{config.root}/lib/"]  # include all subdirectories

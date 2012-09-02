@@ -13,6 +13,11 @@ gem 'immigrant'
 gem 'acts_as_commentable_with_threading'
 gem 'paper_trail'
 gem 'devise'
+gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
+gem 'omniauth-facebook'
+gem 'omniauth-twitter'
+gem 'omniauth-openid'
+gem 'mongrel', '1.2.0.pre2'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -29,4 +34,7 @@ end
 group :development do
   gem 'rspec-rails', '2.9.0'
   gem 'annotate','~> 2.4.1beta1'
+  gem "nifty-generators"
 end
+
+gem "mocha", :group => :test

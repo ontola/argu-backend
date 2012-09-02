@@ -1,5 +1,5 @@
-<% provide(:title, @user.username || t(:users_show_title)) %>
 <% unless current_user.nil? %>
+  <% provide(:title, (@user.username.nil? ? @user.email : @user.username) || t(:users_show_title)) %>
   <% @title = ((current_user.id == @user.id)  ? 'profile' : 'users') %>
 <% else %>
   <% @title = 'users' %>
