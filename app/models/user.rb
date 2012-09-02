@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  has_many :authentications
+  has_many :authentications, dependent: :destroy
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable
@@ -7,13 +7,14 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable,
          :validatable#, :omniauthable
 
+  after_destroy :cleanup
+
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :name, :email, :password, :password_confirmation, :remember_me, :provider, :uid, :login
   # attr_accessible :title, :body
-
   has_settings
 
 =begin
@@ -50,9 +51,12 @@ class User < ActiveRecord::Base
     (authentications.empty?) && super
   end
 
+  def isOmniOnly
+    !authentications.empty? && (email.blank? && username.blank? && password.blank?)
+  end
+
   #Provides username or email login
   def self.find_first_by_auth_conditions(warden_conditions)
-    logger.debug "=================================================================================================================="
       conditions = warden_conditions.dup
       if login = conditions.delete(:login)
         where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
@@ -60,4 +64,9 @@ class User < ActiveRecord::Base
         where(conditions).first
       end
     end
+
+private 
+  def cleanup
+    self.authentications.destroy_all
+  end
 end
