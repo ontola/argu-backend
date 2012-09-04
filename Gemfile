@@ -19,6 +19,7 @@ gem 'omniauth-facebook', "~> 1.4.0"
 gem 'omniauth-twitter', "~> 0.0.13"
 #gem 'omniauth-openid'
 gem 'mongrel', '1.2.0.pre2'
+gem 'cancan', '~> 1.6.8'
 
 # Gems used only for assets and not required
 # in production environments by default.

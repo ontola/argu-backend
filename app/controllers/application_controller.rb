@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
     redirect_to :back
   }
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
+
   def set_locale
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale
