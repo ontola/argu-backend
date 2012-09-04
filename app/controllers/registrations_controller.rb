@@ -7,7 +7,7 @@ class RegistrationsController < Devise::RegistrationsController
 	def edit
 	  unless current_user.nil?
     	@user = User.find(current_user.id)
-      	render "edit"
+    	render 'edit'
       else
       	flash[:error] = "You need to be signed in for this action"
       	redirect_to root_path

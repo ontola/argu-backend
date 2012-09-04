@@ -12,11 +12,13 @@ gem 'foreigner'
 gem 'immigrant'
 gem 'acts_as_commentable_with_threading'
 gem 'paper_trail'
-gem 'devise'
-gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
-gem 'omniauth-facebook'
-gem 'omniauth-twitter'
-gem 'omniauth-openid'
+gem 'devise', "~> 2.1.2"
+#gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
+gem "omniauth", "~> 1.0.0"
+gem "omniauth-oauth2", "~> 1.0.0"
+gem 'omniauth-facebook', "~> 1.4.0"
+gem 'omniauth-twitter', "~> 0.0.13"
+#gem 'omniauth-openid'
 gem 'mongrel', '1.2.0.pre2'
 
 # Gems used only for assets and not required

@@ -207,9 +207,7 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', :scope => 'user,public_repo'
-  #config.omniauth :facebook, "269911176456825", "ed0c2c861fa37c1bb6b94dfe8d85f75e", scope: "email", display: "popup",
-  #                :client_options => {:ssl => {:ca_path => 'c:\\arguadmin\\ssl\\'}}
-
+  
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.

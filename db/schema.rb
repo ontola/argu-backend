@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120902213418) do
+ActiveRecord::Schema.define(:version => 20120902111604) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -114,7 +114,6 @@ ActiveRecord::Schema.define(:version => 20120902213418) do
     t.string   "name"
     t.string   "provider"
     t.string   "uid"
-    t.string   "unconfirmed_email"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"
