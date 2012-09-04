@@ -1,5 +1,5 @@
 class VotesController < ApplicationController
-# GET /votes
+  # GET /votes
   # GET /votes.json
   def index
     @votes = Vote.all
@@ -41,7 +41,6 @@ class VotesController < ApplicationController
   # POST /votes.json
   def create
     if signed_in?
-      raise PermissionViolation unless Vote.creatable_by?(current_user)
       @vote = Vote.new(params[:vote])
       @vote.user_id = params[:user_id] unless params[:user_id].nil?
       @vote.statementargument_id = params[:statementargument_id] unless params[:statementargument_id].nil?
@@ -72,7 +71,6 @@ class VotesController < ApplicationController
   def update
     if signed_in?
       @vote = Vote.find(params[:id])
-      raise PermissionViolation unless @vote.updatable_by?(current_user)
 
       respond_to do |format|
         if @vote.update_attributes(params[:vote])
@@ -97,7 +95,6 @@ class VotesController < ApplicationController
   def destroy
     if signed_in?
       @vote = Vote.find(params[:id])
-      raise PermissionViolation unless @vote.destroyable_by?(current_user)
       @statementargument = Statementargument.find_by_id(@vote.statementargument_id)
       @vote.destroy
 

@@ -7,7 +7,6 @@ gem 'bcrypt-ruby', '3.0.1'
 gem 'bootstrap-sass', '~>2.0.1'
 gem 'rfc-822', '~> 0.3.0'
 gem "rails3-jquery-autocomplete", "~> 1.0.7"
-gem 'ledermann-rails-settings', :require => 'rails-settings'
 gem 'foreigner'
 gem 'immigrant'
 gem 'acts_as_commentable_with_threading'
