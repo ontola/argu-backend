@@ -1,17 +1,17 @@
 source 'http://rubygems.org'
 
 gem 'rails', '~>3.2.3'
-gem 'pg', "~> 0.13.2"
+gem 'pg', '~> 0.13.2'
 gem 'jquery-rails'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'bootstrap-sass', '~>2.0.1'
 gem 'rfc-822', '~> 0.3.0'
-gem "rails3-jquery-autocomplete", "~> 1.0.7"
+gem 'rails3-jquery-autocomplete', '~> 1.0.7'
 gem 'ledermann-rails-settings', :require => 'rails-settings'
-gem 'foreigner'
-gem 'immigrant'
-gem 'acts_as_commentable_with_threading'
-gem 'paper_trail'
+gem 'foreigner', '~> 1.2.1'
+gem 'immigrant', '~> 0.1.2'
+gem 'acts_as_commentable_with_threading', '~> 1.1.2'
+gem 'paper_trail', '~> 2.6.3'
 
 # Gems used only for assets and not required
 # in production environments by default.
