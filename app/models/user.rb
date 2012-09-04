@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
+  has_and_belongs_to_many :roles
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -38,6 +39,11 @@ class User < ActiveRecord::Base
 		       format: { with: PASSWORD_FORMAT_REGEX }
   validates :password_confirmation, presence: true, :if => lambda { new_record? || !password.blank? }
 =end
+
+  def role?(role)
+    return !!self.roles.find_by_name(role.to_s.camelize)
+  end
+
 
   def apply_omniauth(omniauth)
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
