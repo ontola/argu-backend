@@ -19,7 +19,7 @@
         	<td><%= v.id.to_s %></td>
         	<td><%= s.title %></td>
         	<td><%= s.content[0,140] + ((s.content.length < 140) ? "" : "...") %></td>
-        	<td><%= link_to(u.username, user_url(u)) %></td>
+        	<td><%= u.username %></td>
         	<td><%= v.created_at.to_s %></td>
         	<td><%= link_to('Goto', rev_revisions_statement_url(@statement, v)) %></td>
         	<td><%= link_to('Revert', update_revision_statement_url(s, v), method: :put) %></td>

@@ -1,10 +1,14 @@
 <div class="profile form-horizontal">
 	<ul id="head">
-		<li><%= link_to("edit", edit_user_url(@user), html_options = { remote: true, id: :editbtn }) %></li>
+		<% if @user.username == current_user.username %><li><%= link_to("edit", edit_user_registration_url(@user), html_options = { remote: true, id: :editbtn }) %></li><% end %>
 		<li><h1 id="txt">Profiel</h1></li>
 	</ul>
 	<div id="profbody">
 		<h3><%= @user.username %></h3>
 		<p><%= mail_to(@user.email) %></p>
+		<p><%= @user.name %></p>
 	</div>
+	<h3 id="txt">Linked accounts</h3>
+	<%= render 'authentications/login_providers_connected' %>
+	<%= link_to 'Link profile', authentications_url %>
 </div>

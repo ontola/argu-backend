@@ -36,7 +36,7 @@ body
 	margin:0px;
 	margin-left: 5px;
 	float:left;
-	padding: 0px;
+	padding: 0px;/**/
 }		
 
 #speech-bubble:before {
@@ -63,11 +63,27 @@ div#navbar
 }
 
 
-div#navbar ul
+div#navbar #mainbar
 {
 	margin:0px auto;
 	padding: 0px;
 	width: 960px;
+		&:hover ul .dropdown { display: block; }
+}
+
+ul .dropdown
+{
+	display: none;
+	position: absolute; 
+	top: 1em;
+	left: 0;
+
+	li
+	{
+		top: auto;
+		left: auto;
+	}
+
 }
 
 div#navbar li
@@ -118,6 +134,8 @@ div#navbar li #search
 	padding-left: 8px;
 	float: right;
 }
+
+
 
 #search textarea:focus, input:focus{
 	outline: solid;
@@ -547,4 +565,74 @@ div.pageconf li a
 	tr:nth-child(even) {background: #E9F2DD}
 	tr:nth-child(odd) {background: #F0F3FC}
 	tr:nth-child(1) {background: #468783}
+}
+
+.alert
+{
+	border: 1px;
+	border-style: solid;
+}
+.alert-Notice
+{
+	background-color: #9FF781;
+}
+.alert-Error
+{
+	background-color: #F78181;
+}
+
+/*  Authentications page */
+.authentications {
+  margin-bottom: 40px;
+  margin-top: 5px;
+}
+
+.authentication {
+  width: 227px;
+  float: left;
+  background-color: #EEE;
+  border: solid 1px #468783;
+  margin-left: 9px;
+  position: relative;
+}
+
+.authentication .remove {
+  text-decoration: none;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  color: #333;
+  padding: 2px 4px;
+  font-size: 10px;
+}
+
+.authentication .remove:hover {
+  color: #CCC;
+  background-color: #777;
+}
+
+.authentication img {
+  float: left;
+  margin-right: 10px;
+}
+
+.authentication .provider {
+  font-weight: bold;
+}
+
+.authentication .uid {
+  color: #666;
+  font-size: 11px;
+}
+
+.auth_provider img {
+  display: block;
+}
+
+.auth_provider {
+  float: left;
+  text-decoration: none;
+  margin-right: 20px;
+  text-align: center;
+  margin-bottom: 10px;
 }

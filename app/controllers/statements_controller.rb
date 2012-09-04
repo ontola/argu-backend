@@ -1,5 +1,6 @@
 class StatementsController < ApplicationController
   autocomplete :argument, :title, :full => true, :extra_data => [:id]
+  before_filter :authenticate_user!, except: [:show, :index]
 
   # GET /statements
   # GET /statements.json
@@ -73,7 +74,7 @@ class StatementsController < ApplicationController
       if @statement.nil?
         @statement = @statement.versions.last
       end
-      raise PermissionViolation unless @statement.updatable_by?(current_user)
+      #raise PermissionViolation unless @statement.updatable_by?(current_user)
 
       respond_to do |format|
         if @statement.save
@@ -113,7 +114,7 @@ class StatementsController < ApplicationController
   # POST /statements.json
   def create
     if signed_in?
-      raise PermissionViolation unless Statement.creatable_by?(current_user)
+      #raise PermissionViolation unless Statement.creatable_by?(current_user)
       @statement = Statement.new(params[:statement])
       respond_to do |format|
         if @statement.save
@@ -138,7 +139,7 @@ class StatementsController < ApplicationController
   def update
     if signed_in?
       @statement = Statement.find(params[:id])
-      raise PermissionViolation unless @statement.updatable_by?(current_user)
+      #raise PermissionViolation unless @statement.updatable_by?(current_user)
 
       respond_to do |format|
         if @statement.update_attributes(params[:statement])
@@ -163,7 +164,7 @@ class StatementsController < ApplicationController
   def destroy
     if signed_in?
       @statement = Statement.find(params[:id])
-      raise PermissionViolation unless @statement.destroyable_by?(current_user)
+      #raise PermissionViolation unless @statement.destroyable_by?(current_user)
       @statement.destroy
 
       respond_to do |format|
