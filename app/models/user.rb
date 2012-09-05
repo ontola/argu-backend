@@ -40,11 +40,17 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true, :if => lambda { new_record? || !password.blank? }
 =end
 
+#general
+  def getLogin
+    return (:username.blank? ? email : username )
+  end
+
+#permissions
   def role?(role)
     return !!self.roles.find_by_name(role.to_s.camelize)
   end
 
-
+#authentiaction
   def apply_omniauth(omniauth)
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
