@@ -42,7 +42,6 @@ class StatementargumentsController < ApplicationController
   def create
     if signed_in?
       @statementargument = Statementargument.new(params[:statementargument])
-      raise PermissionViolation unless Statementargument.creatable_by?(current_user)
       @statementargument.pro = (params[:statementargument][:pro]=="true")? true : false
 
       respond_to do |format|
@@ -56,7 +55,7 @@ class StatementargumentsController < ApplicationController
           format.js
           format.json { render json: @statementargument.errors, status: :unprocessable_entity }
         end
-    end
+      end
     else
       respond_to do |format|
         flash.now[:error] = t(:application_general_not_allowed) + "!"
@@ -70,18 +69,17 @@ class StatementargumentsController < ApplicationController
   # PUT /statementarguments/1.json
   def update
     if signed_in?
-    @statementargument = Statementargument.find(params[:id])
-    raise PermissionViolation unless @statementargument.updatable_by?(current_user)
+      @statementargument = Statementargument.find(params[:id])
 
-    respond_to do |format|
-      if @statementargument.update_attributes(params[:statementargument])
-        format.html { redirect_to @statementargument, notice: 'Statementargument was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @statementargument.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        if @statementargument.update_attributes(params[:statementargument])
+          format.html { redirect_to @statementargument, notice: 'Statementargument was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: "edit" }
+          format.json { render json: @statementargument.errors, status: :unprocessable_entity }
+        end
       end
-    end
     else
       respond_to do |format|
         flash.now[:error] = t(:application_general_not_allowed) + "!"
@@ -96,7 +94,6 @@ class StatementargumentsController < ApplicationController
   def destroy
     if signed_in?
       @statementargument = Statementargument.find(params[:id])
-      raise PermissionViolation unless @statementargument.destroyable_by?(current_user)
       @statementargument.destroy
 
       respond_to do |format|

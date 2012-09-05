@@ -62,8 +62,8 @@ class ArgumentsController < ApplicationController
   # PUT /arguments/1/revisions
   # PUT /arguments/1/revisions.json
   def setrevision
-      if signed_in?
-         @argument = Argument.find(params[:id])
+    if signed_in?
+      @argument = Argument.find(params[:id])
       @version = nil
       @rev = params[:rev]
 
@@ -75,7 +75,6 @@ class ArgumentsController < ApplicationController
       if @argument.nil?
         @argument = @argument.versions.last
       end
-      raise PermissionViolation unless @argument.updatable_by?(current_user)
 
       respond_to do |format|
         if @argument.save
@@ -116,7 +115,6 @@ class ArgumentsController < ApplicationController
   # POST /arguments.json
   def create
     if signed_in?
-      raise PermissionViolation unless Argument.creatable_by?(current_user)
       if !params[:statement_id].nil?
         @sa = Statementargument.create(Statement.find_by_id(params[:statement_id]), @argument)
       end
@@ -148,7 +146,6 @@ class ArgumentsController < ApplicationController
   def update
     if signed_in?
       @argument = Argument.find(params[:id])
-      raise PermissionViolation unless @argument.updatable_by?(current_user)
 
       respond_to do |format|
         if @argument.update_attributes(params[:argument])
@@ -173,7 +170,6 @@ class ArgumentsController < ApplicationController
   def destroy
     if signed_in?
       @argument = Argument.find(params[:id])
-      raise PermissionViolation unless @argument.destroyable_by?(current_user)
 
       @argument.destroy
 

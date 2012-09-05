@@ -1,6 +1,8 @@
 class StatementsController < ApplicationController
-  autocomplete :argument, :title, :full => true, :extra_data => [:id]
   before_filter :authenticate_user!, except: [:show, :index]
+  load_and_authorize_resource
+
+  autocomplete :argument, :title, :full => true, :extra_data => [:id]
 
   # GET /statements
   # GET /statements.json
@@ -16,8 +18,6 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
-    @statement = Statement.find(params[:id])
-    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @statement }
@@ -61,8 +61,8 @@ class StatementsController < ApplicationController
   # PUT /statements/1/revisions
   # PUT /statements/1/revisions.json
   def setrevision
-      if signed_in?
-         @statement = Statement.find(params[:id])
+    if signed_in?
+      @statement = Statement.find(params[:id])
       @version = nil
       @rev = params[:rev]
 
@@ -74,7 +74,6 @@ class StatementsController < ApplicationController
       if @statement.nil?
         @statement = @statement.versions.last
       end
-      #raise PermissionViolation unless @statement.updatable_by?(current_user)
 
       respond_to do |format|
         if @statement.save
@@ -97,8 +96,6 @@ class StatementsController < ApplicationController
   # GET /statements/new
   # GET /statements/new.json
   def new
-    @statement = Statement.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @statement }
@@ -107,15 +104,12 @@ class StatementsController < ApplicationController
 
   # GET /statements/1/edit
   def edit
-    @statement = Statement.find(params[:id])
   end
 
   # POST /statements
   # POST /statements.json
   def create
     if signed_in?
-      #raise PermissionViolation unless Statement.creatable_by?(current_user)
-      @statement = Statement.new(params[:statement])
       respond_to do |format|
         if @statement.save
           format.html { redirect_to @statement, notice: 'Statement was successfully created.' }
@@ -138,9 +132,6 @@ class StatementsController < ApplicationController
   # PUT /statements/1.json
   def update
     if signed_in?
-      @statement = Statement.find(params[:id])
-      #raise PermissionViolation unless @statement.updatable_by?(current_user)
-
       respond_to do |format|
         if @statement.update_attributes(params[:statement])
           format.html { redirect_to @statement, notice: 'Statement was successfully updated.' }
@@ -163,8 +154,6 @@ class StatementsController < ApplicationController
   # DELETE /statements/1.json
   def destroy
     if signed_in?
-      @statement = Statement.find(params[:id])
-      #raise PermissionViolation unless @statement.destroyable_by?(current_user)
       @statement.destroy
 
       respond_to do |format|
