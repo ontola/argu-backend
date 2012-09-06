@@ -10,6 +10,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable,
          :validatable#, :omniauthable
 
+  before_create :check_for_profile
+  after_create :mark_as_user
   after_destroy :cleanup
 
   # Virtual attribute for authenticating by either username or email
@@ -42,6 +44,11 @@ class User < ActiveRecord::Base
 =end
 
 #general
+  def self.find(id)
+    user = User.find_by_username(id.to_s)
+    user ||= User.find_by_id(id)
+    user ||= super(id)
+  end
   def getLogin
     return (:username.blank? ? email : username )
   end
@@ -74,8 +81,14 @@ class User < ActiveRecord::Base
       end
     end
 
-private 
+private
+  def check_for_profile
+    self.profile ||= Profile.create
+  end
   def cleanup
     self.authentications.destroy_all
+  end
+  def mark_as_user
+    self.roles << Role.find_by_name("user")
   end
 end
