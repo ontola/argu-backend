@@ -17,6 +17,8 @@
 </div>
 <div>
   <ul class="revunderbar">
+    <li><%= link_to("Statements", arguments_url) %></li>
+    <li><%= link_to("Arguments", statements_url) %></li>
     <% unless current_user.nil? %>
       <li><%= link_to("Profile", profile_path((current_user.username || current_user.profile.id))) %></li>
       <li><%= link_to("Sign out", destroy_user_session_url, method: :delete) %></li>

@@ -198,11 +198,7 @@ DEPENDENCIES
   omniauth-facebook (~> 1.4.0)
   omniauth-oauth2 (~> 1.0.0)
   omniauth-twitter (~> 0.0.13)
-<<<<<<< HEAD
   paper_trail (~> 2.6.3)
-=======
-  paper_trail
->>>>>>> feature-openid
   pg (~> 0.13.2)
   rails (~> 3.2.3)
   rails3-jquery-autocomplete (~> 1.0.7)
