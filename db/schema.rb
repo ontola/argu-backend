@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120904215321) do
+ActiveRecord::Schema.define(:version => 20120905133430) do
 
   create_table "activities", :force => true do |t|
     t.integer  "trackable_id"
@@ -71,6 +71,15 @@ ActiveRecord::Schema.define(:version => 20120904215321) do
   add_index "fb_users", ["email"], :name => "index_fb_users_on_email"
   add_index "fb_users", ["id"], :name => "index_fb_users_on_id"
 
+  create_table "profiles", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.text     "about"
+    t.string   "picture"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
   create_table "roles", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -78,9 +87,11 @@ ActiveRecord::Schema.define(:version => 20120904215321) do
   end
 
   create_table "roles_users", :id => false, :force => true do |t|
-    t.integer "role_id"
-    t.integer "user_id"
+    t.integer "role_id", :null => false
+    t.integer "user_id", :null => false
   end
+  add_index "roles_users", ["user_id", "role_id"], :name => "user_role", :unique => true
+
 
   create_table "statementarguments", :force => true do |t|
     t.integer "argument_id",                    :null => false
@@ -111,10 +122,10 @@ ActiveRecord::Schema.define(:version => 20120904215321) do
     t.datetime "created_at",                             :null => false
     t.datetime "updated_at",                             :null => false
     t.string   "username"
-    t.string   "name"
     t.string   "provider"
     t.string   "uid"
     t.string   "unconfirmed_email"
+    t.integer  "profile_id"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email"

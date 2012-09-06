@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
   has_and_belongs_to_many :roles
+  has_one :profile, dependent: :destroy
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -16,7 +17,7 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :name, :email, :password, :password_confirmation, :remember_me, :unconfirmed_email, :provider, :uid, :login
+  attr_accessible :username, :profile, :email, :password, :password_confirmation, :remember_me, :unconfirmed_email, :provider, :uid, :login
 
 =begin
  before_save { |user| user.email = email.downcase }
