@@ -21,6 +21,7 @@ Argu::Application.routes.draw do
   put "/arguments/:id/revisions/:rev" => "arguments#setrevision", as: 'update_revision_argument'
   
   #resources :sessions #, only: [:new, :create, :destroy]
+  resources :profiles
   resources :statementarguments
   resources :votes
   resources :comments

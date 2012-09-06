@@ -1,0 +1,12 @@
+<div class="profile" style="overflow: hidden; text-overflow:ellipsis;">
+	<ul id="head">
+		<% if @profile.user_id == current_user.id %><li><%= link_to("edit", edit_profile_url(@profile), html_options = { remote: true, id: :editbtn }) %></li><% end %>
+		<li><h1 id="txt">Profile</h1></li>
+	</ul>
+	<div id="profbody">
+		<%= image_tag (@profile.picture.blank? ? "icon_temp.png" : @profile.picture), options = { alt: "Profile picture", size: "45x45", style: "float: left; margin-right: 5px;" } %>
+		<h3 style="align:inline;"><%= @user.username %></h3>
+		<p><%= @profile.name %></p>
+		<p style="text-overflow:ellipsis; white-space: nowrap;"><%= mail_to(@user.email, "" + (@user.email.length > 25 ? (@user.email.to_s[0, 23] + "...") : @user.email unless @user.email.blank?).to_s )  %></p>
+	</div>
+</div>

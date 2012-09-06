@@ -196,9 +196,9 @@ DEPENDENCIES
   mongrel (= 1.2.0.pre2)
   nifty-generators
   omniauth (~> 1.0.0)
-  omniauth-facebook
+  omniauth-facebook (~> 1.4.0)
   omniauth-oauth2 (~> 1.0.0)
-  omniauth-twitter
+  omniauth-twitter (~> 0.0.13)
   paper_trail
   pg (~> 0.13.2)
   rails (~> 3.2.3)
