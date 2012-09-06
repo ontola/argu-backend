@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+	authorize_resource
 	def show
 		#let users find themselves by their username or id
 		# !username  regex must be configured!

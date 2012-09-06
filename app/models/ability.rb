@@ -5,14 +5,41 @@ class Ability
     user ||= User.new #Guest users
 
     if user.role? :coder
+        #The coder can do anything
         can :manage, :all
     elsif user.role? :admin
-        can :manage, :all
-    else
+        #The admin can manage all the generic objects
+        can :manage, :statements
+        can :manage, :arguments
+        can :manage, :statementarguments
+        can :manage, :comments
+        can :manage, :profiles
+        can :manage, :revisions
+        can :manage, :votes
+    elsif user.role? :user
+        #A general user can manage it's own profile and comments
+        #But can't delete general goods
+        can :read, :all
+        cannot :delete, :statements
+        cannot :delete, :arguments
+        cannot :update, :revisions
+        cannot :update, :statementarguments
+        cannot :delete, :statementarguments
+        can :manage, Profile do |profile|
+            user.profile == profile
+        end
         can :manage, Comment do |comment|
             comment.try(:user) == user
         end
-        can :read, :all
+        can :manage, Vote do |vote|
+            vote.try(:user) == user
+        end
+    else
+        #Guests (non-registered) are only able to read general goods
+        can :read, :statements
+        can :read, :arguments
+        can :read, :comments
+        can :read, :profiles
     end
         
 
