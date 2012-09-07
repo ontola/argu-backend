@@ -1,5 +1,5 @@
 class VotesController < ApplicationController
-  authorize_and_load_resource
+  load_and_authorize_resource
 
   # GET /votes
   # GET /votes.json
@@ -13,6 +13,9 @@ class VotesController < ApplicationController
   # GET /votes/1
   # GET /votes/1.json
   def show
+    @sa = Statementargument.find_by_id(@vote.statementargument_id)
+    @s = @sa.statement.title 
+    @a = @sa.argument.title
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @vote }

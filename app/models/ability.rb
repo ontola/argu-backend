@@ -3,46 +3,40 @@ class Ability
 
   def initialize(user)
     user ||= User.new #Guest users
-
     if user.role? :coder
         #The coder can do anything
         can :manage, :all
     elsif user.role? :admin
         #The admin can manage all the generic objects
-        can :manage, :statements
-        can :manage, :arguments
-        can :manage, :statementarguments
-        can :manage, :comments
-        can :manage, :profiles
-        can :manage, :revisions
-        can :manage, :votes
+        can :manage, [:statements, 
+                      :arguments,
+                      :statementarguments,
+                      :comments,
+                      :profiles,
+                      :revisions,
+                      :votes]
     elsif user.role? :user
         #A general user can manage it's own profile and comments
         #But can't delete general goods
         can :read, :all
-        can :create, :statements
-        can :create, :arguments
-        can :create, :statementarguments
-        cannot :delete, :statements
-        cannot :delete, :arguments
-        cannot :update, :revisions
-        cannot :update, :statementarguments
-        cannot :delete, :statementarguments
-        can :manage, Profile do |profile|
+        can :create, [:statements, :arguments, :statementarguments]
+        cannot :delete, [:statements, :arguments, :statementarguments]
+        cannot [:update, :delete], [:revisions, :statementarguments]
+        can [:edit, :update, :delete], Profile do |profile|
             user.profile == profile
         end
-        can :manage, Comment do |comment|
+        can [:edit, :update, :delete], Comment do |comment|
             comment.try(:user) == user
         end
-        can :manage, Vote do |vote|
-            vote.try(:user) == user
+        can [:edit, :update, :delete], Vote do |vote|
+            vote.user_id == user.id
         end
     else
         #Guests (non-registered) are only able to read general goods
-        can :read, :statements
-        can :read, :arguments
-        can :read, :comments
-        can :read, :profiles
+        can :read, [:statements,
+                    :arguments,
+                    :comments,
+                    :profiles]
     end
         
 

@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
   }
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
+    request.env['HTTP_REFERER'] ||= root_path
+    redirect_to :back, :alert => exception.message
   end
 
   def set_locale
