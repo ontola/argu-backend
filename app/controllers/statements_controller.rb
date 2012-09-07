@@ -1,7 +1,7 @@
 class StatementsController < ApplicationController
   load_and_authorize_resource
 
-  autocomplete :argument, :title, :full => true, :extra_data => [:id]
+  #autocomplete :argument, :title, :full => true, :extra_data => [:id] #Not currently in use
 
   # GET /statements
   # GET /statements.json
