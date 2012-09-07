@@ -19,7 +19,9 @@ class User < ActiveRecord::Base
   attr_accessor :login
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :profile, :email, :password, :password_confirmation, :remember_me, :unconfirmed_email, :provider, :uid, :login
+  attr_accessible :username, :profile, :email, :password, :password_confirmation,
+                  :remember_me, :unconfirmed_email, :provider, :uid, :login,
+                  :roles
 
 =begin
  before_save { |user| user.email = email.downcase }
@@ -55,7 +57,7 @@ class User < ActiveRecord::Base
 
 #permissions
   def role?(role)
-    return !!self.roles.find_by_name(role.to_s.camelize)
+    return !!self.roles.find_by_name(role.to_s.downcase)
   end
 
 #authentiaction
