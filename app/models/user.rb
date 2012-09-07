@@ -7,43 +7,42 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable,
-         :validatable#, :omniauthable
+         :recoverable, :rememberable, :trackable#,
+         #:validatable, :omniauthable
 
   before_create :check_for_profile
   after_create :mark_as_user
   after_destroy :cleanup
+  before_save { |user| user.email = email.downcase }
+  before_save :normalize_blank_values
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
-  attr_accessor :login
+  attr_accessor :login, :current_password, :email
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :profile, :email, :password, :password_confirmation,
                   :remember_me, :unconfirmed_email, :provider, :uid, :login,
-                  :roles
-
-=begin
- before_save { |user| user.email = email.downcase }
+                  :roles, :current_password
 
   USERNAME_FORMAT_REGEX = /^\d*[a-zA-Z][a-zA-Z0-9]*$/i
-
   NAME_FORMAT_REGEX =  /^[a-z]{1,50}/i
   PASSWORD_FORMAT_REGEX = /^[a-z0-9_]{6,128}/i
 
   validates :username, presence: true,
-		       length: { maximum:20, minimum: 3},
+		       length: { in: 4..20 },
 		       format: { with: USERNAME_FORMAT_REGEX },
 		       uniqueness: { case_sensetive: false }
-  validates :email,
-		    format: { with: RFC822::EMAIL },
-		    uniqueness: { case_sensetive: false }
+  validates :email, allow_blank: true,
+		    format: { with: RFC822::EMAIL }
+=begin
   validates :name, allow_blank:true, format: { with: NAME_FORMAT_REGEX }
   validates :password,
 		       length: { minimum: 6, maximum: 128 },
 		       format: { with: PASSWORD_FORMAT_REGEX }
   validates :password_confirmation, presence: true, :if => lambda { new_record? || !password.blank? }
 =end
+
 
 #general
   def self.find(id)
@@ -73,6 +72,10 @@ class User < ActiveRecord::Base
     authentications.any? && password.blank?
   end
 
+  def self.isValidUsername?(name)
+    USERNAME_FORMAT_REGEX.match(name.to_s)
+  end
+
   #Provides username or email login
   def self.find_first_by_auth_conditions(warden_conditions)
       conditions = warden_conditions.dup
@@ -92,5 +95,10 @@ private
   end
   def mark_as_user
     self.roles << Role.find_by_name("user")
+  end
+  def normalize_blank_values
+    attributes.each do |column, value|
+      self[column].present? || self[column] = nil
+    end
   end
 end
