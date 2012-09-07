@@ -1,6 +1,6 @@
 <div class="profile" style="overflow: hidden; text-overflow:ellipsis;">
 	<ul id="head">
-		<% if @profile.user_id == current_user.id %><li><%= link_to("edit", edit_profile_url(@profile), html_options = { remote: true, id: :editbtn }) %></li><% end %>
+		<% if @profile.user_id == current_user.id %><li><%= link_to("edit", edit_profile_url(@profile), html_options = { remote: false, id: :editbtn }) %></li><% end %>
 		<li><h1 id="txt">Profile</h1></li>
 	</ul>
 	<div id="profbody">
