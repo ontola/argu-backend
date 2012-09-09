@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
   before_create :check_for_profile
   after_create :mark_as_user
   after_destroy :cleanup
-  before_save { |user| user.email = email.downcase }
+  before_save { |user| user.email = email.downcase unless email.blank? }
   before_save :normalize_blank_values
 
   # Virtual attribute for authenticating by either username or email

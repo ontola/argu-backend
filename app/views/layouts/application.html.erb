@@ -2,15 +2,19 @@
 <html>
 <head>
   <title><%= yield(:title) == "" ? "" : yield(:title) + " | " %><%= t(:application_name) %></title>
+  <% cache do %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= csrf_meta_tags %>
   <meta charset="UTF-8">
   <%= render 'layouts/shim'%>
   <%= stylesheet_link_tag "newlayout" %>
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300' rel='stylesheet' type='text/css'>
+  <% end %>
 </head>
 <body>
+  <% cache do %>
   <%= render 'layouts/header' %>
+  <% end %>
   <div id="fb-root"></div>
   <div class="container">
     <% flash.each do |key,value| %>
@@ -21,6 +25,7 @@
     <%= yield %>
     <div class="push"></div>
   </div>
+  <% cache do %>
   <%= render 'layouts/footer'%>
   <!-- It should load faster when placed in the bottom.. -->
   <%= javascript_include_tag "application" %>
@@ -33,5 +38,6 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
     })();
   </script>
+  <% end %>
 </body>
 </html>
