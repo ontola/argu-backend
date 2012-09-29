@@ -126,3 +126,4 @@ ActiveRecord::Schema.define(version: 20120905133430) do
   add_index "votes", ["statementargument_id", "user_id"], name: "index_votes_on_statementargument_id_and_user_id", unique: true
 
 end
+  
