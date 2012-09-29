@@ -10,7 +10,7 @@ class Argument < ActiveRecord::Base
   has_paper_trail
   acts_as_commentable
 
-  attr_accessible :id, :content, :title, :argtype, :statements
+  attr_accessible :id, :content, :title, :argtype, :statements, :statementarguments
 
   validates :content, presence: true, length: { minimum: 5, maximum: 500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
