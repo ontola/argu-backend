@@ -20,7 +20,7 @@ gem 'omniauth-twitter', "~> 0.0.13"
 #gem 'omniauth-openid'
 gem 'mongrel', '1.2.0.pre2'
 gem 'cancan', '~> 1.6.8'
-gem 'newrelic_rpm'
+
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -38,6 +38,10 @@ group :development do
   gem 'rspec-rails', '2.9.0'
   gem 'annotate','~> 2.4.1beta1'
   gem "nifty-generators", '~> 0.4.6'
+end
+
+group :production do 
+	gem 'newrelic_rpm'
 end
 
 gem "mocha", '~> 0.12.3',:group => :test
