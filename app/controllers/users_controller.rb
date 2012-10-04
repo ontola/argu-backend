@@ -7,6 +7,10 @@ class UsersController < ApplicationController
 		@user = User.find_by_username(params[:login])
 		@user ||= User.find_by_id(params[:login])
 
+		@tab = params['tab']
+		@tab ||= "account"
+		@tab = @tab.downcase
+		
 		unless @user.nil? 
 			@authentications = @user.authentications
 			respond_to do |format|

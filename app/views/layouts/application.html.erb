@@ -7,7 +7,8 @@
   <%= csrf_meta_tags %>
   <meta charset="UTF-8">
   <%= render 'layouts/shim'%>
-  <%= stylesheet_link_tag "newlayout" %>
+  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "fb" %>
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300' rel='stylesheet' type='text/css'>
   <% end %>
 </head>
@@ -27,9 +28,6 @@
   </div>
   <% cache do %>
   <%= render 'layouts/footer'%>
-  <!-- It should load faster when placed in the bottom.. -->
-  <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "fb" %>
   <script type="text/javascript">
     var uvOptions = {};
     (function() {

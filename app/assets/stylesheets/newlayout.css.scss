@@ -460,10 +460,12 @@ a:hover
 .form-horizontal
 {
 	width: 237px;
+	min-height: 200px;
 	border-right-style: solid;
 	border-color: #468783;
 	border-width: 1px;
 	padding: 0px;
+	margin-right: 20px;
 	float: left;
 }
 

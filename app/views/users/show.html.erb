@@ -15,5 +15,13 @@
     </ul>
   </div>
 <% end %>
+<%= render 'navigation' %>
+<% if @tab == "account" %>
 <%= render 'account' %>
-<%= render 'activity' %>
+<% elsif @tab == "profile" %>
+<%= render 'profile' %>
+<% elsif @tab == "links" %>
+<%= render 'linked_accounts' %>
+<% else %>
+<%= render 'account' %>
+<% end %>
