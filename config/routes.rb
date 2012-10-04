@@ -3,8 +3,6 @@ Argu::Application.routes.draw do
   match 'auth/:provider/callback' => "authentications#create"
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
-  get "/users/:login" => "users#show", as: 'user'
-  resources :users, :only => [:show]
 
   #resources :users
   resources :statements do 
@@ -27,13 +25,12 @@ Argu::Application.routes.draw do
   resources :comments
 
   ##get "users/new"
-  #get "/users/:id/settings" => "users#settings"
-  #post "/users/:id/settings" => "users#settingsUpdate"
 
   root to: 'static_pages#home'
 
   match "/", to: "static_pages#home"
   match "/home", to: "static_pages#home"
+  match "/settings", to: "users#show"
   #match "/signup", to: "users#new"
   #match "/signin", to: "sessions#new"
   #get "/signout", to: "sessions#destroy", via: :delete
