@@ -1,5 +1,5 @@
 Argu::Application.routes.draw do
-  resources :authentications
+  resources :authentications, only: [:create, :destoy]
   match 'auth/:provider/callback' => "authentications#create"
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
