@@ -1,0 +1,7 @@
+<div class="settings-menu form-horizontal">
+	<ul class="nav" id="head">
+		<li><%= link_to "Account", user_path(current_user.id, tab: "account"), html_option = { class: (@tab.eql?("account")) ? "active" : "" } %></li>
+		<li><%= link_to "Profile", user_path(current_user.id, tab: "profile"), html_option = { class: (@tab.eql?("profile")) ? "active" : "" } %></li>
+		<li><%= link_to "Links", user_path(current_user.id, tab: "links"), html_option = { class: (@tab.eql?("links")) ? "active" : "" } %></li>
+	</ul>
+</div>

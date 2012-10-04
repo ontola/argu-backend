@@ -1,0 +1,15 @@
+<div class="setting-content">
+	<ul>
+		<li><h1 id="txt">Profile</h1></li>
+	</ul>
+	<div>
+		<div class="settings-row">
+			<div class="column-name">Name</div>
+			<div class="edit column-content"><%= current_user.profile.name %></div>
+		</div>
+		<div class="settings-row">
+			<div class="column-name">About</div>
+			<div class="edit_area column-content"><%= current_user.profile.about %></div>
+		</div>
+	</div>
+</div>
