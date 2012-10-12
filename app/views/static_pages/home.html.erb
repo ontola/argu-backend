@@ -3,31 +3,21 @@
 <div>
   <div>
     <h1><%= t(:home_header) %></h1>
-    <div class="row">
-      <div class="span6">
+    <div>
+      <div class="subtitle">
         <h2><%= t(:home_title_new) + ": " + t(:statement_title).pluralize %></h2>
-        <span>
-          <% @newstatements.first(4).each do |statement| %>
-		  	<%= render 'statements/statements', statement: statement %>
-		  <% end %>
-        </span>
       </div>
-      <div class="span6">
-        <h2><%= t(:home_title_new) + ": " + t(:argument_title).pluralize %></h2>
-        <span>
-          <% @newarguments.first(4).each do |argument| %>
-		  	<%= render 'arguments/arguments', argument: argument %>
-		  <% end %>
-        </span>
-      </div>
+      <% @newstatements.first(4).each do |statement| %>
+	  	  <%= render 'statements/statements', statement: statement %>
+	    <% end %>
     </div>
-<!--    <div class="row">
-      <div class="span12">
-      <h2><%= t(:home_title_follow) %></h2>
-      <pre>
-        <%= "Some ruby generated stories" %>
-      </pre>
+    <div>
+      <div class="subtitle">
+        <h2><%= t(:home_title_new) + ": " + t(:argument_title).pluralize %></h2>
       </div>
-    </div> -->
+      <% @newarguments.first(4).each do |argument| %>
+        <%= render 'arguments/arguments', argument: argument %>
+      <% end %>
+    </div>
   </div>
 </div>  

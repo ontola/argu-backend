@@ -1,6 +1,6 @@
 <% unless current_user.nil? %>
   <% provide(:title, (@user.username.nil? ? @user.email : @user.username) || t(:users_show_title)) %>
-  <% @title = ((current_user.id == @user.id)  ? 'profile' : 'users') %>
+  <% @title = ((current_user.id == @user.id)  ? 'Account' : 'users') %>
 <% else %>
   <% @title = 'users' %>
 <% end %>
@@ -15,5 +15,13 @@
     </ul>
   </div>
 <% end %>
+<%= render 'navigation' %>
+<% if @tab == "account" %>
+<%= render 'account' %>
+<% elsif @tab == "profile" %>
 <%= render 'profile' %>
-<%= render 'activity' %>
+<% elsif @tab == "links" %>
+<%= render 'linked_accounts' %>
+<% else %>
+<%= render 'account' %>
+<% end %>

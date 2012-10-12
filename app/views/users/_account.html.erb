@@ -1,0 +1,15 @@
+<div class="setting-content">
+	<ul>
+		<li><h1 id="txt">Account</h1></li>
+	</ul>
+	<div>
+		<div class="settings-row">
+			<div class="column-name">Username</div>
+			<div class="edit column-content"><%= @user.username %></div>
+		</div>
+		<div class="settings-row">
+			<div class="column-name">Email</div>
+			<div class="edit column-content"><%= current_user.email.blank? ? "None yet" : current_user.email %></div>
+		</div>
+	</div>
+</div>

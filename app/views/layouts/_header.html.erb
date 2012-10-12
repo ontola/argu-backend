@@ -4,7 +4,7 @@
     <li><input type="text" id="search"></li>
     <div id="navr">
       <% if !current_user.nil?%>
-        <li><%= link_to t(:header_menuitem_settings), '/users/' + current_user.id.to_s, id: "account" %>
+        <li><%= link_to t(:header_menuitem_settings), '/profiles/' + (current_user.username.blank? ? current_user.profile.id.to_s : current_user.username.to_s), id: "account" %>
           <ul class="dropdown">
             <li>Test</li>
           </ul></li>
@@ -17,8 +17,10 @@
 </div>
 <div>
   <ul class="revunderbar">
+    <li><%= link_to("Statements", statements_url) %></li>
+    <li><%= link_to("Arguments", arguments_url) %></li>
     <% unless current_user.nil? %>
-      <li><%= link_to("Profile", user_path((current_user.username || current_user.id))) %></li>
+      <li><%= link_to("Settings", settings_url) %></li>
       <li><%= link_to("Sign out", destroy_user_session_url, method: :delete) %></li>
     <% else %>
       <li><%= link_to("Sign up", new_user_registration_url) %></li>

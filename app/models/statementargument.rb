@@ -5,7 +5,6 @@ class Statementargument < ActiveRecord::Base
 	belongs_to :argument
 	has_many :votes
 
-	has_restful_permissions
 	has_paper_trail
 
 	attr_accessible :pro, :statement_id, :argument_id, :votes
@@ -17,18 +16,6 @@ class Statementargument < ActiveRecord::Base
 	validates_uniqueness_of :argument_id, :scope => [:statement_id]
 
 public
-	class << self
-		def creatable_by?(user)
-	    	Settings['permissions.create.statementargument'] >= user.clearance unless user.clearance.nil?
-		end
-	end
-	def updatable_by?(user)
-		Settings['permissions.update.statementargument'] >= user.clearance unless user.clearance.nil?
-	end
-	def destroyable_by?(user)
-		Settings['permissions.destroy.statementargument'] >= user.clearance unless user.clearance.nil?
-	end
-
 	def voted_by?(user)
 		!(self.votes.find_by_user_id(user.id).nil?) unless user.nil?
 	end

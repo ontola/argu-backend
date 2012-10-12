@@ -5,8 +5,18 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-ua = User.create(username: 'thom', email:'thom@wthex.com', password:'foobar', password_confirmation:'foobar', clearance: 0)
-ua = User.create(username: 'admin', email:'admin@argu.com', password:'foobar', password_confirmation:'foobar', clearance: 0)
+['user', 'moderator', 'admin', 'coder'].each do |role|
+  Role.find_or_create_by_name(role).save
+end
+
+ua = User.create(email: 'thomvankalkeren@gmail.com', username: 'TheFletcher91', password: 'foobar', password_confirmation:'foobar' );
+ub = User.create(username: 'admin', email: 'postmaster@argu.nl', password:'foobar', password_confirmation:'foobar')
+
+ua.profile = Profile.create(name: 'Thom van Kalkeren', picture: 'http://www.wthex.com/images/coolcookie.gif', about: "I'm the coder!")
+ub.profile = Profile.create(name: 'Administrator')
+
+ua.roles << Role.find_by_name('coder')
+ub.roles << Role.find_by_name('admin')
 
 sa = Statement.create(title:'Free education', content: 'Education should be free')
 sb = Statement.create(title:'Statement2', content: 'Another statement')

@@ -7,7 +7,7 @@
 	<div class="span6">
 		<dl class="dl-horizontal">
 			<dt>Statementarg</dt>
-			<dd><%= Statement.find_by_id(Statementargument.find_by_id(@vote.statementargument_id).statement_id).title %>, <%= Argument.find_by_id(Statementargument.find_by_id(@vote.statementargument_id).argument_id).title %></dd>
+			<dd><%= @s %>, <%= @a %></dd>
 			<dt>User</dt>
 			<dd><%= User.find_by_id(@vote.user_id).email %></dd>
 			<dt>Type</dt>

@@ -1,9 +1,8 @@
 class StatementargumentsController < ApplicationController
+  load_and_authorize_resource
   # GET /statementarguments
   # GET /statementarguments.json
   def index
-    @statementarguments = Statementargument.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @statementarguments }
@@ -13,8 +12,6 @@ class StatementargumentsController < ApplicationController
   # GET /statementarguments/1
   # GET /statementarguments/1.json
   def show
-    @statementargument = Statementargument.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @statementargument }
@@ -24,8 +21,6 @@ class StatementargumentsController < ApplicationController
   # GET /statementarguments/new
   # GET /statementarguments/new.json
   def new
-    @statementargument = Statementargument.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @statementargument }
@@ -34,34 +29,23 @@ class StatementargumentsController < ApplicationController
 
   # GET /statementarguments/1/edit
   def edit
-    @statementargument = Statementargument.find(params[:id])
   end
 
   # POST /statementarguments
   # POST /statementarguments.json
   def create
-    if signed_in?
-      @statementargument = Statementargument.new(params[:statementargument])
-      raise PermissionViolation unless Statementargument.creatable_by?(current_user)
-      @statementargument.pro = (params[:statementargument][:pro]=="true")? true : false
+    @statementargument.pro = (params[:statementargument][:pro]=="true")? true : false
 
-      respond_to do |format|
-        if @statementargument.save
-          format.html { redirect_to Statement.find_by_id(@statementargument.statement_id), notice: 'Statementargument was successfully created.' }
-          format.js
-          format.json { render json: @statementargument, status: :created, location: @statementargument }
-        else
-          flash.now[:errors] = @statementargument.errors.to_a
-          format.html { redirect_to Statement.find_by_id(@statementargument.statement_id) } #render action: "new" }
-          format.js
-          format.json { render json: @statementargument.errors, status: :unprocessable_entity }
-        end
-    end
-    else
-      respond_to do |format|
-        flash.now[:error] = t(:application_general_not_allowed) + "!"
-        format.html { redirect_to statements_url}
-        format.json { head :no_content }
+    respond_to do |format|
+      if @statementargument.save
+        format.html { redirect_to Statement.find_by_id(@statementargument.statement_id), notice: 'Statementargument was successfully created.' }
+        format.js
+        format.json { render json: @statementargument, status: :created, location: @statementargument }
+      else
+        flash.now[:errors] = @statementargument.errors.to_a
+        format.html { redirect_to Statement.find_by_id(@statementargument.statement_id) } #render action: "new" }
+        format.js
+        format.json { render json: @statementargument.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -69,10 +53,6 @@ class StatementargumentsController < ApplicationController
   # PUT /statementarguments/1
   # PUT /statementarguments/1.json
   def update
-    if signed_in?
-    @statementargument = Statementargument.find(params[:id])
-    raise PermissionViolation unless @statementargument.updatable_by?(current_user)
-
     respond_to do |format|
       if @statementargument.update_attributes(params[:statementargument])
         format.html { redirect_to @statementargument, notice: 'Statementargument was successfully updated.' }
@@ -82,33 +62,16 @@ class StatementargumentsController < ApplicationController
         format.json { render json: @statementargument.errors, status: :unprocessable_entity }
       end
     end
-    else
-      respond_to do |format|
-        flash.now[:error] = t(:application_general_not_allowed) + "!"
-        format.html { redirect_to statements_url}
-        format.json { head :no_content }
-      end
-    end
   end
 
   # DELETE /statementarguments/1
   # DELETE /statementarguments/1.json
   def destroy
-    if signed_in?
-      @statementargument = Statementargument.find(params[:id])
-      raise PermissionViolation unless @statementargument.destroyable_by?(current_user)
-      @statementargument.destroy
+    @statementargument.destroy
 
-      respond_to do |format|
-        format.html { redirect_to Statement.find_by_id(@statementargument.statement_id) }
-        format.json { head :no_content }
-      end
-    else
-      respond_to do |format|
-        flash.now[:error] = t(:application_general_not_allowed) + "!"
-        format.html { redirect_to statements_url}
-        format.json { head :no_content }
-      end
+    respond_to do |format|
+      format.html { redirect_to Statement.find_by_id(@statementargument.statement_id) }
+      format.json { head :no_content }
     end
   end
 end

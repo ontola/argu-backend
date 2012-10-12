@@ -1,4 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
+	#load_and_authorize_resource, unless: [:create, :edit] #Not sure yet
+
 	def create
 		super
 		session[:omniauth] = nil unless @user.new_record?

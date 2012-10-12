@@ -1,12 +1,11 @@
 class StatementsController < ApplicationController
-  autocomplete :argument, :title, :full => true, :extra_data => [:id]
-  before_filter :authenticate_user!, except: [:show, :index]
+  load_and_authorize_resource
+
+  #autocomplete :argument, :title, :full => true, :extra_data => [:id] #Not currently in use
 
   # GET /statements
   # GET /statements.json
   def index
-    @statements = Statement.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @statements }
@@ -16,8 +15,6 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
-    @statement = Statement.find(params[:id])
-    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @statement }
@@ -27,7 +24,7 @@ class StatementsController < ApplicationController
   # GET /statements/1/revisions/:rev
   # GET /statements/1/revisions/:rev.json
   def revisions
-    @statement = Statement.find(params[:id])
+    authorize! :read, :revisions
     @version = nil
     @rev = params[:rev]
 
@@ -49,6 +46,7 @@ class StatementsController < ApplicationController
   # GET /statements/1/revisions
   # GET /statements/1/revisions.json
   def allrevisions
+    authorize! :index, :revisions
     @statement = Statement.find(params[:id])
     @revisions = @statement.versions
 
@@ -61,35 +59,27 @@ class StatementsController < ApplicationController
   # PUT /statements/1/revisions
   # PUT /statements/1/revisions.json
   def setrevision
-      if signed_in?
-         @statement = Statement.find(params[:id])
-      @version = nil
-      @rev = params[:rev]
+    authorize :update, :revisions
+    @statement = Statement.find(params[:id])
+    @version = nil
+    @rev = params[:rev]
 
-      unless @rev.nil?
-        @version = @statement.versions.find_by_id(@rev);
-        @statement = @version.reify
-      end
-      
-      if @statement.nil?
-        @statement = @statement.versions.last
-      end
-      #raise PermissionViolation unless @statement.updatable_by?(current_user)
+    unless @rev.nil?
+      @version = @statement.versions.find_by_id(@rev);
+      @statement = @version.reify
+    end
+    
+    if @statement.nil?
+      @statement = @statement.versions.last
+    end
 
-      respond_to do |format|
-        if @statement.save
-          format.html { redirect_to @statement, notice: 'Statement was successfully restored.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @statement.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-      respond_to do |format|
-        flash.now[:error] = t(:application_general_not_allowed) + "!"
-        format.html { redirect_to statements_url}
+    respond_to do |format|
+      if @statement.save
+        format.html { redirect_to @statement, notice: 'Statement was successfully restored.' }
         format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @statement.errors, status: :unprocessable_entity }
       end
     end
   end  
@@ -97,8 +87,6 @@ class StatementsController < ApplicationController
   # GET /statements/new
   # GET /statements/new.json
   def new
-    @statement = Statement.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @statement }
@@ -107,29 +95,18 @@ class StatementsController < ApplicationController
 
   # GET /statements/1/edit
   def edit
-    @statement = Statement.find(params[:id])
   end
 
   # POST /statements
   # POST /statements.json
   def create
-    if signed_in?
-      #raise PermissionViolation unless Statement.creatable_by?(current_user)
-      @statement = Statement.new(params[:statement])
-      respond_to do |format|
-        if @statement.save
-          format.html { redirect_to @statement, notice: 'Statement was successfully created.' }
-          format.json { render json: @statement, status: :created, location: @statement }
-        else
-          format.html { render action: "new" }
-          format.json { render json: @statement.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-      respond_to do |format|
-        flash.now[:error] = t(:application_general_not_allowed) + "!"
-        format.html { redirect_to statements_url}
-        format.json { head :no_content }
+    respond_to do |format|
+      if @statement.save
+        format.html { redirect_to @statement, notice: 'Statement was successfully created.' }
+        format.json { render json: @statement, status: :created, location: @statement }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @statement.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -137,24 +114,13 @@ class StatementsController < ApplicationController
   # PUT /statements/1
   # PUT /statements/1.json
   def update
-    if signed_in?
-      @statement = Statement.find(params[:id])
-      #raise PermissionViolation unless @statement.updatable_by?(current_user)
-
-      respond_to do |format|
-        if @statement.update_attributes(params[:statement])
-          format.html { redirect_to @statement, notice: 'Statement was successfully updated.' }
-          format.json { head :no_content }
-        else
-          format.html { render action: "edit" }
-          format.json { render json: @statement.errors, status: :unprocessable_entity }
-        end
-      end
-    else
-      respond_to do |format|
-        flash.now[:error] = t(:application_general_not_allowed) + "!"
-        format.html { redirect_to statements_url}
+    respond_to do |format|
+      if @statement.update_attributes(params[:statement])
+        format.html { redirect_to @statement, notice: 'Statement was successfully updated.' }
         format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @statement.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -162,21 +128,11 @@ class StatementsController < ApplicationController
   # DELETE /statements/1
   # DELETE /statements/1.json
   def destroy
-    if signed_in?
-      @statement = Statement.find(params[:id])
-      #raise PermissionViolation unless @statement.destroyable_by?(current_user)
-      @statement.destroy
+    @statement.destroy
 
-      respond_to do |format|
-        format.html { redirect_to statements_url }
-        format.json { head :no_content }
-      end
-    else
-      respond_to do |format|
-        flash.now[:error] = t(:application_general_not_allowed) + "!"
-        format.html { redirect_to statements_url}
-        format.json { head :no_content }
-      end
+    respond_to do |format|
+      format.html { redirect_to statements_url }
+      format.json { head :no_content }
     end
   end
 end

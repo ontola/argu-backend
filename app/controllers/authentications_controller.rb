@@ -1,7 +1,4 @@
 class AuthenticationsController < ApplicationController
-  def index
-    @authentications = current_user.authentications if current_user
-  end
 
   def create
     omniauth = request.env["omniauth.auth"]
@@ -14,11 +11,17 @@ class AuthenticationsController < ApplicationController
       flash[:notice] = "Authentication succesfull"
       redirect_to authentications_url
     else
-      user = User.new(:email => omniauth['info']['email'], :name => omniauth['info']['name'], :username => omniauth['info']['nickname'], :password => Devise.friendly_token[0,20])
+      omniauth['info']['nickname'] = User.isValidUsername?(omniauth['info']['nickname']) ? omniauth['info']['nickname'] : ('u'+'%010d' % rand(10 ** 10)).to_s
+      user = User.create(username: omniauth['info']['nickname'],
+                         email: omniauth['info']['email'],
+                         profile: Profile.create(name: omniauth['info']['name'],
+                                                 picture: omniauth['info']['image']),
+                         :password => Devise.friendly_token[0,20])
       user.apply_omniauth(omniauth)
       if user.save
         flash[:notice] = "Signed in succesfully"
-        sign_in_and_redirect(:user, user)
+        sign_in(:user, user)
+        redirect_to edit_user_registration_path
       else
         session[:omniauth] = omniauth.except('extra')
         redirect_to new_user_registration_url

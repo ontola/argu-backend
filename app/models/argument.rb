@@ -7,26 +7,13 @@ class Argument < ActiveRecord::Base
   before_save :trim_data
   before_save :cap_title
 
-  has_restful_permissions
   has_paper_trail
   acts_as_commentable
 
-  attr_accessible :id, :content, :title, :argtype, :statements
+  attr_accessible :id, :content, :title, :argtype, :statements, :statementarguments
 
   validates :content, presence: true, length: { minimum: 5, maximum: 500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
-
-  class << self
-    def creatable_by?(user)
-      Settings['permissions.create.argument'] >= user.clearance unless user.clearance.nil?
-    end
-  end
-  def updatable_by?(user)
-    Settings['permissions.update.argument'] >= user.clearance unless user.clearance.nil?
-  end
-  def destroyable_by?(user)
-    Settings['permissions.destroy.argument'] >= user.clearance unless user.clearance.nil?
-  end
 
   def trim_data
     self.title = title.strip

@@ -1,11 +1,12 @@
 class UsersController < ApplicationController
+	authorize_resource
 	def show
-		#let users find themselves by their username or id
-		# !username  regex must be configured!
-		# !to require at least one alpha char!
-		@user = User.find_by_username(params[:login])
-		@user ||= User.find_by_id(params[:login])
+		@user = current_user
 
+		@tab = params['tab']
+		@tab ||= "account"
+		@tab = @tab.downcase
+		
 		unless @user.nil? 
 			@authentications = @user.authentications
 			respond_to do |format|

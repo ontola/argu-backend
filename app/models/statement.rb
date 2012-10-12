@@ -7,25 +7,12 @@ class Statement < ActiveRecord::Base
   before_save :trim_data
   before_save :cap_title
 
-  has_restful_permissions
   has_paper_trail
 
   attr_accessible :id, :title, :content, :arguments, :statementarguments, :statetype
  
   validates :content, presence: true, length: { minimum: 5, maximum: 140 }
   validates :title, presence: true, length: { minimum: 5, maximum: 50 }
-
-  class << self
-    def creatable_by?(user)
-      Settings['permissions.create.statement'] >= user.clearance unless user.clearance.nil?
-    end
-  end
-  def updatable_by?(user)
-    Settings['permissions.update.statement'] >= user.clearance unless user.clearance.nil?
-  end
-  def destroyable_by?(user)
-    Settings['permissions.destroy.statement'] >= user.clearance unless user.clearance.nil?
-  end
 
   def trim_data
     self.title = title.strip
