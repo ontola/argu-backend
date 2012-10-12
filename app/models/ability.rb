@@ -19,7 +19,8 @@ class Ability
         #A general user can manage it's own profile and comments
         #But can't delete general goods
         can :read, :all
-        can :create, [Statement, Argument, Statementargument]
+        can :create, [Statement, Argument, Statementargument, Comment]
+        can :placeComment, [Statement, Argument, Comment]
         cannot :delete, [Statement, Argument, Statementargument]
         cannot [:update, :delete], [Version, Statementargument]
         can [:edit, :update, :delete], Profile do |profile|

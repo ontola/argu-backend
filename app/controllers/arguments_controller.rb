@@ -109,7 +109,7 @@ class ArgumentsController < ApplicationController
     @argument.title = params[:argument][:title]
     @argument.content = params[:argument][:content]
     @argument.argtype = params[:argument][:argtype]
-    @argument.statementarguments << Statementargument.create(
+    @statement = Statementargument.create(
                                   statement_id: params[:statement_id].to_s,
                                    argument_id: @argument.id,
                                            pro: params[:pro].to_s)
@@ -125,11 +125,11 @@ class ArgumentsController < ApplicationController
     if !params[:content].nil?
       @argument.content = params[:content]
     end
-=end  
-
+=end
     respond_to do |format|
       if @argument.save
-        format.html { redirect_to @argument, notice: 'Argument was successfully created.' }
+        @argument.statementarguments << @statement
+        format.html { redirect_to (params[:statement_id].blank? ? @argument : Statement.find_by_id(params[:statement_id])), notice: 'Argument was successfully created.' }
         format.json { render json: @argument, status: :created, location: @argument }
       else
         format.html { render action: "new", pro: params[:pro], statement_id: params[:statement_id] }
