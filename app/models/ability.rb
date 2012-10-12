@@ -8,20 +8,20 @@ class Ability
         can :manage, :all
     elsif user.role? :admin
         #The admin can manage all the generic objects
-        can :manage, [:statements, 
-                      :arguments,
-                      :statementarguments,
-                      :comments,
-                      :profiles,
-                      :revisions,
-                      :votes]
+        can :manage, [Statement, 
+                      Argument,
+                      Statementargument,
+                      Comment,
+                      Profile,
+                      Revision,
+                      Vote]
     elsif user.role? :user
         #A general user can manage it's own profile and comments
         #But can't delete general goods
         can :read, :all
-        can :create, [:statements, :arguments, :statementarguments]
-        cannot :delete, [:statements, :arguments, :statementarguments]
-        cannot [:update, :delete], [:revisions, :statementarguments]
+        can :create, [Statement, Argument, Statementargument]
+        cannot :delete, [Statements, Arguments, Statementargument]
+        cannot [:update, :delete], [Revision, Statementargument]
         can [:edit, :update, :delete], Profile do |profile|
             user.profile == profile
         end
@@ -33,10 +33,10 @@ class Ability
         end
     else
         #Guests (non-registered) are only able to read general goods
-        can :read, [:statements,
-                    :arguments,
-                    :comments,
-                    :profiles]
+        can :read, [Statement,
+                    Argument,
+                    Comment,
+                    Profile]
     end
         
 
