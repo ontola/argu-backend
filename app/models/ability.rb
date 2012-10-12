@@ -20,8 +20,8 @@ class Ability
         #But can't delete general goods
         can :read, :all
         can :create, [Statement, Argument, Statementargument]
-        cannot :delete, [Statements, Arguments, Statementargument]
-        cannot [:update, :delete], [Revision, Statementargument]
+        cannot :delete, [Statement, Argument, Statementargument]
+        cannot [:update, :delete], [Version, Statementargument]
         can [:edit, :update, :delete], Profile do |profile|
             user.profile == profile
         end
