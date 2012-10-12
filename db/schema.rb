@@ -111,7 +111,7 @@ ActiveRecord::Schema.define(version: 20120905133430) do
     t.integer  "item_id",                       null: false
     t.string   "event",                         null: false
     t.string   "whodunnit",                     null: false
-    t.text     "object",                        null: false
+    t.text     "object"
     t.datetime "created_at"
   end
   add_index "versions", ["item_type", "item_id"], name: "index_versions_on_item_type_and_item_id"
