@@ -2,7 +2,15 @@
 <% @pro = statementargument.pro %>
 <% @comment = getBestComment(@argument) %>
 <div class=<%= (@pro ? "pargument" : "cargument") %>>
-	<%= link_to @argument.title, argument_path(@argument), class: (@pro ? "pargtitle" : "cargtitle") %>
+	<div <%= "class= " + (@pro ? "pargtitle" : "cargtitle") %>><%= link_to @argument.title, argument_path(@argument) %>
+	<div class="showheadright">
+	<h4 id="<%=statementargument.id%>" class="vote"><%= (statementargument.num_of_votes >= 1 ? "+" : "") + statementargument.num_of_votes.to_s %></h4>
+	<div class="votebtn"><p class="btn"><%= (statementargument.voted_by?(current_user) unless current_user.nil?) ? 
+	(button_to "–", Vote.where(user_id: current_user.id, statementargument_id: statementargument.id).first, :method => :delete, :remote => true) :
+	 (link_to "+", {:controller => :votes, :action => :create, :statementargument_id => statementargument.id, :user_id => (signed_in? ? current_user.id : nil), :statementargument => statementargument }, :method => :post, :remote => true)
+	  %></p></div>
+
+	</div></div>
 	<p><%= @argument.content.strip[0,140] + ((@argument.content.strip.length < 140) ? "" : "...") %><p>
 	<% if (!@comment.nil?)%>
 	<%= link_to ( argument_path(@argument)+"#commentstitle" ) do %><p class=<%= (@pro ? "pcomment" : "ccomment") %>><%= @comment.body %></p><% end %>

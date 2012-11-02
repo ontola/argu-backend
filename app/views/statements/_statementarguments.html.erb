@@ -9,7 +9,7 @@
 	<hr></hr>
 	<% hasItems = nil %><% @statement.statementarguments.where("pro = :pro", pro: true).each do |statementargument| %>
 		<%= render 'arguments/sarguments', statementargument: statementargument %><hr></hr>
-		<% hasItems = 1 %><% end %><% if hasItems != 1 %><pre><%= t(:statement_no_pros) %></pre>
+		<% hasItems = 1 %><% end %><% if hasItems != 1 %><pre class="noargs"><%= t(:statement_no_pros) %></pre>
 	<% end %>
 	<div class="pargument"><%= link_to "Nieuw", new_argument_path(pro: true, statement_id: @statement.id), class: "pargtitle", id: "pnewargtitle" %></div>
 </div>
@@ -17,7 +17,7 @@
 	<hr></hr>
 	<% hasItems = nil %><% @statement.statementarguments.where("pro = :pro", pro: false).each do |statementargument| %>
 		<%= render 'arguments/sarguments', statementargument: statementargument %><hr></hr>
-		<% hasItems = 1 %><% end %><% if hasItems != 1 %><pre><%= t(:statement_no_cons) %></pre>
+		<% hasItems = 1 %><% end %><% if hasItems != 1 %><pre class="noargs"><%= t(:statement_no_cons) %></pre>
 	<% end %>
 	<div class="cargument"><%= link_to "Nieuw", new_argument_path(pro: false, statement_id: @statement.id), class: "cargtitle", id: "cnewargtitle" %></div>
 </div>

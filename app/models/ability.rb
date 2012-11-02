@@ -19,7 +19,7 @@ class Ability
         #A general user can manage it's own profile and comments
         #But can't delete general goods
         can :read, :all
-        can :create, [Statement, Argument, Statementargument, Comment]
+        can :create, [Statement, Argument, Statementargument, Comment, Vote]
         can :placeComment, [Statement, Argument, Comment]
         cannot :delete, [Statement, Argument, Statementargument]
         cannot [:update, :delete], [Version, Statementargument]
@@ -29,9 +29,7 @@ class Ability
         can [:edit, :update, :delete], Comment do |comment|
             comment.try(:user) == user
         end
-        can [:edit, :update, :delete], Vote do |vote|
-            vote.user_id == user.id
-        end
+        can [:manage], Vote
     else
         #Guests (non-registered) are only able to read general goods
         can :read, [Statement,

@@ -4,4 +4,5 @@ class Vote < ActiveRecord::Base
 
   attr_accessible :statementargument_id, :user_id, :vote_type
 
+  scope :by_statementargument, lambda { |statementargument| { conditions: { :statementargument_id => statementargument } } }
 end

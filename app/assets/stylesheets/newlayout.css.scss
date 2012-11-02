@@ -425,9 +425,42 @@ h3
 	width: 100%;
 }
 
+.vote
+{
+	float: right;
+	margin-top: -18px;
+	margin-right: 25px;
+}
+
+.votebtn
+{
+	float: right;
+	margin-top: -22px;
+	margin-right: 51px;
+	width: 26px; height: 26px; 
+    -webkit-border-radius: 13px; -moz-border-radius: 13px;
+    background-color: #888943;
+}
+.btn
+{
+	text-align: center;
+	input
+	{
+		text-decoration: none;
+		margin-left: -1px;
+		color: white;
+	}
+}
+
 #pnewargtitle
 {
 	border-bottom-style: none;
+}
+
+.noargs
+{
+	height: 78px;
+	padding-bottom: 13px;
 }
 
 a
