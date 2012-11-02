@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'bariol_lightlight';
+    src: url('bariol_light-webfont.eot');
+    src: url('bariol_light-webfont.eot?#iefix') format('embedded-opentype'),
+         url('bariol_light-webfont.woff') format('woff'),
+         url('bariol_light-webfont.ttf') format('truetype'),
+         url('bariol_light-webfont.svg#bariol_lightlight') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
 body
 {
@@ -189,7 +199,7 @@ b.logo
 	display: block;
 	color: white;
 	background-color: #468783;
-	font-family: 'quicksand', sans-serif;
+	font-family: 'bariol_lightlight', sans-serif;
 	font-size: 33px;
 	width: 92px;
 	height: 45px;
@@ -299,7 +309,7 @@ h1
 {
 	text-align:center;
 	color:#468783;
-	font-family: 'quicksand', sans-serif;
+	font-family: 'bariol_lightlight', sans-serif;
 	font-size:36px;
 	padding-bottom: 2px;
 	margin: 0px;
@@ -366,7 +376,7 @@ h2
 {
 	text-align:center;
 	color:white;
-	font-family: 'quicksand', sans-serif;
+	font-family: 'bariol_lightlight', sans-serif;
 	font-size:36px;
 	margin: -3px;
 	padding: -1px;
@@ -681,7 +691,7 @@ div.pageconf li a
 	width: 53px;
 	color: #385c5b;
 	letter-spacing: 1px;
-	font-family: 'quicksand', sans-serif;
+	font-family: 'bariol_lightlight', sans-serif;
 	text-align: center;
 	font-size: 28px;
 	border-left-style: solid;
