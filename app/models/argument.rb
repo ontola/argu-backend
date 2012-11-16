@@ -1,8 +1,7 @@
 include HasRestfulPermissions
 
 class Argument < ActiveRecord::Base
-  has_many :statementarguments, :dependent => :destroy
-  has_many :statements, :through => :statementarguments
+  belongs_to :statement, :dependent => :destroy
 
   before_save :trim_data
   before_save :cap_title
@@ -10,7 +9,7 @@ class Argument < ActiveRecord::Base
   has_paper_trail
   acts_as_commentable
 
-  attr_accessible :id, :content, :title, :argtype, :statements, :statementarguments
+  attr_accessible :id, :content, :title, :argtype, :statement
 
   validates :content, presence: true, length: { minimum: 5, maximum: 500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
@@ -23,6 +22,21 @@ class Argument < ActiveRecord::Base
   def cap_title 
     self.title = self.title.capitalize
   end
+
+  def after_save
+    self.update_counter_cache
+  end
+
+  def after_destroy
+    self.update_counter_cache
+  end
+
+  def update_counter_cache
+    self.statement.pro_count = self.statement.arguments.count(:conditions => ["pro = true"])
+    self.statement.con_count = self.statement.arguments.count(:conditions => ["con = true"])
+    self.statement.save
+  end
+
 
   scope :today, lambda { 
     {

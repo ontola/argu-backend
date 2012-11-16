@@ -6,6 +6,8 @@ class StatementsController < ApplicationController
   # GET /statements
   # GET /statements.json
   def index
+    @statements = Statement.first(30)
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @statements }
@@ -15,6 +17,20 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
+    @arguments = Argument.where(statement_id: @statement.id)
+    @pro = Array.new
+    @con = Array.new
+    unless @arguments.nil?
+      @arguments.each do |arg|
+        if arg.pro?
+          @pro << arg
+        else
+          @con << arg
+        end
+      end
+    end
+    
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @statement }

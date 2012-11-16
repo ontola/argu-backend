@@ -7,17 +7,23 @@
 </div>
 <div class="prosbox">
 	<hr></hr>
-	<% hasItems = nil %><% @statement.statementarguments.where("pro = :pro", pro: true).each do |statementargument| %>
-		<%= render 'arguments/sarguments', statementargument: statementargument %><hr></hr>
-		<% hasItems = 1 %><% end %><% if hasItems != 1 %><pre><%= t(:statement_no_pros) %></pre>
+	<% unless @pro.nil? %>
+		<% @pro.each do |argument| %>
+			<%= render 'arguments/sarguments', argument: argument, pro: true %><hr></hr>
+		<% end %>
+	<% else %>
+		<pre><%= t(:statement_no_pros) %></pre>
 	<% end %>
 	<div class="pargument"><%= link_to "Nieuw", new_argument_path(pro: true, statement_id: @statement.id), class: "pargtitle", id: "pnewargtitle" %></div>
 </div>
 <div class="consbox">
 	<hr></hr>
-	<% hasItems = nil %><% @statement.statementarguments.where("pro = :pro", pro: false).each do |statementargument| %>
-		<%= render 'arguments/sarguments', statementargument: statementargument %><hr></hr>
-		<% hasItems = 1 %><% end %><% if hasItems != 1 %><pre><%= t(:statement_no_cons) %></pre>
+	<% unless @con.nil? %>
+		<% @con.each do |argument| %>
+			<%= render 'arguments/sarguments', argument: argument, pro: false %><hr></hr>
+		<% end %>
+	<% else %>
+		<pre><%= t(:statement_no_cons) %></pre>
 	<% end %>
 	<div class="cargument"><%= link_to "Nieuw", new_argument_path(pro: false, statement_id: @statement.id), class: "cargtitle", id: "cnewargtitle" %></div>
 </div>

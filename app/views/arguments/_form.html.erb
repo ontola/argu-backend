@@ -35,7 +35,7 @@
             ], @argument.argtype)) %>
         </div>
       </fieldset>
-      <%= f.hidden_field('statement_id', name: 'statement_id', value: @s_id.to_s ) %>
+      <%= f.hidden_field('statement_id', name: 'statement_id', value: @statement_id.to_s ) %>
       <%= f.hidden_field('pro', name: 'pro', value: @pro ) %>
       <fieldset class="form-actions">
         <%= link_to t(:application_general_back), arguments_path, class: "btn btn-danger" %>
