@@ -186,57 +186,18 @@ div#navr
 	float: right;
 }
 
+div#nothingbar
+{
+	width:100px;
+	display: block;
+}
+
 .container
 {
 	width: 960px;
 	margin-top: 45px;
 	margin:0px auto;
 }
-
-/*Dit zijn info en account buttons in de navbar OUD MOET WEG!*/
-b.logo
-{
-	display: block;
-	color: white;
-	background-color: #468783;
-	font-family: 'bariol_lightlight', sans-serif;
-	font-size: 33px;
-	width: 92px;
-	height: 45px;
-	text-align: center;
-	padding: 0;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	border-right-style: solid;
-	border-width: 1px;
-	border-color: white;
-	text-decoration: none;
-}
-
-hr
-{
-	background-color: #F2F2F2;
-	color: #468783;
-	height: 1px;
-	border: 0px;
-	clear: both;
-	margin: 5px;
-}		
-
-hr.streep 
-{
-	background-color: #468783;
-	margin: 0px;
-}
-
-hr.invis
-{
-	margin: 0px;
-	height: 0px;
-	background-color: #F2F2F2;
-}
-
-
 
 /*Dit is de opmaak van gewone text, waaronder de toelichting van een argument + beschrijving van onderwerp*/
 p
