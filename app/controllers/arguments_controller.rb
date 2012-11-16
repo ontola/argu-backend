@@ -146,6 +146,7 @@ class ArgumentsController < ApplicationController
     @comment = params[:comment]
     @comment = Comment.build_from( Argument.find(params[:id]), @current_user.id, @comment )
     @comment.save!
+    @comment.move_to_child_of(Comment.find_by_id(params[:parent_id])) unless params[:parent_id].blank?
     redirect_to request.referrer
   end
 
