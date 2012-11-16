@@ -20,7 +20,6 @@ Argu::Application.routes.draw do
   
   #resources :sessions #, only: [:new, :create, :destroy]
   resources :profiles
-  resources :statementarguments
   resources :votes
   resources :comments
 
