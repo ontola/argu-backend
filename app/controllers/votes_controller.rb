@@ -13,9 +13,9 @@ class VotesController < ApplicationController
   # GET /votes/1
   # GET /votes/1.json
   def show
-    @sa = Statementargument.find_by_id(@vote.statementargument_id)
+    @argument = Argument.find_by_id(@vote.argument_id)
     @s = @sa.statement.title 
-    @a = @sa.argument.title
+
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @vote }
@@ -39,8 +39,8 @@ class VotesController < ApplicationController
   # POST /votes.json
   def create
     @vote.user_id = params[:user_id] unless params[:user_id].nil?
-    @vote.statementargument_id = params[:statementargument_id] unless params[:statementargument_id].nil?
-    @statementargument = Statementargument.find_by_id(@vote.statementargument_id)
+    @vote.argument_id = params[:argument_id] unless params[:argument_id].nil?
+    @argument = Argument.find_by_id(@vote.argument_id)
 
     respond_to do |format|
       if @vote.save
@@ -72,7 +72,7 @@ class VotesController < ApplicationController
   # DELETE /votes/1
   # DELETE /votes/1.json
   def destroy
-    @statementargument = Statementargument.find_by_id(@vote.statementargument_id)
+    @argument = Argument.find_by_id(@vote.argument_id)
     @vote.destroy
 
     respond_to do |format|

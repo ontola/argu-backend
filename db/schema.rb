@@ -121,13 +121,13 @@ ActiveRecord::Schema.define(:version => 20121116171024) do
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
 
   create_table "votes", :force => true do |t|
-    t.integer  "statementargument_id", :null => false
+    t.integer  "argument_id", :null => false
     t.integer  "user_id",              :null => false
     t.integer  "vote_type"
     t.datetime "created_at",           :null => false
     t.datetime "updated_at",           :null => false
   end
 
-  add_index "votes", ["statementargument_id", "user_id"], :name => "index_votes_on_statementargument_id_and_user_id", :unique => true
+  add_index "votes", ["argument_id", "user_id"], :name => "index_votes_on_argument_id_and_user_id", :unique => true
 
 end

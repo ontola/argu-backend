@@ -1,2 +1,2 @@
-$(".showvotes#<%= @statementargument.id %>").replaceWith("<h4 class=\"showvotes\" id=\"<%= @statementargument.id %>\"><%= escape_javascript((@statementargument.num_of_votes >= 1 ? "+" : "") + @statementargument.num_of_votes.to_s) %></h4>");
-$("#votebtn<%= @statementargument.id %>").replaceWith("<span id=\"votebtn<%= @statementargument.id %>\"><%= escape_javascript((link_to "+1", {:controller => :votes, :action => :create, :statementargument_id => @statementargument.id, :user_id => (signed_in? ? current_user.id : nil), :statementargument => @statementargument }, :method => :post, :remote => true, class:"btn btn-primary showbtn")) %></span>");
+$(".vote#<%= @argument.id.to_s %>").replaceWith(escape_javascript("<%= render partial: 'showvotes', locals: { argument: @argument } %>"));
+$(".votebtn#<%= @argument.id.to_s %>").replaceWith(escape_javascript("<%= render partial: 'votebtn', locals: { argument: @argument } %>"));
