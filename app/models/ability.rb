@@ -28,11 +28,10 @@ class Ability
         can [:edit, :update, :delete], Comment do |comment|
             comment.try(:user) == user
         end
-        can [:edit, :update, :delete], Vote do |vote|
-            vote.user_id == user.id
-        end
+        can [:manage], Vote
     else
         #Guests (non-registered) are only able to read general goods
+        can :manage, Vote
         can :read, [Statement,
                     Argument,
                     Comment,

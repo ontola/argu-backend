@@ -1,7 +1,8 @@
 class Vote < ActiveRecord::Base
-  belongs_to :statementargument, counter_cache: true
+  belongs_to :argument, counter_cache: true
   has_one :user
 
-  attr_accessible :statementargument_id, :user_id, :vote_type
+  attr_accessible :argument_id, :user_id, :vote_type
 
+  scope :by_argument, lambda { |argument| { conditions: { :argument_id => argument } } }
 end

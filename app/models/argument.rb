@@ -2,6 +2,7 @@ include HasRestfulPermissions
 
 class Argument < ActiveRecord::Base
   belongs_to :statement, :dependent => :destroy
+  has_many :votes
 
   before_save :trim_data
   before_save :cap_title
@@ -9,7 +10,7 @@ class Argument < ActiveRecord::Base
   has_paper_trail
   acts_as_commentable
 
-  attr_accessible :id, :content, :title, :argtype, :statement
+  attr_accessible :id, :content, :title, :argtype, :statement, :votes
 
   validates :content, presence: true, length: { minimum: 5, maximum: 500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
@@ -37,6 +38,17 @@ class Argument < ActiveRecord::Base
     self.statement.save
   end
 
+  def voted_by?(user)
+          !(self.votes.find_by_user_id(user.id).nil?) unless user.nil?
+  end
+
+  def get_vote(user)
+          self.votes.find_by_user_id(user.id) unless user.nil?
+  end
+
+  def num_of_votes
+          self.votes.count
+  end
 
   scope :today, lambda { 
     {
