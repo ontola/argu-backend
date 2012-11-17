@@ -1,0 +1,11 @@
+<p class="c<%= (depth-1).to_s %>" id="<%= c.id %>"><%= c.body %></p>
+<% unless depth > 4 %>
+	<% if c.has_children? %>
+		<% c.children.limit(10).each do |ch| %>
+			<%= render partial: 'buildcomment', locals: { c: ch, depth: depth+1 } %>
+		<% end %>
+		<% if c.children.length > 10 %>
+			<%= link_to "show more (not yet working)", '/' %>
+		<% end %>
+	<% end %>
+<% end %>

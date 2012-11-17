@@ -13,7 +13,11 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1
   # GET /arguments/1.json
   def show
-    @comments = @argument.root_comments
+    @offset = params[:offset].to_i
+    @offset ||= 0
+    
+    @comments = @argument.root_comments.order('created_at ASC').offset(@offset).limit(5)
+    @length = @argument.root_comments.length
 
     respond_to do |format|
       format.html # show.html.erb
