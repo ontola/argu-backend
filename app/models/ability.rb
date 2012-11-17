@@ -12,7 +12,7 @@ class Ability
                       Argument,
                       Comment,
                       Profile,
-                      Revision,
+                      #Revision,
                       Vote]
     elsif user.role? :user
         #A general user can manage it's own profile and comments

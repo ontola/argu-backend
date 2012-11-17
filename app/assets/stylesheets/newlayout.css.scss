@@ -214,6 +214,30 @@ p
 }
 
 /*Dit is de opmaak van een comment*/
+div.commentusername
+	{
+		color: #468783;
+		position: relative;
+		float: right;
+		top: -35px;
+		left: -75px;
+		background-color: white;
+		border-style: solid;
+		border-width: 1px;
+		padding: 3px;
+		padding-top: -10px;
+		border-color:#468783;
+		font-family: Verdana,arial,sans-serif;
+	}
+
+.commentbuttons li
+	{
+		list-style-type: none;
+		padding-right: 20px;
+		display: inline;
+	}
+
+
 .comments
 {
 	p
@@ -221,13 +245,11 @@ p
 		border-style:solid;
 		border-width:1px;
 		border-color:#468783;
-		border-radius:7px;
-		margin-left:10px;
-		margin-right:27px;
-		margin-top:5px;
+		margin-top:20px;
 		margin-bottom: 21px;
-		background-color: #F0F3FC;
-		padding: 7px;
+		background-color: #FFFFFF;
+		padding: 10px;
+		padding-left: 20px;
 	}
 	.c1
 	{

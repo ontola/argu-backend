@@ -1,5 +1,14 @@
 <p class="c<%= (depth-1).to_s %>" id="<%= c.id %>"><%= c.body %></p>
-<% unless depth > 4 %>
+<div class="commentusername"><%= link_to c.user.username.to_s, profile_path(c.user) %>
+</div>
+<div >
+	<ul class=commentbuttons>
+		<li><a href="#">favorite</a></li>
+		<li><a href="#">reply</a></li>
+		<li><a href="#">bad comment</a></li>
+	</ul>
+</div>
+	<% unless depth > 4 %>
 	<% if c.has_children? %>
 		<% c.children.limit(10).each do |ch| %>
 			<%= render partial: 'buildcomment', locals: { c: ch, depth: depth+1 } %>
