@@ -1,13 +1,14 @@
 <p class="c<%= (depth-1).to_s %>" id="<%= c.id %>"><%= c.body %></p>
-<div class="commentusername"><%= link_to c.user.username.to_s, profile_path(c.user) %>
-</div>
 <div >
-	<ul class=commentbuttons>
-		<li><a href="#">favorite</a></li>
-		<li><a href="#">reply</a></li>
-		<li><a href="#">bad comment</a></li>
+	<ul class="commentbuttons">
+		<li><%= image_tag 'favoriet1.svg', alt: "Favoriet" %></li>
+		<li><%= image_tag 'reageer1.svg', alt: "Reageer" %></li>
+		<li><%= image_tag 'verwijder1.svg', alt: "Verwijder" %></li></li>
 	</ul>
 </div>
+<div class="commentusername"><%= link_to c.user.username.to_s, profile_path(c.user) %>
+</div>
+
 	<% unless depth > 4 %>
 	<% if c.has_children? %>
 		<% c.children.limit(10).each do |ch| %>
