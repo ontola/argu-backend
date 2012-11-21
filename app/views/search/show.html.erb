@@ -1,0 +1,21 @@
+<table>
+  <caption><%= "Found " + @search.total.to_s + " items" %></caption>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Content</th>
+      <th>Pro</th>
+      <th>Con</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<% for result in @search.results %>
+    <tr>
+      <td><%= link_to result.title, Statement.find_by_title(result.title) %></td>
+      <td><%= result.content %></td>
+      <td><%= result.con_count %></td>
+      <td><%= result.pro_count %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
