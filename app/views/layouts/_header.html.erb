@@ -1,7 +1,7 @@
 <div id="navbar">
   <ul id="mainbar">
     <li><%= link_to "Home", '/', id: "argulogo" %></li>
-    <li><input type="text" id="search"></li>
+    <li><%= render partial: 'search/search' %></li>
     <div id="navr">
       <% if !current_user.nil?%>
         <li><%= link_to t(:header_menuitem_settings), '/profiles/' + (current_user.username.blank? ? current_user.profile.id.to_s : current_user.username.to_s), id: "account" %>

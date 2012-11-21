@@ -9,10 +9,24 @@ class Statement < ActiveRecord::Base
 
   has_paper_trail
 
-  attr_accessible :id, :title, :content, :arguments, :statetype
+  attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count
  
   validates :content, presence: true, length: { minimum: 5, maximum: 140 }
   validates :title, presence: true, length: { minimum: 5, maximum: 50 }
+
+  searchable do
+    text :title, :content
+    text :arguments do
+      arguments.map { |argument| argument.content }
+    end
+
+    integer :pro_count
+    integer :con_count
+
+    string  :sort_title do
+      title.downcase.gsub(/^(an?|the)/, '')
+    end
+  end
 
   def trim_data
     self.title = title.strip

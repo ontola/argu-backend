@@ -78,6 +78,15 @@ ActiveRecord::Schema.define(:version => 20121116171024) do
 
   add_index "roles_users", ["user_id", "role_id"], :name => "user_role", :unique => true
 
+  create_table "statementarguments", :force => true do |t|
+    t.integer "argument_id",                    :null => false
+    t.integer "statement_id",                   :null => false
+    t.boolean "pro",          :default => true, :null => false
+    t.integer "votes_count",  :default => 0
+  end
+
+  add_index "statementarguments", ["argument_id", "statement_id"], :name => "arg_state_index"
+
   create_table "statements", :force => true do |t|
     t.string   "title",                     :null => false
     t.string   "content",                   :null => false
@@ -122,10 +131,10 @@ ActiveRecord::Schema.define(:version => 20121116171024) do
 
   create_table "votes", :force => true do |t|
     t.integer  "argument_id", :null => false
-    t.integer  "user_id",              :null => false
+    t.integer  "user_id",     :null => false
     t.integer  "vote_type"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   add_index "votes", ["argument_id", "user_id"], :name => "index_votes_on_argument_id_and_user_id", :unique => true

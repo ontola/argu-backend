@@ -23,6 +23,9 @@ Argu::Application.routes.draw do
   resources :votes
   resources :comments
 
+  get "/search/" => "search#show", as: 'search'
+  post "/search/" => "search#show", as: 'search'
+
   ##get "users/new"
 
   root to: 'static_pages#home'
