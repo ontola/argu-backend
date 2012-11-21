@@ -130,8 +130,12 @@ div#navbar li #argulogo:hover
 	background:url(spriteb.png) no-repeat 0px -45px;
 }
 
+
+
 div#navbar li #search
 {
+	-webkit-appearance:none;
+	box-sizing: content-box;
 	width: auto;
 	padding: 5px;
 	height: 25px;
@@ -144,8 +148,6 @@ div#navbar li #search
 	padding-left: 8px;
 	float: right;
 }
-
-
 
 #search textarea:focus, input:focus{
 	outline: solid;
