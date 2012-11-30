@@ -199,6 +199,7 @@ div#nothingbar
 	width: 960px;
 	margin-top: 45px;
 	margin:0px auto;
+	padding-top: 15px;
 }
 
 /*Dit is de opmaak van gewone text, waaronder de toelichting van een argument + beschrijving van onderwerp*/
@@ -545,34 +546,6 @@ a:hover
 	float: left;
 }
 
-/* Profile */
-.profile #head
-{
-	list-style-type: none;
-
-	#editbtn
-	{
-		float: right;
-		vertical-align: text-top;
-		padding-top: 7px;
-	}
-}
-
-div.pageconf
-{
-	float: right;
-	height: 25px;
-}
-
-div.pageconf ul
-{
-	list-style: none;
-}
-
-div.pageconf li a
-{
-	text-decoration: none;
-}
 
 /* Revisions styling */
 .revbar
@@ -900,3 +873,83 @@ div.pageconf li a
 	height: 2px;
 	display: block;
 }
+
+/*Zoekresultaten*/
+div.preview {
+	background-color: white;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #468783;
+	margin-bottom: 15px;
+}
+
+p.previewtitle {
+	text-align:center;
+	color:#468783;
+	font-family: 'bariol_lightlight', sans-serif;
+	font-size:36px;
+	padding: 0px;
+}
+
+p.grey {
+	color: grey;
+}
+
+/* Profile */
+.profile #head
+{
+	list-style-type: none;
+
+	#editbtn
+	{
+		float: right;
+		vertical-align: text-top;
+		padding-top: 7px;
+	}
+}
+
+div.pageconf
+{
+	float: right;
+	height: 25px;
+}
+
+div.pageconf ul
+{
+	list-style: none;
+}
+
+div.pageconf li a
+{
+	text-decoration: none;
+}
+
+.leftcolumn{
+	width: 40%;
+	float: left;
+}
+
+.rightcolumn{
+	width: 60%; 
+	float:right;
+}
+
+h1.setting{
+	text-align: right;
+	height: 50px;
+}
+
+.settingform
+{
+	color:#468783;
+	font-family: 'bariol_lightlight', sans-serif;
+	font-size:24px;
+	padding: 10px;
+	background: white;
+	border-style: solid;
+	border-width: 1px;
+	margin: 8px;
+	height: 15px;
+	margin-right: 70px;	
+}
+
