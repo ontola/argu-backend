@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121116171024) do
+ActiveRecord::Schema.define(:version => 20121130143732) do
 
   create_table "arguments", :force => true do |t|
     t.string   "content",                        :null => false
@@ -84,8 +84,6 @@ ActiveRecord::Schema.define(:version => 20121116171024) do
     t.integer  "statetype",  :default => 6
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
-    t.integer  "pro_count",  :default => 0
-    t.integer  "con_count",  :default => 0
   end
 
   create_table "users", :force => true do |t|
@@ -121,13 +119,17 @@ ActiveRecord::Schema.define(:version => 20121116171024) do
   add_index "versions", ["item_type", "item_id"], :name => "index_versions_on_item_type_and_item_id"
 
   create_table "votes", :force => true do |t|
-    t.integer  "argument_id", :null => false
-    t.integer  "user_id",              :null => false
-    t.integer  "vote_type"
-    t.datetime "created_at",           :null => false
-    t.datetime "updated_at",           :null => false
+    t.boolean  "vote",          :default => false, :null => false
+    t.integer  "voteable_id",                      :null => false
+    t.string   "voteable_type",                    :null => false
+    t.integer  "voter_id"
+    t.string   "voter_type"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
-  add_index "votes", ["argument_id", "user_id"], :name => "index_votes_on_argument_id_and_user_id", :unique => true
+  add_index "votes", ["voteable_id", "voteable_type"], :name => "index_votes_on_voteable_id_and_voteable_type"
+  add_index "votes", ["voter_id", "voter_type", "voteable_id", "voteable_type"], :name => "fk_one_vote_per_user_per_entity", :unique => true
+  add_index "votes", ["voter_id", "voter_type"], :name => "index_votes_on_voter_id_and_voter_type"
 
 end
