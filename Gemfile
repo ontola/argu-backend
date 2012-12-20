@@ -22,6 +22,7 @@ gem 'mongrel', '1.2.0.pre2'
 gem 'cancan', '~> 1.6.8'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
+gem 'rails-i18n'
 
 
 # Gems used only for assets and not required
