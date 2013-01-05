@@ -25,6 +25,9 @@ class Ability
         can [:edit, :update, :delete], Profile do |profile|
             user.profile == profile
         end
+        can [:show, :update], User do |u|
+            user.id == u.id
+        end
         can [:edit, :update, :delete], Comment do |comment|
             comment.try(:user) == user
         end

@@ -32,7 +32,8 @@ Argu::Application.routes.draw do
 
   match "/", to: "static_pages#home"
   match "/home", to: "static_pages#home"
-  match "/settings", to: "users#show"
+  get "/settings", to: "users#show"
+  post '/settings' => 'users#update'
   #match "/signup", to: "users#new"
   #match "/signin", to: "sessions#new"
   #get "/signout", to: "sessions#destroy", via: :delete
