@@ -1,35 +1,8 @@
 <% provide(:menu_class, 'statements') %>
-<h1>Listing statements</h1>
-
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th>Pros</th>
-      <th>Cons</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-<% @statements.each do |statement| %>
-    <tr>
-      <td><%= link_to statement.title, statement %></td>
-      <td><%= statement.content %></td>
-      <td><%= statement.arguments.nil? ? t(:statement_no_pros) : statement.arguments.where("pro = :pro", pro: true).count %></td>
-      <td><%= statement.arguments.nil? ? t(:statement_no_cons) : statement.arguments.where("pro = :pro", pro: false).count %></td>
-      <td>
-        <div class="btn-group">
-          <%= link_to t(:application_general_show), statement, class: "btn btn-primary" %>
-          <%= link_to t(:application_general_edit), edit_statement_path(statement), class: "btn" %>
-          <%= link_to t(:application_general_destroy), statement, class: "btn btn-danger", confirm: t(:application_general_destroy_confirmation), method: :delete %>
-        </div>
-      </td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-
+<h1>Stellingen</h1>
 <%= link_to t(:statement_newstatement), new_statement_path, class: "btn btn-primary" %>
+<% @statements.each do |statement| %>
+    <%= render partial: "statements/preview", locals: { statement: statement } %>
+<% end %>
+
+

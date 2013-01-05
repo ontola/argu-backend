@@ -1,15 +1,43 @@
+<div class="leftcolumn">
+	<h1 class="setting">gebruikersnaam</h1>
+	<h1 class="setting">volledige naam</h1>
+	<h1 class="setting">e-mailadres</h1>
+	<h1 class="setting">wachtwoord</h1>
+	<h1 class="setting">gekoppelde accounts</h1>
+</div>
+<div class="rightcolumn">
+	<input type="text" name="username" placeholder="<%= @user.username %>" class="settingform"></input>
+	<input type="text" name="profilename" placeholder="<%= current_user.profile.name %>" class="settingform"></input>
+	<input type="text" name="email" placeholder="<%= current_user.email.blank? ? "Vul hier je e-mailadres in" : current_user.email %>"class="settingform"></input
+	<input class="settingform"><%= current_user.password %></input>
+
+</div>
+
+<!--
 <div class="setting-content">
-	<ul>
-		<li><h1 id="txt">Account</h1></li>
-	</ul>
 	<div>
 		<div class="settings-row">
-			<div class="column-name">Username</div>
+			<div class="column-name">gebruikersnaam</div>
 			<div class="edit column-content"><%= @user.username %></div>
 		</div>
 		<div class="settings-row">
 			<div class="column-name">Email</div>
-			<div class="edit column-content"><%= current_user.email.blank? ? "None yet" : current_user.email %></div>
+			<div class="edit column-content"><%= current_user.email.blank? ? "Vul hier je e-mailadres in" : current_user.email %></div>
+		</div>
+		<div class="settings-row">
+			<div class="column-name">Name</div>
+			<div class="edit column-content"><%= current_user.profile.name %></div>
+		</div>
+		<div class="settings-row">
+			<div class="column-name">About</div>
+			<div class="edit_area column-content"><%= current_user.profile.about %></div>
+		</div>
+		<div class="newline">
+			<%= render 'authentications/login_providers_connected' %>
+		</div>
+		<div class="newline">
+			<h3 id="txt">Link additional</h3>
+			<%= render 'authentications/login_providers', size: 32 %>
 		</div>
 	</div>
 </div>

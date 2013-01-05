@@ -1,11 +1,11 @@
-<table>
+<!--<table>
   <caption><%= "Found " + @search.total.to_s + " items" %></caption>
   <thead>
     <tr>
-      <th>Title</th>
-      <th>Content</th>
-      <th>Pro</th>
-      <th>Con</th>
+      <th>Stelling</th>
+      <th>Omschrijven</th>
+      <th>Voor</th>
+      <th>Tegen</th>
     </tr>
   </thead>
   <tbody>
@@ -19,3 +19,7 @@
     <% end %>
   </tbody>
 </table>
+-->
+<% for result in @search.results %>
+  <%= render partial: "statements/preview", locals: { statement: result } %>
+<% end %>
