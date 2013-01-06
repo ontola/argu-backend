@@ -21,6 +21,8 @@ Argu::Application.routes.draw do
   #resources :sessions #, only: [:new, :create, :destroy]
   resources :profiles
   resources :votes
+  match "/arguments/:id/upvote" => "votes#create", as: 'argument_create_vote'
+  match "/arguments/:id/unvote" => "votes#destroy", as: 'argument_destroy_vote'
   resources :comments
 
   get "/search/" => "search#show", as: 'search'

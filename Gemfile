@@ -23,6 +23,7 @@ gem 'cancan', '~> 1.6.8'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'rails-i18n'
+gem "thumbs_up", "~> 0.6.2"
 
 
 # Gems used only for assets and not required

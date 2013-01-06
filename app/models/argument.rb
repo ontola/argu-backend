@@ -9,6 +9,7 @@ class Argument < ActiveRecord::Base
 
   has_paper_trail
   acts_as_commentable
+  acts_as_voteable
 
   attr_accessible :id, :content, :title, :argtype, :statement, :votes
 
@@ -36,18 +37,6 @@ class Argument < ActiveRecord::Base
     self.statement.pro_count = self.statement.arguments.count(:conditions => ["pro = true"])
     self.statement.con_count = self.statement.arguments.count(:conditions => ["con = true"])
     self.statement.save
-  end
-
-  def voted_by?(user)
-          !(self.votes.find_by_user_id(user.id).nil?) unless user.nil?
-  end
-
-  def get_vote(user)
-          self.votes.find_by_user_id(user.id) unless user.nil?
-  end
-
-  def num_of_votes
-          self.votes.count
   end
 
   scope :today, lambda { 
