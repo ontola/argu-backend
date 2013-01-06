@@ -35,7 +35,7 @@ class Argument < ActiveRecord::Base
 
   def update_counter_cache
     self.statement.pro_count = self.statement.arguments.count(:conditions => ["pro = true"])
-    self.statement.con_count = self.statement.arguments.count(:conditions => ["con = true"])
+    self.statement.con_count = self.statement.arguments.count(:conditions => ["pro = false"])
     self.statement.save
   end
 
