@@ -313,7 +313,7 @@ p.pcomment
 	border-color:#468783;
 	border-radius:7px;
 	margin-left:10px;
-	margin-right:27px;
+	margin-right:26px;
 	margin-top:5px;
 	margin-bottom: 21px;
 	background-color: #F0F3FC;
@@ -326,7 +326,7 @@ p.ccomment
 	border-width:1px;
 	border-color:#468783;
 	border-radius:7px;
-	margin-left:27px;
+	margin-left:26px;
 	margin-right:10px;
 	margin-top:5px;
 	margin-bottom: 21px;
@@ -363,7 +363,7 @@ h1
 	text-align:center;
 	color:#468783;
 	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size:27px;
+	font-size:26px;
 	font-weight: normal;
 	padding-bottom: 2px;
 	margin: 0px;
@@ -371,7 +371,7 @@ h1
 	margin-bottom: 3px;
 }
 
-/*Dit is de opmaak van een deelonderwerp*/
+/*Dit is de opmaak van een deelonderwerptitel (meestal is dit "argumenten")*/
 div.stcont3
 {
 	clear: left;
@@ -425,40 +425,12 @@ div.stcol3
 	left: 76.67%;
 }
 
-div.subtitle
-{
-	display: block;
-	background-color: #468783;
-	width:100%;
-	height: 45px;
-	overflow: hidden;
-}
-
-div.subtitle ul
-{
-	margin:0px auto;
-	padding: 0px;
-	width: auto;
-}
-
-div.subtitle li
-{
-	list-style-type: none;
-	display: inline-block;
-	float: left;
-}
-
-div.subtitletitle
-{
-	width: 772px;
-}
-
 h2
 {
 	text-align:center;
 	color:white;
 	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size: 27px;
+	font-size: 26px;
 	font-weight:normal;
 	margin: -3px;
 	padding: -1px;
@@ -940,7 +912,7 @@ p.previewtitle {
 	text-align:center;
 	color:#468783;
 	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size:36px;
+	font-size:26px;
 	padding: 0px;
 }
 
