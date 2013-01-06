@@ -1,0 +1,4 @@
+<div class="showheadright" id="shr<%= argument.id %>">
+		<h4 class="vote" id="<%= argument.id %>"><%= (argument.votes.size >= 1 ? '+' : '') + argument.votes_for.to_s %></h4>
+		<%= render partial: 'votes/votebtn', locals: { argument: argument } %>
+	</div>

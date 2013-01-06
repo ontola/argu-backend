@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 16.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 width="45px" height="45px" viewBox="0 0 45 45" enable-background="new 0 0 45 45" xml:space="preserve">
-<rect fill="#345891" width="45" height="45"/>
-<path id="path4266_1_" inkscape:connector-curvature="0" fill="#6B83AC" d="M2.572,42.458h39.343v-6.561H2.572V42.458L2.572,42.458z
-	"/>
-<g id="g4268_1_" transform="matrix(67.367286,0,0,-67.367286,342.86316,361.8115)">
-	<path id="path4270_1_" inkscape:connector-curvature="0" fill="#FFFFFF" d="M-4.711,4.74v0.251h-0.066v0.09h0.066v0.077
-		c0,0.06,0.039,0.116,0.129,0.116c0.036,0,0.063-0.003,0.063-0.003L-4.52,5.187c0,0-0.028,0-0.058,0
-		c-0.033,0-0.038-0.015-0.038-0.04V5.081h0.098l-0.004-0.09h-0.094V4.74"/>
+<svg version="1.2" baseProfile="tiny" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+	 x="0px" y="0px" width="59px" height="59px" viewBox="0 0 59 59" overflow="scroll" xml:space="preserve">
+<rect fill="#355991" width="59" height="59"/>
+<path id="path4266_1_" fill="#6C83AC" d="M3,54.858h49.079v-8.184H3V54.858L3,54.858z"/>
+<path id="path4270_1_" fill="#FFFFFF" d="M31.628,54.858V33.806h-5.569v-7.583h5.569V19.75
+	c0-5.083,3.287-9.75,10.87-9.75c3.062,0,5.331,0.293,5.331,0.293l-0.178,7.066c0,0-2.314-0.016-4.836-0.016
+	c-2.731,0-3.171,1.257-3.171,3.348v5.532h8.224l-0.355,7.583h-7.869v21.053"/>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
+</g>
+<g>
 </g>
 </svg>

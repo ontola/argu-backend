@@ -121,16 +121,14 @@ div#navbar li a
 
 div#navbar li #argulogo
 {
-	background:url(spriteb.png) no-repeat 0px 0px;
+	background:url(sprites_navbar.svg) no-repeat 0px 0px;
 	border-left-style:solid;
 }
 
 div#navbar li #argulogo:hover
 {
-	background:url(spriteb.png) no-repeat 0px -45px;
+	background:url(sprites_navbar.svg) no-repeat 0px -45px;
 }
-
-
 
 div#navbar li #search
 {
@@ -163,24 +161,23 @@ textarea
 
 div#navbar li a#account
 {
-	background:url(spriteb.png) no-repeat -184px 0px;
+	background:url(sprites_navbar.svg) no-repeat -184px 0px;
 	border-left-style: solid;
-	width: 121px;
 }
 
 div#navbar li a#account:hover
 {
-	background:url(spriteb.png) no-repeat -184px -45px;
+	background:url(sprites_navbar.svg) no-repeat -184px -45px;
 }
 
 div#navbar li a#info
 {
-	background:url(spriteb.png) no-repeat -92px 0px;
+	background:url(sprites_navbar.svg) no-repeat -92px 0px;
 }
 
 div#navbar li a#info:hover
 {
-	background:url(spriteb.png) no-repeat -92px -45px;
+	background:url(sprites_navbar.svg) no-repeat -92px -45px;
 }
 
 div#navr
@@ -343,8 +340,9 @@ h1
 {
 	text-align:center;
 	color:#468783;
-	font-family: 'bariol_lightlight', sans-serif;
-	font-size:36px;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
+	font-size:27px;
+	font-weight: normal;
 	padding-bottom: 2px;
 	margin: 0px;
 	padding: 0px;
@@ -410,8 +408,9 @@ h2
 {
 	text-align:center;
 	color:white;
-	font-family: 'bariol_lightlight', sans-serif;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
 	font-size:36px;
+	font-weight:normal;
 	margin: -3px;
 	padding: -1px;
 	padding-bottom: 2px;
@@ -511,6 +510,7 @@ a
 {
 	text-decoration: none;
 	color: #468783;
+	border-style: none;
 }
 
 a:hover
@@ -633,17 +633,14 @@ a:hover
 }
 
 /*  Authentications page */
-.authentications {
-  margin-bottom: 40px;
-  margin-top: 5px;
-}
 
 .authentication {
-  width: 227px;
+  font-family: verdana, sans-serif;
+  width: 320px;
   float: left;
-  background-color: #EEE;
+  background-color: white;
   border: solid 1px #468783;
-  margin-left: 9px;
+  margin: 8px;
   position: relative;
 }
 
@@ -668,7 +665,7 @@ a:hover
 }
 
 .authentication .provider {
-  font-weight: bold;
+  margin-top: 10px;
 }
 
 .authentication .uid {
@@ -676,16 +673,15 @@ a:hover
   font-size: 11px;
 }
 
-.auth_provider img {
-  display: block;
-}
-
 .auth_provider {
   float: left;
   text-decoration: none;
-  margin-right: 20px;
   text-align: center;
-  margin-bottom: 10px;
+  border-style: solid;
+  border-width: 1px;
+  margin: 8px;
+  margin-right: 11px;
+  height: 64px;
 }
 
 /*info about page tabs*/
@@ -730,7 +726,7 @@ a:hover
 	width: 53px;
 	color: #385c5b;
 	letter-spacing: 1px;
-	font-family: 'bariol_lightlight', sans-serif;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
 	text-align: center;
 	font-size: 28px;
 	border-left-style: solid;
@@ -742,56 +738,55 @@ a:hover
 
 .tabs label.tab-label-1 {
 	border-left-style: solid;
-	background:url(sprite_info.png) no-repeat 0px -1px;
+	background:url(sprite_info.svg) no-repeat 0px -1px;
 }
 
 .tabs input:hover + label.tab-label-1 {
-	background:url(sprite_info.png) no-repeat 0px -45px;
+	background:url(sprite_info.svg) no-repeat 0px -45px;
 }
 
 .tabs input:checked + label.tab-label-1 {
-	background:url(sprite_info.png) no-repeat 0px -45px;
+	background:url(sprite_info.svg) no-repeat 0px -45px;
 }
 
-
 .tabs label.tab-label-2 {
-	background:url(sprite_info.png) no-repeat -92px 0px;
+	background:url(sprite_info.svg) no-repeat -92px 0px;
 }
 
 .tabs input:hover + label.tab-label-2 {
-	background:url(sprite_info.png) no-repeat -92px -44px;
+	background:url(sprite_info.svg) no-repeat -92px -44px;
 }
 
 .tabs input:checked + label.tab-label-2 {
-	background:url(sprite_info.png) no-repeat -92px -44px;
+	background:url(sprite_info.svg) no-repeat -92px -44px;
 }
 
 .tabs label.tab-label-3 {
 	width: 85px;
-	background:url(sprite_info.png) no-repeat -182px 0px;
+	background:url(sprite_info.svg) no-repeat -182px 0px;
 }
 
 .tabs input:hover + label.tab-label-3 {
-	background:url(sprite_info.png) no-repeat -182px -44px;
+	background:url(sprite_info.svg) no-repeat -182px -44px;
 }
 
 .tabs input:checked + label.tab-label-3 {
-	background:url(sprite_info.png) no-repeat -182px -44px;
+	background:url(sprite_info.svg) no-repeat -182px -44px;
 }
 
 .tabs label.tab-label-4 {
-	background:url(sprite_info.png) no-repeat -304px 0px;
+	background:url(sprite_info.svg) no-repeat -304px 0px;
 	border-right-style: solid;
 	border-right-width: 1px;
 	width: 85px;
 }
 
 .tabs input:hover + label.tab-label-4 {
-	background:url(sprite_info.png) no-repeat -304px -44px;
+	background:url(sprite_info.svg) no-repeat -304px -44px;
 }
 
 .tabs input:checked + label.tab-label-4 {
-	background:url(sprite_info.png) no-repeat -304px -44px;
+	background:url(sprite_info.svg) no-repeat -304px -44px;
 }
 
 
@@ -886,7 +881,7 @@ div.preview {
 p.previewtitle {
 	text-align:center;
 	color:#468783;
-	font-family: 'bariol_lightlight', sans-serif;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
 	font-size:36px;
 	padding: 0px;
 }
@@ -936,20 +931,20 @@ div.pageconf li a
 
 h1.setting{
 	text-align: right;
-	height: 50px;
+	font-size: 23px;
 }
 
 .settingform
 {
 	color:#468783;
-	font-family: 'bariol_lightlight', sans-serif;
-	font-size:24px;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
+	font-size:23px;
+	width: 300px;
 	padding: 10px;
 	background: white;
 	border-style: solid;
 	border-width: 1px;
 	margin: 8px;
-	height: 15px;
-	margin-right: 70px;	
+	height: auto;	
 }
 
