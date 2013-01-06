@@ -2,19 +2,14 @@
 <html>
 <head>
   <title><%= yield(:title) == "" ? "" : yield(:title) + " | " %><%= t(:application_name) %></title>
-  <% cache do %>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= csrf_meta_tags %>
   <meta charset="UTF-8">
   <%= render 'layouts/shim'%>
   <%= javascript_include_tag "application" %>
-  <%= javascript_include_tag "fb" %>
-  <% end %>
 </head>
 <body>
-  <% cache do %>
   <%= render 'layouts/header' %>
-  <% end %>
   <div id="fb-root"></div>
   <div class="container">
     <% flash.each do |key,value| %>
@@ -25,7 +20,6 @@
     <%= yield %>
     <div class="push"></div>
   </div>
-  <% cache do %>
   <!--<%= render 'layouts/footer'%>-->
   <script type="text/javascript">
     var uvOptions = {};
@@ -35,6 +29,5 @@
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
     })();
   </script>
-  <% end %>
 </body>
 </html>
