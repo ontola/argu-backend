@@ -55,7 +55,6 @@ nl:
   #Not logged in
   home_new_header: "Welkom bij "
   home_new_text: "Nederlands awesome slogan."
-  home_new_content_link: "http://www.youtube.com/embed/OghccYtXBdI"
 #Login
   login_new_user: "Nieuwe gebruiker?"
   login_title: :application_general_sign_in
