@@ -19,35 +19,57 @@ body
 {
 	background-color: white;
 	overflow:hidden;
-	border-style: solid;
-	border-color: #468783;
-	border-width: 1px;
+	border-style: none;
 }
 
 .cargument
 {
 	background-color: white;
 	overflow:hidden;
-	border-style: solid;
-	border-color: #468783;
-	border-width: 1px;
+}
+
+.argcontainer1
+{
+	clear: left;
+	float: left;
+	width: 100%;
+	overflow: hidden;
+	background: white; 
+}
+
+.argcontainer2
+{
+	float: left;
+	width: 100%;
+	position: relative;
+	right: 50%;
+	background: white;
 }
 
 .prosbox
 {
-	width:475px;
-	margin-right: 5px;
-	float:left;
+	float: left;
+	width: 50%;
+	position: relative;
+	left: 50%;
+	overflow: hidden;
 }		
 
 .consbox
 {
-	width:475px;
-	margin:0px;
-	margin-left: 5px;
-	float:left;
-	padding: 0px;/**/
+	float: left;
+	width: 50%;
+	position: relative;
+	left: 50%;
+	overflow: hidden;
 }		
+
+hr.stripe
+{
+	border-color: #468783;
+	border-style: none;
+	border-top-style: solid;
+}
 
 #speech-bubble:before {
    content:"";
@@ -315,7 +337,7 @@ p.ccomment
 .intro
 {
 	background-color: white;
-	border-style:solid;
+	border-top-style:solid;
 	border-width:1px;
 	border-color:#468783;
 }
@@ -350,6 +372,59 @@ h1
 }
 
 /*Dit is de opmaak van een deelonderwerp*/
+div.stcont3
+{
+	clear: left;
+	float: left;
+	width: 100%;
+	overflow: hidden;
+	background-color: #468783; 
+	height: 45px;
+}
+
+div.stcont2
+{
+	clear: left;
+	float: left;
+	width: 100%;
+	position: relative;
+	right: 33.333%;
+	background-color: #468783; 
+}
+
+div.stcont1
+{
+	float: left;
+	width: 100%;
+	position: relative;
+	right: 33.333%;
+	background-color: #468783; 
+}
+
+div.stcol1
+{
+	float: left;
+	width: 29.33%;
+	position: relative;
+	left: 68.67%;
+}
+
+div.stcol2
+{
+	float: left;
+	width: 29.33%;
+	position: relative;
+	left: 72.67%;
+}
+
+div.stcol3
+{
+	float: left;
+	width: 29.33%;
+	position: relative;
+	left: 76.67%;
+}
+
 div.subtitle
 {
 	display: block;
@@ -363,7 +438,7 @@ div.subtitle ul
 {
 	margin:0px auto;
 	padding: 0px;
-	width: 960px;
+	width: auto;
 }
 
 div.subtitle li
@@ -378,47 +453,36 @@ div.subtitletitle
 	width: 772px;
 }
 
-.voor
-{
-	display: block;
-	height: 45px;
-	width: 92px;
-	background-image: url(spriteb.png);
-	background-position: 0px -90px;
-	background-repeat: no-repeat;
-	border-right-style: solid;
-	border-width:1px;
-	border-color:white;
-}
-
-.tegen
-{
-	display: block;
-	height: 45px;
-	width: 90px;
-	background-image: url(spriteb.png);
-	background-position: -92px -90px;
-	background-repeat: no-repeat;
-	border-left-style: solid;
-	border-width:1px;
-	border-color:white;
-}
-
 h2
 {
 	text-align:center;
 	color:white;
 	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size:36px;
+	font-size: 27px;
 	font-weight:normal;
 	margin: -3px;
 	padding: -1px;
 	padding-bottom: 2px;
 	clear: both;
-	position:relative;
-	top:0px;
+	position: relative;
+	top: 5px;
 }
 
+h2.voor
+{
+	font-size: 20px;
+	position: relative;
+	top: 12px;
+	text-align: left;
+}
+
+h2.tegen
+{
+	font-size: 20px;
+	position: relative;
+	top: 12px;
+	text-align: right;
+}
 /*Dit is de opmaak van een argument*/
 h3
 {
@@ -445,9 +509,6 @@ h3
 	text-decoration: none;
 	padding: 10px;
 	background-color: #E9F2DD;
-	border-bottom-style: solid;
-	border-width: 1px;
-	border-color: #468783;
 	width: 100%;
 }
 
@@ -462,9 +523,6 @@ h3
 	text-decoration: none;
 	padding: 10px;
 	background-color: #F0F3FC;
-	border-bottom-style: solid;
-	border-width: 1px;
-	border-color: #468783;
 	width: 100%;
 }
 
@@ -506,7 +564,7 @@ h3
 	padding-bottom: 13px;
 }
 
-a
+a /*link*/
 {
 	text-decoration: none;
 	color: #468783;

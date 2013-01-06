@@ -1,15 +1,19 @@
-<div class="subtitle">
-	<ul>
-		<li><div class="voor"></div></li>
-		<li><div class="subtitletitle"><h2>Argumenten</h2></div></li>
-		<li><div class="tegen"></div></li>
-	</ul>
+<div class="stcont3">
+	<div class="stcont2">
+		<div class="stcont1">
+			<div class="stcol1"><h2 class="voor">voor<h2></div></li>
+			<div class="stcol2"><h2>Argumenten</h2></div></li>
+			<div class="stcol3"><h2 class="tegen">tegen<h2></div></li>
+		</div>
+	</div>
 </div>
+<div class="argcontainer1">
+<div class="argcontainer2">
 <div class="prosbox">
-	<hr></hr>
 	<% unless @pro.nil? %>
 		<% @pro.each do |argument| %>
-			<%= render 'arguments/sarguments', argument: argument, pro: true %><hr></hr>
+			<%= render 'arguments/sarguments', argument: argument, pro: true %>
+			<hr class="stripe"></hr>
 		<% end %>
 	<% else %>
 		<pre><%= t(:statement_no_pros) %></pre>
@@ -17,13 +21,15 @@
 	<div class="pargument"><%= link_to "Nieuw", new_argument_path(pro: true, statement_id: @statement.id), class: "pargtitle", id: "pnewargtitle" %></div>
 </div>
 <div class="consbox">
-	<hr></hr>
 	<% unless @con.nil? %>
 		<% @con.each do |argument| %>
-			<%= render 'arguments/sarguments', argument: argument, pro: false %><hr></hr>
+			<%= render 'arguments/sarguments', argument: argument, pro: false %>
+				<hr class="stripe"></hr>
 		<% end %>
 	<% else %>
 		<pre><%= t(:statement_no_cons) %></pre>
 	<% end %>
 	<div class="cargument"><%= link_to "Nieuw", new_argument_path(pro: false, statement_id: @statement.id), class: "cargtitle", id: "cnewargtitle" %></div>
+</div>
+</div>
 </div>
