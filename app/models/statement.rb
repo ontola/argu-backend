@@ -37,6 +37,14 @@ class Statement < ActiveRecord::Base
     self.title = self.title.capitalize
   end
 
+  def pro_count
+    self.arguments.count(:conditions => ["pro = true"])
+  end
+
+  def con_count
+    self.arguments.count(:conditions => ["pro = false"])
+  end
+
   scope :today, lambda { 
     {
       :conditions => ["created_at >= ?", (Time.now - 1.days)]

@@ -1,5 +1,5 @@
 <div class="preview">
   <p class="previewtitle"><%= link_to statement.title, Statement.find_by_title(statement.title) %></p>
   <p class="previewcontent"><%= statement.content %></p>
-  <p class="grey"><%= "" %> voorargumenten, <%= statement.con_count %> tegenargumenten.</p>
+  <p class="grey"><%= statement.pro_count %> voorargumenten, <%= statement.con_count %> tegenargumenten.</p>
 </div>
