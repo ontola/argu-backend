@@ -46,6 +46,7 @@ end
 
 group :production do 
 	gem 'newrelic_rpm'
+	gem 'mysql2', '~> 0.3.11'
+	gem 'therubyracer'
+	gem 'capistrano'
 end
-
-gem "mocha", '~> 0.12.3',:group => :test
