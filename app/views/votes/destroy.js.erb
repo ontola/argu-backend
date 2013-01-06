@@ -1,2 +1,0 @@
-$(".vote#<%= @argument.id.to_s %>").replaceWith(escape_javascript("<%= render partial: 'showvotes', locals: { argument: @argument } %>"));
-$(".votebtn#<%= @argument.id.to_s %>").replaceWith(escape_javascript("<%= render partial: 'votebtn', locals: { argument: @argument } %>"));

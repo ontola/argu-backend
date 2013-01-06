@@ -1,1 +1,5 @@
-<div class="votebtn" id="<%= argument.id %>"><p class="btn"><%= (argument.voted_by?(current_user) unless current_user.nil?) ? (button_to '–', Vote.where(user_id: current_user.id, argument_id: argument.id).first, :method => :delete, :remote => true) : (link_to '+', {:controller => :votes, :action => :create, :argument_id => argument.id, :user_id => (signed_in? ? current_user.id : nil), :argument => argument }, :method => :post, :remote => true)%></p></div>
+<% unless current_user.nil? %><div class="votebtn" id="<%= argument.id %>"><p class="btn">
+		<%= current_user.voted_on?(argument) ? 
+		(link_to '-', argument_destroy_vote_path(argument), :remote => true) :
+		(link_to '+', argument_create_vote_path(argument), :remote => true) %>
+</p></div><% end %>
