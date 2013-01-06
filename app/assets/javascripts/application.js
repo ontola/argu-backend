@@ -15,3 +15,4 @@
 //= require jquery-ui
 //= require jquery.jeditable.mini
 //= require settings
+//= require_tree .

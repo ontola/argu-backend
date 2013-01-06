@@ -1,0 +1,11 @@
+<div class="pageconf">
+	<%= link_to('edit', edit_statement_path(@statement)) %>
+	<%= link_to('history', revisions_statement_path(@statement)) %>
+</div>
+<div class="info">
+<p>Created by: <%= User.find_by_id(@statement.versions.first.whodunnit).username.to_s %></p>
+<p>Last edited by: <%= User.find_by_id(@statement.originator).username.to_s %></p>
+<div class="mods">
+	<p>Moderators:</p>
+</div>
+</div>
