@@ -1,0 +1,7 @@
+#Dutch general revisions translations
+
+nl:
+  revisions:
+    title: "Revisies"
+    goto: "Toon"
+    revert: "Terugzetten"

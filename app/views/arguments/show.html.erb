@@ -1,15 +1,15 @@
-<% provide(:title, @argument.title.nil? ? t(:argument_title) : @argument.title) %>
+<% provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title) %>
 <% provide(:menu_class, 'arguments') %>
 <div class="pageconf">
-	<%= link_to('edit', edit_argument_path(@argument)) %>
-	<%= link_to('history', revisions_argument_path(@argument)) %>
+	<%= link_to(t("edit"), edit_argument_path(@argument)) %>
+	<%= link_to(t("history"), revisions_argument_path(@argument)) %>
 </div>
 <%= render 'argumentbody' %>
 <%= render 'argumentcomments' %>
 <%= form_tag(@argument.id.to_s + "/placeComment", :action => "placeComment", :method => "post", :id => @argument.id) do %>
 <%= text_area_tag :comment,"", :rows => 5, :cols => 50 %>
 <% unless @parent_id.blank? %>
-<input type="hidden" name="parent_id" value ="<%= @parent_id %>" />
+	<input type="hidden" name="parent_id" value ="<%= @parent_id %>" />
 <% end %>
-<%= submit_tag "Reageer" %>
+<%= submit_tag t("arguments.show.reply") %>
 <% end %>

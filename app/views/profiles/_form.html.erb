@@ -10,18 +10,18 @@
     </div>
   <% end %>
   <div class="field">
-    <%= f.label :name %><br />
+    <%= f.label :name, t("profiles.edit.name") %><br />
     <%= f.text_field :name, value: @profile.name %>
   </div>
   <div class="field">
-    <%= f.label :picture %><br />
+    <%= f.label :picture, t("profiles.edit.picture") %><br />
     <%= f.text_field :picture, value: @profile.picture %>
   </div>
   <div class="field">
-    <%= f.label :about %><br />
+    <%= f.label :about, t("profiles.edit.about") %><br />
     <%= f.text_field :about, value: @profile.about %>
   </div>
   <div class="actions">
-    <%= f.submit :class => "btn btn-primary" %>
+    <%= f.submit t("update_type", type: t("profiles.type")), :class => "btn btn-primary" %>
   </div>
 <% end %>

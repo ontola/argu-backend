@@ -17,7 +17,7 @@
 			<%= render partial: 'buildcomment', locals: { c: ch, depth: depth+1 } %>
 		<% end %>
 		<% if c.children.length > 10 %>
-			<%= link_to "show more (not yet working)", '/' %>
+			<%= link_to t("arguments.comments.more"), '/' %>
 		<% end %>
 	<% end %>
 <% end %>

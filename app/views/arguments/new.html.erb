@@ -1,4 +1,4 @@
 <% provide(:menu_class, 'arguments') %>
-<h1>New argument</h1>
+<h1><%= t("new_type", type: t("arguments.type")).capitalize %></h1>
 
 <%= render 'form' %>

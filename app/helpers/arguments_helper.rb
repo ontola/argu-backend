@@ -8,15 +8,15 @@ private
 	def getArgType(argument)
 		case argument.argtype
 		when 0
-			t(:argument_type_scientific)
+			t("arguments.type_scientific")
 		when 1
-			t(:argument_type_axiomatic)
+			t("arguments.type_axiomatic")
 		when 2
-			t(:argument_type_other)
+			t("arguments.type_other")
 		when 3
-			t(:argument_type_discussion)
+			t("arguments.type_discussion")
 		else
-			t(:argument_type_unknown)
+			t("arguments.type_unknown")
 		end
 	end
 

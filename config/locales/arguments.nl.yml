@@ -1,0 +1,39 @@
+#Dutch argument translations
+
+nl:
+  arguments:
+    type: "argument"
+    type_scientific: "wetenschappelijk"
+    type_axiomatic: "axiomatisch"
+    type_other: "anders"
+    type_discussion: "in discussie"
+    type: "type"
+    index:
+      title: "argumenten"
+    show:
+      title: "argumenten"
+      reply: "reageer"
+    form:
+      arg_title: "titel"
+      content: "inhoud"
+      type: "type"
+    revisions:
+      table_id: "id"
+      table_title: "titel"
+      table_content: "inhoud"
+      table_edited: "bewerkt door"
+      table_created: "gemaakt op"
+      table_page: "pagina"
+      table_make: "zet terug"
+      newest: "recenst"
+      oldest: "oudst"
+      current: "huidig"
+      edited_by: "bewerkt door"
+      options: "opties"
+      revert: "terugzetten"
+    comments:
+      title: "Reacties"
+      favorite: "favoriet"
+      reply: "reageer"
+      delete: "verwijder"
+      more: "toon meer"
