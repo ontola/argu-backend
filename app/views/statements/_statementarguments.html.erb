@@ -18,7 +18,7 @@
 	<% else %>
 		<pre><%= t(:statement_no_pros) %></pre>
 	<% end %>
-	<div class="pargument"><%= link_to "Nieuw", new_argument_path(pro: true, statement_id: @statement.id), class: "pargtitle", id: "pnewargtitle" %></div>
+	<div class="argument pro"><%= link_to "Nieuw", new_argument_path(pro: true, statement_id: @statement.id), class: "argtitle", id: "pnewargtitle" %></div>
 </div>
 <div class="consbox">
 	<% unless @con.nil? %>
@@ -29,7 +29,7 @@
 	<% else %>
 		<pre><%= t(:statement_no_cons) %></pre>
 	<% end %>
-	<div class="cargument"><%= link_to "Nieuw", new_argument_path(pro: false, statement_id: @statement.id), class: "cargtitle", id: "cnewargtitle" %></div>
+	<div class="argument con"><%= link_to "Nieuw", new_argument_path(pro: false, statement_id: @statement.id), class: "argtitle", id: "cnewargtitle" %></div>
 </div>
 </div>
 </div>

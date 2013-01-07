@@ -15,17 +15,23 @@ body
 	background-color: #F2F2F2;
 }
 
-.pargument
+.argument
 {
 	background-color: white;
 	overflow:hidden;
 	border-style: none;
 }
 
-.cargument
+.pro
 {
-	background-color: white;
-	overflow:hidden;
+	border-right: solid 1px #468783;
+	background-color:  #E9F2DD;
+}
+
+.con
+{
+	background-color: #F0F3FC;
+	overflow:hidden; 
 }
 
 .argcontainer1
@@ -470,7 +476,7 @@ h3
 	font-weight:normal;
 }
 
-.pargtitle
+.argtitle
 {
 	display: block;
 	text-align:justify;
@@ -480,21 +486,6 @@ h3
 	font-weight:normal;
 	text-decoration: none;
 	padding: 10px;
-	background-color: #E9F2DD;
-	width: 100%;
-}
-
-.cargtitle
-{
-	display: block;
-	text-align:justify;
-	color:#295E59;
-	font-family: Verdana, arial, sans-serif;
-	font-size:16px;
-	font-weight:normal;
-	text-decoration: none;
-	padding: 10px;
-	background-color: #F0F3FC;
 	width: 100%;
 }
 
@@ -566,14 +557,11 @@ a:hover
 
 .form-horizontal
 {
-	width: 237px;
+	width: auto;
 	min-height: 200px;
-	border-right-style: solid;
-	border-color: #468783;
-	border-width: 1px;
 	padding: 0px;
 	margin-right: 20px;
-	float: left;
+	font-family: verdana, sans-serif;
 }
 
 
@@ -621,15 +609,16 @@ a:hover
 .revunderbar
 {
 	list-style-type: none;
+	font-family: verdana, sans-serif;
 	text-align: center;
 	border: 1px;
 	border-style: none;
 	border-color: #468783;
+	background-color: white;
 
 	li
 	{
 		display: inline;
-
 		h3
 		{
 			display: inline;
@@ -652,14 +641,19 @@ a:hover
 {
 	border: 1px;
 	border-style: solid;
+	border-color: #468783;
+	background-color: white;
+	font-family: verdana, sans-serif;
+	padding: 5px;
+
 }
 .alert-Notice
 {
-	background-color: #9FF781;
+	background-color: white;
 }
 .alert-Error
 {
-	background-color: #F78181;
+	border-color: red;
 }
 
 /*  Authentications page */
@@ -681,7 +675,7 @@ a:hover
   right: 3px;
   color: #333;
   padding: 2px 4px;
-  font-size: 10px;
+  font-size: 15px;
 }
 
 .authentication .remove:hover {
@@ -691,16 +685,16 @@ a:hover
 
 .authentication img {
   float: left;
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 .authentication .provider {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .authentication .uid {
   color: #666;
-  font-size: 11px;
+  font-size: 15px;
 }
 
 .auth_provider {
@@ -713,6 +707,25 @@ a:hover
   margin-right: 11px;
   height: 64px;
 }
+
+.submitbtn 
+{     
+	border: 1px solid #468783; 
+	margin: 8px;
+	width: auto;
+	color: #468783;
+	background-color: white;
+	height: 32px;
+	font-family: verdana, sans-serif;
+	font-size: 14px;
+}
+
+.submitbtn:hover
+{
+	border-color: black;
+	color: black;
+}
+
 
 /*info about page tabs*/
 
@@ -962,13 +975,15 @@ div.pageconf li a
 h1.setting{
 	text-align: right;
 	font-size: 23px;
+	position: relative;
+	top: 1px;
 }
 
 .settingform
 {
 	color:#468783;
-	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size:23px;
+	font-family: Verdana, Century Gothic, sans-serif;
+	font-size:16px;
 	width: 300px;
 	padding: 10px;
 	background: white;
@@ -978,3 +993,8 @@ h1.setting{
 	height: auto;	
 }
 
+.remember
+{
+	color: #468783;
+	margin: 8px;
+}

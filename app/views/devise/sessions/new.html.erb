@@ -1,6 +1,4 @@
-<h1>Sign in</h1>
-
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { class: "form-horizontal" } ) do |f| %>
+<!--<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { class: "form-horizontal" } ) do |f| %>
   <div><%= f.label :login %><br />
   <%= f.text_field :login %></div>
 
@@ -11,7 +9,54 @@
     <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
   <% end -%>
 
-  <div><%= f.submit "Sign in" %></div>
+  <div><%= f.submit "log in" , class: "submitbtn" %></div>
 <% end %>
-<%= render 'authentications/login_providers' %>
+-->
+<%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { class: "form-horizontal" } ) do |f| %>
+
+<table border="0">
+<tr>
+<td><h1 class="setting">login met</h1></td>
+<td>
+	<a href="/auth/twitter" class="auth_provider">
+  <%= image_tag "favicon_twitter.svg", :size => "64x64",
+  :alt => "Twitter" %></a>
+<a href="/auth/facebook" class="auth_provider">
+  <%= image_tag "favicon_facebook.svg", :size => "64x64",
+  :alt => "Facebook" %></a>
+<a href="/auth/google_apps" class="auth_provider">
+  <%= image_tag "favicon_google.svg", :size => "64x64",
+  :alt => "Google" %></a>
+<a href="/auth/openid" class="auth_provider">
+  <%= image_tag "favicon_openid.svg", :size => "64x64",
+  :alt => "OpenID" %></a>
+</td>
+</tr>
+<tr>
+<td></td>
+<td><h3>of</h3></td>
+</tr>
+<tr>
+<td><h1 class="setting"><%= f.label :login %></h1></td>
+<td><%= f.text_field :login, class: "settingform" %>
+</tr>
+<tr>
+<td><h1 class="setting"><%= f.label :password %></h1></td>
+<td><%= f.password_field :password, class: "settingform" %>
+</tr>
+<tr>
+<td><h1 class="setting"><%= f.label :remember_me %></h1></td>
+<td>  <% if devise_mapping.rememberable? %>
+    <div class="remember"><%= f.check_box :remember_me %></div>
+  <% end -%>
+</tr>
+<tr>
+<td></td>
+<td> <div><%= f.submit "log in" , class: "submitbtn" %></div></td>
+</tr>
+
+
+<% end %>
+
+<!--<%= render 'authentications/login_providers' %>
 <div style="display: block; float: left;"><%= render "devise/shared/links" %></div>
