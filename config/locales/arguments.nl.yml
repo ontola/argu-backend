@@ -1,0 +1,23 @@
+#Dutch argument translations
+
+nl:
+  arguments:
+    type: "argument"
+    index:
+      title: "Argumenten"
+    show:
+      title: "Argumenten"
+      reply: "Reageer"
+    revisions:
+      table_id: "id"
+      table_title: "Titel"
+      table_content: "Inhoud"
+      table_edited: "Bewerkt door"
+      table_created: "Gemaakt op"
+      table_page: "Pagina"
+      table_make: "Zet terug"
+    comments:
+      favorite: "Favoriet"
+      reply: "Reageer"
+      delete: "Verwijder"
+      more: "Toon meer (nog niet werkend)"

@@ -1,5 +1,5 @@
 <% provide(:menu_class, 'arguments') %>
-<h1>Listing arguments</h1>
+<h1><%= t("arguments.index.title") %></h1>
 
 <table class="table table-striped">
 <thead>
@@ -18,9 +18,9 @@
     <td><%= getArgType(argument) %></td>
     <td>
       <div class="btn-group">
-        <%= link_to t(:application_general_show), argument, class: "btn btn-primary" %>
-        <%= link_to t(:application_general_edit), edit_argument_path(argument), class: "btn" %>
-        <%= link_to t(:application_general_destroy), argument, class: "btn btn-danger", confirm: t(:application_general_destroy_confirmation), method: :delete %>
+        <%= link_to t(:show), argument, class: "btn btn-primary" %>
+        <%= link_to t(:edit), edit_argument_path(argument), class: "btn" %>
+        <%= link_to t(:destroy), argument, class: "btn btn-danger", confirm: t(:destroy_confirmation), method: :delete %>
       </div>
     </td>
   </tr>
@@ -30,4 +30,4 @@
 
 <br />
 
-<%= link_to 'New Argument', new_argument_path, class: "btn" %>
+<%= link_to t("new", t("arguments.type")), new_argument_path, class: "btn" %>
