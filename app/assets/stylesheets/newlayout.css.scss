@@ -25,12 +25,12 @@ body
 .pro
 {
 	border-right: solid 1px #468783;
-	background-color:  #E9F2DD;
+	background-color:  #f3fafa;
 }
 
 .con
 {
-	background-color: #F0F3FC;
+	background-color: #faf4f3;
 	overflow:hidden; 
 }
 
@@ -246,15 +246,12 @@ div.commentusername
 	{
 		color: #468783;
 		position: relative;
-		float: right;
-		top: -35px;
-		background-color: white;
-		border-style: solid;
-		border-width: 1px;
+		float: left;
+		top: -46px;
+		border-style: none;
 		padding: 3px;
 		border-color:#468783;
 		font-family: Verdana,arial,sans-serif;
-		left: -7px;
 		padding-left: 5px;
 		padding-right: 5px;	
 	}
@@ -267,18 +264,30 @@ div.commentusername
 		width: 40px;
 	}
 
-.commentbuttons img
+.commentbuttons a
 	{
-		width: 22px;
+		width: 50px;
 		position: relative;
 		float: right;
-		top: -33px;
+		top: -35px;
 		left: -7px;
-		margin-left: 7px;
+		font-family: Verdana,arial,sans-serif;
+		border-color:#468783;
+		background-color: white;
+		border-style: solid;
+		border-width: 1px;
+		padding: 3px;
+
+	
 	}
 
 .commentbuttons img:hover {cursor: pointer}     
-.commentbuttons img:hover polygon[id="star"] {fill:#468783; }     
+.commentbuttons img:hover polygon[id="star"] {fill:#468783; }
+
+path.iconborder:hover
+{
+	color: black;
+}     
 
 .comments
 {
@@ -292,7 +301,7 @@ div.commentusername
 		background-color: #FFFFFF;
 		padding: 10px;
 		padding-left: 20px;
-		padding-bottom: 16px;
+		padding-bottom: 25px;
 	}
 	.c1
 	{
@@ -710,11 +719,12 @@ a:hover
 
 .submitbtn 
 {     
-	border: 1px solid #468783; 
+	border: none; 
 	margin: 8px;
+	padding: 5px;
 	width: auto;
-	color: #468783;
-	background-color: white;
+	color: white;
+	background-color: #468783;
 	height: 32px;
 	font-family: verdana, sans-serif;
 	font-size: 14px;
@@ -722,8 +732,8 @@ a:hover
 
 .submitbtn:hover
 {
-	border-color: black;
-	color: black;
+	color: white;
+	background-color: #529E99;
 }
 
 

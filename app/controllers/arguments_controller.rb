@@ -15,6 +15,8 @@ class ArgumentsController < ApplicationController
   def show
     @offset = params[:offset].to_i
     @offset ||= 0
+
+    @parent_id = params[:parent_id].to_s
     
     @comments = @argument.root_comments.order('created_at ASC').offset(@offset).limit(5)
     @length = @argument.root_comments.length
@@ -147,11 +149,13 @@ class ArgumentsController < ApplicationController
   end
 
   def placeComment 
+    argument = Argument.find(params[:id])
     @comment = params[:comment]
-    @comment = Comment.build_from( Argument.find(params[:id]), @current_user.id, @comment )
+    @comment = Comment.build_from(argument, @current_user.id, @comment )
     @comment.save!
+    puts "==================="+params[:parent_id]+"==============================="
     @comment.move_to_child_of(Comment.find_by_id(params[:parent_id])) unless params[:parent_id].blank?
-    redirect_to request.referrer
+    redirect_to argument_path(argument)
   end
 
 end
