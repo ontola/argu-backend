@@ -9,7 +9,7 @@
 			<%= argument.content.strip[0,140] + ((argument.content.strip.length < 140) ? "" : "...") %>
 		</div>
 		<p>
-			<small class="showtype">Type: <%= getArgType(argument) %></small><small class="timestamp showtime"><%=t(:application_general_edited)%> <%= time_ago_in_words(argument.updated_at) + " " + t(:datetime_ago) %></small>
+			<small class="showtype"><%= t("arguments.type") + " " + getArgType(argument) %></small><small class="timestamp showtime"><%= ". "+ time_ago_in_words(argument.updated_at) + " " + t("datetime_ago") + " " + t("edited") %></small>
 		</p>
 	</span>
 <% end %>

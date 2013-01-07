@@ -1,7 +1,7 @@
 <div class="profile" style="overflow: hidden; text-overflow:ellipsis;">
 	<ul id="head">
 		<% if @profile.user_id == current_user.id %><li><%= link_to("edit", edit_profile_url(@profile), html_options = { remote: false, id: :editbtn }) %></li><% end %>
-		<li><h1 id="txt">Profile</h1></li>
+		<li><h1 id="txt"><%= t("profiles.show.title") %></h1></li>
 	</ul>
 	<div id="profbody">
 		<%= image_tag (@profile.picture.blank? ? "icon_temp.png" : @profile.picture), options = { alt: "Profile picture", size: "45x45", style: "float: left; margin-right: 5px;" } %>

@@ -1,0 +1,12 @@
+#Dutch argument translations
+
+nl:
+  profiles:
+    type: "profiel"
+    show:
+      title: "profiel"
+    edit:
+      title: "profiel bewerken"
+      name: "naam"
+      picture: "afbeelding"
+      about: "over"
