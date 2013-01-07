@@ -1,6 +1,6 @@
 <% @comment = getBestComment(argument) %>
-<div class=<%= (pro ? "pargument" : "cargument") %>>
-	<%= link_to argument.title, argument_path(argument), class: (pro ? "pargtitle" : "cargtitle") %>
+<div class="<%= (pro ? "argument pro" : "argument con") %>">
+	<%= link_to argument.title, argument_path(argument), class: (pro ? "argtitle" : "argtitle") %>
 	<%= render partial: "votes/shr", locals: {argument: argument} %>
 	<p><%= argument.content.strip[0,140] + ((argument.content.strip.length < 140) ? "" : "...") %><p>
 	<% if (!@comment.nil?)%>
