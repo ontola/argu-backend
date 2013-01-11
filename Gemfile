@@ -18,7 +18,6 @@ gem "omniauth-oauth2", "~> 1.0.0"
 gem 'omniauth-facebook', "~> 1.4.0"
 gem 'omniauth-twitter', "~> 0.0.13"
 #gem 'omniauth-openid'
-gem 'mongrel', '1.2.0.pre2'
 gem 'cancan', '~> 1.6.8'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
@@ -39,6 +38,7 @@ group :assets do
 end
 
 group :development do
+  gem 'thin'
   gem 'rspec-rails', '2.9.0'
   gem 'annotate','~> 2.4.1beta1'
   gem "nifty-generators", '~> 0.4.6'
