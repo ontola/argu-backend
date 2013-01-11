@@ -1,95 +1,43 @@
 Argu::Application.routes.draw do
-  resources :authentications, only: [:create, :destoy]
-  match 'auth/:provider/callback' => "authentications#create"
+  root to: 'static_pages#home'
+  match "/", to: "static_pages#home", constraints: lambda { |r| r.env["warden"].authenticate? }
+  match "/home", to: "static_pages#home", constraints: lambda { |r| r.env["warden"].authenticate? }
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
-  #resources :users
-  resources :statements do 
-    get :autocomplete_argument_title, :on => :collection
-  end
-  get "/statements/:id/revisions" => "statements#allrevisions", as: 'revisions_statement'
-  get "/statements/:id/revisions/:rev" => "statements#revisions", as: 'rev_revisions_statement'
-  put "/statements/:id/revisions/:rev" => "statements#setrevision", as: 'update_revision_statement'
+  resources :authentications, only: [:create, :destoy], constraints: lambda { |r| r.env["warden"].authenticate? }
+  match 'auth/:provider/callback' => "authentications#create", constraints: lambda { |r| r.env["warden"].authenticate? }
 
-  resources :arguments
-  post "/arguments/:id/placeComment" => "arguments#placeComment"
-  get "/arguments/:id/revisions" => "arguments#allrevisions", as: 'revisions_argument'
-  get "/arguments/:id/revisions/:rev" => "arguments#revisions", as: 'rev_revisions_argument'
-  put "/arguments/:id/revisions/:rev" => "arguments#setrevision", as: 'update_revision_argument'
+
+  #resources :users
+  resources :statements, constraints: lambda { |r| r.env["warden"].authenticate? }
+  get "/statements/:id/revisions" => "statements#allrevisions", as: 'revisions_statement', constraints: lambda { |r| r.env["warden"].authenticate? }
+  get "/statements/:id/revisions/:rev" => "statements#revisions", as: 'rev_revisions_statement', constraints: lambda { |r| r.env["warden"].authenticate? }
+  put "/statements/:id/revisions/:rev" => "statements#setrevision", as: 'update_revision_statement', constraints: lambda { |r| r.env["warden"].authenticate? }
+
+  resources :arguments, constraints: lambda { |r| r.env["warden"].authenticate? }
+  post "/arguments/:id/placeComment" => "arguments#placeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
+  get "/arguments/:id/revisions" => "arguments#allrevisions", as: 'revisions_argument', constraints: lambda { |r| r.env["warden"].authenticate? }
+  get "/arguments/:id/revisions/:rev" => "arguments#revisions", as: 'rev_revisions_argument', constraints: lambda { |r| r.env["warden"].authenticate? }
+  put "/arguments/:id/revisions/:rev" => "arguments#setrevision", as: 'update_revision_argument', constraints: lambda { |r| r.env["warden"].authenticate? }
   
   #resources :sessions #, only: [:new, :create, :destroy]
-  resources :profiles
-  resources :votes
-  match "/arguments/:id/upvote" => "votes#create", as: 'argument_create_vote'
-  match "/arguments/:id/unvote" => "votes#destroy", as: 'argument_destroy_vote'
-  resources :comments
+  resources :profiles, constraints: lambda { |r| r.env["warden"].authenticate? }
+  resources :votes, constraints: lambda { |r| r.env["warden"].authenticate? }
+  match "/arguments/:id/upvote" => "votes#create", as: 'argument_create_vote', constraints: lambda { |r| r.env["warden"].authenticate? }
+  match "/arguments/:id/unvote" => "votes#destroy", as: 'argument_destroy_vote', constraints: lambda { |r| r.env["warden"].authenticate? }
+  resources :comments, constraints: lambda { |r| r.env["warden"].authenticate? }
 
-  get "/search/" => "search#show", as: 'search'
-  post "/search/" => "search#show", as: 'search'
+  get "/search/" => "search#show", as: 'search', constraints: lambda { |r| r.env["warden"].authenticate? }
+  post "/search/" => "search#show", as: 'search', constraints: lambda { |r| r.env["warden"].authenticate? }
 
   ##get "users/new"
-
-  root to: 'static_pages#home'
-
-  match "/", to: "static_pages#home"
-  match "/home", to: "static_pages#home"
-  get "/settings", to: "users#show"
-  post '/settings' => 'users#update'
+  get "/settings", to: "users#show", constraints: lambda { |r| r.env["warden"].authenticate? }
+  post '/settings' => 'users#update', constraints: lambda { |r| r.env["warden"].authenticate? }
   #match "/signup", to: "users#new"
   #match "/signin", to: "sessions#new"
   #get "/signout", to: "sessions#destroy", via: :delete
-  match "/about", to: "static_pages#about"
-  match "/learn", to: "static_pages#learn"
-  match "/newpage", to: "static_pages#newlayout"
-
-
-  # The priority is based upon order of creation:
-  # first created -> highest priority.
-
-  # Sample of regular route:
-  #   match 'products/:id' => 'catalog#view'
-  # Keep in mind you can assign values other than :controller and :action
-
-  # Sample of named route:
-  #   match 'products/:id/purchase' => 'catalog#purchase', :as => :purchase
-  # This route can be invoked with purchase_url(:id => product.id)
-
-  # Sample resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Sample resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Sample resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Sample resource route with more complex sub-resources
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', :on => :collection
-  #     end
-  #   end
-
-  # Sample resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
-
-  # See how all your routes lay out with "rake routes"
+  match "/about", to: "static_pages#about", constraints: lambda { |r| r.env["warden"].authenticate? }
+  match "/learn", to: "static_pages#learn", constraints: lambda { |r| r.env["warden"].authenticate? }
+  match "/newpage", to: "static_pages#newlayout", constraints: lambda { |r| r.env["warden"].authenticate? }
 end

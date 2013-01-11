@@ -33,8 +33,7 @@ class Ability
         end
         can [:manage], Vote
     else
-        #Guests (non-registered) are only able to read general goods
-        can :manage, Vote
+        #can :manage, Vote
         can :read, [Statement,
                     Argument,
                     Comment,

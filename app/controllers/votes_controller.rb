@@ -1,5 +1,4 @@
 class VotesController < ApplicationController
-  #load_and_authorize_resource
 
   # GET /votes/1
   # GET /votes/1.json

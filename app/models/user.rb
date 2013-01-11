@@ -78,16 +78,6 @@ class User < ActiveRecord::Base
     USERNAME_FORMAT_REGEX.match(name.to_s)
   end
 
-  #Provides username or email login
-  def self.find_first_by_auth_conditions(warden_conditions)
-      conditions = warden_conditions.dup
-      if login = conditions.delete(:login)
-        where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-      else
-        where(conditions).first
-      end
-    end
-
 private
   def check_for_profile
     self.profile ||= Profile.create
