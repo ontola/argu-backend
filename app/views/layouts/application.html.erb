@@ -2,11 +2,11 @@
 <html>
 <head>
   <title><%= yield(:title) == "" ? "" : yield(:title) + " | " %><%= t('name') %></title>
+  <meta charset="UTF-8">
+  <%= csrf_meta_tags %>
+  <%= render 'layouts/shim'%>
   <% unless current_user.blank? %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
-    <%= csrf_meta_tags %>
-    <meta charset="UTF-8">
-    <%= render 'layouts/shim'%>
     <%= javascript_include_tag "application" %>
   <% end %>
 </head>
