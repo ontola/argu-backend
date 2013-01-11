@@ -7,7 +7,7 @@
 end
 
 ua = User.create(email: 'thomvankalkeren@gmail.com', username: 'fletcher91', password: 'foobar', password_confirmation:'foobar' );
-ub = User.create(username: 'admin', email: 'postmaster@argu.nl', password:'foobar', password_confirmation:'foobar')
+ub = User.create(username: 'admin', email: 'postmaster@argu.nl', password:'opendebate', password_confirmation:'opendebate')
 uc = User.create(email: 'joepmeindertsma@gmail.com', username: 'joep', password: 'joepjoep', password_confirmation:'joepjoep' );
 
 ua.profile = Profile.create(name: 'Thom van Kalkeren', picture: 'http://www.wthex.com/images/coolcookie.gif', about: "I'm the coder!")
