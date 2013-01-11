@@ -33,8 +33,9 @@ class Ability
         end
         can [:manage], Vote
     else
+        cannot :manage, :all
         #can :manage, Vote
-        can :read, [Statement,
+        #can :read, [Statement,
                     Argument,
                     Comment,
                     Profile]

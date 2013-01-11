@@ -5,8 +5,8 @@ Argu::Application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
-  resources :authentications, only: [:create, :destoy], constraints: lambda { |r| r.env["warden"].authenticate? }
-  match 'auth/:provider/callback' => "authentications#create", constraints: lambda { |r| r.env["warden"].authenticate? }
+  resources :authentications, only: [:create, :destoy]
+  match 'auth/:provider/callback' => "authentications#create"
 
 
   #resources :users
