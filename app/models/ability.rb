@@ -36,9 +36,9 @@ class Ability
         cannot :manage, :all
         #can :manage, Vote
         #can :read, [Statement,
-                    Argument,
-                    Comment,
-                    Profile]
+        #            Argument,
+        #            Comment,
+        #            Profile]
     end
         
 
