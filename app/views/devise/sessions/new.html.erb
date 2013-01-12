@@ -13,7 +13,50 @@
 <% end %>
 -->
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { class: "form-horizontal" } ) do |f| %>
-
+<div class="label-row">
+  <label><%= t("users_oauth_new") %></label>
+  <div class="label-subrow">
+    <a href="/auth/twitter" class="auth_provider">
+      <%= image_tag "favicon_twitter.svg", :size => "64x64",
+      :alt => "Twitter" %></a>
+    <a href="/auth/facebook" class="auth_provider">
+      <%= image_tag "favicon_facebook.svg", :size => "64x64",
+      :alt => "Facebook" %></a>
+    <a href="/auth/google_apps" class="auth_provider">
+      <%= image_tag "favicon_google.svg", :size => "64x64",
+      :alt => "Google" %></a>
+    <a href="/auth/openid" class="auth_provider">
+      <%= image_tag "favicon_openid.svg", :size => "64x64",
+      :alt => "OpenID" %></a>
+  </div>
+</div>
+<div class="label-row">
+  <label><%= f.label :login %></label>
+  <div class="label-subrow">
+    <%= f.text_field :login, class: "settingform" %>
+  </div>
+</div>
+<div class="label-row">
+  <label><%= f.label :password %></label>
+  <div class="label-subrow">
+    <%= f.password_field :password, class: "settingform" %>
+  </div>
+</div>
+<div class="label-row">
+  <label><%= f.label :remember_me %></label>
+  <div class="label-subrow">
+      <% if devise_mapping.rememberable? %>
+    <div class="remember"><%= f.check_box :remember_me %></div>
+  <% end -%>
+  </div>
+</div>
+<div class="label-row">
+  <label></label>
+  <div class="label-subrow">
+    <%= f.submit "log in" , class: "submitbtn" %>
+  </div>
+</div>
+<!--
 <table border="0">
 <tr>
 <td><h1 class="setting">login met</h1></td>
@@ -54,9 +97,6 @@
 <td></td>
 <td> <div><%= f.submit "log in" , class: "submitbtn" %></div></td>
 </tr>
-
-
+<%= render 'authentications/login_providers' %>
+<div style="display: block; float: left;"><%= render "devise/shared/links" %></div>-->
 <% end %>
-
-<!--<%= render 'authentications/login_providers' %>
-<div style="display: block; float: left;"><%= render "devise/shared/links" %></div>

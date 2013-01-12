@@ -1,9 +1,5 @@
 <% provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title) %>
 <% provide(:menu_class, 'arguments') %>
-<div class="pageconf">
-	<%= link_to(t("edit"), edit_argument_path(@argument)) %>
-	<%= link_to(t("history"), revisions_argument_path(@argument)) %>
-</div>
 <%= render 'argumentbody' %>
 <%= render 'argumentcomments' %>
 <%= form_tag(@argument.id.to_s + "/placeComment", :action => "placeComment", :method => "post", :id => @argument.id) do %>

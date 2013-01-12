@@ -5,5 +5,5 @@
 	<p><%= argument.content.strip[0,140] + ((argument.content.strip.length < 140) ? "" : "...") %><p>
 	<% if (!@comment.nil?)%>
 	<%= link_to ( argument_path(argument)+"#commentstitle" ) do %><p class=<%= (pro ? "pcomment" : "ccomment") %>><%= @comment.body %></p><% end %>
-	<%= image_tag((pro ? "pcmnt.png" : "ccmnt.png"), class: (pro ? "imgpcomment" : "imgccomment")) %><% end %>
+	<% end %>
 </div>

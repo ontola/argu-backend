@@ -1,6 +1,9 @@
 <header>
-	<h1><%= @statement.title %></h1>
-	<div class= "intro">
+	<div class= "introbox">
+		<h1><%= @statement.title %></h1>
 		<p><%= @statement.content %></p>
-	<div>
+		<p>
+			<%= link_to(t("edit"), edit_statement_path(@statement)) %>
+			<%= link_to(t("history"), revisions_statement_path(@statement)) %>
+		</p>
 </header>

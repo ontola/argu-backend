@@ -1,35 +1,35 @@
 <div class="stcont3">
 	<div class="stcont2">
 		<div class="stcont1">
-			<div class="stcol1"><h2 class="voor">voor<h2></div></li>
-			<div class="stcol2"><h2>Argumenten</h2></div></li>
-			<div class="stcol3"><h2 class="tegen">tegen<h2></div></li>
+			<div class="stcol1"><h2 class="voor">voor<h2></div>
+			<div class="stcol2"><h2>Argumenten</h2></div>
+			<div class="stcol3"><h2 class="tegen">tegen<h2></div>
 		</div>
 	</div>
 </div>
 <div class="argcontainer1">
-<div class="argcontainer2">
-<div class="prosbox">
-	<% unless @pro.nil? %>
-		<% @pro.each do |argument| %>
-			<%= render 'arguments/sarguments', argument: argument, pro: true %>
-			<hr class="stripe"></hr>
-		<% end %>
-	<% else %>
-		<pre><%= t(:statement_no_pros) %></pre>
-	<% end %>
-	<div class="argument pro"><%= link_to "Nieuw", new_argument_path(pro: true, statement_id: @statement.id), class: "argtitle", id: "pnewargtitle" %></div>
-</div>
-<div class="consbox">
-	<% unless @con.nil? %>
-		<% @con.each do |argument| %>
-			<%= render 'arguments/sarguments', argument: argument, pro: false %>
-				<hr class="stripe"></hr>
-		<% end %>
-	<% else %>
-		<pre><%= t(:statement_no_cons) %></pre>
-	<% end %>
-	<div class="argument con"><%= link_to "Nieuw", new_argument_path(pro: false, statement_id: @statement.id), class: "argtitle", id: "cnewargtitle" %></div>
-</div>
-</div>
+	<div class="argcontainer2">
+		<div class="prosbox">
+			<% unless @pro.nil? %>
+				<% @pro.each do |argument| %>
+					<%= render 'arguments/sarguments', argument: argument, pro: true %>
+					<hr class="stripe"></hr>
+				<% end %>
+			<% else %>
+				<pre><%= t(:statement_no_pros) %></pre>
+			<% end %>
+			<div class="argument pro"><%= link_to t("new"), new_argument_path(pro: true, statement_id: @statement.id), class: "argtitle", id: "pnewargtitle" %></div>
+		</div>
+		<div class="consbox">
+			<% unless @con.nil? %>
+				<% @con.each do |argument| %>
+					<%= render 'arguments/sarguments', argument: argument, pro: false %>
+						<hr class="stripe"></hr>
+				<% end %>
+			<% else %>
+				<pre><%= t(:statement_no_cons) %></pre>
+			<% end %>
+			<div class="argument con"><%= link_to "Nieuw", new_argument_path(pro: false, statement_id: @statement.id), class: "argtitle", id: "cnewargtitle" %></div>
+		</div>
+	</div>
 </div>
