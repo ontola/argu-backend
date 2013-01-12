@@ -1,18 +1,110 @@
-@font-face {
-    font-family: 'bariol_lightlight';
-    src: url('bariol_light.eot');
-    src: url('bariol_light.eot?#iefix') format('embedded-opentype'),
-         url('bariol_light.svg#bariol_lightlight') format('svg'),
-         url('bariol_light.woff') format('woff'),
-         url('bariol_light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
 body
 {	
 	margin: 0px; padding: 0px;
 	background-color: #F2F2F2;
+}
+
+table td
+{
+	border-style: none;
+	vertical-align: middle;
+}
+
+.container
+{
+	width: 960px;
+	margin-top: 45px;
+	margin:0px auto;
+	padding-top: 15px;
+}
+
+hr.stripe
+{
+	border-color: #468783;
+	border-style: none;
+	border-top-style: solid;
+}
+
+/*Dit is de opmaak van gewone text, waaronder de toelichting van een argument + beschrijving van onderwerp*/
+p
+{
+	text-align:justify;
+	color:black;
+	font-family: Verdana,arial,sans-serif;
+	font-size:13px;
+	line-height:135%;
+	margin:0px;
+	padding: 10px;	
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+/*onderwerpstitel */
+h1
+{
+	text-align:center;
+	color:#468783;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
+	font-size:26px;
+	font-weight: normal;
+	padding-bottom: 2px;
+	margin: 0px;
+	padding: 0px;
+	margin-bottom: 3px;
+}
+
+h2
+{
+	text-align:center;
+	color:white;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
+	font-size: 26px;
+	font-weight:normal;
+	margin: -3px;
+	padding: -1px;
+	padding-bottom: 2px;
+	clear: both;
+	position: relative;
+	top: 10px;
+}
+
+h3
+{
+	text-align:justify;
+	color:#468783;
+	font-family: Verdana, arial, sans-serif;
+	font-size:16px;
+	margin: 0px;
+	padding: 5px;
+	padding-left: 8px;
+	padding-bottom: 0px;
+	margin-bottom: -5px;
+	font-weight:normal;
+}
+
+a /*link*/
+{
+	text-decoration: none;
+	color: #468783;
+	border-style: none;
+	font-family: verdana, sans-serif;
+	font-size: 12px;
+}
+
+a:hover
+{
+	color: black;
+}
+
+label
+{
+	float: left;
+	text-align: right;
+	font-size: 23px;
+	position: relative;
+	color:#468783;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
+	width: 280px;
 }
 
 .argument
@@ -69,13 +161,6 @@ body
 	left: 50%;
 	overflow: hidden;
 }		
-
-hr.stripe
-{
-	border-color: #468783;
-	border-style: none;
-	border-top-style: solid;
-}
 
 #speech-bubble:before {
    content:"";
@@ -219,89 +304,67 @@ div#nothingbar
 	display: block;
 }
 
-.container
-{
-	width: 960px;
-	margin-top: 45px;
-	margin:0px auto;
-	padding-top: 15px;
-}
-
-/*Dit is de opmaak van gewone text, waaronder de toelichting van een argument + beschrijving van onderwerp*/
-p
-{
-	text-align:justify;
-	color:black;
-	font-family: Verdana,arial,sans-serif;
-	font-size:13px;
-	line-height:135%;
-	margin:0px;
-	padding: 10px;	
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-
 /*Dit is de opmaak van een comment*/
-div.commentusername
+a.commentusername
 	{
 		color: #468783;
 		position: relative;
 		float: left;
-		top: -46px;
+		top: 0px;
 		border-style: none;
 		padding: 3px;
 		border-color:#468783;
 		font-family: Verdana,arial,sans-serif;
+		font-size: 12px;
 		padding-left: 5px;
 		padding-right: 5px;	
 	}
 
-.commentbuttons li
+.commentinfo
+{
+	display: block;
+	p
 	{
-		list-style-type: none;
-		padding-right: 20px;
-		display: inline;
-		width: 40px;
+	color: grey;
+	position: relative;
+	top: 5px;
 	}
+}
+
+.commentbuttons li
+{
+	display: inline;
+	width: 40px;
+}
 
 .commentbuttons a
-	{
-		width: 50px;
-		position: relative;
-		float: right;
-		top: -35px;
-		left: -7px;
-		font-family: Verdana,arial,sans-serif;
-		border-color:#468783;
-		background-color: white;
-		border-style: solid;
-		border-width: 1px;
-		padding: 3px;
-
-	
-	}
-
-.commentbuttons img:hover {cursor: pointer}     
-.commentbuttons img:hover polygon[id="star"] {fill:#468783; }
-
-path.iconborder:hover
 {
-	color: black;
-}     
+	width: 50px;
+	position: relative;
+	float: right;
+	top: -20px;
+	left: 0px;
+	font-family: Verdana,arial,sans-serif;
+	font-size: 13px;
+	border-color:#468783;
+	background-color: white;
+	border-left-style: solid;
+	border-top-style: solid;
+	border-width: 1px;
+	padding: 3px;
+}
 
 .comments
 {
-	p
+	.commentbox
 	{
 		border-style:solid;
 		border-width:1px;
 		border-color:#468783;
 		margin-top:20px;
-		margin-bottom: 21px;
+		margin-bottom: 8px;
 		background-color: #FFFFFF;
-		padding: 10px;
-		padding-left: 20px;
-		padding-bottom: 25px;
+		padding-top: 3px;
 	}
 	.c1
 	{
@@ -372,19 +435,6 @@ p.ccomment
 	margin-bottom: 0px;
 	padding:0px;
 }
-/*Dit is de opmaak van een onderwerpstitel */
-h1
-{
-	text-align:center;
-	color:#468783;
-	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size:26px;
-	font-weight: normal;
-	padding-bottom: 2px;
-	margin: 0px;
-	padding: 0px;
-	margin-bottom: 3px;
-}
 
 /*Dit is de opmaak van een deelonderwerptitel (meestal is dit "argumenten")*/
 div.stcont3
@@ -440,26 +490,11 @@ div.stcol3
 	left: 76.67%;
 }
 
-h2
-{
-	text-align:center;
-	color:white;
-	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size: 26px;
-	font-weight:normal;
-	margin: -3px;
-	padding: -1px;
-	padding-bottom: 2px;
-	clear: both;
-	position: relative;
-	top: 5px;
-}
-
 h2.voor
 {
 	font-size: 20px;
 	position: relative;
-	top: 12px;
+	top: 15px;
 	text-align: left;
 }
 
@@ -467,22 +502,8 @@ h2.tegen
 {
 	font-size: 20px;
 	position: relative;
-	top: 12px;
+	top: 15px;
 	text-align: right;
-}
-/*Dit is de opmaak van een argument*/
-h3
-{
-	text-align:justify;
-	color:#468783;
-	font-family: Verdana, arial, sans-serif;
-	font-size:16px;
-	margin: 0px;
-	padding: 5px;
-	padding-left: 8px;
-	padding-bottom: 0px;
-	margin-bottom: -5px;
-	font-weight:normal;
 }
 
 .argtitle
@@ -534,18 +555,6 @@ h3
 {
 	height: 78px;
 	padding-bottom: 13px;
-}
-
-a /*link*/
-{
-	text-decoration: none;
-	color: #468783;
-	border-style: none;
-}
-
-a:hover
-{
-	color: black;
 }
 
 .control-group
@@ -669,17 +678,15 @@ a:hover
 
 .authentication {
   font-family: verdana, sans-serif;
-  width: 320px;
-  float: left;
+  width: 410px;
   background-color: white;
   border: solid 1px #468783;
-  margin: 8px;
-  position: relative;
+  height: 64px;
 }
 
 .authentication .remove {
   text-decoration: none;
-  position: absolute;
+  position: relative;
   top: 3px;
   right: 3px;
   color: #333;
@@ -698,29 +705,24 @@ a:hover
 }
 
 .authentication .provider {
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .authentication .uid {
   color: #666;
   font-size: 15px;
+  padding-top: 5px;
 }
 
-.auth_provider {
-  float: left;
-  text-decoration: none;
-  text-align: center;
+.auth_provider img{
   border-style: solid;
   border-width: 1px;
-  margin: 8px;
-  margin-right: 11px;
-  height: 64px;
+  margin-right: 16px;
 }
 
 .submitbtn 
 {     
-	border: none; 
-	margin: 8px;
+	border: none;
 	padding: 5px;
 	width: auto;
 	color: white;
@@ -931,19 +933,18 @@ div.preview {
 	margin-bottom: 15px;
 }
 
-p.previewtitle {
+.previewtitle a {
 	text-align:center;
 	color:#468783;
 	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size:26px;
-	padding: 0px;
+	font-size:23px;
 }
 
 p.grey {
 	color: grey;
 }
 
-/* Profile */
+/* Profile en settings */
 .profile #head
 {
 	list-style-type: none;
@@ -982,11 +983,13 @@ div.pageconf li a
 	float:right;
 }
 
-h1.setting{
-	text-align: right;
-	font-size: 23px;
-	position: relative;
-	top: 1px;
+.label-row{
+	margin-bottom: 20px;
+}
+
+.label-subrow{
+	margin-left: 288px;
+	width: 100%;
 }
 
 .settingform
@@ -994,13 +997,12 @@ h1.setting{
 	color:#468783;
 	font-family: Verdana, Century Gothic, sans-serif;
 	font-size:16px;
-	width: 300px;
-	padding: 10px;
+	width: 400px;
 	background: white;
 	border-style: solid;
 	border-width: 1px;
-	margin: 8px;
 	height: auto;	
+	padding: 5px;
 }
 
 .remember
