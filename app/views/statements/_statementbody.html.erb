@@ -2,8 +2,19 @@
 	<div class= "introbox">
 		<h1><%= @statement.title %></h1>
 		<p><%= @statement.content %></p>
-		<p>
-			<%= link_to(t("edit"), edit_statement_path(@statement)) %>
-			<%= link_to(t("history"), revisions_statement_path(@statement)) %>
-		</p>
+		<ul class="commentbuttons">
+			<li>
+				<div class="commentinfo">
+					<%= content_tag(:p, t("test2")) %>
+				</div>
+			</li>
+			<li>	
+				<%= link_to(t("edit"), 	edit_statement_path(@statement)) %>
+			</li>
+			<li>	
+				<%= link_to(t("history"), revisions_statement_path(@statement)) %>
+			</li>
+		</ul>
+		<div style='clear:both;'></div>
+	</div>
 </header>

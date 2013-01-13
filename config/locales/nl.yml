@@ -1,8 +1,8 @@
 #Dutch general translations
 
 nl:
-  test: "om %{date}"
-  test2: "Geplaatst door %{user} om %{date}"
+  test: "op %{date}"
+  test2: "Geplaatst door %{user} op %{date}"
 #Application
   name: "argu"
   name_phonetic: "\\\'är-(ˌ)gyü\\"

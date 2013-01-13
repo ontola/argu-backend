@@ -1,13 +1,16 @@
 <div class="commentbox c<%= (depth-1).to_s %>">
 	<p class= id="<%= c.id %>"><%= c.body %></p>
-	<div class="commentinfo">
-		<%= content_tag(:p, raw(t("test2", user: link_to(c.user.username.to_s, profile_path(c.user)), date: l(c.created_at, :format => :long) ))) %>
-	</div>
 	<div>
-		<ul class="commentbuttons"><p></p>
+		<ul class="commentbuttons">
+			<li>
+				<div class="commentinfo">
+					<%= ;content_tag(:p, raw(t("test2", user: link_to(c.user.username.to_s, profile_path(c.user)), date: l(c.created_at, :format => :long) ))) %>
+				</div>
+			</li>
 			<li><%= link_to t("reply"), argument_path(@argument, parent_id: c.id) %></li>
 			<li><%= link_to t("reply"), argument_path(@argument, parent_id: c.id) %></li>
 		</ul>
+		<div style='clear:both;'></div>
 	</div>
 </div>
 	<% unless depth > 4 %>

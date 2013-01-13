@@ -12,7 +12,7 @@ table td
 
 .container
 {
-	width: auto;
+	width: 960px;
 	margin-top: 45px;
 	margin:0px auto;
 	padding-top: 15px;
@@ -32,11 +32,8 @@ p
 	color:black;
 	font-family: Verdana,arial,sans-serif;
 	font-size:13px;
-	line-height:135%;
 	margin:0px;
-	padding: 10px;	
-	padding-top: 5px;
-	padding-bottom: 5px;
+	padding: 5px;
 }
 
 /*onderwerpstitel */
@@ -89,6 +86,7 @@ a /*link*/
 a:hover
 {
 	color: black;
+	text-decoration: underline;
 }
 
 label
@@ -315,17 +313,6 @@ a.commentusername
 		padding-right: 5px;	
 	}
 
-.commentinfo
-{
-	display: block;
-	p
-	{
-	color: grey;
-	position: relative;
-	top: 5px;
-	}
-}
-
 #commentstitle
 {
 	display: block;
@@ -343,21 +330,25 @@ a.commentusername
 	width: auto;
 }
 
-.commentbuttons a
+ul.commentbuttons
 {
+	display: block;
+	background-color: white;
+}
+
+.commentbuttons a /* MOET GELIJK ZIJN AAN p */
+{
+	display: none;
 	width: auto;
-	position: relative;
 	float: right;
-	top: -20px;
-	left: 0px;
 	font-family: Verdana,arial,sans-serif;
 	font-size: 13px;
 	border-color:#468783;
 	background-color: white;
 	border-left-style: solid;
 	border-top-style: solid;
-	border-width: 1px;
-	padding: 3px;
+	border-width: 0px;
+	padding: 5px;
 }
 
 .introcommentbox
@@ -438,7 +429,38 @@ p.ccomment
 		margin-top: 10px;
 	}
 }
+.introbox:hover .commentbuttons a
+{
+	display: inline;
+}
 
+.introcommentbox:hover .commentbuttons a
+{
+	display: inline;
+}
+
+
+.commentbox:hover .commentbuttons a
+{
+	display: inline;
+}
+
+.commentinfo
+{
+	float: left;
+	p
+	{
+	color: grey;
+	}
+	a
+	{
+		display: inline;
+		float: none;
+		border-style: none;
+		background-color: none;
+		padding: 0px;
+	}
+}
 /*Dit is de opmaak van een deelonderwerptitel (meestal is dit "argumenten")*/
 div.stcont3
 {
