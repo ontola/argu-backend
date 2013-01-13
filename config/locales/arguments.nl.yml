@@ -13,6 +13,7 @@ nl:
     show:
       title: "argumenten"
       reply: "reageer"
+      created_by: "Geplaatst door %{user} op %{date}"
     form:
       arg_title: "titel"
       content: "inhoud"
@@ -37,4 +38,4 @@ nl:
       reply: "reageer"
       delete: "verwijder"
       more: "toon meer"
-      by: "Geplaatst door"
+      placed_by: "Geplaatst door %{user} op %{date}"

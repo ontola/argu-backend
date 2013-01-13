@@ -5,7 +5,7 @@
 		<ul class="commentbuttons">
 			<li>
 				<div class="commentinfo">
-				<%= content_tag(:p, t("test2")) %>
+				<%= content_tag(:p, t("arguments.show.created_by", user: argumentCreatorUsername(@argument), date: l(@argument.created_at, format: :long))) %>
 				</div>
 			</li>			
 			<li>	<%= link_to(t("edit"), edit_argument_path(@argument)) %>
