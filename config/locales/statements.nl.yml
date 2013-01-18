@@ -1,0 +1,14 @@
+#Dutch statements translations
+
+nl:
+  statements:
+    type: "stelling"
+    preview:
+      pro:
+        zero: "geen voorargumenten"
+        one: "1 voorargument"
+        other: "%{count} voorargumenten"
+      con:
+        zero: "geen tegenargumenten"
+        one: "1  tegenargument"
+        other: "%{count} tegenargumenten"
