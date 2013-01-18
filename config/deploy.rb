@@ -15,7 +15,7 @@ set :use_sudo, false
 
 # If you are using Passenger mod_rails uncomment this:
 namespace :deploy do  
-  task symlink_shared do
+  task :symlink_shared do
   	#create symlinks for password files
   	run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
   	run "ln -nfs #{shared_path}/config/ca-bundle.crt #{release_path}/config/ca-bundle.crt"
@@ -25,7 +25,7 @@ namespace :deploy do
   	run "ln -nfs #{shared_path}/config/cert #{release_path}/config/cert"
   end
 
-  task bundle do
+  task :bundle do
   	require "bundler/capistrano"					# Update gems
   end
 
