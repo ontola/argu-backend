@@ -34,4 +34,4 @@ namespace :deploy do
   end
 end
 
-after 'deploy:update_code', 'deploy:symlink_shared', 'deploy:bundle', 'deploy:assets', 'deploy:restart'
+after 'deploy:update_code', 'deploy:symlink_shared', 'deploy:bundle', 'deploy:migrations', 'deploy:assets', 'deploy:restart'
