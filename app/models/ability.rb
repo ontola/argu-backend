@@ -8,27 +8,31 @@ class Ability
         can :manage, :all
     elsif user.role? :admin
         #The admin can manage all the generic objects
-        
+        can :manage, [Statement, 
+                      Argument,
+                      Comment,
+                      Profile,
+                      Revision,
+                      Vote]
     elsif user.role? :user
-        #A general user can manage it's own profile and comments
-        #But can't delete general goods
-        can :read, :all
+        can :read, :all                                         #Not sure yet
         can :create, [Statement, Argument, Comment]
+        can [:revisions, :allrevisions], Statement              #View revisions
         can :placeComment, [Statement, Argument, Comment]
-        cannot :delete, [Statement, Argument ]
-        cannot [:update, :delete], [Version]
-        can [:edit, :update, :delete], Profile do |profile|
+        cannot :delete, [Statement, Argument ]                  #No touching!
+        cannot [:update, :delete], [Version]                    #I said, no touching!
+        can [:edit, :update, :delete], Profile do |profile|     #Do whatever you want with your own profile
             user.profile == profile
         end
-        can [:show, :update], User do |u|
+        can [:show, :update], User do |u|                       #Same goes for your persona
             user.id == u.id
         end
-        can [:edit, :update, :delete], Comment do |comment|
+        can [:edit, :update, :delete], Comment do |comment|     #And your comments
             comment.try(:user) == user
         end
-        can [:manage], Vote
+        can [:manage], Vote                                     #Freedom in democracy
     else
-        cannot :manage, [Statement,
+        cannot :manage, [Statement,                             #not loggin in and in closed beta, so bugger off!
                          Argument,
                          Comment,
                          Profile,
@@ -36,29 +40,5 @@ class Ability
                          Version,
                          Revision]
     end
-        
-
-    # Define abilities for the passed in user here. For example:
-    #
-    #   user ||= User.new # guest user (not logged in)
-    #   if user.admin?
-    #     can :manage, :all
-    #   else
-    #     can :read, :all
-    #   end
-    #
-    # The first argument to `can` is the action you are giving the user permission to do.
-    # If you pass :manage it will apply to every action. Other common actions here are
-    # :read, :create, :update and :destroy.
-    #
-    # The second argument is the resource the user can perform the action on. If you pass
-    # :all it will apply to every resource. Otherwise pass a Ruby class of the resource.
-    #
-    # The third argument is an optional hash of conditions to further filter the objects.
-    # For example, here the user can only update published articles.
-    #
-    #   can :update, Article, :published => true
-    #
-    # See the wiki for details: https://github.com/ryanb/cancan/wiki/Defining-Abilities
   end
 end

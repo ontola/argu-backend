@@ -11,8 +11,8 @@
     	<th><%= "Page" %></th>
     	<th><%= "Make current" %></th>
   	</tr>
-<% unless @statement.versions.scoped.empty? %> 
-    <% @statement.versions.scoped.reverse.each do |v| %>
+<% unless @revisions.empty? %> 
+    <% @revisions.each do |v| %>
     	<tr>
     		<% s = v.reify %>
     		<% u = User.find_by_id(v.whodunnit) %>
