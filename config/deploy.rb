@@ -5,7 +5,7 @@ role :app, application                          # This may be the same as your `
 role :db,  application, :primary => true		# This is where Rails migrations will run
 
 set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
-set :repository, "ssh://fletcher91@bitbucket.org:fletcher91/argu.git"
+set :repository, "git@bitbucket.org:fletcher91/argu.git"
 set :branch, "cap"
 
 set :user, "deploy"
