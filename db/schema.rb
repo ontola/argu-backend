@@ -11,19 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130143732) do
+ActiveRecord::Schema.define(:version => 20130118115253) do
 
   create_table "arguments", :force => true do |t|
-    t.string   "content",                        :null => false
-    t.integer  "statement_id",                   :null => false
-    t.boolean  "pro",          :default => true, :null => false
-    t.integer  "votes_count",  :default => 0
-    t.integer  "argtype",      :default => 3,    :null => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.string   "content",                              :null => false
+    t.integer  "statement_id",                         :null => false
+    t.boolean  "pro",                :default => true, :null => false
+    t.integer  "votes_count",        :default => 0
+    t.integer  "argtype",            :default => 3,    :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.string   "title"
+    t.integer  "cached_votes_total", :default => 0
+    t.integer  "cached_votes_up",    :default => 0
+    t.integer  "cached_votes_down",  :default => 0
   end
 
+  add_index "arguments", ["cached_votes_down"], :name => "index_arguments_on_cached_votes_down"
+  add_index "arguments", ["cached_votes_total"], :name => "index_arguments_on_cached_votes_total"
+  add_index "arguments", ["cached_votes_up"], :name => "index_arguments_on_cached_votes_up"
   add_index "arguments", ["statement_id"], :name => "statement_id"
 
   create_table "authentications", :force => true do |t|
@@ -78,21 +84,14 @@ ActiveRecord::Schema.define(:version => 20121130143732) do
 
   add_index "roles_users", ["user_id", "role_id"], :name => "user_role", :unique => true
 
-  create_table "statementarguments", :force => true do |t|
-    t.integer "argument_id",                    :null => false
-    t.integer "statement_id",                   :null => false
-    t.boolean "pro",          :default => true, :null => false
-    t.integer "votes_count",  :default => 0
-  end
-
-  add_index "statementarguments", ["argument_id", "statement_id"], :name => "arg_state_index"
-
   create_table "statements", :force => true do |t|
     t.string   "title",                     :null => false
     t.string   "content",                   :null => false
     t.integer  "statetype",  :default => 6
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false
+    t.integer  "pro_count",  :default => 0
+    t.integer  "con_count",  :default => 0
   end
 
   create_table "users", :force => true do |t|
