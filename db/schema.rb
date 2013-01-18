@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130143732) do
+ActiveRecord::Schema.define(:version => 20130118193654) do
 
   create_table "arguments", :force => true do |t|
-    t.string   "content",                        :null => false
+    t.text     "content",                        :null => false
     t.integer  "statement_id",                   :null => false
     t.boolean  "pro",          :default => true, :null => false
     t.integer  "votes_count",  :default => 0
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20121130143732) do
 
   create_table "statements", :force => true do |t|
     t.string   "title",                     :null => false
-    t.string   "content",                   :null => false
+    t.text     "content",                   :null => false
     t.integer  "statetype",  :default => 6
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false

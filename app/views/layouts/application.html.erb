@@ -2,6 +2,7 @@
 <html>
 <head>
   <title><%= yield(:title) == "" ? "" : yield(:title) + " | " %><%= t(:application_name) %></title>
+  <meta name="viewport" content="initial-scale=1.0">
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= csrf_meta_tags %>
   <meta charset="UTF-8">

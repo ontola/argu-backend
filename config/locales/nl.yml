@@ -119,25 +119,6 @@ nl:
   settings_locale: "Taal"
   settings_item_account: "Account"
   settings_item_settings: "Instellingen"
-#statement
-  statement_title: "Stelling"
-  statement_header: "Stelling"
-  statement_pros: "Voor"
-  statement_cons: "Tegen"
-  statement_no_pros: "Nog niets voor"
-  statement_no_cons: "Nog niets tegen"
-  statement_newstatement: "Nieuwe stelling"
-  statement_type: "Type"
-  statement_content: "Inhoud"
-  #statement types
-  statement_type_social: "Maatschappelijk"
-  statement_type_political: "Politiek"
-  statement_type_jurisdictional: "Juridisch"
-  statement_type_ecological: "Ecologisch"
-  statement_type_economical: "Economisch"
-  statement_type_technological: "Technologisch"
-  statement_type_discussion: "In discussie"
-  statement_type_other: "Overig"
 #comment
   comment_title: "Reacties"
 #vote

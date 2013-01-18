@@ -9,7 +9,7 @@
     <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
   <% end -%>
 
-  <div><%= f.submit "log in" , class: "submitbtn" %></div>
+  <div><%= f.submit "log in" , class: "btn" %></div>
 <% end %>
 -->
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { class: "form-horizontal" } ) do |f| %>
@@ -53,7 +53,7 @@
 <div class="label-row">
   <label></label>
   <div class="label-subrow">
-    <%= f.submit "log in" , class: "submitbtn" %>
+    <%= f.submit "log in" , class: "btn" %>
   </div>
 </div>
 <!--
@@ -95,7 +95,7 @@
 </tr>
 <tr>
 <td></td>
-<td> <div><%= f.submit "log in" , class: "submitbtn" %></div></td>
+<td> <div><%= f.submit "log in" , class: "btn" %></div></td>
 </tr>
 <%= render 'authentications/login_providers' %>
 <div style="display: block; float: left;"><%= render "devise/shared/links" %></div>-->

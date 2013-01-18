@@ -7,6 +7,8 @@ nl:
     type_axiomatic: "axiomatisch"
     type_other: "anders"
     type_discussion: "in discussie"
+    pro: "voor"
+    con: "tegen"
     type: "type"
     index:
       title: "argumenten"
@@ -14,10 +16,15 @@ nl:
       title: "argumenten"
       reply: "reageer"
       created_by: "Geplaatst door %{user} op %{date}"
+    new:
+      header: "nieuw argument %{side} de stelling:"
     form:
       arg_title: "titel"
       content: "inhoud"
       type: "type"
+      helper:
+        title: "Maak een goede titel, verdomme"
+        content: "Onderbouw je argument zo logisch mogelijk, gebruik wetenschap enzo."
     revisions:
       table_id: "id"
       table_title: "titel"

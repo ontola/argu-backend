@@ -1,6 +1,6 @@
 <% provide(:menu_class, 'statements') %>
-<h1>Stellingen</h1>
-<%= link_to t(:statement_newstatement), new_statement_path, class: "btn btn-primary" %>
+<h1><%= t("statements.plural") %></h1>
+<%= link_to t(:statement_newstatement), new_statement_path, class: "btn" %>
 <% @statements.each do |statement| %>
     <%= render partial: "statements/preview", locals: { statement: statement } %>
 <% end %>
