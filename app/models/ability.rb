@@ -8,12 +8,7 @@ class Ability
         can :manage, :all
     elsif user.role? :admin
         #The admin can manage all the generic objects
-        can :manage, [Statement, 
-                      Argument,
-                      Comment,
-                      Profile,
-                      #Revision,
-                      Vote]
+        
     elsif user.role? :user
         #A general user can manage it's own profile and comments
         #But can't delete general goods
@@ -33,12 +28,13 @@ class Ability
         end
         can [:manage], Vote
     else
-        cannot :manage, :all
-        #can :manage, Vote
-        #can :read, [Statement,
-        #            Argument,
-        #            Comment,
-        #            Profile]
+        cannot :manage, [Statement,
+                         Argument,
+                         Comment,
+                         Profile,
+                         Vote,
+                         Version,
+                         Revision]
     end
         
 

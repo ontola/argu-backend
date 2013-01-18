@@ -17,7 +17,8 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
-    @arguments = Argument.where(statement_id: @statement.id)
+    #@arguments = Argument.where(statement_id: @statement.id).order('votes.size DESC')
+    @arguments = @statement.arguments.plusminus_tally({order: "vote_count ASC"})
     @pro = Array.new
     @con = Array.new
     unless @arguments.nil?

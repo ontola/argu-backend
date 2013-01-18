@@ -153,7 +153,6 @@ class ArgumentsController < ApplicationController
     @comment = params[:comment]
     @comment = Comment.build_from(argument, @current_user.id, @comment )
     @comment.save!
-    puts "==================="+params[:parent_id]+"==============================="
     @comment.move_to_child_of(Comment.find_by_id(params[:parent_id])) unless params[:parent_id].blank?
     redirect_to argument_path(argument)
   end

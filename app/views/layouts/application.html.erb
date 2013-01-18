@@ -34,7 +34,7 @@
   </script>
 <% else %>
   <%= image_tag "argu.png", alt: "argu is nog in ontwikkeling", width: "673px", height: "72px", style: "margin-left:auto;margin-right:auto;display:block;margin-top:200px" %>
-  <%= form_for("users", :url => user_session_path, :html => { class: "form-horizontal" } ) do |f| %>
+  <%= form_for("user", :url => user_session_path, :html => { class: "form-horizontal" } ) do |f| %>
     <table border="0">
       <tr>
         <td><h1 class="setting"><%= f.label :login %></h1></td>
