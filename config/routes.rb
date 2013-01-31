@@ -1,7 +1,7 @@
 Argu::Application.routes.draw do
-  root to: 'static_pages#home'
-  match "/", to: "static_pages#home", constraints: lambda { |r| r.env["warden"].authenticate? }
-  match "/home", to: "static_pages#home", constraints: lambda { |r| r.env["warden"].authenticate? }
+  root to: 'statements#index'
+  match "/", to: "statements#index", constraints: lambda { |r| r.env["warden"].authenticate? }
+  match "/home", to: "statements#index", constraints: lambda { |r| r.env["warden"].authenticate? }
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
