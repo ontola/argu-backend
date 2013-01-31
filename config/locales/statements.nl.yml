@@ -1,0 +1,24 @@
+#statement
+
+nl:
+  statements:
+    title: "stelling"
+    header: "stelling"
+    plural: "stellingen"
+    pros: "voor"
+    cons: "tegen"
+    edit: "bewerken"
+    no_pros: "nog niets voor"
+    no_cons: "nog niets tegen"
+    newstatement: "nieuwe stelling"
+    type: "type"
+    content: "inhoud"
+    #statement types
+    type_social: "Maatschappelijk"
+    type_political: "Politiek"
+    type_jurisdictional: "Juridisch"
+    type_ecological: "Ecologisch"
+    type_economical: "Economisch"
+    type_technological: "Technologisch"
+    type_discussion: "In discussie"
+    type_other: "Overig"

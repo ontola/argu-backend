@@ -13,7 +13,7 @@ class Argument < ActiveRecord::Base
 
   attr_accessible :id, :content, :title, :argtype, :statement, :votes
 
-  validates :content, presence: true, length: { minimum: 5, maximum: 500 }
+  validates :content, presence: true, length: { minimum: 5, maximum: 1500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
 
   def trim_data

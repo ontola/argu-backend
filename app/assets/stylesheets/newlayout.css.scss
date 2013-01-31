@@ -4,15 +4,25 @@ body
 	background-color: #F2F2F2;
 }
 
+.color
+{
+	color: #468783;
+}
+
 table td
 {
 	border-style: none;
 	vertical-align: middle;
 }
 
+div.clear
+{
+	clear: both;
+}
+
 .container
 {
-	width: 960px;
+	width: 90%;
 	margin-top: 45px;
 	margin:0px auto;
 	padding-top: 15px;
@@ -34,6 +44,7 @@ p
 	font-size:13px;
 	margin:0px;
 	padding: 5px;
+	line-height: 18px;
 }
 
 /*onderwerpstitel */
@@ -56,8 +67,6 @@ h2
 	font-size: 20px;
 	font-weight:normal;
 	clear: both;
-	position: relative;
-	top: 10px;
 }
 
 h3
@@ -86,18 +95,24 @@ a /*link*/
 a:hover
 {
 	color: black;
-	text-decoration: underline;
 }
 
 label
 {
 	float: left;
 	text-align: right;
-	font-size: 23px;
-	position: relative;
+	font-size: 18px;
+	line-height: 30px;
 	color:#468783;
 	font-family: Century Gothic,'bariol_lightlight', sans-serif;
 	width: 280px;
+}
+
+label.vertical
+{
+	text-align: left;
+	float: none;
+	padding-bottom: 5px;
 }
 
 .argument
@@ -105,6 +120,7 @@ label
 	background-color: white;
 	overflow:hidden;
 	border-style: none;
+	padding: 5px;
 }
 
 .pro
@@ -126,6 +142,7 @@ label
 	width: 100%;
 	overflow: hidden;
 	background: white; 
+	border: solid 1px #468783
 }
 
 .argcontainer2
@@ -154,6 +171,23 @@ label
 	left: 50%;
 	overflow: hidden;
 }		
+
+.left
+{
+	text-align: left;
+}
+
+.floatleft
+{
+	float: left;
+}
+
+div.dropdown
+{
+	height: 30px;
+	width: 50%;
+	padding-right: 10px;
+}
 
 #speech-bubble:before {
    content:"";
@@ -254,9 +288,10 @@ div#navbar li #search
 }
 
 #search textarea:focus, input:focus{
+/*	
 	outline: solid;
-	outline-color: white;
 	outline-width: 1px;
+*/
 }
 
 textarea
@@ -324,19 +359,19 @@ a.commentusername
 	overflow: hidden;
 }
 
-.commentbuttons li
+.buttons li
 {
 	display: inline;
 	width: auto;
 }
 
-ul.commentbuttons
+ul.buttons
 {
 	display: block;
 	background-color: white;
 }
 
-.commentbuttons a /* MOET GELIJK ZIJN AAN p */
+.buttons a /* MOET GELIJK ZIJN AAN p */
 {
 	display: none;
 	width: auto;
@@ -357,7 +392,8 @@ ul.commentbuttons
 	border-width:1px;
 	border-color:#468783;
 	background-color: #FFFFFF;
-	padding-top: 3px;
+	padding: 5px;
+	padding-bottom: 2px;
 }
 
 .comments
@@ -367,10 +403,10 @@ ul.commentbuttons
 		border-style:solid;
 		border-width:1px;
 		border-color:#468783;
-		margin-top:20px;
 		margin-bottom: 8px;
 		background-color: #FFFFFF;
-		padding-top: 3px;
+		padding: 5px;
+		padding-bottom: 2px;
 	}
 	.c1
 	{
@@ -392,16 +428,14 @@ ul.commentbuttons
 
 p.pcomment
 {
-	border-style:solid;
+	border-top-style:dotted;
+	font-style: italic;
 	border-width:1px;
 	border-color:#468783;
-	border-radius:7px;
-	margin-left:10px;
-	margin-right:26px;
-	margin-top:5px;
-	margin-bottom: 21px;
-	background-color: #F0F3FC;
 	padding: 7px;
+	a{
+		color: #575757;
+	}
 }
 
 p.ccomment
@@ -422,25 +456,30 @@ p.ccomment
 {
 	display: block;
 	background-color: white;
-	border-top-style:solid;
+	border-style:solid;
 	border-width:1px;
 	border-color:#468783;
 	h1{
 		margin-top: 10px;
 	}
 }
-.introbox:hover .commentbuttons a
+
+.introbox:hover .buttons a
 {
 	display: inline;
 }
 
-.introcommentbox:hover .commentbuttons a
+.introcommentbox:hover .buttons a
 {
 	display: inline;
 }
 
+.commentbox:hover .buttons a
+{
+	display: inline;
+}
 
-.commentbox:hover .commentbuttons a
+.argument:hover .buttons a
 {
 	display: inline;
 }
@@ -469,12 +508,7 @@ div.stcont3
 	width: 100%;
 	overflow: hidden;
 	background-color: #F2F2F2;
-	height: 45px;
-	border-top-style: solid;
-	border-bottom-style: solid;
-	border-color: #468783;
-	border-width: 1px;
-
+	line-height: 40px;
 }
 
 div.stcont2
@@ -541,26 +575,34 @@ h2.tegen
 	font-size:16px;
 	font-weight:normal;
 	text-decoration: none;
-	padding: 10px;
+	padding-top: 7px;
+	padding-left: 5px;
+	padding-bottom: 5px;
 	width: 100%;
 }
 
 .vote
 {
+	display: inline;
+	color: #468783;
+	font-family: verdana, sans-serif;
+	line-height: 20px;
+	font-size: 13px;
 	float: right;
-	margin-top: -18px;
-	margin-right: 25px;
+
 }
 
 .votebtn
 {
-	float: right;
-	margin-top: -22px;
-	margin-right: 51px;
-	width: 26px; height: 26px; 
-    -webkit-border-radius: 13px; -moz-border-radius: 13px;
-    background-color: #330033;
+
 }
+
+.votebtnbtn a
+{
+	display: none;
+    background-color: white;
+}
+
 .btn
 {
 	text-align: center;
@@ -589,11 +631,6 @@ h2.tegen
 	color: #468783;
 }
 
-.control-label
-{
-	font-family: verdana, arial, sans;
-}
-
 .form-actions
 {
 	border-style: none;
@@ -607,7 +644,6 @@ h2.tegen
 	margin-right: 20px;
 	font-family: verdana, sans-serif;
 }
-
 
 /* Revisions styling */
 .revbar
@@ -750,19 +786,19 @@ h2.tegen
   margin-bottom: -4px;
 }
 
-.submitbtn 
+.btn 
 {     
 	border: none;
 	padding: 5px;
 	width: auto;
 	color: white;
 	background-color: #468783;
-	height: 32px;
 	font-family: verdana, sans-serif;
 	font-size: 14px;
+	line-height: 27px;
 }
 
-.submitbtn:hover
+.btn:hover
 {
 	color: white;
 	background-color: #529E99;
@@ -1027,6 +1063,18 @@ div.pageconf li a
 	width: 100%;
 }
 
+.helpertext
+{
+	float: left;
+	width: 45%;
+	display: none;
+}
+
+.label-row:hover .helpertext
+{
+	display: inline;
+}
+
 .settingform
 {
 	color:#468783;
@@ -1039,6 +1087,16 @@ div.pageconf li a
 	height: auto;	
 	padding: 5px;
 }
+
+.verticalform
+{
+	color: black;
+	font-size: 13px;
+	border-color: #468783;
+	float: left;
+	width: 50%;
+}
+
 
 .remember
 {

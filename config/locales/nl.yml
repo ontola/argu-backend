@@ -41,18 +41,18 @@ nl:
 #Views
 #Header
   header_logo_text: t(:application_name)
-  header_menuitem_home: "Home"
+  header_menuitem_home: "home"
   header_menuitem_sign_in: :application_general_sign_in
   header_menuitem_sign_up: :application_general_sign_up
   header_menuitem_sign_out: "Uitloggen"
-  header_menuitem_users: "Gebruikers"
-  header_menuitem_account: "Lidmaatschap"
-  header_menuitem_profile: "Profiel"
-  header_menuitem_settings: "Instellingen"
-  header_menuitem_statements: "Stellingen"
-  header_menuitem_arguments: "Argumenten"
+  header_menuitem_users: "gebruikers"
+  header_menuitem_account: "lidmaatschap"
+  header_menuitem_profile: "profiel"
+  header_menuitem_settings: "instellingen"
+  header_menuitem_statements: "stellingen"
+  header_menuitem_arguments: "argumenten"
 #Footer
-  footer_item_about: "Over"
+  footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2012 - "
 #Home
@@ -91,55 +91,37 @@ nl:
   users_votes: "Stemmen"
   users_clearance: "bevoegdheid"
   users_password: "wachtwoord"
-  users_password_confirmation: "Wachtwoord bevestigen"
-  users_password_old: "Oud wachtwoord"
+  users_password_confirmation: "wachtwoord bevestigen"
+  users_password_old: "oud wachtwoord"
   users_oauth_coupled: "gekoppelde accounts"
   users_oauth_new: "account toevoegen"
+  users_oauth_login: "inloggen met"
   users_oauth_remove: "account ontkoppelen"
-  users_oauth_remove_confirmation: "Het ontkoppelen van dit account zorgt ervoor dat je niet meer kunt inloggen, aangezien je nog geen gebruikersnaam + wachtwoord op argu hebt gekozen om mee in te loggen. Weet je zeker dat je je account wil verwijderen?"
+  users_oauth_remove_confirmation: "PAS OP! Het ontkoppelen van dit account zorgt ervoor dat je niet meer kunt inloggen, aangezien je nog geen gebruikersnaam + wachtwoord op argu hebt gekozen om mee in te loggen. Weet je zeker dat je je account wil verwijderen?"
   #index
-  users_title: "Gebruikers"
-  users_header: "Gebruikers"
+  users_title: "gebruikers"
+  users_header: "gebruikers"
   users_show: :application_general_show
   users_edit: :application_general_edit
   users_destroy: :application_general_destroy
   users_destroy_confirmation: :application_general_destroy_confirmation
   users_newuser: "Nieuwe gebruiker"
   #new
-  users_new_title: "Aanmelden"
-  users_new_header: "Aanmelden"
-  users_new_confirmation: "Bevestigen"
-  users_new_create: "Account aanmaken"
-  users_new_failed: "Controleer je invoer"
+  users_new_title: "aanmelden"
+  users_new_header: "aanmelden"
+  users_new_confirmation: "bevestigen"
+  users_new_create: "account aanmaken"
+  users_new_failed: "controleer je invoer"
   #show
-  users_show_title: "Gebruiker"
-  users_show_username: "Gebruikersnaam"
-  users_show_email: "E-mail"
+  users_show_title: "gebruiker"
+  users_show_username: "gebruikersnaam"
+  users_show_email: "e-mail"
 #settings
-  settings_locale: "Taal"
-  settings_item_account: "Account"
-  settings_item_settings: "Instellingen"
-#statement
-  statement_title: "Stelling"
-  statement_header: "Stelling"
-  statement_pros: "Voor"
-  statement_cons: "Tegen"
-  statement_no_pros: "Nog niets voor"
-  statement_no_cons: "Nog niets tegen"
-  statement_newstatement: "Nieuwe stelling"
-  statement_type: "Type"
-  statement_content: "Inhoud"
-  #statement types
-  statement_type_social: "Maatschappelijk"
-  statement_type_political: "Politiek"
-  statement_type_jurisdictional: "Juridisch"
-  statement_type_ecological: "Ecologisch"
-  statement_type_economical: "Economisch"
-  statement_type_technological: "Technologisch"
-  statement_type_discussion: "In discussie"
-  statement_type_other: "Overig"
+  settings_locale: "taal"
+  settings_item_account: "account"
+  settings_item_settings: "instellingen"
 #comment
-  comment_title: "Reacties"
+  comment_title: "reacties"
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
 

@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(:version => 20130118115253) do
 
   create_table "statements", :force => true do |t|
     t.string   "title",                     :null => false
-    t.string   "content",                   :null => false
+    t.text     "content",                   :null => false
     t.integer  "statetype",  :default => 6
     t.datetime "created_at",                :null => false
     t.datetime "updated_at",                :null => false

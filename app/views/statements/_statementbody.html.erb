@@ -2,10 +2,10 @@
 	<div class= "introbox">
 		<h1><%= @statement.title %></h1>
 		<p><%= @statement.content %></p>
-		<ul class="commentbuttons">
+		<ul class="buttons">
 			<li>
 				<div class="commentinfo">
-					<%= content_tag(:p, t("test2")) %>
+					<%= content_tag(:p, t("arguments.comments.placed_by", user: @statement.id, date: l(@statement.created_at, format: :long))) %>
 				</div>
 			</li>
 			<li>	
