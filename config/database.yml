@@ -1,8 +1,11 @@
-# SQLite version 3.x
-#   gem install sqlite3
-#
-#   Ensure the SQLite 3 gem is defined in your Gemfile
-#   gem 'sqlite3'
+production:
+  adapter: mysql2
+  encoding: utf8
+  database: argu_production
+  pool: 5
+  username: argu_prod
+  password: Op3ndebate
+
 development:
   adapter: postgresql
   host: localhost
@@ -11,41 +14,3 @@ development:
   pool: 5
   username: arguroot
   password: opendebate
-
-# Warning: The database defined as "test" will be erased and
-# re-generated from your development database when you run "rake".
-# Do not set this db to the same as development or production.
-test: &TEST
-  adapter: postgresql
-  host: localhost
-  encoding: utf8
-  database: argu_test
-  pool: 5
-  username: arguroot
-  password: opendebate
-
-production:
-  adapter: postgresql
-  encoding: utf8
-  database: argu_production
-  pool: 5
-  username: arguroot
-  password: opendebate
-
-cucumber:
-  <<: *TEST
-
-#development:
-#  adapter: sqlite3
-#  database: db/argu_development.sql
-#  timeout: 5000
-
-#test:
-#  adapter: sqlite3
-#  database: db/argu_test.sql
-#  timeout: 5000
-
-#production:
-#  adapter: sqlite3
-#  database: db/argu_production.sql
-#  timeout: 5000
