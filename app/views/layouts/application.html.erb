@@ -6,11 +6,11 @@
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= csrf_meta_tags %>
   <meta charset="UTF-8">
-  <%= render 'layouts/shim'%>
+  <%= render 'shim'%>
   <%= javascript_include_tag "application" %>
 </head>
 <body>
-  <%= render 'layouts/header' %>
+  <%= render 'header' %>
   <div id="fb-root"></div>
   <div class="container">
     <% flash.each do |key,value| %>
@@ -21,7 +21,7 @@
     <%= yield %>
     <div class="push"></div>
   </div>
-  <!--<%= render 'layouts/footer'%>
+  <!--<%= render 'footer'%>
   <script type="text/javascript">
     var uvOptions = {};
     (function() {
