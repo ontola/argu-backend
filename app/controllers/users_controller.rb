@@ -27,7 +27,6 @@ class UsersController < ApplicationController
 	# PUT /settings
 	def update
 		@user = current_user unless current_user.blank?
-		puts "=============" + params.to_s
 
 		respond_to do |format|
 			if @user.update_attributes(params[:user]) && @user.profile.update_attributes(params[:profile])

@@ -4,7 +4,7 @@
   <title><%= yield(:title) == "" ? "" : yield(:title) + " | " %><%= t('name') %></title>
   <meta charset="UTF-8">
   <%= csrf_meta_tags %>
-  <%= render 'layouts/shim'%>
+  <%= render 'shim'%>
   <% unless current_user.blank? %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
