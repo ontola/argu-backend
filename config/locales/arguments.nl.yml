@@ -18,9 +18,10 @@ nl:
       created_by: "Geplaatst door %{user} op %{date}"
     new:
       header: "nieuw argument %{side} de stelling:"
+      create: "nieuw argument %{side}"
     form:
-      arg_title: "titel"
-      content: "inhoud"
+      arg_title: "argument"
+      content: "toelichting"
       type: "type"
       helper:
         title: "Maak een goede titel, verdomme"
