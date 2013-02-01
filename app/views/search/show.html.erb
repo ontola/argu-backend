@@ -1,25 +1,5 @@
-<!--<table>
-  <caption><%= "Found " + @search.total.to_s + " items" %></caption>
-  <thead>
-    <tr>
-      <th>Stelling</th>
-      <th>Omschrijven</th>
-      <th>Voor</th>
-      <th>Tegen</th>
-    </tr>
-  </thead>
-  <tbody>
-  	<% for result in @search.results %>
-    <tr>
-      <td><%= link_to result.title, Statement.find_by_title(result.title) %></td>
-      <td><%= result.content %></td>
-      <td><%= result.con_count %></td>
-      <td><%= result.pro_count %></td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
--->
+<h1><%= t "search.title", q: params["q"] %></h1>
+<small><%= t "search.results_found", count: @search.total %></small>
 <% for result in @search.results %>
   <%= render partial: "statements/preview", locals: { statement: result } %>
 <% end %>
