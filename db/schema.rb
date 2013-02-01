@@ -11,25 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118115253) do
+ActiveRecord::Schema.define(:version => 20130118193654) do
 
   create_table "arguments", :force => true do |t|
-    t.string   "content",                              :null => false
-    t.integer  "statement_id",                         :null => false
-    t.boolean  "pro",                :default => true, :null => false
-    t.integer  "votes_count",        :default => 0
-    t.integer  "argtype",            :default => 3,    :null => false
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.text     "content",                        :null => false
+    t.integer  "statement_id",                   :null => false
+    t.boolean  "pro",          :default => true, :null => false
+    t.integer  "votes_count",  :default => 0
+    t.integer  "argtype",      :default => 3,    :null => false
+    t.datetime "created_at",                     :null => false
+    t.datetime "updated_at",                     :null => false
     t.string   "title"
-    t.integer  "cached_votes_total", :default => 0
-    t.integer  "cached_votes_up",    :default => 0
-    t.integer  "cached_votes_down",  :default => 0
   end
 
-  add_index "arguments", ["cached_votes_down"], :name => "index_arguments_on_cached_votes_down"
-  add_index "arguments", ["cached_votes_total"], :name => "index_arguments_on_cached_votes_total"
-  add_index "arguments", ["cached_votes_up"], :name => "index_arguments_on_cached_votes_up"
   add_index "arguments", ["statement_id"], :name => "statement_id"
 
   create_table "authentications", :force => true do |t|

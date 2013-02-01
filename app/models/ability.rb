@@ -8,12 +8,12 @@ class Ability
         can :manage, :all
     elsif user.role? :admin
         #The admin can manage all the generic objects
-        can :manage, [Statement, 
-                      Argument,
-                      Comment,
-                      Profile,
-                      Revision,
-                      Vote]
+        can [:manage, :revisions, :allrevisions],
+            [Statement, 
+             Argument,
+             Comment,
+             Profile,
+             Vote]
     elsif user.role? :user
         can :read, :all                                         #Not sure yet
         can :create, [Statement, Argument, Comment]
@@ -30,15 +30,17 @@ class Ability
         can [:edit, :update, :delete], Comment do |comment|     #And your comments
             comment.try(:user) == user
         end
-        can [:manage], Vote                                     #Freedom in democracy
+        can [:manage], Vote do |vote|                           #Freedom in democracy
+            user.id == vote.voter_id
+        end
     else
-        cannot :manage, [Statement,                             #not loggin in and in closed beta, so bugger off!
-                         Argument,
-                         Comment,
-                         Profile,
-                         Vote,
-                         Version,
-                         Revision]
+        cannot [:manage, :revisions, :allrevisions],            #not loggin in and in closed beta, so bugger off!
+               [Statement,
+                Argument,
+                Comment,
+                Profile,
+                Vote,
+                Version]
     end
   end
 end

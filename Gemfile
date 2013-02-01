@@ -23,6 +23,7 @@ gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'rails-i18n'
 gem "thumbs_up", "~> 0.6.2"
+gem 'capistrano'
 
 
 # Gems used only for assets and not required
@@ -45,8 +46,7 @@ group :development do
 end
 
 group :production do 
-	gem 'newrelic_rpm'
-	gem 'mysql2', '~> 0.3.11'
-	gem 'therubyracer'
-	gem 'capistrano'
+  gem 'newrelic_rpm'
+  gem 'mysql2', '~> 0.3.11'
+  gem 'therubyracer'
 end
