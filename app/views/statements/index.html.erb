@@ -4,5 +4,4 @@
 <% @statements.each do |statement| %>
     <%= render partial: "statements/preview", locals: { statement: statement } %>
 <% end %>
-
-
+<%= paginate @statements %>

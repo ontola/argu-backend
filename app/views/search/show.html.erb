@@ -3,3 +3,4 @@
 <% for result in @search.results %>
   <%= render partial: "statements/preview", locals: { statement: result } %>
 <% end %>
+<%= paginate @search.results %>

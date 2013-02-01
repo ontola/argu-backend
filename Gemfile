@@ -24,6 +24,8 @@ gem 'sunspot_solr'
 gem 'rails-i18n'
 gem "thumbs_up", "~> 0.6.2"
 gem 'capistrano'
+gem 'kaminari'
+gem "sunspot_with_kaminari", '~> 0.2.0'
 
 
 # Gems used only for assets and not required

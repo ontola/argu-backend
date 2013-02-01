@@ -6,7 +6,7 @@ class StatementsController < ApplicationController
   # GET /statements
   # GET /statements.json
   def index
-    @statements = Statement.first(30)
+    @statements = Statement.page(params[:page])
 
     respond_to do |format|
       format.html # index.html.erb
