@@ -14,7 +14,13 @@ class Ability
              Comment,
              Profile,
              Vote]
+        can :manage, User do |u|
+          user == u
+        end
     elsif user.role? :user
+        cannot :manage, User do |u|
+          user != u
+        end
         can :read, :all                                         #Not sure yet
         can :create, [Statement, Argument, Comment]
         can [:revisions, :allrevisions], Statement              #View revisions
@@ -25,7 +31,7 @@ class Ability
             user.profile == profile
         end
         can [:show, :update], User do |u|                       #Same goes for your persona
-            user.id == u.id
+            user == u
         end
         can [:edit, :update, :delete], Comment do |comment|     #And your comments
             comment.try(:user) == user
