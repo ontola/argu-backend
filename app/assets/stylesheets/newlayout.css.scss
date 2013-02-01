@@ -133,6 +133,7 @@ label.vertical
 {
 	/*	background-color: #faf4f3;*/
 	overflow:hidden; 
+	border-right: solid 1px #468783;
 }
 
 .argcontainer1
@@ -224,7 +225,7 @@ div#navbar #mainbar
 {
 	margin:0px auto;
 	padding: 0px;
-	width: 960px;
+	width: 90%;
 		&:hover ul .dropdown { display: block; }
 }
 
@@ -454,16 +455,16 @@ p.pcomment
 
 p.ccomment
 {
-	border-style:solid;
+	border-top-style:dotted;
+	font-style: italic;
 	border-width:1px;
 	border-color:#468783;
-	border-radius:7px;
-	margin-left:26px;
-	margin-right:10px;
-	margin-top:5px;
-	margin-bottom: 21px;
-	background-color: #E9F2DD;
 	padding: 7px;
+	clear: both;
+	color: grey;
+	a{
+		color: #575757;
+	}
 }
 
 .introbox
