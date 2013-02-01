@@ -1,4 +1,6 @@
 <% provide(:menu_class, 'arguments') %>
-<h1><%= t("new_type", type: t("arguments.type")).capitalize %></h1>
-
+  <div class= "label-row">
+		<p class="color"><%= t("arguments.new.header", side: params[:pro] ? t("arguments.pro") : t("arguments.con")) %></p>
+		<h2 class="left">Hier moet de titel van de stelling komen te staan</h2>
+  </div>
 <%= render 'form' %>

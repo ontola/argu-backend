@@ -1,25 +1,95 @@
 <%= form_tag(controller: "users", action: "update", method: "put") do %>
+
+<div class="label-row">
+	<label><%= t("users_username") %></label>
+	<div class="label-subrow">
+		<%= text_field(:user, :username, class: "settingform", placeholder: current_user.username) %>
+	</div>
+</div>
+<div class="label-row">
+	<label><%= t("users_name") %></label>
+	<div class="label-subrow">
+		<%= text_field(:profile, :name, class: "settingform", placeholder: current_user.profile.name.blank? ? t("users_name_placeholder") : current_user.profile.name) %>
+	</div>
+</div>
+<div class="label-row">
+	<label><%= t("users_email") %></label>
+	<div class="label-subrow">
+		<%= email_field(:user, :email, class: "settingform", placeholder: current_user.email.blank? ? t("users_email_placeholder") : current_user.email) %>
+	</div>
+</div>
+<div class="label-row">
+	<label><%= t("users_password") %></label>
+	<div class="label-subrow">
+		<%= password_field_tag(:password, "", class: "settingform") %>
+	</div>
+</div>
+<div class="label-row">
+	<label><%= t("users_oauth_coupled") %></label>
+	<div class="label-subrow">
+		<div class="authentications">
+		  <% for authentication in @authentications %>
+		    <div class="authentication">
+		      <%= image_tag "favicon_#{authentication.provider}.svg", :size => "64x64" %>
+		      <div class="provider"><%= authentication.provider.titleize %></div>
+		      <div class="uid"><%= authentication.uid %></div>
+		      <% unless current_user.isOmniOnly && (current_user.authentications.size == 1) %>
+		        <%= link_to t("users_oauth_remove"), authentication, :confirm => t("users_oauth_remove_confirmation"), :method => :delete, :class => "remove",
+		          :class => "remove" %>
+		      <% else %>
+		        <%= link_to t("users_oauth_remove"), cancel_user_registration_path(current_user), :confirm => (t("users_oauth_remove_confirmation")),
+		            :class => "remove" %>
+		      <% end %>
+			</div>
+		</div>
+	  <% end %>
+	</div>
+</div>
+<div class="label-row">
+	<label><%= t("users_oauth_new") %></label>
+	<div class="label-subrow">
+		<a href="/auth/twitter" class="auth_provider">
+		  <%= image_tag "favicon_twitter.svg", :size => "64x64",
+		  :alt => "Twitter" %></a>
+		<a href="/auth/facebook" class="auth_provider">
+		  <%= image_tag "favicon_facebook.svg", :size => "64x64",
+		  :alt => "Facebook" %></a>
+		<a href="/auth/google_apps" class="auth_provider">
+		  <%= image_tag "favicon_google.svg", :size => "64x64",
+		  :alt => "Google" %></a>
+		<a href="/auth/openid" class="auth_provider">
+		  <%= image_tag "favicon_openid.svg", :size => "64x64",
+		  :alt => "OpenID" %></a>
+	</div>
+</div>
+<div class="label-row">
+	<label></label>
+	<div class="label-subrow">
+		<%= submit_tag(t("save"), class: "btn") %>
+	</div>
+</div>
+<!--
 <table border="0">
 <tr>
-<td><h1 class="setting">gebruikersnaam</h1></td>
+<td><label>gebruikersnaam</label></td>
 <td><%= text_field(:user, :username, class: "settingform", placeholder: current_user.username) %>
 </tr>
 <tr>
-<td><h1 class="setting">volledige naam</h1></td>
+<td><label>volledige naam</label></td>
 <td><%= text_field(:profile, :name, class: "settingform", placeholder: current_user.profile.name.blank? ? "Vul hier je naam in" : current_user.profile.name) %>
 </td>
 </tr>
 <tr>
-<td><h1 class="setting">e-mailadres</h1></td>
+<td><label>e-mailadres</label></td>
 <td><%= email_field(:user, :email, class: "settingform", placeholder: current_user.email.blank? ? "Vul hier je e-mailadres in" : current_user.email) %></td>
 </tr>
 <tr>
-<td><h1 class="setting">wachtwoord</h1></td>
+<td><label>wachtwoord</label></td>
 <td><%= password_field_tag(:password, "", class: "settingform") %>
 </td>
 </tr>
 <tr>
-<td><h1 class="setting">gekoppelde accounts</h1></td>
+<td><label>gekoppelde accounts</label></td>
 <td>
 <div class="authentications">
   <% for authentication in @authentications %>
@@ -41,7 +111,7 @@
 </td>
 </tr>
 <tr>
-<td><h1 class="setting">account koppelen</h1></td>
+<td><label>account koppelen</h1></td>
 <td>
 	<a href="/auth/twitter" class="auth_provider">
   <%= image_tag "favicon_twitter.svg", :size => "64x64",
@@ -60,21 +130,22 @@
 <tr>
 <td>
 </td>
-<td><%= submit_tag("opslaan", class: "submitbtn") %>
+<td><%= submit_tag("opslaan", class: "btn") %>
 </td>
 </tr>
 
 	</table>
+-->
 <% end %>
 
 
 <!--
 <div class="leftcolumn">
-		<h1 class="setting">gebruikersnaam</h1>
-	<h1 class="setting">volledige naam</h1>
-	<h1 class="setting">e-mailadres</h1>
-	<h1 class="setting">wachtwoord</h1>
-	<h1 class="setting">gekoppelde accounts</h1>
+		<label>gebruikersnaam</h1>
+	<label>volledige naam</h1>
+	<label>e-mailadres</h1>
+	<label>wachtwoord</h1>
+	<label>gekoppelde accounts</h1>
 </div>
 <div class="rightcolumn">
 	<input type="text" name="username" placeholder="<%= @user.username %>" class="settingform"></input>

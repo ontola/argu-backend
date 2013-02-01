@@ -4,7 +4,7 @@
   <title><%= yield(:title) == "" ? "" : yield(:title) + " | " %><%= t('name') %></title>
   <meta charset="UTF-8">
   <%= csrf_meta_tags %>
-  <%= render 'layouts/shim'%>
+  <%= render 'shim'%>
   <% unless current_user.blank? %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
@@ -12,7 +12,7 @@
 </head>
 <body>
 <% unless current_user.blank? %>
-  <%= render 'layouts/header' %>
+  <%= render 'header' %>
   <div id="fb-root"></div>
   <div class="container">
     <% flash.each do |key,value| %>
@@ -23,7 +23,7 @@
     <%= yield %>
     <div class="push"></div>
   </div>
-  <!--<%= render 'layouts/footer'%>-->
+  <!--<%= render 'footer'%>
   <script type="text/javascript">
     var uvOptions = {};
     (function() {
@@ -31,7 +31,7 @@
       uv.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'widget.uservoice.com/hflYbYhLWzx2DDmc1utYTw.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(uv, s);
     })();
-  </script>
+  </script> -->
 <% else %>
   <%= image_tag "argu.png", alt: "argu is nog in ontwikkeling", width: "673px", height: "72px", style: "margin-left:auto;margin-right:auto;display:block;margin-top:200px" %>
   <%= form_for("user", :url => user_session_path, :html => { class: "form-horizontal" } ) do |f| %>

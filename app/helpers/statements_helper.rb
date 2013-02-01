@@ -1,23 +1,24 @@
+
 module StatementsHelper
 private
 	def getStateType(statetype)
 		case statetype
 		when 0
-			t(:statement_type_social)
+			t("statements.type_social")
 		when 1
-			t(:statement_type_political)
+			t("statements.type_political")
 		when 2
-			t(:statement_type_jurisdictional)
+			t("statements.type_jurisdictional")
 		when 3
-			t(:statement_type_economical)
+			t("statements.type_economical")
 		when 4
-			t(:statement_type_ecological)
+			t("statements.type_ecological")
 		when 5
-			t(:statement_type_technological)
+			t("statements.type_technological")
 		when 6
-			t(:statement_type_discussion)
+			t("statements.type_discussion")
 		when 7
-			t(:statement_type_other)
+			t("statements.type_other")
 		end
 	end
 

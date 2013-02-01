@@ -1,9 +1,5 @@
 <% provide(:title, @statement.title.nil? ? t(:statement_title) : @statement.title) %>
 <% provide(:menu_class, 'statements') %>
-<div class="pageconf">
-	<%= link_to('edit', edit_statement_path(@statement)) %>
-	<%= link_to('history', revisions_statement_path(@statement)) %>
-</div>
 <%= render 'statementbody' %>
 <%= render 'statementarguments' %>
 

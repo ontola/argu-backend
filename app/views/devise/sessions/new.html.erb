@@ -1,10 +1,8 @@
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { class: "form-horizontal" } ) do |f| %>
-
-<table border="0">
-  <tr>
-    <td><h1 class="setting">login met</h1></td>
-    <td>
-    	<a href="/auth/twitter" class="auth_provider">
+<div class="label-row">
+  <label><%= t("users_oauth_new") %></label>
+  <div class="label-subrow">
+    <a href="/auth/twitter" class="auth_provider">
       <%= image_tag "favicon_twitter.svg", :size => "64x64",
       :alt => "Twitter" %></a>
     <a href="/auth/facebook" class="auth_provider">
@@ -16,32 +14,32 @@
     <a href="/auth/openid" class="auth_provider">
       <%= image_tag "favicon_openid.svg", :size => "64x64",
       :alt => "OpenID" %></a>
-    </td>
-  </tr>
-  <tr>
-    <td></td>
-    <td><h3>of</h3></td>
-  </tr>
-  <tr>
-    <td><h1 class="setting"><%= f.label :login %></h1></td>
-    <td><%= f.text_field :login, class: "settingform" %>
-  </tr>
-  <tr>
-    <td><h1 class="setting"><%= f.label :password %></h1></td>
-    <td><%= f.password_field :password, class: "settingform" %>
-  </tr>
-  <tr>
-    <td><h1 class="setting"><%= f.label :remember_me %></h1></td>
-    <td>
+  </div>
+</div>
+<div class="label-row">
+  <label><%= f.label :login %></label>
+  <div class="label-subrow">
+    <%= f.text_field :login, class: "settingform" %>
+  </div>
+</div>
+<div class="label-row">
+  <label><%= f.label :password %></label>
+  <div class="label-subrow">
+    <%= f.password_field :password, class: "settingform" %>
+  </div>
+</div>
+<div class="label-row">
+  <label><%= f.label :remember_me %></label>
+  <div class="label-subrow">
       <% if devise_mapping.rememberable? %>
-        <div class="remember"><%= f.check_box :remember_me %></div>
-      <% end -%>
-    </td>
-  </tr>
-  <tr>
-    <td></td>
-    <td> <div><%= f.submit "log in" , class: "submitbtn" %></div></td>
-  </tr>
-</table>
-
+    <div class="remember"><%= f.check_box :remember_me %></div>
+  <% end -%>
+  </div>
+</div>
+<div class="label-row">
+  <label></label>
+  <div class="label-subrow">
+    <%= f.submit "log in" , class: "btn" %>
+  </div>
+</div>
 <% end %>

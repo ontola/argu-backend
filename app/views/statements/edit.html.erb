@@ -1,7 +1,4 @@
 <% provide(:title, t(:statement_title)) %>
 <% provide(:menu_class, 'statements') %>
-<h1>Editing statement</h1>
-
+<h1><%= t("statements.edit") %></h1>
 <%= render 'form' %>
-
-<%= link_to t(:application_general_back), statements_path, class: "btn" %>

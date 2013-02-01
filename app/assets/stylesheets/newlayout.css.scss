@@ -1,18 +1,118 @@
-@font-face {
-    font-family: 'bariol_lightlight';
-    src: url('bariol_light.eot');
-    src: url('bariol_light.eot?#iefix') format('embedded-opentype'),
-         url('bariol_light.svg#bariol_lightlight') format('svg'),
-         url('bariol_light.woff') format('woff'),
-         url('bariol_light.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
 body
 {	
 	margin: 0px; padding: 0px;
 	background-color: #F2F2F2;
+}
+
+.color
+{
+	color: #468783;
+}
+
+table td
+{
+	border-style: none;
+	vertical-align: middle;
+}
+
+div.clear
+{
+	clear: both;
+}
+
+.container
+{
+	width: 90%;
+	margin-top: 45px;
+	margin:0px auto;
+	padding-top: 15px;
+}
+
+hr.stripe
+{
+	border-color: #468783;
+	border-style: none;
+	border-top-style: solid;
+}
+
+/*Dit is de opmaak van gewone text, waaronder de toelichting van een argument + beschrijving van onderwerp*/
+p
+{
+	text-align:justify;
+	color:black;
+	font-family: Verdana,arial,sans-serif;
+	font-size:13px;
+	margin:0px;
+	padding: 5px;
+	line-height: 18px;
+}
+
+/*onderwerpstitel */
+h1
+{
+	text-align:center;
+	color:#468783;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
+	font-size:26px;
+	font-weight: normal;
+	padding-bottom: 2px;
+	margin-bottom: 3px;
+}
+
+h2
+{
+	text-align:center;
+	color:#468783;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
+	font-size: 20px;
+	font-weight:normal;
+	clear: both;
+}
+
+h3
+{
+	text-align:justify;
+	color:#468783;
+	font-family: Verdana, arial, sans-serif;
+	font-size:16px;
+	margin: 0px;
+	padding: 5px;
+	padding-left: 8px;
+	padding-bottom: 0px;
+	margin-bottom: -5px;
+	font-weight:normal;
+}
+
+a /*link*/
+{
+	text-decoration: none;
+	color: #468783;
+	border-style: none;
+	font-family: verdana, sans-serif;
+	font-size: 12px;
+}
+
+a:hover
+{
+	color: black;
+}
+
+label
+{
+	float: left;
+	text-align: right;
+	font-size: 18px;
+	line-height: 30px;
+	color:#468783;
+	font-family: Century Gothic,'bariol_lightlight', sans-serif;
+	width: 280px;
+}
+
+label.vertical
+{
+	text-align: left;
+	float: none;
+	padding-bottom: 5px;
 }
 
 .argument
@@ -20,17 +120,18 @@ body
 	background-color: white;
 	overflow:hidden;
 	border-style: none;
+	padding: 5px;
 }
 
 .pro
 {
 	border-right: solid 1px #468783;
-	background-color:  #f3fafa;
+	/*background-color:  #f3fafa;*/
 }
 
 .con
 {
-	background-color: #faf4f3;
+	/*	background-color: #faf4f3;*/
 	overflow:hidden; 
 }
 
@@ -41,6 +142,7 @@ body
 	width: 100%;
 	overflow: hidden;
 	background: white; 
+	border: solid 1px #468783
 }
 
 .argcontainer2
@@ -70,11 +172,21 @@ body
 	overflow: hidden;
 }		
 
-hr.stripe
+.left
 {
-	border-color: #468783;
-	border-style: none;
-	border-top-style: solid;
+	text-align: left;
+}
+
+.floatleft
+{
+	float: left;
+}
+
+div.dropdown
+{
+	height: 30px;
+	width: 50%;
+	padding-right: 10px;
 }
 
 #speech-bubble:before {
@@ -176,9 +288,10 @@ div#navbar li #search
 }
 
 #search textarea:focus, input:focus{
+/*	
 	outline: solid;
-	outline-color: white;
 	outline-width: 1px;
+*/
 }
 
 textarea
@@ -219,89 +332,81 @@ div#nothingbar
 	display: block;
 }
 
-.container
-{
-	width: 960px;
-	margin-top: 45px;
-	margin:0px auto;
-	padding-top: 15px;
-}
-
-/*Dit is de opmaak van gewone text, waaronder de toelichting van een argument + beschrijving van onderwerp*/
-p
-{
-	text-align:justify;
-	color:black;
-	font-family: Verdana,arial,sans-serif;
-	font-size:13px;
-	line-height:135%;
-	margin:0px;
-	padding: 10px;	
-	padding-top: 5px;
-	padding-bottom: 5px;
-}
-
 /*Dit is de opmaak van een comment*/
-div.commentusername
+a.commentusername
 	{
 		color: #468783;
 		position: relative;
 		float: left;
-		top: -46px;
+		top: 0px;
 		border-style: none;
 		padding: 3px;
 		border-color:#468783;
 		font-family: Verdana,arial,sans-serif;
+		font-size: 12px;
 		padding-left: 5px;
 		padding-right: 5px;	
 	}
 
-.commentbuttons li
-	{
-		list-style-type: none;
-		padding-right: 20px;
-		display: inline;
-		width: 40px;
-	}
-
-.commentbuttons a
-	{
-		width: 50px;
-		position: relative;
-		float: right;
-		top: -35px;
-		left: -7px;
-		font-family: Verdana,arial,sans-serif;
-		border-color:#468783;
-		background-color: white;
-		border-style: solid;
-		border-width: 1px;
-		padding: 3px;
-
-	
-	}
-
-.commentbuttons img:hover {cursor: pointer}     
-.commentbuttons img:hover polygon[id="star"] {fill:#468783; }
-
-path.iconborder:hover
+#commentstitle
 {
-	color: black;
-}     
+	display: block;
+	background-color: #F2F2F2;
+	border-width: 1px;
+	border-color: #468783;
+	width:100%;
+	height: 45px;
+	overflow: hidden;
+}
+
+.buttons li
+{
+	display: inline;
+	width: auto;
+}
+
+ul.buttons
+{
+	display: block;
+	background-color: white;
+}
+
+.buttons a /* MOET GELIJK ZIJN AAN p */
+{
+	display: none;
+	width: auto;
+	float: right;
+	font-family: Verdana,arial,sans-serif;
+	font-size: 13px;
+	border-color:#468783;
+	background-color: white;
+	border-left-style: solid;
+	border-top-style: solid;
+	border-width: 0px;
+	padding: 5px;
+}
+
+.introcommentbox
+{
+	border-style:solid;
+	border-width:1px;
+	border-color:#468783;
+	background-color: #FFFFFF;
+	padding: 5px;
+	padding-bottom: 2px;
+}
 
 .comments
 {
-	p
+	.commentbox
 	{
 		border-style:solid;
 		border-width:1px;
 		border-color:#468783;
-		margin-top:20px;
-		margin-bottom: 21px;
+		margin-bottom: 8px;
 		background-color: #FFFFFF;
-		padding: 10px;
-		padding-left: 20px;
-		padding-bottom: 25px;
+		padding: 5px;
+		padding-bottom: 2px;
 	}
 	.c1
 	{
@@ -323,16 +428,14 @@ path.iconborder:hover
 
 p.pcomment
 {
-	border-style:solid;
+	border-top-style:dotted;
+	font-style: italic;
 	border-width:1px;
 	border-color:#468783;
-	border-radius:7px;
-	margin-left:10px;
-	margin-right:26px;
-	margin-top:5px;
-	margin-bottom: 21px;
-	background-color: #F0F3FC;
 	padding: 7px;
+	a{
+		color: #575757;
+	}
 }
 
 p.ccomment
@@ -349,43 +452,54 @@ p.ccomment
 	padding: 7px;
 }
 
-.intro
+.introbox
 {
+	display: block;
 	background-color: white;
-	border-top-style:solid;
+	border-style:solid;
 	border-width:1px;
 	border-color:#468783;
+	h1{
+		margin-top: 10px;
+	}
 }
 
-.imgpcomment
+.introbox:hover .buttons a
 {
-	float:right;
-	margin-top: -32px;
-	margin-bottom: 0px;
-	padding:0px;
+	display: inline;
 }
 
-.imgccomment
+.introcommentbox:hover .buttons a
 {
-	float:left;
-	margin-top: -32px;
-	margin-bottom: 0px;
-	padding:0px;
-}
-/*Dit is de opmaak van een onderwerpstitel */
-h1
-{
-	text-align:center;
-	color:#468783;
-	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size:26px;
-	font-weight: normal;
-	padding-bottom: 2px;
-	margin: 0px;
-	padding: 0px;
-	margin-bottom: 3px;
+	display: inline;
 }
 
+.commentbox:hover .buttons a
+{
+	display: inline;
+}
+
+.argument:hover .buttons a
+{
+	display: inline;
+}
+
+.commentinfo
+{
+	float: left;
+	p
+	{
+	color: grey;
+	}
+	a
+	{
+		display: inline;
+		float: none;
+		border-style: none;
+		background-color: none;
+		padding: 0px;
+	}
+}
 /*Dit is de opmaak van een deelonderwerptitel (meestal is dit "argumenten")*/
 div.stcont3
 {
@@ -393,8 +507,8 @@ div.stcont3
 	float: left;
 	width: 100%;
 	overflow: hidden;
-	background-color: #468783; 
-	height: 45px;
+	background-color: #F2F2F2;
+	line-height: 40px;
 }
 
 div.stcont2
@@ -404,7 +518,7 @@ div.stcont2
 	width: 100%;
 	position: relative;
 	right: 33.333%;
-	background-color: #468783; 
+	background-color: #F2F2F2;
 }
 
 div.stcont1
@@ -413,7 +527,7 @@ div.stcont1
 	width: 100%;
 	position: relative;
 	right: 33.333%;
-	background-color: #468783; 
+	background-color: #F2F2F2;
 }
 
 div.stcol1
@@ -440,49 +554,16 @@ div.stcol3
 	left: 76.67%;
 }
 
-h2
-{
-	text-align:center;
-	color:white;
-	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size: 26px;
-	font-weight:normal;
-	margin: -3px;
-	padding: -1px;
-	padding-bottom: 2px;
-	clear: both;
-	position: relative;
-	top: 5px;
-}
-
 h2.voor
 {
 	font-size: 20px;
-	position: relative;
-	top: 12px;
 	text-align: left;
 }
 
 h2.tegen
 {
 	font-size: 20px;
-	position: relative;
-	top: 12px;
 	text-align: right;
-}
-/*Dit is de opmaak van een argument*/
-h3
-{
-	text-align:justify;
-	color:#468783;
-	font-family: Verdana, arial, sans-serif;
-	font-size:16px;
-	margin: 0px;
-	padding: 5px;
-	padding-left: 8px;
-	padding-bottom: 0px;
-	margin-bottom: -5px;
-	font-weight:normal;
 }
 
 .argtitle
@@ -494,26 +575,34 @@ h3
 	font-size:16px;
 	font-weight:normal;
 	text-decoration: none;
-	padding: 10px;
+	padding-top: 7px;
+	padding-left: 5px;
+	padding-bottom: 5px;
 	width: 100%;
 }
 
 .vote
 {
+	display: inline;
+	color: #468783;
+	font-family: verdana, sans-serif;
+	line-height: 20px;
+	font-size: 13px;
 	float: right;
-	margin-top: -18px;
-	margin-right: 25px;
+
 }
 
 .votebtn
 {
-	float: right;
-	margin-top: -22px;
-	margin-right: 51px;
-	width: 26px; height: 26px; 
-    -webkit-border-radius: 13px; -moz-border-radius: 13px;
-    background-color: #330033;
+
 }
+
+.votebtnbtn a
+{
+	display: none;
+    background-color: white;
+}
+
 .btn
 {
 	text-align: center;
@@ -536,27 +625,10 @@ h3
 	padding-bottom: 13px;
 }
 
-a /*link*/
-{
-	text-decoration: none;
-	color: #468783;
-	border-style: none;
-}
-
-a:hover
-{
-	color: black;
-}
-
 .control-group
 {
 	border-style: none;
 	color: #468783;
-}
-
-.control-label
-{
-	font-family: verdana, arial, sans;
 }
 
 .form-actions
@@ -572,7 +644,6 @@ a:hover
 	margin-right: 20px;
 	font-family: verdana, sans-serif;
 }
-
 
 /* Revisions styling */
 .revbar
@@ -624,6 +695,7 @@ a:hover
 	border-style: none;
 	border-color: #468783;
 	background-color: white;
+	padding-bottom: 5px;
 
 	li
 	{
@@ -654,12 +726,14 @@ a:hover
 	background-color: white;
 	font-family: verdana, sans-serif;
 	padding: 5px;
-
+	margin-bottom: 10px;
 }
+
 .alert-Notice
 {
 	background-color: white;
 }
+
 .alert-Error
 {
 	border-color: red;
@@ -669,17 +743,15 @@ a:hover
 
 .authentication {
   font-family: verdana, sans-serif;
-  width: 320px;
-  float: left;
+  width: 410px;
   background-color: white;
   border: solid 1px #468783;
-  margin: 8px;
-  position: relative;
+  height: 64px;
 }
 
 .authentication .remove {
   text-decoration: none;
-  position: absolute;
+  position: relative;
   top: 3px;
   right: 3px;
   color: #333;
@@ -698,39 +770,35 @@ a:hover
 }
 
 .authentication .provider {
-  margin-top: 15px;
+  margin-top: 5px;
 }
 
 .authentication .uid {
   color: #666;
   font-size: 15px;
+  padding-top: 5px;
 }
 
-.auth_provider {
-  float: left;
-  text-decoration: none;
-  text-align: center;
+.auth_provider img{
   border-style: solid;
   border-width: 1px;
-  margin: 8px;
-  margin-right: 11px;
-  height: 64px;
+  margin-right: 16px;
+  margin-bottom: -4px;
 }
 
-.submitbtn 
+.btn 
 {     
-	border: none; 
-	margin: 8px;
+	border: none;
 	padding: 5px;
 	width: auto;
 	color: white;
 	background-color: #468783;
-	height: 32px;
 	font-family: verdana, sans-serif;
 	font-size: 14px;
+	line-height: 27px;
 }
 
-.submitbtn:hover
+.btn:hover
 {
 	color: white;
 	background-color: #529E99;
@@ -931,19 +999,22 @@ div.preview {
 	margin-bottom: 15px;
 }
 
-p.previewtitle {
-	text-align:center;
+.previewtitle a {
 	color:#468783;
 	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size:26px;
-	padding: 0px;
+	font-size:23px;
+}
+
+p.previewtitle{
+	text-align: center;
+	margin-top: 10px;
 }
 
 p.grey {
 	color: grey;
 }
 
-/* Profile */
+/* Profile en settings */
 .profile #head
 {
 	list-style-type: none;
@@ -960,6 +1031,7 @@ div.pageconf
 {
 	float: right;
 	height: 25px;
+	display: inline;
 }
 
 div.pageconf ul
@@ -982,11 +1054,25 @@ div.pageconf li a
 	float:right;
 }
 
-h1.setting{
-	text-align: right;
-	font-size: 23px;
-	position: relative;
-	top: 1px;
+.label-row{
+	margin-bottom: 20px;
+}
+
+.label-subrow{
+	margin-left: 288px;
+	width: 100%;
+}
+
+.helpertext
+{
+	float: left;
+	width: 45%;
+	display: none;
+}
+
+.label-row:hover .helpertext
+{
+	display: inline;
 }
 
 .settingform
@@ -994,17 +1080,25 @@ h1.setting{
 	color:#468783;
 	font-family: Verdana, Century Gothic, sans-serif;
 	font-size:16px;
-	width: 300px;
-	padding: 10px;
+	width: 400px;
 	background: white;
 	border-style: solid;
 	border-width: 1px;
-	margin: 8px;
 	height: auto;	
+	padding: 5px;
 }
+
+.verticalform
+{
+	color: black;
+	font-size: 13px;
+	border-color: #468783;
+	float: left;
+	width: 50%;
+}
+
 
 .remember
 {
 	color: #468783;
-	margin: 8px;
 }

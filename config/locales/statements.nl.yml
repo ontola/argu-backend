@@ -3,6 +3,16 @@
 nl:
   statements:
     type: "stelling"
+    title: "stelling"
+    header: "stelling"
+    plural: "stellingen"
+    pros: "voor"
+    cons: "tegen"
+    edit: "bewerken"
+    no_pros: "nog niets voor"
+    no_cons: "nog niets tegen"
+    newstatement: "nieuwe stelling"
+    content: "inhoud"
     preview:
       pro:
         zero: "geen voorargumenten"
@@ -12,3 +22,13 @@ nl:
         zero: "geen tegenargumenten"
         one: "1  tegenargument"
         other: "%{count} tegenargumenten"
+
+    #statement types
+    type_social: "Maatschappelijk"
+    type_political: "Politiek"
+    type_jurisdictional: "Juridisch"
+    type_ecological: "Ecologisch"
+    type_economical: "Economisch"
+    type_technological: "Technologisch"
+    type_discussion: "In discussie"
+    type_other: "Overig"

@@ -4,6 +4,9 @@ private
 		@comment = argument.root_comments[0]
 	end
 
+	def argumentCreatorUsername(argument)
+		User.find_by_id(argument.versions.last.whodunnit.to_s).username	
+	end
 
 	def getArgType(argument)
 		case argument.argtype
