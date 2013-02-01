@@ -12,6 +12,9 @@ nl:
     type: "type"
     index:
       title: "argumenten"
+      opinion: "opinie"
+      parties: "partijen"
+      law: "wet"
     show:
       title: "argumenten"
       reply: "reageer"

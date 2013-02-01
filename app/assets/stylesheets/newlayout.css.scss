@@ -173,6 +173,38 @@ label.vertical
 	}
 }
 
+.navcontent
+{
+	list-style-type: none;
+	display: block;
+	text-align: center;
+	margin-top: 20px;
+	li
+	{
+		display: inline;
+	}
+	a
+	{
+		font-family: Century Gothic,'bariol_lightlight', sans-serif;
+		font-size: 23px;
+		padding: 5px;
+		padding-top: 0px;
+		border: solid 1px #F2F2F2;		
+	}
+	a:hover
+	{
+		border: solid 1px #468783;
+		background-color: white;
+		color: #468783;
+	}
+
+	a.current
+	{
+		border: solid 1px #468783;	
+		background-color: white;
+	}
+}
+
 .prosbox
 {
 	float: left;
@@ -851,8 +883,7 @@ p.vote
 
 .btnm:hover
 {
-	color: white;
-	background-color: #468783;
+	color: black;
 }
 
 /*info about page tabs*/
