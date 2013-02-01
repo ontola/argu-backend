@@ -1,0 +1,11 @@
+#Dutch static pages translations
+
+nl:
+  static_pages:
+    title: "Home"
+    header: "\"The only fence against the world is a thorough knowledge of it.\""
+    title_top: "Top stories"
+    title_follow: "Discussies die je volgt"
+    title_new: "Net binnen"
+    new_header: "Welkom bij "
+    new_text: "Nederlands awesome slogan."
