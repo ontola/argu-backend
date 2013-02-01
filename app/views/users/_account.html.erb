@@ -19,9 +19,15 @@
 	</div>
 </div>
 <div class="label-row">
-	<label><%= t("users_password") %></label>
+	<label><%= t("users_password_edit") %></label>
 	<div class="label-subrow">
 		<%= password_field_tag(:password, "", class: "settingform") %>
+	</div>
+</div>
+<div class="label-row">
+	<label><%= t("users_password_confirmation") %></label>
+	<div class="label-subrow">
+		<%= password_field_tag(:password_confirmation, "", class: "settingform") %>
 	</div>
 </div>
 <% if @authentications.present? %>

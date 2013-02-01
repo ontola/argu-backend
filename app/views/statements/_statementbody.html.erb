@@ -4,9 +4,7 @@
 		<p><%= @statement.content %></p>
 		<ul class="buttons">
 			<li>
-				<div class="commentinfo">
-					<%= content_tag(:p, t("arguments.comments.placed_by", user: @statement.id, date: l(@statement.created_at, format: :long))) %>
-				</div>
+				<%= content_tag(:p, t("arguments.comments.placed_by", user: @statement.id, date: l(@statement.created_at, format: :long))) %>
 			</li>
 			<li>	
 				<%= link_to(t("edit"), 	edit_statement_path(@statement)) %>

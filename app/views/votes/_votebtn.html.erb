@@ -1,5 +1,5 @@
 <% unless current_user.nil? %><div class="votebtn" id="<%= argument.id %>">
 		<%= current_user.voted_on?(argument) ? 
-		(link_to 'geen favoriet', argument_destroy_vote_path(argument), :remote => true) :
-		(link_to 'favoriet', argument_create_vote_path(argument), :remote => true) %>
+		(link_to '-1', argument_destroy_vote_path(argument), :remote => true) :
+		(link_to '+1', argument_create_vote_path(argument), :remote => true) %>
 </div><% end %>

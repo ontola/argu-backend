@@ -53,7 +53,7 @@ h1
 	text-align:center;
 	color:#468783;
 	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size:26px;
+	font-size:23px;
 	font-weight: normal;
 	padding-bottom: 2px;
 	margin-bottom: 3px;
@@ -126,7 +126,7 @@ label.vertical
 .pro
 {
 	border-right: solid 1px #468783;
-	/*background-color:  #f3fafa;*/
+	border-left: solid 1px #468783;	/*background-color:  #f3fafa;*/
 }
 
 .con
@@ -135,14 +135,15 @@ label.vertical
 	overflow:hidden; 
 }
 
+.newargument
+
+
 .argcontainer1
 {
 	clear: left;
 	float: left;
 	width: 100%;
 	overflow: hidden;
-	background: white; 
-	border: solid 1px #468783
 }
 
 .argcontainer2
@@ -151,7 +152,6 @@ label.vertical
 	width: 100%;
 	position: relative;
 	right: 50%;
-	background: white;
 }
 
 .prosbox
@@ -161,6 +161,7 @@ label.vertical
 	position: relative;
 	left: 50%;
 	overflow: hidden;
+	border-top: solid 1px #468783;	
 }		
 
 .consbox
@@ -170,7 +171,13 @@ label.vertical
 	position: relative;
 	left: 50%;
 	overflow: hidden;
+	border-top: solid 1px #468783;
 }		
+
+.centerbox
+{
+	text-align: center;
+}
 
 .left
 {
@@ -368,22 +375,27 @@ a.commentusername
 ul.buttons
 {
 	display: block;
+	height: 18px;
 	background-color: white;
 }
 
-.buttons a /* MOET GELIJK ZIJN AAN p */
+.buttons
 {
-	display: none;
-	width: auto;
-	float: right;
-	font-family: Verdana,arial,sans-serif;
-	font-size: 13px;
-	border-color:#468783;
-	background-color: white;
-	border-left-style: solid;
-	border-top-style: solid;
-	border-width: 0px;
-	padding: 5px;
+	a
+	{
+		display: none;
+		width: auto;
+		float: right;
+		font-family: Verdana,arial,sans-serif;
+		font-size: 13px;
+		padding: 5px;
+		padding-top: 10px;
+	}
+	p
+	{
+		float: left;
+		color: grey;
+	}
 }
 
 .introcommentbox
@@ -433,6 +445,8 @@ p.pcomment
 	border-width:1px;
 	border-color:#468783;
 	padding: 7px;
+	clear: both;
+	color: darkgrey;
 	a{
 		color: #575757;
 	}
@@ -581,20 +595,23 @@ h2.tegen
 	width: 100%;
 }
 
-.vote
+p.vote 
 {
 	display: inline;
 	color: #468783;
 	font-family: verdana, sans-serif;
-	line-height: 20px;
 	font-size: 13px;
 	float: right;
-
+	padding: 0px;
 }
 
 .votebtn
 {
-
+	a{
+	padding: 0px;
+	padding-top: 3px;
+	font-weight: bold; 
+	}
 }
 
 .votebtnbtn a
@@ -726,7 +743,7 @@ h2.tegen
 	background-color: white;
 	font-family: verdana, sans-serif;
 	padding: 5px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 
 .alert-Notice
