@@ -193,15 +193,17 @@ label.vertical
 	}
 	a:hover
 	{
-		border: solid 1px #468783;
-		background-color: white;
-		color: #468783;
+
 	}
 
 	a.current
 	{
 		border: solid 1px #468783;	
 		background-color: white;
+	}
+	a.current:hover
+	{
+		color: #468783;
 	}
 }
 
@@ -425,7 +427,7 @@ a.commentusername
 ul.buttons
 {
 	display: block;
-	height: 18px;
+	height: 20px;
 }
 
 .buttons
@@ -647,22 +649,33 @@ p.vote
 	font-family: verdana, sans-serif;
 	font-size: 13px;
 	float: right;
+	line-height: 20px;
 	padding: 0px;
+	padding-right: 3px;
+}
+p.vote:hover
+{
+	display: none;
 }
 
 .votebtn
 {
-	a{
-	padding: 0px;
+	a
+	{
+	padding: 3px;
 	padding-top: 3px;
 	font-weight: bold; 
+	color: white;
+	background-color: #529E99;
+	}
+	a:hover
+	{
+		background-color: #468783;
 	}
 }
 
-.votebtnbtn a
-{
-	display: none;
-    background-color: white;
+.argument:hover p.vote{
+display: none;
 }
 
 #pnewargtitle
