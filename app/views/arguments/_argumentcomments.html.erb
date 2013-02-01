@@ -7,7 +7,5 @@
 	<% @comments.each do |c| %>
 		<%= render partial: 'buildcomment', locals: { c: c, depth: 1 } %>
 	<% end %>
-	<% if @length > 5 %>
-		<%= link_to t("arguments.comments.more"), argument_path(@argument, offset: @offset + 5) unless @length < @offset + 5 %>
-	<% end %>
+	<%= paginate @comments %>
 </div>

@@ -4,6 +4,7 @@ class SearchController < ApplicationController
 		begin
 	    @search = Statement.search do
 	    	fulltext params['q']
+	    	paginate page: params[:page]
 	    end
 	    
 	    respond_to do |format|

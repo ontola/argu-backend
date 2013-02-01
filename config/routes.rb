@@ -1,7 +1,4 @@
 Argu::Application.routes.draw do
-  root to: 'static_pages#home'
-  match "/", to: "statements#index", constraints: lambda { |r| r.env["warden"].authenticate? }
-  match "/home", to: "statements#index", constraints: lambda { |r| r.env["warden"].authenticate? }
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
@@ -10,7 +7,7 @@ Argu::Application.routes.draw do
 
 
   #resources :users
-  resources :statements, constraints: lambda { |r| r.env["warden"].authenticate? }
+  resources :statements
   get "/statements/:id/revisions" => "statements#allrevisions", as: 'revisions_statement', constraints: lambda { |r| r.env["warden"].authenticate? }
   get "/statements/:id/revisions/:rev" => "statements#revisions", as: 'rev_revisions_statement', constraints: lambda { |r| r.env["warden"].authenticate? }
   put "/statements/:id/revisions/:rev" => "statements#setrevision", as: 'update_revision_statement', constraints: lambda { |r| r.env["warden"].authenticate? }
@@ -40,4 +37,8 @@ Argu::Application.routes.draw do
   match "/about", to: "static_pages#about", constraints: lambda { |r| r.env["warden"].authenticate? }
   match "/learn", to: "static_pages#learn", constraints: lambda { |r| r.env["warden"].authenticate? }
   match "/newpage", to: "static_pages#newlayout", constraints: lambda { |r| r.env["warden"].authenticate? }
+
+  root to: 'static_pages#home'
+  match "/", to: "statements#index", constraints: lambda { |r| r.env["warden"].authenticate? }
+  match "/home", to: "statements#index", constraints: lambda { |r| r.env["warden"].authenticate? }
 end

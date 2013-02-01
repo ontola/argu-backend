@@ -1,24 +1,12 @@
 class ArgumentsController < ApplicationController
   load_and_authorize_resource
-  
-  # GET /arguments
-  # GET /arguments.json
-  def index
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @arguments }
-    end
-  end
 
   # GET /arguments/1
   # GET /arguments/1.json
   def show
-    @offset = params[:offset].to_i
-    @offset ||= 0
-
     @parent_id = params[:parent_id].to_s
     
-    @comments = @argument.root_comments.order('created_at ASC').offset(@offset).limit(5)
+    @comments = @argument.root_comments.page(params[:page]).order('created_at ASC')
     @length = @argument.root_comments.length
 
     respond_to do |format|

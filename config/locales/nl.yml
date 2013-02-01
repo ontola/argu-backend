@@ -135,3 +135,10 @@ nl:
       about_x_hours:
         one: '%{count} uur geleden'
         other: '%{count} uur geleden'
+  views:
+    pagination:
+      first: "&laquo; eerste"
+      last: "laatste &raquo;"
+      previous: "&lsaquo; vorige"
+      next: "volgende &rsaquo;"
+      truncate: "..."
