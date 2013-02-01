@@ -16,23 +16,25 @@
 				<pre><%= t(:statement_no_pros) %></pre>
 			<% end %>
 			<div class="centerbox">
-				<%= link_to t("arguments.new.create", side: t("arguments.pro")), new_argument_path(pro: true, statement_id: @statement.id), class: "btn", id: "pnewargtitle" %>
+				<%= link_to t("arguments.new.create", side: t("arguments.pro")), new_argument_path(pro: true, statement_id: @statement.id), class: "btnm", id: "pnewargtitle" %>
 			</div>
 		</div>
 		<div class="consbox">
 			<div class="argtypebox">
 				<h2><%= t("arguments.con") %></h2>
-			</div>			
-			<% unless @con.nil? %>
-				<% @con.each do |argument| %>
-					<%= render 'arguments/sarguments', argument: argument, pro: false %>
+			</div>
+			<div class="verticalborder">			
+				<% unless @con.nil? %>
+					<% @con.each do |argument| %>
+						<%= render 'arguments/sarguments', argument: argument, pro: false %>
 						<hr class="stripe"></hr>
+					<% end %>
+				<% else %>
+					<pre><%= t(:statement_no_cons) %></pre>
 				<% end %>
-			<% else %>
-				<pre><%= t(:statement_no_cons) %></pre>
-			<% end %>
+			</div>
 			<div class="centerbox">
-				<%= link_to t("arguments.new.create", side: t("arguments.con")), new_argument_path(pro: false, statement_id: @statement.id), class: "btn", id: "cnewargtitle" %>
+				<%= link_to t("arguments.new.create", side: t("arguments.con")), new_argument_path(pro: false, statement_id: @statement.id), class: "btnm", id: "cnewargtitle" %>
 			</div>
 		</div>
 	</div>

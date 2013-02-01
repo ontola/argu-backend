@@ -179,7 +179,7 @@ label.vertical
 	width: 50%;
 	position: relative;
 	left: 50%;
-	overflow: hidden;
+	overflow: hidden;	
 }		
 
 .consbox
@@ -189,7 +189,13 @@ label.vertical
 	position: relative;
 	left: 50%;
 	overflow: hidden;
+	margin-left: -1px;
 }		
+
+.verticalborder
+{
+	border-left: solid 1px #468783;	
+}
 
 .centerbox
 {
@@ -388,7 +394,6 @@ ul.buttons
 {
 	display: block;
 	height: 18px;
-	background-color: white;
 }
 
 .buttons
@@ -595,16 +600,12 @@ h2.tegen
 .argtitle
 {
 	display: block;
-	text-align:justify;
-	color:#295E59;
+	text-align:center;
 	font-family: Verdana, arial, sans-serif;
 	font-size:16px;
-	font-weight:normal;
+	font-weight:bold;
 	text-decoration: none;
-	padding-top: 7px;
-	padding-left: 5px;
-	padding-bottom: 5px;
-	width: 100%;
+	padding: 7px;
 }
 
 p.vote 
@@ -621,7 +622,7 @@ p.vote
 {
 	a{
 	padding: 0px;
-	padding-top: 2px;
+	padding-top: 3px;
 	font-weight: bold; 
 	}
 }
@@ -630,17 +631,6 @@ p.vote
 {
 	display: none;
     background-color: white;
-}
-
-.btn
-{
-	text-align: center;
-	input
-	{
-		text-decoration: none;
-		margin-left: -1px;
-		color: white;
-	}
 }
 
 #pnewargtitle
@@ -816,23 +806,54 @@ p.vote
 }
 
 .btn 
-{     
+{    
+	display: inline-block; 
 	border: none;
 	padding: 5px;
 	width: auto;
 	color: white;
-	background-color: #468783;
+	background-color: #529E99;
 	font-family: verdana, sans-serif;
 	font-size: 14px;
-	line-height: 27px;
+	text-align: center;
+	input
+	{
+		text-decoration: none;
+		margin-left: -1px;
+		color: white;
+	}
 }
 
 .btn:hover
 {
 	color: white;
-	background-color: #529E99;
+	background-color: #468783;
 }
 
+.btnm
+{
+	display: inline-block; 
+	border: none;
+	padding: 5px;
+	width: auto;
+	font-family: verdana, sans-serif;
+	font-size: 14px;
+	margin-bottom: 7px;
+	margin-top: 7px;
+	text-align: center;
+	input
+	{
+		text-decoration: none;
+		margin-left: -1px;
+		color: white;	
+	}
+}
+
+.btnm:hover
+{
+	color: white;
+	background-color: #468783;
+}
 
 /*info about page tabs*/
 
