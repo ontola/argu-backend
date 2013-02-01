@@ -1,23 +1,14 @@
-<% provide(:title, t(:home_title)) %>
-<% provide(:menu_class, 'home') %>
+<% provide(:title, t("static_pages.home.title")) %>
 <div>
   <div>
-    <h1><%= t(:home_header) %></h1>
+    <blockquote style="padding-bottom: 20px;">
+      <h1><%= t("static_pages.header") %></h1>
+      <p style="text-align: center; color: grey; margin-top: -10px;"><i>John Locke</i></p>
+    </blockquote>
     <div>
-      <div class="subtitle">
-        <h2><%= t(:home_title_new) + ": " + t(:statement_title).pluralize %></h2>
-      </div>
       <% @newstatements.first(4).each do |statement| %>
-	  	  <%= render 'statements/statements', statement: statement %>
+	  	  <%= render 'statements/preview', statement: statement %>
 	    <% end %>
-    </div>
-    <div>
-      <div class="subtitle">
-        <h2><%= t(:home_title_new) + ": " + t(:argument_title).pluralize %></h2>
-      </div>
-      <% @newarguments.first(4).each do |argument| %>
-        <%= render 'arguments/arguments', argument: argument %>
-      <% end %>
     </div>
   </div>
 </div>  
