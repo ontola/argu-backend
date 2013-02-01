@@ -1,15 +1,12 @@
 <div class="stcont3">
-	<div class="stcont2">
-		<div class="stcont1">
-			<div class="stcol1"><h2 class="voor">voor<h2></div>
-			<div class="stcol2"><h2>Argumenten</h2></div>
-			<div class="stcol3"><h2 class="tegen">tegen<h2></div>
-		</div>
-	</div>
+	<h2><%= t("arguments.show.title") %></h2>
 </div>
 <div class="argcontainer1">
 	<div class="argcontainer2">
 		<div class="prosbox">
+			<div class="argtypebox">
+				<h2><%= t("arguments.pro") %></h2>
+			</div>
 			<% unless @pro.nil? %>
 				<% @pro.each do |argument| %>
 					<%= render 'arguments/sarguments', argument: argument, pro: true %>
@@ -23,6 +20,9 @@
 			</div>
 		</div>
 		<div class="consbox">
+			<div class="argtypebox">
+				<h2><%= t("arguments.pro") %></h2>
+			</div>			
 			<% unless @con.nil? %>
 				<% @con.each do |argument| %>
 					<%= render 'arguments/sarguments', argument: argument, pro: false %>
