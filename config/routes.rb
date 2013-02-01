@@ -1,5 +1,5 @@
 Argu::Application.routes.draw do
-  root to: 'statements#index'
+  root to: 'static_pages#home'
   match "/", to: "statements#index", constraints: lambda { |r| r.env["warden"].authenticate? }
   match "/home", to: "statements#index", constraints: lambda { |r| r.env["warden"].authenticate? }
 

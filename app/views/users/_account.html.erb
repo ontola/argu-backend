@@ -24,6 +24,7 @@
 		<%= password_field_tag(:password, "", class: "settingform") %>
 	</div>
 </div>
+<% if @authentications.present? %>
 <div class="label-row">
 	<label><%= t("users_oauth_coupled") %></label>
 	<div class="label-subrow">
@@ -41,10 +42,11 @@
 		            :class => "remove" %>
 		      <% end %>
 			</div>
-		</div>
+		 </div>
 	  <% end %>
 	</div>
 </div>
+<% end %>
 <div class="label-row">
 	<label><%= t("users_oauth_new") %></label>
 	<div class="label-subrow">
