@@ -43,7 +43,7 @@ class ArgumentsController < ApplicationController
   def allrevisions
     authorize! :index, :revisions
     @argument = Argument.find(params[:id])
-    @revisions = @argument.versions
+    @revisions = @argument.versions.scoped.reject{ |v| v.object.nil? }.reverse
 
     respond_to do |format|
       format.html # allrevisions.html.erb

@@ -65,7 +65,7 @@ class StatementsController < ApplicationController
   def allrevisions
     authorize! :index, :revisions
     @statement = Statement.find(params[:id])
-    @revisions = @statement.versions.where(event: 'NOT create').scoped.reverse
+    @revisions = @statement.versions.scoped.reject{ |v| v.object.nil? }.reverse
 
     respond_to do |format|
       format.html # allrevisions.html.erb
