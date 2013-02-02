@@ -35,6 +35,11 @@ hr.stripe
 	border-top-style: solid;
 }
 
+hr.clear
+{
+	border: none;
+}
+
 /*Dit is de opmaak van gewone text, waaronder de toelichting van een argument + beschrijving van onderwerp*/
 p
 {
@@ -124,6 +129,17 @@ label.vertical
 	text-align: left;
 	float: none;
 	padding-bottom: 5px;
+}
+
+
+.box
+{
+	display: block;
+	background-color: white;
+	border:solid 1px #468783;
+	h1{
+		margin-top: 10px;
+	}
 }
 
 .argument
@@ -569,7 +585,7 @@ p.ccomment
 div.stcont3
 {
 	clear: left;
-	float: left;
+	/*float: left;*/
 	width: 100%;
 	overflow: hidden;
 	background-color: #F2F2F2;
