@@ -22,7 +22,6 @@
 			<% unless @pro.nil? %>
 				<% @pro.each do |argument| %>
 					<%= render 'arguments/sarguments', argument: argument, pro: true %>
-					<hr class="stripe"></hr>
 				<% end %>
 			<% else %>
 				<pre><%= t(:statement_no_pros) %></pre>
@@ -39,7 +38,6 @@
 				<% unless @con.nil? %>
 					<% @con.each do |argument| %>
 						<%= render 'arguments/sarguments', argument: argument, pro: false %>
-						<hr class="stripe"></hr>
 					<% end %>
 				<% else %>
 					<pre><%= t(:statement_no_cons) %></pre>

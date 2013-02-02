@@ -1,0 +1,31 @@
+<header>
+	<h1><%= t("revisions.title") %></h1>
+</header>
+<% unless @revisions.empty? %> 
+<table class="revtbl">
+    <tr>
+        <th><%= t("revisions.table_id") %></th>
+        <th><%= t("revisions.table_title") %></th>
+        <th><%= t("revisions.table_content") %></th>
+        <th><%= t("revisions.table_edited") %></th>
+        <th><%= t("revisions.table_created") %></th>
+        <th><%= t("revisions.table_page") %></th>
+        <th><%= t("revisions.table_make") %></th>
+    </tr>
+    <% @revisions.reject{ |v| v.object.nil? }.each do |v| %>
+        <tr>
+            <% i = v.reify %>
+            <% u = User.find_by_id(v.whodunnit) %>
+            <td><%= v.id.to_s %></td>
+            <td><%= i.title %></td>
+            <td><%= i.content[0,140] + ((i.content.length < 140) ? "" : "...") %></td>
+            <td><%= u.getLogin %></td>
+            <td><%= v.created_at.to_s %></td>
+            <td><%= link_to('Goto', rev_revisions_statement_url(i, v)) %></td>
+            <td><%= link_to('Revert', update_revision_statement_url(i, v), method: :put) %></td>
+        </tr>
+    <% end %>
+</table>
+<% else %>
+<h2><%= t("empty_type", type: "revisies") %></h2>
+<% end %>
