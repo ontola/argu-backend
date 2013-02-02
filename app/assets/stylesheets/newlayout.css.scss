@@ -35,11 +35,6 @@ hr.stripe
 	border-top-style: solid;
 }
 
-hr.clear
-{
-	border: none;
-}
-
 /*Dit is de opmaak van gewone text, waaronder de toelichting van een argument + beschrijving van onderwerp*/
 p
 {
@@ -135,11 +130,9 @@ label.vertical
 .box
 {
 	display: block;
+	padding: 5px;
 	background-color: white;
 	border:solid 1px #468783;
-	h1{
-		margin-top: 10px;
-	}
 }
 
 .argument
@@ -147,8 +140,8 @@ label.vertical
 	background-color: white;
 	overflow:hidden;
 	border-style: none;
-	border-bottom: solid 1px #468783;
 	padding: 5px;
+	border-bottom: solid 1px #468783;
 }
 
 .pro
@@ -206,6 +199,7 @@ label.vertical
 		font-size: 23px;
 		padding: 5px;
 		padding-top: 0px;
+		border: solid 1px #F2F2F2;		
 	}
 	a:hover
 	{
@@ -250,6 +244,15 @@ label.vertical
 .centerbox
 {
 	text-align: center;
+}
+
+.partytitle
+{
+	display: block;
+	font-size: 15px;
+	padding: 5px;
+	padding-bottom: 0px;
+	font-weight: bold;
 }
 
 .left
@@ -477,14 +480,9 @@ ul.buttons
 
 .comments
 {
-	.commentbox
+	.box
 	{
-		border-style:solid;
-		border-width:1px;
-		border-color:#468783;
 		margin-bottom: 8px;
-		background-color: #FFFFFF;
-		padding: 5px;
 		padding-bottom: 2px;
 	}
 	.c1
@@ -555,6 +553,11 @@ p.ccomment
 	display: inline;
 }
 
+.box:hover .buttons a
+{
+	display: inline;
+}
+
 .commentbox:hover .buttons a
 {
 	display: inline;
@@ -563,6 +566,23 @@ p.ccomment
 .argument:hover .buttons a
 {
 	display: inline;
+}
+
+.info
+{
+	float: left;
+	p
+	{
+	color: grey;
+	}
+	a
+	{
+		display: inline;
+		float: none;
+		border-style: none;
+		background-color: none;
+		padding: 0px;
+	}
 }
 
 .commentinfo
@@ -649,13 +669,26 @@ h2.tegen
 
 .argtitle
 {
+	text-decoration: none;
 	display: block;
 	text-align:center;
 	font-family: Verdana, arial, sans-serif;
-	font-size:16px;
+	font-size: 15px;
 	font-weight:bold;
-	text-decoration: none;
 	padding: 7px;
+	padding-bottom: 0px;
+}
+
+.title
+{
+	text-decoration: none;
+	display: block;
+	text-align:center;
+	font-family: Verdana, arial, sans-serif;
+	font-size: 18px;
+	font-weight:bold;
+	padding: 7px;
+	padding-bottom: 4px;
 }
 
 p.vote 
@@ -1102,22 +1135,7 @@ display: none;
 
 /*Zoekresultaten*/
 div.preview {
-	background-color: white;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #468783;
 	margin-bottom: 15px;
-}
-
-.previewtitle a {
-	color:#468783;
-	font-family: Century Gothic,'bariol_lightlight', sans-serif;
-	font-size:23px;
-}
-
-p.previewtitle{
-	text-align: center;
-	margin-top: 10px;
 }
 
 p.grey {

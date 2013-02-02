@@ -1,4 +1,3 @@
-
 <div class="argcontainer1">
 	<div class="argcontainer2">
 		<div class="prosbox">
@@ -11,7 +10,9 @@
 				<% end %>
 			<% else %>
 				<pre><%= t(:statement_no_pros) %></pre>
-			<% end %>
+			<% end %>	
+				
+		</div>
 			<div class="centerbox">
 				<%= link_to t("arguments.new.create", side: t("arguments.pro")), new_argument_path(pro: true, statement_id: @statement.id), class: "btnm", id: "pnewargtitle" %>
 			</div>
