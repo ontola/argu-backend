@@ -10,4 +10,9 @@
         $(this).animate({height: newHeight}, 500);
     });
 
+    $('.c_reply').click(function(event) {
+    	event.preventDefault();
+    	$('.comment_form#cf' + $(this).attr('id')).slideDown();
+    });
+
  });

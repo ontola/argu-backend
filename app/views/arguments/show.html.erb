@@ -1,11 +1,4 @@
 <% provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title) %>
-<% provide(:menu_class, 'arguments') %>
 <%= render 'argumentbody' %>
 <%= render 'argumentcomments' %>
-<%= form_tag(@argument.id.to_s + "/placeComment", :action => "placeComment", :method => "post", :id => @argument.id) do %>
-<%= text_area_tag :comment,"", :rows => 5, :cols => 50 %>
-<% unless @parent_id.blank? %>
-	<input type="hidden" class= "submitbtn" name="parent_id" value ="<%= @parent_id %>" />
-<% end %>
-<%= submit_tag t("arguments.show.reply"), class: "btn" %>
-<% end %>
+<%= render partial: 'add_comment_form', locals: { argument: @argument, parent_id: @parent_id, visible: true } %>
