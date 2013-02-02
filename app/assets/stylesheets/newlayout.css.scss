@@ -13,6 +13,26 @@ table td
 {
 	border-style: none;
 	vertical-align: middle;
+	padding: 8px;
+	border: none;
+	font-family: Verdana,arial,sans-serif;
+	font-size:13px;
+	text-align: left;
+	background-color: white;
+	border: solid 1px #468783;
+	border-top: none;
+}
+
+table th
+{	
+	border-style: none;
+	vertical-align: middle;
+	padding: 5px;
+	border: none;
+	font-family: Verdana,arial,sans-serif;
+	font-size:13px;
+	text-align: left;
+	color: white;
 }
 
 div.clear
@@ -822,10 +842,6 @@ display: none;
 
 .revtbl
 {
-	border: none;
-	font-family: Verdana,arial,sans-serif;
-	font-size:13px;
-
 	tr:nth-child(even) {background: #E9F2DD}
 	tr:nth-child(odd) {background: #F0F3FC}
 	tr:nth-child(1) {background: #468783}
