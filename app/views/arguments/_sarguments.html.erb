@@ -1,6 +1,6 @@
 <% @comment = getBestComment(argument) %>
 <div class="<%= (pro ? "argument pro" : "argument con") %>">
-	<%= link_to argument.title, argument_path(argument), class: (pro ? "argtitle" : "argtitle") %>
+	<%= link_to argument.title, argument_path(argument), class: (pro ? "title" : "title") %>
 		<div id="expand_nope">
 			<p><%= argument.content %></p>
 			<%= render partial: "votes/shr", locals: {argument: argument} %>
