@@ -10,9 +10,7 @@
 				<% end %>
 			<% else %>
 				<pre><%= t(:statement_no_pros) %></pre>
-			<% end %>	
-				
-		</div>
+			<% end %>		
 			<div class="centerbox">
 				<%= link_to t("arguments.new.create", side: t("arguments.pro")), new_argument_path(pro: true, statement_id: @statement.id), class: "btnm", id: "pnewargtitle" %>
 			</div>
