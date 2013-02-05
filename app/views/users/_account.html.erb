@@ -76,6 +76,9 @@
 		<%= submit_tag(t("save"), class: "btn") %>
 	</div>
 </div>
+
+<%= link_to t(:header_menuitem_profile_show), '/profiles/' + (current_user.username.blank? ? current_user.profile.id.to_s : current_user.username.to_s), id: "account" %>
+
 <!--
 <table border="0">
 <tr>
