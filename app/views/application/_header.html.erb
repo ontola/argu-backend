@@ -1,6 +1,6 @@
 <div id="navbar">
   <ul id="mainbar">
-    <li><%= link_to "Home", '/', id: "argulogo" %></li>
+    <li><%= link_to "argu", '/', id: "argulogo" %></li>
     <div id="navr">
       <li><%= render partial: 'search/search' %></li>
       <% if current_user.present?%>
@@ -11,7 +11,7 @@
       <% else %>
         <li><%= link_to t(:header_menuitem_settings), new_user_session_url, id: "account" %></li>
       <% end %>
-      <li><%= link_to "Info", '/about', id: "info" %></li>
+      <li><%= link_to "info", '/about', class: "close", id: "info" %></li>
     </div>
   </ul>
 </div>
