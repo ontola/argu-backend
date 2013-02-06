@@ -43,9 +43,7 @@ div.clear
 .container
 {
 	width: 90%;
-	margin-top: 45px;
 	margin:0px auto;
-	padding-top: 15px;
 }
 
 hr.stripe
@@ -88,6 +86,7 @@ h1
 	font-weight: normal;
 	padding-bottom: 2px;
 	margin-bottom: 3px;
+	margin-top: 20px;
 }
 
 h2
@@ -146,13 +145,13 @@ label.vertical
 	padding-bottom: 5px;
 }
 
-
 .box
 {
 	display: block;
 	padding: 5px;
 	background-color: white;
 	border:solid 1px #468783;
+	margin-top: 20px;
 }
 
 .argument
@@ -203,6 +202,11 @@ label.vertical
 	}
 }
 
+textarea
+{
+	resize: none;
+}
+
 .navcontent
 {
 	list-style-type: none;
@@ -218,7 +222,7 @@ label.vertical
 		font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
 		font-size: 26px;
 		padding: 5px;
-		padding-top: 0px;
+		padding-top: 3px;
 		border: solid 1px #F2F2F2;		
 	}
 	a:hover
@@ -230,6 +234,8 @@ label.vertical
 	{
 		border: solid 1px #468783;	
 		background-color: white;
+		padding-left: 10px;
+		padding-right: 10px;
 	}
 	a.current:hover
 	{
@@ -339,6 +345,7 @@ div#navbar li
 	list-style-type: none;
 	display: inline-block;
 	float: left;
+	border-left: solid 1px white;
 }
 
 div#navbar li a
@@ -349,7 +356,6 @@ div#navbar li a
 	color: white;
 	line-height: 39px;
 	padding: 3px;
-	border-left: solid 1px white;
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -374,11 +380,11 @@ div#navbar li:hover
 
 div#navbar li #search
 {
-	-webkit-appearance:none;
+	-webkit-appearance: none;
 	box-sizing: content-box;
 	background-color: #468783;
 	height: 35px;
-	width: 200px;
+	width: 103px;
 	padding: 5px;
 	padding-left: 10px;
 	font-family: Raleway, Century Gothic, sans-serif;
@@ -387,11 +393,22 @@ div#navbar li #search
 	color: white;
 	float: right;
 	border: none;
-	border-left: solid 1px white;
 }
 
-#search textarea:focus, input:focus{
-	background-color: #529E99;
+div#navbar li textarea:focus, div#navbar li input:focus{
+	background-color: #529E99 !important;
+	border-style: none !important;
+	width: 350px !important;
+	font-size: 18px !important;
+	webkit-appearance: none !important;
+}
+
+div#navbar li textarea:hover, div#navbar li input:hover{
+	background-color: #529E99 !important;
+}
+
+::-webkit-search-cancel-button {   // select all "X" buttons in search inputs  
+    -webkit-appearance: none;      // hide the default "X" button  
 }
 
 #search::-webkit-input-placeholder { /* WebKit browsers */
@@ -406,12 +423,6 @@ div#navbar li #search
 #search:-ms-input-placeholder { /* Internet Explorer 10+ */
     color:    white;
 }
-
-textarea
-{
-	resize: none;
-}
-
 
 div#navbar li a#account
 {
@@ -640,6 +651,7 @@ div.stcont3
 	overflow: hidden;
 	background-color: #F2F2F2;
 	line-height: 40px;
+	margin-bottom: 20px;
 }
 
 div.stcont2

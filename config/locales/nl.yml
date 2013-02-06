@@ -44,7 +44,7 @@ nl:
   header_menuitem_home: "home"
   header_menuitem_sign_in: :application_general_sign_in
   header_menuitem_sign_up: :application_general_sign_up
-  header_menuitem_sign_out: "Uitloggen"
+  header_menuitem_sign_out: "uitloggen"
   header_menuitem_users: "gebruikers"
   header_menuitem_account: "lidmaatschap"
   header_menuitem_profile: "profiel"
@@ -52,6 +52,7 @@ nl:
   header_menuitem_settings: "instellingen"
   header_menuitem_statements: "stellingen"
   header_menuitem_arguments: "argumenten"
+  header_menuitem_activity: "activiteit"
 #Footer
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
@@ -99,7 +100,7 @@ nl:
   users_oauth_new: "account toevoegen"
   users_oauth_login: "inloggen met"
   users_oauth_remove: "account ontkoppelen"
-  users_oauth_remove_confirmation: "PAS OP! Het ontkoppelen van dit account zorgt ervoor dat je niet meer kunt inloggen, aangezien je nog geen gebruikersnaam + wachtwoord op argu hebt gekozen om mee in te loggen. Weet je zeker dat je je account wil verwijderen?"
+  users_oauth_remove_confirmation: "PAS OP! Het ontkoppelen van dit account zorgt ervoor dat je niet meer kunt inloggen, aangezien je nog geen gebruikersnaam + wachtwoord op argu hebt gemaakt. Weet je zeker dat je dit account wilt verwijderen?"
   #index
   users_title: "gebruikers"
   users_header: "gebruikers"
