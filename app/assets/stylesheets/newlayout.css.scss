@@ -86,7 +86,6 @@ h1
 	font-weight: normal;
 	padding-bottom: 2px;
 	margin-bottom: 3px;
-	margin-top: 20px;
 }
 
 h2
@@ -411,17 +410,23 @@ div#navbar li textarea:hover, div#navbar li input:hover{
     -webkit-appearance: none;      // hide the default "X" button  
 }
 
+#search {
+    -moz-appearance:    textfield;
+    -webkit-appearance: textfield;
+    appearance: textfield;
+}
+
 #search::-webkit-input-placeholder { /* WebKit browsers */
-    color:    white;
+    color:    white !important;
 }
 #search:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color:    white;
+    color:    white !important;
 }
 #search::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color:    white;
+    color:    white !important;
 }
 #search:-ms-input-placeholder { /* Internet Explorer 10+ */
-    color:    white;
+    color:    white !important;
 }
 
 div#navbar li a#account
@@ -733,6 +738,11 @@ h2.tegen
 	padding-bottom: 4px;
 }
 
+.top
+{
+	margin-top: 20px;
+}
+
 p.vote 
 {
 	display: inline;
@@ -877,7 +887,7 @@ display: none;
 	background-color: white;
 	font-family: verdana, sans-serif;
 	padding: 5px;
-	margin-bottom: 20px;
+	margin-top: 20px;
 }
 
 .alert-Notice
@@ -1243,13 +1253,12 @@ div.pageconf li a
 
 .settingform
 {
-	color:#468783;
+	color: #468783;
 	font-family: Verdana, sans-serif;
 	font-size:16px;
 	width: 400px;
 	background: white;
-	border-style: solid;
-	border-width: 1px;
+	border: solid 1px #468783;
 	height: auto;	
 	padding: 5px;
 }
