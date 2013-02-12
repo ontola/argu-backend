@@ -1,5 +1,5 @@
 <div class="box preview">
-	<%= link_to statement.title, Statement.find_by_title(statement.title), class: "title" %>
+	<%= link_to statement.title, statement_path(statement), class: "title" %>
 	<p><%= statement.content %></p>
 	<ul class="buttons">
 			<li>
@@ -8,7 +8,7 @@
 					</p>
 				</div>
 			</li>
-			<li><%= link_to t("delete"), "/" %></li>
+			<li><%= link_to t("destroy"), statement_path(statement), method: :delete, confirm: t("destroy_confirmation") %></li>
 		</ul>
 		<div style='clear:both;'></div>
 </div>
