@@ -193,11 +193,11 @@ label.vertical
 
 .argtypebox
 {
-	height: 30px;
-	border-bottom: solid 1px #468783;	
+	height: 34px;
+	border-bottom: solid 1px #468783;
 	h2
 	{
-		line-height: 25px;
+		line-height: 34px;
 	}
 }
 
@@ -392,7 +392,14 @@ div#navbar li #search
 	color: white;
 	float: right;
 	border: none;
+
 }
+
+#search-moz-placeholder 
+{ 
+	color: white; 
+}
+
 
 div#navbar li textarea:focus, div#navbar li input:focus{
 	background-color: #529E99 !important;
@@ -480,7 +487,7 @@ a.commentusername
 	border-color: #468783;
 	width:100%;
 	height: 45px;
-	overflow: hidden;
+	overflow: hidden;	
 }
 
 .buttons li
@@ -512,16 +519,6 @@ ul.buttons
 		float: left;
 		color: grey;
 	}
-}
-
-.introcommentbox
-{
-	border-style:solid;
-	border-width:1px;
-	border-color:#468783;
-	background-color: #FFFFFF;
-	padding: 5px;
-	padding-bottom: 2px;
 }
 
 .comments
@@ -577,34 +574,19 @@ p.ccomment
 	}
 }
 
-.introbox
+.comment_form
 {
 	display: block;
-	background-color: white;
-	border-style:solid;
-	border-width:1px;
-	border-color:#468783;
-	h1{
-		margin-top: 10px;
+	textarea{
+		width: 80%;
+	}
+	input.btn{
+		position: relative;
+		top: -10px
 	}
 }
 
-.introbox:hover .buttons a
-{
-	display: inline;
-}
-
-.introcommentbox:hover .buttons a
-{
-	display: inline;
-}
-
 .box:hover .buttons a
-{
-	display: inline;
-}
-
-.commentbox:hover .buttons a
 {
 	display: inline;
 }
@@ -650,12 +632,12 @@ p.ccomment
 /*Dit is de opmaak van een deelonderwerptitel (meestal is dit "argumenten")*/
 div.stcont3
 {
-	clear: left;
-	/*float: left;*/
+	/*clear: left;
+	float: left;
 	width: 100%;
 	overflow: hidden;
 	background-color: #F2F2F2;
-	line-height: 40px;
+	line-height: 40px;*/
 	margin-bottom: 20px;
 }
 

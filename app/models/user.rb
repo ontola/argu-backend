@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   has_and_belongs_to_many :roles
   has_one :profile, dependent: :destroy
 
+  accepts_nested_attributes_for :profile
+
   acts_as_voter
 
   # Include default devise modules. Others available are:
