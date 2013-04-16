@@ -21,9 +21,12 @@ class Ability
         cannot :manage, User do |u|
           user != u
         end
-        can :read, :all                                         #Not sure yet
+        can :read, :all                                         #read by default, should be changed later
         can :create, [Statement, Argument, Comment]
-        can [:revisions, :allrevisions], Statement              #View revisions
+        can :update, [Statement, Argument] do |item|
+          user == item.creator
+        end
+        can [:revisions, :allrevisions], [Statement, Argument]              #View revisions
         can :placeComment, [Statement, Argument, Comment]
         cannot :delete, [Statement, Argument ]                  #No touching!
         cannot [:update, :delete], [Version]                    #I said, no touching!

@@ -5,13 +5,11 @@
 		<ul class="buttons">
 			<li>
 				<div class="commentinfo">
-					<%= content_tag(:p, t("arguments.show.created_by", user: argumentCreatorUsername(@argument), date: l(@argument.created_at, format: :long))) %>
+					<%= content_tag(:p, t("arguments.show.created_by", user: @argument.creator.username, date: l(@argument.created_at, format: :long))) %>
 				</div>
 			</li>			
-			<li>	<%= link_to(t("edit"), edit_argument_path(@argument)) %>
-			</li>
-			<li>	<%= link_to(t("history"), revisions_argument_path(@argument)) %>
-			</li>
+			<li><%= link_to(t("edit"), edit_argument_path(@argument)) %></li>
+			<li><%= link_to(t("history"), revisions_argument_path(@argument)) %></li>
 		</ul>
 		<div style='clear:both;'></div>
 	</div>

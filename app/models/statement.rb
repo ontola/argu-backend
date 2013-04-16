@@ -28,22 +28,30 @@ class Statement < ActiveRecord::Base
     end
   end
 
-  def trim_data
-    self.title = title.strip
-    self.content = content.strip
-  end
+# Custom methods
 
   def cap_title 
     self.title = self.title.capitalize
+  end
+
+  def con_count
+    self.arguments.count(:conditions => ["pro = false"])
+  end
+
+  def creator
+    User.find_by_id self.versions.first.whodunnit
   end
 
   def pro_count
     self.arguments.count(:conditions => ["pro = true"])
   end
 
-  def con_count
-    self.arguments.count(:conditions => ["pro = false"])
+  def trim_data
+    self.title = title.strip
+    self.content = content.strip
   end
+
+# Scopes
 
   scope :today, lambda { 
     {
