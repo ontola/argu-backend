@@ -28,7 +28,7 @@ class VotesController < ApplicationController
   # POST /votes
   # POST /votes.json
   def create
-    @argument = Argument.find_by_id(params[:id])
+    @argument = Argument.find_by_id(params[:argument_id])
 
     respond_to do |format|
       if current_user.vote_for(@argument)
@@ -46,7 +46,7 @@ class VotesController < ApplicationController
   # DELETE /votes/1
   # DELETE /votes/1.json
   def destroy
-    @argument = Argument.find_by_id(params[:id])
+    @argument = Argument.find_by_id(params[:argument_id])
     current_user.unvote_for(@argument)
 
     respond_to do |format|
