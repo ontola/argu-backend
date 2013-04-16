@@ -42,6 +42,10 @@ class Statement < ActiveRecord::Base
     User.find_by_id self.versions.first.whodunnit
   end
 
+  def is_moderator?(user)
+    self.moderators.include?(user.id)
+  end
+
   def pro_count
     self.arguments.count(:conditions => ["pro = true"])
   end

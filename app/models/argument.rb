@@ -34,6 +34,10 @@ class Argument < ActiveRecord::Base
     User.find_by_id self.versions.first.whodunnit
   end
 
+  def is_moderator?(user)
+    self.statement.is_moderator?(user)
+  end
+
   def trim_data
     self.title = title.strip
     self.content = content.strip

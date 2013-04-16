@@ -1,7 +1,8 @@
 class Role < ActiveRecord::Base
-has_and_belongs_to_many :users
-attr_accessible :name
-before_create :correctName
+	has_many :roles_users, dependent: :destroy
+	has_many :roles, through: :roles_users
+	attr_accessible :name
+	before_create :correctName
 
 private
 	def correctName

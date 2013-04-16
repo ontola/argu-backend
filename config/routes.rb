@@ -7,22 +7,27 @@ Argu::Application.routes.draw do
 
 
   #resources :users
-  resources :statements
-  get "/statements/:id/revisions" => "statements#allrevisions", as: 'revisions_statement', constraints: lambda { |r| r.env["warden"].authenticate? }
-  get "/statements/:id/revisions/:rev" => "statements#revisions", as: 'rev_revisions_statement', constraints: lambda { |r| r.env["warden"].authenticate? }
-  put "/statements/:id/revisions/:rev" => "statements#setrevision", as: 'update_revision_statement', constraints: lambda { |r| r.env["warden"].authenticate? }
+  resources :statements do
+    get "revisions" => "statements#allrevisions", as: 'revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
+    get "revisions/:rev" => "statements#revisions", as: 'rev_revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
+    put "revisions/:rev" => "statements#setrevision", as: 'update_revision', constraints: lambda { |r| r.env["warden"].authenticate? }
+  end
 
-  resources :arguments, constraints: lambda { |r| r.env["warden"].authenticate? }
-  post "/arguments/:id/placeComment" => "arguments#placeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
-  get "/arguments/:id/revisions" => "arguments#allrevisions", as: 'revisions_argument', constraints: lambda { |r| r.env["warden"].authenticate? }
-  get "/arguments/:id/revisions/:rev" => "arguments#revisions", as: 'rev_revisions_argument', constraints: lambda { |r| r.env["warden"].authenticate? }
-  put "/arguments/:id/revisions/:rev" => "arguments#setrevision", as: 'update_revision_argument', constraints: lambda { |r| r.env["warden"].authenticate? }
+  resources :arguments, constraints: lambda { |r| r.env["warden"].authenticate? } do
+    post "comment" => "arguments#placeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
+    delete "comment/:id" => "arguments#wipeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
+    
+    get "revisions" => "arguments#allrevisions", as: 'revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
+    get "revisions/:rev" => "arguments#revisions", as: 'rev_revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
+    put "revisions/:rev" => "arguments#setrevision", as: 'update_revision', constraints: lambda { |r| r.env["warden"].authenticate? }
+    
+    match "upvote" => "votes#create", as: 'create_vote', constraints: lambda { |r| r.env["warden"].authenticate? }
+    match "unvote" => "votes#destroy", as: 'destroy_vote', constraints: lambda { |r| r.env["warden"].authenticate? }
+  end
   
   #resources :sessions #, only: [:new, :create, :destroy]
   resources :profiles, constraints: lambda { |r| r.env["warden"].authenticate? }
   resources :votes, constraints: lambda { |r| r.env["warden"].authenticate? }
-  match "/arguments/:id/upvote" => "votes#create", as: 'argument_create_vote', constraints: lambda { |r| r.env["warden"].authenticate? }
-  match "/arguments/:id/unvote" => "votes#destroy", as: 'argument_destroy_vote', constraints: lambda { |r| r.env["warden"].authenticate? }
   resources :comments, constraints: lambda { |r| r.env["warden"].authenticate? }
 
   get "/search/" => "search#show", as: 'search', constraints: lambda { |r| r.env["warden"].authenticate? }

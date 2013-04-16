@@ -117,6 +117,8 @@ class StatementsController < ApplicationController
   # POST /statements
   # POST /statements.json
   def create
+    @statement.moderators << current_user.id
+
     respond_to do |format|
       if @statement.save
         format.html { redirect_to @statement, notice: 'Statement was successfully created.' }

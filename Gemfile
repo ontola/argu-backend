@@ -27,6 +27,9 @@ gem 'capistrano'
 gem 'kaminari'
 gem "sunspot_with_kaminari", '~> 0.2.0'
 
+##### Gems already in Rails 4
+gem 'postgres_ext' # When migrating to 4, don't forget to remove this and require 'postgres_ext' in application.rb
+#####
 
 # Gems used only for assets and not required
 # in production environments by default.

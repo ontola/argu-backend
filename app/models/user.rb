@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
-  has_and_belongs_to_many :roles
+  has_many :roles_users, dependent: :destroy
+  has_many :roles, through: :roles_users
   has_one :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile

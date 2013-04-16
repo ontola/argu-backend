@@ -42,7 +42,7 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1/revisions.json
   def allrevisions
     authorize! :index, :revisions
-    @argument = Argument.find(params[:id])
+    @argument = Argument.find(params[:argument_id])
     @revisions = @argument.versions.scoped.reject{ |v| v.object.nil? }.reverse
 
     respond_to do |format|
@@ -136,13 +136,19 @@ class ArgumentsController < ApplicationController
     end
   end
 
+  # POST /arguments/1/comments
   def placeComment 
-    argument = Argument.find(params[:id])
+    argument = Argument.find(params[:argument_id])
     @comment = params[:comment]
     @comment = Comment.build_from(argument, @current_user.id, @comment )
     @comment.save!
     @comment.move_to_child_of(Comment.find_by_id(params[:parent_id])) unless params[:parent_id].blank?
     redirect_to argument_path(argument)
+  end
+
+  # DELETE /arguments/1/comments/1
+  def wipeComment
+    
   end
 
 end
