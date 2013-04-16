@@ -1,6 +1,15 @@
 <div class="centerbox">
 	<h2 class="top"><%= t("arguments.comments.title") %></h1>
 </div>
+<form action="" class="sort">
+<span class="grey">Sorteer</span>
+<select name="cars">
+<option value="volvo">Hoogst beoordeeld</option>
+<option value="saab">Nieuwst</option>
+<option value="fiat">Geel</option>
+<option value="audi">Audi</option>
+</select>
+</form>
 <div class="comments">
 	<% @comments.each do |c| %>
 		<%= render partial: 'buildcomment', locals: { c: c, depth: 1 } %>

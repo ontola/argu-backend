@@ -141,7 +141,22 @@ class ArgumentsController < ApplicationController
     @comment = params[:comment]
     @comment = Comment.build_from(argument, @current_user.id, @comment )
     @comment.save!
-    @comment.move_to_child_of(Comment.find_by_id(params[:parent_id])) unless params[:parent_id].blank?
+    
+    unless params[:parent_id].blank?
+      parent = Comment.find_by_id(params[:parent_id])
+      org_parent = parent
+      for i in 0..10 do
+        if (parent = parent.parent).parent.blank?  # Stack isn't too deep, so allow
+          break
+        end
+      end
+      if i < 10
+        @comment.move_to_child_of(org_parent)
+      else
+        @comment.move_to_child_of(org_parent.parent)
+      end
+    end
+
     redirect_to argument_path(argument)
   end
 

@@ -5,7 +5,11 @@
 		<p><%= argument.content %></p>
 		<%= render partial: "votes/shr", locals: {argument: argument} %>
 		<% if (!@comment.nil?)%>
-			<%= link_to ( argument_path(argument)+"#commentstitle" ) do %><p class=<%= (pro ? "pcomment" : "ccomment") %>><%= @comment.body %></p>
+			<%= link_to ( argument_path(argument)+"#commentstitle" ) do %>
+				<p class=<%= (pro ? "pcomment" : "ccomment") %>>
+					# reacties: </br>
+					"<%= @comment.body %>"
+				</p>
 			<% end %>
 		<% end %>
 	</div>

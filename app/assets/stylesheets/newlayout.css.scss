@@ -4,6 +4,16 @@ body
 	background-color: #F2F2F2;
 }
 
+span
+{
+	text-align:justify;
+	color:black;
+	font-family: Verdana,arial,sans-serif;
+	font-size:13px;
+	margin:0px;
+	padding: 0px;
+}
+
 .color
 {
 	color: #468783;
@@ -151,6 +161,13 @@ label.vertical
 	background-color: white;
 	border:solid 1px #468783;
 	margin-top: 20px;
+}
+
+.sort
+{
+	float: right;
+	position: relative;
+	top: -20px;
 }
 
 .argument
@@ -577,11 +594,14 @@ p.ccomment
 {
 	display: block;
 	textarea{
-		width: 80%;
+		width: 90%;
+		margin-left: 5px;
+		margin-bottom: 5px;
 	}
 	input.btn{
 		position: relative;
-		top: -10px
+		top: -25px;
+		float: right;
 	}
 }
 
@@ -638,7 +658,7 @@ div.stcont3
 	background-color: #F2F2F2;
 	line-height: 40px;*/
 	clear: both;
-	margin-bottom: 20px;
+	margin-bottom: 30px;
 	margin-top: 30px;
 }
 
@@ -719,6 +739,12 @@ h2.tegen
 	font-weight:bold;
 	padding: 7px;
 	padding-bottom: 4px;
+}
+
+.lefttitle
+{
+	padding: 0px;
+	text-align: left;
 }
 
 .top
