@@ -18,9 +18,7 @@
   <div id="fb-root"></div>
   <div class="container">
     <% flash.each do |key,value| %>
-        <div class="alert alert-block alert-<%= key.capitalize %>" data-dismiss="alert"><%= value.capitalize %>
-          <a class="close"><i class="icon ok" alt="x" >x</i></a>
-        </div>
+        <div class="alert alert-block alert-<%= key.capitalize %>" data-dismiss="alert"><%= value.capitalize %></div>
     <% end %>
     <%= yield %>
     <div class="push"></div>
