@@ -6,7 +6,7 @@ class ChangeRolesToMask < ActiveRecord::Migration
   	drop_table :roles
   	drop_table :roles_users
 
-  	User.where('id = *').find_in_batches do |group|
+  	User.where('id > 0').find_in_batches do |group|
   		sleep(50)
   		group.each { |u| u.roles = ["user"] }
   	end
