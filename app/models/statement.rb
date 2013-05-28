@@ -9,7 +9,7 @@ class Statement < ActiveRecord::Base
 
   has_paper_trail
 
-  attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count
+  attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators
  
   validates :content, presence: true, length: { minimum: 5, maximum: 140 }
   validates :title, presence: true, length: { minimum: 5, maximum: 50 }
@@ -43,7 +43,19 @@ class Statement < ActiveRecord::Base
   end
 
   def is_moderator?(user)
-    self.moderators.include?(user.id)
+    self.mods.include?(user.id)
+  end
+
+  def mods
+    if self.moderators != nil
+      return self.moderators.split(',').map { |s| s.to_i }
+    else 
+      return []
+    end
+  end
+
+  def add_mod(user)
+    self.mods << user.id unless self.mods.include? user.id
   end
 
   def pro_count

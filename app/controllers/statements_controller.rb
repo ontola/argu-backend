@@ -117,7 +117,7 @@ class StatementsController < ApplicationController
   # POST /statements
   # POST /statements.json
   def create
-    @statement.moderators << current_user.id
+    @statement.add_mod current_user
 
     respond_to do |format|
       if @statement.save
