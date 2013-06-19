@@ -144,9 +144,9 @@ label
 	font-size: 20px;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
 	font-weight: 200;
-	line-height: 30px;
 	color:#5b5b5b;
-	width: 280px;
+	width: 250px;
+	margin-top: 4px;
 }
 
 label.vertical
@@ -162,7 +162,7 @@ label.vertical
 	background-color: white;
 	border-bottom:solid 2px #E2E2E2;
 	margin: auto;
-	margin-top: 20px;
+	margin-bottom: 20px;
 	border-radius: 3px;
 	max-width: 600px;
 	p{
@@ -243,6 +243,7 @@ label.vertical
 .argtypebox
 {
 	height: 34px;
+	margin-bottom: 20px;
 	h2
 	{
 		line-height: 34px;
@@ -357,6 +358,7 @@ div#navbar
 	background-color:white;
 	float: left;
 	border-bottom: solid 2px #E2E2E2;
+	margin-bottom: 20px;
 }
 
 
@@ -578,6 +580,10 @@ ul.buttons
 		margin-bottom: 8px;
 		padding-bottom: 2px;
 	}
+	.c0
+	{
+		margin-left: 0px;
+	}
 	.c1
 	{
 		margin-left:25px;
@@ -783,7 +789,6 @@ h2.tegen
 
 .top
 {
-	margin-top: 20px;
 }
 
 p.vote 
@@ -822,7 +827,6 @@ display: none;
 
 #pnewargtitle
 {
-	border-bottom-style: none;
 }
 
 .noargs
@@ -988,10 +992,24 @@ display: none;
   margin-bottom: -4px;
 }
 
+#error_explanation{
+	background-color: white;
+	border: solid 1px #5b5b5b;
+	font-family: verdana, sans-serif;
+	font-size: 13px;
+	color: #5b5b5b;
+	padding: 10px;
+	margin-bottom: 20px;
+	h2{
+		text-align: left;
+		margin-bottom: 5px;
+	}
+}
 .btn
 {
 	display: inline-block;
 	border: none;
+	border-bottom: solid 2px #e2e2e2;
 	padding: 5px;
 	width: auto;
 	color: white;
@@ -1011,31 +1029,39 @@ display: none;
 {
 	color: white;
 	background-color: black;
+	padding-bottom: 5px;
+	margin-top: 2px;
+	border-bottom: none;
 }
 
 .btnm
 {
-	display: inline-block; 
+	display: inline-block;
 	background-color: white;
 	border: none;
+	border-bottom: solid 2px #e2e2e2;
 	padding: 5px;
+	padding-bottom: 7px;
 	width: auto;
 	font-family: verdana, sans-serif;
 	font-size: 14px;
-	margin-bottom: 7px;
-	margin-top: 7px;
+	margin-bottom: 20px;
 	text-align: center;
 	input
 	{
 		text-decoration: none;
 		margin-left: -1px;
-		color: white;	
+		color: white;
 	}
 }
 
 .btnm:hover
 {
 	color: black;
+	border-top: solid 2px #F2F2F2;
+	border-bottom: none;
+	padding-bottom: 5px;
+	margin-top: 2px;
 }
 
 /*info about page tabs*/
@@ -1277,7 +1303,7 @@ div.pageconf li a
 }
 
 .label-subrow{
-	margin-left: 288px;
+	margin-left: 270px;
 	width: 100%;
 }
 
@@ -1286,6 +1312,9 @@ div.pageconf li a
 	float: left;
 	width: 45%;
 	display: none;
+	color: #5b5b5b;
+	margin-left: 10px;
+	text-align: left;
 }
 
 .label-row:hover .helpertext
@@ -1298,7 +1327,7 @@ div.pageconf li a
 	color: #5b5b5b;
 	font-family: Verdana, sans-serif;
 	font-size:16px;
-	width: 400px;
+	width: 350px;
 	background: white;
 	border: solid 1px #5b5b5b;
 	height: auto;	
