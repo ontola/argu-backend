@@ -1,7 +1,7 @@
 <div class="argcontainer1">
 	<div class="argcontainer2">
 		<div class="prosbox">
-			<div class="argtypebox">
+			<div class="argtypebox pro">
 				<h2><%= t("arguments.pro") %></h2>
 			</div>
 			<% unless @pro.nil? %>
@@ -10,16 +10,15 @@
 				<% end %>
 			<% else %>
 				<pre><%= t(:statement_no_pros) %></pre>
-			<% end %>		
-			<div class="centerbox">
+			<% end %>
+			<div class="centerbox pro">
 				<%= link_to t("arguments.new.create", side: t("arguments.pro")), new_argument_path(pro: true, statement_id: @statement.id), class: "btnm", id: "pnewargtitle" %>
 			</div>
 		</div>
 		<div class="consbox">
-			<div class="argtypebox">
+			<div class="argtypebox con">
 				<h2><%= t("arguments.con") %></h2>
 			</div>
-			<div class="verticalborder">			
 				<% unless @con.nil? %>
 					<% @con.each do |argument| %>
 						<%= render 'arguments/sarguments', argument: argument, pro: false %>
@@ -27,8 +26,7 @@
 				<% else %>
 					<pre><%= t(:statement_no_cons) %></pre>
 				<% end %>
-			</div>
-			<div class="centerbox">
+			<div class="centerbox con">
 				<%= link_to t("arguments.new.create", side: t("arguments.con")), new_argument_path(pro: false, statement_id: @statement.id), class: "btnm", id: "cnewargtitle" %>
 			</div>
 		</div>

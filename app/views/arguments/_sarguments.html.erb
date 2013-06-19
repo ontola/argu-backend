@@ -1,5 +1,5 @@
 <% @comment = getBestComment(argument) %>
-<div class="<%= (pro ? "argument pro" : "argument con") %>">
+<div class="<%= (pro ? "box pro" : "box con") %>">
 	<%= link_to argument.title, argument_path(argument), class: (pro ? "title" : "title") %>
 	<div id="expand_nope">
 		<p><%= argument.content %></p>

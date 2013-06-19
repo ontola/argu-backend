@@ -16,7 +16,7 @@ span
 
 .color
 {
-	color: #468783;
+	color: #5b5b5b;
 }
 
 table td
@@ -29,7 +29,7 @@ table td
 	font-size:13px;
 	text-align: left;
 	background-color: white;
-	border: solid 1px #468783;
+	border: solid 1px #5b5b5b;
 	border-top: none;
 }
 
@@ -53,12 +53,13 @@ div.clear
 .container
 {
 	width: 90%;
+	max-width: 900px;
 	margin:0px auto;
 }
 
 hr.stripe
 {
-	border-color: #468783;
+	border-color: #5b5b5b;
 	border-style: none;
 	border-top-style: solid;
 }
@@ -90,10 +91,10 @@ small
 h1
 {
 	text-align:center;
-	color:#468783;
+	color:#5b5b5b;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
 	font-size: 26px;
-	font-weight: normal;
+	font-weight: 200;
 	padding-bottom: 2px;
 	margin-bottom: 3px;
 }
@@ -101,17 +102,17 @@ h1
 h2
 {
 	text-align:center;
-	color:#468783;
+	color:#5b5b5b;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
 	font-size: 23px;
-	font-weight:normal;
+	font-weight: 200;
 	clear: both;
 }
 
 h3
 {
 	text-align:justify;
-	color:#468783;
+	color:#5b5b5b;
 	font-family: Verdana, arial, sans-serif;
 	font-size:16px;
 	margin: 0px;
@@ -125,7 +126,7 @@ h3
 a /*link*/
 {
 	text-decoration: none;
-	color: #468783;
+	color: #5b5b5b;
 	border-style: none;
 	font-family: verdana, sans-serif;
 	font-size: 12px;
@@ -142,8 +143,9 @@ label
 	text-align: right;
 	font-size: 20px;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
+	font-weight: 200;
 	line-height: 30px;
-	color:#468783;
+	color:#5b5b5b;
 	width: 280px;
 }
 
@@ -157,10 +159,16 @@ label.vertical
 .box
 {
 	display: block;
-	padding: 5px;
 	background-color: white;
-	border:solid 1px #468783;
+	border-bottom:solid 2px #E2E2E2;
+	margin: auto;
 	margin-top: 20px;
+	border-radius: 3px;
+	max-width: 600px;
+	p{
+		padding-left: 11px;
+		padding-right: 11px;
+	}
 }
 
 .sort
@@ -170,31 +178,55 @@ label.vertical
 	top: -20px;
 }
 
+.statement
+{
+	.title
+	{
+		color: #4C88A8;
+	}
+}
+
 .argument
 {
 	background-color: white;
 	overflow:hidden;
 	border-style: none;
 	padding: 5px;
-	border-bottom: solid 1px #468783;
+	border-bottom: solid 1px #5b5b5b;
 }
 
 .pro
 {
-	border-right: solid 1px #468783;
-	border-left: solid 1px #468783;	/*background-color:  #f3fafa;*/
+	margin-right: 30px;
+	.title
+	{
+		color: #76966e;
+	}
+	h2
+	{
+		color: white;
+		background-color: #76966e;
+	}
 }
 
 .con
 {
 	/*	background-color: #faf4f3;*/
-	overflow:hidden; 
-	border-right: solid 1px #468783;
+	overflow:hidden;
+	margin-left: 30px;
+	.title
+	{
+		color: #AA6D6D;
+	}
+	h2
+	{
+		color: white;
+		background-color: #AA6D6D;
+	}
 }
 
 .argcontainer1
 {
-	float: left;
 	width: 100%;
 	overflow: hidden;
 	clear: left;
@@ -211,7 +243,6 @@ label.vertical
 .argtypebox
 {
 	height: 34px;
-	border-bottom: solid 1px #468783;
 	h2
 	{
 		line-height: 34px;
@@ -236,25 +267,22 @@ textarea
 	{
 		font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
 		font-size: 26px;
-		padding: 5px;
-		padding-top: 3px;
-		border: solid 1px #F2F2F2;		
+		font-weight: 200;
+		padding: 0px;
+		margin-right: 8px;
+		margin-left: 8px;
 	}
 	a:hover
 	{
-
+		border-bottom: solid 5px #E2E2E2;
 	}
 
 	a.current
 	{
-		border: solid 1px #468783;	
-		background-color: white;
-		padding-left: 10px;
-		padding-right: 10px;
+		border-bottom: solid 5px #E2E2E2;
 	}
 	a.current:hover
 	{
-		color: #468783;
 	}
 }
 
@@ -264,9 +292,8 @@ textarea
 	width: 50%;
 	position: relative;
 	left: 50%;
-	overflow: hidden;	
-}		
-
+	overflow: hidden;
+}
 .consbox
 {
 	float: left;
@@ -275,11 +302,11 @@ textarea
 	left: 50%;
 	overflow: hidden;
 	margin-left: -1px;
-}		
+}
 
 .verticalborder
 {
-	border-left: solid 1px #468783;	
+	border-left: solid 1px #5b5b5b;	
 }
 
 .centerbox
@@ -327,8 +354,9 @@ div.dropdown
 div#navbar
 {
 	width: 100%;
-	background-color:#468783;
+	background-color:white;
 	float: left;
+	border-bottom: solid 2px #E2E2E2;
 }
 
 
@@ -337,6 +365,7 @@ div#navbar #mainbar
 	margin:0px auto;
 	padding: 0px;
 	width: 90%;
+	max-width: 900px;
 		&:hover ul .dropdown { display: block; }
 }
 
@@ -367,8 +396,8 @@ div#navbar li a
 {
 	display: block;
 	font-family: Raleway, Century Gothic, sans-serif;
-	font-size: 22px;
-	color: white;
+	font-size: 16px;
+	font-weight: 200;
 	line-height: 39px;
 	padding: 3px;
 	padding-left: 10px;
@@ -383,6 +412,10 @@ div#navbar li #argulogo
 	border-right: solid 1px white;
 }
 
+div#navbar li #argulogo:hover
+{
+}
+
 div#navbar .close
 {
 	border-right: solid 1px white;
@@ -390,22 +423,23 @@ div#navbar .close
 
 div#navbar li:hover
 {
-	background-color: #529E99;
+	background-color: #E2E2E2;
 }
 
 div#navbar li #search
 {
 	-webkit-appearance: none;
 	box-sizing: content-box;
-	background-color: #468783;
+	background-color: white;
 	height: 35px;
-	width: 80px;
+	width: 60px;
 	padding: 5px;
 	padding-left: 10px;
 	font-family: Raleway, Century Gothic, sans-serif;
-	font-size: 22px;
+	font-size: 16px;
+	font-weight: 200;
 	line-height: 39px;
-	color: white;
+	color: #5b5b5b;
 	float: right;
 	border: none;
 
@@ -413,20 +447,20 @@ div#navbar li #search
 
 #search-moz-placeholder 
 { 
-	color: white; 
+	color: #5b5b5b; 
 }
 
 
 div#navbar li textarea:focus, div#navbar li input:focus{
-	background-color: #529E99 !important;
+	background-color: #E2E2E2 !important;
 	border-style: none !important;
-	width: 350px !important;
-	font-size: 18px !important;
+	width: 300px !important;
+	font-size: 16px !important;
 	webkit-appearance: none !important;
 }
 
 div#navbar li textarea:hover, div#navbar li input:hover{
-	background-color: #529E99 !important;
+	background-color: #E2E2E2 !important;
 }
 
 ::-webkit-search-cancel-button {   // select all "X" buttons in search inputs  
@@ -440,16 +474,16 @@ div#navbar li textarea:hover, div#navbar li input:hover{
 }
 
 #search::-webkit-input-placeholder { /* WebKit browsers */
-    color:    white !important;
+    color:    #5b5b5b !important;
 }
 #search:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color:    white !important;
+    color:    #5b5b5b !important;
 }
 #search::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color:    white !important;
+    color:    #5b5b5b !important;
 }
 #search:-ms-input-placeholder { /* Internet Explorer 10+ */
-    color:    white !important;
+    color:    #5b5b5b !important;
 }
 
 div#navbar li a#account
@@ -482,13 +516,13 @@ div#nothingbar
 /*Dit is de opmaak van een comment*/
 a.commentusername
 	{
-		color: #468783;
+		color: #5b5b5b;
 		position: relative;
 		float: left;
 		top: 0px;
 		border-style: none;
 		padding: 3px;
-		border-color:#468783;
+		border-color:#5b5b5b;
 		font-family: Verdana,arial,sans-serif;
 		font-size: 12px;
 		padding-left: 5px;
@@ -500,7 +534,7 @@ a.commentusername
 	display: block;
 	background-color: #F2F2F2;
 	border-width: 1px;
-	border-color: #468783;
+	border-color: #5b5b5b;
 	width:100%;
 	height: 45px;
 	overflow: hidden;	
@@ -567,7 +601,7 @@ p.pcomment
 	border-top-style:dotted;
 	font-style: italic;
 	border-width:1px;
-	border-color:#468783;
+	border-color:#5b5b5b;
 	padding: 7px;
 	clear: both;
 	color: grey;
@@ -581,7 +615,7 @@ p.ccomment
 	border-top-style:dotted;
 	font-style: italic;
 	border-width:1px;
-	border-color:#468783;
+	border-color:#5b5b5b;
 	padding: 7px;
 	clear: both;
 	color: grey;
@@ -659,7 +693,7 @@ div.stcont3
 	line-height: 40px;*/
 	clear: both;
 	margin-bottom: 30px;
-	margin-top: 30px;
+	margin-top: 22px;
 }
 
 div.stcont2
@@ -755,32 +789,30 @@ h2.tegen
 p.vote 
 {
 	display: inline;
-	color: #468783;
+	color: #5b5b5b;
 	font-family: verdana, sans-serif;
 	font-size: 13px;
+	font-weight: bold;
 	float: right;
 	line-height: 20px;
-	padding: 0px;
-	padding-right: 3px;
 }
+
 p.vote:hover
 {
-	display: none;
 }
 
 .votebtn
 {
 	a
 	{
-	padding: 3px;
-	padding-top: 3px;
 	font-weight: bold; 
 	color: white;
-	background-color: #529E99;
+	background-color: #4C88A8;
+	margin-right: 5px;
 	}
 	a:hover
 	{
-		background-color: #468783;
+		background-color: #5b5b5b;
 	}
 }
 
@@ -802,7 +834,7 @@ display: none;
 .control-group
 {
 	border-style: none;
-	color: #468783;
+	color: #5b5b5b;
 }
 
 .form-actions
@@ -823,7 +855,7 @@ display: none;
 .revbar
 {
 	display: block;
-	background-color: #468783;
+	background-color: #5b5b5b;
 	width:100%;
 	height: 45px;
 	overflow: hidden;
@@ -867,7 +899,7 @@ display: none;
 	text-align: center;
 	border: 1px;
 	border-style: none;
-	border-color: #468783;
+	border-color: #5b5b5b;
 	background-color: white;
 	padding-bottom: 5px;
 
@@ -885,14 +917,14 @@ display: none;
 {
 	tr:nth-child(even) {background: #E9F2DD}
 	tr:nth-child(odd) {background: #F0F3FC}
-	tr:nth-child(1) {background: #468783}
+	tr:nth-child(1) {background: #5b5b5b}
 }
 
 .alert
 {
 	border: 1px;
 	border-style: solid;
-	border-color: #468783;
+	border-color: #5b5b5b;
 	background-color: white;
 	font-family: verdana, sans-serif;
 	padding: 5px;
@@ -915,7 +947,7 @@ display: none;
   font-family: verdana, sans-serif;
   width: 410px;
   background-color: white;
-  border: solid 1px #468783;
+  border: solid 1px #5b5b5b;
   height: 64px;
 }
 
@@ -956,14 +988,14 @@ display: none;
   margin-bottom: -4px;
 }
 
-.btn 
-{    
-	display: inline-block; 
+.btn
+{
+	display: inline-block;
 	border: none;
 	padding: 5px;
 	width: auto;
 	color: white;
-	background-color: #529E99;
+	background-color: #5b5b5b;
 	font-family: verdana, sans-serif;
 	font-size: 14px;
 	text-align: center;
@@ -978,12 +1010,13 @@ display: none;
 .btn:hover
 {
 	color: white;
-	background-color: #468783;
+	background-color: black;
 }
 
 .btnm
 {
 	display: inline-block; 
+	background-color: white;
 	border: none;
 	padding: 5px;
 	width: auto;
@@ -1047,13 +1080,14 @@ display: none;
 	color: #385c5b;
 	letter-spacing: 1px;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
+	font-weight: 200;
 	text-align: center;
 	font-size: 28px;
 	border-left-style: solid;
 	border-left-width: 1px;
 	border-top-style: solid;
 	border-top-width: 1px;
-	border-color: #468783;
+	border-color: #5b5b5b;
 }
 
 .tabs label.tab-label-1 {
@@ -1135,7 +1169,7 @@ display: none;
 	border-left-style: solid;
 	border-right-style: solid;
 	border-width: 1px;
-	border-color: #468783;
+	border-color: #5b5b5b;
 }
 
 	.content div {
@@ -1261,12 +1295,12 @@ div.pageconf li a
 
 .settingform
 {
-	color: #468783;
+	color: #5b5b5b;
 	font-family: Verdana, sans-serif;
 	font-size:16px;
 	width: 400px;
 	background: white;
-	border: solid 1px #468783;
+	border: solid 1px #5b5b5b;
 	height: auto;	
 	padding: 5px;
 }
@@ -1275,7 +1309,7 @@ div.pageconf li a
 {
 	color: black;
 	font-size: 13px;
-	border-color: #468783;
+	border-color: #5b5b5b;
 	float: left;
 	width: 50%;
 }
@@ -1283,5 +1317,5 @@ div.pageconf li a
 
 .remember
 {
-	color: #468783;
+	color: #5b5b5b;
 }
