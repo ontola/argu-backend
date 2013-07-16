@@ -54,19 +54,14 @@ class User < ActiveRecord::Base
 #permissions
   def is?(role)
     self.role.eql? role.to_s
-    #roles.include?(role.to_s)
   end
   
   def roles=(roles)
     self.role = roles[0].to_s
-    #self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
   end
   
   def roles
     self.role
-    #ROLES.reject do |r|
-    #  ((roles_mask || 0) & 2**ROLES.index(r)).zero?
-    #end
   end
 
 #authentiaction
