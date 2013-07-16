@@ -12,7 +12,6 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui
 //= require jquery.jeditable.mini
 //= require settings
 //= require_tree .

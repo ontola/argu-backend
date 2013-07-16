@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :profile, :email, :password, :password_confirmation,
                   :remember_me, :unconfirmed_email, :provider, :uid, :login,
-                  :roles, :current_password, :roles_mask
+                  :role, :current_password
 
   USERNAME_FORMAT_REGEX = /^\d*[a-zA-Z][a-zA-Z0-9]*$/i
   NAME_FORMAT_REGEX =  /^[a-z]{1,50}/i
@@ -53,17 +53,20 @@ class User < ActiveRecord::Base
 
 #permissions
   def is?(role)
-    roles.include?(role.to_s)
+    self.role.eql? role.to_s
+    #roles.include?(role.to_s)
   end
   
   def roles=(roles)
-    self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
+    self.role = roles[0].to_s
+    #self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.inject(0, :+)
   end
   
   def roles
-    ROLES.reject do |r|
-      ((roles_mask || 0) & 2**ROLES.index(r)).zero?
-    end
+    self.role
+    #ROLES.reject do |r|
+    #  ((roles_mask || 0) & 2**ROLES.index(r)).zero?
+    #end
   end
 
 #authentiaction
