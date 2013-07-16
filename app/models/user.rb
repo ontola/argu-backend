@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable#,
          #:validatable, :omniauthable
-  ROLES = %w[coder admin moderator user banned]
+  ROLES = %w[coder admin user banned]
 
   before_create :check_for_profile
   after_create :mark_as_user
