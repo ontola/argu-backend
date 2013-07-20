@@ -3,9 +3,9 @@
 		<h1 class="title"><%= @statement.title %></h1>
 		<p><%= @statement.content %></p>
 		<ul class="buttons">
-			<li>
+			<div class="info">
 				<%= content_tag(:p, t("arguments.comments.placed_by", user: @statement.creator.username, date: l(@statement.created_at, format: :long))) %>
-			</li>
+			</div>
 			<li>	
 				<%= link_to(t("edit"), 	edit_statement_path(@statement)) %>
 			</li>

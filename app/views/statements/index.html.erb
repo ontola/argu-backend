@@ -1,6 +1,6 @@
 <% provide(:menu_class, 'statements') %>
 <h1 class="top"><%= t("statements.plural") %></h1>
-<div class="centerbox">
+<div class="centerbar">
 	<%= link_to t("statements.newstatement"), new_statement_path, class: "btnm" %>
 </div>
 <% @statements.each do |statement| %>

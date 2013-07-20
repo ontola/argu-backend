@@ -11,7 +11,7 @@
 			<% else %>
 				<pre><%= t(:statement_no_pros) %></pre>
 			<% end %>
-			<div class="centerbox pro">
+			<div class="centerbar pro">
 				<%= link_to t("arguments.new.create", side: t("arguments.pro")), new_argument_path(pro: true, statement_id: @statement.id), class: "btnm", id: "pnewargtitle" %>
 			</div>
 		</div>
@@ -26,7 +26,7 @@
 				<% else %>
 					<pre><%= t(:statement_no_cons) %></pre>
 				<% end %>
-			<div class="centerbox con">
+			<div class="centerbar con">
 				<%= link_to t("arguments.new.create", side: t("arguments.con")), new_argument_path(pro: false, statement_id: @statement.id), class: "btnm", id: "cnewargtitle" %>
 			</div>
 		</div>

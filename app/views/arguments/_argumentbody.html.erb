@@ -4,7 +4,7 @@
 		<p class="intro"><%= @argument.content %></p>
 		<ul class="buttons">
 			<li>
-				<div class="commentinfo">
+				<div class="info">
 					<%= content_tag(:p, t("arguments.show.created_by", user: @argument.creator.username, date: l(@argument.created_at, format: :long))) %>
 				</div>
 			</li>			

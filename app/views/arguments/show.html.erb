@@ -1,4 +1,6 @@
 <% provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title) %>
 <%= render 'argumentbody' %>
 <%= render 'argumentcomments' %>
-<%= render partial: 'add_comment_form', locals: { argument: @argument, parent_id: @parent_id, visible: true } %>
+<div class="box"> 
+	<%= render partial: 'add_comment_form', locals: { argument: @argument, parent_id: @parent_id, visible: true } %>
+</div>
