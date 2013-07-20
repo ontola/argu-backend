@@ -6,7 +6,7 @@
 		<%= render partial: "votes/shr", locals: {argument: argument} %>
 		<% if (!@comment.nil?)%>
 			<%= link_to ( argument_path(argument)+"#commentstitle" ) do %>
-				<p class=<%= (pro ? "pcomment" : "ccomment") %>>
+				<p class="comment">
 				<% num_comments = argument.comment_threads.size%>
 					<%= num_comments.to_s + (num_comments == 1 ? " reactie:" : " reacties:") %></br>
 					"<%= @comment.body %>"

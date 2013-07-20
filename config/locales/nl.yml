@@ -108,7 +108,7 @@ nl:
   users_edit: :application_general_edit
   users_destroy: :application_general_destroy
   users_destroy_confirmation: :application_general_destroy_confirmation
-  users_newuser: "Nieuwe gebruiker"
+  users_newuser: "nieuwe gebruiker"
   #new
   users_new_title: "aanmelden"
   users_new_header: "aanmelden"

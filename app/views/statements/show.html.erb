@@ -1,6 +1,6 @@
 <% provide(:title, @statement.title.nil? ? t(:statement_title) : @statement.title) %>
 <%= render 'statementbody' %>
-<div class="stcont3">
+<div class="navrow">
 	<ul class="navcontent">
 		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } , class: "current" , id: "arguments"  %></li>
 		<li><%= link_to t("arguments.index.opinion") , {:anchor => "opinion" } %></li>
@@ -8,7 +8,7 @@
 		<li><%= link_to t("arguments.index.law") , {:anchor => "law" } %></li>
 </div>
 <%= render 'statementarguments' %>
-<div class="stcont3">
+<div class="navrow">
 	<ul class="navcontent">
 		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } %></li>
 		<li><%= link_to t("arguments.index.opinion") , {:anchor => "opinion" }, class: "current" , id: "opinion" %></li>
@@ -16,7 +16,7 @@
 		<li><%= link_to t("arguments.index.law") , {:anchor => "law" } %></li>
 </div>
 <p> wat vinden jullie er van dan?</p>
-<div class="stcont3">
+<div class="navrow">
 	<ul class="navcontent">
 		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } %></li>
 		<li><%= link_to t("arguments.index.opinion") , {:anchor => "opinion" } %></li>
@@ -24,7 +24,7 @@
 		<li><%= link_to t("arguments.index.law") , {:anchor => "law" } %></li>
 </div>
 <%= render 'parties' %>
-<div class="stcont3">
+<div class="navrow">
 	<ul class="navcontent">
 		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } %></li>
 		<li><%= link_to t("arguments.index.opinion") , {:anchor => "opinion" } %></li>
