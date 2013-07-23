@@ -1,9 +1,11 @@
 <div id="shr<%= argument.id %>">
 	<ul class="buttons">
 		<li>
-			<%= render partial: 'votes/votebtn', locals: { argument: argument } %></li>
-		<li>
-		<p class="vote" id="<%= argument.id %>"> <%= (argument.votes.size >= 1 ? '+' : '') + argument.votes_for.to_s %></p></li>
 		<p class="votelabel"><%= t("votes.score")%></p>
+		<p class="vote" id="<%= argument.id %>"> <%= (argument.votes.size >= 1 ? '+' : '') + argument.votes_for.to_s %></p>
+		</li>
+		<li>
+			<%= render partial: 'votes/votebtn', locals: { argument: argument } %>
+		</li>
 	</ul>
 </div>

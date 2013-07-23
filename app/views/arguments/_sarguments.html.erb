@@ -12,6 +12,10 @@
 					"<%= @comment.body %>"
 				</p>
 			<% end %>
+		<% else %>
+			<%= link_to (argument_path(argument)) do %>
+				<p class="comment"><%= t("arguments.comments.none") %></p>
+			<% end %>
 		<% end %>
 	</div>
 </div>

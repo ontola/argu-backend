@@ -9,6 +9,7 @@ nl:
     type_discussion: "in discussie"
     pro: "voor"
     con: "tegen"
+    neu: "neutraal"
     type: "type"
     index:
       title: "argumenten"
@@ -36,3 +37,4 @@ nl:
       delete: "verwijder"
       more: "toon meer"
       placed_by: "Geplaatst door %{user} op %{date}"
+      none: "geen reacties"

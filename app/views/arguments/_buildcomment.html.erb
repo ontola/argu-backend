@@ -9,6 +9,7 @@
 			</li>
 			<% if depth < 10 %>
 			<li><%= link_to t("reply"), argument_path(@argument, parent_id: c.id), html_options = { id: c.id, class: "c_reply" } %></li>
+			<li><a href="">rapporteer</a></li> <!-- TODO-->
 			<% end %>
 		</ul>
 		<div style='clear:both;'></div>

@@ -1,7 +1,18 @@
+$gre: #76966e;
+$gred: #A5BC9F;
+$red: #AA6D6D;
+$redd: #CEA7A7;
+$blu: #4C88A8;
+$g0: #F2F2F2;
+$g1: #E2E2E2;
+$g3: #808080;
+$g2: #C6C6C6;
+$g4: #5B5B5B;
+
 body
 {	
 	margin: 0px; padding: 0px;
-	background-color: #F2F2F2;
+	background-color: $g0;
 }
 
 span
@@ -16,7 +27,7 @@ span
 
 .color
 {
-	color: #5b5b5b;
+	color: $g4;
 }
 
 table td
@@ -29,7 +40,7 @@ table td
 	font-size:12px;
 	text-align: left;
 	background-color: white;
-	border: solid 1px #5b5b5b;
+	border: solid 1px $g4;
 	border-top: none;
 }
 
@@ -52,20 +63,21 @@ div.clear
 
 .container
 {
-	width: 90%;
-	max-width: 900px;
+	width: 95%;
+	max-width: 1000px;
+	min-width: 650px;
 	margin:0px auto;
 }
 
 hr.stripe
 {
-	border-color: #5b5b5b;
+	border-color: $g4;
 	border-style: none;
 	border-top-style: solid;
 }
 
 /*Dit is de opmaak van gewone text, waaronder de toelichting van een argument + beschrijving van onderwerp*/
-p
+p /*paragraph*/
 {
 	text-align:justify;
 	color:black;
@@ -87,11 +99,11 @@ small
 	line-height: 18px;
 }
 
-/*onderwerpstitel */
+/*header*/
 h1
 {
 	text-align:center;
-	color:#5b5b5b;
+	color:$g4;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
 	font-size: 26px;
 	font-weight: 200;
@@ -102,7 +114,7 @@ h1
 h2
 {
 	text-align:center;
-	color:#5b5b5b;
+	color:$g4;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
 	font-size: 23px;
 	font-weight: 200;
@@ -112,7 +124,7 @@ h2
 h3
 {
 	text-align:justify;
-	color:#5b5b5b;
+	color:$g4;
 	font-family: Verdana, arial, sans-serif;
 	font-size:16px;
 	margin: 0px;
@@ -126,7 +138,7 @@ h3
 a /*link*/
 {
 	text-decoration: none;
-	color: #5b5b5b;
+	color: $g4;
 	border-style: none;
 	font-family: verdana, sans-serif;
 	font-size: 12px;
@@ -145,7 +157,7 @@ label
 	font-size: 20px;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
 	font-weight: 200;
-	color:#5b5b5b;
+	color:$g4;
 	width: 250px;
 	margin-top: 4px;
 }
@@ -159,11 +171,11 @@ label.vertical
 .box
 {
 	display: block;
-	padding: 10px;
+	padding: 12px;
 	padding-bottom: 8px;
 	padding-top: 8px;
 	background-color: white;
-	border-bottom:solid 2px #E2E2E2;
+	border-bottom:solid 2px $g1;
 	margin-bottom: 20px;
 	border-radius: 3px;
 	max-width: 600px;
@@ -178,19 +190,65 @@ label.vertical
 {
 	.title
 	{
-		color: #4C88A8;
+		color: $blu;
+		font-size: 19px;
+		margin-bottom: 6px; 
+		margin-top: 6px;
 	}
 	margin-left: auto;
 	margin-right: auto;
 }
 
+.opinionbtns{
+	display: block;
+	max-width: 624px;
+	width: 100%;
+	height: 21px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	border-radius: 3px;
+	overflow: hidden;
+	a{
+		display: block;
+		float: left;
+		width: 33.3%;
+		text-align: center;
+		line-height: 21px;
+	}
+	.oppro{
+		color: white;
+		background-color: $gred;
+	}	
+	.oppro:hover{
+		color: white !important;
+		background-color: $gre;
+	}
+	.opneu{
+		color: white;
+		background-color: $g2;
+	}	
+	.opneu:hover{
+		color: white !important;
+		background-color: $g3;
+	}	
+	.opcon{
+		color: white;
+		background-color: $redd;
+	}
+	.opcon:hover{
+		color: white !important;
+		background-color: $red;
+	}
+}
 .argument
 {
 	background-color: white;
 	overflow:hidden;
 	border-style: none;
 	padding: 5px;
-	border-bottom: solid 1px #5b5b5b;
+	border-bottom: solid 1px $g4;
 }
 
 .pro
@@ -198,12 +256,12 @@ label.vertical
 	margin-right: 11px;
 	.title
 	{
-		color: #76966e;
+		color: $gre;
 	}
 	h2
 	{
 		color: white;
-		background-color: #76966e;
+		background-color: $gre;
 	}
 }
 
@@ -214,12 +272,12 @@ label.vertical
 	margin-left: 11px;
 	.title
 	{
-		color: #AA6D6D;
+		color: $red;
 	}
 	h2
 	{
 		color: white;
-		background-color: #AA6D6D;
+		background-color: $red;
 	}
 }
 
@@ -245,6 +303,7 @@ label.vertical
 	{
 		line-height: 34px;
 		height: 37px;
+		border-radius: 3px;
 	}
 }
 
@@ -257,7 +316,7 @@ select
 {
 	border: none;
 	background: transparent;
-	color:grey;
+	color:$g3;
 	font-family: Verdana,arial,sans-serif;
 	font-size:12px;
 }
@@ -282,15 +341,18 @@ select
 	}
 	a:hover
 	{
-		border-bottom: solid 5px #E2E2E2;
+		border-bottom: solid 5px $g1;
+		color: $g4 !important;
 	}
 
 	a.current
 	{
-		border-bottom: solid 5px #E2E2E2;
+		border-bottom: solid 5px $g1;
+		color: black;
 	}
 	a.current:hover
 	{
+		color: black !important;
 	}
 }
 
@@ -314,7 +376,7 @@ select
 
 .verticalborder
 {
-	border-left: solid 1px #5b5b5b;	
+	border-left: solid 1px $g4;	
 }
 
 .center
@@ -371,7 +433,7 @@ div#navbar
 	width: 100%;
 	background-color:white;
 	float: left;
-	border-bottom: solid 2px #E2E2E2;
+	border-bottom: solid 2px $g1;
 	margin-bottom: 20px;
 }
 
@@ -381,7 +443,8 @@ div#navbar #mainbar
 	margin:0px auto;
 	padding: 0px;
 	width: 90%;
-	max-width: 900px;
+	max-width: 1000px;
+	min-width: 650px;
 		&:hover ul .dropdown { display: block; }
 }
 
@@ -439,7 +502,7 @@ div#navbar .close
 
 div#navbar li:hover
 {
-	background-color: #E2E2E2;
+	background-color: $g1;
 }
 
 div#navbar li #search
@@ -455,7 +518,7 @@ div#navbar li #search
 	font-size: 16px;
 	font-weight: 200;
 	line-height: 39px;
-	color: #5b5b5b;
+	color: $g4;
 	float: right;
 	border: none;
 
@@ -463,20 +526,20 @@ div#navbar li #search
 
 #search-moz-placeholder 
 { 
-	color: #5b5b5b; 
+	color: $g4; 
 }
 
 
 div#navbar li textarea:focus, div#navbar li input:focus{
-	background-color: #E2E2E2 !important;
+	background-color: $g1 !important;
 	border-style: none !important;
-	width: 300px !important;
+	width: 200px !important;
 	font-size: 16px !important;
 	webkit-appearance: none !important;
 }
 
 div#navbar li textarea:hover, div#navbar li input:hover{
-	background-color: #E2E2E2 !important;
+	background-color: $g1 !important;
 }
 
 ::-webkit-search-cancel-button {   // select all "X" buttons in search inputs  
@@ -490,16 +553,16 @@ div#navbar li textarea:hover, div#navbar li input:hover{
 }
 
 #search::-webkit-input-placeholder { /* WebKit browsers */
-    color:    #5b5b5b !important;
+    color:    $g4 !important;
 }
 #search:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color:    #5b5b5b !important;
+    color:    $g4 !important;
 }
 #search::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color:    #5b5b5b !important;
+    color:    $g4 !important;
 }
 #search:-ms-input-placeholder { /* Internet Explorer 10+ */
-    color:    #5b5b5b !important;
+    color:    $g4 !important;
 }
 
 div#navbar li a#account
@@ -532,13 +595,13 @@ div#nothingbar
 /*Dit is de opmaak van een comment*/
 a.commentusername
 	{
-		color: #5b5b5b;
+		color: $g4;
 		position: relative;
 		float: left;
 		top: 0px;
 		border-style: none;
 		padding: 3px;
-		border-color:#5b5b5b;
+		border-color:$g4;
 		font-family: Verdana,arial,sans-serif;
 		font-size: 12px;
 		padding-left: 5px;
@@ -548,9 +611,9 @@ a.commentusername
 #commentstitle
 {
 	display: block;
-	background-color: #F2F2F2;
+	background-color: $g0;
 	border-width: 1px;
-	border-color: #5b5b5b;
+	border-color: $g4;
 	width:100%;
 	height: 45px;
 	overflow: hidden;	
@@ -566,13 +629,14 @@ ul.buttons
 {
 	display: block;
 	height: 20px;
+	margin-top: 5px;
 }
 
 .buttons
 {
 	a
 	{
-		color: grey;
+		color: $g3;
 		display: none;
 		width: auto;
 		float: right;
@@ -584,7 +648,7 @@ ul.buttons
 	p
 	{
 		float: left;
-		color: grey;
+		color: $g3;
 	}
 }
 
@@ -618,17 +682,22 @@ ul.buttons
 
 p.comment
 {
-	border-top-style:dotted;
+	border-top-style:solid;
 	border-width:1px;
-	border-color:#5b5b5b;
+	border-color: $g2;
 	clear: both;
-	color: grey;
+	color: $g3;
 	line-height: 15px;
 	padding-top: 4px;
 	font-size: 10px;
 	a{
 		color: #575757;
 	}
+}
+
+p.comment:hover
+{
+	color: black;
 }
 
 .comment_form
@@ -638,12 +707,10 @@ p.comment
 	margin-top: 3px;
 	textarea{
 		width: 100%;
-		border-color: #E2E2E2; 
+		border-color: $g1; 
 		margin-bottom: 6px;
 	}
 	input.btn{
-		position: relative;
-		margin-bottom: 4px;	
 	}
 }
 
@@ -658,7 +725,7 @@ p.comment
 }
 
 .box:hover .votebtn a{
-	color: #4C88A8;
+	color: $blu;
 }
 
 .info
@@ -666,7 +733,7 @@ p.comment
 	float: left;
 	p
 	{
-	color: grey;
+	color: $g3;
 	font-size: 10px;
 	position: relative;
 	top: 2px;
@@ -734,21 +801,21 @@ h2.tegen
 p.vote 
 {
 	display: inline;
-	color: #5b5b5b;
+	color: $g4;
 	font-family: verdana, sans-serif;
 	font-size: 13px;
 	font-weight: bold;
-	float: right;
+	float: left;
 	line-height: 20px;
 }
 
 p.votelabel
 {
 	display: inline;
-	color: grey;
+	color: $g3;
 	font-family: verdana, sans-serif;
 	font-size: 10px;
-	float: right;
+	float: left;
 	line-height: 20px;
 	margin-right: 3px;
 }
@@ -765,11 +832,12 @@ p.votelabel
 	line-height: 20px;
 	width: 20px;
 	text-align: center;
+	float: left;
 	}
 	a:hover
 	{
 		color: white !important;
-		background-color: #4C88A8;
+		background-color: $blu;
 	}
 }
 
@@ -790,7 +858,7 @@ display: none;
 .control-group
 {
 	border-style: none;
-	color: #5b5b5b;
+	color: $g4;
 }
 
 .form-actions
@@ -811,7 +879,7 @@ display: none;
 .revbar
 {
 	display: block;
-	background-color: #5b5b5b;
+	background-color: $g4;
 	width:100%;
 	height: 45px;
 	overflow: hidden;
@@ -855,7 +923,7 @@ display: none;
 	text-align: center;
 	border: 1px;
 	border-style: none;
-	border-color: #5b5b5b;
+	border-color: $g4;
 	background-color: white;
 	padding-bottom: 5px;
 
@@ -873,14 +941,14 @@ display: none;
 {
 	tr:nth-child(even) {background: #E9F2DD}
 	tr:nth-child(odd) {background: #F0F3FC}
-	tr:nth-child(1) {background: #5b5b5b}
+	tr:nth-child(1) {background: $g4}
 }
 
 .alert
 {
 	border: 1px;
 	border-style: solid;
-	border-color: #5b5b5b;
+	border-color: $g4;
 	background-color: white;
 	font-family: verdana, sans-serif;
 	padding: 5px;
@@ -903,7 +971,7 @@ display: none;
   font-family: verdana, sans-serif;
   width: 410px;
   background-color: white;
-  border: solid 1px #5b5b5b;
+  border: solid 1px $g4;
   height: 64px;
 }
 
@@ -946,10 +1014,10 @@ display: none;
 
 #error_explanation{
 	background-color: white;
-	border: solid 1px #5b5b5b;
+	border: solid 1px $g4;
 	font-family: verdana, sans-serif;
 	font-size: 12px;
-	color: #5b5b5b;
+	color: $g4;
 	padding: 10px;
 	margin-bottom: 20px;
 	h2{
@@ -965,7 +1033,7 @@ display: none;
 	padding: 5px;
 	width: auto;
 	color: white;
-	background-color: #5b5b5b;
+	background-color: $g4;
 	font-family: verdana, sans-serif;
 	font-size: 14px;
 	padding-bottom: 7px;
@@ -980,7 +1048,7 @@ display: none;
 
 .btn:hover
 {
-	border-top: solid 1px #e2e2e2;
+	border-top: solid 1px $g1;
 	color: white;
 	background-color: black;
 	padding-bottom: 6px;
@@ -993,7 +1061,7 @@ display: none;
 	display: inline-block;
 	background-color: white;
 	border: none;
-	border-bottom: solid 1px #e2e2e2;
+	border-bottom: solid 1px $g1;
 	padding: 5px;
 	padding-bottom: 7px;
 	width: auto;
@@ -1010,7 +1078,7 @@ display: none;
 
 .btnm:hover
 {
-	border-top: solid 1px #F2F2F2;
+	border-top: solid 1px $g0;
 	border-bottom: none;
 	padding-bottom: 6px;
 	margin-top: 1px;
@@ -1019,7 +1087,7 @@ display: none;
 /*Zoekresultaten*/
 
 .grey {
-	color: grey;
+	color: $g3;
 }
 
 /* Profile en settings */
@@ -1075,24 +1143,24 @@ div.pageconf li a
 {
 	float: left;
 	width: 45%;
-	color: #F2F2F2;
+	color: $g0;
 	margin-left: 10px;
 	text-align: left;
 }
 
 .label-row:hover .helpertext
 {
-	color: #5b5b5b;
+	color: $g4;
 }
 
 .settingform
 {
-	color: #5b5b5b;
+	color: $g4;
 	font-family: Verdana, sans-serif;
 	font-size:16px;
 	width: 350px;
 	background: white;
-	border: solid 1px #5b5b5b;
+	border: solid 1px $g4;
 	height: auto;	
 	padding: 5px;
 }
@@ -1101,12 +1169,12 @@ div.pageconf li a
 {
 	color: black;
 	font-size: 12px;
-	border-color: #5b5b5b;
+	border-color: $g4;
 	float: left;
 	width: 50%;
 }
 
 .remember
 {
-	color: #5b5b5b;
+	color: $g4;
 }
