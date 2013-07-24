@@ -12,7 +12,7 @@
 				<pre><%= t(:statement_no_pros) %></pre>
 			<% end %>
 			<div class="centerbar pro">
-				<%= link_to t("arguments.new.create", side: t("arguments.pro")), new_argument_path(pro: true, statement_id: @statement.id), class: "btnm", id: "pnewargtitle" %>
+				<%= link_to t("arguments.new.create", side: t("arguments.pro")), new_argument_path(pro: true, statement_id: @statement.id), class: "btn", id: "pnewargtitle" %>
 			</div>
 		</div>
 		<div class="procon">
@@ -27,7 +27,7 @@
 					<pre><%= t(:statement_no_cons) %></pre>
 				<% end %>
 			<div class="centerbar con">
-				<%= link_to t("arguments.new.create", side: t("arguments.con")), new_argument_path(pro: false, statement_id: @statement.id), class: "btnm", id: "cnewargtitle" %>
+				<%= link_to t("arguments.new.create", side: t("arguments.con")), new_argument_path(pro: false, statement_id: @statement.id), class: "btn", id: "cnewargtitle" %>
 			</div>
 		</div>
 	</div>

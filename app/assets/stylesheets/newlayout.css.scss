@@ -3,6 +3,7 @@ $gred: #A5BC9F;
 $red: #AA6D6D;
 $redd: #CEA7A7;
 $blu: #4C88A8;
+$blud: #93bcce;
 $g0: #F2F2F2;
 $g1: #E2E2E2;
 $g3: #808080;
@@ -20,7 +21,7 @@ span
 	text-align:justify;
 	color:black;
 	font-family: Verdana,arial,sans-serif;
-	font-size:12px;
+	font-size: 0.8em;
 	margin:0px;
 	padding: 0px;
 }
@@ -37,7 +38,7 @@ table td
 	padding: 8px;
 	border: none;
 	font-family: Verdana,arial,sans-serif;
-	font-size:12px;
+	font-size: 0.8em;
 	text-align: left;
 	background-color: white;
 	border: solid 1px $g4;
@@ -51,7 +52,7 @@ table th
 	padding: 5px;
 	border: none;
 	font-family: Verdana,arial,sans-serif;
-	font-size:12px;
+	font-size: 0.8em;
 	text-align: left;
 	color: white;
 }
@@ -81,10 +82,10 @@ p /*paragraph*/
 	text-align:justify;
 	color:black;
 	font-family: Verdana,arial,sans-serif;
-	font-size:12px;
-	margin:0px;
+	font-size: 0.8em;
+	margin: 0px;
 	padding: 0px;
-	line-height: 18px;
+	line-height: 1.3em;
 }
 
 small
@@ -92,30 +93,29 @@ small
 	text-align:justify;
 	color:black;
 	font-family: Verdana,arial,sans-serif;
-	font-size:10px;
-	margin:0px;
+	font-size: 0.7em;
+	margin: 0px;
 	padding: 5px;
-	line-height: 18px;
+	line-height: 1em;
 }
 
 /*header*/
 h1
 {
 	text-align:center;
-	color:$g4;
+	color: $g4;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
-	font-size: 26px;
+	font-size: 1.6em;
 	font-weight: 200;
-	padding-bottom: 2px;
-	margin-bottom: 3px;
+	padding-bottom: 0.3em;
 }
 
 h2
 {
-	text-align:center;
-	color:$g4;
+	text-align: center;
+	color: $g4;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
-	font-size: 23px;
+	font-size: 1.5em;
 	font-weight: 200;
 	clear: both;
 }
@@ -125,7 +125,7 @@ h3
 	text-align:justify;
 	color:$g4;
 	font-family: Verdana, arial, sans-serif;
-	font-size:16px;
+	font-size: 1em;
 	margin: 0px;
 	padding: 5px;
 	padding-left: 8px;
@@ -140,7 +140,7 @@ a /*link*/
 	color: $g4;
 	border-style: none;
 	font-family: verdana, sans-serif;
-	font-size: 12px;
+	font-size: 0.9em;
 	padding: 0px;
 }
 
@@ -190,22 +190,17 @@ label.vertical
 	.title
 	{
 		color: $blu;
-		font-size: 19px;
-		margin-bottom: 6px; 
-		margin-top: 6px;
+		font-size: 1.2em;
+
 	}
 	margin-left: auto;
 	margin-right: auto;
 }
 
 .opinionbtns{
-	display: block;
 	max-width: 624px;
-	width: 100%;
-	height: 21px;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 10px;
 	margin-bottom: 20px;
 	border-radius: 3px;
 	overflow: hidden;
@@ -214,7 +209,7 @@ label.vertical
 		float: left;
 		width: 33.3%;
 		text-align: center;
-		line-height: 21px;
+		line-height: 1.4em;
 	}
 	.oppro{
 		color: white;
@@ -240,14 +235,6 @@ label.vertical
 		color: white !important;
 		background-color: $red;
 	}
-}
-.argument
-{
-	background-color: white;
-	overflow:hidden;
-	border-style: none;
-	padding: 5px;
-	border-bottom: solid 1px $g4;
 }
 
 .pro
@@ -300,8 +287,8 @@ label.vertical
 	margin-bottom: 20px;
 	h2
 	{
-		line-height: 34px;
-		height: 37px;
+		line-height: 1.3em;
+		height: 1.4em;
 		border-radius: 3px;
 	}
 }
@@ -317,7 +304,7 @@ select
 	background: transparent;
 	color:$g3;
 	font-family: Verdana,arial,sans-serif;
-	font-size:12px;
+	font-size: 0.8em;
 }
 
 .navcontent
@@ -332,23 +319,21 @@ select
 	a
 	{
 		font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
-		font-size: 26px;
+		font-size: 1.8em;
 		font-weight: 200;
 		padding: 0px;
 		margin-right: 8px;
 		margin-left: 8px;
-		line-height: 35px;
+		line-height: 1.3em;
 	}
 	a:hover
 	{
 		border-bottom: solid 5px $g1;
-		color: $g4 !important;
 	}
 
 	a.current
 	{
 		border-bottom: solid 5px $g1;
-		color: black;
 	}
 	a.current:hover
 	{
@@ -363,7 +348,7 @@ select
 	position: relative;
 	left: 50%;
 	overflow: hidden;
-	min-width: 300px;
+	min-width: 200px;
 }
 
 .verticalborder
@@ -436,7 +421,6 @@ div#navbar #mainbar
 	padding: 0px;
 	width: 90%;
 	max-width: 1000px;
-	min-width: 650px;
 		&:hover ul .dropdown { display: block; }
 }
 
@@ -444,7 +428,7 @@ ul .dropdown
 {
 	display: none;
 	position: absolute; 
-	top: 1em;
+	top: 0.8em;
 	left: 0;
 
 	li
@@ -509,7 +493,6 @@ div#navbar li #search
 	font-family: Raleway, Century Gothic, sans-serif;
 	font-size: 16px;
 	font-weight: 200;
-	line-height: 39px;
 	color: $g4;
 	float: right;
 	border: none;
@@ -595,7 +578,7 @@ a.commentusername
 		padding: 3px;
 		border-color:$g4;
 		font-family: Verdana,arial,sans-serif;
-		font-size: 12px;
+		font-size: 0.8em;
 		padding-left: 5px;
 		padding-right: 5px;	
 	}
@@ -619,21 +602,18 @@ a.commentusername
 
 ul.buttons
 {
-	display: block;
-	height: 20px;
-	margin-top: 5px;
+	margin-top: 2px;
 }
 
 .buttons
 {
 	a
 	{
-		color: $g3;
-		display: none;
+		color: white;
 		width: auto;
 		float: right;
 		font-family: Verdana,arial,sans-serif;
-		font-size: 12px;
+		font-size: 0.8em;
 		padding-left: 10px;
 		padding-top: 4px;
 	}
@@ -679,9 +659,8 @@ p.comment
 	border-color: $g2;
 	clear: both;
 	color: $g3;
-	line-height: 15px;
 	padding-top: 4px;
-	font-size: 10px;
+	font-size: 0.8em;
 	a{
 		color: #575757;
 	}
@@ -708,12 +687,7 @@ p.comment:hover
 
 .box:hover .buttons a
 {
-	display: inline;
-}
-
-.argument:hover .buttons a
-{
-	display: inline;
+	color: $g3;
 }
 
 .box:hover .votebtn a{
@@ -726,7 +700,7 @@ p.comment:hover
 	p
 	{
 	color: $g3;
-	font-size: 10px;
+	font-size: 0.7em;
 	position: relative;
 	top: 2px;
 	}
@@ -737,39 +711,17 @@ p.comment:hover
 		border-style: none;
 		background-color: none;
 		padding: 0px;
-		font-size: 10px;	
+		font-size: 1em;	
+		color: $g3;
 	}
 }
 
 /*Dit is de opmaak van een deelonderwerptitel (meestal is dit "argumenten")*/
-div.navrow
+.navrow
 {
 	clear: both;
-	margin-bottom: 25px;
-}
-
-h2.voor
-{
-	font-size: 20px;
-	text-align: left;
-}
-
-h2.tegen
-{
-	font-size: 20px;
-	text-align: right;
-}
-
-.argtitle
-{
-	text-decoration: none;
-	display: block;
-	text-align:center;
-	font-family: Verdana, arial, sans-serif;
-	font-size: 15px;
-	font-weight:bold;
-	padding: 7px;
-	padding-bottom: 0px;
+	margin-bottom: 20px;
+	margin-top: -5px;
 }
 
 .title
@@ -778,10 +730,10 @@ h2.tegen
 	display: block;
 	text-align: center;
 	font-family: Verdana, arial, sans-serif;
-	font-size: 15px;
+	font-size: 1em;
 	font-weight:bold;
-	line-height: 18px;
-	padding-bottom: 6px;
+	line-height: 1.1em;
+	padding-bottom: 0.2em;
 }
 
 .lefttitle
@@ -795,10 +747,10 @@ p.vote
 	display: inline;
 	color: $g4;
 	font-family: verdana, sans-serif;
-	font-size: 13px;
+	font-size: 0.9em;
 	font-weight: bold;
 	float: left;
-	line-height: 20px;
+	line-height: 1.4em;
 }
 
 p.votelabel
@@ -806,9 +758,9 @@ p.votelabel
 	display: inline;
 	color: $g3;
 	font-family: verdana, sans-serif;
-	font-size: 10px;
+	font-size: 0.7em;
 	float: left;
-	line-height: 20px;
+	line-height: 1.7em;
 	margin-right: 3px;
 }
 
@@ -816,25 +768,20 @@ p.votelabel
 {
 	a
 	{
-	font-size: 13px;
+	font-size: 0.9em;
 	display: inline;
 	font-weight: bold; 
 	color: white;
 	padding: 0px;
-	line-height: 20px;
+	line-height: 1.4em;
 	width: 20px;
 	text-align: center;
 	float: left;
 	}
 	a:hover
 	{
-		color: white !important;
-		background-color: $blu;
-	}
-}
 
-.argument:hover p.vote{
-display: none;
+	}
 }
 
 #pnewargtitle
@@ -938,9 +885,8 @@ display: none;
 
 .alert
 {
-	border: 1px;
-	border-style: solid;
-	border-color: $g4;
+	border: solid 1px $blu; 
+	border-radius: 3px;
 	background-color: white;
 	font-family: verdana, sans-serif;
 	padding: 5px;
@@ -949,12 +895,12 @@ display: none;
 
 .alert-Notice
 {
-	background-color: white;
+	border-color: $gre;
 }
 
 .alert-Error
 {
-	border-color: red;
+	border-color: $red;
 }
 
 /*  Authentications page */
@@ -1002,13 +948,18 @@ display: none;
   border-width: 1px;
   margin-right: 16px;
   margin-bottom: -4px;
+  opacity:0.8;
+}
+
+.auth_provider :hover{
+	opacity: 1;
 }
 
 #error_explanation{
 	background-color: white;
 	border: solid 1px $g4;
 	font-family: verdana, sans-serif;
-	font-size: 12px;
+	font-size: 0.8em;
 	color: $g4;
 	padding: 10px;
 	margin-bottom: 20px;
@@ -1017,63 +968,34 @@ display: none;
 		margin-bottom: 5px;
 	}
 }
+
 .btn
 {
 	display: inline-block;
+	background-color: white;
+	color: $g4;
 	border: none;
-	border-bottom: solid 1px #d2d2d2;
+	border-bottom: solid 2px $g1;
 	padding: 5px;
+	padding-bottom: 7px;
 	width: auto;
-	color: white;
-	background-color: $g4;
 	font-family: verdana, sans-serif;
 	font-size: 14px;
-	padding-bottom: 7px;
 	text-align: center;
+	border-radius: 3px;
 	input
 	{
 		text-decoration: none;
 		margin-left: -1px;
 		color: white;
 	}
+
 }
 
 .btn:hover
 {
-	border-top: solid 1px $g1;
-	color: white;
-	background-color: black;
-	padding-bottom: 6px;
-	margin-top: 1px;
-	border-bottom: none;
-}
-
-.btnm
-{
-	display: inline-block;
-	background-color: white;
-	border: none;
-	border-bottom: solid 1px $g1;
-	padding: 5px;
-	padding-bottom: 7px;
-	width: auto;
-	font-family: verdana, sans-serif;
-	font-size: 14px;
-	text-align: center;
-	input
-	{
-		text-decoration: none;
-		margin-left: -1px;
-		color: white;
-	}
-}
-
-.btnm:hover
-{
-	border-top: solid 1px $g0;
-	border-bottom: none;
-	padding-bottom: 6px;
-	margin-top: 1px;
+	border-bottom: solid 2px $g3;
+	color: black;
 }
 
 /*Zoekresultaten*/
@@ -1160,7 +1082,7 @@ div.pageconf li a
 .verticalform
 {
 	color: black;
-	font-size: 12px;
+	font-size: 0.8em;
 	border-color: $g4;
 	float: left;
 	width: 50%;
@@ -1171,14 +1093,43 @@ div.pageconf li a
 	color: $g4;
 }
 
-@media screen and (max-width: 650px) {
-  .procon {
-    width: 100%;
-  }
-  .pro {
-  	margin-right: 0px;
-  }
-  .con {
-  	margin-left: 0px;
-  }
+/*Responsive design voor kleinere displays*/
+@media screen and (max-width: 550px) {
+	.procon {
+	width: 100%;
+	}
+	.pro {
+		margin-right: 0px;
+	}
+	.con {
+		margin-left: 0px;
+	}
+	.label-row{
+	}
+	label{
+		float: none;
+		display: block;
+		line-height: 1.2em;
+		text-align: left;
+	}
+	.label-subrow{
+		margin-left: 0;
+	}
+	.verticalform{
+		width: 100%;
+	}
+	.helpertext{
+		width: 100%;
+		color: $g4;
+		margin-left: 0px;
+	}
+
+}
+
+/*Transitie effecten op alles*/
+*{
+	transition: all 250ms;
+	-moz-transition: all 250ms;
+	-webkit-transition: all 250ms;
+	-o-transition: all 250ms;
 }
