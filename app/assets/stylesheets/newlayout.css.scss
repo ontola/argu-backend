@@ -65,7 +65,6 @@ div.clear
 {
 	width: 95%;
 	max-width: 1000px;
-	min-width: 650px;
 	margin:0px auto;
 }
 
@@ -338,6 +337,7 @@ select
 		padding: 0px;
 		margin-right: 8px;
 		margin-left: 8px;
+		line-height: 35px;
 	}
 	a:hover
 	{
@@ -356,22 +356,14 @@ select
 	}
 }
 
-.prosbox
+.procon
 {
 	float: left;
 	width: 50%;
 	position: relative;
 	left: 50%;
 	overflow: hidden;
-}
-.consbox
-{
-	float: left;
-	width: 50%;
-	position: relative;
-	left: 50%;
-	overflow: hidden;
-	margin-left: -1px;
+	min-width: 300px;
 }
 
 .verticalborder
@@ -1177,4 +1169,16 @@ div.pageconf li a
 .remember
 {
 	color: $g4;
+}
+
+@media screen and (max-width: 650px) {
+  .procon {
+    width: 100%;
+  }
+  .pro {
+  	margin-right: 0px;
+  }
+  .con {
+  	margin-left: 0px;
+  }
 }

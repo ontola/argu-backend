@@ -1,6 +1,6 @@
 <div class="argcontainer1">
 	<div class="argcontainer2">
-		<div class="prosbox">
+		<div class="procon">
 			<div class="argtypebox pro">
 				<h2><%= t("arguments.pro") %></h2>
 			</div>
@@ -15,7 +15,7 @@
 				<%= link_to t("arguments.new.create", side: t("arguments.pro")), new_argument_path(pro: true, statement_id: @statement.id), class: "btnm", id: "pnewargtitle" %>
 			</div>
 		</div>
-		<div class="consbox">
+		<div class="procon">
 			<div class="argtypebox con">
 				<h2><%= t("arguments.con") %></h2>
 			</div>

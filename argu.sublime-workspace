@@ -3,10 +3,38 @@
 	{
 		"selected_items":
 		[
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"margin",
+				"margin-right"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"pa",
+				"padding"
+			],
+			[
+				"padd",
+				"padding-top"
+			]
 		]
 	},
 	"buffers":
 	[
+		{
+			"file": "app/assets/stylesheets/newlayout.css.scss",
+			"settings":
+			{
+				"buffer_size": 15247,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -35,16 +63,32 @@
 	},
 	"file_history":
 	[
+		"/D/argu/app/views/statements/_statementarguments.html.erb",
+		"/D/argu/tmp/cache/assets/CD8/370/sprockets%2F357970feca3ac29060c1e3861e2c0953",
+		"/D/argu/tmp/cache/assets/D32/A10/sprockets%2F13fe41fee1fe35b49d145bcc06610705",
+		"/D/argu/tmp/cache/assets/D33/A30/sprockets%2Ffb89e7727e2934e397e757ad458f8a5a",
+		"/D/argu/tmp/cache/assets/D36/B70/sprockets%2Fc5e7417029b081dfe25dc28e7b420a6b",
+		"/D/argu/tmp/cache/assets/DAE/D00/sprockets%2F0889d23fd96eddbb28159257bd2ec6cf",
+		"/D/argu/tmp/cache/sass/7496e54b0faec34d6a03e0fe28189a2ecc9b6763/newlayout.css.scssc",
+		"/D/argu/app/views/arguments/_arguments.html.erb",
+		"/D/argu/app/views/statements/_statements.html.erb",
+		"/D/argu/app/models/user.rb",
+		"/D/argu/app/helpers/arguments_helper.rb",
+		"/D/argu/app/views/arguments/_sarguments.html.erb",
+		"/D/argu/app/models/statement.rb",
+		"/D/argu/app/views/votes/_shr.html.erb",
+		"/D/argu/app/assets/stylesheets/newlayout.css.scss"
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 36.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 96.0,
 		"where_history":
 		[
+			"D:\\argu"
 		]
 	},
 	"find_state":
@@ -52,6 +96,24 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"overfl",
+			"font-size:12px",
+			"12px",
+			"300px",
+			"consbox",
+			"prosbox",
+			"btn",
+			"getBestComment",
+			"hover",
+			"buttons",
+			"btn",
+			"title",
+			".box",
+			"buttons",
+			"btn",
+			".pro",
+			"newarg",
+			"cewarg"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -59,6 +121,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"procon"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -69,14 +132,43 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "app/assets/stylesheets/newlayout.css.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 15247,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3844,
+								3844
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4937.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -108,7 +200,7 @@
 	"project": "argu.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -116,6 +208,18 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"argu/",
+				"app\\views\\arguments\\_sarguments.html.erb"
+			],
+			[
+				"user",
+				"app\\models\\user.rb"
+			],
+			[
+				"statement",
+				"app\\models\\statement.rb"
+			]
 		],
 		"width": 0.0
 	},
@@ -142,7 +246,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 280.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
