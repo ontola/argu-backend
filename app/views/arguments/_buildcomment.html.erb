@@ -4,7 +4,9 @@
 		<ul class="buttons">
 			<li>
 				<div class="info">
-					<%= ;content_tag(:p, raw(t("arguments.comments.placed_by", user: link_to(c.user.username.to_s, profile_path(c.user)), date: l(c.created_at, :format => :long) ))) %>
+					<p>
+						<%= raw(t("arguments.comments.placed_by", user: link_to(c.user.username.to_s, profile_path(Profile.find_by_user_id(c.user))), date: l(c.created_at, :format => :long) )) %>
+					</p>
 				</div>
 			</li>
 			<% if depth < 10 %>

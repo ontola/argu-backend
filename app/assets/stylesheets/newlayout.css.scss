@@ -20,7 +20,7 @@ span
 {
 	text-align:justify;
 	color:black;
-	font-family: Verdana,arial,sans-serif;
+	font-family: Open Sans,verdana,arial,sans-serif;
 	font-size: 0.8em;
 	margin:0px;
 	padding: 0px;
@@ -37,7 +37,7 @@ table td
 	vertical-align: middle;
 	padding: 8px;
 	border: none;
-	font-family: Verdana,arial,sans-serif;
+	font-family: Open Sans,verdana,arial,sans-serif;
 	font-size: 0.8em;
 	text-align: left;
 	background-color: white;
@@ -51,7 +51,7 @@ table th
 	vertical-align: middle;
 	padding: 5px;
 	border: none;
-	font-family: Verdana,arial,sans-serif;
+	font-family: Open Sans,verdana,arial,sans-serif;
 	font-size: 0.8em;
 	text-align: left;
 	color: white;
@@ -81,7 +81,7 @@ p /*paragraph*/
 {
 	text-align:justify;
 	color:black;
-	font-family: Verdana,arial,sans-serif;
+	font-family: Open Sans,verdana,arial,sans-serif;
 	font-size: 0.8em;
 	margin: 0px;
 	padding: 0px;
@@ -92,7 +92,7 @@ small
 {
 	text-align:justify;
 	color:black;
-	font-family: Verdana,arial,sans-serif;
+	font-family: Open Sans,verdana,arial,sans-serif;
 	font-size: 0.7em;
 	margin: 0px;
 	padding: 5px;
@@ -124,7 +124,7 @@ h3
 {
 	text-align:justify;
 	color:$g4;
-	font-family: Verdana, arial, sans-serif;
+	font-family: Open Sans,verdana, arial, sans-serif;
 	font-size: 1em;
 	margin: 0px;
 	padding: 5px;
@@ -139,7 +139,7 @@ a /*link*/
 	text-decoration: none;
 	color: $g4;
 	border-style: none;
-	font-family: verdana, sans-serif;
+	font-family: Open Sans,verdana, sans-serif;
 	font-size: 0.9em;
 	padding: 0px;
 }
@@ -303,7 +303,7 @@ select
 	border: none;
 	background: transparent;
 	color:$g3;
-	font-family: Verdana,arial,sans-serif;
+	font-family: Open Sans,verdana,arial,sans-serif;
 	font-size: 0.8em;
 }
 
@@ -577,7 +577,7 @@ a.commentusername
 		border-style: none;
 		padding: 3px;
 		border-color:$g4;
-		font-family: Verdana,arial,sans-serif;
+		font-family: Open Sans,verdana,arial,sans-serif;
 		font-size: 0.8em;
 		padding-left: 5px;
 		padding-right: 5px;	
@@ -612,7 +612,7 @@ ul.buttons
 		color: white;
 		width: auto;
 		float: right;
-		font-family: Verdana,arial,sans-serif;
+		font-family: Open Sans,verdana,arial,sans-serif;
 		font-size: 0.8em;
 		padding-left: 10px;
 		padding-top: 4px;
@@ -729,7 +729,7 @@ p.comment:hover
 	text-decoration: none;
 	display: block;
 	text-align: center;
-	font-family: Verdana, arial, sans-serif;
+	font-family: Open Sans,verdana, arial, sans-serif;
 	font-size: 1em;
 	font-weight:bold;
 	line-height: 1.1em;
@@ -746,7 +746,7 @@ p.vote
 {
 	display: inline;
 	color: $g4;
-	font-family: verdana, sans-serif;
+	font-family: Open Sans,verdana, sans-serif;
 	font-size: 0.9em;
 	font-weight: bold;
 	float: left;
@@ -757,7 +757,7 @@ p.votelabel
 {
 	display: inline;
 	color: $g3;
-	font-family: verdana, sans-serif;
+	font-family: Open Sans,verdana, sans-serif;
 	font-size: 0.7em;
 	float: left;
 	line-height: 1.7em;
@@ -811,7 +811,7 @@ p.votelabel
 	min-height: 200px;
 	padding: 0px;
 	margin-right: 20px;
-	font-family: verdana, sans-serif;
+	font-family: Open Sans,verdana, sans-serif;
 }
 
 /* Revisions styling */
@@ -858,7 +858,7 @@ p.votelabel
 .revunderbar
 {
 	list-style-type: none;
-	font-family: verdana, sans-serif;
+	font-family: Open Sans,verdana, sans-serif;
 	text-align: center;
 	border: 1px;
 	border-style: none;
@@ -888,7 +888,7 @@ p.votelabel
 	border: solid 1px $blu; 
 	border-radius: 3px;
 	background-color: white;
-	font-family: verdana, sans-serif;
+	font-family: Open Sans,verdana, sans-serif;
 	padding: 5px;
 	margin-bottom: 20px;
 }
@@ -906,7 +906,7 @@ p.votelabel
 /*  Authentications page */
 
 .authentication {
-  font-family: verdana, sans-serif;
+  font-family: Open Sans,verdana, sans-serif;
   width: 410px;
   background-color: white;
   border: solid 1px $g4;
@@ -958,7 +958,7 @@ p.votelabel
 #error_explanation{
 	background-color: white;
 	border: solid 1px $g4;
-	font-family: verdana, sans-serif;
+	font-family: Open Sans,verdana, sans-serif;
 	font-size: 0.8em;
 	color: $g4;
 	padding: 10px;
@@ -979,7 +979,7 @@ p.votelabel
 	padding: 5px;
 	padding-bottom: 7px;
 	width: auto;
-	font-family: verdana, sans-serif;
+	font-family: Open Sans,verdana, sans-serif;
 	font-size: 14px;
 	text-align: center;
 	border-radius: 3px;
@@ -1070,7 +1070,7 @@ div.pageconf li a
 .settingform
 {
 	color: $g4;
-	font-family: Verdana, sans-serif;
+	font-family: Open Sans,verdana, sans-serif;
 	font-size:16px;
 	width: 350px;
 	background: white;

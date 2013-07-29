@@ -47,7 +47,7 @@ class Statement < ActiveRecord::Base
   end
 
   def mods
-    if self.moderators != nil
+    if !self.moderators.blank?
       return self.moderators.split(',').map { |s| s.to_i }
     else 
       return []

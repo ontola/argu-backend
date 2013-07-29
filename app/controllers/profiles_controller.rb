@@ -3,6 +3,7 @@ class ProfilesController < ApplicationController
 
 	#GET /profiles/1
 	def show
+		puts "=======================================" + @profile.to_json.to_s
 		@user = User.find_by_id(@profile.user_id)
 
 		respond_to do |format|

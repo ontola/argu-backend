@@ -31,7 +31,15 @@
 			"file": "app/assets/stylesheets/newlayout.css.scss",
 			"settings":
 			{
-				"buffer_size": 15247,
+				"buffer_size": 14679,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/views/layouts/application.html.erb",
+			"settings":
+			{
+				"buffer_size": 2216,
 				"line_ending": "Windows"
 			}
 		}
@@ -96,6 +104,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Verdana",
+			"verdana",
 			"overfl",
 			"font-size:12px",
 			"12px",
@@ -121,6 +131,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"Open Sans,verdana",
+			"Open Sans,verdana,",
 			"procon"
 		],
 		"reverse": false,
@@ -132,7 +144,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -141,15 +153,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 15247,
+						"buffer_size": 14679,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3844,
-								3844
+								4178,
+								4178
 							]
 						],
 						"settings":
@@ -158,7 +170,36 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 4937.0,
+						"translation.y": 5672.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/views/layouts/application.html.erb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2216,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								523,
+								523
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -200,7 +241,7 @@
 	"project": "argu.sublime-project",
 	"replace":
 	{
-		"height": 52.0
+		"height": 66.0
 	},
 	"save_all_on_build": true,
 	"select_file":
