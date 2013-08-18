@@ -18,6 +18,9 @@
 </head>
 <body>
 <% unless current_user.blank? %>
+  <!--[if lt IE 8]>
+    <p class="browsehappy"><%= raw t("outdated_browser") %></p>
+  <![endif]-->
   <%= render 'header' %>
   <div id="fb-root"></div>
   <div class="container">
