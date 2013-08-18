@@ -11,8 +11,8 @@ class Statement < ActiveRecord::Base
 
   attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators
  
-  validates :content, presence: true, length: { minimum: 5, maximum: 140 }
-  validates :title, presence: true, length: { minimum: 5, maximum: 50 }
+  validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
+  validates :title, presence: true, length: { minimum: 5, maximum: 500 }
 
   searchable do
     text :title, :content
