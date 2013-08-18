@@ -1,5 +1,6 @@
 production:
-  adapter: mysql2
+  adapter: postgresql
+  host: localhost
   encoding: utf8
   database: argu_production
   pool: 5
