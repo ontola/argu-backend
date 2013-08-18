@@ -86,6 +86,11 @@ p /*paragraph*/
 	margin: 0px;
 	padding: 0px;
 	line-height: 1.3em;
+	white-space: pre-wrap;
+	html.lt-ie8 & {
+		white-space: pre;
+		word-wrap: break-word;
+	}
 }
 
 small

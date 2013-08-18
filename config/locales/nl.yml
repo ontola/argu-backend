@@ -33,6 +33,7 @@ nl:
   destroy_confirmation: "weet je het zeker?"
   not_allowed: "actie niet toegestaan."
   error_prohibited: " bij het opslaan:"
+  outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser</a> om argu te bezoeken."
 #Controllers
 #Sessions
   sessions_error_invalid: "Foutieve gebruikersnaam of wachtwoord"
