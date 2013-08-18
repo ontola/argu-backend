@@ -1,5 +1,8 @@
 <!DOCTYPE html>
-<html>
+<!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
 <head>
   <title><%= yield(:title) == "" ? "" : yield(:title) + " | " %><%= t('name') %></title>
   <meta charset="UTF-8">
@@ -11,9 +14,13 @@
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
   <% end %>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <%= render 'shim'%>
 </head>
 <body>
+ <!--[if lt IE 8]>
+    <p class="browsehappy"><%= raw t("outdated_browser") %></p>
+<![endif]-->
 <% unless current_user.blank? %>
   <%= render 'header' %>
   <div id="fb-root"></div>
