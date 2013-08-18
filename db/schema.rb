@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130118193654) do
+ActiveRecord::Schema.define(:version => 20130716152517) do
 
   create_table "arguments", :force => true do |t|
     t.text     "content",                        :null => false
@@ -65,27 +65,24 @@ ActiveRecord::Schema.define(:version => 20130118193654) do
 
   add_index "profiles", ["user_id"], :name => "profiles_by_user_id", :unique => true
 
-  create_table "roles", :force => true do |t|
-    t.string   "name",       :null => false
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "statementarguments", :force => true do |t|
+    t.integer "argument_id",                    :null => false
+    t.integer "statement_id",                   :null => false
+    t.boolean "pro",          :default => true, :null => false
+    t.integer "votes_count",  :default => 0
   end
 
-  create_table "roles_users", :id => false, :force => true do |t|
-    t.integer "role_id", :null => false
-    t.integer "user_id", :null => false
-  end
-
-  add_index "roles_users", ["user_id", "role_id"], :name => "user_role", :unique => true
+  add_index "statementarguments", ["argument_id", "statement_id"], :name => "arg_state_index"
 
   create_table "statements", :force => true do |t|
-    t.string   "title",                     :null => false
-    t.text     "content",                   :null => false
+    t.string   "title",                      :null => false
+    t.text     "content",                    :null => false
     t.integer  "statetype",  :default => 6
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
     t.integer  "pro_count",  :default => 0
     t.integer  "con_count",  :default => 0
+    t.integer  "moderators", :default => [],                 :array => true
   end
 
   create_table "users", :force => true do |t|
@@ -103,6 +100,7 @@ ActiveRecord::Schema.define(:version => 20130118193654) do
     t.datetime "updated_at",                             :null => false
     t.string   "username"
     t.string   "unconfirmed_email"
+    t.string   "role"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

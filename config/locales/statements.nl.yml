@@ -22,6 +22,10 @@ nl:
         zero: "geen tegenargumenten"
         one: "1  tegenargument"
         other: "%{count} tegenargumenten"
+    form:
+        helper:
+            title: "Vat de stelling hier zo bondig mogelijk samen. Een goede stelling is in principe uitvoerbaar door de overheid."
+            content: "Beschrijft jouw stelling in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
 
     #statement types
     type_social: "Maatschappelijk"

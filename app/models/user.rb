@@ -1,7 +1,8 @@
 class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
-  has_and_belongs_to_many :roles
   has_one :profile, dependent: :destroy
+
+  accepts_nested_attributes_for :profile
 
   acts_as_voter
 
@@ -11,6 +12,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable#,
          #:validatable, :omniauthable
+  ROLES = %w[coder admin user banned]
 
   before_create :check_for_profile
   after_create :mark_as_user
@@ -25,25 +27,18 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessible :username, :profile, :email, :password, :password_confirmation,
                   :remember_me, :unconfirmed_email, :provider, :uid, :login,
-                  :roles, :current_password
+                  :role, :current_password
 
   USERNAME_FORMAT_REGEX = /^\d*[a-zA-Z][a-zA-Z0-9]*$/i
   NAME_FORMAT_REGEX =  /^[a-z]{1,50}/i
   PASSWORD_FORMAT_REGEX = /^[a-z0-9_]{6,128}/i
 
   validates :username, presence: true,
-		       length: { in: 4..20 },
-		       format: { with: USERNAME_FORMAT_REGEX },
-		       uniqueness: { case_sensetive: false }
+           length: { in: 4..20 },
+           format: { with: USERNAME_FORMAT_REGEX },
+           uniqueness: { case_sensetive: false }
   validates :email, allow_blank: true,
-		    format: { with: RFC822::EMAIL }
-=begin
-  validates :name, allow_blank:true, format: { with: NAME_FORMAT_REGEX }
-  validates :password,
-		       length: { minimum: 6, maximum: 128 },
-		       format: { with: PASSWORD_FORMAT_REGEX }
-  validates :password_confirmation, presence: true, :if => lambda { new_record? || !password.blank? }
-=end
+        format: { with: RFC822::EMAIL }
 
 
 #general
@@ -57,8 +52,16 @@ class User < ActiveRecord::Base
   end
 
 #permissions
-  def role?(role)
-    return !!self.roles.find_by_name(role.to_s.downcase)
+  def is?(role)
+    self.role.eql? role.to_s
+  end
+  
+  def roles=(roles)
+    self.role = roles[0].to_s
+  end
+  
+  def roles
+    self.role
   end
 
 #authentiaction
@@ -82,15 +85,18 @@ private
   def check_for_profile
     self.profile ||= Profile.create
   end
+
   def cleanup
     self.authentications.destroy_all
   end
+
   def mark_as_user
-    self.roles << Role.find_by_name("user")
+    self.roles= ["user"]
   end
+
   def normalize_blank_values
     attributes.each do |column, value|
-      self[column].present? || self[column] = nil
+      self[column].present? || self[column] = nil unless column.eql?(:roles) || column.eql?(:roles_mask)
     end
   end
 

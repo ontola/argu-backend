@@ -9,7 +9,7 @@ class Statement < ActiveRecord::Base
 
   has_paper_trail
 
-  attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count
+  attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators
  
   validates :content, presence: true, length: { minimum: 5, maximum: 140 }
   validates :title, presence: true, length: { minimum: 5, maximum: 50 }
@@ -28,22 +28,46 @@ class Statement < ActiveRecord::Base
     end
   end
 
-  def trim_data
-    self.title = title.strip
-    self.content = content.strip
-  end
+# Custom methods
 
   def cap_title 
     self.title = self.title.capitalize
+  end
+
+  def con_count
+    self.arguments.count(:conditions => ["pro = false"])
+  end
+
+  def creator
+    User.find_by_id self.versions.first.whodunnit
+  end
+
+  def is_moderator?(user)
+    self.mods.include?(user.id)
+  end
+
+  def mods
+    if !self.moderators.blank?
+      return self.moderators.split(',').map { |s| s.to_i }
+    else 
+      return []
+    end
+  end
+
+  def add_mod(user)
+    self.mods << user.id unless self.mods.include? user.id
   end
 
   def pro_count
     self.arguments.count(:conditions => ["pro = true"])
   end
 
-  def con_count
-    self.arguments.count(:conditions => ["pro = false"])
+  def trim_data
+    self.title = title.strip
+    self.content = content.strip
   end
+
+# Scopes
 
   scope :today, lambda { 
     {

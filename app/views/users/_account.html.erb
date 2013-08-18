@@ -1,33 +1,40 @@
-<%= form_tag(controller: "users", action: "update", method: "put") do %>
-
+<%= form_for @user, url: settings_path(method: :put), method: :put do |user| %>
+<div class="navrow">
+	<ul class="navcontent">
+		<li><%= link_to t("header_menuitem_settings") , {:anchor => "settings" } , class: "current" %></li>
+		<li><%= link_to t("header_menuitem_profile") , {:anchor => "profile" } %></li>
+		<li><%= link_to t("header_menuitem_activity") , {:anchor => "activity" } %></li>
+</div>
 <div class="label-row">
 	<label><%= t("users_username") %></label>
 	<div class="label-subrow">
-		<%= text_field(:user, :username, class: "settingform", placeholder: current_user.username) %>
+		<%= user.text_field(:username, class: "settingform") %>
 	</div>
 </div>
+<%= user.fields_for :profile do |profile| %>
 <div class="label-row">
 	<label><%= t("users_name") %></label>
 	<div class="label-subrow">
-		<%= text_field(:profile, :name, class: "settingform", placeholder: current_user.profile.name.blank? ? t("users_name_placeholder") : current_user.profile.name) %>
+		<%= profile.text_field(:name, class: "settingform", placeholder: t("users_name_placeholder")) %>
 	</div>
 </div>
+<% end %>
 <div class="label-row">
 	<label><%= t("users_email") %></label>
 	<div class="label-subrow">
-		<%= email_field(:user, :email, class: "settingform", placeholder: current_user.email.blank? ? t("users_email_placeholder") : current_user.email) %>
+		<%= user.email_field(:email, class: "settingform", placeholder: current_user.email.blank? ? t("users_email_placeholder") : current_user.email) %>
 	</div>
 </div>
 <div class="label-row">
 	<label><%= t("users_password_edit") %></label>
 	<div class="label-subrow">
-		<%= password_field_tag(:password, "", class: "settingform") %>
+		<%= user.password_field("", class: "settingform") %>
 	</div>
 </div>
 <div class="label-row">
 	<label><%= t("users_password_confirmation") %></label>
 	<div class="label-subrow">
-		<%= password_field_tag(:password_confirmation, "", class: "settingform") %>
+		<%= user.password_field("", class: "settingform") %>
 	</div>
 </div>
 <% if @authentications.present? %>
@@ -73,121 +80,7 @@
 <div class="label-row">
 	<label></label>
 	<div class="label-subrow">
-		<%= submit_tag(t("save"), class: "btn") %>
+		<%= user.submit(t("save"), class: "btn") %>
 	</div>
 </div>
-<!--
-<table border="0">
-<tr>
-<td><label>gebruikersnaam</label></td>
-<td><%= text_field(:user, :username, class: "settingform", placeholder: current_user.username) %>
-</tr>
-<tr>
-<td><label>volledige naam</label></td>
-<td><%= text_field(:profile, :name, class: "settingform", placeholder: current_user.profile.name.blank? ? "Vul hier je naam in" : current_user.profile.name) %>
-</td>
-</tr>
-<tr>
-<td><label>e-mailadres</label></td>
-<td><%= email_field(:user, :email, class: "settingform", placeholder: current_user.email.blank? ? "Vul hier je e-mailadres in" : current_user.email) %></td>
-</tr>
-<tr>
-<td><label>wachtwoord</label></td>
-<td><%= password_field_tag(:password, "", class: "settingform") %>
-</td>
-</tr>
-<tr>
-<td><label>gekoppelde accounts</label></td>
-<td>
-<div class="authentications">
-  <% for authentication in @authentications %>
-    <div class="authentication">
-      <%= image_tag "favicon_#{authentication.provider}.svg", :size => "64x64" %>
-      <div class="provider"><%= authentication.provider.titleize %></div>
-      <div class="uid"><%= authentication.uid %></div>
-      <% unless current_user.isOmniOnly && (current_user.authentications.size == 1) %>
-        <%= link_to "ontkoppelen", authentication, :confirm => 'Weet je zeker dat je dit account wil ontkoppelen??', :method => :delete, :class => "remove",
-          :class => "remove" %>
-      <% else %>
-        <%= link_to "X", cancel_user_registration_path(current_user), :confirm => ('Het ontkoppelen van dit account zorgt ervoor dat je niet meer kunt inloggen, aangezien je nog geen gebruikersnaam + wachtwoord op argu hebt gekozen om mee in te loggen.'),
-            :class => "remove" %>
-      <% end %>
-    </div>
-  <% end %>
-  <div class="clear"></div>
-</div>
-</td>
-</tr>
-<tr>
-<td><label>account koppelen</h1></td>
-<td>
-	<a href="/auth/twitter" class="auth_provider">
-  <%= image_tag "favicon_twitter.svg", :size => "64x64",
-  :alt => "Twitter" %></a>
-<a href="/auth/facebook" class="auth_provider">
-  <%= image_tag "favicon_facebook.svg", :size => "64x64",
-  :alt => "Facebook" %></a>
-<a href="/auth/google_apps" class="auth_provider">
-  <%= image_tag "favicon_google.svg", :size => "64x64",
-  :alt => "Google" %></a>
-<a href="/auth/openid" class="auth_provider">
-  <%= image_tag "favicon_openid.svg", :size => "64x64",
-  :alt => "OpenID" %></a>
-</td>
-</tr>
-<tr>
-<td>
-</td>
-<td><%= submit_tag("opslaan", class: "btn") %>
-</td>
-</tr>
-
-	</table>
--->
 <% end %>
-
-
-<!--
-<div class="leftcolumn">
-		<label>gebruikersnaam</h1>
-	<label>volledige naam</h1>
-	<label>e-mailadres</h1>
-	<label>wachtwoord</h1>
-	<label>gekoppelde accounts</h1>
-</div>
-<div class="rightcolumn">
-	<input type="text" name="username" placeholder="<%= @user.username %>" class="settingform"></input>
-	<input type="text" name="profilename" placeholder="<%= current_user.profile.name %>" class="settingform"></input>
-	<input type="text" name="email" placeholder="<%= current_user.email.blank? ? "Vul hier je e-mailadres in" : current_user.email %>"class="settingform"></input
-	<input class="settingform"><%= current_user.password %></input>
-
-</div>
-
-<div class="setting-content">
-	<div>
-		<div class="settings-row">
-			<div class="column-name">gebruikersnaam</div>
-			<div class="edit column-content"><%= @user.username %></div>
-		</div>
-		<div class="settings-row">
-			<div class="column-name">Email</div>
-			<div class="edit column-content"><%= current_user.email.blank? ? "Vul hier je e-mailadres in" : current_user.email %></div>
-		</div>
-		<div class="settings-row">
-			<div class="column-name">Name</div>
-			<div class="edit column-content"><%= current_user.profile.name %></div>
-		</div>
-		<div class="settings-row">
-			<div class="column-name">About</div>
-			<div class="edit_area column-content"><%= current_user.profile.about %></div>
-		</div>
-		<div class="newline">
-			<%= render 'authentications/login_providers_connected' %>
-		</div>
-		<div class="newline">
-			<h3 id="txt">Link additional</h3>
-			<%= render 'authentications/login_providers', size: 32 %>
-		</div>
-	</div>
-</div>
--->

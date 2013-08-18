@@ -3,12 +3,15 @@
 <head>
   <title><%= yield(:title) == "" ? "" : yield(:title) + " | " %><%= t('name') %></title>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
   <%= render 'shim'%>
   <% unless current_user.blank? %>
     <%= stylesheet_link_tag    "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
   <% end %>
+  <link href='http://fonts.googleapis.com/css?family=Raleway:200' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <% unless current_user.blank? %>
@@ -16,9 +19,7 @@
   <div id="fb-root"></div>
   <div class="container">
     <% flash.each do |key,value| %>
-        <div class="alert alert-block alert-<%= key.capitalize %>" data-dismiss="alert"><%= value.capitalize %>
-          <a class="close"><i class="icon ok" alt="x" >x</i></a>
-        </div>
+        <div class="alert alert-block alert-<%= key.capitalize %>" data-dismiss="alert"><%= value.capitalize %></div>
     <% end %>
     <%= yield %>
     <div class="push"></div>

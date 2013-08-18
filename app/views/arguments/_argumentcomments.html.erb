@@ -1,8 +1,15 @@
-<div id="commentstitle">
-	<div class="stcont3">
-		<h2><%= t("arguments.comments.title") %></h2>
+<form action="" class="sort">
+	<div class="leftbar">
+		<h2 style="display:inline; margin-right: 20px;"><%= t("arguments.comments.title") %></h2>
+		<span class="grey">sorteer op:</span>
+			<select name="cars">
+				<option value="volvo">Hoogst beoordeeld</option>
+				<option value="saab">Nieuwst</option>
+				<option value="fiat">Geel</option>
+				<option value="audi">Audi</option>
+			</select>
 	</div>
-</div>
+</form>
 <div class="comments">
 	<% @comments.each do |c| %>
 		<%= render partial: 'buildcomment', locals: { c: c, depth: 1 } %>

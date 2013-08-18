@@ -2,6 +2,18 @@
 
 nl:
   revisions:
-    title: "Revisies"
-    goto: "Toon"
-    revert: "Terugzetten"
+    title: "revisies"
+    goto: "toon"
+    revert: "terugzetten"
+    table_id: "id"
+    table_title: "titel"
+    table_content: "inhoud"
+    table_edited: "gebruiker"
+    table_created: "gewijzigd op"
+    table_page: "pagina"
+    table_make: "zet terug"
+    newest: "nieuwste"
+    oldest: "oudste"
+    current: "huidig"
+    edited_by: "bewerkt door"
+    options: "opties"

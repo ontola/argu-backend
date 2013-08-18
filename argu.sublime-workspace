@@ -1,0 +1,295 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"mar",
+				"margin-left"
+			],
+			[
+				"margin",
+				"margin-right"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"pa",
+				"padding"
+			],
+			[
+				"padd",
+				"padding-top"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "app/assets/stylesheets/newlayout.css.scss",
+			"settings":
+			{
+				"buffer_size": 14679,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/views/layouts/application.html.erb",
+			"settings":
+			{
+				"buffer_size": 2216,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/D/argu/app/views/statements/_statementarguments.html.erb",
+		"/D/argu/tmp/cache/assets/CD8/370/sprockets%2F357970feca3ac29060c1e3861e2c0953",
+		"/D/argu/tmp/cache/assets/D32/A10/sprockets%2F13fe41fee1fe35b49d145bcc06610705",
+		"/D/argu/tmp/cache/assets/D33/A30/sprockets%2Ffb89e7727e2934e397e757ad458f8a5a",
+		"/D/argu/tmp/cache/assets/D36/B70/sprockets%2Fc5e7417029b081dfe25dc28e7b420a6b",
+		"/D/argu/tmp/cache/assets/DAE/D00/sprockets%2F0889d23fd96eddbb28159257bd2ec6cf",
+		"/D/argu/tmp/cache/sass/7496e54b0faec34d6a03e0fe28189a2ecc9b6763/newlayout.css.scssc",
+		"/D/argu/app/views/arguments/_arguments.html.erb",
+		"/D/argu/app/views/statements/_statements.html.erb",
+		"/D/argu/app/models/user.rb",
+		"/D/argu/app/helpers/arguments_helper.rb",
+		"/D/argu/app/views/arguments/_sarguments.html.erb",
+		"/D/argu/app/models/statement.rb",
+		"/D/argu/app/views/votes/_shr.html.erb",
+		"/D/argu/app/assets/stylesheets/newlayout.css.scss"
+	],
+	"find":
+	{
+		"height": 36.0
+	},
+	"find_in_files":
+	{
+		"height": 96.0,
+		"where_history":
+		[
+			"D:\\argu"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"Verdana",
+			"verdana",
+			"overfl",
+			"font-size:12px",
+			"12px",
+			"300px",
+			"consbox",
+			"prosbox",
+			"btn",
+			"getBestComment",
+			"hover",
+			"buttons",
+			"btn",
+			"title",
+			".box",
+			"buttons",
+			"btn",
+			".pro",
+			"newarg",
+			"cewarg"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"Open Sans,verdana",
+			"Open Sans,verdana,",
+			"procon"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "app/assets/stylesheets/newlayout.css.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 14679,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4178,
+								4178
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 5672.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "app/views/layouts/application.html.erb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2216,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								523,
+								523
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 28.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"project": "argu.sublime-project",
+	"replace":
+	{
+		"height": 66.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"argu/",
+				"app\\views\\arguments\\_sarguments.html.erb"
+			],
+			[
+				"user",
+				"app\\models\\user.rb"
+			],
+			[
+				"statement",
+				"app\\models\\statement.rb"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 280.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

@@ -3,10 +3,10 @@ class Ability
 
   def initialize(user)
     user ||= User.new #Guest users
-    if user.role? :coder
+    if user.is? :coder
         #The coder can do anything
         can :manage, :all
-    elsif user.role? :admin
+    elsif user.is? :admin
         #The admin can manage all the generic objects
         can [:manage, :revisions, :allrevisions],
             [Statement, 
@@ -17,13 +17,16 @@ class Ability
         can :manage, User do |u|
           user == u
         end
-    elsif user.role? :user
+    elsif user.is? :user
         cannot :manage, User do |u|
           user != u
         end
-        can :read, :all                                         #Not sure yet
+        can :read, :all                                         #read by default, should be changed later
         can :create, [Statement, Argument, Comment]
-        can [:revisions, :allrevisions], Statement              #View revisions
+        can :update, [Statement, Argument] do |item|
+          item.is_moderator?(user)
+        end
+        can [:revisions, :allrevisions], [Statement, Argument]  #View revisions
         can :placeComment, [Statement, Argument, Comment]
         cannot :delete, [Statement, Argument ]                  #No touching!
         cannot [:update, :delete], [Version]                    #I said, no touching!
@@ -31,16 +34,19 @@ class Ability
             user.profile == profile
         end
         can [:show, :update], User do |u|                       #Same goes for your persona
-            user == u
+          user == u
         end
-        can [:edit, :update, :delete], Comment do |comment|     #And your comments
-            comment.try(:user) == user
+        can :wipeComment, Comment do |comment|
+          (comment.user == user) || comment.commentable.is_moderator?(user)
+        end
+        can [:edit, :update], Comment do |comment|              #And your comments
+          comment.user == user
         end
         can [:manage], Vote do |vote|                           #Freedom in democracy
-            user.id == vote.voter_id
+          user.id == vote.voter_id
         end
     else
-        cannot [:manage, :revisions, :allrevisions],            #not loggin in and in closed beta, so bugger off!
+        cannot [:manage, :revisions, :allrevisions],            #Closed beta, so bugger off!
                [Statement,
                 Argument,
                 Comment,

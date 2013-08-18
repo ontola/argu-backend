@@ -1,23 +1,29 @@
-<div class="commentbox c<%= (depth-1).to_s %>">
+<div class="box c<%= (depth-1).to_s %>">
 	<p class= id="<%= c.id %>"><%= c.body %></p>
 	<div>
 		<ul class="buttons">
 			<li>
-				<div class="commentinfo">
-					<%= ;content_tag(:p, raw(t("arguments.comments.placed_by", user: link_to(c.user.username.to_s, profile_path(c.user)), date: l(c.created_at, :format => :long) ))) %>
+				<div class="info">
+					<p>
+						<%= raw(t("arguments.comments.placed_by", user: link_to(c.user.username.to_s, profile_path(Profile.find_by_user_id(c.user))), date: l(c.created_at, :format => :long) )) %>
+					</p>
 				</div>
 			</li>
-			<li><%= link_to t("reply"), argument_path(@argument, parent_id: c.id) %></li>
+			<% if depth < 10 %>
+			<li><%= link_to t("reply"), argument_path(@argument, parent_id: c.id), html_options = { id: c.id, class: "c_reply" } %></li>
+			<li><a href="">rapporteer</a></li> <!-- TODO-->
+			<% end %>
 		</ul>
 		<div style='clear:both;'></div>
+		<%= render partial: 'add_comment_form', locals: { argument: @argument, parent_id: c.id, visible: false } %>
 	</div>
 </div>
-	<% unless depth > 4 %>
+	<% if depth < 10 %>
 	<% if c.has_children? %>
 		<% c.children.limit(10).each do |ch| %>
 			<%= render partial: 'buildcomment', locals: { c: ch, depth: depth+1 } %>
 		<% end %>
-		<% if c.children.length > 10 %>
+		<% if c.children.length > 40 %>
 			<%= link_to t("arguments.comments.more"), '/' %>
 		<% end %>
 	<% end %>

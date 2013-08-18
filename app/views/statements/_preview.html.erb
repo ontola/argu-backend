@@ -1,5 +1,14 @@
-<div class="preview">
-  <p class="previewtitle"><%= link_to statement.title, Statement.find_by_title(statement.title) %></p>
-  <p class="previewcontent"><%= statement.content %></p>
-  <p class="grey"><%= t "statements.preview.pro", count: statement.pro_count %>, <%= t "statements.preview.con", count: statement.con_count %>.</p>
+<div class="box statement">
+	<%= link_to statement.title, statement_path(statement), class: "title" %>
+	<p><%= statement.content %></p>
+	<ul class="buttons">
+			<li>
+				<div class="info">
+					<p><%= t "statements.preview.pro", count: statement.pro_count %>, <%= t "statements.preview.con", count: statement.con_count %>
+					</p>
+				</div>
+			</li>
+			<li><%= link_to t("destroy"), statement_path(statement), method: :delete, confirm: t("destroy_confirmation") %></li>
+		</ul>
+		<div style='clear:both;'></div>
 </div>

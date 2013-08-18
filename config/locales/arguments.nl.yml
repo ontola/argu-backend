@@ -9,9 +9,13 @@ nl:
     type_discussion: "in discussie"
     pro: "voor"
     con: "tegen"
+    neu: "neutraal"
     type: "type"
     index:
       title: "argumenten"
+      opinion: "opinie"
+      parties: "partijen"
+      law: "wet"
     show:
       title: "argumenten"
       reply: "reageer"
@@ -26,20 +30,6 @@ nl:
       helper:
         title: "Maak een goede titel, verdomme"
         content: "Onderbouw je argument zo logisch mogelijk, gebruik wetenschap enzo."
-    revisions:
-      table_id: "id"
-      table_title: "titel"
-      table_content: "inhoud"
-      table_edited: "bewerkt door"
-      table_created: "gemaakt op"
-      table_page: "pagina"
-      table_make: "zet terug"
-      newest: "meest recent"
-      oldest: "oudst"
-      current: "huidig"
-      edited_by: "bewerkt door"
-      options: "opties"
-      revert: "terugzetten"
     comments:
       title: "reacties"
       favorite: "favoriet"
@@ -47,3 +37,4 @@ nl:
       delete: "verwijder"
       more: "toon meer"
       placed_by: "Geplaatst door %{user} op %{date}"
+      none: "geen reacties"
