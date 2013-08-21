@@ -19,7 +19,7 @@ nl:
     show:
       title: "argumenten"
       reply: "reageer"
-      created_by: "Geplaatst door %{user} op %{date}"
+      created_by: "%{user} - %{date}"
     new:
       header: "nieuw argument %{side} de stelling:"
       create: "nieuw argument %{side}"
@@ -36,5 +36,5 @@ nl:
       reply: "reageer"
       delete: "verwijder"
       more: "toon meer"
-      placed_by: "Geplaatst door %{user} op %{date}"
+      placed_by: "%{user} - %{date}"
       none: "geen reacties"

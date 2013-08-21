@@ -85,8 +85,8 @@ p /*paragraph*/
 	font-size: 0.8em;
 	margin: 0px;
 	padding: 0px;
-	line-height: 1.3em;
-	white-space: pre-wrap;
+	line-height: 1.5em;
+	white-space: pre-line;
 	html.lt-ie8 & {
 		white-space: pre;
 		word-wrap: break-word;
@@ -158,18 +158,23 @@ label
 {
 	float: left;
 	text-align: right;
-	font-size: 20px;
+	font-size: 1.3em;
 	font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
 	font-weight: 200;
 	color:$g4;
 	width: 250px;
 	margin-top: 4px;
+	line-height: 1.2em;
 }
 
 label.vertical
 {
 	text-align: left;
 	padding-bottom: 5px;
+}
+
+input {
+	border-radius: 3px;
 }
 
 .box
@@ -189,6 +194,14 @@ label.vertical
 
 .sort
 {}
+
+.sortoptions
+{
+	display: inline;
+	float: right;
+	position: relative;
+	top: 5px;
+}
 
 .statement
 {
@@ -301,6 +314,7 @@ label.vertical
 textarea
 {
 	resize: none;
+	border-radius: 3px;
 }
 
 select
@@ -377,6 +391,7 @@ select
 {
 	text-align: left;
 	margin-bottom: 20px;
+	max-width: 624px;
 	h2{
 		text-align: left;
 	}
@@ -608,6 +623,7 @@ a.commentusername
 ul.buttons
 {
 	margin-top: 2px;
+	line-height: 0.5em;
 }
 
 .buttons
@@ -666,6 +682,7 @@ p.comment
 	color: $g3;
 	padding-top: 4px;
 	font-size: 0.8em;
+	white-space: normal;
 	a{
 		color: #575757;
 	}
@@ -737,7 +754,7 @@ p.comment:hover
 	font-family: Open Sans,verdana, arial, sans-serif;
 	font-size: 1em;
 	font-weight:bold;
-	line-height: 1.1em;
+	line-height: 1.3em;
 	padding-bottom: 0.2em;
 }
 
@@ -745,6 +762,7 @@ p.comment:hover
 {
 	padding: 0px;
 	text-align: left;
+	color: $g4;
 }
 
 p.vote 
@@ -755,7 +773,6 @@ p.vote
 	font-size: 0.9em;
 	font-weight: bold;
 	float: left;
-	line-height: 1.4em;
 }
 
 p.votelabel
@@ -778,7 +795,7 @@ p.votelabel
 	font-weight: bold; 
 	color: white;
 	padding: 0px;
-	line-height: 1.4em;
+	line-height: 1.5em;
 	width: 20px;
 	text-align: center;
 	float: left;
@@ -912,10 +929,11 @@ p.votelabel
 
 .authentication {
   font-family: Open Sans,verdana, sans-serif;
-  width: 410px;
+  width: 250px;
   background-color: white;
-  border: solid 1px $g4;
   height: 64px;
+  border: solid 1px $g2;
+  border-radius: 3px;
 }
 
 .authentication .remove {
@@ -923,14 +941,12 @@ p.votelabel
   position: relative;
   top: 3px;
   right: 3px;
-  color: #333;
+  color: $g3;
   padding: 2px 4px;
   font-size: 15px;
 }
 
 .authentication .remove:hover {
-  color: #CCC;
-  background-color: #777;
 }
 
 .authentication img {
@@ -949,10 +965,10 @@ p.votelabel
 }
 
 .auth_provider img{
-  border-style: solid;
-  border-width: 1px;
+  border: solid 1px $g2;
+  border-radius: 3px;
   margin-right: 16px;
-  margin-bottom: -4px;
+  margin-bottom: 18px;
   opacity:0.8;
 }
 
@@ -1003,6 +1019,14 @@ p.votelabel
 	color: black;
 }
 
+.btn2{
+	background-color: $g0;
+}
+
+.btn2:hover{
+	background-color: $g1;
+}
+
 /*Zoekresultaten*/
 
 .grey {
@@ -1020,6 +1044,12 @@ p.votelabel
 		vertical-align: text-top;
 		padding-top: 7px;
 	}
+}
+
+.profilepicture{
+	float: left;
+	margin-right: 10px; 
+	margin-top: 3px;
 }
 
 div.pageconf
@@ -1055,7 +1085,6 @@ div.pageconf li a
 
 .label-subrow{
 	margin-left: 270px;
-	width: 100%;
 }
 
 .helpertext
@@ -1076,19 +1105,19 @@ div.pageconf li a
 {
 	color: $g4;
 	font-family: Open Sans,verdana, sans-serif;
-	font-size:16px;
-	width: 350px;
+	font-size: 0.9em;
+	width: 95%;
+	max-width: 350px;
 	background: white;
-	border: solid 1px $g4;
+	border: solid 1px $g2;
 	height: auto;	
 	padding: 5px;
+	margin-right: 5px;
 }
 
 .verticalform
 {
-	color: black;
 	font-size: 0.8em;
-	border-color: $g4;
 	float: left;
 	width: 50%;
 }
@@ -1110,11 +1139,12 @@ div.pageconf li a
 		margin-left: 0px;
 	}
 	.label-row{
+		margin-top: -10px;
 	}
 	label{
 		float: none;
 		display: block;
-		line-height: 1.2em;
+		line-height: 1.5em;
 		text-align: left;
 	}
 	.label-subrow{
@@ -1137,4 +1167,11 @@ div.pageconf li a
 	-moz-transition: all 250ms;
 	-webkit-transition: all 250ms;
 	-o-transition: all 250ms;
+}
+
+form {
+	transition: none;
+	-moz-transition: none;
+	-webkit-transition: none;
+	-o-transition: none;
 }

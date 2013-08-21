@@ -1,13 +1,13 @@
 <form action="" class="sort">
 	<div class="leftbar">
 		<h2 style="display:inline; margin-right: 20px;"><%= t("arguments.comments.title") %></h2>
-		<span class="grey">sorteer op:</span>
-			<select name="cars">
-				<option value="volvo">Hoogst beoordeeld</option>
-				<option value="saab">Nieuwst</option>
-				<option value="fiat">Geel</option>
-				<option value="audi">Audi</option>
+		<div class="sortoptions">
+			<span class="grey">sorteer op:</span>
+			<select name="sort">
+				<option value="highest">Hoogst beoordeeld</option>
+				<option value="newest">Nieuwst</option>
 			</select>
+		</div>
 	</div>
 </form>
 <div class="comments">

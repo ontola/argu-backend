@@ -1,12 +1,8 @@
 class UsersController < ApplicationController
 	load_and_authorize_resource
 
-	def show
+	def edit
 		@user = current_user
-
-		@tab = params['tab']
-		@tab ||= "account"
-		@tab = @tab.downcase
 		
 		unless @user.nil? 
 			@authentications = @user.authentications
