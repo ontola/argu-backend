@@ -41,5 +41,7 @@
     <p class="helpertext floatleft"><%= t("statements.form.helper.type") %></p>
     <div class="clear"></div>
   </div>
+  <%= f.label :tags %>
+  <%= f.text_field :tag_list %>
   <%= f.submit t(:save), class: "btn"  %>
 <% end %>

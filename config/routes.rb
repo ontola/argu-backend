@@ -4,7 +4,8 @@ Argu::Application.routes.draw do
 
   resources :authentications, only: [:create, :destoy]
   match 'auth/:provider/callback' => "authentications#create"
-
+  
+  match 'tagged' => 'statements#tagged', :as => 'tagged'
 
   #resources :users
   resources :statements do

@@ -7,9 +7,11 @@ class Statement < ActiveRecord::Base
   before_save :trim_data
   before_save :cap_title
 
+  acts_as_taggable_on :tags
+
   has_paper_trail
 
-  attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators
+  attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators, :tag_list
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }
