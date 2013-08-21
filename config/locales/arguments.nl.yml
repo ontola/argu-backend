@@ -27,9 +27,10 @@ nl:
       arg_title: "argument"
       content: "toelichting"
       type: "type"
+      submit: "argument plaatsen"
       helper:
-        title: "Maak een goede titel, verdomme"
-        content: "Onderbouw je argument zo logisch mogelijk, gebruik wetenschap enzo."
+        title: "Houd de titel zo kort mogelijk. Vat de kern van je argument samen in een paar woorden."
+        content: "Bespreek je argument hier in meer detail. Noem waarom het van toepassing is op de stelling."
     comments:
       title: "reacties"
       favorite: "favoriet"

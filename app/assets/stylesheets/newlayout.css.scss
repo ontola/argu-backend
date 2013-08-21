@@ -485,6 +485,7 @@ div#navbar li #argulogo
 	padding-top: 0px;
 	padding-bottom: 6px;
 	border-right: solid 1px white;
+	background-image: url(argulogo.svg);
 }
 
 div#navbar li #argulogo:hover
@@ -725,6 +726,7 @@ p.comment:hover
 	font-size: 0.7em;
 	position: relative;
 	top: 2px;
+	white-space: normal;
 	}
 	a
 	{
