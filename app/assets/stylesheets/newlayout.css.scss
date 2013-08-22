@@ -209,23 +209,22 @@ input {
 	{
 		color: $blu;
 		font-size: 1.2em;
-
 	}
 	margin-left: auto;
 	margin-right: auto;
 }
 
 .tags{
-	margin-top: 8px;
+	margin-top: 3px;
 }
 
 .tag{
 	color: white;
 	background-color: $blud;
 	border-radius: 5px;
-	padding: 0px 5px 0px 5px; 
+	padding: 0px 5px 2px 5px; 
 	font-size: 0.8em;
-
+	margin-right: 3px;
 }
 
 .tag:hover{
@@ -815,7 +814,6 @@ p.votelabel
 	font-weight: bold; 
 	color: white;
 	padding: 0px;
-	line-height: 1.5em;
 	width: 20px;
 	text-align: center;
 	float: left;
@@ -1189,9 +1187,30 @@ div.pageconf li a
 	-o-transition: all 250ms;
 }
 
-form {
+form, #argulogo {
 	transition: none;
 	-moz-transition: none;
 	-webkit-transition: none;
 	-o-transition: none;
+}
+
+/*Zaken die niet op het papier hoeven*/
+@media print{
+
+	header nav, footer, #navbar, .btn {
+		display: none;
+	}
+
+	.buttons a{
+		display: none;
+	}
+
+	.navrow a{
+		display: none;
+	}
+
+	.navrow a.current{
+		display: inline;
+		border: none;
+	}
 }
