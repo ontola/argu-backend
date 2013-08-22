@@ -19,7 +19,7 @@ nl:
     show:
       title: "argumenten"
       reply: "reageer"
-      created_by: "Geplaatst door %{user} op %{date}"
+      created_by: "%{user} - %{date}"
     new:
       header: "nieuw argument %{side} de stelling:"
       create: "nieuw argument %{side}"
@@ -27,14 +27,15 @@ nl:
       arg_title: "argument"
       content: "toelichting"
       type: "type"
+      submit: "argument plaatsen"
       helper:
-        title: "Maak een goede titel, verdomme"
-        content: "Onderbouw je argument zo logisch mogelijk, gebruik wetenschap enzo."
+        title: "Houd de titel zo kort mogelijk. Vat de kern van je argument samen in een paar woorden."
+        content: "Bespreek je argument hier in meer detail. Noem waarom het van toepassing is op de stelling."
     comments:
       title: "reacties"
       favorite: "favoriet"
       reply: "reageer"
       delete: "verwijder"
       more: "toon meer"
-      placed_by: "Geplaatst door %{user} op %{date}"
+      placed_by: "%{user} - %{date}"
       none: "geen reacties"

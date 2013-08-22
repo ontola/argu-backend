@@ -4,6 +4,7 @@
 	<div id="expand_nope">
 		<p><%= argument.content %></p>
 		<%= render partial: "votes/shr", locals: {argument: argument} %>
+		<br>
 		<% if (!@comment.nil?)%>
 			<%= link_to ( argument_path(argument)+"#commentstitle" ) do %>
 				<p class="comment">

@@ -34,7 +34,7 @@ Argu::Application.routes.draw do
   post "/search/" => "search#show", as: 'search', constraints: lambda { |r| r.env["warden"].authenticate? }
 
   ##get "users/new"
-  get "/settings", to: "users#show", as: 'settings', constraints: lambda { |r| r.env["warden"].authenticate? }
+  get "/settings", to: "users#edit", as: 'settings', constraints: lambda { |r| r.env["warden"].authenticate? }
   post '/settings' => 'users#update', as: 'settings', constraints: lambda { |r| r.env["warden"].authenticate? }
   #match "/signup", to: "users#new"
   #match "/signin", to: "sessions#new"
