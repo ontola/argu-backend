@@ -19,7 +19,6 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1/revisions/:rev
   # GET /arguments/1/revisions/:rev.json
   def revisions
-    authorize! :read, :revisions
     @version = nil
     @rev = params[:rev]
 
@@ -32,6 +31,7 @@ class ArgumentsController < ApplicationController
       @argument = @argument.versions.last
     end
 
+    authorize! :revisions, @argument
     respond_to do |format|
       format.html # revisions.html.erb
       format.json { render json: @argument }
@@ -41,10 +41,10 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1/revisions
   # GET /arguments/1/revisions.json
   def allrevisions
-    authorize! :index, :revisions
     @argument = Argument.find(params[:argument_id])
     @revisions = @argument.versions.scoped.reject{ |v| v.object.nil? }.reverse
 
+    authorize! :revisions, @argument
     respond_to do |format|
       format.html # allrevisions.html.erb
       format.json { render json: @argument }
@@ -54,7 +54,6 @@ class ArgumentsController < ApplicationController
   # PUT /arguments/1/revisions
   # PUT /arguments/1/revisions.json
   def setrevision
-    authorize! :update, :revisions
     @argument = Argument.find(params[:id])
     @version = nil
     @rev = params[:rev]
@@ -68,6 +67,7 @@ class ArgumentsController < ApplicationController
       @argument = @argument.versions.last
     end
 
+    authorize! :revisions, @argument
     respond_to do |format|
       if @argument.save
         format.html { redirect_to @argument, notice: 'Argument was successfully restored.' }

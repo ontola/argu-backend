@@ -41,7 +41,6 @@ class StatementsController < ApplicationController
   # GET /statements/1/revisions/:rev
   # GET /statements/1/revisions/:rev.json
   def revisions
-    authorize! :read, :revisions
     @version = nil
     @rev = params[:rev]
 
@@ -54,6 +53,7 @@ class StatementsController < ApplicationController
       @statement = @statement.versions.last
     end
 
+    authorize! :revisions, @statement
     respond_to do |format|
       format.html # revisions.html.erb
       format.json { render json: @statement }
@@ -63,10 +63,10 @@ class StatementsController < ApplicationController
   # GET /statements/1/revisions
   # GET /statements/1/revisions.json
   def allrevisions
-    authorize! :index, :revisions
     @statement = Statement.find(params[:id])
     @revisions = @statement.versions.scoped.reject{ |v| v.object.nil? }.reverse
 
+    authorize! :allrevisions, @statement
     respond_to do |format|
       format.html # allrevisions.html.erb
       format.json { render json: @statement }
@@ -76,7 +76,6 @@ class StatementsController < ApplicationController
   # PUT /statements/1/revisions
   # PUT /statements/1/revisions.json
   def setrevision
-    authorize :update, :revisions
     @statement = Statement.find(params[:id])
     @version = nil
     @rev = params[:rev]
@@ -90,6 +89,7 @@ class StatementsController < ApplicationController
       @statement = @statement.versions.last
     end
 
+    authorize :setrevision, @statement
     respond_to do |format|
       if @statement.save
         format.html { redirect_to @statement, notice: 'Statement was successfully restored.' }
