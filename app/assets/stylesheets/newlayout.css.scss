@@ -215,12 +215,22 @@ input {
 	margin-right: auto;
 }
 
+.tags{
+	margin-top: 8px;
+}
+
 .tag{
 	color: white;
 	background-color: $blud;
 	border-radius: 5px;
 	padding: 0px 5px 0px 5px; 
 	font-size: 0.8em;
+
+}
+
+.tag:hover{
+	color: white !important;
+	background-color: $blu;
 }
 
 .opinionbtns{
