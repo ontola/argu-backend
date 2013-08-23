@@ -84,8 +84,9 @@ class ArgumentsController < ApplicationController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    @statement_id = params[:statement_id]
-    @pro = params[:pro]
+    @argument.assign_attributes({pro: params[:pro], statement_id: params[:statement_id]})
+    #@argument.statement = Statement.find_by_id!(params[:statement_id]).id.to_s
+    #@argument.pro = params[:pro] == 'true' ? true : false
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @argument }
@@ -99,8 +100,6 @@ class ArgumentsController < ApplicationController
   # POST /arguments
   # POST /arguments.json
   def create
-    @argument.statement_id = params[:statement_id]
-    @argument.pro = params[:pro]
     respond_to do |format|
       if @argument.save
         format.html { redirect_to (params[:statement_id].blank? ? @argument : Statement.find_by_id(params[:statement_id])), notice: 'Argument was successfully created.' }
