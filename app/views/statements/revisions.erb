@@ -1,14 +1,20 @@
-<div class="revbar">
-	<ul>
-		<li><h3><%= @version.next.nil? ? t("revisions.newest") : link_to( t("next"),  statement_rev_revisions_url(@statement, @version.next)) %></h3></li>
-		<li id="revheader"><h2><%= @version.created_at.to_s %></h2></li>
-		<li id="revprev"><h3><%= @version.previous.nil? ? t("revisions.oldest") : link_to( t("previous"),  statement_rev_revisions_url(@statement, @version.previous)) %></h3></li>
+<div class="box revbar">
+		<ul>
+		<li><h3 class="left"><%= @version.next.nil? ? t("revisions.newest") : link_to( t("next"),  statement_rev_revisions_url(@statement, @version.next)) %></h3></li>
+		<li id="revprev"><h3 class="right"><%= @version.previous.nil? ? t("revisions.oldest") : link_to( t("previous"),  statement_rev_revisions_url(@statement, @version.previous)) %></h3></li>
 	</ul>
+</div>
+
+
+
+<div class="revbar">
+
 </div>
 <div>
 	<ul class="revunderbar">
 		<% u = User.find_by_id(@statement.version.whodunnit) %>
-		<li>Edited by: <%= u.username %></li>
+		<li>Edited by: <%= u.username %> <%= @version.created_at.to_s %></li>
+		<li id="revheader"><h2><%= @version.created_at.to_s %></h2></li>
 		<li><h3>Options:</h3></li>
 		<li><% if(@statement.live?)%><%= t("revisions.current") %><% else %> <%= link_to(t("revisions.revert"), statement_update_revision_url(@statement, @version), method: :put) %><% end %></li>
 

@@ -424,6 +424,10 @@ select
 	float: left;
 }
 
+.right{
+	text-align: right;
+}
+
 div.dropdown
 {
 	height: 30px;
@@ -653,7 +657,7 @@ ul.buttons
 		float: right;
 		font-family: Open Sans,verdana,arial,sans-serif;
 		font-size: 0.8em;
-		padding-left: 10px;
+		margin-left: 10px;
 		padding-top: 4px;
 	}
 	p
@@ -857,41 +861,35 @@ p.votelabel
 /* Revisions styling */
 .revbar
 {
-	display: block;
-	background-color: $g4;
-	width:100%;
-	height: 45px;
-	overflow: hidden;
-	border-top: solid 1px white;
-
+	margin: auto;
 	ul
 	{
-		margin:0px auto;
-		padding: 0px;
-		width: 960px;
-
+		text-align: center;
+		width: 100%;
 		li
 		{
+			width: 49%;
 			list-style-type: none;
 			display: inline-block;
-			float: left;
-
 			h3
 			{
-				color: white;
-				a {text-decoration: none;}
+				padding: 5px;
+				color: $g4;
+				a {
+					text-decoration: none;
+					font-size: 1em;
+				}
 			}
 		}
 	}
 
 	#revheader
 			{ 
-				padding-left: 150px;
 			}
 
 			#revprev
 			{
-				float: right;
+				float: none;
 			}
 }
 
