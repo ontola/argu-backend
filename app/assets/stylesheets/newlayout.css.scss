@@ -861,7 +861,10 @@ p.votelabel
 /* Revisions styling */
 .revbar
 {
-	margin: auto;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 600px;
+	height: 35px;
 	ul
 	{
 		text-align: center;
