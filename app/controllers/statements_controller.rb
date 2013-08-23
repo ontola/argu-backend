@@ -41,6 +41,7 @@ class StatementsController < ApplicationController
   # GET /statements/1/revisions/:rev
   # GET /statements/1/revisions/:rev.json
   def revisions
+    @statement = Statement.find_by_id(params[:statement_id])
     @version = nil
     @rev = params[:rev]
 
@@ -63,7 +64,7 @@ class StatementsController < ApplicationController
   # GET /statements/1/revisions
   # GET /statements/1/revisions.json
   def allrevisions
-    @statement = Statement.find(params[:id])
+    @statement = Statement.find_by_id(params[:statement_id])
     @revisions = @statement.versions.scoped.reject{ |v| v.object.nil? }.reverse
 
     authorize! :allrevisions, @statement
@@ -76,7 +77,7 @@ class StatementsController < ApplicationController
   # PUT /statements/1/revisions
   # PUT /statements/1/revisions.json
   def setrevision
-    @statement = Statement.find(params[:id])
+    @statement = Statement.find_by_id(params[:statement_id])
     @version = nil
     @rev = params[:rev]
 
