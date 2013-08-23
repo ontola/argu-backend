@@ -21,8 +21,8 @@
             <td><%= i.content[0,140] + ((i.content.length < 140) ? "" : "...") %></td>
             <td><%= u.getLogin %></td>
             <td><%= v.created_at.to_s %></td>
-            <td><%= link_to('Goto', rev_revisions_statement_url(i, v)) %></td>
-            <td><%= link_to('Revert', update_revision_statement_url(i, v), method: :put) %></td>
+            <td><%= link_to('Goto', statement_rev_revisions_url(i, v)) %></td>
+            <td><%= link_to('Revert', statement_update_revision_url(i, v), method: :put) %></td>
         </tr>
     <% end %>
 </table>
