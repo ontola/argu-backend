@@ -7,7 +7,7 @@ class Statement < ActiveRecord::Base
   before_save :trim_data
   before_save :cap_title
 
-  acts_as_taggable_on :tags
+  acts_as_ordered_taggable_on :tags
 
   has_paper_trail
 
