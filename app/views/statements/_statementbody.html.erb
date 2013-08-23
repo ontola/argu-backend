@@ -2,6 +2,12 @@
 	<div class= "box statement">
 		<h1 class="title"><%= @statement.title %></h1>
 		<p><%= @statement.content %></p>
+			<div class="tags">
+				<% @statement.tags.any? %>
+					<% @statement.tags.each do |tag| %>
+		  			<%= link_to tag.name, tagged_url(:tag => tag.name), class:"tag" %>
+				<% end %>
+			</div>
 		<ul class="buttons">
 			<div class="info">
 				<%= content_tag(:p, t("arguments.comments.placed_by", user: @statement.creator.username, date: l(@statement.created_at, format: :long))) %>

@@ -1,5 +1,7 @@
-
+include ActsAsTaggableOn::TagsHelper
 module StatementsHelper
+	
+
 private
 	def getStateType(statetype)
 		case statetype

@@ -23,22 +23,11 @@
     <p class="helpertext floatleft"><%= t("statements.form.helper.content") %></p>
     <div class="clear"></div>
   </div>
-  <div class= "label-row">
-    <%= f.label :statetype, t("statements.type"), class: "vertical" %>
+    <div class= "label-row">
+    <%= f.label :tags, t("statements.form.themes"), class: "vertical" %>
     <div class="clear"></div>
-    <div class="floatleft dropdown">
-      <%= f.select(:statetype, options_for_select([
-        [getStateType(0), 0],
-        [getStateType(1), 1],
-        [getStateType(2), 2],
-        [getStateType(3), 3],
-        [getStateType(4), 4],
-        [getStateType(5), 5],
-        [getStateType(6), 6],
-        [getStateType(7), 7],
-        ], @statement.statetype)) %>
-    </div> 
-    <p class="helpertext floatleft"><%= t("statements.form.helper.type") %></p>
+    <%= f.text_field :tag_list, class: "settingform verticalform" %>
+    <p class="helpertext floatleft"><%= t("statements.form.helper.themes") %></p>
     <div class="clear"></div>
   </div>
   <%= f.submit t(:save), class: "btn"  %>

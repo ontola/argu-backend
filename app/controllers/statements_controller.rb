@@ -102,6 +102,14 @@ class StatementsController < ApplicationController
     end
   end  
 
+def tagged
+  if params[:tag].present? 
+    @statements = Statement.tagged_with(params[:tag])
+  else 
+    @statements = Statement.postall
+  end  
+end
+
   # GET /statements/new
   # GET /statements/new.json
   def new
