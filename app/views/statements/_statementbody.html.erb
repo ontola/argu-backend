@@ -2,20 +2,22 @@
 	<div class= "box statement">
 		<h1 class="title"><%= @statement.title %></h1>
 		<p><%= @statement.content %></p>
-			<div class="tags floatleft">
+		<div class="infobar">
+			<div class="tags floatleft" title="thema's">
 				<% @statement.tags.any? %>
 					<% @statement.tags.each do |tag| %>
-		  			<%= link_to tag.name, tagged_url(:tag => tag.name), class:"tag" %>
+		  			<%= link_to tag.name, tagged_url(:tag => tag.name), class:"tag", title: t("statements.titles.tags")+tag.name%>
 				<% end %>
 			</div>
-		<ul class="buttons">
-			<li>	
-				<%= link_to(t("edit"), 	edit_statement_path(@statement)) %>
-			</li>
-			<li>	
-				<%= link_to(t("history"), statement_revisions_path(@statement)) %>
-			</li>
-		</ul>
+			<ul class="buttons">
+				<li>	
+					<%= link_to(t("edit"), 	edit_statement_path(@statement)) %>
+				</li>
+				<li>	
+					<%= link_to(t("history"), statement_revisions_path(@statement)) %>
+				</li>
+			</ul>
+		</div>	
 		<div style='clear:both;'></div>
 	</div>
 </header>

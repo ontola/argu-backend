@@ -11,7 +11,7 @@ nl:
     edit: "bewerken"
     no_pros: "nog niets voor"
     no_cons: "nog niets tegen"
-    newstatement: "nieuwe stelling"
+    newstatement: "+ stelling"
     content: "inhoud"
     preview:
       pro:
@@ -28,7 +28,8 @@ nl:
             title: "Vat de stelling zo bondig mogelijk samen."
             content: "Beschrijf de stelling in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
             themes: "Thema's of onderwerpen die aan deze stelling gerelateerd zijn. Plaats komma's tussen de thema's."
-
+    titles:
+      tags: "Zoek stellingen met het thema "
     #statement types
     type_social: "Maatschappelijk"
     type_political: "Politiek"
