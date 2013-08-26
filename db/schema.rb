@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130821130838) do
+ActiveRecord::Schema.define(:version => 20130716152517) do
 
   create_table "arguments", :force => true do |t|
     t.text     "content",                        :null => false
@@ -65,41 +65,15 @@ ActiveRecord::Schema.define(:version => 20130821130838) do
 
   add_index "profiles", ["user_id"], :name => "profiles_by_user_id", :unique => true
 
-  create_table "statementarguments", :force => true do |t|
-    t.integer "argument_id",                    :null => false
-    t.integer "statement_id",                   :null => false
-    t.boolean "pro",          :default => true, :null => false
-    t.integer "votes_count",  :default => 0
-  end
-
-  add_index "statementarguments", ["argument_id", "statement_id"], :name => "arg_state_index"
-
   create_table "statements", :force => true do |t|
-    t.string   "title",                      :null => false
-    t.text     "content",                    :null => false
+    t.string   "title",                     :null => false
+    t.text     "content",                   :null => false
     t.integer  "statetype",  :default => 6
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.integer  "pro_count",  :default => 0
     t.integer  "con_count",  :default => 0
-    t.integer  "moderators", :default => [],                 :array => true
-  end
-
-  create_table "taggings", :force => true do |t|
-    t.integer  "tag_id"
-    t.integer  "taggable_id"
-    t.string   "taggable_type"
-    t.integer  "tagger_id"
-    t.string   "tagger_type"
-    t.string   "context",       :limit => 128
-    t.datetime "created_at"
-  end
-
-  add_index "taggings", ["tag_id"], :name => "index_taggings_on_tag_id"
-  add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
-
-  create_table "tags", :force => true do |t|
-    t.string "name"
+    t.string   "moderators"
   end
 
   create_table "users", :force => true do |t|
