@@ -12,6 +12,11 @@ class ApplicationController < ActionController::Base
     request.env['HTTP_REFERER'] ||= root_path
     redirect_to :back, :alert => exception.message
   end
+  
+  rescue_from Errno::ECONNREFUSED do |exception|
+    request.env['HTTP_REFERER'] ||= root_path
+    redirect_to :back, :alert => exception.message
+  end
 
   def set_locale
     unless current_user.nil?
