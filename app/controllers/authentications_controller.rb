@@ -4,11 +4,11 @@ class AuthenticationsController < ApplicationController
     omniauth = request.env["omniauth.auth"]
     authentication = Authentication.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if authentication
-      flash[:notice] = "Signed in succesfully"
+      flash[:notice] = t("users_oauth_notices_signedin")
       sign_in_and_redirect(:user, authentication.user)
     elsif current_user
       current_user.authentications.create!(:provider => omniauth['provider'], :uid => omniauth['uid'])
-      flash[:notice] = "Authentication succesfull"
+      flash[:notice] = t("users_oauth_notices_linked")
       redirect_to authentications_url
     else
       omniauth['info']['nickname'] = User.isValidUsername?(omniauth['info']['nickname']) ? omniauth['info']['nickname'] : ('u'+'%010d' % rand(10 ** 10)).to_s
@@ -19,7 +19,7 @@ class AuthenticationsController < ApplicationController
                          :password => Devise.friendly_token[0,20])
       user.apply_omniauth(omniauth)
       if user.save
-        flash[:notice] = "Signed in succesfully"
+        flash[:notice] = t("users_oauth_notices_signedin")
         sign_in(:user, user)
         redirect_to edit_user_registration_path
       else
@@ -35,9 +35,9 @@ class AuthenticationsController < ApplicationController
     #Check if auth was the last linked account, if so, delete the user
     if current_user.authentications.empty? && current_user.email.blank? && current_user.username.blank?
       current_user.destroy
-      redirect_to root_url, :notice => "Account deleted."
+      redirect_to root_url, :notice => t("users_oauth_notices_deleted")
     else
-      redirect_to authentications_url, :notice => "Successfully destroyed authentication."
+      redirect_to authentications_url, :notice => t("users_oauth_notices_linked")
     end
   end
 end
