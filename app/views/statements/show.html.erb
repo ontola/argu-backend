@@ -1,4 +1,4 @@
-<% provide(:title, @statement.title.nil? ? t(:statement_title) : @statement.title) %>
+<% provide :title, (@statement.title.nil? ? t(:statement_title) : @statement.title) %>
 <%= render 'statementbody' %>
 	<div class="opinionbtns"> <!--TODO-->
 		<%= link_to(t("arguments.pro"), '', class:"oppro") %>

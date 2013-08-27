@@ -4,7 +4,7 @@
 <!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
-  <title><%= yield(:title) == "" ? "" : yield(:title) + " | " %><%= t('name') %></title>
+  <title><%= yield(:title).blank? ? "" : yield(:title) + " | " %><%= t('name') %></title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <%= csrf_meta_tags %>
