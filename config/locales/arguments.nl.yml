@@ -39,3 +39,7 @@ nl:
       more: "toon meer"
       placed_by: "%{user} - %{date}"
       none: "geen reacties"
+    notices:
+      restored: "Het argument is teruggeplaatst."
+      created: "Het argument is geplaatst."
+      updated: "Het argument is gewijzigd."

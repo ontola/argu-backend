@@ -71,7 +71,7 @@ class ArgumentsController < ApplicationController
     authorize! :revisions, @argument
     respond_to do |format|
       if @argument.save
-        format.html { redirect_to @argument, notice: 'Argument was successfully restored.' }
+        format.html { redirect_to @argument, notice: t("arguments.notices.restored") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -102,7 +102,7 @@ class ArgumentsController < ApplicationController
   def create
     respond_to do |format|
       if @argument.save
-        format.html { redirect_to (params[:statement_id].blank? ? @argument : Statement.find_by_id(params[:statement_id])), notice: 'Argument was successfully created.' }
+        format.html { redirect_to (params[:statement_id].blank? ? @argument : Statement.find_by_id(params[:statement_id])), notice: t("arguments.notices.created") }
         format.json { render json: @argument, status: :created, location: @argument }
       else
         format.html { render action: "new", pro: params[:pro], statement_id: params[:statement_id] }
@@ -116,7 +116,7 @@ class ArgumentsController < ApplicationController
   def update
     respond_to do |format|
       if @argument.update_attributes(params[:argument])
-        format.html { redirect_to @argument, notice: 'Argument was successfully updated.' }
+        format.html { redirect_to @argument, notice: t("arguments.notices.updated") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

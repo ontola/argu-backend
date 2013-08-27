@@ -13,7 +13,7 @@ nl:
   devise:
     failure:
       already_authenticated: 'Je bent al ingelogd.'
-      unauthenticated: ' Je moet inloggen voordat je door kan gaan.'
+      unauthenticated: 'Je moet inloggen voordat je door kan gaan.'
       unconfirmed: 'Je moet je account bevestigen voordat je door kan gaan.'
       locked: 'Jouw account is vergrendeld.'
       invalid: 'Ongeldig email-adres of wachtwoord.'

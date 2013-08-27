@@ -35,7 +35,7 @@ nl:
   destroy_confirmation: "weet je het zeker?"
   not_allowed: "actie niet toegestaan."
   error_prohibited: " bij het opslaan:"
-  outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser</a> om argu te bezoeken."
+  outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
 #Controllers
 #Sessions
   sessions_error_invalid: "Foutieve gebruikersnaam of wachtwoord"
@@ -104,6 +104,10 @@ nl:
   users_oauth_login: "inloggen met"
   users_oauth_remove: "account ontkoppelen"
   users_oauth_remove_confirmation: "PAS OP! Het ontkoppelen van dit account zorgt ervoor dat je niet meer kunt inloggen, aangezien je nog geen gebruikersnaam + wachtwoord op argu hebt gemaakt. Weet je zeker dat je dit account wilt verwijderen?"
+  users_oauth_notices_deleted: "Account verwijderd."
+  users_oauth_notices_linked: "Account gekoppeld."
+  users_oauth_notices_signedin: "Succesvol ingelogd."
+  users_oauth_notices_unlinked: "Account ontkoppeld."
   #index
   users_title: "gebruikers"
   users_header: "gebruikers"

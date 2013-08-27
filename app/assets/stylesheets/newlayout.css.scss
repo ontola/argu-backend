@@ -62,10 +62,6 @@ p /*paragraph*/
 	padding: 0px;
 	line-height: 1.5em;
 	white-space: pre-line;
-	html.lt-ie8 & {
-		white-space: pre;
-		word-wrap: break-word;
-	}
 }
 
 small
@@ -193,6 +189,9 @@ div.clear
 	min-width: 400px;
 	max-width: 1000px;
 	margin:0px auto;
+	text-align: center;
+	html.lt-ie6 & {
+	width: 100%;	}
 }
 
 hr.stripe
@@ -247,6 +246,9 @@ hr.stripe
 	margin-top: 0px;
 	margin-bottom: -5px;
 	margin-left: -3px;
+	html.lt-ie8 & {
+		padding-bottom: 0px;
+	}
 }
 
 .tag{
@@ -273,9 +275,8 @@ hr.stripe
 	margin-right: auto;
 	margin-bottom: 20px;
 	overflow: hidden;
-	
 	li{
-		display: inline-block;
+		display: inline
 	}
 	p{
 		text-align: center;
@@ -289,29 +290,33 @@ hr.stripe
 		margin-right: 10px;
 		background-color: white;
 		border-radius: 3px;
+		width: 4em;
 	}
 	.oppro{
-		color: $gred;
-		border-bottom: 2px solid #a5bc9f;
+		color: $gre;
+		border-bottom: 2px solid $gre;
 	}	
 	.oppro:hover{
-		color: $gre !important;
+		color: white!important;
+		background-color: $gred;
 		border-bottom: 2px solid $gre;
 	}
 	.opneu{
-		color: $g2 !important;
-		border-bottom: 2px solid $g2;
-	}	
-	.opneu:hover{
 		color: $g3 !important;
 		border-bottom: 2px solid $g3;
 	}	
+	.opneu:hover{
+		color: white !important;
+		background-color: $g2;
+		border-bottom: 2px solid $g3;
+	}	
 	.opcon{
-		color: $redd !important;
-		border-bottom: 2px solid $redd;
+		color: $red !important;
+		border-bottom: 2px solid $red;
 	}
 	.opcon:hover{
-		color: $red !important;
+		color: white !important;
+		background-color: $redd;
 		border-bottom: 2px solid $red;
 	}
 }
@@ -489,15 +494,19 @@ ul .dropdown
 
 }
 
+#navbtns{
+	float: right;
+	display: inline;
+}
+
 div#navbar li
 {
 	list-style-type: none;
 	display: inline-block;
 	float: left;
-	border-left: solid 1px white;
 }
 
-div#navbar li a
+div#navbar a
 {
 	display: block;
 	font-family: Raleway, Century Gothic, sans-serif;
@@ -509,17 +518,20 @@ div#navbar li a
 	padding-right: 10px;
 }
 
-div#navbar li #argulogo
+div#navbar #argulogo
 {
 	font-size: 36px;
 	padding-top: 0px;
+	width: 73px;
 	padding-bottom: 6px;
-	border-right: solid 1px white;
 	background-image: url(argulogo.svg);
+	float: left;
 }
 
-div#navbar li #argulogo:hover
+div#navbar #argulogo:hover
 {
+		background-color: $g1;
+
 }
 
 div#navbar .close
@@ -546,7 +558,14 @@ div#navbar li #search
 	font-weight: 200;
 	color: $g4;
 	float: right;
+		html.lt-ie8 & {
+		float: left;
+		line-height: 35px;
+	}
 	border: none;
+	/*Removing chrome uglyness*/
+	border-radius: 0px;
+	outline: none;
 }
 
 #search-moz-placeholder 
@@ -757,7 +776,7 @@ p.comment:hover
 {
 	clear: both;
 	margin-bottom: 20px;
-	margin-top: -5px;
+	margin-top: -8px;
 }
 
 .title
@@ -894,16 +913,16 @@ p.votelabel
 	margin-left: auto;
 	margin-right: auto;
 	max-width: 624px;
-	height: 30px;
 	ul
 	{
 		text-align: center;
 		width: 100%;
 		li
-		{
-			width: 49%;
+		{	
+			float: left;
 			list-style-type: none;
 			display: inline-block;
+			padding-bottom: 9px;
 			h3
 			{
 				padding: 5px;
@@ -911,18 +930,17 @@ p.votelabel
 				a {
 					text-decoration: none;
 					font-size: 1em;
+				
 				}
 			}
 		}
 	}
-
 	#revheader
 			{ 
 			}
-
 			#revprev
 			{
-				float: none;
+				float: right;
 			}
 }
 
@@ -982,6 +1000,7 @@ p.votelabel
   height: 64px;
   border: solid 1px $g2;
   border-radius: 3px;
+  text-align: left;
 }
 
 .authentication .remove {
@@ -1018,6 +1037,7 @@ p.votelabel
   margin-right: 16px;
   margin-bottom: 18px;
   opacity:0.8;
+  float: left;
 }
 
 .auth_provider :hover{
@@ -1076,7 +1096,7 @@ p.votelabel
 
 /*Zoekresultaten*/
 
-/* Profile en settings */
+/* Profile */
 .profile #head
 {
 	list-style-type: none;
@@ -1112,12 +1132,22 @@ div.pageconf li a
 	text-decoration: none;
 }
 
+/* Settings */
+
 .label-row{
 	margin-bottom: 20px;
+	clear: both;
 }
 
 .label-subrow{
 	margin-left: 270px;
+	.btn{
+		float: left;
+	}
+}
+
+form .btn{
+	float: left;
 }
 
 .helpertext
@@ -1136,16 +1166,23 @@ div.pageconf li a
 
 .settingform
 {
+	display: block;
 	color: $g4;
 	font-family: Open Sans,verdana, sans-serif;
 	font-size: 0.9em;
-	width: 95%;
-	max-width: 350px;
+	/*width: 95%;*/
+	max-width: 550px;
 	background: white;
 	border: solid 1px $g2;
 	height: auto;	
 	padding: 5px;
 	margin-right: 5px;
+}
+
+.edit-user{
+	.settingform{
+			width: 382px !important;
+	}
 }
 
 .verticalform
@@ -1160,7 +1197,42 @@ div.pageconf li a
 	color: $g4;
 }
 
-/*Responsive design voor kleinere displays*/
+
+/*Fixes*/
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+ 
+.clearfix {
+	display: block;
+}
+ 
+html[xmlns] .clearfix {
+	display: block;
+}
+ 
+* html .clearfix {
+	height: 1%;
+}
+
+/*IE7*/
+p.browsehappy{
+	text-align: center;
+	padding: 10px;
+	background-color: $redd;
+	color: white;
+	a{
+		font-size: 1em;
+		font-weight: bold;
+	}
+}
+
+/*Responsive design*/
 @media screen and (max-width: 550px) {
 	.procon {
 		width: 100%;

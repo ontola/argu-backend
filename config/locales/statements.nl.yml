@@ -8,7 +8,7 @@ nl:
     plural: "stellingen"
     pros: "voor"
     cons: "tegen"
-    edit: "bewerken"
+    edit: "stelling bewerken"
     no_pros: "nog niets voor"
     no_cons: "nog niets tegen"
     newstatement: "+ stelling"
@@ -23,6 +23,8 @@ nl:
         one: "1  tegenargument"
         other: "%{count} tegenargumenten"
     form:
+        title: "titel"
+        content: "inhoud"
         themes: "thema's"
         helper:
             title: "Vat de stelling zo bondig mogelijk samen."

@@ -10,16 +10,16 @@
     </div>
   <% end %>
   <div class= "label-row">
-    <%= f.label :title, t("statements.title"), class: "vertical" %>
+    <%= f.label :title, t("statements.form.title"), class: "vertical" %>
     <div class="clear"></div>
     <%= f.text_field :title, class: "settingform verticalform" %>
     <p class="helpertext floatleft"><%= t("statements.form.helper.title") %></p>
     <div class="clear"></div>
   </div>
   <div class= "label-row">
-    <%= f.label :content, t("statements.content"), class: "vertical" %>
+    <%= f.label :content, t("statements.form.content"), class: "vertical" %>
     <div class="clear"></div>
-    <%= f.text_area :content, class: "settingform verticalform", rows: "4" %>
+    <%= f.text_area :content, class: "settingform verticalform", rows: "10" %>
     <p class="helpertext floatleft"><%= t("statements.form.helper.content") %></p>
     <div class="clear"></div>
   </div>
