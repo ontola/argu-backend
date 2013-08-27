@@ -14,8 +14,9 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Errno::ECONNREFUSED do |exception|
-    request.env['HTTP_REFERER'] ||= root_path
-    redirect_to :back, :alert => exception.message
+    # AKA just don't crash
+    # Maybe inform someone that the 
+    Rails.logger.error "Errno::ECONNREFUSED thrown: " + exception.to_json.to_s
   end 
 
   def set_locale
