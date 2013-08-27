@@ -1,22 +1,21 @@
 <div id="navbar">
-  <ul id="mainbar">
-    <li>
-      <%= link_to "argu", '/', id: "argulogo" %>
-    </li>
-    <div id="navr">
-      <li><%= render partial: 'search/search' %></li>
-      <% if current_user.present?%>
-      <li><%= link_to t(:header_menuitem_statements), statements_url, id: "statements" %></li>
-        <li><%= link_to t(:users_show_title), settings_url , id: "account" %>
-          <ul class="dropdown">
-            <li>Test</li>
-          </ul></li>
-      <% else %>
-        <li><%= link_to t(:sign_in), new_user_session_url, id: "account" %></li>
-      <% end %>
-      <li><%= link_to "info", '/about', class: "close", id: "info" %></li>
-      <li><%= link_to("Uitloggen", destroy_user_session_url, method: :delete) %></li>
-    </div>
-  </ul>
-</div>
+  <div id="mainbar">      
+  <%= link_to "argu", '/', id: "argulogo" %>
+      <ul id="navbtns">
+        <li><%= render partial: 'search/search' %></li>
+        <% if current_user.present?%>
+          <li><%= link_to t(:header_menuitem_statements), statements_url, id: "statements" %></li>
+            <li><%= link_to t(:users_show_title), settings_url , id: "account" %>
+              <ul class="dropdown">
+                <li></li>
+              </ul></li>
+        <% else %>
+          <li><%= link_to t(:sign_in), new_user_session_url, id: "account" %></li>
+        <% end %>
+        <li><%= link_to "info", '/about', class: "close", id: "info" %></li>
+        <li><%= link_to("Uitloggen", destroy_user_session_url, method: :delete) %></li>
+      </ul>
+      </div></div>
+    </ul>
+  </div>
 <div class="clear"></div>
