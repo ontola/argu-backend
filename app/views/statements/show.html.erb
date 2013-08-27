@@ -1,10 +1,10 @@
 <% provide :title, (@statement.title.nil? ? t(:statement_title) : @statement.title) %>
 <%= render 'statementbody' %>
-	<div class="opinionbtns"> <!--TODO-->
-		<%= link_to(t("arguments.pro"), '', class:"oppro") %>
-		<%= link_to(t("arguments.neu"), '', class:"opneu") %>
-		<%= link_to(t("arguments.con"), '', class:"opcon") %>
-	</div>
+	<ul class="opinionbtns"> <!--TODO-->
+		<li><%= link_to(t("arguments.pro"), '', class:"oppro") %></li>
+		<li><%= link_to(t("arguments.neu"), '', class:"opneu") %></li>
+		<li><%= link_to(t("arguments.con"), '', class:"opcon") %></li>
+	</ul>
 <nav class="navrow">
 	<ul class="navcontent">
 		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } , class: "current" , id: "arguments"  %></li>

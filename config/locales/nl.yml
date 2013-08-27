@@ -22,6 +22,8 @@ nl:
   add: "toevoegen"
   next: "volgende"
   previous: "vorige"
+  older: "ouder"
+  newer: "niewer"
   destroy: "verwijderen"
   empty_type: "er zijn geen %{type}"
   history: "geschiendenis"

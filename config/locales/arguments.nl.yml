@@ -22,7 +22,7 @@ nl:
       created_by: "%{user} - %{date}"
     new:
       header: "nieuw argument %{side} de stelling:"
-      create: "nieuw argument %{side}"
+      create: "+ argument %{side}"
     form:
       arg_title: "argument"
       content: "toelichting"
