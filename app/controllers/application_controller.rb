@@ -12,12 +12,6 @@ class ApplicationController < ActionController::Base
     request.env['HTTP_REFERER'] ||= root_path
     redirect_to :back, :alert => exception.message
   end
-  
-  rescue_from Errno::ECONNREFUSED do |exception|
-    # AKA just don't crash
-    # Maybe inform someone that the solr server isn't running
-    Rails.logger.error "Errno::ECONNREFUSED thrown: " + exception.to_json.to_s
-  end
 
   def set_locale
     unless current_user.nil?
