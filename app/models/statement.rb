@@ -11,7 +11,7 @@ class Statement < ActiveRecord::Base
 
   has_paper_trail
 
-  attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators, :tag_list
+  attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators, :tag_list, :invert_arguments
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }
@@ -67,6 +67,18 @@ class Statement < ActiveRecord::Base
   def trim_data
     self.title = title.strip
     self.content = content.strip
+  end
+
+  def invert_arguments
+    true
+  end
+
+  def invert_arguments=(invert)
+    if invert
+      self.arguments.each do |a|
+        a.update_attributes pro: !a.pro
+      end
+    end
   end
 
 # Scopes

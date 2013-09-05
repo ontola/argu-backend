@@ -26,6 +26,7 @@ nl:
         title: "titel"
         content: "inhoud"
         themes: "thema's"
+        invert: "alle argumenten omkeren"
         helper:
             title: "Vat de stelling zo bondig mogelijk samen."
             content: "Beschrijf de stelling in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."

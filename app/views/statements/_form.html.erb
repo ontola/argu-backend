@@ -23,12 +23,18 @@
     <p class="helpertext floatleft"><%= t("statements.form.helper.content") %></p>
     <div class="clear"></div>
   </div>
-    <div class= "label-row">
+  <div class= "label-row">
     <%= f.label :tags, t("statements.form.themes"), class: "vertical" %>
     <div class="clear"></div>
     <%= f.text_field :tag_list, class: "settingform verticalform" %>
     <p class="helpertext floatleft"><%= t("statements.form.helper.themes") %></p>
     <div class="clear"></div>
   </div>
+  <div class= "label-row">
+    <%= f.label :invert_arguments, t("statements.form.invert"), class: "vertical" %>
+    <div class="clear"></div>
+    <%= f.check_box :invert_arguments %> 
+    <div class="clear"></div>
+  </div>  
   <%= f.submit t(:save), class: "btn"  %>
 <% end %>
