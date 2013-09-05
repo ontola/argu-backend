@@ -70,7 +70,7 @@ class Statement < ActiveRecord::Base
   end
 
   def invert_arguments
-    true
+    false
   end
 
   def invert_arguments=(invert)
