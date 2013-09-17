@@ -1,6 +1,12 @@
 <% provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title) %>
-<div class="centercont"><%= render 'argumentbody' %>
-<%= render 'argumentcomments' %>
-<div class="box clearfix"> 
-  <%= render partial: 'add_comment_form', locals: { argument: @argument, parent_id: @parent_id, visible: true } %>
-</div></div>
+<div class="centercont">
+  <div class= "label-row">
+    <p style="text-align: center;"><%= t("arguments.new.header", side: params[:pro] ? t("arguments.pro") : t("arguments.con")) %></p>
+    <h1 class="title statement">Hier moet de titel van de stelling komen te staan</h2> <!-- TODO -->
+  </div>
+  <%= render 'argumentbody' %>
+  <%= render 'argumentcomments' %>
+  <div class="box clearfix"> 
+    <%= render partial: 'add_comment_form', locals: { argument: @argument, parent_id: @parent_id, visible: true } %>
+  </div>
+</div>

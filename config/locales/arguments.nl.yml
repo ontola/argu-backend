@@ -21,7 +21,7 @@ nl:
       reply: "reageer"
       created_by: "%{user} - %{date}"
     new:
-      header: "nieuw argument %{side} de stelling:"
+      header: "argument %{side} de stelling:"
       create: "+ argument %{side}"
     form:
       arg_title: "argument"

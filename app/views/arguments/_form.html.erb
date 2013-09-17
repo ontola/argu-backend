@@ -23,21 +23,6 @@
     <p class="helpertext floatleft"><%= t("arguments.form.helper.content") %></p>
     <div class="clear"></div>
   </div>
-  <div class= "label-row">
-    <%= f.label :argtype, t("arguments.form.type"), class: "vertical" %>
-    <div class="clear"></div>
-    <div class="floatleft dropdown">
-      <%= f.select(:argtype, options_for_select([
-      [t("arguments.type_scientific"), 0],
-      [t("arguments.type_axiomatic"), 1],
-      [t("arguments.type_other"), 2],
-      [t("arguments.type_discussion"), 3]
-      ], @argument.argtype)) %>   
-    </div> 
-    <p class="helpertext floatleft"><%= t("arguments.form.helper.type") %></p>
-    <div class="clear"></div>
-  </div>
-
   <div class="row">
     <div class="span8">
       <fieldset class="control-group">

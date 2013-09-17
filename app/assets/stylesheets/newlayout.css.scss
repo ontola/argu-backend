@@ -436,7 +436,7 @@ div#navbar {
 div#navbar #mainbar {
 	margin:0px auto;
 	padding: 0px;
-	width: 90%;
+	width: 97%;
 	max-width: 1000px;
 		&:hover ul .dropdown { display: block; }
 }
@@ -446,13 +446,11 @@ ul .dropdown {
 	position: absolute; 
 	top: 0.8em;
 	left: 0;
-
 	li
 	{
 		top: auto;
 		left: auto;
 	}
-
 }
 
 #navbtns {
@@ -484,6 +482,8 @@ div#navbar #argulogo {
 	padding-bottom: 6px;
 	background-image: url(argulogo.svg);
 	float: left;
+	position: relative;
+	left: -8px;
 }
 
 div#navbar #argulogo:hover {

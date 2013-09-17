@@ -1,8 +1,5 @@
-<header>
-	<h1><%= t("edit_type", type: t("arguments.type")).capitalize %></h1>
-</header>
-<div class="row">
-	<div class="span8">
-		<%= render 'form' %>
-	</div>
-</div>
+<div class= "label-row">
+  <p class="lefttitle"><%= t("arguments.new.header", side: params[:pro] ? t("arguments.pro") : t("arguments.con")) %></p>
+  <h1 class="title statement lefttitle">Hier moet de titel van de stelling komen te staan</h2> <!-- TODO -->
+</div>		
+<%= render 'form' %>
