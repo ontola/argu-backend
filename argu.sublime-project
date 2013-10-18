@@ -3,7 +3,9 @@
 	[
 		{
 			"follow_symlinks": true,
-			"path": "D:\\argu"
+			"path": "C:\\argu"
 		}
-	]
+	],
+	"tab_size": 2,
+	"translate_tabs_to_spaces": true
 }

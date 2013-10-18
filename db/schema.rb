@@ -65,24 +65,15 @@ ActiveRecord::Schema.define(:version => 20130821130838) do
 
   add_index "profiles", ["user_id"], :name => "profiles_by_user_id", :unique => true
 
-  create_table "statementarguments", :force => true do |t|
-    t.integer "argument_id",                    :null => false
-    t.integer "statement_id",                   :null => false
-    t.boolean "pro",          :default => true, :null => false
-    t.integer "votes_count",  :default => 0
-  end
-
-  add_index "statementarguments", ["argument_id", "statement_id"], :name => "arg_state_index"
-
   create_table "statements", :force => true do |t|
-    t.string   "title",                      :null => false
-    t.text     "content",                    :null => false
+    t.string   "title",                     :null => false
+    t.text     "content",                   :null => false
     t.integer  "statetype",  :default => 6
-    t.datetime "created_at",                 :null => false
-    t.datetime "updated_at",                 :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.integer  "pro_count",  :default => 0
     t.integer  "con_count",  :default => 0
-    t.integer  "moderators", :default => [],                 :array => true
+    t.string   "moderators"
   end
 
   create_table "taggings", :force => true do |t|

@@ -28,18 +28,42 @@
 	"buffers":
 	[
 		{
-			"file": "app/assets/stylesheets/newlayout.css.scss",
+			"file": "app/controllers/statements_controller.rb",
 			"settings":
 			{
-				"buffer_size": 14679,
+				"buffer_size": 4194,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "config/routes.rb",
+			"settings":
+			{
+				"buffer_size": 3105,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "app/views/layouts/application.html.erb",
+			"file": "app/models/statement.rb",
 			"settings":
 			{
-				"buffer_size": 2216,
+				"buffer_size": 1784,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "app/views/statements/show.html.erb",
+			"settings":
+			{
+				"buffer_size": 1822,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "app/assets/stylesheets/newlayout.css.scss",
+			"settings":
+			{
+				"buffer_size": 17397,
 				"line_ending": "Windows"
 			}
 		}
@@ -71,6 +95,14 @@
 	},
 	"file_history":
 	[
+		"/C/argu/app/views/statements/_statementbody.html.erb",
+		"/C/Users/thom/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/thom/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/argu/config/locales/statements.nl.yml",
+		"/C/argu/app/models/statement.rb",
+		"/C/argu/Gemfile",
+		"/C/argu/app/assets/stylesheets/newlayout.css.scss",
+		"/C/argu/app/views/layouts/application.html.erb",
 		"/D/argu/app/views/statements/_statementarguments.html.erb",
 		"/D/argu/tmp/cache/assets/CD8/370/sprockets%2F357970feca3ac29060c1e3861e2c0953",
 		"/D/argu/tmp/cache/assets/D32/A10/sprockets%2F13fe41fee1fe35b49d145bcc06610705",
@@ -89,7 +121,7 @@
 	],
 	"find":
 	{
-		"height": 36.0
+		"height": 38.0
 	},
 	"find_in_files":
 	{
@@ -104,6 +136,12 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"#search",
+			"div#navbar",
+			"box",
+			"postall",
+			"solr",
+			"sunspot",
 			"Verdana",
 			"verdana",
 			"overfl",
@@ -144,62 +182,148 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/assets/stylesheets/newlayout.css.scss",
+					"file": "app/controllers/statements_controller.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14679,
+						"buffer_size": 4194,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4178,
-								4178
+								80,
+								80
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 5672.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "app/views/layouts/application.html.erb",
+					"file": "config/routes.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2216,
+						"buffer_size": 3105,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								523,
-								523
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "app/models/statement.rb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1784,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								194,
+								194
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Ruby/Ruby.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "app/views/statements/show.html.erb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1822,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "app/assets/stylesheets/newlayout.css.scss",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17397,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								11683,
+								11683
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Sass/Syntaxes/Sass.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 17756.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -250,16 +374,40 @@
 		"selected_items":
 		[
 			[
+				"newlayou",
+				"app\\assets\\stylesheets\\newlayout.css.scss"
+			],
+			[
+				"statemnbody",
+				"app\\views\\statements\\_statementbody.html.erb"
+			],
+			[
+				"statement/show.html",
+				"app\\views\\statements\\show.html.erb"
+			],
+			[
+				"statement",
+				"app\\models\\statement.rb"
+			],
+			[
+				"statemn",
+				"config\\locales\\statements.nl.yml"
+			],
+			[
+				"routes",
+				"config\\routes.rb"
+			],
+			[
+				"statementbody",
+				"app\\views\\statements\\_statementbody.html.erb"
+			],
+			[
 				"argu/",
 				"app\\views\\arguments\\_sarguments.html.erb"
 			],
 			[
 				"user",
 				"app\\models\\user.rb"
-			],
-			[
-				"statement",
-				"app\\models\\statement.rb"
 			]
 		],
 		"width": 0.0

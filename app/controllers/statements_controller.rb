@@ -1,8 +1,6 @@
 class StatementsController < ApplicationController
   load_and_authorize_resource
 
-  #autocomplete :argument, :title, :full => true, :extra_data => [:id] #Not currently in use
-
   # GET /statements
   # GET /statements.json
   def index
@@ -102,13 +100,13 @@ class StatementsController < ApplicationController
     end
   end  
 
-def tagged
-  if params[:tag].present? 
-    @statements = Statement.tagged_with(params[:tag])
-  else 
-    @statements = Statement.postall
-  end  
-end
+  def tagged
+    if params[:tag].present? 
+      @statements = Statement.tagged_with(params[:tag])
+    else
+      @statements = Statement.postall
+    end
+  end
 
   # GET /statements/new
   # GET /statements/new.json
