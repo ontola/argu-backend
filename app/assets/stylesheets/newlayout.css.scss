@@ -1,27 +1,16 @@
-$gre: #76966e;
-$gred: #A5BC9F;
-$red: #AA6D6D;
-$redd: #CEA7A7;
-$blu: #4C88A8;
-$blud: #93bcce;
-$g0: #F2F2F2;
-$g1: #E2E2E2;
-$g3: #808080;
-$g2: #C6C6C6;
-$g4: #5B5B5B;
+@import "colors";
+@import "mixins";
+
+$opensans: Open Sans,verdana,arial,sans-serif;
+$raleway: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
+
+$maxCommentDepth: 10;
+
 
 body {
-  margin: 0px; padding: 0px;
-  background-color: $g0;
-}
-
-span {
-  text-align:justify;
-  color:black;
-  font-family: Open Sans,verdana,arial,sans-serif;
-  font-size: 0.8em;
-  margin:0px;
+  margin: 0px;
   padding: 0px;
+  background-color: $g0;
 }
 
 table td {
@@ -29,7 +18,7 @@ table td {
   vertical-align: middle;
   padding: 8px;
   border: none;
-  font-family: Open Sans,verdana,arial,sans-serif;
+  font-family: $opensans;
   font-size: 0.8em;
   text-align: left;
   background-color: white;
@@ -42,70 +31,50 @@ table th {
   vertical-align: middle;
   padding: 5px;
   border: none;
-  font-family: Open Sans,verdana,arial,sans-serif;
+  font-family: $opensans;
   font-size: 0.8em;
   text-align: left;
   color: white;
 }
 
-p /*paragraph*/ {
-  text-align:justify;
-  color:black;
-  font-family: Open Sans,verdana,arial,sans-serif;
-  font-size: 0.8em;
-  margin: 0px;
-  padding: 0px;
+span {
+  @include text_settings();
+}
+
+p {
+  @include text_settings();
   line-height: 1.5em;
   white-space: pre-line;
 }
 
 small {
-  text-align:justify;
-  color:black;
-  font-family: Open Sans,verdana,arial,sans-serif;
-  font-size: 0.7em;
-  margin: 0px;
-  padding: 5px;
+  @include text_settings($size: 0.7em, $padding: 5px);
   line-height: 1em;
 }
 
 /*header*/
 h1 {
-  text-align:center;
-  color: $g4;
-  font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
-  font-size: 1.6em;
-  font-weight: 200;
+  @include header_settings();
   padding-bottom: 0.3em;
 }
 
 h2 {
-  text-align: center;
-  color: $g4;
-  font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
-  font-size: 1.5em;
-  font-weight: 200;
+  @include header_settings($size: 1.5em);
   clear: both;
 }
 
 h3 {
-  text-align:justify;
-  color:$g4;
-  font-family: Open Sans,verdana, arial, sans-serif;
-  font-size: 1em;
-  margin: 0px;
-  padding: 5px;
+  @include header_settings($align: justify, $color: $g4, $family: $opensans, $size: 1em, $weight: normal, $padding: 5px);
   padding-left: 8px;
   padding-bottom: 0px;
   margin-bottom: -5px;
-  font-weight:normal;
 }
 
-a /*link*/ {
+a {
   text-decoration: none;
   color: $g4;
   border-style: none;
-  font-family: Open Sans,verdana, sans-serif;
+  font-family: $opensans;
   font-size: 0.9em;
   padding: 0px;
   &:hover {
@@ -117,7 +86,7 @@ label {
   float: left;
   text-align: right;
   font-size: 1.3em;
-  font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
+  font-family: $raleway;
   font-weight: 200;
   color:$g4;
   width: 250px;
@@ -142,7 +111,7 @@ select {
   border: none;
   background: transparent;
   color:$g3;
-  font-family: Open Sans,verdana,arial,sans-serif;
+  font-family: $opensans;
   font-size: 0.8em;
 }
 
@@ -271,7 +240,7 @@ hr.stripe {
     border-bottom: 2px solid $gre;
   }  
   .oppro:hover {
-    color: white!important;
+    color: white !important;
     background-color: $gred;
     border-bottom: 2px solid $gre;
   }
@@ -356,7 +325,7 @@ hr.stripe {
   }
   a
   {
-    font-family: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
+    font-family: $raleway;
     font-size: 1.8em;
     font-weight: 200;
     padding: 0px;
@@ -372,10 +341,11 @@ hr.stripe {
   a.current
   {
     border-bottom: solid 5px $g1;
-  }
-  a.current:hover
-  {
-    color: black !important;
+
+    &:hover
+    {
+      color: black !important;
+    }
   }
 }
 
@@ -472,12 +442,12 @@ div#navbar {
       width: 60px;
       padding: 5px;
       padding-left: 10px;
-      font-family: Raleway, Century Gothic, sans-serif;
+      font-family: $raleway;
       font-size: 16px;
       font-weight: 200;
       color: $g4;
       float: right;
-        html.lt-ie8 & {
+      html.lt-ie8 & {
         float: left;
         line-height: 35px;
       }
@@ -504,7 +474,7 @@ div#navbar {
 
   a {
     display: block;
-    font-family: Raleway, Century Gothic, sans-serif;
+    font-family: $raleway;
     font-size: 16px;
     font-weight: 200;
     line-height: 39px;
@@ -526,7 +496,6 @@ div#navbar {
 
   #argulogo:hover {
       background-color: $g1;
-
   }
 
   .close {
@@ -539,21 +508,10 @@ div#navbar {
 }
 
 #search {
+  @include placeholder($g4);
   -moz-appearance:    textfield;
   -webkit-appearance: textfield;
   appearance: textfield;
-  &::-webkit-input-placeholder { /* WebKit browsers */
-      color:    $g4 !important;
-  }
-  &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-      color:    $g4 !important;
-  }
-  &::-moz-placeholder { /* Mozilla Firefox 19+ */
-      color:    $g4 !important;
-  }
-  &:-ms-input-placeholder { /* Internet Explorer 10+ */
-      color:    $g4 !important;
-  }
 }
 
 #search-moz-placeholder  { 
@@ -573,7 +531,7 @@ a.commentusername {
   border-style: none;
   padding: 3px;
   border-color:$g4;
-  font-family: Open Sans,verdana,arial,sans-serif;
+  font-family: $opensans;
   font-size: 0.8em;
   padding-left: 5px;
   padding-right: 5px;  
@@ -584,7 +542,7 @@ a.commentusername {
   background-color: $g0;
   border-width: 1px;
   border-color: $g4;
-  width:100%;
+  width: 100%;
   height: 45px;
   overflow: hidden;  
 }
@@ -600,7 +558,7 @@ ul.buttons {
     color: white;
     width: auto;
     float: right;
-    font-family: Open Sans,verdana,arial,sans-serif;
+    font-family: $opensans;
     font-size: 0.8em;
     margin-left: 10px;
     padding-top: 4px;
@@ -617,59 +575,17 @@ ul.buttons {
 }
 
 .comments {
-  .box
-  {
+  .box {
     margin-bottom: 8px;
   }
-  .c0
-  {
-    margin-left: 0px;
-  }
-  .c1
-  {
-    margin-left:10px;
-  }
-  .c2
-  {
-    margin-left:20px;
-  }
-  .c3
-  {
-    margin-left:30px;
-  }
-  .c4
-  {
-    margin-left:40px;
-  }
-  .c5
-  {
-    margin-left:50px;
-  }
-  .c6
-  {
-    margin-left:60px;
-  }
-  .c7
-  {
-    margin-left:70px;
-  }
-  .c8
-  {
-    margin-left:80px;
-  }
-  .c9
-  {
-    margin-left:90px;
-  }
-  .c10
-  {
-    margin-left: 100px;
+  @for $i from 0 through $maxCommentDepth {
+    .c#{$i} { margin-left: #{10 * $i}px; }
   }
 }
 
 p.comment {
-  border-top-style:solid;
-  border-width:1px;
+  border-top-style: solid;
+  border-width: 1px;
   border-color: $g2;
   clear: both;
   color: $g3;
@@ -746,9 +662,9 @@ p.comment {
   text-decoration: none;
   display: block;
   text-align: center;
-  font-family: Open Sans,verdana, arial, sans-serif;
+  font-family: $opensans;
   font-size: 1em;
-  font-weight:bold;
+  font-weight: bold;
   line-height: 1.3em;
   margin-bottom: 0.1em; 
   margin-top: 0.1em;
@@ -772,7 +688,7 @@ p.comment {
 p.vote {
   display: inline;
   color: $g4;
-  font-family: Open Sans,verdana, sans-serif;
+  font-family: $opensans;
   font-size: 0.9em;
   font-weight: bold;
   float: left;
@@ -781,7 +697,7 @@ p.vote {
 p.votelabel {
   display: inline;
   color: $g3;
-  font-family: Open Sans,verdana, sans-serif;
+  font-family: $opensans;
   font-size: 0.7em;
   float: left;
   line-height: 1.7em;
@@ -809,7 +725,7 @@ p.votelabel {
 
   &:hover:after {
     content: attr(title);
-     background: $blu;
+    background: $blu;
     border-radius: 3px;
     border: solid 0px $blu;
     bottom: 21px;
@@ -818,7 +734,7 @@ p.votelabel {
     padding: 5px 7px;
     position: absolute;
     z-index: 98;
-    font-family: Open Sans,verdana,arial,sans-serif;
+    font-family: $opensans;
     font-size: 0.8em;
     font-weight: normal;
     margin: 0px;
@@ -853,7 +769,7 @@ p.votelabel {
   min-height: 200px;
   padding: 0px;
   margin-right: 20px;
-  font-family: Open Sans,verdana, sans-serif;
+  font-family: $opensans;
 }
 
 /* Revisions styling */
@@ -891,7 +807,7 @@ p.votelabel {
 
 .revunderbar {
   list-style-type: none;
-  font-family: Open Sans,verdana, sans-serif;
+  font-family: $opensans;
   text-align: center;
   border: 1px;
   border-style: none;
@@ -918,7 +834,7 @@ p.votelabel {
   border: solid 1px $blu; 
   border-radius: 3px;
   background-color: white;
-  font-family: Open Sans,verdana, sans-serif;
+  font-family: $opensans;
   padding: 5px;
   margin-bottom: 20px;
 }
@@ -934,7 +850,7 @@ p.votelabel {
 /*  Authentications page */
 
 .authentication {
-  font-family: Open Sans,verdana, sans-serif;
+  font-family: $opensans;
   width: 250px;
   background-color: white;
   height: 64px;
@@ -985,7 +901,7 @@ p.votelabel {
 #error_explanation {
   background-color: white;
   border: solid 1px $g4;
-  font-family: Open Sans,verdana, sans-serif;
+  font-family: $opensans;
   font-size: 0.8em;
   color: $g4;
   padding: 10px;
@@ -1005,7 +921,7 @@ p.votelabel {
   padding: 5px;
   padding-bottom: 7px;
   width: auto;
-  font-family: Open Sans,verdana, sans-serif;
+  font-family: $opensans;
   font-size: 14px;
   text-align: center;
   border-radius: 3px;
@@ -1103,7 +1019,7 @@ input[type=checkbox]{
 .settingform {
   display: block;
   color: $g4;
-  font-family: Open Sans,verdana, sans-serif;
+  font-family: $opensans;
   font-size: 0.9em;
   /*width: 95%;*/
   max-width: 550px;
@@ -1208,17 +1124,11 @@ p.browsehappy {
 
 /*Transitie effecten op alles*/
 *{
-  transition: all 250ms;
-  -moz-transition: all 250ms;
-  -webkit-transition: all 250ms;
-  -o-transition: all 250ms;
+  @include transition(all 250ms);
 }
 
 form, #argulogo {
-  transition: none;
-  -moz-transition: none;
-  -webkit-transition: none;
-  -o-transition: none;
+  @include transition(none);
 }
 
 /*Zaken die niet op het papier hoeven*/

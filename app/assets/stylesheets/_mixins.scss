@@ -1,0 +1,27 @@
+@mixin placeholder($color) {
+  &:-moz-placeholder            { color: $color; } // Firefox 4-18
+  &::-moz-placeholder           { color: $color; } // Firefox 19+
+  &:-ms-input-placeholder       { color: $color; } // Internet Explorer 10+
+  &::-webkit-input-placeholder  { color: $color; } // Safari and Chrome
+}
+
+@mixin transition($opts) {
+  transition: $opts;
+  -moz-transition: $opts;
+  -webkit-transition: $opts;
+  -o-transition: $opts;
+}
+
+@mixin text_settings($align: justify, $color: black, $family: $opensans, $size: 0.8em, $margin: 0, $padding: 0) {
+  text-align: $align;
+  color: $color;
+  font-family: $family;
+  font-size: $size;
+  margin: $margin;
+  padding: $padding;
+}
+
+@mixin header_settings($align: center, $color: $g4, $family: $raleway, $size: 1.6em, $weight: 200, $padding: 0) {
+  @include text_settings($align: $align, $color: $color, $family: $family, $size: $size, $padding: $padding);
+  font-weight: $weight;
+}

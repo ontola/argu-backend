@@ -147,7 +147,7 @@ class ArgumentsController < ApplicationController
       parent = Comment.find_by_id(params[:parent_id])
       org_parent = parent
       for i in 0..10 do
-        if (parent = parent.parent).parent.blank? # Stack isn't too deep, so allow
+        if parent.parent.present? && (parent = parent.parent).parent.blank? # Stack isn't too deep, so allow
           break
         end
       end
