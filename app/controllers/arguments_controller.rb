@@ -1,9 +1,11 @@
 class ArgumentsController < ApplicationController
-  load_and_authorize_resource
+  #load_and_authorize_resource
 
   # GET /arguments/1
   # GET /arguments/1.json
   def show
+    @argument = Argument.find_by_id(params[:argument_id])
+    authorize! :read, @argument
     @parent_id = params[:parent_id].to_s
     
     @comments = @argument.root_comments.page(params[:page]).order('created_at ASC')
@@ -101,11 +103,12 @@ class ArgumentsController < ApplicationController
   # POST /arguments.json
   def create
     respond_to do |format|
+      puts "===================="+params.to_json.to_s+"====================="
       if @argument.save
-        format.html { redirect_to (params[:statement_id].blank? ? @argument : Statement.find_by_id(params[:statement_id])), notice: t("arguments.notices.created") }
+        format.html { redirect_to (params[:argument][:statement_id].blank? ? @argument : Statement.find_by_id(params[:argument][:statement_id])), notice: t("arguments.notices.created") }
         format.json { render json: @argument, status: :created, location: @argument }
       else
-        format.html { render action: "new", pro: params[:pro], statement_id: params[:statement_id] }
+        format.html { render action: "new", pro: params[:pro], statement_id: params[:argument][:statement_id] }
         format.json { render json: @argument.errors, status: :unprocessable_entity }
       end
     end
