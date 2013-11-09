@@ -44,6 +44,10 @@ class Statement < ActiveRecord::Base
     User.find_by_id self.versions.first.whodunnit
   end
 
+  def is_main_statement?(tag)
+    self.tags.reject { |a,b| a.statement == b }.first == tag
+  end
+
   def is_moderator?(user)
     self.mods.include?(user.id)
   end

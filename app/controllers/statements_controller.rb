@@ -143,8 +143,13 @@ class StatementsController < ApplicationController
   def update
     respond_to do |format|
       if @statement.update_attributes(params[:statement])
-        format.html { redirect_to @statement, notice: 'Statement was successfully updated.' }
-        format.json { head :no_content }
+        if params[:statement].present? && params[:statement][:tag_id].present? && @statement.tags.reject { |a,b| a.statement==b }.first.present?
+          format.html { redirect_to tagged_url(tag: ActsAsTaggableOn::Tag.find_by_id(@statement.tag_id).name)}
+          format.json { head :no_content }
+        else
+          format.html { redirect_to @statement, notice: 'Statement was successfully updated.' }
+          format.json { head :no_content }
+        end
       else
         format.html { render action: "edit" }
         format.json { render json: @statement.errors, status: :unprocessable_entity }
