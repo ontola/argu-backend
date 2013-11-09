@@ -1,5 +1,5 @@
 <% provide :title, (@statement.title.nil? ? t(:statement_title) : @statement.title) %>
-<%= render 'statementbody' %>
+<%= render partial: 'statementbody', locals: { statement: @statement } %>
 	<ul class="opinionbtns"> <!--TODO-->
 		<li><%= link_to(t("arguments.pro"), '', class:"oppro") %></li>
 		<li><%= link_to(t("arguments.neu"), '', class:"opneu") %></li>
@@ -12,7 +12,7 @@
 		<li><%= link_to t("arguments.index.parties") , {:anchor => "parties" } %></li>
 	</ul>
 </nav>
-<%= render 'statementarguments' %>
+<%= render partial: 'statementarguments', locals: { statement: @statement } %>
 <nav class="navrow">
 	<ul class="navcontent">
 		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } %></li>
@@ -28,7 +28,7 @@
 		<li><%= link_to t("arguments.index.parties") , {:anchor => "parties" } , class: "current" , id: "parties" %></li>
 	</ul>
 </nav>
-<%= render 'parties' %>
+<%= render partial: 'parties', locals: { statement: @statement } %>
 <nav class="navrow">
 	<ul class="navcontent">
 		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } %></li>

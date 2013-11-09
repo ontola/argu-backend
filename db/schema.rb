@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131108224157) do
+ActiveRecord::Schema.define(:version => 20131109152432) do
 
   create_table "arguments", :force => true do |t|
     t.text     "content",                        :null => false
@@ -76,6 +76,8 @@ ActiveRecord::Schema.define(:version => 20131108224157) do
     t.string   "moderators"
     t.integer  "tag_id"
   end
+
+  add_index "statements", ["tag_id"], :name => "index_statements_on_tag_id"
 
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"

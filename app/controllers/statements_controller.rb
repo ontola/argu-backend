@@ -101,6 +101,7 @@ class StatementsController < ApplicationController
   end  
 
   def tagged
+    @tag = ActsAsTaggableOn::Tag.find_by_name(params[:tag])
     if params[:tag].present? 
       @statements = Statement.tagged_with(params[:tag])
     else

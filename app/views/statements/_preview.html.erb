@@ -8,7 +8,10 @@
 				</p>
 			</div>
 		</li>
-		<li><%= link_to t("destroy"), statement_path(statement), method: :delete, confirm: t("destroy_confirmation") %></li>
+    <li><%= link_to t("destroy"), statement_path(statement), method: :delete, confirm: t("destroy_confirmation") %></li>
+		<% if tag %>
+      <li><%= link_to 'make hoofdstelling', statement_path(statement, "statement[tag_id]" => tag.id), method: :put, :confirm => "Sure?" %></li>
+    <% end %>
 	</ul>
 	<div style='clear:both;'></div>
 </div>
