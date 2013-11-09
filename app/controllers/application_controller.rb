@@ -9,6 +9,8 @@ class ApplicationController < ActionController::Base
   }
 
   rescue_from CanCan::AccessDenied do |exception|
+    puts exception.to_json.to_s
+    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
     request.env['HTTP_REFERER'] ||= root_path
     redirect_to :back, :alert => exception.message
   end

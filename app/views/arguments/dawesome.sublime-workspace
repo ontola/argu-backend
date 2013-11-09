@@ -40,69 +40,34 @@
 	"buffers":
 	[
 		{
-			"file": "app/controllers/arguments_controller.rb",
+			"file": "/C/dawesome/app/models/user.rb",
 			"settings":
 			{
-				"buffer_size": 4822,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/controllers/statements_controller.rb",
-			"settings":
-			{
-				"buffer_size": 4194,
+				"buffer_size": 153,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/models/statement.rb",
+			"file": "/C/dawesome/app/models/project.rb",
 			"settings":
 			{
-				"buffer_size": 1784,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/views/arguments/_arguments.html.erb",
-			"settings":
-			{
-				"buffer_size": 557,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/views/statements/_statementarguments.html.erb",
-			"settings":
-			{
-				"buffer_size": 1113,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "<% provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title) %>\n<div class=\"centercont\">\n  <div class= \"label-row\">\n    <p style=\"text-align: center;\"><%= t(\"arguments.new.header\", side: params[:pro] ? t(\"arguments.pro\") : t(\"arguments.con\")) %></p>\n    <h1 class=\"title statement\"><%= @argument.statement.title  %></h2>\n  </div>\n  <%= render 'argumentbody' %>\n  <%= render 'argumentcomments' %>\n  <div class=\"box clearfix\"> \n    <%= render partial: 'add_comment_form', locals: { argument: @argument, parent_id: @parent_id, visible: true } %>\n  </div>\n</div>",
-			"file": "app/views/arguments/show.html.erb",
-			"file_size": 583,
-			"file_write_time": 130267470938812505,
-			"settings":
-			{
-				"buffer_size": 584,
+				"buffer_size": 96,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "config/locales/nl.yml",
+			"file": "/C/dawesome/app/models/relationship.rb",
 			"settings":
 			{
-				"buffer_size": 5687,
+				"buffer_size": 130,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "app/models/ability.rb",
+			"file": "/C/dawesome/Gemfile",
 			"settings":
 			{
-				"buffer_size": 2086,
+				"buffer_size": 1005,
 				"line_ending": "Unix"
 			}
 		}
@@ -134,7 +99,20 @@
 	},
 	"file_history":
 	[
-		"/C/argu/Gemfile",
+		"/C/dawesome/config/application.rb",
+		"/C/dawesome/config/environments/test.rb",
+		"/C/dawesome/config/environments/production.rb",
+		"/C/dawesome/Gemfile",
+		"/C/dawesome/config/environments/development.rb",
+		"/C/dawesome/db/migrate/20131021224528_create_users.rb",
+		"/C/dawesome/db/migrate/20131021230738_create_relationships.rb",
+		"/C/dawesome/db/migrate/20131021230334_create_projects.rb",
+		"/C/dawesome/2.0'",
+		"/C/dawesome/db/seeds.rb",
+		"/C/dawesome/config/locales/en.yml",
+		"/C/dawesome/config/database.yml",
+		"/C/dawesome/config/routes.rb",
+		"/C/dawesome/config/environment.rb",
 		"/C/dawesome/app/models/user.rb",
 		"/C/argu/app/views/arguments/_sarguments.html.erb",
 		"/C/argu/app/views/votes/_shr.html.erb",
@@ -161,6 +139,7 @@
 		"/C/argu/argu.sublime-project",
 		"/C/argu/app/views/statements/_statementbody.html.erb",
 		"/C/argu/config/locales/statements.nl.yml",
+		"/C/argu/Gemfile",
 		"/C/argu/app/views/layouts/application.html.erb",
 		"/D/argu/app/views/statements/_statementarguments.html.erb",
 		"/D/argu/tmp/cache/assets/CD8/370/sprockets%2F357970feca3ac29060c1e3861e2c0953",
@@ -195,6 +174,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"whiny",
 			"params[:statement_id]",
 			"statement_id",
 			"F0F3FC",
@@ -275,24 +255,24 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/controllers/arguments_controller.rb",
+					"file": "/C/dawesome/app/models/user.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4822,
+						"buffer_size": 153,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								212,
-								212
+								148,
+								148
 							]
 						],
 						"settings":
@@ -307,19 +287,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "app/controllers/statements_controller.rb",
+					"file": "/C/dawesome/app/models/project.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4194,
+						"buffer_size": 96,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3115,
-								3115
+								57,
+								57
 							]
 						],
 						"settings":
@@ -327,26 +307,26 @@
 							"syntax": "Packages/Ruby/Ruby.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2310.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "app/models/statement.rb",
+					"file": "/C/dawesome/app/models/relationship.rb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1784,
+						"buffer_size": 130,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1251,
-								1251
+								125,
+								125
 							]
 						],
 						"settings":
@@ -354,134 +334,26 @@
 							"syntax": "Packages/Ruby/Ruby.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 858.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 3,
-					"file": "app/views/arguments/_arguments.html.erb",
+					"file": "/C/dawesome/Gemfile",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 557,
+						"buffer_size": 1005,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								530,
-								304
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "app/views/statements/_statementarguments.html.erb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1113,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								767,
-								777
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "app/views/arguments/show.html.erb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 584,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								584,
-								584
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "config/locales/nl.yml",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 5687,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/YAML/YAML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "app/models/ability.rb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2086,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13,
-								13
+								423,
+								423
 							]
 						],
 						"settings":
@@ -528,7 +400,7 @@
 		]
 	},
 	"menu_visible": true,
-	"project": "argu.sublime-project",
+	"project": "dawesome.sublime-project",
 	"replace":
 	{
 		"height": 70.0
@@ -539,10 +411,6 @@
 		"height": 0.0,
 		"selected_items":
 		[
-			[
-				"gemfile",
-				"Gemfile"
-			],
 			[
 				"ability",
 				"app\\models\\ability.rb"

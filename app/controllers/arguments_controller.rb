@@ -1,11 +1,9 @@
 class ArgumentsController < ApplicationController
-  #load_and_authorize_resource
+  load_and_authorize_resource :argument, :parent => false
 
   # GET /arguments/1
   # GET /arguments/1.json
   def show
-    @argument = Argument.find_by_id(params[:argument_id])
-    authorize! :read, @argument
     @parent_id = params[:parent_id].to_s
     
     @comments = @argument.root_comments.page(params[:page]).order('created_at ASC')

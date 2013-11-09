@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130821130838) do
+ActiveRecord::Schema.define(:version => 20131108224157) do
 
   create_table "arguments", :force => true do |t|
     t.text     "content",                        :null => false
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20130821130838) do
     t.integer  "pro_count",  :default => 0
     t.integer  "con_count",  :default => 0
     t.string   "moderators"
+    t.integer  "tag_id"
   end
 
   create_table "taggings", :force => true do |t|
