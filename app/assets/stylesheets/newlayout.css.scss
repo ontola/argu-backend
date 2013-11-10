@@ -8,8 +8,8 @@ $maxCommentDepth: 10;
 
 
 body {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   background-color: $g0;
   font-size: 0.9em;
 }
@@ -95,12 +95,12 @@ label {
 }
 
 input {
-  border-radius: 3px;
+  border-radius: .3em;
 }
 
 textarea {
   resize: none;
-  border-radius: 3px;
+  border-radius: .3em;
 }
 
 select {
@@ -121,7 +121,12 @@ select {
   margin-bottom: 1.8em;
   border-radius: 0.3em;
   max-width: 600px;
+
 }
+.box > p {
+  margin-bottom: .4em;
+}
+
 
 div.clear {
   clear: both;
@@ -131,7 +136,7 @@ div.clear {
   width: 95%;
   min-width: 300px;
   max-width: 1000px;
-  margin:0px auto;
+  margin:0 auto;
   text-align: center;
   html.lt-ie6 & {
     width: 100%;
@@ -181,21 +186,16 @@ hr.stripe {
 }
 
 .tags {
-  margin-top: 0px;
-  margin-bottom: -5px;
-  margin-left: -3px;
   html.lt-ie8 & {
-    padding-bottom: 0px;
+    padding-bottom: 0;
   }
 }
 
 .tag {
   color: white;
   background-color: $blud;
-  border-radius: 5px;
-  padding: 2px 5px 3px 5px;
-  margin-right: 3px;
-  margin-bottom: 5px;
+  border-radius: .5em;
+  padding: .2em .4em;
   display: inline-block;
 
   &:hover {
@@ -218,42 +218,34 @@ hr.stripe {
     text-align: center;
   }
   a {
-    padding: .2em;
-    padding-bottom: .3em;
-    display: inline-block;
-    text-align: center;
-    margin-left: .7em;
-    margin-right: .7em;
-    background-color: white;
-    border-radius: .3em;
-    width: 4em;
+  margin: 0em 1em;
   }
   .oppro {
     color: $gre;
-    border-bottom: .2em solid $gre;
+    border-bottom-color: $gre;
   }  
   .oppro:hover {
     color: white !important;
     background-color: $gred;
-    border-bottom: .2em solid $gre;
+    border-bottom-color: $gre;
   }
   .opneu {
     color: $g3 !important;
-    border-bottom: .2em solid $g3;
+    border-bottom-color: $g3;
   }  
   .opneu:hover {
     color: white !important;
     background-color: $g2;
-    border-bottom: .2em solid $g3;
+    border-bottom-color: $g3;
   }  
   .opcon {
     color: $red !important;
-    border-bottom: .2em solid $red;
+    border-bottom-color: $red;
   }
   .opcon:hover {
     color: white !important;
     background-color: $redd;
-    border-bottom: .2em solid $red;
+    border-bottom-color: $red;
   }
 }
 
@@ -304,7 +296,7 @@ hr.stripe {
   {
     line-height: 1.3em;
     height: 1.4em;
-    border-radius: 3px;
+    border-radius: .3em;
   }
 }
 
@@ -321,7 +313,7 @@ hr.stripe {
     font-family: $raleway;
     font-size: 1.8em;
     font-weight: 200;
-    padding: 0px;
+    padding: 0;
     margin-right: 8px;
     margin-left: 8px;
     line-height: 1.3em;
@@ -414,8 +406,8 @@ div#navbar {
     margin-bottom: 20px;
 
   #mainbar {
-    margin:0px auto;
-    padding: 0px;
+    margin:0 auto;
+    padding: 0;
     width: 97%;
     max-width: 1000px;
       &:hover ul .dropdown { display: block; }
@@ -449,7 +441,7 @@ div#navbar {
       }
       border: none;
       /*Removing chrome uglyness*/
-      border-radius: 0px;
+      border-radius: 0;
       outline: none;
     }
 
@@ -481,7 +473,7 @@ div#navbar {
 
   #argulogo {
     font-size: 36px;
-    padding-top: 0px;
+    padding-top: 0;
     width: 73px;
     padding-bottom: 6px;
     background-image: url(argulogo.svg);
@@ -523,7 +515,7 @@ a.commentusername {
   color: $g4;
   position: relative;
   float: left;
-  top: 0px;
+  top: 0;
   border-style: none;
   padding: 3px;
   border-color:$g4;
@@ -616,7 +608,11 @@ p.comment {
 }
 
 .infobar {
-  font-size: 0.8em;
+  font-size: .7em;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-top: -.1em;
+  margin-bottom: -.2em;
 }
 
 .info {
@@ -634,10 +630,10 @@ p.comment {
     float: none;
     border-style: none;
     background-color: none;
-    padding: 0px;
+    padding: 0;
     font-size: 1em;  
     color: $g3;
-    margin: 0px;
+    margin: 0;
   }
 }
 
@@ -671,10 +667,11 @@ p.comment {
 .titlestatement {
   color: $blu;
   font-size: 1.1em;
-}
+  margin-bottom: .5em;
+  }
 
 .lefttitle {
-  padding: 0px;
+  padding: 0;
   text-align: left;
   color: $g4;
 }
@@ -688,7 +685,7 @@ p.vote {
 p.votelabel {
   margin-right: 0.4em;
   font-size: 1em;
-  line-height: 1.9em;
+  line-height: 2.3em;
   font-weight: normal;
 }
 
@@ -698,10 +695,10 @@ p.votelabel {
     color: white;
     font-size: 1.5em;
     line-height: 1.5em;
-    padding: 0px;
+    padding: 0;
     width: 1.9em;
     float: left;
-    margin: 0px;
+    margin: 0;
     margin-left: 0.1em;
   }
 }
@@ -713,8 +710,8 @@ p.votelabel {
   &:hover:after {
     content: attr(title);
     background: $blu;
-    border-radius: 3px;
-    border: solid 0px $blu;
+    border-radius: .3em;
+    border: solid 0 $blu;
     bottom: 21px;
     color: white;
     left: -3px;
@@ -722,9 +719,9 @@ p.votelabel {
     position: absolute;
     z-index: 98;
     font-family: $opensans;
-    font-size: 0.8em;
+    font-size: 0.6em;
     font-weight: normal;
-    margin: 0px;
+    margin: 0;
     line-height: 1.5em;
     display: inline-block;
     white-space: nowrap;
@@ -736,7 +733,7 @@ p.votelabel {
     border-width: 6px 6px 0 6px;
     bottom: 16px;
     content: "";
-    left: 0px;
+    left: 0;
     position: absolute;
     z-index: 99;
   }
@@ -754,7 +751,7 @@ p.votelabel {
 .form-horizontal {
   width: auto;
   min-height: 200px;
-  padding: 0px;
+  padding: 0;
   margin-right: 1.9em;
   font-family: $opensans;
 }
@@ -819,7 +816,7 @@ p.votelabel {
 
 .alert {
   border: solid 1px $blu; 
-  border-radius: 3px;
+  border-radius: .3em;
   background-color: white;
   font-family: $opensans;
   padding: 5px;
@@ -901,18 +898,18 @@ p.votelabel {
 
 .btn {
   display: inline-block;
-  font-size: 1em;
+  font-size: .7em;
   background-color: white;
   color: $g4;
   border: none;
-  border-bottom: solid 2px $g1;
-  padding: 5px;
-  padding-bottom: 7px;
+  border-bottom: solid .2em $g1;
+  padding: .5em;
   width: auto;
   font-family: $opensans;
   text-align: center;
-  border-radius: 3px;
-  
+  border-radius: .5em;
+  letter-spacing: .1em;
+text-transform: uppercase;
   input
   {
     text-decoration: none;
@@ -921,7 +918,7 @@ p.votelabel {
   }
   
   &:hover {
-    border-bottom: solid 2px $g3;
+    border-bottom-color: $g3;
     color: black;
   }
 }
@@ -1075,11 +1072,11 @@ p.browsehappy {
   }
 
   .pro {
-    margin-right: 0px;
+    margin-right: 0;
   }
 
   .con {
-    margin-left: 0px;
+    margin-left: 0;
   }
 
   .container{
@@ -1108,7 +1105,7 @@ p.browsehappy {
   .helpertext {
     width: 100%;
     color: $g4;
-    margin-left: 0px;
+    margin-left: 0;
   }
 }
 

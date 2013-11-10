@@ -1,9 +1,9 @@
 <% provide :title, (@statement.title.nil? ? t(:statement_title) : @statement.title) %>
 <%= render partial: 'statementbody', locals: { statement: @statement } %>
 	<ul class="opinionbtns"> <!--TODO-->
-		<li><%= link_to(t("arguments.pro"), '', class:"oppro") %></li>
-		<li><%= link_to(t("arguments.neu"), '', class:"opneu") %></li>
-		<li><%= link_to(t("arguments.con"), '', class:"opcon") %></li>
+		<li><%= link_to(t("arguments.pro"), '', class:"btn oppro") %></li>
+		<li><%= link_to(t("arguments.neu"), '', class:"btn opneu") %></li>
+		<li><%= link_to(t("arguments.con"), '', class:"btn opcon") %></li>
 	</ul>
 <nav class="navrow">
 	<ul class="navcontent">
