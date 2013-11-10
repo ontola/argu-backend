@@ -1,8 +1,8 @@
 <% provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title) %>
 <div class="centercont">
-  <div class= "label-row">
-    <p style="text-align: center;"><%= t("arguments.new.header", side: params[:pro] ? t("arguments.pro") : t("arguments.con")) %></p>
-    <h1 class="title statement"><%= @argument.statement.title %></h2>
+  <div>
+    <p class="centeralign"><%= t("arguments.new.header", side: params[:pro] ? t("arguments.pro") : t("arguments.con")) %></p>
+    <h1 class="title titlestatement"><%= @argument.statement.title %></h2>
   </div>
   <%= render 'argumentbody' %>
   <%= render 'argumentcomments' %>

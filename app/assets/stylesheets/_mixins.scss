@@ -12,13 +12,14 @@
   -o-transition: $opts;
 }
 
-@mixin text_settings($align: justify, $color: black, $family: $opensans, $size: 0.8em, $margin: 0, $padding: 0) {
+@mixin text_settings($align: justify, $color: $g4, $family: $opensans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
   text-align: $align;
   color: $color;
   font-family: $family;
   font-size: $size;
   margin: $margin;
   padding: $padding;
+  line-height: $line-height;
 }
 
 @mixin header_settings($align: center, $color: $g4, $family: $raleway, $size: 1.6em, $weight: 200, $padding: 0) {

@@ -27,6 +27,7 @@ gem 'capistrano'
 gem 'kaminari'
 gem "sunspot_with_kaminari", '~> 0.2.0'
 gem 'acts-as-taggable-on'
+gem 'haml'
 
 ##### Gems already in Rails 4
 gem 'postgres_ext' # When migrating to 4, don't forget to remove this and require 'postgres_ext' in application.rb

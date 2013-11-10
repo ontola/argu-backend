@@ -11,12 +11,13 @@ body {
   margin: 0px;
   padding: 0px;
   background-color: $g0;
+  font-size: 0.9em;
 }
 
 table td {
   border-style: none;
   vertical-align: middle;
-  padding: 8px;
+  padding: 0.8em;
   border: none;
   font-family: $opensans;
   font-size: 0.8em;
@@ -29,7 +30,7 @@ table td {
 table th {
   border-style: none;
   vertical-align: middle;
-  padding: 5px;
+  padding: 0.5em;
   border: none;
   font-family: $opensans;
   font-size: 0.8em;
@@ -43,7 +44,6 @@ span {
 
 p {
   @include text_settings();
-  line-height: 1.5em;
   white-space: pre-line;
 }
 
@@ -64,19 +64,15 @@ h2 {
 }
 
 h3 {
-  @include header_settings($align: justify, $color: $g4, $family: $opensans, $size: 1em, $weight: normal, $padding: 5px);
-  padding-left: 8px;
-  padding-bottom: 0px;
+  @include header_settings($align: justify, $color: $g4, $family: $opensans, $size: 1em, $weight: normal, $padding: 0.5em);
+  padding-left: 0.8em;
+  padding-bottom: 0;
   margin-bottom: -5px;
 }
 
 a {
+  @include text_settings($color: $g4);
   text-decoration: none;
-  color: $g4;
-  border-style: none;
-  font-family: $opensans;
-  font-size: 0.9em;
-  padding: 0px;
   &:hover {
     color: black !important;
   }
@@ -112,18 +108,18 @@ select {
   background: transparent;
   color:$g3;
   font-family: $opensans;
-  font-size: 0.8em;
+  font-size: 1em;
 }
 
 .box {
   display: block;
-  padding: 12px;
-  padding-bottom: 8px;
-  padding-top: 8px;
+  padding: 0.8em;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
   background-color: white;
-  border-bottom:solid 2px $g1;
-  margin-bottom: 20px;
-  border-radius: 3px;
+  border-bottom:solid 0.2em $g1;
+  margin-bottom: 1.8em;
+  border-radius: 0.3em;
   max-width: 600px;
 }
 
@@ -133,7 +129,7 @@ div.clear {
 
 .container {
   width: 95%;
-  min-width: 400px;
+  min-width: 300px;
   max-width: 1000px;
   margin:0px auto;
   text-align: center;
@@ -179,7 +175,6 @@ hr.stripe {
   .title
   {
     color: $blu;
-    font-size: 1.2em;
   }
   margin-left: auto;
   margin-right: auto;
@@ -199,7 +194,6 @@ hr.stripe {
   background-color: $blud;
   border-radius: 5px;
   padding: 2px 5px 3px 5px;
-  font-size: 0.8em;
   margin-right: 3px;
   margin-bottom: 5px;
   display: inline-block;
@@ -216,7 +210,6 @@ hr.stripe {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 20px;
   overflow: hidden;
   li {
     display: inline
@@ -225,42 +218,42 @@ hr.stripe {
     text-align: center;
   }
   a {
-    padding: 5px;
-    padding-bottom: 7px;
+    padding: .2em;
+    padding-bottom: .3em;
     display: inline-block;
     text-align: center;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: .7em;
+    margin-right: .7em;
     background-color: white;
-    border-radius: 3px;
+    border-radius: .3em;
     width: 4em;
   }
   .oppro {
     color: $gre;
-    border-bottom: 2px solid $gre;
+    border-bottom: .2em solid $gre;
   }  
   .oppro:hover {
     color: white !important;
     background-color: $gred;
-    border-bottom: 2px solid $gre;
+    border-bottom: .2em solid $gre;
   }
   .opneu {
     color: $g3 !important;
-    border-bottom: 2px solid $g3;
+    border-bottom: .2em solid $g3;
   }  
   .opneu:hover {
     color: white !important;
     background-color: $g2;
-    border-bottom: 2px solid $g3;
+    border-bottom: .2em solid $g3;
   }  
   .opcon {
     color: $red !important;
-    border-bottom: 2px solid $red;
+    border-bottom: .2em solid $red;
   }
   .opcon:hover {
     color: white !important;
     background-color: $redd;
-    border-bottom: 2px solid $red;
+    border-bottom: .2em solid $red;
   }
 }
 
@@ -306,7 +299,7 @@ hr.stripe {
 }
 
 .argtypebox {
-  margin-bottom: 20px;
+  margin-bottom: 1.8em;
   h2
   {
     line-height: 1.3em;
@@ -367,6 +360,10 @@ hr.stripe {
   margin-right: auto;
 }
 
+.centeralign {
+  text-align: center;
+}
+
 .centercont {
   margin-left: auto;
   margin-right: auto;
@@ -375,13 +372,12 @@ hr.stripe {
 
 .centerbar {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 1.8em;
 }
 
 .leftbar {
   text-align: left;
-  margin-bottom: 20px;
-  max-width: 624px;
+  margin-bottom: 1.8em;
   h2 {
     text-align: left;
   }
@@ -558,8 +554,6 @@ ul.buttons {
     color: white;
     width: auto;
     float: right;
-    font-family: $opensans;
-    font-size: 0.8em;
     margin-left: 10px;
     padding-top: 4px;
   }
@@ -576,7 +570,7 @@ ul.buttons {
 
 .comments {
   .box {
-    margin-bottom: 8px;
+    margin-bottom: 0.8em;
   }
   @for $i from 0 through $maxCommentDepth {
     .c#{$i} { margin-left: #{10 * $i}px; }
@@ -622,10 +616,7 @@ p.comment {
 }
 
 .infobar {
-  margin-top: 5px;
-  .buttons a {
-    padding-top: 7px;
-  }
+  font-size: 0.8em;
 }
 
 .info {
@@ -633,7 +624,6 @@ p.comment {
   p
   {
     color: $g3;
-    font-size: 0.7em;
     position: relative;
     top: 2px;
     white-space: normal;
@@ -654,8 +644,8 @@ p.comment {
 /*Dit is de opmaak van een deelonderwerptitel (meestal is dit "argumenten")*/
 .navrow {
   clear: both;
-  margin-bottom: 20px;
-  margin-top: -8px;
+  margin-bottom: 1em;
+  margin-top: 0.8em;
 }
 
 .title {
@@ -663,12 +653,11 @@ p.comment {
   display: block;
   text-align: center;
   font-family: $opensans;
-  font-size: 1em;
+  font-size: 1.3em;
   font-weight: bold;
   line-height: 1.3em;
-  margin-bottom: 0.1em; 
   margin-top: 0.1em;
-  padding-bottom: 0.2em;
+  padding-bottom: 0.5em;
 }
 
 .titlepro {
@@ -679,6 +668,11 @@ p.comment {
   color: $red;
 }
 
+.titlestatement {
+  color: $blu;
+  font-size: 1.1em;
+}
+
 .lefttitle {
   padding: 0px;
   text-align: left;
@@ -686,36 +680,29 @@ p.comment {
 }
 
 p.vote {
-  display: inline;
-  color: $g4;
-  font-family: $opensans;
-  font-size: 0.9em;
   font-weight: bold;
-  float: left;
+  line-height: 1.5em;
+  font-size: 1.5em;
 }
 
 p.votelabel {
-  display: inline;
-  color: $g3;
-  font-family: $opensans;
-  font-size: 0.7em;
-  float: left;
-  line-height: 1.7em;
-  margin-right: 3px;
+  margin-right: 0.4em;
+  font-size: 1em;
+  line-height: 1.9em;
+  font-weight: normal;
 }
 
 .votebtn {
   a {
-    font-size: 0.9em;
-    display: inline;
     font-weight: bold; 
     color: white;
+    font-size: 1.5em;
+    line-height: 1.5em;
     padding: 0px;
-    width: 20px;
-    text-align: center;
+    width: 1.9em;
     float: left;
     margin: 0px;
-    line-height: 1.5em;
+    margin-left: 0.1em;
   }
 }
 
@@ -768,7 +755,7 @@ p.votelabel {
   width: auto;
   min-height: 200px;
   padding: 0px;
-  margin-right: 20px;
+  margin-right: 1.9em;
   font-family: $opensans;
 }
 
@@ -836,7 +823,7 @@ p.votelabel {
   background-color: white;
   font-family: $opensans;
   padding: 5px;
-  margin-bottom: 20px;
+  margin-bottom: 1.9em;
 }
 
 .alert-Notice {
@@ -905,7 +892,7 @@ p.votelabel {
   font-size: 0.8em;
   color: $g4;
   padding: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 1.9em;
   h2 {
     text-align: left;
     margin-bottom: 5px;
@@ -914,6 +901,7 @@ p.votelabel {
 
 .btn {
   display: inline-block;
+  font-size: 1em;
   background-color: white;
   color: $g4;
   border: none;
@@ -922,7 +910,6 @@ p.votelabel {
   padding-bottom: 7px;
   width: auto;
   font-family: $opensans;
-  font-size: 14px;
   text-align: center;
   border-radius: 3px;
   
@@ -984,7 +971,7 @@ div.pageconf {
 /* Settings */
 
 .label-row {
-  margin-bottom: 20px;
+  margin-bottom: 1.8em;
   clear: both;
 }
 
@@ -1037,7 +1024,6 @@ input[type=checkbox]{
 }
 
 .verticalform {
-  font-size: 0.8em;
   float: left;
   width: 50%;
 }
@@ -1083,7 +1069,7 @@ p.browsehappy {
 }
 
 /*Responsive design*/
-@media screen and (max-width: 550px) {
+@media screen and (max-width: 650px) {
   .procon {
     width: 100%;
   }
@@ -1094,6 +1080,10 @@ p.browsehappy {
 
   .con {
     margin-left: 0px;
+  }
+
+  .container{
+
   }
 
   .label-row {
@@ -1122,8 +1112,27 @@ p.browsehappy {
   }
 }
 
+@media screen and (min-width: 1500px) {
+  body{
+    font-size: 1.2em;
+  }
+
+  .container{
+    max-width: 1500px; 
+  }
+
+  .box{
+    max-width: 900px;
+  }
+
+  .centercont{
+    max-width: 900px;
+  }
+}
+
+
 /*Transitie effecten op alles*/
-*{
+a, #search, .btn{
   @include transition(all 250ms);
 }
 

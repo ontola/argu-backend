@@ -1,8 +1,10 @@
-<h1><%= @tag.name.humanize %></h1>
+<p class="center">
+  <%= t("statements.plural") %> <span class="tag center"><%= @tag.name %></span>
+</p>
 <%= render partial: 'statements/tag_statement', locals: { statement: @tag.statement } if @tag.statement %>
 <h1><%= t("statements.plural") %></h1>
 <div class="centerbar">
-	<%= link_to t("statements.newstatement"), new_statement_path, class: "btn" %>
+	<%= link_to t("statements.newstatement"), new_statement_path(statement: {tag_list: [@tag.name]} ), class: "btn" %>
 </div>
 <% @statements.each do |statement| %>
   <%= render partial: "statements/preview", locals: { statement: statement, tag: @tag } %>
