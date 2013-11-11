@@ -78,7 +78,7 @@ class Statement < ActiveRecord::Base
   end
 
   def invert_arguments=(invert)
-    if invert
+    if invert != "0"
       self.arguments.each do |a|
         a.update_attributes pro: !a.pro
       end

@@ -7,6 +7,7 @@ nl:
     type_axiomatic: "axiomatisch"
     type_other: "anders"
     type_discussion: "in discussie"
+    vote: "stem"
     pro: "voor"
     con: "tegen"
     neu: "neutraal"

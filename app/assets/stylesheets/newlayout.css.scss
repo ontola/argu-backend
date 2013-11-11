@@ -55,7 +55,6 @@ small {
 /*header*/
 h1 {
   @include header_settings();
-  padding-bottom: 0.3em;
 }
 
 h2 {
@@ -120,11 +119,12 @@ select {
   border-bottom:solid 0.2em $g1;
   margin-bottom: 1.8em;
   border-radius: 0.3em;
-  max-width: 600px;
+  max-width: 46em;
 
 }
 .box > p {
   margin-bottom: .4em;
+  margin-top: .2em;
 }
 
 
@@ -135,7 +135,7 @@ div.clear {
 .container {
   width: 95%;
   min-width: 300px;
-  max-width: 1000px;
+  max-width: 1200px;
   margin:0 auto;
   text-align: center;
   html.lt-ie6 & {
@@ -183,6 +183,11 @@ hr.stripe {
   }
   margin-left: auto;
   margin-right: auto;
+  .infobar{
+    .buttons{
+    padding-top: .2em;
+    }
+  }  
 }
 
 .tags {
@@ -195,9 +200,10 @@ hr.stripe {
   color: white;
   background-color: $blud;
   border-radius: .5em;
-  padding: .2em .4em;
+  padding: .1em .4em .2em .4em;
   display: inline-block;
-
+  margin-right: 0.4em;
+  text-transform: lowercase;
   &:hover {
     color: white !important;
     background-color: $blu;
@@ -211,6 +217,7 @@ hr.stripe {
   margin-left: auto;
   margin-right: auto;
   overflow: hidden;
+  margin-top: -.4em;
   li {
     display: inline
   }
@@ -218,7 +225,7 @@ hr.stripe {
     text-align: center;
   }
   a {
-  margin: 0em 1em;
+  margin: 0em .5em;
   }
   .oppro {
     color: $gre;
@@ -250,7 +257,7 @@ hr.stripe {
 }
 
 .pro {
-  margin-right: 11px;
+  margin-right: .8em;
   .title
   {
     color: $gre;
@@ -265,7 +272,7 @@ hr.stripe {
 .con {
   /*  background-color: #faf4f3;*/
   overflow:hidden;
-  margin-left: 11px;
+  margin-left: .8em;
   .title
   {
     color: $red;
@@ -304,6 +311,7 @@ hr.stripe {
   list-style-type: none;
   display: block;
   text-align: center;
+  margin-bottom: 1.7em;
   li
   {
     display: inline;
@@ -314,18 +322,18 @@ hr.stripe {
     font-size: 1.8em;
     font-weight: 200;
     padding: 0;
-    margin-right: 8px;
-    margin-left: 8px;
+    margin-right: .3em;
+    margin-left: .3em;
     line-height: 1.3em;
   }
   a:hover
   {
-    border-bottom: solid 5px $g1;
+    border-bottom: solid 0.13em $g1;
   }
 
   a.current
   {
-    border-bottom: solid 5px $g1;
+    border-bottom: solid 0.13em $g1;
 
     &:hover
     {
@@ -359,7 +367,7 @@ hr.stripe {
 .centercont {
   margin-left: auto;
   margin-right: auto;
-  max-width: 600px;
+  max-width: 46em;
 }
 
 .centerbar {
@@ -535,19 +543,13 @@ a.commentusername {
   overflow: hidden;  
 }
 
-ul.buttons {
-  margin-top: 2px;
-  line-height: 0.5em;
-}
-
 .buttons {
   a
   {
     color: white;
     width: auto;
     float: right;
-    margin-left: 10px;
-    padding-top: 4px;
+    margin-left: 1em;
   }
   p
   {
@@ -609,10 +611,9 @@ p.comment {
 
 .infobar {
   font-size: .7em;
-  letter-spacing: .1em;
+  letter-spacing: .08em;
   text-transform: uppercase;
   margin-top: -.1em;
-  margin-bottom: -.2em;
 }
 
 .info {
@@ -652,8 +653,7 @@ p.comment {
   font-size: 1.3em;
   font-weight: bold;
   line-height: 1.3em;
-  margin-top: 0.1em;
-  padding-bottom: 0.5em;
+  padding-bottom: .1em;
 }
 
 .titlepro {
@@ -667,8 +667,8 @@ p.comment {
 .titlestatement {
   color: $blu;
   font-size: 1.1em;
-  margin-bottom: .5em;
-  }
+  margin-bottom: .7em;
+}
 
 .lefttitle {
   padding: 0;
@@ -898,18 +898,18 @@ p.votelabel {
 
 .btn {
   display: inline-block;
-  font-size: .7em;
+  font-size: .8em;
   background-color: white;
   color: $g4;
   border: none;
   border-bottom: solid .2em $g1;
-  padding: .5em;
+  padding: .25em .5em;
   width: auto;
   font-family: $opensans;
   text-align: center;
   border-radius: .5em;
-  letter-spacing: .1em;
-text-transform: uppercase;
+  letter-spacing: .07em;
+  text-transform: uppercase;
   input
   {
     text-decoration: none;
@@ -1109,22 +1109,22 @@ p.browsehappy {
   }
 }
 
+@media screen and (max-width: 1000px) {
+  body{
+    font-size: 0.8em;
+  }
+
+}
+
 @media screen and (min-width: 1500px) {
   body{
-    font-size: 1.2em;
+    font-size: 1.1em;
   }
 
   .container{
     max-width: 1500px; 
   }
 
-  .box{
-    max-width: 900px;
-  }
-
-  .centercont{
-    max-width: 900px;
-  }
 }
 
 
