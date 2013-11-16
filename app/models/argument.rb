@@ -30,6 +30,17 @@ class Argument < ActiveRecord::Base
     self.title = self.title.capitalize
   end
 
+  #TODO escape content=(text)
+  def supped_content
+    refs = 0
+    content.gsub(/(\[\w*\])(\(\w*\))/) {|url,text| '<a class="inlineref" href="#ref%d">%d</a>' % [refs += 1, refs] }
+  end
+
+  def references
+    refs = 0
+    content.scan(/\[(\w*)\]\((\w*)\)/).each { |r| r << 'ref' + (refs += 1).to_s }
+  end
+
   def creator
     User.find_by_id self.versions.first.whodunnit
   end

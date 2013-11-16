@@ -48,7 +48,7 @@ p {
 }
 
 small {
-  @include text_settings($size: 0.7em, $padding: 5px);
+  @include text_settings($size: 0.85em, $padding: 5px);
   line-height: 1em;
 }
 
@@ -98,6 +98,7 @@ input {
 }
 
 textarea {
+  @include text_settings;
   resize: none;
   border-radius: .3em;
 }
@@ -182,12 +183,7 @@ hr.stripe {
     color: $blu;
   }
   margin-left: auto;
-  margin-right: auto;
-  .infobar{
-    .buttons{
-    padding-top: .2em;
-    }
-  }  
+  margin-right: auto;  
 }
 
 .tags {
@@ -204,10 +200,20 @@ hr.stripe {
   display: inline-block;
   margin-right: 0.4em;
   text-transform: lowercase;
+  font-size: 120%;
   &:hover {
     color: white !important;
     background-color: $blu;
   }
+}
+
+.smallertag{
+  font-size: 70%;
+}
+
+.inlineref{
+    font-size: 70%;
+  vertical-align: top;
 }
 
 .opinionbtns {
@@ -560,6 +566,11 @@ a.commentusername {
     display: inline;
     width: auto;
   }
+}
+
+.hastags {
+  position: relative;
+  top: .5em;
 }
 
 .comments {
@@ -920,6 +931,10 @@ p.votelabel {
   &:hover {
     border-bottom-color: $g3;
     color: black;
+  }
+  &:active{
+    border-bottom-width: 0;
+    margin-top: .1em;
   }
 }
 

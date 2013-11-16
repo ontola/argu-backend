@@ -9,7 +9,7 @@
 		  			<%= link_to tag.name, tagged_url(:tag => tag.name), class:"tag", title: t("statements.titles.tags")+tag.name%>
 				<% end %>
 			</div>
-			<ul class="buttons">
+			<ul class="buttons hastags">
 				<li>
 					<%= link_to(t("edit"), 	edit_statement_path(statement)) %>
 				</li>

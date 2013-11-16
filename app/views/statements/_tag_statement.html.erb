@@ -1,10 +1,2 @@
 <% provide :title, (statement.title.nil? ? t(:statement_title) : statement.title) %>
 <%= render partial: 'statementbody', locals: {statement: statement} %>
-<nav class="navrow">
-	<ul class="navcontent">
-		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } , class: "current" , id: "arguments"  %></li>
-		<li><%= link_to t("arguments.index.opinion") , {:anchor => "opinion" } %></li>
-		<li><%= link_to t("arguments.index.parties") , {:anchor => "parties" } %></li>
-	</ul>
-</nav>
-<%= render partial: 'statementarguments', locals: {statement: statement} %>

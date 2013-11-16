@@ -1,6 +1,6 @@
-<p class="center">
-  <%= t("statements.plural") %> <span class="tag center"><%= @tag.name %></span>
-</p>
+<h1 class="center">
+  <%= t("statements.plural") + " met het thema" %> <a class="tag center smallertag"><%= @tag.name %></a>
+</h1>
 <%= render partial: 'statements/tag_statement', locals: { statement: @tag.statement } if @tag.statement %>
 <h1><%= t("statements.plural") %></h1>
 <div class="centerbar">
