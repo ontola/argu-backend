@@ -12,6 +12,7 @@ nl:
     con: "tegen"
     neu: "neutraal"
     type: "type"
+    references: "referenties"
     index:
       title: "argumenten"
       opinion: "opinie"

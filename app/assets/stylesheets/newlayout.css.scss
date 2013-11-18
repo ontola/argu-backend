@@ -11,7 +11,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: $g0;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 table td {
@@ -99,7 +99,6 @@ input {
 
 textarea {
   @include text_settings;
-  resize: none;
   border-radius: .3em;
 }
 
@@ -121,13 +120,37 @@ select {
   margin-bottom: 1.8em;
   border-radius: 0.3em;
   max-width: 46em;
-
+  ol{
+    list-style: decimal;
+    margin-left: 1.4em;
+    margin-bottom: .5em;
+    margin-top: -.3em;
+    text-align: left;
+    li{
+      text-align: justify;
+      color: #5b5b5b;
+      font-family: Open Sans, verdana, arial, sans-serif;
+      font-size: 1em;
+      margin: 0;
+      padding: 0;
+      line-height: 1.3em;
+      text-decoration: none;;
+    }
+  a{
+    text-align: left;
+  }
+  }
 }
 .box > p {
   margin-bottom: .4em;
   margin-top: .2em;
 }
 
+p.referencestitle{
+  margin-top: 1.5em;
+  letter-spacing: .08em;
+  text-transform: uppercase; font-size: .7em;
+}
 
 div.clear {
   clear: both;
@@ -212,8 +235,8 @@ hr.stripe {
 }
 
 .inlineref{
-    font-size: 70%;
-  vertical-align: top;
+    font-size: 80%;
+    vertical-align: top;
 }
 
 .opinionbtns {
@@ -633,7 +656,6 @@ p.comment {
   {
     color: $g3;
     position: relative;
-    top: 2px;
     white-space: normal;
   }
   a
@@ -1126,7 +1148,7 @@ p.browsehappy {
 
 @media screen and (max-width: 1000px) {
   body{
-    font-size: 0.8em;
+    font-size: 0.9em;
   }
 
 }
