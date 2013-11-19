@@ -1,30 +1,4 @@
 class VotesController < ApplicationController
-
-  # GET /votes/1
-  # GET /votes/1.json
-  def show
-    @argument = Argument.find_by_id(@vote.argument_id)
-    @s = @sa.statement.title 
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @vote }
-    end
-  end
-
-  # GET /votes/new
-  # GET /votes/new.json
-  def new
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @vote }
-    end
-  end
-
-  # GET /votes/1/edit
-  def edit
-  end
-
   # POST /votes
   # POST /votes.json
   def create

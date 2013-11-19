@@ -9,20 +9,15 @@
       </ul>
     </div>
   <% end %>
-  <div class= "label-row">
-    <%= f.label :title, t("arguments.form.arg_title"), class: "vertical" %>
-    <div class="clear"></div>
-    <%= f.text_field :title, class: "settingform verticalform" %>
-    <p class="helpertext floatleft"><%= t("arguments.form.helper.title") %></p>
-    <div class="clear"></div>
-  </div>
+  <% [:title, :content].each do |i| %>
     <div class= "label-row">
-    <%= f.label :content, t("arguments.form.content"), class: "vertical" %>
-    <div class="clear"></div>
-    <%= f.text_area :content, class: "settingform verticalform", rows: "4" %>
-    <p class="helpertext floatleft"><%= t("arguments.form.helper.content") %></p>
-    <div class="clear"></div>
-  </div>
+      <%= f.label i, t("arguments.form."+i.to_s), class: "vertical" %>
+      <div class="clear"></div>
+      <%= f.text_field i, class: "settingform verticalform" %>
+      <p class="helpertext floatleft"><%= t("arguments.form.helper."+i.to_s) %></p>
+      <div class="clear"></div>
+    </div>
+  <% end %>
   <div class="row">
     <div class="span8">
       <fieldset class="control-group">

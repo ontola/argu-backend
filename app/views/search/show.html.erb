@@ -1,6 +1,6 @@
 <h1 class="top"><%= t "search.title", q: params["q"] %></h1>
 <small><%= t "search.results_found", count: @search.total %></small>
 <% for result in @search.results %>
-  <%= render partial: "statements/preview", locals: { statement: result } %>
+  <%= render result %>
 <% end %>
 <%= paginate @search.results %>

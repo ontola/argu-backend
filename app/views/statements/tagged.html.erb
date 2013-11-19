@@ -7,5 +7,5 @@
 	<%= link_to t("statements.newstatement"), new_statement_path(statement: {tag_list: [@tag.name]} ), class: "btn" %>
 </div>
 <% @statements.each do |statement| %>
-  <%= render partial: "statements/preview", locals: { statement: statement, tag: @tag } %>
+  <%= render partial: statement, locals: { tag: @tag } %>
 <% end %>

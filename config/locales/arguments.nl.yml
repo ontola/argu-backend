@@ -26,7 +26,7 @@ nl:
       header: "argument %{side} de stelling:"
       create: "+ argument %{side}"
     form:
-      arg_title: "argument"
+      title: "argument"
       content: "toelichting"
       type: "type"
       submit: "argument plaatsen"

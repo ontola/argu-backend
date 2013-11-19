@@ -50,6 +50,7 @@ group :development do
   gem 'rspec-rails', '2.9.0'
   gem 'annotate','~> 2.4.1beta1'
   gem "nifty-generators", '~> 0.4.6'
+  gem 'meta_request'
 end
 
 group :production do 
