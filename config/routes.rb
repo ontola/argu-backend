@@ -2,6 +2,12 @@ Argu::Application.routes.draw do
 
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
+  namespace :admin do
+    get 'list' => 'administration#list'
+    get 'add' => 'administration#add'
+    root to: 'administration#panel'
+  end
+
   resources :authentications, only: [:create, :destoy]
   match 'auth/:provider/callback' => "authentications#create"
   

@@ -18,7 +18,8 @@ gem "omniauth-oauth2", "~> 1.0.0"
 gem 'omniauth-facebook', "~> 1.4.0"
 gem 'omniauth-twitter', "~> 0.0.13"
 #gem 'omniauth-openid'
-gem 'cancan', '~> 1.6.8'
+gem 'cancan'
+gem 'rolify'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'rails-i18n'
@@ -27,7 +28,8 @@ gem 'capistrano'
 gem 'kaminari'
 gem "sunspot_with_kaminari", '~> 0.2.0'
 gem 'acts-as-taggable-on'
-gem 'haml'
+gem 'haml' # TODO: convert haml to slim, then remove this gem
+gem 'slim'
 
 ##### Gems already in Rails 4
 gem 'postgres_ext' # When migrating to 4, don't forget to remove this and require 'postgres_ext' in application.rb

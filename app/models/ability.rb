@@ -3,10 +3,10 @@ class Ability
 
   def initialize(user)
     user ||= User.new #Guest users
-    if user.is? :coder
+    if user.has_role? :coder
         #The coder can do anything
         can :manage, :all
-    elsif user.is? :admin
+    elsif user.has_role? :admin
         #The admin can manage all the generic objects
         can [:manage, :revisions, :allrevisions],
             [Statement, 
@@ -17,7 +17,7 @@ class Ability
         can :manage, User do |u|
           user == u
         end
-    elsif user.is? :user
+    elsif user.has_role? :user
         cannot :manage, User do |u|
           user != u
         end

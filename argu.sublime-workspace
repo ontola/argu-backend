@@ -40,81 +40,22 @@
 	"buffers":
 	[
 		{
-			"file": "app/controllers/arguments_controller.rb",
+			"file": "/C/Users/thom/Documents/GitHub/Sick-Beard/sickbeard/db.py",
 			"settings":
 			{
-				"buffer_size": 4822,
+				"buffer_size": 9328,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/controllers/statements_controller.rb",
-			"settings":
-			{
-				"buffer_size": 4194,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/models/statement.rb",
-			"settings":
-			{
-				"buffer_size": 1784,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/views/arguments/_arguments.html.erb",
-			"settings":
-			{
-				"buffer_size": 557,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/views/statements/_statementarguments.html.erb",
-			"settings":
-			{
-				"buffer_size": 1113,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "<% provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title) %>\n<div class=\"centercont\">\n  <div class= \"label-row\">\n    <p style=\"text-align: center;\"><%= t(\"arguments.new.header\", side: params[:pro] ? t(\"arguments.pro\") : t(\"arguments.con\")) %></p>\n    <h1 class=\"title statement\"><%= @argument.statement.title  %></h2>\n  </div>\n  <%= render 'argumentbody' %>\n  <%= render 'argumentcomments' %>\n  <div class=\"box clearfix\"> \n    <%= render partial: 'add_comment_form', locals: { argument: @argument, parent_id: @parent_id, visible: true } %>\n  </div>\n</div>",
-			"file": "app/views/arguments/show.html.erb",
-			"file_size": 583,
-			"file_write_time": 130267470938812505,
-			"settings":
-			{
-				"buffer_size": 584,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "config/locales/nl.yml",
-			"settings":
-			{
-				"buffer_size": 5687,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "app/models/ability.rb",
-			"settings":
-			{
-				"buffer_size": 2086,
-				"line_ending": "Unix"
 			}
 		}
 	],
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 0.0,
+		"height": 392.0,
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 472.0
 	},
 	"console":
 	{
@@ -134,32 +75,60 @@
 	},
 	"file_history":
 	[
+		"/C/argu/app/controllers/statements_controller.rb",
+		"/M/Kopimism/Completed/Adventure Time S05E43 HDTV XviD-AFG/Adventure.Time.S05E43.HDTV.XviD-AFG.1.nfo",
+		"/C/argu/app/models/statement.rb",
+		"/C/argu/readme",
+		"/C/argu/.rspec",
+		"/C/argu/script/rails",
+		"/C/argu/.bundle/config",
+		"/C/argu/config/locales/arguments.nl.yml",
+		"/C/argu/config/routes.rb",
+		"/C/argu/app/helpers/arguments_helper.rb",
+		"/C/argu/app/helpers/static_pages_helper.rb",
+		"/C/argu/app/helpers/statements_helper.rb",
+		"/C/argu/app/controllers/votes_controller.rb",
+		"/C/argu/app/views/statements/index.html.erb",
+		"/C/argu/app/views/arguments/_argument.html.erb",
+		"/C/argu/app/views/arguments/_form.html.erb",
+		"/C/argu/app/views/statements/_form.html.erb",
+		"/C/argu/app/views/statements/_statementarguments.html.erb",
+		"/C/argu/app/views/statements/_statementbody.html.erb",
+		"/C/argu/app/views/statements/_tag_statement.html.erb",
+		"/C/argu/app/views/registrations/new.html.erb",
+		"/C/argu/app/views/profiles/_form.html.erb",
+		"/C/argu/app/views/arguments/revisions.erb",
+		"/C/argu/app/views/arguments/edit.html.erb",
+		"/C/argu/app/views/arguments/create.js.erb",
+		"/C/argu/app/views/arguments/_newsargument.html.erb",
+		"/C/argu/app/models/argument.rb",
 		"/C/argu/Gemfile",
+		"/C/argu/app/views/static_pages/home.html.erb",
+		"/C/argu/app/views/statements/tagged.html.erb",
+		"/C/argu/app/views/search/show.html.erb",
+		"/C/argu/app/controllers/arguments_controller.rb",
+		"/C/argu/app/views/arguments/_arguments.html.erb",
+		"/C/argu/app/views/arguments/show.html.erb",
+		"/C/argu/app/models/ability.rb",
 		"/C/dawesome/app/models/user.rb",
 		"/C/argu/app/views/arguments/_sarguments.html.erb",
 		"/C/argu/app/views/votes/_shr.html.erb",
 		"/C/argu/app/views/votes/show.html.erb",
 		"/C/argu/app/views/statements/show.html.erb",
-		"/C/argu/app/models/argument.rb",
 		"/C/argu/app/assets/stylesheets/newlayout.css.scss",
 		"/C/argu/app/assets/stylesheets/_mixins.scss",
 		"/C/argu/app/assets/stylesheets/_colors.scss",
 		"/C/argu/app/assets/stylesheets/_mixins - Copy.scss",
-		"/C/argu/app/controllers/arguments_controller.rb",
 		"/C/argu/app/assets/stylesheets/settings.css.scss",
 		"/C/argu/app/assets/stylesheets/footer.css.scss",
 		"/C/argu/app/assets/stylesheets/reset.css",
 		"/C/argu/app/assets/stylesheets/arguments.css.scss",
 		"/C/argu/app/assets/stylesheets/application.css",
-		"/C/argu/app/models/statement.rb",
-		"/C/argu/config/routes.rb",
-		"/C/argu/app/controllers/statements_controller.rb",
 		"/C/Users/thom/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
 		"/C/Users/thom/AppData/Roaming/Sublime Text 3/Packages/User/JSON.sublime-settings",
 		"/C/Users/thom/AppData/Roaming/Sublime Text 3/Packages/User/Distraction Free.sublime-settings",
 		"/C/Users/thom/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
 		"/C/argu/argu.sublime-project",
-		"/C/argu/app/views/statements/_statementbody.html.erb",
 		"/C/argu/config/locales/statements.nl.yml",
 		"/C/argu/app/views/layouts/application.html.erb",
 		"/D/argu/app/views/statements/_statementarguments.html.erb",
@@ -180,13 +149,14 @@
 	],
 	"find":
 	{
-		"height": 38.0
+		"height": 39.0
 	},
 	"find_in_files":
 	{
 		"height": 96.0,
 		"where_history":
 		[
+			"",
 			"D:\\argu"
 		]
 	},
@@ -195,6 +165,28 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"tags",
+			"new_pages",
+			"getStateImage",
+			"getStateType",
+			"print_references",
+			"getBestComment",
+			"getArgImage",
+			"getArgType",
+			"votes",
+			"statements",
+			":title",
+			":name",
+			"newsargument",
+			"create",
+			"newsargument",
+			"arguments",
+			"add_comment_form",
+			"pro",
+			"sarguments",
+			"addargument",
+			"statementargument",
+			"preview",
 			"params[:statement_id]",
 			"statement_id",
 			"F0F3FC",
@@ -258,7 +250,7 @@
 		"highlight": true,
 		"in_selection": false,
 		"preserve_case": false,
-		"regex": true,
+		"regex": false,
 		"replace_history":
 		[
 			"  ",
@@ -275,178 +267,16 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/controllers/arguments_controller.rb",
+					"file": "/C/Users/thom/Documents/GitHub/Sick-Beard/sickbeard/db.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4822,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								212,
-								212
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "app/controllers/statements_controller.rb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4194,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								3115,
-								3115
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 2310.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "app/models/statement.rb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1784,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1251,
-								1251
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 858.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "app/views/arguments/_arguments.html.erb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 557,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								530,
-								304
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "app/views/statements/_statementarguments.html.erb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1113,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								767,
-								777
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "app/views/arguments/show.html.erb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 584,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								584,
-								584
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "config/locales/nl.yml",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 5687,
+						"buffer_size": 9328,
 						"regions":
 						{
 						},
@@ -459,37 +289,10 @@
 						],
 						"settings":
 						{
-							"syntax": "Packages/YAML/YAML.tmLanguage"
+							"syntax": "Packages/Python/Python.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "app/models/ability.rb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2086,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13,
-								13
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Ruby/Ruby.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2527.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -503,7 +306,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 39.0
 	},
 	"layout":
 	{
@@ -539,6 +342,42 @@
 		"height": 0.0,
 		"selected_items":
 		[
+			[
+				"statement",
+				"app\\models\\statement.rb"
+			],
+			[
+				"state_contr",
+				"app\\controllers\\statements_controller.rb"
+			],
+			[
+				"argumen.yml",
+				"config\\locales\\arguments.nl.yml"
+			],
+			[
+				"routes",
+				"config\\routes.rb"
+			],
+			[
+				"votes_controller",
+				"app\\controllers\\votes_controller.rb"
+			],
+			[
+				"arg.yml",
+				"config\\locales\\arguments.nl.yml"
+			],
+			[
+				"argument",
+				"app\\models\\argument.rb"
+			],
+			[
+				"statements_controller",
+				"app\\controllers\\statements_controller.rb"
+			],
+			[
+				"rou",
+				"config\\routes.rb"
+			],
 			[
 				"gemfile",
 				"Gemfile"
@@ -612,16 +451,8 @@
 				"app\\views\\statements\\show.html.erb"
 			],
 			[
-				"statement",
-				"app\\models\\statement.rb"
-			],
-			[
 				"statemn",
 				"config\\locales\\statements.nl.yml"
-			],
-			[
-				"routes",
-				"config\\routes.rb"
 			],
 			[
 				"statementbody",

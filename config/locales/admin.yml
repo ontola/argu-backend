@@ -1,0 +1,12 @@
+nl:
+  admin:
+    panel:
+      name: 'Panel'
+      m_list: 'tonen'
+      m_add: 'toevoegen'
+      list:
+        h_admins: 'Admins'
+        h_id: 'id'
+        h_username: 'username'
+        h_email: 'email'
+        h_actions: 'actions'

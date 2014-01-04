@@ -8,7 +8,7 @@ class Statement < ActiveRecord::Base
   before_save :cap_title
 
   acts_as_ordered_taggable_on :tags
-
+  resourcify
   has_paper_trail
 
   attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators, :tag_list, :invert_arguments, :tag_id

@@ -3,6 +3,7 @@ class RegistrationsController < Devise::RegistrationsController
 
 	def create
 		super
+    @user.add_role :user
 		session[:omniauth] = nil unless @user.new_record?
 	end
 

@@ -1,0 +1,21 @@
+#navbar
+  #mainbar      
+    == link_to "argu", '/', id: "argulogo"
+    ul id="navbtns"
+      li
+        == render partial: 'search/search'
+      - if current_user.present?
+        li
+          == link_to t(:header_menuitem_statements), statements_url, id: "statements"
+        li
+          == link_to t(:users_show_title), settings_url , id: "account"
+      - else
+        li
+          == link_to t(:sign_in), new_user_session_url, id: "account"
+      li 
+        == link_to t('admin.panel.name'), admin_root_url
+      li
+        == link_to "info", '/about', class: "close", id: "info"
+      li
+        == link_to("uitloggen", destroy_user_session_url, method: :delete)
+.clear

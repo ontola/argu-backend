@@ -1,5 +1,4 @@
 class StatementsController < ApplicationController
-  load_and_authorize_resource
 
   # GET /statements
   # GET /statements.json
@@ -15,8 +14,10 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
+    @statement = Statement.where(id: params[:id]).includes(:arguments, :tags).first
     #@arguments = Argument.where(statement_id: @statement.id).order('votes.size DESC')
     @arguments = @statement.arguments.plusminus_tally({order: "vote_count ASC"})
+    authorize! :show, @statement
     @pro = Array.new
     @con = Array.new
     unless @arguments.nil?

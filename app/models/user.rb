@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  rolify
   has_many :authentications, dependent: :destroy
   has_one :profile, dependent: :destroy
 
@@ -12,7 +13,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable#,
          #:validatable, :omniauthable
-  ROLES = %w[coder admin user banned]
+  
+  #ROLES = %w[coder admin user banned]
+  rolify
 
   before_create :check_for_profile
   after_create :mark_as_user
@@ -52,17 +55,17 @@ class User < ActiveRecord::Base
   end
 
 #permissions
-  def is?(role)
-    self.role.eql? role.to_s
-  end
+  #def is?(role)
+  #  self.role.eql? role.to_s
+  #end
   
-  def roles=(roles)
-    self.role = roles[0].to_s
-  end
-  
-  def roles
-    self.role
-  end
+  #def roles=(roles)
+  #  self.role = roles[0].to_s
+  #end
+  #
+  #def roles
+  #  self.role
+  #end
 
 #authentiaction
   def apply_omniauth(omniauth)

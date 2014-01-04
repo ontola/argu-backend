@@ -1,0 +1,11 @@
+h1 Admin Panel
+.argcontainer2
+  .procon
+    h2 Stats
+    .box
+      p
+        | Number of mods: 
+        == @admin_count
+        = link_to t('admin.panel.m_list'), admin_list_url, class: 'btn', remote: true
+        = link_to t('admin.panel.m_add'), admin_add_url, class: 'btn'
+      #adminlist
