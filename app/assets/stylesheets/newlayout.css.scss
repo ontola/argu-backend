@@ -216,14 +216,14 @@ hr.stripe {
 }
 
 .tag {
-  color: white;
-  background-color: $blud;
+  color: $blu;
   border-radius: .5em;
   padding: .1em .4em .2em .4em;
   display: inline-block;
   margin-right: 0.4em;
   text-transform: lowercase;
   font-size: 120%;
+  border: solid 1px $blu;
   &:hover {
     color: white !important;
     background-color: $blu;
@@ -785,7 +785,6 @@ p.votelabel {
   width: auto;
   min-height: 200px;
   padding: 0;
-  margin-right: 1.9em;
   font-family: $opensans;
 }
 
@@ -960,12 +959,15 @@ p.votelabel {
   }
 }
 
-
-.btn2 {
-  background-color: $g0;
+.box .btn{
+    background-color: $g0;
   &:hover {
     background-color: $g1;
   }
+}
+
+.btn2 {
+
 }
 
 /*Zoekresultaten*/
@@ -1018,6 +1020,11 @@ div.pageconf {
 
 form .btn {
   float: left;
+}
+
+form {
+  max-width: 900px;
+  margin: auto;
 }
 
 input[type=checkbox]{
@@ -1117,7 +1124,6 @@ p.browsehappy {
   }
 
   .container{
-
   }
 
   .label-row {

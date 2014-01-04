@@ -30,7 +30,7 @@
     <p class="helpertext floatleft"><%= t("statements.form.helper.themes") %></p>
     <div class="clear"></div>
   </div>
-  <div class= "label-row">
+  <div class= "label-row"> <!-- TODO only visible when in edit, not in new. -->
     <%= f.label :invert_arguments, t("statements.form.invert"), class: "vertical" %>
     <div class="clear"></div>
     <%= f.check_box :invert_arguments %> 

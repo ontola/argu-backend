@@ -1,11 +1,11 @@
 <h1 class="center">
   <%= t("statements.plural") + " met het thema" %> <a class="tag center smallertag"><%= @tag.name %></a>
 </h1>
-<%= render partial: 'statements/tag_statement', locals: { statement: @tag.statement } if @tag.statement %>
-<h1><%= t("statements.plural") %></h1>
 <div class="centerbar">
 	<%= link_to t("statements.newstatement"), new_statement_path(statement: {tag_list: [@tag.name]} ), class: "btn" %>
 </div>
+<%= render partial: 'statements/tag_statement', locals: { statement: @tag.statement } if @tag.statement %>
+
 <% @statements.each do |statement| %>
   <%= render partial: statement, locals: { tag: @tag } %>
 <% end %>

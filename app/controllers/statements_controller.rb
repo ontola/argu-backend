@@ -103,7 +103,7 @@ class StatementsController < ApplicationController
   def tagged
     @tag = ActsAsTaggableOn::Tag.find_by_name(params[:tag])
     if params[:tag].present? 
-      @statements = Statement.tagged_with(params[:tag])
+      @statements = Statement.tagged_with(params[:tag]) # TODO rewrite statement to exclude where statement.tag_id
     else
       @statements = Statement.postall
     end
