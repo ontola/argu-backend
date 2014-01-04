@@ -1,10 +1,15 @@
 <div class=" revbar">
-		<ul>
-		<li><h3 class="left"><%= @version.next.nil? ? nil : link_to( t("newer"),  statement_rev_revisions_url(@statement, @version.next)) %></h3></li>
-		<li id="revprev"><h3 class="right"><%= @version.previous.nil? ? t("revisions.oldest") : link_to( t("older"),  statement_rev_revisions_url(@statement, @version.previous)) %></h3></li>
-				<% u = User.find_by_id(@statement.version.whodunnit) %>
+	<ul>
+		<li>
+			<%= @version.next.nil? ? nil : link_to( "← " + t("newer"),  statement_rev_revisions_url(@statement, @version.next), class:"btn") %>
+		</li>
+		<li id="revprev">
+			<%= @version.previous.nil? ? t("revisions.oldest") : link_to( t("older") + " →",  statement_rev_revisions_url(@statement, @version.previous), class:"btn") %>
+		</li>
+		<% u = User.find_by_id(@statement.version.whodunnit) %>
 	</ul>
 </div>
+
 <header style="clear:both">
 	<div class= "box statement">
 		<h1 class="title"><%= @statement.title %></h1>
@@ -18,7 +23,7 @@
 			</div>
 			<ul class="buttons">
 				<li>
-					<div class="info floatright">
+					<div class="info floatright hastags">
 						<p>
 							<% u = User.find_by_id(@statement.version.whodunnit) %>
 							<p>bewerkt door <%= u.username %> <%= @version.created_at.to_s %></p>

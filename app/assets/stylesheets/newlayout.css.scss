@@ -23,7 +23,7 @@ table td {
   font-size: 0.8em;
   text-align: left;
   background-color: white;
-  border: solid 1px $g4;
+  border: solid 1px $g2;
   border-top: none;
 }
 
@@ -36,6 +36,7 @@ table th {
   font-size: 0.8em;
   text-align: left;
   color: white;
+  background-color: $g3;
 }
 
 span {
@@ -116,7 +117,8 @@ select {
   padding-bottom: 0.5em;
   padding-top: 0.5em;
   background-color: white;
-  border-bottom:solid 0.2em $g1;
+  /**border-bottom:solid 0.2em $g1;**/
+  box-shadow: 1px 1px 10px $g1;
   margin-bottom: 1.8em;
   border-radius: 0.3em;
   max-width: 46em;
@@ -245,7 +247,6 @@ hr.stripe {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
-  overflow: hidden;
   margin-top: -.4em;
   li {
     display: inline
@@ -300,7 +301,6 @@ hr.stripe {
 
 .con {
   /*  background-color: #faf4f3;*/
-  overflow:hidden;
   margin-left: .8em;
   .title
   {
@@ -333,6 +333,8 @@ hr.stripe {
     line-height: 1.3em;
     height: 1.4em;
     border-radius: .3em;
+        box-shadow: 1px 1px 10px $g1;
+
   }
 }
 
@@ -439,7 +441,8 @@ div#navbar {
     width: 100%;
     background-color:white;
     float: left;
-    border-bottom: solid 2px $g1;
+    /*border-bottom: solid 2px $g1;*/
+      box-shadow: 1px 1px 10px $g1;
     margin-bottom: 20px;
 
   #mainbar {
@@ -792,7 +795,7 @@ p.votelabel {
 .revbar {
   margin-left: auto;
   margin-right: auto;
-  max-width: 624px;
+  max-width: 46em;
   ul
   {
     text-align: center;
@@ -802,7 +805,7 @@ p.votelabel {
       float: left;
       list-style-type: none;
       display: inline-block;
-      padding-bottom: 9px;
+      margin-bottom: 1.1em;
       h3
       {
         padding: 5px;
@@ -934,7 +937,8 @@ p.votelabel {
   background-color: white;
   color: $g4;
   border: none;
-  border-bottom: solid .2em $g1;
+  /*border-bottom: solid .2em $g1;*/
+  box-shadow: 1px 1px 10px $g1;
   padding: .25em .5em;
   width: auto;
   font-family: $opensans;
@@ -956,6 +960,7 @@ p.votelabel {
   &:active{
     border-bottom-width: 0;
     margin-top: .1em;
+    margin-bottom: -.1em;
   }
 }
 
@@ -1027,6 +1032,10 @@ form {
   margin: auto;
 }
 
+form.edit_user{
+    max-width: 700px;
+  }
+
 input[type=checkbox]{
   border-color: $blu;
   float: left;
@@ -1038,6 +1047,7 @@ input[type=checkbox]{
   color: $g0;
   margin-left: 10px;
   text-align: left;
+  font-size: 0.9em;
 }
 
 .label-row:hover .helpertext {
@@ -1145,11 +1155,7 @@ p.browsehappy {
     width: 100%;
   }
 
-  .helpertext {
-    width: 100%;
-    color: $g4;
-    margin-left: 0;
-  }
+
   div#navbar {
     #argulogo{
       float: none;
@@ -1161,14 +1167,47 @@ p.browsehappy {
       float: none;
       text-align: center;
       display: block;
+      a{
+        padding-left: 10px;
+        padding-right: 10px;
+        line-height: 24px;
+      }
+
       li{
         float: none;
       }
       #search{
         float: none;
+        line-height: 20px;
+        padding: 1px;
+        padding-top: 3px;
+        padding-left: 10px;
+        height: 25px;
       }
     }
   }
+
+  form.edit_user {
+    max-width: 382px !important;
+    input.settingform{
+      width: 100%;}
+  }
+  /*disable hidden buttons for small devices*/
+  .box {
+  .buttons a {
+    color: $g3;
+  }
+  
+  .votebtn a {
+    color: $blu;
+  }
+
+  .helpertext {
+    width: 100%;
+    color: $g4;
+    margin-left: 0;
+  }
+}
 }
 
 

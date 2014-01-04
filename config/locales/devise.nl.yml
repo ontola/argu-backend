@@ -21,7 +21,7 @@ nl:
       timeout: 'Jouw sessie is verlopen, log opnieuw in om door te gaan.'
       inactive: 'Jouw account is nog niet geactiveerd.'
     sessions:
-      signed_in: 'Welkom, je bent succesvol ingelogd.'
+      signed_in: 'Welkom terug!'
       signed_out: 'Je bent succesvol uitgelogd, tot ziens.'
     passwords:
       send_instructions: 'Je zal straks een email ontvangen met intructies om jouw wachtwoord te resetten.'
