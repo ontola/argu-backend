@@ -1150,7 +1150,27 @@ p.browsehappy {
     color: $g4;
     margin-left: 0;
   }
+  div#navbar {
+    #argulogo{
+      float: none;
+      padding-bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+    #navbtns{
+      float: none;
+      text-align: center;
+      display: block;
+      li{
+        float: none;
+      }
+      #search{
+        float: none;
+      }
+    }
+  }
 }
+
 
 @media screen and (max-width: 1000px) {
   body{
