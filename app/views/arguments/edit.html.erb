@@ -1,4 +1,2 @@
-<h1><%= t("arguments.new.header", side: params[:pro] ? t("arguments.pro") : t("arguments.con")) %></h1>
-<h1 class="title statement top"><%= @argument.statement.title %></h1>
-  <!--TODO make link -->
+<%= back_to_statement %>
 <%= render 'form' %>

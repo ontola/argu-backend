@@ -1,5 +1,2 @@
-<div class= "label-row">
-  <h1><%= t("arguments.new.header", side: params[:pro] == "true" ? t("arguments.pro") : t("arguments.con")) %></p>
-  <h1 class="title statement top"><%= @argument.statement.title %></h1> <!--TODO make link -->
-</div>
+<%= back_to_statement %>
 <%= render 'form' %>
