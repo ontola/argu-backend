@@ -2,7 +2,7 @@
 <div class="centercont">
   <div>
     <h1><%= t("arguments.new.header", side: params[:pro] ? t("arguments.pro") : t("arguments.con")) %></p>
-    <h1 class="title titlestatement"><%= @argument.statement.title %></h2>
+    <h1 class="title statement top"><%= @argument.statement.title %></h2>
   </div>
   <%= render 'argumentbody' %>
   <%= render 'argumentcomments' %>

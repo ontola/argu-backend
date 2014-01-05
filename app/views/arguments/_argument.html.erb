@@ -2,7 +2,6 @@
 <div class="<%= (argument.pro ? "box pro" : "box con") %>">
 	<%= link_to argument.title, argument_path(argument), class: argument.pro ? "title" : "title" %>
 	<%= content_tag :p, raw(argument.supped_content), class: 'intro' %>
-  <%= argument.references.present? ? ( content_tag :p, t("arguments.references") , class: 'referencestitle') : "" %>
 	<%= render partial: "votes/shr", locals: { argument: argument } %>
 	<br>
 	<% if @comment.present? %>
@@ -11,7 +10,7 @@
 				<% num_comments = argument.comment_threads.size%>
 				<span class="commentsnumber infobar"><%= num_comments.to_s + (num_comments == 1 ? " reactie:" : " reacties:") %></span>
 				</br>
-				<p><%= @comment.body[0..150] + (@comment.body[150] ? "...": "") %></p>
+				<p><%= @comment.body[0..150] + (@comment.body[151] ? "..." : "") %></p>
 			</div>
 		<% end %>
 	<% else %>

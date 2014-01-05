@@ -77,8 +77,11 @@ h3 {
 a {
   @include text_settings($color: $g4);
   text-decoration: none;
+}
+
+.no-touch a{
   &:hover {
-    color: black !important;
+    color: black;
   }
 }
 
@@ -149,6 +152,15 @@ select {
   }
   form{
     margin-top: 4px;
+  }
+}
+
+.no-touch .box {
+  .buttons a{
+    color: white;
+  }
+  .votebtn{
+    color: white;
   }
   &:hover{
     .buttons a {
@@ -259,6 +271,9 @@ hr.stripe {
   text-transform: lowercase;
   font-size: 120%;
   border: solid 1px $blu;
+}
+
+.no-touch .tag {
   &:hover {
     color: white !important;
     background-color: $blu;
@@ -375,17 +390,19 @@ hr.stripe {
     margin-left: .3em;
     line-height: 1.3em;
   }
+  a.current
+  {
+    border-bottom: solid 0.13em $g1;
+  }
+}
+
+.no-touch .navcontent {
   a:hover
   {
     border-bottom: solid 0.13em $g1;
   }
-
-  a.current
-  {
-    border-bottom: solid 0.13em $g1;
-
-    &:hover
-    {
+  a.current {
+    &:hover {
       color: black;
     }
   }
@@ -460,29 +477,24 @@ ul .dropdown {
 }
 
 div#navbar {
-    width: 100%;
-    background-color:white;
-    float: left;
-    /*border-bottom: solid 2px $g1;*/
-      box-shadow: 1px 1px 10px $g1;
-    margin-bottom: 1.5em;
+  width: 100%;
+  background-color:white;
+  float: left;
+  /*border-bottom: solid 2px $g1;*/
+  box-shadow: 1px 1px 10px $g1;
+  margin-bottom: 1.5em;
 
   #mainbar {
     margin:0 auto;
     padding: 0;
     width: 97%;
     max-width: 1000px;
-    &:hover ul .dropdown { display: block; }
   }
 
   li {
     list-style-type: none;
     display: inline-block;
     float: left;
-
-    &:hover {
-      background-color: $g1;
-    }
 
     #search {
       -webkit-appearance: none;
@@ -515,11 +527,6 @@ div#navbar {
       font-size: 16px !important;
       webkit-appearance: none !important;
     }
-
-    textarea:hover,
-    input:hover {
-      background-color: $g1 !important;
-    }
   }
 
   a {
@@ -544,12 +551,29 @@ div#navbar {
     left: -8px;
   }
 
-  #argulogo:hover {
-      background-color: $g1;
-  }
-
   .close {
     border-right: solid 1px white;
+  }
+}
+
+.no-touch div#navbar {
+  #mainbar{
+    &:hover ul .dropdown { display: block; }
+  }
+  li {
+    &:hover{
+      background-color: $g1;
+    }
+    #search {
+
+    }
+    textarea:hover,
+    input:hover {
+      background-color: $g1 !important;
+    }
+  }
+  #argulogo:hover {
+    background-color: $g1;
   }
 }
 
@@ -617,7 +641,7 @@ a.commentusername {
 .buttons {
   a
   {
-    color: white;
+    color: $g3;
     width: auto;
     float: right;
     margin-left: 1em;
@@ -755,8 +779,8 @@ p.votelabel {
 
 .votebtn {
   a {
+    color: $blu;
     font-weight: bold; 
-    color: white;
     font-size: 1.5em;
     line-height: 1.5em;
     padding: 0;
@@ -770,8 +794,10 @@ p.votelabel {
 .tooltip {
   display: inline;
   position: relative;
+}
 
-  &:hover:after {
+.no-touch .tooltip {
+    &:hover:after {
     content: attr(title);
     background: $blu;
     border-radius: .3em;
@@ -941,7 +967,7 @@ p.votelabel {
   float: left;
 }
 
-.auth_provider :hover {
+.no-touch .auth_provider :hover {
   opacity: 1;
 }
 
@@ -972,6 +998,37 @@ p.votelabel {
   }
 }
 
+.no-touch .btn {
+  &:hover{
+    border-bottom-color: $g3;
+    color: black;   
+  }
+  &.green{
+    &:hover{
+      background-color: $gre;
+      color: white !important;
+    }
+  } 
+  &.red{
+    &:hover{
+      background-color: $red;
+      color: white !important;
+    } 
+  }
+  &.grey{
+    &:hover{
+      background-color: $g3;
+      color: white !important;
+    } 
+  }
+  &.blue{
+    &:hover{
+      background-color: $blu;
+      color: white !important;
+    }  
+  } 
+}
+
 .btn {
   display: inline-block;
   font-size: .8em;
@@ -994,46 +1051,25 @@ p.votelabel {
     color: white;
   }
   
-  &:hover {
-    border-bottom-color: $g3;
-    color: black;
-  }
   &:active{
     border-bottom-width: 0;
   }
   &.green{
     background-color: $gred;
     color: white;
-    &:hover{
-      background-color: $gre;
-      color: white !important;
-    } 
   }
   &.red{
     background-color: $redd;
     color: white;
-    &:hover{
-      background-color: $red;
-      color: white !important;
-    } 
   }
   &.grey{
     background-color: $g2;
     color: white;
-    &:hover{
-      background-color: $g3;
-      color: white !important;
-    } 
   }
   &.blue{
     background-color: $blud;
     color: white;
-    &:hover{
-      background-color: $blu;
-      color: white !important;
-    } 
   }
-
 }
 
 /*Zoekresultaten*/
@@ -1101,13 +1137,13 @@ input[type=checkbox]{
 .helpertext {
   float: left;
   width: 45%;
-  color: $g2;
+  color: $g3;
   margin-left: 10px;
   text-align: left;
   font-size: 0.8em;
 }
 
-.label-row:hover .helpertext {
+.no-touch .label-row:hover .helpertext {
   color: $g4;
 }
 
