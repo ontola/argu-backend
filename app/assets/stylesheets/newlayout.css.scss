@@ -324,6 +324,7 @@ hr.stripe {
   }
   &.argumenttitle{
     color: $gre;
+    @include placeholder ($gred)
   }
 }
 
@@ -343,6 +344,7 @@ hr.stripe {
   }
   &.argumenttitle{
     color: $red;
+    @include placeholder ($redd)
   }
 }
 
@@ -581,19 +583,16 @@ div#navbar {
     -webkit-appearance: none;      // hide the default "X" button  
 }
 
-input{
+input, textarea{
   -webkit-appearance: none;
+  @include placeholder ($g2, 1)
 }
 
 #search {
-  @include placeholder($g4);
+  @include placeholder($g4, 1);
   -moz-appearance:    textfield;
   -webkit-appearance: textfield;
   appearance: textfield;
-}
-
-#search-moz-placeholder  { 
-  color: $g4; 
 }
 
 div#navr {
@@ -1162,6 +1161,7 @@ input[type=checkbox]{
     color: $blu;
     font-size: 1.3em;
     font-weight: bold;
+    @include placeholder($blud, 1)
   }
   &.argumenttitle{
     font-size: 1.2em;
