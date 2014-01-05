@@ -11,17 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140104143931) do
+ActiveRecord::Schema.define(:version => 20140105015649) do
 
   create_table "arguments", :force => true do |t|
-    t.text     "content",                        :null => false
-    t.integer  "statement_id",                   :null => false
-    t.boolean  "pro",          :default => true, :null => false
+    t.text     "content",                         :null => false
+    t.integer  "statement_id",                    :null => false
+    t.boolean  "pro",          :default => true,  :null => false
     t.integer  "votes_count",  :default => 0
-    t.integer  "argtype",      :default => 3,    :null => false
-    t.datetime "created_at",                     :null => false
-    t.datetime "updated_at",                     :null => false
+    t.integer  "argtype",      :default => 3,     :null => false
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
     t.string   "title"
+    t.boolean  "is_trashed",   :default => false
   end
 
   add_index "arguments", ["statement_id"], :name => "statement_id"
@@ -43,12 +44,13 @@ ActiveRecord::Schema.define(:version => 20140104143931) do
     t.string   "title",            :default => ""
     t.text     "body",             :default => ""
     t.string   "subject",          :default => ""
-    t.integer  "user_id",          :default => 0,  :null => false
+    t.integer  "user_id",          :default => 0,     :null => false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
+    t.boolean  "is_trashed",       :default => false
   end
 
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"

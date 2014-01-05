@@ -15,6 +15,7 @@ class Ability
       cannot [:admin, :mod, :user], User do |item|
         item.has_any_role? :coder, :admin
       end
+      can :trash, [Argument]
       #The admin can manage all the generic objects
       can [:manage, :revisions, :allrevisions],
           [Statement, 
@@ -27,6 +28,12 @@ class Ability
       end
     elsif user.has_role? :mod
       can :list, :mod
+      can :trash, Argument do |item|
+        user.is_mod_of? item.statement
+      end
+      can :trash, Comment do |item|
+        user.is_mod_of? eval(item.commentable_type).find_by_id(item.commentable_id).statement
+      end
       cannot [:mod, :user], User do |item|
         item.has_any_role? :coder, :admin, :mod
       end

@@ -3,11 +3,11 @@ Argu::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
   namespace :admin do
-    get 'list' => 'administration#list'
-    post 'admin/:id' => 'administration#add'
-    delete 'admin/:id' => 'administration#remove', as: 'remove'
-    post 'search_username' => 'administration#search_username'
-    root to: 'administration#panel'
+    get 'list' => 'administration#list', constraints: lambda { |r| r.env["warden"].authenticate? }
+    post 'admin/:id' => 'administration#add', constraints: lambda { |r| r.env["warden"].authenticate? }
+    delete 'admin/:id' => 'administration#remove', as: 'remove', constraints: lambda { |r| r.env["warden"].authenticate? }
+    post 'search_username' => 'administration#search_username', constraints: lambda { |r| r.env["warden"].authenticate? }
+    root to: 'administration#panel', constraints: lambda { |r| r.env["warden"].authenticate? }
   end
 
   resources :authentications, only: [:create, :destoy]
@@ -23,6 +23,7 @@ Argu::Application.routes.draw do
   end
 
   resources :arguments, constraints: lambda { |r| r.env["warden"].authenticate? } do
+    delete "argument/:id" => "arguments#destroy", as: 'destroy', constraints: lambda { |r| r.env["warden"].authenticate? }
     post "comment" => "arguments#placeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
     delete "comment/:id" => "arguments#wipeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
     

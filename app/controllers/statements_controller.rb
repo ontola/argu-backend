@@ -14,7 +14,7 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
-    @statement = Statement.where(id: params[:id]).includes(:arguments, :tags).first
+    @statement = Statement.includes(:arguments, :tags).where(id: params[:id], 'arguments.is_trashed' => false).first
     #@arguments = Argument.where(statement_id: @statement.id).order('votes.size DESC')
     @arguments = @statement.arguments.plusminus_tally({order: "vote_count ASC"})
     authorize! :show, @statement
@@ -161,7 +161,13 @@ class StatementsController < ApplicationController
   # DELETE /statements/1
   # DELETE /statements/1.json
   def destroy
-    @statement.destroy
+  	if params[:destroy] == 'true'
+      authorize! :destroy, @statement
+      @statement.destroy
+    else
+      authorize! :trash, @statement
+      @statement.trash
+    end
 
     respond_to do |format|
       format.html { redirect_to statements_url }

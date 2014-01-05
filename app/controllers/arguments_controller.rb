@@ -101,7 +101,6 @@ class ArgumentsController < ApplicationController
   # POST /arguments.json
   def create
     respond_to do |format|
-      puts "===================="+params.to_json.to_s+"====================="
       if @argument.save
         format.html { redirect_to (params[:argument][:statement_id].blank? ? @argument : Statement.find_by_id(params[:argument][:statement_id])), notice: t("arguments.notices.created") }
         format.json { render json: @argument, status: :created, location: @argument }
@@ -129,10 +128,16 @@ class ArgumentsController < ApplicationController
   # DELETE /arguments/1
   # DELETE /arguments/1.json
   def destroy
-    @argument.destroy
+    if params[:destroy] == 'true'
+      authorize! :destroy, @argument
+      @argument.destroy
+    else
+      authorize! :trash, @argument
+      @argument.trash
+    end
 
     respond_to do |format|
-      format.html { redirect_to arguments_url }
+      format.html { redirect_to @argument.statement }
       format.json { head :no_content }
     end
   end
