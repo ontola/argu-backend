@@ -6,17 +6,30 @@ class Ability
     if user.has_role? :coder
         #The coder can do anything
         can :manage, :all
+        can [:panel, :list, :search_username, :add, :remove], :admin
+        can [:add, :remove, :list], [:admin, :mod, :user]
     elsif user.has_role? :admin
-        #The admin can manage all the generic objects
-        can [:manage, :revisions, :allrevisions],
-            [Statement, 
-             Argument,
-             Comment,
-             Profile,
-             Vote]
-        can :manage, User do |u|
-          user == u
-        end
+      can [:panel, :search_username], :admin
+      can [:add, :remove, :list], [:mod, :user]
+      can :list, :admin
+      cannot [:admin, :mod, :user], User do |item|
+        item.has_any_role? :coder, :admin
+      end
+      #The admin can manage all the generic objects
+      can [:manage, :revisions, :allrevisions],
+          [Statement, 
+           Argument,
+           Comment,
+           Profile,
+           Vote]
+      can :manage, User do |u|
+        user == u
+      end
+    elsif user.has_role? :mod
+      can :list, :mod
+      cannot [:mod, :user], User do |item|
+        item.has_any_role? :coder, :admin, :mod
+      end
     elsif user.has_role? :user
         cannot :manage, User do |u|
           user != u

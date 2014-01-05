@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-	load_and_authorize_resource
 
 	def edit
 		@user = current_user
+    authorize! :edit, @user
 		
 		unless @user.nil? 
 			@authentications = @user.authentications
@@ -23,6 +23,7 @@ class UsersController < ApplicationController
 	# PUT /settings
 	def update
 		@user = current_user unless current_user.blank?
+    authorize! :update, @user
 
 		respond_to do |format|
 			if @user.update_attributes(params[:user]) && @user.profile.update_attributes(params[:profile])

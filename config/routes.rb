@@ -4,7 +4,9 @@ Argu::Application.routes.draw do
 
   namespace :admin do
     get 'list' => 'administration#list'
-    get 'add' => 'administration#add'
+    post 'admin/:id' => 'administration#add'
+    delete 'admin/:id' => 'administration#remove', as: 'remove'
+    post 'search_username' => 'administration#search_username'
     root to: 'administration#panel'
   end
 

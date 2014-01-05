@@ -4,7 +4,6 @@ class User < ActiveRecord::Base
   has_one :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile
-
   acts_as_voter
 
   # Include default devise modules. Others available are:
@@ -13,9 +12,6 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable#,
          #:validatable, :omniauthable
-  
-  #ROLES = %w[coder admin user banned]
-  rolify
 
   before_create :check_for_profile
   after_create :mark_as_user
@@ -43,6 +39,9 @@ class User < ActiveRecord::Base
   validates :email, allow_blank: true,
         format: { with: RFC822::EMAIL }
 
+  searchable do 
+    text :username, :email
+  end
 
 #general
   def self.find(id)
@@ -53,19 +52,6 @@ class User < ActiveRecord::Base
   def getLogin
     return (:username.blank? ? email : username )
   end
-
-#permissions
-  #def is?(role)
-  #  self.role.eql? role.to_s
-  #end
-  
-  #def roles=(roles)
-  #  self.role = roles[0].to_s
-  #end
-  #
-  #def roles
-  #  self.role
-  #end
 
 #authentiaction
   def apply_omniauth(omniauth)
@@ -94,7 +80,7 @@ private
   end
 
   def mark_as_user
-    self.roles= ["user"]
+    self.add_role :user
   end
 
   def normalize_blank_values
