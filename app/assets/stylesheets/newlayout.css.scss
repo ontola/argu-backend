@@ -239,6 +239,9 @@ hr.stripe {
   }
   margin-left: auto;
   margin-right: auto;  
+  &.title{
+    color: $blu;
+  }
 }
 
 .tags {
@@ -292,7 +295,9 @@ hr.stripe {
 }
 
 .pro {
-  margin-right: .8em;
+  &.box, &.argtypebox{
+    margin-right: .8em;
+  }
   .title
   {
     color: $gre;
@@ -302,11 +307,16 @@ hr.stripe {
     color: white;
     background-color: $gre;
   }
+  &.argumenttitle{
+    color: $gre;
+  }
 }
 
 .con {
   /*  background-color: #faf4f3;*/
-  margin-left: .8em;
+  &.box, &.argtypebox{
+    margin-left: .8em;
+  }
   .title
   {
     color: $red;
@@ -315,6 +325,9 @@ hr.stripe {
   {
     color: white;
     background-color: $red;
+  }
+  &.argumenttitle{
+    color: $red;
   }
 }
 
@@ -475,7 +488,7 @@ div#navbar {
       -webkit-appearance: none;
       box-sizing: content-box;
       background-color: white;
-      height: 35px;
+      height: 34.8px;
       width: 60px;
       padding: 5px;
       padding-left: 10px;

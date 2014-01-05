@@ -11,7 +11,7 @@
       </div>
     <% end %>
     <div class= "label-row">
-      <%= f.text_field "title", class: "settingform verticalform argumenttitle", placeholder: t("arguments.form.title").capitalize %>
+      <%= f.text_field "title", class: "settingform verticalform argumenttitle " + (params[:pro] == "true" ? "pro" : "con"), placeholder: t("arguments.form.title").capitalize %>
       <p class="helpertext floatleft"><%= t("arguments.form.helper.title") %></p>
       <div class="clear"></div>
     </div>
