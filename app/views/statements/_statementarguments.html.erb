@@ -6,7 +6,7 @@
   			<div class="argtypebox <%= p.to_s %>">
   				<h2><%= t("arguments." + p.to_s) %></h2>
   			</div>
-  			<% unless procon.nil? %>
+  			<% unless procon.blank? %>
   				<% procon.each do |argument| %>
   					<%= render argument %>
   				<% end %>
@@ -14,7 +14,7 @@
   				<pre><%= t('statement_no_' + p.to_s + 's') %></pre>
   			<% end %>
   			<div class="centerbar <%= p.to_s %>">
-  				<%= link_to t("arguments.new.create", side: t("arguments." + p.to_s)), new_argument_path(pro: p ? true : false, statement_id: statement.id), class: "btn" %>
+  				<%= link_to t("arguments.new.create", side: t("arguments." + p.to_s)), new_argument_path(pro: p == :pro ? true : false, statement_id: statement.id), class: "btn" %>
   			</div>
   		</div>
     <% end %>

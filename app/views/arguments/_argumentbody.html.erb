@@ -4,7 +4,7 @@
       <%= @argument.title %>
     </h1>
     <%= content_tag :p, raw(@argument.supped_content), class: 'intro' %>
-    <%= content_tag :p, t("arguments.references") + ":", class: 'referencestitle' %>
+    <%= @argument.references.present? ? ( content_tag :p, t("arguments.references") , class: 'referencestitle') : "" %>
     <%= print_references @argument.references %>
     <div class="infobar">
       <ul class="buttons">

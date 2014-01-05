@@ -1,32 +1,35 @@
-<%= form_for(@argument) do |f|%>
-  <% if @argument.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@argument.errors.count, "error") + t("error_prohibited") %></h2>
-      <ul>
-        <% @argument.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <% [:title, :content].each do |i| %>
+<div class="box center">
+  <%= form_for(@argument) do |f|%>
+    <% if @argument.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@argument.errors.count, "error") + t("error_prohibited") %></h2>
+        <ul>
+          <% @argument.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     <div class= "label-row">
-      <%= f.label i, t("arguments.form."+i.to_s), class: "vertical" %>
+      <%= f.text_field "title", class: "settingform verticalform argumenttitle", placeholder: t("arguments.form.title").capitalize %>
+      <p class="helpertext floatleft"><%= t("arguments.form.helper.title") %></p>
       <div class="clear"></div>
-      <%= f.text_field i, class: "settingform verticalform" %>
-      <p class="helpertext floatleft"><%= t("arguments.form.helper."+i.to_s) %></p>
+    </div>
+    <div class= "label-row">
+      <%= f.text_area "content", class: "settingform verticalform", placeholder: t("arguments.form.content").capitalize, rows: "10" %>
+      <p class="helpertext floatleft"><%= raw t("arguments.form.helper.content") %></p>
       <div class="clear"></div>
+    </div>
+    <div class="row">
+      <div class="span8">
+        <fieldset class="control-group">
+        </fieldset>
+        <%= f.hidden_field(:statement_id) %>
+        <%= f.hidden_field(:pro) %>
+        <fieldset class="form-actions">
+          <%= f.submit t("arguments.form.submit"), class: "btn blue" %>
+        </fieldset>
+      </div>
     </div>
   <% end %>
-  <div class="row">
-    <div class="span8">
-      <fieldset class="control-group">
-      </fieldset>
-      <%= f.hidden_field(:statement_id) %>
-      <%= f.hidden_field(:pro) %>
-      <fieldset class="form-actions">
-        <%= f.submit t("arguments.form.submit"), class: "btn" %>
-      </fieldset>
-    </div>
-  </div>
-<% end %>
+</div>

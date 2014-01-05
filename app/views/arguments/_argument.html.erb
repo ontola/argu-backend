@@ -1,20 +1,24 @@
 <% @comment = getBestComment(argument) %>
 <div class="<%= (argument.pro ? "box pro" : "box con") %>">
 	<%= link_to argument.title, argument_path(argument), class: argument.pro ? "title" : "title" %>
-	<p><%= argument.content %></p>
+	<%= content_tag :p, raw(argument.supped_content), class: 'intro' %>
+  <%= argument.references.present? ? ( content_tag :p, t("arguments.references") , class: 'referencestitle') : "" %>
 	<%= render partial: "votes/shr", locals: { argument: argument } %>
 	<br>
 	<% if @comment.present? %>
 		<%= link_to argument_path(argument) + "#commentstitle" do %>
-			<p class="comment">
-			<% num_comments = argument.comment_threads.size%>
-				<%= num_comments.to_s + (num_comments == 1 ? " reactie:" : " reacties:") %></br>
-				"<%= @comment.body %>"
-			</p>
+			<div class="topcomment">
+				<% num_comments = argument.comment_threads.size%>
+				<span class="commentsnumber infobar"><%= num_comments.to_s + (num_comments == 1 ? " reactie:" : " reacties:") %></span>
+				</br>
+				<p><%= @comment.body[0..150] + (@comment.body[150] ? "...": "") %></p>
+			</div>
 		<% end %>
 	<% else %>
 		<%= link_to argument_path(argument) do %>
-			<p class="comment"><%= t "arguments.comments.none" %></p>
+						<div class="topcomment">
+							<span class="commentsnumber infobar"><%= t "arguments.comments.none" %></span>
+						</div>
 		<% end %>
 	<% end %>
 </div>

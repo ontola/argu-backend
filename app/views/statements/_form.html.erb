@@ -1,3 +1,4 @@
+<div class="box center">
 <%= form_for(@statement, html: { class: "form-horizontal" }) do |f| %>
   <% if @statement.errors.any? %>
     <div id="error_explanation">
@@ -10,31 +11,25 @@
     </div>
   <% end %>
   <div class= "label-row">
-    <%= f.label :title, t("statements.form.title"), class: "vertical" %>
-    <div class="clear"></div>
-    <%= f.text_field :title, class: "settingform verticalform" %>
+    <%= f.text_field :title, class: "settingform verticalform statementtitle", placeholder: t("statements.form.title").capitalize %>
     <p class="helpertext floatleft"><%= t("statements.form.helper.title") %></p>
     <div class="clear"></div>
   </div>
   <div class= "label-row">
-    <%= f.label :content, t("statements.form.content"), class: "vertical" %>
-    <div class="clear"></div>
-    <%= f.text_area :content, class: "settingform verticalform", rows: "10" %>
+    <%= f.text_area :content, class: "settingform verticalform", placeholder: t("statements.form.content").capitalize, rows: "8" %>
     <p class="helpertext floatleft"><%= t("statements.form.helper.content") %></p>
     <div class="clear"></div>
   </div>
   <div class= "label-row">
-    <%= f.label :tags, t("statements.form.themes"), class: "vertical" %>
-    <div class="clear"></div>
-    <%= f.text_field :tag_list, class: "settingform verticalform" %>
+    <%= f.text_field :tag_list, class: "settingform verticalform", placeholder: t("statements.form.themes") %>
     <p class="helpertext floatleft"><%= t("statements.form.helper.themes") %></p>
     <div class="clear"></div>
   </div>
-  <div class= "label-row"> <!-- TODO only visible when in edit, not in new. -->
+<!-- TODO invert arguments only visible when in edit, not in new. 
     <%= f.label :invert_arguments, t("statements.form.invert"), class: "vertical" %>
-    <div class="clear"></div>
     <%= f.check_box :invert_arguments %> 
-    <div class="clear"></div>
-  </div>  
-  <%= f.submit t(:save), class: "btn"  %>
+    <div class="clear"></div> 
+-->
+  <%= f.submit t(:save), class: "btn blue"  %>
 <% end %>
+</div>

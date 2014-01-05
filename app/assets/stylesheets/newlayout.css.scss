@@ -53,6 +53,10 @@ small {
   line-height: 1em;
 }
 
+code {
+  font-family: courier;
+}
+
 /*header*/
 h1 {
   @include header_settings();
@@ -85,7 +89,6 @@ label {
   font-family: $raleway;
   font-weight: 200;
   color:$g4;
-  width: 250px;
   margin-top: 4px;
   line-height: 1.2em;
   &.vertical {
@@ -128,21 +131,48 @@ select {
     margin-bottom: .5em;
     margin-top: -.3em;
     text-align: left;
+    color: $blu;
     li{
       text-align: justify;
-      color: #5b5b5b;
       font-family: Open Sans, verdana, arial, sans-serif;
       font-size: 1em;
       margin: 0;
       padding: 0;
       line-height: 1.3em;
       text-decoration: none;;
+      a:visited{
+        color: $g3;
+      }
     }
-  a{
-    text-align: left;
   }
+  a{
+  }
+  form{
+    margin-top: 4px;
+  }
+  &:hover{
+    .buttons a {
+      color: $g3;
+    }
+    .votebtn a {
+    color: $blu;
+    }
   }
 }
+
+form {
+  input[type="text"],input[type="email"],input[type="password"], textarea{
+    box-shadow: inset 1px 1px 10px $g1;
+    box-sizing: border-box;
+  }
+  textarea{
+    resize: vertical;
+  }
+  .btn{
+    box-shadow: 1px 1px 10px $g1;
+  }
+}
+
 .box > p {
   margin-bottom: .4em;
   margin-top: .2em;
@@ -239,6 +269,8 @@ hr.stripe {
 .inlineref{
     font-size: 80%;
     vertical-align: top;
+    color: $blu;
+    padding: 0.1em;
 }
 
 .opinionbtns {
@@ -256,33 +288,6 @@ hr.stripe {
   }
   a {
   margin: 0em .5em;
-  }
-  .oppro {
-    color: $gre;
-    border-bottom-color: $gre;
-  }  
-  .oppro:hover {
-    color: white !important;
-    background-color: $gred;
-    border-bottom-color: $gre;
-  }
-  .opneu {
-    color: $g3 !important;
-    border-bottom-color: $g3;
-  }  
-  .opneu:hover {
-    color: white !important;
-    background-color: $g2;
-    border-bottom-color: $g3;
-  }  
-  .opcon {
-    color: $red !important;
-    border-bottom-color: $red;
-  }
-  .opcon:hover {
-    color: white !important;
-    background-color: $redd;
-    border-bottom-color: $red;
   }
 }
 
@@ -368,7 +373,7 @@ hr.stripe {
 
     &:hover
     {
-      color: black !important;
+      color: black;
     }
   }
 }
@@ -404,6 +409,10 @@ hr.stripe {
 .centerbar {
   text-align: center;
   margin-bottom: 1.8em;
+}
+
+.top{
+  margin-bottom: 1em;
 }
 
 .leftbar {
@@ -443,14 +452,14 @@ div#navbar {
     float: left;
     /*border-bottom: solid 2px $g1;*/
       box-shadow: 1px 1px 10px $g1;
-    margin-bottom: 20px;
+    margin-bottom: 1.5em;
 
   #mainbar {
     margin:0 auto;
     padding: 0;
     width: 97%;
     max-width: 1000px;
-      &:hover ul .dropdown { display: block; }
+    &:hover ul .dropdown { display: block; }
   }
 
   li {
@@ -535,6 +544,10 @@ div#navbar {
     -webkit-appearance: none;      // hide the default "X" button  
 }
 
+input{
+  -webkit-appearance: none;
+}
+
 #search {
   @include placeholder($g4);
   -moz-appearance:    textfield;
@@ -573,6 +586,19 @@ a.commentusername {
   width: 100%;
   height: 45px;
   overflow: hidden;  
+}
+
+.topcomment {
+  border-top-style: solid;
+  border-width: 1px;
+  border-color: $g2;
+  clear: both;
+  color: gray;
+  white-space: normal;
+  p{
+    font-style: italic;
+    font-size: 0.9em;
+  }
 }
 
 .buttons {
@@ -618,10 +644,7 @@ p.comment {
   font-size: 0.8em;
   white-space: normal;
   a {
-    color: #575757;
-  }
-  &:hover {
-    color: black;
+    color: $g3;
   }
 }
 
@@ -636,21 +659,13 @@ p.comment {
   }
 }
 
-.box:hover {
-	.buttons a {
-	  color: $g3;
-	}
-	
-	.votebtn a {
-	  color: $blu;
-	}
-}
 
 .infobar {
   font-size: .7em;
   letter-spacing: .08em;
   text-transform: uppercase;
   margin-top: -.1em;
+  color: $g3;
 }
 
 .info {
@@ -919,15 +934,28 @@ p.votelabel {
 
 #error_explanation {
   background-color: white;
-  border: solid 1px $g4;
+  border: solid 1px $redd;
+  box-shadow: 1px 1px 10px $g1;
+  width: auto;
+  margin: auto;
+  border-radius: .5em;
   font-family: $opensans;
   font-size: 0.8em;
   color: $g4;
   padding: 10px;
   margin-bottom: 1.9em;
   h2 {
-    text-align: left;
+    font-family: $opensans;
+    font-weight: bold;
+    text-align: center;
     margin-bottom: 5px;
+    color: $red;
+    font-size: 1em;
+  }
+  li {
+    line-height: 1.5em;
+    font-size: 1.1em;
+
   }
 }
 
@@ -959,19 +987,39 @@ p.votelabel {
   }
   &:active{
     border-bottom-width: 0;
-    margin-top: .1em;
-    margin-bottom: -.1em;
   }
-}
-
-.box .btn{
-    background-color: $g0;
-  &:hover {
-    background-color: $g1;
+  &.green{
+    background-color: $gred;
+    color: white;
+    &:hover{
+      background-color: $gre;
+      color: white !important;
+    } 
   }
-}
-
-.btn2 {
+  &.red{
+    background-color: $redd;
+    color: white;
+    &:hover{
+      background-color: $red;
+      color: white !important;
+    } 
+  }
+  &.grey{
+    background-color: $g2;
+    color: white;
+    &:hover{
+      background-color: $g3;
+      color: white !important;
+    } 
+  }
+  &.blue{
+    background-color: $blud;
+    color: white;
+    &:hover{
+      background-color: $blu;
+      color: white !important;
+    } 
+  }
 
 }
 
@@ -1023,17 +1071,13 @@ div.pageconf {
   }
 }
 
-form .btn {
-  float: left;
-}
-
 form {
   max-width: 900px;
   margin: auto;
 }
 
 form.edit_user{
-    max-width: 700px;
+    max-width: 600px;
   }
 
 input[type=checkbox]{
@@ -1044,10 +1088,10 @@ input[type=checkbox]{
 .helpertext {
   float: left;
   width: 45%;
-  color: $g0;
+  color: $g2;
   margin-left: 10px;
   text-align: left;
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 
 .label-row:hover .helpertext {
@@ -1060,17 +1104,19 @@ input[type=checkbox]{
   font-family: $opensans;
   font-size: 0.9em;
   /*width: 95%;*/
-  max-width: 550px;
   background: white;
   border: solid 1px $g2;
   height: auto;  
   padding: 5px;
   margin-right: 5px;
-}
-
-.edit-user {
-  .settingform {
-      width: 382px !important;
+  &.statementtitle{
+    color: $blu;
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+  &.argumenttitle{
+    font-size: 1.2em;
+    font-weight: bold;
   }
 }
 
@@ -1155,11 +1201,10 @@ p.browsehappy {
     width: 100%;
   }
 
-
   div#navbar {
     #argulogo{
       float: none;
-      padding-bottom: 0;
+      padding-bottom: 5px;
       left: 0;
       margin: auto;
     }
@@ -1177,20 +1222,27 @@ p.browsehappy {
         float: none;
       }
       #search{
-        float: none;
-        line-height: 20px;
-        padding: 1px;
-        padding-top: 3px;
-        padding-left: 10px;
-        height: 25px;
+       float: none;
+      line-height: 20px;
+      padding: 1px;
+      padding-left: 10px;
+      height: 27px;
       }
     }
+  }
+  
+  .box form > .label-row {
+    margin-top: 10px; 
+
   }
 
   form.edit_user {
     max-width: 382px !important;
     input.settingform{
       width: 100%;}
+      label{
+        width: 250px;
+      }
   }
   /*disable hidden buttons for small devices*/
   .box {
@@ -1206,6 +1258,7 @@ p.browsehappy {
     width: 100%;
     color: $g4;
     margin-left: 0;
+    margin-top: .4em;
   }
 }
 }
@@ -1217,7 +1270,7 @@ p.browsehappy {
   }
 
 }
-
+  
 @media screen and (min-width: 1500px) {
   body{
     font-size: 1.1em;
@@ -1231,7 +1284,7 @@ p.browsehappy {
 
 
 /*Transitie effecten op alles*/
-a, #search, .btn{
+#search{
   @include transition(all 250ms);
 }
 

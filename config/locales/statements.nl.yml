@@ -11,8 +11,12 @@ nl:
     edit: "stelling bewerken"
     no_pros: "nog niets voor"
     no_cons: "nog niets tegen"
-    newstatement: "+ stelling"
+    newstatement: "nieuwe stelling"
     content: "inhoud"
+    votes:
+        pro: "ik ben voor"
+        neu: "ik ben onbesloten"
+        con: "ik ben tegen"
     preview:
       pro:
         zero: "geen voorargumenten"
@@ -25,7 +29,7 @@ nl:
     form:
         title: "titel"
         content: "inhoud"
-        themes: "thema's"
+        themes: "thema1, thema2"
         invert: "alle argumenten omkeren"
         helper:
             title: "Vat de stelling zo bondig mogelijk samen."
