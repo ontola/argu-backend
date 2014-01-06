@@ -14,22 +14,11 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
-    @statement = Statement.includes(:arguments, :tags).where(id: params[:id], 'arguments.is_trashed' => false).first
-    #@arguments = Argument.where(statement_id: @statement.id).order('votes.size DESC')
-    @arguments = @statement.arguments.plusminus_tally({order: "vote_count ASC"})
+  	# Eager loading and filtering on trashed on both the main and the tally query seems to result in the least amount of sql
+  	# without writing a custom query 
+    @statement = Statement.where(id: params[:id], arguments: {is_trashed: false}).includes(:arguments, :tags).first
     authorize! :show, @statement
-    @pro = Array.new
-    @con = Array.new
-    unless @arguments.nil?
-      @arguments.each do |arg|
-        if arg.pro?
-          @pro << arg
-        else
-          @con << arg
-        end
-      end
-    end
-    
+    @arguments = @statement.arguments.where(is_trashed: false).plusminus_tally({order: "vote_count ASC"}).group_by { |a| a.key }
 
     respond_to do |format|
       format.html # show.html.erb

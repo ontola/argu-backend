@@ -1,4 +1,4 @@
-<%= form_tag(argument_comment_path(argument.id), :method => "post", id: "cf" + parent_id.to_s, class: "comment_form", style: visible ? "" : "display: none;") do %>
+<%= form_tag(argument_comments_path(argument.id), :method => "post", id: "cf" + parent_id.to_s, class: "comment_form", style: visible ? "" : "display: none;") do %>
 <%= text_area_tag :comment,"", :rows => 5, :cols => 50 %>
 <% unless parent_id.blank? %>
 	<input type="hidden" class= "submitbtn" name="parent_id" value ="<%= parent_id %>" />

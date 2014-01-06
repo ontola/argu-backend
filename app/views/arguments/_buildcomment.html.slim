@@ -1,0 +1,20 @@
+.box.clearfix[class="c#{(depth-1).to_s}"]
+  p[id="#{c.id}"]= c.body
+  div
+    .infobar
+      ul.buttons
+        li
+          .info
+            p= raw(t('arguments.comments.placed_by', user: link_to(c.user.username.to_s, profile_path(Profile.find_by_user_id(c.user))), date: l(c.created_at, :format => :long) ))
+        - if depth < 10
+          li= link_to t('reply'), argument_path(@argument, parent_id: c.id), html_options = { id: c.id, class: "c_reply" }
+          li= link_to t('report'), '#'
+          li= link_to t('trash'), argument_destroy_comments_path(@argument, c), method: :delete if can? :trash, c
+          / TODO
+      .clearfix
+    = render partial: 'add_comment_form', locals: { argument: @argument, parent_id: c.id, visible: false }
+- if depth < 10
+  - if c.has_children?
+    - c.children.limit(10).each do |ch|
+      = render partial: 'buildcomment', locals: { c: ch, depth: depth+1 }
+    = link_to t('arguments.comments.more'), '/' if c.children.length > 40

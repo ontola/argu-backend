@@ -24,8 +24,8 @@ Argu::Application.routes.draw do
 
   resources :arguments, constraints: lambda { |r| r.env["warden"].authenticate? } do
     delete "argument/:id" => "arguments#destroy", as: 'destroy', constraints: lambda { |r| r.env["warden"].authenticate? }
-    post "comment" => "arguments#placeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
-    delete "comment/:id" => "arguments#wipeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
+    post "comments" => "arguments#placeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
+    delete "comments/:comment_id" => "arguments#destroyComment", as: 'destroy_comments', constraints: lambda { |r| r.env["warden"].authenticate? }
     
     get "revisions" => "arguments#allrevisions", as: 'revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
     get "revisions/:rev" => "arguments#revisions", as: 'rev_revisions', constraints: lambda { |r| r.env["warden"].authenticate? }

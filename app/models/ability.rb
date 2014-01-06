@@ -56,8 +56,8 @@ class Ability
         can [:show, :update], User do |u|                       #Same goes for your persona
           user == u
         end
-        can :wipeComment, Comment do |comment|
-          (comment.user == user) || comment.commentable.is_moderator?(user)
+        can :destroyComment, Comment do |comment|
+          (comment.user == user)
         end
         can [:edit, :update], Comment do |comment|              #And your comments
           comment.user == user

@@ -6,7 +6,7 @@ class ArgumentsController < ApplicationController
   def show
     @parent_id = params[:parent_id].to_s
     
-    @comments = @argument.root_comments.page(params[:page]).order('created_at ASC')
+    @comments = @argument.root_comments.where(is_trashed: false).page(params[:page]).order('created_at ASC')
     @length = @argument.root_comments.length
 
     respond_to do |format|
@@ -168,8 +168,19 @@ class ArgumentsController < ApplicationController
   end
 
   # DELETE /arguments/1/comments/1
-  def wipeComment
-    
+  def destroyComment
+  	@comment = Comment.find_by_id params[:comment_id]
+    if params[:destroy] == 'true'
+      authorize! :destroy, @comment
+      @comment.destroy
+    else
+      authorize! :trash, @comment
+      @comment.trash
+    end
+    respond_to do |format|
+    	format.html { redirect_to argument_path(@comment.commentable_id) }
+    	format.js # destroy_comment.js
+    end
   end
 
 end

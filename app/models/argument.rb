@@ -25,8 +25,12 @@ class Argument < ActiveRecord::Base
   end
 
   def trash
-    self.is_trashed = true
-    self.save
+    update_attribute :is_trashed, true
+  end
+
+  # To facilitate the group_by command
+  def key
+  	self.pro ? :pro : :con
   end
 
 # Custom methods
