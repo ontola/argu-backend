@@ -502,15 +502,16 @@ div#navbar {
       -webkit-appearance: none;
       box-sizing: content-box;
       background-color: white;
-      height: 34.8px;
       width: 60px;
-      padding: 5px;
+      padding: 3px;
       padding-left: 10px;
       font-family: $raleway;
       font-size: 16px;
       font-weight: 200;
       color: $g4;
       float: right;
+      line-height: 39px;
+      height: 39px;
       html.lt-ie8 & {
         float: left;
         line-height: 35px;
