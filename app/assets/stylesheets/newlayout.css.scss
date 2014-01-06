@@ -79,7 +79,7 @@ a {
   text-decoration: none;
 }
 
-.no-touch a{
+a{
   &:hover {
     color: black;
   }
@@ -273,7 +273,7 @@ hr.stripe {
   border: solid 1px $blu;
 }
 
-.no-touch .tag {
+.tag {
   &:hover {
     color: white !important;
     background-color: $blu;
@@ -398,7 +398,7 @@ hr.stripe {
   }
 }
 
-.no-touch .navcontent {
+.navcontent {
   a:hover
   {
     border-bottom: solid 0.13em $g1;
@@ -558,9 +558,9 @@ div#navbar {
   }
 }
 
-.no-touch div#navbar {
+div#navbar {
   #mainbar{
-    &:hover ul .dropdown { display: block; }
+    ul li .dropit:hover .dropdown { display: block; }
   }
   li {
     &:hover{
@@ -966,7 +966,7 @@ p.votelabel {
   float: left;
 }
 
-.no-touch .auth_provider :hover {
+.auth_provider:hover {
   opacity: 1;
 }
 
@@ -997,7 +997,7 @@ p.votelabel {
   }
 }
 
-.no-touch .btn {
+.btn {
   &:hover{
     border-bottom-color: $g3;
     color: black;   
@@ -1142,7 +1142,7 @@ input[type=checkbox]{
   font-size: 0.8em;
 }
 
-.no-touch .label-row:hover .helpertext {
+.label-row:hover .helpertext {
   color: $g4;
 }
 
