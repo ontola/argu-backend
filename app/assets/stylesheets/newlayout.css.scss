@@ -1,11 +1,10 @@
 @import "colors";
 @import "mixins";
 
-$opensans: Open Sans,verdana,arial,sans-serif;
+$opensans: Lato, Open Sans,verdana,arial,sans-serif;
 $raleway: Raleway, Century Gothic,'bariol_lightlight', sans-serif;
 
 $maxCommentDepth: 10;
-
 
 body {
   margin: 0;
@@ -79,7 +78,7 @@ a {
   text-decoration: none;
 }
 
-a{
+a {
   &:hover {
     color: black;
   }
@@ -128,14 +127,14 @@ select {
   margin-bottom: 1.8em;
   border-radius: 0.3em;
   max-width: 46em;
-  ol{
+  ol {
     list-style: decimal;
     margin-left: 1.4em;
     margin-bottom: .5em;
     margin-top: -.3em;
     text-align: left;
     color: $blu;
-    li{
+    li {
       text-align: justify;
       font-family: Open Sans, verdana, arial, sans-serif;
       font-size: 1em;
@@ -148,39 +147,37 @@ select {
       }
     }
   }
-  a{
-  }
-  form{
+  form {
     margin-top: 4px;
   }
 }
 
 .no-touch .box {
-  .buttons a{
+  .buttons a {
     color: white;
   }
-  .votebtn{
+  .votebtn {
     color: white;
   }
-  &:hover{
+  &:hover {
     .buttons a {
       color: $g3;
     }
     .votebtn a {
-    color: $blu;
+      color: $blu;
     }
   }
 }
 
 form {
-  input[type="text"],input[type="email"],input[type="password"], textarea{
+  input[type="text"],input[type="email"],input[type="password"], textarea {
     box-shadow: inset 1px 1px 10px $g1;
     box-sizing: border-box;
   }
-  textarea{
+  textarea {
     resize: vertical;
   }
-  .btn{
+  .btn {
     box-shadow: 1px 1px 10px $g1;
   }
 }
@@ -190,7 +187,7 @@ form {
   margin-top: .2em;
 }
 
-p.referencestitle{
+p.referencestitle {
   margin-top: 1.5em;
   letter-spacing: .08em;
   text-transform: uppercase; font-size: .7em;
@@ -245,13 +242,12 @@ hr.stripe {
 }
 
 .statement {
-  .title
-  {
+  .title {
     color: $blu;
   }
   margin-left: auto;
   margin-right: auto;  
-  &.title{
+  &.title {
     color: $blu;
   }
 }
@@ -263,14 +259,16 @@ hr.stripe {
 }
 
 .tag {
-  color: $blu;
+  color: white;
   border-radius: .5em;
-  padding: .1em .4em .2em .4em;
+  padding: .1em .4em;
   display: inline-block;
-  margin-right: 0.4em;
+  margin-right: 0.25em;
   text-transform: lowercase;
-  font-size: 120%;
-  border: solid 1px $blu;
+  background-color: $blud;
+  line-height: 1.3em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
 }
 
 .tag {
@@ -280,11 +278,11 @@ hr.stripe {
   }
 }
 
-.smallertag{
+.smallertag {
   font-size: 70%;
 }
 
-.inlineref{
+.inlineref {
     font-size: 80%;
     vertical-align: top;
     color: $blu;
@@ -310,19 +308,17 @@ hr.stripe {
 }
 
 .pro {
-  &.box, &.argtypebox{
+  &.box, &.argtypebox {
     margin-right: .8em;
   }
-  .title
-  {
+  .title {
     color: $gre;
   }
-  h2
-  {
+  h2 {
     color: white;
     background-color: $gre;
   }
-  &.argumenttitle{
+  &.argumenttitle {
     color: $gre;
     @include placeholder ($gred)
   }
@@ -330,19 +326,17 @@ hr.stripe {
 
 .con {
   /*  background-color: #faf4f3;*/
-  &.box, &.argtypebox{
+  &.box, &.argtypebox {
     margin-left: .8em;
   }
-  .title
-  {
+  .title {
     color: $red;
   }
-  h2
-  {
+  h2 {
     color: white;
     background-color: $red;
   }
-  &.argumenttitle{
+  &.argumenttitle {
     color: $red;
     @include placeholder ($redd)
   }
@@ -363,13 +357,11 @@ hr.stripe {
 
 .argtypebox {
   margin-bottom: 1.8em;
-  h2
-  {
+  h2 {
     line-height: 1.3em;
     height: 1.4em;
     border-radius: .3em;
-        box-shadow: 1px 1px 10px $g1;
-
+    box-shadow: 1px 1px 10px $g1;
   }
 }
 
@@ -485,19 +477,16 @@ div#navbar {
   /*border-bottom: solid 2px $g1;*/
   box-shadow: 1px 1px 10px $g1;
   margin-bottom: 1.5em;
-
   #mainbar {
     margin:0 auto;
     padding: 0;
     width: 97%;
     max-width: 1000px;
   }
-
   li {
     list-style-type: none;
     display: inline-block;
     float: left;
-
     #search {
       -webkit-appearance: none;
       box-sizing: content-box;
@@ -521,7 +510,6 @@ div#navbar {
       border-radius: 0;
       outline: none;
     }
-
     textarea:focus,
     input:focus {
       background-color: $g1 !important;
@@ -531,7 +519,6 @@ div#navbar {
       webkit-appearance: none !important;
     }
   }
-
   a {
     display: block;
     font-family: $raleway;
@@ -542,7 +529,6 @@ div#navbar {
     padding-left: 10px;
     padding-right: 10px;
   }
-
   #argulogo {
     font-size: 36px;
     padding-top: 0;
@@ -553,7 +539,6 @@ div#navbar {
     position: relative;
     left: -8px;
   }
-
   .close {
     border-right: solid 1px white;
   }
@@ -584,7 +569,7 @@ div#navbar {
     -webkit-appearance: none;      // hide the default "X" button  
 }
 
-input, textarea{
+input, textarea {
   -webkit-appearance: none;
   @include placeholder ($g2, 1)
 }
@@ -632,22 +617,20 @@ a.commentusername {
   clear: both;
   color: gray;
   white-space: normal;
-  p{
+  p {
     font-style: italic;
     font-size: 0.9em;
   }
 }
 
 .buttons {
-  a
-  {
+  a {
     color: $g3;
     width: auto;
     float: right;
     margin-left: 1em;
   }
-  p
-  {
+  p {
     float: left;
     color: $g3;
   }
@@ -659,7 +642,7 @@ a.commentusername {
 
 .hastags {
   position: relative;
-  top: .5em;
+  top: .2em;
 }
 
 .comments {
@@ -707,14 +690,12 @@ p.comment {
 
 .info {
   float: left;
-  p
-  {
+  p {
     color: $g3;
     position: relative;
     white-space: normal;
   }
-  a
-  {
+  a {
     display: inline;
     float: none;
     border-style: none;
@@ -816,7 +797,6 @@ p.votelabel {
     display: inline-block;
     white-space: nowrap;
   }
-  
   &:hover:before {
     border: solid;
     border-color: $blu transparent;
@@ -850,18 +830,15 @@ p.votelabel {
   margin-left: auto;
   margin-right: auto;
   max-width: 46em;
-  ul
-  {
+  ul {
     text-align: center;
     width: 100%;
-    li
-    {  
+    li {  
       float: left;
       list-style-type: none;
       display: inline-block;
       margin-bottom: 1.1em;
-      h3
-      {
+      h3 {
         padding: 5px;
         color: $g4;
         a {
@@ -887,11 +864,9 @@ p.votelabel {
   border-color: $g4;
   background-color: white;
   padding-bottom: 5px;
-  li
-  {
+  li {
     display: inline;
-    h3
-    {
+    h3 {
       display: inline;
     }
   }
@@ -999,30 +974,30 @@ p.votelabel {
 }
 
 .btn {
-  &:hover{
+  &:hover {
     border-bottom-color: $g3;
     color: black;   
   }
-  &.green{
-    &:hover{
+  &.green {
+    &:hover {
       background-color: $gre;
       color: white !important;
     }
   } 
-  &.red{
-    &:hover{
+  &.red {
+    &:hover {
       background-color: $red;
       color: white !important;
     } 
   }
-  &.grey{
-    &:hover{
+  &.grey {
+    &:hover {
       background-color: $g3;
       color: white !important;
     } 
   }
-  &.blue{
-    &:hover{
+  &.blue {
+    &:hover {
       background-color: $blu;
       color: white !important;
     }  
@@ -1044,29 +1019,28 @@ p.votelabel {
   border-radius: .5em;
   letter-spacing: .07em;
   text-transform: uppercase;
-  input
-  {
+  input {
     text-decoration: none;
     margin-left: -1px;
     color: white;
   }
   
-  &:active{
+  &:active {
     border-bottom-width: 0;
   }
-  &.green{
+  &.green {
     background-color: $gred;
     color: white;
   }
-  &.red{
+  &.red {
     background-color: $redd;
     color: white;
   }
-  &.grey{
+  &.grey {
     background-color: $g2;
     color: white;
   }
-  &.blue{
+  &.blue {
     background-color: $blud;
     color: white;
   }
@@ -1078,8 +1052,7 @@ p.votelabel {
 .profile #head {
   list-style-type: none;
 
-  #editbtn
-  {
+  #editbtn {
     float: right;
     vertical-align: text-top;
     padding-top: 7px;
@@ -1125,11 +1098,11 @@ form {
   margin: auto;
 }
 
-form.edit_user{
+form.edit_user {
     max-width: 600px;
   }
 
-input[type=checkbox]{
+input[type=checkbox] {
   border-color: $blu;
   float: left;
 }
@@ -1137,7 +1110,7 @@ input[type=checkbox]{
 .helpertext {
   float: left;
   width: 45%;
-  color: $g3;
+  color: $g2;
   margin-left: 10px;
   text-align: left;
   font-size: 0.8em;
@@ -1158,13 +1131,13 @@ input[type=checkbox]{
   height: auto;  
   padding: 5px;
   margin-right: 5px;
-  &.statementtitle{
+  &.statementtitle {
     color: $blu;
     font-size: 1.3em;
     font-weight: bold;
     @include placeholder($blud, 1)
   }
-  &.argumenttitle{
+  &.argumenttitle {
     font-size: 1.2em;
     font-weight: bold;
   }
@@ -1229,9 +1202,6 @@ p.browsehappy {
     margin-left: 0;
   }
 
-  .container{
-  }
-
   .label-row {
     margin-top: -10px;
   }
@@ -1252,26 +1222,26 @@ p.browsehappy {
   }
 
   div#navbar {
-    #argulogo{
+    #argulogo {
       float: none;
       padding-bottom: 5px;
       left: 0;
       margin: auto;
     }
-    #navbtns{
+    #navbtns {
       float: none;
       text-align: center;
       display: block;
-      a{
+      a {
         padding-left: 10px;
         padding-right: 10px;
         line-height: 24px;
       }
 
-      li{
+      li {
         float: none;
       }
-      #search{
+      #search {
        float: none;
       line-height: 20px;
       padding: 1px;
@@ -1315,18 +1285,18 @@ p.browsehappy {
 
 
 @media screen and (max-width: 1000px) {
-  body{
+  body {
     font-size: 0.9em;
   }
 
 }
   
 @media screen and (min-width: 1500px) {
-  body{
+  body {
     font-size: 1.1em;
   }
 
-  .container{
+  .container {
     max-width: 1500px; 
   }
 
@@ -1334,7 +1304,7 @@ p.browsehappy {
 
 
 /*Transitie effecten op alles*/
-#search{
+#search {
   @include transition(all 250ms);
 }
 
