@@ -147,8 +147,11 @@ select {
       }
     }
   }
+  a:hover{
+    color: black;
+  }
   form {
-    margin-top: 4px;
+  margin-top: 4px;
   }
 }
 
@@ -162,6 +165,9 @@ select {
   &:hover {
     .buttons a {
       color: $g3;
+      &:hover{
+        color: black;
+      }
     }
     .votebtn a {
       color: $blu;
@@ -297,13 +303,13 @@ hr.stripe {
   margin-right: auto;
   margin-top: -.4em;
   li {
-    display: inline
+    display: inline;
   }
   p {
     text-align: center;
   }
   a {
-  margin: 0em .5em;
+    margin: 0em .5em .7em;
   }
 }
 
@@ -531,13 +537,11 @@ div#navbar {
   }
   #argulogo {
     font-size: 36px;
-    padding-top: 0;
     width: 73px;
-    padding-bottom: 6px;
     background-image: url(argulogo.svg);
     float: left;
     position: relative;
-    left: -8px;
+    height: 39px;
   }
   .close {
     border-right: solid 1px white;
@@ -1190,16 +1194,28 @@ p.browsehappy {
 
 /*Responsive design*/
 @media screen and (max-width: 650px) {
+  .opinionbtns {
+    a{
+      margin-bottom: .7em;
+    }
+  }
+
   .procon {
     width: 100%;
   }
 
   .pro {
     margin-right: 0;
+    &.box, &.argtypebox {
+    margin-right: 0;  
+    }
   }
 
   .con {
     margin-left: 0;
+    &.box, &.argtypebox {
+    margin-left: 0;  
+    }
   }
 
   .label-row {
@@ -1285,14 +1301,14 @@ p.browsehappy {
 
 
 @media screen and (max-width: 1000px) {
-  body {
-    font-size: 0.9em;
+  html {
+    font-size: 1em;
   }
 
 }
   
 @media screen and (min-width: 1500px) {
-  body {
+  html {
     font-size: 1.1em;
   }
 
