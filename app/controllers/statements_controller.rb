@@ -31,16 +31,12 @@ class StatementsController < ApplicationController
   def revisions
     @statement = Statement.find_by_id(params[:statement_id])
     @version = nil
-    @rev = params[:rev]
 
-    unless @rev.nil?
+    unless (@rev = params[:rev]).nil?
       @version = @statement.versions.find_by_id(@rev);
       @statement = @version.reify
     end
-    
-    if @statement.nil?
-      @statement = @statement.versions.last
-    end
+    @statement ||= @statement.versions.last
 
     authorize! :revisions, @statement
     respond_to do |format|
@@ -52,8 +48,9 @@ class StatementsController < ApplicationController
   # GET /statements/1/revisions
   # GET /statements/1/revisions.json
   def allrevisions
-    @statement = Statement.find_by_id(params[:statement_id])
+    @statement = Statement.where(id: params[:statement_id], arguments: {is_trashed: true}).includes(:arguments).first
     @revisions = @statement.versions.scoped.reject{ |v| v.object.nil? }.reverse
+    @arguments = @statement.arguments.where(is_trashed: true).plusminus_tally({order: "vote_count ASC"}).group_by { |a| a.key }
 
     authorize! :allrevisions, @statement
     respond_to do |format|
@@ -67,16 +64,12 @@ class StatementsController < ApplicationController
   def setrevision
     @statement = Statement.find_by_id(params[:statement_id])
     @version = nil
-    @rev = params[:rev]
 
-    unless @rev.nil?
+    unless (@rev = params[:rev]).nil?
       @version = @statement.versions.find_by_id(@rev);
       @statement = @version.reify
     end
-    
-    if @statement.nil?
-      @statement = @statement.versions.last
-    end
+    @statement ||= @statement.versions.last if @statement.nil?
 
     authorize :setrevision, @statement
     respond_to do |format|

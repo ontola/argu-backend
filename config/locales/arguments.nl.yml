@@ -25,6 +25,8 @@ nl:
     new:
       header: "argument %{side} de stelling:"
       create: "+ argument %{side}"
+    revisions:
+      title_wiped: 'Gewiste reacties'
     form:
       title: "argument"
       content: "toelichting"

@@ -9,7 +9,7 @@
         - if depth < 10
           li= link_to t('reply'), argument_path(@argument, parent_id: c.id), html_options = { id: c.id, class: "c_reply" }
           li= link_to t('report'), '#'
-          li= link_to t('trash'), argument_destroy_comments_path(@argument, c), method: :delete if can? :trash, c
+          li= link_to t('trash'), argument_destroy_comments_path(@argument, c), method: :delete if can?(:trash, c) && !c.is_trashed
           / TODO
       .clearfix
     = render partial: 'add_comment_form', locals: { argument: @argument, parent_id: c.id, visible: false }

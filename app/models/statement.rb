@@ -48,22 +48,6 @@ class Statement < ActiveRecord::Base
     self.tags.reject { |a,b| a.statement == b }.first == tag
   end
 
-  def is_moderator?(user)
-    self.mods.include?(user.id)
-  end
-
-  def mods
-    if !self.moderators.blank?
-      return self.moderators.split(',').map { |s| s.to_i }
-    else 
-      return []
-    end
-  end
-
-  def add_mod(user)
-    self.mods << user.id unless self.mods.include? user.id
-  end
-
   def pro_count
     self.arguments.count(:conditions => ["pro = true"])
   end

@@ -48,6 +48,9 @@ class Comment < ActiveRecord::Base
     commentable_str.constantize.find(commentable_id)
   end
 
+  def is_trashed?
+    read_attribute :is_trashed
+  end
   def trash
     update_attribute :is_trashed, true
   end

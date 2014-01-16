@@ -22,6 +22,8 @@ nl:
         zero: "geen tegenargumenten"
         one: "1  tegenargument"
         other: "%{count} tegenargumenten"
+    revisions:
+      title_wiped: 'Gewiste argumenten'
     form:
         title: "titel"
         content: "inhoud"
@@ -38,7 +40,8 @@ nl:
         title_invite: 'Moderators uitnodigen'
         invite: 'Uitnodigen'
         invited: 'Uitnodigd'
-      show_moderation_panel: 'admin'
+        is_mod: 'is al een mod'
+      show_moderation_panel: 'moderator'
     titles:
       tags: "Zoek stellingen met het thema "
     #statement types

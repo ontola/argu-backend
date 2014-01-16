@@ -43,15 +43,10 @@ class UsersController < ApplicationController
     @users = User.search do
       fulltext params['username']
       paginate page: params[:page]
-    end.results
+    end.results unless params['username'].blank?
     respond_to do |format|
-      if @users.present?
         format.js { render partial: params[:c].present? ? params[:c] + '/search' : 'search' }
         format.json { render json: @users }
-      else
-        format.js { head :no_content }
-        format.json { head :no_content}
-      end
     end
   end
 end

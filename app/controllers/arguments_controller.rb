@@ -1,5 +1,5 @@
 class ArgumentsController < ApplicationController
-  load_and_authorize_resource :argument, :parent => false
+  load_and_authorize_resource :argument, :parent => false, except: :allrevisions
 
   # GET /arguments/1
   # GET /arguments/1.json
@@ -43,6 +43,7 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1/revisions.json
   def allrevisions
     @argument = Argument.find_by_id(params[:argument_id])
+    @comments = @argument.root_comments.where(is_trashed: true).page(params[:page]).order('created_at ASC')
     @revisions = @argument.versions.scoped.reject{ |v| v.object.nil? }.reverse
 
     authorize! :revisions, @argument
@@ -63,10 +64,7 @@ class ArgumentsController < ApplicationController
       @version = @argument.versions.find_by_id(@rev);
       @argument = @version.reify
     end
-    
-    if @argument.nil?
-      @argument = @argument.versions.last
-    end
+    @argument ||= @argument.versions.last
 
     authorize! :revisions, @argument
     respond_to do |format|
