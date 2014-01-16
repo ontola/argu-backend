@@ -31,6 +31,11 @@ nl:
             title: "Vat de stelling zo bondig mogelijk samen."
             content: "Beschrijf de stelling in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
             themes: "Thema's of onderwerpen die aan deze stelling gerelateerd zijn. Plaats komma's tussen de thema's."
+    admin:
+      edit_moderators:
+        title: 'Moderators van %{title}'
+        remove: 'afzetten'
+        invite: 'Moderators uitnodigen'
     titles:
       tags: "Zoek stellingen met het thema "
     #statement types

@@ -110,6 +110,7 @@ class StatementsController < ApplicationController
 
   # GET /statements/1/edit
   def edit
+    @statement = Statement.find_by_id(params[:id])
   end
 
   # POST /statements

@@ -1,4 +1,4 @@
-class Ability
+class   Ability
   include CanCan::Ability
 
   def initialize(user)
@@ -37,6 +37,9 @@ class Ability
       cannot [:mod, :user], User do |item|
         item.has_any_role? :coder, :admin, :mod
       end
+      can [:edit_mod, :create_mod, :destroy_mod], Statement do |item|
+        user.is_mod_of? item
+      end
     elsif user.has_role? :user
         cannot :manage, User do |u|
           user != u
@@ -53,7 +56,7 @@ class Ability
         can [:edit, :update, :delete], Profile do |profile|     #Do whatever you want with your own profile
             user.profile == profile
         end
-        can [:show, :update], User do |u|                       #Same goes for your persona
+        can [:show, :update, :search], User do |u|                       #Same goes for your persona
           user == u
         end
         can :destroyComment, Comment do |comment|

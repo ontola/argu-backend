@@ -1,0 +1,3 @@
+tr[id=('list_item_'+user_result_row.id.to_s)]
+  td= user_result_row.username
+  td= link_to 'invite', statement_moderators_user_path(statement_id: params[:statement_id], user_id: user_result_row.id), method: :post, remote: true, class: 'btn', id: ('btn_upgrade_user_' + user_result_row.id.to_s)

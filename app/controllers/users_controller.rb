@@ -34,5 +34,24 @@ class UsersController < ApplicationController
 				format.jsoon { render json: @profile.errors, status: :unprocessable_entity }
 			end
 		end
-	end
+  end
+
+  # POST /users/search/:username
+  # POST /users/search
+  def search
+    #@users = User.where(User.arel_table[:username].matches("%#{params[:username]}%")) if params[:username].present?
+    @users = User.search do
+      fulltext params['username']
+      paginate page: params[:page]
+    end.results
+    respond_to do |format|
+      if @users.present?
+        format.js { render partial: params[:c].present? ? params[:c] + '/search' : 'search' }
+        format.json { render json: @users }
+      else
+        format.js { head :no_content }
+        format.json { head :no_content}
+      end
+    end
+  end
 end

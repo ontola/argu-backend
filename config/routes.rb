@@ -6,7 +6,7 @@ Argu::Application.routes.draw do
     get 'list' => 'administration#list', constraints: lambda { |r| r.env["warden"].authenticate? }
     post 'admin/:id' => 'administration#add', constraints: lambda { |r| r.env["warden"].authenticate? }
     delete 'admin/:id' => 'administration#remove', as: 'remove', constraints: lambda { |r| r.env["warden"].authenticate? }
-    post 'search_username' => 'administration#search_username', constraints: lambda { |r| r.env["warden"].authenticate? }
+    #post 'search_username' => 'administration#search_username', constraints: lambda { |r| r.env["warden"].authenticate? }
     root to: 'administration#panel', constraints: lambda { |r| r.env["warden"].authenticate? }
   end
 
@@ -15,11 +15,22 @@ Argu::Application.routes.draw do
   
   match 'tagged' => 'statements#tagged', :as => 'tagged'
 
-  #resources :users
+  resources :users do
+    collection do
+      post '/search/:username' => 'users#search', as: 'search'
+      post '/search' => 'users#search', as: 'search'
+    end
+  end
+
   resources :statements do
     get "revisions" => "statements#allrevisions", as: 'revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
     get "revisions/:rev" => "statements#revisions", as: 'rev_revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
     put "revisions/:rev" => "statements#setrevision", as: 'update_revision', constraints: lambda { |r| r.env["warden"].authenticate? }
+    namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
+      get '' => 'statements#index'
+      post ':user_id' => 'statements#create', as: 'user'
+      delete ':user_id' => 'statements#destroy'
+    end
   end
 
   resources :arguments, constraints: lambda { |r| r.env["warden"].authenticate? } do

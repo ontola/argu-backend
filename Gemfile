@@ -58,6 +58,5 @@ end
 
 group :production do 
   gem 'newrelic_rpm'
-  gem 'mysql2', '~> 0.3.11'
   gem 'therubyracer'
 end

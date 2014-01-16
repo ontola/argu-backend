@@ -19,15 +19,6 @@ class Admin::AdministrationController < ApplicationController
     @admins = User.with_role(@role)
   end
 
-  def search_username
-    check_role
-    authorize! :search_username, :admin
-    @users = User.search do
-      fulltext params['username']
-      paginate page: params[:page]
-    end.results
-  end
-
   # POST /admin/admin/:id
   def add
     check_role

@@ -11,7 +11,7 @@
     .procon
       .box
         .addrole
-          = form_tag admin_search_username_url, id: 'user_search_form', remote: true
+          = form_tag search_users_url, id: 'user_search_form', remote: true
             input[type='hidden' name='role' id='role']
             input[type='text' name='username']
         div[id='resultlist']

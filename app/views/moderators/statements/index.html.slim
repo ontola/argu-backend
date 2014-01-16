@@ -1,0 +1,10 @@
+h1=t('statements.admin.edit_moderators.invite')
+.addrole
+  = form_tag search_users_url(c: 'moderators/statements', statement_id: @statement.id), id: 'user_search_form', remote: true
+  input[type='hidden' name='role' id='role']
+  input[type='text' name='username']
+  div[id='resultlist']
+h1= t('statements.admin.edit_moderators.title', title: @statement.title)
+table.mods
+  -@moderators.each do |m|
+    =render partial: 'user_table_row', object: m
