@@ -1,18 +1,19 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery secret: "Nl4EV8Fm3LdKayxNtIBwrzMdH9BD18KcQwSczxh1EdDbtyf045rFuVces8AdPtobC9pp044KsDkilWfvXoDADZWi6Gnwk1vf3GghCIdKXEh7yYg41Tu1vWaPdyzH7solN33liZppGlJlNTlJjFKjCoGjZP3iJhscsYnPVwY15XqWqmpPqjNiluaSpCmOBpbzWLPexWwBSOvTcd6itoUdWUSQJEVL3l0rwyJ76fznlNu6DUurFb8bOL2ItPiSit7g"
 
-  #before_filter :set_locale
-
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
     flash[:warning] = t(:vote_same_twice_warning)
     redirect_to :back
   }
 
   rescue_from CanCan::AccessDenied do |exception|
-    puts exception.to_json.to_s
-    Rails.logger.debug "Access denied on #{exception.action} #{exception.subject.inspect}"
-    request.env['HTTP_REFERER'] ||= root_path
-    redirect_to :back, :alert => exception.message
+    respond_to do |format|
+      format.js { head 403 }
+      format.html {
+        request.env['HTTP_REFERER'] ||= root_path
+        redirect_to :back, :alert => exception.message
+      }
+    end
   end
 
   def set_locale

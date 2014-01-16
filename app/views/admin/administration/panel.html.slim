@@ -1,0 +1,24 @@
+.admin
+  h1.top Admin Panel
+  .argcontainer2
+    .procon
+      .box
+        p= t 'admin.panel.your_account', username: current_user.username, type: select_highest_rank(current_user.roles)
+        - Admin::ROLES.reject {|k| cannot? :list, k.to_sym}.each do |r|
+          p[id=('amount_of_'+r)]= t 'admin.panel.amount_of_type', type: t('admin.' + r), count: eval('@'+r+'_count')
+          = link_to t('admin.panel.m_list'), admin_list_url(role: r), id: 'btn_show_'+r+'_list', class: 'btn', remote: true
+          = link_to t('admin.panel.m_add'), '#', class: 'btn btnaddrole', role: r
+    .procon
+      .box
+        .addrole
+          = form_tag search_users_url, id: 'user_search_form', remote: true
+            input[type='hidden' name='role' id='role']
+            input[type='text' name='username']
+        div[id='resultlist']
+  .clearfix
+  h1= t 'admin.panel.statements_mod'
+  .box.center
+    - if @statements.present?
+      = render partial: 'statements/statement', collection: @statements 
+    - else
+      p= t 'admin.panel.no_statements'

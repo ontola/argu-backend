@@ -1,9 +1,0 @@
-<% provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title) %>
-<div class="centercont">
-  <%= back_to_statement %>
-  <%= render 'argumentbody' %>
-  <%= render 'argumentcomments' %>
-  <div class="box clearfix"> 
-    <%= render partial: 'add_comment_form', locals: { argument: @argument, parent_id: @parent_id, visible: true } %>
-  </div>
-</div>
