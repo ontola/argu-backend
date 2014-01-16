@@ -14,7 +14,7 @@ class Moderators::StatementsController < ApplicationController
   # GET /statements/:statement_id/moderators/
   def index
     @statement = Statement.find_by_id(params[:statement_id])
-    authorize! :edit_moderators, @statement
+    authorize! :edit_mods, @statement
     @moderators = User.with_role :mod, @statement
     Rails.logger.info @moderators
   end

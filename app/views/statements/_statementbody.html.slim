@@ -8,6 +8,7 @@ header
 					- statement.tags.each do |tag|
 						= link_to tag.name, tagged_url(:tag => tag.name), class: "tag", title: t("statements.titles.tags")+tag.name
 			ul.buttons.hastags
+				li= link_to t('statements.admin.show_moderation_panel'), [statement, :moderators]
 				li= link_to t("destroy"), statement_path(statement, destroy: true), method: :delete, confirm: t("destroy_confirmation") if can? :delete, statement
 				li= link_to t("trash"), statement_path(statement), method: :delete, confirm: t("trash_confirmation") if can? :trash, statement
 				li= link_to(t("edit"), edit_statement_path(statement))  if can? :edit, statement

@@ -27,7 +27,7 @@ Argu::Application.routes.draw do
     get "revisions/:rev" => "statements#revisions", as: 'rev_revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
     put "revisions/:rev" => "statements#setrevision", as: 'update_revision', constraints: lambda { |r| r.env["warden"].authenticate? }
     namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
-      get '' => 'statements#index'
+      get '' => 'statements#index', as: ''
       post ':user_id' => 'statements#create', as: 'user'
       delete ':user_id' => 'statements#destroy'
     end

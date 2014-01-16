@@ -37,7 +37,7 @@ class   Ability
       cannot [:mod, :user], User do |item|
         item.has_any_role? :coder, :admin, :mod
       end
-      can [:edit_mod, :create_mod, :destroy_mod], Statement do |item|
+      can [:edit_mods, :create_mod, :destroy_mod], Statement do |item|
         user.is_mod_of? item
       end
     elsif user.has_role? :user
