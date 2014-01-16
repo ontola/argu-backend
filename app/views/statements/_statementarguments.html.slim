@@ -1,13 +1,13 @@
 div.argcontainer1
 	div.argcontainer2
-    -[:pro, :con].each do |p|
-  		div.procon
-  			div[class=("argtypebox" + p.to_s)]
-  				h2= t("arguments." + p.to_s)
-  			-unless @arguments[p].nil?
-  				-@arguments[p].each do |argument|
-  					= render argument
-  			-else
-  				pre= t('statements.preview.' + p.to_s, count: 0)
-  			div[class=("centerbar "+ p.to_s)]
-  				= link_to t("arguments.new.create", side: t("arguments." + p.to_s)), new_argument_path(pro: p ? true : false, statement_id: statement.id), class: "btn"
+        -[:pro, :con].each do |p|
+  		    div.procon
+      			div[class=("argtypebox" + p.to_s)]
+  	    			h2= t("arguments." + p.to_s)
+  		    	-unless @arguments[p].nil?
+  			    	-@arguments[p].each do |argument|
+  				    	= render argument
+  	    		-else
+  		    		span= t('statements.preview.' + p.to_s, count: 0)
+  			        div[class=("centerbar "+ p.to_s)]
+  				        = link_to t("arguments.new.create", side: t("arguments." + p.to_s)), new_argument_path(pro: p ? true : false, statement_id: statement.id), class: "btn"

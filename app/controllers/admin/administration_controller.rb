@@ -37,6 +37,28 @@ class Admin::AdministrationController < ApplicationController
     get_count
   end
 
+  # POST /admin/freeze/:id
+  def freeze
+    @user.find_by_id params[:id]
+    authorize! :freeze, @user
+    @user.freeze
+    respond_to do |format|
+      format.js { render js: 'window.alert("User frozen")' }
+      format.html {}
+    end
+  end
+
+  # DELETE /admin/freeze/:id
+  def unfreeze
+    @user.find_by_id params[:id]
+    authorize! :unfreeze, @user
+    @user.unfreeze
+    respond_to do |format|
+      format.js { render js: 'window.alert("User unfrozen")' }
+      format.html {}
+    end
+  end
+
 private
   def check_role
     if params[:role]

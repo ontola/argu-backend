@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  rolify
+  rolify after_remove: :role_removed, before_add: :role_added
   has_many :authentications, dependent: :destroy
   has_one :profile, dependent: :destroy
 
@@ -70,6 +70,18 @@ class User < ActiveRecord::Base
     USERNAME_FORMAT_REGEX.match(name.to_s)
   end
 
+  def frozen?
+    self.has_role? 'user'
+  end
+
+  def freeze
+    self.remove_role 'user'
+  end
+
+  def unfreeze
+    self.add_role 'user'
+  end
+
 private
   def check_for_profile
     self.profile ||= Profile.create
@@ -86,6 +98,18 @@ private
   def normalize_blank_values
     attributes.each do |column, value|
       self[column].present? || self[column] = nil unless column.eql?(:roles) || column.eql?(:roles_mask)
+    end
+  end
+
+  def role_added
+    if self.frozen?
+      # Send mail or notification to user that he has been unfrozen
+    end
+  end
+
+  def role_removed
+    if self.frozen?
+      # Send mail or notification to user that he has been frozen
     end
   end
 
