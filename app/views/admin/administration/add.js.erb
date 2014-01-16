@@ -1,2 +1,1 @@
-$('#btn_upgrade_user_<%= @user.id %>').prop('value','<%= t "admin.panel.added" %>');
-$('#amount_of_<%= @role.to_s %>').text("<%= t 'admin.panel.amount_of_type', type: t('admin.' + @role.to_s), count: eval('@'+@role.to_s+'_count') %>");
+$('#admin_btn').html('<%= render partial: 'profiles/admin_btn' %>');

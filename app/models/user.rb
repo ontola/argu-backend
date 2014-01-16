@@ -71,15 +71,15 @@ class User < ActiveRecord::Base
   end
 
   def frozen?
-    self.has_role? 'user'
+    !has_role? 'user'
   end
 
   def freeze
-    self.remove_role 'user'
+    remove_role :user
   end
 
   def unfreeze
-    self.add_role 'user'
+    add_role :user
   end
 
 private
@@ -101,13 +101,13 @@ private
     end
   end
 
-  def role_added
+  def role_added(role)
     if self.frozen?
       # Send mail or notification to user that he has been unfrozen
     end
   end
 
-  def role_removed
+  def role_removed(role)
     if self.frozen?
       # Send mail or notification to user that he has been frozen
     end

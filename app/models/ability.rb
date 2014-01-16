@@ -6,11 +6,16 @@ class   Ability
     if user.has_role? :coder
         #The coder can do anything
         can :manage, :all
-        #can [:panel, :list, :search_username, :add, :remove], :admin ##This is included in :manage according to the docs
+        can [:add_admin, :remove_admin], User do |item| ##This is included in :manage according to the docs
+          !item.has_role? :coder
+        end
         #can [:add, :remove, :list], [:admin, :mod, :user]
-    elsif user.has_role? :admin
+    elsif user.has_role?(:admin) && !user.frozen?
       can [:panel, :search_username, :list], :admin
-      can [:add, :remove, :list, :freeze], [:mod, :user]
+      can [:add, :remove, :list], [:mod, :user]
+      can [:freeze, :unfreeze], User do |item|
+        !item.has_any_role? :coder, :admin
+      end
       can :trash, [Argument]
       #The admin can manage all the generic objects
       can [:manage, :revisions, :allrevisions],
@@ -20,13 +25,9 @@ class   Ability
            Profile,
            Vote]
       can :manage, User do |u|
-        user == u
+        user != u
       end
-      ## May not happen under any circumstance
-      cannot [:admin, :mod, :user, :freeze], User do |item|
-        item.has_any_role? :coder, :admin
-      end
-    elsif user.has_role? :user
+    elsif user.has_role?(:user) && !user.frozen?
         can :read, :all                                         #read by default, should be changed later
         can [:create, :placeComment, :report], [Statement, Argument, Comment]
         can [:revisions, :allrevisions], [Statement, Argument]  #View revisions
@@ -61,13 +62,13 @@ class   Ability
           user.id == vote.voter_id
         end
     else
-        #cannot [:manage],            #Closed beta, so bugger off!
-        #       [Statement,
-        #        Argument,
-        #        Comment,
-        #        Profile,
-        #        Vote,
-        #        Version]
+        cannot [:manage],            #Closed beta, so bugger off!
+               [Statement,
+                Argument,
+                Comment,
+                Profile,
+                Vote,
+                Version]
         can :read, [Statement,
                     Argument,
                     Comment,

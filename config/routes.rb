@@ -6,7 +6,7 @@ Argu::Application.routes.draw do
     get 'list' => 'administration#list', constraints: lambda { |r| r.env['warden'].authenticate? }
     post ':id' => 'administration#add', constraints: lambda { |r| r.env['warden'].authenticate? }
     delete ':id' => 'administration#remove', as: 'remove', constraints: lambda { |r| r.env['warden'].authenticate? }
-    post 'freeze/:id' => 'administration#freeze', as: ''
+    post 'freeze/:id' => 'administration#freeze', as: 'freeze'
     delete 'freeze/:id' => 'administration#unfreeze'
     #post 'search_username' => 'administration#search_username', constraints: lambda { |r| r.env["warden"].authenticate? }
     root to: 'administration#panel', constraints: lambda { |r| r.env['warden'].authenticate? }
