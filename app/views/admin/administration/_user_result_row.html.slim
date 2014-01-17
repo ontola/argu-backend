@@ -1,0 +1,4 @@
+tr[id=('list_item_'+user_result_row.id.to_s)]
+  td= user_result_row.username
+  td= user_result_row.email
+  td= button_to t('admin.panel.make_type', type: t('admin.'+@role.to_s)), admin_path(user_result_row.id, role: @role.to_s), class: 'btn', id: ('btn_upgrade_user_' + user_result_row.id.to_s), remote: true

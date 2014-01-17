@@ -1,11 +1,10 @@
 class StatementsController < ApplicationController
-  load_and_authorize_resource
 
   # GET /statements
   # GET /statements.json
   def index
     @statements = Statement.page(params[:page])
-
+    authorize! :read, Statement
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @statements }
@@ -15,20 +14,11 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
-    #@arguments = Argument.where(statement_id: @statement.id).order('votes.size DESC')
-    @arguments = @statement.arguments.plusminus_tally({order: "vote_count ASC"})
-    @pro = Array.new
-    @con = Array.new
-    unless @arguments.nil?
-      @arguments.each do |arg|
-        if arg.pro?
-          @pro << arg
-        else
-          @con << arg
-        end
-      end
-    end
-    
+  	# Eager loading and filtering on trashed on both the main and the tally query seems to result in the least amount of sql
+  	# without writing a custom query 
+    @statement = Statement.find_by_id params[:id] #, arguments: {is_trashed: false}).includes(:arguments, :tags).first
+    authorize! :read, Statement
+    @arguments = @statement.arguments.where(is_trashed: false).plusminus_tally({order: "vote_count ASC"}).group_by { |a| a.key }
 
     respond_to do |format|
       format.html # show.html.erb
@@ -41,16 +31,12 @@ class StatementsController < ApplicationController
   def revisions
     @statement = Statement.find_by_id(params[:statement_id])
     @version = nil
-    @rev = params[:rev]
 
-    unless @rev.nil?
+    unless (@rev = params[:rev]).nil?
       @version = @statement.versions.find_by_id(@rev);
       @statement = @version.reify
     end
-    
-    if @statement.nil?
-      @statement = @statement.versions.last
-    end
+    @statement ||= @statement.versions.last
 
     authorize! :revisions, @statement
     respond_to do |format|
@@ -62,8 +48,9 @@ class StatementsController < ApplicationController
   # GET /statements/1/revisions
   # GET /statements/1/revisions.json
   def allrevisions
-    @statement = Statement.find_by_id(params[:statement_id])
+    @statement = Statement.where(id: params[:statement_id], arguments: {is_trashed: true}).includes(:arguments).first
     @revisions = @statement.versions.scoped.reject{ |v| v.object.nil? }.reverse
+    @arguments = @statement.arguments.where(is_trashed: true).plusminus_tally({order: "vote_count ASC"}).group_by { |a| a.key }
 
     authorize! :allrevisions, @statement
     respond_to do |format|
@@ -77,16 +64,12 @@ class StatementsController < ApplicationController
   def setrevision
     @statement = Statement.find_by_id(params[:statement_id])
     @version = nil
-    @rev = params[:rev]
 
-    unless @rev.nil?
+    unless (@rev = params[:rev]).nil?
       @version = @statement.versions.find_by_id(@rev);
       @statement = @version.reify
     end
-    
-    if @statement.nil?
-      @statement = @statement.versions.last
-    end
+    @statement ||= @statement.versions.last if @statement.nil?
 
     authorize :setrevision, @statement
     respond_to do |format|
@@ -101,6 +84,7 @@ class StatementsController < ApplicationController
   end  
 
   def tagged
+    authorize! :read, Statement
     @tag = ActsAsTaggableOn::Tag.find_by_name(params[:tag])
     if params[:tag].present? 
       @statements = Statement.tagged_with(params[:tag]) # TODO rewrite statement to exclude where statement.tag_id
@@ -112,6 +96,7 @@ class StatementsController < ApplicationController
   # GET /statements/new
   # GET /statements/new.json
   def new
+    authorize! :create, Statement
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @statement }
@@ -120,11 +105,14 @@ class StatementsController < ApplicationController
 
   # GET /statements/1/edit
   def edit
+    @statement = Statement.find_by_id(params[:id])
+    authorize! :update, @statement
   end
 
   # POST /statements
   # POST /statements.json
   def create
+    authorize! :create, Statement
     @statement.add_mod current_user
 
     respond_to do |format|
@@ -141,6 +129,8 @@ class StatementsController < ApplicationController
   # PUT /statements/1
   # PUT /statements/1.json
   def update
+    @statement = Statement.find_by_id params[:id]
+    authorize! :update, @statement
     respond_to do |format|
       if @statement.update_attributes(params[:statement])
         if params[:statement].present? && params[:statement][:tag_id].present? && @statement.tags.reject { |a,b| a.statement==b }.first.present?
@@ -160,7 +150,14 @@ class StatementsController < ApplicationController
   # DELETE /statements/1
   # DELETE /statements/1.json
   def destroy
-    @statement.destroy
+    @statement = Statement.find_by_id params[:id]
+    if params[:destroy] == 'true'
+      authorize! :destroy, @statement
+      @statement.destroy
+    else
+      authorize! :trash, @statement
+      @statement.trash
+    end
 
     respond_to do |format|
       format.html { redirect_to statements_url }

@@ -26,6 +26,8 @@ nl:
         zero: "geen tegenargumenten"
         one: "1  tegenargument"
         other: "%{count} tegenargumenten"
+    revisions:
+      title_wiped: 'Gewiste argumenten'
     form:
         title: "titel"
         content: "inhoud"
@@ -35,6 +37,15 @@ nl:
             title: "Vat de stelling zo bondig mogelijk samen."
             content: "Beschrijf de stelling in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
             themes: "Thema's of onderwerpen die aan deze stelling gerelateerd zijn. Plaats komma's tussen de thema's."
+    mod:
+      edit_moderators:
+        title: 'Moderators van %{title}'
+        remove: 'afzetten'
+        title_invite: 'Moderators uitnodigen'
+        invite: 'Uitnodigen'
+        invited: 'Uitnodigd'
+        is_mod: 'is al een mod'
+      show_moderation_panel: 'moderator'
     titles:
       tags: "Zoek stellingen met het thema "
     #statement types

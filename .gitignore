@@ -19,3 +19,4 @@ Gemfile.lock
 /tmp/*
 /solr/data/*
 /solr/pids/*
+/.idea

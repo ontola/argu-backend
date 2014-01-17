@@ -8,7 +8,7 @@ class Statement < ActiveRecord::Base
   before_save :cap_title
 
   acts_as_ordered_taggable_on :tags
-
+  resourcify
   has_paper_trail
 
   attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators, :tag_list, :invert_arguments, :tag_id
@@ -46,22 +46,6 @@ class Statement < ActiveRecord::Base
 
   def is_main_statement?(tag)
     self.tags.reject { |a,b| a.statement == b }.first == tag
-  end
-
-  def is_moderator?(user)
-    self.mods.include?(user.id)
-  end
-
-  def mods
-    if !self.moderators.blank?
-      return self.moderators.split(',').map { |s| s.to_i }
-    else 
-      return []
-    end
-  end
-
-  def add_mod(user)
-    self.mods << user.id unless self.mods.include? user.id
   end
 
   def pro_count

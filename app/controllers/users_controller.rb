@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
-	load_and_authorize_resource
 
 	def edit
 		@user = current_user
+    authorize! :edit, @user
 		
 		unless @user.nil? 
 			@authentications = @user.authentications
@@ -23,6 +23,7 @@ class UsersController < ApplicationController
 	# PUT /settings
 	def update
 		@user = current_user unless current_user.blank?
+    authorize! :update, @user
 
 		respond_to do |format|
 			if @user.update_attributes(params[:user]) && @user.profile.update_attributes(params[:profile])
@@ -33,5 +34,19 @@ class UsersController < ApplicationController
 				format.jsoon { render json: @profile.errors, status: :unprocessable_entity }
 			end
 		end
-	end
+  end
+
+  # POST /users/search/:username
+  # POST /users/search
+  def search
+    #@users = User.where(User.arel_table[:username].matches("%#{params[:username]}%")) if params[:username].present?
+    @users = User.search do
+      fulltext params['username']
+      paginate page: params[:page]
+    end.results unless params['username'].blank?
+    respond_to do |format|
+        format.js { render partial: params[:c].present? ? params[:c] + '/search' : 'search' }
+        format.json { render json: @users }
+    end
+  end
 end

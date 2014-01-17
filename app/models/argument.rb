@@ -11,7 +11,7 @@ class Argument < ActiveRecord::Base
   acts_as_commentable
   acts_as_voteable
 
-  attr_accessible :id, :content, :title, :argtype, :statement, :votes, :pro, :statement_id
+  attr_accessible :id, :content, :title, :argtype, :statement, :votes, :pro, :statement_id, :is_trashed
 
   validates :content, presence: true, length: { minimum: 5, maximum: 1500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
@@ -22,6 +22,15 @@ class Argument < ActiveRecord::Base
 
   def after_destroy
     self.update_counter_cache
+  end
+
+  def trash
+    update_attribute :is_trashed, true
+  end
+
+  # To facilitate the group_by command
+  def key
+  	self.pro ? :pro : :con
   end
 
 # Custom methods
