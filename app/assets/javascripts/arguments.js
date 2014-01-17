@@ -16,20 +16,12 @@
     });
 
      $('.collapsible').each(function(i, e) {
-         var span = $(this).find('span');
-         var before = $('<span>...<a href="#">meer</a></span>');
-         var after = $('<span><a href="#">minder</a></span>');
-         var _onclick = function(e) {
-             if(e!=undefined) e.preventDefault();
-             span.toggle();
-             before.toggle();
-             after.toggle();
-         }();
-         span.after(after);
-         span.before(before);
-         after.toggle();
-         before.click(function (e) {e.preventDefault(); $(this).toggle(); span.toggle(); after.toggle(); });
-         after.click(function (e) {e.preventDefault(); $(this).toggle(); span.toggle(); before.toggle(); });
+         var span   = $(this).find('span').toggle(),
+             before = $('<span>...<a href="#">meer</a></span>'),
+             after  = $('<span><a href="#">minder</a></span>').hide(),
+           _onclick = function test (e) {e.preventDefault(); before.toggle(); span.toggle(); after.toggle(); };
+         span.before(before.click(_onclick));
+         span.after(after.click(_onclick));
      });
 
  });
