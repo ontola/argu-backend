@@ -1,14 +1,15 @@
 -@comment = getBestComment(argument)
 div[class=(argument.pro ? "box pro" : "box con")]
 	= link_to argument.title, argument_path(argument), class: argument.pro ? "title" : "title"
-	= content_tag :p, raw(argument.supped_content), class: 'intro'
+	= content_tag :p, class: 'intro collapsible' do
+	  ==((content = argument.supped_content)[0..500] + (content_tag(:span, content[501..content.length].to_s) if content[501]))
 	= render partial: "votes/shr", locals: { argument: argument }
 	br
 	-if @comment.present?
 		= link_to argument_path(argument) + "#commentstitle" do
 			.topcomment
 				-num_comments = argument.comment_threads.size
-				span class="commentsnumber infobar"= num_comments.to_s + (num_comments == 1 ? " reactie:" : " reacties:")
+				span.commentsnumber.infobar= num_comments.to_s + (num_comments == 1 ? " reactie:" : " reacties:")
 				br
 				p= @comment.body[0..150] + (@comment.body[151] ? "..." : "")
 	-else

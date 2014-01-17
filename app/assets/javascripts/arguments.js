@@ -15,4 +15,21 @@
     	$('.comment_form#cf' + $(this).attr('id')).slideDown();
     });
 
+     $('.collapsible').each(function(i, e) {
+         var span = $(this).find('span');
+         var before = $('<span>...<a href="#">meer</a></span>');
+         var after = $('<span><a href="#">minder</a></span>');
+         var _onclick = function(e) {
+             if(e!=undefined) e.preventDefault();
+             span.toggle();
+             before.toggle();
+             after.toggle();
+         }();
+         span.after(after);
+         span.before(before);
+         after.toggle();
+         before.click(function (e) {e.preventDefault(); $(this).toggle(); span.toggle(); after.toggle(); });
+         after.click(function (e) {e.preventDefault(); $(this).toggle(); span.toggle(); before.toggle(); });
+     });
+
  });
