@@ -96,6 +96,7 @@ class StatementsController < ApplicationController
   # GET /statements/new
   # GET /statements/new.json
   def new
+    @statement = Statement.new
     authorize! :create, Statement
     respond_to do |format|
       format.html # new.html.erb
