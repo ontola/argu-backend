@@ -17,7 +17,7 @@ private
   end
 
   def pro_translation
-    params[:pro] == 'true' ? t("arguments.pro") : t("arguments.con")
+    %w(pro true).index(params[:pro] || @argument.pro.to_s) ? t("arguments.pro") : t("arguments.con")
   end
 
   def back_to_statement

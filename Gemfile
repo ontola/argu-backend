@@ -54,6 +54,8 @@ group :development do
   gem 'annotate','~> 2.4.1beta1'
   gem "nifty-generators", '~> 0.4.6'
   gem 'meta_request'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :production do 

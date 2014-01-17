@@ -99,7 +99,7 @@ class StatementsController < ApplicationController
     @statement = Statement.new
     authorize! :create, Statement
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render 'form' }
       format.json { render json: @statement }
     end
   end
@@ -108,6 +108,9 @@ class StatementsController < ApplicationController
   def edit
     @statement = Statement.find_by_id(params[:id])
     authorize! :update, @statement
+    respond_to do |format|
+      format.html { render 'form' }
+    end
   end
 
   # POST /statements

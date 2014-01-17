@@ -82,17 +82,23 @@ class ArgumentsController < ApplicationController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    @argument.assign_attributes({pro: params[:pro], statement_id: params[:statement_id]})
-    #@argument.statement = Statement.find_by_id!(params[:statement_id]).id.to_s
-    #@argument.pro = params[:pro] == 'true' ? true : false
+    @argument.assign_attributes({pro: %w(pro true).index(params[:pro]), statement_id: params[:statement_id]})
     respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @argument }
+      if !params[:statement_id]
+        format.html { render :form }
+        format.json { render json: @argument }
+      else
+        format.html { render text: 'Bad request', status: 400 }
+        format.json { head 400 }
+      end
     end
   end
 
   # GET /arguments/1/edit
   def edit
+    respond_to do |format|
+      format.html { render :form }
+    end
   end
 
   # POST /arguments
