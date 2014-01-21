@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140105015649) do
+ActiveRecord::Schema.define(:version => 20140105221304) do
 
   create_table "arguments", :force => true do |t|
     t.text     "content",                         :null => false
@@ -56,6 +56,26 @@ ActiveRecord::Schema.define(:version => 20140105015649) do
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "motionarguments", :force => true do |t|
+    t.integer "argument_id",                   :null => false
+    t.integer "motion_id",                     :null => false
+    t.boolean "pro",         :default => true, :null => false
+    t.integer "votes_count", :default => 0
+  end
+
+  add_index "motionarguments", ["argument_id", "motion_id"], :name => "arg_state_index"
+
+  create_table "motions", :force => true do |t|
+    t.string   "title",                      :null => false
+    t.text     "content",                    :null => false
+    t.integer  "statetype",  :default => 6
+    t.datetime "created_at",                 :null => false
+    t.datetime "updated_at",                 :null => false
+    t.integer  "pro_count",  :default => 0
+    t.integer  "con_count",  :default => 0
+    t.integer  "moderators", :default => [],                 :array => true
+  end
+
   create_table "profiles", :force => true do |t|
     t.integer  "user_id"
     t.string   "name",       :default => ""
@@ -86,7 +106,6 @@ ActiveRecord::Schema.define(:version => 20140105015649) do
     t.datetime "updated_at",                :null => false
     t.integer  "pro_count",  :default => 0
     t.integer  "con_count",  :default => 0
-    t.string   "moderators"
     t.integer  "tag_id"
   end
 

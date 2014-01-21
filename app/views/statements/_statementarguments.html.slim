@@ -2,7 +2,7 @@ div.argcontainer1
 	div.argcontainer2
         -[:pro, :con].each do |p|
   		    div.procon
-      			div[class=("argtypebox" + p.to_s)]
+      			div[class=("argtypebox " + p.to_s)]
   	    			h2= t("arguments." + p.to_s)
   		    	-unless @arguments[p].nil?
   			    	-@arguments[p].each do |argument|
