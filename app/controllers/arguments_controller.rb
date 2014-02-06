@@ -84,7 +84,7 @@ class ArgumentsController < ApplicationController
   def new
     @argument.assign_attributes({pro: %w(pro true).index(params[:pro]), statement_id: params[:statement_id]})
     respond_to do |format|
-      if !params[:statement_id]
+      if params[:statement_id].present?
         format.html { render :form }
         format.json { render json: @argument }
       else
