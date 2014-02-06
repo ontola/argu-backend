@@ -86,7 +86,6 @@ ActiveRecord::Schema.define(:version => 20140105015649) do
     t.datetime "updated_at",                :null => false
     t.integer  "pro_count",  :default => 0
     t.integer  "con_count",  :default => 0
-    t.string   "moderators"
     t.integer  "tag_id"
   end
 

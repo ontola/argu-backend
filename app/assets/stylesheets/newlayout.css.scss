@@ -690,6 +690,15 @@ p.comment {
   text-transform: uppercase;
   margin-top: -.1em;
   color: $g3;
+  .buttons{
+    .info{
+      p{
+        a{
+          color: $g3;
+        }
+      }
+    }
+  }
 }
 
 .info {
@@ -1091,7 +1100,7 @@ div.pageconf {
 }
 
 .label-subrow {
-  margin-left: 270px;
+  margin-left: 330px;
   .btn {
     float: left;
   }
@@ -1103,7 +1112,7 @@ form {
 }
 
 form.edit_user {
-    max-width: 600px;
+    max-width: 700px;
   }
 
 input[type=checkbox] {
