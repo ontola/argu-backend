@@ -116,8 +116,9 @@ class StatementsController < ApplicationController
   # POST /statements
   # POST /statements.json
   def create
+    @statement = Statement.create params[:statement]
     authorize! :create, Statement
-    @statement.add_mod current_user
+    current_user.add_role :mod, @statement
 
     respond_to do |format|
       if @statement.save
