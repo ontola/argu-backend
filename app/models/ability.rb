@@ -25,7 +25,7 @@ class   Ability
            Profile,
            Vote]
       can :manage, User do |u|
-        user != u
+        user == u
       end
     elsif user.has_role?(:user) && !user.frozen?
         can :read, :all                                         #read by default, should be changed later
