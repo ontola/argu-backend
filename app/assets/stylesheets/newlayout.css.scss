@@ -127,6 +127,14 @@ select {
   margin-bottom: 1.8em;
   border-radius: 0.3em;
   max-width: 46em;
+  .btn{
+    color: white;
+    background-color: $blud;
+    &:hover{
+      color: white;
+      background-color: $blu;
+    }
+  }
   ol {
     list-style: decimal;
     margin-left: 1.4em;
@@ -269,12 +277,12 @@ hr.stripe {
   border-radius: .5em;
   padding: .1em .4em;
   display: inline-block;
-  margin-right: 0.25em;
   text-transform: lowercase;
   background-color: $blud;
   line-height: 1.3em;
   letter-spacing: .08em;
   text-transform: uppercase;
+  margin-right: 0.25em;
 }
 
 .tag {
@@ -736,20 +744,12 @@ p.comment {
   font-weight: bold;
   line-height: 1.3em;
   padding-bottom: .1em;
-}
-
-.titlepro {
-  color: $gre;
-}
-
-.titlecon {
-  color: $red;
-}
-
-.titlestatement {
-  color: $blu;
-  font-size: 1.1em;
-  margin-bottom: .7em;
+  &.pro{
+    color: $gre;
+  }
+  &.con{
+    color: $red;
+  }
 }
 
 .lefttitle {
@@ -1037,7 +1037,6 @@ p.votelabel {
     margin-left: -1px;
     color: white;
   }
-  
   &:active {
     border-bottom-width: 0;
   }
@@ -1056,6 +1055,9 @@ p.votelabel {
   &.blue {
     background-color: $blud;
     color: white;
+  }
+  &.space{
+    margin: 0 .5em 0 0;
   }
 }
 

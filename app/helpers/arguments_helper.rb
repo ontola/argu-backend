@@ -6,7 +6,7 @@ private
 
   def print_references(argument)
     content_tag :ol do
-      @argument.references.each do |ref|
+      argument.references.each do |ref|
         if ref[0].blank?
           concat content_tag :li, content_tag(:p, ref[1], id: ref[2])
         else

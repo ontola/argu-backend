@@ -7,7 +7,4 @@ div.argcontainer1
         -unless @arguments[p].nil?
           -@arguments[p].each do |argument|
             = render argument
-        -else
-          span= t('statements.preview.' + p.to_s, count: 0)
-            div[class=("centerbar "+ p.to_s)]
-              = link_to t("arguments.new.create", side: t("arguments." + p.to_s)), new_argument_path(pro: p, statement_id: statement.id), class: "btn"
+        = link_to t("arguments.new.create", side: t("arguments." + p.to_s)), new_argument_path(pro: p, statement_id: statement.id), class: "btn"
