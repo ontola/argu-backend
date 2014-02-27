@@ -15,3 +15,12 @@ development:
   pool: 5
   username: arguroot
   password: opendebate
+
+test:
+  adapter: postgresql
+  host: localhost
+  encoding: utf8
+  database: argu_test
+  pool: 5
+  username: arguroot
+  password: opendebate
