@@ -24,3 +24,4 @@ test:
   pool: 5
   username: arguroot
   password: opendebate
+  min_messages: warning

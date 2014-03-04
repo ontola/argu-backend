@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe VoteController do
+describe VotesController do
 
 end

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <!--[if lt IE 7]>      <html class="lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="lt-ie9"> <![endif]-->
@@ -18,7 +17,7 @@
   <% end %>
 </head>
 <body>
-<% unless current_user.blank? %>
+<% unless false # current_user.blank? %>
   <!--[if lt IE 8]>
     <p class="browsehappy"><%= raw t("outdated_browser") %></p>
   <![endif]-->

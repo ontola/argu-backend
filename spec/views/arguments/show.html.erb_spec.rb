@@ -2,18 +2,24 @@ require 'spec_helper'
 
 describe "arguments/show" do
   before(:each) do
-    @argument = assign(:argument, stub_model(Argument,
-      :title => "Title",
-      :content => "Content",
-      :type => 1
-    ))
+    @user = FactoryGirl.create :user
+    sign_in @user
+    #sign_in FactoryGirl.create :user
+    #@argument = FactoryGirl.create :argument
+    #@comments = []
+    #assign(:argument, @argument)
+    #assign(:comments, @comments)
   end
 
-  it "renders attributes in <p>" do
+  it "renders attributes in <p>", :versioning => true  do
+    PaperTrail.whodunnit = @user
+    @argument = FactoryGirl.create :argument
+    @comments = []
+    assign(:argument, @argument)
+    assign(:comments, Kaminari.paginate_array(@comments).page(1))
     render
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
-    rendered.should match(/Title/)
-    rendered.should match(/Content/)
-    rendered.should match(/1/)
+
+    assert_select ".box>h1.title", :text => @argument.title
+    assert_select ".box>p.intro", :text => @argument.content
   end
 end

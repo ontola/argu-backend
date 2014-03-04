@@ -20,145 +20,181 @@ require 'spec_helper'
 
 describe ArgumentsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Argument. As you add validations to Argument, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-  
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # ArgumentsController. Be sure to keep this updated too.
-  def valid_session
-    {}
-  end
+  describe "as a user" do
+    login_user
 
-  describe "GET index" do
-    it "assigns all arguments as @arguments" do
-      argument = Argument.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:arguments).should eq([argument])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested argument as @argument" do
-      argument = Argument.create! valid_attributes
-      get :show, {:id => argument.to_param}, valid_session
-      assigns(:argument).should eq(argument)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new argument as @argument" do
-      get :new, {}, valid_session
-      assigns(:argument).should be_a_new(Argument)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested argument as @argument" do
-      argument = Argument.create! valid_attributes
-      get :edit, {:id => argument.to_param}, valid_session
-      assigns(:argument).should eq(argument)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Argument" do
-        expect {
-          post :create, {:argument => valid_attributes}, valid_session
-        }.to change(Argument, :count).by(1)
-      end
-
-      it "assigns a newly created argument as @argument" do
-        post :create, {:argument => valid_attributes}, valid_session
-        assigns(:argument).should be_a(Argument)
-        assigns(:argument).should be_persisted
-      end
-
-      it "redirects to the created argument" do
-        post :create, {:argument => valid_attributes}, valid_session
-        response.should redirect_to(Argument.last)
+    describe "GET show" do
+      it "assigns the requested argument as @argument" do
+        argument = FactoryGirl.create :argument
+        get :show, {:id => argument.to_param}
+        assigns(:argument).should eq(argument)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved argument as @argument" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Argument.any_instance.stub(:save).and_return(false)
-        post :create, {:argument => {}}, valid_session
+    describe "GET new" do
+      it "assigns a new argument as @argument" do
+        get :new, {}
         assigns(:argument).should be_a_new(Argument)
       end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Argument.any_instance.stub(:save).and_return(false)
-        post :create, {:argument => {}}, valid_session
-        response.should render_template("new")
-      end
     end
-  end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested argument" do
-        argument = Argument.create! valid_attributes
-        # Assuming there are no other arguments in the database, this
-        # specifies that the Argument created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Argument.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => argument.to_param, :argument => {'these' => 'params'}}, valid_session
-      end
-
+    describe "GET edit" do
       it "assigns the requested argument as @argument" do
-        argument = Argument.create! valid_attributes
-        put :update, {:id => argument.to_param, :argument => valid_attributes}, valid_session
+        argument = FactoryGirl.create :argument
+        get :edit, {:id => argument.to_param}
         assigns(:argument).should eq(argument)
-      end
-
-      it "redirects to the argument" do
-        argument = Argument.create! valid_attributes
-        put :update, {:id => argument.to_param, :argument => valid_attributes}, valid_session
-        response.should redirect_to(argument)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns the argument as @argument" do
-        argument = Argument.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Argument.any_instance.stub(:save).and_return(false)
-        put :update, {:id => argument.to_param, :argument => {}}, valid_session
-        assigns(:argument).should eq(argument)
+    describe "POST create" do
+      describe "with valid params" do
+        it "creates a new Argument" do
+          expect {
+            statement = FactoryGirl.create :statement
+            post :create, {:argument => FactoryGirl.attributes_for(:argument).merge({statement_id: statement.id}) }
+          }.to change(Argument, :count).by(1)
+        end
+
+        it "assigns a newly created argument as @argument" do
+          statement = FactoryGirl.create :statement
+          post :create, {:argument => FactoryGirl.attributes_for(:argument).merge({statement_id: statement.id}) }
+          assigns(:argument).should be_a(Argument)
+          assigns(:argument).should be_persisted
+        end
+
+        it "redirects to the created argument" do
+          statement = FactoryGirl.create :statement
+          post :create, {:argument => FactoryGirl.attributes_for(:argument).merge({statement_id: statement.id}) }
+          response.should redirect_to(Argument.last.statement)
+        end
       end
 
-      it "re-renders the 'edit' template" do
-        argument = Argument.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Argument.any_instance.stub(:save).and_return(false)
-        put :update, {:id => argument.to_param, :argument => {}}, valid_session
-        response.should render_template("edit")
+      describe "with invalid params" do
+        it "assigns a newly created but unsaved argument as @argument" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          Argument.any_instance.stub(:save).and_return(false)
+          post :create, {:argument => {}}
+          assigns(:argument).should be_a_new(Argument)
+        end
+
+        it "re-renders the 'new' template" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          Argument.any_instance.stub(:save).and_return(false)
+          post :create, {:argument => {}}
+          response.should render_template('form')
+        end
+      end
+    end
+
+    describe "PUT update" do
+      describe "with valid params" do
+        it "redirects to root" do
+          argument = FactoryGirl.create :argument
+          put :update, {:id => argument.to_param, :argument => FactoryGirl.attributes_for(:argument) }
+          response.should redirect_to(root_path)
+        end
+      end
+
+      describe "with invalid params" do
+        it "redirects to root" do
+          argument = FactoryGirl.create :argument
+          # Trigger the behavior that occurs when invalid params are submitted
+          Argument.any_instance.stub(:save).and_return(false)
+          put :update, {:id => argument.to_param, :argument => {}}
+          response.should redirect_to(root_path)
+        end
+      end
+    end
+
+    describe "DELETE destroy" do
+      it "doesn't destroy the requested argument" do
+        argument = FactoryGirl.create :argument
+        expect {
+          delete :destroy, {:id => argument.to_param}
+        }.to change(Argument, :count).by(0)
+      end
+
+      it "redirects to root" do
+        argument = FactoryGirl.create :argument
+        delete :destroy, {:id => argument.to_param}
+        response.should redirect_to(root_path)
       end
     end
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested argument" do
-      argument = Argument.create! valid_attributes
-      expect {
-        delete :destroy, {:id => argument.to_param}, valid_session
-      }.to change(Argument, :count).by(-1)
+  describe "as an admin" do
+    login_admin
+
+    describe "PUT update" do
+      describe "with valid params" do
+        it "updates the requested argument" do
+          argument = FactoryGirl.create :argument
+          # Assuming there are no other arguments in the database, this
+          # specifies that the Argument created on the previous line
+          # receives the :update_attributes message with whatever params are
+          # submitted in the request.
+          Argument.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+          put :update, {:id => argument.to_param, :argument => {'these' => 'params'}}
+        end
+
+        it "assigns the requested argument as @argument" do
+          argument = FactoryGirl.create :argument
+          put :update, {:id => argument.to_param, :argument => FactoryGirl.attributes_for(:argument)}
+          assigns(:argument).should eq(argument)
+        end
+
+        it "redirects to the argument" do
+          argument = FactoryGirl.create :argument
+          put :update, {:id => argument.to_param, :argument => FactoryGirl.attributes_for(:argument)}
+          response.should redirect_to(argument)
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns the argument as @argument" do
+          argument = FactoryGirl.create :argument
+          # Trigger the behavior that occurs when invalid params are submitted
+          Argument.any_instance.stub(:save).and_return(false)
+          put :update, {:id => argument.to_param, :argument => {}}
+          assigns(:argument).should eq(argument)
+        end
+
+        it "re-renders the 'edit' template" do
+          argument = FactoryGirl.create :argument
+          # Trigger the behavior that occurs when invalid params are submitted
+          Argument.any_instance.stub(:save).and_return(false)
+          put :update, {:id => argument.to_param, :argument => {}}
+          response.should render_template('arguments/form')
+        end
+      end
     end
 
-    it "redirects to the arguments list" do
-      argument = Argument.create! valid_attributes
-      delete :destroy, {:id => argument.to_param}, valid_session
-      response.should redirect_to(arguments_url)
+    describe "DELETE destroy" do
+      it "destroys the requested argument" do
+        argument = FactoryGirl.create :argument
+        expect {
+          delete :destroy, {:id => argument.to_param, destroy: true}
+        }.to change(Argument, :count).by(-1)
+      end
+
+      it "redirects to the statement after destroying" do
+        argument = FactoryGirl.create :argument
+        delete :destroy, {:id => argument.to_param, destroy: true}
+        response.should redirect_to(statement_url(argument.statement))
+      end
+
+      it "trashes the requested argument" do
+        argument = FactoryGirl.create :argument
+        expect {
+          delete :destroy, {:id => argument.to_param}
+        }.to change { Argument.last.is_trashed }.to(true)
+      end
+
+      it "redirects to the arguments list after trashing" do
+        argument = FactoryGirl.create :argument
+        delete :destroy, {:id => argument.to_param, destroy: false}
+        response.should redirect_to(statement_url(argument.statement))
+      end
     end
   end
-
 end

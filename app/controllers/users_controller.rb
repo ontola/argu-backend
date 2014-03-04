@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
 
 	def edit
-		@user = current_user
+		@user = User.find current_user.id
     authorize! :edit, @user
 		
-		unless @user.nil? 
+		unless @user.nil?
 			@authentications = @user.authentications
 			respond_to do |format|
 				format.html

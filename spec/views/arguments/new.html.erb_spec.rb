@@ -2,21 +2,23 @@ require 'spec_helper'
 
 describe "arguments/new" do
   before(:each) do
-    assign(:argument, stub_model(Argument,
-      :title => "MyString",
-      :content => "MyString",
-      :type => 1
-    ).as_new_record)
+    @argument = FactoryGirl.create :argument
+    assign(:argument, @argument)
   end
 
   it "renders new argument form" do
-    render
+    render template: 'arguments/form'
 
-    # Run the generator again with the --webrat flag if you want to use webrat matchers
+    # Should be empty since it's a new object
     assert_select "form", :action => arguments_path, :method => "post" do
-      assert_select "input#argument_title", :name => "argument[title]"
-      assert_select "input#argument_content", :name => "argument[content]"
-      assert_select "input#argument_type", :name => "argument[type]"
+      assert_select "input#argument_title", name: 'argument[title]'
+      assert_select "textarea#argument_content", name: 'argument[content]'
     end
   end
+
+  it "has the statement title in the header" do
+    render template: 'arguments/form'
+    assert_select 'a.title.statement.top', @argument.statement.title
+  end
+
 end

@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
          #:validatable, :omniauthable
 
   before_create :check_for_profile
-  after_create :mark_as_user
+  before_create :mark_as_user
   after_destroy :cleanup
   before_save { |user| user.email = email.downcase unless email.blank? }
   before_save :normalize_blank_values
@@ -42,6 +42,9 @@ class User < ActiveRecord::Base
   searchable do 
     text :username, :email
   end
+  handle_asynchronously :solr_index
+  handle_asynchronously :solr_index!
+  handle_asynchronously :remove_from_index
 
 #general
   def self.find(id)

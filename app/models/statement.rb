@@ -29,6 +29,9 @@ class Statement < ActiveRecord::Base
       title.downcase.gsub(/^(an?|the)/, '')
     end
   end
+  handle_asynchronously :solr_index
+  handle_asynchronously :solr_index!
+  handle_asynchronously :remove_from_index
 
 # Custom methods
 
