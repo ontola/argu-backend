@@ -1,5 +1,5 @@
 module Admin
-  ROLES = %w(user mod admin coder)
+  ROLES = %w(coder admin mod user)
   module AdministrationHelper
     def select_highest_rank(roles)
       t 'admin.' + highest_rank(roles)

@@ -1,4 +1,4 @@
-class   Ability
+class Ability
   include CanCan::Ability
 
   def initialize(user)
@@ -32,24 +32,24 @@ class   Ability
         can [:create, :placeComment, :report], [Statement, Argument, Comment]
         can [:revisions, :allrevisions], [Statement, Argument]  #View revisions
         cannot :delete, [Statement, Argument]                   #No touching!
-        cannot [:update, :delete], [Version]                    #I said, no touching!
+        cannot [:update, :delete], [PaperTrail::Version]                    #I said, no touching!
 
         ##Moderator rights
         can [:edit_mods, :create_mod, :destroy_mod], Statement do |item|
-          user.is_mod_of? item
+          user.has_role? :mod, item
         end
         can :trash, Argument do |item|
-          user.is_mod_of? item.statement
+          user.has_role? :mod, item.statement
         end
         can :trash, Comment do |item|
-          user.is_mod_of? eval(item.commentable_type).find_by_id(item.commentable_id).statement
+          user.has_role? :mod, eval(item.commentable_type).find_by_id(item.commentable_id).statement
         end
         can [:edit, :update, :delete], Profile do |profile|     #Do whatever you want with your own profile
           user.profile == profile
         end
 
         ##Owned objects
-        can [:show, :update, :search], User do |u|                       #Same goes for your persona
+        can [:show, :edit, :update, :search], User do |u|       #Same goes for your persona
           user == u
         end
         can :destroyComment, Comment do |comment|
@@ -68,13 +68,13 @@ class   Ability
                 Comment,
                 Profile,
                 Vote,
-                Version]
+                PaperTrail::Version]
         can :read, [Statement,
                     Argument,
                     Comment,
                     Profile,
                     Vote,
-                    Version]
+                    PaperTrail::Version]
     end
   end
 end

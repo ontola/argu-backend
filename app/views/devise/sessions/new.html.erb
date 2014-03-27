@@ -16,6 +16,15 @@
       :alt => "OpenID" %></a>
   </div>
 </div>
+<% if resource.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% resource.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
 <div class="label-row">
   <label><%= f.label :login %></label>
   <div class="label-subrow">

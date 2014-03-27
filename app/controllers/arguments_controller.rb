@@ -82,7 +82,7 @@ class ArgumentsController < ApplicationController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    @argument.assign_attributes({pro: %w(pro true).index(params[:pro]), statement_id: params[:statement_id]})
+    @argument.assign_attributes({pro: %w(con pro).index(params[:pro]), statement_id: params[:statement_id]})
     respond_to do |format|
       if params[:statement_id].present?
         format.html { render :form }
@@ -97,7 +97,7 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1/edit
   def edit
     respond_to do |format|
-      format.html { render :form }
+      format.html { render :form}
     end
   end
 
@@ -109,7 +109,7 @@ class ArgumentsController < ApplicationController
         format.html { redirect_to (params[:argument][:statement_id].blank? ? @argument : Statement.find_by_id(params[:argument][:statement_id])), notice: t("arguments.notices.created") }
         format.json { render json: @argument, status: :created, location: @argument }
       else
-        format.html { render action: "new", pro: params[:pro], statement_id: params[:argument][:statement_id] }
+        format.html { render :form, pro: params[:pro], statement_id: params[:argument][:statement_id] }
         format.json { render json: @argument.errors, status: :unprocessable_entity }
       end
     end
@@ -123,7 +123,7 @@ class ArgumentsController < ApplicationController
         format.html { redirect_to @argument, notice: t("arguments.notices.updated") }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
+        format.html { render :form }
         format.json { render json: @argument.errors, status: :unprocessable_entity }
       end
     end
@@ -132,7 +132,7 @@ class ArgumentsController < ApplicationController
   # DELETE /arguments/1
   # DELETE /arguments/1.json
   def destroy
-    if params[:destroy] == 'true'
+    if params[:destroy].to_s == 'true'
       authorize! :destroy, @argument
       @argument.destroy
     else
@@ -141,7 +141,7 @@ class ArgumentsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to @argument.statement }
+      format.html { redirect_to statement_path(@argument.statement_id) }
       format.json { head :no_content }
     end
   end
@@ -152,20 +152,10 @@ class ArgumentsController < ApplicationController
     @comment = params[:comment]
     @comment = Comment.build_from(argument, @current_user.id, @comment )
     @comment.save!
-    
+
     unless params[:parent_id].blank?
-      parent = Comment.find_by_id(params[:parent_id])
-      org_parent = parent
-      for i in 0..10 do
-        if parent.parent.present? && (parent = parent.parent).parent.blank? # Stack isn't too deep, so allow
-          break
-        end
-      end
-      if i < 10
-        @comment.move_to_child_of(org_parent)
-      else
-        @comment.move_to_child_of(org_parent.parent)
-      end
+      #@TODO Just let them go nuts for now, infinite parenting
+      @comment.move_to_child_of Comment.find_by_id params[:parent_id]
     end
 
     redirect_to argument_path(argument)

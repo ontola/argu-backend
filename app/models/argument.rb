@@ -25,7 +25,7 @@ class Argument < ActiveRecord::Base
   end
 
   def trash
-    update_attribute :is_trashed, true
+    update_column :is_trashed, true
   end
 
   # To facilitate the group_by command

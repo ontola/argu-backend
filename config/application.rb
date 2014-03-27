@@ -58,14 +58,19 @@ module Argu
     # parameters by using an attr_accessible or attr_protected declaration.
     config.active_record.whitelist_attributes = true
 
-    
+    config.generators do |g|
+      g.test_framework  :rspec, :fixture => true, :views => false
+      g.integration_tool :rspec, :fixture => true, :views => true
+    end
 
     # Enable the asset pipeline
     config.assets.enabled = true
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+    config.i18n.enforce_available_locales = true
+    I18n.enforce_available_locales = true
     config.i18n.default_locale = :nl #zodat nederlands de standaard weergegeven taal is.
-    I18n.locale = :nl
+    #I18n.locale = :nl
   end
 end

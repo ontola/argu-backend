@@ -3,7 +3,7 @@ class StatementsController < ApplicationController
   # GET /statements
   # GET /statements.json
   def index
-    @statements = Statement.page(params[:page])
+    @statements = Statement.index params[:trashed], params[:page]
     authorize! :read, Statement
     respond_to do |format|
       format.html # index.html.erb
@@ -125,7 +125,7 @@ class StatementsController < ApplicationController
         format.html { redirect_to @statement, notice: 'Statement was successfully created.' }
         format.json { render json: @statement, status: :created, location: @statement }
       else
-        format.html { render action: "new" }
+        format.html { render 'form' }
         format.json { render json: @statement.errors, status: :unprocessable_entity }
       end
     end
@@ -146,7 +146,7 @@ class StatementsController < ApplicationController
           format.json { head :no_content }
         end
       else
-        format.html { render action: "edit" }
+        format.html { render 'form' }
         format.json { render json: @statement.errors, status: :unprocessable_entity }
       end
     end
@@ -156,7 +156,7 @@ class StatementsController < ApplicationController
   # DELETE /statements/1.json
   def destroy
     @statement = Statement.find_by_id params[:id]
-    if params[:destroy] == 'true'
+    if params[:destroy].to_s == 'true'
       authorize! :destroy, @statement
       @statement.destroy
     else

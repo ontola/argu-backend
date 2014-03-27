@@ -11,12 +11,12 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140105015649) do
+ActiveRecord::Schema.define(:version => 20140326231505) do
 
   create_table "arguments", :force => true do |t|
     t.text     "content",                         :null => false
     t.integer  "statement_id",                    :null => false
-    t.boolean  "pro",          :default => true,  :null => false
+    t.boolean  "pro",          :default => true
     t.integer  "votes_count",  :default => 0
     t.integer  "argtype",      :default => 3,     :null => false
     t.datetime "created_at",                      :null => false
@@ -56,6 +56,22 @@ ActiveRecord::Schema.define(:version => 20140105015649) do
   add_index "comments", ["commentable_id"], :name => "index_comments_on_commentable_id"
   add_index "comments", ["user_id"], :name => "index_comments_on_user_id"
 
+  create_table "delayed_jobs", :force => true do |t|
+    t.integer  "priority",   :default => 0, :null => false
+    t.integer  "attempts",   :default => 0, :null => false
+    t.text     "handler",                   :null => false
+    t.text     "last_error"
+    t.datetime "run_at"
+    t.datetime "locked_at"
+    t.datetime "failed_at"
+    t.string   "locked_by"
+    t.string   "queue"
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+  end
+
+  add_index "delayed_jobs", ["priority", "run_at"], :name => "delayed_jobs_priority"
+
   create_table "profiles", :force => true do |t|
     t.integer  "user_id"
     t.string   "name",       :default => ""
@@ -79,14 +95,15 @@ ActiveRecord::Schema.define(:version => 20140105015649) do
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "statements", :force => true do |t|
-    t.string   "title",                     :null => false
-    t.text     "content",                   :null => false
+    t.string   "title",                         :null => false
+    t.text     "content",                       :null => false
     t.integer  "statetype",  :default => 6
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "pro_count",  :default => 0
     t.integer  "con_count",  :default => 0
     t.integer  "tag_id"
+    t.boolean  "is_trashed", :default => false
   end
 
   add_index "statements", ["tag_id"], :name => "index_statements_on_tag_id"

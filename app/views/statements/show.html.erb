@@ -1,31 +1,31 @@
 <% provide :title, (@statement.title.nil? ? t(:statement_title) : @statement.title) %>
 <%= render partial: 'statementbody', locals: { statement: @statement } %>
-	<ul class="opinionbtns"> <!--TODO-->
-		<li><%= link_to(t("statements.votes.pro"), '', class:"btn green") %></li>
-		<li><%= link_to(t("statements.votes.neu"), '', class:"btn grey") %></li>
-		<li><%= link_to(t("statements.votes.con"), '', class:"btn red") %></li>
-	</ul>
+<ul class="opinionbtns"> <!--TODO-->
+    <li><%= link_to(t("statements.votes.pro"), '', class:"btn green") %></li>
+    <li><%= link_to(t("statements.votes.neu"), '', class:"btn grey") %></li>
+    <li><%= link_to(t("statements.votes.con"), '', class:"btn red") %></li>
+</ul>
 <nav class="navrow">
 	<ul class="navcontent">
-		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } , class: "current" , id: "arguments"  %></li>
-		<li><%= link_to t("arguments.index.opinion") , {:anchor => "opinion" } %></li>
-		<li><%= link_to t("arguments.index.parties") , {:anchor => "parties" } %></li>
+		<li><%= link_to t("arguments.index.title") , { id: @statement.id, :anchor => "arguments" }, class: "current" , id: "arguments"  %></li>
+		<li><%= link_to t("arguments.index.opinion") , { id: @statement.id, :anchor => "opinion" } %></li>
+		<li><%= link_to t("arguments.index.parties") , { id: @statement.id, :anchor => "parties" } %></li>
 	</ul>
 </nav>
-<%= render partial: 'statementarguments', locals: { statement: @statement } %>
+<%= render partial: 'statementarguments', locals: { id: @statement.id,  statement: @statement } %>
 <nav class="navrow">
 	<ul class="navcontent">
-		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } %></li>
-		<li><%= link_to t("arguments.index.opinion") , {:anchor => "opinion" }, class: "current" , id: "opinion" %></li>
-		<li><%= link_to t("arguments.index.parties") , {:anchor => "parties" } %></li>
+		<li><%= link_to t("arguments.index.title") , { id: @statement.id, :anchor => "arguments" } %></li>
+		<li><%= link_to t("arguments.index.opinion") , { id: @statement.id, :anchor => "opinion" }, class: "current" , id: "opinion" %></li>
+		<li><%= link_to t("arguments.index.parties") , { id: @statement.id, :anchor => "parties" } %></li>
 	</ul>
 </nav>
 <p> wat vinden jullie er van dan?</p>
 <nav class="navrow">
 	<ul class="navcontent">
-		<li><%= link_to t("arguments.index.title") , {:anchor => "arguments" } %></li>
-		<li><%= link_to t("arguments.index.opinion") , {:anchor => "opinion" } %></li>
-		<li><%= link_to t("arguments.index.parties") , {:anchor => "parties" } , class: "current" , id: "parties" %></li>
+		<li><%= link_to t("arguments.index.title") , { id: @statement.id, :anchor => "arguments" } %></li>
+		<li><%= link_to t("arguments.index.opinion") , { id: @statement.id, :anchor => "opinion" } %></li>
+		<li><%= link_to t("arguments.index.parties") , { id: @statement.id, :anchor => "parties" } , class: "current" , id: "parties" %></li>
 	</ul>
 </nav>
 <%= render partial: 'parties', locals: { statement: @statement } %>
