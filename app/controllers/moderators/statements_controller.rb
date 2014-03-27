@@ -16,7 +16,6 @@ class Moderators::StatementsController < ApplicationController
     @statement = Statement.find_by_id(params[:statement_id])
     authorize! :edit_mods, @statement
     @moderators = User.with_role :mod, @statement
-    Rails.logger.info @moderators
   end
 
   # DELETE /statements/:statement_id/moderators/:user_id

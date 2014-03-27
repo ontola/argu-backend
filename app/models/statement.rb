@@ -55,6 +55,10 @@ class Statement < ActiveRecord::Base
     self.arguments.count(:conditions => ["pro = true"])
   end
 
+  def trash
+    update_column :is_trashed, true
+  end
+
   def trim_data
     self.title = title.strip
     self.content = content.strip
@@ -79,4 +83,6 @@ class Statement < ActiveRecord::Base
       :conditions => ["created_at >= ?", (Time.now - 1.days)]
     }
   }
+
+  scope :index, ->(trashed, page) { where(is_trashed: trashed.present?).order('pro_count + con_count DESC').page(page) }
 end

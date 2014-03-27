@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140227222404) do
+ActiveRecord::Schema.define(:version => 20140326231505) do
 
   create_table "arguments", :force => true do |t|
     t.text     "content",                         :null => false
@@ -95,14 +95,15 @@ ActiveRecord::Schema.define(:version => 20140227222404) do
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "statements", :force => true do |t|
-    t.string   "title",                     :null => false
-    t.text     "content",                   :null => false
+    t.string   "title",                         :null => false
+    t.text     "content",                       :null => false
     t.integer  "statetype",  :default => 6
-    t.datetime "created_at",                :null => false
-    t.datetime "updated_at",                :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
     t.integer  "pro_count",  :default => 0
     t.integer  "con_count",  :default => 0
     t.integer  "tag_id"
+    t.boolean  "is_trashed", :default => false
   end
 
   add_index "statements", ["tag_id"], :name => "index_statements_on_tag_id"

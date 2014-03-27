@@ -3,7 +3,7 @@ class StatementsController < ApplicationController
   # GET /statements
   # GET /statements.json
   def index
-    @statements = Statement.page(params[:page])
+    @statements = Statement.index params[:trashed], params[:page]
     authorize! :read, Statement
     respond_to do |format|
       format.html # index.html.erb

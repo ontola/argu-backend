@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
 
   def home
   	if signed_in?
-      @newstatements = Statement.all.sort_by { |s| s.arguments.size }.reverse
+      @newstatements = Statement.index params[:trashed], params[:page]
   		render 'static_pages/home'
   	else
   		render 'static_pages/home_new'
