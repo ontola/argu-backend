@@ -1,10 +1,10 @@
 Argu::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
-  ARGUMENT_TYPE_SCIENTIFIC = "scientific";
-  ARGUMENT_TYPE_AXIOMATIC = "axiomatic";
-  ARGUMENT_TYPE_OTHER = "other";
-  ARGUMENT_TYPE_DISCUSSION = "discussion";
+  config.epics = ActiveSupport::OrderedOptions.new
+  config.epics.opinion_buttons = true
+  config.epics.opinion = true
+  config.epics.parties = true
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
