@@ -892,22 +892,35 @@ p.votelabel {
 }
 
 .alert {
-  border: solid 1px $blu; 
-  border-radius: .3em;
-  background-color: white;
-  font-family: $opensans;
-  padding: 5px;
-  margin-bottom: 1.9em;
+  color: #FFF;
+  display: none;
+  font-family: $raleway;
+  font-size: 2em;
+  font-weight: 200;
+  line-height: 39px;
+  height: 34px;
+  padding: 2px 0 8px;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+  &.alert-success {
+    background-color: $gre;
+  }
+  &.alert-warning {
+    background-color: #CBB234;
+  }
+  &.alert-notice {
+    background-color: $blu;
+  }
+  &.alert-error {
+    background-color: $red;
+  }
+  html.no-js & {
+    display: block;
+  }
 }
-
-.alert-Notice {
-  border-color: $gre;
-}
-
-.alert-Error {
-  border-color: $red;
-}
-
 /*  Authentications page */
 
 .authentication {

@@ -21,12 +21,12 @@
   <!--[if lt IE 8]>
     <p class="browsehappy"><%= raw t("outdated_browser") %></p>
   <![endif]-->
+  <% flash.each do |key,value| %>
+    <div class="alert alert-block alert-<%= key %>" data-dismiss="alert"><%= value.capitalize %></div>
+  <% end %>
   <%= render 'header' %>
   <div id="fb-root"></div>
   <div class="container">
-    <% flash.each do |key,value| %>
-        <div class="alert alert-block alert-<%= key.capitalize %>" data-dismiss="alert"><%= value.capitalize %></div>
-    <% end %>
     <%= yield %>
     <div class="push"></div>
   </div>
