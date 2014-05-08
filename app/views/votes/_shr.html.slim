@@ -1,5 +1,5 @@
 .infobar[id=("shr"+argument.id.to_s)]
-	ul.buttons
+	ul.buttons.vote-buttons
 		li
 			p.vote.votelabel=t("votes.score")
 			p.vote[id=argument.id.to_s]=(argument.votes.size >= 1 ? '+' : '') + argument.votes_for.to_s

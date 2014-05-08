@@ -1,11 +1,10 @@
 - tag ||= nil
 .box.statement
 	= link_to statement.title, statement_path(statement), class: "title"
-	p= statement.content
+	p= statement.supped_content.html_safe
 	.infobar
+		p.info= t("statements.preview.pro", count: statement.pro_count) + ', ' + t("statements.preview.con", count: statement.con_count)
 		ul.buttons
-			li.info
-				p= t("statements.preview.pro", count: statement.pro_count) + ', ' + t("statements.preview.con", count: statement.con_count)
 			li= link_to t("trash"), statement_path(statement), method: :delete, confirm: t("trash_confirmation") if can? :trash, statement
 			li= link_to t("destroy"), statement_path(statement, destroy: true), method: :delete, confirm: t("destroy_confirmation") if can? :delete, statement
 			- if tag.present?

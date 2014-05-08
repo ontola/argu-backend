@@ -698,6 +698,9 @@ p.comment {
   text-transform: uppercase;
   margin-top: -.1em;
   color: $g3;
+  .info {
+    float: left;
+  }
   .buttons{
     .info{
       p{
@@ -758,29 +761,26 @@ p.comment {
   color: $g4;
 }
 
-p.vote {
-  font-weight: bold;
-  line-height: 1.5em;
-  font-size: 1.5em;
-}
 
-p.votelabel {
-  margin-right: 0.4em;
-  font-size: 1em;
-  line-height: 2.3em;
-  font-weight: normal;
-}
-
-.votebtn {
-  a {
-    color: $blu;
-    font-weight: bold; 
-    font-size: 1.5em;
+ul.vote-buttons {
+  float: left;
+  li, p, .votebtn {
+    display: inline;
+    margin-left: 0;
+  }
+  p.vote, .votebtn a{
+    font-weight: bold;
     line-height: 1.5em;
-    padding: 0;
-    width: 1.9em;
-    float: left;
-    margin: 0;
+    font-size: 1.5em;
+  }
+  p.votelabel {
+    margin-right: 0.4em;
+    font-size: 1em;
+    line-height: 2.3em;
+    font-weight: normal;
+  }
+  .votebtn a {
+    color: $blu;
     margin-left: 0.1em;
   }
 }
