@@ -635,20 +635,20 @@ a.commentusername {
   }
 }
 
-.buttons {
-  a {
-    color: $g3;
-    width: auto;
+ul.buttons {
     float: right;
-    margin-left: 1em;
-  }
+    li {
+      display: inline;
+      margin-left: 1em;
+      width: auto;
+      a {
+        color: $g3;
+        width: auto;
+      }
+    }
   p {
     float: left;
     color: $g3;
-  }
-  li {
-    display: inline;
-    width: auto;
   }
 }
 
