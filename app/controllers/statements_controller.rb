@@ -122,7 +122,7 @@ class StatementsController < ApplicationController
 
     respond_to do |format|
       if @statement.save
-        format.html { redirect_to @statement, notice: 'Statement was successfully created.' }
+        format.html { redirect_to @statement, notice: t('type_save_success', type: t('statements.type')) }
         format.json { render json: @statement, status: :created, location: @statement }
       else
         format.html { render 'form' }

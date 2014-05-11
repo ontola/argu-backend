@@ -1,0 +1,11 @@
+article[class="new-card-page" id=card_page.id]
+  =form_for card_page, html: { class: "form-horizontal", remote: true} do |f|
+    .label-row
+      = f.text_field :title, class: "settingform statementtitle", placeholder: t('cards.form.title').capitalize
+      .clear
+    .label-row
+      = f.text_area :contents, class: "settingform statementtitle", placeholder: t('cards.form.contents').capitalize
+      .clear
+    .label-row
+      =f.submit class: 'btn'
+      .clear

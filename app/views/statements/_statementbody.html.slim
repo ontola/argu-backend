@@ -1,6 +1,6 @@
 .box.statement
     h1.title= statement.title
-    p= statement.content
+    p= statement.supped_content.html_safe
     .infobar
         .tags.floatleft[title="thema's"]
             - if statement.tags.any?

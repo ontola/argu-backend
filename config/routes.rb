@@ -52,6 +52,9 @@ Argu::Application.routes.draw do
   resources :profiles
   resources :votes
   resources :comments
+  resources :cards do
+    resources :card_pages, as: 'pages', path: 'pages'
+  end
 
   get '/search/' => 'search#show', as: 'search'
   post '/search/' => 'search#show', as: 'search'

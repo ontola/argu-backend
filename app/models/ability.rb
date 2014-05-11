@@ -23,13 +23,14 @@ class Ability
            Argument,
            Comment,
            Profile,
+           Card,
            Vote]
       can :manage, User do |u|
         user == u
       end
     elsif user.has_role?(:user) && !user.frozen?
         can :read, :all                                         #read by default, should be changed later
-        can [:create, :placeComment, :report], [Statement, Argument, Comment]
+        can [:create, :placeComment, :report], [Statement, Argument, Comment, Card]
         can [:revisions, :allrevisions], [Statement, Argument]  #View revisions
         cannot :delete, [Statement, Argument]                   #No touching!
         cannot [:update, :delete], [PaperTrail::Version]                    #I said, no touching!
@@ -68,12 +69,14 @@ class Ability
                 Comment,
                 Profile,
                 Vote,
+                Card,
                 PaperTrail::Version]
         can :read, [Statement,
                     Argument,
                     Comment,
                     Profile,
                     Vote,
+                    Card,
                     PaperTrail::Version]
     end
   end

@@ -1,0 +1,5 @@
+article[id='#{card_page.url}']
+  -if card_page.contents.present?
+    =raw card_page.contents
+  -else
+    p=raw card_page.contents

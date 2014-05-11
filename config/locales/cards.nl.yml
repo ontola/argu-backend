@@ -1,0 +1,12 @@
+#Dutch statements translations
+
+nl:
+  cards:
+    form:
+        title: "titel"
+        contents: "inhoud"
+        submitted: "verstuurd.."
+    type: "Kaart"
+  arguments:
+    form:
+      submit: "opslaan"

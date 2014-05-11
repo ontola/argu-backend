@@ -9,6 +9,7 @@ nl:
   sign_in: "inloggen"
   sign_up: "aanmelden"
   learn_more: "meer info"
+  not_found_type: "%{type} niet gevonden"
   edit: "bewerken"
   edit_type: "%{type} bewerken"
   update: "bijwerken"
@@ -62,7 +63,7 @@ nl:
 #Footer
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
-  footer_item_copyright: "Copyright 2012 - "
+  footer_item_copyright: "Copyright 2014 - "
 #Home
   home_title: "Home"
   home_header: "Wat gebeurd er"
@@ -155,3 +156,5 @@ nl:
       previous: "&lsaquo; vorige"
       next: "volgende &rsaquo;"
       truncate: "..."
+  type_save_success: "%{type} successvol opgeslagen"
+  type_create_success: "%{type} successvol aangemaakt"

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140326231505) do
+ActiveRecord::Schema.define(:version => 20140508132018) do
 
   create_table "arguments", :force => true do |t|
     t.text     "content",                         :null => false
@@ -37,6 +37,24 @@ ActiveRecord::Schema.define(:version => 20140326231505) do
 
   add_index "authentications", ["user_id", "uid"], :name => "user_id_and_uid", :unique => true
   add_index "authentications", ["user_id"], :name => "user_id"
+
+  create_table "card_pages", :force => true do |t|
+    t.integer  "card_id"
+    t.string   "title"
+    t.text     "contents"
+    t.integer  "page_index"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "url"
+  end
+
+  create_table "cards", :force => true do |t|
+    t.string   "title"
+    t.string   "url"
+    t.integer  "tags_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "comments", :force => true do |t|
     t.integer  "commentable_id",   :default => 0
@@ -94,6 +112,15 @@ ActiveRecord::Schema.define(:version => 20140326231505) do
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
+  create_table "statementarguments", :force => true do |t|
+    t.integer "argument_id",                    :null => false
+    t.integer "statement_id",                   :null => false
+    t.boolean "pro",          :default => true, :null => false
+    t.integer "votes_count",  :default => 0
+  end
+
+  add_index "statementarguments", ["argument_id", "statement_id"], :name => "arg_state_index"
+
   create_table "statements", :force => true do |t|
     t.string   "title",                         :null => false
     t.text     "content",                       :null => false
@@ -122,7 +149,8 @@ ActiveRecord::Schema.define(:version => 20140326231505) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], :name => "index_taggings_on_taggable_id_and_taggable_type_and_context"
 
   create_table "tags", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.integer "taggings_count", :default => 0
   end
 
   create_table "users", :force => true do |t|

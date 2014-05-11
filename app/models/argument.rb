@@ -42,7 +42,7 @@ class Argument < ActiveRecord::Base
   #TODO escape content=(text)
   def supped_content
     refs = 0
-    content.gsub(/(\[[\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*\])(\([\w\s]*\))/) {|url,text| '<a class="inlineref" href="'+Rails.application.routes.url_helpers.argument_path(self)+'#ref%d">%d</a>' % [refs += 1, refs] }
+    content.gsub(/(\[[\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*\])(\([\w\s]*\))/) {|url,text| '<a class="inlineref" href="%s#ref%d">%d</a>' % [Rails.application.routes.url_helpers.argument_path(self), refs += 1, refs] }
   end
 
   def references

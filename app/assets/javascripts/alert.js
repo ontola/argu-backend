@@ -17,7 +17,8 @@ if(!window.Argu) {
 
     Argu.Alert = function (message, messageType, instantShow, beforeSelector) {
         var alert = this,
-           _alert = undefined;
+           _alert = undefined,
+        _duration = 3000;
         message        = typeof message        !== 'undefined' ? message : '';
         messageType    = typeof messageType    !== 'undefined' ? messageType : 'success';
         instantShow    = typeof instantShow    !== 'undefined' ? instantShow : false;
@@ -28,11 +29,16 @@ if(!window.Argu) {
             return _alert;
         };
 
+        this.hide = function () {
+            fade(_duration, _alert);
+        };
+
         this.show = function (duration, autoHide) {
-            duration = typeof duration !== 'undefined' ? duration : 3000;
+           _duration = typeof duration !== 'undefined' ? duration : _duration;
             autoHide = typeof autoHide !== 'undefined' ? autoHide : true;
             render().slideDown();
-            if(autoHide) fade(duration, _alert);
+            if(autoHide) fade(_duration, _alert);
+            return _alert;
         };
 
         if(instantShow) this.show();
