@@ -4,5 +4,5 @@ class Card < ActiveRecord::Base
 
   attr_accessor :pages_index
 
-  attr_accessible :title, :url, :tag, :card_pages_attributes
+  #attr_accessible :title, :url, :tag, :card_pages_attributes
 end

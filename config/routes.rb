@@ -13,13 +13,13 @@ Argu::Application.routes.draw do
   end
 
   resources :authentications, only: [:create, :destroy]
-  match 'auth/:provider/callback' => 'authentications#create'
+  match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
   
-  match 'tagged' => 'statements#tagged', :as => 'tagged'
+  get 'tagged' => 'statements#tagged', :as => 'tagged'
 
   resources :users do
     collection do
-      post '/search/:username' => 'users#search', as: 'search'
+      post '/search/:username' => 'users#search' #, as: 'search'
       post '/search' => 'users#search', as: 'search'
     end
   end
@@ -46,8 +46,8 @@ Argu::Application.routes.draw do
     get 'revisions/:rev' => 'arguments#revisions', as: 'rev_revisions'
     put 'revisions/:rev' => 'arguments#setrevision', as: 'update_revision'
     
-    match 'upvote' => 'votes#create', as: 'create_vote'
-    match 'unvote' => 'votes#destroy', as: 'destroy_vote'
+    post 'upvote' => 'votes#create', as: 'create_vote'
+    post 'unvote' => 'votes#destroy', as: 'destroy_vote'
   end
   
   #resources :sessions #, only: [:new, :create, :destroy]
@@ -58,8 +58,8 @@ Argu::Application.routes.draw do
     resources :card_pages, as: 'pages', path: 'pages'
   end
 
-  get '/search/' => 'search#show', as: 'search'
-  post '/search/' => 'search#show', as: 'search'
+  match '/search/' => 'search#show', as: 'search', via: [:get, :post]
+  #post '/search/' => 'search#show', as: 'search'
 
   ##get "users/new"
   get '/settings', to: 'users#edit', as: 'settings'
@@ -67,11 +67,11 @@ Argu::Application.routes.draw do
   #match "/signup", to: "users#new"
   #match "/signin", to: "sessions#new"
   #get "/signout", to: "sessions#destroy", via: :delete
-  match '/about', to: 'static_pages#about'
-  match '/learn', to: 'static_pages#learn'
-  match '/newpage', to: 'static_pages#newlayout'
+  get '/about', to: 'static_pages#about'
+  get '/learn', to: 'static_pages#learn'
+  get '/newpage', to: 'static_pages#newlayout'
 
   root to: 'static_pages#home'
-  match '/', to: 'statements#index'
-  match '/home', to: 'statements#index'
+  get '/', to: 'statements#index'
+  get '/home', to: 'statements#index'
 end

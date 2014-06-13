@@ -24,13 +24,13 @@ class User < ActiveRecord::Base
   attr_accessor :login, :current_password, :email
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :profile, :email, :password, :password_confirmation,
-                  :remember_me, :unconfirmed_email, :provider, :uid, :login,
-                  :role, :current_password
+  #attr_accessible :username, :profile, :email, :password, :password_confirmation,
+  #                :remember_me, :unconfirmed_email, :provider, :uid, :login,
+  #                :role, :current_password
 
-  USERNAME_FORMAT_REGEX = /^\d*[a-zA-Z][a-zA-Z0-9]*$/i
-  NAME_FORMAT_REGEX =  /^[a-z]{1,50}/i
-  PASSWORD_FORMAT_REGEX = /^[a-z0-9_]{6,128}/i
+  USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][a-zA-Z0-9]*\z/i
+  NAME_FORMAT_REGEX =  /\A[a-z]{1,50}/i
+  PASSWORD_FORMAT_REGEX = /\A[a-z0-9_]{6,128}/i
 
   validates :username, presence: true,
            length: { in: 4..20 },

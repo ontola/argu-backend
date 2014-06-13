@@ -47,7 +47,7 @@ section.card {
         bottom: 1em;
 
         .full-icon {
-          background: url(asset_path('exit_fullscreen.svg',nil)) no-repeat;
+          background: url(asset_path('exit_fullscreen.svg')) no-repeat;
           background-size: contain;
         }
       }

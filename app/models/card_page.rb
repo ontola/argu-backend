@@ -1,7 +1,7 @@
 class CardPage < ActiveRecord::Base
   belongs_to :card
 
-  attr_accessible :title, :contents, :page_index
+  #attr_accessible :title, :contents, :page_index
 
   validates_presence_of :title
   validates_uniqueness_of :url, scope: :card_id

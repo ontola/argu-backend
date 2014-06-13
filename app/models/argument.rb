@@ -11,7 +11,7 @@ class Argument < ActiveRecord::Base
   acts_as_commentable
   acts_as_voteable
 
-  attr_accessible :id, :content, :title, :argtype, :statement, :votes, :pro, :statement_id, :is_trashed
+  #attr_accessible :id, :content, :title, :argtype, :statement, :votes, :pro, :statement_id, :is_trashed
 
   validates :content, presence: true, length: { minimum: 5, maximum: 1500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
