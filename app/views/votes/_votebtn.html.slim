@@ -1,4 +1,4 @@
 .votebtn[id=argument.id.to_s]
 	= current_user.voted_on?(argument) ? \
-	(link_to '-1', argument_destroy_vote_path(argument), :remote => true) : \
-	(link_to '+1', argument_create_vote_path(argument), :remote => true, class:"tooltip", title:t("votes.tooltips.argument"))
+	(link_to '-1', argument_vote_path(argument), :remote => true, method: :delete) : \
+	(link_to '+1', argument_vote_path(argument), :remote => true, method: :post, class:"tooltip", title:t("votes.tooltips.argument"))

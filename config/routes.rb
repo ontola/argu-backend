@@ -46,8 +46,8 @@ Argu::Application.routes.draw do
     get 'revisions/:rev' => 'arguments#revisions', as: 'rev_revisions'
     put 'revisions/:rev' => 'arguments#setrevision', as: 'update_revision'
     
-    post 'upvote' => 'votes#create', as: 'create_vote'
-    post 'unvote' => 'votes#destroy', as: 'destroy_vote'
+    post   'vote' => 'votes#create'
+    delete 'vote' => 'votes#destroy'
   end
   
   #resources :sessions #, only: [:new, :create, :destroy]
