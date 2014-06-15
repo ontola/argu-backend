@@ -1,7 +1,0 @@
-#Dutch votes translations
-
-nl:
-  votes:
-    score: "score:"
-    tooltips:
-      argument: "belangrijk argument"
