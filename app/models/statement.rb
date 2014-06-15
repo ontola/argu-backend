@@ -10,8 +10,6 @@ class Statement < ActiveRecord::Base
   acts_as_ordered_taggable_on :tags
   resourcify
   has_paper_trail
-
-  #attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators, :tag_list, :invert_arguments, :tag_id
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }

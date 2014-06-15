@@ -1,11 +1,7 @@
 <% provide :title, (@statement.title.nil? ? t(:statement_title) : @statement.title) %>
 <%= render partial: 'statementbody', locals: { statement: @statement } %>
 <% if Rails.configuration.epics.opinion_buttons %>
-<ul class="opinionbtns"> <!--TODO-->
-    <li><%= link_to(t("statements.votes.pro"), '', class:"btn green") %></li>
-    <li><%= link_to(t("statements.votes.neu"), '', class:"btn grey") %></li>
-    <li><%= link_to(t("statements.votes.con"), '', class:"btn red") %></li>
-</ul>
+<%= render partial: 'opinionbtns' %>
 <% end %>
 <nav class="navrow">
 	<ul class="navcontent">

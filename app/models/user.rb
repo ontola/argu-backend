@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :authentications, dependent: :destroy
+  has_many :avotes, as: :voteable
   has_one :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile

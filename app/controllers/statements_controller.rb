@@ -16,13 +16,13 @@ class StatementsController < ApplicationController
   def show
   	# Eager loading and filtering on trashed on both the main and the tally query seems to result in the least amount of sql
   	# without writing a custom query 
-    @statement = Statement.find_by_id params[:id] #, arguments: {is_trashed: false}).includes(:arguments, :tags).first
+    @statement = Statement.find_by_id(params[:id]) #, arguments: {is_trashed: false}).includes(:arguments, :tags).first
     authorize! :read, Statement
     @arguments = @statement.arguments.where(is_trashed: false).plusminus_tally({order: "vote_count ASC"}).group_by { |a| a.key }
-
+    @voted = Avote.where(voteable: @statement, voter: current_user).last.try(:for) unless current_user.blank?
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @statement }
+      format.json { render json: @statement.as_json.merge({voted: @voted.presence ? @voted : 'abstain' }) }
     end
   end
 
@@ -33,7 +33,7 @@ class StatementsController < ApplicationController
     @version = nil
 
     unless (@rev = params[:rev]).nil?
-      @version = @statement.versions.find_by_id(@rev);
+      @version = @statement.versions.find_by_id(@rev)
       @statement = @version.reify
     end
     @statement ||= @statement.versions.last
@@ -137,7 +137,7 @@ class StatementsController < ApplicationController
     @statement = Statement.find_by_id params[:id]
     authorize! :update, @statement
     respond_to do |format|
-      if @statement.update_attributes(params[:statement])
+      if @statement.update_attributes(permit_params)
         if params[:statement].present? && params[:statement][:tag_id].present? && @statement.tags.reject { |a,b| a.statement==b }.first.present?
           format.html { redirect_to tagged_url(tag: ActsAsTaggableOn::Tag.find_by_id(@statement.tag_id).name)}
           format.json { head :no_content }
@@ -168,5 +168,10 @@ class StatementsController < ApplicationController
       format.html { redirect_to statements_url }
       format.json { head :no_content }
     end
+  end
+
+private
+  def permit_params
+    params.require(:statement).permit(:id, :title, :content, :arguments, :statetype, :tag_list, :invert_arguments, :tag_id)
   end
 end

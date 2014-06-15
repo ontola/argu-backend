@@ -36,18 +36,6 @@ gem 'delayed_job', '~> 4.0.1'
 gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'tzinfo-data'
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 4.0.3'
-  gem 'coffee-rails', '~> 4.0.1'
-
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platform => :ruby
-
-  gem 'uglifier', '>= 1.0.3'
-end
-
 group :development, :test do
   gem 'thin'
   gem 'rspec', '2.8.0'
@@ -59,6 +47,10 @@ group :development, :test do
   gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'spring'
+  gem 'sass-rails',   '~> 4.0.3'
+  gem 'coffee-rails', '~> 4.0.1'
+  gem 'uglifier', '>= 1.0.3'
 end
 
 group :production do 

@@ -1,0 +1,4 @@
+ul.opinionbtns
+  li= link_to t('statements.votes.pro'), statement_vote_path(@statement, 'pro'), class: "btn green#{ ' voted' if @voted.eql?(Avote::OPTIONS[0])}", remote: true, method: :post
+  li= link_to t('statements.votes.neu'), statement_vote_path(@statement, 'neutral'), class: "btn grey#{ ' voted' if @voted.eql?(Avote::OPTIONS[2])}", remote: true, method: :post
+  li= link_to t('statements.votes.con'), statement_vote_path(@statement, 'con'), class: "btn red#{ ' voted' if @voted.eql?(Avote::OPTIONS[1])}", remote: true, method: :post

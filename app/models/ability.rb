@@ -5,7 +5,7 @@ class Ability
     user ||= User.new #Guest users
     if user.has_role? :coder
         #The coder can do anything
-        can :manage, :all
+        can [:manage, :vote], :all
         can [:add_admin, :remove_admin], User do |item| ##This is included in :manage according to the docs
           !item.has_role? :coder
         end
@@ -18,7 +18,7 @@ class Ability
       end
       can :trash, [Argument]
       #The admin can manage all the generic objects
-      can [:manage, :revisions, :allrevisions],
+      can [:manage, :revisions, :allrevisions, :vote],
           [Statement, 
            Argument,
            Comment,
@@ -30,7 +30,7 @@ class Ability
       end
     elsif user.has_role?(:user) && !user.frozen?
         can :read, :all                                         #read by default, should be changed later
-        can [:create, :placeComment, :report], [Statement, Argument, Comment, Card]
+        can [:create, :placeComment, :report, :vote], [Statement, Argument, Comment, Card]
         can [:revisions, :allrevisions], [Statement, Argument]  #View revisions
         cannot :delete, [Statement, Argument]                   #No touching!
         cannot [:update, :delete], [PaperTrail::Version]                    #I said, no touching!

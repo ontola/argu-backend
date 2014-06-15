@@ -1027,7 +1027,11 @@ ul.vote-buttons {
       background-color: $blu;
       color: white !important;
     }  
-  } 
+  }
+  &.voted {
+    //@TODO: JOEP!
+    border: 1px solid yellow;
+  }
 }
 
 .btn {

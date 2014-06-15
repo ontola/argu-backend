@@ -25,11 +25,11 @@ Argu::Application.routes.draw do
   end
 
   resources :statements do
-    get 'revisions' => 'statements#allrevisions', as: 'revisions'
-    get 'revisions/:rev' => 'statements#revisions', as: 'rev_revisions'
-    put 'revisions/:rev' => 'statements#setrevision', as: 'update_revision'
-    post 'vote' => 'statements#vote'
-    delete 'vote' => 'statements#destroy_vote'
+    get 'revisions'       => 'statements#allrevisions',   as: 'revisions'
+    get 'revisions/:rev'  => 'statements#revisions',      as: 'rev_revisions'
+    put 'revisions/:rev'  => 'statements#setrevision',    as: 'update_revision'
+    post 'vote/:for'      => 'votes/statements#create',   as: 'vote'
+    delete 'vote'         => 'votes/statements#destroy',  as: 'vote_delete'
     namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
       get '' => 'statements#index', as: ''
       post ':user_id' => 'statements#create', as: 'user'
