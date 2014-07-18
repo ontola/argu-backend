@@ -30,6 +30,12 @@ Argu::Application.routes.draw do
     put 'revisions/:rev'  => 'statements#setrevision',    as: 'update_revision'
     post 'vote/:for'      => 'votes/statements#create',   as: 'vote'
     delete 'vote'         => 'votes/statements#destroy',  as: 'vote_delete'
+    collection do
+      get 'tags'
+    end
+    #member do
+    #  get 'tags'   # refactor above to this later (or, ideally a new controller on its own)
+    #end
     namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
       get '' => 'statements#index', as: ''
       post ':user_id' => 'statements#create', as: 'user'

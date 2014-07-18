@@ -14,6 +14,9 @@
 //= require jquery_ujs
 //= require jquery.ui.autocomplete
 //= require jquery.ui.sortable
+//= require microplugin
+//= require sifter
+//= require selectize
 //= require requirejs
 //= require autocomplete-rails
 //= require settings

@@ -93,6 +93,15 @@ class StatementsController < ApplicationController
     end
   end
 
+  def tags
+    authorize! :read, Statement
+    if params[:q].present?
+      @tags = Statement.all_tags.where("lower(name) LIKE lower(?)", "%#{params[:q]}%").order(taggings_count: :desc).page params[:page]
+    else
+      @tags = Statement.all_tags.order(taggings_count: :desc).page params[:page]
+    end
+  end
+
   # GET /statements/new
   # GET /statements/new.json
   def new
@@ -116,7 +125,7 @@ class StatementsController < ApplicationController
   # POST /statements
   # POST /statements.json
   def create
-    @statement = Statement.create params[:statement]
+    @statement = Statement.create permit_params
     authorize! :create, Statement
     current_user.add_role :mod, @statement
 

@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'rails', '~>4.1.0'
 gem 'pg', '~> 0.17.1'
+gem 'jbuilder', '~> 1.2'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'bcrypt-ruby', '3.0.1'
@@ -10,6 +11,7 @@ gem 'rfc-822', '~> 0.3.0'
 gem 'rails3-jquery-autocomplete', '~> 1.0.7'
 gem 'foreigner', '~> 1.2.1'
 gem 'immigrant', '~> 0.1.2'
+gem 'awesome_nested_set', '~> 3.0.0.rc.5'
 gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 gem 'paper_trail', '~> 3.0.0'
 gem 'devise', "~> 3.2.4"
@@ -19,7 +21,7 @@ gem "omniauth-oauth2"
 gem 'omniauth-facebook', "~> 1.4.0"
 gem 'omniauth-twitter', "~> 0.0.13"
 #gem 'omniauth-openid'
-gem 'cancan'
+gem 'cancancan'
 gem 'rolify'
 gem 'sunspot_rails'
 gem 'sunspot_solr'
@@ -35,6 +37,7 @@ gem 'slim', '~>2.0.2'
 gem 'delayed_job', '~> 4.0.1'
 gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'tzinfo-data'
+gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   gem 'thin'
