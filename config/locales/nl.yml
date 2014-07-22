@@ -42,6 +42,8 @@ nl:
   outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
   status:
     400: "Fout in de aanvraag"
+  header:
+    statements: "stellingen"
 #Controllers
 #Footer
   footer_item_about: "over"

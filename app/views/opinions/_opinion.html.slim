@@ -1,0 +1,18 @@
+-@comment = getBestComment(opinion)
+div[class=(opinion.pro ? "box pro" : "box con")]
+  =link_to opinion.title, opinion_path(opinion), class: opinion.pro ? "title" : "title"
+  =content_tag :p, class: 'intro collapsible' do
+    ==((content = opinion.supped_content)[0..500] + (content_tag(:span, content[501..content.length].to_s) if content[501]).to_s)
+  /= render partial: "arguments/shr", locals: { opinion: opinion }
+  br
+  -if @comment.present?
+    =link_to opinion_path(opinion) + "#commentstitle" do
+      .topcomment
+        -num_comments = opinion.comment_threads.size
+        span.commentsnumber.infobar= num_comments.to_s + (num_comments == 1 ? ' reactie:' : " reacties:")
+        br
+        p= @comment.body[0..150] + (@comment.body[151] ? '...' : '')
+  -else
+    =link_to opinion_path(opinion) do
+      .topcomment
+        span.commentsnumber.infobar= t "opinions.comments.none"

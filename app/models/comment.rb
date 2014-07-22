@@ -1,5 +1,5 @@
 class Comment < ActiveRecord::Base
-  #acts_as_nested_set :scope => [:commentable_id, :commentable_type]
+  acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 
   validates_presence_of :body
   validates_presence_of :user
@@ -27,7 +27,7 @@ class Comment < ActiveRecord::Base
 
   #helper method to check if a comment has children
   def has_children?
-    self.children.size > 0
+    self.children.length > 0
   end
 
   # Helper class method to lookup all comments assigned

@@ -19,9 +19,11 @@ class StatementsController < ApplicationController
     @statement = Statement.find_by_id(params[:id]) #, arguments: {is_trashed: false}).includes(:arguments, :tags).first
     authorize! :read, Statement
     @arguments = @statement.arguments.where(is_trashed: false).plusminus_tally({order: "vote_count ASC"}).group_by { |a| a.key }
+    @opinions= @statement.opinions.where(is_trashed: false).group_by { |a| a.key }
     @voted = Avote.where(voteable: @statement, voter: current_user).last.try(:for) unless current_user.blank?
     respond_to do |format|
       format.html # show.html.erb
+      format.widget { render @statement }
       format.json { render json: @statement.as_json.merge({voted: @voted.presence ? @voted : 'abstain' }) }
     end
   end

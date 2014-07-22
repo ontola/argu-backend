@@ -1,5 +1,5 @@
 class ArgumentsController < ApplicationController
-  load_and_authorize_resource :argument, :parent => false, except: :allrevisions
+  load_and_authorize_resource :argument, :parent => false, except: :allrevisions, param_method: :argument_params
 
   # GET /arguments/1
   # GET /arguments/1.json
@@ -11,6 +11,7 @@ class ArgumentsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.widget { render @argument }
       format.json { render json: @argument }
     end
   end
@@ -104,12 +105,14 @@ class ArgumentsController < ApplicationController
   # POST /arguments
   # POST /arguments.json
   def create
+    @argument.statement_id = argument_params[:statement_id]
+    @argument.pro = argument_params[:pro]
     respond_to do |format|
       if @argument.save
-        format.html { redirect_to (params[:argument][:statement_id].blank? ? @argument : Statement.find_by_id(params[:argument][:statement_id])), notice: t("arguments.notices.created") }
+        format.html { redirect_to (argument_params[:statement_id].blank? ? @argument : Statement.find_by_id(argument_params[:statement_id])), notice: 'Argument was successfully created.' }
         format.json { render json: @argument, status: :created, location: @argument }
       else
-        format.html { render :form, pro: params[:pro], statement_id: params[:argument][:statement_id] }
+        format.html { render action: "form", pro: argument_params[:pro], statement_id: argument_params[:statement_id] }
         format.json { render json: @argument.errors, status: :unprocessable_entity }
       end
     end
@@ -119,7 +122,7 @@ class ArgumentsController < ApplicationController
   # PUT /arguments/1.json
   def update
     respond_to do |format|
-      if @argument.update_attributes(params[:argument])
+      if @argument.update_attributes(argument_params)
         format.html { redirect_to @argument, notice: t("arguments.notices.updated") }
         format.json { head :no_content }
       else
@@ -146,35 +149,9 @@ class ArgumentsController < ApplicationController
     end
   end
 
-  # POST /arguments/1/comments
-  def placeComment 
-    argument = Argument.find(params[:argument_id])
-    @comment = params[:comment]
-    @comment = Comment.build_from(argument, @current_user.id, @comment )
-    @comment.save!
-
-    unless params[:parent_id].blank?
-      #@TODO Just let them go nuts for now, infinite parenting
-      @comment.move_to_child_of Comment.find_by_id params[:parent_id]
-    end
-
-    redirect_to argument_path(argument)
-  end
-
-  # DELETE /arguments/1/comments/1
-  def destroyComment
-  	@comment = Comment.find_by_id params[:comment_id]
-    if params[:destroy] == 'true'
-      authorize! :destroy, @comment
-      @comment.destroy
-    else
-      authorize! :trash, @comment
-      @comment.trash
-    end
-    respond_to do |format|
-    	format.html { redirect_to argument_path(@comment.commentable_id) }
-    	format.js # destroy_comment.js
-    end
+private
+  def argument_params
+    params.require(:argument).permit :title, :content, :pro, :statement_id
   end
 
 end

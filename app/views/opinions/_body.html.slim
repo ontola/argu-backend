@@ -1,0 +1,16 @@
+header
+  .box
+    h1[class=(@opinion.pro ? 'title pro' : 'title con')]= @opinion.title
+    = content_tag :p, raw(@opinion.supped_content), class: 'intro'
+    = content_tag :p, t("arguments.references") + ":", class: 'referencestitle'
+    = print_references @opinion
+    /TODO
+    .infobar
+      ul.buttons
+        li
+          .info=content_tag(:p, t("arguments.show.created_by", user: @opinion.creator.username, date: l(@opinion.created_at, format: :long)))
+        li=link_to(t("destroy"), argument_path(@opinion), method: :delete, destroy: true) if can? :destroy, @opinion
+        li=link_to(t("trash"), argument_path(@opinion), method: :delete) if can? :trash, @argument
+        li=link_to(t("edit"), edit_argument_path(@opinion)) if can? :edit, @argument
+        li=link_to(t("history"), argument_revisions_path(@opinion)) if can? :allrevisions, @opinion
+    .clearfix

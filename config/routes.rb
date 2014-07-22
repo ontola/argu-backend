@@ -1,5 +1,5 @@
 Argu::Application.routes.draw do
-
+  get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
   namespace :admin do
@@ -44,22 +44,23 @@ Argu::Application.routes.draw do
   end
 
   resources :arguments do
-    delete 'argument/:id' => 'arguments#destroy', as: 'destroy'
-    post 'comments' => 'arguments#placeComment'
-    delete 'comments/:comment_id' => 'arguments#destroyComment', as: 'destroy_comments'
-    
+    resources :comments
+
     get 'revisions' => 'arguments#allrevisions', as: 'revisions'
     get 'revisions/:rev' => 'arguments#revisions', as: 'rev_revisions'
     put 'revisions/:rev' => 'arguments#setrevision', as: 'update_revision'
     
-    post   'vote' => 'votes#create'
-    delete 'vote' => 'votes#destroy'
+    post   'vote' => 'votes/arguments#create'
+    delete 'vote' => 'votes/arguments#destroy'
+  end
+
+  resources :opinions do
+    resources :comments
   end
   
   #resources :sessions #, only: [:new, :create, :destroy]
   resources :profiles
   resources :votes
-  resources :comments
   resources :cards do
     resources :card_pages, as: 'pages', path: 'pages'
   end
@@ -74,7 +75,7 @@ Argu::Application.routes.draw do
   #match "/signin", to: "sessions#new"
   #get "/signout", to: "sessions#destroy", via: :delete
   get '/about', to: 'static_pages#about'
-  get '/learn', to: 'static_pages#learn'
+
   get '/newpage', to: 'static_pages#newlayout'
 
   root to: 'static_pages#home'

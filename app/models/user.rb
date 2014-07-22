@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_one :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile
-  acts_as_voter
+  #acts_as_voter
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -80,6 +80,12 @@ class User < ActiveRecord::Base
 
   def freeze
     remove_role :user
+  end
+
+  def voted_on?(item)
+    Avote.where(voter_id: self.id, voter_type: self.class.name,
+                voteable_id: item.id, voteable_type: item.class.to_s).last
+          .try(:for) == 'pro'
   end
 
   def unfreeze

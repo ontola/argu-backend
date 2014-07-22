@@ -4,7 +4,7 @@
     ul#navbtns
       li=render partial: 'search/search'
       -if current_user.present?
-        li=link_to t(:header_menuitem_statements), statements_url, id: 'statements'
+        li=link_to t('header.statements'), statements_url, id: 'statements'
         li=link_to t(:users_show_title), settings_url , id: 'account'
       -else
         li=link_to t(:sign_in), new_user_session_url, id: 'account'

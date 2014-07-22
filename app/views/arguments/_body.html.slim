@@ -1,0 +1,16 @@
+header
+  .box
+    h1[class=(@argument.pro ? 'title pro' : 'title con')]= @argument.title
+    = content_tag :p, raw(@argument.supped_content), class: 'intro'
+    = content_tag :p, t("arguments.references") + ":", class: 'referencestitle'
+    = print_references @argument
+    /TODO
+    .infobar
+      ul.buttons
+        li
+          .info= content_tag(:p, t("arguments.show.created_by", user: @argument.creator.username, date: l(@argument.created_at, format: :long)))
+        li= link_to(t("destroy"), argument_path(@argument), method: :delete, destroy: true) if can? :destroy, @argument
+        li= link_to(t("trash"), argument_path(@argument), method: :delete) if can? :trash, @argument
+        li= link_to(t("edit"), edit_argument_path(@argument)) if can? :edit, @argument
+        li= link_to(t("history"), argument_revisions_path(@argument)) if can? :allrevisions, @argument
+    .clearfix

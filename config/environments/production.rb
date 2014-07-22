@@ -1,4 +1,5 @@
 Argu::Application.configure do
+  config.host = "argu.nl"
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new

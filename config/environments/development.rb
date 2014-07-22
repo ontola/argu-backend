@@ -1,4 +1,5 @@
 Argu::Application.configure do
+  config.host = "home.fletcher91.com:3000"
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new

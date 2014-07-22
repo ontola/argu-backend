@@ -28,7 +28,7 @@ class CardPagesController < ApplicationController
     @card_page = Card.find_by_url(params[:card_id]).card_pages.new
 
     respond_to do |format|
-      if @card_page.update_attributes params[:card_page]
+      if @card_page.update_attributes permit_params
         format.html { redirect_to @card_page.card }
         format.js { render json: {card_page: @card_page}.to_json }
       else
@@ -44,5 +44,9 @@ class CardPagesController < ApplicationController
 
   def destroy
 
+  end
+private
+  def permit_params
+    params.require(:card_page).permit(:title, :contents)
   end
 end
