@@ -25,14 +25,12 @@ Argu::Application.routes.draw do
   end
 
   resources :statements do
-    get 'revisions'       => 'statements#allrevisions',   as: 'revisions'
-    get 'revisions/:rev'  => 'statements#revisions',      as: 'rev_revisions'
-    put 'revisions/:rev'  => 'statements#setrevision',    as: 'update_revision'
     post 'vote/:for'      => 'votes/statements#create',   as: 'vote'
     delete 'vote'         => 'votes/statements#destroy',  as: 'vote_delete'
     collection do
       get 'tags'
     end
+    resources :revisions, only: [:index, :show, :update], shallow: true
     #member do
     #  get 'tags'   # refactor above to this later (or, ideally a new controller on its own)
     #end
@@ -45,10 +43,7 @@ Argu::Application.routes.draw do
 
   resources :arguments do
     resources :comments
-
-    get 'revisions' => 'arguments#allrevisions', as: 'revisions'
-    get 'revisions/:rev' => 'arguments#revisions', as: 'rev_revisions'
-    put 'revisions/:rev' => 'arguments#setrevision', as: 'update_revision'
+    resources :revisions, only: [:index, :show, :update], shallow: true
     
     post   'vote' => 'votes/arguments#create'
     delete 'vote' => 'votes/arguments#destroy'
@@ -57,7 +52,7 @@ Argu::Application.routes.draw do
   resources :opinions do
     resources :comments
   end
-  
+
   #resources :sessions #, only: [:new, :create, :destroy]
   resources :profiles
   resources :votes
@@ -66,7 +61,6 @@ Argu::Application.routes.draw do
   end
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
-  #post '/search/' => 'search#show', as: 'search'
 
   ##get "users/new"
   get '/settings', to: 'users#edit', as: 'settings'
@@ -75,8 +69,6 @@ Argu::Application.routes.draw do
   #match "/signin", to: "sessions#new"
   #get "/signout", to: "sessions#destroy", via: :delete
   get '/about', to: 'static_pages#about'
-
-  get '/newpage', to: 'static_pages#newlayout'
 
   root to: 'static_pages#home'
   get '/', to: 'statements#index'
