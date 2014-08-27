@@ -1,17 +1,12 @@
 class Vote < ActiveRecord::Base
+  belongs_to :voteable, polymorphic: true
+  belongs_to :voter, polymorphic: true
 
-  scope :for_voter, lambda { |*args| where(["voter_id = ? AND voter_type = ?", args.first.id, args.first.class.base_class.name]) }
-  scope :for_voteable, lambda { |*args| where(["voteable_id = ? AND voteable_type = ?", args.first.id, args.first.class.base_class.name]) }
-  scope :recent, lambda { |*args| where(["created_at > ?", (args.first || 2.weeks.ago)]) }
-  scope :descending, order("created_at DESC")
+  enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
+  Vote::OPTIONS = ["pro", "con", "neutral", "abstain"]
 
-  belongs_to :voteable, :polymorphic => true
-  belongs_to :voter, :polymorphic => true
-
-  #attr_accessible :vote, :voter, :voteable
-
-
-  # Comment out the line below to allow multiple votes per user.
-  validates_uniqueness_of :voteable_id, :scope => [:voteable_type, :voter_type, :voter_id]
+  def for? item
+    self.for.to_s === item.to_s
+  end
 
 end

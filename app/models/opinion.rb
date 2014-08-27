@@ -2,14 +2,13 @@ include HasRestfulPermissions
 
 class Opinion < ActiveRecord::Base
   belongs_to :statement, :dependent => :destroy
-  has_many :avotes, as: :voteable
+  has_many :votes, as: :voteable
 
   before_save :trim_data
   before_save :cap_title
 
   has_paper_trail
   acts_as_commentable
-  acts_as_voteable
 
   validates :content, presence: true, length: { minimum: 5, maximum: 1500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }

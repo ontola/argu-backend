@@ -14,6 +14,8 @@ gem 'immigrant', '~> 0.1.2'
 gem 'awesome_nested_set', '~> 3.0.0.rc.5'
 gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 gem 'paper_trail', '~> 3.0.0'
+
+##################User management########################
 gem 'devise', "~> 3.2.4"
 #gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
 gem "omniauth", "~> 1.0.0"
@@ -23,10 +25,10 @@ gem 'omniauth-twitter', "~> 0.0.13"
 #gem 'omniauth-openid'
 gem 'cancancan'
 gem 'rolify'
+
 gem 'sunspot_rails'
 gem 'sunspot_solr'
 gem 'rails-i18n', '~> 4.0.0'
-gem "thumbs_up", "~> 0.6.2"
 gem 'capistrano'
 gem 'kaminari', '~>0.15.1'
 gem "sunspot_with_kaminari", '~> 0.2.0'

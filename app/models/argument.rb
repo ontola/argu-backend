@@ -2,7 +2,7 @@ include HasRestfulPermissions
 
 class Argument < ActiveRecord::Base
   belongs_to :statement, :dependent => :destroy
-  has_many :avotes, as: :voteable
+  has_many :votes, as: :voteable
   has_many :votes
 
   before_save :trim_data
@@ -10,7 +10,6 @@ class Argument < ActiveRecord::Base
 
   has_paper_trail
   acts_as_commentable
-  acts_as_voteable
 
   validates :content, presence: true, length: { minimum: 5, maximum: 1500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
@@ -69,11 +68,9 @@ class Argument < ActiveRecord::Base
   end
 
   def votes_count
-    ActiveRecord::Base.connection.execute("SELECT COUNT(*) FROM
-    (SELECT DISTINCT voter_id, voter_type, avotes.for
-    FROM   avotes
-    WHERE voteable_type = 'Argument' AND voteable_id = #{self.id}
-    GROUP BY voter_id, voter_type, avotes.for) tot WHERE tot.for = 1")[0]['count']
+    ActiveRecord::Base.connection.execute("SELECT COUNT(*)
+    FROM   votes
+    WHERE voteable_type = 'Argument' AND voteable_id = #{self.id} AND \"for\" = 1")[0]['count']
   end
 
 # Scopes

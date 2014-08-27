@@ -3,7 +3,7 @@ include HasRestfulPermissions
 class Statement < ActiveRecord::Base
   has_many :arguments, :dependent => :destroy
   has_many :opinions, :dependent => :destroy
-  has_many :avotes, as: :voteable
+  has_many :votes, as: :voteable
 
   before_save :trim_data
   before_save :cap_title

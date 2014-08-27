@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :authentications, dependent: :destroy
-  has_many :avotes, as: :voteable
+  has_many :votes, as: :voteable
   has_one :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile
@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
   end
 
   def voted_on?(item)
-    Avote.where(voter_id: self.id, voter_type: self.class.name,
+    Vote.where(voter_id: self.id, voter_type: self.class.name,
                 voteable_id: item.id, voteable_type: item.class.to_s).last
           .try(:for) == 'pro'
   end
