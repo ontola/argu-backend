@@ -40,58 +40,23 @@ nl:
   not_allowed: "actie niet toegestaan."
   error_prohibited: " bij het opslaan:"
   outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
+  status:
+    400: "Fout in de aanvraag"
+  header:
+    statements: "stellingen"
 #Controllers
-#Sessions
-  sessions_error_invalid: "Foutieve gebruikersnaam of wachtwoord"
-#Users
-  users_success_welcome: "Welkom bij "
-#Views
-#Header
-  header_logo_text: t(:application_name)
-  header_menuitem_home: "home"
-  header_menuitem_sign_in: :application_general_sign_in
-  header_menuitem_sign_up: :application_general_sign_up
-  header_menuitem_sign_out: "uitloggen"
-  header_menuitem_users: "gebruikers"
-  header_menuitem_account: "lidmaatschap"
-  header_menuitem_profile: "profiel"
-  header_menuitem_profile_show: "profiel weergeven"
-  header_menuitem_settings: "instellingen"
-  header_menuitem_statements: "stellingen"
-  header_menuitem_arguments: "argumenten"
-  header_menuitem_activity: "activiteit"
 #Footer
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
 #Home
   home_title: "Home"
-  home_header: "Wat gebeurd er"
-  home_title_top: "Top stories"
-  home_title_follow: "Discussies die je volgt"
-  home_title_new: "Net binnen"
   #Not logged in
   home_new_header: "Welkom bij "
   home_new_text: "Nederlands awesome slogan."
-#Login
-  login_new_user: "Nieuwe gebruiker?"
-  login_title: :application_general_sign_in
-  login_header: :application_general_sign_in
 #About
   about_title: "Over"
-  about_header: "Over"
-  about_text:
-    "Welkom op argu! Bij argu draait alles om discussie, opinie en bovenal: argumenten. Wij hebben argu gemaakt om mensen een platform te geven waardoor ze worden geprikkeld om een betere mening te krijgen. Of het nu gaat over belastingsverhoging, speciaal onderwijs, kernenergie of kilometerheffing: op argu worden de sterkste voor- en tegenargumenten verzameld en gesorteerd. Jij bepaalt welke argumenten en onderwerpen het meest belangrijk zijn. Mist er een belangrijk argument? Dan kan je die zelf gemakkelijk toevoegen. Ben je het ergens niet mee eens? Laat je stem horen door te reageren. De beste reacties kunnen zo dienen als tegenargument, zodat je al snel geordende en specifieke discussies krijgt."
 #Users
-  users_clearance_0: "coder"
-  users_clearance_1: "administrator"
-  users_clearance_2: "moderator"
-  users_clearance_3: "vertrouwde gebruiker"
-  users_clearance_4: "gebruiker"
-  users_clearance_5: "IP"
-  users_clearance_6: "politieke partij"
-  users_clearance_7: "organisatie"
-  users_clearance_8: "bedrijf"
   users_username: "gebruikersnaam"
   users_name: "volledige naam"
   users_name_placeholder: "Vul hier jouw volledige naam in."
@@ -112,30 +77,11 @@ nl:
   users_oauth_notices_linked: "Account gekoppeld."
   users_oauth_notices_signedin: "Succesvol ingelogd."
   users_oauth_notices_unlinked: "Account ontkoppeld."
-  #index
-  users_title: "gebruikers"
-  users_header: "gebruikers"
-  users_show: :application_general_show
-  users_edit: :application_general_edit
-  users_destroy: :application_general_destroy
-  users_destroy_confirmation: :application_general_destroy_confirmation
-  users_newuser: "nieuwe gebruiker"
   #new
-  users_new_title: "aanmelden"
-  users_new_header: "aanmelden"
   users_new_confirmation: "bevestigen"
   users_new_create: "account aanmaken"
-  users_new_failed: "controleer je invoer"
   #show
   users_show_title: "gebruiker"
-  users_show_username: "gebruikersnaam"
-  users_show_email: "e-mail"
-#settings
-  settings_locale: "taal"
-  settings_item_account: "account"
-  settings_item_settings: "instellingen"
-#comment
-  comment_title: "reacties"
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
 

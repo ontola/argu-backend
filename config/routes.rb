@@ -1,5 +1,5 @@
 Argu::Application.routes.draw do
-
+  get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
   namespace :admin do
@@ -13,21 +13,27 @@ Argu::Application.routes.draw do
   end
 
   resources :authentications, only: [:create, :destroy]
-  match 'auth/:provider/callback' => 'authentications#create'
+  match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
   
-  match 'tagged' => 'statements#tagged', :as => 'tagged'
+  get 'tagged' => 'statements#tagged', :as => 'tagged'
 
   resources :users do
     collection do
-      post '/search/:username' => 'users#search', as: 'search'
+      post '/search/:username' => 'users#search' #, as: 'search'
       post '/search' => 'users#search', as: 'search'
     end
   end
 
   resources :statements do
-    get 'revisions' => 'statements#allrevisions', as: 'revisions'
-    get 'revisions/:rev' => 'statements#revisions', as: 'rev_revisions'
-    put 'revisions/:rev' => 'statements#setrevision', as: 'update_revision'
+    post 'vote/:for'      => 'votes/statements#create',   as: 'vote'
+    delete 'vote'         => 'votes/statements#destroy',  as: 'vote_delete'
+    collection do
+      get 'tags'
+    end
+    resources :revisions, only: [:index, :show, :update], shallow: true
+    #member do
+    #  get 'tags'   # refactor above to this later (or, ideally a new controller on its own)
+    #end
     namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
       get '' => 'statements#index', as: ''
       post ':user_id' => 'statements#create', as: 'user'
@@ -36,28 +42,25 @@ Argu::Application.routes.draw do
   end
 
   resources :arguments do
-    delete 'argument/:id' => 'arguments#destroy', as: 'destroy'
-    post 'comments' => 'arguments#placeComment'
-    delete 'comments/:comment_id' => 'arguments#destroyComment', as: 'destroy_comments'
+    resources :comments
+    resources :revisions, only: [:index, :show, :update], shallow: true
     
-    get 'revisions' => 'arguments#allrevisions', as: 'revisions'
-    get 'revisions/:rev' => 'arguments#revisions', as: 'rev_revisions'
-    put 'revisions/:rev' => 'arguments#setrevision', as: 'update_revision'
-    
-    match 'upvote' => 'votes#create', as: 'create_vote'
-    match 'unvote' => 'votes#destroy', as: 'destroy_vote'
+    post   'vote' => 'votes/arguments#create'
+    delete 'vote' => 'votes/arguments#destroy'
   end
-  
+
+  resources :opinions do
+    resources :comments
+  end
+
   #resources :sessions #, only: [:new, :create, :destroy]
   resources :profiles
   resources :votes
-  resources :comments
   resources :cards do
     resources :card_pages, as: 'pages', path: 'pages'
   end
 
-  get '/search/' => 'search#show', as: 'search'
-  post '/search/' => 'search#show', as: 'search'
+  match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
   ##get "users/new"
   get '/settings', to: 'users#edit', as: 'settings'
@@ -65,11 +68,9 @@ Argu::Application.routes.draw do
   #match "/signup", to: "users#new"
   #match "/signin", to: "sessions#new"
   #get "/signout", to: "sessions#destroy", via: :delete
-  match '/about', to: 'static_pages#about'
-  match '/learn', to: 'static_pages#learn'
-  match '/newpage', to: 'static_pages#newlayout'
+  get '/about', to: 'static_pages#about'
 
   root to: 'static_pages#home'
-  match '/', to: 'statements#index'
-  match '/home', to: 'statements#index'
+  get '/', to: 'statements#index'
+  get '/home', to: 'statements#index'
 end

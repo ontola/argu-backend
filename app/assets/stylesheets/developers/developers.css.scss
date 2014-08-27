@@ -1,0 +1,72 @@
+@import "variables";
+
+.developers {
+  display: flex;
+  flex-direction: column;
+  header.big {
+    background: #B6B6B6 center;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+    text-align: center;
+    padding: 6.3em 0em 5.2em 0em;
+    position: relative;
+    width: 100%;
+    z-index: 0;
+    &#prometheus {
+      background-position: 0 -12em;
+    }
+    h1 {
+      font-size: 3em;
+      color: white;
+      z-index: 897987;
+      &.jumbo {
+        font-size: 6.6em;
+      }
+    }
+    &:after {
+      position: absolute;
+      content: '\A';
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: rgba(109, 86, 86, 0.43);
+      z-index: -1;
+    }
+  }
+
+  & :not(header) h1 {
+    padding: 1em;
+  }
+
+  nav {
+    position: sticky;
+    top: 0;
+    background-color: rgb(255, 255, 255);
+
+    ul {
+      display: flex;
+      justify-content: space-around;
+      width: 100%;
+      li {
+        padding: 1em;
+        a {
+          font-family: $raleway;
+        }
+        &:hover {
+          color: rgb(0, 0, 0);
+          background-color: $g1;
+        }
+      }
+    }
+  }
+  section {
+    .exanation {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 2em;
+    }
+  }
+}

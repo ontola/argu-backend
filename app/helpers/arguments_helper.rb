@@ -16,12 +16,4 @@ private
     end
   end
 
-  def pro_translation
-    %w(pro true).index(params[:pro] || @argument.pro.to_s) ? t("arguments.pro") : t("arguments.con")
-  end
-
-  def back_to_statement
-    concat content_tag 'h1', t('arguments.new.header', side: pro_translation)
-    link_to @argument.statement.title, statement_path(@argument.statement), class: "title statement top"
-  end
 end

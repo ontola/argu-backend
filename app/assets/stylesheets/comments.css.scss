@@ -1,0 +1,7 @@
+@import "variables";
+
+.comment {
+  &.trashed {
+    border: 1px dotted $red;
+  }
+}

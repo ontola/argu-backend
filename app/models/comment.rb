@@ -4,10 +4,6 @@ class Comment < ActiveRecord::Base
   validates_presence_of :body
   validates_presence_of :user
 
-  # NOTE: install the acts_as_votable plugin if you
-  # want user to vote on the quality of comments.
-  #acts_as_voteable
-
   belongs_to :commentable, :polymorphic => true
 
   # NOTE: Comments belong to a user
@@ -27,7 +23,7 @@ class Comment < ActiveRecord::Base
 
   #helper method to check if a comment has children
   def has_children?
-    self.children.size > 0
+    self.children.length > 0
   end
 
   # Helper class method to lookup all comments assigned

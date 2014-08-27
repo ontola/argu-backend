@@ -1,0 +1,50 @@
+doctype html
+/[if lt IE 7]
+  | <html class="lt-ie9 lt-ie8 lt-ie7">
+/[if IE 7]
+  | <html class="lt-ie9 lt-ie8">
+/[if IE 8]
+  | <html class="lt-ie9">
+/[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
+head
+  title= (yield(:title).blank? ? "" : yield(:title) + " | ") + t('name')
+  meta charset="UTF-8"
+  meta name="viewport" content="width=device-width, initial-scale=1"
+  = csrf_meta_tags
+  = render 'shim'
+  link href='//fonts.googleapis.com/css?family=Raleway:200' rel='stylesheet' type='text/css'
+  link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'
+  link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'
+  / unless current_user.blank?
+  = stylesheet_link_tag "application", :media => "all"
+body
+  -unless current_user.blank?
+    /[if lt IE 8]
+      p.browsehappy=raw t("outdated_browser")
+    -flash.each do |key,value|
+      .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
+    = render 'header'
+    #fb-root
+    .container
+      = yield
+      .push
+    -unless current_user.blank?
+      =javascript_include_tag "application", async: Rails.env == 'development' ? false : true
+  -else
+    .container
+      = image_tag "argu.png", alt: "argu is nog in ontwikkeling", width: "673px", height: "72px", style: "margin-left:auto;margin-right:auto;display:block;margin-top:200px"
+      = form_for("user", :url => user_session_path, :html => { class: "form-horizontal" } ) do |f|
+        table[border="0"]
+          tr
+            td
+              h1.setting=f.label :login
+            td=f.text_field :login, autofocus: true, class: "settingform"
+          tr
+            td
+              h1.setting= f.label :password
+            td= f.password_field :password, class: "settingform"
+          tr
+            td
+            td
+              div
+                = f.submit "log in" , class: "submitbtn"

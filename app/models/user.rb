@@ -1,10 +1,11 @@
 class User < ActiveRecord::Base
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :authentications, dependent: :destroy
+  has_many :votes, as: :voteable
   has_one :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile
-  acts_as_voter
+  #acts_as_voter
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -24,13 +25,13 @@ class User < ActiveRecord::Base
   attr_accessor :login, :current_password, :email
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :username, :profile, :email, :password, :password_confirmation,
-                  :remember_me, :unconfirmed_email, :provider, :uid, :login,
-                  :role, :current_password
+  #attr_accessible :username, :profile, :email, :password, :password_confirmation,
+  #                :remember_me, :unconfirmed_email, :provider, :uid, :login,
+  #                :role, :current_password
 
-  USERNAME_FORMAT_REGEX = /^\d*[a-zA-Z][a-zA-Z0-9]*$/i
-  NAME_FORMAT_REGEX =  /^[a-z]{1,50}/i
-  PASSWORD_FORMAT_REGEX = /^[a-z0-9_]{6,128}/i
+  USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][a-zA-Z0-9]*\z/i
+  NAME_FORMAT_REGEX =  /\A[a-z]{1,50}/i
+  PASSWORD_FORMAT_REGEX = /\A[a-z0-9_]{6,128}/i
 
   validates :username, presence: true,
            length: { in: 4..20 },
@@ -79,6 +80,12 @@ class User < ActiveRecord::Base
 
   def freeze
     remove_role :user
+  end
+
+  def voted_on?(item)
+    Vote.where(voter_id: self.id, voter_type: self.class.name,
+                voteable_id: item.id, voteable_type: item.class.to_s).last
+          .try(:for) == 'pro'
   end
 
   def unfreeze

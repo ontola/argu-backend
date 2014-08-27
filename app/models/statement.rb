@@ -2,7 +2,8 @@ include HasRestfulPermissions
 
 class Statement < ActiveRecord::Base
   has_many :arguments, :dependent => :destroy
-  #, order: "pro_count DESC"
+  has_many :opinions, :dependent => :destroy
+  has_many :votes, as: :voteable
 
   before_save :trim_data
   before_save :cap_title
@@ -10,8 +11,6 @@ class Statement < ActiveRecord::Base
   acts_as_ordered_taggable_on :tags
   resourcify
   has_paper_trail
-
-  attr_accessible :id, :title, :content, :arguments, :statetype, :pro_count, :con_count, :moderators, :tag_list, :invert_arguments, :tag_id
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }

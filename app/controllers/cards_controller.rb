@@ -50,4 +50,9 @@ class CardsController < ApplicationController
 
   def destroy
   end
+
+private
+  def permit_params
+    params.require(:card).permit(:url, :title, :pages_index)
+  end
 end

@@ -5,7 +5,7 @@ class Ability
     user ||= User.new #Guest users
     if user.has_role? :coder
         #The coder can do anything
-        can :manage, :all
+        can [:manage, :vote], :all
         can [:add_admin, :remove_admin], User do |item| ##This is included in :manage according to the docs
           !item.has_role? :coder
         end
@@ -16,11 +16,12 @@ class Ability
       can [:freeze, :unfreeze], User do |item|
         !item.has_any_role? :coder, :admin
       end
-      can :trash, [Argument]
+      can :trash, [Argument, Opinion]
       #The admin can manage all the generic objects
-      can [:manage, :revisions, :allrevisions],
+      can [:manage, :revisions, :allrevisions, :vote],
           [Statement, 
            Argument,
+           Opinion,
            Comment,
            Profile,
            Card,
@@ -29,17 +30,17 @@ class Ability
         user == u
       end
     elsif user.has_role?(:user) && !user.frozen?
-        can :read, :all                                         #read by default, should be changed later
-        can [:create, :placeComment, :report], [Statement, Argument, Comment, Card]
-        can [:revisions, :allrevisions], [Statement, Argument]  #View revisions
-        cannot :delete, [Statement, Argument]                   #No touching!
-        cannot [:update, :delete], [PaperTrail::Version]                    #I said, no touching!
+        can :read, :all                                                  #read by default, should be changed later
+        can [:create, :placeComment, :report, :vote], [Statement, Argument, Opinion, Comment, Card]
+        can [:revisions, :allrevisions], [Statement, Argument, Opinion]  #View revisions
+        cannot :delete, [Statement, Argument, Opinion]                   #No touching!
+        cannot [:update, :delete], [PaperTrail::Version]                 #I said, no touching!
 
         ##Moderator rights
         can [:edit_mods, :create_mod, :destroy_mod], Statement do |item|
           user.has_role? :mod, item
         end
-        can :trash, Argument do |item|
+        can :trash, Argument, Opinion do |item|
           user.has_role? :mod, item.statement
         end
         can :trash, Comment do |item|
@@ -66,6 +67,7 @@ class Ability
         cannot [:manage],            #Closed beta, so bugger off!
                [Statement,
                 Argument,
+                Opinion,
                 Comment,
                 Profile,
                 Vote,
@@ -73,6 +75,7 @@ class Ability
                 PaperTrail::Version]
         can :read, [Statement,
                     Argument,
+                    Opinion,
                     Comment,
                     Profile,
                     Vote,

@@ -23,7 +23,8 @@ nl:
       reply: "reageer"
       created_by: "%{user} - %{date}"
     new:
-      header: "argument %{side} de stelling:"
+      header: "argument %{side} de stelling: "
+      header_short: "%{side}: "
       create: "+ argument %{side}"
     revisions:
       title_wiped: 'Gewiste reacties'
