@@ -7,9 +7,9 @@
                 - statement.tags.each do |tag|
                     = link_to tag.name, tagged_url(:tag => tag.name), class: "tag", title: t("statements.titles.tags")+tag.name
         ul.buttons.hastags
-            li= link_to t('statements.mod.show_moderation_panel'), [statement, :moderators] if can? :mod, statement
-            li= link_to t("destroy"), statement_path(statement, destroy: true), method: :delete, confirm: t("destroy_confirmation") if can? :delete, statement
-            li= link_to t("trash"), statement_path(statement), method: :delete, confirm: t("trash_confirmation") if can? :trash, statement
-            li= link_to(t("edit"), edit_statement_path(statement)) if can? :edit, statement
-            li= link_to(t("history"), statement_revisions_path(statement)) if can? :allrevisions, statement
+            li= link_to t('statements.mod.show_moderation_panel'), [statement, :moderators] if policy(statement).update?
+            li= link_to t("destroy"), statement_path(statement, destroy: true), method: :delete, confirm: t("destroy_confirmation") if policy(statement).destroy?
+            li= link_to t("trash"), statement_path(statement), method: :delete, confirm: t("trash_confirmation") if policy(statement).trash?
+            li= link_to(t("edit"), edit_statement_path(statement)) if policy(statement).update?
+            li= link_to(t("history"), statement_revisions_path(statement)) if policy(statement).show?
     .clearfix

@@ -2,4 +2,4 @@
 .centercont
   =back_to_statement @argument
   =render 'body'
-  =render template: 'comments/show', locals: { resource: @argument } if can? :read, Argument
+  =render template: 'comments/show', locals: { resource: @argument } if policy(@argument).show?

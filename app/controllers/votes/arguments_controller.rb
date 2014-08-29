@@ -2,7 +2,7 @@ class Votes::ArgumentsController < ApplicationController
   # POST /arguments/:statement_id/vote/:for
   def create
     @argument = Argument.find(params[:argument_id])
-    authorize! :vote, @argument
+    authorize @argument, :vote?
     respond_to do |format|
       @voted = Vote.find_or_create_by voteable: @argument, voter: current_user
       if (@voted.blank? || !@voted.for.eql?(:pro)) && (@voted = @voted.update(for: :pro))
@@ -21,7 +21,7 @@ class Votes::ArgumentsController < ApplicationController
   # DELETE /arguments/:statement_id/vote
   def destroy
     @argument = Argument.find(params[:argument_id])
-    authorize! :vote, @argument
+    authorize @argument, :vote?
     @voted = Vote.find_or_create_by voteable: @argument, voter: current_user
     if @voted.present? && @voted.for?(:pro) && @voted.update(for: :abstain)
       save_vote_to_stats @voted

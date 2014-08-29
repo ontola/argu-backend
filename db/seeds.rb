@@ -6,7 +6,7 @@ ub = User.find_or_create_by_email(username: 'admin', email: 'postmaster@argu.nl'
 uc = User.find_or_create_by_email(email: 'joepmeindertsma@gmail.com', username: 'joep', password: 'joepjoep', password_confirmation:'joepjoep')
 
 ua.add_role :coder
-ub.add_role :admin
+ub.add_role :administration
 uc.add_role :user
 
 ua.profile = Profile.find_or_create_by_name(name: 'Thom van Kalkeren', picture: 'http://www.wthex.com/images/coolcookie.gif', about: "I'm the coder!")

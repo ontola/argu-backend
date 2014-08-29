@@ -7,6 +7,7 @@ class CommentsController < ApplicationController
   def create
     resource = get_commentable
     @comment = Comment.build_from(resource, @current_user.id, params[:comment])
+    authorize @comment
     parent = Comment.find_by_id params[:parent_id] unless params[:parent_id].blank?
     #unless params[:parent_id].blank?
     #  #@TODO Just let them go nuts for now, infinite parenting
@@ -28,13 +29,13 @@ class CommentsController < ApplicationController
 
   # DELETE /arguments/1/comments/1
   def destroy
-    @comment = Comment.find_by_id params[:comment_id]
+    @comment = Comment.find_by_id params[:id]
     resource = @comment.commentable
     if params[:destroy] == 'true'
-      authorize! :destroy, @comment
+      authorize @comment
       @comment.destroy
     else
-      authorize! :trash, @comment
+      authorize @comment, :trash?
       @comment.trash
     end
     respond_to do |format|

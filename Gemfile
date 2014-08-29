@@ -23,8 +23,9 @@ gem "omniauth-oauth2"
 gem 'omniauth-facebook', "~> 1.4.0"
 gem 'omniauth-twitter', "~> 0.0.13"
 #gem 'omniauth-openid'
-gem 'cancancan'
+gem 'pundit', "~> 0.3.0"
 gem 'rolify'
+
 
 gem 'sunspot_rails'
 gem 'sunspot_solr'

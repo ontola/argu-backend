@@ -10,11 +10,11 @@ class Ability
           !item.has_role? :coder
         end
         #can [:add, :remove, :list], [:admin, :mod, :user]
-    elsif user.has_role?(:admin) && !user.frozen?
-      can [:panel, :search_username, :list], :admin
+    elsif user.has_role?(:administration) && !user.frozen?
+      can [:panel, :search_username, :list], :administration
       can [:add, :remove, :list], [:mod, :user]
       can [:freeze, :unfreeze], User do |item|
-        !item.has_any_role? :coder, :admin
+        !item.has_any_role? :coder, :administration
       end
       can :trash, [Argument, Opinion]
       #The admin can manage all the generic objects

@@ -8,7 +8,7 @@
         li=link_to t(:users_show_title), settings_url , id: 'account'
       -else
         li=link_to t(:sign_in), new_user_session_url, id: 'account'
-      li=link_to t('admin.panel.name'), admin_root_url if can? :panel, :admin
+      li=link_to t('admin.panel.name'), root_admin_url if policy(:administration).show?
       li=link_to 'info', '/about', class: 'close', id: 'info'
       li=link_to('uitloggen', destroy_user_session_url, method: :delete)
 .clear

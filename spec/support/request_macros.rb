@@ -7,7 +7,7 @@ module RequestMacros
   end
 
   def login_admin
-    @user ||= FactoryGirl.create :admin
+    @user ||= FactoryGirl.create :administration
     post_via_redirect user_session_path, parameters = {'user[login]' => @user.username, 'user[password]' => @user.password}
   end
 end

@@ -9,8 +9,8 @@ header
       ul.buttons
         li
           .info= content_tag(:p, t("arguments.show.created_by", user: @argument.creator.username, date: l(@argument.created_at, format: :long)))
-        li= link_to(t("destroy"), argument_path(@argument), method: :delete, destroy: true) if can? :destroy, @argument
-        li= link_to(t("trash"), argument_path(@argument), method: :delete) if can? :trash, @argument
-        li= link_to(t("edit"), edit_argument_path(@argument)) if can? :edit, @argument
-        li= link_to(t("history"), argument_revisions_path(@argument)) if can? :allrevisions, @argument
+        li= link_to(t("destroy"), argument_path(@argument), method: :delete, destroy: true) if policy(@argument).destroy?
+        li= link_to(t("trash"), argument_path(@argument), method: :delete) if policy(@argument).trash?
+        li= link_to(t("edit"), edit_argument_path(@argument)) if policy(@argument).update?
+        li= link_to(t("history"), argument_revisions_path(@argument)) if policy(@argument).show?
     .clearfix

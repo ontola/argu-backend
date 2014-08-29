@@ -1,15 +1,10 @@
-class Admin::AdministrationController < ApplicationController
+class AdministrationController < ApplicationController
   respond_to :js, :html
 
   def panel
-    authorize! :panel, :admin
-    #Totals
-    @coder_count = User.with_role(:coder).count if can? :list, :coder
-    @admin_count = User.with_role(:admin).count if can? :list, :admin
-    @mod_count = User.with_role(:mod).count if can? :list, :mod
-    @user_count = User.with_role(:user).count if can? :list, :user
+    authorize :administration, :show?
     #Own statements
-    @statements = Statement.with_role(:mod, current_user)
+    #@statements = Statement.with_role(:mod, current_user)
   end
 
   def list
@@ -24,7 +19,7 @@ class Admin::AdministrationController < ApplicationController
     authorize! :add_admin, @user
 
     respond_to do |format|
-      if !@user.frozen? && @user.add_role(:admin)
+      if !@user.frozen? && @user.add_role(:administration)
         format.js
       else
         format.js { head 400 }
@@ -36,7 +31,7 @@ class Admin::AdministrationController < ApplicationController
   def remove
     @user = User.find(params[:id])
     authorize! :remove_admin, @user
-    @user.remove_role :admin
+    @user.remove_role :administration
     respond_to do |format|
       format.js { render 'add'}
     end
@@ -73,7 +68,7 @@ private
 
   def get_count
     @coder_count = User.with_role(:coder).count if @role == :coder
-    @admin_count = User.with_role(:admin).count if @role == :admin
+    @admin_count = User.with_role(:administration).count if @role == :administration
     @mod_count = User.with_role(:mod).count if @role == :mod
     @user_count = User.with_role(:user).count if @role == :user
   end

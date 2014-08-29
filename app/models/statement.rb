@@ -9,7 +9,7 @@ class Statement < ActiveRecord::Base
   before_save :cap_title
 
   acts_as_ordered_taggable_on :tags
-  resourcify
+  #resourcify
   has_paper_trail
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
@@ -30,7 +30,6 @@ class Statement < ActiveRecord::Base
   end
   handle_asynchronously :solr_index
   handle_asynchronously :solr_index!
-  handle_asynchronously :remove_from_index
 
 # Custom methods
 

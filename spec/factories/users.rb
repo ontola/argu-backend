@@ -15,8 +15,8 @@ FactoryGirl.define do
     password 'foobar'
     password_confirmation 'foobar'
 
-    factory :admin do
-      after(:create) { |user| user.add_role :admin }
+    factory :administration do
+      after(:create) { |user| user.add_role :administration }
     end
 
     factory :coder do

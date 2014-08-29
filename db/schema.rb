@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140827152045) do
+ActiveRecord::Schema.define(version: 20140827161952) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,23 +40,6 @@ ActiveRecord::Schema.define(version: 20140827152045) do
 
   add_index "authentications", ["user_id", "uid"], name: "user_id_and_uid", unique: true, using: :btree
   add_index "authentications", ["user_id"], name: "user_id", using: :btree
-
-  create_table "card_pages", force: true do |t|
-    t.integer  "card_id"
-    t.string   "title"
-    t.text     "contents"
-    t.integer  "page_index"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "cards", force: true do |t|
-    t.string   "title"
-    t.string   "url"
-    t.integer  "tags_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "comments", force: true do |t|
     t.integer  "commentable_id",   default: 0

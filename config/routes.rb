@@ -1,8 +1,9 @@
 Argu::Application.routes.draw do
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
+  get '/developers', to: 'static_pages#developers'
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
-  namespace :admin do
+  resource :admin do
     get 'list' => 'administration#list'
     post ':id' => 'administration#add'
     delete ':id' => 'administration#remove', as: 'remove'
@@ -56,9 +57,6 @@ Argu::Application.routes.draw do
   #resources :sessions #, only: [:new, :create, :destroy]
   resources :profiles
   resources :votes
-  resources :cards do
-    resources :card_pages, as: 'pages', path: 'pages'
-  end
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 

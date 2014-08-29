@@ -2,7 +2,7 @@ class Votes::StatementsController < ApplicationController
   # POST /statements/:statement_id/vote/:for
   def create
     @statement = Statement.find(params[:statement_id])
-    authorize! :vote, @statement
+    authorize @statement, :vote?
     if params[:for].in?(Vote.fors)
       @vote = Vote.find_or_create_by(voteable: @statement, voter: current_user)
       if @vote.try(:for) == permit_params[:for]

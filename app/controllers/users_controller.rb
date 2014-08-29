@@ -1,39 +1,39 @@
 class UsersController < ApplicationController
 
-	def edit
-		@user = User.find current_user.id
-    authorize! :edit, @user
-		
-		unless @user.nil?
-			@authentications = @user.authentications
-			respond_to do |format|
-				format.html
-				format.json { render json: @user }
-			end
-		else
-			flash['User not found']
-			request.env['HTTP_REFERER'] ||= root_path
-			respond_to do |format|
-				format.html { redirect_to :back }
-				format.json { render json: "Error: user not found" }
-			end
-		end
-	end
+  def edit
+    @user = User.find current_user.id
+    authorize @user
 
-	# PUT /settings
-	def update
-		@user = current_user unless current_user.blank?
-    authorize! :update, @user
+    unless @user.nil?
+      @authentications = @user.authentications
+      respond_to do |format|
+        format.html
+        format.json { render json: @user }
+      end
+    else
+      flash['User not found']
+      request.env['HTTP_REFERER'] ||= root_path
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.json { render json: "Error: user not found" }
+      end
+    end
+  end
 
-		respond_to do |format|
-			if @user.update_attributes(params[:user]) && @user.profile.update_attributes(params[:profile])
-				format.html { redirect_to settings_path, notice: "Wijzigingen opgeslagen." }
-				format.json { head :no_content }
-			else
-				format.html { render action: "edit" }
-				format.jsoon { render json: @profile.errors, status: :unprocessable_entity }
-			end
-		end
+  # PUT /settings
+  def update
+    @user = current_user unless current_user.blank?
+    authorize @user
+
+    respond_to do |format|
+      if @user.update_attributes(params[:user]) && @user.profile.update_attributes(params[:profile])
+        format.html { redirect_to settings_path, notice: "Wijzigingen opgeslagen." }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.jsoon { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # POST /users/search/:username

@@ -3,8 +3,8 @@ class StatementsController < ApplicationController
   # GET /statements
   # GET /statements.json
   def index
-    @statements = Statement.index params[:trashed], params[:page]
-    authorize! :read, Statement
+    @statements = policy_scope(Statement.index params[:trashed], params[:page])
+    authorize @statements
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @statements }
@@ -17,7 +17,7 @@ class StatementsController < ApplicationController
   	# Eager loading and filtering on trashed on both the main and the tally query seems to result in the least amount of sql
   	# without writing a custom query 
     @statement = Statement.find_by_id(params[:id]) #, arguments: {is_trashed: false}).includes(:arguments, :tags).first
-    authorize! :read, Statement
+    authorize @statement
     @arguments = @statement.arguments.where(is_trashed: false).sort { |a,b| b.votes_count <=> a.votes_count }.group_by { |a| a.key }
     @opinions= @statement.opinions.where(is_trashed: false).group_by { |a| a.key }
     @voted = Vote.where(voteable: @statement, voter: current_user).last.try(:for) unless current_user.blank?
@@ -52,7 +52,7 @@ class StatementsController < ApplicationController
   # GET /statements/new.json
   def new
     @statement = Statement.new
-    authorize! :create, Statement
+    authorize @statement
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @statement }
@@ -62,7 +62,7 @@ class StatementsController < ApplicationController
   # GET /statements/1/edit
   def edit
     @statement = Statement.find_by_id(params[:id])
-    authorize! :update, @statement
+    authorize @statement
     respond_to do |format|
       format.html { render 'form' }
     end
@@ -72,7 +72,7 @@ class StatementsController < ApplicationController
   # POST /statements.json
   def create
     @statement = Statement.create permit_params
-    authorize! :create, Statement
+    authorize @statement
     current_user.add_role :mod, @statement
 
     respond_to do |format|
@@ -90,7 +90,7 @@ class StatementsController < ApplicationController
   # PUT /statements/1.json
   def update
     @statement = Statement.find_by_id params[:id]
-    authorize! :update, @statement
+    authorize @statement
     respond_to do |format|
       if @statement.update_attributes(permit_params)
         if params[:statement].present? && params[:statement][:tag_id].present? && @statement.tags.reject { |a,b| a.statement==b }.first.present?
@@ -112,10 +112,10 @@ class StatementsController < ApplicationController
   def destroy
     @statement = Statement.find_by_id params[:id]
     if params[:destroy].to_s == 'true'
-      authorize! :destroy, @statement
+      authorize @statement
       @statement.destroy
     else
-      authorize! :trash, @statement
+      authorize @statement, :trash?
       @statement.trash
     end
 

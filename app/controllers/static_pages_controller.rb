@@ -3,6 +3,7 @@ class StaticPagesController < ApplicationController
   include StaticPagesHelper
 
   def home
+    authorize :static_pages
   	if signed_in?
       @newstatements = Statement.index params[:trashed], params[:page]
   		render 'static_pages/home'
@@ -11,6 +12,7 @@ class StaticPagesController < ApplicationController
 	  end
   end
   def about
+    authorize :static_pages
   end
 
   def developers

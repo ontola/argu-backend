@@ -12,6 +12,6 @@
     = paginate @comments
   -else
     p=t('opinions.comments.none')
--if can? :create, Comment
+-if policy(resource).show?
   .box.clearfix
     =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true }

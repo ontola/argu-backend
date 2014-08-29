@@ -1,9 +1,11 @@
 class ArgumentsController < ApplicationController
-  load_and_authorize_resource :argument, :parent => false, except: :allrevisions, param_method: :argument_params
+  #load_and_authorize_resource :argument, :parent => false, except: :allrevisions, param_method: :argument_params
 
   # GET /arguments/1
   # GET /arguments/1.json
   def show
+    @argument = Argument.find params[:id]
+    authorize @argument
     @parent_id = params[:parent_id].to_s
     
     @comments = @argument.root_comments.where(is_trashed: false).page(params[:page]).order('created_at ASC')
@@ -83,6 +85,8 @@ class ArgumentsController < ApplicationController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
+    @argument = Argument.new
+    authorize @argument
     @argument.assign_attributes({pro: %w(con pro).index(params[:pro]), statement_id: params[:statement_id]})
     respond_to do |format|
       if params[:statement_id].present?
@@ -105,6 +109,8 @@ class ArgumentsController < ApplicationController
   # POST /arguments
   # POST /arguments.json
   def create
+    @argument = Argument.new argument_params
+    authorize @argument
     @argument.statement_id = argument_params[:statement_id]
     @argument.pro = argument_params[:pro]
     respond_to do |format|
@@ -135,11 +141,12 @@ class ArgumentsController < ApplicationController
   # DELETE /arguments/1
   # DELETE /arguments/1.json
   def destroy
+    @argument = Argument.find params[:id]
     if params[:destroy].to_s == 'true'
-      authorize! :destroy, @argument
+      authorize @argument
       @argument.destroy
     else
-      authorize! :trash, @argument
+      authorize @argument, :trash?
       @argument.trash
     end
 

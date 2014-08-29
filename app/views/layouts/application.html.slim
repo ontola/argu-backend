@@ -30,6 +30,7 @@ body
       .push
     -unless current_user.blank?
       =javascript_include_tag "application", async: Rails.env == 'development' ? false : true
+      =javascript_include_tag "//localhost:3000/assets/cards.js", async: Rails.env == 'development' ? false : true
   -else
     .container
       = image_tag "argu.png", alt: "argu is nog in ontwikkeling", width: "673px", height: "72px", style: "margin-left:auto;margin-right:auto;display:block;margin-top:200px"
