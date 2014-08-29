@@ -7,7 +7,7 @@
          persist: false,
          create: function(input) {
              return {
-                 value: input,
+                 name: input,
                  text: input
              }
          },
@@ -29,7 +29,6 @@
                      callback();
                  },
                  success: function (res) {
-                     console.log(res.tags);
                      callback(res.tags);
                  }
              });

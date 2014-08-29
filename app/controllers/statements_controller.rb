@@ -29,25 +29,6 @@ class StatementsController < ApplicationController
     end
   end
 
-  def tagged
-    authorize! :read, Statement
-    @tag = ActsAsTaggableOn::Tag.find_by_name(params[:tag])
-    if params[:tag].present? 
-      @statements = Statement.tagged_with(params[:tag]) # TODO rewrite statement to exclude where statement.tag_id
-    else
-      @statements = Statement.postall
-    end
-  end
-
-  def tags
-    authorize! :read, Statement
-    if params[:q].present?
-      @tags = Statement.all_tags.where("lower(name) LIKE lower(?)", "%#{params[:q]}%").order(taggings_count: :desc).page params[:page]
-    else
-      @tags = Statement.all_tags.order(taggings_count: :desc).page params[:page]
-    end
-  end
-
   # GET /statements/new
   # GET /statements/new.json
   def new

@@ -15,8 +15,6 @@ Argu::Application.routes.draw do
 
   resources :authentications, only: [:create, :destroy]
   match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
-  
-  get 'tagged' => 'statements#tagged', :as => 'tagged'
 
   resources :users do
     collection do
@@ -28,9 +26,10 @@ Argu::Application.routes.draw do
   resources :statements do
     post 'vote/:for'      => 'votes/statements#create',   as: 'vote'
     delete 'vote'         => 'votes/statements#destroy',  as: 'vote_delete'
-    collection do
-      get 'tags'
-    end
+
+    get 'tags',      to: 'tags/statements#index', on: :collection
+    get 'tags/:tag', to: 'tags/statements#show',  on: :collection, as: :tag
+
     resources :revisions, only: [:index, :show, :update], shallow: true
     #member do
     #  get 'tags'   # refactor above to this later (or, ideally a new controller on its own)

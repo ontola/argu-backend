@@ -7,5 +7,5 @@
 <%= render partial: 'statements/tag_statement', locals: { statement: @tag.statement } if @tag.statement %>
 
 <% @statements.each do |statement| %>
-  <%= render partial: statement, locals: { tag: @tag } %>
+  <%= render partial: 'statements/statement', locals: { statement: statement, tag: @tag } %>
 <% end %>

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery #secret: "Nl4EV8Fm3LdKayxNtIBwrzMdH9BD18KcQwSczxh1EdDbtyf045rFuVces8AdPtobC9pp044KsDkilWfvXoDADZWi6Gnwk1vf3GghCIdKXEh7yYg41Tu1vWaPdyzH7solN33liZppGlJlNTlJjFKjCoGjZP3iJhscsYnPVwY15XqWqmpPqjNiluaSpCmOBpbzWLPexWwBSOvTcd6itoUdWUSQJEVL3l0rwyJ76fznlNu6DUurFb8bOL2ItPiSit7g"
-  after_action :verify_authorized, :except => :index
+  after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
