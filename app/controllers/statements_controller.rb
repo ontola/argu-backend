@@ -32,7 +32,7 @@ class StatementsController < ApplicationController
   # GET /statements/new
   # GET /statements/new.json
   def new
-    @statement = Statement.new
+    @statement = Statement.new permit_params
     authorize @statement
     respond_to do |format|
       format.html { render 'form' }
@@ -75,7 +75,7 @@ class StatementsController < ApplicationController
     respond_to do |format|
       if @statement.update_attributes(permit_params)
         if params[:statement].present? && params[:statement][:tag_id].present? && @statement.tags.reject { |a,b| a.statement==b }.first.present?
-          format.html { redirect_to tagged_url(tag: ActsAsTaggableOn::Tag.find_by_id(@statement.tag_id).name)}
+          format.html { redirect_to tag_statements_url(Tag.find_by_id(@statement.tag_id).name)}
           format.json { head :no_content }
         else
           format.html { redirect_to @statement, notice: 'Statement was successfully updated.' }

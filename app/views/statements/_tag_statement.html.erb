@@ -1,2 +1,2 @@
 <% provide :title, (statement.title.nil? ? t(:statement_title) : statement.title) %>
-<%= render partial: 'statementbody', locals: {statement: statement} %>
+<%= render partial: 'statements/statementbody', locals: {statement: statement} %>

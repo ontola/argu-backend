@@ -1,3 +1,5 @@
 class Tag < ActsAsTaggableOn::Tag
-  has_one :statement
+  ActsAsTaggableOn::Tag.class_eval do
+    has_one :statement
+  end
 end

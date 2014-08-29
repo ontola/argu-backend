@@ -16,8 +16,7 @@ module Argu
     #config.force_ssl = true
 
     config.autoload_paths += Dir["#{config.root}/lib/"]  # include all subdirectories
-    require "#{config.root}/lib/tag"
-    
+
     # Configure the default encoding used in templates for Ruby 1.9.
     config.encoding = "utf-8"
 
