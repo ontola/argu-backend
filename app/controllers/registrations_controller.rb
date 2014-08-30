@@ -1,22 +1,21 @@
 class RegistrationsController < Devise::RegistrationsController
-	#load_and_authorize_resource, unless: [:create, :edit] #Not sure yet
 
-	def create
-		super
-		session[:omniauth] = nil unless @user.new_record?
-	end
+  def create
+    super
+    session[:omniauth] = nil unless @user.new_record?
+  end
 
-	def edit
-	  unless current_user.nil?
-    	@user = User.find(current_user.id)
-    	render 'edit'
+  def edit
+    unless current_user.nil?
+      @user = User.find(current_user.id)
+      render 'edit'
       else
-      	flash[:error] = "You need to be signed in for this action"
-      	redirect_to root_path
+        flash[:error] = "You need to be signed in for this action"
+        redirect_to root_path
       end
-	end
+  end
 
-	def update
+  def update
       @user = User.find(current_user.id)
       email_changed = @user.email != params[:email]
       password_changed = !params[:password].blank?
@@ -35,26 +34,26 @@ class RegistrationsController < Devise::RegistrationsController
       end
     end
 
-	def cancel
-		unless current_user.nil?
-			render 'cancel'
-		else
-			flash[:error] = "Not signed in"
-			redirect_to root_path
-		end
-	end
+  def cancel
+    unless current_user.nil?
+      render 'cancel'
+    else
+      flash[:error] = "Not signed in"
+      redirect_to root_path
+    end
+  end
 
-	def destroy
-		super
-	end
+  def destroy
+    super
+  end
 
-	private
+private
 
-	def build_resource(*args)
-		super
-		if session[:omniauth]
-			@user.apply_omniauth(session[:omniauth])
-			@user.valid?
-		end
-	end
+  def build_resource(*args)
+    super
+    if session[:omniauth]
+      @user.apply_omniauth(session[:omniauth])
+      @user.valid?
+    end
+  end
 end

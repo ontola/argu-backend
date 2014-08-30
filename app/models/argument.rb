@@ -1,4 +1,4 @@
-include HasRestfulPermissions
+include HasRestfulPermissions              # This seems superfluous
 
 class Argument < ActiveRecord::Base
   belongs_to :statement, :dependent => :destroy

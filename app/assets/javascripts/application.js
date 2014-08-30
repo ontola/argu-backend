@@ -20,5 +20,4 @@
 //= require requirejs
 //= require autocomplete-rails
 //= require fixedsticky
-//= require settings
 //= require_tree .

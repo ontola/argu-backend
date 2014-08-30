@@ -570,9 +570,6 @@ div#navbar {
     &:hover{
       background-color: $g1;
     }
-    #search {
-
-    }
     textarea:hover,
     input:hover {
       background-color: $g1 !important;
@@ -603,7 +600,7 @@ div#navr {
   float: right;
 }
 
-/*Dit is de opmaak van een comment*/
+/* Comment styling */
 a.commentusername {
   color: $g4;
   position: relative;
@@ -697,7 +694,6 @@ p.comment {
   }
 }
 
-
 .infobar {
   font-size: .7em;
   letter-spacing: .08em;
@@ -737,7 +733,7 @@ p.comment {
   }
 }
 
-/*Dit is de opmaak van een deelonderwerptitel (meestal is dit "argumenten")*/
+/* Section title styling */
 .navrow {
   clear: both;
   margin-bottom: 1em;
@@ -1084,8 +1080,6 @@ ul.vote-buttons {
   }
 }
 
-/*Zoekresultaten*/
-
 /* Profile */
 .profile #head {
   list-style-type: none;
@@ -1107,11 +1101,9 @@ div.pageconf {
   float: right;
   height: 25px;
   display: inline;
-
   ul {
     list-style: none;
   }
-
   li a {
     text-decoration: none;
   }
@@ -1189,7 +1181,6 @@ input[type=checkbox] {
 .remember {
   color: $g4;
 }
-
 
 /*Fixes*/
 .clearfix {

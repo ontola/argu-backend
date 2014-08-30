@@ -1,5 +1,4 @@
 class ArgumentsController < ApplicationController
-  #load_and_authorize_resource :argument, :parent => false, except: :allrevisions, param_method: :argument_params
 
   # GET /arguments/1
   # GET /arguments/1.json
