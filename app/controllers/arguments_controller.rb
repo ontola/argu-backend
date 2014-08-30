@@ -87,6 +87,7 @@ class ArgumentsController < ApplicationController
     @argument = Argument.new
     authorize @argument
     @argument.assign_attributes({pro: %w(con pro).index(params[:pro]), statement_id: params[:statement_id]})
+
     respond_to do |format|
       if params[:statement_id].present?
         format.html { render :form }
@@ -100,6 +101,9 @@ class ArgumentsController < ApplicationController
 
   # GET /arguments/1/edit
   def edit
+    @argument = Argument.find params[:id]
+    authorize @argument
+
     respond_to do |format|
       format.html { render :form}
     end
@@ -112,6 +116,7 @@ class ArgumentsController < ApplicationController
     authorize @argument
     @argument.statement_id = argument_params[:statement_id]
     @argument.pro = argument_params[:pro]
+
     respond_to do |format|
       if @argument.save
         format.html { redirect_to (argument_params[:statement_id].blank? ? @argument : Statement.find_by_id(argument_params[:statement_id])), notice: 'Argument was successfully created.' }
@@ -126,6 +131,9 @@ class ArgumentsController < ApplicationController
   # PUT /arguments/1
   # PUT /arguments/1.json
   def update
+    @argument = Argument.find params[:id]
+    authorize @argument
+
     respond_to do |format|
       if @argument.update_attributes(argument_params)
         format.html { redirect_to @argument, notice: t("arguments.notices.updated") }

@@ -5,6 +5,12 @@ class Argument < ActiveRecord::Base
   has_many :votes, as: :voteable
   has_many :votes
 
+  counter_culture :statement,
+                  column_names: {
+                      ["pro = ?", true] => 'argument_pro_count',
+                      ["pro = ?", false] => 'argument_con_count'
+                  }
+
   before_save :trim_data
   before_save :cap_title
 
@@ -14,6 +20,7 @@ class Argument < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 1500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
 
+=begin
   def after_save
     self.update_counter_cache
   end
@@ -21,6 +28,7 @@ class Argument < ActiveRecord::Base
   def after_destroy
     self.update_counter_cache
   end
+=end
 
   def trash
     update_column :is_trashed, true
@@ -61,6 +69,7 @@ class Argument < ActiveRecord::Base
     self.content = content.strip
   end
 
+=begin
   def update_counter_cache
     self.statement.pro_count = self.statement.arguments.count(:conditions => ["pro = true"])
     self.statement.con_count = self.statement.arguments.count(:conditions => ["pro = false"])
@@ -72,6 +81,7 @@ class Argument < ActiveRecord::Base
     FROM   votes
     WHERE voteable_type = 'Argument' AND voteable_id = #{self.id} AND \"for\" = 1")[0]['count']
   end
+=end
 
 # Scopes
 

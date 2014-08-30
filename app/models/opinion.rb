@@ -4,6 +4,12 @@ class Opinion < ActiveRecord::Base
   belongs_to :statement, :dependent => :destroy
   has_many :votes, as: :voteable
 
+  counter_culture :statement,
+                  column_names: {
+                      ["pro = ?", true] => 'opinion_pro_count',
+                      ["pro = ?", false] => 'opinion_con_count'
+                  }
+
   before_save :trim_data
   before_save :cap_title
 

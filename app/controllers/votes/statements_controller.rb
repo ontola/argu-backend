@@ -29,8 +29,8 @@ class Votes::StatementsController < ApplicationController
   # DELETE /statements/:statement_id/vote
   def destroy
     @statement = Statement.find(params[:statement_id])
-    authorize! :vote, Statement
     @vote = Vote.find_or_create_by(voteable: @statement, voter: current_user)
+    authorize @statement, :vote?
     if @vote.update for: :abstain
       save_vote_to_stats(@vote)
       respond_to do |format|

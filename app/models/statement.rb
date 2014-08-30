@@ -88,5 +88,5 @@ class Statement < ActiveRecord::Base
     }
   }
 
-  scope :index, ->(trashed, page) { where(is_trashed: trashed.present?).order('pro_count + con_count DESC').page(page) }
+  scope :index, ->(trashed, page) { where(is_trashed: trashed.present?).order('argument_pro_count + argument_con_count DESC').page(page) }
 end

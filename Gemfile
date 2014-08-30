@@ -14,6 +14,7 @@ gem 'immigrant', '~> 0.1.2'
 gem 'awesome_nested_set', '~> 3.0.0.rc.5'
 gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 gem 'paper_trail', '~> 3.0.0'
+gem 'counter_culture', '~> 0.1.25'
 
 ##################User management########################
 gem 'devise', "~> 3.2.4"
@@ -35,7 +36,6 @@ gem 'kaminari', '~>0.15.1'
 gem "sunspot_with_kaminari", '~> 0.2.0'
 gem 'acts-as-taggable-on'
 gem 'haml' # TODO: convert haml to slim, then remove this gem
-#gem 'tilt', '~>1.3.3'
 gem 'slim', '~>2.0.2'
 gem 'delayed_job', '~> 4.0.1'
 gem 'delayed_job_active_record', '~> 4.0.1'

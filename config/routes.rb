@@ -55,7 +55,6 @@ Argu::Application.routes.draw do
 
   #resources :sessions #, only: [:new, :create, :destroy]
   resources :profiles
-  resources :votes
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 

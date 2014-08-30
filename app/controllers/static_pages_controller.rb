@@ -1,7 +1,5 @@
 class StaticPagesController < ApplicationController
   
-  include StaticPagesHelper
-
   def home
     authorize :static_pages
   	if signed_in?
