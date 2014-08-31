@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140831201131) do
+ActiveRecord::Schema.define(version: 20140831211429) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,6 @@ ActiveRecord::Schema.define(version: 20140831201131) do
     t.text     "content",                             null: false
     t.integer  "statement_id",                        null: false
     t.boolean  "pro",                 default: true
-    t.integer  "argtype",             default: 3,     null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "title"
@@ -30,6 +29,10 @@ ActiveRecord::Schema.define(version: 20140831201131) do
     t.integer  "votes_abstain_count", default: 0,     null: false
   end
 
+  add_index "arguments", ["id"], name: "index_arguments_on_id", using: :btree
+  add_index "arguments", ["statement_id", "id", "pro"], name: "index_arguments_on_statement_id_and_id_and_pro", using: :btree
+  add_index "arguments", ["statement_id", "id"], name: "index_arguments_on_statement_id_and_id", using: :btree
+  add_index "arguments", ["statement_id", "is_trashed"], name: "index_arguments_on_statement_id_and_is_trashed", using: :btree
   add_index "arguments", ["statement_id"], name: "statement_id", using: :btree
 
   create_table "authentications", force: true do |t|
@@ -58,6 +61,7 @@ ActiveRecord::Schema.define(version: 20140831201131) do
     t.boolean  "is_trashed",       default: false
   end
 
+  add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
@@ -80,14 +84,20 @@ ActiveRecord::Schema.define(version: 20140831201131) do
   create_table "opinions", force: true do |t|
     t.string   "title"
     t.text     "content"
-    t.boolean  "is_trashed",      default: false
-    t.boolean  "pro",             default: false
+    t.boolean  "is_trashed",          default: false
+    t.boolean  "pro",                 default: false
     t.integer  "statement_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "votes_pro_count", default: 0,     null: false
-    t.integer  "comments_count",  default: 0,     null: false
+    t.integer  "votes_pro_count",     default: 0,     null: false
+    t.integer  "comments_count",      default: 0,     null: false
+    t.integer  "votes_abstain_count", default: 0,     null: false
   end
+
+  add_index "opinions", ["id"], name: "index_opinions_on_id", using: :btree
+  add_index "opinions", ["statement_id", "id", "pro"], name: "index_opinions_on_statement_id_and_id_and_pro", using: :btree
+  add_index "opinions", ["statement_id", "id"], name: "index_opinions_on_statement_id_and_id", using: :btree
+  add_index "opinions", ["statement_id", "is_trashed"], name: "index_opinions_on_statement_id_and_is_trashed", using: :btree
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
@@ -114,7 +124,6 @@ ActiveRecord::Schema.define(version: 20140831201131) do
   create_table "statements", force: true do |t|
     t.string   "title",                               null: false
     t.text     "content",                             null: false
-    t.integer  "statetype",           default: 6
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.integer  "tag_id"
@@ -131,6 +140,8 @@ ActiveRecord::Schema.define(version: 20140831201131) do
     t.integer  "votes_abstain_count", default: 0,     null: false
   end
 
+  add_index "statements", ["id"], name: "index_statements_on_id", using: :btree
+  add_index "statements", ["is_trashed"], name: "index_statements_on_is_trashed", using: :btree
   add_index "statements", ["tag_id"], name: "index_statements_on_tag_id", using: :btree
 
   create_table "taggings", force: true do |t|
@@ -201,5 +212,9 @@ ActiveRecord::Schema.define(version: 20140831201131) do
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
   end
+
+  add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "index_votes_on_voter_and_voteable_and_trashed", using: :btree
+  add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
+  add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
 end

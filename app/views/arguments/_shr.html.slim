@@ -3,4 +3,9 @@
     li
       p.vote.votelabel=t("votes.score")
       p.vote[id=argument.id.to_s]=(argument.votes_pro_count >= 1 ? '+' : '') + argument.votes_pro_count.to_s
-      li=render partial: 'arguments/votebtn', locals: { argument: argument } if policy(argument).vote?
+      -if policy(argument).vote?
+        li
+          .votebtn[id=argument.id.to_s]
+            = argument.votes.first.voter_id == current_user.id && argument.votes.first.for?(:pro) ? \
+              (link_to '-1', argument_vote_path(argument), :remote => true, method: :delete) : \
+              (link_to '+1', argument_vote_path(argument), :remote => true, method: :post, class:"tooltip", title:t("votes.tooltips.argument"))

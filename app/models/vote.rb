@@ -12,7 +12,6 @@ class Vote < ActiveRecord::Base
 
   def update_counter_cache
     if self.for_was != self.for
-      puts "=======#{self.for_was}=====to======#{self.for}=========="
       self.voteable.decrement("votes_#{self.for_was}_count") if self.for_was
       self.voteable.increment("votes_#{self.for}_count")
     end

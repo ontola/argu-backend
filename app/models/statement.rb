@@ -1,8 +1,8 @@
 include HasRestfulPermissions
+include ActionView::Helpers::NumberHelper
 
 class Statement < ActiveRecord::Base
   has_many :arguments, :dependent => :destroy
-  has_many :arguments_with_comments, -> { includes(:comment_threads).where(is_trashed: false) }, class_name: 'Argument'
   has_many :opinions, :dependent => :destroy
   has_many :votes, as: :voteable
 
@@ -32,6 +32,7 @@ class Statement < ActiveRecord::Base
   handle_asynchronously :solr_index
   handle_asynchronously :solr_index!
 
+
 # Custom methods
 
   def cap_title 
@@ -52,6 +53,15 @@ class Statement < ActiveRecord::Base
 
   def pro_count
     self.arguments.count(:conditions => ["pro = true"])
+  end
+
+  def score
+    number_to_human(raw_score, :format => '%n%u', :units => { :thousand => 'K' })
+  end
+
+  def raw_score
+    # Neutral voters dont influence the relative score, but they do fluff it
+    self.votes_pro_count*self.votes_neutral_count - self.votes_con_count*self.votes_neutral_count
   end
 
   def supped_content
