@@ -1,20 +1,41 @@
 source 'https://rubygems.org'
 
 gem 'rails', '~>4.1.0'
+##################DB########################
 gem 'pg', '~> 0.17.1'
-gem 'jbuilder', '~> 1.2'
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'bcrypt-ruby', '3.0.1'
-gem 'bootstrap-sass', '~>2.0.1'
-gem 'rfc-822', '~> 0.3.0'
-gem 'rails3-jquery-autocomplete', '~> 1.0.7'
 gem 'foreigner', '~> 1.2.1'
 gem 'immigrant', '~> 0.1.2'
-gem 'awesome_nested_set', '~> 3.0.0.rc.5'
-gem 'acts_as_commentable_with_threading', '~> 1.2.0'
-gem 'paper_trail', '~> 3.0.0'
+
+gem 'jbuilder', '~> 1.2'
+gem 'bcrypt-ruby', '3.0.1'
+gem 'rfc-822', '~> 0.3.0'
 gem 'counter_culture', '~> 0.1.25'
+gem 'rails-i18n', '~> 4.0.0'
+gem 'capistrano'
+gem 'delayed_job', '~> 4.0.1'
+gem 'delayed_job_active_record', '~> 4.0.1'
+gem 'tzinfo-data'
+gem 'rack-cors', :require => 'rack/cors'
+
+##################Features########################
+gem 'paper_trail', '~> 3.0.0'
+gem 'acts-as-taggable-on'
+gem 'awesome_nested_set', '~> 3.0.1'
+gem 'acts_as_commentable_with_threading', '~> 1.2.0'
+#Search
+gem 'sunspot_rails'
+gem 'sunspot_solr'
+#Pagination
+gem 'kaminari', '~>0.15.1'
+gem "sunspot_with_kaminari", '~> 0.2.0'
+
+##################Asset-y########################
+gem 'haml' # TODO: convert haml to slim, then remove this gem
+gem 'slim', '~>2.0.2'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'rails3-jquery-autocomplete', '~> 1.0.7'
+gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
 
 ##################User management########################
 gem 'devise', "~> 3.2.4"
@@ -26,21 +47,6 @@ gem 'omniauth-twitter', "~> 0.0.13"
 #gem 'omniauth-openid'
 gem 'pundit', "~> 0.3.0"
 gem 'rolify'
-
-
-gem 'sunspot_rails'
-gem 'sunspot_solr'
-gem 'rails-i18n', '~> 4.0.0'
-gem 'capistrano'
-gem 'kaminari', '~>0.15.1'
-gem "sunspot_with_kaminari", '~> 0.2.0'
-gem 'acts-as-taggable-on'
-gem 'haml' # TODO: convert haml to slim, then remove this gem
-gem 'slim', '~>2.0.2'
-gem 'delayed_job', '~> 4.0.1'
-gem 'delayed_job_active_record', '~> 4.0.1'
-gem 'tzinfo-data'
-gem 'rack-cors', :require => 'rack/cors'
 
 group :development, :test do
   gem 'thin'

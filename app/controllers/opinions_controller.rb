@@ -1,10 +1,11 @@
 class OpinionsController < ApplicationController
-  load_and_authorize_resource :opinion, :parent => false, except: :allrevisions
 
   def show
+    @opinion = Opinion.includes(:comment_threads).find params[:id]
+    authorize @opinion
     @parent_id = params[:parent_id].to_s
 
-    @comments = @opinion.root_comments.where(is_trashed: false).page(params[:page]).order('created_at ASC')
+    @comments = @opinion.comment_threads.where(:parent_id => nil, is_trashed: false).page(params[:page]).order('created_at ASC')
     @length = @opinion.root_comments.length
 
     respond_to do |format|
@@ -15,7 +16,10 @@ class OpinionsController < ApplicationController
   end
 
   def new
+    @opinion = Opinion.new
+    authorize @opinion
     @opinion.assign_attributes({pro: %w(con pro).index(params[:pro]), statement_id: params[:statement_id]})
+
     respond_to do |format|
       if params[:statement_id].present?
         format.html { render :form }
@@ -28,12 +32,20 @@ class OpinionsController < ApplicationController
   end
 
   def edit
+    @opinion = Opinion.find params[:id]
+    authorize @opinion
+
     respond_to do |format|
       format.html { render :form}
     end
   end
 
   def create
+    @opinion = Opinion.new create_params
+    authorize @opinion
+    @opinion.statement_id = create_params[:statement_id]
+    @opinion.pro = create_params[:pro]
+
     respond_to do |format|
       if @opinion.save
         format.html { redirect_to (params[:opinion][:statement_id].blank? ? @opinion : Statement.find_by_id(params[:opinion][:statement_id])), notice: t("opinions.notices.created") }
@@ -46,9 +58,34 @@ class OpinionsController < ApplicationController
   end
 
   def update
+    @opinion = Opinion.find params[:id]
+    authorize @opinion
+
+    respond_to do |format|
+      if @opinion.update_attributes(resource_params)
+        format.html { redirect_to @opinion, notice: t('arguments.notices.updated') }
+        format.json { head :no_content }
+      else
+        format.html { render :form }
+        format.json { render json: @opinion.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def destroy
+    @opinion = Opinion.find params[:id]
+    if params[:destroy].to_s == 'true'
+      authorize @argument
+      @opinion.destroy
+    else
+      authorize @opinion, :trash?
+      @opinion.trash
+    end
+
+    respond_to do |format|
+      format.html { redirect_to statement_path(@opinion.statement_id) }
+      format.json { head :no_content }
+    end
   end
 
 private

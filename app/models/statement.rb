@@ -2,6 +2,7 @@ include HasRestfulPermissions
 
 class Statement < ActiveRecord::Base
   has_many :arguments, :dependent => :destroy
+  has_many :arguments_with_comments, -> { includes(:comment_threads).where(is_trashed: false) }, class_name: 'Argument'
   has_many :opinions, :dependent => :destroy
   has_many :votes, as: :voteable
 

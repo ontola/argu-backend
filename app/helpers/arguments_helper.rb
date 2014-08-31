@@ -1,8 +1,5 @@
 module ArgumentsHelper
 private
-	def getBestComment(argument)
-		@comment = argument.root_comments[0]
-	end
 
   def print_references(argument)
     content_tag :ol do

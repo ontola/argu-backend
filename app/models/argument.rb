@@ -3,7 +3,7 @@ include HasRestfulPermissions              # This seems superfluous
 class Argument < ActiveRecord::Base
   belongs_to :statement, :dependent => :destroy
   has_many :votes, as: :voteable
-  has_many :votes
+  default_scope { preload(:comment_threads).where(is_trashed: false).order(votes_pro_count: :desc) }
 
   counter_culture :statement,
                   column_names: {
@@ -19,16 +19,6 @@ class Argument < ActiveRecord::Base
 
   validates :content, presence: true, length: { minimum: 5, maximum: 1500 }
   validates :title, presence: true, length: { minimum: 5, maximum: 75 }
-
-=begin
-  def after_save
-    self.update_counter_cache
-  end
-
-  def after_destroy
-    self.update_counter_cache
-  end
-=end
 
   def trash
     update_column :is_trashed, true
@@ -56,6 +46,10 @@ class Argument < ActiveRecord::Base
     content.scan(/\[([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)\]\(([\w\s]*)\)/).each { |r| r << 'ref' + (refs += 1).to_s }
   end
 
+  def root_comments
+    self.comment_threads.where(:parent_id => nil)
+  end
+
   def creator
     User.find_by_id self.versions.first.whodunnit
   end
@@ -69,25 +63,9 @@ class Argument < ActiveRecord::Base
     self.content = content.strip
   end
 
-=begin
-  def update_counter_cache
-    self.statement.pro_count = self.statement.arguments.count(:conditions => ["pro = true"])
-    self.statement.con_count = self.statement.arguments.count(:conditions => ["pro = false"])
-    self.statement.save
-  end
-
-  def votes_count
-    ActiveRecord::Base.connection.execute("SELECT COUNT(*)
-    FROM   votes
-    WHERE voteable_type = 'Argument' AND voteable_id = #{self.id} AND \"for\" = 1")[0]['count']
-  end
-=end
-
 # Scopes
 
   scope :today, lambda { 
-    {
-      :conditions => ["created_at >= ?", (Time.now - 1.days)]
-    }
+    { :conditions => ["created_at >= ?", (Time.now - 1.days)] }
   }
 end

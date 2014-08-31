@@ -11,22 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140830093652) do
+ActiveRecord::Schema.define(version: 20140831201131) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "arguments", force: true do |t|
-    t.text     "content",                        null: false
-    t.integer  "statement_id",                   null: false
-    t.boolean  "pro",            default: true
-    t.integer  "argtype",        default: 3,     null: false
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.text     "content",                             null: false
+    t.integer  "statement_id",                        null: false
+    t.boolean  "pro",                 default: true
+    t.integer  "argtype",             default: 3,     null: false
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
     t.string   "title"
-    t.boolean  "is_trashed",     default: false
-    t.integer  "votes_count",    default: 0,     null: false
-    t.integer  "comments_count", default: 0,     null: false
+    t.boolean  "is_trashed",          default: false
+    t.integer  "votes_pro_count",     default: 0,     null: false
+    t.integer  "comments_count",      default: 0,     null: false
+    t.integer  "votes_abstain_count", default: 0,     null: false
   end
 
   add_index "arguments", ["statement_id"], name: "statement_id", using: :btree
@@ -79,13 +80,13 @@ ActiveRecord::Schema.define(version: 20140830093652) do
   create_table "opinions", force: true do |t|
     t.string   "title"
     t.text     "content"
-    t.boolean  "is_trashed",     default: false
-    t.boolean  "pro",            default: false
+    t.boolean  "is_trashed",      default: false
+    t.boolean  "pro",             default: false
     t.integer  "statement_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "votes_count",    default: 0,     null: false
-    t.integer  "comments_count", default: 0,     null: false
+    t.integer  "votes_pro_count", default: 0,     null: false
+    t.integer  "comments_count",  default: 0,     null: false
   end
 
   create_table "profiles", force: true do |t|
@@ -125,6 +126,9 @@ ActiveRecord::Schema.define(version: 20140830093652) do
     t.integer  "argument_con_count",  default: 0,     null: false
     t.integer  "opinion_pro_count",   default: 0,     null: false
     t.integer  "opinion_con_count",   default: 0,     null: false
+    t.integer  "pro_count",           default: 0
+    t.integer  "con_count",           default: 0
+    t.integer  "votes_abstain_count", default: 0,     null: false
   end
 
   add_index "statements", ["tag_id"], name: "index_statements_on_tag_id", using: :btree

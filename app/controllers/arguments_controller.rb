@@ -3,11 +3,11 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1
   # GET /arguments/1.json
   def show
-    @argument = Argument.find params[:id]
+    @argument = Argument.includes(:comment_threads).find params[:id]
     authorize @argument
     @parent_id = params[:parent_id].to_s
     
-    @comments = @argument.root_comments.where(is_trashed: false).page(params[:page]).order('created_at ASC')
+    @comments = @argument.comment_threads.where(:parent_id => nil, is_trashed: false).page(params[:page]).order('created_at ASC')
     @length = @argument.root_comments.length
 
     respond_to do |format|
@@ -26,7 +26,7 @@ class ArgumentsController < ApplicationController
     @rev = params[:rev]
 
     unless @rev.nil?
-      @version = @argument.versions.find_by_id(@rev);
+      @version = @argument.versions.find_by_id(@rev)
       @argument = @version.reify
     end
     

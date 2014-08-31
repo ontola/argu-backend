@@ -3,7 +3,7 @@
     p= statement.supped_content.html_safe
     .infobar
         .tags.floatleft[title="thema's"]
-            - if statement.tags.any?
+            - if statement.tags.present?
                 - statement.tags.each do |tag|
                     = link_to tag.name, tag_statements_url(tag.name), class: "tag", title: t("statements.titles.tags")+tag.name
         ul.buttons.hastags

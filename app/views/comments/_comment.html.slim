@@ -14,5 +14,5 @@
     = render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false }
 - if c.has_children?
   - c.children.each do |ch|
-    = render partial: 'buildcomment', locals: { c: ch, depth: depth+1 }
+    = render partial: 'comments/comment', locals: { resource: resource, c: ch, depth: depth+1 }
   = link_to t('opinions.comments.more'), '/' if c.children.length > 40

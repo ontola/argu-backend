@@ -3,6 +3,7 @@ include HasRestfulPermissions
 class Opinion < ActiveRecord::Base
   belongs_to :statement, :dependent => :destroy
   has_many :votes, as: :voteable
+  default_scope { includes(:comment_threads).where(is_trashed: false).order(votes_pro_count: :desc) }
 
   counter_culture :statement,
                   column_names: {

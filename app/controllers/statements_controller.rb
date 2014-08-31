@@ -14,12 +14,10 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
-  	# Eager loading and filtering on trashed on both the main and the tally query seems to result in the least amount of sql
-  	# without writing a custom query 
-    @statement = Statement.find_by_id(params[:id]) #, arguments: {is_trashed: false}).includes(:arguments, :tags).first
+    @statement = Statement.find(params[:id])
     authorize @statement
-    @arguments = @statement.arguments.where(is_trashed: false).sort { |a,b| b.votes_count <=> a.votes_count }.group_by { |a| a.key }
-    @opinions= @statement.opinions.where(is_trashed: false).group_by { |a| a.key }
+    @arguments = @statement.arguments.includes(:comment_threads, :votes).where(votes: {voter: current_user}).group_by { |a| a.key }
+    @opinions = @statement.opinions.includes(:comment_threads, :votes).where(votes: {voter: current_user}).group_by { |a| a.key }
     @voted = Vote.where(voteable: @statement, voter: current_user).last.try(:for) unless current_user.blank?
 
     respond_to do |format|

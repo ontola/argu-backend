@@ -33,6 +33,7 @@ class Votes::ArgumentsController < ApplicationController
     else
       respond_to do |format|
         format.html { redirect_to @argument.statement, notice: '_error._' }
+        format.js { head 400 }
         format.json { render json: {notifications: [{type: 'error', message: t('status.400')}] } }
       end
     end

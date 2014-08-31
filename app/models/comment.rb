@@ -4,6 +4,9 @@ class Comment < ActiveRecord::Base
   validates_presence_of :body
   validates_presence_of :user
 
+  after_validation :increase_counter_cache
+  after_destroy :decrease_counter_cache
+
   belongs_to :commentable, :polymorphic => true
   belongs_to :user
 
@@ -21,7 +24,7 @@ class Comment < ActiveRecord::Base
 
   #helper method to check if a comment has children
   def has_children?
-    self.children.length > 0
+    self.lft || self.rgt
   end
 
   # Helper class method to lookup all comments assigned
@@ -40,6 +43,13 @@ class Comment < ActiveRecord::Base
   # given the commentable class name and id
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
+  end
+
+  def decrease_counter_cache
+    self.commentable.deccrement("comments_count")
+  end
+  def increase_counter_cache
+    self.commentable.increment("comments_count")
   end
 
   def is_trashed?

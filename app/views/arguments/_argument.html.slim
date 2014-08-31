@@ -1,18 +1,16 @@
--@comment = getBestComment(argument)
 div[class=(argument.pro ? "box pro" : "box con")]
-	= link_to argument.title, argument_path(argument), class: argument.pro ? "title" : "title"
-	= content_tag :p, class: 'intro collapsible' do
-	  ==((content = argument.supped_content)[0..500] + (content_tag(:span, content[501..content.length].to_s) if content[501]).to_s)
-	= render partial: "arguments/shr", locals: { argument: argument }
-	br
-	-if @comment.present?
-		= link_to argument_path(argument) + "#commentstitle" do
-			.topcomment
-				-num_comments = argument.comment_threads.size
-				span.commentsnumber.infobar= num_comments.to_s + (num_comments == 1 ? " reactie:" : " reacties:")
-				br
-				p= @comment.body[0..150] + (@comment.body[151] ? "..." : "")
-	-else
-		= link_to argument_path(argument) do
-			.topcomment
-				span.commentsnumber.infobar= t "arguments.comments.none"
+  = link_to argument.title, argument_path(argument), class: argument.pro ? "title" : "title"
+  = content_tag :p, class: 'intro collapsible' do
+    ==((content = argument.supped_content)[0..500] + (content_tag(:span, content[501..content.length].to_s) if content[501]).to_s)
+  = render partial: "arguments/shr", locals: { argument: argument }
+  br
+  -if argument.comment_threads.present?
+    = link_to argument_path(argument) + "#commentstitle" do
+      .topcomment
+        span.commentsnumber.infobar= argument.comments_count.to_s + (argument.comments_count == 1 ? " reactie:" : " reacties:")
+        br
+        p= argument.comment_threads.first.body[0..150] + (argument.comment_threads.first.body[151] ? "..." : "")
+  -else
+    = link_to argument_path(argument) do
+      .topcomment
+        span.commentsnumber.infobar= t "arguments.comments.none"
