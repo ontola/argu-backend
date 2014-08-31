@@ -2,8 +2,8 @@ include HasRestfulPermissions
 include ActionView::Helpers::NumberHelper
 
 class Statement < ActiveRecord::Base
-  has_many :arguments, :dependent => :destroy
-  has_many :opinions, :dependent => :destroy
+  has_many :arguments, -> { argument_comments }, :dependent => :destroy
+  has_many :opinions, -> { opinion_comments }, :dependent => :destroy
   has_many :votes, as: :voteable
 
   before_save :trim_data

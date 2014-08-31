@@ -2,4 +2,4 @@
 .centercont
   =back_to_statement @opinion
   =render 'body'
-  =render template: 'comments/show', locals: { resource: @opinion } if can? :read, Opinion
+  =render template: 'comments/show', locals: { resource: @opinion }

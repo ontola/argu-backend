@@ -14,17 +14,16 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
-    @statement = Statement.find(params[:id])
+    @statement = Statement.includes(:arguments, :opinions).find(params[:id])
     authorize @statement
-    @arguments = @statement.arguments.includes(:comment_threads, :votes).where(votes: {voter: current_user}).group_by { |a| a.key }
-    @opinions = @statement.opinions.includes(:comment_threads).group_by { |a| a.key }
+    @arguments = @statement.arguments.group_by { |a| a.key }
+    @opinions = @statement.opinions.group_by { |a| a.key }
     @voted = Vote.where(voteable: @statement, voter: current_user).last.try(:for) unless current_user.blank?
 
     respond_to do |format|
       format.html # show.html.erb
       format.widget { render @statement }
-      #format.json { render json: @statement.as_json.merge({voted: @voted.presence ? @voted : 'abstain' }) }
-      format.json
+      format.json # show.json.jbuilder
     end
   end
 

@@ -6,6 +6,7 @@ json.is_trashed @statement.is_trashed
 json.voted @voted.presence ? @voted : 'abstain'
 json.arguments @statement.arguments do |a|
   json.id a.id
+  json.pro a.pro
   json.title a.title
 end
 json.opinions @statement.opinions do |o|
