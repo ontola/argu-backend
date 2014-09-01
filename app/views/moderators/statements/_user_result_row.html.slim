@@ -1,0 +1,6 @@
+tr[id=('list_item_'+user_result_row.id.to_s)]
+  td= user_result_row.username
+  -if !user_result_row.is_mod_of? Statement.find_by_id(params[:statement_id])
+    td= link_to t('statements.mod.edit_moderators.invite'), statement_moderators_user_path(statement_id: params[:statement_id], user_id: user_result_row.id), method: :post, remote: true, class: 'btn', id: ('btn_upgrade_user_' + user_result_row.id.to_s)
+  -else
+    td= link_to t('statements.mod.edit_moderators.is_mod'), '#', class: 'btn'

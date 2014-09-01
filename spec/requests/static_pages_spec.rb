@@ -4,7 +4,7 @@ describe "StaticPages" do
 
   describe "Home page" do
     it "works" do
-      get static_pages_index_path + "/home"
+      get root_path
       response.status.should be(200)
     end
   end

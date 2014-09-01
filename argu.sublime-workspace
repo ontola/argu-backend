@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"rale",
+				"raleway"
+			],
+			[
+				"trans",
+				"transition"
+			],
+			[
+				"ral",
+				"raleway"
+			],
+			[
 				"mar",
 				"margin-left"
 			],
@@ -28,18 +40,10 @@
 	"buffers":
 	[
 		{
-			"file": "app/assets/stylesheets/newlayout.css.scss",
+			"file": "/C/Users/thom/Documents/GitHub/Sick-Beard/sickbeard/db.py",
 			"settings":
 			{
-				"buffer_size": 14679,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "app/views/layouts/application.html.erb",
-			"settings":
-			{
-				"buffer_size": 2216,
+				"buffer_size": 9328,
 				"line_ending": "Windows"
 			}
 		}
@@ -47,11 +51,11 @@
 	"build_system": "",
 	"command_palette":
 	{
-		"height": 0.0,
+		"height": 392.0,
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 472.0
 	},
 	"console":
 	{
@@ -71,6 +75,62 @@
 	},
 	"file_history":
 	[
+		"/C/argu/app/controllers/statements_controller.rb",
+		"/M/Kopimism/Completed/Adventure Time S05E43 HDTV XviD-AFG/Adventure.Time.S05E43.HDTV.XviD-AFG.1.nfo",
+		"/C/argu/app/models/statement.rb",
+		"/C/argu/readme",
+		"/C/argu/.rspec",
+		"/C/argu/script/rails",
+		"/C/argu/.bundle/config",
+		"/C/argu/config/locales/arguments.nl.yml",
+		"/C/argu/config/routes.rb",
+		"/C/argu/app/helpers/arguments_helper.rb",
+		"/C/argu/app/helpers/static_pages_helper.rb",
+		"/C/argu/app/helpers/statements_helper.rb",
+		"/C/argu/app/controllers/votes_controller.rb",
+		"/C/argu/app/views/statements/index.html.erb",
+		"/C/argu/app/views/arguments/_argument.html.erb",
+		"/C/argu/app/views/arguments/_form.html.erb",
+		"/C/argu/app/views/statements/_form.html.erb",
+		"/C/argu/app/views/statements/_statementarguments.html.erb",
+		"/C/argu/app/views/statements/_statementbody.html.erb",
+		"/C/argu/app/views/statements/_tag_statement.html.erb",
+		"/C/argu/app/views/registrations/new.html.erb",
+		"/C/argu/app/views/profiles/_form.html.erb",
+		"/C/argu/app/views/arguments/revisions.erb",
+		"/C/argu/app/views/arguments/edit.html.erb",
+		"/C/argu/app/views/arguments/create.js.erb",
+		"/C/argu/app/views/arguments/_newsargument.html.erb",
+		"/C/argu/app/models/argument.rb",
+		"/C/argu/Gemfile",
+		"/C/argu/app/views/static_pages/home.html.erb",
+		"/C/argu/app/views/statements/tagged.html.erb",
+		"/C/argu/app/views/search/show.html.erb",
+		"/C/argu/app/controllers/arguments_controller.rb",
+		"/C/argu/app/views/arguments/_arguments.html.erb",
+		"/C/argu/app/views/arguments/show.html.erb",
+		"/C/argu/app/models/ability.rb",
+		"/C/dawesome/app/models/user.rb",
+		"/C/argu/app/views/arguments/_sarguments.html.erb",
+		"/C/argu/app/views/votes/_shr.html.erb",
+		"/C/argu/app/views/votes/show.html.erb",
+		"/C/argu/app/views/statements/show.html.erb",
+		"/C/argu/app/assets/stylesheets/newlayout.css.scss",
+		"/C/argu/app/assets/stylesheets/_mixins.scss",
+		"/C/argu/app/assets/stylesheets/_colors.scss",
+		"/C/argu/app/assets/stylesheets/_mixins - Copy.scss",
+		"/C/argu/app/assets/stylesheets/settings.css.scss",
+		"/C/argu/app/assets/stylesheets/footer.css.scss",
+		"/C/argu/app/assets/stylesheets/reset.css",
+		"/C/argu/app/assets/stylesheets/arguments.css.scss",
+		"/C/argu/app/assets/stylesheets/application.css",
+		"/C/Users/thom/AppData/Roaming/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/C/Users/thom/AppData/Roaming/Sublime Text 3/Packages/User/JSON.sublime-settings",
+		"/C/Users/thom/AppData/Roaming/Sublime Text 3/Packages/User/Distraction Free.sublime-settings",
+		"/C/Users/thom/AppData/Roaming/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/C/argu/argu.sublime-project",
+		"/C/argu/config/locales/statements.nl.yml",
+		"/C/argu/app/views/layouts/application.html.erb",
 		"/D/argu/app/views/statements/_statementarguments.html.erb",
 		"/D/argu/tmp/cache/assets/CD8/370/sprockets%2F357970feca3ac29060c1e3861e2c0953",
 		"/D/argu/tmp/cache/assets/D32/A10/sprockets%2F13fe41fee1fe35b49d145bcc06610705",
@@ -89,13 +149,14 @@
 	],
 	"find":
 	{
-		"height": 36.0
+		"height": 39.0
 	},
 	"find_in_files":
 	{
 		"height": 96.0,
 		"where_history":
 		[
+			"",
 			"D:\\argu"
 		]
 	},
@@ -104,6 +165,67 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"tags",
+			"new_pages",
+			"getStateImage",
+			"getStateType",
+			"print_references",
+			"getBestComment",
+			"getArgImage",
+			"getArgType",
+			"votes",
+			"statements",
+			":title",
+			":name",
+			"newsargument",
+			"create",
+			"newsargument",
+			"arguments",
+			"add_comment_form",
+			"pro",
+			"sarguments",
+			"addargument",
+			"statementargument",
+			"preview",
+			"params[:statement_id]",
+			"statement_id",
+			"F0F3FC",
+			"E9F2DD",
+			"git checkout develop",
+			"-moz",
+			"-web",
+			"all 250ms",
+			"-webkit",
+			"-moz",
+			":[\\w]",
+			"sans",
+			"arial",
+			"Raleway, Century Gothic, sans-serif",
+			"raleway",
+			"verdana",
+			"Open Sans",
+			"Open Sans,verdana, arial, sans-serif",
+			"opensans2",
+			"Open Sans,verdana, sans-serif",
+			"Raleway, Century Gothic,'bariol_lightlight', sans-serif",
+			"Century Goth",
+			"$font",
+			"Open Sans,verdana,arial,sans-serif",
+			"Sans,verdana,arial,sans-serif",
+			"Open Sans,verdana,arial,sans-serif",
+			"settings",
+			".btn",
+			"clearfix",
+			"div.pageconf",
+			"authentication",
+			".tooltip",
+			"	",
+			"#search",
+			"div#navbar",
+			"box",
+			"postall",
+			"solr",
+			"sunspot",
 			"Verdana",
 			"verdana",
 			"overfl",
@@ -131,6 +253,7 @@
 		"regex": false,
 		"replace_history":
 		[
+			"  ",
 			"Open Sans,verdana",
 			"Open Sans,verdana,",
 			"procon"
@@ -144,62 +267,32 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "app/assets/stylesheets/newlayout.css.scss",
+					"file": "/C/Users/thom/Documents/GitHub/Sick-Beard/sickbeard/db.py",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 14679,
+						"buffer_size": 9328,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4178,
-								4178
+								0,
+								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/CSS/CSS.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Python/Python.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 5672.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "app/views/layouts/application.html.erb",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2216,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								523,
-								523
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Rails/HTML (Rails).tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2527.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -213,7 +306,7 @@
 	},
 	"input":
 	{
-		"height": 0.0
+		"height": 39.0
 	},
 	"layout":
 	{
@@ -241,7 +334,7 @@
 	"project": "argu.sublime-project",
 	"replace":
 	{
-		"height": 66.0
+		"height": 70.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -250,16 +343,128 @@
 		"selected_items":
 		[
 			[
+				"statement",
+				"app\\models\\statement.rb"
+			],
+			[
+				"state_contr",
+				"app\\controllers\\statements_controller.rb"
+			],
+			[
+				"argumen.yml",
+				"config\\locales\\arguments.nl.yml"
+			],
+			[
+				"routes",
+				"config\\routes.rb"
+			],
+			[
+				"votes_controller",
+				"app\\controllers\\votes_controller.rb"
+			],
+			[
+				"arg.yml",
+				"config\\locales\\arguments.nl.yml"
+			],
+			[
+				"argument",
+				"app\\models\\argument.rb"
+			],
+			[
+				"statements_controller",
+				"app\\controllers\\statements_controller.rb"
+			],
+			[
+				"rou",
+				"config\\routes.rb"
+			],
+			[
+				"gemfile",
+				"Gemfile"
+			],
+			[
+				"ability",
+				"app\\models\\ability.rb"
+			],
+			[
+				"arg_controller",
+				"app\\controllers\\arguments_controller.rb"
+			],
+			[
+				"argument/show",
+				"app\\views\\arguments\\show.html.erb"
+			],
+			[
+				"votes/shr",
+				"app\\views\\votes\\_shr.html.erb"
+			],
+			[
+				"sarguments",
+				"app\\views\\arguments\\_sarguments.html.erb"
+			],
+			[
+				"statementarguments.",
+				"app\\views\\statements\\_statementarguments.html.erb"
+			],
+			[
+				"statements/show",
+				"app\\views\\statements\\show.html.erb"
+			],
+			[
+				"argument.rb",
+				"app\\models\\argument.rb"
+			],
+			[
+				"argument.html.erb",
+				"app\\views\\arguments\\_arguments.html.erb"
+			],
+			[
+				"state",
+				"app\\models\\statement.rb"
+			],
+			[
+				"stat_controller",
+				"app\\controllers\\statements_controller.rb"
+			],
+			[
+				"ar_con",
+				"app\\controllers\\arguments_controller.rb"
+			],
+			[
+				"arg_contr",
+				"app\\controllers\\arguments_controller.rb"
+			],
+			[
+				"newlao",
+				"app\\assets\\stylesheets\\newlayout.css.scss"
+			],
+			[
+				"newlayou",
+				"app\\assets\\stylesheets\\newlayout.css.scss"
+			],
+			[
+				"statemnbody",
+				"app\\views\\statements\\_statementbody.html.erb"
+			],
+			[
+				"statement/show.html",
+				"app\\views\\statements\\show.html.erb"
+			],
+			[
+				"statemn",
+				"config\\locales\\statements.nl.yml"
+			],
+			[
+				"statementbody",
+				"app\\views\\statements\\_statementbody.html.erb"
+			],
+			[
 				"argu/",
 				"app\\views\\arguments\\_sarguments.html.erb"
 			],
 			[
 				"user",
 				"app\\models\\user.rb"
-			],
-			[
-				"statement",
-				"app\\models\\statement.rb"
 			]
 		],
 		"width": 0.0

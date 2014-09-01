@@ -1,0 +1,24 @@
+=back_to_statement(@opinion)
+.box.center
+  =form_for(@opinion) do |f|
+    -if @opinion.errors.any?
+      #error_explanation
+        h2= pluralize(@opinion.errors.count, "error") + t("error_prohibited")
+        ul
+          -@opinion.errors.full_messages.each do |msg|
+            li=msg
+    .label-row
+      =f.text_field "title", class: "settingform verticalform argumenttitle " + (%w(pro true).index(params[:pro] || @opinion.pro.to_s) ? "pro" : "con"), placeholder: t("opinions.form.title").capitalize
+      p.helpertext.floatleft= t("opinions.form.helper.title")
+      .clearfix
+    .label-row
+      =f.text_area "content", class: "settingform verticalform", placeholder: t("opinions.form.content").capitalize, rows: "10"
+      p.helpertext.floatleft= raw t("opinions.form.helper.content")
+      .clearfix
+    .row
+      .span8
+        fieldset.control-group
+        =f.hidden_field(:statement_id)
+        =f.hidden_field(:pro)
+        fieldset.form-actions
+          =f.submit t("opinions.form.submit"), class: "btn blue"

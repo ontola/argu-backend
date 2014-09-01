@@ -1,0 +1,11 @@
+.infobar[id=("shr"+argument.id.to_s)]
+  ul.buttons.vote-buttons
+    li
+      p.vote.votelabel=t("votes.score")
+      p.vote[id=argument.id.to_s]=(argument.votes_pro_count >= 1 ? '+' : '') + argument.votes_pro_count.to_s
+      -if policy(argument).vote?
+        li
+          .votebtn[id=argument.id.to_s]
+            = current_user.voted_on?(argument) ? \
+              (link_to '-1', argument_vote_path(argument), :remote => true, method: :delete) : \
+              (link_to '+1', argument_vote_path(argument), :remote => true, method: :post, class:"tooltip", title:t("votes.tooltips.argument"))

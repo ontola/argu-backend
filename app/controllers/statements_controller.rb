@@ -1,13 +1,10 @@
 class StatementsController < ApplicationController
-  load_and_authorize_resource
-
-  #autocomplete :argument, :title, :full => true, :extra_data => [:id] #Not currently in use
 
   # GET /statements
   # GET /statements.json
   def index
-    @statements = Statement.page(params[:page])
-
+    @statements = policy_scope(Statement.index params[:trashed], params[:page])
+    authorize @statements
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @statements }
@@ -17,114 +14,52 @@ class StatementsController < ApplicationController
   # GET /statements/1
   # GET /statements/1.json
   def show
-    #@arguments = Argument.where(statement_id: @statement.id).order('votes.size DESC')
-    @arguments = @statement.arguments.plusminus_tally({order: "vote_count ASC"})
-    @pro = Array.new
-    @con = Array.new
-    unless @arguments.nil?
-      @arguments.each do |arg|
-        if arg.pro?
-          @pro << arg
-        else
-          @con << arg
-        end
-      end
-    end
-    
+    @statement = Statement.includes(:arguments, :opinions).find(params[:id])
+    authorize @statement
+    @arguments = @statement.arguments.group_by { |a| a.key }
+    @opinions = @statement.opinions.group_by { |a| a.key }
+    @voted = Vote.where(voteable: @statement, voter: current_user).last.try(:for) unless current_user.blank?
 
     respond_to do |format|
       format.html # show.html.erb
-      format.json { render json: @statement }
+      format.widget { render @statement }
+      format.json # show.json.jbuilder
     end
   end
-
-  # GET /statements/1/revisions/:rev
-  # GET /statements/1/revisions/:rev.json
-  def revisions
-    @version = nil
-    @rev = params[:rev]
-
-    unless @rev.nil?
-      @version = @statement.versions.find_by_id(@rev);
-      @statement = @version.reify
-    end
-    
-    if @statement.nil?
-      @statement = @statement.versions.last
-    end
-
-    authorize! :read, :revisions
-    respond_to do |format|
-      format.html # revisions.html.erb
-      format.json { render json: @statement }
-    end
-  end
-
-  # GET /statements/1/revisions
-  # GET /statements/1/revisions.json
-  def allrevisions
-    @statement = Statement.find(params[:id])
-    @revisions = @statement.versions.scoped.reject{ |v| v.object.nil? }.reverse
-
-    authorize! :index, :revisions
-    respond_to do |format|
-      format.html # allrevisions.html.erb
-      format.json { render json: @statement }
-    end
-  end  
-
-  # PUT /statements/1/revisions
-  # PUT /statements/1/revisions.json
-  def setrevision
-    @statement = Statement.find(params[:id])
-    @version = nil
-    @rev = params[:rev]
-
-    unless @rev.nil?
-      @version = @statement.versions.find_by_id(@rev);
-      @statement = @version.reify
-    end
-    
-    if @statement.nil?
-      @statement = @statement.versions.last
-    end
-
-    authorize :update, :revisions
-    respond_to do |format|
-      if @statement.save
-        format.html { redirect_to @statement, notice: 'Statement was successfully restored.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @statement.errors, status: :unprocessable_entity }
-      end
-    end
-  end  
 
   # GET /statements/new
   # GET /statements/new.json
   def new
+    @statement = Statement.new permit_params
+    authorize @statement
     respond_to do |format|
-      format.html # new.html.erb
+      format.html { render 'form' }
       format.json { render json: @statement }
     end
   end
 
   # GET /statements/1/edit
   def edit
+    @statement = Statement.find_by_id(params[:id])
+    authorize @statement
+    respond_to do |format|
+      format.html { render 'form' }
+    end
   end
 
   # POST /statements
   # POST /statements.json
   def create
-    @statement.add_mod current_user
+    @statement = Statement.create permit_params
+    authorize @statement
+    current_user.add_role :mod, @statement
 
     respond_to do |format|
       if @statement.save
-        format.html { redirect_to @statement, notice: 'Statement was successfully created.' }
+        format.html { redirect_to @statement, notice: t('type_save_success', type: t('statements.type')) }
         format.json { render json: @statement, status: :created, location: @statement }
       else
-        format.html { render action: "new" }
+        format.html { render 'form' }
         format.json { render json: @statement.errors, status: :unprocessable_entity }
       end
     end
@@ -133,12 +68,19 @@ class StatementsController < ApplicationController
   # PUT /statements/1
   # PUT /statements/1.json
   def update
+    @statement = Statement.find_by_id params[:id]
+    authorize @statement
     respond_to do |format|
-      if @statement.update_attributes(params[:statement])
-        format.html { redirect_to @statement, notice: 'Statement was successfully updated.' }
-        format.json { head :no_content }
+      if @statement.update_attributes(permit_params)
+        if params[:statement].present? && params[:statement][:tag_id].present? && @statement.tags.reject { |a,b| a.statement==b }.first.present?
+          format.html { redirect_to tag_statements_url(Tag.find_by_id(@statement.tag_id).name)}
+          format.json { head :no_content }
+        else
+          format.html { redirect_to @statement, notice: 'Statement was successfully updated.' }
+          format.json { head :no_content }
+        end
       else
-        format.html { render action: "edit" }
+        format.html { render 'form' }
         format.json { render json: @statement.errors, status: :unprocessable_entity }
       end
     end
@@ -147,11 +89,23 @@ class StatementsController < ApplicationController
   # DELETE /statements/1
   # DELETE /statements/1.json
   def destroy
-    @statement.destroy
+    @statement = Statement.find_by_id params[:id]
+    if params[:destroy].to_s == 'true'
+      authorize @statement
+      @statement.destroy
+    else
+      authorize @statement, :trash?
+      @statement.trash
+    end
 
     respond_to do |format|
       format.html { redirect_to statements_url }
       format.json { head :no_content }
     end
+  end
+
+private
+  def permit_params
+    params.require(:statement).permit(:id, :title, :content, :arguments, :statetype, :tag_list, :invert_arguments, :tag_id)
   end
 end

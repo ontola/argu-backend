@@ -4,13 +4,10 @@ class Comment < ActiveRecord::Base
   validates_presence_of :body
   validates_presence_of :user
 
-  # NOTE: install the acts_as_votable plugin if you
-  # want user to vote on the quality of comments.
-  #acts_as_voteable
+  after_validation :increase_counter_cache
+  after_destroy :decrease_counter_cache
 
   belongs_to :commentable, :polymorphic => true
-
-  # NOTE: Comments belong to a user
   belongs_to :user
 
   # Helper class method that allows you to build a comment
@@ -27,7 +24,7 @@ class Comment < ActiveRecord::Base
 
   #helper method to check if a comment has children
   def has_children?
-    self.children.size > 0
+    self.lft || self.rgt
   end
 
   # Helper class method to lookup all comments assigned
@@ -46,5 +43,19 @@ class Comment < ActiveRecord::Base
   # given the commentable class name and id
   def self.find_commentable(commentable_str, commentable_id)
     commentable_str.constantize.find(commentable_id)
+  end
+
+  def decrease_counter_cache
+    self.commentable.deccrement("comments_count")
+  end
+  def increase_counter_cache
+    self.commentable.increment("comments_count")
+  end
+
+  def is_trashed?
+    read_attribute :is_trashed
+  end
+  def trash
+    update_attribute :is_trashed, true
   end
 end

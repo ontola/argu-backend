@@ -1,0 +1,2 @@
+$('.mods tbody').append('<%= escape_javascript render( partial: 'user_table_row', object: @user) %>');
+$('<%= '#btn_upgrade_user_'+@user.id.to_s %>').text('<%= t 'statements.mod.edit_moderators.invited' %>').attr('href', '#');

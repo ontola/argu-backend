@@ -1,0 +1,6 @@
+tr[id=('list_item_'+list_row.id.to_s)]
+  td= list_row.username
+  td= list_row.email
+  td= select_highest_rank(list_row.roles)
+  td
+    = button_to t('admin.panel.m_delete'), admin_remove_path(list_row.id, role: @role.to_s), class: 'btn', remote: true, method: :delete, confirm: t('admin.panel.confirm')

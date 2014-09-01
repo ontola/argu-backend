@@ -1,5 +1,0 @@
-$('#shr<%= @argument.id %>')
-  .fadeOut()
-  .replaceWith('<%= escape_javascript(render(partial: "votes/shr", locals: {argument: @argument}))%>')
-  .hide()
-  .fadeIn()

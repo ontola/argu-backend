@@ -4,6 +4,7 @@
 		<li><%= link_to t("header_menuitem_settings") , {:anchor => "settings" } , class: "current" %></li>
 		<li><%= link_to t("header_menuitem_profile") , {:anchor => "profile" } %></li>
 		<li><%= link_to t("header_menuitem_activity") , {:anchor => "activity" } %></li>
+    </ul>
 </div>
 <div class="label-row">
 	<label><%= t("users_username") %></label>
@@ -80,7 +81,7 @@
 <div class="label-row">
 	<label></label>
 	<div class="label-subrow">
-		<%= user.submit(t("save"), class: "btn") %>
+		<%= user.submit(t("save"), class: "btn blue") %>
 	</div>
 </div>
 <% end %>

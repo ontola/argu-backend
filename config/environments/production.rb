@@ -1,14 +1,17 @@
 Argu::Application.configure do
+  config.host = "argu.nl"
   # Settings specified here will take precedence over those in config/application.rb
 
-  ARGUMENT_TYPE_SCIENTIFIC = "scientific";
-  ARGUMENT_TYPE_AXIOMATIC = "axiomatic";
-  ARGUMENT_TYPE_OTHER = "other";
-  ARGUMENT_TYPE_DISCUSSION = "discussion";
+  config.epics = ActiveSupport::OrderedOptions.new
+  config.epics.opinion_buttons = false
+  config.epics.opinion = false
+  config.epics.parties = false
 
   
   # Code is not reloaded between requests
   config.cache_classes = true
+
+  config.eager_load = true
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
@@ -33,7 +36,7 @@ Argu::Application.configure do
   # config.assets.manifest = YOUR_PATH
 
   # Specifies the header that your server uses for sending files
-  # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
+  config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
   
   # See everything in the log (default is :info)

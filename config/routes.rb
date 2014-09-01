@@ -1,49 +1,72 @@
 Argu::Application.routes.draw do
-
+  get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
+  get '/developers', to: 'static_pages#developers'
   devise_for :users, :controllers => { :registrations => 'registrations' }
 
-  resources :authentications, only: [:create, :destoy]
-  match 'auth/:provider/callback' => "authentications#create"
+  resource :admin do
+    get 'list' => 'administration#list'
+    post ':id' => 'administration#add'
+    delete ':id' => 'administration#remove', as: 'remove'
+    post 'freeze/:id' => 'administration#freeze', as: 'freeze'
+    delete 'freeze/:id' => 'administration#unfreeze'
+    #post 'search_username' => 'administration#search_username', constraints: lambda { |r| r.env["warden"].authenticate? }
+    root to: 'administration#panel'
+  end
 
+  resources :authentications, only: [:create, :destroy]
+  match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
 
-  #resources :users
+  resources :users do
+    collection do
+      post '/search/:username' => 'users#search' #, as: 'search'
+      post '/search' => 'users#search', as: 'search'
+    end
+  end
+
   resources :statements do
-    get "revisions" => "statements#allrevisions", as: 'revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
-    get "revisions/:rev" => "statements#revisions", as: 'rev_revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
-    put "revisions/:rev" => "statements#setrevision", as: 'update_revision', constraints: lambda { |r| r.env["warden"].authenticate? }
+    post 'vote/:for'      => 'votes/statements#create',   as: 'vote'
+    delete 'vote'         => 'votes/statements#destroy',  as: 'vote_delete'
+
+    get 'tags',      to: 'tags/statements#index', on: :collection
+    get 'tags/:tag', to: 'tags/statements#show',  on: :collection, as: :tag
+
+    resources :revisions, only: [:index, :show, :update], shallow: true
+    #member do
+    #  get 'tags'   # refactor above to this later (or, ideally a new controller on its own)
+    #end
+    namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
+      get '' => 'statements#index', as: ''
+      post ':user_id' => 'statements#create', as: 'user'
+      delete ':user_id' => 'statements#destroy'
+    end
   end
 
-  resources :arguments, constraints: lambda { |r| r.env["warden"].authenticate? } do
-    post "comment" => "arguments#placeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
-    delete "comment/:id" => "arguments#wipeComment", constraints: lambda { |r| r.env["warden"].authenticate? }
+  resources :arguments do
+    resources :comments
+    resources :revisions, only: [:index, :show, :update], shallow: true
     
-    get "revisions" => "arguments#allrevisions", as: 'revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
-    get "revisions/:rev" => "arguments#revisions", as: 'rev_revisions', constraints: lambda { |r| r.env["warden"].authenticate? }
-    put "revisions/:rev" => "arguments#setrevision", as: 'update_revision', constraints: lambda { |r| r.env["warden"].authenticate? }
-    
-    match "upvote" => "votes#create", as: 'create_vote', constraints: lambda { |r| r.env["warden"].authenticate? }
-    match "unvote" => "votes#destroy", as: 'destroy_vote', constraints: lambda { |r| r.env["warden"].authenticate? }
+    post   'vote' => 'votes/arguments#create'
+    delete 'vote' => 'votes/arguments#destroy'
   end
-  
+
+  resources :opinions do
+    resources :comments
+  end
+
   #resources :sessions #, only: [:new, :create, :destroy]
-  resources :profiles, constraints: lambda { |r| r.env["warden"].authenticate? }
-  resources :votes, constraints: lambda { |r| r.env["warden"].authenticate? }
-  resources :comments, constraints: lambda { |r| r.env["warden"].authenticate? }
+  resources :profiles
 
-  get "/search/" => "search#show", as: 'search', constraints: lambda { |r| r.env["warden"].authenticate? }
-  post "/search/" => "search#show", as: 'search', constraints: lambda { |r| r.env["warden"].authenticate? }
+  match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
   ##get "users/new"
-  get "/settings", to: "users#edit", as: 'settings', constraints: lambda { |r| r.env["warden"].authenticate? }
-  post '/settings' => 'users#update', as: 'settings', constraints: lambda { |r| r.env["warden"].authenticate? }
+  get '/settings', to: 'users#edit', as: 'settings'
+  post '/settings', to: 'users#update'
   #match "/signup", to: "users#new"
   #match "/signin", to: "sessions#new"
   #get "/signout", to: "sessions#destroy", via: :delete
-  match "/about", to: "static_pages#about", constraints: lambda { |r| r.env["warden"].authenticate? }
-  match "/learn", to: "static_pages#learn", constraints: lambda { |r| r.env["warden"].authenticate? }
-  match "/newpage", to: "static_pages#newlayout", constraints: lambda { |r| r.env["warden"].authenticate? }
+  get '/about', to: 'static_pages#about'
 
   root to: 'static_pages#home'
-  match "/", to: "statements#index", constraints: lambda { |r| r.env["warden"].authenticate? }
-  match "/home", to: "statements#index", constraints: lambda { |r| r.env["warden"].authenticate? }
+  get '/', to: 'statements#index'
+  get '/home', to: 'statements#index'
 end

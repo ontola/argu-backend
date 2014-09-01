@@ -1,0 +1,57 @@
+(function() {
+    if (!document.getElementById('argu-acss'))
+    {
+        var link  = document.createElement('link');
+        link.id   = 'argu-acss';
+        link.rel  = 'stylesheet';
+        link.type = 'text/css';
+        link.href = '//<%= Rails.application.config.host + asset_path('widgets/argu.css') %>';
+        link.media = 'all';
+        document.getElementsByTagName('head')[0].appendChild(link);
+    }
+    var Statement = function () {
+        var statements = document.getElementsByTagName("statement");
+        console.log('arguments found: ' + statements.length);
+
+        for(var i = 0; i < statements.length; i++) {
+            var statement = statements[i];
+            if (statement.id == null) break;
+
+            var req = new XMLHttpRequest();
+            req.onload = function (e) {
+                if (e.target.readyState == 4 && e.target.status == 200) {
+                    statement.innerHTML = e.target.responseText;
+                }
+            };
+            req.open("get", "//<%= Rails.application.config.host %>/statements/" + statement.id + '.widget', true);
+            req.send();
+        }
+    };
+
+    var Argument = function () {
+        var arguments = document.getElementsByTagName("argument");
+        console.log('arguments found: ' + arguments.length);
+
+        for(var i = 0; i < arguments.length; i++) {
+            var argument = arguments[i];
+            if (argument.id == null) break;
+
+            var req = new XMLHttpRequest();
+            req.onload = function (e) {
+                if (e.target.readyState == 4 && e.target.status == 200) {
+                    argument.innerHTML = e.target.responseText;
+                }
+            };
+            req.open("get", "//<%= Rails.application.config.host %>/arguments/" + argument.id + '.widget', true);
+            req.send();
+        }
+    };
+
+
+    var run = function () {
+        Argument();
+        Statement();
+    };
+    document.addEventListener("DOMContentLoaded", run);
+    console.log('argu sdk loaded');
+})();
