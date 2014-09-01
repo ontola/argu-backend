@@ -552,7 +552,7 @@ div#navbar {
   #argulogo {
     font-size: 36px;
     width: 73px;
-    background-image: url(image_path('argulogo.svg'));
+    background-image: image_url('argulogo.svg');
     float: left;
     position: relative;
     height: 39px;
