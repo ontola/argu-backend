@@ -1,5 +1,4 @@
 class Profile < ActiveRecord::Base
-	attr_accessible :name, :picture, :about
 
 	def self.find(id)
 		@profile = Profile.find_by_username(id)

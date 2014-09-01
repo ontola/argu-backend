@@ -1,2 +1,87 @@
-<h1>Profiel</h1>
-<%= render 'form' %>
+<%= form_for @user, url: settings_path(method: :put), method: :put do |user| %>
+<div class="navrow">
+	<ul class="navcontent">
+		<li><%= link_to t("header_menuitem_settings") , {:anchor => "settings" } , class: "current" %></li>
+		<li><%= link_to t("header_menuitem_profile") , {:anchor => "profile" } %></li>
+		<li><%= link_to t("header_menuitem_activity") , {:anchor => "activity" } %></li>
+    </ul>
+</div>
+<div class="label-row">
+	<label><%= t("users_username") %></label>
+	<div class="label-subrow">
+		<%= user.text_field(:username, class: "settingform") %>
+	</div>
+</div>
+<%= user.fields_for :profile do |profile| %>
+<div class="label-row">
+	<label><%= t("users_name") %></label>
+	<div class="label-subrow">
+		<%= profile.text_field(:name, class: "settingform", placeholder: t("users_name_placeholder")) %>
+	</div>
+</div>
+<% end %>
+<div class="label-row">
+	<label><%= t("users_email") %></label>
+	<div class="label-subrow">
+		<%= user.email_field(:email, class: "settingform", placeholder: current_user.email.blank? ? t("users_email_placeholder") : current_user.email) %>
+	</div>
+</div>
+<div class="label-row">
+	<label><%= t("users_password_edit") %></label>
+	<div class="label-subrow">
+		<%= user.password_field("", class: "settingform") %>
+	</div>
+</div>
+<div class="label-row">
+	<label><%= t("users_password_confirmation") %></label>
+	<div class="label-subrow">
+		<%= user.password_field("", class: "settingform") %>
+	</div>
+</div>
+<% if @authentications.present? %>
+<div class="label-row">
+	<label><%= t("users_oauth_coupled") %></label>
+	<div class="label-subrow">
+		<div class="authentications">
+		  <% for authentication in @authentications %>
+		    <div class="authentication">
+		      <%= image_tag "favicon_#{authentication.provider}.svg", :size => "64x64" %>
+		      <div class="provider"><%= authentication.provider.titleize %></div>
+		      <div class="uid"><%= authentication.uid %></div>
+		      <% unless current_user.isOmniOnly && (current_user.authentications.size == 1) %>
+		        <%= link_to t("users_oauth_remove"), authentication, :confirm => t("users_oauth_remove_confirmation"), :method => :delete, :class => "remove",
+		          :class => "remove" %>
+		      <% else %>
+		        <%= link_to t("users_oauth_remove"), cancel_user_registration_path(current_user), :confirm => (t("users_oauth_remove_confirmation")),
+		            :class => "remove" %>
+		      <% end %>
+			</div>
+		 </div>
+	  <% end %>
+	</div>
+</div>
+<% end %>
+<div class="label-row" style="margin-bottom: 0px;">
+	<label><%= t("users_oauth_new") %></label>
+	<div class="label-subrow">
+		<a href="/auth/twitter" class="auth_provider">
+		  <%= image_tag "favicon_twitter.svg", :size => "64x64",
+		  :alt => "Twitter" %></a>
+		<a href="/auth/facebook" class="auth_provider">
+		  <%= image_tag "favicon_facebook.svg", :size => "64x64",
+		  :alt => "Facebook" %></a>
+		<a href="/auth/google_apps" class="auth_provider">
+		  <%= image_tag "favicon_google.svg", :size => "64x64",
+		  :alt => "Google" %></a>
+		<a href="/auth/openid" class="auth_provider">
+		  <%= image_tag "favicon_openid.svg", :size => "64x64",
+		  :alt => "OpenID" %></a>
+	</div>
+</div>
+<div class="label-row">
+	<label></label>
+	<div class="label-subrow">
+		<%= user.submit(t("save"), class: "btn blue") %>
+	</div>
+</div>
+<% end %>

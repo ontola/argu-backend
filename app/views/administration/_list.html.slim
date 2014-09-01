@@ -1,0 +1,9 @@
+table
+  caption= t 'admin.panel.list.h_'+@role.to_s
+  thead
+    tr
+      th= t 'admin.panel.list.h_username'
+      th= t 'admin.panel.list.h_email'
+      th= t 'admin.panel.list.h_role'
+      th= t 'admin.panel.list.h_actions'
+  tbody== render partial: 'list_row', collection: @admins

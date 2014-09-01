@@ -20,144 +20,172 @@ require 'spec_helper'
 
 describe StatementsController do
 
-  # This should return the minimal set of attributes required to create a valid
-  # Statement. As you add validations to Statement, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-  
-  # This should return the minimal set of values that should be in the session
-  # in order to pass any filters (e.g. authentication) defined in
-  # StatementsController. Be sure to keep this updated too.
-  def valid_session
-    {}
-  end
+  describe "as a user" do
+    login_user
 
-  describe "GET index" do
-    it "assigns all statements as @statements" do
-      statement = Statement.create! valid_attributes
-      get :index, {}, valid_session
-      assigns(:statements).should eq([statement])
-    end
-  end
-
-  describe "GET show" do
-    it "assigns the requested statement as @statement" do
-      statement = Statement.create! valid_attributes
-      get :show, {:id => statement.to_param}, valid_session
-      assigns(:statement).should eq(statement)
-    end
-  end
-
-  describe "GET new" do
-    it "assigns a new statement as @statement" do
-      get :new, {}, valid_session
-      assigns(:statement).should be_a_new(Statement)
-    end
-  end
-
-  describe "GET edit" do
-    it "assigns the requested statement as @statement" do
-      statement = Statement.create! valid_attributes
-      get :edit, {:id => statement.to_param}, valid_session
-      assigns(:statement).should eq(statement)
-    end
-  end
-
-  describe "POST create" do
-    describe "with valid params" do
-      it "creates a new Statement" do
-        expect {
-          post :create, {:statement => valid_attributes}, valid_session
-        }.to change(Statement, :count).by(1)
-      end
-
-      it "assigns a newly created statement as @statement" do
-        post :create, {:statement => valid_attributes}, valid_session
-        assigns(:statement).should be_a(Statement)
-        assigns(:statement).should be_persisted
-      end
-
-      it "redirects to the created statement" do
-        post :create, {:statement => valid_attributes}, valid_session
-        response.should redirect_to(Statement.last)
+    describe "GET index" do
+      it "assigns all statements as @statements" do
+        statement = FactoryGirl.create(:statement)
+        get :index, {}
+        assigns(:statements).should eq([statement])
       end
     end
 
-    describe "with invalid params" do
-      it "assigns a newly created but unsaved statement as @statement" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Statement.any_instance.stub(:save).and_return(false)
-        post :create, {:statement => {}}, valid_session
+    describe "GET show" do
+      it "assigns the requested statement as @statement" do
+        statement = FactoryGirl.create(:statement)
+        get :show, {:id => statement.to_param}
+        assigns(:statement).should eq(statement)
+      end
+    end
+
+    describe "GET new" do
+      it "assigns a new statement as @statement" do
+        get :new, {}
         assigns(:statement).should be_a_new(Statement)
       end
-
-      it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
-        Statement.any_instance.stub(:save).and_return(false)
-        post :create, {:statement => {}}, valid_session
-        response.should render_template("new")
-      end
     end
-  end
 
-  describe "PUT update" do
-    describe "with valid params" do
-      it "updates the requested statement" do
-        statement = Statement.create! valid_attributes
-        # Assuming there are no other statements in the database, this
-        # specifies that the Statement created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
-        Statement.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => statement.to_param, :statement => {'these' => 'params'}}, valid_session
-      end
-
+    describe "GET edit" do
       it "assigns the requested statement as @statement" do
-        statement = Statement.create! valid_attributes
-        put :update, {:id => statement.to_param, :statement => valid_attributes}, valid_session
+        statement = FactoryGirl.create(:statement)
+        get :edit, {:id => statement.to_param}
         assigns(:statement).should eq(statement)
-      end
-
-      it "redirects to the statement" do
-        statement = Statement.create! valid_attributes
-        put :update, {:id => statement.to_param, :statement => valid_attributes}, valid_session
-        response.should redirect_to(statement)
       end
     end
 
-    describe "with invalid params" do
-      it "assigns the statement as @statement" do
-        statement = Statement.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Statement.any_instance.stub(:save).and_return(false)
-        put :update, {:id => statement.to_param, :statement => {}}, valid_session
-        assigns(:statement).should eq(statement)
+    describe "POST create" do
+      describe "with valid params" do
+        it "creates a new Statement" do
+          expect {
+            post :create, {:statement => FactoryGirl.attributes_for(:statement) }
+          }.to change(Statement, :count).by(1)
+        end
+
+        it "assigns a newly created statement as @statement" do
+          post :create, {:statement => FactoryGirl.attributes_for(:statement) }
+          assigns(:statement).should be_a(Statement)
+          assigns(:statement).should be_persisted
+        end
+
+        it "redirects to the created statement" do
+          post :create, {:statement => FactoryGirl.attributes_for(:statement) }
+          response.should redirect_to(Statement.last)
+        end
       end
 
-      it "re-renders the 'edit' template" do
-        statement = Statement.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
-        Statement.any_instance.stub(:save).and_return(false)
-        put :update, {:id => statement.to_param, :statement => {}}, valid_session
-        response.should render_template("edit")
+      describe "with invalid params" do
+        it "assigns a newly created but unsaved statement as @statement" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          Statement.any_instance.stub(:save).and_return(false)
+          post :create, {:statement => {}}
+          assigns(:statement).should be_a_new(Statement)
+        end
+
+        it "re-renders the 'new' template" do
+          # Trigger the behavior that occurs when invalid params are submitted
+          Statement.any_instance.stub(:save).and_return(false)
+          post :create, {:statement => {}}
+          response.should render_template('form')
+        end
       end
     end
+
+    describe "PUT update" do
+      describe "with valid params" do
+        it "redirects to root" do
+          statement = FactoryGirl.create(:statement)
+          put :update, {:id => statement.to_param, :statement => FactoryGirl.attributes_for(:statement) }
+          response.should redirect_to(root_path)
+        end
+      end
+
+      describe "with invalid params" do
+
+        it "redirect to root" do
+          statement = FactoryGirl.create(:statement)
+          # Trigger the behavior that occurs when invalid params are submitted
+          Statement.any_instance.stub(:save).and_return(false)
+          put :update, {:id => statement.to_param, :statement => {}}
+          response.should redirect_to(root_path)
+        end
+      end
+    end
+
+    describe "DELETE destroy" do
+      it "doesn't destroy the requested statement" do
+        statement = FactoryGirl.create(:statement)
+        expect {
+          delete :destroy, {:id => statement.to_param}
+        }.to change(Statement, :count).by(0)
+      end
+
+      it "redirects to root" do
+        statement = FactoryGirl.create(:statement)
+        delete :destroy, {:id => statement.to_param}
+        response.should redirect_to(root_path)
+      end
+    end
+
   end
 
-  describe "DELETE destroy" do
-    it "destroys the requested statement" do
-      statement = Statement.create! valid_attributes
-      expect {
-        delete :destroy, {:id => statement.to_param}, valid_session
-      }.to change(Statement, :count).by(-1)
+  describe "as admin" do
+    login_admin
+
+    describe "PUT update" do
+      describe "with valid params" do
+
+        it "updates the requested statement" do
+          statement = FactoryGirl.create(:statement)
+          Statement.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+          put :update, {:id => statement.to_param, :statement => {'these' => 'params'}}
+        end
+
+        it "assigns the requested statement as @statement" do
+          statement = FactoryGirl.create(:statement)
+          put :update, {:id => statement.to_param, :statement => FactoryGirl.attributes_for(:statement) }
+          assigns(:statement).should eq(statement)
+        end
+
+        it "redirects to the statement" do
+          statement = FactoryGirl.create(:statement)
+          put :update, {:id => statement.to_param, :statement => FactoryGirl.attributes_for(:statement) }
+          response.should redirect_to(statement)
+        end
+      end
+
+      describe "with invalid params" do
+        it "assigns the statement as @statement" do
+          statement = FactoryGirl.create(:statement)
+          # Trigger the behavior that occurs when invalid params are submitted
+          Statement.any_instance.stub(:save).and_return(false)
+          put :update, {:id => statement.to_param, :statement => {}}
+          assigns(:statement).should eq(statement)
+        end
+
+        it "re-renders the 'edit' template" do
+          statement = FactoryGirl.create(:statement)
+          # Trigger the behavior that occurs when invalid params are submitted
+          Statement.any_instance.stub(:save).and_return(false)
+          put :update, {:id => statement.to_param, :statement => {}}
+          response.should render_template('statements/form')
+        end
+      end
     end
 
-    it "redirects to the statements list" do
-      statement = Statement.create! valid_attributes
-      delete :destroy, {:id => statement.to_param}, valid_session
-      response.should redirect_to(statements_url)
+    describe "DELETE destroy" do
+      it "destroys the requested statement" do
+        statement = FactoryGirl.create(:statement)
+        expect {
+          delete :destroy, {:id => statement.to_param, destroy: true}
+        }.to change(Statement, :count).by(-1)
+      end
+
+      it "redirects to the statements list" do
+        statement = FactoryGirl.create(:statement)
+        delete :destroy, {:id => statement.to_param, destroy: true}
+        response.should redirect_to(statements_url)
+      end
     end
   end
 

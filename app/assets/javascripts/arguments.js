@@ -10,9 +10,13 @@
         $(this).animate({height: newHeight}, 500);
     });
 
-    $('.c_reply').click(function(event) {
-    	event.preventDefault();
-    	$('.comment_form#cf' + $(this).attr('id')).slideDown();
-    });
+     $('.collapsible').each(function(i, e) {
+         var span   = $(this).find('span').toggle(),
+             before = $('<span>...<a href="#">meer</a></span>'),
+             after  = $('<span><a href="#">minder</a></span>').hide(),
+           _onclick = function test (e) {e.preventDefault(); before.toggle(); span.toggle(); after.toggle(); };
+         span.before(before.click(_onclick));
+         span.after(after.click(_onclick));
+     });
 
  });

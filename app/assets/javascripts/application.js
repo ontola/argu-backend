@@ -12,6 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.jeditable.mini
-//= require settings
+//= require jquery-ui/autocomplete
+//= require jquery-ui/sortable
+//= require microplugin
+//= require sifter
+//= require selectize
+//= require requirejs
+//= require autocomplete-rails
+//= require fixedsticky
 //= require_tree .

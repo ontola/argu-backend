@@ -5,6 +5,12 @@ nl:
     type: "profiel"
     show:
       title: "profiel"
+      btn:
+        edit: 'Bewerken'
+        freeze: 'Bevriezen'
+        unfreeze: 'Ontdooien'
+        admin: 'Maak admin'
+        unadmin: 'Degradeer admin'
     edit:
       title: "profiel bewerken"
       name: "naam"

@@ -7,7 +7,7 @@
 # Ignore gemfile lock
 ./Gemfile.lock
 Gemfile.lock
-
+/.idea/*
 # Ignore bundler config
 /.bundle
 
@@ -19,3 +19,4 @@ Gemfile.lock
 /tmp/*
 /solr/data/*
 /solr/pids/*
+/.idea

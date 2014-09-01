@@ -1,18 +1,17 @@
 <div class="revbar">
 	<ul>
-		<li><h3><%= @version.next.nil? ? t("arguments.revisions.newest") : link_to(t("next"), rev_revisions_argument_url(@argument, @version.next)) %></h3></li>
-		<li id="revheader"><h2><%= @version.created_at.to_s %></h2></li>
-		<li id="revprev"><h3><%= @version.next.nil? ? t("arguments.revisions.oldest") : link_to(t("previous"), rev_revisions_argument_url(@argument, @version.previous)) %></h3></li>
+		<li><h2><%= @version.next.nil? ? t("arguments.revisions.newest") : link_to(t("next"), rev_revisions_argument_url(@argument, @version.next)) %></h2></li>
+		<li id="revprev"><h2><%= @version.next.nil? ? t("arguments.revisions.oldest") : link_to(t("previous"), rev_revisions_argument_url(@argument, @version.previous)) %></h2></li>
 	</ul>
 </div>
 <div>
 	<ul class="revunderbar">
 		<% u = User.find_by_id(@argument.version.whodunnit) %>
 		<li><%= t("arguments.revisions.edited_by") + ":" %><%= link_to(u.username, profile_url(u)) %></li>
+		<li id="revheader"><h2><%= @version.created_at.to_s %></h2></li>
 		<li><h3><%= t("arguments.revisions.options") + ":" %></h3></li>
 		<li><% if(@argument.live?)%><%= t("arguments.revisions.current") %><% else %> <%= link_to(t("arguments.revisions.revert"), update_revision_argument_url(@argument, @version), method: :put) %><% end %></li>
 
 	</ul>
 </div>
-<%= render 'argumentbody' %>
-<% #render 'argumentarguments' #Not yet migrating with the trail %>
+<%= render 'body' %>

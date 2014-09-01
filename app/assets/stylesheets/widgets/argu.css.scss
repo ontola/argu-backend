@@ -1,0 +1,16 @@
+statement,
+argument {
+  display: block;
+  margin: 1px;
+  .box {
+    overflow: hidden;
+  }
+}
+
+argument {
+  .box {
+    h1.title {
+      padding-top: 0.5em;
+    }
+  }
+}

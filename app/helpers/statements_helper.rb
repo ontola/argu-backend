@@ -1,45 +1,15 @@
-
+include ActsAsTaggableOn::TagsHelper
 module StatementsHelper
-private
-	def getStateType(statetype)
-		case statetype
-		when 0
-			t("statements.type_social")
-		when 1
-			t("statements.type_political")
-		when 2
-			t("statements.type_jurisdictional")
-		when 3
-			t("statements.type_economical")
-		when 4
-			t("statements.type_ecological")
-		when 5
-			t("statements.type_technological")
-		when 6
-			t("statements.type_discussion")
-		when 7
-			t("statements.type_other")
-		end
-	end
+  def back_to_statement(resource)
+    concat content_tag 'h1', t("#{resource.class.name.pluralize.downcase}.new.header", side: pro_translation(resource))
+    link_to resource.statement.title, statement_path(resource.statement), class: "title statement top"
+  end
 
-	def getStateImage(statetype)
-		case statetype
-		when 0
-			"\\assets\\icon_state_soc.png"
-		when 1
-			"\\assets\\icon_state_pol.png"
-		when 2
-			"\\assets\\icon_state_jur.png"
-		when 3
-			"\\assets\\icon_state_ecn.png"
-		when 4
-			"\\assets\\icon_state_ecl.png"
-		when 5
-			"\\assets\\icon_state_tec.png"
-		when 6
-			"\\assets\\icon_state_dis.png"
-		when 7
-			"\\assets\\icon_state_oth.png"
-		end
-	end
+  def pro_side(resource)
+    %w(pro true).index(params[:pro] || resource.pro.to_s) ? "pro" : "con"
+  end
+
+  def pro_translation(resource)
+    %w(pro true).index(params[:pro] || resource.pro.to_s) ? t("#{resource.class.to_s.pluralize.downcase}.pro") : t("#{resource.class.to_s.pluralize.downcase}.con")
+  end
 end

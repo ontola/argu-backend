@@ -3,41 +3,59 @@ class Ability
 
   def initialize(user)
     user ||= User.new #Guest users
-    if user.is? :coder
+    if user.has_role? :coder
         #The coder can do anything
-        can :manage, :all
-    elsif user.is? :admin
-        #The admin can manage all the generic objects
-        can [:manage, :revisions, :allrevisions],
-            [Statement, 
-             Argument,
-             Comment,
-             Profile,
-             Vote]
-        can :manage, User do |u|
-          user == u
+        can [:manage, :vote], :all
+        can [:add_admin, :remove_admin], User do |item| ##This is included in :manage according to the docs
+          !item.has_role? :coder
         end
-    elsif user.is? :user
-        cannot :manage, User do |u|
-          user != u
+        #can [:add, :remove, :list], [:admin, :mod, :user]
+    elsif user.has_role?(:administration) && !user.frozen?
+      can [:panel, :search_username, :list], :administration
+      can [:add, :remove, :list], [:mod, :user]
+      can [:freeze, :unfreeze], User do |item|
+        !item.has_any_role? :coder, :administration
+      end
+      can :trash, [Argument, Opinion]
+      #The admin can manage all the generic objects
+      can [:manage, :revisions, :allrevisions, :vote],
+          [Statement, 
+           Argument,
+           Opinion,
+           Comment,
+           Profile,
+           Card,
+           Vote]
+      can :manage, User do |u|
+        user == u
+      end
+    elsif user.has_role?(:user) && !user.frozen?
+        can :read, :all                                                  #read by default, should be changed later
+        can [:create, :placeComment, :report, :vote], [Statement, Argument, Opinion, Comment, Card]
+        can [:revisions, :allrevisions], [Statement, Argument, Opinion]  #View revisions
+        cannot :delete, [Statement, Argument, Opinion]                   #No touching!
+        cannot [:update, :delete], [PaperTrail::Version]                 #I said, no touching!
+
+        ##Moderator rights
+        can [:edit_mods, :create_mod, :destroy_mod], Statement do |item|
+          user.has_role? :mod, item
         end
-        can :read, :all                                         #read by default, should be changed later
-        can :create, [Statement, Argument, Comment]
-        can :update, [Statement, Argument] do |item|
-          item.is_moderator?(user)
+        can :trash, Argument, Opinion do |item|
+          user.has_role? :mod, item.statement
         end
-        can [:revisions, :allrevisions], [Statement, Argument]  #View revisions
-        can :placeComment, [Statement, Argument, Comment]
-        cannot :delete, [Statement, Argument ]                  #No touching!
-        cannot [:update, :delete], [Version]                    #I said, no touching!
+        can :trash, Comment do |item|
+          user.has_role? :mod, eval(item.commentable_type).find_by_id(item.commentable_id).statement
+        end
         can [:edit, :update, :delete], Profile do |profile|     #Do whatever you want with your own profile
-            user.profile == profile
+          user.profile == profile
         end
-        can [:show, :update], User do |u|                       #Same goes for your persona
+
+        ##Owned objects
+        can [:show, :edit, :update, :search], User do |u|       #Same goes for your persona
           user == u
         end
-        can :wipeComment, Comment do |comment|
-          (comment.user == user) || comment.commentable.is_moderator?(user)
+        can :destroyComment, Comment do |comment|
+          (comment.user == user)
         end
         can [:edit, :update], Comment do |comment|              #And your comments
           comment.user == user
@@ -46,13 +64,23 @@ class Ability
           user.id == vote.voter_id
         end
     else
-        cannot [:manage, :revisions, :allrevisions],            #Closed beta, so bugger off!
+        cannot [:manage],            #Closed beta, so bugger off!
                [Statement,
                 Argument,
+                Opinion,
                 Comment,
                 Profile,
                 Vote,
-                Version]
+                Card,
+                PaperTrail::Version]
+        can :read, [Statement,
+                    Argument,
+                    Opinion,
+                    Comment,
+                    Profile,
+                    Vote,
+                    Card,
+                    PaperTrail::Version]
     end
   end
 end
