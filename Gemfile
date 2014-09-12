@@ -16,6 +16,7 @@ gem 'delayed_job', '~> 4.0.1'
 gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'formtastic', '~> 3.0'
 
 ##################Features########################
 gem 'paper_trail', '~> 3.0.0'
@@ -36,6 +37,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete', '~> 1.0.7'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
+gem "paperclip", "~> 4.2"
 
 ##################User management########################
 gem 'devise', "~> 3.2.4"

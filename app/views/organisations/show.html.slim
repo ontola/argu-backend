@@ -1,0 +1,11 @@
+.profile-header
+  =image_tag @org.cover_photo
+  h1= @org.name
+  =image_tag @org.profile_photo
+.box
+  p= @org.description
+  p
+    == '&#127757; '
+    = link_to @org.website.sub(/^https?\:\/\//, ''), @org.website
+  - @org.key_tags.each do |tag|
+    span=tag

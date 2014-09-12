@@ -1,4 +1,18 @@
 Argu::Application.routes.draw do
+  get 'organisation/show'
+
+  get 'organisation/new'
+
+  get 'organisation/create'
+
+  get 'organisation/edit'
+
+  get 'organisation/update'
+
+  get 'organisation/delete'
+
+  get 'organisation/destroy'
+
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
   devise_for :users, :controllers => { :registrations => 'registrations' }
@@ -52,6 +66,8 @@ Argu::Application.routes.draw do
   resources :opinions do
     resources :comments
   end
+
+  resources :organisations, except: :index
 
   #resources :sessions #, only: [:new, :create, :destroy]
   resources :profiles

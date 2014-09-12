@@ -1,0 +1,15 @@
+h1 _create organisation_
+= semantic_form_for @org do |f|
+  = f.inputs do
+    = f.input :name
+    = f.input :description
+    = f.input :slogan
+    = f.input :website
+    = f.input :public, :label => "_maak publiek_"
+    = f.input :listed, :label => "_maak vindbaar_"
+    = f.input :requestable, :label => "_sta aanmeldingsverzoeken toe_"
+    = f.input :key_tags, :required => false, :hint => "Example: ruby, rails, forms"
+
+  = f.actions do
+    = f.action :submit, :as => :button
+    = f.action :cancel, :as => :link

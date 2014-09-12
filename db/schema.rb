@@ -11,10 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140831211429) do
-
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+ActiveRecord::Schema.define(version: 20140912224058) do
 
   create_table "arguments", force: true do |t|
     t.text     "content",                             null: false
@@ -81,6 +78,14 @@ ActiveRecord::Schema.define(version: 20140831211429) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "follows", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "followed_id"
+    t.string   "followed_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
   create_table "opinions", force: true do |t|
     t.string   "title"
     t.text     "content"
@@ -98,6 +103,27 @@ ActiveRecord::Schema.define(version: 20140831211429) do
   add_index "opinions", ["statement_id", "id", "pro"], name: "index_opinions_on_statement_id_and_id_and_pro", using: :btree
   add_index "opinions", ["statement_id", "id"], name: "index_opinions_on_statement_id_and_id", using: :btree
   add_index "opinions", ["statement_id", "is_trashed"], name: "index_opinions_on_statement_id_and_is_trashed", using: :btree
+
+  create_table "organisations", force: true do |t|
+    t.string   "name"
+    t.string   "website"
+    t.boolean  "public"
+    t.boolean  "listed"
+    t.boolean  "requestable"
+    t.text     "description"
+    t.string   "slogan"
+    t.string   "key_tags"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "profile_photo_file_name"
+    t.string   "profile_photo_content_type"
+    t.integer  "profile_photo_file_size"
+    t.datetime "profile_photo_updated_at"
+    t.string   "cover_photo_file_name"
+    t.string   "cover_photo_content_type"
+    t.integer  "cover_photo_file_size"
+    t.datetime "cover_photo_updated_at"
+  end
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
@@ -121,11 +147,22 @@ ActiveRecord::Schema.define(version: 20140831211429) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "statementarguments", force: true do |t|
+    t.integer "argument_id",                 null: false
+    t.integer "statement_id",                null: false
+    t.boolean "pro",          default: true, null: false
+    t.integer "votes_count",  default: 0
+  end
+
+  add_index "statementarguments", ["argument_id", "statement_id"], name: "arg_state_index", using: :btree
+
   create_table "statements", force: true do |t|
     t.string   "title",                               null: false
     t.text     "content",                             null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "pro_count",           default: 0
+    t.integer  "con_count",           default: 0
     t.integer  "tag_id"
     t.boolean  "is_trashed",          default: false
     t.integer  "votes_pro_count",     default: 0,     null: false
@@ -135,8 +172,6 @@ ActiveRecord::Schema.define(version: 20140831211429) do
     t.integer  "argument_con_count",  default: 0,     null: false
     t.integer  "opinion_pro_count",   default: 0,     null: false
     t.integer  "opinion_con_count",   default: 0,     null: false
-    t.integer  "pro_count",           default: 0
-    t.integer  "con_count",           default: 0
     t.integer  "votes_abstain_count", default: 0,     null: false
   end
 
@@ -209,8 +244,8 @@ ActiveRecord::Schema.define(version: 20140831211429) do
     t.integer  "voter_id"
     t.string   "voter_type"
     t.integer  "for",           default: 3, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "index_votes_on_voter_and_voteable_and_trashed", using: :btree

@@ -3,13 +3,12 @@ class AdministrationController < ApplicationController
 
   def panel
     authorize :administration, :show?
-    #Own statements
-    #@statements = Statement.with_role(:mod, current_user)
+
   end
 
   def list
     check_role
-    authorize! :list, @role
+    authorize :administration, :show?
     @admins = User.with_role(@role)
   end
 

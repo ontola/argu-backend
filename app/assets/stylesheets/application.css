@@ -12,6 +12,7 @@
  *= require fixedsticky
  *= require selectize
  *= require selectize.default
+ *= require formtastic
  *= require_self
  *= require_tree .
 */
