@@ -2,6 +2,8 @@ class User < ActiveRecord::Base
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :authentications, dependent: :destroy
   has_many :votes, as: :voteable
+  has_many :memberships
+  has_many :organisations, through: :memberships
   has_one :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile
@@ -40,7 +42,13 @@ class User < ActiveRecord::Base
   handle_asynchronously :solr_index!
   handle_asynchronously :remove_from_index
 
-#general
+#######Attributes########
+  def display_name
+    self.profile.name.presence || self.username
+  end
+
+
+#######Utility########
   def self.find(id)
     user = User.find_by_username(id.to_s)
     user ||= User.find_by_id(id)
@@ -50,7 +58,7 @@ class User < ActiveRecord::Base
     return (:username.blank? ? email : username )
   end
 
-#authentiaction
+#########Auth##############
   def apply_omniauth(omniauth)
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
@@ -62,6 +70,8 @@ class User < ActiveRecord::Base
   def isOmniOnly
     authentications.any? && password.blank?
   end
+
+  #######Methods########
 
   def self.isValidUsername?(name)
     USERNAME_FORMAT_REGEX.match(name.to_s)

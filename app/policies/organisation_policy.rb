@@ -7,7 +7,7 @@ class OrganisationPolicy < RestrictivePolicy
   end
 
   def show?
-    user.has_role? :staff
+    user.memberships.where(organisation: record) || super
   end
 
   def new?

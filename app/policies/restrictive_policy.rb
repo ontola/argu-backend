@@ -7,39 +7,39 @@ class RestrictivePolicy
   end
 
   def index?
-    false
+    user.has_role? :staff
   end
 
   def show?
-    false
+    user.has_role? :staff
   end
 
   def create?
-    false
+    user.has_role? :staff
   end
 
   def new?
-    false
+    create?
   end
 
   def update?
-    false
+    user.has_role? :staff
   end
 
   def edit?
-    false
+    update?
   end
 
   def trash?
-    false
+    user.has_role? :staff
   end
 
   def destroy?
-    false
+    user.has_role? :staff
   end
 
   def vote?
-    false
+    user.has_role? :staff
   end
 
   def scope

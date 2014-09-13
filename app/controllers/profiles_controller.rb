@@ -1,14 +1,14 @@
 class ProfilesController < ApplicationController
-	load_and_authorize_resource
 
-	#GET /profiles/1
-	def show
-		@user = User.find_by_id(@profile.user_id)
+  #GET /profiles/1
+  def show
+    @profile = Profile.find params[:id]
+    authorize @profile, :show?
 
-		respond_to do |format|
-			format.html # show.html.erb
-		end
-	end
+    respond_to do |format|
+      format.html # show.html.erb
+    end
+  end
 
 	#GET /1/edit
 	def edit

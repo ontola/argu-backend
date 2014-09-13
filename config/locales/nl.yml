@@ -81,7 +81,7 @@ nl:
   users_new_confirmation: "bevestigen"
   users_new_create: "account aanmaken"
   #show
-  users_show_title: "gebruiker"
+  users_show_title: "instellingen"
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
 

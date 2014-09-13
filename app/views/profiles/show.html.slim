@@ -1,11 +1,6 @@
-h1#txt= t("profiles.show.title")
+.profile-header
+  =image_tag @profile.cover_photo
+  h1= @profile.name
+  =image_tag @profile.profile_photo
 .box.profile.center
-	=image_tag (@profile.picture.blank? ? "icon_temp.png" : @profile.picture), options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
-	h3=@user.username
-	p=@profile.name
-	p[style="text-overflow:ellipsis; white-space: nowrap;"]=mail_to(@user.email, "" + (@user.email.length > 25 ? (@user.email.to_s[0, 23] + "...") : @user.email unless @user.email.blank?).to_s )
-	ul.buttons.hastags
-		li=link_to(t("profiles.show.btn.edit"), edit_profile_url(@profile), html_options = { remote: false, id: :editbtn }) if can? :edit, @profile
-		li#admin_btn=render partial: 'admin_btn'
-		li#freeze_btn=render partial: 'freeze_btn'
-	.clearfix
+  h1=@profile.display_name

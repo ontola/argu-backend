@@ -20,12 +20,20 @@ class OrganisationsController < ApplicationController
     end
   end
 
-  def edit
+  def settings
     @org = Organisation.find params[:id]
     authorize @org, :update?
   end
 
   def update
+    @org = Organisation.find params[:id]
+    authorize @org, :update?
+
+    if @org.update permit_params
+      render 'settings'
+    else
+      render notifications: [{type: 'error', message: 'Fout tijdens het opslaan'}]
+    end
   end
 
   def delete

@@ -1,3 +1,4 @@
+=render partial: 'manage_bar'  if policy(@org).update?
 .profile-header
   =image_tag @org.cover_photo
   h1= @org.name

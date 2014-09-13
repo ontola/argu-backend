@@ -1,0 +1,14 @@
+.sidebar
+  .box
+    .profile
+      =link_to profile_path(current_user.profile) do
+        =image_tag current_user.profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
+        p=current_user.display_name
+    .group
+      h3 organisations
+      ul
+        -current_user.organisations.each do |o|
+          li= link_to o.name, organisation_path(o)
+.content
+  - @newstatements.first(4).each do |statement|
+    = render statement

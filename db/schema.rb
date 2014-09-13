@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140912224058) do
+ActiveRecord::Schema.define(version: 20140913110328) do
 
   create_table "arguments", force: true do |t|
     t.text     "content",                             null: false
@@ -86,6 +86,11 @@ ActiveRecord::Schema.define(version: 20140912224058) do
     t.datetime "updated_at",    null: false
   end
 
+  create_table "memberships", force: true do |t|
+    t.integer "user_id"
+    t.integer "organisation_id"
+  end
+
   create_table "opinions", force: true do |t|
     t.string   "title"
     t.text     "content"
@@ -127,11 +132,19 @@ ActiveRecord::Schema.define(version: 20140912224058) do
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
-    t.string   "name",       default: ""
-    t.text     "about",      default: ""
-    t.string   "picture",    default: ""
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "name",                       default: ""
+    t.text     "about",                      default: ""
+    t.string   "picture",                    default: ""
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.string   "profile_photo_file_name"
+    t.string   "profile_photo_content_type"
+    t.integer  "profile_photo_file_size"
+    t.datetime "profile_photo_updated_at"
+    t.string   "cover_photo_file_name"
+    t.string   "cover_photo_content_type"
+    t.integer  "cover_photo_file_size"
+    t.datetime "cover_photo_updated_at"
   end
 
   add_index "profiles", ["user_id"], name: "profiles_by_user_id", unique: true, using: :btree

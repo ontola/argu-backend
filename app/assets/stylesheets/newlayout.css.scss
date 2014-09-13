@@ -122,6 +122,18 @@ select {
   font-size: 1em;
 }
 
+.sidebar {
+  width: 20em;
+  float: left;
+  margin-right: 2em;
+  .group {
+    clear: left;
+  }
+}
+.content {
+  float: left;
+}
+
 .box {
   display: block;
   padding: 0.8em;
