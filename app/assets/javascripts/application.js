@@ -20,4 +20,7 @@
 //= require requirejs
 //= require autocomplete-rails
 //= require fixedsticky
+//= require jquery.jcrop
+//= require papercrop
+//= require cocoon
 //= require_tree .

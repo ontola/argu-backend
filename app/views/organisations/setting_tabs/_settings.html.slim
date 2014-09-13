@@ -6,10 +6,11 @@
     = f.input :website
     = f.input :profile_photo
     = f.input :cover_photo
+    = f.cropbox :cover_photo, :width => 600
     = f.input :public, :label => "_maak publiek_"
     = f.input :listed, :label => "_maak vindbaar_"
     = f.input :requestable, :label => "_sta aanmeldingsverzoeken toe_"
-    = f.input :key_tags, :required => false, :hint => "Example: ruby, rails, forms"
+    = f.input :key_tags, :required => false, input_html: {class: 'tag-list'}, :hint => "Example: ruby, rails, forms"
 
   = f.actions do
     = f.action :submit, :as => :button

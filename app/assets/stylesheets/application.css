@@ -13,6 +13,7 @@
  *= require selectize
  *= require selectize.default
  *= require formtastic
+ *= require jquery.jcrop
  *= require_self
  *= require_tree .
 */

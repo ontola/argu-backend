@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  autocomplete :user, :name, :extra_data => [:profile_photo]
 
   def edit
     @user = User.find current_user.id

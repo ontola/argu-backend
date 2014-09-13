@@ -1,5 +1,6 @@
 =render partial: 'manage_bar'  if policy(@org).update?
-.profile-header[style="background-image: url('#{asset_url @org.cover_photo.url}');"]
+.profile-header
+  =image_tag @org.cover_photo.url(:cropped), class: 'cover'
   =image_tag @org.profile_photo, class: 'profile'
   h1= @org.name
 .box
@@ -7,8 +8,9 @@
   p
     == '&#127757; '
     = link_to @org.website.sub(/^https?\:\/\//, ''), @org.website
-  - @org.key_tags.each do |tag|
-    span=tag
+  .tags
+    - @org.key_tags.each do |tag|
+      = link_to tag, tag_statements_url(tag), class: "tag", title: t("statements.titles.tags")+tag
 .argcontainer1
   .argcontainer2
     .procon

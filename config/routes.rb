@@ -17,6 +17,7 @@ Argu::Application.routes.draw do
   match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
 
   resources :users do
+    get :autocomplete_user_name, :on => :collection
     collection do
       post '/search/:username' => 'users#search' #, as: 'search'
       post '/search' => 'users#search', as: 'search'

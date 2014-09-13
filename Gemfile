@@ -17,6 +17,7 @@ gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.0'
+gem "cocoon"
 
 ##################Features########################
 gem 'paper_trail', '~> 3.0.0'
@@ -35,9 +36,10 @@ gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~>2.0.2'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'rails3-jquery-autocomplete', '~> 1.0.7'
+gem 'rails3-jquery-autocomplete', '~> 1.0.12'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
 gem "paperclip", "~> 4.2"
+gem "papercrop"
 
 ##################User management########################
 gem 'devise', "~> 3.2.4"
@@ -65,6 +67,7 @@ group :development, :test do
   gem 'sass-rails',   '~> 4.0.3'
   gem 'coffee-rails', '~> 4.0.1'
   gem 'uglifier', '>= 1.0.3'
+  gem 'quiet_assets'
 end
 
 group :production do 

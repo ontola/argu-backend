@@ -1,6 +1,12 @@
-=link_to 'Add manager', '#'
+ul.role-list
+  =semantic_form_for @org do |f|
+    -@org.managers.each do |m|
+      li
+    = f.semantic_fields_for :memberships, where: {} do |manager|
+      = render 'membership', :f => manager
+    .links
+      = link_to_add_association 'add manager', f, :memberships
 
-ul
-  -@org.managers.each do |m|
-    li
-      =render m
+.right
+  =link_to 'cancel', '#', class: 'btn'
+  =link_to 'save', '#', class: 'btn'

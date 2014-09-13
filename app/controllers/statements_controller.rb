@@ -30,7 +30,7 @@ class StatementsController < ApplicationController
   # GET /statements/new
   # GET /statements/new.json
   def new
-    @statement = Statement.new permit_params
+    @statement = Statement.new params[:statement]
     authorize @statement
     respond_to do |format|
       format.html { render 'form' }

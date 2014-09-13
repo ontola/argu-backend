@@ -1,0 +1,3 @@
+li[id=('list_item_'+f.object.id.to_s)]
+  =image_tag f.object.user.profile.profile_photo, style: 'width: 3em; height: 3em; float:left;'
+  p= f.object.user.display_name

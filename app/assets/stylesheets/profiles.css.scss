@@ -1,7 +1,7 @@
 
 .profile-header {
   position: relative;
-  height: 20em;
+  height: 22.7em;
   display: inline-block;
   width: 100%;
   background-size: cover;
@@ -15,6 +15,9 @@
     height: 15em;
     border: 1px solid rgba(150,150,150,.2);
   }
+  img.cover {
+    width: 100%;
+  }
   h1 {
     float:left;
     position: absolute;
@@ -26,5 +29,18 @@
     text-align: left;
     padding-left: 9em;
     background-color: rgba(255,255,255,.8);
+  }
+}
+
+.tags {
+  text-align: left;
+}
+
+.role-list {
+  li {
+    text-align:left;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 1em;
   }
 }
