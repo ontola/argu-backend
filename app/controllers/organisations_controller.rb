@@ -44,6 +44,6 @@ class OrganisationsController < ApplicationController
 
 private
   def permit_params
-    params.require(:organisation).permit :name, :description, :slogan, :website, :public, :listed, :requestable, :key_tags
+    params.require(:organisation).permit :name, :description, :slogan, :website, :public, :listed, :requestable, :key_tags, :profile_photo, :cover_photo
   end
 end

@@ -126,8 +126,19 @@ select {
   width: 20em;
   float: left;
   margin-right: 2em;
+  .profile {
+    display: inline-block;
+    width: 100%;
+  }
   .group {
     clear: left;
+    h3 {
+      font-weight: bold;
+      margin: 1em 0 0 0;
+    }
+  }
+  ul {
+    text-align: left;
   }
 }
 .content {
@@ -178,6 +189,29 @@ select {
   }
   form {
   margin-top: 4px;
+  }
+}
+
+.options-bar {
+  width: 100%;
+  background-color: white;
+  float: left;
+  box-shadow: 1px 1px 10px #e2e2e2;
+  margin-top: -1em;
+  li {
+    list-style-type: none;
+    display: inline-block;
+    float: left;
+  }
+  a {
+    display: block;
+    font-family: $raleway;
+    font-size: 16px;
+    font-weight: 200;
+    line-height: 39px;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 

@@ -10,7 +10,7 @@ Gemfile.lock
 /.idea/*
 # Ignore bundler config
 /.bundle
-
+/public/system
 # Ignore the default SQLite database.
 /db/*.sqlite3
 

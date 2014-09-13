@@ -5,10 +5,13 @@
         =image_tag current_user.profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
         p=current_user.display_name
     .group
-      h3 organisations
+      h3 _Organisations_
       ul
         -current_user.organisations.each do |o|
-          li= link_to o.name, organisation_path(o)
+          li
+            =link_to organisation_path(o)
+              = image_tag o.profile_photo, size: '16x16'
+              = o.name
 .content
   - @newstatements.first(4).each do |statement|
     = render statement
