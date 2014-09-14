@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140913110328) do
+ActiveRecord::Schema.define(version: 20140914191048) do
 
   create_table "arguments", force: true do |t|
     t.text     "content",                             null: false
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20140913110328) do
   create_table "memberships", force: true do |t|
     t.integer "user_id"
     t.integer "organisation_id"
+    t.integer "role",            default: 0, null: false
   end
 
   create_table "opinions", force: true do |t|
@@ -128,6 +129,7 @@ ActiveRecord::Schema.define(version: 20140913110328) do
     t.string   "cover_photo_content_type"
     t.integer  "cover_photo_file_size"
     t.datetime "cover_photo_updated_at"
+    t.string   "web_url"
   end
 
   create_table "profiles", force: true do |t|
@@ -159,6 +161,16 @@ ActiveRecord::Schema.define(version: 20140913110328) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
+  create_table "sessions", force: true do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
   create_table "statementarguments", force: true do |t|
     t.integer "argument_id",                 null: false

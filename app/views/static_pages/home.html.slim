@@ -9,7 +9,7 @@
       ul
         -current_user.organisations.each do |o|
           li
-            =link_to organisation_path(o)
+            =link_to organisation_url(o, subdomain: o.web_url)
               = image_tag o.profile_photo, size: '16x16'
               = o.name
 .content

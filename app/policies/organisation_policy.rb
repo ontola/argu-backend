@@ -7,7 +7,7 @@ class OrganisationPolicy < RestrictivePolicy
   end
 
   def show?
-    user.memberships.where(organisation: record) || super
+    (user && user.memberships.where(organisation: record).present?) || super
   end
 
   def new?

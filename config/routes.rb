@@ -32,9 +32,6 @@ Argu::Application.routes.draw do
     get 'tags/:tag', to: 'tags/statements#show',  on: :collection, as: :tag
 
     resources :revisions, only: [:index, :show, :update], shallow: true
-    #member do
-    #  get 'tags'   # refactor above to this later (or, ideally a new controller on its own)
-    #end
     namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
       get '' => 'statements#index', as: ''
       post ':user_id' => 'statements#create', as: 'user'

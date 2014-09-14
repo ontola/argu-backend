@@ -7,15 +7,15 @@ class RestrictivePolicy
   end
 
   def index?
-    user.has_role? :staff
+    user && user.has_role?(:staff)
   end
 
   def show?
-    user.has_role? :staff
+    user && user.has_role?(:staff)
   end
 
   def create?
-    user.has_role? :staff
+    user && user.has_role?(:staff)
   end
 
   def new?
@@ -23,7 +23,7 @@ class RestrictivePolicy
   end
 
   def update?
-    user.has_role? :staff
+    user && user.has_role?(:staff)
   end
 
   def edit?
@@ -31,15 +31,15 @@ class RestrictivePolicy
   end
 
   def trash?
-    user.has_role? :staff
+    user && user.has_role?(:staff)
   end
 
   def destroy?
-    user.has_role? :staff
+    user && user.has_role?(:staff)
   end
 
   def vote?
-    user.has_role? :staff
+    user && user.has_role?(:staff)
   end
 
   def scope

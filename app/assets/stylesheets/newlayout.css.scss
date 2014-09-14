@@ -595,13 +595,26 @@ div#navbar {
     padding-left: 10px;
     padding-right: 10px;
   }
-  #argulogo {
-    font-size: 36px;
-    width: 73px;
-    background-image: url(image_path('argulogo.svg'));
+  .top-logo {
     float: left;
-    position: relative;
-    height: 39px;
+    display: inline-block;
+    a.local {
+      display: inline-block;
+      padding: 0;
+    }
+    h1 {
+      line-height: 45px;
+      padding: 3px;
+      display: inline;
+    }
+    #argulogo {
+      font-size: 36px;
+      width: 73px;
+      float: left;
+      position: relative;
+      height: 39px;
+      padding: 0 0.5em 0 0;
+    }
   }
   .close {
     border-right: solid 1px white;

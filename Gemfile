@@ -18,6 +18,7 @@ gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.0'
 gem "cocoon"
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 ##################Features########################
 gem 'paper_trail', '~> 3.0.0'

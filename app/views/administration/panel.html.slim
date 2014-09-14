@@ -1,3 +1,0 @@
-.admin
-  -current_user.roles.map(&:name).uniq.each do |r|
-    = render partial: "administration/panel/#{r}/panel"
