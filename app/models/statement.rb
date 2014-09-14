@@ -5,6 +5,7 @@ class Statement < ActiveRecord::Base
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy
   has_many :votes, as: :voteable
+  belongs_to :organisation
 
   before_save :trim_data
   before_save :cap_title

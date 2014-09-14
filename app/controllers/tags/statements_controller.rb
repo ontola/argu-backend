@@ -9,7 +9,7 @@ class Tags::StatementsController < ApplicationController
   end
 
   def show
-    @tag = Tag.find_by_name(params[:tag])
+    @tag = Tag.find_or_create_by(name: params[:tag])
     if params[:tag].present? 
       @statements = Statement.tagged_with(params[:tag]) # TODO rewrite statement to exclude where statement.tag_id
     else

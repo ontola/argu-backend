@@ -28,9 +28,10 @@ class ApplicationController < ActionController::Base
 
   def set_local_scope
     if subdomain.present?
-      @_argu_scope = Organisation.find_by web_url: subdomain
-      if @_argu_scope && policy(@_argu_scope).show?
+      _argu_scope = Organisation.find_by web_url: subdomain
+      if _argu_scope && policy(_argu_scope).show?
         @local_title = subdomain
+        current_user._current_scope = _argu_scope
       else
         raise ActionController::RoutingError.new('Not Found')
       end

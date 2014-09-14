@@ -2,6 +2,7 @@ class Organisation < ActiveRecord::Base
   has_many :memberships
   has_many :users, through: :memberships
   accepts_nested_attributes_for :memberships, :reject_if => :all_blank, :allow_destroy => true
+  has_many :statements
 
   has_attached_file :profile_photo
   validates_attachment_content_type :profile_photo, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/webm"]

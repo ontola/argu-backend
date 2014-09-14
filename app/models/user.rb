@@ -24,7 +24,7 @@ class User < ActiveRecord::Base
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
-  attr_accessor :login, :current_password, :email
+  attr_accessor :login, :current_password, :email, :_current_scope
 
   USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][a-zA-Z0-9]*\z/i
 

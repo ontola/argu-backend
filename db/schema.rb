@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140914191048) do
+ActiveRecord::Schema.define(version: 20140914225119) do
 
   create_table "arguments", force: true do |t|
     t.text     "content",                             null: false
@@ -198,10 +198,12 @@ ActiveRecord::Schema.define(version: 20140914191048) do
     t.integer  "opinion_pro_count",   default: 0,     null: false
     t.integer  "opinion_con_count",   default: 0,     null: false
     t.integer  "votes_abstain_count", default: 0,     null: false
+    t.integer  "organisation_id"
   end
 
   add_index "statements", ["id"], name: "index_statements_on_id", using: :btree
   add_index "statements", ["is_trashed"], name: "index_statements_on_is_trashed", using: :btree
+  add_index "statements", ["organisation_id"], name: "index_statements_on_organisation_id", using: :btree
   add_index "statements", ["tag_id"], name: "index_statements_on_tag_id", using: :btree
 
   create_table "taggings", force: true do |t|
