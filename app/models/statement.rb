@@ -7,6 +7,8 @@ class Statement < ActiveRecord::Base
   has_many :votes, as: :voteable
   belongs_to :organisation
 
+  counter_culture :organisation
+
   before_save :trim_data
   before_save :cap_title
 
