@@ -3,11 +3,12 @@ class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
   has_many :votes, as: :voteable
   has_many :memberships
+  has_many :group_memberships
   has_many :organisations, through: :memberships
+  has_many :groups, through: :group_memberships
   has_one :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile
-  #acts_as_voter
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,

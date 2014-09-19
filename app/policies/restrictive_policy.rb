@@ -6,16 +6,20 @@ class RestrictivePolicy
     @record = record
   end
 
-  def index?
+  def staff?
     user && user.has_role?(:staff)
+  end
+
+  def index?
+    staff?
   end
 
   def show?
-    user && user.has_role?(:staff)
+    staff?
   end
 
   def create?
-    user && user.has_role?(:staff)
+    staff?
   end
 
   def new?
@@ -23,7 +27,7 @@ class RestrictivePolicy
   end
 
   def update?
-    user && user.has_role?(:staff)
+    staff?
   end
 
   def edit?
@@ -31,15 +35,15 @@ class RestrictivePolicy
   end
 
   def trash?
-    user && user.has_role?(:staff)
+    staff?
   end
 
   def destroy?
-    user && user.has_role?(:staff)
+    staff?
   end
 
   def vote?
-    user && user.has_role?(:staff)
+    staff?
   end
 
   def scope

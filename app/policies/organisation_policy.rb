@@ -6,8 +6,10 @@ class OrganisationPolicy < RestrictivePolicy
 
   end
 
+  ######CRUD######
   def show?
-    (user && user.memberships.where(organisation: record).present?) || super
+    puts "=================#{Organisation.public_forms[record.public_form]} == #{Organisation.public_forms[:f_public]}====================="
+    Organisation.public_forms[record.public_form] == Organisation.public_forms[:f_public] || (user && user.memberships.where(organisation: record).present?) || super
   end
 
   def new?
@@ -15,7 +17,7 @@ class OrganisationPolicy < RestrictivePolicy
   end
 
   def create?
-    user.has_role? :staff
+    super
   end
 
   def edit?
@@ -23,6 +25,18 @@ class OrganisationPolicy < RestrictivePolicy
   end
 
   def update?
-    user.has_role :staff
+    (user && user.memberships.where(organisation: record, role: Membership.roles[:manager]).present?) || super
   end
+
+  #######Attributes########
+  # Is the current user a member of the group?
+  def member?
+    (user && user.memberships.where(organisation: record).present?) || staff?
+  end
+
+  # Can the current user change the organisation web_url? (currently a subdomain)
+  def web_url?
+    (user && user.memberships.where(organisation: record, role: Membership.roles[:manager]).present?) || staff?
+  end
+
 end

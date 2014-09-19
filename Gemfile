@@ -69,6 +69,7 @@ group :development, :test do
   gem 'coffee-rails', '~> 4.0.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'quiet_assets'
+  gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 end
 
 group :production do 

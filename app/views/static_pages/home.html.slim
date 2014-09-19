@@ -4,14 +4,17 @@
       =link_to profile_path(current_user.profile) do
         =image_tag current_user.profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
         p=current_user.display_name
-    .group
-      h3 _Organisations_
-      ul
-        -current_user.organisations.each do |o|
-          li
-            =link_to organisation_url(o, subdomain: o.web_url)
-              = image_tag o.profile_photo, size: '16x16'
-              = o.name
+    -Organisation.scope_types.merge(current_user.organisations.select(:id, :name, :web_url, :scope).group_by { |a| a.scope}).each do |key, value|
+      .group
+        h3= t("organisations.scope_names.#{key}")
+        ul
+          -value.each do |o|
+            li
+              =link_to root_url(o, subdomain: o.web_url)
+                = image_tag o.profile_photo, size: '16x16'
+                = o.name
+          - if key == 'scope_group'
+            =link_to new_group_url
 .content
   - @newstatements.first(4).each do |statement|
     = render statement

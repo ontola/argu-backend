@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140914225119) do
+ActiveRecord::Schema.define(version: 20140919202733) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "arguments", force: true do |t|
     t.text     "content",                             null: false
@@ -86,6 +89,39 @@ ActiveRecord::Schema.define(version: 20140914225119) do
     t.datetime "updated_at",    null: false
   end
 
+  create_table "group_memberships", force: true do |t|
+    t.integer "user_id"
+    t.integer "group_id"
+    t.integer "role",     default: 0, null: false
+  end
+
+  create_table "groups", force: true do |t|
+    t.string   "name"
+    t.string   "website"
+    t.text     "description"
+    t.string   "slogan"
+    t.string   "key_tags"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "profile_photo_file_name"
+    t.string   "profile_photo_content_type"
+    t.integer  "profile_photo_file_size"
+    t.datetime "profile_photo_updated_at"
+    t.string   "cover_photo_file_name"
+    t.string   "cover_photo_content_type"
+    t.integer  "cover_photo_file_size"
+    t.datetime "cover_photo_updated_at"
+    t.string   "web_url"
+    t.integer  "memberships_count",          null: false
+    t.integer  "statements_count",           null: false
+    t.integer  "scope",                      null: false
+    t.integer  "application_form",           null: false
+    t.integer  "public_form",                null: false
+  end
+
+  add_index "groups", ["name"], name: "groups_name_idx", using: :btree
+  add_index "groups", ["web_url"], name: "groups_web_url_idx", using: :btree
+
   create_table "memberships", force: true do |t|
     t.integer "user_id"
     t.integer "organisation_id"
@@ -113,9 +149,6 @@ ActiveRecord::Schema.define(version: 20140914225119) do
   create_table "organisations", force: true do |t|
     t.string   "name"
     t.string   "website"
-    t.boolean  "public"
-    t.boolean  "listed"
-    t.boolean  "requestable"
     t.text     "description"
     t.string   "slogan"
     t.string   "key_tags"
@@ -130,7 +163,16 @@ ActiveRecord::Schema.define(version: 20140914225119) do
     t.integer  "cover_photo_file_size"
     t.datetime "cover_photo_updated_at"
     t.string   "web_url"
+    t.integer  "memberships_count",          default: 0, null: false
+    t.integer  "statements_count",           default: 0, null: false
+    t.integer  "scope",                      default: 0, null: false
+    t.integer  "application_form",           default: 0, null: false
+    t.integer  "public_form",                default: 0, null: false
   end
+
+  add_index "organisations", ["id"], name: "index_organisations_on_id", using: :btree
+  add_index "organisations", ["name"], name: "index_organisations_on_name", using: :btree
+  add_index "organisations", ["web_url"], name: "index_organisations_on_web_url", using: :btree
 
   create_table "profiles", force: true do |t|
     t.integer  "user_id"

@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
       _argu_scope = Organisation.find_by web_url: subdomain
       if _argu_scope && policy(_argu_scope).show?
         @local_title = subdomain
-        current_user._current_scope = _argu_scope
+        current_user._current_scope = _argu_scope if current_user
       else
         raise ActionController::RoutingError.new('Not Found')
       end

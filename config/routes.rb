@@ -53,9 +53,13 @@ Argu::Application.routes.draw do
 
   resources :organisations, except: [:index, :edit] do
     get :settings, on: :member
+    resources :memberships, only: [:create, :destroy]
   end
 
-  #resources :sessions #, only: [:new, :create, :destroy]
+  resources :groups, except: [:index, :edit] do
+    get :settings, on: :member
+    resources :group_memberships, path: 'memberships', only: [:create, :destroy]
+  end
   resources :profiles
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
@@ -67,6 +71,8 @@ Argu::Application.routes.draw do
   #match "/signin", to: "sessions#new"
   #get "/signout", to: "sessions#destroy", via: :delete
   get '/about', to: 'static_pages#about'
+
+  get '/portal', to: 'portal/portal#home'
 
   root to: 'static_pages#home'
   get '/', to: 'statements#index'
