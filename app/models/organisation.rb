@@ -1,6 +1,6 @@
 class Organisation < ActiveRecord::Base
   include IOrganisation
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
   accepts_nested_attributes_for :memberships, :reject_if => :all_blank, :allow_destroy => true
 

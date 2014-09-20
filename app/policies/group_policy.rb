@@ -30,7 +30,7 @@ class GroupPolicy < RestrictivePolicy
   #######Attributes########
   # Is the current user a member of the group?
   def member?
-    (user && user.group_memberships.where(organisation: record).present?) || staff?
+    (user && user.group_memberships.where(group: record).present?) || staff?
   end
 
   # Can the current user change the organisation web_url? (currently a subdomain)

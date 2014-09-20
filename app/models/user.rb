@@ -2,8 +2,8 @@ class User < ActiveRecord::Base
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :authentications, dependent: :destroy
   has_many :votes, as: :voteable
-  has_many :memberships
-  has_many :group_memberships
+  has_many :memberships, dependent: :destroy
+  has_many :group_memberships, dependent: :destroy
   has_many :organisations, through: :memberships
   has_many :groups, through: :group_memberships
   has_one :profile, dependent: :destroy

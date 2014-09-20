@@ -1,0 +1,26 @@
+=render partial: 'manage_bar'  if policy(@group).update?
+.profile-header
+  =image_tag @group.cover_photo.url(:cropped), class: 'cover'
+  =image_tag @group.profile_photo, class: 'profile'
+  h1= @group.name
+.box
+  p= @group.description
+  -if policy(@group).member?
+    p You're a member!
+  p
+    == '&#127757; '
+    = link_to @group.website.sub(/^https?\:\/\//, ''), @group.website if @group.website
+  =link_to 'join', group_group_memberships_path(@group.id), method: :create, class: 'btn'
+  .tags
+    - @group.key_tags.each do |tag|
+      = link_to tag, tag_statements_url(tag), class: "tag", title: t("statements.titles.tags")+tag
+.argcontainer1
+  .argcontainer2
+    .procon
+      .argtypebox.pro
+        h2 problemen
+      =render Statement.first
+    .procon
+      .argtypebox.pro
+        h2 oplossingen
+      =render Statement.second
