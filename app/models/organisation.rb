@@ -15,6 +15,6 @@ class Organisation < ActiveRecord::Base
 
   ########Other########
   def self.scope_types
-    HashWithIndifferentAccess[{scope_local: [], scope_org: [], scope_group: []}]
+    HashWithIndifferentAccess[{scope_local: [], scope_org: []}]
   end
 end

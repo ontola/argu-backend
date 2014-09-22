@@ -1,3 +1,4 @@
 li[id=('list_item_'+f.object.id.to_s)]
-  =image_tag f.object.user.profile.profile_photo, style: 'width: 3em; height: 3em; float:left;'
+  =image_tag f.object.user.profile.profile_photo, class: 'profile-photo'
   p= f.object.user.display_name
+  =f.input :role, as: :inline_select, collection: Membership.roles.keys

@@ -1,6 +1,14 @@
 class UsersController < ApplicationController
   autocomplete :user, :name, :extra_data => [:profile_photo]
 
+  def index
+    if params[:q].present?
+      @users = policy_scope(User).includes(:profile).where("lower(username) LIKE lower(?)", "%#{params[:q]}%").page params[:page]
+    else
+      @users = policy_scope(User).includes(:profile).page params[:page]
+    end
+  end
+
   def edit
     @user = User.find current_user.id
     authorize @user

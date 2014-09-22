@@ -1,12 +1,10 @@
-ul.role-list
-  =semantic_form_for @org do |f|
-    -@org.managers.each do |m|
-      li
+=semantic_form_for @org do |f|
+  ul.role-list
     = f.semantic_fields_for :memberships, where: {} do |manager|
       = render 'membership', :f => manager
     .links
       = link_to_add_association 'add manager', f, :memberships
 
-.right
-  =link_to 'cancel', '#', class: 'btn'
-  =link_to 'save', '#', class: 'btn'
+  .right
+    =f.actions do
+      =f.action :submit, as: :button, label: 'save', class: 'btn'

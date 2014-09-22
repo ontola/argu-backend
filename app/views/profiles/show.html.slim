@@ -1,6 +1,4 @@
 .profile-header
-  =image_tag @profile.cover_photo
-  h1= @profile.name
-  =image_tag @profile.profile_photo
-.box.profile.center
-  h1=@profile.display_name
+  =image_tag @profile.cover_photo.url(:cropped), class: 'cover'
+  h1= @profile.display_name
+  =image_tag @profile.profile_photo, class: 'profile'

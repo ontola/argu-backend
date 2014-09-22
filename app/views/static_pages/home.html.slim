@@ -13,8 +13,15 @@
               =link_to root_url(o, subdomain: o.web_url)
                 = image_tag o.profile_photo, size: '16x16'
                 = o.name
-          - if key == 'scope_group'
-            =link_to new_group_url
+    .group
+      h3= t("organisations.scope_names.scope_local")
+      ul
+        -current_user.groups.each do |g|
+          li
+            =link_to group_url(g)
+              = image_tag g.profile_photo, size: '16x16'
+              = g.name
+        li=link_to new_group_url
 .content
   - @newstatements.first(4).each do |statement|
     = render statement
