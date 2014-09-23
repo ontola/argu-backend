@@ -31,9 +31,9 @@ class OrganisationsController < ApplicationController
     authorize @org, :update?
 
     if @org.update permit_params
-      redirect_to settings_organisation_path(@org)
+      redirect_to settings_organisation_path(@org, tab: params[:tab])
     else
-      render notifications: [{type: 'error', message: 'Fout tijdens het opslaan'}]
+      render 'settings'
     end
   end
 

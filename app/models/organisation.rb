@@ -4,9 +4,17 @@ class Organisation < ActiveRecord::Base
   has_many :users, through: :memberships
   accepts_nested_attributes_for :memberships, :reject_if => :all_blank, :allow_destroy => true
 
+  validate :manager_present?
+
   enum scope: { scope_group: 0, scope_org: 1, scope_local: 2 }
 
   resourcify
+
+  def manager_present?
+    if memberships.where(role: Membership.roles[:manager]).present?
+      errors.add :base, "_manager not present_"
+    end
+  end
 
   ######Roles#######
   def managers

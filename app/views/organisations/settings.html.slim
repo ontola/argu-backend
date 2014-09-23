@@ -4,9 +4,9 @@ small  <!-- for styling -->
   .procon
     .box[style="width: 23em;"]
       ul
-        li= link_to raw('&#9881; _algemeen_'), '?tab=settings'
-        li= link_to raw('&#128188; _managers_'), '?tab=managers'
-        li= link_to raw('&#128110; _moderators_'), '?tab=moderators'
+        li= link_to raw('&#9881; _algemeen_'), settings_organisation_path(@org, tab: :settings)
+        li= link_to raw('&#128188; _managers_'), settings_organisation_path(@org, tab: :managers)
+        li= link_to raw('&#128110; _moderators_'), settings_organisation_path(@org, tab: :moderators)
   .procon
     .box
       =render partial: "organisations/setting_tabs/#{params[:tab] || 'settings'}"
