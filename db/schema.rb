@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140919202733) do
+ActiveRecord::Schema.define(version: 20140923085802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,11 +112,11 @@ ActiveRecord::Schema.define(version: 20140919202733) do
     t.integer  "cover_photo_file_size"
     t.datetime "cover_photo_updated_at"
     t.string   "web_url"
-    t.integer  "memberships_count",          null: false
-    t.integer  "statements_count",           null: false
-    t.integer  "scope",                      null: false
-    t.integer  "application_form",           null: false
-    t.integer  "public_form",                null: false
+    t.integer  "memberships_count",          default: 0, null: false
+    t.integer  "statements_count",           default: 0, null: false
+    t.integer  "scope",                      default: 0, null: false
+    t.integer  "application_form",           default: 0, null: false
+    t.integer  "public_form",                default: 0, null: false
   end
 
   add_index "groups", ["name"], name: "groups_name_idx", using: :btree
@@ -127,6 +127,8 @@ ActiveRecord::Schema.define(version: 20140919202733) do
     t.integer "organisation_id"
     t.integer "role",            default: 0, null: false
   end
+
+  add_index "memberships", ["user_id", "organisation_id"], name: "index_memberships_on_user_id_and_organisation_id", unique: true, using: :btree
 
   create_table "opinions", force: true do |t|
     t.string   "title"

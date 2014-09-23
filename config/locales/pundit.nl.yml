@@ -1,0 +1,6 @@
+#Dutch general translations
+
+nl:
+  pundit:
+    membership_policy:
+      destroy?: "Lidmaatschap mag niet opgezegd worden"

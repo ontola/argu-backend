@@ -8,7 +8,6 @@ class OrganisationPolicy < RestrictivePolicy
 
   ######CRUD######
   def show?
-    puts "=================#{Organisation.public_forms[record.public_form]} == #{Organisation.public_forms[:f_public]}====================="
     Organisation.public_forms[record.public_form] == Organisation.public_forms[:f_public] || (user && user.memberships.where(organisation: record).present?) || super
   end
 

@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     respond_to do |format|
-      format.js { head 403 }
+      format.js { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {
         request.env['HTTP_REFERER'] ||= root_path
         redirect_to :back, :alert => exception.message

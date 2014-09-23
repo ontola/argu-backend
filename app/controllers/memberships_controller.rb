@@ -1,5 +1,5 @@
 class MembershipsController < ApplicationController
-  responds_to :js
+  #responds_to :js
 
   def create
     user = User.find params[:id]
@@ -26,6 +26,17 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
+    @membership = Organisation.find(params[:organisation_id]).memberships.find params[:id]
+    authorize @membership
+    if @membership.destroy
+      respond_to do |f|
+        f.js { render }
+      end
+    else
+      respond_to do |f|
+        f.js { render json: {notifications: [{type: 'error', message: '_niet gelukt_'}]} }
+      end
+    end
   end
 
 private

@@ -7,10 +7,11 @@
   p= @org.description
   -if policy(@org).member?
     p You're a member!
+  -else
+    =link_to 'join', organisation_memberships_path(@org.id), method: :create, class: 'btn'
   p
     == '&#127757; '
     = link_to @org.website.sub(/^https?\:\/\//, ''), @org.website
-  =link_to 'join', organisation_memberships_path(@org.id), method: :create, class: 'btn'
   .tags
     - @org.key_tags.each do |tag|
       = link_to tag, tag_statements_url(tag), class: "tag", title: t("statements.titles.tags")+tag
