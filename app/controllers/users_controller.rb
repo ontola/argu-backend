@@ -2,10 +2,11 @@ class UsersController < ApplicationController
   autocomplete :user, :name, :extra_data => [:profile_photo]
 
   def index
+    scope = policy_scope(User).includes(:profile)
+    scope = scope.includes(:memberships).where('memberships IS NULL OR memberships.organisation_id != 1').references(:memberships) if params[:organisation_id].present?
+
     if params[:q].present?
-      @users = policy_scope(User).includes(:profile).where("lower(username) LIKE lower(?)", "%#{params[:q]}%").page params[:page]
-    else
-      @users = policy_scope(User).includes(:profile).page params[:page]
+      @users = scope.where("lower(username) LIKE lower(?)", "%#{params[:q]}%").page params[:page]
     end
   end
 

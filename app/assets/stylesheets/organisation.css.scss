@@ -19,7 +19,8 @@
   float:left;
   margin-right: 0.5em;
 }
-.search-result span {
+.search-result .label,
+.search-result .profile-xs {
   float: left;
 }
 .selectize-control.add-user .item, .selectize-dropdown-content .search-result .label,

@@ -24,7 +24,8 @@ $(document).on('cocoon:after-insert', function (e, insertedItem) {
                 type: 'GET',
                 dataType: 'json',
                 data: {
-                    q: query
+                    q: query,
+                    organisation_id: addBlock.closest('.organisation_id').attr('id')
                 },
                 error: function () {
                     callback();

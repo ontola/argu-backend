@@ -1,6 +1,6 @@
 =render partial: 'manage_bar'  if policy(@org).update?
 small  <!-- for styling -->
-.argcontainer2
+.argcontainer2.organisation_id[id="#{@org.id}"]
   .procon
     .box[style="width: 23em;"]
       ul
