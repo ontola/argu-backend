@@ -1,5 +1,115 @@
 
 ---
+comments:
+  columns:
+  - id
+  - commentable_id
+  - commentable_type
+  - title
+  - body
+  - subject
+  - user_id
+  - parent_id
+  - lft
+  - rgt
+  - created_at
+  - updated_at
+  - is_trashed
+  records: 
+  - - '1'
+    - '2'
+    - Argument
+    - ''
+    - Maar je eerste referentie is niet onderbouwd.
+    - ''
+    - '1'
+    - 
+    - '1'
+    - '4'
+    - '2014-09-16 07:18:36.289516'
+    - '2014-09-16 07:19:31.757681'
+    - false
+  - - '2'
+    - '2'
+    - Argument
+    - ''
+    - Kijk is goed droplul! Er staat duidelijk literatuur over de geschiedenis van
+      drop.
+    - ''
+    - '1'
+    - '1'
+    - '2'
+    - '3'
+    - '2014-09-16 07:19:31.731024'
+    - '2014-09-16 07:19:31.757681'
+    - false
+  - - '3'
+    - '3'
+    - Argument
+    - ''
+    - Er is toch een subsidiepot.
+    - ''
+    - '1'
+    - 
+    - '5'
+    - '14'
+    - '2014-09-23 09:28:24.219826'
+    - '2014-09-23 09:29:50.683623'
+    - false
+  - - '4'
+    - '3'
+    - Argument
+    - ''
+    - Ja maar das van het volk!
+    - ''
+    - '1'
+    - '3'
+    - '6'
+    - '13'
+    - '2014-09-23 09:28:42.628808'
+    - '2014-09-23 09:29:50.683623'
+    - false
+  - - '5'
+    - '3'
+    - Argument
+    - ''
+    - Wie maakt het volk nou wat uit..
+    - ''
+    - '1'
+    - '4'
+    - '7'
+    - '12'
+    - '2014-09-23 09:28:58.979386'
+    - '2014-09-23 09:29:50.683623'
+    - false
+  - - '6'
+    - '3'
+    - Argument
+    - ''
+    - Jij bent toch onderdeel van het volk!
+    - ''
+    - '1'
+    - '5'
+    - '8'
+    - '11'
+    - '2014-09-23 09:29:36.600256'
+    - '2014-09-23 09:29:50.683623'
+    - false
+  - - '7'
+    - '3'
+    - Argument
+    - ''
+    - Nee, ik ben wereldburger
+    - ''
+    - '1'
+    - '6'
+    - '9'
+    - '10'
+    - '2014-09-23 09:29:50.660527'
+    - '2014-09-23 09:29:50.683623'
+    - false
+
+---
 memberships:
   columns:
   - id
@@ -7,14 +117,14 @@ memberships:
   - organisation_id
   - role
   records: 
-  - - '1'
-    - '4'
+  - - '20'
+    - '3'
     - '1'
-    - '0'
-  - - '2'
+    - '2'
+  - - '25'
     - '1'
     - '1'
-    - '0'
+    - '1'
 
 ---
 delayed_jobs:
@@ -1212,6 +1322,162 @@ delayed_jobs:
     - 
     - '2014-09-14 23:20:21.114539'
     - '2014-09-14 23:20:21.114539'
+  - - '64'
+    - '0'
+    - '0'
+    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
+      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
+      dingen, zo weinig tijd. {EU}(Europese Unie) of [www.website.nl](voorbeeld\n
+      \     omschrijving). Vergeet {Neelie_Kroes}(Neelie) niet samen met {Marietje}(Marietje)\n
+      \   created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-09-16
+      07:16:35.602222000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
+      false\n    votes_pro_count: 1\n    votes_con_count: 0\n    votes_neutral_count:
+      0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
+      0\n    opinion_con_count: 0\n    votes_abstain_count: -1\n    organisation_id:
+      \nmethod_name: :solr_index_without_delay\nargs: []\n"
+    - 
+    - '2014-09-16 07:16:35.734966'
+    - 
+    - 
+    - 
+    - 
+    - '2014-09-16 07:16:35.737407'
+    - '2014-09-16 07:16:35.737407'
+  - - '65'
+    - '0'
+    - '0'
+    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
+      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
+      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
+      \n    sign_in_count: 20\n    current_sign_in_at: 2014-09-19 18:47:54.827262000
+      Z\n    last_sign_in_at: 2014-09-14 19:02:30.780721000 Z\n    current_sign_in_ip:
+      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
+      Z\n    updated_at: 2014-09-19 18:47:54.830831000 Z\n    username: fletcher91\n
+      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
+    - 
+    - '2014-09-19 18:47:54.861023'
+    - 
+    - 
+    - 
+    - 
+    - '2014-09-19 18:47:54.861148'
+    - '2014-09-19 18:47:54.861148'
+  - - '66'
+    - '0'
+    - '0'
+    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
+      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
+      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
+      \n    sign_in_count: 21\n    current_sign_in_at: 2014-09-22 17:44:56.835025000
+      Z\n    last_sign_in_at: 2014-09-19 18:47:54.827262000 Z\n    current_sign_in_ip:
+      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
+      Z\n    updated_at: 2014-09-22 17:44:56.840886000 Z\n    username: fletcher91\n
+      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
+    - 
+    - '2014-09-22 17:44:56.885575'
+    - 
+    - 
+    - 
+    - 
+    - '2014-09-22 17:44:56.885766'
+    - '2014-09-22 17:44:56.885766'
+  - - '67'
+    - '0'
+    - '0'
+    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
+      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
+      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
+      \n    sign_in_count: 22\n    current_sign_in_at: 2014-09-22 19:51:32.455646000
+      Z\n    last_sign_in_at: 2014-09-22 17:44:56.835025000 Z\n    current_sign_in_ip:
+      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
+      Z\n    updated_at: 2014-09-22 19:51:32.458392000 Z\n    username: fletcher91\n
+      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
+    - 
+    - '2014-09-22 19:51:32.466612'
+    - 
+    - 
+    - 
+    - 
+    - '2014-09-22 19:51:32.466802'
+    - '2014-09-22 19:51:32.466802'
+  - - '68'
+    - '0'
+    - '0'
+    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
+      \ attributes:\n    id: 6\n    title: Weg tot de wetenschap volgooien met zonnepanelen\n
+      \   content: Iets met dat wegen toch onnodig zijn.\n    created_at: 2014-09-23
+      09:27:32.048098000 Z\n    updated_at: 2014-09-23 09:27:32.048098000 Z\n    pro_count:
+      0\n    con_count: 0\n    tag_id: \n    is_trashed: false\n    votes_pro_count:
+      0\n    votes_con_count: 0\n    votes_neutral_count: 0\n    argument_pro_count:
+      0\n    argument_con_count: 0\n    opinion_pro_count: 0\n    opinion_con_count:
+      0\n    votes_abstain_count: 0\n    organisation_id: \nmethod_name: :solr_index_without_delay\nargs:
+      []\n"
+    - 
+    - '2014-09-23 09:27:32.503921'
+    - 
+    - 
+    - 
+    - 
+    - '2014-09-23 09:27:32.504078'
+    - '2014-09-23 09:27:32.504078'
+  - - '69'
+    - '0'
+    - '0'
+    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
+      \ attributes:\n    id: 6\n    title: Weg tot de wetenschap volgooien met zonnepanelen\n
+      \   content: Iets met dat wegen toch onnodig zijn.\n    created_at: 2014-09-23
+      09:27:32.048098000 Z\n    updated_at: 2014-09-23 09:27:32.594278000 Z\n    pro_count:
+      0\n    con_count: 0\n    tag_id: \n    is_trashed: false\n    votes_pro_count:
+      0\n    votes_con_count: 0\n    votes_neutral_count: 0\n    argument_pro_count:
+      0\n    argument_con_count: 0\n    opinion_pro_count: 0\n    opinion_con_count:
+      0\n    votes_abstain_count: 0\n    organisation_id: 1\nmethod_name: :solr_index_without_delay\nargs:
+      []\n"
+    - 
+    - '2014-09-23 09:27:32.616528'
+    - 
+    - 
+    - 
+    - 
+    - '2014-09-23 09:27:32.616611'
+    - '2014-09-23 09:27:32.616611'
+  - - '70'
+    - '0'
+    - '0'
+    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
+      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
+      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
+      \n    sign_in_count: 23\n    current_sign_in_at: 2014-09-24 14:31:48.901129000
+      Z\n    last_sign_in_at: 2014-09-22 19:51:32.455646000 Z\n    current_sign_in_ip:
+      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
+      Z\n    updated_at: 2014-09-24 14:31:48.905407000 Z\n    username: fletcher91\n
+      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
+    - 
+    - '2014-09-24 14:31:48.952085'
+    - 
+    - 
+    - 
+    - 
+    - '2014-09-24 14:31:48.952219'
+    - '2014-09-24 14:31:48.952219'
+  - - '71'
+    - '0'
+    - '0'
+    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
+      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
+      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
+      \n    sign_in_count: 24\n    current_sign_in_at: 2014-09-24 14:47:56.015407000
+      Z\n    last_sign_in_at: 2014-09-24 14:31:48.901129000 Z\n    current_sign_in_ip:
+      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
+      Z\n    updated_at: 2014-09-24 14:47:56.018640000 Z\n    username: fletcher91\n
+      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
+    - 
+    - '2014-09-24 14:47:56.04487'
+    - 
+    - 
+    - 
+    - 
+    - '2014-09-24 14:47:56.044988'
+    - '2014-09-24 14:47:56.044988'
 
 ---
 arguments:
@@ -1242,16 +1508,27 @@ arguments:
   - - '2'
     - Wie wil[http://www.youtube.com/watch?v=HkDqNLLj6fU](never) er nou zulke[http://www.youtube.com/watch?v=H8UAcoTotnM](gonna)
       prachtige[http://www.youtube.com/watch?v=hO0yCz3K9Pw](give) cultuur[http://www.youtube.com/watch?v=lIVstols8i4](you)
-      verliezen[http://www.youtube.com/watch?v=XN7EqlAeGkQ](up)
+      verliezen[http://www.youtube.com/watch?v=XN7EqlAeGkQ](up).
     - '1'
     - false
     - '2014-05-02 23:49:08.162509'
-    - '2014-05-02 23:49:08.162509'
+    - '2014-09-19 21:03:13.125907'
     - Testest
     - false
+    - '1'
     - '0'
+    - '-1'
+  - - '3'
+    - Dan gaan al die zonnepanelen toch kapot!
+    - '6'
+    - false
+    - '2014-09-23 09:28:03.131566'
+    - '2014-09-23 09:28:08.624879'
+    - Bussen moeten kunnen rijden
+    - false
+    - '1'
     - '0'
-    - '0'
+    - '-1'
 
 ---
 roles:
@@ -1323,6 +1600,12 @@ roles:
     - Statement
     - '2014-09-14 23:20:20.93746'
     - '2014-09-14 23:20:20.93746'
+  - - '11'
+    - mod
+    - '6'
+    - Statement
+    - '2014-09-23 09:27:32.529043'
+    - '2014-09-23 09:27:32.529043'
 
 ---
 profiles:
@@ -1349,11 +1632,11 @@ profiles:
     - I'm the coder!
     - http://www.wthex.com/images/coolcookie.gif
     - '2014-05-02 15:16:33.722659'
-    - '2014-05-02 15:16:33.729113'
-    - 
-    - 
-    - 
-    - 
+    - '2014-09-22 20:58:27.583184'
+    - IMG_2052.jpg
+    - image/jpeg
+    - '102554'
+    - '2014-09-22 20:58:27.510142'
     - 
     - 
     - 
@@ -1364,11 +1647,11 @@ profiles:
     - ''
     - ''
     - '2014-05-02 15:16:33.734038'
-    - '2014-05-02 15:16:33.739798'
-    - 
-    - 
-    - 
-    - 
+    - '2014-09-22 21:05:44.980133'
+    - DSC06781.JPG
+    - image/jpeg
+    - '2649948'
+    - '2014-09-22 21:05:44.942982'
     - 
     - 
     - 
@@ -1379,11 +1662,11 @@ profiles:
     - argu designer
     - https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg
     - '2014-05-02 15:16:33.745944'
-    - '2014-05-02 15:16:33.752164'
-    - 
-    - 
-    - 
-    - 
+    - '2014-09-22 21:05:19.155738'
+    - IMG_0391.JPG
+    - image/jpeg
+    - '3982342'
+    - '2014-09-22 21:05:19.076444'
     - 
     - 
     - 
@@ -1394,11 +1677,11 @@ profiles:
     - ''
     - ''
     - '2014-09-13 10:04:57.677249'
-    - '2014-09-13 10:04:57.832635'
-    - 
-    - 
-    - 
-    - 
+    - '2014-09-22 21:04:31.170125'
+    - DSC06783_20_282_29.JPG
+    - image/jpeg
+    - '359779'
+    - '2014-09-22 21:04:31.127191'
     - 
     - 
     - 
@@ -1491,6 +1774,164 @@ sessions:
       TEFkbWszMU5hTXYwNE02am8rcmovS0pBPQY7AEY=
     - '2014-09-15 09:03:23.992572'
     - '2014-09-15 09:03:23.992572'
+  - - '20'
+    - 7bc47f47640577a573b7a24daa314cf2
+    - |
+      BAh7C0kiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQZJIiIkMmEk
+      MTAkQURNM2ZmUmRDaXBiaVdGRHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFYUnkzM0Fka1RGQnhWL2Nlc2d4QWxWays2WnZROHBzUENwVGhjNmdP
+      T1FRPQY7AEZJIhRvbW5pYXV0aC5wYXJhbXMGOwBUewBJIhRvbW5pYXV0aC5v
+      cmlnaW4GOwBUIiRodHRwOi8vbG9jYWwuaG9zdDozMDAwL3NldHRpbmdzSSIT
+      b21uaWF1dGguc3RhdGUGOwBUSSI1OTM3OTkzZDlkODRjOTIxOTgxZWZlOThm
+      MzdiNTk2YzAwMjNhYjYxZWQwN2YzYjFhBjsARkkiCm9hdXRoBjsAVHsGSSIM
+      dHdpdHRlcgY7AFR7CEkiF2NhbGxiYWNrX2NvbmZpcm1lZAY7AFRUSSIScmVx
+      dWVzdF90b2tlbgY7AFRJIiV4eDJONG5vRVhqdDhiOFZJTnBRQUlWQjNNV0h2
+      eno0QQY7AFRJIhNyZXF1ZXN0X3NlY3JldAY7AFRJIiVLcWU4cWlWVFRGc3gy
+      QzRFTlNHNWZDOFk1OVFBQ1M3OQY7AFQ=
+    - '2014-09-15 15:27:55.446978'
+    - '2014-09-17 15:07:18.654939'
+  - - '21'
+    - 3f4aa724b37e0ac2a1dce7154e389f1d
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjFzT2k3VlRhTUJvOC9ReFhRMHpq
+      N1BjNFlXNmNDbFhqZkM0SGQ2Tzg4VWdBPQY7AEY=
+    - '2014-09-17 11:52:08.281274'
+    - '2014-09-17 11:52:08.281274'
+  - - '22'
+    - c6ec0bee23f9e1f48be040973e4e462a
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjEwaUdZQW9HL1VGbk9XUWg3ZlBC
+      eWx6TW56VTdackQ1OFNYVzgzRE5nb0dJPQY7AEY=
+    - '2014-09-17 12:56:39.886423'
+    - '2014-09-17 12:56:39.886423'
+  - - '24'
+    - 0b4a7efd1910c6ad0e5f8920fe2ebded
+    - |
+      BAh7B0kiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQlJIiIkMmEk
+      MTAkd2pxWmZWY0lFYUY2dC5BZ1JhNlJxdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFncVlZZ21icnZBM3U3dkw4WHlCMzhtMnV5T0Z5RURZOFpBeUl4TDVq
+      OHFrPQY7AEY=
+    - '2014-09-17 12:56:51.437625'
+    - '2014-09-17 20:30:31.131009'
+  - - '25'
+    - 24a6b908d0967d3c82014e73597afad5
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjFsd1pmSHczTGd3VzcyTEY0TnNN
+      ZG0vNEdZNGIyZnZ1UUFLU0dmN0NHYWNrPQY7AEY=
+    - '2014-09-17 19:48:32.41524'
+    - '2014-09-17 19:48:32.41524'
+  - - '26'
+    - 393f0c546e041bc713d3191b063a0995
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjFSSWgwL2NjUGxPSTNEWGxyYVNL
+      ZTA4alI3cVNUSVBZZXp4eTZDUUVKRHlBPQY7AEY=
+    - '2014-09-17 19:48:32.790724'
+    - '2014-09-17 19:48:32.790724'
+  - - '28'
+    - b15d7818d4d223c7fa9fc45fc5016b1b
+    - |
+      BAh7B0kiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQZJIiIkMmEk
+      MTAkQURNM2ZmUmRDaXBiaVdGRHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFrRTVRSlkxVFJNcVdxMm5McEdEckJUREFXQ1FOWVZwTm85TWZ4SmtB
+      aWZvPQY7AEY=
+    - '2014-09-19 18:47:54.898712'
+    - '2014-09-19 21:03:41.858232'
+  - - '29'
+    - 5b07709044313b61c0b950daa861c825
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjFYdXpqbjA5YXJsRHIxNlFZblJt
+      U2FVa1FjZEp1Vjh4RXl6QTkrSnJLMDJBPQY7AEY=
+    - '2014-09-20 11:39:22.388163'
+    - '2014-09-20 11:39:22.388163'
+  - - '30'
+    - 36751a10ef975d2a5a5c0d2b5df3cbca
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjE0cVVRVys5RW9qN3JMMWxzTzVM
+      cUVOM1R1SmJjeUpsTXpEU1ovaTl4T2hZPQY7AEY=
+    - '2014-09-20 11:39:22.678915'
+    - '2014-09-20 11:39:22.678915'
+  - - '32'
+    - 4e7e0809939dd2fe0cbbf3dfde2a0f02
+    - |
+      BAh7B0kiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQZJIiIkMmEk
+      MTAkQURNM2ZmUmRDaXBiaVdGRHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFKL0wvNUpkZFVla2plWWlWcjg4ZFJYS0tMdndSNDRGVWpOUURDYjVM
+      V0NVPQY7AEY=
+    - '2014-09-22 17:44:57.028644'
+    - '2014-09-22 18:42:25.294558'
+  - - '33'
+    - 973a5041c46cffd1b09a50205250a89f
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjFPcnRUTVFaanVtL05GeEYyVk5u
+      d3lXTjl2RkJYUURRaGN5aFg0YlAzai9VPQY7AEY=
+    - '2014-09-22 18:31:25.826226'
+    - '2014-09-22 18:31:25.826226'
+  - - '35'
+    - f0d358fe87a806601f62a940d08427d3
+    - |
+      BAh7B0kiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQZJIiIkMmEk
+      MTAkQURNM2ZmUmRDaXBiaVdGRHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFEWmQzRlcyWUVQcm41QlVHYmJZRUZzejJYL1Z2dkptZVdIYlNpRHdT
+      Q2xzPQY7AEY=
+    - '2014-09-22 19:51:32.574833'
+    - '2014-09-23 13:09:18.879681'
+  - - '36'
+    - da8294bd8ed8bef163c02dd96e29fcff
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjFKWnhlTGQvTTBxSHpYaHVJTHR2
+      WDgvTGVjakRBcFIwbFRlZ0wxSExKMWx3PQY7AEY=
+    - '2014-09-23 13:03:32.98337'
+    - '2014-09-23 13:03:32.98337'
+  - - '37'
+    - 940e2faaa72d8a1c1e79278aa10a7886
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjEzaXZZUXQzSmVmUVJudGN6MGt1
+      U3lnYnNVVHMxZVEwclIwK05IUTJvekZBPQY7AEY=
+    - '2014-09-23 13:03:33.985218'
+    - '2014-09-23 13:03:33.985218'
+  - - '38'
+    - 5469e60ae46679534eb639f236f6ebf8
+    - |
+      BAh7BkkiCmZsYXNoBjoGRVR7B0kiDGRpc2NhcmQGOwBUWwBJIgxmbGFzaGVz
+      BjsAVHsGSSIKYWxlcnQGOwBGSSJBbm90IGFsbG93ZWQgdG8gdXBkYXRlPyB0
+      aGlzICM8T3JnYW5pc2F0aW9uOjB4MDA3ZmVjNGFiNDgzYzA+BjsAVA==
+    - '2014-09-24 11:43:02.570052'
+    - '2014-09-24 11:43:02.570052'
+  - - '39'
+    - bdc13af4e1df707cee34b5e9471a97b1
+    - |
+      BAh7B0kiEF9jc3JmX3Rva2VuBjoGRUZJIjFiTFNQTEZmZUxHMkc1ZXN3bjdv
+      L2pDQi9vU0NqbVdZMWozaFRleE5jUnRBPQY7AEZJIgpmbGFzaAY7AFR7B0ki
+      DGRpc2NhcmQGOwBUWwBJIgxmbGFzaGVzBjsAVHsGSSIKYWxlcnQGOwBGSSJB
+      bm90IGFsbG93ZWQgdG8gdXBkYXRlPyB0aGlzICM8T3JnYW5pc2F0aW9uOjB4
+      MDA3ZmVjNGEzODJjZDA+BjsAVA==
+    - '2014-09-24 11:43:02.628939'
+    - '2014-09-24 11:43:03.021701'
+  - - '40'
+    - 93ec6ba0a5a3bd5a9234a1d68488a8fa
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjFpeTQyQ2ZXMmNrSGdLQ0JyUlZG
+      VDhyY3pSc3pXM1QydWx3b2QyS2E0aXdFPQY7AEY=
+    - '2014-09-24 13:16:01.265837'
+    - '2014-09-24 13:16:01.265837'
+  - - '42'
+    - 2639d60fc07c7ae33cf7603adb06d725
+    - |
+      BAh7B0kiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQZJIiIkMmEk
+      MTAkQURNM2ZmUmRDaXBiaVdGRHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFVbUZVMmNXUjVQQ1pTTlhoT01aWllXYnNkK3RBeVMxcHFGRVBlVU5o
+      a2RZPQY7AEY=
+    - '2014-09-24 14:31:48.984971'
+    - '2014-09-24 14:32:18.119312'
+  - - '44'
+    - cc040c96cf7c38849f8a537e502a1e83
+    - |
+      BAh7B0kiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQZJIiIkMmEk
+      MTAkQURNM2ZmUmRDaXBiaVdGRHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFPUDBOSEplVGl4M3RZK0grNTVmVXRMbVQ1bGF5TzdrcTdoN3BYcUsz
+      Z0h3PQY7AEY=
+    - '2014-09-24 14:47:56.073466'
+    - '2014-09-24 14:48:02.622699'
 
 ---
 users:
@@ -1517,13 +1958,13 @@ users:
     - 
     - 
     - 
-    - '19'
-    - '2014-09-14 19:02:30.780721'
-    - '2014-09-14 18:35:43.009525'
+    - '24'
+    - '2014-09-24 14:47:56.015407'
+    - '2014-09-24 14:31:48.901129'
     - 127.0.0.1
     - 127.0.0.1
     - '2014-05-02 15:16:33.323573'
-    - '2014-09-14 19:02:30.783891'
+    - '2014-09-24 14:47:56.01864'
     - fletcher91
     - 
   - - '2'
@@ -1594,6 +2035,8 @@ users_roles:
     - '9'
   - - '1'
     - '10'
+  - - '1'
+    - '11'
   - - '2'
     - '1'
   - - '2'
@@ -1602,8 +2045,6 @@ users_roles:
     - '1'
   - - '4'
     - '1'
-  - - '4'
-    - '2'
   - - '4'
     - '8'
 
@@ -1835,6 +2276,106 @@ versions:
       0\nargument_con_count: 0\nopinion_pro_count: 0\nopinion_con_count: 0\nvotes_abstain_count:
       0\norganisation_id: \n"
     - '2014-09-14 23:20:21.104603'
+  - - '26'
+    - Statement
+    - '1'
+    - update
+    - '1'
+    - "---\nid: 1\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd.
+      {EU}(Europese Unie) of [www.website.nl](voorbeeld\n  omschrijving). Vergeet
+      {Neelie_Kroes}(Neelie) niet samen met {Marietje}(Marietje)\ncreated_at: 2014-05-02
+      15:18:33.604968000 Z\nupdated_at: 2014-09-13 21:28:46.960008000 Z\npro_count:
+      0\ncon_count: 0\ntag_id: \nis_trashed: false\nvotes_pro_count: 0\nvotes_con_count:
+      0\nvotes_neutral_count: 0\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count:
+      0\nopinion_con_count: 0\nvotes_abstain_count: 0\norganisation_id: \n"
+    - '2014-09-16 07:16:35.656489'
+  - - '27'
+    - Argument
+    - '2'
+    - update
+    - '1'
+    - |
+      ---
+      id: 2
+      content: Wie wil[http://www.youtube.com/watch?v=HkDqNLLj6fU](never) er nou zulke[http://www.youtube.com/watch?v=H8UAcoTotnM](gonna)
+        prachtige[http://www.youtube.com/watch?v=hO0yCz3K9Pw](give) cultuur[http://www.youtube.com/watch?v=lIVstols8i4](you)
+        verliezen[http://www.youtube.com/watch?v=XN7EqlAeGkQ](up)
+      statement_id: 1
+      pro: false
+      created_at: 2014-05-02 23:49:08.162509000 Z
+      updated_at: 2014-05-02 23:49:08.162509000 Z
+      title: Testest
+      is_trashed: false
+      votes_pro_count: 0
+      comments_count: 0
+      votes_abstain_count: 0
+    - '2014-09-16 07:51:29.295536'
+  - - '28'
+    - Argument
+    - '2'
+    - update
+    - '1'
+    - |
+      ---
+      id: 2
+      content: Wie wil[http://www.youtube.com/watch?v=HkDqNLLj6fU](never) er nou zulke[http://www.youtube.com/watch?v=H8UAcoTotnM](gonna)
+        prachtige[http://www.youtube.com/watch?v=hO0yCz3K9Pw](give) cultuur[http://www.youtube.com/watch?v=lIVstols8i4](you)
+        verliezen[http://www.youtube.com/watch?v=XN7EqlAeGkQ](up)
+      statement_id: 1
+      pro: false
+      created_at: 2014-05-02 23:49:08.162509000 Z
+      updated_at: 2014-09-16 07:51:29.289456000 Z
+      title: Testest
+      is_trashed: false
+      votes_pro_count: 1
+      comments_count: 0
+      votes_abstain_count: -1
+    - '2014-09-19 21:03:13.138989'
+  - - '29'
+    - Statement
+    - '6'
+    - create
+    - '1'
+    - 
+    - '2014-09-23 09:27:32.079448'
+  - - '30'
+    - Statement
+    - '6'
+    - update
+    - '1'
+    - "---\nid: 6\ntitle: Weg tot de wetenschap volgooien met zonnepanelen\ncontent:
+      Iets met dat wegen toch onnodig zijn.\ncreated_at: 2014-09-23 09:27:32.048098000
+      Z\nupdated_at: 2014-09-23 09:27:32.048098000 Z\npro_count: 0\ncon_count: 0\ntag_id:
+      \nis_trashed: false\nvotes_pro_count: 0\nvotes_con_count: 0\nvotes_neutral_count:
+      0\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count: 0\nopinion_con_count:
+      0\nvotes_abstain_count: 0\norganisation_id: \n"
+    - '2014-09-23 09:27:32.601208'
+  - - '31'
+    - Argument
+    - '3'
+    - create
+    - '1'
+    - 
+    - '2014-09-23 09:28:03.144135'
+  - - '32'
+    - Argument
+    - '3'
+    - update
+    - '1'
+    - |
+      ---
+      id: 3
+      content: Dan gaan al die zonnepanelen toch kapot!
+      statement_id: 6
+      pro: false
+      created_at: 2014-09-23 09:28:03.131566000 Z
+      updated_at: 2014-09-23 09:28:03.131566000 Z
+      title: Bussen moeten kunnen rijden
+      is_trashed: false
+      votes_pro_count: 0
+      comments_count: 0
+      votes_abstain_count: 0
+    - '2014-09-23 09:28:08.633695'
 
 ---
 votes:
@@ -1856,61 +2397,30 @@ votes:
     - '0'
     - '2014-09-14 15:12:15.271418'
     - '2014-09-14 15:12:47.477555'
-
----
-organisations:
-  columns:
-  - id
-  - name
-  - website
-  - public
-  - listed
-  - requestable
-  - description
-  - slogan
-  - key_tags
-  - created_at
-  - updated_at
-  - profile_photo_file_name
-  - profile_photo_content_type
-  - profile_photo_file_size
-  - profile_photo_updated_at
-  - cover_photo_file_name
-  - cover_photo_content_type
-  - cover_photo_file_size
-  - cover_photo_updated_at
-  - web_url
-  - members_count
-  - statements_count
-  records: 
-  - - '1'
-    - Gemeente Utrecht
-    - http://www.utrecht.nl
-    - true
-    - false
-    - true
-    - Bij de gemeente Utrecht werken ruim 4.000 medewerkers verdeeld over twaalf diensten
-      en twee projectorganisaties. Samen werken wij voor ruim 300.000 Utrechters aan
-      de stad. Onze gemeente staat de komende jaren voor grote uitdagingen. Naast
-      het realiseren van het collegeprogramma voor een groen open en sociaal Utrecht,
-      ligt er ook een grote veranderopgave voor de organisatie. Het college wil de
-      ambtelijke organisatie omvormen in een financieel gezonde organisatie die slanker
-      is en vraaggerichter en slagvaardiger werkt.
-    - Hart van Nederland...
-    - utrecht,beleid
-    - '2014-09-12 22:17:37.351175'
-    - '2014-09-14 19:18:59.220316'
-    - utrecht.png
-    - image/png
-    - '18136'
-    - '2014-09-13 19:14:56.678361'
-    - 2420372849_35fc3d3e11_o.jpg
-    - image/jpeg
-    - '1915671'
-    - '2014-09-13 21:04:56.159122'
-    - utrecht
-    - '0'
-    - '0'
+  - - '2'
+    - '1'
+    - Statement
+    - '1'
+    - User
+    - '1'
+    - '2014-09-16 07:16:35.592191'
+    - '2014-09-16 07:16:35.742926'
+  - - '3'
+    - '2'
+    - Argument
+    - '1'
+    - User
+    - '1'
+    - '2014-09-16 07:51:29.281391'
+    - '2014-09-16 07:51:29.30417'
+  - - '4'
+    - '3'
+    - Argument
+    - '1'
+    - User
+    - '1'
+    - '2014-09-23 09:28:08.608862'
+    - '2014-09-23 09:28:08.638511'
 
 ---
 taggings:
@@ -1988,6 +2498,30 @@ taggings:
     - 
     - tags
     - '2014-09-14 23:09:06.261846'
+  - - '9'
+    - '7'
+    - '6'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-09-23 09:27:32.324112'
+  - - '10'
+    - '8'
+    - '6'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-09-23 09:27:32.348883'
+  - - '11'
+    - '4'
+    - '6'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-09-23 09:27:32.36237'
 
 ---
 tags:
@@ -2007,12 +2541,18 @@ tags:
     - '2'
   - - '4'
     - natuur
-    - '2'
+    - '3'
   - - '5'
     - utrecht
     - '1'
   - - '6'
     - tags
+    - '1'
+  - - '7'
+    - zonneenergie
+    - '1'
+  - - '8'
+    - duurzaamheid
     - '1'
 
 ---
@@ -2042,19 +2582,19 @@ statements:
     - Zo veel belangrijke dingen, zo weinig tijd. {EU}(Europese Unie) of [www.website.nl](voorbeeld
       omschrijving). Vergeet {Neelie_Kroes}(Neelie) niet samen met {Marietje}(Marietje)
     - '2014-05-02 15:18:33.604968'
-    - '2014-09-13 21:28:46.960008'
+    - '2014-09-16 07:16:35.602222'
     - '0'
     - '0'
     - 
     - false
+    - '1'
     - '0'
     - '0'
     - '0'
     - '0'
     - '0'
     - '0'
-    - '0'
-    - '0'
+    - '-1'
     - 
   - - '2'
     - Prachtig voorstel
@@ -2128,3 +2668,205 @@ statements:
     - '0'
     - '0'
     - '1'
+  - - '6'
+    - Weg tot de wetenschap volgooien met zonnepanelen
+    - Iets met dat wegen toch onnodig zijn.
+    - '2014-09-23 09:27:32.048098'
+    - '2014-09-23 09:27:32.594278'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '1'
+    - '0'
+    - '0'
+    - '0'
+    - '1'
+
+---
+organisations:
+  columns:
+  - id
+  - name
+  - website
+  - description
+  - slogan
+  - key_tags
+  - created_at
+  - updated_at
+  - profile_photo_file_name
+  - profile_photo_content_type
+  - profile_photo_file_size
+  - profile_photo_updated_at
+  - cover_photo_file_name
+  - cover_photo_content_type
+  - cover_photo_file_size
+  - cover_photo_updated_at
+  - web_url
+  - memberships_count
+  - statements_count
+  - scope
+  - application_form
+  - public_form
+  records: 
+  - - '1'
+    - Gemeente Utrecht
+    - http://www.utrecht.nl
+    - Bij de gemeente Utrecht werken ruim 4.000 medewerkers verdeeld over twaalf diensten
+      en twee projectorganisaties. Samen werken wij voor ruim 300.000 Utrechters aan
+      de stad. Onze gemeente staat de komende jaren voor grote uitdagingen. Naast
+      het realiseren van het collegeprogramma voor een groen open en sociaal Utrecht,
+      ligt er ook een grote veranderopgave voor de organisatie. Het college wil de
+      ambtelijke organisatie omvormen in een financieel gezonde organisatie die slanker
+      is en vraaggerichter en slagvaardiger werkt.
+    - Hart van Nederland...
+    - utrecht,beleid
+    - '2014-09-12 22:17:37.351175'
+    - '2014-09-14 19:18:59.220316'
+    - utrecht.png
+    - image/png
+    - '18136'
+    - '2014-09-13 19:14:56.678361'
+    - 2420372849_35fc3d3e11_o.jpg
+    - image/jpeg
+    - '1915671'
+    - '2014-09-13 21:04:56.159122'
+    - utrecht
+    - '7'
+    - '3'
+    - '2'
+    - '0'
+    - '0'
+  - - '2'
+    - Amsterdam
+    - http://www.amsterdam.nl
+    - 'De kernwaarden van de gemeente Amsterdam zijn: Open Actief en Integer'
+    - I Amsterdam
+    - amsterdam
+    - '2014-09-15 21:01:50.075052'
+    - '2014-09-17 20:20:46.757263'
+    - 537px-wapen_amsterdam_svg.png
+    - image/png
+    - '7458'
+    - '2014-09-15 21:01:50.032979'
+    - 10515254_765459156828667_429335714916021152_o.jpg
+    - image/jpeg
+    - '341263'
+    - '2014-09-15 21:03:45.376141'
+    - amsterdam
+    - '0'
+    - '0'
+    - '2'
+    - '0'
+    - '0'
+  - - '3'
+    - Greenpeace
+    - http://www.greenpeace.org/international/en/
+    - Greenpeace exists because this fragile Earth deserves a voice. It needs solutions.
+      It needs change. It needs action. It needs YOU!
+    - ''
+    - milieu,natuur,dekleurgroen
+    - '2014-09-15 21:19:32.622286'
+    - '2014-09-15 21:24:57.005482'
+    - 943075_10151524836783300_2015064063_n.png
+    - image/png
+    - '32026'
+    - '2014-09-15 21:24:56.465481'
+    - 1077393_10152457436438300_4352758260534740143_o.png
+    - image/png
+    - '406188'
+    - '2014-09-15 21:24:56.572842'
+    - ''
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+  - - '4'
+    - Janssens Discussies
+    - ''
+    - Jaaaaannnssseeen!
+    - Altijd de pineut
+    - ''
+    - '2014-09-17 12:36:55.318919'
+    - '2014-09-17 12:36:55.318919'
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+
+---
+groups:
+  columns:
+  - id
+  - name
+  - website
+  - description
+  - slogan
+  - key_tags
+  - created_at
+  - updated_at
+  - profile_photo_file_name
+  - profile_photo_content_type
+  - profile_photo_file_size
+  - profile_photo_updated_at
+  - cover_photo_file_name
+  - cover_photo_content_type
+  - cover_photo_file_size
+  - cover_photo_updated_at
+  - web_url
+  - memberships_count
+  - statements_count
+  - scope
+  - application_form
+  - public_form
+  records: 
+  - - '3'
+    - Thom's groepje
+    - 
+    - ''
+    - Cogitationes posteriores sunt saniores
+    - ''
+    - '2014-09-20 15:59:03.032995'
+    - '2014-09-20 15:59:03.032995'
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - '0'
+    - '0'
+    - '0'
+    - '2'
+    - '1'
+
+---
+group_memberships:
+  columns:
+  - id
+  - user_id
+  - group_id
+  - role
+  records: 
+  - - '2'
+    - '1'
+    - '3'
+    - '2'

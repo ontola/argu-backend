@@ -19,6 +19,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.0'
 gem "cocoon"
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 
 ##################Features########################
 gem 'paper_trail', '~> 3.0.0'
@@ -54,7 +55,8 @@ gem 'pundit', "~> 0.3.0"
 gem 'rolify'
 
 group :development, :test do
-  gem 'thin'
+  #gem 'thin'
+  gem 'puma'
   gem 'rspec', '2.8.0'
   gem 'rspec-rails', '2.8.0'
   gem 'factory_girl'
@@ -69,7 +71,7 @@ group :development, :test do
   gem 'coffee-rails', '~> 4.0.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'quiet_assets'
-  gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
+
 end
 
 group :production do 
