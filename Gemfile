@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+
+gem 'sass-rails',   '~> 4.0.3'
 gem 'rails', '~>4.1.0'
 ##################DB########################
 gem 'pg', '~> 0.17.1'
@@ -60,7 +62,6 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'
-  gem 'sass-rails',   '~> 4.0.3'
   gem 'coffee-rails', '~> 4.0.1'
   gem 'uglifier', '>= 1.0.3'
 end
