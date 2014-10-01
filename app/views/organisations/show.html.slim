@@ -1,0 +1,27 @@
+=render partial: 'manage_bar'  if policy(@org).update?
+.profile-header
+  =image_tag @org.cover_photo.url(:cropped), class: 'cover'
+  =image_tag @org.profile_photo, class: 'profile'
+  h1= @org.name
+.box
+  p= @org.description
+  -if policy(@org).member?
+    p You're a member!
+  -else
+    =link_to 'join', organisation_memberships_path(@org.id), method: :create, class: 'btn'
+  p
+    == '&#127757; '
+    = link_to @org.website.sub(/^https?\:\/\//, ''), @org.website
+  .tags
+    - @org.key_tags.each do |tag|
+      = link_to tag, tag_statements_url(tag), class: "tag", title: t("statements.titles.tags")+tag
+.argcontainer1
+  .argcontainer2
+    .procon
+      .argtypebox.pro
+        h2 problemen
+      =render Statement.first
+    .procon
+      .argtypebox.pro
+        h2 oplossingen
+      =render Statement.second

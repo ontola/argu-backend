@@ -1,0 +1,18 @@
+= semantic_form_for @org do |f|
+  = f.inputs do
+    = f.input :name
+    -if policy(@org).web_url?
+      = f.input :web_url
+    = f.input :description
+    = f.input :slogan
+    = f.input :website
+    = f.input :profile_photo
+    = f.input :cover_photo
+    - if @org.cover_photo.present?
+      = f.cropbox :cover_photo, :width => 600
+    = f.input :public_form, as: :radio, collection: Organisation.public_forms.keys, member_label: method(:public_form_member_label)
+    = f.input :application_form, as: :radio, collection: Organisation.application_forms.keys, member_label: method(:application_form_member_label)
+    = f.input :key_tags, :required => false, input_html: {class: 'tag-list'}, :hint => "Example: ruby, rails, forms"
+
+  = f.actions do
+    = f.action :submit, :as => :button

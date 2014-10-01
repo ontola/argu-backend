@@ -1,21 +1,8 @@
-<%= form_for(@profile) do |f| %>
-  <% if @profile.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@profile.errors.count, "error") %> prohibited this profile from being saved:</h2>
-      <ul>
-      <% @profile.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-  <% [:name, :picture, :about].each do |i| %>
-    <div class="field">
-      <%= f.label i, t("profiles.edit."+i.to_s) %><br />
-      <%= f.text_field i, value: eval('@profile.'+i.to_s) %>
-    </div>
-  <% end %>
-  <div class="actions">
-    <%= f.submit t("update_type", type: t("profiles.type")), :class => "btn btn-primary" %>
-  </div>
+<%= semantic_form_for @profile do |f| %>
+    <%= f.inputs :name %>
+    <%= f.inputs :about %>
+    <%= f.inputs :profile_photo %>
+    <%= f.actions do %>
+        <%= f.action :submit, :as => :button %>
+    <% end %>
 <% end %>

@@ -17,6 +17,7 @@ Argu::Application.routes.draw do
   match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
 
   resources :users do
+    get :autocomplete_user_name, :on => :collection
     collection do
       post '/search/:username' => 'users#search' #, as: 'search'
       post '/search' => 'users#search', as: 'search'
@@ -31,9 +32,6 @@ Argu::Application.routes.draw do
     get 'tags/:tag', to: 'tags/statements#show',  on: :collection, as: :tag
 
     resources :revisions, only: [:index, :show, :update], shallow: true
-    #member do
-    #  get 'tags'   # refactor above to this later (or, ideally a new controller on its own)
-    #end
     namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
       get '' => 'statements#index', as: ''
       post ':user_id' => 'statements#create', as: 'user'
@@ -53,7 +51,15 @@ Argu::Application.routes.draw do
     resources :comments
   end
 
-  #resources :sessions #, only: [:new, :create, :destroy]
+  resources :organisations, except: [:index, :edit] do
+    get :settings, on: :member
+    resources :memberships, only: [:create, :destroy]
+  end
+
+  resources :groups, except: [:index, :edit] do
+    get :settings, on: :member
+    resources :group_memberships, path: 'memberships', only: [:create, :destroy]
+  end
   resources :profiles
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
@@ -65,6 +71,8 @@ Argu::Application.routes.draw do
   #match "/signin", to: "sessions#new"
   #get "/signout", to: "sessions#destroy", via: :delete
   get '/about', to: 'static_pages#about'
+
+  get '/portal', to: 'portal/portal#home'
 
   root to: 'static_pages#home'
   get '/', to: 'statements#index'

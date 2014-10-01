@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery #secret: "Nl4EV8Fm3LdKayxNtIBwrzMdH9BD18KcQwSczxh1EdDbtyf045rFuVces8AdPtobC9pp044KsDkilWfvXoDADZWi6Gnwk1vf3GghCIdKXEh7yYg41Tu1vWaPdyzH7solN33liZppGlJlNTlJjFKjCoGjZP3iJhscsYnPVwY15XqWqmpPqjNiluaSpCmOBpbzWLPexWwBSOvTcd6itoUdWUSQJEVL3l0rwyJ76fznlNu6DUurFb8bOL2ItPiSit7g"
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
+  before_action :set_local_scope
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
     flash[:warning] = t(:vote_same_twice_warning)
@@ -11,7 +12,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     respond_to do |format|
-      format.js { head 403 }
+      format.js { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {
         request.env['HTTP_REFERER'] ||= root_path
         redirect_to :back, :alert => exception.message
@@ -23,6 +24,22 @@ class ApplicationController < ActionController::Base
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale
     end
+  end
+
+  def set_local_scope
+    if subdomain.present?
+      _argu_scope = Organisation.find_by web_url: subdomain
+      if _argu_scope && policy(_argu_scope).show?
+        @local_title = subdomain
+        current_user._current_scope = _argu_scope if current_user
+      else
+        raise ActionController::RoutingError.new('Not Found')
+      end
+    end
+  end
+
+  def subdomain
+    request.subdomain.presence != 'www' ? request.subdomain : nil
   end
 
 end

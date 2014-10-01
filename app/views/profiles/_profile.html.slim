@@ -1,0 +1,5 @@
+.profile
+  =image_tag profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
+  h3=profile.user.username
+  p=profile.name
+  p[style="text-overflow:ellipsis; white-space: nowrap;"]=mail_to(profile.user.email, "" + (profile.user.email.length > 25 ? (profile.user.email.to_s[0, 23] + "...") : profile.user.email unless profile.user.email.blank?).to_s )

@@ -1,0 +1,49 @@
+@import "variables";
+@import "mixins";
+
+.formtastic .radio {
+  .label {
+    width: auto;
+  }
+  fieldset .label label {
+    position: relative;
+    display:block;
+    float:left;
+    padding-top:.2em;
+  }
+}
+
+.profile-photo {
+  width: 3em;
+  height: 3em;
+  float:left;
+  margin-right: 0.5em;
+}
+.search-result .label,
+.search-result .profile-xs {
+  float: left;
+}
+.selectize-control.add-user .item, .selectize-dropdown-content .search-result .label,
+.selectize-control.add-user .item, .selectize-dropdown-content .search-result .label .highlight {
+  font-size: 1rem;
+  line-height: 2.7rem;;
+}
+.profile-xs {
+  width: 50px;
+  height: 50px;
+  margin-right: 0.5em;
+}
+.selectize-control.add-user,
+.selectize-control.add-user .selectize-input,
+.selectize-control.add-user .item {
+  width: 15em;
+}
+.selectize-control.add-user .item,
+.selectize-dropdown-content .label,
+.selectize-input input {
+  @include text_settings($size: 1.3em);
+}
+
+.selectize-input {
+  padding: 4px 8px;
+}

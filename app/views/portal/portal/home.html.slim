@@ -1,0 +1,28 @@
+h1= t('portal.portal')
+p= content_tag(:strong, current_user.username)
+nav
+  ul
+    li= link_to t('portal.new_organisation'), new_organisation_url
+h2 _organisaties_
+-if @organisations.blank?
+  p=t('portal.none')
+-else
+  table.styled
+    thead
+      tr
+        td= t('portal.name')
+        td= t('portal.created_at')
+        td= t('portal.updated_at')
+        td _Statement count_
+        td _Member count_
+    tbody
+      - @organisations.each do |t|
+        tr
+          td
+            = image_tag t.profile_photo, size: '16x16'
+            = link_to t.name.presence || t('portal.no_title'), organisation_path(t)
+          td=l t.created_at, format: :short
+          td=l t.updated_at, format: :short
+          td=t.statements_count
+          td=t.memberships_count
+  //=paginate @organisations, param_name: :published_page

@@ -122,6 +122,29 @@ select {
   font-size: 1em;
 }
 
+.sidebar {
+  width: 20em;
+  float: left;
+  margin-right: 2em;
+  .profile {
+    display: inline-block;
+    width: 100%;
+  }
+  .group {
+    clear: left;
+    h3 {
+      font-weight: bold;
+      margin: 1em 0 0 0;
+    }
+  }
+  ul {
+    text-align: left;
+  }
+}
+.content {
+  float: left;
+}
+
 .box {
   display: block;
   padding: 0.8em;
@@ -166,6 +189,29 @@ select {
   }
   form {
   margin-top: 4px;
+  }
+}
+
+.options-bar {
+  width: 100%;
+  background-color: white;
+  float: left;
+  box-shadow: 1px 1px 10px #e2e2e2;
+  margin-top: -1em;
+  li {
+    list-style-type: none;
+    display: inline-block;
+    float: left;
+  }
+  a {
+    display: block;
+    font-family: $raleway;
+    font-size: 16px;
+    font-weight: 200;
+    line-height: 39px;
+    padding: 3px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }
 
@@ -549,13 +595,26 @@ div#navbar {
     padding-left: 10px;
     padding-right: 10px;
   }
-  #argulogo {
-    font-size: 36px;
-    width: 73px;
-    background-image: image_url('argulogo.svg');
+  .top-logo {
     float: left;
-    position: relative;
-    height: 39px;
+    display: inline-block;
+    a.local {
+      display: inline-block;
+      padding: 0;
+    }
+    h1 {
+      line-height: 45px;
+      padding: 3px;
+      display: inline;
+    }
+    #argulogo {
+      font-size: 36px;
+      width: 73px;
+      float: left;
+      position: relative;
+      height: 39px;
+      padding: 0 0.5em 0 0;
+    }
   }
   .close {
     border-right: solid 1px white;
@@ -584,7 +643,7 @@ div#navbar {
     -webkit-appearance: none;      // hide the default "X" button  
 }
 
-input, textarea {
+input:not([type="checkbox"]):not([type="radio"]), textarea {
   -webkit-appearance: none;
   @include placeholder ($g2, 1)
 }
@@ -730,6 +789,25 @@ p.comment {
     font-size: 1em;
     color: $g3;
     margin: 0;
+  }
+}
+
+#staffsign {
+  margin: 0;
+  padding: .3em 0.5em;
+  text-align: center;
+  background: rgba(76, 76, 76, 0.9);
+  z-index: 6;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  font-size: 140%;
+  a, span {
+    font-family: sans-serif;
+    color: white;
+    text-decoration: none;
+    padding: 0 0.7em 0.2em;
+    line-height: 1em;
   }
 }
 
