@@ -18,7 +18,7 @@ head
   / unless current_user.blank?
   = stylesheet_link_tag "application", :media => "all"
 body
-  -unless current_user.blank?
+  -unless false # current_user.blank?
     - if current_user.has_role? :staff
       =render partial: 'staffsign'
     /[if lt IE 8]
