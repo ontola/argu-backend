@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_local_scope
-    if subdomain.present?
+    if subdomain.present? && subdomain != 'argu'
       _argu_scope = Organisation.find_by web_url: subdomain
       if _argu_scope && policy(_argu_scope).show?
         @local_title = subdomain
