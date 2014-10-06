@@ -37,6 +37,8 @@ Argu::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  config.session_store :active_record_store, key: '_Argu_session', domain: 'local.host'
+
   config.i18n.available_locales = :nl
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

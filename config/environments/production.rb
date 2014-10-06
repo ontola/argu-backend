@@ -48,6 +48,8 @@ Argu::Application.configure do
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
+  config.session_store :active_record_store, key: '_Argu_session', domain: 'alpha.argu.nl'
+
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
 
