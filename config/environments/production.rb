@@ -1,5 +1,5 @@
 Argu::Application.configure do
-  config.host = "argu.nl"
+  config.host = ENV['HOSTNAME'] || 'argu.nl'
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
@@ -40,7 +40,7 @@ Argu::Application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
   
   # See everything in the log (default is :info)
-  config.log_level = :debug
+  config.log_level = ENV['LOG_LEVEL'] || :info
 
   # Prepend all log lines with the following tags
   # config.log_tags = [ :subdomain, :uuid ]
@@ -48,7 +48,7 @@ Argu::Application.configure do
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
-  config.session_store :active_record_store, key: '_Argu_session', domain: 'alpha.argu.nl'
+  config.session_store :active_record_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'argu.nl')
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store

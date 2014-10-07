@@ -1,5 +1,5 @@
 Argu::Application.configure do
-  config.host = "logos.argu.nl"
+  config.host = ENV['HOSTNAME'] || "logos.argu.nl"
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
@@ -29,7 +29,7 @@ Argu::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  config.log_level = :debug
+  config.log_level = ENV['LOG_LEVEL'] || :debug
 
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false
@@ -37,7 +37,7 @@ Argu::Application.configure do
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection    = false
 
-  config.session_store :cookie_store, key: '_Argu_session', domain: 'logos.argu.nl'
+  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'logos.argu.nl')
   #config.session_store :active_record_store, key: '_Argu_session', domain: 'logos.argu.nl'
 
   # Tell Action Mailer not to deliver emails to the real world.
