@@ -4,7 +4,7 @@
       ==link_to root_url(subdomain: ''), id: "argulogo"
         =image_tag 'argulogo.svg'
       -if @local_title.present?
-        ==link_to organisation_url(current_user._current_scope, subdomain: current_user._current_scope.web_url), class: 'local'
+        ==link_to organisation_url(session[:_current_scope], subdomain: session[:_current_scope].web_url), class: 'local'
           h1= "| #{@local_title.capitalize}"
     ul#navbtns
       li=render partial: 'search/search'

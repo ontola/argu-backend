@@ -1,5 +1,5 @@
 Argu::Application.configure do
-  config.host = ENV['HOSTNAME'] || 'home.fletcher91.com:3000'
+  config.host = ENV['HOSTNAME'] || 'local.host:3000'
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
@@ -37,7 +37,7 @@ Argu::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.session_store :active_record_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'home.fletcher91.com:3000')
+  config.session_store :active_record_store, key: '_Argu_session', domain: :all
 
   config.i18n.available_locales = :nl
 
