@@ -42,11 +42,6 @@ class User < ActiveRecord::Base
   end
 
 #######Utility########
-  def self.find(id)
-    user = User.find_by_username(id.to_s)
-    user ||= User.find_by_id(id)
-    user ||= super(id)
-  end
   def getLogin
     return (:username.blank? ? email : username )
   end
