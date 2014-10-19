@@ -14,7 +14,6 @@ class Statement < ActiveRecord::Base
 
   acts_as_ordered_taggable_on :tags
   resourcify
-  has_paper_trail
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }
@@ -27,10 +26,6 @@ class Statement < ActiveRecord::Base
 
   def con_count
     self.arguments.count(:conditions => ["pro = false"])
-  end
-
-  def creator
-    User.find_by_id self.versions.first.whodunnit
   end
 
   def is_main_statement?(tag)

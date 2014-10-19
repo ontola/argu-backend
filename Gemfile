@@ -24,7 +24,6 @@ gem "cocoon"
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 ##################Features########################
-gem 'paper_trail', '~> 3.0.0'
 gem 'acts-as-taggable-on'
 gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 1.2.0'

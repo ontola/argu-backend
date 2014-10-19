@@ -12,7 +12,6 @@ module ProCon
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
 
     acts_as_commentable
-    has_paper_trail
   end
 
   def trash
@@ -42,10 +41,6 @@ module ProCon
 
   def root_comments
     self.comment_threads.where(:parent_id => nil)
-  end
-
-  def creator
-    User.find_by_id self.versions.first.whodunnit
   end
 
   def is_moderator?(user)

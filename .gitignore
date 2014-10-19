@@ -17,3 +17,4 @@
 /solr/data/*
 /solr/pids/*
 /.idea
+secrets.yml

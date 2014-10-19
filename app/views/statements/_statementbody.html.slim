@@ -10,6 +10,5 @@
             li= link_to t('statements.mod.show_moderation_panel'), [statement, :moderators] if policy(statement).update?
             li= link_to t("destroy"), statement_path(statement, destroy: true), method: :delete, confirm: t("destroy_confirmation") if policy(statement).destroy?
             li= link_to t("trash"), statement_path(statement), method: :delete, confirm: t("trash_confirmation") if policy(statement).trash?
-            li= link_to(t("edit"), edit_statement_path(statement)) if policy(statement).update?
-            li= link_to(t("history"), statement_revisions_path(statement)) if policy(statement).show?
+            li= link_to t("edit"), edit_statement_path(statement) if policy(statement).update?
     .clearfix

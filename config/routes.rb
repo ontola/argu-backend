@@ -31,7 +31,6 @@ Argu::Application.routes.draw do
     get 'tags',      to: 'tags/statements#index', on: :collection
     get 'tags/:tag', to: 'tags/statements#show',  on: :collection, as: :tag
 
-    resources :revisions, only: [:index, :show, :update], shallow: true
     namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
       get '' => 'statements#index', as: ''
       post ':user_id' => 'statements#create', as: 'user'
@@ -41,8 +40,7 @@ Argu::Application.routes.draw do
 
   resources :arguments do
     resources :comments
-    resources :revisions, only: [:index, :show, :update], shallow: true
-    
+
     post   'vote' => 'votes/arguments#create'
     delete 'vote' => 'votes/arguments#destroy'
   end
