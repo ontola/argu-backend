@@ -51,6 +51,7 @@ class StatementsController < ApplicationController
   # POST /statements.json
   def create
     @statement = Statement.create permit_params
+    @statement.creator = current_user
     authorize @statement
     @statement.organisation = current_user._current_scope
     current_user.add_role :mod, @statement

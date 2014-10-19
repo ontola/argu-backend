@@ -42,6 +42,7 @@ class OpinionsController < ApplicationController
 
   def create
     @opinion = Opinion.new create_params
+    @opinion.creator = current_user
     authorize @opinion
     @opinion.statement_id = create_params[:statement_id]
     @opinion.pro = create_params[:pro]
