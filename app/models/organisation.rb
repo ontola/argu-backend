@@ -2,7 +2,7 @@ class Organisation < ActiveRecord::Base
   include IOrganisation
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
-  accepts_nested_attributes_for :memberships, :reject_if => :all_blank, :allow_destroy => true
+  accepts_nested_attributes_for :memberships, :allow_destroy => true
 
   validate :manager_present?
 
@@ -11,7 +11,7 @@ class Organisation < ActiveRecord::Base
   resourcify
 
   def manager_present?
-    if memberships.where(role: Membership.roles[:manager]).present?
+    if memberships.where(role: Membership.roles[:manager]).blank?
       errors.add :base, "_manager not present_"
     end
   end
