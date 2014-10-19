@@ -1,5 +1,5 @@
 Argu::Application.configure do
-  config.host = "home.fletcher91.com:3000"
+  config.host = ENV['HOSTNAME'] || 'home.fletcher91.com:3000'
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
@@ -23,7 +23,7 @@ Argu::Application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
@@ -36,6 +36,8 @@ Argu::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.session_store :active_record_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'home.fletcher91.com:3000')
 
   config.i18n.available_locales = :nl
 

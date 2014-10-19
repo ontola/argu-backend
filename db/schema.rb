@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140831211429) do
+ActiveRecord::Schema.define(version: 20140923085802) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,55 @@ ActiveRecord::Schema.define(version: 20140831211429) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "follows", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "followed_id"
+    t.string   "followed_type"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  create_table "group_memberships", force: true do |t|
+    t.integer "user_id"
+    t.integer "group_id"
+    t.integer "role",     default: 0, null: false
+  end
+
+  create_table "groups", force: true do |t|
+    t.string   "name"
+    t.string   "website"
+    t.text     "description"
+    t.string   "slogan"
+    t.string   "key_tags"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "profile_photo_file_name"
+    t.string   "profile_photo_content_type"
+    t.integer  "profile_photo_file_size"
+    t.datetime "profile_photo_updated_at"
+    t.string   "cover_photo_file_name"
+    t.string   "cover_photo_content_type"
+    t.integer  "cover_photo_file_size"
+    t.datetime "cover_photo_updated_at"
+    t.string   "web_url"
+    t.integer  "memberships_count",          default: 0, null: false
+    t.integer  "statements_count",           default: 0, null: false
+    t.integer  "scope",                      default: 0, null: false
+    t.integer  "application_form",           default: 0, null: false
+    t.integer  "public_form",                default: 0, null: false
+  end
+
+  add_index "groups", ["name"], name: "groups_name_idx", using: :btree
+  add_index "groups", ["web_url"], name: "groups_web_url_idx", using: :btree
+
+  create_table "memberships", force: true do |t|
+    t.integer "user_id"
+    t.integer "organisation_id"
+    t.integer "role",            default: 0, null: false
+  end
+
+  add_index "memberships", ["user_id", "organisation_id"], name: "index_memberships_on_user_id_and_organisation_id", unique: true, using: :btree
+
   create_table "opinions", force: true do |t|
     t.string   "title"
     t.text     "content"
@@ -99,13 +148,49 @@ ActiveRecord::Schema.define(version: 20140831211429) do
   add_index "opinions", ["statement_id", "id"], name: "index_opinions_on_statement_id_and_id", using: :btree
   add_index "opinions", ["statement_id", "is_trashed"], name: "index_opinions_on_statement_id_and_is_trashed", using: :btree
 
+  create_table "organisations", force: true do |t|
+    t.string   "name"
+    t.string   "website"
+    t.text     "description"
+    t.string   "slogan"
+    t.string   "key_tags"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "profile_photo_file_name"
+    t.string   "profile_photo_content_type"
+    t.integer  "profile_photo_file_size"
+    t.datetime "profile_photo_updated_at"
+    t.string   "cover_photo_file_name"
+    t.string   "cover_photo_content_type"
+    t.integer  "cover_photo_file_size"
+    t.datetime "cover_photo_updated_at"
+    t.string   "web_url"
+    t.integer  "memberships_count",          default: 0, null: false
+    t.integer  "statements_count",           default: 0, null: false
+    t.integer  "scope",                      default: 0, null: false
+    t.integer  "application_form",           default: 0, null: false
+    t.integer  "public_form",                default: 0, null: false
+  end
+
+  add_index "organisations", ["id"], name: "index_organisations_on_id", using: :btree
+  add_index "organisations", ["name"], name: "index_organisations_on_name", using: :btree
+  add_index "organisations", ["web_url"], name: "index_organisations_on_web_url", using: :btree
+
   create_table "profiles", force: true do |t|
     t.integer  "user_id"
-    t.string   "name",       default: ""
-    t.text     "about",      default: ""
-    t.string   "picture",    default: ""
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.string   "name",                       default: ""
+    t.text     "about",                      default: ""
+    t.string   "picture",                    default: ""
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
+    t.string   "profile_photo_file_name"
+    t.string   "profile_photo_content_type"
+    t.integer  "profile_photo_file_size"
+    t.datetime "profile_photo_updated_at"
+    t.string   "cover_photo_file_name"
+    t.string   "cover_photo_content_type"
+    t.integer  "cover_photo_file_size"
+    t.datetime "cover_photo_updated_at"
   end
 
   add_index "profiles", ["user_id"], name: "profiles_by_user_id", unique: true, using: :btree
@@ -121,11 +206,32 @@ ActiveRecord::Schema.define(version: 20140831211429) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "sessions", force: true do |t|
+    t.string   "session_id", null: false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
+  add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
+
+  create_table "statementarguments", force: true do |t|
+    t.integer "argument_id",                 null: false
+    t.integer "statement_id",                null: false
+    t.boolean "pro",          default: true, null: false
+    t.integer "votes_count",  default: 0
+  end
+
+  add_index "statementarguments", ["argument_id", "statement_id"], name: "arg_state_index", using: :btree
+
   create_table "statements", force: true do |t|
     t.string   "title",                               null: false
     t.text     "content",                             null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.integer  "pro_count",           default: 0
+    t.integer  "con_count",           default: 0
     t.integer  "tag_id"
     t.boolean  "is_trashed",          default: false
     t.integer  "votes_pro_count",     default: 0,     null: false
@@ -135,13 +241,13 @@ ActiveRecord::Schema.define(version: 20140831211429) do
     t.integer  "argument_con_count",  default: 0,     null: false
     t.integer  "opinion_pro_count",   default: 0,     null: false
     t.integer  "opinion_con_count",   default: 0,     null: false
-    t.integer  "pro_count",           default: 0
-    t.integer  "con_count",           default: 0
     t.integer  "votes_abstain_count", default: 0,     null: false
+    t.integer  "organisation_id"
   end
 
   add_index "statements", ["id"], name: "index_statements_on_id", using: :btree
   add_index "statements", ["is_trashed"], name: "index_statements_on_is_trashed", using: :btree
+  add_index "statements", ["organisation_id"], name: "index_statements_on_organisation_id", using: :btree
   add_index "statements", ["tag_id"], name: "index_statements_on_tag_id", using: :btree
 
   create_table "taggings", force: true do |t|
@@ -209,8 +315,8 @@ ActiveRecord::Schema.define(version: 20140831211429) do
     t.integer  "voter_id"
     t.string   "voter_type"
     t.integer  "for",           default: 3, null: false
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "index_votes_on_voter_and_voteable_and_trashed", using: :btree

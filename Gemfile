@@ -1,10 +1,13 @@
 source 'https://rubygems.org'
+ruby '2.0.0'
 
+gem 'sass-rails',   '~> 4.0.3'
 gem 'rails', '~>4.1.0'
 ##################DB########################
 gem 'pg', '~> 0.17.1'
 gem 'foreigner', '~> 1.2.1'
 gem 'immigrant', '~> 0.1.2'
+gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 
 gem 'jbuilder', '~> 1.2'
 gem 'bcrypt-ruby', '3.0.1'
@@ -16,6 +19,9 @@ gem 'delayed_job', '~> 4.0.1'
 gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
+gem 'formtastic', '~> 3.0'
+gem "cocoon"
+gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 ##################Features########################
 gem 'paper_trail', '~> 3.0.0'
@@ -34,8 +40,10 @@ gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~>2.0.2'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'rails3-jquery-autocomplete', '~> 1.0.7'
+gem 'rails3-jquery-autocomplete', '~> 1.0.12'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
+gem "paperclip", "~> 4.2"
+gem "papercrop"
 
 ##################User management########################
 gem 'devise', "~> 3.2.4"
@@ -49,7 +57,8 @@ gem 'pundit', "~> 0.3.0"
 gem 'rolify'
 
 group :development, :test do
-  gem 'thin'
+  #gem 'thin'
+  gem 'puma'
   gem 'rspec', '2.8.0'
   gem 'rspec-rails', '2.8.0'
   gem 'factory_girl'
@@ -60,12 +69,14 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'spring'
-  gem 'sass-rails',   '~> 4.0.3'
   gem 'coffee-rails', '~> 4.0.1'
   gem 'uglifier', '>= 1.0.3'
+  gem 'quiet_assets'
+
 end
 
 group :production do 
   gem 'newrelic_rpm'
   gem 'therubyracer'
+  gem 'rails_12factor'
 end

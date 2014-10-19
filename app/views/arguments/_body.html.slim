@@ -2,7 +2,6 @@ header
   .box
     h1[class=(@argument.pro ? 'title pro' : 'title con')]= @argument.title
     = content_tag :p, raw(@argument.supped_content), class: 'intro'
-    = content_tag :p, t("arguments.references") + ":", class: 'referencestitle'
     = print_references @argument
     /TODO
     .infobar

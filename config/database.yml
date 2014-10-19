@@ -1,11 +1,11 @@
 production:
   adapter: postgresql
-  host: localhost
-  encoding: utf8
-  database: argu_production
+#  host: localhost
+#  encoding: utf8
+#  database: argu_production
   pool: 5
-  username: argu_prod
-  password: Op3ndebate
+#  username: argu_prod
+#  password: Op3ndebate
 
 development:
   adapter: postgresql

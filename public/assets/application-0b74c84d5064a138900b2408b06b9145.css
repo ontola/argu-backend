@@ -1,0 +1,2684 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+.fixedsticky {
+	position: -webkit-sticky;
+	position: -moz-sticky;
+	position: -ms-sticky;
+	position: -o-sticky;
+	position: sticky;
+}
+.fixedsticky-withoutfixedfixed .fixedsticky-on,
+.fixed-supported .fixedsticky-on {
+	position: fixed;
+}
+.fixedsticky-dummy {
+	display: none;
+}
+.fixedsticky-on + .fixedsticky-dummy {
+	display: block;
+}
+/**
+ * selectize.css (v0.10.1)
+ * Copyright (c) 2013 Brian Reavis & contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
+ * file except in compliance with the License. You may obtain a copy of the License at:
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ * ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ *
+ * @author Brian Reavis <brian@thirdroute.com>
+ */
+
+
+.selectize-control.plugin-drag_drop.multi > .selectize-input > div.ui-sortable-placeholder {
+  visibility: visible !important;
+  background: #f2f2f2 !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+  border: 0 none !important;
+  -webkit-box-shadow: inset 0 0 12px 4px #ffffff;
+  box-shadow: inset 0 0 12px 4px #ffffff;
+}
+.selectize-control.plugin-drag_drop .ui-sortable-placeholder::after {
+  content: '!';
+  visibility: hidden;
+}
+.selectize-control.plugin-drag_drop .ui-sortable-helper {
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.selectize-dropdown-header {
+  position: relative;
+  padding: 5px 8px;
+  border-bottom: 1px solid #d0d0d0;
+  background: #f8f8f8;
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
+}
+.selectize-dropdown-header-close {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  color: #303030;
+  opacity: 0.4;
+  margin-top: -12px;
+  line-height: 20px;
+  font-size: 20px !important;
+}
+.selectize-dropdown-header-close:hover {
+  color: #000000;
+}
+.selectize-dropdown.plugin-optgroup_columns .optgroup {
+  border-right: 1px solid #f2f2f2;
+  border-top: 0 none;
+  float: left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.selectize-dropdown.plugin-optgroup_columns .optgroup:last-child {
+  border-right: 0 none;
+}
+.selectize-dropdown.plugin-optgroup_columns .optgroup:before {
+  display: none;
+}
+.selectize-dropdown.plugin-optgroup_columns .optgroup-header {
+  border-top: 0 none;
+}
+.selectize-control.plugin-remove_button [data-value] {
+  position: relative;
+  padding-right: 24px !important;
+}
+.selectize-control.plugin-remove_button [data-value] .remove {
+  z-index: 1;
+  /* fixes ie bug (see #392) */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 17px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 12px;
+  color: inherit;
+  text-decoration: none;
+  vertical-align: middle;
+  display: inline-block;
+  padding: 2px 0 0 0;
+  border-left: 1px solid #d0d0d0;
+  -webkit-border-radius: 0 2px 2px 0;
+  -moz-border-radius: 0 2px 2px 0;
+  border-radius: 0 2px 2px 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.selectize-control.plugin-remove_button [data-value] .remove:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+.selectize-control.plugin-remove_button [data-value].active .remove {
+  border-left-color: #cacaca;
+}
+.selectize-control.plugin-remove_button .disabled [data-value] .remove:hover {
+  background: none;
+}
+.selectize-control.plugin-remove_button .disabled [data-value] .remove {
+  border-left-color: #ffffff;
+}
+.selectize-control {
+  position: relative;
+}
+.selectize-dropdown,
+.selectize-input,
+.selectize-input input {
+  color: #303030;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-font-smoothing: inherit;
+}
+.selectize-input,
+.selectize-control.single .selectize-input.input-active {
+  background: #ffffff;
+  cursor: text;
+  display: inline-block;
+}
+.selectize-input {
+  border: 1px solid #d0d0d0;
+  padding: 8px 8px;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.selectize-control.multi .selectize-input.has-items {
+  padding: 6px 8px 3px;
+}
+.selectize-input.full {
+  background-color: #ffffff;
+}
+.selectize-input.disabled,
+.selectize-input.disabled * {
+  cursor: default !important;
+}
+.selectize-input.focus {
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+.selectize-input.dropdown-active {
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
+}
+.selectize-input > * {
+  vertical-align: baseline;
+  display: -moz-inline-stack;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+.selectize-control.multi .selectize-input > div {
+  cursor: pointer;
+  margin: 0 3px 3px 0;
+  padding: 2px 6px;
+  background: #f2f2f2;
+  color: #303030;
+  border: 0 solid #d0d0d0;
+}
+.selectize-control.multi .selectize-input > div.active {
+  background: #e8e8e8;
+  color: #303030;
+  border: 0 solid #cacaca;
+}
+.selectize-control.multi .selectize-input.disabled > div,
+.selectize-control.multi .selectize-input.disabled > div.active {
+  color: #7d7d7d;
+  background: #ffffff;
+  border: 0 solid #ffffff;
+}
+.selectize-input > input {
+  padding: 0 !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  max-width: 100% !important;
+  margin: 0 2px 0 0 !important;
+  text-indent: 0 !important;
+  border: 0 none !important;
+  background: none !important;
+  line-height: inherit !important;
+  -webkit-user-select: auto !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.selectize-input > input::-ms-clear {
+  display: none;
+}
+.selectize-input > input:focus {
+  outline: none !important;
+}
+.selectize-input::after {
+  content: ' ';
+  display: block;
+  clear: left;
+}
+.selectize-input.dropdown-active::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  background: #f0f0f0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.selectize-dropdown {
+  position: absolute;
+  z-index: 10;
+  border: 1px solid #d0d0d0;
+  background: #ffffff;
+  margin: -1px 0 0 0;
+  border-top: 0 none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
+}
+.selectize-dropdown [data-selectable] {
+  cursor: pointer;
+  overflow: hidden;
+}
+.selectize-dropdown [data-selectable] .highlight {
+  background: rgba(125, 168, 208, 0.2);
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 1px;
+}
+.selectize-dropdown [data-selectable],
+.selectize-dropdown .optgroup-header {
+  padding: 5px 8px;
+}
+.selectize-dropdown .optgroup:first-child .optgroup-header {
+  border-top: 0 none;
+}
+.selectize-dropdown .optgroup-header {
+  color: #303030;
+  background: #ffffff;
+  cursor: default;
+}
+.selectize-dropdown .active {
+  background-color: #f5fafd;
+  color: #495c68;
+}
+.selectize-dropdown .active.create {
+  color: #495c68;
+}
+.selectize-dropdown .create {
+  color: rgba(48, 48, 48, 0.5);
+}
+.selectize-dropdown-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 200px;
+}
+.selectize-control.single .selectize-input,
+.selectize-control.single .selectize-input input {
+  cursor: pointer;
+}
+.selectize-control.single .selectize-input.input-active,
+.selectize-control.single .selectize-input.input-active input {
+  cursor: text;
+}
+.selectize-control.single .selectize-input:after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  margin-top: -3px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: #808080 transparent transparent transparent;
+}
+.selectize-control.single .selectize-input.dropdown-active:after {
+  margin-top: -4px;
+  border-width: 0 5px 5px 5px;
+  border-color: transparent transparent #808080 transparent;
+}
+.selectize-control.rtl.single .selectize-input:after {
+  left: 15px;
+  right: auto;
+}
+.selectize-control.rtl .selectize-input > input {
+  margin: 0 4px 0 -2px !important;
+}
+.selectize-control .selectize-input.disabled {
+  opacity: 0.5;
+  background-color: #fafafa;
+}
+/**
+ * selectize.default.css (v0.10.1) - Default Theme
+ * Copyright (c) 2013 Brian Reavis & contributors
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
+ * file except in compliance with the License. You may obtain a copy of the License at:
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under
+ * the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF
+ * ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
+ *
+ * @author Brian Reavis <brian@thirdroute.com>
+ */
+
+.selectize-control.plugin-drag_drop.multi > .selectize-input > div.ui-sortable-placeholder {
+  visibility: visible !important;
+  background: #f2f2f2 !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+  border: 0 none !important;
+  -webkit-box-shadow: inset 0 0 12px 4px #ffffff;
+  box-shadow: inset 0 0 12px 4px #ffffff;
+}
+.selectize-control.plugin-drag_drop .ui-sortable-placeholder::after {
+  content: '!';
+  visibility: hidden;
+}
+.selectize-control.plugin-drag_drop .ui-sortable-helper {
+  -webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.selectize-dropdown-header {
+  position: relative;
+  padding: 5px 8px;
+  border-bottom: 1px solid #d0d0d0;
+  background: #f8f8f8;
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
+}
+.selectize-dropdown-header-close {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  color: #303030;
+  opacity: 0.4;
+  margin-top: -12px;
+  line-height: 20px;
+  font-size: 20px !important;
+}
+.selectize-dropdown-header-close:hover {
+  color: #000000;
+}
+.selectize-dropdown.plugin-optgroup_columns .optgroup {
+  border-right: 1px solid #f2f2f2;
+  border-top: 0 none;
+  float: left;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.selectize-dropdown.plugin-optgroup_columns .optgroup:last-child {
+  border-right: 0 none;
+}
+.selectize-dropdown.plugin-optgroup_columns .optgroup:before {
+  display: none;
+}
+.selectize-dropdown.plugin-optgroup_columns .optgroup-header {
+  border-top: 0 none;
+}
+.selectize-control.plugin-remove_button [data-value] {
+  position: relative;
+  padding-right: 24px !important;
+}
+.selectize-control.plugin-remove_button [data-value] .remove {
+  z-index: 1;
+  /* fixes ie bug (see #392) */
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 17px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 12px;
+  color: inherit;
+  text-decoration: none;
+  vertical-align: middle;
+  display: inline-block;
+  padding: 2px 0 0 0;
+  border-left: 1px solid #0073bb;
+  -webkit-border-radius: 0 2px 2px 0;
+  -moz-border-radius: 0 2px 2px 0;
+  border-radius: 0 2px 2px 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.selectize-control.plugin-remove_button [data-value] .remove:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+.selectize-control.plugin-remove_button [data-value].active .remove {
+  border-left-color: #00578d;
+}
+.selectize-control.plugin-remove_button .disabled [data-value] .remove:hover {
+  background: none;
+}
+.selectize-control.plugin-remove_button .disabled [data-value] .remove {
+  border-left-color: #aaaaaa;
+}
+.selectize-control {
+  position: relative;
+}
+.selectize-dropdown,
+.selectize-input,
+.selectize-input input {
+  color: #303030;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 18px;
+  -webkit-font-smoothing: inherit;
+}
+.selectize-input,
+.selectize-control.single .selectize-input.input-active {
+  background: #ffffff;
+  cursor: text;
+  display: inline-block;
+}
+.selectize-input {
+  border: 1px solid #d0d0d0;
+  padding: 8px 8px;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+}
+.selectize-control.multi .selectize-input.has-items {
+  padding: 5px 8px 2px;
+}
+.selectize-input.full {
+  background-color: #ffffff;
+}
+.selectize-input.disabled,
+.selectize-input.disabled * {
+  cursor: default !important;
+}
+.selectize-input.focus {
+  -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+.selectize-input.dropdown-active {
+  -webkit-border-radius: 3px 3px 0 0;
+  -moz-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
+}
+.selectize-input > * {
+  vertical-align: baseline;
+  display: -moz-inline-stack;
+  display: inline-block;
+  zoom: 1;
+  *display: inline;
+}
+.selectize-control.multi .selectize-input > div {
+  cursor: pointer;
+  margin: 0 3px 3px 0;
+  padding: 2px 6px;
+  background: #1da7ee;
+  color: #ffffff;
+  border: 1px solid #0073bb;
+}
+.selectize-control.multi .selectize-input > div.active {
+  background: #92c836;
+  color: #ffffff;
+  border: 1px solid #00578d;
+}
+.selectize-control.multi .selectize-input.disabled > div,
+.selectize-control.multi .selectize-input.disabled > div.active {
+  color: #ffffff;
+  background: #d2d2d2;
+  border: 1px solid #aaaaaa;
+}
+.selectize-input > input {
+  padding: 0 !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  max-width: 100% !important;
+  margin: 0 1px !important;
+  text-indent: 0 !important;
+  border: 0 none !important;
+  background: none !important;
+  line-height: inherit !important;
+  -webkit-user-select: auto !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+}
+.selectize-input > input::-ms-clear {
+  display: none;
+}
+.selectize-input > input:focus {
+  outline: none !important;
+}
+.selectize-input::after {
+  content: ' ';
+  display: block;
+  clear: left;
+}
+.selectize-input.dropdown-active::before {
+  content: ' ';
+  display: block;
+  position: absolute;
+  background: #f0f0f0;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.selectize-dropdown {
+  position: absolute;
+  z-index: 10;
+  border: 1px solid #d0d0d0;
+  background: #ffffff;
+  margin: -1px 0 0 0;
+  border-top: 0 none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  -webkit-border-radius: 0 0 3px 3px;
+  -moz-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
+}
+.selectize-dropdown [data-selectable] {
+  cursor: pointer;
+  overflow: hidden;
+}
+.selectize-dropdown [data-selectable] .highlight {
+  background: rgba(125, 168, 208, 0.2);
+  -webkit-border-radius: 1px;
+  -moz-border-radius: 1px;
+  border-radius: 1px;
+}
+.selectize-dropdown [data-selectable],
+.selectize-dropdown .optgroup-header {
+  padding: 5px 8px;
+}
+.selectize-dropdown .optgroup:first-child .optgroup-header {
+  border-top: 0 none;
+}
+.selectize-dropdown .optgroup-header {
+  color: #303030;
+  background: #ffffff;
+  cursor: default;
+}
+.selectize-dropdown .active {
+  background-color: #f5fafd;
+  color: #495c68;
+}
+.selectize-dropdown .active.create {
+  color: #495c68;
+}
+.selectize-dropdown .create {
+  color: rgba(48, 48, 48, 0.5);
+}
+.selectize-dropdown-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 200px;
+}
+.selectize-control.single .selectize-input,
+.selectize-control.single .selectize-input input {
+  cursor: pointer;
+}
+.selectize-control.single .selectize-input.input-active,
+.selectize-control.single .selectize-input.input-active input {
+  cursor: text;
+}
+.selectize-control.single .selectize-input:after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  margin-top: -3px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: #808080 transparent transparent transparent;
+}
+.selectize-control.single .selectize-input.dropdown-active:after {
+  margin-top: -4px;
+  border-width: 0 5px 5px 5px;
+  border-color: transparent transparent #808080 transparent;
+}
+.selectize-control.rtl.single .selectize-input:after {
+  left: 15px;
+  right: auto;
+}
+.selectize-control.rtl .selectize-input > input {
+  margin: 0 4px 0 -2px !important;
+}
+.selectize-control .selectize-input.disabled {
+  opacity: 0.5;
+  background-color: #fafafa;
+}
+.selectize-control.multi .selectize-input.has-items {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.selectize-control.multi .selectize-input.disabled [data-value] {
+  color: #999;
+  text-shadow: none;
+  background: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.selectize-control.multi .selectize-input.disabled [data-value],
+.selectize-control.multi .selectize-input.disabled [data-value] .remove {
+  border-color: #e6e6e6;
+}
+.selectize-control.multi .selectize-input.disabled [data-value] .remove {
+  background: none;
+}
+.selectize-control.multi .selectize-input [data-value] {
+  text-shadow: 0 1px 0 rgba(0, 51, 83, 0.3);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  background-color: #1b9dec;
+  background-image: -moz-linear-gradient(top, #1da7ee, #178ee9);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#1da7ee), to(#178ee9));
+  background-image: -webkit-linear-gradient(top, #1da7ee, #178ee9);
+  background-image: -o-linear-gradient(top, #1da7ee, #178ee9);
+  background-image: linear-gradient(to bottom, #1da7ee, #178ee9);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff1da7ee', endColorstr='#ff178ee9', GradientType=0);
+  -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.2),inset 0 1px rgba(255,255,255,0.03);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.2),inset 0 1px rgba(255,255,255,0.03);
+}
+.selectize-control.multi .selectize-input [data-value].active {
+  background-color: #0085d4;
+  background-image: -moz-linear-gradient(top, #008fd8, #0075cf);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#008fd8), to(#0075cf));
+  background-image: -webkit-linear-gradient(top, #008fd8, #0075cf);
+  background-image: -o-linear-gradient(top, #008fd8, #0075cf);
+  background-image: linear-gradient(to bottom, #008fd8, #0075cf);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff008fd8', endColorstr='#ff0075cf', GradientType=0);
+}
+.selectize-control.single .selectize-input {
+  -webkit-box-shadow: 0 1px 0 rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
+  box-shadow: 0 1px 0 rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
+  background-color: #f9f9f9;
+  background-image: -moz-linear-gradient(top, #fefefe, #f2f2f2);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#fefefe), to(#f2f2f2));
+  background-image: -webkit-linear-gradient(top, #fefefe, #f2f2f2);
+  background-image: -o-linear-gradient(top, #fefefe, #f2f2f2);
+  background-image: linear-gradient(to bottom, #fefefe, #f2f2f2);
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fffefefe', endColorstr='#fff2f2f2', GradientType=0);
+}
+.selectize-control.single .selectize-input,
+.selectize-dropdown.single {
+  border-color: #b8b8b8;
+}
+.selectize-dropdown .optgroup-header {
+  padding-top: 7px;
+  font-weight: bold;
+  font-size: 0.85em;
+}
+.selectize-dropdown .optgroup {
+  border-top: 1px solid #f0f0f0;
+}
+.selectize-dropdown .optgroup:first-child {
+  border-top: 0 none;
+}
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+
+
+
+
+
+
+*/
+
+/* line 5, C:/argu/app/assets/stylesheets/admin/administration.css.scss */
+.admin .addrole {
+  display: none;
+}
+/* line 2, C:/argu/app/assets/stylesheets/article.css.scss */
+article b {
+  font-weight: bold;
+}
+/* line 5, C:/argu/app/assets/stylesheets/article.css.scss */
+article i {
+  font-style: italic;
+}
+/* line 4, C:/argu/app/assets/stylesheets/comments.css.scss */
+.comment.trashed {
+  border: 1px dotted #aa6d6d;
+}
+/* line 3, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers {
+  display: flex;
+  flex-direction: column;
+}
+/* line 6, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers header.big {
+  background: #B6B6B6 center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+  text-align: center;
+  padding: 6.3em 0em 5.2em 0em;
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+/* line 17, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers header.big#prometheus {
+  background-position: 0 -12em;
+}
+/* line 20, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers header.big h1 {
+  font-size: 3em;
+  color: white;
+  z-index: 897987;
+}
+/* line 24, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers header.big h1.jumbo {
+  font-size: 6.6em;
+}
+/* line 28, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers header.big:after {
+  position: absolute;
+  content: '\A';
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(109, 86, 86, 0.43);
+  z-index: -1;
+}
+/* line 40, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers :not(header) h1 {
+  padding: 1em;
+}
+/* line 44, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers nav {
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+/* line 49, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers nav ul {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+/* line 53, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers nav ul li {
+  padding: 1em;
+}
+/* line 55, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers nav ul li a {
+  font-family: Raleway, Century Gothic, "bariol_lightlight", sans-serif;
+}
+/* line 58, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers nav ul li:hover {
+  color: black;
+  background-color: #e2e2e2;
+}
+/* line 66, C:/argu/app/assets/stylesheets/developers/developers.css.scss */
+.developers section .exanation {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2em;
+}
+/* line 6, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f2f2f2;
+  font-size: 1em;
+}
+
+/* line 14, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+table td {
+  border-style: none;
+  vertical-align: middle;
+  padding: 0.8em;
+  border: none;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 0.8em;
+  text-align: left;
+  background-color: white;
+  border: solid 1px #c6c6c6;
+  border-top: none;
+}
+/* line 27, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+table th {
+  border-style: none;
+  vertical-align: middle;
+  padding: 0.5em;
+  border: none;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 0.8em;
+  text-align: left;
+  color: white;
+  background-color: gray;
+}
+/* line 39, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+table caption {
+  border: 1px solid #c6c6c6;
+  font-family: Raleway, Century Gothic, "bariol_lightlight", sans-serif;
+  padding: 1em;
+  background-color: white;
+}
+
+/* line 47, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+span {
+  text-align: justify;
+  color: #5b5b5b;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3em;
+}
+
+/* line 51, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+p {
+  text-align: justify;
+  color: #5b5b5b;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3em;
+  white-space: pre-line;
+}
+
+/* line 56, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+small {
+  text-align: justify;
+  color: #5b5b5b;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 0.85em;
+  margin: 0;
+  padding: 5px;
+  line-height: 1.3em;
+  line-height: 1em;
+}
+
+/* line 61, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+code {
+  font-family: courier;
+}
+
+/*header*/
+/* line 66, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+h1 {
+  text-align: center;
+  color: #5b5b5b;
+  font-family: Raleway, Century Gothic, "bariol_lightlight", sans-serif;
+  font-size: 1.6em;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3em;
+  font-weight: 200;
+}
+
+/* line 70, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+h2 {
+  text-align: center;
+  color: #5b5b5b;
+  font-family: Raleway, Century Gothic, "bariol_lightlight", sans-serif;
+  font-size: 1.5em;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3em;
+  font-weight: 200;
+  clear: both;
+}
+
+/* line 75, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+h3 {
+  text-align: justify;
+  color: #5b5b5b;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 1em;
+  margin: 0;
+  padding: 0.5em;
+  line-height: 1.3em;
+  font-weight: normal;
+  padding-left: 0.8em;
+  padding-bottom: 0;
+  margin-bottom: -5px;
+}
+
+/* line 82, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+a {
+  text-align: justify;
+  color: #5b5b5b;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3em;
+  text-decoration: none;
+}
+
+/* line 88, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+a:hover {
+  color: black;
+}
+
+/* line 93, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+label {
+  float: left;
+  text-align: right;
+  font-size: 1.3em;
+  font-family: Raleway, Century Gothic, "bariol_lightlight", sans-serif;
+  font-weight: 200;
+  color: #5b5b5b;
+  margin-top: 4px;
+  line-height: 1.2em;
+}
+/* line 102, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+label.vertical {
+  text-align: left;
+  padding-bottom: 5px;
+}
+
+/* line 108, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+input {
+  border-radius: .3em;
+}
+
+/* line 112, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+textarea {
+  text-align: justify;
+  color: #5b5b5b;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3em;
+  border-radius: .3em;
+}
+
+/* line 117, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+select {
+  border: none;
+  background: transparent;
+  color: gray;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 1em;
+}
+
+/* line 125, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.box {
+  display: block;
+  padding: 0.8em;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  background-color: white;
+  /**border-bottom:solid 0.2em $g1;**/
+  box-shadow: 1px 1px 10px #e2e2e2;
+  margin-bottom: 1.8em;
+  border-radius: 0.3em;
+  max-width: 46em;
+}
+/* line 136, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.box .btn {
+  color: white;
+  background-color: #93bcce;
+}
+/* line 139, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.box .btn:hover {
+  color: white;
+  background-color: #4c88a8;
+}
+/* line 144, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.box ol {
+  list-style: decimal;
+  margin-left: 1.4em;
+  margin-bottom: .5em;
+  margin-top: -.3em;
+  text-align: left;
+  color: #4c88a8;
+}
+/* line 151, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.box ol li {
+  text-align: justify;
+  font-family: Open Sans, verdana, arial, sans-serif;
+  font-size: 1em;
+  margin: 0;
+  padding: 0;
+  line-height: 1.3em;
+  text-decoration: none;
+}
+/* line 159, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.box ol li a:visited {
+  color: gray;
+}
+/* line 164, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.box a:hover {
+  color: black;
+}
+/* line 167, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.box form {
+  margin-top: 4px;
+}
+
+/* line 173, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.no-touch .box .buttons a {
+  color: white;
+}
+/* line 176, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.no-touch .box .votebtn {
+  color: white;
+}
+/* line 180, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.no-touch .box:hover .buttons a {
+  color: gray;
+}
+/* line 182, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.no-touch .box:hover .buttons a:hover {
+  color: black;
+}
+/* line 186, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.no-touch .box:hover .votebtn a {
+  color: #4c88a8;
+}
+
+/* line 193, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+form input[type="text"], form input[type="email"], form input[type="password"], form textarea {
+  box-shadow: inset 1px 1px 10px #e2e2e2;
+  box-sizing: border-box;
+}
+/* line 197, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+form textarea {
+  resize: vertical;
+}
+/* line 200, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+form .btn {
+  box-shadow: 1px 1px 10px #e2e2e2;
+}
+
+/* line 205, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.box > p {
+  margin-bottom: .4em;
+  margin-top: .2em;
+}
+
+/* line 210, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+p.referencestitle {
+  margin-top: 1.5em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-size: .7em;
+}
+
+/* line 216, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div.clear {
+  clear: both;
+}
+
+/* line 220, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.container {
+  width: 95%;
+  min-width: 300px;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+/* line 226, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+html.lt-ie6 .container {
+  width: 100%;
+}
+
+/* line 231, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+hr.stripe {
+  border-color: #5b5b5b;
+  border-style: none;
+  border-top-style: solid;
+}
+
+/* line 237, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.sortlabel {
+  color: gray;
+}
+
+/* line 241, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.sortoptions {
+  display: inline;
+  float: right;
+  position: relative;
+  top: 5px;
+}
+
+/* line 248, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.left {
+  text-align: left;
+}
+
+/* line 252, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.floatleft {
+  float: left;
+}
+
+/* line 256, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.right {
+  text-align: right;
+}
+
+/* line 260, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.floatright {
+  float: right !important;
+}
+
+/* line 264, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.statement {
+  margin-left: auto;
+  margin-right: auto;
+}
+/* line 265, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.statement .title {
+  color: #4c88a8;
+}
+/* line 270, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.statement.title {
+  color: #4c88a8;
+}
+
+/* line 276, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+html.lt-ie8 .tags {
+  padding-bottom: 0;
+}
+
+/* line 281, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.tag {
+  color: white;
+  border-radius: .5em;
+  padding: .1em .4em;
+  display: inline-block;
+  text-transform: lowercase;
+  background-color: #93bcce;
+  line-height: 1.3em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-right: 0.25em;
+}
+
+/* line 295, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.tag:hover {
+  color: white !important;
+  background-color: #4c88a8;
+}
+
+/* line 301, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.smallertag {
+  font-size: 70%;
+}
+
+/* line 305, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.inlineref {
+  font-size: 80%;
+  vertical-align: top;
+  color: #4c88a8;
+  padding: 0.1em;
+}
+
+/* line 312, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.opinionbtns {
+  list-style-type: none;
+  display: block;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: -.4em;
+}
+/* line 319, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.opinionbtns li {
+  display: inline;
+}
+/* line 322, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.opinionbtns p {
+  text-align: center;
+}
+/* line 325, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.opinionbtns a {
+  margin: 0em .5em .7em;
+}
+
+/* line 331, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.pro.box, .pro.argtypebox {
+  margin-right: .8em;
+}
+/* line 334, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.pro .title {
+  color: #76966e;
+}
+/* line 337, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.pro h2 {
+  color: white;
+  background-color: #76966e;
+}
+/* line 341, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.pro.argumenttitle {
+  color: #76966e;
+}
+/* line 2, C:/argu/app/assets/stylesheets/_mixins.scss */
+.pro.argumenttitle:-moz-placeholder {
+  color: #a5bc9f;
+  opacity: 1;
+}
+/* line 3, C:/argu/app/assets/stylesheets/_mixins.scss */
+.pro.argumenttitle::-moz-placeholder {
+  color: #a5bc9f;
+  opacity: 1;
+}
+/* line 4, C:/argu/app/assets/stylesheets/_mixins.scss */
+.pro.argumenttitle:-ms-input-placeholder {
+  color: #a5bc9f;
+  opacity: 1;
+}
+/* line 5, C:/argu/app/assets/stylesheets/_mixins.scss */
+.pro.argumenttitle::-webkit-input-placeholder {
+  color: #a5bc9f;
+  opacity: 1;
+}
+
+/* line 347, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.con {
+  /*  background-color: #faf4f3;*/
+}
+/* line 349, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.con.box, .con.argtypebox {
+  margin-left: .8em;
+}
+/* line 352, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.con .title {
+  color: #aa6d6d;
+}
+/* line 355, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.con h2 {
+  color: white;
+  background-color: #aa6d6d;
+}
+/* line 359, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.con.argumenttitle {
+  color: #aa6d6d;
+}
+/* line 2, C:/argu/app/assets/stylesheets/_mixins.scss */
+.con.argumenttitle:-moz-placeholder {
+  color: #cea7a7;
+  opacity: 1;
+}
+/* line 3, C:/argu/app/assets/stylesheets/_mixins.scss */
+.con.argumenttitle::-moz-placeholder {
+  color: #cea7a7;
+  opacity: 1;
+}
+/* line 4, C:/argu/app/assets/stylesheets/_mixins.scss */
+.con.argumenttitle:-ms-input-placeholder {
+  color: #cea7a7;
+  opacity: 1;
+}
+/* line 5, C:/argu/app/assets/stylesheets/_mixins.scss */
+.con.argumenttitle::-webkit-input-placeholder {
+  color: #cea7a7;
+  opacity: 1;
+}
+
+/* line 365, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.argcontainer1 {
+  width: 100%;
+  overflow: hidden;
+  clear: left;
+}
+
+/* line 371, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.argcontainer2 {
+  float: left;
+  width: 100%;
+  position: relative;
+  right: 50%;
+}
+
+/* line 378, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.argtypebox {
+  margin-bottom: 1.8em;
+}
+/* line 380, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.argtypebox h2 {
+  line-height: 1.3em;
+  height: 1.4em;
+  border-radius: .3em;
+  box-shadow: 1px 1px 10px #e2e2e2;
+}
+
+/* line 388, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.navcontent {
+  list-style-type: none;
+  display: block;
+  text-align: center;
+  margin-bottom: 1.7em;
+}
+/* line 394, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.navcontent li {
+  display: inline;
+}
+/* line 398, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.navcontent a {
+  font-family: Raleway, Century Gothic, "bariol_lightlight", sans-serif;
+  font-size: 1.8em;
+  font-weight: 200;
+  padding: 0;
+  margin-right: .3em;
+  margin-left: .3em;
+  line-height: 1.3em;
+}
+/* line 408, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.navcontent a.current {
+  border-bottom: solid 0.13em #e2e2e2;
+}
+
+/* line 415, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.navcontent a:hover {
+  border-bottom: solid 0.13em #e2e2e2;
+}
+/* line 419, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.navcontent a.current:hover {
+  color: black;
+}
+
+/* line 425, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.procon {
+  float: left;
+  width: 50%;
+  position: relative;
+  left: 50%;
+  overflow: hidden;
+  min-width: 200px;
+}
+
+/* line 434, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.verticalborder {
+  border-left: solid 1px #5b5b5b;
+}
+
+/* line 438, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.center {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* line 443, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.centeralign {
+  text-align: center;
+}
+
+/* line 447, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.centercont {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 46em;
+}
+
+/* line 453, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.centerbar {
+  text-align: center;
+  margin-bottom: 1.8em;
+}
+
+/* line 458, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.top {
+  margin-bottom: 1em;
+}
+
+/* line 462, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.leftbar {
+  text-align: left;
+  margin-bottom: 1.8em;
+}
+/* line 465, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.leftbar h2 {
+  text-align: left;
+}
+
+/* line 470, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div.dropdown {
+  height: 30px;
+  width: 50%;
+  padding-right: 10px;
+}
+
+/* line 476, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul .dropdown {
+  display: none;
+  position: absolute;
+  top: 0.8em;
+  left: 0;
+}
+/* line 482, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul .dropdown li {
+  top: auto;
+  left: auto;
+}
+
+/* line 488, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+#navbtns {
+  float: right;
+  display: inline;
+}
+
+/* line 493, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar {
+  width: 100%;
+  background-color: white;
+  float: left;
+  /*border-bottom: solid 2px $g1;*/
+  box-shadow: 1px 1px 10px #e2e2e2;
+  margin-bottom: 1.5em;
+}
+/* line 500, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar #mainbar {
+  margin: 0 auto;
+  padding: 0;
+  width: 97%;
+  max-width: 1000px;
+}
+/* line 506, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar li {
+  list-style-type: none;
+  display: inline-block;
+  float: left;
+}
+/* line 510, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar li #search {
+  -webkit-appearance: none;
+  box-sizing: content-box;
+  background-color: white;
+  width: 60px;
+  padding: 3px;
+  padding-left: 10px;
+  font-family: Raleway, Century Gothic, "bariol_lightlight", sans-serif;
+  font-size: 16px;
+  font-weight: 200;
+  color: #5b5b5b;
+  float: right;
+  line-height: 39px;
+  height: 39px;
+  border: none;
+  /*Removing chrome uglyness*/
+  border-radius: 0;
+  outline: none;
+}
+/* line 524, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+html.lt-ie8 div#navbar li #search {
+  float: left;
+  line-height: 35px;
+}
+/* line 534, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar li textarea:focus,
+div#navbar li input:focus {
+  background-color: #e2e2e2 !important;
+  border-style: none !important;
+  width: 200px !important;
+  font-size: 16px !important;
+  webkit-appearance: none !important;
+}
+/* line 542, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar a {
+  display: block;
+  font-family: Raleway, Century Gothic, "bariol_lightlight", sans-serif;
+  font-size: 16px;
+  font-weight: 200;
+  line-height: 39px;
+  padding: 3px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+/* line 552, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar #argulogo {
+  font-size: 36px;
+  width: 73px;
+  background-image: "/assets/argulogo.svg";
+  float: left;
+  position: relative;
+  height: 39px;
+}
+/* line 560, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar .close {
+  border-right: solid 1px white;
+}
+
+/* line 567, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar #mainbar ul li .dropit:hover .dropdown {
+  display: block;
+}
+/* line 570, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar li:hover {
+  background-color: #e2e2e2;
+}
+/* line 574, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar li textarea:hover,
+div#navbar li input:hover {
+  background-color: #e2e2e2 !important;
+}
+/* line 578, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navbar #argulogo:hover {
+  background-color: #e2e2e2;
+}
+
+/* line 583, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+}
+
+/* line 587, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+input, textarea {
+  -webkit-appearance: none;
+}
+/* line 2, C:/argu/app/assets/stylesheets/_mixins.scss */
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color: #c6c6c6;
+  opacity: 1;
+}
+/* line 3, C:/argu/app/assets/stylesheets/_mixins.scss */
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color: #c6c6c6;
+  opacity: 1;
+}
+/* line 4, C:/argu/app/assets/stylesheets/_mixins.scss */
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color: #c6c6c6;
+  opacity: 1;
+}
+/* line 5, C:/argu/app/assets/stylesheets/_mixins.scss */
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #c6c6c6;
+  opacity: 1;
+}
+
+/* line 592, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+#search {
+  -moz-appearance: textfield;
+  -webkit-appearance: textfield;
+  appearance: textfield;
+}
+/* line 2, C:/argu/app/assets/stylesheets/_mixins.scss */
+#search:-moz-placeholder {
+  color: #5b5b5b;
+  opacity: 1;
+}
+/* line 3, C:/argu/app/assets/stylesheets/_mixins.scss */
+#search::-moz-placeholder {
+  color: #5b5b5b;
+  opacity: 1;
+}
+/* line 4, C:/argu/app/assets/stylesheets/_mixins.scss */
+#search:-ms-input-placeholder {
+  color: #5b5b5b;
+  opacity: 1;
+}
+/* line 5, C:/argu/app/assets/stylesheets/_mixins.scss */
+#search::-webkit-input-placeholder {
+  color: #5b5b5b;
+  opacity: 1;
+}
+
+/* line 599, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div#navr {
+  float: right;
+}
+
+/* Comment styling */
+/* line 604, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+a.commentusername {
+  color: #5b5b5b;
+  position: relative;
+  float: left;
+  top: 0;
+  border-style: none;
+  padding: 3px;
+  border-color: #5b5b5b;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 0.8em;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+/* line 618, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+#commentstitle {
+  display: block;
+  background-color: #f2f2f2;
+  border-width: 1px;
+  border-color: #5b5b5b;
+  width: 100%;
+  height: 45px;
+  overflow: hidden;
+}
+
+/* line 628, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.topcomment {
+  border-top-style: solid;
+  border-width: 1px;
+  border-color: #c6c6c6;
+  clear: both;
+  color: gray;
+  white-space: normal;
+}
+/* line 635, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.topcomment p {
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+/* line 641, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul.buttons {
+  float: right;
+}
+/* line 643, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul.buttons li {
+  display: inline;
+  margin-left: 1em;
+  width: auto;
+}
+/* line 647, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul.buttons li a {
+  color: gray;
+  width: auto;
+}
+/* line 652, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul.buttons p {
+  float: left;
+  color: gray;
+}
+
+/* line 658, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.hastags {
+  position: relative;
+  top: .2em;
+}
+
+/* line 664, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .box {
+  margin-bottom: 0.8em;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c0 {
+  margin-left: 0px;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c1 {
+  margin-left: 10px;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c2 {
+  margin-left: 20px;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c3 {
+  margin-left: 30px;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c4 {
+  margin-left: 40px;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c5 {
+  margin-left: 50px;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c6 {
+  margin-left: 60px;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c7 {
+  margin-left: 70px;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c8 {
+  margin-left: 80px;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c9 {
+  margin-left: 90px;
+}
+/* line 668, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comments .c10 {
+  margin-left: 100px;
+}
+
+/* line 672, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+p.comment {
+  border-top-style: solid;
+  border-width: 1px;
+  border-color: #c6c6c6;
+  clear: both;
+  color: gray;
+  padding-top: 4px;
+  font-size: 0.8em;
+  white-space: normal;
+}
+/* line 681, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+p.comment a {
+  color: gray;
+}
+
+/* line 686, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comment_form {
+  display: block;
+  margin-right: 4px;
+  margin-top: 3px;
+}
+/* line 690, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.comment_form textarea {
+  width: 100%;
+  border-color: #e2e2e2;
+  margin-bottom: 6px;
+}
+
+/* line 697, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.infobar {
+  font-size: .7em;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-top: -.1em;
+  color: gray;
+}
+/* line 703, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.infobar .info {
+  float: left;
+}
+/* line 709, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.infobar .buttons .info p a {
+  color: gray;
+}
+
+/* line 717, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.info {
+  float: left;
+}
+/* line 719, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.info p {
+  color: gray;
+  position: relative;
+  white-space: normal;
+}
+/* line 724, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.info a {
+  display: inline;
+  float: none;
+  border-style: none;
+  background-color: none;
+  padding: 0;
+  font-size: 1em;
+  color: gray;
+  margin: 0;
+}
+
+/* Section title styling */
+/* line 737, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.navrow {
+  clear: both;
+  margin-bottom: 1em;
+  margin-top: 0.8em;
+}
+
+/* line 743, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.title {
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 1.3em;
+  font-weight: bold;
+  line-height: 1.3em;
+  padding-bottom: .1em;
+}
+/* line 752, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.title.pro {
+  color: #76966e;
+}
+/* line 755, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.title.con {
+  color: #aa6d6d;
+}
+
+/* line 760, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.lefttitle {
+  padding: 0;
+  text-align: left;
+  color: #5b5b5b;
+}
+
+/* line 767, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul.vote-buttons {
+  float: left;
+}
+/* line 769, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul.vote-buttons li, ul.vote-buttons p, ul.vote-buttons .votebtn {
+  display: inline;
+  margin-left: 0;
+}
+/* line 773, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul.vote-buttons p.vote, ul.vote-buttons .votebtn a {
+  font-weight: bold;
+  line-height: 1.5em;
+  font-size: 1.5em;
+}
+/* line 778, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul.vote-buttons p.votelabel {
+  margin-right: 0.4em;
+  font-size: 1em;
+  line-height: 2.3em;
+  font-weight: normal;
+}
+/* line 784, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+ul.vote-buttons .votebtn a {
+  color: #4c88a8;
+  margin-left: 0.1em;
+}
+
+/* line 790, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.tooltip {
+  display: inline;
+  position: relative;
+}
+
+/* line 796, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.no-touch .tooltip:hover:after {
+  content: attr(title);
+  background: #4c88a8;
+  border-radius: .3em;
+  border: solid 0 #4c88a8;
+  bottom: 21px;
+  color: white;
+  left: -3px;
+  padding: 5px 7px;
+  position: absolute;
+  z-index: 98;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 0.6em;
+  font-weight: normal;
+  margin: 0;
+  line-height: 1.5em;
+  display: inline-block;
+  white-space: nowrap;
+}
+/* line 815, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.no-touch .tooltip:hover:before {
+  border: solid;
+  border-color: #4c88a8 transparent;
+  border-width: 6px 6px 0 6px;
+  bottom: 16px;
+  content: "";
+  left: 0;
+  position: absolute;
+  z-index: 99;
+}
+
+/* line 827, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.control-group {
+  border-style: none;
+  color: #5b5b5b;
+}
+
+/* line 832, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.form-actions {
+  border-style: none;
+}
+
+/* line 836, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.form-horizontal {
+  width: auto;
+  min-height: 200px;
+  padding: 0;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+}
+
+/* Revisions styling */
+/* line 844, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revbar {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 46em;
+}
+/* line 848, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revbar ul {
+  text-align: center;
+  width: 100%;
+}
+/* line 851, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revbar ul li {
+  float: left;
+  list-style-type: none;
+  display: inline-block;
+  margin-bottom: 1.1em;
+}
+/* line 856, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revbar ul li h3 {
+  padding: 5px;
+  color: #5b5b5b;
+}
+/* line 859, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revbar ul li h3 a {
+  text-decoration: none;
+  font-size: 1em;
+}
+/* line 868, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revbar #revprev {
+  float: right;
+}
+
+/* line 873, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revunderbar {
+  list-style-type: none;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  text-align: center;
+  border: 1px;
+  border-style: none;
+  border-color: #5b5b5b;
+  background-color: white;
+  padding-bottom: 5px;
+}
+/* line 882, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revunderbar li {
+  display: inline;
+}
+/* line 884, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revunderbar li h3 {
+  display: inline;
+}
+
+/* line 891, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revtbl tr:nth-child(even) {
+  background: #E9F2DD;
+}
+/* line 892, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revtbl tr:nth-child(odd) {
+  background: #F0F3FC;
+}
+/* line 893, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.revtbl tr:nth-child(1) {
+  background: #5b5b5b;
+}
+
+/* line 896, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.alert {
+  color: #FFF;
+  display: none;
+  font-family: Raleway, Century Gothic, "bariol_lightlight", sans-serif;
+  font-size: 2em;
+  font-weight: 200;
+  line-height: 39px;
+  height: 34px;
+  padding: 2px 0 8px;
+  position: fixed;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 2000;
+}
+/* line 910, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.alert.alert-success {
+  background-color: #76966e;
+}
+/* line 913, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.alert.alert-warning {
+  background-color: #CBB234;
+}
+/* line 916, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.alert.alert-notice {
+  background-color: #4c88a8;
+}
+/* line 919, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.alert.alert-error {
+  background-color: #aa6d6d;
+}
+/* line 922, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+html.no-js .alert {
+  display: block;
+}
+
+/*  Authentications page */
+/* line 928, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.authentication {
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  width: 250px;
+  background-color: white;
+  height: 64px;
+  border: solid 1px #c6c6c6;
+  border-radius: 3px;
+  text-align: left;
+}
+/* line 937, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.authentication .remove {
+  text-decoration: none;
+  position: relative;
+  top: 3px;
+  right: 3px;
+  color: gray;
+  padding: 2px 4px;
+  font-size: 15px;
+}
+/* line 947, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.authentication img {
+  float: left;
+  margin-right: 15px;
+}
+/* line 952, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.authentication .provider {
+  margin-top: 5px;
+}
+/* line 956, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.authentication .uid {
+  color: #666;
+  font-size: 15px;
+  padding-top: 5px;
+}
+
+/* line 964, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.auth_provider img {
+  border: solid 1px #c6c6c6;
+  border-radius: 3px;
+  margin-right: 16px;
+  margin-bottom: 18px;
+  opacity: 0.8;
+  float: left;
+}
+
+/* line 973, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.auth_provider:hover {
+  opacity: 1;
+}
+
+/* line 977, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+#error_explanation {
+  background-color: white;
+  border: solid 1px #cea7a7;
+  box-shadow: 1px 1px 10px #e2e2e2;
+  width: auto;
+  margin: auto;
+  border-radius: .5em;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 0.8em;
+  color: #5b5b5b;
+  padding: 10px;
+  margin-bottom: 1.9em;
+}
+/* line 989, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+#error_explanation h2 {
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 5px;
+  color: #aa6d6d;
+  font-size: 1em;
+}
+/* line 997, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+#error_explanation li {
+  line-height: 1.5em;
+  font-size: 1.1em;
+}
+
+/* line 1005, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn:hover {
+  border-bottom-color: gray;
+  color: black;
+}
+/* line 1010, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn.green:hover {
+  background-color: #76966e;
+  color: white !important;
+}
+/* line 1016, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn.red:hover {
+  background-color: #aa6d6d;
+  color: white !important;
+}
+/* line 1022, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn.grey:hover {
+  background-color: gray;
+  color: white !important;
+}
+/* line 1028, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn.blue:hover {
+  background-color: #4c88a8;
+  color: white !important;
+}
+/* line 1033, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn.voted {
+  border: 1px solid yellow;
+}
+
+/* line 1039, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn {
+  display: inline-block;
+  font-size: .8em;
+  background-color: white;
+  color: #5b5b5b;
+  border: none;
+  /*border-bottom: solid .2em $g1;*/
+  box-shadow: 1px 1px 10px #e2e2e2;
+  padding: .25em .5em;
+  width: auto;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  text-align: center;
+  border-radius: .5em;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+}
+/* line 1054, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn input {
+  text-decoration: none;
+  margin-left: -1px;
+  color: white;
+}
+/* line 1059, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn:active {
+  border-bottom-width: 0;
+}
+/* line 1062, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn.green {
+  background-color: #a5bc9f;
+  color: white;
+}
+/* line 1066, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn.red {
+  background-color: #cea7a7;
+  color: white;
+}
+/* line 1070, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn.grey {
+  background-color: #c6c6c6;
+  color: white;
+}
+/* line 1074, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn.blue {
+  background-color: #93bcce;
+  color: white;
+}
+/* line 1078, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.btn.space {
+  margin: 0 .5em 0 0;
+}
+
+/* Profile */
+/* line 1084, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.profile #head {
+  list-style-type: none;
+}
+/* line 1087, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.profile #head #editbtn {
+  float: right;
+  vertical-align: text-top;
+  padding-top: 7px;
+}
+
+/* line 1094, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.profilepicture {
+  float: left;
+  margin-right: 10px;
+  margin-top: 3px;
+}
+
+/* line 1100, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div.pageconf {
+  float: right;
+  height: 25px;
+  display: inline;
+}
+/* line 1104, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div.pageconf ul {
+  list-style: none;
+}
+/* line 1107, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+div.pageconf li a {
+  text-decoration: none;
+}
+
+/* Settings */
+/* line 1114, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.label-row {
+  margin-bottom: 1.8em;
+  clear: both;
+}
+
+/* line 1119, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.label-subrow {
+  margin-left: 330px;
+}
+/* line 1121, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.label-subrow .btn {
+  float: left;
+}
+
+/* line 1126, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+form {
+  max-width: 900px;
+  margin: auto;
+}
+
+/* line 1131, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+form.edit_user {
+  max-width: 700px;
+}
+
+/* line 1135, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+input[type=checkbox] {
+  border-color: #4c88a8;
+  float: left;
+}
+
+/* line 1140, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.helpertext {
+  float: left;
+  width: 45%;
+  color: #c6c6c6;
+  margin-left: 10px;
+  text-align: left;
+  font-size: 0.8em;
+}
+
+/* line 1149, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.label-row:hover .helpertext {
+  color: #5b5b5b;
+}
+
+/* line 1153, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.settingform {
+  display: block;
+  color: #5b5b5b;
+  font-family: Lato, Open Sans, verdana, arial, sans-serif;
+  font-size: 0.9em;
+  /*width: 95%;*/
+  background: white;
+  border: solid 1px #c6c6c6;
+  height: auto;
+  padding: 5px;
+  margin-right: 5px;
+}
+/* line 1164, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.settingform.statementtitle {
+  color: #4c88a8;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+/* line 2, C:/argu/app/assets/stylesheets/_mixins.scss */
+.settingform.statementtitle:-moz-placeholder {
+  color: #93bcce;
+  opacity: 1;
+}
+/* line 3, C:/argu/app/assets/stylesheets/_mixins.scss */
+.settingform.statementtitle::-moz-placeholder {
+  color: #93bcce;
+  opacity: 1;
+}
+/* line 4, C:/argu/app/assets/stylesheets/_mixins.scss */
+.settingform.statementtitle:-ms-input-placeholder {
+  color: #93bcce;
+  opacity: 1;
+}
+/* line 5, C:/argu/app/assets/stylesheets/_mixins.scss */
+.settingform.statementtitle::-webkit-input-placeholder {
+  color: #93bcce;
+  opacity: 1;
+}
+/* line 1170, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.settingform.argumenttitle {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+/* line 1176, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.verticalform {
+  float: left;
+  width: 50%;
+}
+
+/* line 1181, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.remember {
+  color: #5b5b5b;
+}
+
+/*Fixes*/
+/* line 1186, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.clearfix {
+  display: block;
+}
+/* line 1189, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
+}
+/* line 1198, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+html[xmlns] .clearfix {
+  display: block;
+}
+/* line 1202, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+* html .clearfix {
+  height: 1%;
+}
+
+/*IE7*/
+/* line 1208, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+p.browsehappy {
+  text-align: center;
+  padding: 10px;
+  background-color: #cea7a7;
+  color: white;
+}
+/* line 1214, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+p.browsehappy a {
+  font-size: 1em;
+  font-weight: bold;
+}
+
+/*Responsive design*/
+@media screen and (max-width: 650px) {
+  /* line 1223, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .opinionbtns a {
+    margin-bottom: .7em;
+  }
+
+  /* line 1228, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .procon {
+    width: 100%;
+  }
+
+  /* line 1232, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .pro {
+    margin-right: 0;
+  }
+  /* line 1234, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .pro.box, .pro.argtypebox {
+    margin-right: 0;
+  }
+
+  /* line 1239, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .con {
+    margin-left: 0;
+  }
+  /* line 1241, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .con.box, .con.argtypebox {
+    margin-left: 0;
+  }
+
+  /* line 1246, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .label-row {
+    margin-top: -10px;
+  }
+
+  /* line 1250, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  label {
+    float: none;
+    display: block;
+    line-height: 1.5em;
+    text-align: left;
+  }
+
+  /* line 1257, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .label-subrow {
+    margin-left: 0;
+  }
+
+  /* line 1261, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .verticalform {
+    width: 100%;
+  }
+
+  /* line 1266, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  div#navbar #argulogo {
+    float: none;
+    padding-bottom: 5px;
+    left: 0;
+    margin: auto;
+  }
+  /* line 1272, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  div#navbar #navbtns {
+    float: none;
+    text-align: center;
+    display: block;
+  }
+  /* line 1276, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  div#navbar #navbtns a {
+    padding-left: 10px;
+    padding-right: 10px;
+    line-height: 24px;
+  }
+  /* line 1282, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  div#navbar #navbtns li {
+    float: none;
+  }
+  /* line 1285, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  div#navbar #navbtns #search {
+    float: none;
+    line-height: 20px;
+    padding: 1px;
+    padding-left: 10px;
+    height: 27px;
+  }
+
+  /* line 1295, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .box form > .label-row {
+    margin-top: 10px;
+  }
+
+  /* line 1300, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  form.edit_user {
+    max-width: 382px !important;
+  }
+  /* line 1302, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  form.edit_user input.settingform {
+    width: 100%;
+  }
+  /* line 1304, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  form.edit_user label {
+    width: 250px;
+  }
+
+  /*disable hidden buttons for small devices*/
+  /* line 1310, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .box .buttons a {
+    color: gray;
+  }
+  /* line 1314, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .box .votebtn a {
+    color: #4c88a8;
+  }
+  /* line 1318, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .box .helpertext {
+    width: 100%;
+    color: #5b5b5b;
+    margin-left: 0;
+    margin-top: .4em;
+  }
+}
+@media screen and (max-width: 1000px) {
+  /* line 1329, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  html {
+    font-size: 1em;
+  }
+}
+@media screen and (min-width: 1500px) {
+  /* line 1336, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  html {
+    font-size: 1.1em;
+  }
+
+  /* line 1340, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .container {
+    max-width: 1500px;
+  }
+}
+/*Transitie effecten op alles*/
+/* line 1348, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+#search {
+  transition: all 250ms;
+  -moz-transition: all 250ms;
+  -webkit-transition: all 250ms;
+  -o-transition: all 250ms;
+}
+
+/* line 1352, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+form, #argulogo {
+  transition: none;
+  -moz-transition: none;
+  -webkit-transition: none;
+  -o-transition: none;
+}
+
+/*Zaken die niet op het papier hoeven*/
+@media print {
+  /* line 1359, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  header nav, footer, #navbar, .btn {
+    display: none;
+  }
+
+  /* line 1363, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .buttons a {
+    display: none;
+  }
+
+  /* line 1367, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .navrow a {
+    display: none;
+  }
+  /* line 1370, C:/argu/app/assets/stylesheets/newlayout.css.scss */
+  .navrow a.current {
+    display: inline;
+    border: none;
+  }
+}
+/* line 1, C:/argu/app/assets/stylesheets/settings.css.scss */
+.settings-menu {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+/* line 4, C:/argu/app/assets/stylesheets/settings.css.scss */
+.settings-menu ul {
+  list-style-type: none;
+}
+/* line 6, C:/argu/app/assets/stylesheets/settings.css.scss */
+.settings-menu ul li {
+  width: 100px;
+  padding: 2px;
+  margin-top: -1px;
+}
+/* line 10, C:/argu/app/assets/stylesheets/settings.css.scss */
+.settings-menu ul li .active {
+  color: white;
+  background-color: #824587;
+}
+
+/* line 18, C:/argu/app/assets/stylesheets/settings.css.scss */
+.setting-content {
+  overflow: hidden;
+}
+/* line 20, C:/argu/app/assets/stylesheets/settings.css.scss */
+.setting-content ul {
+  list-style-type: none;
+}
+/* line 23, C:/argu/app/assets/stylesheets/settings.css.scss */
+.setting-content .newline {
+  float: left;
+  width: 100%;
+}
+/* line 27, C:/argu/app/assets/stylesheets/settings.css.scss */
+.setting-content .settings-row {
+  border: 1px;
+  border-style: solid;
+  float: left;
+  padding: 2px;
+  margin-top: -1px;
+  width: 75%;
+}
+/* line 35, C:/argu/app/assets/stylesheets/settings.css.scss */
+.setting-content .settings-row .column-name {
+  padding-top: 2px;
+  width: 40%;
+  float: left;
+}
+/* line 40, C:/argu/app/assets/stylesheets/settings.css.scss */
+.setting-content .settings-row .column-content {
+  width: 59%;
+  border: inset;
+  border-width: 2px;
+  float: right;
+}
+/* line 45, C:/argu/app/assets/stylesheets/settings.css.scss */
+.setting-content .settings-row .column-content input {
+  width: 260px !important;
+  text-overflow: ellipsis;
+}
+/* line 2, C:/argu/app/assets/stylesheets/widgets/argu.css.scss */
+statement,
+argument {
+  display: block;
+  margin: 1px;
+}
+/* line 5, C:/argu/app/assets/stylesheets/widgets/argu.css.scss */
+statement .box,
+argument .box {
+  overflow: hidden;
+}
+
+/* line 12, C:/argu/app/assets/stylesheets/widgets/argu.css.scss */
+argument .box h1.title {
+  padding-top: 0.5em;
+}

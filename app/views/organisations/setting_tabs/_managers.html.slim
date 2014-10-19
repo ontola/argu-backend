@@ -1,0 +1,12 @@
+=semantic_form_for @org do |f|
+  =hidden_field_tag 'tab', 'managers'
+  ul.role-list
+    = f.semantic_fields_for :memberships, where: {}, include_id: false do |manager|
+      = render 'membership', :f => manager
+    .links
+      = link_to_add_association 'add manager', f, :memberships
+
+  .right
+    =f.actions do
+      = f.semantic_errors
+      =f.action :submit, as: :button, label: 'save', class: 'btn'

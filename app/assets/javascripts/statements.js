@@ -1,5 +1,5 @@
  $(document).ready(function() {
-     $('#statement_tag_list').selectize({
+     $('.tag-list').selectize({
          delimiter: ',',
          valueField: 'name',
          labelField: 'name',

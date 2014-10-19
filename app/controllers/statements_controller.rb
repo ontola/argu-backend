@@ -3,7 +3,7 @@ class StatementsController < ApplicationController
   # GET /statements
   # GET /statements.json
   def index
-    @statements = policy_scope(Statement.index params[:trashed], params[:page])
+    @statements = policy_scope(Statement.index(params[:trashed], params[:page]))
     authorize @statements
     respond_to do |format|
       format.html # index.html.erb
@@ -30,7 +30,7 @@ class StatementsController < ApplicationController
   # GET /statements/new
   # GET /statements/new.json
   def new
-    @statement = Statement.new permit_params
+    @statement = Statement.new params[:statement]
     authorize @statement
     respond_to do |format|
       format.html { render 'form' }
@@ -52,6 +52,7 @@ class StatementsController < ApplicationController
   def create
     @statement = Statement.create permit_params
     authorize @statement
+    @statement.organisation = current_user._current_scope
     current_user.add_role :mod, @statement
 
     respond_to do |format|
