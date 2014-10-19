@@ -19,23 +19,6 @@ class Statement < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }
 
-  searchable do
-    text :title, :content
-    text :arguments do
-      arguments.map { |argument| argument.content }
-    end
-
-    integer :pro_count
-    integer :con_count
-
-    string  :sort_title do
-      title.downcase.gsub(/^(an?|the)/, '')
-    end
-  end
-  handle_asynchronously :solr_index
-  handle_asynchronously :solr_index!
-
-
 # Custom methods
 
   def cap_title 

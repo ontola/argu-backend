@@ -231,8 +231,6 @@ GEM
     ref (1.0.5)
     rfc-822 (0.3.0)
     rolify (3.4.1)
-    rsolr (1.0.10)
-      builder (>= 2.1.2)
     rspec (2.8.0)
       rspec-core (~> 2.8.0)
       rspec-expectations (~> 2.8.0)
@@ -269,18 +267,7 @@ GEM
       colorize
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
-    sunspot (2.1.1)
-      pr_geohash (~> 1.0)
-      rsolr (~> 1.0.7)
-    sunspot_rails (2.1.1)
-      nokogiri
-      rails (>= 3)
-      sunspot (= 2.1.1)
-    sunspot_solr (2.1.1)
-    sunspot_with_kaminari (0.2.0)
-      kaminari (>= 0.14.0)
-      sunspot
-      sunspot_rails
+    subexec (0.2.3)
     temple (0.6.8)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
@@ -354,9 +341,6 @@ DEPENDENCIES
   sass-rails (~> 4.0.3)
   slim (~> 2.0.2)
   spring
-  sunspot_rails
-  sunspot_solr
-  sunspot_with_kaminari (~> 0.2.0)
   therubyracer
   tzinfo-data
   uglifier (>= 1.0.3)

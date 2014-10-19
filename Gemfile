@@ -29,11 +29,9 @@ gem 'acts-as-taggable-on'
 gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 #Search
-gem 'sunspot_rails'
-gem 'sunspot_solr'
+
 #Pagination
 gem 'kaminari', '~>0.15.1'
-gem "sunspot_with_kaminari", '~> 0.2.0'
 
 ##################Asset-y########################
 gem 'haml' # TODO: convert haml to slim, then remove this gem

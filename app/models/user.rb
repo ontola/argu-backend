@@ -36,18 +36,10 @@ class User < ActiveRecord::Base
   validates :email, allow_blank: true,
         format: { with: RFC822::EMAIL }
 
-  searchable do 
-    text :username, :email
-  end
-  handle_asynchronously :solr_index
-  handle_asynchronously :solr_index!
-  handle_asynchronously :remove_from_index
-
 #######Attributes########
   def display_name
     self.profile.name.presence || self.username
   end
-
 
 #######Utility########
   def self.find(id)
