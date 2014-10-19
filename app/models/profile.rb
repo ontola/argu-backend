@@ -1,10 +1,8 @@
 class Profile < ActiveRecord::Base
   belongs_to :user
 
-  has_attached_file :profile_photo
-  validates_attachment_content_type :profile_photo, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/webm"]
-  has_attached_file :cover_photo
-  validates_attachment_content_type :cover_photo, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/webm"]
+  mount_uploader :profile_photo, ImageUploader
+  mount_uploader :cover_photo, ImageUploader
 
   ######Attributes#######
   def display_name
