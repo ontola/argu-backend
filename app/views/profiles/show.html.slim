@@ -1,4 +1,4 @@
 .profile-header
   =image_tag @profile.cover_photo.url, class: 'cover'
   h1= @profile.display_name
-  =image_tag @profile.profile_photo, class: 'profile'
+  =pica_pica @profile.profile_photo, container_class: 'profile'

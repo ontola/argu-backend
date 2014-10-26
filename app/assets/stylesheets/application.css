@@ -13,6 +13,7 @@
  *= require selectize
  *= require selectize.default
  *= require formtastic
+ *= require pica_pica/pica_pica
  *= require_self
  *= require_tree .
 */

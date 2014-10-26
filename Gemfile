@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 #ruby '2.0.0'
 
+gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git' # path: '/Users/thom1/Developer/ruby/pica_pica'
+
 gem 'sass-rails',   '~> 4.0.3'
 gem 'rails', '~>4.1.0'
 ##################DB########################
@@ -20,7 +22,7 @@ gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.0'
-gem "cocoon"
+gem 'cocoon'
 gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
 
 ##################Features########################
@@ -62,7 +64,7 @@ group :development, :test do
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'annotate','~> 2.4.1beta1'
-  gem "nifty-generators", '~> 0.4.6'
+  gem 'nifty-generators', '~> 0.4.6'
   gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller'

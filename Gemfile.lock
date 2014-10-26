@@ -14,6 +14,14 @@ GIT
       activerecord (>= 4.0.0, < 5)
       railties (>= 4.0.0, < 5)
 
+GIT
+  remote: git@bitbucket.org:fletcher91/pica_pica.git
+  revision: 7dcaa254b14811b9e7e474daea36ec8207a0c293
+  specs:
+    pica_pica (0.0.1)
+      rails (>= 4.0.0)
+      slim (>= 2.0.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -343,6 +351,7 @@ DEPENDENCIES
   omniauth-oauth2
   omniauth-twitter (~> 0.0.13)
   pg (~> 0.17.1)
+  pica_pica!
   puma
   pundit (~> 0.3.0)
   quiet_assets
