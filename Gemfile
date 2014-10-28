@@ -33,6 +33,7 @@ gem 'kaminari', '~>0.15.1'
 gem "sunspot_with_kaminari", '~> 0.2.0'
 
 ##################Asset-y########################
+gem 'briarcliff', path: 'C:\sites\briarcliff'
 gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~>2.0.2'
 gem 'jquery-rails'
