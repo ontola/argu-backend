@@ -8,7 +8,7 @@ class GroupPolicy < RestrictivePolicy
 
   ######CRUD######
   def show?
-    Group.public_forms[record.public_form] == Group.public_forms[:f_public] || (user && user.group_memberships.where(group: record).present?) || super
+    Group.public_forms[record.public_form] == Group.public_forms[:f_public] || (user && user.profile.group_memberships.where(group: record).present?) || super
   end
 
   def new?
@@ -24,18 +24,18 @@ class GroupPolicy < RestrictivePolicy
   end
 
   def update?
-    (user && user.group_memberships.where(group: record, role: GroupMembership.roles[:manager]).present?) || super
+    (user && user.profile.group_memberships.where(group: record, role: GroupMembership.roles[:manager]).present?) || super
   end
 
   #######Attributes########
   # Is the current user a member of the group?
   def member?
-    (user && user.group_memberships.where(group: record).present?) || staff?
+    (user && user.profile.group_memberships.where(group: record).present?) || staff?
   end
 
   # Can the current user change the organisation web_url? (currently a subdomain)
   def web_url?
-    (user && user.group_memberships.where(group: record, role: GroupMembership.roles[:manager]).present?) || staff?
+    (user && user.profile.group_memberships.where(group: record, role: GroupMembership.roles[:manager]).present?) || staff?
   end
 
 end

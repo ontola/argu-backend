@@ -1,10 +1,10 @@
 .sidebar
   .box
     .profile
-      =link_to profile_path(current_user.profile) do
+      =link_to profile_path(current_user.username) do
         =image_tag current_user.profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
         p=current_user.display_name
-    -Organisation.scope_types.merge(current_user.organisations.select(:id, :name, :profile_photo, :web_url, :scope).group_by { |a| a.scope}).each do |key, value|
+    -Organisation.scope_types.merge(current_user.profile.organisations.select(:id, :name, :profile_photo, :web_url, :scope).group_by { |a| a.scope}).each do |key, value|
       .group
         h3= t("organisations.scope_names.#{key}")
         ul
@@ -16,7 +16,7 @@
     .group
       h3= t("organisations.scope_names.scope_local")
       ul
-        -current_user.groups.each do |g|
+        -current_user.profile.groups.each do |g|
           li
             =link_to group_url(g)
               = image_tag g.profile_photo, size: '16x16'

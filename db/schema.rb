@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141019131701) do
+ActiveRecord::Schema.define(version: 20141028104930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20141019131701) do
     t.string   "title",            default: ""
     t.text     "body",             default: ""
     t.string   "subject",          default: ""
-    t.integer  "user_id",          default: 0,     null: false
+    t.integer  "profile_id",       default: 0,     null: false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 20141019131701) do
 
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
-  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+  add_index "comments", ["profile_id"], name: "index_comments_on_profile_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false
@@ -91,9 +91,9 @@ ActiveRecord::Schema.define(version: 20141019131701) do
   end
 
   create_table "group_memberships", force: true do |t|
-    t.integer "user_id"
+    t.integer "profile_id"
     t.integer "group_id"
-    t.integer "role",     default: 0, null: false
+    t.integer "role",       default: 0, null: false
   end
 
   create_table "groups", force: true do |t|
@@ -118,12 +118,12 @@ ActiveRecord::Schema.define(version: 20141019131701) do
   add_index "groups", ["web_url"], name: "groups_web_url_idx", using: :btree
 
   create_table "memberships", force: true do |t|
-    t.integer "user_id"
+    t.integer "profile_id"
     t.integer "organisation_id"
     t.integer "role",            default: 0, null: false
   end
 
-  add_index "memberships", ["user_id", "organisation_id"], name: "index_memberships_on_user_id_and_organisation_id", unique: true, using: :btree
+  add_index "memberships", ["profile_id", "organisation_id"], name: "index_memberships_on_profile_id_and_organisation_id", unique: true, using: :btree
 
   create_table "opinions", force: true do |t|
     t.string   "title"
@@ -178,6 +178,13 @@ ActiveRecord::Schema.define(version: 20141019131701) do
   end
 
   add_index "profiles", ["user_id"], name: "profiles_by_user_id", unique: true, using: :btree
+
+  create_table "profiles_roles", id: false, force: true do |t|
+    t.integer "profile_id"
+    t.integer "role_id"
+  end
+
+  add_index "profiles_roles", ["profile_id", "role_id"], name: "index_profiles_roles_on_profile_id_and_role_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -275,13 +282,6 @@ ActiveRecord::Schema.define(version: 20141019131701) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
-
-  create_table "users_roles", id: false, force: true do |t|
-    t.integer "user_id"
-    t.integer "role_id"
-  end
-
-  add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
   create_table "votes", force: true do |t|
     t.integer  "voteable_id"

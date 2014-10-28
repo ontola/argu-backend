@@ -1,7 +1,7 @@
 class Organisation < ActiveRecord::Base
   include IOrganisation
   has_many :memberships, dependent: :destroy
-  has_many :users, through: :memberships
+  has_many :profiles, through: :memberships
   accepts_nested_attributes_for :memberships, :allow_destroy => true
 
   validate :manager_present?
@@ -18,7 +18,7 @@ class Organisation < ActiveRecord::Base
 
   ######Roles#######
   def managers
-    User.with_role :manager, self
+    Profile.with_role :manager, self
   end
 
   ########Other########

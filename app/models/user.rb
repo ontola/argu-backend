@@ -1,11 +1,5 @@
 class User < ActiveRecord::Base
-  rolify after_remove: :role_removed, before_add: :role_added
   has_many :authentications, dependent: :destroy
-  has_many :votes, as: :voteable
-  has_many :memberships, dependent: :destroy
-  has_many :group_memberships, dependent: :destroy
-  has_many :organisations, through: :memberships
-  has_many :groups, through: :group_memberships
   has_one :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile
@@ -73,12 +67,6 @@ class User < ActiveRecord::Base
     remove_role :user
   end
 
-  def voted_on?(item)
-    Vote.where(voter_id: self.id, voter_type: self.class.name,
-                voteable_id: item.id, voteable_type: item.class.to_s).last
-          .try(:for) == 'pro'
-  end
-
   def unfreeze
     add_role :user
   end
@@ -99,18 +87,6 @@ private
   def normalize_blank_values
     attributes.each do |column, value|
       self[column].present? || self[column] = nil unless column.eql?(:roles) || column.eql?(:roles_mask)
-    end
-  end
-
-  def role_added(role)
-    if self.frozen?
-      # Send mail or notification to user that he has been unfrozen
-    end
-  end
-
-  def role_removed(role)
-    if self.frozen?
-      # Send mail or notification to user that he has been frozen
     end
   end
 
