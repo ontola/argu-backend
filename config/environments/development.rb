@@ -1,6 +1,6 @@
 Argu::Application.configure do
   config.host = ENV['HOSTNAME'] || 'local.host:3000'
-  # Settings specified here will take precedence over those in config/application.rb
+  # Settings specified here will take precedence over those in config/application.rb#
 
   config.epics = ActiveSupport::OrderedOptions.new
   config.epics.opinion_buttons = true
