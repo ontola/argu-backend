@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 #ruby '2.0.0'
 
-gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica' # git: 'git@bitbucket.org:fletcher91/pica_pica.git'
+gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git' #path: '/Users/thom1/Developer/ruby/pica_pica'
 
 gem 'sass-rails',   '~> 4.0.3'
 gem 'rails', '~>4.1.0'
@@ -58,8 +58,8 @@ gem 'pundit', "~> 0.3.0"
 gem 'rolify'
 
 group :development, :test do
-  #gem 'thin'
-  gem 'puma'
+  gem 'thin'
+  #gem 'puma'
   gem 'rspec', '2.8.0'
   gem 'rspec-rails', '2.8.0'
   gem 'factory_girl'

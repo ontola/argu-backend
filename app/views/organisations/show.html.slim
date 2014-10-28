@@ -20,8 +20,10 @@
     .procon
       .argtypebox.pro
         h2 problemen
-      =render Statement.first
+      -if Statement.first
+        =render Statement.first
     .procon
       .argtypebox.pro
         h2 oplossingen
-      =render Statement.second
+      -if Statement.second
+        =render Statement.second

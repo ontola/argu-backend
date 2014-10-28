@@ -11,7 +11,7 @@ class Organisation < ActiveRecord::Base
   resourcify
 
   def manager_present?
-    if memberships.where(role: Membership.roles[:manager]).blank?
+    unless memberships.collect { |m| m.role == 'manager' }
       errors.add :base, "_manager not present_"
     end
   end
