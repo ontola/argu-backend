@@ -11,5 +11,4 @@ header
         li= link_to(t("destroy"), argument_path(@argument), method: :delete, destroy: true) if policy(@argument).destroy?
         li= link_to(t("trash"), argument_path(@argument), method: :delete) if policy(@argument).trash?
         li= link_to(t("edit"), edit_argument_path(@argument)) if policy(@argument).update?
-        li= link_to(t("history"), argument_revisions_path(@argument)) if policy(@argument).show?
     .clearfix

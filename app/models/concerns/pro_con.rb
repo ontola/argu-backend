@@ -4,6 +4,7 @@ module ProCon
   included do
     belongs_to :statement, :dependent => :destroy
     has_many :votes, as: :voteable
+    belongs_to :creator, class_name: 'User'
 
     before_save :trim_data
     before_save :cap_title
@@ -12,7 +13,10 @@ module ProCon
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
 
     acts_as_commentable
-    has_paper_trail
+
+    def creator
+      super || User.new(username: 'Onbekend')
+    end
   end
 
   def trash
@@ -42,10 +46,6 @@ module ProCon
 
   def root_comments
     self.comment_threads.where(:parent_id => nil)
-  end
-
-  def creator
-    User.find_by_id self.versions.first.whodunnit
   end
 
   def is_moderator?(user)

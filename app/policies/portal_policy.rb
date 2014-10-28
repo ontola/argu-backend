@@ -6,6 +6,6 @@ class PortalPolicy < Struct.new(:user, :portal)
   end
 
   def home?
-    user.has_role? :staff
+    user.profile.has_role? :staff
   end
 end

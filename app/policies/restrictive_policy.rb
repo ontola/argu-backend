@@ -7,7 +7,7 @@ class RestrictivePolicy
   end
 
   def staff?
-    user && user.has_role?(:staff)
+    user && user.profile.has_role?(:staff)
   end
 
   def index?

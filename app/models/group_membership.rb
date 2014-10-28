@@ -1,5 +1,5 @@
 class GroupMembership < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :profile
   belongs_to :group, inverse_of: :group_memberships
 
   counter_culture :group

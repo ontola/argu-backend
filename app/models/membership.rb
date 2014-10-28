@@ -1,5 +1,5 @@
 class Membership < ActiveRecord::Base
-  belongs_to :user
+  belongs_to :profile
   belongs_to :organisation, inverse_of: :memberships
 
   counter_culture :organisation

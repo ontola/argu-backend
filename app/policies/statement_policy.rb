@@ -18,7 +18,6 @@ class StatementPolicy < RestrictivePolicy
   end
 
   def index?
-
-    (user._current_scope.present? && Organisation.public_forms[user._current_scope.public_form] == Organisation.public_forms[:f_public]) || (user && user.memberships.where(organisation: record).present?) || super
+    (user._current_scope.present? && Organisation.public_forms[user._current_scope.public_form] == Organisation.public_forms[:f_public]) || (user && user.profile.memberships.where(organisation: record).present?) || super
   end
 end

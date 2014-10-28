@@ -6,6 +6,6 @@
       -if policy(argument).vote?
         li
           .votebtn[id=argument.id.to_s]
-            = current_user.voted_on?(argument) ? \
+            = current_user.profile.voted_on?(argument) ? \
               (link_to '-1', argument_vote_path(argument), :remote => true, method: :delete) : \
               (link_to '+1', argument_vote_path(argument), :remote => true, method: :post, class:"tooltip", title:t("votes.tooltips.argument"))

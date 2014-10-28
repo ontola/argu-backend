@@ -13,3 +13,4 @@ ua.profile = Profile.where(name: 'Thom van Kalkeren').first_or_create.update_att
 ub.profile = Profile.where(name: 'Administrator').first_or_create
 uc.profile = Profile.where(name: 'Joep').first_or_create.update_attributes(picture: 'https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg', about: "argu designer")
 
+
