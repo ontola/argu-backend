@@ -38,7 +38,7 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :questions, only: [:show, :new, :create, :update] do
+  resources :questions, only: [:show, :update] do
     resources :statements, only: [:new, :create, :delete, :destroy]
   end
 
@@ -56,7 +56,7 @@ Argu::Application.routes.draw do
   resources :organisations, except: [:index, :edit] do
     get :settings, on: :member
     resources :memberships, only: [:create, :destroy]
-    resources :questions, only: [:index]
+    resources :questions, only: [:index, :new, :create]
   end
 
   resources :groups, except: [:index, :edit] do

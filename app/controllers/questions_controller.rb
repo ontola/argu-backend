@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to [@organisation, @question], notice: t('type_save_success', type: t('statements.type')) }
+        format.html { redirect_to @question, notice: t('type_save_success', type: t('statements.type')) }
         format.json { render json: @question, status: :created, location: @question }
       else
         format.html { render 'form' }
@@ -43,6 +43,6 @@ class QuestionsController < ApplicationController
 
 private
   def permit_params
-    params.require(:question).permit(:id, :title, :content, :tag_list)
+    params.require(:question).permit(:id, :title, :content, :tag_list, :organisation_id)
   end
 end

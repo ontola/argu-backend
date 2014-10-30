@@ -26,6 +26,7 @@
     <p class="helpertext floatleft"><%= t("questions.form.helper.themes") %></p>
     <div class="clear"></div>
   </div>
+  <%= f.hidden_field :organisation_id, value: @organisation.id %>
   <%= f.submit t(:save), class: "btn blue"  %>
 <% end %>
 </div>

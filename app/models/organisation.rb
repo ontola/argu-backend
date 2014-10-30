@@ -2,6 +2,7 @@ class Organisation < ActiveRecord::Base
   include IOrganisation
   has_many :memberships, dependent: :destroy
   has_many :profiles, through: :memberships
+  has_many :questions, inverse_of: :organisation
   accepts_nested_attributes_for :memberships, :allow_destroy => true
 
   validate :manager_present?
