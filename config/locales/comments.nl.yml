@@ -1,3 +1,4 @@
 nl:
   comments:
     type: "reactie"
+    placeholder: "Plaats een reactie..."

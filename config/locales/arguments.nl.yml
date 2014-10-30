@@ -29,8 +29,8 @@ nl:
     revisions:
       title_wiped: 'Gewiste reacties'
     form:
-      title: "argument"
-      content: "toelichting"
+      title: "Kern van argument"
+      content: "Toelichting op argument"
       type: "type"
       submit: "argument plaatsen"
       helper:

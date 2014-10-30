@@ -2,7 +2,7 @@ class Comment < ActiveRecord::Base
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 
   validates_presence_of :body
-  validates_presence_of :user
+  validates_presence_of :profile
 
   after_validation :increase_counter_cache
   after_destroy :decrease_counter_cache
@@ -20,6 +20,10 @@ class Comment < ActiveRecord::Base
     c.body = comment
     c.profile_id = profile_id
     c
+  end
+
+  def creator
+    self.profile
   end
 
   #helper method to check if a comment has children
