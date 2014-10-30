@@ -2,6 +2,8 @@ module ProCon
   extend ActiveSupport::Concern
 
   included do
+    include Trashable
+
     belongs_to :statement, :dependent => :destroy
     has_many :votes, as: :voteable
     belongs_to :creator, class_name: 'User'
@@ -15,12 +17,9 @@ module ProCon
     acts_as_commentable
 
     def creator
-      super || User.new(username: 'Onbekend')
+      super || User.first_or_create(username: 'Onbekend')
     end
-  end
 
-  def trash
-    update_column :is_trashed, true
   end
 
   # To facilitate the group_by command

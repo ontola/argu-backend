@@ -2,9 +2,13 @@ include HasRestfulPermissions
 include ActionView::Helpers::NumberHelper
 
 class Statement < ActiveRecord::Base
+  include Trashable
+
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy
   has_many :votes, as: :voteable
+  has_many :question_answers, inverse_of: :statement
+  has_many :questions, through: :question_answers
   belongs_to :organisation
 
   counter_culture :organisation
@@ -51,10 +55,6 @@ class Statement < ActiveRecord::Base
       .gsub(/\[([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)\]\(([\w\s]*)\)/, '<a href="\1">\2</a>')
   end
 
-  def trash
-    update_column :is_trashed, true
-  end
-
   def trim_data
     self.title = title.strip
     self.content = content.strip
@@ -80,5 +80,5 @@ class Statement < ActiveRecord::Base
     }
   }
 
-  scope :index, ->(trashed, page) { where(is_trashed: trashed.present?).order('argument_pro_count + argument_con_count DESC').page(page) }
+  scope :index, ->(trashed, page) { trashed(trashed).order('argument_pro_count + argument_con_count DESC').page(page) }
 end
