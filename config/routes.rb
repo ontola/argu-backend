@@ -24,7 +24,7 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :statements do
+  resources :statements, only: [:show, :edit] do
     post 'vote/:for'      => 'votes/statements#create',   as: 'vote'
     delete 'vote'         => 'votes/statements#destroy',  as: 'vote_delete'
 
@@ -36,6 +36,10 @@ Argu::Application.routes.draw do
       post ':user_id' => 'statements#create', as: 'user'
       delete ':user_id' => 'statements#destroy'
     end
+  end
+
+  resources :questions, only: [:show, :new, :create, :update] do
+    resources :statements, only: [:new, :create, :delete, :destroy]
   end
 
   resources :arguments do
@@ -52,6 +56,7 @@ Argu::Application.routes.draw do
   resources :organisations, except: [:index, :edit] do
     get :settings, on: :member
     resources :memberships, only: [:create, :destroy]
+    resources :questions, only: [:index]
   end
 
   resources :groups, except: [:index, :edit] do

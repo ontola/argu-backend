@@ -18,6 +18,7 @@ nl:
       f_invite_desc: "Leden kunnen anderen uitnodigen om lid te worden."
       f_management_invite: "Door de beheerder(s)"
       f_management_invite_desc: "Alleen de beheerder(s) kunnen nieuwe leden toevoegen."
+    new_group: "Creëer groep"
   activerecord:
     attributes:
       organisation:

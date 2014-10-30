@@ -21,7 +21,7 @@
             =link_to group_url(g)
               = image_tag g.profile_photo, size: '16x16'
               = g.name
-        li=link_to new_group_url
+        li=link_to t('groups.new_group'), new_group_url
 .content
-  - @newstatements.first(4).each do |statement|
+  - @questions.first(4).each do |statement|
     = render statement

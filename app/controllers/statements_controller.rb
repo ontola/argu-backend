@@ -30,6 +30,7 @@ class StatementsController < ApplicationController
   # GET /statements/new
   # GET /statements/new.json
   def new
+    @question = Question.find params[:question_id]
     @statement = Statement.new params[:statement]
     authorize @statement
     respond_to do |format|
@@ -50,11 +51,13 @@ class StatementsController < ApplicationController
   # POST /statements
   # POST /statements.json
   def create
+    @question = Question.find params[:question_id]
     @statement = Statement.create permit_params
-    @statement.creator = current_user
+    @statement.questions << @question
+    #@statement.creator = current_user.profile
     authorize @statement
     @statement.organisation = current_user._current_scope
-    current_user.add_role :mod, @statement
+    #current_user.profile.add_role :mod, @statement
 
     respond_to do |format|
       if @statement.save

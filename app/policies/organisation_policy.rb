@@ -27,6 +27,10 @@ class OrganisationPolicy < RestrictivePolicy
     (user && user.profile.memberships.where(organisation: record, role: Membership.roles[:manager]).present?) || super
   end
 
+  def add_question?
+    false || update?
+  end
+
   #######Attributes########
   # Is the current user a member of the group?
   def member?

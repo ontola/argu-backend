@@ -20,6 +20,7 @@
     .procon
       .argtypebox.pro
         h2 problemen
+      =link_to t('questions.new_question_path'), new_organisation_question_path(@org)
       -if Statement.first
         =render Statement.first
     .procon
