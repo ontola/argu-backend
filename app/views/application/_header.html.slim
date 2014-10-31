@@ -9,19 +9,19 @@ nav.navbar role="navigation"
       li
         ==link_to root_url(subdomain: ''), class: "navbar-link"
           span.fa.fa-home.icon-left
-          span.navbar-link-description Home
+          span.navbar-link-description= t("home_title")
       li
         .dropdown-trigger.navbar-item href="/"
           span.fa.fa-tags.icon-left
-          span.navbar-link-description Tags
+          span.navbar-link-description= t("tags.type")
           .dropdown-content.dropdown-col-2
             .dropdown-col-2-1
-              h3 trending
+              h3= t("tags.trending")
               ul.tags-vertical
                 li
                   a.tag href="" geertwilders
             .dropdown-col-2-1
-              h3 mijn tags
+              h3= t("tags.my")
               ul
                 li
                   a.tag href=""
@@ -33,27 +33,27 @@ nav.navbar role="navigation"
       li
         .navbar-item.dropdown-trigger href="/"
           span.fa.fa-search.icon-left
-          span.navbar-link-description zoeken
+          span.navbar-link-description= t("search.type")
           .dropdown-content.dropdown-right.nav-search
             form
-              input.nav-search-text type="text" placeholder="Zoek op thema, partij, persoon..."
+              input.nav-search-text type="text" placeholder= t("search.placeholder")
         //=render partial: 'search/search'
       -if current_user.present?
         li
           .dropdown-trigger.navbar-item href="/"
             span.fa.fa-user.icon-left
-            span.navbar-link-description Joep
+            span.navbar-link-description Ik
             ul.dropdown-content.dropdown-right
               li
-                a.navbar-sublink href=""
+                =link_to profile_url(current_user.username) do
                   span.fa.fa-user.icon-left
-                  span profiel
+                  span = t("profiles.type")
               li=link_to settings_url do
                 span.fa.fa-gear.icon-left
                 span=t(:users_show_title)
               li=link_to(destroy_user_session_url, method: :delete) do
                 span.fa.fa-sign-out.icon-left
-                span uitloggen
+                span Uitloggen
       -else
         li=link_to t(:sign_in), new_user_session_url, id: 'account'
       li=link_to about_url, class: 'close', id: 'info'

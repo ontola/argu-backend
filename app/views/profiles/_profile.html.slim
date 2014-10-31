@@ -5,7 +5,10 @@
   p[style="text-overflow:ellipsis; white-space: nowrap;"]=mail_to(profile.user.email, "" + (profile.user.email.length > 25 ? (profile.user.email.to_s[0, 23] + "...") : profile.user.email unless profile.user.email.blank?).to_s )
 
 section.profile-small
-  img[src=profile.profile_photo.url alt="profile picture"]
+  =link_to profile_path(current_user.username) do
+    /TODO link gaat naar profiel van poster, niet van huidige gebruiker!
+    img[src=profile.profile_photo.url alt="profile picture"]
   .info-block
-    .info=l(resource.created_at, format: :long)
-    .name=profile.display_name
+    =link_to profile_path(current_user.username) do
+      .info=l(resource.created_at, format: :long)
+      .name=profile.display_name
