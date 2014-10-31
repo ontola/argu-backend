@@ -9,10 +9,10 @@ header
           ul
             -@argument.errors.full_messages.each do |msg|
               li= msg
-      .label-row
+
         = f.text_field "title", class: (%w(pro true).index(params[:pro] || @argument.pro.to_s) ? "pro" : "con") + "-t h1", placeholder: t("arguments.form.title").capitalize
         p.helpertext= t("arguments.form.helper.title")
-      .label-row
+
         = f.text_area "content", placeholder: t("arguments.form.content").capitalize, rows: "10"
         p.helpertext= raw t("arguments.form.helper.content")
       .row

@@ -1,30 +1,38 @@
 =render partial: 'manage_bar'  if policy(@org).update?
-.profile-header
-  =image_tag @org.cover_photo.url, class: 'cover'
-  =image_tag @org.profile_photo.url, class: 'profile'
-  h1= @org.name
-.box
-  p= @org.description
-  -if policy(@org).member?
-    p You're a member!
-  -else
-    =link_to 'join', organisation_memberships_path(@org.id), method: :create, class: 'btn'
-  p
-    == '&#127757; '
-    = link_to @org.website.sub(/^https?\:\/\//, ''), @org.website
-  .tags
-    - @org.key_tags.each do |tag|
-      = link_to tag, tag_statements_url(tag), class: "tag", title: t("statements.titles.tags")+tag
-.argcontainer1
-  .argcontainer2
-    .procon
-      .argtypebox.pro
-        h2 problemen
-      =link_to t('questions.new_question_path'), new_organisation_question_path(@org)
-      -if @org.questions.present?
-        =render partial: 'questions/question', collection: @org.questions
-    .procon
-      .argtypebox.pro
-        h2 oplossingen
-      -if Statement.second
-        =render Statement.second
+
+.col-1
+  header
+    h1 organisatie
+  /=image_tag @org.cover_photo.url, class: 'cover'
+  .box.profile-big
+    .profile-picture.profile-picture-show
+      =image_tag @org.profile_photo.url
+    section
+      h1= @org.name
+      p.quote = @org.description
+      -if policy(@org).member?
+        p You're a member!
+      -else
+        =link_to 'join', organisation_memberships_path(@org.id), method: :create, class: 'btn'
+        p
+          == '&#127757; '
+          = link_to @org.website.sub(/^https?\:\/\//, ''), @org.website
+    section.unpadded.tags
+      - @org.key_tags.each do |tag|
+        = link_to tag, tag_statements_url(tag), class: "tag", title: t("statements.titles.tags")+tag
+
+.col-2
+  header
+    h1 problemen & oplossingen
+  .col-2-1
+    header
+      h2.con-bg vraagstukken
+    .center
+      =link_to t('questions.new_question_path'), new_organisation_question_path(@org), class: "btn btn-white"
+    -if @org.questions.present?
+      =render partial: 'questions/question', collection: @org.questions
+  .col-2-1
+    header
+      h2.sta-bg voorstellen
+    -if Statement.second
+      =render Statement.second
