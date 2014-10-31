@@ -12,11 +12,20 @@ head
   meta name="viewport" content="width=device-width, initial-scale=1"
   = csrf_meta_tags
   = render 'shim'
-  link href='//fonts.googleapis.com/css?family=Raleway:200' rel='stylesheet' type='text/css'
-  link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'
-  link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'
+
   / unless current_user.blank?
   = stylesheet_link_tag "application", :media => "all"
+  / Raleway font from google fonts
+  link href='http://fonts.googleapis.com/css?family=Raleway:800,300' rel='stylesheet' type='text/css'
+
+  / FontAwesome for icons
+  link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
+
+  / Browser-sync
+  javascript:
+    //<![CDATA[
+    document.write("<script async src='//HOST:3000/browser-sync/browser-sync-client.1.5.8.js'><\/script>".replace(/HOST/g, location.hostname).replace(/PORT/g, location.port));
+    //]]>
 body
   -unless false # current_user.blank?
     - if current_user && current_user.profile.has_role?(:staff)

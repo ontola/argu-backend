@@ -1,20 +1,26 @@
 -provide :title, (@statement.title.nil? ? t(:statement_title) : @statement.title)
 =render partial: 'statementbody', locals: { statement: @statement }
 =render partial: 'opinionbtns'
-nav.navrow
+header
+  h1=t("arguments.index.title")
+/nav.navrow
   ul.navcontent
     li=link_to t("arguments.index.title") , { id: @statement.id, :anchor => "arguments" }, class: "current" , id: "arguments"
     li=link_to t("arguments.index.opinion") , { id: @statement.id, :anchor => "opinion" } if Rails.configuration.epics.opinion
     li=link_to t("arguments.index.parties") , { id: @statement.id, :anchor => "parties" } if Rails.configuration.epics.parties
 = render partial: 'statementitems', locals: { resource: Argument, items: @arguments, id: @statement.id,  statement: @statement }
-nav.navrow
+header
+  h1=t("arguments.index.opinion")
+/nav.navrow
   ul.navcontent
     li=link_to t("arguments.index.title") , { id: @statement.id, :anchor => "arguments" }
     li=link_to t("arguments.index.opinion") , { id: @statement.id, :anchor => "opinion" }, class: "current" , id: "opinion"
     li=link_to t("arguments.index.parties") , { id: @statement.id, :anchor => "parties" } if Rails.configuration.epics.parties
 =render partial: 'statementitems', locals: { resource: Opinion, items: @opinions, id: @statement.id, statement: @statement }
 -if Rails.configuration.epics.parties
-  nav.navrow
+  header
+    h1=t("arguments.index.parties")
+  /nav.navrow
     ul.navcontent
       li=link_to t("arguments.index.title") , { id: @statement.id, :anchor => "arguments" }
       li=link_to t("arguments.index.opinion") , { id: @statement.id, :anchor => "opinion" } if Rails.configuration.epics.opinion

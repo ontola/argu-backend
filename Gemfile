@@ -43,7 +43,7 @@ gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete', '~> 1.0.12'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
 gem 'carrierwave'                                                     # Will replace paperclip
-gem 'mini_magick', require: false                                     # Ruby connector for ImageMagick
+gem 'mini_magick'#, require: false                                     # Ruby connector for ImageMagick
 gem "fog"                                                             # Cloud storage connector for CW
 
 ##################User management########################

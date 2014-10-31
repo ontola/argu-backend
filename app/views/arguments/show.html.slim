@@ -1,5 +1,4 @@
 -provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title)
-.centercont
-  =back_to_statement @argument
-  =render 'body'
-  =render template: 'comments/show', locals: { resource: @argument }
+header=back_to_statement @argument
+=render 'body'
+=render template: 'comments/show', locals: { resource: @argument }
