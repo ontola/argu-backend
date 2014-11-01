@@ -6,8 +6,8 @@ nl:
     new_question_path: "Nieuw vraagstuk"
     new_question: "Nieuw vraagstuk"
     form:
-      title: "titel"
-      content: "inhoud"
+      title: "Kern van vraagstuk"
+      content: "Licht hier je vraagstuk toe. Waarom zitten jullie met dit probleem / deze vraag?"
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
       helper:

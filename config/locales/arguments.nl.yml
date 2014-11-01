@@ -30,7 +30,7 @@ nl:
       title_wiped: 'Gewiste reacties'
     form:
       title: "Kern van argument"
-      content: "Toelichting op argument"
+      content: "Toelichting op argument. Waarom ondersteunt of weerlegt dit het voorstel? Probeer helder te onderbouwden en gebruik betrouwbare bronnen."
       type: "type"
       submit: "argument plaatsen"
       helper:

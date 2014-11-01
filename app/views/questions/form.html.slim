@@ -1,30 +1,29 @@
 header
-  = content_tag :h1, t('statements.newstatement') if controller.action_name == 'new'
-= '_over_ ' + @question.title
+  = content_tag :h1, t('questions.new_question') if controller.action_name == 'new'
 .box
-  = form_for([@question, @statement]) do |f|
+  = form_for([@organisation, @question]) do |f|
     section
-      - if @statement.errors.any?
+      - if @question.errors.any?
         #error_explanation
           h2
-            = pluralize(@statement.errors.count, "error")
+            = pluralize(@question.errors.count, "error")
             | prohibited this statement from being saved:
           ul
             - @statement.errors.full_messages.each do |msg|
               li= msg
 
-      = f.text_field :title, placeholder: t("statements.form.title").capitalize, class: "h1 sta-t"
+      = f.text_field :title, placeholder: t("questions.form.title").capitalize, class: "h1 sta-t"
       /p.helpertext= t("statements.form.helper.title")
 
-      = f.text_area :content, placeholder: t("statements.form.content"), rows: "8"
+      = f.text_area :content, placeholder: t("questions.form.content"), rows: "8"
       /p.helpertext= t("statements.form.helper.content")
 
-      = f.text_field :tag_list, placeholder: t("statements.form.themes"), class: "tag-list"
+      = f.text_field :tag_list, placeholder: t("questions.form.themes"), class: "tag-list"
       /p.helpertext= t("statements.form.helper.themes")
 
       /TODO invert arguments only visible when in edit, not in new.
         <%= f.label :invert_arguments, t("statements.form.invert"), class: "vertical" %>
         <%= f.check_box :invert_arguments %>
     = render partial: 'profiles/profile_current'
-
+    = f.hidden_field :organisation_id, value: @organisation.id
     = f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"
