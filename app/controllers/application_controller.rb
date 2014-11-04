@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
       if _argu_scope && policy(_argu_scope).show?
         @local_title = subdomain
         session[:_current_scope] = _argu_scope
+        current_user._current_scope = _argu_scope if current_user.present?
       else
         raise ActionController::RoutingError.new('Not Found')
       end

@@ -14,7 +14,7 @@
                 = image_tag o.profile_photo.url(:icon), size: '16x16'
                 = o.name
     .group
-      h3= t("organisations.scope_names.scope_local")
+      h3= t("organisations.scope_names.scope_group")
       ul
         -current_user.profile.groups.each do |g|
           li
@@ -23,5 +23,5 @@
               = g.name
         li=link_to t('groups.new_group'), new_group_url
 .content
-  - @questions.first(4).each do |statement|
-    = render statement
+  - @questions.each do |question|
+    = render question
