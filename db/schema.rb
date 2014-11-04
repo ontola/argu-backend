@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 20141029171256) do
   create_table "arguments", force: true do |t|
     t.text     "content",                             null: false
     t.integer  "statement_id",                        null: false
-    t.boolean  "pro",                 default: true
+    t.boolean  "pro",                 default: true,  null: false
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "title"
@@ -76,19 +76,11 @@ ActiveRecord::Schema.define(version: 20141029171256) do
     t.datetime "failed_at"
     t.string   "locked_by"
     t.string   "queue"
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
-
-  create_table "follows", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "followed_id"
-    t.string   "followed_type"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-  end
 
   create_table "group_memberships", force: true do |t|
     t.integer "profile_id"
@@ -105,11 +97,11 @@ ActiveRecord::Schema.define(version: 20141029171256) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "web_url"
-    t.integer  "memberships_count", default: 0, null: false
-    t.integer  "statements_count",  default: 0, null: false
-    t.integer  "scope",             default: 0, null: false
-    t.integer  "application_form",  default: 0, null: false
-    t.integer  "public_form",       default: 0, null: false
+    t.integer  "memberships_count", null: false
+    t.integer  "statements_count",  null: false
+    t.integer  "scope",             null: false
+    t.integer  "application_form",  null: false
+    t.integer  "public_form",       null: false
     t.string   "profile_photo"
     t.string   "cover_photo"
   end
@@ -124,6 +116,26 @@ ActiveRecord::Schema.define(version: 20141029171256) do
   end
 
   add_index "memberships", ["profile_id", "organisation_id"], name: "index_memberships_on_profile_id_and_organisation_id", unique: true, using: :btree
+
+  create_table "motionarguments", force: true do |t|
+    t.integer "argument_id",                null: false
+    t.integer "motion_id",                  null: false
+    t.boolean "pro",         default: true, null: false
+    t.integer "votes_count", default: 0
+  end
+
+  add_index "motionarguments", ["argument_id", "motion_id"], name: "arg_state_index", using: :btree
+
+  create_table "motions", force: true do |t|
+    t.string   "title",                   null: false
+    t.text     "content",                 null: false
+    t.integer  "statetype",  default: 6
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "pro_count",  default: 0
+    t.integer  "con_count",  default: 0
+    t.integer  "moderators", default: [],              array: true
+  end
 
   create_table "opinions", force: true do |t|
     t.string   "title"
@@ -228,15 +240,6 @@ ActiveRecord::Schema.define(version: 20141029171256) do
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
-
-  create_table "statementarguments", force: true do |t|
-    t.integer "argument_id",                 null: false
-    t.integer "statement_id",                null: false
-    t.boolean "pro",          default: true, null: false
-    t.integer "votes_count",  default: 0
-  end
-
-  add_index "statementarguments", ["argument_id", "statement_id"], name: "arg_state_index", using: :btree
 
   create_table "statements", force: true do |t|
     t.string   "title",                               null: false

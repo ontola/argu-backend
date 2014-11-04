@@ -1,24 +1,25 @@
-=back_to_statement @argument
-.box.center
+header
+  =back_to_statement @argument
+.box
   = form_for(@argument) do |f|
-    -if @argument.errors.any?
-      #error_explanation
-        h2= pluralize(@argument.errors.count, "error") + t("error_prohibited")
-        ul
-          -@argument.errors.full_messages.each do |msg|
-            li= msg
-    .label-row
-      = f.text_field "title", class: "settingform verticalform argumenttitle " + (%w(pro true).index(params[:pro] || @argument.pro.to_s) ? "pro" : "con"), placeholder: t("arguments.form.title").capitalize
-      p.helpertext.floatleft= t("arguments.form.helper.title")
-      .clearfix
-    .label-row
-      = f.text_area "content", class: "settingform verticalform", placeholder: t("arguments.form.content").capitalize, rows: "10"
-      p.helpertext.floatleft= raw t("arguments.form.helper.content")
-      .clearfix
-    .row
-      .span8
-        fieldset.control-group
-        = f.hidden_field(:statement_id)
-        = f.hidden_field(:pro)
-        fieldset.form-actions
-          = f.submit t("arguments.form.submit"), class: "btn blue"
+    section
+      -if @argument.errors.any?
+        #error_explanation
+          h2= pluralize(@argument.errors.count, "error") + t("error_prohibited")
+          ul
+            -@argument.errors.full_messages.each do |msg|
+              li= msg
+
+      = f.text_field "title", class: (%w(pro true).index(params[:pro] || @argument.pro.to_s) ? "pro" : "con") + "-t h1", placeholder: t("arguments.form.title")
+      /p.helpertext= t("arguments.form.helper.title")
+
+      = f.text_area "content", placeholder: t("arguments.form.content").capitalize, rows: "10"
+      /p.helpertext= raw t("arguments.form.helper.content")
+      .row
+        .span8
+          fieldset.control-group
+          = f.hidden_field(:statement_id)
+          = f.hidden_field(:pro)
+    = render partial: 'profiles/profile_current'
+    fieldset.form-actions
+      = f.submit t("arguments.form.submit"), class: "btn btn-sticky btn-sticky-bottom"

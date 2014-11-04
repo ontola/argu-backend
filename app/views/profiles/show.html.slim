@@ -1,4 +1,38 @@
-.profile-header
-  =image_tag @profile.cover_photo.url, class: 'cover'
-  h1= @profile.display_name
-  =pica_pica @profile.profile_photo, container_class: 'profile'
+.col-1
+  header
+    h1 profiel
+  /=image_tag @profile.cover_photo.url
+  .box.profile-big
+    .profile-picture.profile-picture-show
+      =pica_pica @profile.profile_photo, container_class: 'profile'
+    section
+      h1= @profile.display_name
+      h3 Co-Founder of Argu
+      p.quote "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."
+    /Todo: alles functioneel maken
+    section.unpadded
+      ul.tags
+        li
+          a.tag href=""
+            span energie
+        li
+          a.tag href=""
+            span duurzaamheid
+        li
+          a.tag href=""
+            span windmolens
+  .col-2
+    header
+      h1 mening
+    .col-2-1
+      header
+        h2.pro-bg eens
+      .box
+        section
+          h3.pro-t Windmolens op de Uithof
+    .col-2-1
+      header
+        h2.con-bg oneens
+      .box
+        section
+          h3.con-t Snoep stelen van baby's

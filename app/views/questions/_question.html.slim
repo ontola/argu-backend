@@ -1,7 +1,8 @@
 - tag ||= nil
-.box.question
-	= link_to question.title, question_path(question), class: "title"
-	p= question.supped_content.html_safe
-	.infobar
-		p.info= t("statements.preview.pro", count: question.votes_pro_count) + ', ' + t("statements.preview.con", count: question.votes_con_count)
-		.clearfix
+.box
+  section
+    = link_to question_path(question) do
+      h3.con-t = question.title
+    p= question.supped_content.html_safe
+    /p.info= t("statements.preview.pro", count: question.votes_pro_count) + ', ' + t("statements.preview.con", count: question.votes_con_count)
+    p.info= question.votes_pro_count.to_s + " " + t("statements.plural")
