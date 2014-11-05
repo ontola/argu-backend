@@ -48,6 +48,10 @@ nav.navbar role="navigation"
                 =link_to profile_url(current_user.username) do
                   span.fa.fa-user.icon-left
                   span = t("profiles.type")
+              li
+                =link_to edit_profile_path(current_user.username) do
+                  span.fa.fa-pencil.icon-left
+                  span = t("profiles.edit.title")
               li=link_to settings_url do
                 span.fa.fa-gear.icon-left
                 span=t(:users_show_title)
