@@ -1,4 +1,5 @@
 -provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title)
-header=back_to_statement @argument
+/header=back_to_statement @argument
+=render partial: 'statements/back_to', locals: {resource: @argument}
 =render 'body'
 =render template: 'comments/show', locals: { resource: @argument }

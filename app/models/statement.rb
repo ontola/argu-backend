@@ -10,6 +10,7 @@ class Statement < ActiveRecord::Base
   has_many :question_answers, inverse_of: :statement
   has_many :questions, through: :question_answers
   belongs_to :organisation
+  belongs_to :creator, class_name: 'Profile'
 
   counter_culture :organisation
 
@@ -30,6 +31,10 @@ class Statement < ActiveRecord::Base
 
   def con_count
     self.arguments.count(:conditions => ["pro = false"])
+  end
+
+  def creator
+    super || Profile.first_or_create(name: 'Onbekend')
   end
 
   def is_main_statement?(tag)

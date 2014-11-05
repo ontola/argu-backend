@@ -53,8 +53,8 @@ class StatementsController < ApplicationController
   def create
     @question = Question.find params[:question_id]
     @statement = Statement.create permit_params
+    @statement.creator = current_user.profile
     @statement.questions << @question
-    #@statement.creator = current_user.profile
     authorize @statement
     @statement.organisation = current_user._current_scope
     #current_user.profile.add_role :mod, @statement

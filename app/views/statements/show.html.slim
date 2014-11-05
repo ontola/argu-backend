@@ -1,4 +1,7 @@
 -provide :title, (@statement.title.nil? ? t(:statement_title) : @statement.title)
+/-if GEBRUIKER KOMT VAN VRAAGSTUK do
+   a.box.box-back
+    h3 Titel Vraagstuk
 =render partial: 'statementbody', locals: { statement: @statement }
 =render partial: 'opinionbtns'
 header

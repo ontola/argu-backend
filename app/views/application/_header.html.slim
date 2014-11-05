@@ -55,7 +55,9 @@ nav.navbar role="navigation"
                 span.fa.fa-sign-out.icon-left
                 span Uitloggen
       -else
-        li=link_to t(:sign_in), new_user_session_url, id: 'account'
-      li=link_to about_url, class: 'close', id: 'info'
+        li=link_to new_user_session_url, id: 'account', class: 'navbar-item' do
+          span.fa.fa-sign-in.icon-left
+          span.navbar-link-description = t(:sign_in)
+      li=link_to about_url, class: 'navbar-item', id: 'info'
         span.fa.fa-question.icon-left
         span.navbar-link-description="over"

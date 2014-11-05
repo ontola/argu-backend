@@ -1,8 +1,9 @@
 -provide :title, @question.title
 .box
   section
-    h1.con-t= @question.title
+    h1.que-t= @question.title
     p= @question.supped_content.html_safe
+  =render @question.creator.profile, locals= {resource: @question}
 /render partial: 'opinionbtns'
 .col-1
   header
@@ -11,4 +12,4 @@
     -@motions.each do |m|
       =render m
   .center
-    =link_to "_voorstel indienden", new_question_statement_path(@question), class: "btn btn-white"
+    =link_to t("statements.newstatement"), new_question_statement_path(@question), class: "btn btn-white"

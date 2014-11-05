@@ -1,0 +1,41 @@
+= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { class: "form-horizontal" } ) do |f|
+  .overlay
+    .overlay-dialog
+      h2 log in
+      .box.overlay-sign-in
+        section
+          /a.auth_provider href="/auth/twitter"
+            = image_tag "favicon_twitter.svg", :size => "64x64",  :alt => "Twitter"
+            a.auth_provider href="/auth/facebook"
+              = image_tag "favicon_facebook.svg", :size => "64x64", :alt => "Facebook"
+            a.auth_provider href="/auth/google_apps"
+              = image_tag "favicon_google.svg", :size => "64x64",  :alt => "Google"
+            a.auth_provider href="/auth/openid"
+              = image_tag "favicon_openid.svg", :size => "64x64",  :alt => "OpenID"
+          ul.btns-signup
+            li
+              a.btn.facebook-bg href="/auth/facebook"
+                span.fa.fa-facebook.icon-left
+                span Log in met facebook
+            li
+              a.btn.twitter-bg href="/auth/twitter"
+                span.fa.fa-twitter.icon-left
+                span Log in met twitter
+            li
+              a.btn href="/users/sign_up"
+                span.fa.fa-plus.icon-left
+                span Maak een Argu account
+          - if resource.errors.any?
+            #error_explanation
+              ul
+                - resource.errors.full_messages.each do |msg|
+                  li= msg
+        section
+          .form-sign-in
+            .info.info-signup bestaand Argu account:
+            = f.text_field :login, placeholder: "gebruikersnaam of e-mail"
+            = f.password_field :password, placeholder: "wachtwoord"
+            /- if devise_mapping.rememberable?
+              .remember= f.check_box :remember_me
+            = render "devise/shared/links"
+            = f.submit "log in" , class: "btn"

@@ -1,4 +1,7 @@
-.options-bar
-  ul
-    li=link_to '_page_', organisation_path(@org)
-    li=link_to '_settings_', settings_organisation_path(@org)
+ul.options-bar.btns-subtle
+  /li=link_to organisation_path(@org) do
+    span.fa.fa-eye.icon-left
+    span _page_
+  li=link_to settings_organisation_path(@org) do
+    span.fa.fa-gear.icon-left
+    span _page settings_
