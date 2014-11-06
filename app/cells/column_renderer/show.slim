@@ -1,0 +1,10 @@
+div[class="col-#{keys.length}"]
+  header
+    h1= header
+  -keys.each_with_index do |key,i|
+    div[class="col-#{keys.length}-#{i}"]
+      header
+        h2[class="#{key}-bg"]= key
+      .box
+        -model[key.to_s].each do |item|
+          == cell(:column_renderer, item)

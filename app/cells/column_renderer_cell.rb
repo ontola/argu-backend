@@ -1,6 +1,5 @@
-class ProconCell < Cell::ViewModel
+class ColumnRendererCell < Cell::ViewModel
   builds do |model, options|
-    puts " =============#{model}================="
     StatementCell if model.is_a? Statement
     VoteCell      if model.is_a? Vote
   end
@@ -9,18 +8,14 @@ class ProconCell < Cell::ViewModel
     render
   end
 
-  def list
-
-  end
-
   private
 
-  def pro_items
-    model['pro']
+  def header
+    options[:header]
   end
 
-  def con_items
-    model['con']
+  def keys
+    model.keys
   end
 
   def title
