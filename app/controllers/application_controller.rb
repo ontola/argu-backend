@@ -21,6 +21,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_scope
+    @current_scope || Organisation.find(_session[:_current_scope])
+  end
+  helper_method :current_scope
+
   def set_locale
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale
@@ -32,7 +37,8 @@ class ApplicationController < ActionController::Base
       _argu_scope = Organisation.find_by web_url: subdomain
       if _argu_scope && policy(_argu_scope).show?
         @local_title = subdomain
-        session[:_current_scope] = _argu_scope
+        @current_scope = _argu_scope
+        session[:_current_scope] = _argu_scope.id
         current_user._current_scope = _argu_scope if current_user.present?
       else
         raise ActionController::RoutingError.new('Not Found')

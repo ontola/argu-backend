@@ -37,7 +37,7 @@ Argu::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.session_store :active_record_store, key: '_Argu_session', domain: :all
+  config.session_store :cookie_store, key: '_Argu_session', domain: :all, :tld_length => 2
 
   config.i18n.available_locales = :nl
 

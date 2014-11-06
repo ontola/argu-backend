@@ -8,7 +8,7 @@ class QuestionPolicy < RestrictivePolicy
     end
 
     def resolve
-      if user._current_scope.present?
+      if current_scope.present?
         scope.where(organisation_id: user._current_scope.id)
       else
         scope.where(organisation_id: nil)

@@ -3,7 +3,7 @@ nav.navbar role="navigation"
     ==link_to root_url(subdomain: ''), class: "navbar-logo"
       =image_tag 'logo.svg'
       -if @local_title.present?
-        ==link_to organisation_url(session[:_current_scope], subdomain: session[:_current_scope].web_url), class: 'local'
+        ==link_to organisation_url(current_scope, subdomain: current_scope.web_url), class: 'local'
           h1= "| #{@local_title.capitalize}"
     ul.navbar-links
       li
