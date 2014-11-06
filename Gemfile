@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 #ruby '2.0.0'
 
-gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git' #path: '/Users/thom1/Developer/ruby/pica_pica'
+gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica' #git: 'git@bitbucket.org:fletcher91/pica_pica.git'
 
-gem 'sass-rails',   '~> 4.0.3'
-gem 'rails', '~>4.1.0'
+gem 'sass-rails',   '~> 5.0.0.beta1'                        ###!
+gem 'rails', git: 'https://github.com/rails/rails.git' # '~>4.2.0.beta4'                                ###!
 ##################DB########################
 gem 'pg', '~> 0.17.1'
 gem 'foreigner', '~> 1.2.1'
@@ -34,19 +34,21 @@ gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 gem 'kaminari', '~>0.15.1'
 
 ##################Asset-y########################
-gem 'briarcliff', path: 'C:\sites\briarcliff'
-gem 'haml' # TODO: convert haml to slim, then remove this gem
-gem 'slim', '~>2.0.2'
+gem 'briarcliff', path: '/Users/thom1/Developer' # path: 'C:\sites\briarcliff'
+#gem 'haml' # TODO: convert haml to slim, then remove this gem
+gem 'slim', '~> 2.1.0'
+#gem 'slim-rails'
+gem 'cells', '~> 4.0.0.alpha1', git: 'https://github.com/apotonick/cells.git'   ###!
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete', '~> 1.0.12'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
-gem 'carrierwave'                                                     # Will replace paperclip
-gem 'mini_magick'#, require: false                                     # Ruby connector for ImageMagick
-gem "fog"                                                             # Cloud storage connector for CW
+gem 'carrierwave'                                                         # Will replace paperclip
+gem 'mini_magick'#, require: false                                        # Ruby connector for ImageMagick
+gem "fog"                                                                 # Cloud storage connector for CW
 
 ##################User management########################
-gem 'devise', "~> 3.2.4"
+gem 'devise', "~> 3.4.1"
 #gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
 gem "omniauth", "~> 1.0.0"
 gem "omniauth-oauth2"
@@ -57,22 +59,24 @@ gem 'pundit', "~> 0.3.0"
 gem 'rolify'
 
 group :development, :test do
-  gem 'thin'
-  #gem 'puma'
+  gem 'thin', require: false
+  gem 'puma', require: false
+  gem 'unicorn', require: false
+  gem 'nokogiri', '1.6.3.1'
   gem 'rspec', '2.8.0'
   gem 'rspec-rails', '2.8.0'
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'annotate','~> 2.4.1beta1'
+  gem 'annotate','~> 2.4.1beta1'                      ###!
   gem 'nifty-generators', '~> 0.4.6'
-  gem 'meta_request'
-  gem 'better_errors'
-  gem 'binding_of_caller'
+  #gem 'meta_request'
+  #gem 'better_errors'
+  gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
   gem 'spring'
   gem 'coffee-rails', '~> 4.0.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'quiet_assets'
-
+  gem 'web-console', '~> 2.0.0.beta4'                 ###!
 end
 
 group :production do 

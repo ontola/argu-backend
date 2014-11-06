@@ -1,28 +1,28 @@
-.box
-  section
-    .profile
-      =link_to profile_path(current_user.username) do
-        =image_tag current_user.profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
-        p=current_user.display_name
-    -Organisation.scope_types.merge(current_user.profile.organisations.select(:id, :name, :profile_photo, :web_url, :scope).group_by { |a| a.scope}).each do |key, value|
+-if current_user.present?
+  .box
+    section
+      .profile
+        =link_to profile_path(current_user.username) do
+          =image_tag current_user.profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
+          p=current_user.display_name
+      -Organisation.scope_types.merge(current_user.profile.organisations.select(:id, :name, :profile_photo, :web_url, :scope).group_by { |a| a.scope}).each do |key, value|
+        .group
+          h3= t("organisations.scope_names.#{key}")
+          ul
+            -value.each do |o|
+              li
+                /=link_to root_url(o, subdomain: o.web_url)
+                =link_to organisation_path(o)
+                  = image_tag o.profile_photo.url(:icon), size: '16x16'
+                  = o.name
       .group
-        h3= t("organisations.scope_names.#{key}")
+        h3= t("organisations.scope_names.scope_group")
         ul
-          -value.each do |o|
+          -current_user.profile.groups.each do |g|
             li
-              /=link_to root_url(o, subdomain: o.web_url)
-              =link_to organisation_path(o)
-                = image_tag o.profile_photo.url(:icon), size: '16x16'
-                = o.name
-    .group
-      h3= t("organisations.scope_names.scope_group")
-      ul
-        -current_user.profile.groups.each do |g|
-          li
-            =link_to group_url(g)
-              = image_tag g.profile_photo, size: '16x16'
-              = g.name
-        li=link_to t('groups.new_group'), new_group_url
+              =link_to group_url(g)
+                = image_tag g.profile_photo, size: '16x16'
+                = g.name
+          li=link_to t('groups.new_group'), new_group_url
 .content
-  - @questions.each do |question|
-    = render question
+  =cell(:feed, collection: @questions)

@@ -21,18 +21,4 @@
         li
           a.tag href=""
             span windmolens
-  .col-2
-    header
-      h1 mening
-    .col-2-1
-      header
-        h2.pro-bg eens
-      .box
-        section
-          h3.pro-t Windmolens op de Uithof
-    .col-2-1
-      header
-        h2.con-bg oneens
-      .box
-        section
-          h3.con-t Snoep stelen van baby's
+  == cell(:procon, @collection)

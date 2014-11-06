@@ -1,0 +1,15 @@
+.col-2
+  header
+    h1 _mening_
+  .col-2-1
+    header
+      h2.pro-bg _eens_
+    .box
+      - pro_items.each do |item|
+        == cell(:procon, item)
+  .col-2-1
+    header
+      h2.con-bg _oneens_
+    .box
+      - con_items.each do |item|
+        == cell(:procon, item)
