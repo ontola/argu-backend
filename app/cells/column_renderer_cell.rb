@@ -1,7 +1,12 @@
 class ColumnRendererCell < Cell::ViewModel
   builds do |model, options|
-    StatementCell if model.is_a? Statement
-    VoteCell      if model.is_a? Vote
+    if model.is_a?(Statement)
+      StatementCell
+    elsif model.is_a?(Argument)
+      ArgumentCell
+    elsif model.is_a?(Vote)
+      VoteCell
+    end
   end
 
   def show
