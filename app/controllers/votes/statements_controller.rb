@@ -4,7 +4,7 @@ class Votes::StatementsController < ApplicationController
     @statement = Statement.find(params[:statement_id])
     authorize @statement, :vote?
     if params[:for].in?(Vote.fors)
-      @vote = Vote.find_or_create_by(voteable: @statement, voter: current_user)
+      @vote = Vote.find_or_create_by(voteable: @statement, voter: current_user.profile)
       if @vote.try(:for) == permit_params[:for]
         respond_to do |format|
           format.json { render json: {notifications: [{type: 'warning', message: '_Stem ongewijzigd_'}]} }
@@ -29,7 +29,7 @@ class Votes::StatementsController < ApplicationController
   # DELETE /statements/:statement_id/vote
   def destroy
     @statement = Statement.find(params[:statement_id])
-    @vote = Vote.find_or_create_by(voteable: @statement, voter: current_user)
+    @vote = Vote.find_or_create_by(voteable: @statement, voter: current_user.profile)
     authorize @statement, :vote?
     if @vote.update for: :abstain
       save_vote_to_stats(@vote)
