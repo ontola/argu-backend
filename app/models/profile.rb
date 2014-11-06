@@ -24,6 +24,18 @@ class Profile < ActiveRecord::Base
         .try(:for) == 'pro'
   end
 
+  def frozen?
+    !has_role? 'user'
+  end
+
+  def freeze
+    remove_role :user
+  end
+
+  def unfreeze
+    add_role :user
+  end
+
 
   #######Utility#########
   def self.find_by_username(user)

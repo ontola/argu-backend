@@ -59,18 +59,6 @@ class User < ActiveRecord::Base
     USERNAME_FORMAT_REGEX.match(name.to_s)
   end
 
-  def frozen?
-    !has_role? 'user'
-  end
-
-  def freeze
-    remove_role :user
-  end
-
-  def unfreeze
-    add_role :user
-  end
-
 private
   def check_for_profile
     self.profile ||= Profile.create
