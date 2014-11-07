@@ -22,17 +22,15 @@
         = link_to tag, tag_statements_url(tag), class: "tag", title: t("statements.titles.tags")+tag
 
 .col-2
-  header
-    h1 problemen & oplossingen
   .col-2-1
     header
-      h2.con-bg vraagstukken
+      h2 vraagstukken
     -if @org.questions.present?
       =render partial: 'questions/question', collection: @org.questions
     .center
       =link_to t('questions.new_question_path'), new_organisation_question_path(@org), class: "btn btn-white"
   .col-2-1
     header
-      h2.sta-bg voorstellen
+      h2 voorstellen
     -if Statement.second
       =render Statement.second
