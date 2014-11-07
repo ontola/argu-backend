@@ -8,6 +8,7 @@ nl:
     type_other: "anders"
     type_discussion: "in discussie"
     vote: "stem"
+    new_btn: "nieuw argument"
     pro: "voor"
     con: "tegen"
     neu: "neutraal"

@@ -25,6 +25,14 @@ class ColumnRendererCell < Cell::ViewModel
     model.keys
   end
 
+  def show_new_buttons
+    if options[:buttons_url].present?
+      content_tag :div, class: 'center' do
+        link_to I18n.t("#{options[:buttons_model].name.pluralize.downcase}.new_btn"), options[:buttons_url], class: 'btn btn-white'
+      end
+    end
+  end
+
   def title
     model.title
   end
