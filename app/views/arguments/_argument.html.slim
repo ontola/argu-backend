@@ -12,5 +12,8 @@
         /span.commentsnumber.infobar= argument.comments_count.to_s + (argument.comments_count == 1 ? " reactie:" : " reacties:")
         p= argument.comment_threads.first.body[0..150] + (argument.comment_threads.first.body[151] ? "..." : "")
         .btn-subtle.btn-comments
-          span = argument.comments_count.to_s
+          span
+            /= argument.comments_count.to_s
+            /TODO werkt nog niet, geeft altijd 0 comments
+            = "1"
           span.fa.fa-comments.icon-right

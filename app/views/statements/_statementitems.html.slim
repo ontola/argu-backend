@@ -1,8 +1,8 @@
 div.col-2
   -[:pro, :con].each do |p|
     .col-2-1
-      header[class=("argtypebox " + p.to_s)]
-        h2[class=(p.to_s + "-bg")]=t("arguments." + p.to_s)
+      header[class=( p.to_s)]
+        h2=t("arguments." + p.to_s)
       -unless items[p].nil?
         -items[p].each do |i|
           =render i
