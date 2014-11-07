@@ -1,0 +1,22 @@
+.box.box-with-btns
+  section
+    = link_title do
+      h3[class="#{pro ? 'pro-t' : 'con-t'}"]= title
+    p[class='collapsible']
+      ==supped_content
+    ul.btns-sticky.btns-sticky-top
+      li
+        a.btn-subtle href="/"
+          span[id=id.to_s]=(votes_pro_count >= 1 ? '+' : '') + votes_pro_count.to_s
+          span.fa.fa-arrow-up.icon-right
+      li
+        a.btn-subtle href="/"
+          span[id=id.to_s]= 0
+          span.fa.fa-arrow-down.icon-right
+  -if comment_threads.present?
+    = link_to argument_path(model) + "#commentstitle" do
+      section.top-comment
+        p= comment_threads.first.body[0..150] + (comment_threads.first.body[151] ? "..." : "")
+        .btn-subtle.btn-comments
+          span = comments_count.to_s
+          span.fa.fa-comments.icon-right

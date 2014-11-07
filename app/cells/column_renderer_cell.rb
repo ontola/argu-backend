@@ -6,6 +6,8 @@ class ColumnRendererCell < Cell::ViewModel
       ArgumentCell
     elsif model.is_a?(Vote)
       VoteCell
+    elsif model.is_a?(Opinion)
+      OpinionCell
     end
   end
 

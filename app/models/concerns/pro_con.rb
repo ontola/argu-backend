@@ -56,6 +56,8 @@ module ProCon
   end
 
   module ClassMethods
-
+    def ordered
+      HashWithIndifferentAccess.new(pro: [], con: []).merge @relation.group_by { |a| a.key }
+    end
   end
 end

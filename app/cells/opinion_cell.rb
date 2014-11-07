@@ -1,4 +1,4 @@
-class ArgumentCell < Cell::ViewModel
+class OpinionCell < Cell::ViewModel
   def show
     render
   end
@@ -15,6 +15,6 @@ class ArgumentCell < Cell::ViewModel
   end
 
   def vote_buttons
-    render partial: "arguments/shr", locals: { argument: model }
+    render partial: "opinions/shr", locals: { opinion: model }
   end
 end
