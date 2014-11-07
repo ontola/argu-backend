@@ -9,4 +9,8 @@ class VoteCell < Cell::ViewModel
   def title
     model.voteable.title
   end
+
+  def vote_for
+    model.for
+  end
 end

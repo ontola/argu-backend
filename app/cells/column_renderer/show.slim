@@ -5,6 +5,5 @@ div[class="col-#{keys.length}"]
     div[class="col-#{keys.length}-1"]
       header
         h2[class="#{key}-bg"]= key
-      .box
-        -(model[key] || model[key.to_s]).each do |item|
-          == cell(:column_renderer, item)
+      -(model[key] || model[key.to_s]).each do |item|
+        == cell(:column_renderer, item)

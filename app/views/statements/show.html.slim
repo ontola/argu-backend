@@ -6,12 +6,7 @@
 =render partial: 'opinionbtns'
 
 == cell(:column_renderer, @arguments, header: t("arguments.index.title"))
-header
-  h1=t("arguments.index.title")
-= render partial: 'statementitems', locals: { resource: Argument, items: @arguments, id: @statement.id,  statement: @statement }
-header
-  h1=t("arguments.index.opinion")
-=render partial: 'statementitems', locals: { resource: Opinion, items: @opinions, id: @statement.id, statement: @statement }
+== cell(:column_renderer, @opinions, header: t("arguments.index.opinion"))
 -if Rails.configuration.epics.parties
   header
     h1=t("arguments.index.parties")
