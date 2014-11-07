@@ -33,5 +33,5 @@
     header
       h2 voorstellen
     -if @org.statements.present?
-      =render partial: 'statements/statement', collection: @org.statements
+      == cell(:statement, collection: @org.statements)
     /TODO NIEUWE STELLING PLAATSEN, cellify de shit
