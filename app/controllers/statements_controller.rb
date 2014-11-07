@@ -16,8 +16,8 @@ class StatementsController < ApplicationController
   def show
     @statement = Statement.includes(:arguments, :opinions).find(params[:id])
     authorize @statement
-    @arguments = @statement.arguments.ordered
-    @opinions = @statement.opinions.ordered
+    @arguments = Argument.ordered @statement.arguments
+    @opinions = Opinion.ordered @statement.opinions
     @voted = Vote.where(voteable: @statement, voter: current_user).last.try(:for) unless current_user.blank?
 
     respond_to do |format|

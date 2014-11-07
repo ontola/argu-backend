@@ -20,8 +20,8 @@ class Vote < ActiveRecord::Base
   end
 
   ##########Class methods###########
-  def self.ordered
-    HashWithIndifferentAccess.new(pro: [], neutral: [], con: []).merge @relation.group_by { |a| a.for }
+  def self.ordered (votes)
+    HashWithIndifferentAccess.new(pro: [], neutral: [], con: []).merge votes.group_by { |a| a.for }
   end
 
 end

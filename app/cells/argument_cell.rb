@@ -7,7 +7,7 @@ class ArgumentCell < Cell::ViewModel
   property :title, :pro, :supped_content, :comment_threads, :votes_pro_count, :id, :comments_count
 
   def link_title(&block)
-    link_to raw(yield block), question_path(model)
+    link_to raw(yield block), argument_path(model)
   end
 
   def supped_content

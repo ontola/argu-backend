@@ -1,4 +1,5 @@
 class ColumnRendererCell < Cell::ViewModel
+  extend ViewModel
   builds do |model, options|
     if model.is_a?(Statement)
       StatementCell
