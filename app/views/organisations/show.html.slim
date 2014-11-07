@@ -26,7 +26,7 @@
     header
       h2 vraagstukken
     -if @org.questions.present?
-      =render partial: 'questions/question', collection: @org.questions
+      ==cell(:question, collection: @org.questions)
     .center
       =link_to t('questions.new_question_path'), new_organisation_question_path(@org), class: "btn btn-white"
   .col-2-1
@@ -34,4 +34,4 @@
       h2 voorstellen
     -if @org.statements.present?
       =render partial: 'statements/statement', collection: @org.statements
-    /TODO NIEUWE STELLING PLAATSEN
+    /TODO NIEUWE STELLING PLAATSEN, cellify de shit

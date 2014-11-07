@@ -17,6 +17,6 @@ a href="http://local.host:3000/organisations/1"
     h1 voorstellen
   -if @motions.present?
     -@motions.each do |m|
-      =render m
+      ==cell(:statement, m)
   .center
     =link_to t("statements.newstatement"), new_question_statement_path(@question), class: "btn btn-white"
