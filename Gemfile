@@ -6,7 +6,7 @@ gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica' #git: 'git@bitbuc
 gem 'sass-rails',   '~> 5.0.0.beta1'                        ###!
 gem 'rails', git: 'https://github.com/rails/rails.git' # '~>4.2.0.beta4'                                ###!
 ##################DB########################
-gem 'pg', '~> 0.17.1'
+gem 'pg', '0.18.0.pre20141017160319'
 gem 'foreigner', '~> 1.2.1'
 gem 'immigrant', '~> 0.1.2'
 gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
@@ -50,7 +50,7 @@ gem "fog"                                                                 # Clou
 ##################User management########################
 gem 'devise', "~> 3.4.1"
 #gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
-gem "omniauth", "~> 1.0.0"
+gem "omniauth", "~> 1.2.1"
 gem "omniauth-oauth2"
 gem 'omniauth-facebook', "~> 1.4.0"
 gem 'omniauth-twitter', "~> 0.0.13"
