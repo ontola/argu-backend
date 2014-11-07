@@ -1,6 +1,13 @@
 header
-  = content_tag :h1, t('statements.newstatement') if controller.action_name == 'new'
-= '_over_ ' + @question.title
+/  = content_tag :h1, t('statements.newstatement') if controller.action_name == 'new'
+/= '_over_ ' + @question.title
+a href="http://local.host:3000/questions/3"
+  .box.box-back
+    section
+      h3.que-t
+        span.fa.fa-arrow-left.icon-left
+        span Hoe realiseren we meer nul-op-de-meter woningen?
+        /TODO non-statisch maken!
 .box
   = form_for([@question, @statement]) do |f|
     section

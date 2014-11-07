@@ -6,6 +6,14 @@ GIT
     yaml_db (0.2.3)
 
 GIT
+  remote: git@bitbucket.org:fletcher91/pica_pica.git
+  revision: 7dcaa254b14811b9e7e474daea36ec8207a0c293
+  specs:
+    pica_pica (0.0.1)
+      rails (>= 4.0.0)
+      slim (>= 2.0.0)
+
+GIT
   remote: https://github.com/apotonick/cells.git
   revision: 96670ea8bb441004f111f60541c434626ea27ba1
   specs:
@@ -17,7 +25,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 00ae750b23f0f9f59fd7058fc3bff043d2a04c5f
+  revision: 58f3cf9bcb64ad2ee4997e89f4d7646f4c7bdbe7
   specs:
     actionmailer (4.2.0.beta4)
       actionpack (= 4.2.0.beta4)
@@ -72,15 +80,9 @@ GIT
       thor (>= 0.18.1, < 2.0)
 
 PATH
-  remote: /Users/thom1/Developer
+  remote: C:/sites/briarcliff
   specs:
     briarcliff (0.0.1)
-
-PATH
-  remote: /Users/thom1/Developer/ruby/pica_pica
-  specs:
-    pica_pica (0.0.1)
-      slim (>= 2.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -205,7 +207,6 @@ GEM
     kaminari (0.15.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
-    kgio (2.9.2)
     libv8 (3.16.14.7)
     loofah (2.0.1)
       nokogiri (>= 1.5.9)
@@ -251,8 +252,6 @@ GEM
     orm_adapter (0.5.0)
     pg (0.17.1)
     pg (0.17.1-x86-mingw32)
-    puma (2.9.1)
-      rack (>= 1.1, < 2.0)
     pundit (0.3.0)
       activesupport (>= 3.0.0)
     quiet_assets (1.0.3)
@@ -279,7 +278,6 @@ GEM
       rails_stdout_logging
     rails_serve_static_assets (0.0.2)
     rails_stdout_logging (0.0.3)
-    raindrops (0.13.0)
     rake (10.3.2)
     ref (1.0.5)
     responders (2.0.1)
@@ -342,10 +340,6 @@ GEM
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
-    unicorn (4.8.3)
-      kgio (~> 2.6)
-      rack
-      raindrops (~> 0.7)
     warden (1.2.3)
       rack (>= 1.0)
     web-console (2.0.0.beta4)
@@ -396,7 +390,6 @@ DEPENDENCIES
   omniauth-twitter (~> 0.0.13)
   pg (~> 0.17.1)
   pica_pica!
-  puma
   pundit (~> 0.3.0)
   quiet_assets
   rack-cors
@@ -415,6 +408,5 @@ DEPENDENCIES
   thin
   tzinfo-data
   uglifier (>= 1.0.3)
-  unicorn
   web-console (~> 2.0.0.beta4)
   yaml_db!
