@@ -4,7 +4,7 @@ class ArgumentCell < Cell::ViewModel
   end
 
   private
-  property :title, :pro, :supped_content, :comment_threads, :votes_pro_count, :id, :comments_count
+  property :title, :pro, :supped_content, :comment_threads, :votes_pro_count, :votes_con_count, :id, :comments_count
 
   def link_title(&block)
     link_to raw(yield block), argument_path(model)
