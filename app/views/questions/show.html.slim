@@ -3,16 +3,10 @@
   ==cell(:context, @question).call(:to_parent)
   .box
     section
-      h3.neu-t
-        span.fa.fa-arrow-left.icon-left
-        span Economic Board Utrecht
-        /TODO non-statisch maken!
-.box
-  section
-    h1.que-t= @question.title
-    p= @question.supped_content.html_safe
-  =render @question.creator.profile, locals= {resource: @question}
-/render partial: 'opinionbtns'
+      h1.que-t= @question.title
+      p= @question.supped_content.html_safe
+    =render @question.creator.profile, locals= {resource: @question}
+  /render partial: 'opinionbtns'
 .col-1
   header
     h1 voorstellen

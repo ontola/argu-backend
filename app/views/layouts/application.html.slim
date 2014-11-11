@@ -27,6 +27,7 @@ head
     document.write("<script async src='//HOST:3000/browser-sync/browser-sync-client.1.5.8.js'><\/script>".replace(/HOST/g, location.hostname).replace(/PORT/g, location.port));
     //]]>
 body
+  .background
   - if current_user && current_user.profile.has_role?(:staff)
     =render partial: 'staff_sign'
   /[if lt IE 8]

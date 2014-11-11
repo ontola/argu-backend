@@ -22,14 +22,19 @@ class ColumnRendererCell < Cell::ViewModel
     options[:header]
   end
 
+  # This generates the translations for the header text, e.g. "arguments.header.pro"
+  def header_text(key)
+    I18n.t("#{options[:collection_model].to_s.pluralize.downcase}.header.#{key}")
+  end
+
   def keys
     model.keys
   end
 
   def show_new_buttons
     if options[:buttons_url].present?
-      content_tag :div, class: 'center' do
-        link_to I18n.t("#{options[:buttons_model].name.pluralize.downcase}.new_btn"), options[:buttons_url], class: 'btn btn-white'
+      link_to options[:buttons_url], class: 'btn btn-white' do
+        I18n.t("#{options[:collection_model].name.pluralize.downcase}.new_btn")
       end
     end
   end

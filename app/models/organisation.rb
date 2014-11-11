@@ -1,5 +1,6 @@
 class Organisation < ActiveRecord::Base
   include IOrganisation
+
   has_many :memberships, dependent: :destroy
   has_many :profiles, through: :memberships
   has_many :questions, inverse_of: :organisation

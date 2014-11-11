@@ -2,22 +2,23 @@
 
 .col-1
   /=image_tag @org.cover_photo.url, class: 'cover'
-  .box.profile-big
+  .profile-big
     .profile-picture.profile-picture-show
       =image_tag @org.profile_photo.url
-    section
-      h1= @org.name
-      p.quote = @org.description
-      -if policy(@org).member?
-        /p You're a member!
-      -else
-        =link_to 'join', organisation_memberships_path(@org.id), method: :create, class: 'btn'
-        p
-          == '&#127757; '
-          = link_to @org.website.sub(/^https?\:\/\//, ''), @org.website
-      =link_to settings_organisation_path(@org), class: 'btn-subtle btn-sticky btn-sticky-bottom' do
-        span.fa.fa-gear.icon-left
-        span beheer
+    .box
+      section
+        h1= @org.name
+        p.quote = @org.description
+        -if policy(@org).member?
+          /p You're a member!
+        -else
+          =link_to 'join', organisation_memberships_path(@org.id), method: :create, class: 'btn'
+          p
+            == '&#127757; '
+            = link_to @org.website.sub(/^https?\:\/\//, ''), @org.website
+        =link_to settings_organisation_path(@org), class: 'btn-subtle btn-sticky' do
+          span.fa.fa-gear.icon-left
+          span beheer
     section.unpadded.tags
       - @org.key_tags.each do |tag|
         = link_to tag, tag_statements_url(tag), class: "tag", title: t("statements.titles.tags")+tag
