@@ -1,14 +1,22 @@
 class Question < ActiveRecord::Base
   include Trashable
+  include Parentable
+
   belongs_to :organisation
   belongs_to :creator, class_name: 'User'
   has_many :question_answers, inverse_of: :question
   has_many :statements, through: :question_answers
 
   acts_as_ordered_taggable_on :tags
+  parentable :organisation
+
 
   def creator
     super || User.first_or_create(username: 'Onbekend')
+  end
+
+  def display_name
+    title
   end
 
   def supped_content

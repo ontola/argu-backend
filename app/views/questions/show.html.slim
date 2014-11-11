@@ -1,6 +1,7 @@
 -provide :title, @question.title
-a href="http://local.host:3000/organisations/1"
-  .box.box-back
+.col-1
+  ==cell(:context, @question).call(:to_parent)
+  .box
     section
       h3.neu-t
         span.fa.fa-arrow-left.icon-left

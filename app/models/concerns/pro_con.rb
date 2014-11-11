@@ -3,6 +3,7 @@ module ProCon
 
   included do
     include Trashable
+    include Parentable
 
     belongs_to :statement, :dependent => :destroy
     has_many :votes, as: :voteable
@@ -15,11 +16,20 @@ module ProCon
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
 
     acts_as_commentable
+    parentable :statement
 
     def creator
       super || User.first_or_create(username: 'Onbekend')
     end
 
+  end
+
+  def cap_title
+    self.title = self.title.capitalize
+  end
+
+  def display_name
+    title
   end
 
   # To facilitate the group_by command
@@ -49,10 +59,6 @@ module ProCon
 
   def is_moderator?(user)
     self.statement.is_moderator?(user)
-  end
-
-  def cap_title
-    self.title = self.title.capitalize
   end
 
   module ClassMethods

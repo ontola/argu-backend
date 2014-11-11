@@ -1,4 +1,4 @@
-=render partial: 'statements/back_to', locals: {resource: @argument}
+==cell(:context, @argument).call(:to_parent)
 .box
   = form_for(@argument) do |f|
     section

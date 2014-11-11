@@ -12,6 +12,9 @@ nl:
     neu: "neutraal"
     type: "type"
     references: "referenties"
+    header:
+      pro: "argumenten voor"
+      con: "argumenten tegen"
     index:
       title: "argumenten"
       opinion: "opinie"

@@ -11,7 +11,9 @@ module IOrganisation
     mount_uploader :cover_photo, ImageUploader
   end
 
-
+  def display_name
+    name
+  end
 
   ######Attributes#######
   def key_tags

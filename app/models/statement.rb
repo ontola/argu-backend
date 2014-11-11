@@ -3,6 +3,7 @@ include ActionView::Helpers::NumberHelper
 
 class Statement < ActiveRecord::Base
   include Trashable
+  include Parentable
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy
@@ -18,6 +19,7 @@ class Statement < ActiveRecord::Base
   before_save :cap_title
 
   acts_as_ordered_taggable_on :tags
+  parentable :questions
   resourcify
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
@@ -35,6 +37,10 @@ class Statement < ActiveRecord::Base
 
   def creator
     super || Profile.first_or_create(name: 'Onbekend')
+  end
+
+  def display_name
+    title
   end
 
   def is_main_statement?(tag)
