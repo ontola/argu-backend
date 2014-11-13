@@ -1,15 +1,13 @@
 source 'https://rubygems.org'
-#ruby '2.0.0'
 
 gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
-gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git', platform: :mswin
+#gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git', platform: :mswin
 
 gem 'sass-rails',   '~> 5.0.0.beta1'                                         ###!
-gem 'rails', '~>4.2.0.beta4', platform: :ruby                                ###!
-gem 'rails', git: 'https://github.com/rails/rails.git', platform: :mswin     ###!
+gem 'rails', git: 'https://github.com/rails/rails.git' ###!
 ##################DB########################
 gem 'pg', '0.17.1', platform: :ruby
-gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
+#gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
 gem 'foreigner', '~> 1.2.1'
 gem 'immigrant', '~> 0.1.2'
 gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
@@ -38,7 +36,7 @@ gem 'kaminari', '~>0.15.1'
 
 ##################Asset-y########################
 gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
-gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
+#gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
 #gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
@@ -81,6 +79,7 @@ group :development, :test do
   gem 'uglifier', '>= 1.0.3'
   gem 'quiet_assets'
   gem 'web-console', '~> 2.0.0.beta4'                 ###!
+  gem 'capistrano-rails'
 end
 
 group :production do 
