@@ -1,17 +1,10 @@
-.leftbar
-  h2[style="display:inline; margin-right: 20px;"]= t("arguments.comments.title")
-  .sortoptions
-    span.sortlabel sorteer op:
-    select[name="sort"]
-      option[value="highest"]Hoogst beoordeeld
-      option[value="newest"]Nieuwst
+header
+  h1= t("arguments.comments.title")
 .comments
   -if @comments.present?
     - @comments.each do |c|
       = render partial: 'comments/comment', locals: { resource: resource, c: c, depth: 1 }
     = paginate @comments
-  -else
-    p=t('opinions.comments.none')
 -if policy(resource).show?
-  .box.clearfix
+  .box
     =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true }

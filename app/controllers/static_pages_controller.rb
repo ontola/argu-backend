@@ -1,13 +1,13 @@
 class StaticPagesController < ApplicationController
-  
+
   def home
     authorize :static_pages
-  	if signed_in?
-      @newstatements = policy_scope(Statement.index params[:trashed], params[:page])
+  	#if signed_in?
+      @questions = Question.index params[:trashed], params[:page]
   		render 'static_pages/home'
-  	else
-  		render 'static_pages/home_new'
-	  end
+  	#else
+  	#	render 'static_pages/home_new'
+	  #end
   end
   def about
     authorize :static_pages

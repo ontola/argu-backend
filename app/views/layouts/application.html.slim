@@ -12,42 +12,31 @@ head
   meta name="viewport" content="width=device-width, initial-scale=1"
   = csrf_meta_tags
   = render 'shim'
-  link href='//fonts.googleapis.com/css?family=Raleway:200' rel='stylesheet' type='text/css'
-  link href='//fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'
-  link href='http://fonts.googleapis.com/css?family=Lato:300,400,700,900' rel='stylesheet' type='text/css'
+
   / unless current_user.blank?
   = stylesheet_link_tag "application", :media => "all"
+  / Raleway font from google fonts
+  link href='http://fonts.googleapis.com/css?family=Raleway:800,300' rel='stylesheet' type='text/css'
+
+  / FontAwesome for icons
+  link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
+
+  / Browser-sync
+  javascript:
+    //<![CDATA[
+    document.write("<script async src='//HOST:3000/browser-sync/browser-sync-client.1.5.8.js'><\/script>".replace(/HOST/g, location.hostname).replace(/PORT/g, location.port));
+    //]]>
 body
-  -unless false # current_user.blank?
-    - if current_user && current_user.has_role?(:staff)
-      =render partial: 'staffsign'
-    /[if lt IE 8]
-      p.browsehappy=raw t("outdated_browser")
-    -flash.each do |key,value|
-      .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
-    = render 'header'
-    #fb-root
-    .container
-      = yield
-      .push
-    -unless current_user.blank?
-      =javascript_include_tag "application", async: Rails.env == 'development' ? false : true
-      //=javascript_include_tag "//localhost:3000/assets/cards.js", async: Rails.env == 'development' ? false : true
-  -else
-    .container
-      = image_tag "argu.png", alt: "argu is nog in ontwikkeling", width: "673px", height: "72px", style: "margin-left:auto;margin-right:auto;display:block;margin-top:200px"
-      = form_for("user", :url => user_session_path, :html => { class: "form-horizontal" } ) do |f|
-        table[border="0"]
-          tr
-            td
-              h1.setting=f.label :login
-            td=f.text_field :login, autofocus: true, class: "settingform"
-          tr
-            td
-              h1.setting= f.label :password
-            td= f.password_field :password, class: "settingform"
-          tr
-            td
-            td
-              div
-                = f.submit "log in" , class: "submitbtn"
+  .background
+  - if current_user && current_user.profile.has_role?(:staff)
+    =render partial: 'staff_sign'
+  /[if lt IE 8]
+    p.browsehappy=raw t("outdated_browser")
+  -flash.each do |key,value|
+    .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
+  = render 'header'
+  #fb-root
+  .container
+    = yield
+    .push
+  =javascript_include_tag "application", async: Rails.env == 'development' ? false : true

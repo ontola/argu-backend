@@ -7,7 +7,7 @@ class RestrictivePolicy
   end
 
   def staff?
-    user && user.has_role?(:staff)
+    user && user.profile.has_role?(:staff)
   end
 
   def index?
@@ -61,6 +61,16 @@ class RestrictivePolicy
     def resolve
       scope
     end
+
+    def current_scope
+      user._current_scope if user.present?
+    end
   end
+
+private
+  def current_scope
+    user._current_scope if user.present?
+  end
+
 end
 

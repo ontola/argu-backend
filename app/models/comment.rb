@@ -2,24 +2,28 @@ class Comment < ActiveRecord::Base
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 
   validates_presence_of :body
-  validates_presence_of :user
+  validates_presence_of :profile
 
   after_validation :increase_counter_cache
   after_destroy :decrease_counter_cache
 
   belongs_to :commentable, :polymorphic => true
-  belongs_to :user
+  belongs_to :profile
 
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
   # example in readme
-  def self.build_from(obj, user_id, comment)
+  def self.build_from(obj, profile_id, comment)
     c = self.new
     c.commentable_id = obj.id
     c.commentable_type = obj.class.base_class.name
     c.body = comment
-    c.user_id = user_id
+    c.profile_id = profile_id
     c
+  end
+
+  def creator
+    self.profile
   end
 
   #helper method to check if a comment has children
@@ -30,7 +34,7 @@ class Comment < ActiveRecord::Base
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.
   scope :find_comments_by_user, lambda { |user|
-    where(:user_id => user.id).order('created_at DESC')
+    where(:profile_id => user.profile.id).order('created_at DESC')
   }
 
   # Helper class method to look up all comments for

@@ -1,5 +1,7 @@
 =form_tag(polymorphic_path([resource, :comments]), :method => "post", id: "cf" + parent_id.to_s, class: "comment_form", style: visible ? "" : "display: none;") do
-  =text_area_tag :comment,"", :rows => 5, :cols => 50
-  -unless parent_id.blank?
-    input[type="hidden" class= "btn blue" name="parent_id" value ="#{parent_id}"]
-  =submit_tag t("opinions.show.reply"), class: "btn clearfix blue"
+  section
+    =text_area_tag :comment,"", :rows => 2, :cols => 50, placeholder: t("comments.placeholder")
+    -unless parent_id.blank?
+      input[type="hidden" class= "btn" name="parent_id" value ="#{parent_id}"]
+  =render current_user.profile, locals= {resource: resource}
+  =submit_tag t("opinions.show.reply"), class: "btn btn-sticky btn-sticky-bottom sta-bg"

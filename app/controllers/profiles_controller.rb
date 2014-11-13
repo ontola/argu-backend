@@ -2,8 +2,10 @@ class ProfilesController < ApplicationController
 
   #GET /profiles/1
   def show
-    @profile = Profile.find params[:id]
+    @profile = User.find_by(username: params[:id]).profile
     authorize @profile, :show?
+
+    @collection =  Vote.ordered @profile.votes
 
     respond_to do |format|
       format.html # show.html.erb
@@ -12,7 +14,7 @@ class ProfilesController < ApplicationController
 
   #GET /1/edit
   def edit
-    @profile = Profile.find params[:id]
+    @profile = User.find_by(username: params[:id]).profile
     authorize @profile
 
     respond_to do |format|
@@ -22,12 +24,12 @@ class ProfilesController < ApplicationController
 
   #PUT /1
   def update
-    @profile = Profile.find params[:id]
+    @profile = User.find_by(username: params[:id]).profile
     authorize @profile
 
     respond_to do |format|
       if @profile.update_attributes permit_params
-        format.html { redirect_to @profile, notice: "Profile was successfully updated." }
+        format.html { redirect_to profile_path(@profile.user.username), notice: "Profile was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

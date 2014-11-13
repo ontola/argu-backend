@@ -1,10 +1,13 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
 
-gem 'sass-rails',   '~> 4.0.3'
-gem 'rails', '~>4.1.0'
+gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
+#gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git', platform: :mswin
+
+gem 'sass-rails',   '~> 5.0.0.beta1'                                         ###!
+gem 'rails', git: 'https://github.com/rails/rails.git' ###!
 ##################DB########################
-gem 'pg', '~> 0.17.1'
+gem 'pg', '0.17.1', platform: :ruby
+#gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
 gem 'foreigner', '~> 1.2.1'
 gem 'immigrant', '~> 0.1.2'
 gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
@@ -20,35 +23,36 @@ gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.0'
-gem "cocoon"
-gem 'activerecord-session_store', github: 'rails/activerecord-session_store'
+gem 'cocoon'
 
 ##################Features########################
-gem 'paper_trail', '~> 3.0.0'
 gem 'acts-as-taggable-on'
 gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 #Search
-gem 'sunspot_rails'
-gem 'sunspot_solr'
+
 #Pagination
 gem 'kaminari', '~>0.15.1'
-gem "sunspot_with_kaminari", '~> 0.2.0'
 
 ##################Asset-y########################
-gem 'haml' # TODO: convert haml to slim, then remove this gem
-gem 'slim', '~>2.0.2'
+gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
+#gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
+#gem 'haml' # TODO: convert haml to slim, then remove this gem
+gem 'slim', '~> 2.1.0'
+#gem 'slim-rails'
+gem 'cells', '~> 4.0.0.alpha1', git: 'https://github.com/apotonick/cells.git'   ###!
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete', '~> 1.0.12'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
-gem "paperclip", "~> 4.2"
-gem "papercrop"
+gem 'carrierwave'                                                         # Will replace paperclip
+gem 'mini_magick'#, require: false                                        # Ruby connector for ImageMagick
+gem "fog"                                                                 # Cloud storage connector for CW
 
 ##################User management########################
-gem 'devise', "~> 3.2.4"
+gem 'devise', "~> 3.4.1"
 #gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
-gem "omniauth", "~> 1.0.0"
+gem "omniauth", "~> 1.2.1"
 gem "omniauth-oauth2"
 gem 'omniauth-facebook', "~> 1.4.0"
 gem 'omniauth-twitter', "~> 0.0.13"
@@ -57,22 +61,25 @@ gem 'pundit', "~> 0.3.0"
 gem 'rolify'
 
 group :development, :test do
-  #gem 'thin'
-  gem 'puma'
+  gem 'thin'
+  gem 'puma', platform: :ruby
+  gem 'unicorn', platform: :ruby
+  gem 'nokogiri', '1.6.3.1'
   gem 'rspec', '2.8.0'
   gem 'rspec-rails', '2.8.0'
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  gem 'annotate','~> 2.4.1beta1'
-  gem "nifty-generators", '~> 0.4.6'
-  gem 'meta_request'
-  gem 'better_errors'
-  gem 'binding_of_caller'
+  gem 'annotate','~> 2.4.1beta1'                      ###!
+  gem 'nifty-generators', '~> 0.4.6'
+  #gem 'meta_request'
+  #gem 'better_errors'
+  gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
   gem 'spring'
   gem 'coffee-rails', '~> 4.0.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'quiet_assets'
-
+  gem 'web-console', '~> 2.0.0.beta4'                 ###!
+  gem 'capistrano-rails'
 end
 
 group :production do 

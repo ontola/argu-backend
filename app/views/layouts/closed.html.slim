@@ -1,0 +1,17 @@
+.container
+  = image_tag "argu.png", alt: "argu is nog in ontwikkeling", width: "673px", height: "72px", style: "margin-left:auto;margin-right:auto;display:block;margin-top:200px"
+  = form_for("user", :url => user_session_path, :html => { class: "form-horizontal" } ) do |f|
+    table[border="0"]
+      tr
+        td
+          h1.setting=f.label :login
+        td=f.text_field :login, autofocus: true, class: "settingform"
+      tr
+        td
+          h1.setting= f.label :password
+        td= f.password_field :password, class: "settingform"
+      tr
+        td
+        td
+          div
+            = f.submit "log in" , class: "submitbtn"

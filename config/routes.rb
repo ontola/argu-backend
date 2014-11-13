@@ -24,14 +24,13 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :statements do
+  resources :statements, only: [:show, :edit] do
     post 'vote/:for'      => 'votes/statements#create',   as: 'vote'
     delete 'vote'         => 'votes/statements#destroy',  as: 'vote_delete'
 
     get 'tags',      to: 'tags/statements#index', on: :collection
     get 'tags/:tag', to: 'tags/statements#show',  on: :collection, as: :tag
 
-    resources :revisions, only: [:index, :show, :update], shallow: true
     namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
       get '' => 'statements#index', as: ''
       post ':user_id' => 'statements#create', as: 'user'
@@ -39,10 +38,13 @@ Argu::Application.routes.draw do
     end
   end
 
+  resources :questions, only: [:show, :update] do
+    resources :statements, only: [:new, :create, :delete, :destroy]
+  end
+
   resources :arguments do
     resources :comments
-    resources :revisions, only: [:index, :show, :update], shallow: true
-    
+
     post   'vote' => 'votes/arguments#create'
     delete 'vote' => 'votes/arguments#destroy'
   end
@@ -54,6 +56,7 @@ Argu::Application.routes.draw do
   resources :organisations, except: [:index, :edit] do
     get :settings, on: :member
     resources :memberships, only: [:create, :destroy]
+    resources :questions, only: [:index, :new, :create]
   end
 
   resources :groups, except: [:index, :edit] do

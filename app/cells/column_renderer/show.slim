@@ -1,0 +1,10 @@
+div[class="col-#{keys.length}"]
+  /header
+    h1= header
+  -keys.each_with_index do |key,i|
+    div[class="col-#{keys.length}-1"]
+      header
+        h2= header_text(key)
+      -(model[key] || model[key.to_s]).each do |item|
+        == cell(:column_renderer, item)
+      = show_new_buttons

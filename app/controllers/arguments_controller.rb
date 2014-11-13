@@ -17,70 +17,6 @@ class ArgumentsController < ApplicationController
     end
   end
 
-
-  # GET /arguments/1/revisions/:rev
-  # GET /arguments/1/revisions/:rev.json
-  def revisions
-    @argument = Argument.find_by_id(params[:argument_id])
-    @version = nil
-    @rev = params[:rev]
-
-    unless @rev.nil?
-      @version = @argument.versions.find_by_id(@rev)
-      @argument = @version.reify
-    end
-    
-    if @argument.nil?
-      @argument = @argument.versions.last
-    end
-
-    authorize! :revisions, @argument
-    respond_to do |format|
-      format.html # revisions.html.erb
-      format.json { render json: @argument }
-    end
-  end
-
-  # GET /arguments/1/revisions
-  # GET /arguments/1/revisions.json
-  def allrevisions
-    @argument = Argument.find_by_id(params[:argument_id])
-    @comments = @argument.root_comments.where(is_trashed: true).page(params[:page]).order('created_at ASC')
-    @revisions = @argument.versions.scoped.reject{ |v| v.object.nil? }.reverse
-
-    authorize! :revisions, @argument
-    respond_to do |format|
-      format.html # allrevisions.html.erb
-      format.json { render json: @argument }
-    end
-  end  
-
-  # PUT /arguments/1/revisions
-  # PUT /arguments/1/revisions.json
-  def setrevision
-    @argument = Argument.find_by_id(params[:argument_id])
-    @version = nil
-    @rev = params[:rev]
-
-    unless @rev.nil?
-      @version = @argument.versions.find_by_id(@rev);
-      @argument = @version.reify
-    end
-    @argument ||= @argument.versions.last
-
-    authorize! :revisions, @argument
-    respond_to do |format|
-      if @argument.save
-        format.html { redirect_to @argument, notice: t("arguments.notices.restored") }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @argument.errors, status: :unprocessable_entity }
-      end
-    end
-  end  
-
-
   # GET /arguments/new
   # GET /arguments/new.json
   def new
@@ -113,6 +49,7 @@ class ArgumentsController < ApplicationController
   # POST /arguments.json
   def create
     @argument = Argument.new argument_params
+    @argument.creator = current_user
     authorize @argument
     @argument.statement_id = argument_params[:statement_id]
     @argument.pro = argument_params[:pro]

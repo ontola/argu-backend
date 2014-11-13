@@ -1,0 +1,59 @@
+#Dutch statements translations
+
+nl:
+  statements:
+    type: "voorstel"
+    title: "voorstel"
+    header: "voorstel"
+    plural: "voorstellen"
+    pros: "voor"
+    cons: "tegen"
+    edit: "stelling bewerken"
+    no_pros: "nog niets voor"
+    no_cons: "nog niets tegen"
+    newstatement: "nieuw voorstel"
+    content: "inhoud"
+    votes:
+      pro: "ik ben voor"
+      neu: "ik ben onbesloten"
+      con: "ik ben tegen"
+    preview:
+      pro:
+        zero: "geen voorargumenten"
+        one: "1 voorargument"
+        other: "%{count} voorargumenten"
+      con:
+        zero: "geen tegenargumenten"
+        one: "1  tegenargument"
+        other: "%{count} tegenargumenten"
+    revisions:
+      title_wiped: 'Gewiste argumenten'
+    form:
+      title: "Voorstel in enkele woorden"
+      content: "Toelichting op voorstel. Leg de huidige situatie uit, en licht toe wat jouw voorstel precies inhoudt. Probeer hier niet te overtuigen; dat doe je met argumenten."
+      themes: "thema1, thema2"
+      invert: "alle argumenten omkeren"
+      helper:
+        title: "Vat de stelling zo bondig mogelijk samen."
+        content: "Beschrijf de stelling in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
+        themes: "Thema's of onderwerpen die aan deze stelling gerelateerd zijn. Plaats komma's tussen de thema's."
+    mod:
+      edit_moderators:
+        title: 'Moderators van %{title}'
+        remove: 'afzetten'
+        title_invite: 'Moderators uitnodigen'
+        invite: 'Uitnodigen'
+        invited: 'Uitnodigd'
+        is_mod: 'is al een mod'
+      show_moderation_panel: 'moderator'
+    titles:
+      tags: "Zoek stellingen met het thema "
+    #statement types
+    type_social: "Maatschappelijk"
+    type_political: "Politiek"
+    type_jurisdictional: "Juridisch"
+    type_ecological: "Ecologisch"
+    type_economical: "Economisch"
+    type_technological: "Technologisch"
+    type_discussion: "In discussie"
+    type_other: "Overig"

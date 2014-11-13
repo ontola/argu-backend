@@ -4,25 +4,25 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
+  include CarrierWave::MiniMagick
 
-  # Choose what kind of storage to use for this uploader:
-  storage :fog
-  # storage :fog
-
-  CarrierWave.configure do |config|
-    config.fog_credentials = {
+  if ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'].present? && ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'].present?
+    storage = :fog
+    fog_credentials = {
         :provider                         => 'Google',
         :google_storage_access_key_id     => ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'],
         :google_storage_secret_access_key => ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY']
     }
-    config.fog_directory = 'foresight-banners'
+    fog_directory = 'argu-logos'
+  else
+    storage = :local
   end
+
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "images/#{model.class.to_s.pluralize.underscore}/#{model.id}-#{model.name}"
+    "#{model.class.to_s.pluralize.underscore}/#{model.id}-#{model.name.gsub(' ', '+')}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -41,9 +41,13 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  # version :thumb do
-  #   process :resize_to_fit => [50, 50]
-  # end
+  version :icon do
+    process :resize_to_fit => [16, 16]
+  end
+
+  version :cover do
+    process :resize_to_fit => [1500, 1000]
+  end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:

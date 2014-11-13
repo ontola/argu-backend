@@ -1,37 +1,58 @@
-set :application, "alpha.argu.nl"
+# config valid only for Capistrano 3.1
+lock '3.2.1'
 
-role :web, application                          # Your HTTP server, Apache/etc
-role :app, application                          # This may be the same as your `Web` server
-role :db,  application, :primary => true		# This is where Rails migrations will run
+set :application, 'my_app_name'
+set :repo_url, 'git@example.com:me/my_repo.git'
 
-set :scm, :git # You can set :scm explicitly or Capistrano will make an intelligent guess based on known version control directory names
-set :repository, "git@bitbucket.org:fletcher91/argu.git"
-set :branch, "cap"
+# Default branch is :master
+# ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 
-set :user, "deploy"
-set :deploy_to, "/var/www/apps/#{application}"
-set :deploy_via, :remote_cache
-set :use_sudo, false
+# Default deploy_to directory is /var/www/my_app
+# set :deploy_to, '/var/www/my_app'
 
-# If you are using Passenger mod_rails uncomment this:
-namespace :deploy do  
-  task :symlink_shared do
-  	#create symlinks for password files
-  	run "ln -nfs #{shared_path}/config/database.yml #{release_path}/config/database.yml"
-  	run "ln -nfs #{shared_path}/config/ca-bundle.crt #{release_path}/config/ca-bundle.crt"
-  	run "ln -nfs #{shared_path}/config/initializers/devise.rb #{release_path}/config/initializers/devise.rb"
-  	run "ln -nfs #{shared_path}/config/initializers/secret_token.rb #{release_path}/config/initializers/secret_token.rb"
-  	run "ln -nfs #{shared_path}/config/initializers/omniauth.rb #{release_path}/config/initializers/omniauth.rb"
-  	run "ln -nfs #{shared_path}/config/cert #{release_path}/config/cert"
+# Default value for :scm is :git
+# set :scm, :git
+
+# Default value for :format is :pretty
+# set :format, :pretty
+
+# Default value for :log_level is :debug
+# set :log_level, :debug
+
+# Default value for :pty is false
+# set :pty, true
+
+# Default value for :linked_files is []
+# set :linked_files, %w{config/database.yml}
+
+# Default value for linked_dirs is []
+# set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
+
+# Default value for default_env is {}
+# set :default_env, { path: "/opt/ruby/bin:$PATH" }
+
+# Default value for keep_releases is 5
+# set :keep_releases, 5
+
+namespace :deploy do
+
+  desc 'Restart application'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      # Your restart mechanism here, for example:
+      # execute :touch, release_path.join('tmp/restart.txt')
+    end
   end
 
-  task :bundle do
-  	require "bundler/capistrano"					# Update gems
+  after :publishing, :restart
+
+  after :restart, :clear_cache do
+    on roles(:web), in: :groups, limit: 3, wait: 10 do
+      # Here we can do anything such as:
+      # within release_path do
+      #   execute :rake, 'cache:clear'
+      # end
+    end
   end
 
-  task :restart, :roles => :app, :except => { :no_release => true } do
-    run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-  end
 end
-
-after 'deploy:update_code', 'deploy:symlink_shared', 'deploy:bundle', 'deploy:migrations', 'deploy:assets', 'deploy:restart'

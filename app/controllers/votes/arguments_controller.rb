@@ -4,7 +4,7 @@ class Votes::ArgumentsController < ApplicationController
     @argument = Argument.find(params[:argument_id])
     authorize @argument, :vote?
     respond_to do |format|
-      @voted = Vote.find_or_create_by voteable: @argument, voter: current_user
+      @voted = Vote.find_or_create_by voteable: @argument, voter: current_user.profile
       if (@voted.blank? || !@voted.for.eql?(:pro)) && (@voted = @voted.update(for: :pro))
         save_vote_to_stats @voted
         format.html { redirect_to @argument.statement, notice: 'Successfully voted.' }
@@ -22,7 +22,7 @@ class Votes::ArgumentsController < ApplicationController
   def destroy
     @argument = Argument.find(params[:argument_id])
     authorize @argument, :vote?
-    @voted = Vote.find_or_create_by voteable: @argument, voter: current_user
+    @voted = Vote.find_or_create_by voteable: @argument, voter: current_user.profile
     if @voted.present? && @voted.for?(:pro) && @voted.update(for: :abstain)
       save_vote_to_stats @voted
       respond_to do |format|

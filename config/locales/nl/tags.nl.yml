@@ -1,0 +1,8 @@
+#Dutch statements translations
+
+nl:
+  tags:
+    type: "tags"
+    with_tag: " met de tag "
+    trending: "trending"
+    my: "mijn tags"

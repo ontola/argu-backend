@@ -1,4 +1,5 @@
-ul.opinionbtns
-  li= link_to t('statements.votes.pro'), statement_vote_path(@statement, 'pro'), class: "btn green#{ ' voted' if @voted.eql?('pro')}", remote: true, method: :post
-  li= link_to t('statements.votes.neu'), statement_vote_path(@statement, 'neutral'), class: "btn grey#{ ' voted' if @voted.eql?('neutral')}", remote: true, method: :post
-  li= link_to t('statements.votes.con'), statement_vote_path(@statement, 'con'), class: "btn red#{ ' voted' if @voted.eql?('con')}", remote: true, method: :post
+.center
+  ul.btns-opinion
+   li= link_to t('statements.votes.pro'), statement_vote_path(@statement, 'pro'), class: "btn btn-pro#{ ' voted' if @voted.eql?('pro')}", remote: true, method: :post
+   li= link_to t('statements.votes.neu'), statement_vote_path(@statement, 'neutral'), class: "btn btn-neu#{ ' voted' if @voted.eql?('neutral')}", remote: true, method: :post
+   li= link_to t('statements.votes.con'), statement_vote_path(@statement, 'con'), class: "btn btn-con#{ ' voted' if @voted.eql?('con')}", remote: true, method: :post

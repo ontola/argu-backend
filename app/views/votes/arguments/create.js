@@ -1,1 +1,1 @@
-$('#shr<%= @argument.id %>').replaceWith('<%= escape_javascript(render(partial: "arguments/shr", locals: {argument: @argument}))%>');
+$('#votebtn<%= @argument.id %>').replaceWith('<%= escape_javascript(render(partial: "arguments/shr", locals: {argument: @argument}))%>');

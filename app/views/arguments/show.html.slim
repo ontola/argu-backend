@@ -1,5 +1,5 @@
 -provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title)
-.centercont
-  =back_to_statement @argument
+==cell(:context, @argument).call(:to_parent)
+.col-1
   =render 'body'
   =render template: 'comments/show', locals: { resource: @argument }

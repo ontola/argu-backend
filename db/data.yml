@@ -15,7 +15,7 @@ comments:
   - created_at
   - updated_at
   - is_trashed
-  records: 
+  records:
   - - '1'
     - '2'
     - Argument
@@ -23,7 +23,7 @@ comments:
     - Maar je eerste referentie is niet onderbouwd.
     - ''
     - '1'
-    - 
+    -
     - '1'
     - '4'
     - '2014-09-16 07:18:36.289516'
@@ -50,7 +50,7 @@ comments:
     - Er is toch een subsidiepot.
     - ''
     - '1'
-    - 
+    -
     - '5'
     - '14'
     - '2014-09-23 09:28:24.219826'
@@ -116,7 +116,7 @@ memberships:
   - user_id
   - organisation_id
   - role
-  records: 
+  records:
   - - '20'
     - '3'
     - '1'
@@ -141,7 +141,7 @@ delayed_jobs:
   - queue
   - created_at
   - updated_at
-  records: 
+  records:
   - - '1'
     - '0'
     - '0'
@@ -152,12 +152,12 @@ delayed_jobs:
       \n    last_sign_in_ip: \n    created_at: 2014-05-02 15:16:33.323573000 Z\n    updated_at:
       2014-05-02 15:16:33.323573000 Z\n    username: fletcher91\n    unconfirmed_email:
       \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-02 15:16:33.356598'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 15:16:33.357241'
     - '2014-05-02 15:16:33.357241'
   - - '2'
@@ -170,12 +170,12 @@ delayed_jobs:
       \n    last_sign_in_ip: \n    created_at: 2014-05-02 15:16:33.479540000 Z\n    updated_at:
       2014-05-02 15:16:33.479540000 Z\n    username: admin\n    unconfirmed_email:
       \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-02 15:16:33.490709'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 15:16:33.491128'
     - '2014-05-02 15:16:33.491128'
   - - '3'
@@ -188,12 +188,12 @@ delayed_jobs:
       \n    last_sign_in_ip: \n    created_at: 2014-05-02 15:16:33.587219000 Z\n    updated_at:
       2014-05-02 15:16:33.587219000 Z\n    username: joep\n    unconfirmed_email:
       \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-02 15:16:33.601224'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 15:16:33.601659'
     - '2014-05-02 15:16:33.601659'
   - - '4'
@@ -207,12 +207,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-02 15:16:42.232164000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-02 15:16:42.260496'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 15:16:42.261509'
     - '2014-05-02 15:16:42.261509'
   - - '5'
@@ -227,12 +227,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-02 15:16:42.276437000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-02 15:16:42.281331'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 15:16:42.282115'
     - '2014-05-02 15:16:42.282115'
   - - '6'
@@ -244,12 +244,12 @@ delayed_jobs:
       Z\n    updated_at: 2014-05-02 15:18:33.604968000 Z\n    pro_count: 0\n    con_count:
       0\n    tag_id: \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-02 15:18:33.66443'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 15:18:33.665299'
     - '2014-05-02 15:18:33.665299'
   - - '7'
@@ -261,12 +261,12 @@ delayed_jobs:
       Z\n    updated_at: 2014-05-02 15:18:33.604968000 Z\n    pro_count: 0\n    con_count:
       0\n    tag_id: \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-02 15:18:33.766005'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 15:18:33.766778'
     - '2014-05-02 15:18:33.766778'
   - - '8'
@@ -278,12 +278,12 @@ delayed_jobs:
       Z\n    updated_at: 2014-05-02 15:40:24.268720000 Z\n    pro_count: 0\n    con_count:
       0\n    tag_id: \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-02 15:40:24.402618'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 15:40:24.403613'
     - '2014-05-02 15:40:24.403613'
   - - '9'
@@ -295,12 +295,12 @@ delayed_jobs:
       15:18:33.604968000 Z\n    updated_at: 2014-05-02 15:41:54.905481000 Z\n    pro_count:
       0\n    con_count: 0\n    tag_id: \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-02 15:41:54.926814'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 15:41:54.927704'
     - '2014-05-02 15:41:54.927704'
   - - '10'
@@ -312,12 +312,12 @@ delayed_jobs:
       6\n    created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-05-02
       15:42:22.065080000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
       false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-02 15:42:22.082592'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 15:42:22.083449'
     - '2014-05-02 15:42:22.083449'
   - - '11'
@@ -328,12 +328,12 @@ delayed_jobs:
       \   statetype: 6\n    created_at: 2014-05-02 20:11:03.425027000 Z\n    updated_at:
       2014-05-02 20:11:03.425027000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
       \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-02 20:11:03.758261'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 20:11:03.759771'
     - '2014-05-02 20:11:03.759771'
   - - '12'
@@ -344,12 +344,12 @@ delayed_jobs:
       \   statetype: 6\n    created_at: 2014-05-02 20:11:03.425027000 Z\n    updated_at:
       2014-05-02 20:11:03.425027000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
       \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-02 20:11:03.849463'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 20:11:03.850428'
     - '2014-05-02 20:11:03.850428'
   - - '13'
@@ -360,12 +360,12 @@ delayed_jobs:
       \   statetype: 6\n    created_at: 2014-05-02 20:12:50.637794000 Z\n    updated_at:
       2014-05-02 20:12:50.637794000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
       \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-02 20:12:50.68289'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 20:12:50.68362'
     - '2014-05-02 20:12:50.68362'
   - - '14'
@@ -376,12 +376,12 @@ delayed_jobs:
       \   statetype: 6\n    created_at: 2014-05-02 20:12:50.637794000 Z\n    updated_at:
       2014-05-02 20:12:50.637794000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
       \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-02 20:12:50.792353'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 20:12:50.793248'
     - '2014-05-02 20:12:50.793248'
   - - '15'
@@ -393,12 +393,12 @@ delayed_jobs:
       \   statetype: 6\n    created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at:
       2014-05-02 23:00:58.752264000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
       \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-02 23:00:58.860847'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 23:00:58.862372'
     - '2014-05-02 23:00:58.862372'
   - - '16'
@@ -410,12 +410,12 @@ delayed_jobs:
       \   statetype: 6\n    created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at:
       2014-05-02 23:17:17.547825000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
       \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-02 23:17:17.563327'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-02 23:17:17.564108'
     - '2014-05-02 23:17:17.564108'
   - - '17'
@@ -428,12 +428,12 @@ delayed_jobs:
       Z\n    updated_at: 2014-05-03 12:09:29.250850000 Z\n    pro_count: 0\n    con_count:
       0\n    tag_id: \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-03 12:09:29.406825'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-03 12:09:29.407729'
     - '2014-05-03 12:09:29.407729'
   - - '18'
@@ -447,12 +447,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.479540000
       Z\n    updated_at: 2014-05-03 20:07:58.439816000 Z\n    username: admin\n    unconfirmed_email:
       \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-03 20:07:58.552005'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-03 20:07:58.553919'
     - '2014-05-03 20:07:58.553919'
   - - '19'
@@ -465,12 +465,12 @@ delayed_jobs:
       2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-05-05 22:32:13.287191000
       Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed: false\nmethod_name:
       :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-05 22:32:13.574035'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-05 22:32:13.577552'
     - '2014-05-05 22:32:13.577552'
   - - '20'
@@ -483,12 +483,12 @@ delayed_jobs:
       2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-05-05 22:32:13.287191000
       Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed: false\nmethod_name:
       :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-05 22:36:50.536421'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-05 22:36:50.537256'
     - '2014-05-05 22:36:50.537256'
   - - '21'
@@ -501,12 +501,12 @@ delayed_jobs:
       2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-05-05 22:32:13.287191000
       Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed: false\nmethod_name:
       :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-05 23:05:17.267911'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-05 23:05:17.268692'
     - '2014-05-05 23:05:17.268692'
   - - '22'
@@ -521,12 +521,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-08 12:56:52.285082000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-08 12:56:52.375648'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-08 12:56:52.376664'
     - '2014-05-08 12:56:52.376664'
   - - '23'
@@ -541,12 +541,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-08 16:57:15.822966000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-08 16:57:15.831664'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-08 16:57:15.832883'
     - '2014-05-08 16:57:15.832883'
   - - '24'
@@ -561,12 +561,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-08 17:16:08.682518000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-08 17:16:08.686649'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-08 17:16:08.687338'
     - '2014-05-08 17:16:08.687338'
   - - '25'
@@ -581,12 +581,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-08 17:18:23.503834000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-08 17:18:23.511277'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-08 17:18:23.512609'
     - '2014-05-08 17:18:23.512609'
   - - '26'
@@ -601,12 +601,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-08 17:18:23.503834000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-09 15:34:48.557284'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-09 15:34:48.55816'
     - '2014-05-09 15:34:48.55816'
   - - '27'
@@ -621,12 +621,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-09 15:34:48.606078000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-09 15:34:48.613913'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-09 15:34:48.66198'
     - '2014-05-09 15:34:48.66198'
   - - '28'
@@ -639,12 +639,12 @@ delayed_jobs:
       2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-05-05 22:32:13.287191000
       Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed: false\nmethod_name:
       :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-09 19:36:08.180246'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-09 19:36:08.181219'
     - '2014-05-09 19:36:08.181219'
   - - '29'
@@ -657,12 +657,12 @@ delayed_jobs:
       \   statetype: 6\n    created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at:
       2014-05-10 12:07:50.942277000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
       \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-10 12:07:51.108658'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-10 12:07:51.109653'
     - '2014-05-10 12:07:51.109653'
   - - '30'
@@ -677,12 +677,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11 07:36:42.575105000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-11 07:36:42.64585'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-11 07:36:42.647369'
     - '2014-05-11 07:36:42.647369'
   - - '31'
@@ -697,12 +697,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11 07:36:42.575105000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-11 19:25:43.908204'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-11 19:25:43.908907'
     - '2014-05-11 19:25:43.908907'
   - - '32'
@@ -717,12 +717,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11 19:25:43.929857000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-05-11 19:25:43.935409'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-11 19:25:43.936086'
     - '2014-05-11 19:25:43.936086'
   - - '33'
@@ -737,12 +737,12 @@ delayed_jobs:
       \   created_at: 2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11
       19:48:45.194127000 Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name:
       :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-11 19:48:45.198766'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-11 19:48:45.199529'
     - '2014-05-11 19:48:45.199529'
   - - '34'
@@ -757,12 +757,12 @@ delayed_jobs:
       \   created_at: 2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11
       19:56:23.944684000 Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name:
       :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-11 19:56:23.949305'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-11 19:56:23.950021'
     - '2014-05-11 19:56:23.950021'
   - - '35'
@@ -777,12 +777,12 @@ delayed_jobs:
       \   created_at: 2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11
       19:56:23.944684000 Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name:
       :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-16 12:57:03.385566'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-16 12:57:03.386582'
     - '2014-05-16 12:57:03.386582'
   - - '36'
@@ -797,12 +797,12 @@ delayed_jobs:
       \   created_at: 2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-16
       12:57:03.445097000 Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name:
       :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-05-16 12:57:03.451118'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-05-16 12:57:03.451876'
     - '2014-05-16 12:57:03.451876'
   - - '37'
@@ -817,12 +817,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-09-12 20:01:38.336759000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-12 20:01:38.392031'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-12 20:01:38.392143'
     - '2014-09-12 20:01:38.392143'
   - - '38'
@@ -837,12 +837,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-09-12 20:26:12.463238000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-12 20:26:12.468342'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-12 20:26:12.468411'
     - '2014-09-12 20:26:12.468411'
   - - '39'
@@ -855,12 +855,12 @@ delayed_jobs:
       \n    last_sign_in_ip: \n    created_at: 2014-09-13 10:04:57.661066000 Z\n    updated_at:
       2014-09-13 10:04:57.661066000 Z\n    username: maarschaar\n    unconfirmed_email:
       \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-13 10:04:57.855277'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-13 10:04:57.855383'
     - '2014-09-13 10:04:57.855383'
   - - '40'
@@ -874,12 +874,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-09-13 10:04:57.661066000
       Z\n    updated_at: 2014-09-13 10:05:15.839643000 Z\n    username: maarschaar\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-13 10:05:15.870546'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-13 10:05:15.870767'
     - '2014-09-13 10:05:15.870767'
   - - '41'
@@ -894,12 +894,12 @@ delayed_jobs:
       2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-09-13 17:27:46.403912000
       Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-13 17:27:46.502317'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-13 17:27:46.502493'
     - '2014-09-13 17:27:46.502493'
   - - '42'
@@ -913,12 +913,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-09-13 10:04:57.661066000
       Z\n    updated_at: 2014-09-13 17:28:01.077939000 Z\n    username: maarschaar\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-13 17:28:01.082845'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-13 17:28:01.08292'
     - '2014-09-13 17:28:01.08292'
   - - '43'
@@ -934,12 +934,12 @@ delayed_jobs:
       0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
       0\n    opinion_con_count: 0\n    votes_abstain_count: 0\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-13 21:28:47.434476'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-13 21:28:47.434581'
     - '2014-09-13 21:28:47.434581'
   - - '44'
@@ -953,12 +953,12 @@ delayed_jobs:
       0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
       0\n    opinion_con_count: 0\n    votes_abstain_count: 0\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-13 21:29:09.707795'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-13 21:29:09.707877'
     - '2014-09-13 21:29:09.707877'
   - - '45'
@@ -972,12 +972,12 @@ delayed_jobs:
       0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
       0\n    opinion_con_count: 0\n    votes_abstain_count: -1\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-14 15:12:15.370575'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 15:12:15.3707'
     - '2014-09-14 15:12:15.3707'
   - - '46'
@@ -991,12 +991,12 @@ delayed_jobs:
       0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
       0\n    opinion_con_count: 0\n    votes_abstain_count: -1\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-14 15:12:35.42817'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 15:12:35.428235'
     - '2014-09-14 15:12:35.428235'
   - - '47'
@@ -1010,12 +1010,12 @@ delayed_jobs:
       1\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
       0\n    opinion_con_count: 0\n    votes_abstain_count: -1\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-14 15:12:38.735558'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 15:12:38.735618'
     - '2014-09-14 15:12:38.735618'
   - - '48'
@@ -1029,12 +1029,12 @@ delayed_jobs:
       0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
       0\n    opinion_con_count: 0\n    votes_abstain_count: -1\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-14 15:12:44.141076'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 15:12:44.141161'
     - '2014-09-14 15:12:44.141161'
   - - '49'
@@ -1048,12 +1048,12 @@ delayed_jobs:
       0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
       0\n    opinion_con_count: 0\n    votes_abstain_count: -1\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-14 15:12:47.472087'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 15:12:47.47216'
     - '2014-09-14 15:12:47.47216'
   - - '50'
@@ -1067,12 +1067,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-14 18:13:52.171263000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 18:13:52.215754'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 18:13:52.215894'
     - '2014-09-14 18:13:52.215894'
   - - '51'
@@ -1086,12 +1086,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-14 18:13:57.968089000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 18:13:57.973346'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 18:13:57.973433'
     - '2014-09-14 18:13:57.973433'
   - - '52'
@@ -1105,12 +1105,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-14 18:20:08.154302000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 18:20:08.179338'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 18:20:08.179445'
     - '2014-09-14 18:20:08.179445'
   - - '53'
@@ -1124,12 +1124,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-14 18:20:30.489030000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 18:20:30.493706'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 18:20:30.493767'
     - '2014-09-14 18:20:30.493767'
   - - '54'
@@ -1143,12 +1143,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-14 18:35:43.013021000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 18:35:43.045434'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 18:35:43.045702'
     - '2014-09-14 18:35:43.045702'
   - - '55'
@@ -1162,12 +1162,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-14 19:02:30.783891000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 19:02:30.808416'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 19:02:30.808529'
     - '2014-09-14 19:02:30.808529'
   - - '56'
@@ -1181,12 +1181,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-14 19:02:30.783891000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 19:02:36.224367'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 19:02:36.224452'
     - '2014-09-14 19:02:36.224452'
   - - '57'
@@ -1200,12 +1200,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.587219000
       Z\n    updated_at: 2014-09-14 19:03:16.707967000 Z\n    username: joep\n    unconfirmed_email:
       \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 19:03:16.713494'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 19:03:16.713563'
     - '2014-09-14 19:03:16.713563'
   - - '58'
@@ -1219,12 +1219,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.587219000
       Z\n    updated_at: 2014-09-14 19:03:16.707967000 Z\n    username: joep\n    unconfirmed_email:
       \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 22:38:11.923621'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 22:38:11.923742'
     - '2014-09-14 22:38:11.923742'
   - - '59'
@@ -1238,12 +1238,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.587219000
       Z\n    updated_at: 2014-09-14 22:38:21.572016000 Z\n    username: joep\n    unconfirmed_email:
       \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 22:38:21.577151'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 22:38:21.577225'
     - '2014-09-14 22:38:21.577225'
   - - '60'
@@ -1257,12 +1257,12 @@ delayed_jobs:
       0\n    votes_neutral_count: 0\n    argument_pro_count: 0\n    argument_con_count:
       0\n    opinion_pro_count: 0\n    opinion_con_count: 0\n    votes_abstain_count:
       0\n    organisation_id: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 23:09:06.273909'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 23:09:06.274002'
     - '2014-09-14 23:09:06.274002'
   - - '61'
@@ -1276,12 +1276,12 @@ delayed_jobs:
       0\n    votes_neutral_count: 0\n    argument_pro_count: 0\n    argument_con_count:
       0\n    opinion_pro_count: 0\n    opinion_con_count: 0\n    votes_abstain_count:
       0\n    organisation_id: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 23:09:06.47421'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 23:09:06.474322'
     - '2014-09-14 23:09:06.474322'
   - - '62'
@@ -1295,12 +1295,12 @@ delayed_jobs:
       0\n    votes_neutral_count: 0\n    argument_pro_count: 0\n    argument_con_count:
       0\n    opinion_pro_count: 0\n    opinion_con_count: 0\n    votes_abstain_count:
       0\n    organisation_id: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 23:20:20.899122'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 23:20:20.899219'
     - '2014-09-14 23:20:20.899219'
   - - '63'
@@ -1314,12 +1314,12 @@ delayed_jobs:
       0\n    votes_neutral_count: 0\n    argument_pro_count: 0\n    argument_con_count:
       0\n    opinion_pro_count: 0\n    opinion_con_count: 0\n    votes_abstain_count:
       0\n    organisation_id: 1\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-14 23:20:21.114446'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-14 23:20:21.114539'
     - '2014-09-14 23:20:21.114539'
   - - '64'
@@ -1335,12 +1335,12 @@ delayed_jobs:
       0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
       0\n    opinion_con_count: 0\n    votes_abstain_count: -1\n    organisation_id:
       \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-16 07:16:35.734966'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-16 07:16:35.737407'
     - '2014-09-16 07:16:35.737407'
   - - '65'
@@ -1354,12 +1354,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-19 18:47:54.830831000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-19 18:47:54.861023'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-19 18:47:54.861148'
     - '2014-09-19 18:47:54.861148'
   - - '66'
@@ -1373,12 +1373,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-22 17:44:56.840886000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-22 17:44:56.885575'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-22 17:44:56.885766'
     - '2014-09-22 17:44:56.885766'
   - - '67'
@@ -1392,12 +1392,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-22 19:51:32.458392000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-22 19:51:32.466612'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-22 19:51:32.466802'
     - '2014-09-22 19:51:32.466802'
   - - '68'
@@ -1412,12 +1412,12 @@ delayed_jobs:
       0\n    argument_con_count: 0\n    opinion_pro_count: 0\n    opinion_con_count:
       0\n    votes_abstain_count: 0\n    organisation_id: \nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-23 09:27:32.503921'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-23 09:27:32.504078'
     - '2014-09-23 09:27:32.504078'
   - - '69'
@@ -1432,12 +1432,12 @@ delayed_jobs:
       0\n    argument_con_count: 0\n    opinion_pro_count: 0\n    opinion_con_count:
       0\n    votes_abstain_count: 0\n    organisation_id: 1\nmethod_name: :solr_index_without_delay\nargs:
       []\n"
-    - 
+    -
     - '2014-09-23 09:27:32.616528'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-23 09:27:32.616611'
     - '2014-09-23 09:27:32.616611'
   - - '70'
@@ -1451,12 +1451,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-24 14:31:48.905407000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-24 14:31:48.952085'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-24 14:31:48.952219'
     - '2014-09-24 14:31:48.952219'
   - - '71'
@@ -1470,12 +1470,12 @@ delayed_jobs:
       127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
       Z\n    updated_at: 2014-09-24 14:47:56.018640000 Z\n    username: fletcher91\n
       \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    - 
+    -
     - '2014-09-24 14:47:56.04487'
-    - 
-    - 
-    - 
-    - 
+    -
+    -
+    -
+    -
     - '2014-09-24 14:47:56.044988'
     - '2014-09-24 14:47:56.044988'
 
@@ -1493,7 +1493,7 @@ arguments:
   - votes_pro_count
   - comments_count
   - votes_abstain_count
-  records: 
+  records:
   - - '1'
     - Das toch altijd zo?
     - '1'
@@ -1539,28 +1539,28 @@ roles:
   - resource_type
   - created_at
   - updated_at
-  records: 
+  records:
   - - '1'
     - user
-    - 
-    - 
+    -
+    -
     - '2014-05-02 15:16:33.25666'
     - '2014-05-02 15:16:33.25666'
   - - '2'
     - staff
-    - 
-    - 
+    -
+    -
     - '2014-05-02 15:16:33.644588'
     - '2014-05-02 15:16:33.644588'
   - - '3'
     - admin
-    - 
-    - 
+    -
+    -
     - '2014-05-02 15:16:33.706086'
     - '2014-05-02 15:16:33.706086'
   - - '4'
     - mod
-    - 
+    -
     - Statement
     - '2014-05-02 15:18:29.718852'
     - '2014-05-02 15:18:29.718852'
@@ -1617,15 +1617,7 @@ profiles:
   - picture
   - created_at
   - updated_at
-  - profile_photo_file_name
-  - profile_photo_content_type
-  - profile_photo_file_size
-  - profile_photo_updated_at
-  - cover_photo_file_name
-  - cover_photo_content_type
-  - cover_photo_file_size
-  - cover_photo_updated_at
-  records: 
+  records:
   - - '4'
     - '1'
     - Thom van Kalkeren
@@ -1633,14 +1625,6 @@ profiles:
     - http://www.wthex.com/images/coolcookie.gif
     - '2014-05-02 15:16:33.722659'
     - '2014-09-22 20:58:27.583184'
-    - IMG_2052.jpg
-    - image/jpeg
-    - '102554'
-    - '2014-09-22 20:58:27.510142'
-    - 
-    - 
-    - 
-    - 
   - - '5'
     - '2'
     - Administrator
@@ -1648,14 +1632,6 @@ profiles:
     - ''
     - '2014-05-02 15:16:33.734038'
     - '2014-09-22 21:05:44.980133'
-    - DSC06781.JPG
-    - image/jpeg
-    - '2649948'
-    - '2014-09-22 21:05:44.942982'
-    - 
-    - 
-    - 
-    - 
   - - '6'
     - '3'
     - Joep
@@ -1663,14 +1639,6 @@ profiles:
     - https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg
     - '2014-05-02 15:16:33.745944'
     - '2014-09-22 21:05:19.155738'
-    - IMG_0391.JPG
-    - image/jpeg
-    - '3982342'
-    - '2014-09-22 21:05:19.076444'
-    - 
-    - 
-    - 
-    - 
   - - '7'
     - '4'
     - ''
@@ -1678,14 +1646,6 @@ profiles:
     - ''
     - '2014-09-13 10:04:57.677249'
     - '2014-09-22 21:04:31.170125'
-    - DSC06783_20_282_29.JPG
-    - image/jpeg
-    - '359779'
-    - '2014-09-22 21:04:31.127191'
-    - 
-    - 
-    - 
-    - 
 
 ---
 sessions:
@@ -1695,7 +1655,7 @@ sessions:
   - data
   - created_at
   - updated_at
-  records: 
+  records:
   - - '3'
     - 71c065c49ac5dd1071239377fc952997
     - |
@@ -1951,13 +1911,13 @@ users:
   - updated_at
   - username
   - unconfirmed_email
-  records: 
+  records:
   - - '1'
-    - 
+    -
     - $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju
-    - 
-    - 
-    - 
+    -
+    -
+    -
     - '24'
     - '2014-09-24 14:47:56.015407'
     - '2014-09-24 14:31:48.901129'
@@ -1966,13 +1926,13 @@ users:
     - '2014-05-02 15:16:33.323573'
     - '2014-09-24 14:47:56.01864'
     - fletcher91
-    - 
+    -
   - - '2'
-    - 
+    -
     - $2a$10$nZWUR.U60Ro8JK.HglHtTuph7DQPTkX5JRd.e1td4on8nxJvgrByu
-    - 
-    - 
-    - 
+    -
+    -
+    -
     - '1'
     - '2014-05-03 20:07:58.412805'
     - '2014-05-03 20:07:58.412805'
@@ -1981,13 +1941,13 @@ users:
     - '2014-05-02 15:16:33.47954'
     - '2014-05-03 20:07:58.439816'
     - admin
-    - 
+    -
   - - '3'
-    - 
+    -
     - $2a$10$COLVATzZopFlRBoLHdIkC.Ww/ZCQOUBrAS7SqoIVYJIQBPRdKPtNm
-    - 
-    - 
-    - 
+    -
+    -
+    -
     - '2'
     - '2014-09-14 22:38:21.568731'
     - '2014-09-14 19:03:16.705308'
@@ -1996,13 +1956,13 @@ users:
     - '2014-05-02 15:16:33.587219'
     - '2014-09-14 22:38:21.572016'
     - joep
-    - 
+    -
   - - '4'
-    - 
+    -
     - $2a$10$wjqZfVcIEaF6t.AgRa6RqumL.ISOUwTZAmIq9EuxfGV10CO/vf4Lq
-    - 
-    - 
-    - 
+    -
+    -
+    -
     - '2'
     - '2014-09-13 17:28:01.075219'
     - '2014-09-13 10:05:15.836322'
@@ -2011,14 +1971,14 @@ users:
     - '2014-09-13 10:04:57.661066'
     - '2014-09-13 17:28:01.077939'
     - maarschaar
-    - 
+    -
 
 ---
 users_roles:
   columns:
   - user_id
   - role_id
-  records: 
+  records:
   - - '1'
     - '1'
   - - '1'
@@ -2049,335 +2009,6 @@ users_roles:
     - '8'
 
 ---
-versions:
-  columns:
-  - id
-  - item_type
-  - item_id
-  - event
-  - whodunnit
-  - object
-  - created_at
-  records: 
-  - - '1'
-    - Statement
-    - '1'
-    - create
-    - '1'
-    - 
-    - '2014-05-02 15:18:33.65242'
-  - - '2'
-    - Argument
-    - '1'
-    - create
-    - '1'
-    - 
-    - '2014-05-02 15:34:26.243474'
-  - - '4'
-    - Statement
-    - '1'
-    - update
-    - '1'
-    - "---\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd.\nstatetype:
-      6\ncreated_at: 2014-05-02 15:18:33.604968000 Z\nupdated_at: 2014-05-02 15:18:33.604968000
-      Z\npro_count: 0\ncon_count: 0\ntag_id: \nis_trashed: false\nid: 1\n"
-    - '2014-05-02 15:40:24.271928'
-  - - '5'
-    - Statement
-    - '1'
-    - update
-    - '1'
-    - "---\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd.\nstatetype:
-      6\ncreated_at: 2014-05-02 15:18:33.604968000 Z\nupdated_at: 2014-05-02 15:40:24.268720000
-      Z\npro_count: 0\ncon_count: 0\ntag_id: \nis_trashed: false\nid: 1\n"
-    - '2014-05-02 15:41:54.908701'
-  - - '6'
-    - Statement
-    - '1'
-    - update
-    - '1'
-    - "---\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd. http://test.com\nstatetype:
-      6\ncreated_at: 2014-05-02 15:18:33.604968000 Z\nupdated_at: 2014-05-02 15:41:54.905481000
-      Z\npro_count: 0\ncon_count: 0\ntag_id: \nis_trashed: false\nid: 1\n"
-    - '2014-05-02 15:42:22.068148'
-  - - '7'
-    - Statement
-    - '2'
-    - create
-    - '1'
-    - 
-    - '2014-05-02 20:11:03.470478'
-  - - '8'
-    - Statement
-    - '3'
-    - create
-    - '1'
-    - 
-    - '2014-05-02 20:12:50.642838'
-  - - '9'
-    - Statement
-    - '1'
-    - update
-    - '1'
-    - "---\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd. [www.website.nl](voorbeeld
-      omschrijving)\nstatetype: 6\ncreated_at: 2014-05-02 15:18:33.604968000 Z\nupdated_at:
-      2014-05-02 15:42:22.065080000 Z\npro_count: 0\ncon_count: 0\ntag_id: \nis_trashed:
-      false\nid: 1\n"
-    - '2014-05-02 23:00:58.846681'
-  - - '10'
-    - Statement
-    - '1'
-    - update
-    - '1'
-    - "---\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd. {EU}(Europese
-      Unie) [www.website.nl](voorbeeld\n  omschrijving)\nstatetype: 6\ncreated_at:
-      2014-05-02 15:18:33.604968000 Z\nupdated_at: 2014-05-02 23:00:58.752264000 Z\npro_count:
-      0\ncon_count: 0\ntag_id: \nis_trashed: false\nid: 1\n"
-    - '2014-05-02 23:17:17.550927'
-  - - '11'
-    - Argument
-    - '2'
-    - create
-    - '1'
-    - 
-    - '2014-05-02 23:49:08.177932'
-  - - '12'
-    - Statement
-    - '1'
-    - update
-    - '1'
-    - "---\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd. {EU}(Europese
-      Unie) f [www.website.nl](voorbeeld\n  omschrijving)\nstatetype: 6\ncreated_at:
-      2014-05-02 15:18:33.604968000 Z\nupdated_at: 2014-05-02 23:17:17.547825000 Z\npro_count:
-      0\ncon_count: 0\ntag_id: \nis_trashed: false\nid: 1\n"
-    - '2014-05-03 12:09:29.256999'
-  - - '13'
-    - Statement
-    - '1'
-    - update
-    - '1'
-    - "---\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd. {EU}(Europese
-      Unie) {EU2}(Europese\n  Unie2) f [www.website.nl](voorbeeld omschrijving)\nstatetype:
-      6\ncreated_at: 2014-05-02 15:18:33.604968000 Z\nupdated_at: 2014-05-03 12:09:29.250850000
-      Z\npro_count: 0\ncon_count: 0\ntag_id: \nis_trashed: false\nid: 1\n"
-    - '2014-05-05 22:32:13.361238'
-  - - '14'
-    - Statement
-    - '1'
-    - update
-    - '1'
-    - "---\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd. {EU}(Europese
-      Unie) {EU2}(Europese\n  Unie2) of [www.website.nl](voorbeeld omschrijving)\nstatetype:
-      6\ncreated_at: 2014-05-02 15:18:33.604968000 Z\nupdated_at: 2014-05-05 22:32:13.287191000
-      Z\npro_count: 0\ncon_count: 0\ntag_id: \nis_trashed: false\nid: 1\n"
-    - '2014-05-10 12:07:50.946335'
-  - - '16'
-    - Statement
-    - '1'
-    - update
-    - '1'
-    - "---\nid: 1\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd.
-      {EU}(Europese Unie) of [www.website.nl](voorbeeld\n  omschrijving). Vergeet
-      {Neelie_Kroes}(Neelie) niet samen met {Marietje}(Marietje)\ncreated_at: 2014-05-02
-      15:18:33.604968000 Z\nupdated_at: 2014-05-10 12:07:50.942277000 Z\npro_count:
-      0\ncon_count: 0\ntag_id: \nis_trashed: false\nvotes_pro_count: 0\nvotes_con_count:
-      0\nvotes_neutral_count: 0\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count:
-      0\nopinion_con_count: 0\nvotes_abstain_count: 0\n"
-    - '2014-09-13 21:28:46.985713'
-  - - '17'
-    - Statement
-    - '3'
-    - update
-    - '1'
-    - "---\nid: 3\ntitle: Prachtig voorstel\ncontent: zeker doen!\ncreated_at: 2014-05-02
-      20:12:50.637794000 Z\nupdated_at: 2014-05-02 20:12:50.637794000 Z\npro_count:
-      0\ncon_count: 0\ntag_id: \nis_trashed: false\nvotes_pro_count: 0\nvotes_con_count:
-      0\nvotes_neutral_count: 0\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count:
-      0\nopinion_con_count: 0\nvotes_abstain_count: 0\n"
-    - '2014-09-13 21:29:09.582827'
-  - - '18'
-    - Statement
-    - '2'
-    - update
-    - '1'
-    - "---\nid: 2\ntitle: Prachtig voorstel\ncontent: zeker doen!\ncreated_at: 2014-05-02
-      20:11:03.425027000 Z\nupdated_at: 2014-05-02 20:11:03.425027000 Z\npro_count:
-      0\ncon_count: 0\ntag_id: \nis_trashed: false\nvotes_pro_count: 0\nvotes_con_count:
-      0\nvotes_neutral_count: 0\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count:
-      0\nopinion_con_count: 0\nvotes_abstain_count: 0\n"
-    - '2014-09-14 15:12:15.316328'
-  - - '19'
-    - Statement
-    - '2'
-    - update
-    - '1'
-    - "---\nid: 2\ntitle: Prachtig voorstel\ncontent: zeker doen!\ncreated_at: 2014-05-02
-      20:11:03.425027000 Z\nupdated_at: 2014-09-14 15:12:15.298788000 Z\npro_count:
-      0\ncon_count: 0\ntag_id: \nis_trashed: false\nvotes_pro_count: 1\nvotes_con_count:
-      0\nvotes_neutral_count: 0\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count:
-      0\nopinion_con_count: 0\nvotes_abstain_count: -1\n"
-    - '2014-09-14 15:12:35.422992'
-  - - '20'
-    - Statement
-    - '2'
-    - update
-    - '1'
-    - "---\nid: 2\ntitle: Prachtig voorstel\ncontent: zeker doen!\ncreated_at: 2014-05-02
-      20:11:03.425027000 Z\nupdated_at: 2014-09-14 15:12:35.416444000 Z\npro_count:
-      0\ncon_count: 0\ntag_id: \nis_trashed: false\nvotes_pro_count: 0\nvotes_con_count:
-      1\nvotes_neutral_count: 0\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count:
-      0\nopinion_con_count: 0\nvotes_abstain_count: -1\n"
-    - '2014-09-14 15:12:38.729825'
-  - - '21'
-    - Statement
-    - '2'
-    - update
-    - '1'
-    - "---\nid: 2\ntitle: Prachtig voorstel\ncontent: zeker doen!\ncreated_at: 2014-05-02
-      20:11:03.425027000 Z\nupdated_at: 2014-09-14 15:12:38.720336000 Z\npro_count:
-      0\ncon_count: 0\ntag_id: \nis_trashed: false\nvotes_pro_count: 0\nvotes_con_count:
-      0\nvotes_neutral_count: 1\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count:
-      0\nopinion_con_count: 0\nvotes_abstain_count: -1\n"
-    - '2014-09-14 15:12:44.135251'
-  - - '22'
-    - Statement
-    - '2'
-    - update
-    - '1'
-    - "---\nid: 2\ntitle: Prachtig voorstel\ncontent: zeker doen!\ncreated_at: 2014-05-02
-      20:11:03.425027000 Z\nupdated_at: 2014-09-14 15:12:44.128478000 Z\npro_count:
-      0\ncon_count: 0\ntag_id: \nis_trashed: false\nvotes_pro_count: 1\nvotes_con_count:
-      0\nvotes_neutral_count: 0\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count:
-      0\nopinion_con_count: 0\nvotes_abstain_count: -1\n"
-    - '2014-09-14 15:12:47.466505'
-  - - '23'
-    - Statement
-    - '4'
-    - create
-    - '1'
-    - 
-    - '2014-09-14 23:09:06.089997'
-  - - '24'
-    - Statement
-    - '5'
-    - create
-    - '1'
-    - 
-    - '2014-09-14 23:20:20.887374'
-  - - '25'
-    - Statement
-    - '5'
-    - update
-    - '1'
-    - "---\nid: 5\ntitle: Deze zou ook voor utrecht zijn\ncontent: 'Dan werkt de auto
-      scoping in 1x : )'\ncreated_at: 2014-09-14 23:20:20.873066000 Z\nupdated_at:
-      2014-09-14 23:20:20.873066000 Z\npro_count: 0\ncon_count: 0\ntag_id: \nis_trashed:
-      false\nvotes_pro_count: 0\nvotes_con_count: 0\nvotes_neutral_count: 0\nargument_pro_count:
-      0\nargument_con_count: 0\nopinion_pro_count: 0\nopinion_con_count: 0\nvotes_abstain_count:
-      0\norganisation_id: \n"
-    - '2014-09-14 23:20:21.104603'
-  - - '26'
-    - Statement
-    - '1'
-    - update
-    - '1'
-    - "---\nid: 1\ntitle: Test2\ncontent: Zo veel belangrijke dingen, zo weinig tijd.
-      {EU}(Europese Unie) of [www.website.nl](voorbeeld\n  omschrijving). Vergeet
-      {Neelie_Kroes}(Neelie) niet samen met {Marietje}(Marietje)\ncreated_at: 2014-05-02
-      15:18:33.604968000 Z\nupdated_at: 2014-09-13 21:28:46.960008000 Z\npro_count:
-      0\ncon_count: 0\ntag_id: \nis_trashed: false\nvotes_pro_count: 0\nvotes_con_count:
-      0\nvotes_neutral_count: 0\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count:
-      0\nopinion_con_count: 0\nvotes_abstain_count: 0\norganisation_id: \n"
-    - '2014-09-16 07:16:35.656489'
-  - - '27'
-    - Argument
-    - '2'
-    - update
-    - '1'
-    - |
-      ---
-      id: 2
-      content: Wie wil[http://www.youtube.com/watch?v=HkDqNLLj6fU](never) er nou zulke[http://www.youtube.com/watch?v=H8UAcoTotnM](gonna)
-        prachtige[http://www.youtube.com/watch?v=hO0yCz3K9Pw](give) cultuur[http://www.youtube.com/watch?v=lIVstols8i4](you)
-        verliezen[http://www.youtube.com/watch?v=XN7EqlAeGkQ](up)
-      statement_id: 1
-      pro: false
-      created_at: 2014-05-02 23:49:08.162509000 Z
-      updated_at: 2014-05-02 23:49:08.162509000 Z
-      title: Testest
-      is_trashed: false
-      votes_pro_count: 0
-      comments_count: 0
-      votes_abstain_count: 0
-    - '2014-09-16 07:51:29.295536'
-  - - '28'
-    - Argument
-    - '2'
-    - update
-    - '1'
-    - |
-      ---
-      id: 2
-      content: Wie wil[http://www.youtube.com/watch?v=HkDqNLLj6fU](never) er nou zulke[http://www.youtube.com/watch?v=H8UAcoTotnM](gonna)
-        prachtige[http://www.youtube.com/watch?v=hO0yCz3K9Pw](give) cultuur[http://www.youtube.com/watch?v=lIVstols8i4](you)
-        verliezen[http://www.youtube.com/watch?v=XN7EqlAeGkQ](up)
-      statement_id: 1
-      pro: false
-      created_at: 2014-05-02 23:49:08.162509000 Z
-      updated_at: 2014-09-16 07:51:29.289456000 Z
-      title: Testest
-      is_trashed: false
-      votes_pro_count: 1
-      comments_count: 0
-      votes_abstain_count: -1
-    - '2014-09-19 21:03:13.138989'
-  - - '29'
-    - Statement
-    - '6'
-    - create
-    - '1'
-    - 
-    - '2014-09-23 09:27:32.079448'
-  - - '30'
-    - Statement
-    - '6'
-    - update
-    - '1'
-    - "---\nid: 6\ntitle: Weg tot de wetenschap volgooien met zonnepanelen\ncontent:
-      Iets met dat wegen toch onnodig zijn.\ncreated_at: 2014-09-23 09:27:32.048098000
-      Z\nupdated_at: 2014-09-23 09:27:32.048098000 Z\npro_count: 0\ncon_count: 0\ntag_id:
-      \nis_trashed: false\nvotes_pro_count: 0\nvotes_con_count: 0\nvotes_neutral_count:
-      0\nargument_pro_count: 0\nargument_con_count: 0\nopinion_pro_count: 0\nopinion_con_count:
-      0\nvotes_abstain_count: 0\norganisation_id: \n"
-    - '2014-09-23 09:27:32.601208'
-  - - '31'
-    - Argument
-    - '3'
-    - create
-    - '1'
-    - 
-    - '2014-09-23 09:28:03.144135'
-  - - '32'
-    - Argument
-    - '3'
-    - update
-    - '1'
-    - |
-      ---
-      id: 3
-      content: Dan gaan al die zonnepanelen toch kapot!
-      statement_id: 6
-      pro: false
-      created_at: 2014-09-23 09:28:03.131566000 Z
-      updated_at: 2014-09-23 09:28:03.131566000 Z
-      title: Bussen moeten kunnen rijden
-      is_trashed: false
-      votes_pro_count: 0
-      comments_count: 0
-      votes_abstain_count: 0
-    - '2014-09-23 09:28:08.633695'
-
----
 votes:
   columns:
   - id
@@ -2388,7 +2019,7 @@ votes:
   - for
   - created_at
   - updated_at
-  records: 
+  records:
   - - '1'
     - '2'
     - Statement
@@ -2433,93 +2064,93 @@ taggings:
   - tagger_type
   - context
   - created_at
-  records: 
+  records:
   - - '1'
     - '1'
     - '1'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-13 21:28:47.263275'
   - - '2'
     - '2'
     - '1'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-13 21:28:47.314558'
   - - '3'
     - '3'
     - '1'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-13 21:28:47.332331'
   - - '4'
     - '4'
     - '3'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-13 21:29:09.606294'
   - - '5'
     - '3'
     - '3'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-13 21:29:09.693681'
   - - '6'
     - '5'
     - '4'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-14 23:09:06.137376'
   - - '7'
     - '4'
     - '4'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-14 23:09:06.246782'
   - - '8'
     - '6'
     - '4'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-14 23:09:06.261846'
   - - '9'
     - '7'
     - '6'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-23 09:27:32.324112'
   - - '10'
     - '8'
     - '6'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-23 09:27:32.348883'
   - - '11'
     - '4'
     - '6'
     - Statement
-    - 
-    - 
+    -
+    -
     - tags
     - '2014-09-23 09:27:32.36237'
 
@@ -2529,7 +2160,7 @@ tags:
   - id
   - name
   - taggings_count
-  records: 
+  records:
   - - '1'
     - EU
     - '1'
@@ -2576,7 +2207,7 @@ statements:
   - opinion_con_count
   - votes_abstain_count
   - organisation_id
-  records: 
+  records:
   - - '1'
     - Test2
     - Zo veel belangrijke dingen, zo weinig tijd. {EU}(Europese Unie) of [www.website.nl](voorbeeld
@@ -2585,7 +2216,7 @@ statements:
     - '2014-09-16 07:16:35.602222'
     - '0'
     - '0'
-    - 
+    -
     - false
     - '1'
     - '0'
@@ -2595,7 +2226,7 @@ statements:
     - '0'
     - '0'
     - '-1'
-    - 
+    -
   - - '2'
     - Prachtig voorstel
     - zeker doen!
@@ -2603,7 +2234,7 @@ statements:
     - '2014-09-14 15:12:47.459294'
     - '0'
     - '0'
-    - 
+    -
     - false
     - '0'
     - '1'
@@ -2613,7 +2244,7 @@ statements:
     - '0'
     - '0'
     - '-1'
-    - 
+    -
   - - '3'
     - Prachtig voorstel
     - zeker doen!
@@ -2621,7 +2252,7 @@ statements:
     - '2014-09-13 21:29:09.574489'
     - '0'
     - '0'
-    - 
+    -
     - false
     - '0'
     - '0'
@@ -2631,7 +2262,7 @@ statements:
     - '0'
     - '0'
     - '0'
-    - 
+    -
   - - '4'
     - Speciaal voor utrecht
     - Om de scoping van stellingen te testen
@@ -2639,7 +2270,7 @@ statements:
     - '2014-09-14 23:09:06.059991'
     - '0'
     - '0'
-    - 
+    -
     - false
     - '0'
     - '0'
@@ -2657,7 +2288,7 @@ statements:
     - '2014-09-14 23:20:21.098038'
     - '0'
     - '0'
-    - 
+    -
     - false
     - '0'
     - '0'
@@ -2675,7 +2306,7 @@ statements:
     - '2014-09-23 09:27:32.594278'
     - '0'
     - '0'
-    - 
+    -
     - false
     - '0'
     - '0'
@@ -2698,21 +2329,13 @@ organisations:
   - key_tags
   - created_at
   - updated_at
-  - profile_photo_file_name
-  - profile_photo_content_type
-  - profile_photo_file_size
-  - profile_photo_updated_at
-  - cover_photo_file_name
-  - cover_photo_content_type
-  - cover_photo_file_size
-  - cover_photo_updated_at
   - web_url
   - memberships_count
   - statements_count
   - scope
   - application_form
   - public_form
-  records: 
+  records:
   - - '1'
     - Gemeente Utrecht
     - http://www.utrecht.nl
@@ -2727,14 +2350,6 @@ organisations:
     - utrecht,beleid
     - '2014-09-12 22:17:37.351175'
     - '2014-09-14 19:18:59.220316'
-    - utrecht.png
-    - image/png
-    - '18136'
-    - '2014-09-13 19:14:56.678361'
-    - 2420372849_35fc3d3e11_o.jpg
-    - image/jpeg
-    - '1915671'
-    - '2014-09-13 21:04:56.159122'
     - utrecht
     - '7'
     - '3'
@@ -2749,14 +2364,6 @@ organisations:
     - amsterdam
     - '2014-09-15 21:01:50.075052'
     - '2014-09-17 20:20:46.757263'
-    - 537px-wapen_amsterdam_svg.png
-    - image/png
-    - '7458'
-    - '2014-09-15 21:01:50.032979'
-    - 10515254_765459156828667_429335714916021152_o.jpg
-    - image/jpeg
-    - '341263'
-    - '2014-09-15 21:03:45.376141'
     - amsterdam
     - '0'
     - '0'
@@ -2772,14 +2379,6 @@ organisations:
     - milieu,natuur,dekleurgroen
     - '2014-09-15 21:19:32.622286'
     - '2014-09-15 21:24:57.005482'
-    - 943075_10151524836783300_2015064063_n.png
-    - image/png
-    - '32026'
-    - '2014-09-15 21:24:56.465481'
-    - 1077393_10152457436438300_4352758260534740143_o.png
-    - image/png
-    - '406188'
-    - '2014-09-15 21:24:56.572842'
     - ''
     - '0'
     - '0'
@@ -2794,15 +2393,7 @@ organisations:
     - ''
     - '2014-09-17 12:36:55.318919'
     - '2014-09-17 12:36:55.318919'
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
+    -
     - '0'
     - '0'
     - '0'
@@ -2820,38 +2411,22 @@ groups:
   - key_tags
   - created_at
   - updated_at
-  - profile_photo_file_name
-  - profile_photo_content_type
-  - profile_photo_file_size
-  - profile_photo_updated_at
-  - cover_photo_file_name
-  - cover_photo_content_type
-  - cover_photo_file_size
-  - cover_photo_updated_at
   - web_url
   - memberships_count
   - statements_count
   - scope
   - application_form
   - public_form
-  records: 
+  records:
   - - '3'
     - Thom's groepje
-    - 
+    -
     - ''
     - Cogitationes posteriores sunt saniores
     - ''
     - '2014-09-20 15:59:03.032995'
     - '2014-09-20 15:59:03.032995'
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
+    -
     - '0'
     - '0'
     - '0'
@@ -2865,7 +2440,7 @@ group_memberships:
   - user_id
   - group_id
   - role
-  records: 
+  records:
   - - '2'
     - '1'
     - '3'

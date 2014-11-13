@@ -16,8 +16,8 @@ class StatementsController < ApplicationController
   def show
     @statement = Statement.includes(:arguments, :opinions).find(params[:id])
     authorize @statement
-    @arguments = @statement.arguments.group_by { |a| a.key }
-    @opinions = @statement.opinions.group_by { |a| a.key }
+    @arguments = Argument.ordered @statement.arguments
+    @opinions = Opinion.ordered @statement.opinions
     @voted = Vote.where(voteable: @statement, voter: current_user).last.try(:for) unless current_user.blank?
 
     respond_to do |format|
@@ -30,6 +30,7 @@ class StatementsController < ApplicationController
   # GET /statements/new
   # GET /statements/new.json
   def new
+    @question = Question.find params[:question_id]
     @statement = Statement.new params[:statement]
     authorize @statement
     respond_to do |format|
@@ -50,10 +51,13 @@ class StatementsController < ApplicationController
   # POST /statements
   # POST /statements.json
   def create
+    @question = Question.find params[:question_id]
     @statement = Statement.create permit_params
+    @statement.creator = current_user.profile
+    @statement.questions << @question
     authorize @statement
     @statement.organisation = current_user._current_scope
-    current_user.add_role :mod, @statement
+    #current_user.profile.add_role :mod, @statement
 
     respond_to do |format|
       if @statement.save

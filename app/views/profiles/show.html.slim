@@ -1,4 +1,24 @@
-.profile-header
-  =image_tag @profile.cover_photo.url(:cropped), class: 'cover'
-  h1= @profile.display_name
-  =image_tag @profile.profile_photo, class: 'profile'
+.col-1
+  header
+    h1 profiel
+  /=image_tag @profile.cover_photo.url
+  .box.profile-big
+    .profile-picture.profile-picture-show
+      =pica_pica @profile.profile_photo, container_class: 'profile'
+    section
+      h1= @profile.display_name
+      h3 Co-Founder of Argu
+      p.quote "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."
+    /Todo: alles functioneel maken
+    /section.unpadded
+      ul.tags
+        li
+          a.tag href=""
+            span energie
+        li
+          a.tag href=""
+            span duurzaamheid
+        li
+          a.tag href=""
+            span windmolens
+== cell(:column_renderer, @collection, header: '_mening_')

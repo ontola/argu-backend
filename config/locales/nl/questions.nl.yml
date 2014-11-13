@@ -1,0 +1,16 @@
+#Dutch questions translations
+
+nl:
+  questions:
+    type: "vraagstuk"
+    new_question_path: "Nieuw vraagstuk"
+    new_question: "Nieuw vraagstuk"
+    form:
+      title: "Kern van vraagstuk"
+      content: "Licht hier je vraagstuk toe. Waarom zitten jullie met dit probleem / deze vraag?"
+      themes: "thema1, thema2"
+      invert: "alle argumenten omkeren"
+      helper:
+        title: "De kern van het vraagstuk in één zin."
+        content: "Beschrijf het vraagstuk in detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
+        themes: "Thema's of onderwerpen die aan dit vraagstuk gerelateerd zijn. Plaats komma's tussen de thema's."

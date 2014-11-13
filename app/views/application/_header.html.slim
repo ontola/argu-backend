@@ -1,18 +1,67 @@
-#navbar
-  #mainbar
-    .top-logo
-      ==link_to root_url(subdomain: ''), id: "argulogo"
-        =image_tag 'argulogo.svg'
+nav.navbar role="navigation"
+  .container
+    ==link_to root_url(subdomain: ''), class: "navbar-logo"
+      =image_tag 'logo.svg'
       -if @local_title.present?
-        ==link_to organisation_url(current_user._current_scope, subdomain: current_user._current_scope.web_url), class: 'local'
+        ==link_to organisation_url(current_scope, subdomain: current_scope.web_url), class: 'local'
           h1= "| #{@local_title.capitalize}"
-    ul#navbtns
-      li=render partial: 'search/search'
+    ul.navbar-links
+      li
+        ==link_to root_url(subdomain: ''), class: "navbar-link"
+          span.fa.fa-home.icon-left
+          span.navbar-link-description= t("home_title")
+      li
+        .dropdown-trigger.navbar-item href="/"
+          span.fa.fa-tags.icon-left
+          span.navbar-link-description= t("tags.type")
+          .dropdown-content.dropdown-col-2
+            .dropdown-col-2-1
+              h3= t("tags.trending")
+              ul.tags-vertical
+                li
+                  a.tag href="" geertwilders
+            .dropdown-col-2-1
+              h3= t("tags.my")
+              ul
+                li
+                  a.tag href=""
+                    span energie
+      /li=link_to statements_url do
+        span.fa.fa-lightbulb-o.icon-left
+        span.navbar-link-description=t('header.statements')
+    ul.navbar-links.navbar-links-right
+      li
+        .navbar-item.dropdown-trigger href="/"
+          span.fa.fa-search.icon-left
+          span.navbar-link-description= t("search.type")
+          .dropdown-content.dropdown-right.nav-search
+            form
+              input.nav-search-text type="text" placeholder= t("search.placeholder")
+        //=render partial: 'search/search'
       -if current_user.present?
-        li=link_to t('header.statements'), statements_url, id: 'statements'
-        li=link_to t(:users_show_title), settings_url , id: 'account'
+        li
+          .dropdown-trigger.navbar-item href="/"
+            span.fa.fa-user.icon-left
+            span.navbar-link-description Ik
+            ul.dropdown-content.dropdown-right
+              li
+                =link_to profile_url(current_user.username) do
+                  span.fa.fa-user.icon-left
+                  span = t("profiles.type")
+              li
+                =link_to edit_profile_path(current_user.username) do
+                  span.fa.fa-pencil.icon-left
+                  span = t("profiles.edit.title")
+              li=link_to settings_url do
+                span.fa.fa-gear.icon-left
+                span=t(:users_show_title)
+              li=link_to(destroy_user_session_url, method: :delete) do
+                span.fa.fa-sign-out.icon-left
+                span Uitloggen
       -else
-        li=link_to t(:sign_in), new_user_session_url, id: 'account'
-      li=link_to 'info', '/about', class: 'close', id: 'info'
-      li=link_to('uitloggen', destroy_user_session_url, method: :delete)
-.clear
+        li=link_to new_user_session_url, id: 'account', class: 'navbar-item' do
+          span.fa.fa-sign-in.icon-left
+          span.navbar-link-description = t(:sign_in)
+      li=link_to about_url, class: 'navbar-item', id: 'info'
+        span.fa.fa-question.icon-left
+        span.navbar-link-description="over"

@@ -1,6 +1,6 @@
 Argu::Application.configure do
-  config.host = ENV['HOSTNAME'] || 'home.fletcher91.com:3000'
-  # Settings specified here will take precedence over those in config/application.rb
+  config.host = ENV['HOSTNAME'] || 'local.host:3000'
+  # Settings specified here will take precedence over those in config/application.rb#
 
   config.epics = ActiveSupport::OrderedOptions.new
   config.epics.opinion_buttons = true
@@ -16,6 +16,8 @@ Argu::Application.configure do
 
   # Log error messages when you accidentally call methods on nil.
   config.whiny_nils = true
+
+  config.web_console.automount = true
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true
@@ -37,7 +39,7 @@ Argu::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.session_store :active_record_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'home.fletcher91.com:3000')
+  config.session_store :cookie_store, key: '_Argu_session', domain: :all, :tld_length => 2
 
   config.i18n.available_locales = :nl
 

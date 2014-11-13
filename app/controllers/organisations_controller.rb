@@ -12,7 +12,7 @@ class OrganisationsController < ApplicationController
   def create
     @org = Organisation.new permit_params
     authorize @org, :create?
-    @org.memberships.build user: current_user, role: Membership.roles.manager
+    @org.memberships.build(profile: current_user.profile, role: Membership.roles[:manager])
 
     if @org.save
       redirect_to @org

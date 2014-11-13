@@ -1,8 +1,11 @@
 class Organisation < ActiveRecord::Base
   include IOrganisation
+
   has_many :memberships, dependent: :destroy
-  has_many :users, through: :memberships
-  accepts_nested_attributes_for :memberships, :reject_if => :all_blank, :allow_destroy => true
+  has_many :profiles, through: :memberships
+  has_many :questions, inverse_of: :organisation
+  has_many :statements, through: :questions
+  accepts_nested_attributes_for :memberships, :allow_destroy => true
 
   validate :manager_present?
 
@@ -11,14 +14,14 @@ class Organisation < ActiveRecord::Base
   resourcify
 
   def manager_present?
-    if memberships.where(role: Membership.roles[:manager]).present?
+    unless memberships.collect { |m| m.role == 'manager' }
       errors.add :base, "_manager not present_"
     end
   end
 
   ######Roles#######
   def managers
-    User.with_role :manager, self
+    Profile.with_role :manager, self
   end
 
   ########Other########
