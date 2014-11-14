@@ -8,7 +8,7 @@ nl:
     type_other: "anders"
     type_discussion: "in discussie"
     vote: "stem"
-    new_btn: "nieuw argument"
+    new_btn: "Argument toevoegen"
     neu: "neutraal"
     type: "type"
     references: "referenties"

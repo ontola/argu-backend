@@ -33,9 +33,9 @@ class ColumnRendererCell < Cell::ViewModel
 
   def show_new_buttons
     if options[:buttons_url].present?
-      link_to options[:buttons_url], class: 'btn btn-white' do
-        I18n.t("#{options[:collection_model].name.pluralize.downcase}.new_btn")
-      end
+      raw cell(:button, options)
+      #link_to options[:buttons_url], class: 'btn btn-big' do
+      #  I18n.t("#{options[:collection_model].name.pluralize.downcase}.new_btn")
     end
   end
 

@@ -5,7 +5,8 @@
   =render partial: 'opinionbtns'
 
 == cell(:column_renderer, @arguments, header: t("arguments.index.title"), buttons_url: new_argument_path(statement_id: @statement), collection_model: Argument)
-== cell(:column_renderer, @opinions, header: t("arguments.index.opinion"))
+-if Rails.configuration.epics.opinions
+  == cell(:column_renderer, @opinions, header: t("arguments.index.opinion"))
 -if Rails.configuration.epics.parties
   header
     h1=t("arguments.index.parties")

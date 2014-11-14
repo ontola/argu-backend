@@ -4,8 +4,8 @@ Argu::Application.configure do
 
   config.epics = ActiveSupport::OrderedOptions.new
   config.epics.opinion_buttons = true
-  config.epics.opinion = true
-  config.epics.parties = true
+  config.epics.opinion = false
+  config.epics.parties = false
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
