@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
+gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git'
+#gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
 #gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git', platform: :mswin
 
 gem 'sass-rails',   '~> 5.0.0.beta1'                                         ###!
@@ -35,6 +36,7 @@ gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 gem 'kaminari', '~>0.15.1'
 
 ##################Asset-y########################
+gem 'briarcliff', path: 'git@bitbucket.org:arguweb/briarcliff.git', platform: :ruby
 gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
 #gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
 #gem 'haml' # TODO: convert haml to slim, then remove this gem
