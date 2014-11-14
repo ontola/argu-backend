@@ -64,7 +64,6 @@ gem 'rolify'
 group :development, :test do
   gem 'thin'
   #gem 'puma', platform: :ruby
-  gem 'unicorn', platform: :ruby
   gem 'nokogiri', '1.6.3.1'
   gem 'rspec', '2.8.0'
   gem 'rspec-rails', '2.8.0'
@@ -89,7 +88,8 @@ group :development, :test do
 end
 
 group :production do 
-  gem 'newrelic_rpm'
+  #gem 'newrelic_rpm'
   gem 'therubyracer'
   gem 'rails_12factor'
+  gem 'unicorn'
 end
