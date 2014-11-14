@@ -18,7 +18,6 @@ gem 'bcrypt-ruby', '3.0.1'
 gem 'rfc-822', '~> 0.3.0'
 gem 'counter_culture', '~> 0.1.25'
 gem 'rails-i18n', '~> 4.0.0'
-gem 'capistrano'
 gem 'delayed_job', '~> 4.0.1'
 gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'tzinfo-data'
@@ -36,7 +35,7 @@ gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 gem 'kaminari', '~>0.15.1'
 
 ##################Asset-y########################
-gem 'briarcliff', path: 'git@bitbucket.org:arguweb/briarcliff.git'
+gem 'briarcliff', git: 'git@bitbucket.org:arguweb/briarcliff.git'
 #gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
 #gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
 #gem 'haml' # TODO: convert haml to slim, then remove this gem
@@ -49,7 +48,7 @@ gem 'rails3-jquery-autocomplete', '~> 1.0.12'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
 gem 'carrierwave'                                                         # Will replace paperclip
 gem 'mini_magick'#, require: false                                        # Ruby connector for ImageMagick
-gem "fog"                                                                 # Cloud storage connector for CW
+gem 'fog'                                                                 # Cloud storage connector for CW
 
 ##################User management########################
 gem 'devise', "~> 3.4.1"
@@ -81,7 +80,12 @@ group :development, :test do
   gem 'uglifier', '>= 1.0.3'
   gem 'quiet_assets'
   gem 'web-console', '~> 2.0.0.beta4'                 ###!
+  ####Capistrano#####
+  gem 'capistrano'
   gem 'capistrano-rails'
+  gem 'capistrano3-unicorn'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano-rvm'
 end
 
 group :production do 
