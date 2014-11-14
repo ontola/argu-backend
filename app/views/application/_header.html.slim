@@ -10,7 +10,7 @@ nav.navbar role="navigation"
         ==link_to root_url(subdomain: ''), class: "navbar-link"
           span.fa.fa-home.icon-left
           span.navbar-link-description= t("home_title")
-      li
+      /li
         .dropdown-trigger.navbar-item href="/"
           span.fa.fa-tags.icon-left
           span.navbar-link-description= t("tags.type")
@@ -30,7 +30,7 @@ nav.navbar role="navigation"
         span.fa.fa-lightbulb-o.icon-left
         span.navbar-link-description=t('header.statements')
     ul.navbar-links.navbar-links-right
-      li
+      /li
         .navbar-item.dropdown-trigger href="/"
           span.fa.fa-search.icon-left
           span.navbar-link-description= t("search.type")

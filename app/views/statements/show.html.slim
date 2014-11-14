@@ -1,6 +1,6 @@
 -provide :title, (@statement.title.nil? ? t(:statement_title) : @statement.title)
-==cell(:context, @statement).call(:to_parent)
 .col-1
+  ==cell(:context, @statement).call(:to_parent)
   =render partial: 'statementbody', locals: { statement: @statement }
   =render partial: 'opinionbtns'
 

@@ -1,15 +1,16 @@
 source 'https://rubygems.org'
 #ruby '2.0.0'
 
-gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
-gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git', platform: :mswin
+#gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
+gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git'
 
 gem 'sass-rails',   '~> 5.0.0.beta1'                                         ###!
-gem 'rails', '~>4.2.0.beta4', platform: :ruby                                ###!
-gem 'rails', git: 'https://github.com/rails/rails.git', platform: :mswin     ###!
+gem 'rails', '~>4.2.0.beta4'                                ###!
+#gem 'rails', git: 'https://github.com/rails/rails.git', platform: :mswin     ###!
+
 ##################DB########################
-gem 'pg', '0.17.1', platform: :ruby
-gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
+#gem 'pg', '0.17.1', platform: :ruby
+gem 'pg', '0.18.0.pre20141017160319'
 gem 'foreigner', '~> 1.2.1'
 gem 'immigrant', '~> 0.1.2'
 gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
@@ -37,8 +38,8 @@ gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 gem 'kaminari', '~>0.15.1'
 
 ##################Asset-y########################
-gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
-gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
+#gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
+gem 'briarcliff', path: 'C:\sites\briarcliff'
 #gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
@@ -63,7 +64,7 @@ gem 'pundit', "~> 0.3.0"
 gem 'rolify'
 
 group :development, :test do
-  gem 'thin'
+ # gem 'thin'
   gem 'puma', platform: :ruby
   gem 'unicorn', platform: :ruby
   gem 'nokogiri', '1.6.3.1'
