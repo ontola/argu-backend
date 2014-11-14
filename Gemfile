@@ -36,8 +36,8 @@ gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 gem 'kaminari', '~>0.15.1'
 
 ##################Asset-y########################
-gem 'briarcliff', path: 'git@bitbucket.org:arguweb/briarcliff.git', platform: :ruby
-gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
+gem 'briarcliff', path: 'git@bitbucket.org:arguweb/briarcliff.git'
+#gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
 #gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
 #gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~> 2.1.0'
@@ -64,7 +64,7 @@ gem 'rolify'
 
 group :development, :test do
   gem 'thin'
-  gem 'puma', platform: :ruby
+  #gem 'puma', platform: :ruby
   gem 'unicorn', platform: :ruby
   gem 'nokogiri', '1.6.3.1'
   gem 'rspec', '2.8.0'
