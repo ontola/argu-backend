@@ -2,7 +2,8 @@
   section
     h1.sta-t= statement.title
     p= statement.supped_content.html_safe
-  - if statement.tags.present?
+  / TODO tagsrepareren
+  /- if statement.tags.present?
     section.unpadded
         ul.tags[title="thema's"]
           - statement.tags.each do |tag|
@@ -12,7 +13,8 @@
     span.fa.fa-gear.icon-left
     span menu
     ul.dropdown-content.dropdown-right
-      -if policy(statement).update?
+      /TODO
+      /-if policy(statement).update?
         li= link_to [@question, statement, :moderators] do
           span.fa.fa-user.icon-left
           span=t('statements.mod.show_moderation_panel')

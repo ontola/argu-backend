@@ -10,8 +10,13 @@
 .col-1
   header
     h1 voorstellen
-  -if @motions.present?
-    -@motions.each do |m|
+  -if @statements.present?
+    -@statements.each do |m|
       ==cell(:statement, m)
-  .center
-    =link_to t("statements.newstatement"), new_question_statement_path(@question), class: "btn btn-white"
+  /TODO Cellify
+  =link_to new_question_statement_path(@question) do
+    .box.box-link
+      section
+        h3
+          span.fa.fa-plus.icon-left
+          span =  t("statements.newstatement")

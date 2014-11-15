@@ -1,15 +1,14 @@
 .col-1
-  header
-    h1 profiel
   /=image_tag @profile.cover_photo.url
-  .box.profile-big
+  .profile-big
     .profile-picture.profile-picture-show
-      =pica_pica @profile.profile_photo, container_class: 'profile'
-    section
-      h1= @profile.display_name
-      h3 Co-Founder of Argu
-      p.quote "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor."
-    /Todo: alles functioneel maken
+      = pica_pica @profile.profile_photo, container_class: 'profile'
+    .box
+      section
+        h1 = @profile.display_name
+        p.quote = @profile.about
+
+    /TODO Tags
     /section.unpadded
       ul.tags
         li
@@ -21,4 +20,4 @@
         li
           a.tag href=""
             span windmolens
-== cell(:column_renderer, @collection, header: '_mening_')
+== cell(:column_renderer, @collection, header: '_mening_', collection_model: 'opinion')

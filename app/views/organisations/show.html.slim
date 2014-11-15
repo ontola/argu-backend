@@ -28,8 +28,13 @@
       h2 vraagstukken
     -if @org.questions.present?
       ==cell(:question, collection: @org.questions)
-    .center
-      =link_to t('questions.new_question_path'), new_organisation_question_path(@org), class: "btn btn-white"
+    /TODO cellify
+    = link_to new_organisation_question_path(@org) do
+      .box.box-link
+        section
+          h3
+            span.fa.fa-plus.icon-left
+            span = t('questions.new_question_path')
   .col-2-1
     header
       h2 voorstellen
