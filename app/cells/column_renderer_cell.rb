@@ -18,6 +18,7 @@ class ColumnRendererCell < Cell::ViewModel
 
   private
 
+  # Currently not used
   def header
     options[:header]
   end
@@ -27,6 +28,7 @@ class ColumnRendererCell < Cell::ViewModel
     I18n.t("#{options[:collection_model].to_s.pluralize.downcase}.header.#{key}")
   end
 
+  #Side of the argument (pro or con)
   def keys
     model.keys
   end

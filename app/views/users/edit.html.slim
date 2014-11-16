@@ -20,6 +20,7 @@
         label= t("users_password_confirmation")
         = user.password_field("")
 
+        /TODO fix this. Authentications are not showing up.
         - if @authentications.present?
           label= t("users_oauth_coupled")
             - for authentication in @authentications
@@ -32,14 +33,16 @@
                 - else
                   = link_to t("users_oauth_remove"), cancel_user_registration_path(current_user), :confirm => (t("users_oauth_remove_confirmation")), :class => "remove"
 
+        /TODO Hide authentications that are already present.
         label= t("users_oauth_new")
-        a href="/auth/twitter" class="btn-auth"
-          = image_tag "favicon_twitter.svg", :size => "64x64", alt: "Twitter"
-        a href="/auth/facebook" class="btn-auth"
-          = image_tag "favicon_facebook.svg", :size => "64x64", alt: "Facebook"
-        a href="/auth/google_apps" class="btn-auth"
-          = image_tag "favicon_google.svg", :size => "64x64", alt: "Google"
-        a href="/auth/openid" class="btn-auth"
-          = image_tag "favicon_openid.svg", :size => "64x64", alt: "OpenId"
+        .form-auth-icons
+          a href="/auth/twitter" class="btn-auth"
+            = image_tag "favicon_twitter.svg", :size => "64x64", alt: "Twitter"
+          a href="/auth/facebook" class="btn-auth"
+            = image_tag "favicon_facebook.svg", :size => "64x64", alt: "Facebook"
+          /a href="/auth/google_apps" class="btn-auth"
+            = image_tag "favicon_google.svg", :size => "64x64", alt: "Google"
+          /a href="/auth/openid" class="btn-auth"
+            = image_tag "favicon_openid.svg", :size => "64x64", alt: "OpenId"
 
         = user.submit(t("save"), class: "btn btn-sticky btn-sticky-bottom pro-bg")
