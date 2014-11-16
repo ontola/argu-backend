@@ -25,15 +25,15 @@ class Profile < ActiveRecord::Base
   end
 
   def frozen?
-    !has_role? 'user'
+    has_role? 'frozen'
   end
 
   def freeze
-    remove_role :user
+    add_role :frozen
   end
 
   def unfreeze
-    add_role :user
+    remove_role :frozen
   end
 
 
