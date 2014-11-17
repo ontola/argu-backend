@@ -27,6 +27,8 @@ SSHKit.config.command_map[:rails] = "bundle exec rails"
 
 set :keep_releases, 20
 
+set :assets_roles, [:web, :app]
+
 # Default value for :format is :pretty
 # set :format, :pretty
 
@@ -45,10 +47,11 @@ namespace :deploy do
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
       # Your restart mechanism here, for example:
-      #invoke 'unicorn:restart'
+      invoke 'unicorn:restart'
     end
   end
 
+  after :updated, :compile_assets
   after :publishing, :restart
 
   after :restart, :clear_cache do

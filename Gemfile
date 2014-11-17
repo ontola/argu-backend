@@ -1,8 +1,14 @@
 source 'https://rubygems.org'
 
-gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git'
-#gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
-#gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git', platform: :mswin
+source "http://utility.argu.co:3000/" do
+  gem 'briarcliff', '~> 0.0.9'
+  #gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
+  #gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
+
+  gem 'pica_pica', '~> 0.0.1'
+  #gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
+  #gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git', platform: :mswin
+end
 
 gem 'sass-rails',   '~> 5.0.0.beta1'                                         ###!
 gem 'rails', git: 'https://github.com/rails/rails.git' ###!
@@ -35,9 +41,6 @@ gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 gem 'kaminari', '~>0.15.1'
 
 ##################Asset-y########################
-gem 'briarcliff', git: 'git@bitbucket.org:arguweb/briarcliff.git'
-#gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
-#gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
 #gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
@@ -88,7 +91,7 @@ group :development, :test do
 end
 
 group :production do 
-  #gem 'newrelic_rpm'
+  #]gem 'newrelic_rpm'
   gem 'therubyracer'
   gem 'rails_12factor'
   gem 'unicorn'
