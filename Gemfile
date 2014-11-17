@@ -82,10 +82,11 @@ group :development, :test do
 end
 
 group :production do 
-  #]gem 'newrelic_rpm'
+  #gem 'newrelic_rpm'
   gem 'therubyracer'
   gem 'rails_12factor'
   gem 'unicorn'
+  gem 'rack-test'
 end
 
   gem 'briarcliff', '~> 0.0.9'
