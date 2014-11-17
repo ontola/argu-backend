@@ -14,3 +14,39 @@ $maxCommentDepth: 10;
   -moz-background-size: cover; /* Firefox 3.6 */
   background-size: cover; /* Chrome, Firefox 4.0+, Safari 4.1+, Opera 10+ and IE9 */
 }
+
+.bg-hong-kong {
+  background: image-url('bg-hong-kong.jpg');
+  margin-top: -2em;
+  -moz-background-size: cover;
+  background-size: cover;
+  background-position-y: 25%;
+}
+
+.bg-landing-1 {
+  background: image-url('bg-landing-1.jpg');
+  -moz-background-size: cover;
+  background-size: cover;
+  background-position-y: 25%;
+}
+
+.bg-landing-2 {
+  background: image-url('bg-landing-2.jpg');
+  -moz-background-size: cover;
+  background-size: cover;
+  background-position-y: 25%;
+}
+
+.bg-landing-3 {
+  background: image-url('bg-landing-3.jpg');
+  -moz-background-size: cover;
+  background-size: cover;
+  background-position-y: 25%;
+}
+
+.bg-landing-4 {
+  background: image-url('bg-landing-4.jpg');
+  -moz-background-size: cover;
+  background-size: cover;
+  background-position-y: 25%;
+}

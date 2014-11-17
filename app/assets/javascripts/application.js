@@ -20,6 +20,6 @@
 //= require requirejs
 //= require autocomplete-rails
 //= require fixedsticky
-//= require briarcliff
+//= require briarcliff/briarcliff
 //= require cocoon
 //= require_tree .
