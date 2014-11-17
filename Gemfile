@@ -13,7 +13,7 @@ end
 gem 'sass-rails',   '~> 5.0.0.beta1'                                         ###!
 gem 'rails', git: 'https://github.com/rails/rails.git' ###!
 ##################DB########################
-gem 'pg', '0.17.1', platform: :ruby
+gem 'pg', '0.17.1'
 #gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
 gem 'foreigner', '~> 1.2.1'
 gem 'immigrant', '~> 0.1.2'
