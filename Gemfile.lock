@@ -7,7 +7,7 @@ GIT
 
 GIT
   remote: https://github.com/apotonick/cells.git
-  revision: 96670ea8bb441004f111f60541c434626ea27ba1
+  revision: 9e3c5791137011a3b30b86e1766a56bf27c4c243
   specs:
     cells (4.0.0.alpha1)
       actionpack (>= 3.2)
@@ -17,7 +17,7 @@ GIT
 
 GIT
   remote: https://github.com/rails/rails.git
-  revision: 6625000b73f520abf6e0afbd5a6dde8d6b06b7cc
+  revision: c7727559e1df44e5930983901949e035b6346774
   specs:
     actionmailer (4.2.0.beta4)
       actionpack (= 4.2.0.beta4)
@@ -228,7 +228,7 @@ GEM
     mini_magick (3.8.1)
       subexec (~> 0.2.1)
     mini_portile (0.6.0)
-    minitest (5.4.2)
+    minitest (5.4.3)
     multi_json (1.10.1)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
@@ -352,7 +352,7 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2014.9)
       tzinfo (>= 1.0.0)
-    uber (0.0.10)
+    uber (0.0.11)
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
