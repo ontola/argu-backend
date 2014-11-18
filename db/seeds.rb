@@ -9,11 +9,15 @@ uc = User.where(email: 'joepmeindertsma@gmail.com').first_or_create
 uc.update_attributes(username: 'joep', password: 'joepjoep', password_confirmation:'joepjoep')
 
 
-pa = Profile.where(name: 'Thom van Kalkeren').first_or_create.update_attributes(picture: 'http://www.wthex.com/images/coolcookie.gif', about: "I'm the coder!")
+pa = Profile.where(name: 'Thom van Kalkeren')
+pa.first_or_create.update_attributes(picture: 'http://www.wthex.com/images/coolcookie.gif', about: "I'm the coder!")
 ua.profile = pa
+
 pb = Profile.where(name: 'Administrator').first_or_create
 ub.profile = pb
-pc = Profile.where(name: 'Joep').first_or_create.update_attributes(picture: 'https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg', about: "argu designer")
+
+pc = Profile.where(name: 'Joep')
+pc.first_or_create.update_attributes(picture: 'https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg', about: "argu designer")
 uc.profile = pc
 
 pa.add_role :coder
