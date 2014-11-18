@@ -1,16 +1,13 @@
 source 'https://rubygems.org'
-#ruby '2.0.0'
-
-#gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
-gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git'
+source 'http://utility.argu.co:3000/'
 
 gem 'sass-rails',   '~> 5.0.0.beta1'                                         ###!
 gem 'rails', '~>4.2.0.beta4'                                ###!
 #gem 'rails', git: 'https://github.com/rails/rails.git', platform: :mswin     ###!
 
 ##################DB########################
-#gem 'pg', '0.17.1', platform: :ruby
-gem 'pg', '0.18.0.pre20141017160319'
+gem 'pg', '0.17.1'
+#gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
 gem 'foreigner', '~> 1.2.1'
 gem 'immigrant', '~> 0.1.2'
 gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
@@ -20,7 +17,6 @@ gem 'bcrypt-ruby', '3.0.1'
 gem 'rfc-822', '~> 0.3.0'
 gem 'counter_culture', '~> 0.1.25'
 gem 'rails-i18n', '~> 4.0.0'
-gem 'capistrano'
 gem 'delayed_job', '~> 4.0.1'
 gem 'delayed_job_active_record', '~> 4.0.1'
 gem 'tzinfo-data'
@@ -38,8 +34,6 @@ gem 'acts_as_commentable_with_threading', '~> 1.2.0'
 gem 'kaminari', '~>0.15.1'
 
 ##################Asset-y########################
-#gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
-gem 'briarcliff', path: 'C:\sites\briarcliff'
 #gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
@@ -50,7 +44,7 @@ gem 'rails3-jquery-autocomplete', '~> 1.0.12'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
 gem 'carrierwave'                                                         # Will replace paperclip
 gem 'mini_magick'#, require: false                                        # Ruby connector for ImageMagick
-gem "fog"                                                                 # Cloud storage connector for CW
+gem 'fog'                                                                 # Cloud storage connector for CW
 
 ##################User management########################
 gem 'devise', "~> 3.4.1"
@@ -64,9 +58,8 @@ gem 'pundit', "~> 0.3.0"
 gem 'rolify'
 
 group :development, :test do
- # gem 'thin'
-  gem 'puma', platform: :ruby
-  gem 'unicorn', platform: :ruby
+  gem 'thin'
+  #gem 'puma', platform: :ruby
   gem 'nokogiri', '1.6.3.1'
   gem 'rspec', '2.8.0'
   gem 'rspec-rails', '2.8.0'
@@ -82,10 +75,25 @@ group :development, :test do
   gem 'uglifier', '>= 1.0.3'
   gem 'quiet_assets'
   gem 'web-console', '~> 2.0.0.beta4'                 ###!
+  ####Capistrano#####
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-bundler', '~> 1.1.2'
+  gem 'capistrano-rvm'
 end
 
 group :production do 
-  gem 'newrelic_rpm'
+  #gem 'newrelic_rpm'
   gem 'therubyracer'
   gem 'rails_12factor'
+  gem 'unicorn'
+  gem 'rack-test'
 end
+
+  gem 'briarcliff', '~> 0.0.9'
+  #gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
+  #gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
+
+  gem 'pica_pica', '~> 0.0.1'
+  #gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
+  #gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git', platform: :mswin
