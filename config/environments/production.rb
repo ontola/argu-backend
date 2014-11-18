@@ -1,5 +1,5 @@
 Argu::Application.configure do
-  config.host = ENV['HOSTNAME'] || 'argu.nl'
+  config.host = ENV['HOSTNAME'] || 'argu.co'
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
@@ -48,7 +48,7 @@ Argu::Application.configure do
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
-  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'argu.nl')
+  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'argu.co')
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store

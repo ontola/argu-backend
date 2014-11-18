@@ -12,7 +12,6 @@ class User < ActiveRecord::Base
          #:validatable, :omniauthable
 
   before_create :check_for_profile
-  before_create :mark_as_user
   after_destroy :cleanup
   before_save { |user| user.email = email.downcase unless email.blank? }
   before_save :normalize_blank_values
@@ -66,10 +65,6 @@ private
 
   def cleanup
     self.authentications.destroy_all
-  end
-
-  def mark_as_user
-    self.add_role :user
   end
 
   def normalize_blank_values
