@@ -3,11 +3,12 @@ Argu::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
-  config.epics.opinion_buttons = false
   config.epics.opinion = true
   config.epics.parties = false
+  config.epics.tag_system = false
+  config.epics.advanced_navigation = false
+  config.epics.search = false
 
-  
   # Code is not reloaded between requests
   config.cache_classes = true
 
