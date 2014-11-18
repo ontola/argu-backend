@@ -46,12 +46,13 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      pidfile = '/home/unicorn/pids/unicorn.pid'
-      pid = File.read(pidfile).to_i
-      syscmd = "kill -s HUP #{pid}"
-      puts "Running syscmd: #{syscmd}"
-      system(syscmd)
-      FileUtils.rm_f(pidfile)
+      #pidfile = '/home/unicorn/pids/unicorn.pid'
+      #pid = File.read(pidfile).to_i
+      #syscmd = "kill -s HUP #{pid}"
+      #puts "Running syscmd: #{syscmd}"
+      #system(syscmd)
+      #FileUtils.rm_f(pidfile)
+      execute 'service unicorn restart'
     end
   end
 
