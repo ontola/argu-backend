@@ -12,7 +12,7 @@
   -o-transition: $opts;
 }
 
-@mixin text_settings($align: justify, $color: $g4, $family: $opensans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
+@mixin text_settings($align: justify, $color: $g4, $family: $font-sans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
   text-align: $align;
   color: $color;
   font-family: $family;
@@ -22,7 +22,15 @@
   line-height: $line-height;
 }
 
-@mixin header_settings($align: center, $color: $g4, $family: $raleway, $size: 1.6em, $weight: 200, $padding: 0) {
+@mixin header_settings($align: center, $color: $g4, $family: $font-special, $size: 1.6em, $weight: 200, $padding: 0) {
   @include text_settings($align: $align, $color: $color, $family: $family, $size: $size, $padding: $padding);
   font-weight: $weight;
+}
+
+@mixin box-shadow {
+  box-shadow: 0em 0.1em 0.2em 0em rgba(0, 0, 0, 0.17);
+}
+
+@mixin box-shadow-big {
+  box-shadow: 0em 0.3em 0.3em 0em rgba(0, 0, 0, 0.25);
 }

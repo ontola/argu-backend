@@ -1,0 +1,38 @@
+@import "variables";
+@import "mixins";
+
+.comment {
+  position: relative;
+}
+
+.comment .comment {
+  padding-left: 1em;
+}
+
+.comment .box {
+  margin: 0 0 1em 0;
+}
+
+.comments {
+  margin-left: -1em;
+  margin: 0 auto;
+}
+
+.comment:before {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.0);
+  width: 1em;
+  height: 100%;
+  position: absolute;
+}
+
+.top-comment {
+  color: $g3;
+  background-color: rgba(128, 128, 128, 0.02);
+  position: relative;
+  border-top: solid 1px $g1;
+}
+
+.top-comment p {
+  font-style: italic;
+}

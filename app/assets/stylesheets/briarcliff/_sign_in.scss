@@ -1,0 +1,36 @@
+@import "variables";
+@import "mixins";
+
+.form-sign-in {
+  max-width: 14em;
+  padding-bottom: 1em;
+  padding-top: 1em;
+  margin: auto;
+}
+
+.form-sign-in .btn {
+  display: block;
+  margin: auto;
+}
+
+.overlay-sign-in {
+  max-width: 22em;
+  text-align: left;
+}
+
+.btns-signup {
+  text-align: center;
+  margin: 2em auto 2.6em;
+  li {
+    margin-bottom: 1em;
+  }
+  .btn {
+    font-size: 1em;
+    width: 15em;
+    text-transform: none;
+    text-align: left;
+  }
+  .fa {
+    width: 1em;
+  }
+}

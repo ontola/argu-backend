@@ -1,0 +1,115 @@
+@import "variables";
+@import "mixins";
+
+body {
+  background-color: $g1;
+}
+
+.bg {
+  -moz-background-size: cover; /* Firefox 3.6 */
+  background-size: cover; /* Chrome, Firefox 4.0+, Safari 4.1+, Opera 10+ and IE9 */
+}
+
+.center {
+  text-align: center;
+}
+
+.container {
+  margin: 0 auto;
+  position: relative;
+}
+
+.col-1 {
+  position: relative;
+  clear: both;
+  margin: 0 auto;
+  padding: 0em 1em;
+  margin-bottom: 1em;
+  max-width: 55em;
+}
+
+.col-1-small {
+  position: relative;
+  clear: both;
+  margin: 0 auto;
+  padding: 0em 1em;
+  margin-bottom: 1em;
+  max-width: 35em;
+}
+
+.col-2 {
+  position: relative;
+  clear: both;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.col-2-1 {
+  position: relative;
+  float: left;
+  width: 50%;
+  padding: 0em 1em;
+}
+
+.col-3 {
+  position: relative;
+  clear: both;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+.col-3-1 {
+  position: relative;
+  float: left;
+  width: 33.33%;
+  padding: 0em 1em;
+}
+
+.overlay {
+  position: fixed;
+  overflow: auto;
+  text-align: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 11;
+  background-color: $overlay;
+  height: 100%;
+}
+
+.overlay-dialog {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.margin-bottom {
+  margin-bottom: 1em;
+}
+
+.margin-top {
+  margin-top: 1em;
+}
+
+.move-up {
+  margin-top: -1em;
+}
+
+.move-down {
+  margin-bottom: -1em;
+}
+
+@media screen and (max-width: 699px) {
+  .col-1 {
+    width: 100%;
+  }
+
+  .col-2-1 {
+    width: 100%;
+  }
+
+  .col-3-1 {
+    width: 100%;
+  }
+}
