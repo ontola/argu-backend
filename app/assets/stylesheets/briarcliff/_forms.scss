@@ -1,0 +1,48 @@
+@import "variables";
+@import "mixins";
+
+input[type="text"], textarea, input[type="password"], input[type="email"] {
+	width: 100%;
+	width: calc(100% + 1em);
+	margin-bottom: 1em;
+	background-color: $darken1;
+	border: none;
+	padding: .5em;
+	font-size: 1em;
+	margin: -0.2em -0.5em .5em -.5em;
+	font-family: $font-sans;
+	resize: vertical;
+	&:focus {
+		background-color: $darken0;
+		border: none;
+		outline: none;
+	}
+	&.h1 {
+		font-family: $font-special;
+		font-size: 2.5em;
+		font-weight: 800;
+		margin: -0.1em -0.2em .3em -.2em;
+		width: calc(100% + .4em);
+		padding: .2em;
+	}
+	+ input[type="text"],+ textarea,+ input[type="password"] {
+		margin-top: 0em !important;
+	}
+}
+
+label {
+	margin-top: 1em;
+	margin-bottom: 1.1em;
+	display: block;
+	text-transform: uppercase;
+	color: $g3;
+	font-size: 0.8em;
+}
+
+.form-auth-icons {
+	padding-bottom: 1em;
+}
+
+.form-padded {
+	padding-bottom: 2em;
+}

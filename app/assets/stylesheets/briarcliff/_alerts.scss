@@ -1,0 +1,16 @@
+@import "variables";
+@import "mixins";
+
+.alert {
+	position: absolute;
+	width: 100%;
+	/* max-width: 80%; */
+	/* margin: auto; */
+	left: 0;
+	top: 3em;
+	right: 0;
+	padding: 1em;
+	background-color: rgb(156, 221, 156);
+	display: block;
+	z-index: 9;
+}
