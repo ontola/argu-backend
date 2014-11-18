@@ -2,72 +2,72 @@
 @import "mixins";
 
 h1, h2, h3 {
-	font-family: $font-special;
-	margin-bottom: 0.4em;
-	color: $g4;
-	span {
-		font-family: $font-special;
-	}
+  font-family: $font-special;
+  margin-bottom: 0.4em;
+  color: $g4;
+  span {
+    font-family: $font-special;
+  }
 }
 
 h1 {
-	font-size: 2.3em;
+  font-size: 2.3em;
 }
 
 h2 {
-	font-size: 1.7em;
+  font-size: 1.7em;
 }
 
 h3 {
-	font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 br {
-	height: .5em;
-	display: block;
+  height: .5em;
+  display: block;
 }
 
-p, div, small, ol, ul, li, small, span{
-	font-family: $font-sans;
+p, div, small, ol, ul, li, small, span {
+  font-family: $font-sans;
 }
 
 a {
-	text-decoration: none;
-	color: $blu;
+  text-decoration: none;
+  color: $blu;
 }
 
 b {
-	font-weight: bold;
+  font-weight: bold;
 }
 
 p {
-	line-height: 1.4em;
-	color: $g4;
+  line-height: 1.4em;
+  color: $g4;
 }
 
 .info {
-	text-transform: uppercase;
-	font-size: .7em;
-	color: $g2;
-	display: inline-block;
-	margin-bottom: 1em;
+  text-transform: uppercase;
+  font-size: .7em;
+  color: $g2;
+  display: inline-block;
+  margin-bottom: 1em;
 }
 
 header {
-	clear: both;
-	text-align: center;
+  clear: both;
+  text-align: center;
 }
 
 header h1 {
-	font-size: 2.3em;
-	color: $g4;
-	margin-top: 1em;
-	margin-bottom: 0.8em;
+  font-size: 2.3em;
+  color: $g4;
+  margin-top: 1em;
+  margin-bottom: 0.8em;
 }
 
 header h2 {
-	font-size: 2em;
-	color: $g4;
-	margin-top: 1em;
-	margin-bottom: .66em;
+  font-size: 2em;
+  color: $g4;
+  margin-top: 1em;
+  margin-bottom: .66em;
 }	

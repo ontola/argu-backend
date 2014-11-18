@@ -2,73 +2,73 @@
 @import "mixins";
 
 .box {
-	position: relative;
-	background-color: white;
-	margin: 0 auto;
-	margin-bottom: 1em;
-	@include box-shadow;
+  position: relative;
+  background-color: white;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  @include box-shadow;
 }
 
 .box.box-link {
-	opacity: .7;
-	&:hover {
-		opacity: 1;
-	}
-	h3 {
-		font-size: 1.2em;
-		margin-bottom: .8em;
-	}
+  opacity: .7;
+  &:hover {
+    opacity: 1;
+  }
+  h3 {
+    font-size: 1.2em;
+    margin-bottom: .8em;
+  }
 }
 
 section {
-	position: relative;
-	padding: 1.1em 1.6em 0.1em 1.4em;
+  position: relative;
+  padding: 1.1em 1.6em 0.1em 1.4em;
 }
 
-section.unpadded{
-	padding: 0;
+section.unpadded {
+  padding: 0;
 }
 
 section + section {
-	border-top: solid 1px $g1;
+  border-top: solid 1px $g1;
 }
 
-.box h3 a, .box a h3{
-	&:hover {
-		text-decoration: underline;
-	}
+.box h3 a, .box a h3 {
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
-.box h1, .box h2,.box h3 {
-	font-weight: 800;
-	margin-bottom: .5em;
+.box h1, .box h2, .box h3 {
+  font-weight: 800;
+  margin-bottom: .5em;
 }
 
 .box p {
-	margin-bottom: .9em;
+  margin-bottom: .9em;
 }
 
 .box ol, .box ul {
-	color: $g3;
+  color: $g3;
 
 }
 
 .box-with-btns {
-	h1, h2, h3 {
-		padding-right: 1.5em;
-	}
+  h1, h2, h3 {
+    padding-right: 1.5em;
+  }
 }
 
 .box-divider {
-	border-top: solid 1px #e8e8e8;
-	width: calc(100% + 2em);
-	margin-left: -1em;
-	z-index: 1;
-	display: block;
-	position: relative;
+  border-top: solid 1px #e8e8e8;
+  width: calc(100% + 2em);
+  margin-left: -1em;
+  z-index: 1;
+  display: block;
+  position: relative;
 }
 
 .box-divider-space {
-	margin-top: -.4em;
-	padding-bottom: .4em; 
+  margin-top: -.4em;
+  padding-bottom: .4em;
 }

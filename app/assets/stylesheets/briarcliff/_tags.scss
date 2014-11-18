@@ -2,21 +2,21 @@
 @import "mixins";
 
 ul.tags {
-	display: inline-block;
-	li {
-		display: inline-block;		
-	}
+  display: inline-block;
+  li {
+    display: inline-block;
+  }
 }
 
 .tag {
-	color: #4c88a8 !important;
-	text-transform: uppercase;
-	font-weight: bold;
-	font-size: .8em;
-	line-height: 1.5em;
-	padding: .4em 1em;
-	display: inline-block;
-	&:hover{
-		background-color: $bluo;
-	}
+  color: #4c88a8 !important;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: .8em;
+  line-height: 1.5em;
+  padding: .4em 1em;
+  display: inline-block;
+  &:hover {
+    background-color: $bluo;
+  }
 }
