@@ -76,7 +76,6 @@ group :development, :test do
   ####Capistrano#####
   gem 'capistrano'
   gem 'capistrano-rails'
-  gem 'capistrano3-unicorn'
   gem 'capistrano-bundler', '~> 1.1.2'
   gem 'capistrano-rvm'
 end
