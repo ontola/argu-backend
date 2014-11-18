@@ -1,17 +1,16 @@
 @import "variables";
 @import "mixins";
 
-input[type="text"], textarea, input[type="password"], input[type="email"] {
-  width: 100%;
-  width: calc(100% + 1em);
-  margin-bottom: 1em;
+input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
   background-color: $darken1;
   border: none;
   padding: .5em;
   font-size: 1em;
-  margin: -0.2em -0.5em .5em -.5em;
   font-family: $font-sans;
   resize: vertical;
+  display: inline-block;
+  width: 70%;
+  margin-bottom: 1em;
   &:focus {
     background-color: $darken0;
     border: none;
@@ -25,24 +24,60 @@ input[type="text"], textarea, input[type="password"], input[type="email"] {
     width: calc(100% + .4em);
     padding: .2em;
   }
-  + input[type="text"], + textarea, + input[type="password"] {
+  + input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
     margin-top: 0em !important;
   }
+  width: 70%;
 }
 
 label {
   margin-top: 1em;
   margin-bottom: 1.1em;
-  display: block;
+  display: inline-block;
   text-transform: uppercase;
   color: $g3;
   font-size: 0.8em;
+  width: 30%;
+  vertical-align: top;
 }
 
 .form-auth-icons {
   padding-bottom: 1em;
 }
 
+.form-input-content {
+  width: 100%;
+  width: calc(100% + 1em);
+  margin-bottom: 1em;
+  background-color: $darken1;
+  border: none;
+  padding: .5em;
+  font-size: 1em;
+  margin: -0.2em -0.5em .5em -.5em;
+  font-family: $font-sans;
+  resize: vertical;
+  display: inline-block;
+}
+
+.form-input-title {
+  font-family: $font-special;
+  font-size: 2.5em;
+  font-weight: 800;
+  margin: -0.1em -0.2em .3em -.2em;
+  width: calc(100% + .4em);
+  padding: .2em;
+}
+
 .form-padded {
   padding-bottom: 2em;
+}
+
+@media screen and (max-width: 699px) {
+  input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
+    width: 100%;
+  }
+
+  label{
+    width: 100%;
+  }
 }

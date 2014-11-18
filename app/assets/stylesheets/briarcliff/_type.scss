@@ -45,6 +45,13 @@ p {
   color: $g4;
 }
 
+ol.numbered{
+  list-style: decimal;
+  font-style: $font-sans;
+  color: $g4;
+  padding-left: 1.5em;
+}
+
 .info {
   text-transform: uppercase;
   font-size: .7em;
@@ -60,14 +67,16 @@ header {
 
 header h1 {
   font-size: 2.3em;
-  color: $g4;
+  color: white;
   margin-top: 1em;
   margin-bottom: 0.8em;
+  @include text-shadow;
 }
 
 header h2 {
   font-size: 2em;
-  color: $g4;
+  color: white;
   margin-top: 1em;
   margin-bottom: .66em;
+  @include text-shadow;
 }	

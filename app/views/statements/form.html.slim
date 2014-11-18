@@ -14,9 +14,9 @@
               - @statement.errors.full_messages.each do |msg|
                 li= msg
 
-        = f.text_field :title, placeholder: t("statements.form.title").capitalize, class: "h1 sta-t"
+        = f.text_field :title, placeholder: t("statements.form.title").capitalize, class: "h1 sta-t form-input-title"
 
-        = f.text_area :content, placeholder: t("statements.form.content"), rows: "8"
+        = f.text_area :content, placeholder: t("statements.form.content"), rows: "8", class: "form-input-content"
 
         = f.text_field :tag_list, placeholder: t("statements.form.themes"), class: "tag-list"
 
