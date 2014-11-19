@@ -9,15 +9,15 @@ class QuestionPolicy < RestrictivePolicy
 
     def resolve
       if current_scope.present?
-        scope.where(organisation_id: user._current_scope.id)
+        scope.where(forum_id: user._current_scope.id)
       else
-        scope.where(organisation_id: nil)
+        scope.where(forum_id: nil)
       end
     end
 
   end
 
   def index?
-    (user._current_scope.present? && Organisation.public_forms[user._current_scope.public_form] == Organisation.public_forms[:f_public]) || (user && user.profile.memberships.where(organisation: record).present?) || super
+    (user._current_scope.present? && Forum.public_forms[user._current_scope.public_form] == Forum.public_forms[:f_public]) || (user && user.profile.memberships.where(forum: record).present?) || super
   end
 end

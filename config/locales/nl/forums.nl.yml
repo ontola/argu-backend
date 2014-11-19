@@ -1,7 +1,7 @@
 #Dutch argument translations
 
 nl:
-  organisations:
+  forums:
     scope_names:
       scope_group: "Groepen"
       scope_org: "Bedrijven"
@@ -24,7 +24,7 @@ nl:
       f_management_invite_desc: "Alleen de beheerder(s) kunnen nieuwe leden toevoegen."
   activerecord:
     attributes:
-      organisation:
+      forum:
         name: "Naam"
         web_url: "argu web url"
         description: "Omschrijving"

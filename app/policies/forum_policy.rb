@@ -37,7 +37,7 @@ class ForumPolicy < RestrictivePolicy
     (user && user.profile.memberships.where(forum: record).present?) || staff?
   end
 
-  # Can the current user change the organisation web_url? (currently a subdomain)
+  # Can the current user change the forum web_url? (currently a subdomain)
   def web_url?
     (user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || staff?
   end

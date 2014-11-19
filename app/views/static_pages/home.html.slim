@@ -11,7 +11,7 @@
             -current_user.profile.forums.select(:id, :profile_photo).each do |o|
               li
                 /=link_to root_url(o, subdomain: o.web_url)
-                =link_to organisation_path(o)
+                =link_to forum_path(o)
                   = image_tag o.profile_photo.url(:icon), size: '16x16'
                   = o.name
   .content
