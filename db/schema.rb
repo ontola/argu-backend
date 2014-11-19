@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141119133336) do
+ActiveRecord::Schema.define(version: 20141119162301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,7 @@ ActiveRecord::Schema.define(version: 20141119133336) do
     t.integer  "comments_count",                  default: 0,     null: false
     t.integer  "votes_abstain_count",             default: 0,     null: false
     t.integer  "creator_id"
+    t.integer  "votes_con_count",                 default: 0,     null: false
   end
 
   add_index "arguments", ["id"], name: "index_arguments_on_id", using: :btree
@@ -65,30 +66,6 @@ ActiveRecord::Schema.define(version: 20141119133336) do
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["profile_id"], name: "index_comments_on_profile_id", using: :btree
-
-  create_table "delayed_jobs", force: true do |t|
-    t.integer  "priority",               default: 0, null: false
-    t.integer  "attempts",               default: 0, null: false
-    t.text     "handler",                            null: false
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by",  limit: 255
-    t.string   "queue",      limit: 255
-    t.datetime "created_at",                         null: false
-    t.datetime "updated_at",                         null: false
-  end
-
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
-
-  create_table "follows", force: true do |t|
-    t.integer  "user_id"
-    t.integer  "followed_id"
-    t.string   "followed_type", limit: 255
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-  end
 
   create_table "forums", force: true do |t|
     t.string   "name"
@@ -228,15 +205,6 @@ ActiveRecord::Schema.define(version: 20141119133336) do
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
-
-  create_table "statementarguments", force: true do |t|
-    t.integer "argument_id",                 null: false
-    t.integer "statement_id",                null: false
-    t.boolean "pro",          default: true, null: false
-    t.integer "votes_count",  default: 0
-  end
-
-  add_index "statementarguments", ["argument_id", "statement_id"], name: "arg_state_index", using: :btree
 
   create_table "taggings", force: true do |t|
     t.integer  "tag_id"

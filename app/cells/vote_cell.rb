@@ -13,4 +13,8 @@ class VoteCell < Cell::ViewModel
   def vote_for
     model.for
   end
+
+  def link_title(&block)
+    link_to raw(yield block), url_for(model.voteable)
+  end
 end

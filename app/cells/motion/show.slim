@@ -3,7 +3,8 @@
   section
     h3.sta-t= link_to title, motion_path(model)
     p= supped_content
-    p.info= pro_con_count_label
+    -if Rails.configuration.epics.counters
+      p.info= pro_con_count_label
     ul.btns-sticky.btns-sticky-bottom
       - if tag.present?
         - if is_main_motion? tag

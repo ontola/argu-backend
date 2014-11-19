@@ -3,12 +3,11 @@ Argu::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb#
 
   config.epics = ActiveSupport::OrderedOptions.new
-  config.epics.opinion = false
-  config.epics.parties = false
-  config.epics.tag_system = false
-  config.epics.advanced_navigation = false
-  config.epics.search = false
-  config.epics.groups = false
+  config.epics.opinion = false                        # Opinion enabled?
+  config.epics.parties = false                        # Parties enabled?
+  config.epics.advanced_navigation = false            # Navigation by tags and such
+  config.epics.search = false                         # Search enabled?
+  config.epics.counters = true                        # Counter caches on models (e.g. x pro, y con args)
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
