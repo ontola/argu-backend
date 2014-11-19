@@ -1,5 +1,5 @@
 require 'spec_helper'
 
-describe "organisation/update.html.erb" do
+describe "forum/update.html.erb" do
   pending "add some examples to (or delete) #{__FILE__}"
 end

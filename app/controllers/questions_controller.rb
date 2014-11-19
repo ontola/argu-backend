@@ -1,6 +1,6 @@
 class QuestionsController < ApplicationController
   def new
-    @organisation = Organisation.find params[:organisation_id]
+    @forum = Forum.friendly.find params[:forum_id]
     @question = Question.new params[:question]
     authorize @question
     respond_to do |format|
@@ -10,8 +10,8 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @organisation = Organisation.find params[:organisation_id]
-    authorize @organisation, :add_question?
+    @forum = Forum.friendly.find params[:forum_id]
+    authorize @forum, :add_question?
 
     @question = Question.create permit_params
     #@question.creator = current_user
@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to @question, notice: t('type_save_success', type: t('statements.type')) }
+        format.html { redirect_to @question, notice: t('type_save_success', type: t('motions.type')) }
         format.json { render json: @question, status: :created, location: @question }
       else
         format.html { render 'form' }
@@ -32,7 +32,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     authorize @question
     #@voted = Vote.where(voteable: @question, voter: current_user).last.try(:for) unless current_user.blank?
-    @statements = @question.statements
+    @motions = @question.motions
 
     respond_to do |format|
       format.html # show.html.erb
@@ -43,6 +43,6 @@ class QuestionsController < ApplicationController
 
 private
   def permit_params
-    params.require(:question).permit(:id, :title, :content, :tag_list, :organisation_id)
+    params.require(:question).permit(:id, :title, :content, :tag_list, :forum_id)
   end
 end

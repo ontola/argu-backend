@@ -1,6 +1,0 @@
-header
-  h1 = t("statements.plural")
-  = link_to t("statements.newstatement"), new_statement_path, class: "btn sta-bg"
-- @statements.each do |statement|
-  = render statement
-= paginate @statements

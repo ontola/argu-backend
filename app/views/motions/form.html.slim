@@ -1,0 +1,26 @@
+.col-1
+  header
+    /TODO Make the to_parent work
+    /==cell(:context, @motion).call(:to_parent)
+  .box
+    = form_for([@question, @motion]) do |f|
+      section
+        - if @motion.errors.any?
+          #error_explanation
+            h2
+              = pluralize(@motion.errors.count, "error")
+              | prohibited this motion from being saved:
+            ul
+              - @motion.errors.full_messages.each do |msg|
+                li= msg
+
+        = f.text_field :title, placeholder: t("motions.form.title").capitalize, class: "h1 sta-t form-input-title"
+        = f.text_area :content, placeholder: t("motions.form.content"), rows: "8", class: "form-input-content"
+        = f.text_field :tag_list, placeholder: t("motions.form.themes"), class: "tag-list"
+
+        /TODO invert arguments only visible when in edit, not in new.
+          <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
+          <%= f.check_box :invert_arguments %>
+      = render partial: 'profiles/profile_current'
+
+      = f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"

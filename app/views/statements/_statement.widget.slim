@@ -1,5 +1,0 @@
-.box.statement
-  = link_to statement.title, statement_url(statement, host: Rails.application.config.host), target: :_blank, class: "title"
-  p= statement.supped_content.html_safe
-  .infobar
-    p.info= link_to t("statements.preview.pro", count: statement.pro_count) + ', ' + t("statements.preview.con", count: statement.con_count), statement_url(statement, host: Rails.application.config.host, anchor: :arguments), target: :_blank

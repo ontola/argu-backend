@@ -28,6 +28,7 @@ gem 'cocoon'
 gem 'acts-as-taggable-on'
 gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 1.2.0'
+gem 'friendly_id', '~> 5.0.0'
 #Search
 
 #Pagination

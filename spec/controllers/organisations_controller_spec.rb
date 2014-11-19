@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe OrganisationsController do
+describe ForumsController do
 
   describe "GET 'show'" do
     it "returns http success" do

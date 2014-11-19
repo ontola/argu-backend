@@ -1,4 +1,4 @@
-=back_to_statement(@opinion)
+=back_to_motion(@opinion)
 .box.center
   =form_for(@opinion) do |f|
     -if @opinion.errors.any?
@@ -18,7 +18,7 @@
     .row
       .span8
         fieldset.control-group
-        =f.hidden_field(:statement_id)
+        =f.hidden_field(:motion_id)
         =f.hidden_field(:pro)
         fieldset.form-actions
           =f.submit t("opinions.form.submit"), class: "btn blue"

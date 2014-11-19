@@ -1,0 +1,11 @@
+=render partial: 'manage_bar'  if policy(@page).update?
+small  <!-- for styling -->
+header
+  h1 organisatie instellingen
+.forum_id[id="#{@page.id}"]
+  .box[style="width: 23em;"]
+    ul
+      li= link_to raw('&#9881; _algemeen_'), settings_page_path(@page, tab: :settings)
+      li= link_to raw('&#128188; _managers_'), settings_page_path(@page, tab: :managers)
+      li= link_to raw('&#128110; _moderators_'), settings_page_path(@page, tab: :moderators)
+=render partial: "pages/setting_tabs/#{params[:tab] || 'settings'}"

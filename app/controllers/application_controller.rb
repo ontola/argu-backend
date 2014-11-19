@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_scope
-    @current_scope || Organisation.find(_session[:_current_scope])
+    @current_scope || Forum.find(_session[:_current_scope])
   end
   helper_method :current_scope
 
@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
 
   def set_local_scope
     if subdomain.present? && subdomain != 'logos'
-      _argu_scope = Organisation.find_by web_url: subdomain
+      _argu_scope = Forum.find_by web_url: subdomain
       if _argu_scope && policy(_argu_scope).show?
         @local_title = subdomain
         @current_scope = _argu_scope

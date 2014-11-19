@@ -5,7 +5,7 @@ module ProCon
     include Trashable
     include Parentable
 
-    belongs_to :statement, :dependent => :destroy
+    belongs_to :motion, :dependent => :destroy
     has_many :votes, as: :voteable
     belongs_to :creator, class_name: 'User'
 
@@ -16,7 +16,7 @@ module ProCon
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
 
     acts_as_commentable
-    parentable :statement
+    parentable :motion
 
     def creator
       super || User.first_or_create(username: 'Onbekend')
@@ -58,7 +58,7 @@ module ProCon
   end
 
   def is_moderator?(user)
-    self.statement.is_moderator?(user)
+    self.motion.is_moderator?(user)
   end
 
   module ClassMethods

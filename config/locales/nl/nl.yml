@@ -50,7 +50,7 @@ nl:
   status:
     400: "Fout in de aanvraag"
   header:
-    statements: "stellingen"
+    motions: "stellingen"
 #Controllers
 #Footer
   footer_item_about: "over"

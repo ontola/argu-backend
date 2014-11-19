@@ -17,8 +17,8 @@ nl:
       make_admin: 'Maak admin'
       added: 'Toegevoegd'
       no_results: 'Geen resultaten'
-      no_statements: 'Je beheert nog geen stellingen'
-      statements_mod: 'Stellingen die jij beheerd'
+      no_motions: 'Je beheert nog geen stellingen'
+      motions_mod: 'Stellingen die jij beheerd'
       list:
         h_coder: 'Programmeurs'
         h_admin: 'Admins'

@@ -8,7 +8,7 @@ private
   property :votes_pro_count
 
   def amount_of_votes
-    "#{model.votes_pro_count.to_s} #{I18n.translate("statements.plural")}"
+    "#{model.votes_pro_count.to_s} #{I18n.translate("motions.plural")}"
   end
 
   def content

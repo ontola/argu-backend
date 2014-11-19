@@ -1,6 +1,6 @@
 .box
   section
-    = semantic_form_for @profile, url: profile_path(@profile.user.username) do |f|
+    = semantic_form_for @profile, url: profile_path(@user.username) do |f|
       = f.inputs :name
       = f.inputs :about
       = f.inputs :profile_photo

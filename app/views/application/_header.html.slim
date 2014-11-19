@@ -3,7 +3,7 @@ nav.navbar role="navigation"
     ==link_to root_url(subdomain: ''), class: "navbar-logo"
       =image_tag 'logo.svg'
       -if @local_title.present?
-        ==link_to organisation_url(current_scope, subdomain: current_scope.web_url), class: 'local'
+        ==link_to forum_url(current_scope, subdomain: current_scope.web_url), class: 'local'
           h1= "| #{@local_title.capitalize}"
     ul.navbar-links
       li
@@ -29,9 +29,9 @@ nav.navbar role="navigation"
                     a.tag href=""
                       span energie
       -if Rails.configuration.epics.advanced_navigation
-        li=link_to tags_statements_path do
+        li=link_to tags_motions_path do
           span.fa.fa-lightbulb-o.icon-left
-          span=t('header.statements')
+          span=t('header.motions')
     ul.navbar-links.navbar-links-right
       -if Rails.configuration.epics.search
         li

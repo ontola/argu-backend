@@ -2,13 +2,13 @@ class Question < ActiveRecord::Base
   include Trashable
   include Parentable
 
-  belongs_to :organisation
+  belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'User'
   has_many :question_answers, inverse_of: :question
-  has_many :statements, through: :question_answers
+  has_many :motions, through: :question_answers
 
   acts_as_ordered_taggable_on :tags
-  parentable :organisation
+  parentable :forum
 
 
   def creator

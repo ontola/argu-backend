@@ -12,6 +12,6 @@ class CreateOrganisations < ActiveRecord::Migration
 
       t.timestamps
     end
-    add_attachment :organisations, :profile_photo
+    add_attachment :forums, :profile_photo
   end
 end

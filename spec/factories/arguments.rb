@@ -5,7 +5,7 @@ FactoryGirl.define do
     content "some content"
     title "some title"
     pro false
-    association :statement, factory: :statement
+    association :motion, factory: :motion
     #creator # Fix for paper_trail not functioning (correctly) in rspec
   end
 end

@@ -1,0 +1,10 @@
+div.col-2
+  -[:pro, :con].each do |p|
+    .col-2-1
+      header[class=( p.to_s)]
+        h2=t("arguments." + p.to_s)
+      -unless items[p].nil?
+        -items[p].each do |i|
+          =render i
+      .center
+        =link_to t("#{resource.name.downcase.pluralize}.new.create", side: t("arguments." + p.to_s)), self.send("new_#{resource.to_s.downcase}_path", pro: p, motion_id: motion.id), class: p.to_s + "-t btn btn-white"

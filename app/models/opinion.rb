@@ -5,7 +5,7 @@ class Opinion < ActiveRecord::Base
 
   scope :opinion_comments, -> { includes(:comment_threads).trashed(false).order(votes_pro_count: :desc).references(:comment_threads) }
 
-  counter_culture :statement,
+  counter_culture :motion,
                   column_name: Proc.new { |a| "opinion_#{a.pro? ? 'pro' : 'con'}_count" },
                   column_names: {
                       ["pro = ?", true] => 'opinion_pro_count',

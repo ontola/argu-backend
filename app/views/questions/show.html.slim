@@ -10,13 +10,13 @@
 .col-1
   header
     h1 voorstellen
-  -if @statements.present?
-    -@statements.each do |m|
-      ==cell(:statement, m)
+  -if @motions.present?
+    -@motions.each do |m|
+      ==cell(:motion, m)
   /TODO Cellify
-  =link_to new_question_statement_path(@question) do
+  =link_to new_question_motion_path(@question) do
     .box.box-link
       section
         h3
           span.fa.fa-plus.icon-left
-          span =  t("statements.newstatement")
+          span =  t("motions.newmotion")

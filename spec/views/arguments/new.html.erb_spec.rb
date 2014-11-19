@@ -16,9 +16,9 @@ describe "arguments/new" do
     end
   end
 
-  it "has the statement title in the header" do
+  it "has the motion title in the header" do
     render template: 'arguments/form'
-    assert_select 'a.title.statement.top', @argument.statement.title
+    assert_select 'a.title.motion.top', @argument.motion.title
   end
 
 end
