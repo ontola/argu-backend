@@ -1,34 +1,35 @@
 = semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f|
   .overlay
-    .modal
+  .modal
+    header
       h1 = t("sign_in")
-      .box.modal-small
-        section
-          ul.btns-signup
-            li
-              a.btn.facebook-bg href="/auth/facebook"
-                span.fa.fa-facebook.icon-left
-                span = t("sign_in_facebook")
-            li
-              a.btn.twitter-bg href="/auth/twitter"
-                span.fa.fa-twitter.icon-left
-                span = t("sign_in_twitter")
-            li
-              a.btn.neu-bg href="/users/sign_up"
-                span.fa.fa-plus.icon-left
-                span = t("sign_up_argu")
-          - if resource.errors.any?
-            #error_explanation
-              ul
-                - resource.errors.full_messages.each do |msg|
-                  li= msg
-        section
-          .form-small
-            .info.info-signup = t("sign_in_existing")
-            = f.text_field :login, placeholder: t("users_username_or_email")
-            = f.password_field :password, placeholder: t("users_password")
-            /- if devise_mapping.rememberable?
-              .remember= f.check_box :remember_me
-            = f.actions do
-              = f.action :submit, :as => :button, label: t("sign_in")
-            = render "devise/shared/links"
+    .box.modal-small
+      section
+        ul.btns-signup
+          li
+            a.btn.facebook-bg href="/auth/facebook"
+              span.fa.fa-facebook.icon-left
+              span = t("sign_in_facebook")
+          li
+            a.btn.twitter-bg href="/auth/twitter"
+              span.fa.fa-twitter.icon-left
+              span = t("sign_in_twitter")
+          li
+            a.btn.neu-bg href="/users/sign_up"
+              span.fa.fa-plus.icon-left
+              span = t("sign_up_argu")
+        - if resource.errors.any?
+          #error_explanation
+            ul
+              - resource.errors.full_messages.each do |msg|
+                li= msg
+      section
+        .form-small
+          .info.info-signup = t("sign_in_existing")
+          = f.text_field :login, placeholder: t("users_username_or_email"), autofocus: :autofocus
+          = f.password_field :password, placeholder: t("users_password")
+          /- if devise_mapping.rememberable?
+            .remember= f.check_box :remember_me
+          = f.actions do
+            = f.action :submit, :as => :button, label: t("sign_in")
+          = render "devise/shared/links"

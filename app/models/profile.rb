@@ -13,7 +13,7 @@ class Profile < ActiveRecord::Base
 
   ######Attributes#######
   def display_name
-    self.name.presence || self.user.username
+    self.name.presence
   end
 
   #######Methods########

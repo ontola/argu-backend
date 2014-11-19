@@ -2,6 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit
   protect_from_forgery secret: "Nl4EV8Fm3LdKayxNtIBwrzMdH9BD18KcQwSczxh1EdDbtyf045rFuVces8AdPtobC9pp044KsDkilWfvXoDADZWi6Gnwk1vf3GghCIdKXEh7yYg41Tu1vWaPdyzH7solN33liZppGlJlNTlJjFKjCoGjZP3iJhscsYnPVwY15XqWqmpPqjNiluaSpCmOBpbzWLPexWwBSOvTcd6itoUdWUSQJEVL3l0rwyJ76fznlNu6DUurFb8bOL2ItPiSit7g"
   skip_before_filter  :verify_authenticity_token
+  before_action :configure_permitted_parameters, if: :devise_controller?
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
   before_action :set_local_scope
@@ -48,6 +49,12 @@ class ApplicationController < ActionController::Base
 
   def subdomain
     request.subdomain.presence != 'www' ? request.subdomain : nil
+  end
+
+  protected
+
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.for(:sign_up) << :username
   end
 
 end

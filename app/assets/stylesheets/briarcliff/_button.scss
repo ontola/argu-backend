@@ -193,6 +193,24 @@
   }
 }
 
+.btns-signup {
+  text-align: center;
+  margin: 2em auto 2.6em;
+  li {
+    margin-bottom: 1em;
+  }
+  .btn {
+    font-size: 1em;
+    width: 15em;
+    padding: 0.8em 1em;
+    text-transform: none;
+    text-align: left;
+  }
+  .fa {
+    width: 1em;
+  }
+}
+
 .btns-sticky {
   position: absolute;
   right: 0;

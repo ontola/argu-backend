@@ -2,15 +2,30 @@
 @import "mixins";
 
 .alert {
-  position: absolute;
+  position: fixed;
   width: 100%;
-  /* max-width: 80%; */
-  /* margin: auto; */
+  font-size: 1.2em;
   left: 0;
-  top: 3em;
+  bottom: 50%;
   right: 0;
   padding: 1em;
-  background-color: rgb(156, 221, 156);
+  background-color: $darken4;
+  color: white;
   display: block;
   z-index: 9;
+  text-align: center;
+  font-family: $font-sans;
+  @include animation(fade-in 1s both)
+}
+
+.alert-hidden {
+  @include animation(fade-out 1s both);
+}
+
+.alert-notice {
+
+}
+
+.alert-alert {
+
 }

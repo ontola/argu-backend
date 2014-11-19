@@ -5,6 +5,7 @@
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+  @include animation(from-top .5s ease-out both)
 }
 
 .modal h1 {
@@ -16,15 +17,15 @@
   text-align: left;
 }
 
-.overlay {
+.overlay{
   position: fixed;
-  overflow: auto;
-  text-align: center;
   top: 0;
-  left: 0;
   bottom: 0;
+  left: 0;
   right: 0;
   z-index: -1;
-  background-color: $overlay;
   height: 100%;
+  overflow: hidden;
+  background-color: $darken3;
+  @include animation('fade-in .5s ease-in');
 }
