@@ -8,6 +8,7 @@ nl:
   system_not_allowed: "je hebt geen toestemming voor deze actie."
   sign_in: "inloggen"
   sign_up: "aanmelden"
+  sign_out: "uitloggen"
   learn_more: "meer info"
   not_found_type: "%{type} niet gevonden"
   edit: "bewerken"

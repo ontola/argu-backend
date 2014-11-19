@@ -7,14 +7,15 @@ nav.navbar role="navigation"
           h1= "| #{@local_title.capitalize}"
     ul.navbar-links
       li
-        ==link_to root_url(subdomain: ''), class: "navbar-link"
+        ==link_to root_url(subdomain: ''), class: "navbar-item"
           span.fa.fa-home.icon-left
-          span.navbar-link-description= t("home_title")
+          span= t("home_title")
+      /TODO tags weergeven
       -if Rails.configuration.epics.tag_system
         li
           .dropdown-trigger.navbar-item href="/"
             span.fa.fa-tags.icon-left
-            span.navbar-link-description= t("tags.type")
+            span= t("tags.type")
             .dropdown-content.dropdown-col-2
               .dropdown-col-2-1
                 h3= t("tags.trending")
@@ -30,13 +31,13 @@ nav.navbar role="navigation"
       -if Rails.configuration.epics.advanced_navigation
         li=link_to tags_statements_path do
           span.fa.fa-lightbulb-o.icon-left
-          span.navbar-link-description=t('header.statements')
+          span=t('header.statements')
     ul.navbar-links.navbar-links-right
       -if Rails.configuration.epics.search
         li
           .navbar-item.dropdown-trigger href="/"
             span.fa.fa-search.icon-left
-            span.navbar-link-description= t("search.type")
+            span= t("search.type")
             .dropdown-content.dropdown-right.nav-search
               form
                 input.nav-search-text type="text" placeholder= t("search.placeholder")
@@ -44,12 +45,12 @@ nav.navbar role="navigation"
         li
           .dropdown-trigger.navbar-item href="/"
             span.fa.fa-user.icon-left
-            span.navbar-link-description= current_user.display_name
+            span= current_user.display_name
             ul.dropdown-content.dropdown-right
               li
                 =link_to profile_url(current_user.username) do
                   span.fa.fa-user.icon-left
-                  span = t("profiles.type")
+                  span = t("profiles.display")
               li
                 =link_to edit_profile_path(current_user.username) do
                   span.fa.fa-pencil.icon-left
@@ -59,11 +60,11 @@ nav.navbar role="navigation"
                 span=t(:users_show_title)
               li=link_to(destroy_user_session_url, method: :delete) do
                 span.fa.fa-sign-out.icon-left
-                span Uitloggen
+                span = t("sign_out")
       -else
-        li=link_to new_user_session_url, id: 'account', class: 'navbar-item' do
+        li = link_to new_user_session_url, id: 'account', class: 'navbar-item' do
           span.fa.fa-sign-in.icon-left
-          span.navbar-link-description = t(:sign_in)
-      li=link_to about_url, class: 'navbar-item', id: 'info'
+          span = t("sign_in")
+      li = link_to about_url, class: 'navbar-item', id: 'info'
         span.fa.fa-question.icon-left
-        span.navbar-link-description="over"
+        span = t("about_title")
