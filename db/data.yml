@@ -1,1490 +1,10 @@
 
 ---
-comments:
-  columns:
-  - id
-  - commentable_id
-  - commentable_type
-  - title
-  - body
-  - subject
-  - user_id
-  - parent_id
-  - lft
-  - rgt
-  - created_at
-  - updated_at
-  - is_trashed
-  records:
-  - - '1'
-    - '2'
-    - Argument
-    - ''
-    - Maar je eerste referentie is niet onderbouwd.
-    - ''
-    - '1'
-    -
-    - '1'
-    - '4'
-    - '2014-09-16 07:18:36.289516'
-    - '2014-09-16 07:19:31.757681'
-    - false
-  - - '2'
-    - '2'
-    - Argument
-    - ''
-    - Kijk is goed droplul! Er staat duidelijk literatuur over de geschiedenis van
-      drop.
-    - ''
-    - '1'
-    - '1'
-    - '2'
-    - '3'
-    - '2014-09-16 07:19:31.731024'
-    - '2014-09-16 07:19:31.757681'
-    - false
-  - - '3'
-    - '3'
-    - Argument
-    - ''
-    - Er is toch een subsidiepot.
-    - ''
-    - '1'
-    -
-    - '5'
-    - '14'
-    - '2014-09-23 09:28:24.219826'
-    - '2014-09-23 09:29:50.683623'
-    - false
-  - - '4'
-    - '3'
-    - Argument
-    - ''
-    - Ja maar das van het volk!
-    - ''
-    - '1'
-    - '3'
-    - '6'
-    - '13'
-    - '2014-09-23 09:28:42.628808'
-    - '2014-09-23 09:29:50.683623'
-    - false
-  - - '5'
-    - '3'
-    - Argument
-    - ''
-    - Wie maakt het volk nou wat uit..
-    - ''
-    - '1'
-    - '4'
-    - '7'
-    - '12'
-    - '2014-09-23 09:28:58.979386'
-    - '2014-09-23 09:29:50.683623'
-    - false
-  - - '6'
-    - '3'
-    - Argument
-    - ''
-    - Jij bent toch onderdeel van het volk!
-    - ''
-    - '1'
-    - '5'
-    - '8'
-    - '11'
-    - '2014-09-23 09:29:36.600256'
-    - '2014-09-23 09:29:50.683623'
-    - false
-  - - '7'
-    - '3'
-    - Argument
-    - ''
-    - Nee, ik ben wereldburger
-    - ''
-    - '1'
-    - '6'
-    - '9'
-    - '10'
-    - '2014-09-23 09:29:50.660527'
-    - '2014-09-23 09:29:50.683623'
-    - false
-
----
-memberships:
-  columns:
-  - id
-  - user_id
-  - organisation_id
-  - role
-  records:
-  - - '20'
-    - '3'
-    - '1'
-    - '2'
-  - - '25'
-    - '1'
-    - '1'
-    - '1'
-
----
-delayed_jobs:
-  columns:
-  - id
-  - priority
-  - attempts
-  - handler
-  - last_error
-  - run_at
-  - locked_at
-  - failed_at
-  - locked_by
-  - queue
-  - created_at
-  - updated_at
-  records:
-  - - '1'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 0\n    current_sign_in_at: \n    last_sign_in_at: \n    current_sign_in_ip:
-      \n    last_sign_in_ip: \n    created_at: 2014-05-02 15:16:33.323573000 Z\n    updated_at:
-      2014-05-02 15:16:33.323573000 Z\n    username: fletcher91\n    unconfirmed_email:
-      \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-02 15:16:33.356598'
-    -
-    -
-    -
-    -
-    - '2014-05-02 15:16:33.357241'
-    - '2014-05-02 15:16:33.357241'
-  - - '2'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 2\n    email: \n    encrypted_password: $2a$10$nZWUR.U60Ro8JK.HglHtTuph7DQPTkX5JRd.e1td4on8nxJvgrByu\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 0\n    current_sign_in_at: \n    last_sign_in_at: \n    current_sign_in_ip:
-      \n    last_sign_in_ip: \n    created_at: 2014-05-02 15:16:33.479540000 Z\n    updated_at:
-      2014-05-02 15:16:33.479540000 Z\n    username: admin\n    unconfirmed_email:
-      \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-02 15:16:33.490709'
-    -
-    -
-    -
-    -
-    - '2014-05-02 15:16:33.491128'
-    - '2014-05-02 15:16:33.491128'
-  - - '3'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 3\n    email: \n    encrypted_password: $2a$10$COLVATzZopFlRBoLHdIkC.Ww/ZCQOUBrAS7SqoIVYJIQBPRdKPtNm\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 0\n    current_sign_in_at: \n    last_sign_in_at: \n    current_sign_in_ip:
-      \n    last_sign_in_ip: \n    created_at: 2014-05-02 15:16:33.587219000 Z\n    updated_at:
-      2014-05-02 15:16:33.587219000 Z\n    username: joep\n    unconfirmed_email:
-      \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-02 15:16:33.601224'
-    -
-    -
-    -
-    -
-    - '2014-05-02 15:16:33.601659'
-    - '2014-05-02 15:16:33.601659'
-  - - '4'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 0\n    current_sign_in_at:
-      \n    last_sign_in_at: \n    current_sign_in_ip: \n    last_sign_in_ip: \n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-02 15:16:42.232164000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-02 15:16:42.260496'
-    -
-    -
-    -
-    -
-    - '2014-05-02 15:16:42.261509'
-    - '2014-05-02 15:16:42.261509'
-  - - '5'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 1\n    current_sign_in_at:
-      2014-05-02 15:16:42.274101000 Z\n    last_sign_in_at: 2014-05-02 15:16:42.274101000
-      Z\n    current_sign_in_ip: 127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-02 15:16:42.276437000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-02 15:16:42.281331'
-    -
-    -
-    -
-    -
-    - '2014-05-02 15:16:42.282115'
-    - '2014-05-02 15:16:42.282115'
-  - - '6'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd.\n    statetype: 6\n    created_at: 2014-05-02 15:18:33.604968000
-      Z\n    updated_at: 2014-05-02 15:18:33.604968000 Z\n    pro_count: 0\n    con_count:
-      0\n    tag_id: \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-02 15:18:33.66443'
-    -
-    -
-    -
-    -
-    - '2014-05-02 15:18:33.665299'
-    - '2014-05-02 15:18:33.665299'
-  - - '7'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd.\n    statetype: 6\n    created_at: 2014-05-02 15:18:33.604968000
-      Z\n    updated_at: 2014-05-02 15:18:33.604968000 Z\n    pro_count: 0\n    con_count:
-      0\n    tag_id: \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-02 15:18:33.766005'
-    -
-    -
-    -
-    -
-    - '2014-05-02 15:18:33.766778'
-    - '2014-05-02 15:18:33.766778'
-  - - '8'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd.\n    statetype: 6\n    created_at: 2014-05-02 15:18:33.604968000
-      Z\n    updated_at: 2014-05-02 15:40:24.268720000 Z\n    pro_count: 0\n    con_count:
-      0\n    tag_id: \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-02 15:40:24.402618'
-    -
-    -
-    -
-    -
-    - '2014-05-02 15:40:24.403613'
-    - '2014-05-02 15:40:24.403613'
-  - - '9'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. http://test.com\n    statetype: 6\n    created_at: 2014-05-02
-      15:18:33.604968000 Z\n    updated_at: 2014-05-02 15:41:54.905481000 Z\n    pro_count:
-      0\n    con_count: 0\n    tag_id: \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-02 15:41:54.926814'
-    -
-    -
-    -
-    -
-    - '2014-05-02 15:41:54.927704'
-    - '2014-05-02 15:41:54.927704'
-  - - '10'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. [www.website.nl](voorbeeld\n      omschrijving)\n    statetype:
-      6\n    created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-05-02
-      15:42:22.065080000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
-      false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-02 15:42:22.082592'
-    -
-    -
-    -
-    -
-    - '2014-05-02 15:42:22.083449'
-    - '2014-05-02 15:42:22.083449'
-  - - '11'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 2\n    title: Prachtig voorstel\n    content: zeker doen!\n
-      \   statetype: 6\n    created_at: 2014-05-02 20:11:03.425027000 Z\n    updated_at:
-      2014-05-02 20:11:03.425027000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
-      \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-02 20:11:03.758261'
-    -
-    -
-    -
-    -
-    - '2014-05-02 20:11:03.759771'
-    - '2014-05-02 20:11:03.759771'
-  - - '12'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 2\n    title: Prachtig voorstel\n    content: zeker doen!\n
-      \   statetype: 6\n    created_at: 2014-05-02 20:11:03.425027000 Z\n    updated_at:
-      2014-05-02 20:11:03.425027000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
-      \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-02 20:11:03.849463'
-    -
-    -
-    -
-    -
-    - '2014-05-02 20:11:03.850428'
-    - '2014-05-02 20:11:03.850428'
-  - - '13'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 3\n    title: Prachtig voorstel\n    content: zeker doen!\n
-      \   statetype: 6\n    created_at: 2014-05-02 20:12:50.637794000 Z\n    updated_at:
-      2014-05-02 20:12:50.637794000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
-      \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-02 20:12:50.68289'
-    -
-    -
-    -
-    -
-    - '2014-05-02 20:12:50.68362'
-    - '2014-05-02 20:12:50.68362'
-  - - '14'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 3\n    title: Prachtig voorstel\n    content: zeker doen!\n
-      \   statetype: 6\n    created_at: 2014-05-02 20:12:50.637794000 Z\n    updated_at:
-      2014-05-02 20:12:50.637794000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
-      \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-02 20:12:50.792353'
-    -
-    -
-    -
-    -
-    - '2014-05-02 20:12:50.793248'
-    - '2014-05-02 20:12:50.793248'
-  - - '15'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. {EU}(Europese Unie) [www.website.nl](voorbeeld\n      omschrijving)\n
-      \   statetype: 6\n    created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at:
-      2014-05-02 23:00:58.752264000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
-      \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-02 23:00:58.860847'
-    -
-    -
-    -
-    -
-    - '2014-05-02 23:00:58.862372'
-    - '2014-05-02 23:00:58.862372'
-  - - '16'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. {EU}(Europese Unie) f [www.website.nl](voorbeeld\n      omschrijving)\n
-      \   statetype: 6\n    created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at:
-      2014-05-02 23:17:17.547825000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
-      \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-02 23:17:17.563327'
-    -
-    -
-    -
-    -
-    - '2014-05-02 23:17:17.564108'
-    - '2014-05-02 23:17:17.564108'
-  - - '17'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. {EU}(Europese Unie) {EU2}(Europese\n      Unie2) f [www.website.nl](voorbeeld
-      omschrijving)\n    statetype: 6\n    created_at: 2014-05-02 15:18:33.604968000
-      Z\n    updated_at: 2014-05-03 12:09:29.250850000 Z\n    pro_count: 0\n    con_count:
-      0\n    tag_id: \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-03 12:09:29.406825'
-    -
-    -
-    -
-    -
-    - '2014-05-03 12:09:29.407729'
-    - '2014-05-03 12:09:29.407729'
-  - - '18'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 2\n    email: \n    encrypted_password: $2a$10$nZWUR.U60Ro8JK.HglHtTuph7DQPTkX5JRd.e1td4on8nxJvgrByu\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 1\n    current_sign_in_at: 2014-05-03 20:07:58.412805000
-      Z\n    last_sign_in_at: 2014-05-03 20:07:58.412805000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.479540000
-      Z\n    updated_at: 2014-05-03 20:07:58.439816000 Z\n    username: admin\n    unconfirmed_email:
-      \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-03 20:07:58.552005'
-    -
-    -
-    -
-    -
-    - '2014-05-03 20:07:58.553919'
-    - '2014-05-03 20:07:58.553919'
-  - - '19'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. {EU}(Europese Unie) {EU2}(Europese\n      Unie2) of
-      [www.website.nl](voorbeeld omschrijving)\n    statetype: 6\n    created_at:
-      2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-05-05 22:32:13.287191000
-      Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed: false\nmethod_name:
-      :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-05 22:32:13.574035'
-    -
-    -
-    -
-    -
-    - '2014-05-05 22:32:13.577552'
-    - '2014-05-05 22:32:13.577552'
-  - - '20'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. {EU}(Europese Unie) {EU2}(Europese\n      Unie2) of
-      [www.website.nl](voorbeeld omschrijving)\n    statetype: 6\n    created_at:
-      2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-05-05 22:32:13.287191000
-      Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed: false\nmethod_name:
-      :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-05 22:36:50.536421'
-    -
-    -
-    -
-    -
-    - '2014-05-05 22:36:50.537256'
-    - '2014-05-05 22:36:50.537256'
-  - - '21'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. {EU}(Europese Unie) {EU2}(Europese\n      Unie2) of
-      [www.website.nl](voorbeeld omschrijving)\n    statetype: 6\n    created_at:
-      2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-05-05 22:32:13.287191000
-      Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed: false\nmethod_name:
-      :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-05 23:05:17.267911'
-    -
-    -
-    -
-    -
-    - '2014-05-05 23:05:17.268692'
-    - '2014-05-05 23:05:17.268692'
-  - - '22'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 2\n    current_sign_in_at:
-      2014-05-08 12:56:52.274654000 Z\n    last_sign_in_at: 2014-05-02 15:16:42.274101000
-      Z\n    current_sign_in_ip: 10.0.1.18\n    last_sign_in_ip: 127.0.0.1\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-08 12:56:52.285082000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-08 12:56:52.375648'
-    -
-    -
-    -
-    -
-    - '2014-05-08 12:56:52.376664'
-    - '2014-05-08 12:56:52.376664'
-  - - '23'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 3\n    current_sign_in_at:
-      2014-05-08 16:57:15.819927000 Z\n    last_sign_in_at: 2014-05-08 12:56:52.274654000
-      Z\n    current_sign_in_ip: 10.0.1.18\n    last_sign_in_ip: 10.0.1.18\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-08 16:57:15.822966000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-08 16:57:15.831664'
-    -
-    -
-    -
-    -
-    - '2014-05-08 16:57:15.832883'
-    - '2014-05-08 16:57:15.832883'
-  - - '24'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 4\n    current_sign_in_at:
-      2014-05-08 17:16:08.680091000 Z\n    last_sign_in_at: 2014-05-08 16:57:15.819927000
-      Z\n    current_sign_in_ip: 10.0.1.18\n    last_sign_in_ip: 10.0.1.18\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-08 17:16:08.682518000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-08 17:16:08.686649'
-    -
-    -
-    -
-    -
-    - '2014-05-08 17:16:08.687338'
-    - '2014-05-08 17:16:08.687338'
-  - - '25'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 5\n    current_sign_in_at:
-      2014-05-08 17:18:23.501088000 Z\n    last_sign_in_at: 2014-05-08 17:16:08.680091000
-      Z\n    current_sign_in_ip: 127.0.0.1\n    last_sign_in_ip: 10.0.1.18\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-08 17:18:23.503834000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-08 17:18:23.511277'
-    -
-    -
-    -
-    -
-    - '2014-05-08 17:18:23.512609'
-    - '2014-05-08 17:18:23.512609'
-  - - '26'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 5\n    current_sign_in_at:
-      2014-05-08 17:18:23.501088000 Z\n    last_sign_in_at: 2014-05-08 17:16:08.680091000
-      Z\n    current_sign_in_ip: 127.0.0.1\n    last_sign_in_ip: 10.0.1.18\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-08 17:18:23.503834000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-09 15:34:48.557284'
-    -
-    -
-    -
-    -
-    - '2014-05-09 15:34:48.55816'
-    - '2014-05-09 15:34:48.55816'
-  - - '27'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 6\n    current_sign_in_at:
-      2014-05-09 15:34:48.604078000 Z\n    last_sign_in_at: 2014-05-08 17:18:23.501088000
-      Z\n    current_sign_in_ip: 127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-09 15:34:48.606078000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-09 15:34:48.613913'
-    -
-    -
-    -
-    -
-    - '2014-05-09 15:34:48.66198'
-    - '2014-05-09 15:34:48.66198'
-  - - '28'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. {EU}(Europese Unie) {EU2}(Europese\n      Unie2) of
-      [www.website.nl](voorbeeld omschrijving)\n    statetype: 6\n    created_at:
-      2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-05-05 22:32:13.287191000
-      Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed: false\nmethod_name:
-      :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-09 19:36:08.180246'
-    -
-    -
-    -
-    -
-    - '2014-05-09 19:36:08.181219'
-    - '2014-05-09 19:36:08.181219'
-  - - '29'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. {EU}(Europese Unie) of [www.website.nl](voorbeeld\n
-      \     omschrijving). Vergeet {Neelie_Kroes}(Neelie) niet samen met {Marietje}(Marietje)\n
-      \   statetype: 6\n    created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at:
-      2014-05-10 12:07:50.942277000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id:
-      \n    is_trashed: false\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-10 12:07:51.108658'
-    -
-    -
-    -
-    -
-    - '2014-05-10 12:07:51.109653'
-    - '2014-05-10 12:07:51.109653'
-  - - '30'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 7\n    current_sign_in_at:
-      2014-05-11 07:36:42.569998000 Z\n    last_sign_in_at: 2014-05-09 15:34:48.604078000
-      Z\n    current_sign_in_ip: 66.249.81.191\n    last_sign_in_ip: 127.0.0.1\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11 07:36:42.575105000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-11 07:36:42.64585'
-    -
-    -
-    -
-    -
-    - '2014-05-11 07:36:42.647369'
-    - '2014-05-11 07:36:42.647369'
-  - - '31'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 7\n    current_sign_in_at:
-      2014-05-11 07:36:42.569998000 Z\n    last_sign_in_at: 2014-05-09 15:34:48.604078000
-      Z\n    current_sign_in_ip: 66.249.81.191\n    last_sign_in_ip: 127.0.0.1\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11 07:36:42.575105000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-11 19:25:43.908204'
-    -
-    -
-    -
-    -
-    - '2014-05-11 19:25:43.908907'
-    - '2014-05-11 19:25:43.908907'
-  - - '32'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 8\n    current_sign_in_at:
-      2014-05-11 19:25:43.925994000 Z\n    last_sign_in_at: 2014-05-11 07:36:42.569998000
-      Z\n    current_sign_in_ip: 127.0.0.1\n    last_sign_in_ip: 66.249.81.191\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11 19:25:43.929857000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-05-11 19:25:43.935409'
-    -
-    -
-    -
-    -
-    - '2014-05-11 19:25:43.936086'
-    - '2014-05-11 19:25:43.936086'
-  - - '33'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 9\n    current_sign_in_at:
-      2014-05-11 19:48:45.191527000 Z\n    last_sign_in_at: 2014-05-11 19:25:43.925994000
-      Z\n    current_sign_in_ip: 145.97.194.253\n    last_sign_in_ip: 127.0.0.1\n
-      \   created_at: 2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11
-      19:48:45.194127000 Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name:
-      :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-11 19:48:45.198766'
-    -
-    -
-    -
-    -
-    - '2014-05-11 19:48:45.199529'
-    - '2014-05-11 19:48:45.199529'
-  - - '34'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 10\n    current_sign_in_at:
-      2014-05-11 19:56:23.942142000 Z\n    last_sign_in_at: 2014-05-11 19:48:45.191527000
-      Z\n    current_sign_in_ip: 145.97.235.238\n    last_sign_in_ip: 145.97.194.253\n
-      \   created_at: 2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11
-      19:56:23.944684000 Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name:
-      :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-11 19:56:23.949305'
-    -
-    -
-    -
-    -
-    - '2014-05-11 19:56:23.950021'
-    - '2014-05-11 19:56:23.950021'
-  - - '35'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 10\n    current_sign_in_at:
-      2014-05-11 19:56:23.942142000 Z\n    last_sign_in_at: 2014-05-11 19:48:45.191527000
-      Z\n    current_sign_in_ip: 145.97.235.238\n    last_sign_in_ip: 145.97.194.253\n
-      \   created_at: 2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-11
-      19:56:23.944684000 Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name:
-      :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-16 12:57:03.385566'
-    -
-    -
-    -
-    -
-    - '2014-05-16 12:57:03.386582'
-    - '2014-05-16 12:57:03.386582'
-  - - '36'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 11\n    current_sign_in_at:
-      2014-05-16 12:57:03.442788000 Z\n    last_sign_in_at: 2014-05-11 19:56:23.942142000
-      Z\n    current_sign_in_ip: 127.0.0.1\n    last_sign_in_ip: 145.97.235.238\n
-      \   created_at: 2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-05-16
-      12:57:03.445097000 Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name:
-      :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-05-16 12:57:03.451118'
-    -
-    -
-    -
-    -
-    - '2014-05-16 12:57:03.451876'
-    - '2014-05-16 12:57:03.451876'
-  - - '37'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 12\n    current_sign_in_at:
-      2014-09-12 20:01:38.333445000 Z\n    last_sign_in_at: 2014-05-16 12:57:03.442788000
-      Z\n    current_sign_in_ip: 127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-09-12 20:01:38.336759000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-12 20:01:38.392031'
-    -
-    -
-    -
-    -
-    - '2014-09-12 20:01:38.392143'
-    - '2014-09-12 20:01:38.392143'
-  - - '38'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 13\n    current_sign_in_at:
-      2014-09-12 20:26:12.460362000 Z\n    last_sign_in_at: 2014-09-12 20:01:38.333445000
-      Z\n    current_sign_in_ip: 127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-09-12 20:26:12.463238000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-12 20:26:12.468342'
-    -
-    -
-    -
-    -
-    - '2014-09-12 20:26:12.468411'
-    - '2014-09-12 20:26:12.468411'
-  - - '39'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 4\n    email: \n    encrypted_password: $2a$10$wjqZfVcIEaF6t.AgRa6RqumL.ISOUwTZAmIq9EuxfGV10CO/vf4Lq\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 0\n    current_sign_in_at: \n    last_sign_in_at: \n    current_sign_in_ip:
-      \n    last_sign_in_ip: \n    created_at: 2014-09-13 10:04:57.661066000 Z\n    updated_at:
-      2014-09-13 10:04:57.661066000 Z\n    username: maarschaar\n    unconfirmed_email:
-      \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-13 10:04:57.855277'
-    -
-    -
-    -
-    -
-    - '2014-09-13 10:04:57.855383'
-    - '2014-09-13 10:04:57.855383'
-  - - '40'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 4\n    email: \n    encrypted_password: $2a$10$wjqZfVcIEaF6t.AgRa6RqumL.ISOUwTZAmIq9EuxfGV10CO/vf4Lq\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 1\n    current_sign_in_at: 2014-09-13 10:05:15.836322000
-      Z\n    last_sign_in_at: 2014-09-13 10:05:15.836322000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-09-13 10:04:57.661066000
-      Z\n    updated_at: 2014-09-13 10:05:15.839643000 Z\n    username: maarschaar\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-13 10:05:15.870546'
-    -
-    -
-    -
-    -
-    - '2014-09-13 10:05:15.870767'
-    - '2014-09-13 10:05:15.870767'
-  - - '41'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      2014-05-02 15:16:42.228019000 Z\n    sign_in_count: 14\n    current_sign_in_at:
-      2014-09-13 17:27:46.399214000 Z\n    last_sign_in_at: 2014-09-12 20:26:12.460362000
-      Z\n    current_sign_in_ip: 127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at:
-      2014-05-02 15:16:33.323573000 Z\n    updated_at: 2014-09-13 17:27:46.403912000
-      Z\n    username: fletcher91\n    unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-13 17:27:46.502317'
-    -
-    -
-    -
-    -
-    - '2014-09-13 17:27:46.502493'
-    - '2014-09-13 17:27:46.502493'
-  - - '42'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 4\n    email: \n    encrypted_password: $2a$10$wjqZfVcIEaF6t.AgRa6RqumL.ISOUwTZAmIq9EuxfGV10CO/vf4Lq\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 2\n    current_sign_in_at: 2014-09-13 17:28:01.075219000
-      Z\n    last_sign_in_at: 2014-09-13 10:05:15.836322000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-09-13 10:04:57.661066000
-      Z\n    updated_at: 2014-09-13 17:28:01.077939000 Z\n    username: maarschaar\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-13 17:28:01.082845'
-    -
-    -
-    -
-    -
-    - '2014-09-13 17:28:01.08292'
-    - '2014-09-13 17:28:01.08292'
-  - - '43'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. {EU}(Europese Unie) of [www.website.nl](voorbeeld\n
-      \     omschrijving). Vergeet {Neelie_Kroes}(Neelie) niet samen met {Marietje}(Marietje)\n
-      \   created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-09-13
-      21:28:46.960008000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
-      false\n    votes_pro_count: 0\n    votes_con_count: 0\n    votes_neutral_count:
-      0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
-      0\n    opinion_con_count: 0\n    votes_abstain_count: 0\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-13 21:28:47.434476'
-    -
-    -
-    -
-    -
-    - '2014-09-13 21:28:47.434581'
-    - '2014-09-13 21:28:47.434581'
-  - - '44'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 3\n    title: Prachtig voorstel\n    content: zeker doen!\n
-      \   created_at: 2014-05-02 20:12:50.637794000 Z\n    updated_at: 2014-09-13
-      21:29:09.574489000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
-      false\n    votes_pro_count: 0\n    votes_con_count: 0\n    votes_neutral_count:
-      0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
-      0\n    opinion_con_count: 0\n    votes_abstain_count: 0\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-13 21:29:09.707795'
-    -
-    -
-    -
-    -
-    - '2014-09-13 21:29:09.707877'
-    - '2014-09-13 21:29:09.707877'
-  - - '45'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 2\n    title: Prachtig voorstel\n    content: zeker doen!\n
-      \   created_at: 2014-05-02 20:11:03.425027000 Z\n    updated_at: 2014-09-14
-      15:12:15.298788000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
-      false\n    votes_pro_count: 1\n    votes_con_count: 0\n    votes_neutral_count:
-      0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
-      0\n    opinion_con_count: 0\n    votes_abstain_count: -1\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-14 15:12:15.370575'
-    -
-    -
-    -
-    -
-    - '2014-09-14 15:12:15.3707'
-    - '2014-09-14 15:12:15.3707'
-  - - '46'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 2\n    title: Prachtig voorstel\n    content: zeker doen!\n
-      \   created_at: 2014-05-02 20:11:03.425027000 Z\n    updated_at: 2014-09-14
-      15:12:35.416444000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
-      false\n    votes_pro_count: 0\n    votes_con_count: 1\n    votes_neutral_count:
-      0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
-      0\n    opinion_con_count: 0\n    votes_abstain_count: -1\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-14 15:12:35.42817'
-    -
-    -
-    -
-    -
-    - '2014-09-14 15:12:35.428235'
-    - '2014-09-14 15:12:35.428235'
-  - - '47'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 2\n    title: Prachtig voorstel\n    content: zeker doen!\n
-      \   created_at: 2014-05-02 20:11:03.425027000 Z\n    updated_at: 2014-09-14
-      15:12:38.720336000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
-      false\n    votes_pro_count: 0\n    votes_con_count: 0\n    votes_neutral_count:
-      1\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
-      0\n    opinion_con_count: 0\n    votes_abstain_count: -1\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-14 15:12:38.735558'
-    -
-    -
-    -
-    -
-    - '2014-09-14 15:12:38.735618'
-    - '2014-09-14 15:12:38.735618'
-  - - '48'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 2\n    title: Prachtig voorstel\n    content: zeker doen!\n
-      \   created_at: 2014-05-02 20:11:03.425027000 Z\n    updated_at: 2014-09-14
-      15:12:44.128478000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
-      false\n    votes_pro_count: 1\n    votes_con_count: 0\n    votes_neutral_count:
-      0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
-      0\n    opinion_con_count: 0\n    votes_abstain_count: -1\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-14 15:12:44.141076'
-    -
-    -
-    -
-    -
-    - '2014-09-14 15:12:44.141161'
-    - '2014-09-14 15:12:44.141161'
-  - - '49'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 2\n    title: Prachtig voorstel\n    content: zeker doen!\n
-      \   created_at: 2014-05-02 20:11:03.425027000 Z\n    updated_at: 2014-09-14
-      15:12:47.459294000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
-      false\n    votes_pro_count: 0\n    votes_con_count: 1\n    votes_neutral_count:
-      0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
-      0\n    opinion_con_count: 0\n    votes_abstain_count: -1\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-14 15:12:47.472087'
-    -
-    -
-    -
-    -
-    - '2014-09-14 15:12:47.47216'
-    - '2014-09-14 15:12:47.47216'
-  - - '50'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 14\n    current_sign_in_at: 2014-09-13 17:27:46.399214000
-      Z\n    last_sign_in_at: 2014-09-12 20:26:12.460362000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-14 18:13:52.171263000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 18:13:52.215754'
-    -
-    -
-    -
-    -
-    - '2014-09-14 18:13:52.215894'
-    - '2014-09-14 18:13:52.215894'
-  - - '51'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 15\n    current_sign_in_at: 2014-09-14 18:13:57.964942000
-      Z\n    last_sign_in_at: 2014-09-13 17:27:46.399214000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-14 18:13:57.968089000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 18:13:57.973346'
-    -
-    -
-    -
-    -
-    - '2014-09-14 18:13:57.973433'
-    - '2014-09-14 18:13:57.973433'
-  - - '52'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 16\n    current_sign_in_at: 2014-09-14 18:20:08.150906000
-      Z\n    last_sign_in_at: 2014-09-14 18:13:57.964942000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-14 18:20:08.154302000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 18:20:08.179338'
-    -
-    -
-    -
-    -
-    - '2014-09-14 18:20:08.179445'
-    - '2014-09-14 18:20:08.179445'
-  - - '53'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 17\n    current_sign_in_at: 2014-09-14 18:20:30.486005000
-      Z\n    last_sign_in_at: 2014-09-14 18:20:08.150906000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-14 18:20:30.489030000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 18:20:30.493706'
-    -
-    -
-    -
-    -
-    - '2014-09-14 18:20:30.493767'
-    - '2014-09-14 18:20:30.493767'
-  - - '54'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 18\n    current_sign_in_at: 2014-09-14 18:35:43.009525000
-      Z\n    last_sign_in_at: 2014-09-14 18:20:30.486005000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-14 18:35:43.013021000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 18:35:43.045434'
-    -
-    -
-    -
-    -
-    - '2014-09-14 18:35:43.045702'
-    - '2014-09-14 18:35:43.045702'
-  - - '55'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 19\n    current_sign_in_at: 2014-09-14 19:02:30.780721000
-      Z\n    last_sign_in_at: 2014-09-14 18:35:43.009525000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-14 19:02:30.783891000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 19:02:30.808416'
-    -
-    -
-    -
-    -
-    - '2014-09-14 19:02:30.808529'
-    - '2014-09-14 19:02:30.808529'
-  - - '56'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 19\n    current_sign_in_at: 2014-09-14 19:02:30.780721000
-      Z\n    last_sign_in_at: 2014-09-14 18:35:43.009525000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-14 19:02:30.783891000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 19:02:36.224367'
-    -
-    -
-    -
-    -
-    - '2014-09-14 19:02:36.224452'
-    - '2014-09-14 19:02:36.224452'
-  - - '57'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 3\n    email: \n    encrypted_password: $2a$10$COLVATzZopFlRBoLHdIkC.Ww/ZCQOUBrAS7SqoIVYJIQBPRdKPtNm\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 1\n    current_sign_in_at: 2014-09-14 19:03:16.705308000
-      Z\n    last_sign_in_at: 2014-09-14 19:03:16.705308000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.587219000
-      Z\n    updated_at: 2014-09-14 19:03:16.707967000 Z\n    username: joep\n    unconfirmed_email:
-      \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 19:03:16.713494'
-    -
-    -
-    -
-    -
-    - '2014-09-14 19:03:16.713563'
-    - '2014-09-14 19:03:16.713563'
-  - - '58'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 3\n    email: \n    encrypted_password: $2a$10$COLVATzZopFlRBoLHdIkC.Ww/ZCQOUBrAS7SqoIVYJIQBPRdKPtNm\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 1\n    current_sign_in_at: 2014-09-14 19:03:16.705308000
-      Z\n    last_sign_in_at: 2014-09-14 19:03:16.705308000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.587219000
-      Z\n    updated_at: 2014-09-14 19:03:16.707967000 Z\n    username: joep\n    unconfirmed_email:
-      \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 22:38:11.923621'
-    -
-    -
-    -
-    -
-    - '2014-09-14 22:38:11.923742'
-    - '2014-09-14 22:38:11.923742'
-  - - '59'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 3\n    email: \n    encrypted_password: $2a$10$COLVATzZopFlRBoLHdIkC.Ww/ZCQOUBrAS7SqoIVYJIQBPRdKPtNm\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 2\n    current_sign_in_at: 2014-09-14 22:38:21.568731000
-      Z\n    last_sign_in_at: 2014-09-14 19:03:16.705308000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.587219000
-      Z\n    updated_at: 2014-09-14 22:38:21.572016000 Z\n    username: joep\n    unconfirmed_email:
-      \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 22:38:21.577151'
-    -
-    -
-    -
-    -
-    - '2014-09-14 22:38:21.577225'
-    - '2014-09-14 22:38:21.577225'
-  - - '60'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 4\n    title: Speciaal voor utrecht\n    content: Om
-      de scoping van stellingen te testen\n    created_at: 2014-09-14 23:09:06.059991000
-      Z\n    updated_at: 2014-09-14 23:09:06.059991000 Z\n    pro_count: 0\n    con_count:
-      0\n    tag_id: \n    is_trashed: false\n    votes_pro_count: 0\n    votes_con_count:
-      0\n    votes_neutral_count: 0\n    argument_pro_count: 0\n    argument_con_count:
-      0\n    opinion_pro_count: 0\n    opinion_con_count: 0\n    votes_abstain_count:
-      0\n    organisation_id: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 23:09:06.273909'
-    -
-    -
-    -
-    -
-    - '2014-09-14 23:09:06.274002'
-    - '2014-09-14 23:09:06.274002'
-  - - '61'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 4\n    title: Speciaal voor utrecht\n    content: Om
-      de scoping van stellingen te testen\n    created_at: 2014-09-14 23:09:06.059991000
-      Z\n    updated_at: 2014-09-14 23:09:06.059991000 Z\n    pro_count: 0\n    con_count:
-      0\n    tag_id: \n    is_trashed: false\n    votes_pro_count: 0\n    votes_con_count:
-      0\n    votes_neutral_count: 0\n    argument_pro_count: 0\n    argument_con_count:
-      0\n    opinion_pro_count: 0\n    opinion_con_count: 0\n    votes_abstain_count:
-      0\n    organisation_id: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 23:09:06.47421'
-    -
-    -
-    -
-    -
-    - '2014-09-14 23:09:06.474322'
-    - '2014-09-14 23:09:06.474322'
-  - - '62'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 5\n    title: Deze zou ook voor utrecht zijn\n    content:
-      'Dan werkt de auto scoping in 1x : )'\n    created_at: 2014-09-14 23:20:20.873066000
-      Z\n    updated_at: 2014-09-14 23:20:20.873066000 Z\n    pro_count: 0\n    con_count:
-      0\n    tag_id: \n    is_trashed: false\n    votes_pro_count: 0\n    votes_con_count:
-      0\n    votes_neutral_count: 0\n    argument_pro_count: 0\n    argument_con_count:
-      0\n    opinion_pro_count: 0\n    opinion_con_count: 0\n    votes_abstain_count:
-      0\n    organisation_id: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 23:20:20.899122'
-    -
-    -
-    -
-    -
-    - '2014-09-14 23:20:20.899219'
-    - '2014-09-14 23:20:20.899219'
-  - - '63'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 5\n    title: Deze zou ook voor utrecht zijn\n    content:
-      'Dan werkt de auto scoping in 1x : )'\n    created_at: 2014-09-14 23:20:20.873066000
-      Z\n    updated_at: 2014-09-14 23:20:21.098038000 Z\n    pro_count: 0\n    con_count:
-      0\n    tag_id: \n    is_trashed: false\n    votes_pro_count: 0\n    votes_con_count:
-      0\n    votes_neutral_count: 0\n    argument_pro_count: 0\n    argument_con_count:
-      0\n    opinion_pro_count: 0\n    opinion_con_count: 0\n    votes_abstain_count:
-      0\n    organisation_id: 1\nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-14 23:20:21.114446'
-    -
-    -
-    -
-    -
-    - '2014-09-14 23:20:21.114539'
-    - '2014-09-14 23:20:21.114539'
-  - - '64'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 1\n    title: Test2\n    content: Zo veel belangrijke
-      dingen, zo weinig tijd. {EU}(Europese Unie) of [www.website.nl](voorbeeld\n
-      \     omschrijving). Vergeet {Neelie_Kroes}(Neelie) niet samen met {Marietje}(Marietje)\n
-      \   created_at: 2014-05-02 15:18:33.604968000 Z\n    updated_at: 2014-09-16
-      07:16:35.602222000 Z\n    pro_count: 0\n    con_count: 0\n    tag_id: \n    is_trashed:
-      false\n    votes_pro_count: 1\n    votes_con_count: 0\n    votes_neutral_count:
-      0\n    argument_pro_count: 0\n    argument_con_count: 0\n    opinion_pro_count:
-      0\n    opinion_con_count: 0\n    votes_abstain_count: -1\n    organisation_id:
-      \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-16 07:16:35.734966'
-    -
-    -
-    -
-    -
-    - '2014-09-16 07:16:35.737407'
-    - '2014-09-16 07:16:35.737407'
-  - - '65'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 20\n    current_sign_in_at: 2014-09-19 18:47:54.827262000
-      Z\n    last_sign_in_at: 2014-09-14 19:02:30.780721000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-19 18:47:54.830831000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-19 18:47:54.861023'
-    -
-    -
-    -
-    -
-    - '2014-09-19 18:47:54.861148'
-    - '2014-09-19 18:47:54.861148'
-  - - '66'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 21\n    current_sign_in_at: 2014-09-22 17:44:56.835025000
-      Z\n    last_sign_in_at: 2014-09-19 18:47:54.827262000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-22 17:44:56.840886000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-22 17:44:56.885575'
-    -
-    -
-    -
-    -
-    - '2014-09-22 17:44:56.885766'
-    - '2014-09-22 17:44:56.885766'
-  - - '67'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 22\n    current_sign_in_at: 2014-09-22 19:51:32.455646000
-      Z\n    last_sign_in_at: 2014-09-22 17:44:56.835025000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-22 19:51:32.458392000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-22 19:51:32.466612'
-    -
-    -
-    -
-    -
-    - '2014-09-22 19:51:32.466802'
-    - '2014-09-22 19:51:32.466802'
-  - - '68'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 6\n    title: Weg tot de wetenschap volgooien met zonnepanelen\n
-      \   content: Iets met dat wegen toch onnodig zijn.\n    created_at: 2014-09-23
-      09:27:32.048098000 Z\n    updated_at: 2014-09-23 09:27:32.048098000 Z\n    pro_count:
-      0\n    con_count: 0\n    tag_id: \n    is_trashed: false\n    votes_pro_count:
-      0\n    votes_con_count: 0\n    votes_neutral_count: 0\n    argument_pro_count:
-      0\n    argument_con_count: 0\n    opinion_pro_count: 0\n    opinion_con_count:
-      0\n    votes_abstain_count: 0\n    organisation_id: \nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-23 09:27:32.503921'
-    -
-    -
-    -
-    -
-    - '2014-09-23 09:27:32.504078'
-    - '2014-09-23 09:27:32.504078'
-  - - '69'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:Statement\n
-      \ attributes:\n    id: 6\n    title: Weg tot de wetenschap volgooien met zonnepanelen\n
-      \   content: Iets met dat wegen toch onnodig zijn.\n    created_at: 2014-09-23
-      09:27:32.048098000 Z\n    updated_at: 2014-09-23 09:27:32.594278000 Z\n    pro_count:
-      0\n    con_count: 0\n    tag_id: \n    is_trashed: false\n    votes_pro_count:
-      0\n    votes_con_count: 0\n    votes_neutral_count: 0\n    argument_pro_count:
-      0\n    argument_con_count: 0\n    opinion_pro_count: 0\n    opinion_con_count:
-      0\n    votes_abstain_count: 0\n    organisation_id: 1\nmethod_name: :solr_index_without_delay\nargs:
-      []\n"
-    -
-    - '2014-09-23 09:27:32.616528'
-    -
-    -
-    -
-    -
-    - '2014-09-23 09:27:32.616611'
-    - '2014-09-23 09:27:32.616611'
-  - - '70'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 23\n    current_sign_in_at: 2014-09-24 14:31:48.901129000
-      Z\n    last_sign_in_at: 2014-09-22 19:51:32.455646000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-24 14:31:48.905407000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-24 14:31:48.952085'
-    -
-    -
-    -
-    -
-    - '2014-09-24 14:31:48.952219'
-    - '2014-09-24 14:31:48.952219'
-  - - '71'
-    - '0'
-    - '0'
-    - "--- !ruby/object:Delayed::PerformableMethod\nobject: !ruby/ActiveRecord:User\n
-      \ attributes:\n    id: 1\n    email: \n    encrypted_password: $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju\n
-      \   reset_password_token: \n    reset_password_sent_at: \n    remember_created_at:
-      \n    sign_in_count: 24\n    current_sign_in_at: 2014-09-24 14:47:56.015407000
-      Z\n    last_sign_in_at: 2014-09-24 14:31:48.901129000 Z\n    current_sign_in_ip:
-      127.0.0.1\n    last_sign_in_ip: 127.0.0.1\n    created_at: 2014-05-02 15:16:33.323573000
-      Z\n    updated_at: 2014-09-24 14:47:56.018640000 Z\n    username: fletcher91\n
-      \   unconfirmed_email: \nmethod_name: :solr_index_without_delay\nargs: []\n"
-    -
-    - '2014-09-24 14:47:56.04487'
-    -
-    -
-    -
-    -
-    - '2014-09-24 14:47:56.044988'
-    - '2014-09-24 14:47:56.044988'
-
----
 arguments:
   columns:
   - id
   - content
-  - statement_id
+  - motion_id
   - pro
   - created_at
   - updated_at
@@ -1493,7 +13,9 @@ arguments:
   - votes_pro_count
   - comments_count
   - votes_abstain_count
-  records:
+  - creator_id
+  - votes_con_count
+  records: 
   - - '1'
     - Das toch altijd zo?
     - '1'
@@ -1504,6 +26,8 @@ arguments:
     - false
     - '0'
     - '0'
+    - '0'
+    - 
     - '0'
   - - '2'
     - Wie wil[http://www.youtube.com/watch?v=HkDqNLLj6fU](never) er nou zulke[http://www.youtube.com/watch?v=H8UAcoTotnM](gonna)
@@ -1517,7 +41,9 @@ arguments:
     - false
     - '1'
     - '0'
-    - '-1'
+    - "-1"
+    - 
+    - '0'
   - - '3'
     - Dan gaan al die zonnepanelen toch kapot!
     - '6'
@@ -1528,7 +54,638 @@ arguments:
     - false
     - '1'
     - '0'
-    - '-1'
+    - "-1"
+    - 
+    - '0'
+  - - '4'
+    - Lorem ipsum et delorum est.
+    - '18'
+    - true
+    - '2014-10-30 14:06:55.517729'
+    - '2014-11-07 16:32:16.967172'
+    - Argument
+    - false
+    - '1'
+    - '0'
+    - "-1"
+    - '1'
+    - '0'
+  - - '5'
+    - Wat moeten zaken zoals boten of het water zelf dan aan, dat zijn immers geen
+      waterwerken
+    - '21'
+    - false
+    - '2014-10-30 14:56:01.039812'
+    - '2014-10-30 14:56:01.039812'
+    - Nog steeds uitsluitend
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '1'
+    - '0'
+  - - '6'
+    - Iets met drop
+    - '21'
+    - false
+    - '2014-11-19 13:48:46.485682'
+    - '2014-11-19 13:48:46.485682'
+    - Test!
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '1'
+    - '0'
+
+---
+questions:
+  columns:
+  - id
+  - title
+  - content
+  - forum_id
+  - creator_id
+  - is_trashed
+  - motions_count
+  - votes_pro_count
+  - votes_con_count
+  - created_at
+  - updated_at
+  records: 
+  - - '1'
+    - Appels lijken te veel op peren.
+    - "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+      when an unknown printer took a galley of type and scrambled it to make a type
+      specimen book. It has survived not only five centuries, but also the leap into
+      electronic typesetting, remaining essentially unchanged. It was popularised
+      in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+      and more recently with desktop publishing software like Aldus PageMaker including
+      versions of Lorem Ipsum.\n\nIt is a long established fact that a reader will
+      be distracted by the readable content of a page when looking at its layout.
+      The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+      of letters, as opposed to using 'Content here, content here', making it look
+      like readable English. Many desktop publishing packages and web page editors
+      now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'
+      will uncover many web sites still in their infancy. Various versions have evolved
+      over the years, sometimes by accident, sometimes on purpose (injected humour
+      and the like).\n\n \nContrary to popular belief, Lorem Ipsum is not simply random
+      text. It has roots in a piece of classical Latin literature from 45 BC, making
+      it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
+      College in Virginia, looked up one of the more obscure Latin words, consectetur,
+      from a Lorem Ipsum passage, and going through the cites of the word in classical
+      literature, discovered the undoubtable source. Lorem Ipsum comes from sections
+      1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good
+      and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory
+      of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
+      \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\n\nThe
+      standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
+      interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\"
+      by Cicero are also r"
+    - '2'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '2014-10-30 12:28:58.034174'
+    - '2014-10-30 12:28:58.034174'
+  - - '2'
+    - Is de dom te hoog?
+    - We hebben altijd de mogelijkheid om m gewoon wat korter te maken.
+    - '2'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '2014-10-30 14:16:19.11421'
+    - '2014-10-30 14:16:19.11421'
+  - - '5'
+    - Meer of minder regen?
+    - It is a long established fact that a reader will be distracted by the readable
+      content of a page when looking at its layout. The point of using Lorem Ipsum
+      is that it has a more-or-less normal distribution of letters, as opposed to
+      using 'Content here, content here', making it look like readable English. Many
+      desktop publishing packages and web page editors now use Lorem Ipsum as their
+      default model text, and a search for 'lorem ipsum' will uncover many web sites
+      still in their infancy. Various versions have evolved over the years, sometimes
+      by accident, sometimes on purpose (injected humour and the like).
+    - '2'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '2014-10-30 14:29:13.691709'
+    - '2014-10-30 14:29:13.691709'
+  - - '6'
+    - Betere naam voor Amsterdam?
+    - Sommigen vinden het discriminerend dat slechts dammen in de naam zijn opgenomen,
+      terwijl de stad bekend staat om haar relatie met water.
+    - '2'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '2014-10-30 14:54:56.478052'
+    - '2014-10-30 14:54:56.478052'
+  - - '7'
+    - Het vraagstuk van Utrecht
+    - Hoe moet dat nou?
+    - '2'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '2014-11-06 11:51:39.290948'
+    - '2014-11-06 11:51:39.290948'
+
+---
+question_answers:
+  columns:
+  - id
+  - question_id
+  - motion_id
+  - votes_pro_count
+  - votes_con_count
+  - created_at
+  - updated_at
+  records: 
+  - - '1'
+    - '1'
+    - '16'
+    - '0'
+    - '0'
+    - '2014-10-30 12:28:58.034174'
+    - '2014-10-30 12:28:58.034174'
+  - - '2'
+    - '1'
+    - '18'
+    - '0'
+    - '0'
+    - '2014-10-30 13:58:53.150422'
+    - '2014-10-30 13:58:53.150422'
+  - - '3'
+    - '5'
+    - '19'
+    - '0'
+    - '0'
+    - '2014-10-30 14:31:12.403028'
+    - '2014-10-30 14:31:12.403028'
+  - - '4'
+    - '5'
+    - '20'
+    - '0'
+    - '0'
+    - '2014-10-30 14:31:44.547319'
+    - '2014-10-30 14:31:44.547319'
+  - - '5'
+    - '6'
+    - '21'
+    - '0'
+    - '0'
+    - '2014-10-30 14:55:11.843296'
+    - '2014-10-30 14:55:11.843296'
+  - - '6'
+    - '6'
+    - '23'
+    - '0'
+    - '0'
+    - '2014-11-19 14:13:07.785694'
+    - '2014-11-19 14:13:07.785694'
+  - - '7'
+    - '6'
+    - '24'
+    - '0'
+    - '0'
+    - '2014-11-19 14:14:06.459802'
+    - '2014-11-19 14:14:06.459802'
+
+---
+opinions:
+  columns:
+  - id
+  - title
+  - content
+  - is_trashed
+  - pro
+  - motion_id
+  - created_at
+  - updated_at
+  - votes_pro_count
+  - comments_count
+  - votes_abstain_count
+  - creator_id
+  records: 
+  - - '1'
+    - Sdfdsfsdfdsa
+    - gsdgsavsavdsagfewfergasdfds
+    - false
+    - false
+    - '18'
+    - '2014-11-07 09:52:38.415296'
+    - '2014-11-07 09:52:38.415296'
+    - '0'
+    - '0'
+    - '0'
+    - '1'
+  - - '2'
+    - Fdsafdsagfdbgdfsgfdsg sd dsa dsfsdaf s
+    - fds rehytkuy kikhik  kg kjhkyut
+    - false
+    - true
+    - '18'
+    - '2014-11-07 09:52:46.600083'
+    - '2014-11-07 09:52:46.600083'
+    - '0'
+    - '0'
+    - '0'
+    - '1'
+  - - '3'
+    - Fdsafdsagfdbgdfsgfdsg sd dsa dsfsdaf s
+    - fds rehytkuy kikhik  kg kjhkyut
+    - false
+    - true
+    - '18'
+    - '2014-11-07 09:52:46.822452'
+    - '2014-11-07 09:52:46.822452'
+    - '0'
+    - '0'
+    - '0'
+    - '1'
+  - - '4'
+    - Jghf j g  fnbnvn v vcnc n
+    - y trh trejyrt d jdyerte dfhjtsde tesr fd hbsearhtnrt
+    - false
+    - false
+    - '18'
+    - '2014-11-07 09:52:55.008453'
+    - '2014-11-07 09:52:55.008453'
+    - '0'
+    - '0'
+    - '0'
+    - '1'
+
+---
+pages:
+  columns:
+  - id
+  - name
+  - created_at
+  - updated_at
+  - slug
+  - web_url
+  - profile_id
+  records: 
+  - - '1'
+    - Gemeente Utrecht
+    - '2014-11-19 12:00:47.935275'
+    - '2014-11-19 12:00:47.935275'
+    - utrecht
+    - ''
+    - '8'
+
+---
+forums:
+  columns:
+  - id
+  - name
+  - page_id
+  - questions_count
+  - motions_count
+  - memberships_count
+  - profile_photo
+  - cover_photo
+  - created_at
+  - updated_at
+  - slug
+  - web_url
+  records: 
+  - - '2'
+    - Gemeente Utrecht
+    - '1'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+    - '2014-11-19 13:23:03.345124'
+    - '2014-11-19 13:23:03.345124'
+    - utrecht
+    - utrecht
+
+---
+profiles_roles:
+  columns:
+  - id
+  - profile_id
+  - role_id
+  - created_at
+  - updated_at
+  records: 
+  - - '1'
+    - '4'
+    - '2'
+    - '2014-11-18 18:37:04.853365'
+    - '2014-11-18 18:37:04.853365'
+
+---
+users:
+  columns:
+  - id
+  - email
+  - encrypted_password
+  - reset_password_token
+  - reset_password_sent_at
+  - remember_created_at
+  - sign_in_count
+  - current_sign_in_at
+  - last_sign_in_at
+  - current_sign_in_ip
+  - last_sign_in_ip
+  - created_at
+  - updated_at
+  - username
+  - unconfirmed_email
+  - profile_id
+  records: 
+  - - '1'
+    - 
+    - "$2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju"
+    - 
+    - 
+    - 
+    - '46'
+    - '2014-11-11 17:03:02.841985'
+    - '2014-11-06 10:52:32.986639'
+    - 127.0.0.1
+    - 127.0.0.1
+    - '2014-05-02 15:16:33.323573'
+    - '2014-11-11 17:03:02.845985'
+    - fletcher91
+    - 
+    - '4'
+  - - '2'
+    - 
+    - "$2a$10$nZWUR.U60Ro8JK.HglHtTuph7DQPTkX5JRd.e1td4on8nxJvgrByu"
+    - 
+    - 
+    - 
+    - '1'
+    - '2014-05-03 20:07:58.412805'
+    - '2014-05-03 20:07:58.412805'
+    - 127.0.0.1
+    - 127.0.0.1
+    - '2014-05-02 15:16:33.47954'
+    - '2014-05-03 20:07:58.439816'
+    - admin
+    - 
+    - 
+  - - '3'
+    - 
+    - "$2a$10$COLVATzZopFlRBoLHdIkC.Ww/ZCQOUBrAS7SqoIVYJIQBPRdKPtNm"
+    - 
+    - 
+    - 
+    - '2'
+    - '2014-09-14 22:38:21.568731'
+    - '2014-09-14 19:03:16.705308'
+    - 127.0.0.1
+    - 127.0.0.1
+    - '2014-05-02 15:16:33.587219'
+    - '2014-09-14 22:38:21.572016'
+    - joep
+    - 
+    - 
+  - - '4'
+    - 
+    - "$2a$10$wjqZfVcIEaF6t.AgRa6RqumL.ISOUwTZAmIq9EuxfGV10CO/vf4Lq"
+    - 
+    - 
+    - 
+    - '2'
+    - '2014-09-13 17:28:01.075219'
+    - '2014-09-13 10:05:15.836322'
+    - 127.0.0.1
+    - 127.0.0.1
+    - '2014-09-13 10:04:57.661066'
+    - '2014-09-13 17:28:01.077939'
+    - maarschaar
+    - 
+    - 
+
+---
+comments:
+  columns:
+  - id
+  - commentable_id
+  - commentable_type
+  - title
+  - body
+  - subject
+  - profile_id
+  - parent_id
+  - lft
+  - rgt
+  - created_at
+  - updated_at
+  - is_trashed
+  records: 
+  - - '1'
+    - '5'
+    - Argument
+    - ''
+    - Maar je eerste referentie is niet onderbouwd.
+    - ''
+    - '4'
+    - 
+    - '1'
+    - '4'
+    - '2014-09-16 07:18:36.289516'
+    - '2014-09-16 07:19:31.757681'
+    - false
+  - - '2'
+    - '2'
+    - Argument
+    - ''
+    - Kijk is goed droplul! Er staat duidelijk literatuur over de geschiedenis van
+      drop.
+    - ''
+    - '4'
+    - '1'
+    - '2'
+    - '3'
+    - '2014-09-16 07:19:31.731024'
+    - '2014-09-16 07:19:31.757681'
+    - false
+  - - '3'
+    - '3'
+    - Argument
+    - ''
+    - Er is toch een subsidiepot.
+    - ''
+    - '4'
+    - 
+    - '5'
+    - '14'
+    - '2014-09-23 09:28:24.219826'
+    - '2014-09-23 09:29:50.683623'
+    - false
+  - - '4'
+    - '3'
+    - Argument
+    - ''
+    - Ja maar das van het volk!
+    - ''
+    - '4'
+    - '3'
+    - '6'
+    - '13'
+    - '2014-09-23 09:28:42.628808'
+    - '2014-09-23 09:29:50.683623'
+    - false
+  - - '5'
+    - '3'
+    - Argument
+    - ''
+    - Wie maakt het volk nou wat uit..
+    - ''
+    - '4'
+    - '4'
+    - '7'
+    - '12'
+    - '2014-09-23 09:28:58.979386'
+    - '2014-09-23 09:29:50.683623'
+    - false
+  - - '6'
+    - '3'
+    - Argument
+    - ''
+    - Jij bent toch onderdeel van het volk!
+    - ''
+    - '4'
+    - '5'
+    - '8'
+    - '11'
+    - '2014-09-23 09:29:36.600256'
+    - '2014-09-23 09:29:50.683623'
+    - false
+  - - '7'
+    - '3'
+    - Argument
+    - ''
+    - Nee, ik ben wereldburger
+    - ''
+    - '4'
+    - '6'
+    - '9'
+    - '10'
+    - '2014-09-23 09:29:50.660527'
+    - '2014-09-23 09:29:50.683623'
+    - false
+  - - '8'
+    - '4'
+    - Argument
+    - ''
+    - 1fsdafdsfsdfsa
+    - ''
+    - '4'
+    - 
+    - '15'
+    - '24'
+    - '2014-11-19 16:14:04.747502'
+    - '2014-11-19 16:14:42.25271'
+    - false
+  - - '9'
+    - '4'
+    - Argument
+    - ''
+    - 2dfsafsdfsadfsda
+    - ''
+    - '4'
+    - 
+    - '25'
+    - '26'
+    - '2014-11-19 16:14:08.801098'
+    - '2014-11-19 16:14:42.25271'
+    - false
+  - - '10'
+    - '4'
+    - Argument
+    - ''
+    - 1.2sdafdsagdsagsa
+    - ''
+    - '4'
+    - '8'
+    - '16'
+    - '21'
+    - '2014-11-19 16:14:14.612867'
+    - '2014-11-19 16:14:34.868143'
+    - false
+  - - '11'
+    - '4'
+    - Argument
+    - ''
+    - 1.2.1bfgdbfgsddsfgdsfgds
+    - ''
+    - '4'
+    - '10'
+    - '17'
+    - '18'
+    - '2014-11-19 16:14:25.192646'
+    - '2014-11-19 16:14:25.210013'
+    - false
+  - - '12'
+    - '4'
+    - Argument
+    - ''
+    - 1.2.2fdsavasv
+    - ''
+    - '4'
+    - '10'
+    - '19'
+    - '20'
+    - '2014-11-19 16:14:34.853277'
+    - '2014-11-19 16:14:34.868143'
+    - false
+  - - '13'
+    - '4'
+    - Argument
+    - ''
+    - 1.3bdsbdssfdg
+    - ''
+    - '4'
+    - '8'
+    - '22'
+    - '23'
+    - '2014-11-19 16:14:42.237446'
+    - '2014-11-19 16:14:42.25271'
+    - false
+
+---
+memberships:
+  columns:
+  - id
+  - profile_id
+  - forum_id
+  - role
+  records: 
+  - - '20'
+    - '7'
+    - '1'
+    - '0'
+  - - '25'
+    - '4'
+    - '1'
+    - '0'
+  - - '26'
+    - '4'
+    - '5'
+    - '2'
 
 ---
 roles:
@@ -1539,28 +696,28 @@ roles:
   - resource_type
   - created_at
   - updated_at
-  records:
+  records: 
   - - '1'
     - user
-    -
-    -
+    - 
+    - 
     - '2014-05-02 15:16:33.25666'
     - '2014-05-02 15:16:33.25666'
   - - '2'
     - staff
-    -
-    -
+    - 
+    - 
     - '2014-05-02 15:16:33.644588'
     - '2014-05-02 15:16:33.644588'
   - - '3'
     - admin
-    -
-    -
+    - 
+    - 
     - '2014-05-02 15:16:33.706086'
     - '2014-05-02 15:16:33.706086'
   - - '4'
     - mod
-    -
+    - 
     - Statement
     - '2014-05-02 15:18:29.718852'
     - '2014-05-02 15:18:29.718852'
@@ -1606,46 +763,12 @@ roles:
     - Statement
     - '2014-09-23 09:27:32.529043'
     - '2014-09-23 09:27:32.529043'
-
----
-profiles:
-  columns:
-  - id
-  - user_id
-  - name
-  - about
-  - picture
-  - created_at
-  - updated_at
-  records:
-  - - '4'
-    - '1'
-    - Thom van Kalkeren
-    - I'm the coder!
-    - http://www.wthex.com/images/coolcookie.gif
-    - '2014-05-02 15:16:33.722659'
-    - '2014-09-22 20:58:27.583184'
-  - - '5'
-    - '2'
-    - Administrator
-    - ''
-    - ''
-    - '2014-05-02 15:16:33.734038'
-    - '2014-09-22 21:05:44.980133'
-  - - '6'
-    - '3'
-    - Joep
-    - argu designer
-    - https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg
-    - '2014-05-02 15:16:33.745944'
-    - '2014-09-22 21:05:19.155738'
-  - - '7'
-    - '4'
-    - ''
-    - ''
-    - ''
-    - '2014-09-13 10:04:57.677249'
-    - '2014-09-22 21:04:31.170125'
+  - - '12'
+    - mod
+    - '15'
+    - Statement
+    - '2014-10-30 13:48:29.32985'
+    - '2014-10-30 13:48:29.32985'
 
 ---
 sessions:
@@ -1655,7 +778,7 @@ sessions:
   - data
   - created_at
   - updated_at
-  records:
+  records: 
   - - '3'
     - 71c065c49ac5dd1071239377fc952997
     - |
@@ -1892,121 +1015,561 @@ sessions:
       Z0h3PQY7AEY=
     - '2014-09-24 14:47:56.073466'
     - '2014-09-24 14:48:02.622699'
-
----
-users:
-  columns:
-  - id
-  - email
-  - encrypted_password
-  - reset_password_token
-  - reset_password_sent_at
-  - remember_created_at
-  - sign_in_count
-  - current_sign_in_at
-  - last_sign_in_at
-  - current_sign_in_ip
-  - last_sign_in_ip
-  - created_at
-  - updated_at
-  - username
-  - unconfirmed_email
-  records:
-  - - '1'
-    -
-    - $2a$10$ADM3ffRdCipbiWFDpzhIju05.J86YuYZwa0Oe8QIc98D8/rSjgOju
-    -
-    -
-    -
-    - '24'
-    - '2014-09-24 14:47:56.015407'
-    - '2014-09-24 14:31:48.901129'
-    - 127.0.0.1
-    - 127.0.0.1
-    - '2014-05-02 15:16:33.323573'
-    - '2014-09-24 14:47:56.01864'
-    - fletcher91
-    -
-  - - '2'
-    -
-    - $2a$10$nZWUR.U60Ro8JK.HglHtTuph7DQPTkX5JRd.e1td4on8nxJvgrByu
-    -
-    -
-    -
-    - '1'
-    - '2014-05-03 20:07:58.412805'
-    - '2014-05-03 20:07:58.412805'
-    - 127.0.0.1
-    - 127.0.0.1
-    - '2014-05-02 15:16:33.47954'
-    - '2014-05-03 20:07:58.439816'
-    - admin
-    -
-  - - '3'
-    -
-    - $2a$10$COLVATzZopFlRBoLHdIkC.Ww/ZCQOUBrAS7SqoIVYJIQBPRdKPtNm
-    -
-    -
-    -
-    - '2'
-    - '2014-09-14 22:38:21.568731'
-    - '2014-09-14 19:03:16.705308'
-    - 127.0.0.1
-    - 127.0.0.1
-    - '2014-05-02 15:16:33.587219'
-    - '2014-09-14 22:38:21.572016'
-    - joep
-    -
-  - - '4'
-    -
-    - $2a$10$wjqZfVcIEaF6t.AgRa6RqumL.ISOUwTZAmIq9EuxfGV10CO/vf4Lq
-    -
-    -
-    -
-    - '2'
-    - '2014-09-13 17:28:01.075219'
-    - '2014-09-13 10:05:15.836322'
-    - 127.0.0.1
-    - 127.0.0.1
-    - '2014-09-13 10:04:57.661066'
-    - '2014-09-13 17:28:01.077939'
-    - maarschaar
-    -
-
----
-users_roles:
-  columns:
-  - user_id
-  - role_id
-  records:
-  - - '1'
-    - '1'
-  - - '1'
-    - '2'
-  - - '1'
-    - '4'
-  - - '1'
-    - '5'
-  - - '1'
-    - '6'
-  - - '1'
-    - '7'
-  - - '1'
-    - '9'
-  - - '1'
-    - '10'
-  - - '1'
-    - '11'
-  - - '2'
-    - '1'
-  - - '2'
-    - '3'
-  - - '3'
-    - '1'
-  - - '4'
-    - '1'
-  - - '4'
-    - '8'
+  - - '46'
+    - 46b6069d496fde2825a8f8b0380af326
+    - |
+      BAh7CEkiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQZJIiIkMmEk
+      MTAkQURNM2ZmUmRDaXBiaVdGRHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFNT2RUNUtlMWVJSDlWbm1ENTRBaXNGdXNnTk90a3IyS1VpbkNuZWQz
+      Yk5RPQY7AEZJIhNfY3VycmVudF9zY29wZQY7AEZvOhFPcmdhbmlzYXRpb24U
+      OhBAYXR0cmlidXRlc3sVSSIHaWQGOwBUSSIGMQY7AFRJIgluYW1lBjsAVEki
+      FUdlbWVlbnRlIFV0cmVjaHQGOwBUSSIMd2Vic2l0ZQY7AFRJIhpodHRwOi8v
+      d3d3LnV0cmVjaHQubmwGOwBUSSIQZGVzY3JpcHRpb24GOwBUSSICCgJCaWog
+      ZGUgZ2VtZWVudGUgVXRyZWNodCB3ZXJrZW4gcnVpbSA0LjAwMCBtZWRld2Vy
+      a2VycyB2ZXJkZWVsZCBvdmVyIHR3YWFsZiBkaWVuc3RlbiBlbiB0d2VlIHBy
+      b2plY3RvcmdhbmlzYXRpZXMuIFNhbWVuIHdlcmtlbiB3aWogdm9vciBydWlt
+      IDMwMC4wMDAgVXRyZWNodGVycyBhYW4gZGUgc3RhZC4gT256ZSBnZW1lZW50
+      ZSBzdGFhdCBkZSBrb21lbmRlIGphcmVuIHZvb3IgZ3JvdGUgdWl0ZGFnaW5n
+      ZW4uIE5hYXN0IGhldCByZWFsaXNlcmVuIHZhbiBoZXQgY29sbGVnZXByb2dy
+      YW1tYSB2b29yIGVlbiBncm9lbiBvcGVuIGVuIHNvY2lhYWwgVXRyZWNodCwg
+      bGlndCBlciBvb2sgZWVuIGdyb3RlIHZlcmFuZGVyb3BnYXZlIHZvb3IgZGUg
+      b3JnYW5pc2F0aWUuIEhldCBjb2xsZWdlIHdpbCBkZSBhbWJ0ZWxpamtlIG9y
+      Z2FuaXNhdGllIG9tdm9ybWVuIGluIGVlbiBmaW5hbmNpZWVsIGdlem9uZGUg
+      b3JnYW5pc2F0aWUgZGllIHNsYW5rZXIgaXMgZW4gdnJhYWdnZXJpY2h0ZXIg
+      ZW4gc2xhZ3ZhYXJkaWdlciB3ZXJrdC4GOwBUSSILc2xvZ2FuBjsAVEkiGkhh
+      cnQgdmFuIE5lZGVybGFuZC4uLgY7AFRJIg1rZXlfdGFncwY7AFRJIhN1dHJl
+      Y2h0LGJlbGVpZAY7AFRJIg9jcmVhdGVkX2F0BjsAVEkiHzIwMTQtMDktMTIg
+      MjI6MTc6MzcuMzUxMTc1BjsAVEkiD3VwZGF0ZWRfYXQGOwBUSSIfMjAxNC0x
+      MC0zMCAxMToyNjo0MC41NDczNDQGOwBUSSIMd2ViX3VybAY7AFRJIgx1dHJl
+      Y2h0BjsAVEkiFm1lbWJlcnNoaXBzX2NvdW50BjsAVEkiBjcGOwBUSSIVc3Rh
+      dGVtZW50c19jb3VudAY7AFRJIgYzBjsAVEkiCnNjb3BlBjsAVEkiBjIGOwBU
+      SSIVYXBwbGljYXRpb25fZm9ybQY7AFRJIgYwBjsAVEkiEHB1YmxpY19mb3Jt
+      BjsAVEkiBjAGOwBUSSIScHJvZmlsZV9waG90bwY7AFRJIhB1dHJlY2h0LnBu
+      ZwY7AFRJIhBjb3Zlcl9waG90bwY7AFRJIg5Mb2dvcy5wbmcGOwBUOhtAY29s
+      dW1uX3R5cGVzX292ZXJyaWRlexVJIgdpZAY7AFRvOkZBY3RpdmVSZWNvcmQ6
+      OkNvbm5lY3Rpb25BZGFwdGVyczo6UG9zdGdyZVNRTEFkYXB0ZXI6Ok9JRDo6
+      SW50ZWdlcgBJIgluYW1lBjsAVG86R0FjdGl2ZVJlY29yZDo6Q29ubmVjdGlv
+      bkFkYXB0ZXJzOjpQb3N0Z3JlU1FMQWRhcHRlcjo6T0lEOjpJZGVudGl0eQBJ
+      Igx3ZWJzaXRlBjsAVEAzSSIQZGVzY3JpcHRpb24GOwBUQDNJIgtzbG9nYW4G
+      OwBUQDNJIg1rZXlfdGFncwY7AFRAM0kiD2NyZWF0ZWRfYXQGOwBUbzo9QWN0
+      aXZlUmVjb3JkOjpBdHRyaWJ1dGVNZXRob2RzOjpUaW1lWm9uZUNvbnZlcnNp
+      b246OlR5cGUGOgxAY29sdW1ubzpIQWN0aXZlUmVjb3JkOjpDb25uZWN0aW9u
+      QWRhcHRlcnM6OlBvc3RncmVTUUxBZGFwdGVyOjpPSUQ6OlRpbWVzdGFtcABJ
+      Ig91cGRhdGVkX2F0BjsAVG87CwY7DEA6SSIMd2ViX3VybAY7AFRAM0kiFm1l
+      bWJlcnNoaXBzX2NvdW50BjsAVEAxSSIVc3RhdGVtZW50c19jb3VudAY7AFRA
+      MUkiCnNjb3BlBjsAVEAxSSIVYXBwbGljYXRpb25fZm9ybQY7AFRAMUkiEHB1
+      YmxpY19mb3JtBjsAVEAxSSIScHJvZmlsZV9waG90bwY7AFRAM0kiEGNvdmVy
+      X3Bob3RvBjsAVEAzOhJAY29sdW1uX3R5cGVzexVJIgdpZAY7AFRvOjdBY3Rp
+      dmVSZWNvcmQ6OkNvbm5lY3Rpb25BZGFwdGVyczo6UG9zdGdyZVNRTENvbHVt
+      bhI6DkBvaWRfdHlwZUAxOgtAYXJyYXlGOgpAbmFtZUkiB2lkBjsAVDoOQHNx
+      bF90eXBlSSIMaW50ZWdlcgY7AFQ6CkBudWxsRjoLQGxpbWl0MDoPQHByZWNp
+      c2lvbjA6C0BzY2FsZTA6CkB0eXBlOgxpbnRlZ2VyOg1AZGVmYXVsdDA6FkBk
+      ZWZhdWx0X2Z1bmN0aW9uSSIubmV4dHZhbCgnb3JnYW5pc2F0aW9uc19pZF9z
+      ZXEnOjpyZWdjbGFzcykGOwBUOg1AcHJpbWFyeVQ6C0Bjb2RlcjBJIgluYW1l
+      BjsAVG87DxI7EEAzOxFGOxJJIgluYW1lBjsAVDsTSSIbY2hhcmFjdGVyIHZh
+      cnlpbmcoMjU1KQY7AFQ7FFQ7FWkB/zsWMDsXMDsYOgtzdHJpbmc7GjA7GzA7
+      HEY7HTBJIgx3ZWJzaXRlBjsAVG87DxI7EEAzOxFGOxJJIgx3ZWJzaXRlBjsA
+      VDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7FFQ7FWkB/zsWMDsX
+      MDsYOx47GjA7GzA7HEY7HTBJIhBkZXNjcmlwdGlvbgY7AFRvOw8SOxBAMzsR
+      RjsSSSIQZGVzY3JpcHRpb24GOwBUOxNJIgl0ZXh0BjsAVDsUVDsVMDsWMDsX
+      MDsYOgl0ZXh0OxowOxswOxxGOx0wSSILc2xvZ2FuBjsAVG87DxI7EEAzOxFG
+      OxJJIgtzbG9nYW4GOwBUOxNJIhtjaGFyYWN0ZXIgdmFyeWluZygyNTUpBjsA
+      VDsUVDsVaQH/OxYwOxcwOxg7HjsaMDsbMDscRjsdMEkiDWtleV90YWdzBjsA
+      VG87DxI7EEAzOxFGOxJJIg1rZXlfdGFncwY7AFQ7E0kiG2NoYXJhY3RlciB2
+      YXJ5aW5nKDI1NSkGOwBUOxRUOxVpAf87FjA7FzA7GDseOxowOxswOxxGOx0w
+      SSIPY3JlYXRlZF9hdAY7AFRvOwsGOwxvOw8SOxBAOjsRRjsSSSIPY3JlYXRl
+      ZF9hdAY7AFQ7E0kiIHRpbWVzdGFtcCB3aXRob3V0IHRpbWUgem9uZQY7AFQ7
+      FFQ7FTA7FjA7FzA7GDoNZGF0ZXRpbWU7GjA7GzA7HEY7HTBJIg91cGRhdGVk
+      X2F0BjsAVG87CwY7DG87DxI7EEA6OxFGOxJJIg91cGRhdGVkX2F0BjsAVDsT
+      SSIgdGltZXN0YW1wIHdpdGhvdXQgdGltZSB6b25lBjsAVDsUVDsVMDsWMDsX
+      MDsYOyA7GjA7GzA7HEY7HTBJIgx3ZWJfdXJsBjsAVG87DxI7EEAzOxFGOxJJ
+      Igx3ZWJfdXJsBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7
+      FFQ7FWkB/zsWMDsXMDsYOx47GjA7GzA7HEY7HTBJIhZtZW1iZXJzaGlwc19j
+      b3VudAY7AFRvOw8SOxBAMTsRRjsSSSIWbWVtYmVyc2hpcHNfY291bnQGOwBU
+      OxNJIgxpbnRlZ2VyBjsAVDsURjsVMDsWMDsXMDsYOxk7GmkAOxswOxxGOx0w
+      SSIVc3RhdGVtZW50c19jb3VudAY7AFRvOw8SOxBAMTsRRjsSSSIVc3RhdGVt
+      ZW50c19jb3VudAY7AFQ7E0kiDGludGVnZXIGOwBUOxRGOxUwOxYwOxcwOxg7
+      GTsaaQA7GzA7HEY7HTBJIgpzY29wZQY7AFRvOw8SOxBAMTsRRjsSSSIKc2Nv
+      cGUGOwBUOxNJIgxpbnRlZ2VyBjsAVDsURjsVMDsWMDsXMDsYOxk7GmkAOxsw
+      OxxGOx0wSSIVYXBwbGljYXRpb25fZm9ybQY7AFRvOw8SOxBAMTsRRjsSSSIV
+      YXBwbGljYXRpb25fZm9ybQY7AFQ7E0kiDGludGVnZXIGOwBUOxRGOxUwOxYw
+      OxcwOxg7GTsaaQA7GzA7HEY7HTBJIhBwdWJsaWNfZm9ybQY7AFRvOw8SOxBA
+      MTsRRjsSSSIQcHVibGljX2Zvcm0GOwBUOxNJIgxpbnRlZ2VyBjsAVDsURjsV
+      MDsWMDsXMDsYOxk7GmkAOxswOxxGOx0wSSIScHJvZmlsZV9waG90bwY7AFRv
+      Ow8SOxBAMzsRRjsSSSIScHJvZmlsZV9waG90bwY7AFQ7E0kiG2NoYXJhY3Rl
+      ciB2YXJ5aW5nKDI1NSkGOwBUOxRUOxVpAf87FjA7FzA7GDseOxowOxswOxxG
+      Ox0wSSIQY292ZXJfcGhvdG8GOwBUbzsPEjsQQDM7EUY7EkkiEGNvdmVyX3Bo
+      b3RvBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7FFQ7FWkB
+      /zsWMDsXMDsYOx47GjA7GzA7HEY7HTA6F0BhZ2dyZWdhdGlvbl9jYWNoZXsA
+      OhdAYXNzb2NpYXRpb25fY2FjaGV7ADoWQGF0dHJpYnV0ZXNfY2FjaGV7CEki
+      EHB1YmxpY19mb3JtBjsARmkASSIHaWQGOwBUaQZJIgx3ZWJfdXJsBjsAVEAg
+      Og5AcmVhZG9ubHlGOg9AZGVzdHJveWVkRjocQG1hcmtlZF9mb3JfZGVzdHJ1
+      Y3Rpb25GOh5AZGVzdHJveWVkX2J5X2Fzc29jaWF0aW9uMDoQQG5ld19yZWNv
+      cmRGOglAdHhuMDoeQF9zdGFydF90cmFuc2FjdGlvbl9zdGF0ZXsAOhdAdHJh
+      bnNhY3Rpb25fc3RhdGUwOhRAcmVmbGVjdHNfc3RhdGVbBkY=
+    - '2014-10-25 11:12:13.645786'
+    - '2014-10-30 14:58:56.344938'
+  - - '48'
+    - 8fb07ebb505b730c21fcc8f3b36078f4
+    - |
+      BAh7CEkiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQZJIiIkMmEk
+      MTAkQURNM2ZmUmRDaXBiaVdGRHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFOdTVXRURad25LUU11SU56R21qbXNjOWFiOHJjbnA3aG5IOHM1M09Z
+      R0Y4PQY7AEZJIhNfY3VycmVudF9zY29wZQY7AEZvOhFPcmdhbmlzYXRpb24U
+      OhBAYXR0cmlidXRlc3sVSSIHaWQGOwBUSSIGMQY7AFRJIgluYW1lBjsAVEki
+      FUdlbWVlbnRlIFV0cmVjaHQGOwBUSSIMd2Vic2l0ZQY7AFRJIhpodHRwOi8v
+      d3d3LnV0cmVjaHQubmwGOwBUSSIQZGVzY3JpcHRpb24GOwBUSSICCgJCaWog
+      ZGUgZ2VtZWVudGUgVXRyZWNodCB3ZXJrZW4gcnVpbSA0LjAwMCBtZWRld2Vy
+      a2VycyB2ZXJkZWVsZCBvdmVyIHR3YWFsZiBkaWVuc3RlbiBlbiB0d2VlIHBy
+      b2plY3RvcmdhbmlzYXRpZXMuIFNhbWVuIHdlcmtlbiB3aWogdm9vciBydWlt
+      IDMwMC4wMDAgVXRyZWNodGVycyBhYW4gZGUgc3RhZC4gT256ZSBnZW1lZW50
+      ZSBzdGFhdCBkZSBrb21lbmRlIGphcmVuIHZvb3IgZ3JvdGUgdWl0ZGFnaW5n
+      ZW4uIE5hYXN0IGhldCByZWFsaXNlcmVuIHZhbiBoZXQgY29sbGVnZXByb2dy
+      YW1tYSB2b29yIGVlbiBncm9lbiBvcGVuIGVuIHNvY2lhYWwgVXRyZWNodCwg
+      bGlndCBlciBvb2sgZWVuIGdyb3RlIHZlcmFuZGVyb3BnYXZlIHZvb3IgZGUg
+      b3JnYW5pc2F0aWUuIEhldCBjb2xsZWdlIHdpbCBkZSBhbWJ0ZWxpamtlIG9y
+      Z2FuaXNhdGllIG9tdm9ybWVuIGluIGVlbiBmaW5hbmNpZWVsIGdlem9uZGUg
+      b3JnYW5pc2F0aWUgZGllIHNsYW5rZXIgaXMgZW4gdnJhYWdnZXJpY2h0ZXIg
+      ZW4gc2xhZ3ZhYXJkaWdlciB3ZXJrdC4GOwBUSSILc2xvZ2FuBjsAVEkiGkhh
+      cnQgdmFuIE5lZGVybGFuZC4uLgY7AFRJIg1rZXlfdGFncwY7AFRJIhN1dHJl
+      Y2h0LGJlbGVpZAY7AFRJIg9jcmVhdGVkX2F0BjsAVEkiHzIwMTQtMDktMTIg
+      MjI6MTc6MzcuMzUxMTc1BjsAVEkiD3VwZGF0ZWRfYXQGOwBUSSIfMjAxNC0x
+      MC0yNSAxMToxNTozNC42Nzg4NzcGOwBUSSIMd2ViX3VybAY7AFRJIgx1dHJl
+      Y2h0BjsAVEkiFm1lbWJlcnNoaXBzX2NvdW50BjsAVEkiBjcGOwBUSSIVc3Rh
+      dGVtZW50c19jb3VudAY7AFRJIgYzBjsAVEkiCnNjb3BlBjsAVEkiBjIGOwBU
+      SSIVYXBwbGljYXRpb25fZm9ybQY7AFRJIgYwBjsAVEkiEHB1YmxpY19mb3Jt
+      BjsAVEkiBjAGOwBUSSIScHJvZmlsZV9waG90bwY7AFRJIhB1dHJlY2h0LnBu
+      ZwY7AFRJIhBjb3Zlcl9waG90bwY7AFQwOhtAY29sdW1uX3R5cGVzX292ZXJy
+      aWRlexVJIgdpZAY7AFRvOkZBY3RpdmVSZWNvcmQ6OkNvbm5lY3Rpb25BZGFw
+      dGVyczo6UG9zdGdyZVNRTEFkYXB0ZXI6Ok9JRDo6SW50ZWdlcgBJIgluYW1l
+      BjsAVG86R0FjdGl2ZVJlY29yZDo6Q29ubmVjdGlvbkFkYXB0ZXJzOjpQb3N0
+      Z3JlU1FMQWRhcHRlcjo6T0lEOjpJZGVudGl0eQBJIgx3ZWJzaXRlBjsAVEAy
+      SSIQZGVzY3JpcHRpb24GOwBUQDJJIgtzbG9nYW4GOwBUQDJJIg1rZXlfdGFn
+      cwY7AFRAMkkiD2NyZWF0ZWRfYXQGOwBUbzo9QWN0aXZlUmVjb3JkOjpBdHRy
+      aWJ1dGVNZXRob2RzOjpUaW1lWm9uZUNvbnZlcnNpb246OlR5cGUGOgxAY29s
+      dW1ubzpIQWN0aXZlUmVjb3JkOjpDb25uZWN0aW9uQWRhcHRlcnM6OlBvc3Rn
+      cmVTUUxBZGFwdGVyOjpPSUQ6OlRpbWVzdGFtcABJIg91cGRhdGVkX2F0BjsA
+      VG87CwY7DEA5SSIMd2ViX3VybAY7AFRAMkkiFm1lbWJlcnNoaXBzX2NvdW50
+      BjsAVEAwSSIVc3RhdGVtZW50c19jb3VudAY7AFRAMEkiCnNjb3BlBjsAVEAw
+      SSIVYXBwbGljYXRpb25fZm9ybQY7AFRAMEkiEHB1YmxpY19mb3JtBjsAVEAw
+      SSIScHJvZmlsZV9waG90bwY7AFRAMkkiEGNvdmVyX3Bob3RvBjsAVEAyOhJA
+      Y29sdW1uX3R5cGVzexVJIgdpZAY7AFRvOjdBY3RpdmVSZWNvcmQ6OkNvbm5l
+      Y3Rpb25BZGFwdGVyczo6UG9zdGdyZVNRTENvbHVtbhI6DkBvaWRfdHlwZUAw
+      OgtAYXJyYXlGOgpAbmFtZUkiB2lkBjsAVDoOQHNxbF90eXBlSSIMaW50ZWdl
+      cgY7AFQ6CkBudWxsRjoLQGxpbWl0MDoPQHByZWNpc2lvbjA6C0BzY2FsZTA6
+      CkB0eXBlOgxpbnRlZ2VyOg1AZGVmYXVsdDA6FkBkZWZhdWx0X2Z1bmN0aW9u
+      SSIubmV4dHZhbCgnb3JnYW5pc2F0aW9uc19pZF9zZXEnOjpyZWdjbGFzcykG
+      OwBUOg1AcHJpbWFyeVQ6C0Bjb2RlcjBJIgluYW1lBjsAVG87DxI7EEAyOxFG
+      OxJJIgluYW1lBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7
+      FFQ7FWkB/zsWMDsXMDsYOgtzdHJpbmc7GjA7GzA7HEY7HTBJIgx3ZWJzaXRl
+      BjsAVG87DxI7EEAyOxFGOxJJIgx3ZWJzaXRlBjsAVDsTSSIbY2hhcmFjdGVy
+      IHZhcnlpbmcoMjU1KQY7AFQ7FFQ7FWkB/zsWMDsXMDsYOx47GjA7GzA7HEY7
+      HTBJIhBkZXNjcmlwdGlvbgY7AFRvOw8SOxBAMjsRRjsSSSIQZGVzY3JpcHRp
+      b24GOwBUOxNJIgl0ZXh0BjsAVDsUVDsVMDsWMDsXMDsYOgl0ZXh0OxowOxsw
+      OxxGOx0wSSILc2xvZ2FuBjsAVG87DxI7EEAyOxFGOxJJIgtzbG9nYW4GOwBU
+      OxNJIhtjaGFyYWN0ZXIgdmFyeWluZygyNTUpBjsAVDsUVDsVaQH/OxYwOxcw
+      Oxg7HjsaMDsbMDscRjsdMEkiDWtleV90YWdzBjsAVG87DxI7EEAyOxFGOxJJ
+      Ig1rZXlfdGFncwY7AFQ7E0kiG2NoYXJhY3RlciB2YXJ5aW5nKDI1NSkGOwBU
+      OxRUOxVpAf87FjA7FzA7GDseOxowOxswOxxGOx0wSSIPY3JlYXRlZF9hdAY7
+      AFRvOwsGOwxvOw8SOxBAOTsRRjsSSSIPY3JlYXRlZF9hdAY7AFQ7E0kiIHRp
+      bWVzdGFtcCB3aXRob3V0IHRpbWUgem9uZQY7AFQ7FFQ7FTA7FjA7FzA7GDoN
+      ZGF0ZXRpbWU7GjA7GzA7HEY7HTBJIg91cGRhdGVkX2F0BjsAVG87CwY7DG87
+      DxI7EEA5OxFGOxJJIg91cGRhdGVkX2F0BjsAVDsTSSIgdGltZXN0YW1wIHdp
+      dGhvdXQgdGltZSB6b25lBjsAVDsUVDsVMDsWMDsXMDsYOyA7GjA7GzA7HEY7
+      HTBJIgx3ZWJfdXJsBjsAVG87DxI7EEAyOxFGOxJJIgx3ZWJfdXJsBjsAVDsT
+      SSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7FFQ7FWkB/zsWMDsXMDsY
+      Ox47GjA7GzA7HEY7HTBJIhZtZW1iZXJzaGlwc19jb3VudAY7AFRvOw8SOxBA
+      MDsRRjsSSSIWbWVtYmVyc2hpcHNfY291bnQGOwBUOxNJIgxpbnRlZ2VyBjsA
+      VDsURjsVMDsWMDsXMDsYOxk7GmkAOxswOxxGOx0wSSIVc3RhdGVtZW50c19j
+      b3VudAY7AFRvOw8SOxBAMDsRRjsSSSIVc3RhdGVtZW50c19jb3VudAY7AFQ7
+      E0kiDGludGVnZXIGOwBUOxRGOxUwOxYwOxcwOxg7GTsaaQA7GzA7HEY7HTBJ
+      IgpzY29wZQY7AFRvOw8SOxBAMDsRRjsSSSIKc2NvcGUGOwBUOxNJIgxpbnRl
+      Z2VyBjsAVDsURjsVMDsWMDsXMDsYOxk7GmkAOxswOxxGOx0wSSIVYXBwbGlj
+      YXRpb25fZm9ybQY7AFRvOw8SOxBAMDsRRjsSSSIVYXBwbGljYXRpb25fZm9y
+      bQY7AFQ7E0kiDGludGVnZXIGOwBUOxRGOxUwOxYwOxcwOxg7GTsaaQA7GzA7
+      HEY7HTBJIhBwdWJsaWNfZm9ybQY7AFRvOw8SOxBAMDsRRjsSSSIQcHVibGlj
+      X2Zvcm0GOwBUOxNJIgxpbnRlZ2VyBjsAVDsURjsVMDsWMDsXMDsYOxk7GmkA
+      OxswOxxGOx0wSSIScHJvZmlsZV9waG90bwY7AFRvOw8SOxBAMjsRRjsSSSIS
+      cHJvZmlsZV9waG90bwY7AFQ7E0kiG2NoYXJhY3RlciB2YXJ5aW5nKDI1NSkG
+      OwBUOxRUOxVpAf87FjA7FzA7GDseOxowOxswOxxGOx0wSSIQY292ZXJfcGhv
+      dG8GOwBUbzsPEjsQQDI7EUY7EkkiEGNvdmVyX3Bob3RvBjsAVDsTSSIbY2hh
+      cmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7FFQ7FWkB/zsWMDsXMDsYOx47GjA7
+      GzA7HEY7HTA6F0BhZ2dyZWdhdGlvbl9jYWNoZXsAOhdAYXNzb2NpYXRpb25f
+      Y2FjaGV7ADoWQGF0dHJpYnV0ZXNfY2FjaGV7CEkiEHB1YmxpY19mb3JtBjsA
+      RmkASSIMd2ViX3VybAY7AFRAIEkiB2lkBjsAVGkGOg5AcmVhZG9ubHlGOg9A
+      ZGVzdHJveWVkRjocQG1hcmtlZF9mb3JfZGVzdHJ1Y3Rpb25GOh5AZGVzdHJv
+      eWVkX2J5X2Fzc29jaWF0aW9uMDoQQG5ld19yZWNvcmRGOglAdHhuMDoeQF9z
+      dGFydF90cmFuc2FjdGlvbl9zdGF0ZXsAOhdAdHJhbnNhY3Rpb25fc3RhdGUw
+      OhRAcmVmbGVjdHNfc3RhdGVbBkY=
+    - '2014-10-28 14:47:54.240466'
+    - '2014-10-28 14:53:09.139756'
+  - - '50'
+    - 254cb96e3aa0c68fa9d1f411ff8578a3
+    - |
+      BAh7CEkiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQZJIiIkMmEk
+      MTAkQURNM2ZmUmRDaXBiaVdGRHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFKYXBGdUNyaVdLY0M1a25wTjNleC93QmRhclJBdEV4SVY4UDh4R24y
+      YllJPQY7AEZJIhNfY3VycmVudF9zY29wZQY7AEZvOhFPcmdhbmlzYXRpb24U
+      OhBAYXR0cmlidXRlc3sVSSIHaWQGOwBUSSIGMgY7AFRJIgluYW1lBjsAVEki
+      DkFtc3RlcmRhbQY7AFRJIgx3ZWJzaXRlBjsAVEkiHGh0dHA6Ly93d3cuYW1z
+      dGVyZGFtLm5sBjsAVEkiEGRlc2NyaXB0aW9uBjsAVEkiSkRlIGtlcm53YWFy
+      ZGVuIHZhbiBkZSBnZW1lZW50ZSBBbXN0ZXJkYW0gemlqbjogT3BlbiBBY3Rp
+      ZWYgZW4gSW50ZWdlcgY7AFRJIgtzbG9nYW4GOwBUSSIQSSBBbXN0ZXJkYW0G
+      OwBUSSINa2V5X3RhZ3MGOwBUSSIOYW1zdGVyZGFtBjsAVEkiD2NyZWF0ZWRf
+      YXQGOwBUSSIfMjAxNC0wOS0xNSAyMTowMTo1MC4wNzUwNTIGOwBUSSIPdXBk
+      YXRlZF9hdAY7AFRJIh8yMDE0LTA5LTE3IDIwOjIwOjQ2Ljc1NzI2MwY7AFRJ
+      Igx3ZWJfdXJsBjsAVEkiDmFtc3RlcmRhbQY7AFRJIhZtZW1iZXJzaGlwc19j
+      b3VudAY7AFRJIgYwBjsAVEkiFXN0YXRlbWVudHNfY291bnQGOwBUSSIGMQY7
+      AFRJIgpzY29wZQY7AFRJIgYyBjsAVEkiFWFwcGxpY2F0aW9uX2Zvcm0GOwBU
+      SSIGMAY7AFRJIhBwdWJsaWNfZm9ybQY7AFRJIgYwBjsAVEkiEnByb2ZpbGVf
+      cGhvdG8GOwBUMEkiEGNvdmVyX3Bob3RvBjsAVDA6G0Bjb2x1bW5fdHlwZXNf
+      b3ZlcnJpZGV7FUkiB2lkBjsAVG86RkFjdGl2ZVJlY29yZDo6Q29ubmVjdGlv
+      bkFkYXB0ZXJzOjpQb3N0Z3JlU1FMQWRhcHRlcjo6T0lEOjpJbnRlZ2VyAEki
+      CW5hbWUGOwBUbzpHQWN0aXZlUmVjb3JkOjpDb25uZWN0aW9uQWRhcHRlcnM6
+      OlBvc3RncmVTUUxBZGFwdGVyOjpPSUQ6OklkZW50aXR5AEkiDHdlYnNpdGUG
+      OwBUQDFJIhBkZXNjcmlwdGlvbgY7AFRAMUkiC3Nsb2dhbgY7AFRAMUkiDWtl
+      eV90YWdzBjsAVEAxSSIPY3JlYXRlZF9hdAY7AFRvOj1BY3RpdmVSZWNvcmQ6
+      OkF0dHJpYnV0ZU1ldGhvZHM6OlRpbWVab25lQ29udmVyc2lvbjo6VHlwZQY6
+      DEBjb2x1bW5vOkhBY3RpdmVSZWNvcmQ6OkNvbm5lY3Rpb25BZGFwdGVyczo6
+      UG9zdGdyZVNRTEFkYXB0ZXI6Ok9JRDo6VGltZXN0YW1wAEkiD3VwZGF0ZWRf
+      YXQGOwBUbzsLBjsMQDhJIgx3ZWJfdXJsBjsAVEAxSSIWbWVtYmVyc2hpcHNf
+      Y291bnQGOwBUQC9JIhVzdGF0ZW1lbnRzX2NvdW50BjsAVEAvSSIKc2NvcGUG
+      OwBUQC9JIhVhcHBsaWNhdGlvbl9mb3JtBjsAVEAvSSIQcHVibGljX2Zvcm0G
+      OwBUQC9JIhJwcm9maWxlX3Bob3RvBjsAVEAxSSIQY292ZXJfcGhvdG8GOwBU
+      QDE6EkBjb2x1bW5fdHlwZXN7FUkiB2lkBjsAVG86N0FjdGl2ZVJlY29yZDo6
+      Q29ubmVjdGlvbkFkYXB0ZXJzOjpQb3N0Z3JlU1FMQ29sdW1uEjoOQG9pZF90
+      eXBlQC86C0BhcnJheUY6CkBuYW1lSSIHaWQGOwBUOg5Ac3FsX3R5cGVJIgxp
+      bnRlZ2VyBjsAVDoKQG51bGxGOgtAbGltaXQwOg9AcHJlY2lzaW9uMDoLQHNj
+      YWxlMDoKQHR5cGU6DGludGVnZXI6DUBkZWZhdWx0MDoWQGRlZmF1bHRfZnVu
+      Y3Rpb25JIi5uZXh0dmFsKCdvcmdhbmlzYXRpb25zX2lkX3NlcSc6OnJlZ2Ns
+      YXNzKQY7AFQ6DUBwcmltYXJ5VDoLQGNvZGVyMEkiCW5hbWUGOwBUbzsPEjsQ
+      QDE7EUY7EkkiCW5hbWUGOwBUOxNJIhtjaGFyYWN0ZXIgdmFyeWluZygyNTUp
+      BjsAVDsUVDsVaQH/OxYwOxcwOxg6C3N0cmluZzsaMDsbMDscRjsdMEkiDHdl
+      YnNpdGUGOwBUbzsPEjsQQDE7EUY7EkkiDHdlYnNpdGUGOwBUOxNJIhtjaGFy
+      YWN0ZXIgdmFyeWluZygyNTUpBjsAVDsUVDsVaQH/OxYwOxcwOxg7HjsaMDsb
+      MDscRjsdMEkiEGRlc2NyaXB0aW9uBjsAVG87DxI7EEAxOxFGOxJJIhBkZXNj
+      cmlwdGlvbgY7AFQ7E0kiCXRleHQGOwBUOxRUOxUwOxYwOxcwOxg6CXRleHQ7
+      GjA7GzA7HEY7HTBJIgtzbG9nYW4GOwBUbzsPEjsQQDE7EUY7EkkiC3Nsb2dh
+      bgY7AFQ7E0kiG2NoYXJhY3RlciB2YXJ5aW5nKDI1NSkGOwBUOxRUOxVpAf87
+      FjA7FzA7GDseOxowOxswOxxGOx0wSSINa2V5X3RhZ3MGOwBUbzsPEjsQQDE7
+      EUY7EkkiDWtleV90YWdzBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1
+      KQY7AFQ7FFQ7FWkB/zsWMDsXMDsYOx47GjA7GzA7HEY7HTBJIg9jcmVhdGVk
+      X2F0BjsAVG87CwY7DG87DxI7EEA4OxFGOxJJIg9jcmVhdGVkX2F0BjsAVDsT
+      SSIgdGltZXN0YW1wIHdpdGhvdXQgdGltZSB6b25lBjsAVDsUVDsVMDsWMDsX
+      MDsYOg1kYXRldGltZTsaMDsbMDscRjsdMEkiD3VwZGF0ZWRfYXQGOwBUbzsL
+      BjsMbzsPEjsQQDg7EUY7EkkiD3VwZGF0ZWRfYXQGOwBUOxNJIiB0aW1lc3Rh
+      bXAgd2l0aG91dCB0aW1lIHpvbmUGOwBUOxRUOxUwOxYwOxcwOxg7IDsaMDsb
+      MDscRjsdMEkiDHdlYl91cmwGOwBUbzsPEjsQQDE7EUY7EkkiDHdlYl91cmwG
+      OwBUOxNJIhtjaGFyYWN0ZXIgdmFyeWluZygyNTUpBjsAVDsUVDsVaQH/OxYw
+      OxcwOxg7HjsaMDsbMDscRjsdMEkiFm1lbWJlcnNoaXBzX2NvdW50BjsAVG87
+      DxI7EEAvOxFGOxJJIhZtZW1iZXJzaGlwc19jb3VudAY7AFQ7E0kiDGludGVn
+      ZXIGOwBUOxRGOxUwOxYwOxcwOxg7GTsaaQA7GzA7HEY7HTBJIhVzdGF0ZW1l
+      bnRzX2NvdW50BjsAVG87DxI7EEAvOxFGOxJJIhVzdGF0ZW1lbnRzX2NvdW50
+      BjsAVDsTSSIMaW50ZWdlcgY7AFQ7FEY7FTA7FjA7FzA7GDsZOxppADsbMDsc
+      RjsdMEkiCnNjb3BlBjsAVG87DxI7EEAvOxFGOxJJIgpzY29wZQY7AFQ7E0ki
+      DGludGVnZXIGOwBUOxRGOxUwOxYwOxcwOxg7GTsaaQA7GzA7HEY7HTBJIhVh
+      cHBsaWNhdGlvbl9mb3JtBjsAVG87DxI7EEAvOxFGOxJJIhVhcHBsaWNhdGlv
+      bl9mb3JtBjsAVDsTSSIMaW50ZWdlcgY7AFQ7FEY7FTA7FjA7FzA7GDsZOxpp
+      ADsbMDscRjsdMEkiEHB1YmxpY19mb3JtBjsAVG87DxI7EEAvOxFGOxJJIhBw
+      dWJsaWNfZm9ybQY7AFQ7E0kiDGludGVnZXIGOwBUOxRGOxUwOxYwOxcwOxg7
+      GTsaaQA7GzA7HEY7HTBJIhJwcm9maWxlX3Bob3RvBjsAVG87DxI7EEAxOxFG
+      OxJJIhJwcm9maWxlX3Bob3RvBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmco
+      MjU1KQY7AFQ7FFQ7FWkB/zsWMDsXMDsYOx47GjA7GzA7HEY7HTBJIhBjb3Zl
+      cl9waG90bwY7AFRvOw8SOxBAMTsRRjsSSSIQY292ZXJfcGhvdG8GOwBUOxNJ
+      IhtjaGFyYWN0ZXIgdmFyeWluZygyNTUpBjsAVDsUVDsVaQH/OxYwOxcwOxg7
+      HjsaMDsbMDscRjsdMDoXQGFnZ3JlZ2F0aW9uX2NhY2hlewA6F0Bhc3NvY2lh
+      dGlvbl9jYWNoZXsAOhZAYXR0cmlidXRlc19jYWNoZXsISSIQcHVibGljX2Zv
+      cm0GOwBGaQBJIgx3ZWJfdXJsBjsAVEAgSSIHaWQGOwBUaQc6DkByZWFkb25s
+      eUY6D0BkZXN0cm95ZWRGOhxAbWFya2VkX2Zvcl9kZXN0cnVjdGlvbkY6HkBk
+      ZXN0cm95ZWRfYnlfYXNzb2NpYXRpb24wOhBAbmV3X3JlY29yZEY6CUB0eG4w
+      Oh5AX3N0YXJ0X3RyYW5zYWN0aW9uX3N0YXRlewA6F0B0cmFuc2FjdGlvbl9z
+      dGF0ZTA6FEByZWZsZWN0c19zdGF0ZVsGRg==
+    - '2014-10-29 16:53:33.664695'
+    - '2014-10-30 15:08:25.904556'
+  - - '51'
+    - 584df006841894b9ad3b5cc2b16e354a
+    - |
+      BAh7B0kiEF9jc3JmX3Rva2VuBjoGRUZJIjE2aktZYm9nOW1vam1WZmxvUERW
+      TkN3MFp6dGhDUkJ4QW5KdjVlbGdlRmEwPQY7AEZJIhNfY3VycmVudF9zY29w
+      ZQY7AEZvOhFPcmdhbmlzYXRpb24UOhBAYXR0cmlidXRlc3sVSSIHaWQGOwBU
+      SSIGMQY7AFRJIgluYW1lBjsAVEkiFUdlbWVlbnRlIFV0cmVjaHQGOwBUSSIM
+      d2Vic2l0ZQY7AFRJIhpodHRwOi8vd3d3LnV0cmVjaHQubmwGOwBUSSIQZGVz
+      Y3JpcHRpb24GOwBUSSICCgJCaWogZGUgZ2VtZWVudGUgVXRyZWNodCB3ZXJr
+      ZW4gcnVpbSA0LjAwMCBtZWRld2Vya2VycyB2ZXJkZWVsZCBvdmVyIHR3YWFs
+      ZiBkaWVuc3RlbiBlbiB0d2VlIHByb2plY3RvcmdhbmlzYXRpZXMuIFNhbWVu
+      IHdlcmtlbiB3aWogdm9vciBydWltIDMwMC4wMDAgVXRyZWNodGVycyBhYW4g
+      ZGUgc3RhZC4gT256ZSBnZW1lZW50ZSBzdGFhdCBkZSBrb21lbmRlIGphcmVu
+      IHZvb3IgZ3JvdGUgdWl0ZGFnaW5nZW4uIE5hYXN0IGhldCByZWFsaXNlcmVu
+      IHZhbiBoZXQgY29sbGVnZXByb2dyYW1tYSB2b29yIGVlbiBncm9lbiBvcGVu
+      IGVuIHNvY2lhYWwgVXRyZWNodCwgbGlndCBlciBvb2sgZWVuIGdyb3RlIHZl
+      cmFuZGVyb3BnYXZlIHZvb3IgZGUgb3JnYW5pc2F0aWUuIEhldCBjb2xsZWdl
+      IHdpbCBkZSBhbWJ0ZWxpamtlIG9yZ2FuaXNhdGllIG9tdm9ybWVuIGluIGVl
+      biBmaW5hbmNpZWVsIGdlem9uZGUgb3JnYW5pc2F0aWUgZGllIHNsYW5rZXIg
+      aXMgZW4gdnJhYWdnZXJpY2h0ZXIgZW4gc2xhZ3ZhYXJkaWdlciB3ZXJrdC4G
+      OwBUSSILc2xvZ2FuBjsAVEkiGkhhcnQgdmFuIE5lZGVybGFuZC4uLgY7AFRJ
+      Ig1rZXlfdGFncwY7AFRJIhN1dHJlY2h0LGJlbGVpZAY7AFRJIg9jcmVhdGVk
+      X2F0BjsAVEkiHzIwMTQtMDktMTIgMjI6MTc6MzcuMzUxMTc1BjsAVEkiD3Vw
+      ZGF0ZWRfYXQGOwBUSSIfMjAxNC0xMC0yNSAxMToxNTozNC42Nzg4NzcGOwBU
+      SSIMd2ViX3VybAY7AFRJIgx1dHJlY2h0BjsAVEkiFm1lbWJlcnNoaXBzX2Nv
+      dW50BjsAVEkiBjcGOwBUSSIVc3RhdGVtZW50c19jb3VudAY7AFRJIgYzBjsA
+      VEkiCnNjb3BlBjsAVEkiBjIGOwBUSSIVYXBwbGljYXRpb25fZm9ybQY7AFRJ
+      IgYwBjsAVEkiEHB1YmxpY19mb3JtBjsAVEkiBjAGOwBUSSIScHJvZmlsZV9w
+      aG90bwY7AFRJIhB1dHJlY2h0LnBuZwY7AFRJIhBjb3Zlcl9waG90bwY7AFQw
+      OhtAY29sdW1uX3R5cGVzX292ZXJyaWRlexVJIgdpZAY7AFRvOkZBY3RpdmVS
+      ZWNvcmQ6OkNvbm5lY3Rpb25BZGFwdGVyczo6UG9zdGdyZVNRTEFkYXB0ZXI6
+      Ok9JRDo6SW50ZWdlcgBJIgluYW1lBjsAVG86R0FjdGl2ZVJlY29yZDo6Q29u
+      bmVjdGlvbkFkYXB0ZXJzOjpQb3N0Z3JlU1FMQWRhcHRlcjo6T0lEOjpJZGVu
+      dGl0eQBJIgx3ZWJzaXRlBjsAVEAuSSIQZGVzY3JpcHRpb24GOwBUQC5JIgtz
+      bG9nYW4GOwBUQC5JIg1rZXlfdGFncwY7AFRALkkiD2NyZWF0ZWRfYXQGOwBU
+      bzo9QWN0aXZlUmVjb3JkOjpBdHRyaWJ1dGVNZXRob2RzOjpUaW1lWm9uZUNv
+      bnZlcnNpb246OlR5cGUGOgxAY29sdW1ubzpIQWN0aXZlUmVjb3JkOjpDb25u
+      ZWN0aW9uQWRhcHRlcnM6OlBvc3RncmVTUUxBZGFwdGVyOjpPSUQ6OlRpbWVz
+      dGFtcABJIg91cGRhdGVkX2F0BjsAVG87CwY7DEA1SSIMd2ViX3VybAY7AFRA
+      LkkiFm1lbWJlcnNoaXBzX2NvdW50BjsAVEAsSSIVc3RhdGVtZW50c19jb3Vu
+      dAY7AFRALEkiCnNjb3BlBjsAVEAsSSIVYXBwbGljYXRpb25fZm9ybQY7AFRA
+      LEkiEHB1YmxpY19mb3JtBjsAVEAsSSIScHJvZmlsZV9waG90bwY7AFRALkki
+      EGNvdmVyX3Bob3RvBjsAVEAuOhJAY29sdW1uX3R5cGVzexVJIgdpZAY7AFRv
+      OjdBY3RpdmVSZWNvcmQ6OkNvbm5lY3Rpb25BZGFwdGVyczo6UG9zdGdyZVNR
+      TENvbHVtbhI6DkBvaWRfdHlwZUAsOgtAYXJyYXlGOgpAbmFtZUkiB2lkBjsA
+      VDoOQHNxbF90eXBlSSIMaW50ZWdlcgY7AFQ6CkBudWxsRjoLQGxpbWl0MDoP
+      QHByZWNpc2lvbjA6C0BzY2FsZTA6CkB0eXBlOgxpbnRlZ2VyOg1AZGVmYXVs
+      dDA6FkBkZWZhdWx0X2Z1bmN0aW9uSSIubmV4dHZhbCgnb3JnYW5pc2F0aW9u
+      c19pZF9zZXEnOjpyZWdjbGFzcykGOwBUOg1AcHJpbWFyeVQ6C0Bjb2RlcjBJ
+      IgluYW1lBjsAVG87DxI7EEAuOxFGOxJJIgluYW1lBjsAVDsTSSIbY2hhcmFj
+      dGVyIHZhcnlpbmcoMjU1KQY7AFQ7FFQ7FWkB/zsWMDsXMDsYOgtzdHJpbmc7
+      GjA7GzA7HEY7HTBJIgx3ZWJzaXRlBjsAVG87DxI7EEAuOxFGOxJJIgx3ZWJz
+      aXRlBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7FFQ7FWkB
+      /zsWMDsXMDsYOx47GjA7GzA7HEY7HTBJIhBkZXNjcmlwdGlvbgY7AFRvOw8S
+      OxBALjsRRjsSSSIQZGVzY3JpcHRpb24GOwBUOxNJIgl0ZXh0BjsAVDsUVDsV
+      MDsWMDsXMDsYOgl0ZXh0OxowOxswOxxGOx0wSSILc2xvZ2FuBjsAVG87DxI7
+      EEAuOxFGOxJJIgtzbG9nYW4GOwBUOxNJIhtjaGFyYWN0ZXIgdmFyeWluZygy
+      NTUpBjsAVDsUVDsVaQH/OxYwOxcwOxg7HjsaMDsbMDscRjsdMEkiDWtleV90
+      YWdzBjsAVG87DxI7EEAuOxFGOxJJIg1rZXlfdGFncwY7AFQ7E0kiG2NoYXJh
+      Y3RlciB2YXJ5aW5nKDI1NSkGOwBUOxRUOxVpAf87FjA7FzA7GDseOxowOxsw
+      OxxGOx0wSSIPY3JlYXRlZF9hdAY7AFRvOwsGOwxvOw8SOxBANTsRRjsSSSIP
+      Y3JlYXRlZF9hdAY7AFQ7E0kiIHRpbWVzdGFtcCB3aXRob3V0IHRpbWUgem9u
+      ZQY7AFQ7FFQ7FTA7FjA7FzA7GDoNZGF0ZXRpbWU7GjA7GzA7HEY7HTBJIg91
+      cGRhdGVkX2F0BjsAVG87CwY7DG87DxI7EEA1OxFGOxJJIg91cGRhdGVkX2F0
+      BjsAVDsTSSIgdGltZXN0YW1wIHdpdGhvdXQgdGltZSB6b25lBjsAVDsUVDsV
+      MDsWMDsXMDsYOyA7GjA7GzA7HEY7HTBJIgx3ZWJfdXJsBjsAVG87DxI7EEAu
+      OxFGOxJJIgx3ZWJfdXJsBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1
+      KQY7AFQ7FFQ7FWkB/zsWMDsXMDsYOx47GjA7GzA7HEY7HTBJIhZtZW1iZXJz
+      aGlwc19jb3VudAY7AFRvOw8SOxBALDsRRjsSSSIWbWVtYmVyc2hpcHNfY291
+      bnQGOwBUOxNJIgxpbnRlZ2VyBjsAVDsURjsVMDsWMDsXMDsYOxk7GmkAOxsw
+      OxxGOx0wSSIVc3RhdGVtZW50c19jb3VudAY7AFRvOw8SOxBALDsRRjsSSSIV
+      c3RhdGVtZW50c19jb3VudAY7AFQ7E0kiDGludGVnZXIGOwBUOxRGOxUwOxYw
+      OxcwOxg7GTsaaQA7GzA7HEY7HTBJIgpzY29wZQY7AFRvOw8SOxBALDsRRjsS
+      SSIKc2NvcGUGOwBUOxNJIgxpbnRlZ2VyBjsAVDsURjsVMDsWMDsXMDsYOxk7
+      GmkAOxswOxxGOx0wSSIVYXBwbGljYXRpb25fZm9ybQY7AFRvOw8SOxBALDsR
+      RjsSSSIVYXBwbGljYXRpb25fZm9ybQY7AFQ7E0kiDGludGVnZXIGOwBUOxRG
+      OxUwOxYwOxcwOxg7GTsaaQA7GzA7HEY7HTBJIhBwdWJsaWNfZm9ybQY7AFRv
+      Ow8SOxBALDsRRjsSSSIQcHVibGljX2Zvcm0GOwBUOxNJIgxpbnRlZ2VyBjsA
+      VDsURjsVMDsWMDsXMDsYOxk7GmkAOxswOxxGOx0wSSIScHJvZmlsZV9waG90
+      bwY7AFRvOw8SOxBALjsRRjsSSSIScHJvZmlsZV9waG90bwY7AFQ7E0kiG2No
+      YXJhY3RlciB2YXJ5aW5nKDI1NSkGOwBUOxRUOxVpAf87FjA7FzA7GDseOxow
+      OxswOxxGOx0wSSIQY292ZXJfcGhvdG8GOwBUbzsPEjsQQC47EUY7EkkiEGNv
+      dmVyX3Bob3RvBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7
+      FFQ7FWkB/zsWMDsXMDsYOx47GjA7GzA7HEY7HTA6F0BhZ2dyZWdhdGlvbl9j
+      YWNoZXsAOhdAYXNzb2NpYXRpb25fY2FjaGV7ADoWQGF0dHJpYnV0ZXNfY2Fj
+      aGV7CEkiEHB1YmxpY19mb3JtBjsARmkASSIMd2ViX3VybAY7AFRAHEkiB2lk
+      BjsAVGkGOg5AcmVhZG9ubHlGOg9AZGVzdHJveWVkRjocQG1hcmtlZF9mb3Jf
+      ZGVzdHJ1Y3Rpb25GOh5AZGVzdHJveWVkX2J5X2Fzc29jaWF0aW9uMDoQQG5l
+      d19yZWNvcmRGOglAdHhuMDoeQF9zdGFydF90cmFuc2FjdGlvbl9zdGF0ZXsA
+      OhdAdHJhbnNhY3Rpb25fc3RhdGUwOhRAcmVmbGVjdHNfc3RhdGVbBkY=
+    - '2014-10-29 16:59:15.804406'
+    - '2014-10-29 16:59:16.981346'
+  - - '52'
+    - 81bbe0a493bb96f1936575e4ec05e92b
+    - |
+      BAh7B0kiE19jdXJyZW50X3Njb3BlBjoGRUZvOhFPcmdhbmlzYXRpb24UOhBA
+      YXR0cmlidXRlc3sVSSIHaWQGOwBUSSIGMgY7AFRJIgluYW1lBjsAVEkiDkFt
+      c3RlcmRhbQY7AFRJIgx3ZWJzaXRlBjsAVEkiHGh0dHA6Ly93d3cuYW1zdGVy
+      ZGFtLm5sBjsAVEkiEGRlc2NyaXB0aW9uBjsAVEkiSkRlIGtlcm53YWFyZGVu
+      IHZhbiBkZSBnZW1lZW50ZSBBbXN0ZXJkYW0gemlqbjogT3BlbiBBY3RpZWYg
+      ZW4gSW50ZWdlcgY7AFRJIgtzbG9nYW4GOwBUSSIQSSBBbXN0ZXJkYW0GOwBU
+      SSINa2V5X3RhZ3MGOwBUSSIOYW1zdGVyZGFtBjsAVEkiD2NyZWF0ZWRfYXQG
+      OwBUSSIfMjAxNC0wOS0xNSAyMTowMTo1MC4wNzUwNTIGOwBUSSIPdXBkYXRl
+      ZF9hdAY7AFRJIh8yMDE0LTA5LTE3IDIwOjIwOjQ2Ljc1NzI2MwY7AFRJIgx3
+      ZWJfdXJsBjsAVEkiDmFtc3RlcmRhbQY7AFRJIhZtZW1iZXJzaGlwc19jb3Vu
+      dAY7AFRJIgYwBjsAVEkiFXN0YXRlbWVudHNfY291bnQGOwBUSSIGMQY7AFRJ
+      IgpzY29wZQY7AFRJIgYyBjsAVEkiFWFwcGxpY2F0aW9uX2Zvcm0GOwBUSSIG
+      MAY7AFRJIhBwdWJsaWNfZm9ybQY7AFRJIgYwBjsAVEkiEnByb2ZpbGVfcGhv
+      dG8GOwBUMEkiEGNvdmVyX3Bob3RvBjsAVDA6G0Bjb2x1bW5fdHlwZXNfb3Zl
+      cnJpZGV7FUkiB2lkBjsAVG86RkFjdGl2ZVJlY29yZDo6Q29ubmVjdGlvbkFk
+      YXB0ZXJzOjpQb3N0Z3JlU1FMQWRhcHRlcjo6T0lEOjpJbnRlZ2VyAEkiCW5h
+      bWUGOwBUbzpHQWN0aXZlUmVjb3JkOjpDb25uZWN0aW9uQWRhcHRlcnM6OlBv
+      c3RncmVTUUxBZGFwdGVyOjpPSUQ6OklkZW50aXR5AEkiDHdlYnNpdGUGOwBU
+      QCtJIhBkZXNjcmlwdGlvbgY7AFRAK0kiC3Nsb2dhbgY7AFRAK0kiDWtleV90
+      YWdzBjsAVEArSSIPY3JlYXRlZF9hdAY7AFRvOj1BY3RpdmVSZWNvcmQ6OkF0
+      dHJpYnV0ZU1ldGhvZHM6OlRpbWVab25lQ29udmVyc2lvbjo6VHlwZQY6DEBj
+      b2x1bW5vOkhBY3RpdmVSZWNvcmQ6OkNvbm5lY3Rpb25BZGFwdGVyczo6UG9z
+      dGdyZVNRTEFkYXB0ZXI6Ok9JRDo6VGltZXN0YW1wAEkiD3VwZGF0ZWRfYXQG
+      OwBUbzsLBjsMQDJJIgx3ZWJfdXJsBjsAVEArSSIWbWVtYmVyc2hpcHNfY291
+      bnQGOwBUQClJIhVzdGF0ZW1lbnRzX2NvdW50BjsAVEApSSIKc2NvcGUGOwBU
+      QClJIhVhcHBsaWNhdGlvbl9mb3JtBjsAVEApSSIQcHVibGljX2Zvcm0GOwBU
+      QClJIhJwcm9maWxlX3Bob3RvBjsAVEArSSIQY292ZXJfcGhvdG8GOwBUQCs6
+      EkBjb2x1bW5fdHlwZXN7FUkiB2lkBjsAVG86N0FjdGl2ZVJlY29yZDo6Q29u
+      bmVjdGlvbkFkYXB0ZXJzOjpQb3N0Z3JlU1FMQ29sdW1uEjoOQG9pZF90eXBl
+      QCk6C0BhcnJheUY6CkBuYW1lSSIHaWQGOwBUOg5Ac3FsX3R5cGVJIgxpbnRl
+      Z2VyBjsAVDoKQG51bGxGOgtAbGltaXQwOg9AcHJlY2lzaW9uMDoLQHNjYWxl
+      MDoKQHR5cGU6DGludGVnZXI6DUBkZWZhdWx0MDoWQGRlZmF1bHRfZnVuY3Rp
+      b25JIi5uZXh0dmFsKCdvcmdhbmlzYXRpb25zX2lkX3NlcSc6OnJlZ2NsYXNz
+      KQY7AFQ6DUBwcmltYXJ5VDoLQGNvZGVyMEkiCW5hbWUGOwBUbzsPEjsQQCs7
+      EUY7EkkiCW5hbWUGOwBUOxNJIhtjaGFyYWN0ZXIgdmFyeWluZygyNTUpBjsA
+      VDsUVDsVaQH/OxYwOxcwOxg6C3N0cmluZzsaMDsbMDscRjsdMEkiDHdlYnNp
+      dGUGOwBUbzsPEjsQQCs7EUY7EkkiDHdlYnNpdGUGOwBUOxNJIhtjaGFyYWN0
+      ZXIgdmFyeWluZygyNTUpBjsAVDsUVDsVaQH/OxYwOxcwOxg7HjsaMDsbMDsc
+      RjsdMEkiEGRlc2NyaXB0aW9uBjsAVG87DxI7EEArOxFGOxJJIhBkZXNjcmlw
+      dGlvbgY7AFQ7E0kiCXRleHQGOwBUOxRUOxUwOxYwOxcwOxg6CXRleHQ7GjA7
+      GzA7HEY7HTBJIgtzbG9nYW4GOwBUbzsPEjsQQCs7EUY7EkkiC3Nsb2dhbgY7
+      AFQ7E0kiG2NoYXJhY3RlciB2YXJ5aW5nKDI1NSkGOwBUOxRUOxVpAf87FjA7
+      FzA7GDseOxowOxswOxxGOx0wSSINa2V5X3RhZ3MGOwBUbzsPEjsQQCs7EUY7
+      EkkiDWtleV90YWdzBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7
+      AFQ7FFQ7FWkB/zsWMDsXMDsYOx47GjA7GzA7HEY7HTBJIg9jcmVhdGVkX2F0
+      BjsAVG87CwY7DG87DxI7EEAyOxFGOxJJIg9jcmVhdGVkX2F0BjsAVDsTSSIg
+      dGltZXN0YW1wIHdpdGhvdXQgdGltZSB6b25lBjsAVDsUVDsVMDsWMDsXMDsY
+      Og1kYXRldGltZTsaMDsbMDscRjsdMEkiD3VwZGF0ZWRfYXQGOwBUbzsLBjsM
+      bzsPEjsQQDI7EUY7EkkiD3VwZGF0ZWRfYXQGOwBUOxNJIiB0aW1lc3RhbXAg
+      d2l0aG91dCB0aW1lIHpvbmUGOwBUOxRUOxUwOxYwOxcwOxg7IDsaMDsbMDsc
+      RjsdMEkiDHdlYl91cmwGOwBUbzsPEjsQQCs7EUY7EkkiDHdlYl91cmwGOwBU
+      OxNJIhtjaGFyYWN0ZXIgdmFyeWluZygyNTUpBjsAVDsUVDsVaQH/OxYwOxcw
+      Oxg7HjsaMDsbMDscRjsdMEkiFm1lbWJlcnNoaXBzX2NvdW50BjsAVG87DxI7
+      EEApOxFGOxJJIhZtZW1iZXJzaGlwc19jb3VudAY7AFQ7E0kiDGludGVnZXIG
+      OwBUOxRGOxUwOxYwOxcwOxg7GTsaaQA7GzA7HEY7HTBJIhVzdGF0ZW1lbnRz
+      X2NvdW50BjsAVG87DxI7EEApOxFGOxJJIhVzdGF0ZW1lbnRzX2NvdW50BjsA
+      VDsTSSIMaW50ZWdlcgY7AFQ7FEY7FTA7FjA7FzA7GDsZOxppADsbMDscRjsd
+      MEkiCnNjb3BlBjsAVG87DxI7EEApOxFGOxJJIgpzY29wZQY7AFQ7E0kiDGlu
+      dGVnZXIGOwBUOxRGOxUwOxYwOxcwOxg7GTsaaQA7GzA7HEY7HTBJIhVhcHBs
+      aWNhdGlvbl9mb3JtBjsAVG87DxI7EEApOxFGOxJJIhVhcHBsaWNhdGlvbl9m
+      b3JtBjsAVDsTSSIMaW50ZWdlcgY7AFQ7FEY7FTA7FjA7FzA7GDsZOxppADsb
+      MDscRjsdMEkiEHB1YmxpY19mb3JtBjsAVG87DxI7EEApOxFGOxJJIhBwdWJs
+      aWNfZm9ybQY7AFQ7E0kiDGludGVnZXIGOwBUOxRGOxUwOxYwOxcwOxg7GTsa
+      aQA7GzA7HEY7HTBJIhJwcm9maWxlX3Bob3RvBjsAVG87DxI7EEArOxFGOxJJ
+      IhJwcm9maWxlX3Bob3RvBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1
+      KQY7AFQ7FFQ7FWkB/zsWMDsXMDsYOx47GjA7GzA7HEY7HTBJIhBjb3Zlcl9w
+      aG90bwY7AFRvOw8SOxBAKzsRRjsSSSIQY292ZXJfcGhvdG8GOwBUOxNJIhtj
+      aGFyYWN0ZXIgdmFyeWluZygyNTUpBjsAVDsUVDsVaQH/OxYwOxcwOxg7Hjsa
+      MDsbMDscRjsdMDoXQGFnZ3JlZ2F0aW9uX2NhY2hlewA6F0Bhc3NvY2lhdGlv
+      bl9jYWNoZXsAOhZAYXR0cmlidXRlc19jYWNoZXsISSIQcHVibGljX2Zvcm0G
+      OwBGaQBJIgx3ZWJfdXJsBjsAVEAaSSIHaWQGOwBUaQc6DkByZWFkb25seUY6
+      D0BkZXN0cm95ZWRGOhxAbWFya2VkX2Zvcl9kZXN0cnVjdGlvbkY6HkBkZXN0
+      cm95ZWRfYnlfYXNzb2NpYXRpb24wOhBAbmV3X3JlY29yZEY6CUB0eG4wOh5A
+      X3N0YXJ0X3RyYW5zYWN0aW9uX3N0YXRlewA6F0B0cmFuc2FjdGlvbl9zdGF0
+      ZTA6FEByZWZsZWN0c19zdGF0ZVsGRkkiEF9jc3JmX3Rva2VuBjsARkkiMXFv
+      UjhKUnRMNGhib3B3ekszU2M5ejBCMDV6SjNET0NKOVc0dzJkMWZRUW89BjsA
+      Rg==
+    - '2014-10-30 15:10:04.127526'
+    - '2014-10-30 15:10:11.177272'
+  - - '54'
+    - 3ea4424ee2a6b048ec8e4b8ad31ced2e
+    - |
+      BAh7B0kiGXdhcmRlbi51c2VyLnVzZXIua2V5BjoGRVRbB1sGaQZJIiIkMmEk
+      MTAkQURNM2ZmUmRDaXBiaVdGRHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7
+      AEZJIjFyOElVb3RncnBIekwvTkpHVGtVL0dUMUZTbWlrYTRtTVJ2aldieVVz
+      aWNrPQY7AEY=
+    - '2014-11-05 11:32:34.01039'
+    - '2014-11-05 11:34:17.165738'
+  - - '56'
+    - e6f96148713448ece408de6ae9821b46
+    - |
+      BAh7CEkiE19jdXJyZW50X3Njb3BlBjoGRUZvOhFPcmdhbmlzYXRpb24UOhBA
+      YXR0cmlidXRlc3sVSSIHaWQGOwBUSSIGMQY7AFRJIgluYW1lBjsAVEkiFUdl
+      bWVlbnRlIFV0cmVjaHQGOwBUSSIMd2Vic2l0ZQY7AFRJIhpodHRwOi8vd3d3
+      LnV0cmVjaHQubmwGOwBUSSIQZGVzY3JpcHRpb24GOwBUSSICCgJCaWogZGUg
+      Z2VtZWVudGUgVXRyZWNodCB3ZXJrZW4gcnVpbSA0LjAwMCBtZWRld2Vya2Vy
+      cyB2ZXJkZWVsZCBvdmVyIHR3YWFsZiBkaWVuc3RlbiBlbiB0d2VlIHByb2pl
+      Y3RvcmdhbmlzYXRpZXMuIFNhbWVuIHdlcmtlbiB3aWogdm9vciBydWltIDMw
+      MC4wMDAgVXRyZWNodGVycyBhYW4gZGUgc3RhZC4gT256ZSBnZW1lZW50ZSBz
+      dGFhdCBkZSBrb21lbmRlIGphcmVuIHZvb3IgZ3JvdGUgdWl0ZGFnaW5nZW4u
+      IE5hYXN0IGhldCByZWFsaXNlcmVuIHZhbiBoZXQgY29sbGVnZXByb2dyYW1t
+      YSB2b29yIGVlbiBncm9lbiBvcGVuIGVuIHNvY2lhYWwgVXRyZWNodCwgbGln
+      dCBlciBvb2sgZWVuIGdyb3RlIHZlcmFuZGVyb3BnYXZlIHZvb3IgZGUgb3Jn
+      YW5pc2F0aWUuIEhldCBjb2xsZWdlIHdpbCBkZSBhbWJ0ZWxpamtlIG9yZ2Fu
+      aXNhdGllIG9tdm9ybWVuIGluIGVlbiBmaW5hbmNpZWVsIGdlem9uZGUgb3Jn
+      YW5pc2F0aWUgZGllIHNsYW5rZXIgaXMgZW4gdnJhYWdnZXJpY2h0ZXIgZW4g
+      c2xhZ3ZhYXJkaWdlciB3ZXJrdC4GOwBUSSILc2xvZ2FuBjsAVEkiGkhhcnQg
+      dmFuIE5lZGVybGFuZC4uLgY7AFRJIg1rZXlfdGFncwY7AFRJIhN1dHJlY2h0
+      LGJlbGVpZAY7AFRJIg9jcmVhdGVkX2F0BjsAVEkiHzIwMTQtMDktMTIgMjI6
+      MTc6MzcuMzUxMTc1BjsAVEkiD3VwZGF0ZWRfYXQGOwBUSSIfMjAxNC0xMC0z
+      MCAxMToyNjo0MC41NDczNDQGOwBUSSIMd2ViX3VybAY7AFRJIgx1dHJlY2h0
+      BjsAVEkiFm1lbWJlcnNoaXBzX2NvdW50BjsAVEkiBjcGOwBUSSIVc3RhdGVt
+      ZW50c19jb3VudAY7AFRJIgYzBjsAVEkiCnNjb3BlBjsAVEkiBjIGOwBUSSIV
+      YXBwbGljYXRpb25fZm9ybQY7AFRJIgYwBjsAVEkiEHB1YmxpY19mb3JtBjsA
+      VEkiBjAGOwBUSSIScHJvZmlsZV9waG90bwY7AFRJIhB1dHJlY2h0LnBuZwY7
+      AFRJIhBjb3Zlcl9waG90bwY7AFRJIg5Mb2dvcy5wbmcGOwBUOhtAY29sdW1u
+      X3R5cGVzX292ZXJyaWRlexVJIgdpZAY7AFRvOkZBY3RpdmVSZWNvcmQ6OkNv
+      bm5lY3Rpb25BZGFwdGVyczo6UG9zdGdyZVNRTEFkYXB0ZXI6Ok9JRDo6SW50
+      ZWdlcgBJIgluYW1lBjsAVG86R0FjdGl2ZVJlY29yZDo6Q29ubmVjdGlvbkFk
+      YXB0ZXJzOjpQb3N0Z3JlU1FMQWRhcHRlcjo6T0lEOjpJZGVudGl0eQBJIgx3
+      ZWJzaXRlBjsAVEAtSSIQZGVzY3JpcHRpb24GOwBUQC1JIgtzbG9nYW4GOwBU
+      QC1JIg1rZXlfdGFncwY7AFRALUkiD2NyZWF0ZWRfYXQGOwBUbzo9QWN0aXZl
+      UmVjb3JkOjpBdHRyaWJ1dGVNZXRob2RzOjpUaW1lWm9uZUNvbnZlcnNpb246
+      OlR5cGUGOgxAY29sdW1ubzpIQWN0aXZlUmVjb3JkOjpDb25uZWN0aW9uQWRh
+      cHRlcnM6OlBvc3RncmVTUUxBZGFwdGVyOjpPSUQ6OlRpbWVzdGFtcABJIg91
+      cGRhdGVkX2F0BjsAVG87CwY7DEA0SSIMd2ViX3VybAY7AFRALUkiFm1lbWJl
+      cnNoaXBzX2NvdW50BjsAVEArSSIVc3RhdGVtZW50c19jb3VudAY7AFRAK0ki
+      CnNjb3BlBjsAVEArSSIVYXBwbGljYXRpb25fZm9ybQY7AFRAK0kiEHB1Ymxp
+      Y19mb3JtBjsAVEArSSIScHJvZmlsZV9waG90bwY7AFRALUkiEGNvdmVyX3Bo
+      b3RvBjsAVEAtOhJAY29sdW1uX3R5cGVzexVJIgdpZAY7AFRvOjdBY3RpdmVS
+      ZWNvcmQ6OkNvbm5lY3Rpb25BZGFwdGVyczo6UG9zdGdyZVNRTENvbHVtbhI6
+      DkBvaWRfdHlwZUArOgtAYXJyYXlGOgpAbmFtZUkiB2lkBjsAVDoOQHNxbF90
+      eXBlSSIMaW50ZWdlcgY7AFQ6CkBudWxsRjoLQGxpbWl0MDoPQHByZWNpc2lv
+      bjA6C0BzY2FsZTA6CkB0eXBlOgxpbnRlZ2VyOg1AZGVmYXVsdDA6FkBkZWZh
+      dWx0X2Z1bmN0aW9uSSIubmV4dHZhbCgnb3JnYW5pc2F0aW9uc19pZF9zZXEn
+      OjpyZWdjbGFzcykGOwBUOg1AcHJpbWFyeVQ6C0Bjb2RlcjBJIgluYW1lBjsA
+      VG87DxI7EEAtOxFGOxJJIgluYW1lBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlp
+      bmcoMjU1KQY7AFQ7FFQ7FWkB/zsWMDsXMDsYOgtzdHJpbmc7GjA7GzA7HEY7
+      HTBJIgx3ZWJzaXRlBjsAVG87DxI7EEAtOxFGOxJJIgx3ZWJzaXRlBjsAVDsT
+      SSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7FFQ7FWkB/zsWMDsXMDsY
+      Ox47GjA7GzA7HEY7HTBJIhBkZXNjcmlwdGlvbgY7AFRvOw8SOxBALTsRRjsS
+      SSIQZGVzY3JpcHRpb24GOwBUOxNJIgl0ZXh0BjsAVDsUVDsVMDsWMDsXMDsY
+      Ogl0ZXh0OxowOxswOxxGOx0wSSILc2xvZ2FuBjsAVG87DxI7EEAtOxFGOxJJ
+      IgtzbG9nYW4GOwBUOxNJIhtjaGFyYWN0ZXIgdmFyeWluZygyNTUpBjsAVDsU
+      VDsVaQH/OxYwOxcwOxg7HjsaMDsbMDscRjsdMEkiDWtleV90YWdzBjsAVG87
+      DxI7EEAtOxFGOxJJIg1rZXlfdGFncwY7AFQ7E0kiG2NoYXJhY3RlciB2YXJ5
+      aW5nKDI1NSkGOwBUOxRUOxVpAf87FjA7FzA7GDseOxowOxswOxxGOx0wSSIP
+      Y3JlYXRlZF9hdAY7AFRvOwsGOwxvOw8SOxBANDsRRjsSSSIPY3JlYXRlZF9h
+      dAY7AFQ7E0kiIHRpbWVzdGFtcCB3aXRob3V0IHRpbWUgem9uZQY7AFQ7FFQ7
+      FTA7FjA7FzA7GDoNZGF0ZXRpbWU7GjA7GzA7HEY7HTBJIg91cGRhdGVkX2F0
+      BjsAVG87CwY7DG87DxI7EEA0OxFGOxJJIg91cGRhdGVkX2F0BjsAVDsTSSIg
+      dGltZXN0YW1wIHdpdGhvdXQgdGltZSB6b25lBjsAVDsUVDsVMDsWMDsXMDsY
+      OyA7GjA7GzA7HEY7HTBJIgx3ZWJfdXJsBjsAVG87DxI7EEAtOxFGOxJJIgx3
+      ZWJfdXJsBjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7FFQ7
+      FWkB/zsWMDsXMDsYOx47GjA7GzA7HEY7HTBJIhZtZW1iZXJzaGlwc19jb3Vu
+      dAY7AFRvOw8SOxBAKzsRRjsSSSIWbWVtYmVyc2hpcHNfY291bnQGOwBUOxNJ
+      IgxpbnRlZ2VyBjsAVDsURjsVMDsWMDsXMDsYOxk7GmkAOxswOxxGOx0wSSIV
+      c3RhdGVtZW50c19jb3VudAY7AFRvOw8SOxBAKzsRRjsSSSIVc3RhdGVtZW50
+      c19jb3VudAY7AFQ7E0kiDGludGVnZXIGOwBUOxRGOxUwOxYwOxcwOxg7GTsa
+      aQA7GzA7HEY7HTBJIgpzY29wZQY7AFRvOw8SOxBAKzsRRjsSSSIKc2NvcGUG
+      OwBUOxNJIgxpbnRlZ2VyBjsAVDsURjsVMDsWMDsXMDsYOxk7GmkAOxswOxxG
+      Ox0wSSIVYXBwbGljYXRpb25fZm9ybQY7AFRvOw8SOxBAKzsRRjsSSSIVYXBw
+      bGljYXRpb25fZm9ybQY7AFQ7E0kiDGludGVnZXIGOwBUOxRGOxUwOxYwOxcw
+      Oxg7GTsaaQA7GzA7HEY7HTBJIhBwdWJsaWNfZm9ybQY7AFRvOw8SOxBAKzsR
+      RjsSSSIQcHVibGljX2Zvcm0GOwBUOxNJIgxpbnRlZ2VyBjsAVDsURjsVMDsW
+      MDsXMDsYOxk7GmkAOxswOxxGOx0wSSIScHJvZmlsZV9waG90bwY7AFRvOw8S
+      OxBALTsRRjsSSSIScHJvZmlsZV9waG90bwY7AFQ7E0kiG2NoYXJhY3RlciB2
+      YXJ5aW5nKDI1NSkGOwBUOxRUOxVpAf87FjA7FzA7GDseOxowOxswOxxGOx0w
+      SSIQY292ZXJfcGhvdG8GOwBUbzsPEjsQQC07EUY7EkkiEGNvdmVyX3Bob3Rv
+      BjsAVDsTSSIbY2hhcmFjdGVyIHZhcnlpbmcoMjU1KQY7AFQ7FFQ7FWkB/zsW
+      MDsXMDsYOx47GjA7GzA7HEY7HTA6F0BhZ2dyZWdhdGlvbl9jYWNoZXsAOhdA
+      YXNzb2NpYXRpb25fY2FjaGV7ADoWQGF0dHJpYnV0ZXNfY2FjaGV7CEkiEHB1
+      YmxpY19mb3JtBjsARmkASSIHaWQGOwBUaQZJIgx3ZWJfdXJsBjsAVEAaOg5A
+      cmVhZG9ubHlGOg9AZGVzdHJveWVkRjocQG1hcmtlZF9mb3JfZGVzdHJ1Y3Rp
+      b25GOh5AZGVzdHJveWVkX2J5X2Fzc29jaWF0aW9uMDoQQG5ld19yZWNvcmRG
+      OglAdHhuMDoeQF9zdGFydF90cmFuc2FjdGlvbl9zdGF0ZXsAOhdAdHJhbnNh
+      Y3Rpb25fc3RhdGUwOhRAcmVmbGVjdHNfc3RhdGVbBkZJIhl3YXJkZW4udXNl
+      ci51c2VyLmtleQY7AFRbB1sGaQZJIiIkMmEkMTAkQURNM2ZmUmRDaXBiaVdG
+      RHB6aElqdQY7AFRJIhBfY3NyZl90b2tlbgY7AEZJIjFDOSs1RnFNOGRhNkNt
+      L0gwK1BhRUl6U2hsVzVXNGRvaWJuUFlSQWJuQXVFPQY7AEY=
+    - '2014-11-05 11:49:35.708886'
+    - '2014-11-05 15:51:53.376243'
+  - - '57'
+    - f7c65dd9e21dfac9fc442eb0f191137b
+    - |
+      BAh7BkkiEF9jc3JmX3Rva2VuBjoGRUZJIjF1dk1uK2NTM2YwWjl4VlFoS3FC
+      aUw1NkE2UW1uOXg2VGRld2lFaWZjdmIwPQY7AEY=
+    - '2014-11-05 13:02:21.648879'
+    - '2014-11-05 13:02:21.648879'
 
 ---
 votes:
@@ -2019,31 +1582,15 @@ votes:
   - for
   - created_at
   - updated_at
-  records:
-  - - '1'
-    - '2'
-    - Statement
-    - '1'
-    - User
-    - '0'
-    - '2014-09-14 15:12:15.271418'
-    - '2014-09-14 15:12:47.477555'
+  records: 
   - - '2'
     - '1'
-    - Statement
+    - Motion
     - '1'
     - User
-    - '1'
-    - '2014-09-16 07:16:35.592191'
-    - '2014-09-16 07:16:35.742926'
-  - - '3'
     - '2'
-    - Argument
-    - '1'
-    - User
-    - '1'
-    - '2014-09-16 07:51:29.281391'
-    - '2014-09-16 07:51:29.30417'
+    - '2014-09-16 07:16:35.592191'
+    - '2014-10-29 17:09:10.002052'
   - - '4'
     - '3'
     - Argument
@@ -2052,6 +1599,145 @@ votes:
     - '1'
     - '2014-09-23 09:28:08.608862'
     - '2014-09-23 09:28:08.638511'
+  - - '5'
+    - '16'
+    - Motion
+    - '1'
+    - User
+    - '1'
+    - '2014-11-06 14:20:29.891574'
+    - '2014-11-06 14:20:29.921167'
+  - - '6'
+    - '18'
+    - Motion
+    - '1'
+    - User
+    - '0'
+    - '2014-11-06 14:20:31.831764'
+    - '2014-11-06 14:20:31.844465'
+  - - '7'
+    - '18'
+    - Motion
+    - '4'
+    - Profile
+    - '1'
+    - '2014-11-06 14:25:58.493845'
+    - '2014-11-07 09:04:49.047094'
+  - - '9'
+    - '16'
+    - Motion
+    - '4'
+    - Profile
+    - '0'
+    - '2014-11-06 15:11:18.706584'
+    - '2014-11-06 15:17:06.498686'
+  - - '10'
+    - '19'
+    - Motion
+    - '4'
+    - Profile
+    - '2'
+    - '2014-11-06 15:12:59.222625'
+    - '2014-11-07 14:34:47.411412'
+  - - '11'
+    - '20'
+    - Motion
+    - '4'
+    - Profile
+    - '0'
+    - '2014-11-06 15:13:01.039391'
+    - '2014-11-06 15:13:01.054849'
+  - - '12'
+    - '1'
+    - Question
+    - '4'
+    - Profile
+    - '0'
+    - '2014-11-06 15:17:06.498686'
+    - '2014-11-06 15:17:06.498686'
+  - - '13'
+    - '2'
+    - Question
+    - '4'
+    - Profile
+    - '2'
+    - '2014-11-06 15:17:06.498686'
+    - '2014-11-06 15:17:06.498686'
+  - - '14'
+    - '4'
+    - Argument
+    - '4'
+    - Profile
+    - '1'
+    - '2014-11-07 16:28:27.545836'
+    - '2014-11-07 16:32:16.971439'
+  - - '15'
+    - '21'
+    - Motion
+    - '4'
+    - Profile
+    - '2'
+    - '2014-11-19 13:51:18.536069'
+    - '2014-11-19 13:55:34.296511'
+
+---
+profiles:
+  columns:
+  - id
+  - name
+  - about
+  - picture
+  - created_at
+  - updated_at
+  - profile_photo
+  - cover_photo
+  - slug
+  records: 
+  - - '4'
+    - Thom van Kalkeren
+    - I'm the coder!
+    - http://www.wthex.com/images/coolcookie.gif
+    - '2014-05-02 15:16:33.722659'
+    - '2014-10-28 14:58:39.105837'
+    - profile_picture_small.jpg
+    - 
+    - 
+  - - '5'
+    - Administrator
+    - ''
+    - ''
+    - '2014-05-02 15:16:33.734038'
+    - '2014-09-22 21:05:44.980133'
+    - 
+    - 
+    - 
+  - - '6'
+    - Joep
+    - argu designer
+    - https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg
+    - '2014-05-02 15:16:33.745944'
+    - '2014-09-22 21:05:19.155738'
+    - 
+    - 
+    - 
+  - - '7'
+    - ''
+    - ''
+    - ''
+    - '2014-09-13 10:04:57.677249'
+    - '2014-09-22 21:04:31.170125'
+    - 
+    - 
+    - 
+  - - '8'
+    - Gemeente utrecht
+    - Gemeente utrecht
+    - ''
+    - '2014-11-06 15:17:06.498686'
+    - '2014-11-06 15:17:06.498686'
+    - ''
+    - ''
+    - ''
 
 ---
 taggings:
@@ -2064,95 +1750,247 @@ taggings:
   - tagger_type
   - context
   - created_at
-  records:
+  records: 
   - - '1'
     - '1'
     - '1'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-13 21:28:47.263275'
   - - '2'
     - '2'
     - '1'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-13 21:28:47.314558'
   - - '3'
     - '3'
     - '1'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-13 21:28:47.332331'
   - - '4'
     - '4'
     - '3'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-13 21:29:09.606294'
   - - '5'
     - '3'
     - '3'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-13 21:29:09.693681'
   - - '6'
     - '5'
     - '4'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-14 23:09:06.137376'
   - - '7'
     - '4'
     - '4'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-14 23:09:06.246782'
   - - '8'
     - '6'
     - '4'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-14 23:09:06.261846'
   - - '9'
     - '7'
     - '6'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-23 09:27:32.324112'
   - - '10'
     - '8'
     - '6'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-23 09:27:32.348883'
   - - '11'
     - '4'
     - '6'
     - Statement
-    -
-    -
+    - 
+    - 
     - tags
     - '2014-09-23 09:27:32.36237'
+  - - '12'
+    - '9'
+    - '7'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 12:22:46.943759'
+  - - '13'
+    - '4'
+    - '7'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 12:22:46.965735'
+  - - '14'
+    - '10'
+    - '7'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 12:22:46.979132'
+  - - '15'
+    - '9'
+    - '8'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 12:25:13.73689'
+  - - '16'
+    - '10'
+    - '8'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 12:25:13.768786'
+  - - '17'
+    - '11'
+    - '8'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 12:25:13.783253'
+  - - '18'
+    - '12'
+    - '17'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 13:56:45.747998'
+  - - '19'
+    - '13'
+    - '17'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 13:56:45.772313'
+  - - '20'
+    - '10'
+    - '17'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 13:56:45.787868'
+  - - '21'
+    - '12'
+    - '18'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 13:58:52.990736'
+  - - '22'
+    - '13'
+    - '18'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 13:58:53.081586'
+  - - '23'
+    - '10'
+    - '18'
+    - Statement
+    - 
+    - 
+    - tags
+    - '2014-10-30 13:58:53.099007'
+  - - '24'
+    - '14'
+    - '2'
+    - Question
+    - 
+    - 
+    - tags
+    - '2014-10-30 14:16:19.153026'
+  - - '25'
+    - '5'
+    - '2'
+    - Question
+    - 
+    - 
+    - tags
+    - '2014-10-30 14:16:19.242714'
+  - - '26'
+    - '14'
+    - '3'
+    - Question
+    - 
+    - 
+    - tags
+    - '2014-10-30 14:16:44.735653'
+  - - '27'
+    - '5'
+    - '3'
+    - Question
+    - 
+    - 
+    - tags
+    - '2014-10-30 14:16:44.753602'
+  - - '28'
+    - '15'
+    - '7'
+    - Question
+    - 
+    - 
+    - tags
+    - '2014-11-06 11:51:39.425753'
+  - - '29'
+    - '16'
+    - '7'
+    - Question
+    - 
+    - 
+    - tags
+    - '2014-11-06 11:51:39.447162'
+  - - '30'
+    - '17'
+    - '7'
+    - Question
+    - 
+    - 
+    - tags
+    - '2014-11-06 11:51:39.473865'
 
 ---
 tags:
@@ -2160,7 +1998,7 @@ tags:
   - id
   - name
   - taggings_count
-  records:
+  records: 
   - - '1'
     - EU
     - '1'
@@ -2172,10 +2010,10 @@ tags:
     - '2'
   - - '4'
     - natuur
-    - '3'
+    - '4'
   - - '5'
     - utrecht
-    - '1'
+    - '3'
   - - '6'
     - tags
     - '1'
@@ -2185,9 +2023,36 @@ tags:
   - - '8'
     - duurzaamheid
     - '1'
+  - - '9'
+    - appels
+    - '2'
+  - - '10'
+    - fruit
+    - '4'
+  - - '11'
+    - bananenrepubliek
+    - '1'
+  - - '12'
+    - thee
+    - '2'
+  - - '13'
+    - irrelevant
+    - '2'
+  - - '14'
+    - architectuur
+    - '2'
+  - - '15'
+    - hoe
+    - '1'
+  - - '16'
+    - moet dat
+    - '1'
+  - - '17'
+    - nou
+    - '1'
 
 ---
-statements:
+motions:
   columns:
   - id
   - title
@@ -2206,27 +2071,29 @@ statements:
   - opinion_pro_count
   - opinion_con_count
   - votes_abstain_count
-  - organisation_id
-  records:
+  - forum_id
+  - creator_id
+  records: 
   - - '1'
     - Test2
     - Zo veel belangrijke dingen, zo weinig tijd. {EU}(Europese Unie) of [www.website.nl](voorbeeld
       omschrijving). Vergeet {Neelie_Kroes}(Neelie) niet samen met {Marietje}(Marietje)
     - '2014-05-02 15:18:33.604968'
-    - '2014-09-16 07:16:35.602222'
+    - '2014-10-29 17:09:09.995987'
     - '0'
     - '0'
-    -
+    - 
     - false
+    - '0'
+    - '0'
     - '1'
     - '0'
     - '0'
     - '0'
     - '0'
-    - '0'
-    - '0'
-    - '-1'
-    -
+    - "-1"
+    - 
+    - 
   - - '2'
     - Prachtig voorstel
     - zeker doen!
@@ -2234,7 +2101,7 @@ statements:
     - '2014-09-14 15:12:47.459294'
     - '0'
     - '0'
-    -
+    - 
     - false
     - '0'
     - '1'
@@ -2243,8 +2110,9 @@ statements:
     - '0'
     - '0'
     - '0'
-    - '-1'
-    -
+    - "-1"
+    - 
+    - 
   - - '3'
     - Prachtig voorstel
     - zeker doen!
@@ -2252,7 +2120,7 @@ statements:
     - '2014-09-13 21:29:09.574489'
     - '0'
     - '0'
-    -
+    - 
     - false
     - '0'
     - '0'
@@ -2262,7 +2130,8 @@ statements:
     - '0'
     - '0'
     - '0'
-    -
+    - 
+    - 
   - - '4'
     - Speciaal voor utrecht
     - Om de scoping van stellingen te testen
@@ -2270,7 +2139,7 @@ statements:
     - '2014-09-14 23:09:06.059991'
     - '0'
     - '0'
-    -
+    - 
     - false
     - '0'
     - '0'
@@ -2281,6 +2150,7 @@ statements:
     - '0'
     - '0'
     - '1'
+    - 
   - - '5'
     - Deze zou ook voor utrecht zijn
     - 'Dan werkt de auto scoping in 1x : )'
@@ -2288,7 +2158,7 @@ statements:
     - '2014-09-14 23:20:21.098038'
     - '0'
     - '0'
-    -
+    - 
     - false
     - '0'
     - '0'
@@ -2299,6 +2169,7 @@ statements:
     - '0'
     - '0'
     - '1'
+    - 
   - - '6'
     - Weg tot de wetenschap volgooien met zonnepanelen
     - Iets met dat wegen toch onnodig zijn.
@@ -2306,7 +2177,7 @@ statements:
     - '2014-09-23 09:27:32.594278'
     - '0'
     - '0'
-    -
+    - 
     - false
     - '0'
     - '0'
@@ -2317,131 +2188,481 @@ statements:
     - '0'
     - '0'
     - '1'
-
----
-organisations:
-  columns:
-  - id
-  - name
-  - website
-  - description
-  - slogan
-  - key_tags
-  - created_at
-  - updated_at
-  - web_url
-  - memberships_count
-  - statements_count
-  - scope
-  - application_form
-  - public_form
-  records:
-  - - '1'
-    - Gemeente Utrecht
-    - http://www.utrecht.nl
-    - Bij de gemeente Utrecht werken ruim 4.000 medewerkers verdeeld over twaalf diensten
-      en twee projectorganisaties. Samen werken wij voor ruim 300.000 Utrechters aan
-      de stad. Onze gemeente staat de komende jaren voor grote uitdagingen. Naast
-      het realiseren van het collegeprogramma voor een groen open en sociaal Utrecht,
-      ligt er ook een grote veranderopgave voor de organisatie. Het college wil de
-      ambtelijke organisatie omvormen in een financieel gezonde organisatie die slanker
-      is en vraaggerichter en slagvaardiger werkt.
-    - Hart van Nederland...
-    - utrecht,beleid
-    - '2014-09-12 22:17:37.351175'
-    - '2014-09-14 19:18:59.220316'
-    - utrecht
-    - '7'
-    - '3'
-    - '2'
+    - 
+  - - '7'
+    - Appels lijken te veel op peren.
+    - "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+      when an unknown printer took a galley of type and scrambled it to make a type
+      specimen book. It has survived not only five centuries, but also the leap into
+      electronic typesetting, remaining essentially unchanged. It was popularised
+      in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+      and more recently with desktop publishing software like Aldus PageMaker including
+      versions of Lorem Ipsum.\r\n\r\nIt is a long established fact that a reader
+      will be distracted by the readable content of a page when looking at its layout.
+      The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+      of letters, as opposed to using 'Content here, content here', making it look
+      like readable English. Many desktop publishing packages and web page editors
+      now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'
+      will uncover many web sites still in their infancy. Various versions have evolved
+      over the years, sometimes by accident, sometimes on purpose (injected humour
+      and the like).\r\n\r\n \r\nContrary to popular belief, Lorem Ipsum is not simply
+      random text. It has roots in a piece of classical Latin literature from 45 BC,
+      making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
+      College in Virginia, looked up one of the more obscure Latin words, consectetur,
+      from a Lorem Ipsum passage, and going through the cites of the word in classical
+      literature, discovered the undoubtable source. Lorem Ipsum comes from sections
+      1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good
+      and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory
+      of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
+      \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\r\n\r\nThe
+      standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
+      interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\"
+      by Cicero are also r"
+    - '2014-10-30 12:22:46.807785'
+    - '2014-10-30 12:22:46.807785'
     - '0'
     - '0'
-  - - '2'
-    - Amsterdam
-    - http://www.amsterdam.nl
-    - 'De kernwaarden van de gemeente Amsterdam zijn: Open Actief en Integer'
-    - I Amsterdam
-    - amsterdam
-    - '2014-09-15 21:01:50.075052'
-    - '2014-09-17 20:20:46.757263'
-    - amsterdam
-    - '0'
-    - '0'
-    - '2'
-    - '0'
-    - '0'
-  - - '3'
-    - Greenpeace
-    - http://www.greenpeace.org/international/en/
-    - Greenpeace exists because this fragile Earth deserves a voice. It needs solutions.
-      It needs change. It needs action. It needs YOU!
-    - ''
-    - milieu,natuur,dekleurgroen
-    - '2014-09-15 21:19:32.622286'
-    - '2014-09-15 21:24:57.005482'
-    - ''
+    - 
+    - false
     - '0'
     - '0'
     - '0'
     - '0'
     - '0'
-  - - '4'
-    - Janssens Discussies
-    - ''
-    - Jaaaaannnssseeen!
-    - Altijd de pineut
-    - ''
-    - '2014-09-17 12:36:55.318919'
-    - '2014-09-17 12:36:55.318919'
-    -
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '8'
+    - Appels lijken te veel op peren.
+    - "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+      when an unknown printer took a galley of type and scrambled it to make a type
+      specimen book. It has survived not only five centuries, but also the leap into
+      electronic typesetting, remaining essentially unchanged. It was popularised
+      in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+      and more recently with desktop publishing software like Aldus PageMaker including
+      versions of Lorem Ipsum.\r\n\r\nIt is a long established fact that a reader
+      will be distracted by the readable content of a page when looking at its layout.
+      The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+      of letters, as opposed to using 'Content here, content here', making it look
+      like readable English. Many desktop publishing packages and web page editors
+      now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'
+      will uncover many web sites still in their infancy. Various versions have evolved
+      over the years, sometimes by accident, sometimes on purpose (injected humour
+      and the like).\r\n\r\n \r\nContrary to popular belief, Lorem Ipsum is not simply
+      random text. It has roots in a piece of classical Latin literature from 45 BC,
+      making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
+      College in Virginia, looked up one of the more obscure Latin words, consectetur,
+      from a Lorem Ipsum passage, and going through the cites of the word in classical
+      literature, discovered the undoubtable source. Lorem Ipsum comes from sections
+      1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good
+      and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory
+      of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
+      \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\r\n\r\nThe
+      standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
+      interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\"
+      by Cicero are also r"
+    - '2014-10-30 12:25:13.691837'
+    - '2014-10-30 12:25:13.691837'
+    - '0'
+    - '0'
+    - 
+    - false
     - '0'
     - '0'
     - '0'
     - '0'
     - '0'
-
----
-groups:
-  columns:
-  - id
-  - name
-  - website
-  - description
-  - slogan
-  - key_tags
-  - created_at
-  - updated_at
-  - web_url
-  - memberships_count
-  - statements_count
-  - scope
-  - application_form
-  - public_form
-  records:
-  - - '3'
-    - Thom's groepje
-    -
-    - ''
-    - Cogitationes posteriores sunt saniores
-    - ''
-    - '2014-09-20 15:59:03.032995'
-    - '2014-09-20 15:59:03.032995'
-    -
     - '0'
     - '0'
     - '0'
-    - '2'
+    - 
+    - 
+  - - '9'
+    - Appels lijken te veel op peren.
+    - "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+      when an unknown printer took a galley of type and scrambled it to make a type
+      specimen book. It has survived not only five centuries, but also the leap into
+      electronic typesetting, remaining essentially unchanged. It was popularised
+      in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+      and more recently with desktop publishing software like Aldus PageMaker including
+      versions of Lorem Ipsum.\r\n\r\nIt is a long established fact that a reader
+      will be distracted by the readable content of a page when looking at its layout.
+      The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+      of letters, as opposed to using 'Content here, content here', making it look
+      like readable English. Many desktop publishing packages and web page editors
+      now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'
+      will uncover many web sites still in their infancy. Various versions have evolved
+      over the years, sometimes by accident, sometimes on purpose (injected humour
+      and the like).\r\n\r\n \r\nContrary to popular belief, Lorem Ipsum is not simply
+      random text. It has roots in a piece of classical Latin literature from 45 BC,
+      making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
+      College in Virginia, looked up one of the more obscure Latin words, consectetur,
+      from a Lorem Ipsum passage, and going through the cites of the word in classical
+      literature, discovered the undoubtable source. Lorem Ipsum comes from sections
+      1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good
+      and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory
+      of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
+      \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\r\n\r\nThe
+      standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
+      interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\"
+      by Cicero are also r"
+    - '2014-10-30 12:25:48.986736'
+    - '2014-10-30 12:25:48.986736'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '10'
+    - Appels lijken te veel op peren.
+    - "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+      when an unknown printer took a galley of type and scrambled it to make a type
+      specimen book. It has survived not only five centuries, but also the leap into
+      electronic typesetting, remaining essentially unchanged. It was popularised
+      in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+      and more recently with desktop publishing software like Aldus PageMaker including
+      versions of Lorem Ipsum.\r\n\r\nIt is a long established fact that a reader
+      will be distracted by the readable content of a page when looking at its layout.
+      The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+      of letters, as opposed to using 'Content here, content here', making it look
+      like readable English. Many desktop publishing packages and web page editors
+      now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'
+      will uncover many web sites still in their infancy. Various versions have evolved
+      over the years, sometimes by accident, sometimes on purpose (injected humour
+      and the like).\r\n\r\n \r\nContrary to popular belief, Lorem Ipsum is not simply
+      random text. It has roots in a piece of classical Latin literature from 45 BC,
+      making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
+      College in Virginia, looked up one of the more obscure Latin words, consectetur,
+      from a Lorem Ipsum passage, and going through the cites of the word in classical
+      literature, discovered the undoubtable source. Lorem Ipsum comes from sections
+      1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good
+      and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory
+      of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
+      \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\r\n\r\nThe
+      standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
+      interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\"
+      by Cicero are also r"
+    - '2014-10-30 12:26:37.624393'
+    - '2014-10-30 12:26:37.624393'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '11'
+    - Appels lijken te veel op peren.
+    - "Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+      when an unknown printer took a galley of type and scrambled it to make a type
+      specimen book. It has survived not only five centuries, but also the leap into
+      electronic typesetting, remaining essentially unchanged. It was popularised
+      in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+      and more recently with desktop publishing software like Aldus PageMaker including
+      versions of Lorem Ipsum.\r\n\r\nIt is a long established fact that a reader
+      will be distracted by the readable content of a page when looking at its layout.
+      The point of using Lorem Ipsum is that it has a more-or-less normal distribution
+      of letters, as opposed to using 'Content here, content here', making it look
+      like readable English. Many desktop publishing packages and web page editors
+      now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum'
+      will uncover many web sites still in their infancy. Various versions have evolved
+      over the years, sometimes by accident, sometimes on purpose (injected humour
+      and the like).\r\n\r\n \r\nContrary to popular belief, Lorem Ipsum is not simply
+      random text. It has roots in a piece of classical Latin literature from 45 BC,
+      making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney
+      College in Virginia, looked up one of the more obscure Latin words, consectetur,
+      from a Lorem Ipsum passage, and going through the cites of the word in classical
+      literature, discovered the undoubtable source. Lorem Ipsum comes from sections
+      1.10.32 and 1.10.33 of \"de Finibus Bonorum et Malorum\" (The Extremes of Good
+      and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory
+      of ethics, very popular during the Renaissance. The first line of Lorem Ipsum,
+      \"Lorem ipsum dolor sit amet..\", comes from a line in section 1.10.32.\r\n\r\nThe
+      standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those
+      interested. Sections 1.10.32 and 1.10.33 from \"de Finibus Bonorum et Malorum\"
+      by Cicero are also r"
+    - '2014-10-30 12:27:54.283379'
+    - '2014-10-30 12:27:54.283379'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '12'
+    - Appels zijn op een gaard
+    - Wat dat ook mag inhouden
+    - '2014-10-30 13:47:36.44559'
+    - '2014-10-30 13:47:36.44559'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '13'
+    - Appels zijn op een gaard
+    - Wat dat ook mag inhouden
+    - '2014-10-30 13:47:53.336033'
+    - '2014-10-30 13:47:53.336033'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '14'
+    - Appels zijn op een gaard
+    - Wat dat ook mag inhouden
+    - '2014-10-30 13:48:14.394226'
+    - '2014-10-30 13:48:14.394226'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '15'
+    - Appels zijn op een gaard
+    - Wat dat ook mag inhouden
+    - '2014-10-30 13:48:29.203498'
+    - '2014-10-30 13:48:29.203498'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '16'
+    - Appels zijn op een gaard
+    - Wat dat ook mag inhouden
+    - '2014-10-30 13:49:20.754586'
+    - '2014-11-06 15:17:06.492797'
+    - '0'
+    - '0'
+    - 
+    - false
     - '1'
-
----
-group_memberships:
-  columns:
-  - id
-  - user_id
-  - group_id
-  - role
-  records:
-  - - '2'
     - '1'
-    - '3'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - "-2"
+    - 
+    - 
+  - - '17'
+    - Peren hebben ook rechten
+    - Want alles moet altijd helemaal gelijk zijn en zo
+    - '2014-10-30 13:56:45.562859'
+    - '2014-10-30 13:56:45.562859'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '18'
+    - Peren hebben ook rechten
+    - Want alles moet altijd helemaal gelijk zijn en zo
+    - '2014-10-30 13:58:52.963543'
+    - '2014-11-07 09:04:49.040141'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '1'
+    - '1'
+    - '0'
+    - '1'
+    - '0'
     - '2'
+    - '2'
+    - "-2"
+    - 
+    - 
+  - - '19'
+    - Meer, meer, meer!
+    - Zeker in oktober
+    - '2014-10-30 14:31:12.361624'
+    - '2014-11-07 14:34:47.40041'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '1'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - "-1"
+    - 
+    - 
+  - - '20'
+    - Minder, minder, minder!
+    - Helemaal in Maart.
+    - '2014-10-30 14:31:44.531539'
+    - '2014-11-06 15:13:01.049105'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '1'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - "-1"
+    - 
+    - 
+  - - '21'
+    - Naam veranderen naar amsterwaterwerk
+    - Dat houdt het lekker algemeen.
+    - '2014-10-30 14:55:11.801536'
+    - '2014-11-19 13:55:34.29012'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '1'
+    - '0'
+    - '2'
+    - '0'
+    - '0'
+    - "-1"
+    - '2'
+    - 
+  - - '22'
+    - Paalstad
+    - Duidelijke etymologisch correcte naam
+    - '2014-11-19 14:12:44.070499'
+    - '2014-11-19 14:12:44.070499'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '23'
+    - Paalstad
+    - Duidelijke etymologisch correcte naam
+    - '2014-11-19 14:13:07.660203'
+    - '2014-11-19 14:13:07.660203'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - 
+  - - '24'
+    - Paalstad
+    - Duidelijke etymologisch correcte naam
+    - '2014-11-19 14:14:06.361007'
+    - '2014-11-19 14:14:06.494347'
+    - '0'
+    - '0'
+    - 
+    - false
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - '0'
+    - 
+    - '4'
