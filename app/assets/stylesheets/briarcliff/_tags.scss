@@ -14,9 +14,11 @@ ul.tags {
   font-weight: bold;
   font-size: .8em;
   line-height: 1.5em;
-  padding: .4em 1em;
+  padding: 0.4em 0.8em;
   display: inline-block;
-  &:hover {
-    background-color: $bluo;
-  }
+  background-color: white;
+  margin: .3em;
+}
+a.tag:hover {
+  background-color: $blul;
 }

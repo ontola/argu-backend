@@ -3,6 +3,7 @@
 nl:
   profiles:
     type: "profiel"
+    display: "profiel bekijken"
     show:
       title: "profiel"
       btn:
