@@ -7,7 +7,13 @@ nl:
   owner: "Thom van Kalkeren & Joep Meindertsma"
   system_not_allowed: "je hebt geen toestemming voor deze actie."
   sign_in: "inloggen"
-  sign_up: "aanmelden"
+  sign_in_facebook: "Log in met facebook"
+  sign_in_twitter: "Log in met twitter"
+  sign_in_existing: "Bestaand argu account:"
+  forgot_password: "Wachtwoord vergeten?"
+
+  sign_up: "account aanmaken"
+  sign_up_argu: "Maak een Argu account"
   sign_out: "uitloggen"
   learn_more: "meer info"
   not_found_type: "%{type} niet gevonden"
@@ -59,6 +65,7 @@ nl:
   about_title: "Over"
 #Users
   users_username: "gebruikersnaam"
+  users_username_or_email: "gebruikersnaam of email"
   users_name: "volledige naam"
   users_name_placeholder: "Vul hier jouw volledige naam in."
   users_email: "e-mail"

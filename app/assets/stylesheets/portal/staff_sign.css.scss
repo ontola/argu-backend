@@ -1,13 +1,14 @@
 #staff_sign {
   margin: 0;
-  padding: .3em 0.5em;
   text-align: center;
-  background: rgba(76, 76, 76, 0.9);
+  background: rgba(0, 0, 0, 0.4);
+  padding: 0.7em 0.1em;
   z-index: 6;
   position: fixed;
+  text-transform: uppercase;
   bottom: 0;
   right: 0;
-  font-size: 140%;
+  font-size: 0.8em;
   a, span {
     font-family: sans-serif;
     color: white;

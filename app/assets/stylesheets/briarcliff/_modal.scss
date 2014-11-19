@@ -1,0 +1,30 @@
+@import "variables";
+@import "mixins";
+
+.modal {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.modal h1 {
+  margin-bottom: 1em;
+}
+
+.modal-small{
+  max-width: 22em;
+  text-align: left;
+}
+
+.overlay {
+  position: fixed;
+  overflow: auto;
+  text-align: center;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: -1;
+  background-color: $overlay;
+  height: 100%;
+}

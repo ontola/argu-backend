@@ -10,7 +10,7 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   resize: vertical;
   display: inline-block;
   width: 70%;
-  margin-bottom: 1em;
+  margin-bottom: 1.5em;
   &:focus {
     background-color: $darken0;
     border: none;
@@ -31,14 +31,15 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
 }
 
 label {
-  margin-top: 1em;
-  margin-bottom: 1.1em;
+  padding: 0.6em 0em;
   display: inline-block;
   text-transform: uppercase;
   color: $g3;
-  font-size: 0.8em;
+  font-size: 0.9em;
   width: 30%;
+  letter-spacing: 0.1em;
   vertical-align: top;
+  line-height: 1.5em;
 }
 
 .form-auth-icons {
@@ -70,6 +71,49 @@ label {
 
 .form-padded {
   padding-bottom: 2em;
+}
+
+.form-small {
+  max-width: 15em;
+  padding-bottom: 1em;
+  padding-top: 1em;
+  margin: auto;
+}
+
+.form-small .btn {
+  display: block;
+  margin: auto;
+}
+
+.form-small input, .form-small button {
+  width: 100%;
+}
+
+.form-small label {
+  padding: 0;
+}
+
+.formtastic button {
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  padding: .5em .8em .4em .8em;
+  background-color: $gre;
+  border: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  margin: 0;
+  margin-bottom: 1em;
+  cursor: hand;
+  display: inline-block;
+  border-bottom: solid 3px $darken2;
+  &:hover {
+    border-color: $darken3;
+  }
+  &:active {
+    border-color: $darken4;
+  }
 }
 
 @media screen and (max-width: 699px) {
