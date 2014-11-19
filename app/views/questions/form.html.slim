@@ -14,9 +14,9 @@
               - @motion.errors.full_messages.each do |msg|
                 li= msg
         = f.text_field :title, placeholder: t("questions.form.title").capitalize, class: "h1 sta-t form-input-title"
-        /p.helpertext= t("statements.form.helper.title")
+        /p.helpertext= t("motions.form.helper.title")
         = f.text_area :content, placeholder: t("questions.form.content"), class: "form-input-content", rows: "8"
-        /p.helpertext= t("statements.form.helper.content")
+        /p.helpertext= t("motions.form.helper.content")
         = f.text_field :tag_list, placeholder: t("questions.form.themes"), class: "tag-list"
         /p.helpertext= t("motions.form.helper.themes")
 

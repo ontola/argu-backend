@@ -1,4 +1,4 @@
-module OrganisationsHelper
+module ForumsHelper
   def public_form_member_label(value)
     t("organisations.public_form.#{value}")
   end

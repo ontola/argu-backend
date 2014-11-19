@@ -1,5 +1,5 @@
 .center
   ul.btns-opinion
-   li= link_to t('statements.votes.pro'), motion_vote_path(@motion, 'pro'), class: "btn btn-pro#{ ' voted' if @voted.eql?('pro')}", remote: true, method: :post
-   li= link_to t('statements.votes.neu'), motion_vote_path(@motion, 'neutral'), class: "btn btn-neu#{ ' voted' if @voted.eql?('neutral')}", remote: true, method: :post
-   li= link_to t('statements.votes.con'), motion_vote_path(@motion, 'con'), class: "btn btn-con#{ ' voted' if @voted.eql?('con')}", remote: true, method: :post
+   li= link_to t('motions.votes.pro'), motion_vote_path(@motion, 'pro'), class: "btn btn-pro#{ ' voted' if @voted.eql?('pro')}", remote: true, method: :post
+   li= link_to t('motions.votes.neu'), motion_vote_path(@motion, 'neutral'), class: "btn btn-neu#{ ' voted' if @voted.eql?('neutral')}", remote: true, method: :post
+   li= link_to t('motions.votes.con'), motion_vote_path(@motion, 'con'), class: "btn btn-con#{ ' voted' if @voted.eql?('con')}", remote: true, method: :post

@@ -1,4 +1,4 @@
--provide :title, (@motion.title.nil? ? t(:statement_title) : @motion.title)
+-provide :title, (@motion.title.nil? ? t(:motion_title) : @motion.title)
 .col-1
   ==cell(:context, @motion).call(:to_parent)
   =render partial: 'motionbody', locals: { motion: @motion }

@@ -1,4 +1,4 @@
-class Tags::StatementsController < ApplicationController
+class Tags::MotionsController < ApplicationController
 
   def index
     if params[:q].present?

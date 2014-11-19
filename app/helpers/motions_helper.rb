@@ -1,8 +1,8 @@
 include ActsAsTaggableOn::TagsHelper
-module StatementsHelper
-  def back_to_statement(resource)
+module MotionsHelper
+  def back_to_motion(resource)
     concat content_tag 'h1', t("#{resource.class.name.pluralize.downcase}.new.header", side: pro_translation(resource))
-    link_to resource.motion.title, statement_path(resource.statement), class: "btn btn-white"
+    link_to resource.motion.title, motion_path(resource.motion), class: "btn btn-white"
   end
 
   def pro_side(resource)

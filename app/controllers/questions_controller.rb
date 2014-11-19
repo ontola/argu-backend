@@ -19,7 +19,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        format.html { redirect_to @question, notice: t('type_save_success', type: t('statements.type')) }
+        format.html { redirect_to @question, notice: t('type_save_success', type: t('motions.type')) }
         format.json { render json: @question, status: :created, location: @question }
       else
         format.html { render 'form' }

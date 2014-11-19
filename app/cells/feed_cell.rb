@@ -1,6 +1,6 @@
 class FeedCell < Cell::ViewModel
   builds do |model, options|
-    #StatementCell   if model.is_a? Statement
+    #MotionCell   if model.is_a? Motion
     QuestionCell    if model.is_a? Question
   end
 

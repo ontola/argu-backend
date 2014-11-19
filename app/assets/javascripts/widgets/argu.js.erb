@@ -9,21 +9,21 @@
         link.media = 'all';
         document.getElementsByTagName('head')[0].appendChild(link);
     } */
-    var Statement = function () {
-        var statements = document.getElementsByTagName("statement");
-        console.log('arguments found: ' + statements.length);
+    var Motion = function () {
+        var motions = document.getElementsByTagName("motion");
+        console.log('arguments found: ' + motions.length);
 
-        for(var i = 0; i < statements.length; i++) {
-            var statement = statements[i];
-            if (statement.id == null) break;
+        for(var i = 0; i < motions.length; i++) {
+            var motion = motions[i];
+            if (motion.id == null) break;
 
             var req = new XMLHttpRequest();
             req.onload = function (e) {
                 if (e.target.readyState == 4 && e.target.status == 200) {
-                    statement.innerHTML = e.target.responseText;
+                    motion.innerHTML = e.target.responseText;
                 }
             };
-            req.open("get", "//<%= Rails.application.config.host %>/motions/" + statement.id + '.widget', true);
+            req.open("get", "//<%= Rails.application.config.host %>/motions/" + motion.id + '.widget', true);
             req.send();
         }
     };
@@ -50,7 +50,7 @@
 
     var run = function () {
         Argument();
-        Statement();
+        Motion();
     };
     document.addEventListener("DOMContentLoaded", run);
     console.log('argu sdk loaded');

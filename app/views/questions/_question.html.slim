@@ -6,5 +6,5 @@
     p= question.supped_content.html_safe
     /p.info= t("motions.preview.pro", count: question.votes_pro_count) + ', ' + t("motions.preview.con", count: question.votes_con_count)
     p.info
-      /= question.statements_count.to_s + " " + t("motions.plural")
+      /= question.motions_count.to_s + " " + t("motions.plural")
       = "1 voorstel"

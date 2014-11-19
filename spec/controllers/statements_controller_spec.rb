@@ -25,17 +25,17 @@ describe MotionsController do
 
     describe "GET index" do
       it "assigns all motions as @motions" do
-        statement = FactoryGirl.create(:motion)
+        motion = FactoryGirl.create(:motion)
         get :index, {}
-        assigns(:motions).should eq([statement])
+        assigns(:motions).should eq([motion])
       end
     end
 
     describe "GET show" do
       it "assigns the requested motion as @motion" do
-        statement = FactoryGirl.create(:motion)
-        get :show, {:id => statement.to_param}
-        assigns(:motion).should eq(statement)
+        motion = FactoryGirl.create(:motion)
+        get :show, {:id => motion.to_param}
+        assigns(:motion).should eq(motion)
       end
     end
 
@@ -48,15 +48,15 @@ describe MotionsController do
 
     describe "GET edit" do
       it "assigns the requested motion as @motion" do
-        statement = FactoryGirl.create(:motion)
-        get :edit, {:id => statement.to_param}
-        assigns(:motion).should eq(statement)
+        motion = FactoryGirl.create(:motion)
+        get :edit, {:id => motion.to_param}
+        assigns(:motion).should eq(motion)
       end
     end
 
     describe "POST create" do
       describe "with valid params" do
-        it "creates a new Statement" do
+        it "creates a new Motion" do
           expect {
             post :create, {:motion => FactoryGirl.attributes_for(:motion) }
           }.to change(Motion, :count).by(1)
@@ -94,8 +94,8 @@ describe MotionsController do
     describe "PUT update" do
       describe "with valid params" do
         it "redirects to root" do
-          statement = FactoryGirl.create(:motion)
-          put :update, {:id => statement.to_param, :motion => FactoryGirl.attributes_for(:motion) }
+          motion = FactoryGirl.create(:motion)
+          put :update, {:id => motion.to_param, :motion => FactoryGirl.attributes_for(:motion) }
           response.should redirect_to(root_path)
         end
       end
@@ -103,10 +103,10 @@ describe MotionsController do
       describe "with invalid params" do
 
         it "redirect to root" do
-          statement = FactoryGirl.create(:motion)
+          motion = FactoryGirl.create(:motion)
           # Trigger the behavior that occurs when invalid params are submitted
           Motion.any_instance.stub(:save).and_return(false)
-          put :update, {:id => statement.to_param, :motion => {}}
+          put :update, {:id => motion.to_param, :motion => {}}
           response.should redirect_to(root_path)
         end
       end
@@ -114,15 +114,15 @@ describe MotionsController do
 
     describe "DELETE destroy" do
       it "doesn't destroy the requested motion" do
-        statement = FactoryGirl.create(:motion)
+        motion = FactoryGirl.create(:motion)
         expect {
-          delete :destroy, {:id => statement.to_param}
+          delete :destroy, {:id => motion.to_param}
         }.to change(Motion, :count).by(0)
       end
 
       it "redirects to root" do
-        statement = FactoryGirl.create(:motion)
-        delete :destroy, {:id => statement.to_param}
+        motion = FactoryGirl.create(:motion)
+        delete :destroy, {:id => motion.to_param}
         response.should redirect_to(root_path)
       end
     end
@@ -136,38 +136,38 @@ describe MotionsController do
       describe "with valid params" do
 
         it "updates the requested motion" do
-          statement = FactoryGirl.create(:motion)
+          motion = FactoryGirl.create(:motion)
           Motion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-          put :update, {:id => statement.to_param, :motion => {'these' => 'params'}}
+          put :update, {:id => motion.to_param, :motion => {'these' => 'params'}}
         end
 
         it "assigns the requested motion as @motion" do
-          statement = FactoryGirl.create(:motion)
-          put :update, {:id => statement.to_param, :motion => FactoryGirl.attributes_for(:motion) }
-          assigns(:motion).should eq(statement)
+          motion = FactoryGirl.create(:motion)
+          put :update, {:id => motion.to_param, :motion => FactoryGirl.attributes_for(:motion) }
+          assigns(:motion).should eq(motion)
         end
 
         it "redirects to the motion" do
-          statement = FactoryGirl.create(:motion)
-          put :update, {:id => statement.to_param, :motion => FactoryGirl.attributes_for(:motion) }
-          response.should redirect_to(statement)
+          motion = FactoryGirl.create(:motion)
+          put :update, {:id => motion.to_param, :motion => FactoryGirl.attributes_for(:motion) }
+          response.should redirect_to(motion)
         end
       end
 
       describe "with invalid params" do
         it "assigns the motion as @motion" do
-          statement = FactoryGirl.create(:motion)
+          motion = FactoryGirl.create(:motion)
           # Trigger the behavior that occurs when invalid params are submitted
           Motion.any_instance.stub(:save).and_return(false)
-          put :update, {:id => statement.to_param, :motion => {}}
-          assigns(:motion).should eq(statement)
+          put :update, {:id => motion.to_param, :motion => {}}
+          assigns(:motion).should eq(motion)
         end
 
         it "re-renders the 'edit' template" do
-          statement = FactoryGirl.create(:motion)
+          motion = FactoryGirl.create(:motion)
           # Trigger the behavior that occurs when invalid params are submitted
           Motion.any_instance.stub(:save).and_return(false)
-          put :update, {:id => statement.to_param, :motion => {}}
+          put :update, {:id => motion.to_param, :motion => {}}
           response.should render_template('motions/form')
         end
       end
@@ -175,16 +175,16 @@ describe MotionsController do
 
     describe "DELETE destroy" do
       it "destroys the requested motion" do
-        statement = FactoryGirl.create(:motion)
+        motion = FactoryGirl.create(:motion)
         expect {
-          delete :destroy, {:id => statement.to_param, destroy: true}
+          delete :destroy, {:id => motion.to_param, destroy: true}
         }.to change(Motion, :count).by(-1)
       end
 
       it "redirects to the motions list" do
-        statement = FactoryGirl.create(:motion)
-        delete :destroy, {:id => statement.to_param, destroy: true}
-        response.should redirect_to(statements_url)
+        motion = FactoryGirl.create(:motion)
+        delete :destroy, {:id => motion.to_param, destroy: true}
+        response.should redirect_to(motions_url)
       end
     end
   end

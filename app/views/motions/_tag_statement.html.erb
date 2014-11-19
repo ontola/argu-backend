@@ -1,2 +1,2 @@
-<% provide :title, (statement.title.nil? ? t(:statement_title) : statement.title) %>
-<%= render partial: 'motions/statementbody', locals: {statement: statement} %>
+<% provide :title, (motion.title.nil? ? t(:motion_title) : motion.title) %>
+<%= render partial: 'motions/motionbody', locals: {motion: motion} %>

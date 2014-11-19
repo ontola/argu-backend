@@ -1,5 +1,5 @@
 class Votes::ArgumentsController < ApplicationController
-  # POST /arguments/:statement_id/vote/:for
+  # POST /arguments/:motion_id/vote/:for
   def create
     @argument = Argument.find(params[:argument_id])
     authorize @argument, :vote?
@@ -18,7 +18,7 @@ class Votes::ArgumentsController < ApplicationController
     end
   end
 
-  # DELETE /arguments/:statement_id/vote
+  # DELETE /arguments/:motion_id/vote
   def destroy
     @argument = Argument.find(params[:argument_id])
     authorize @argument, :vote?

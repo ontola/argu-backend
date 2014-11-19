@@ -18,10 +18,10 @@ class OpinionsController < ApplicationController
   def new
     @opinion = Opinion.new
     authorize @opinion
-    @opinion.assign_attributes({pro: %w(con pro).index(params[:pro]), statement_id: params[:statement_id]})
+    @opinion.assign_attributes({pro: %w(con pro).index(params[:pro]), motion_id: params[:motion_id]})
 
     respond_to do |format|
-      if params[:statement_id].present?
+      if params[:motion_id].present?
         format.html { render :form }
         format.json { render json: @opinion }
       else
@@ -44,15 +44,15 @@ class OpinionsController < ApplicationController
     @opinion = Opinion.new create_params
     @opinion.creator = current_user
     authorize @opinion
-    @opinion.statement_id = create_params[:statement_id]
+    @opinion.motion_id = create_params[:motion_id]
     @opinion.pro = create_params[:pro]
 
     respond_to do |format|
       if @opinion.save
-        format.html { redirect_to (params[:opinion][:statement_id].blank? ? @opinion : Motion.find_by_id(params[:opinion][:statement_id])), notice: t("opinions.notices.created") }
+        format.html { redirect_to (params[:opinion][:motion_id].blank? ? @opinion : Motion.find_by_id(params[:opinion][:motion_id])), notice: t("opinions.notices.created") }
         format.json { render json: @opinion, status: :created, location: @opinion }
       else
-        format.html { render :form, pro: params[:pro], statement_id: params[:opinion][:statement_id] }
+        format.html { render :form, pro: params[:pro], motion_id: params[:opinion][:motion_id] }
         format.json { render json: @opinion.errors, status: :unprocessable_entity }
       end
     end
@@ -84,14 +84,14 @@ class OpinionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to statement_path(@opinion.statement_id) }
+      format.html { redirect_to motion_path(@opinion.motion_id) }
       format.json { head :no_content }
     end
   end
 
 private
   def create_params
-    params.require(:opinion).permit :title, :content, :statement_id, :pro
+    params.require(:opinion).permit :title, :content, :motion_id, :pro
   end
 
   def resource_params

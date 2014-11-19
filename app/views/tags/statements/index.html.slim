@@ -7,5 +7,5 @@ table
       td Hoofdstelling
   -@tags.each do |tag|
     tr
-      td= link_to tag.name, tag_statements_path(tag.name)
-      td= link_to tag.motion.title, statement_path(tag.motion) if tag.motion
+      td= link_to tag.name, tag_motions_path(tag.name)
+      td= link_to tag.motion.title, motion_path(tag.motion) if tag.motion

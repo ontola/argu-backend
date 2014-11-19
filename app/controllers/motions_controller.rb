@@ -61,7 +61,7 @@ class MotionsController < ApplicationController
 
     respond_to do |format|
       if @motion.save
-        format.html { redirect_to @motion, notice: t('type_save_success', type: t('statements.type')) }
+        format.html { redirect_to @motion, notice: t('type_save_success', type: t('motions.type')) }
         format.json { render json: @motion, status: :created, location: @motion }
       else
         format.html { render 'form' }
@@ -78,10 +78,10 @@ class MotionsController < ApplicationController
     respond_to do |format|
       if @motion.update_attributes(permit_params)
         if params[:motion].present? && params[:motion][:tag_id].present? && @motion.tags.reject { |a,b| a.motion==b }.first.present?
-          format.html { redirect_to tag_statements_url(Tag.find_by_id(@motion.tag_id).name)}
+          format.html { redirect_to tag_motions_url(Tag.find_by_id(@motion.tag_id).name)}
           format.json { head :no_content }
         else
-          format.html { redirect_to @motion, notice: 'Statement was successfully updated.' }
+          format.html { redirect_to @motion, notice: 'Motion was successfully updated.' }
           format.json { head :no_content }
         end
       else
@@ -104,7 +104,7 @@ class MotionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to statements_url }
+      format.html { redirect_to motions_url }
       format.json { head :no_content }
     end
   end

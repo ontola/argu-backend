@@ -1,6 +1,6 @@
 header
-  h1 = t("statements.plural")
-  = link_to t("statements.newstatement"), new_statement_path, class: "btn sta-bg"
-- @motions.each do |statement|
-  = render statement
+  h1 = t("motions.plural")
+  = link_to t("motions.newmotion"), new_motion_path, class: "btn sta-bg"
+- @motions.each do |motion|
+  = render motion
 = paginate @motions
