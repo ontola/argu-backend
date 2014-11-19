@@ -3,12 +3,11 @@ Argu::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
-  config.epics.opinion = true
-  config.epics.parties = false
-  config.epics.tag_system = false
-  config.epics.advanced_navigation = false
-  config.epics.search = false
-  config.epics.groups = false
+  config.epics.opinion = true                         # Opinion enabled?
+  config.epics.parties = false                        # Parties enabled?
+  config.epics.advanced_navigation = false            # Navigation by tags and such
+  config.epics.search = false                         # Search enabled?
+  config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
 
   # Code is not reloaded between requests
   config.cache_classes = true
