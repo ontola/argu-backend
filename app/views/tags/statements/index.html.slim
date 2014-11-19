@@ -8,4 +8,4 @@ table
   -@tags.each do |tag|
     tr
       td= link_to tag.name, tag_statements_path(tag.name)
-      td= link_to tag.statement.title, statement_path(tag.statement) if tag.statement
+      td= link_to tag.motion.title, statement_path(tag.motion) if tag.motion

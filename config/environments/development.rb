@@ -8,6 +8,7 @@ Argu::Application.configure do
   config.epics.tag_system = false
   config.epics.advanced_navigation = false
   config.epics.search = false
+  config.epics.groups = false
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

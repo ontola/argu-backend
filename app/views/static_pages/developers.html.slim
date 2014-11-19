@@ -22,7 +22,7 @@
     h2 stellingen
     .exanation
       table.explanation
-        caption= '<statement> tag'
+        caption= '<motion> tag'
         thead
           tr
             th attribuut
@@ -37,9 +37,9 @@
             td id van de stelling welke geladen moet worden.
           tr
             td view
-            td "statement"/"voting"
-            td "statement"
-            td Bepaald de mode van het statement, bij voting word de vote weergave gebruikt.
+            td "motion"/"voting"
+            td "motion"
+            td Bepaald de mode van het motion, bij voting word de vote weergave gebruikt.
           tr
             td arguments
             td "true"/"false"
@@ -58,7 +58,7 @@
       .example
         h2 voorbeeld
         pre
-          code= '<statement id="5"></statement>'
+          code= '<motion id="5"></motion>'
         <statement id="#{Statement.first.id}" arguments="true"></statement>
     h2 argumenten
     .exanation

@@ -49,7 +49,7 @@ class OpinionsController < ApplicationController
 
     respond_to do |format|
       if @opinion.save
-        format.html { redirect_to (params[:opinion][:statement_id].blank? ? @opinion : Statement.find_by_id(params[:opinion][:statement_id])), notice: t("opinions.notices.created") }
+        format.html { redirect_to (params[:opinion][:statement_id].blank? ? @opinion : Motion.find_by_id(params[:opinion][:statement_id])), notice: t("opinions.notices.created") }
         format.json { render json: @opinion, status: :created, location: @opinion }
       else
         format.html { render :form, pro: params[:pro], statement_id: params[:opinion][:statement_id] }

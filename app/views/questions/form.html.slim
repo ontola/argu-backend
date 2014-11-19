@@ -9,22 +9,22 @@
           #error_explanation
             h2
               = pluralize(@question.errors.count, "error")
-              | prohibited this statement from being saved:
+              | prohibited this motion from being saved:
             ul
-              - @statement.errors.full_messages.each do |msg|
+              - @motion.errors.full_messages.each do |msg|
                 li= msg
 
         = f.text_field :title, placeholder: t("questions.form.title").capitalize, class: "h1 sta-t"
-        /p.helpertext= t("statements.form.helper.title")
+        /p.helpertext= t("motions.form.helper.title")
 
         = f.text_area :content, placeholder: t("questions.form.content"), rows: "8"
-        /p.helpertext= t("statements.form.helper.content")
+        /p.helpertext= t("motions.form.helper.content")
 
         = f.text_field :tag_list, placeholder: t("questions.form.themes"), class: "tag-list"
-        /p.helpertext= t("statements.form.helper.themes")
+        /p.helpertext= t("motions.form.helper.themes")
 
         /TODO invert arguments only visible when in edit, not in new.
-          <%= f.label :invert_arguments, t("statements.form.invert"), class: "vertical" %>
+          <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
           <%= f.check_box :invert_arguments %>
       = render partial: 'profiles/profile_current'
       = f.hidden_field :organisation_id, value: @organisation.id

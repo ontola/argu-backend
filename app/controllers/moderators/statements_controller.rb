@@ -1,30 +1,30 @@
 class Moderators::StatementsController < ApplicationController
 
-  # POST /statements/:statement_id/moderator/:user_id
+  # POST /motions/:statement_id/moderator/:user_id
   def create
-    @statement = Statement.find_by_id(params[:statement_id])
-    authorize! :create_mod, @statement
+    @motion = Motion.find_by_id(params[:statement_id])
+    authorize! :create_mod, @motion
     @user = User.find_by_id params[:user_id]
-    @user.add_role :mod, @statement
+    @user.add_role :mod, @motion
     respond_to do |format|
       format.js
       format.json
     end
   end
-  # GET /statements/:statement_id/moderators/
+  # GET /motions/:statement_id/moderators/
   def index
-    @statement = Statement.find_by_id(params[:statement_id])
-    authorize! :edit_mods, @statement
-    @moderators = User.with_role :mod, @statement
+    @motion = Motion.find_by_id(params[:statement_id])
+    authorize! :edit_mods, @motion
+    @moderators = User.with_role :mod, @motion
   end
 
-  # DELETE /statements/:statement_id/moderators/:user_id
+  # DELETE /motions/:statement_id/moderators/:user_id
   def destroy
-    @statement = Statement.find_by_id params[:statement_id]
-    authorize! :destroy_mod, @statement
+    @motion = Motion.find_by_id params[:statement_id]
+    authorize! :destroy_mod, @motion
     user = User.find params[:user_id]
     respond_to do |format|
-      if user.remove_role :mod, @statement
+      if user.remove_role :mod, @motion
         format.js
         format.json
       else

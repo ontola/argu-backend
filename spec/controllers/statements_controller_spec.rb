@@ -18,39 +18,39 @@ require 'spec_helper'
 # Message expectations are only used when there is no simpler way to specify
 # that an instance is receiving a specific message.
 
-describe StatementsController do
+describe MotionsController do
 
   describe "as a user" do
     login_user
 
     describe "GET index" do
-      it "assigns all statements as @statements" do
-        statement = FactoryGirl.create(:statement)
+      it "assigns all motions as @motions" do
+        statement = FactoryGirl.create(:motion)
         get :index, {}
-        assigns(:statements).should eq([statement])
+        assigns(:motions).should eq([statement])
       end
     end
 
     describe "GET show" do
-      it "assigns the requested statement as @statement" do
-        statement = FactoryGirl.create(:statement)
+      it "assigns the requested motion as @motion" do
+        statement = FactoryGirl.create(:motion)
         get :show, {:id => statement.to_param}
-        assigns(:statement).should eq(statement)
+        assigns(:motion).should eq(statement)
       end
     end
 
     describe "GET new" do
-      it "assigns a new statement as @statement" do
+      it "assigns a new motion as @motion" do
         get :new, {}
-        assigns(:statement).should be_a_new(Statement)
+        assigns(:motion).should be_a_new(Motion)
       end
     end
 
     describe "GET edit" do
-      it "assigns the requested statement as @statement" do
-        statement = FactoryGirl.create(:statement)
+      it "assigns the requested motion as @motion" do
+        statement = FactoryGirl.create(:motion)
         get :edit, {:id => statement.to_param}
-        assigns(:statement).should eq(statement)
+        assigns(:motion).should eq(statement)
       end
     end
 
@@ -58,34 +58,34 @@ describe StatementsController do
       describe "with valid params" do
         it "creates a new Statement" do
           expect {
-            post :create, {:statement => FactoryGirl.attributes_for(:statement) }
-          }.to change(Statement, :count).by(1)
+            post :create, {:motion => FactoryGirl.attributes_for(:motion) }
+          }.to change(Motion, :count).by(1)
         end
 
-        it "assigns a newly created statement as @statement" do
-          post :create, {:statement => FactoryGirl.attributes_for(:statement) }
-          assigns(:statement).should be_a(Statement)
-          assigns(:statement).should be_persisted
+        it "assigns a newly created motion as @motion" do
+          post :create, {:motion => FactoryGirl.attributes_for(:motion) }
+          assigns(:motion).should be_a(Motion)
+          assigns(:motion).should be_persisted
         end
 
-        it "redirects to the created statement" do
-          post :create, {:statement => FactoryGirl.attributes_for(:statement) }
-          response.should redirect_to(Statement.last)
+        it "redirects to the created motion" do
+          post :create, {:motion => FactoryGirl.attributes_for(:motion) }
+          response.should redirect_to(Motion.last)
         end
       end
 
       describe "with invalid params" do
-        it "assigns a newly created but unsaved statement as @statement" do
+        it "assigns a newly created but unsaved motion as @motion" do
           # Trigger the behavior that occurs when invalid params are submitted
-          Statement.any_instance.stub(:save).and_return(false)
-          post :create, {:statement => {}}
-          assigns(:statement).should be_a_new(Statement)
+          Motion.any_instance.stub(:save).and_return(false)
+          post :create, {:motion => {}}
+          assigns(:motion).should be_a_new(Motion)
         end
 
         it "re-renders the 'new' template" do
           # Trigger the behavior that occurs when invalid params are submitted
-          Statement.any_instance.stub(:save).and_return(false)
-          post :create, {:statement => {}}
+          Motion.any_instance.stub(:save).and_return(false)
+          post :create, {:motion => {}}
           response.should render_template('form')
         end
       end
@@ -94,8 +94,8 @@ describe StatementsController do
     describe "PUT update" do
       describe "with valid params" do
         it "redirects to root" do
-          statement = FactoryGirl.create(:statement)
-          put :update, {:id => statement.to_param, :statement => FactoryGirl.attributes_for(:statement) }
+          statement = FactoryGirl.create(:motion)
+          put :update, {:id => statement.to_param, :motion => FactoryGirl.attributes_for(:motion) }
           response.should redirect_to(root_path)
         end
       end
@@ -103,25 +103,25 @@ describe StatementsController do
       describe "with invalid params" do
 
         it "redirect to root" do
-          statement = FactoryGirl.create(:statement)
+          statement = FactoryGirl.create(:motion)
           # Trigger the behavior that occurs when invalid params are submitted
-          Statement.any_instance.stub(:save).and_return(false)
-          put :update, {:id => statement.to_param, :statement => {}}
+          Motion.any_instance.stub(:save).and_return(false)
+          put :update, {:id => statement.to_param, :motion => {}}
           response.should redirect_to(root_path)
         end
       end
     end
 
     describe "DELETE destroy" do
-      it "doesn't destroy the requested statement" do
-        statement = FactoryGirl.create(:statement)
+      it "doesn't destroy the requested motion" do
+        statement = FactoryGirl.create(:motion)
         expect {
           delete :destroy, {:id => statement.to_param}
-        }.to change(Statement, :count).by(0)
+        }.to change(Motion, :count).by(0)
       end
 
       it "redirects to root" do
-        statement = FactoryGirl.create(:statement)
+        statement = FactoryGirl.create(:motion)
         delete :destroy, {:id => statement.to_param}
         response.should redirect_to(root_path)
       end
@@ -135,54 +135,54 @@ describe StatementsController do
     describe "PUT update" do
       describe "with valid params" do
 
-        it "updates the requested statement" do
-          statement = FactoryGirl.create(:statement)
-          Statement.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-          put :update, {:id => statement.to_param, :statement => {'these' => 'params'}}
+        it "updates the requested motion" do
+          statement = FactoryGirl.create(:motion)
+          Motion.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
+          put :update, {:id => statement.to_param, :motion => {'these' => 'params'}}
         end
 
-        it "assigns the requested statement as @statement" do
-          statement = FactoryGirl.create(:statement)
-          put :update, {:id => statement.to_param, :statement => FactoryGirl.attributes_for(:statement) }
-          assigns(:statement).should eq(statement)
+        it "assigns the requested motion as @motion" do
+          statement = FactoryGirl.create(:motion)
+          put :update, {:id => statement.to_param, :motion => FactoryGirl.attributes_for(:motion) }
+          assigns(:motion).should eq(statement)
         end
 
-        it "redirects to the statement" do
-          statement = FactoryGirl.create(:statement)
-          put :update, {:id => statement.to_param, :statement => FactoryGirl.attributes_for(:statement) }
+        it "redirects to the motion" do
+          statement = FactoryGirl.create(:motion)
+          put :update, {:id => statement.to_param, :motion => FactoryGirl.attributes_for(:motion) }
           response.should redirect_to(statement)
         end
       end
 
       describe "with invalid params" do
-        it "assigns the statement as @statement" do
-          statement = FactoryGirl.create(:statement)
+        it "assigns the motion as @motion" do
+          statement = FactoryGirl.create(:motion)
           # Trigger the behavior that occurs when invalid params are submitted
-          Statement.any_instance.stub(:save).and_return(false)
-          put :update, {:id => statement.to_param, :statement => {}}
-          assigns(:statement).should eq(statement)
+          Motion.any_instance.stub(:save).and_return(false)
+          put :update, {:id => statement.to_param, :motion => {}}
+          assigns(:motion).should eq(statement)
         end
 
         it "re-renders the 'edit' template" do
-          statement = FactoryGirl.create(:statement)
+          statement = FactoryGirl.create(:motion)
           # Trigger the behavior that occurs when invalid params are submitted
-          Statement.any_instance.stub(:save).and_return(false)
-          put :update, {:id => statement.to_param, :statement => {}}
-          response.should render_template('statements/form')
+          Motion.any_instance.stub(:save).and_return(false)
+          put :update, {:id => statement.to_param, :motion => {}}
+          response.should render_template('motions/form')
         end
       end
     end
 
     describe "DELETE destroy" do
-      it "destroys the requested statement" do
-        statement = FactoryGirl.create(:statement)
+      it "destroys the requested motion" do
+        statement = FactoryGirl.create(:motion)
         expect {
           delete :destroy, {:id => statement.to_param, destroy: true}
-        }.to change(Statement, :count).by(-1)
+        }.to change(Motion, :count).by(-1)
       end
 
-      it "redirects to the statements list" do
-        statement = FactoryGirl.create(:statement)
+      it "redirects to the motions list" do
+        statement = FactoryGirl.create(:motion)
         delete :destroy, {:id => statement.to_param, destroy: true}
         response.should redirect_to(statements_url)
       end

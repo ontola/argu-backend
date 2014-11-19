@@ -2,7 +2,7 @@ module IOrganisation
   extend ActiveSupport::Concern
 
   included do
-    has_many :statements
+    has_many :motions
 
     enum public_form: { f_public: 0, f_private: 1, f_hidden: 2 }
     enum application_form: { f_open: 0, f_request: 1, f_invite: 2, f_management_invite: 3 }

@@ -23,7 +23,7 @@
                     statement.innerHTML = e.target.responseText;
                 }
             };
-            req.open("get", "//<%= Rails.application.config.host %>/statements/" + statement.id + '.widget', true);
+            req.open("get", "//<%= Rails.application.config.host %>/motions/" + statement.id + '.widget', true);
             req.send();
         }
     };

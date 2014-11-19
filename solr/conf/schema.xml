@@ -34,7 +34,7 @@
     value.
   - set indexed="false" if you don't need to search on the field, but only
     return the field as a result of searching on other indexed fields.
-  - remove all unneeded copyField statements
+  - remove all unneeded copyField motions
   - for best index size and searching performance, set "index" to false
     for all general text fields, use copyField to copy them to the
     catchall "text" field, and use that for searching.

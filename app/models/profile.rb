@@ -1,9 +1,8 @@
 class Profile < ActiveRecord::Base
   rolify after_remove: :role_removed, before_add: :role_added
-  belongs_to :user
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy
-  has_many :organisations, through: :memberships
+  has_many :forums, through: :memberships
   has_many :group_memberships, dependent: :destroy
   has_many :groups, through: :group_memberships
 

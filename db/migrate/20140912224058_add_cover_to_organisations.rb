@@ -1,9 +1,9 @@
 class AddCoverToOrganisations < ActiveRecord::Migration
   def up
-    add_attachment :organisations, :cover_photo
+    add_attachment :forums, :cover_photo
   end
 
   def down
-    remove_attachment :organisations, :cover_photo
+    remove_attachment :forums, :cover_photo
   end
 end

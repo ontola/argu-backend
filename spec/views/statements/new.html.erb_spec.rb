@@ -1,18 +1,18 @@
 require 'spec_helper'
 
-describe "statements/new" do
+describe "motions/new" do
   before(:each) do
-    @statement = FactoryGirl.create :statement
-    assign(:statement, @statement)
+    @motion = FactoryGirl.create :motion
+    assign(:motion, @motion)
   end
 
-  it "renders new statement form" do
-    render template: 'statements/form'
+  it "renders new motion form" do
+    render template: 'motions/form'
 
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "form", :action => statements_path, :method => "post" do
-      assert_select "input#statement_title", :name => "statement[title]"
-      assert_select "textarea#statement_content", :name => "statement[content]"
+      assert_select "input#statement_title", :name => "motion[title]"
+      assert_select "textarea#statement_content", :name => "motion[content]"
     end
   end
 end

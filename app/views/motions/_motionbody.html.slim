@@ -1,0 +1,32 @@
+.box
+  section
+    h1.sta-t= motion.title
+    p= motion.supped_content.html_safe
+  / TODO tagsrepareren
+  /- if motion.tags.present?
+    section.unpadded
+        ul.tags[title="thema's"]
+          - motion.tags.each do |tag|
+            li = link_to tag.name, tag_motions_url(tag.name), class: "tag", title: t("motions.titles.tags")+tag.name
+  =render partial: motion.creator, locals: {resource: motion}
+  .btn-subtle.btn-sticky.btn-sticky-bottom.dropdown-trigger
+    span.fa.fa-gear.icon-left
+    span menu
+    ul.dropdown-content.dropdown-right
+      /TODO
+      /-if policy(motion).update?
+        li= link_to [@question, motion, :moderators] do
+          span.fa.fa-user.icon-left
+          span=t('motions.mod.show_moderation_panel')
+      -if policy(motion).destroy?
+        li= link_to motion_path(motion, destroy: true), method: :delete, confirm: t("destroy_confirmation") do
+          span.fa.fa-close.icon-left
+          span=t('destroy')
+      -if policy(motion).trash?
+        li= link_to motion_path(motion), method: :delete, confirm: t("trash_confirmation") do
+          span.fa.fa-trash.icon-left
+          span=t('trash')
+      -if policy(motion).update?
+        li= link_to edit_motion_path(motion) do
+          span.fa.fa-pencil.icon-left
+          span=t('edit')

@@ -1,8 +1,8 @@
 class ColumnRendererCell < Cell::ViewModel
   extend ViewModel
   builds do |model, options|
-    if model.is_a?(Statement)
-      StatementCell
+    if model.is_a?(Motion)
+      MotionCell
     elsif model.is_a?(Argument)
       ArgumentCell
     elsif model.is_a?(Vote)
@@ -36,7 +36,7 @@ class ColumnRendererCell < Cell::ViewModel
   def show_new_buttons
     if options[:buttons_url].present?
       raw cell(:button, options)
-      #TODO change color for argument sides (pro vs con) and type (argument / question / statement)
+      #TODO change color for argument sides (pro vs con) and type (argument / question / motion)
     end
   end
 

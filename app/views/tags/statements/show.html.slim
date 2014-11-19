@@ -1,6 +1,6 @@
 h1.center
   = t("statements.plural") + t('tags.with_tag')
   a.tag.center.smallertag= @tag.name
-= render partial: 'statements/tag_statement', locals: { statement: @tag.statement } if @tag.statement
--@statements.each do |statement|
-  = render partial: 'statements/statement', locals: { statement: statement, tag: @tag }
+= render partial: 'motions/tag_statement', locals: { statement: @tag.motion } if @tag.motion
+-@motions.each do |statement|
+  = render partial: 'motions/motion', locals: { statement: statement, tag: @tag }

@@ -8,6 +8,7 @@ Argu::Application.configure do
   config.epics.tag_system = false
   config.epics.advanced_navigation = false
   config.epics.search = false
+  config.epics.groups = false
 
   # Code is not reloaded between requests
   config.cache_classes = true

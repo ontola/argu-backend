@@ -1,4 +1,4 @@
-#Dutch statements translations
+#Dutch motions translations
 
 nl:
   statements:
@@ -48,7 +48,7 @@ nl:
       show_moderation_panel: 'moderator'
     titles:
       tags: "Zoek stellingen met het thema "
-    #statement types
+    #motion types
     type_social: "Maatschappelijk"
     type_political: "Politiek"
     type_jurisdictional: "Juridisch"

@@ -24,22 +24,22 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :statements, only: [:show, :edit] do
-    post 'vote/:for'      => 'votes/statements#create',   as: 'vote'
-    delete 'vote'         => 'votes/statements#destroy',  as: 'vote_delete'
+  resources :motions, only: [:show, :edit] do
+    post 'vote/:for'      => 'votes/motions#create',   as: 'vote'
+    delete 'vote'         => 'votes/motions#destroy',  as: 'vote_delete'
 
-    get 'tags',      to: 'tags/statements#index', on: :collection
-    get 'tags/:tag', to: 'tags/statements#show',  on: :collection, as: :tag
+    get 'tags',      to: 'tags/motions#index', on: :collection
+    get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
 
-    namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
-      get '' => 'statements#index', as: ''
-      post ':user_id' => 'statements#create', as: 'user'
-      delete ':user_id' => 'statements#destroy'
+    namespace :moderators do# , except: [:new, :update], controller: 'moderators/motions'
+      get '' => 'motionss#index', as: ''
+      post ':user_id' => 'motions#create', as: 'user'
+      delete ':user_id' => 'motions#destroy'
     end
   end
 
   resources :questions, only: [:show, :update] do
-    resources :statements, only: [:new, :create, :delete, :destroy]
+    resources :motions, only: [:new, :create, :delete, :destroy]
   end
 
   resources :arguments do
@@ -53,16 +53,21 @@ Argu::Application.routes.draw do
     resources :comments
   end
 
-  resources :organisations, except: [:index, :edit] do
+  resources :forums, except: [:index, :edit] do
     get :settings, on: :member
     resources :memberships, only: [:create, :destroy]
     resources :questions, only: [:index, :new, :create]
   end
 
-  resources :groups, except: [:index, :edit] do
+  resources :pages, only: :show do
     get :settings, on: :member
-    resources :group_memberships, path: 'memberships', only: [:create, :destroy]
   end
+
+  namespace :portal do
+    resources :pages, only: [:show, :new, :create]
+    resources :forums, only: [:new, :create]
+  end
+
   resources :profiles
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
@@ -78,6 +83,6 @@ Argu::Application.routes.draw do
   get '/portal', to: 'portal/portal#home'
 
   root to: 'static_pages#home'
-  get '/', to: 'statements#index'
-  get '/home', to: 'statements#index'
+  get '/', to: 'motions#index'
+  get '/home', to: 'motions#index'
 end

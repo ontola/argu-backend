@@ -32,7 +32,7 @@ class QuestionsController < ApplicationController
     @question = Question.find(params[:id])
     authorize @question
     #@voted = Vote.where(voteable: @question, voter: current_user).last.try(:for) unless current_user.blank?
-    @statements = @question.statements
+    @motions = @question.motions
 
     respond_to do |format|
       format.html # show.html.erb

@@ -50,22 +50,22 @@ describe ArgumentsController do
       describe "with valid params" do
         it "creates a new Argument" do
           expect {
-            statement = FactoryGirl.create :statement
+            statement = FactoryGirl.create :motion
             post :create, {:argument => FactoryGirl.attributes_for(:argument).merge({statement_id: statement.id}) }
           }.to change(Argument, :count).by(1)
         end
 
         it "assigns a newly created argument as @argument" do
-          statement = FactoryGirl.create :statement
+          statement = FactoryGirl.create :motion
           post :create, {:argument => FactoryGirl.attributes_for(:argument).merge({statement_id: statement.id}) }
           assigns(:argument).should be_a(Argument)
           assigns(:argument).should be_persisted
         end
 
         it "redirects to the created argument" do
-          statement = FactoryGirl.create :statement
+          statement = FactoryGirl.create :motion
           post :create, {:argument => FactoryGirl.attributes_for(:argument).merge({statement_id: statement.id}) }
-          response.should redirect_to(Argument.last.statement)
+          response.should redirect_to(Argument.last.motion)
         end
       end
 
@@ -177,10 +177,10 @@ describe ArgumentsController do
         }.to change(Argument, :count).by(-1)
       end
 
-      it "redirects to the statement after destroying" do
+      it "redirects to the motion after destroying" do
         argument = FactoryGirl.create :argument
         delete :destroy, {:id => argument.to_param, destroy: true}
-        response.should redirect_to(statement_url(argument.statement))
+        response.should redirect_to(statement_url(argument.motion))
       end
 
       it "trashes the requested argument" do
@@ -193,7 +193,7 @@ describe ArgumentsController do
       it "redirects to the arguments list after trashing" do
         argument = FactoryGirl.create :argument
         delete :destroy, {:id => argument.to_param, destroy: false}
-        response.should redirect_to(statement_url(argument.statement))
+        response.should redirect_to(statement_url(argument.motion))
       end
     end
   end

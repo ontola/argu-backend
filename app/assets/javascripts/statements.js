@@ -19,7 +19,7 @@
          load: function(query, callback) {
              if (!query.length) return callback();
              $.ajax({
-                 url: '/statements/tags.json',
+                 url: '/motions/tags.json',
                  type: 'GET',
                  dataType: 'json',
                  data: {
