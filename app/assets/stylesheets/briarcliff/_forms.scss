@@ -7,7 +7,6 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   padding: .5em;
   font-size: 1em;
   font-family: $font-sans;
-  resize: vertical;
   display: inline-block;
   width: 70%;
   margin-bottom: 1.5em;
@@ -30,6 +29,10 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   width: 70%;
 }
 
+textarea {
+  resize: vertical;
+}
+
 label {
   padding: 0.6em 0em;
   display: inline-block;
@@ -44,6 +47,8 @@ label {
 
 .form-auth-icons {
   padding-bottom: 1em;
+  width: 70%;
+  display: inline-block;
 }
 
 .form-input-content {
@@ -104,11 +109,12 @@ label {
   border: none;
   -webkit-appearance: none;
   border-radius: 0;
-  margin: 0;
   margin-bottom: 1em;
   cursor: hand;
-  display: inline-block;
-  border-bottom: solid 3px $darken2;
+  width: auto;
+  display: block;
+  border-bottom: solid 3px rgba(0, 0, 0, 0.15);
+  margin: 1em auto;
   &:hover {
     border-color: $darken3;
   }
@@ -120,9 +126,14 @@ label {
 @media screen and (max-width: 699px) {
   input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
     width: 100%;
+    margin-bottom: 0.4em;
   }
 
   label{
+    width: 100%;
+  }
+
+  .form-auth-icons {
     width: 100%;
   }
 }

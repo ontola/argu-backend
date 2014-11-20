@@ -20,6 +20,8 @@ nl:
       invalid_token: 'Ongeldige authentication token.'
       timeout: 'Jouw sessie is verlopen, log opnieuw in om door te gaan.'
       inactive: 'Jouw account is nog niet geactiveerd.'
+      user:
+        not_found_in_database: 'Ongeldig email-adres of wachtwoord.'
     sessions:
       signed_in: 'Welkom terug!'
       signed_out: 'Je bent succesvol uitgelogd, tot ziens.'

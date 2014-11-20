@@ -14,13 +14,13 @@
           = f.label :email, t("users_email")
           = f.text_field :email
 
-
           = f.label :password, t("users_password")
           = f.password_field :password
 
           = f.label :password_confirmation, t("users_password_confirmation")
           = f.password_field :password_confirmation
 
+          = render "devise/shared/links"
+
           = f.actions do
             = f.action :submit, :as => :button, label: t("sign_up")
-          = render "devise/shared/links"
