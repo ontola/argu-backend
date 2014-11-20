@@ -1,7 +1,7 @@
 .col-1
   .box
     section
-      =semantic_form_for @org do |f|
+      =semantic_form_for @forum do |f|
         =hidden_field_tag 'tab', 'managers'
         ul.role-list
           = f.semantic_fields_for :memberships, where: {}, include_id: false do |manager|
