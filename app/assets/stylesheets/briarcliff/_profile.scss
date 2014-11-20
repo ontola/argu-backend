@@ -53,6 +53,7 @@
   border: solid 4px white;
   width: 8em;
   height: 8em;
+  overflow: hidden;
   @include box-shadow;
 }
 
