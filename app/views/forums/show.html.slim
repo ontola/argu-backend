@@ -1,34 +1,34 @@
-/=render partial: 'manage_bar'  if policy(@org).update?
+/=render partial: 'manage_bar'  if policy(@forum).update?
 
 .col-1
-  /=image_tag @org.cover_photo.url, class: 'cover'
+  /=image_tag @forum.cover_photo.url, class: 'cover'
   .profile-big
     .profile-picture.profile-picture-show
-      =image_tag @org.profile_photo.url
+      =image_tag @forum.profile_photo.url
     .box
       section
-        h1= @org.name
-        /p.quote = @org.description
-        -if !policy(@org).member?
-          =link_to 'join', forum_memberships_path(@org.id), method: :create, class: 'btn'
+        h1= @forum.name
+        /p.quote = @forum.description
+        -if !policy(@forum).member?
+          =link_to 'join', forum_memberships_path(@forum.id), method: :create, class: 'btn'
           p
             == '&#127757; '
-            = link_to @org.website.sub(/^https?\:\/\//, ''), @org.website
-        -if policy(@org).update?
-          =link_to settings_forum_path(@org), class: 'btn-subtle btn-sticky' do
+            = link_to @forum.website.sub(/^https?\:\/\//, ''), @forum.website
+        -if policy(@forum).update?
+          =link_to settings_forum_path(@forum), class: 'btn-subtle btn-sticky' do
             span.fa.fa-gear.icon-left
             span beheer
     section.unpadded.tags
-      /- @org.key_tags.each do |tag|
+      /- @forum.key_tags.each do |tag|
         = link_to tag, tag_motions_url(tag), class: "tag", title: t("motions.titles.tags")+tag
 .col-2
   .col-2-1
     header
       h2 vraagstukken
-    -if @org.questions.present?
-      ==cell(:question, collection: @org.questions)
+    -if @forum.questions.present?
+      ==cell(:question, collection: @forum.questions)
     /TODO cellify
-    = link_to new_forum_question_path(@org) do
+    = link_to new_forum_question_path(@forum) do
       .box.box-link
         section
           h3
@@ -37,6 +37,6 @@
   .col-2-1
     header
       h2 voorstellen
-    -if @org.motions.present?
-      == cell(:motion, collection: @org.motions)
+    -if @forum.motions.present?
+      == cell(:motion, collection: @forum.motions)
     /TODO NIEUWE STELLING PLAATSEN, cellify de shit

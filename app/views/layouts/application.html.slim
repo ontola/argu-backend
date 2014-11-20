@@ -20,12 +20,6 @@ head
 
   / FontAwesome for icons
   link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
-
-  / Browser-sync
-  javascript:
-    //<![CDATA[
-    document.write("<script async src='//HOST:3000/browser-sync/browser-sync-client.1.5.8.js'><\/script>".replace(/HOST/g, location.hostname).replace(/PORT/g, location.port));
-    //]]>
 body
   .background
   - if current_user && current_user.profile.has_role?(:staff)

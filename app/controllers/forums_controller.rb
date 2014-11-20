@@ -1,7 +1,7 @@
 class ForumsController < ApplicationController
   def show
-    @org = Forum.friendly.find params[:id]
-    authorize @org, :show?
+    @forum = Forum.friendly.find params[:id]
+    authorize @forum, :show?
   end
 
 
@@ -12,11 +12,11 @@ class ForumsController < ApplicationController
   end
 
   def update
-    @org = Forum.friendly.find params[:id]
-    authorize @org, :update?
+    @forum = Forum.friendly.find params[:id]
+    authorize @forum, :update?
 
-    if @org.update permit_params
-      redirect_to settings_forum_path(@org, tab: params[:tab])
+    if @forum.update permit_params
+      redirect_to settings_forum_path(@forum, tab: params[:tab])
     else
       render 'settings'
     end
