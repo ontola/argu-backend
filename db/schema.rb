@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141119162301) do
+ActiveRecord::Schema.define(version: 20141124103420) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,6 +81,9 @@ ActiveRecord::Schema.define(version: 20141119162301) do
     t.string   "web_url",           default: "", null: false
   end
 
+  add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
+  add_index "forums", ["web_url"], name: "index_forums_on_web_url", unique: true, using: :btree
+
   create_table "memberships", force: true do |t|
     t.integer "profile_id"
     t.integer "forum_id"
@@ -143,6 +146,10 @@ ActiveRecord::Schema.define(version: 20141119162301) do
     t.integer  "profile_id"
   end
 
+  add_index "pages", ["profile_id"], name: "index_pages_on_profile_id", unique: true, using: :btree
+  add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true, using: :btree
+  add_index "pages", ["web_url"], name: "index_pages_on_web_url", unique: true, using: :btree
+
   create_table "profiles", force: true do |t|
     t.string   "name",          limit: 255, default: ""
     t.text     "about",                     default: ""
@@ -153,6 +160,8 @@ ActiveRecord::Schema.define(version: 20141119162301) do
     t.string   "cover_photo",   limit: 255
     t.string   "slug"
   end
+
+  add_index "profiles", ["slug"], name: "index_profiles_on_slug", unique: true, using: :btree
 
   create_table "profiles_roles", force: true do |t|
     t.integer  "profile_id"
@@ -171,6 +180,8 @@ ActiveRecord::Schema.define(version: 20141119162301) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "question_answers", ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
 
   create_table "questions", force: true do |t|
     t.string   "title",           limit: 255, default: ""
@@ -245,6 +256,7 @@ ActiveRecord::Schema.define(version: 20141119162301) do
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["profile_id"], name: "index_users_on_profile_id", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
