@@ -2,19 +2,15 @@
 @import "mixins";
 
 .modal {
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-  @include animation(from-top .5s ease-out both)
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  @include animation(from-top .5s ease-out)
 }
 
 .modal h1 {
   margin-bottom: 1em;
-}
-
-.modal-small{
-  max-width: 22em;
-  text-align: left;
 }
 
 .overlay{

@@ -10,7 +10,7 @@ class Motion < ActiveRecord::Base
   has_many :votes, as: :voteable
   has_many :question_answers, inverse_of: :motion
   has_many :questions, through: :question_answers
-  belongs_to :forum
+  belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
 
   counter_culture :forum

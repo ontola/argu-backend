@@ -11,8 +11,8 @@
  * require briarcliff/briarcliff
  *= require briarcliff/_reset
  *= require fixedsticky
- *= require selectize
- *= require selectize.default
+ * require selectize
+ * require selectize.default
  * require formtastic
  *= require pica_pica/pica_pica
  *= require_self

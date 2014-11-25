@@ -6,7 +6,7 @@
   width: 100%;
   font-size: 1.2em;
   left: 0;
-  bottom: 50%;
+  bottom: 3em;
   right: 0;
   padding: 1em;
   background-color: $darken4;
@@ -15,7 +15,8 @@
   z-index: 9;
   text-align: center;
   font-family: $font-sans;
-  @include animation(fade-in 1s both)
+  @include animation(fade-in 1s both);
+  pointer-events: none;
 }
 
 .alert-hidden {

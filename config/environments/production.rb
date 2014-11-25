@@ -8,6 +8,7 @@ Argu::Application.configure do
   config.epics.advanced_navigation = false            # Navigation by tags and such
   config.epics.search = false                         # Search enabled?
   config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
+  config.epics.forum_selector = false                 # Show forum selector in nav bar?
 
   # Code is not reloaded between requests
   config.cache_classes = true

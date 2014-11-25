@@ -13,7 +13,7 @@ nl:
   forgot_password: "Wachtwoord vergeten?"
 
   sign_up: "account aanmaken"
-  sign_up_argu: "Maak een Argu account"
+  sign_up_argu: "Argu account aanmaken"
   sign_out: "uitloggen"
   learn_more: "meer info"
   not_found_type: "%{type} niet gevonden"
@@ -32,7 +32,7 @@ nl:
   previous: "vorige"
   older: "ouder"
   newer: "niewer"
-  destroy: "verwijderen"
+  destroy: "vernietigen"
   trash: "Wissen"
   empty_type: "er zijn geen %{type}"
   history: "geschiendenis"

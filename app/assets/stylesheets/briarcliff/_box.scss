@@ -14,19 +14,32 @@
   &:hover {
     opacity: 1;
   }
+  &:active {
+    position: relative;
+    top: 2px;
+    box-shadow: none;
+  }
   h3 {
     font-size: 1.2em;
     margin-bottom: .8em;
   }
 }
 
+.box-small{
+  max-width: 22em;
+}
+
 section {
   position: relative;
-  padding: 1.1em 1.6em 0.1em 1.4em;
+  padding: 1.1em 1.4em 0.1em 1.4em;
 }
 
 section.unpadded {
   padding: 0;
+}
+
+section.smallpadded {
+  padding: 1.1em 1em 0em 1em;
 }
 
 section + section {

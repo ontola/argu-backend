@@ -46,10 +46,25 @@ p {
 }
 
 ol.numbered{
-  list-style: decimal;
+  list-style-type: decimal;
   font-style: $font-sans;
   color: $g4;
   padding-left: 1.5em;
+  li {
+    margin-bottom: 1em;
+    line-height: 1.4em;
+  }
+}
+
+ul.bullets{
+  list-style-type: disc;
+  font-style: $font-sans;
+  color: $g4;
+  padding-left: 1.5em;
+  li {
+    margin-bottom: 1em;
+    line-height: 1.4em;
+  }
 }
 
 .info {

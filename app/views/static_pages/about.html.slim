@@ -19,42 +19,37 @@
       h1 zo werkt argu
     ol.numbered
       li
-        p
-          = "Iemand plaatst een "
-          b.que-t vraagstuk.
-          = " Hierin wordt een open vraag gesteld en het probleem uitgelegd."
+        = "Iemand plaatst een "
+        b.que-t vraagstuk.
+        = " Hierin wordt een open vraag gesteld en het probleem uitgelegd."
       li
-        p
-          = "Mensen bedenken en plaatsen "
-          b.sta-t voorstellen.
-          = " Voorstellen zijn mogelijke antwoorden op het vraagstuk, of oplossingen voor het probleem."
+        = "Mensen bedenken en plaatsen "
+        b.sta-t voorstellen.
+        = " Voorstellen zijn mogelijke antwoorden op het vraagstuk, of oplossingen voor het probleem."
       li
-        p
-          = "Mensen "
-          b.pro-t onderbouwen
-          = " en "
-          b.con-t bekritiseren
-          = " voorstellen met argumenten. Door te stemmen op argumenten, komen de sterkste argumenten bovenaan te staan."
-      li
-        p Iedereen kan stemmen op de voorstellen om aan te geven welke ideeën zij goed vinden.
-      li
-        p Politieke partijen stemmen om aan te geven vinden welke ideeën zij steunen.
+        = "Mensen "
+        b.pro-t onderbouwen
+        = " en "
+        b.con-t bekritiseren
+        = " voorstellen met argumenten. Door te stemmen op argumenten, komen de sterkste argumenten bovenaan te staan."
+      li Iedereen kan stemmen op de voorstellen om aan te geven welke ideeën zij goed vinden.
+      li Politieke partijen stemmen om aan te geven vinden welke ideeën zij steunen.
+    -unless current_user.present?
+      .center
+        a.btn href="/users/sign_in"
+          span.fa.fa-profile
+          span maak een account aan
 .landing-section.pro-bg.landing-filled
   .col-1-small
     header
-      h1 wat wij willen
+      h1 onze missie
     p Wij hebben één hoofddoel: betere beslissingen. Dat geld voor de beslissingen die politici maken, maar ook op de beslissingen die wij zelf maken. Dit hoofddoel hebben wij opgesplitst in vijf kleinere doelen:
     ol.numbered
-      li
-        p Innovatieve oplossingen voor maatschappelijke problemen
-      li
-        p Beter onderbouwde meningen
-      li
-        p Gestructureerde en overzichtelijke discussies
-      li
-        p Een transparant lobby proces
-      li
-        p Politieke partijen inhoudelijk kunnen vergelijken
+      li Innovatieve oplossingen voor maatschappelijke problemen
+      li Beter onderbouwde meningen
+      li Gestructureerde en overzichtelijke discussies
+      li Een transparant lobby proces
+      li Politieke partijen inhoudelijk kunnen vergelijken
 .landing-bg.bg-landing-1
   h1 innovatieve oplossingen
 .landing-section.landing-white
