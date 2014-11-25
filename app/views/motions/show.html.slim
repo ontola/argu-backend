@@ -4,7 +4,7 @@
   =render partial: 'motionbody', locals: { motion: @motion }
   =render partial: 'opinionbtns'
 
-== cell(:column_renderer, @arguments, buttons_url: new_argument_path(motion_id: @motion), collection_model: Argument)
+== cell(:column_renderer, @arguments, buttons_url: new_argument_path(motion_id: @motion), collection_model: Argument, buttons_param: :pro)
 -if Rails.configuration.epics.opinions
   == cell(:column_renderer, @opinions, header: t("arguments.index.opinion"))
 -if Rails.configuration.epics.parties
