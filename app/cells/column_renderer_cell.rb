@@ -41,9 +41,9 @@ class ColumnRendererCell < Cell::ViewModel
     model.keys
   end
 
-  def show_new_buttons
+  def show_new_buttons(key)
     if options[:buttons_url].present?
-      raw cell(:button, options)
+      raw cell(:button, options.merge({pro: key}))
       #TODO change color for argument sides (pro vs con) and type (argument / question / motion)
     end
   end

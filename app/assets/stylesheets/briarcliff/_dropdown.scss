@@ -31,6 +31,10 @@
       background-color: $darken1;
       color: $g4;
     }
+
+    &:active {
+      background-color: $darken2;
+    }
   }
 
   h3 {

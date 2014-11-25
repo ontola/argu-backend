@@ -3,7 +3,7 @@
   .modal
     header
       h1 = t("sign_in")
-    .box.modal-small
+    .box.box-small
       section
         ul.btns-signup
           li
@@ -15,7 +15,7 @@
               span.fa.fa-twitter.icon-left
               span = t("sign_in_twitter")
           li
-            a.btn.neu-bg href="/users/sign_up"
+            a.btn.btn-subtle href="/users/sign_up"
               span.fa.fa-plus.icon-left
               span = t("sign_up_argu")
         - if resource.errors.any?
@@ -24,12 +24,13 @@
               - resource.errors.full_messages.each do |msg|
                 li= msg
       section
+        = devise_error_messages!
         .form-small
           .info.info-signup = t("sign_in_existing")
           = f.text_field :login, placeholder: t("users_username_or_email"), autofocus: :autofocus
           = f.password_field :password, placeholder: t("users_password")
           /- if devise_mapping.rememberable?
             .remember= f.check_box :remember_me
+          = render "devise/shared/links"
           = f.actions do
             = f.action :submit, :as => :button, label: t("sign_in")
-          = render "devise/shared/links"

@@ -20,6 +20,8 @@
   }
   &:active {
     border-color: $darken4;
+    border-bottom: none;
+    margin-top: 3px;
   }
 }
 
@@ -89,6 +91,7 @@
   &:active {
     color: $g3;
     background-color: $darken2;
+    margin-top: 0; //Negates the  "push"-effect of normal buttons
   }
 }
 
@@ -136,30 +139,36 @@
 
 .btns-opinion {
   display: block;
-  max-width: 50em;
-  margin: 0 auto;
   margin-bottom: 1em;
-  font-size: 120%;
+
   li {
     display: inline-block;
     margin: 0 1em;
-    margin-bottom: 0.4em;
+    margin-bottom: 0.5em;
+    @include bp-medium {
+      display: block;
+    }
   }
-  .btn {
+  a {
+    display: inline-block;
     padding: 1em;
     padding-bottom: .8em;
     font-weight: bold;
-    border-radius: 6px;
+    border: solid .3em;
+    text-transform: uppercase;
+    top: 0;
+    position: relative;
     @include box-shadow;
-    &:hover {
-      @include box-shadow-big;
+    &:active{
+      top: 3px;
+      box-shadow: none;
     }
   }
   .btn-pro {
     background-color: white;
     color: $gre;
     border-color: $gre;
-    &:active {
+    &:hover{
       background-color: $grel;
     }
     &.voted {
@@ -171,8 +180,8 @@
     background-color: white;
     color: $g3;
     border-color: $g3;
-    &:active {
-      background-color: $darken1;
+    &:hover {
+      background-color: $g1;
     }
     &.voted {
       background-color: $g3;
@@ -183,7 +192,7 @@
     background-color: white;
     color: $red;
     border-color: $red;
-    &:active {
+    &:hover {
       background-color: $redl;
     }
     &.voted {
@@ -259,10 +268,6 @@ h1 + .btn {
 }
 
 @media screen and (max-width: 699px) {
-  .btns-opinion li {
-    display: block;
-  }
-
   .btns-opinion .btn {
     width: 15em;
   }

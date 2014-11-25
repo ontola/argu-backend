@@ -4,7 +4,7 @@
     /==cell(:context, @question ).call(:to_parent)
   .box
     = form_for([@forum, @question]) do |f|
-      section
+      section.smallpadded
         - if @question.errors.any?
           #error_explanation
             h2
