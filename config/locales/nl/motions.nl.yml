@@ -4,14 +4,15 @@ nl:
   motions:
     type: "voorstel"
     title: "voorstel"
-    header: "voorstel"
+    header: "voorstellen"
+    header: "voorstellen"
     plural: "voorstellen"
     pros: "voor"
     cons: "tegen"
     edit: "stelling bewerken"
     no_pros: "nog niets voor"
     no_cons: "nog niets tegen"
-    newmotion: "Voorstel toevoegen"
+    new_btn: "Voorstel toevoegen"
     content: "inhoud"
     votes:
       pro: "ik ben voor"

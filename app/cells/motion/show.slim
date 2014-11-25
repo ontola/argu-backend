@@ -1,7 +1,7 @@
 - tag ||= nil
 .box
   section
-    h3.sta-t= link_to title, motion_path(model)
+    h3.sta-t= motion_link
     p= supped_content
     -if Rails.configuration.epics.counters
       p.info= pro_con_count_label

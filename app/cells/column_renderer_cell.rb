@@ -1,3 +1,9 @@
+##
+# Renders a collection of models in one or more columns
+# @param #HashWithIndifferentAccess With column names as keys
+# @param :header, title of the main header
+# @param :buttons_url, string for the button beneath a column, gets the column key appended as parameter
+# @param :collection_model, model of the collection, used for translations @todo: fix this hack so this param is obsolete
 class ColumnRendererCell < Cell::ViewModel
   extend ViewModel
   builds do |model, options|
@@ -18,9 +24,11 @@ class ColumnRendererCell < Cell::ViewModel
 
   private
 
-  # Currently not used
+  #
   def header
-    options[:header]
+    content_tag :header do
+      content_tag :h1, options[:header]
+    end
   end
 
   # This generates the translations for the header text, e.g. "arguments.header.pro"
@@ -28,7 +36,7 @@ class ColumnRendererCell < Cell::ViewModel
     I18n.t("#{options[:collection_model].to_s.pluralize.downcase}.header.#{key}")
   end
 
-  #Side of the argument (pro or con)
+  # Keys of the model hash
   def keys
     model.keys
   end

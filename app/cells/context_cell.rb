@@ -1,21 +1,28 @@
 class ContextCell < Cell::ViewModel
   extend ViewModel
   def to_parent
-    render
+    render if get_parent.present?
   end
 
   private
-  property :get_parent
+
+  def get_parent
+    model.get_parent(params)
+  end
+
+  def parent
+    get_parent.model
+  end
 
   def parent_path
-    url_for controller: get_parent.class.name.downcase.pluralize.to_sym, action: :show, id: get_parent.id
+    get_parent.url
   end
 
   def parent_title
-    get_parent.display_name
+    parent.display_name
   end
 
   def parent_type
-    get_parent.class.to_s.downcase
+    parent.class.to_s.downcase
   end
 end

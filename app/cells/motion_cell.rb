@@ -6,6 +6,10 @@ class MotionCell < Cell::ViewModel
   private
   property :title, :argument_pro_count, :argument_con_count, :is_main_motion?
 
+  def motion_link
+    link_to title, motion_path(model)
+  end
+
   def pro_con_count_label
     I18n.t("motions.preview.pro", count: argument_pro_count) + ', ' + I18n.t("motions.preview.con", count: argument_con_count)
   end

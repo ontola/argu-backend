@@ -8,13 +8,10 @@
     =render @question.creator.profile, locals= {resource: @question}
   /render partial: 'opinionbtns'
 .col-1
-  header
-    h1 voorstellen
   -if @motions.present?
-    -@motions.each do |m|
-      ==cell(:motion, m)
+    ==cell(:column_renderer, {'' => @motions}, collection_model: Motion, buttons_url: new_question_motion_path(@question))
   /TODO Cellify
-  =link_to new_question_motion_path(@question) do
+  /=link_to new_question_motion_path(@question) do
     .box.box-link
       section
         h3

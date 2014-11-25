@@ -24,7 +24,7 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :motions, only: [:show, :edit] do
+  resources :motions, only: [:show, :edit, :delete, :destroy] do
     post 'vote/:for'      => 'votes/motions#create',   as: 'vote'
     delete 'vote'         => 'votes/motions#destroy',  as: 'vote_delete'
 
@@ -39,7 +39,7 @@ Argu::Application.routes.draw do
   end
 
   resources :questions, only: [:show, :update] do
-    resources :motions, only: [:new, :create, :delete, :destroy]
+    resources :motions, only: [:new, :create]
   end
 
   resources :arguments do
