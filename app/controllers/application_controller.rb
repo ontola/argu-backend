@@ -27,6 +27,7 @@ class ApplicationController < ActionController::Base
     @current_scope || Forum.find(_session[:_current_scope])
   end
 
+  # Returns the current context, if a param is given, it will serve as the start of the current context
   def current_context(model=nil)
     @current_context ||= Context.parse_from_uri(request.url, model)
   end

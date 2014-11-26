@@ -2,6 +2,6 @@ section.profile-small
   =link_to profile_path(resource.creator.web_url) do
     img[src=profile.profile_photo.url alt="profile picture"]
   .info-block
-    =contextual_link_to profile_path(resource.creator.web_url) do
+    =link_to profile_path(resource.creator.web_url) do
       .info=l(resource.created_at, format: :long)
       .name=profile.display_name

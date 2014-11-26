@@ -1,7 +1,10 @@
 ##
 # Stack with the current breadcrumb context
+# - Context
+# |- model:#ActiveRecord::Collection The current model
+# |- url:#String A URL to the current model
+# |- parent:#Context Parent #Context object of the current model
 # todo: lazy load items when parsed from a string (every item currently creates a db request)
-
 class Context
   include Rails.application.routes.url_helpers
   include ApplicationHelper # For merge_query_parameters
@@ -18,10 +21,12 @@ class Context
     end
   end
 
+  # Generates a URL to the current object with it's parents as a query string
   def contextized_url
     merge_query_parameter(url, (parent.to_query if parent.present?))
   end
 
+  # Whether the parent's contexts' model is present
   def has_parent?
     @parent_context.present?
   end
@@ -30,6 +35,7 @@ class Context
     @model = value
   end
 
+  # @return #Context of the parent of this #Context
   def parent
     @parent_context
   end
@@ -81,6 +87,7 @@ class Context
     end
   end
 
+  # Generates a URL for the model
   def url
     url_for(controller: @model.class.name.downcase.pluralize.to_sym, action: :show, id: (@model.try(:web_url) || @model.id), only_path: true) if @model
   end
