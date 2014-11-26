@@ -8,7 +8,11 @@
   left: 0;
   right: 0;
   z-index: -1;
-  background: asset-url('bg-utrecht-edit10.jpg') fixed, asset-url('bg-utrecht-edit10.jpg') 50% 50% fixed no-repeat;
+  //background: asset-url('bg-utrecht-edit10.jpg') fixed, asset-url('bg-utrecht-edit10.jpg') 50% 50% fixed no-repeat;
+  background: asset-url('bg-utrecht-edit10.jpg') top;
+  height:100%;
+  width:100%;
+  position:fixed;
   -moz-background-size: cover; /* Firefox 3.6 */
   background-size: cover; /* Chrome, Firefox 4.0+, Safari 4.1+, Opera 10+ and IE9 */
 }

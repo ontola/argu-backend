@@ -151,10 +151,11 @@
   }
   a {
     display: inline-block;
-    padding: 1em;
-    padding-bottom: .8em;
+    padding: 0.5em 1.4em;
+    padding-bottom: 0.4em;
     font-weight: bold;
-    border: solid .3em;
+    border-radius: 40px;
+    border: solid 5px white;
     text-transform: uppercase;
     top: 0;
     position: relative;
@@ -167,7 +168,7 @@
   .btn-pro {
     background-color: white;
     color: $gre;
-    border-color: $gre;
+    //border-color: $gre;
     &:hover{
       background-color: $grel;
     }
@@ -179,7 +180,7 @@
   .btn-neu {
     background-color: white;
     color: $g3;
-    border-color: $g3;
+    //border-color: $g3;
     &:hover {
       background-color: $g1;
     }
@@ -191,7 +192,7 @@
   .btn-con {
     background-color: white;
     color: $red;
-    border-color: $red;
+    //border-color: $red;
     &:hover {
       background-color: $redl;
     }

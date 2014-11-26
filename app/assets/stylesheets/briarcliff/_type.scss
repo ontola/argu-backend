@@ -5,6 +5,7 @@ h1, h2, h3 {
   font-family: $font-special;
   margin-bottom: 0.4em;
   color: $g4;
+  font-weight: 600;
   span {
     font-family: $font-special;
   }
@@ -12,14 +13,32 @@ h1, h2, h3 {
 
 h1 {
   font-size: 2.3em;
+  @include bp-large {
+    font-size: 2em;
+  }
+  @include bp-medium {
+    font-size: 1.8em;
+  }
 }
 
 h2 {
   font-size: 1.7em;
+  @include bp-large {
+    font-size: 1.5em;
+  }
+  @include bp-medium {
+    font-size: 1.5em;
+  }
 }
 
 h3 {
   font-size: 1.5em;
+  @include bp-large {
+    font-size: 1.3em;
+  }
+  @include bp-medium {
+    font-size: 1.2em;
+  }
 }
 
 br {
@@ -81,7 +100,6 @@ header {
 }
 
 header h1 {
-  font-size: 2.3em;
   color: white;
   margin-top: 1em;
   margin-bottom: 0.8em;
@@ -89,7 +107,6 @@ header h1 {
 }
 
 header h2 {
-  font-size: 2em;
   color: white;
   margin-top: 1em;
   margin-bottom: .66em;

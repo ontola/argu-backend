@@ -6,6 +6,7 @@
   background-color: white;
   margin: 0 auto;
   margin-bottom: 1em;
+  border-radius: 3px;
   @include box-shadow;
 }
 
@@ -66,12 +67,6 @@ section + section {
 
 }
 
-.box-with-btns {
-  h1, h2, h3 {
-    padding-right: 1.5em;
-  }
-}
-
 .box-divider {
   border-top: solid 1px #e8e8e8;
   width: calc(100% + 2em);
@@ -84,4 +79,14 @@ section + section {
 .box-divider-space {
   margin-top: -.4em;
   padding-bottom: .4em;
+}
+
+.box-list .box {
+  margin-bottom: 1px;
+}
+
+.box-with-btns {
+  h1, h2, h3 {
+    padding-right: 1.5em;
+  }
 }

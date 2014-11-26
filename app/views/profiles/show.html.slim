@@ -8,7 +8,6 @@
         h1 = @profile.display_name
         p.quote = @profile.about
     /TODO Tags
-    /section.unpadded
       ul.tags
         li
           a.tag href=""
@@ -19,4 +18,6 @@
         li
           a.tag href=""
             span windmolens
-= render_columns @collection, collection_model: Opinion
+
+.box-list
+  = render_columns @collection, collection_model: Opinion
