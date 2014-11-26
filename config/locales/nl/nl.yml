@@ -51,6 +51,7 @@ nl:
     400: "Fout in de aanvraag"
   header:
     motions: "stellingen"
+    questions: "vraagstukken"
 #Controllers
 #Footer
   footer_item_about: "over"

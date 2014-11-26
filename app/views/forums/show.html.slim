@@ -1,5 +1,3 @@
-/=render partial: 'manage_bar'  if policy(@forum).update?
-
 .col-1
   /=image_tag @forum.cover_photo.url, class: 'cover'
   .profile-big
@@ -21,22 +19,4 @@
     section.unpadded.tags
       /- @forum.key_tags.each do |tag|
         = link_to tag, tag_motions_url(tag), class: "tag", title: t("motions.titles.tags")+tag
-.col-2
-  .col-2-1
-    header
-      h2 vraagstukken
-    -if @forum.questions.present?
-      ==cell(:question, collection: @forum.questions)
-    /TODO cellify
-    = link_to new_forum_question_path(@forum) do
-      .box.box-link
-        section
-          h3
-            span.fa.fa-plus.icon-left
-            span = t('questions.new_question_path')
-  .col-2-1
-    header
-      h2 voorstellen
-    -if @forum.motions.present?
-      == cell(:motion, collection: @forum.motions)
-    /TODO NIEUWE STELLING PLAATSEN, cellify de shit
+=render_columns({ questions: @forum.questions, motions: @forum.motions})

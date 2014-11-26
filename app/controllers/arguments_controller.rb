@@ -5,6 +5,7 @@ class ArgumentsController < ApplicationController
   def show
     @argument = Argument.includes(:comment_threads).find params[:id]
     authorize @argument
+    current_context @argument
     @parent_id = params[:parent_id].to_s
     
     @comments = @argument.comment_threads.where(:parent_id => nil, is_trashed: false).page(params[:page]).order('created_at ASC')
@@ -22,6 +23,7 @@ class ArgumentsController < ApplicationController
   def new
     @argument = Argument.new
     authorize @argument
+    current_context @argument
     @argument.assign_attributes({pro: %w(con pro).index(params[:pro]), motion_id: params[:motion_id]})
 
     respond_to do |format|

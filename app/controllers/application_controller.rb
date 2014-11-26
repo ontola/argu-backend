@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  helper_method :current_scope, :current_context
   protect_from_forgery secret: "Nl4EV8Fm3LdKayxNtIBwrzMdH9BD18KcQwSczxh1EdDbtyf045rFuVces8AdPtobC9pp044KsDkilWfvXoDADZWi6Gnwk1vf3GghCIdKXEh7yYg41Tu1vWaPdyzH7solN33liZppGlJlNTlJjFKjCoGjZP3iJhscsYnPVwY15XqWqmpPqjNiluaSpCmOBpbzWLPexWwBSOvTcd6itoUdWUSQJEVL3l0rwyJ76fznlNu6DUurFb8bOL2ItPiSit7g"
   skip_before_filter  :verify_authenticity_token
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -25,7 +26,10 @@ class ApplicationController < ActionController::Base
   def current_scope
     @current_scope || Forum.find(_session[:_current_scope])
   end
-  helper_method :current_scope
+
+  def current_context(model=nil)
+    @current_context ||= Context.parse_from_uri(request.url, model)
+  end
 
   def set_locale
     unless current_user.nil?

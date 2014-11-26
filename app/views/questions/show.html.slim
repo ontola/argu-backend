@@ -1,19 +1,10 @@
 -provide :title, @question.title
 .col-1
-  ==cell(:context, @question).call(:to_parent)
+  = to_parent
   .box
     section
       h1.que-t= @question.title
       p= @question.supped_content.html_safe
     =render @question.creator.profile, locals= {resource: @question}
-  /render partial: 'opinionbtns'
-.col-1
-  -if @motions.present?
-    ==cell(:column_renderer, {'' => @motions}, collection_model: Motion, buttons_url: new_question_motion_path(@question))
-  /TODO Cellify
-  /=link_to new_question_motion_path(@question) do
-    .box.box-link
-      section
-        h3
-          span.fa.fa-plus.icon-left
-          span =  t("motions.newmotion")
+-if @motions.present?
+  ==render_columns({'' => @motions}, collection_model: Motion, buttons_url: new_question_motion_path(@question))

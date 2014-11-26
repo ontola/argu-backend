@@ -2,7 +2,9 @@ class QuestionsController < ApplicationController
   def new
     @forum = Forum.friendly.find params[:forum_id]
     @question = Question.new params[:question]
+    @question.forum= @forum
     authorize @question
+    current_context @question
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @question }
@@ -31,6 +33,7 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     authorize @question
+    current_context @question
     #@voted = Vote.where(voteable: @question, voter: current_user).last.try(:for) unless current_user.blank?
     @motions = @question.motions
 

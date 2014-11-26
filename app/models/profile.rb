@@ -16,6 +16,10 @@ class Profile < ActiveRecord::Base
     self.name.presence
   end
 
+  def web_url
+    User.where(profile_id: id).first.username || id
+  end
+
   #######Methods########
   def voted_on?(item)
     Vote.where(voter_id: self.id, voter_type: self.class.name,

@@ -1,12 +1,11 @@
 -provide :title, (@motion.title.nil? ? t(:motion_title) : @motion.title)
 .col-1
-  ==cell(:context, @motion).call(:to_parent)
+  = to_parent
   =render partial: 'motionbody', locals: { motion: @motion }
   =render partial: 'opinionbtns'
-
-== cell(:column_renderer, @arguments, buttons_url: new_argument_path(motion_id: @motion), collection_model: Argument, buttons_param: :pro)
+= render_columns(@arguments, buttons_url: new_argument_path(motion_id: @motion), collection_model: Argument, buttons_param: :pro)
 -if Rails.configuration.epics.opinions
-  == cell(:column_renderer, @opinions, header: t("arguments.index.opinion"))
+  = render_columns(@opinions, header: t("arguments.index.opinion"))
 -if Rails.configuration.epics.parties
   header
     h1=t("arguments.index.parties")

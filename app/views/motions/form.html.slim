@@ -1,7 +1,6 @@
 .col-3
   header
-    /TODO Make the to_parent work
-    /==cell(:context, @motion).call(:to_parent)
+    = to_parent
   .col-3-2
     .box
       = form_for([@question, @motion]) do |f|

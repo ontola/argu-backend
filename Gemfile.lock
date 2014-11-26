@@ -5,16 +5,6 @@ GIT
   specs:
     yaml_db (0.2.3)
 
-GIT
-  remote: https://github.com/apotonick/cells.git
-  revision: 9e3c5791137011a3b30b86e1766a56bf27c4c243
-  specs:
-    cells (4.0.0.alpha1)
-      actionpack (>= 3.2)
-      railties (>= 3.2)
-      tilt (>= 1.4, < 3)
-      uber (~> 0.0.9)
-
 GEM
   remote: https://rubygems.org/
   remote: http://utility.argu.co:3000/
@@ -348,7 +338,6 @@ GEM
       thread_safe (~> 0.1)
     tzinfo-data (1.2014.9)
       tzinfo (>= 1.0.0)
-    uber (0.0.11)
     uglifier (2.5.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
@@ -382,7 +371,6 @@ DEPENDENCIES
   capistrano-rails
   capistrano-rvm
   carrierwave
-  cells (~> 4.0.0.alpha1)!
   cocoon
   coffee-rails (~> 4.0.1)
   counter_culture (~> 0.1.25)

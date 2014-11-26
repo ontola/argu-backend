@@ -15,4 +15,4 @@
                   = image_tag o.profile_photo.url(:icon), size: '16x16'
                   = o.name
   .content
-    =cell(:feed, collection: @questions)
+    ==render_columns({'' => @questions}, collection_model: Question)

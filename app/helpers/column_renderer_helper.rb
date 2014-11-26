@@ -5,52 +5,44 @@
 # @param :buttons_url, string for the button beneath a column
 # @param :buttons_param, if present, adds the column name as a parameter to buttons_url
 # @param :collection_model, model of the collection, used for translations @todo: fix this hack so this param is obsolete
-class ColumnRendererCell < Cell::ViewModel
-  extend ViewModel
-  builds do |model, options|
-    if model.is_a?(Motion)
-      MotionCell
-    elsif model.is_a?(Argument)
-      ArgumentCell
-    elsif model.is_a?(Vote)
-      VoteCell
-    elsif model.is_a?(Opinion)
-      OpinionCell
+module ColumnRendererHelper
+  def render_columns(columns, options = {})
+    partial = case columns
+      when Motion then 'motions/show'
+      when Argument then 'arguments/show'
+      when Vote then 'votes/show'
+      when Opinion then 'opinions/show'
+      when Question then 'questions/show'
+      else 'column_renderer/show'
     end
+    render partial: partial, locals: {model: columns}.merge({options: options})
   end
-
-  def show
-    render
-  end
-
-  private
 
   #
-  def header
+  def header(options)
     content_tag :header do
       content_tag :h1, options[:header]
     end
   end
 
   # This generates the translations for the header text, e.g. "arguments.header.pro"
-  def header_text(key)
+  def header_text(options, key)
     I18n.t("#{options[:collection_model].to_s.pluralize.downcase}.header.#{key}")
   end
 
-  # Keys of the model hash
-  def keys
-    model.keys
-  end
-
-  def show_new_buttons(key)
+  def show_new_buttons(options, key)
     if options[:buttons_url].present?
-      raw cell(:button, options.merge({pro: key}))
+      render partial: 'column_renderer/button', locals: options.merge({pro: key})
       #TODO change color for argument sides (pro vs con) and type (argument / question / motion)
     end
   end
 
-  def title
-    model.title
+  def buttons_url(model)
+    if model[:buttons_param].present?
+      merge_query_parameter(model[:buttons_url], {model[:buttons_param] => model[:pro]})
+    else
+      model[:buttons_url]
+    end
   end
 
 end

@@ -2,6 +2,7 @@ class ForumsController < ApplicationController
   def show
     @forum = Forum.friendly.find params[:id]
     authorize @forum, :show?
+    current_context @forum
   end
 
 

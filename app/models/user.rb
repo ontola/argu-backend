@@ -34,6 +34,10 @@ class User < ActiveRecord::Base
     self.profile.name.presence || self.username
   end
 
+  def web_url
+    username
+  end
+
 #######Utility########
   def getLogin
     return (:username.blank? ? email : username )

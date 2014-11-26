@@ -15,6 +15,7 @@ class MotionsController < ApplicationController
   # GET /motions/1.json
   def show
     @motion = Motion.includes(:arguments, :opinions).find(params[:id])
+    current_context @motion
     authorize @motion
     @arguments = Argument.ordered @motion.arguments
     @opinions = Opinion.ordered @motion.opinions
@@ -33,6 +34,7 @@ class MotionsController < ApplicationController
     @question = Question.find params[:question_id]
     @motion = Motion.new params[:motion]
     authorize @motion
+    current_context @motion
     respond_to do |format|
       format.html { render 'form' }
       format.json { render json: @motion }

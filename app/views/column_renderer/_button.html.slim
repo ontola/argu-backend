@@ -1,4 +1,4 @@
-= link_to buttons_url do
+= contextual_link_to buttons_url({buttons_param: try(:buttons_param), buttons_url: buttons_url, pro: pro}) do
   .box.box-link
     section
       h3
