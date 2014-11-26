@@ -2,9 +2,9 @@
   section
     h1.sta-t= motion.title
     p= motion.supped_content.html_safe
-  / TODO tagsrepareren
-  /- if motion.tags.present?
-    section.unpadded
+  - if motion.tags.present?
+    = render partial: 'tags/tags', locals: {resource: motion}
+    /section.unpadded
         ul.tags[title="thema's"]
           - motion.tags.each do |tag|
             li = link_to tag.name, tag_motions_url(tag.name), class: "tag", title: t("motions.titles.tags")+tag.name

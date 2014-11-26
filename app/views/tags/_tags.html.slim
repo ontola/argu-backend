@@ -1,0 +1,4 @@
+section.unpadded
+  ul.tags[title="thema's"]
+    - resource.tags.each do |tag|
+      li= link_to tag.name, url_for([:tag, resource.class.name.pluralize.downcase, tag: tag.name]), class: "tag", title: t("motions.titles.tags")+tag.name
