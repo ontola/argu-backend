@@ -13,11 +13,6 @@
     span.fa.fa-gear.icon-left
     span menu
     ul.dropdown-content.dropdown-right
-      /TODO
-      /-if policy(motion).update?
-        li= link_to [@question, motion, :moderators] do
-          span.fa.fa-user.icon-left
-          span=t('motions.mod.show_moderation_panel')
       -if policy(motion).destroy?
         li= link_to motion_path(motion, destroy: true), method: :delete, confirm: t("destroy_confirmation") do
           span.fa.fa-close.icon-left

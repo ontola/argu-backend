@@ -30,12 +30,6 @@ Argu::Application.routes.draw do
 
     get 'tags',      to: 'tags/motions#index', on: :collection
     get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
-
-    namespace :moderators do# , except: [:new, :update], controller: 'moderators/motions'
-      get '' => 'motionss#index', as: ''
-      post ':user_id' => 'motions#create', as: 'user'
-      delete ':user_id' => 'motions#destroy'
-    end
   end
 
   resources :questions, only: [:show, :update] do
