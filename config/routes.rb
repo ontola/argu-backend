@@ -24,22 +24,19 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :motions, only: [:show, :edit, :delete, :destroy] do
+  resources :motions, only: [:show, :edit, :update, :delete, :destroy] do
     post 'vote/:for'      => 'votes/motions#create',   as: 'vote'
     delete 'vote'         => 'votes/motions#destroy',  as: 'vote_delete'
 
     get 'tags',      to: 'tags/motions#index', on: :collection
     get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
-
-    namespace :moderators do# , except: [:new, :update], controller: 'moderators/motions'
-      get '' => 'motionss#index', as: ''
-      post ':user_id' => 'motions#create', as: 'user'
-      delete ':user_id' => 'motions#destroy'
-    end
   end
 
-  resources :questions, only: [:show, :update] do
+  resources :questions, only: [:show, :edit, :update] do
     resources :motions, only: [:new, :create]
+
+    get 'tags',      to: 'tags/motions#index', on: :collection
+    get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
   end
 
   resources :arguments do

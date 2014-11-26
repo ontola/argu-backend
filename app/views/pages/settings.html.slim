@@ -7,5 +7,4 @@ header
     ul
       li= link_to raw('&#9881; _algemeen_'), settings_page_path(@page, tab: :settings)
       li= link_to raw('&#128188; _managers_'), settings_page_path(@page, tab: :managers)
-      li= link_to raw('&#128110; _moderators_'), settings_page_path(@page, tab: :moderators)
 =render partial: "pages/setting_tabs/#{params[:tab] || 'settings'}"

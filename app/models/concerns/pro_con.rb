@@ -57,10 +57,6 @@ module ProCon
     self.comment_threads.where(:parent_id => nil)
   end
 
-  def is_moderator?(user)
-    self.motion.is_moderator?(user)
-  end
-
   module ClassMethods
     def ordered (coll=[])
       HashWithIndifferentAccess.new(pro: [], con: []).merge(coll.group_by { |a| a.key })

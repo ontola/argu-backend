@@ -6,6 +6,7 @@
 # |- parent:#Context Parent #Context object of the current model
 # todo: lazy load items when parsed from a string (every item currently creates a db request)
 class Context
+  extend ArguExtensions::Context # WHY DOES THE SEND :EXTEND NOT WORK
   include Rails.application.routes.url_helpers
   include ApplicationHelper # For merge_query_parameters
   @parent_context

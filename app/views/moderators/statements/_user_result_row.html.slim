@@ -1,6 +1,0 @@
-tr[id=('list_item_'+user_result_row.id.to_s)]
-  td= user_result_row.username
-  -if !user_result_row.is_mod_of? Motion.find_by_id(params[:motion_id])
-    td= link_to t('motions.mod.edit_moderators.invite'), motion_moderators_user_path(motion_id: params[:motion_id], user_id: user_result_row.id), method: :post, remote: true, class: 'btn', id: ('btn_upgrade_user_' + user_result_row.id.to_s)
-  -else
-    td= link_to t('motions.mod.edit_moderators.is_mod'), '#', class: 'btn'

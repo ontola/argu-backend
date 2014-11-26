@@ -4,6 +4,7 @@ class Forum < ActiveRecord::Base
   belongs_to :page
   has_many :questions, inverse_of: :forum
   has_many :motions, inverse_of: :forum
+  has_many :memberships
 
   friendly_id :web_url, use: [:slugged, :finders]
 
