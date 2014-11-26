@@ -14,5 +14,5 @@
                 =link_to forum_path(o)
                   = image_tag o.profile_photo.url(:icon), size: '16x16'
                   = o.name
-  .content
-    ==render_columns({'' => @questions}, collection_model: Question)
+.content
+  ==render_columns({'' => @questions}, collection_model: Question)
