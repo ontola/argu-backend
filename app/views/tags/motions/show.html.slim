@@ -3,5 +3,3 @@ h1.center
   a.tag.center.smallertag= @tag.name
 = render partial: 'motions/tag_motion', locals: { motion: @tag.motion } if @tag.motion
 =render_columns({'' => @motions})
-/-@motions.each do |motion|
-  = render partial: 'motions/motion', locals: { motion: motion, tag: @tag }

@@ -4,10 +4,6 @@
     p= motion.supped_content.html_safe
   - if motion.tags.present?
     = render partial: 'tags/tags', locals: {resource: motion}
-    /section.unpadded
-        ul.tags[title="thema's"]
-          - motion.tags.each do |tag|
-            li = link_to tag.name, tag_motions_url(tag.name), class: "tag", title: t("motions.titles.tags")+tag.name
   =render partial: motion.creator, locals: {resource: motion}
   .btn-subtle.btn-sticky.btn-sticky-bottom.dropdown-trigger
     span.fa.fa-gear.icon-left
