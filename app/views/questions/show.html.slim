@@ -7,5 +7,4 @@
       p= @question.supped_content.html_safe
     = render partial: 'tags/tags', locals: {resource: @question}
     =render @question.creator.profile, locals= {resource: @question}
--if @motions.present?
-  ==render_columns({'' => @motions}, collection_model: Motion, buttons_url: new_question_motion_path(@question))
+==render_columns({'' => {collection: @motions}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))

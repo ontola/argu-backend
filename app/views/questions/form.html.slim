@@ -23,5 +23,4 @@
           <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
           <%= f.check_box :invert_arguments %>
       = render partial: 'profiles/profile_current'
-      = f.hidden_field :forum_id, value: (@forum || @question.forum).id
       = f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"

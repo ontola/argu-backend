@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     authorize @question
+    @forum = @question.forum
     current_context @question
     #@voted = Vote.where(voteable: @question, voter: current_user).last.try(:for) unless current_user.blank?
     @motions = @question.motions

@@ -1,6 +1,6 @@
 ##
 # Renders a collection of models in one or more columns
-# @param #HashWithIndifferentAccess With column names as keys
+# @param #HashWithIndifferentAccess As: {column_key: {collection: items, *options}}
 # @param :header, title of the main header
 # @param :buttons_url, string for the button beneath a column
 # @param :buttons_param, if present, adds the column name as a parameter to buttons_url
@@ -15,6 +15,11 @@ module ColumnRendererHelper
       when Question then 'questions/show'
       else 'column_renderer/show'
     end
+
+    if partial == 'column_renderer/show'
+      columns.each { |k,v| columns[k] = v.merge(options) }
+    end
+
     render partial: partial, locals: {model: columns}.merge({options: options})
   end
 
@@ -33,16 +38,21 @@ module ColumnRendererHelper
   def show_new_buttons(options, key)
     if options[:buttons_url].present?
       render partial: 'column_renderer/button', locals: options.merge({pro: key})
-      #TODO change color for argument sides (pro vs con) and type (argument / question / motion)
     end
   end
 
+  # Stitches the url for a button beneath a column together
   def buttons_url(model)
     if model[:buttons_param].present?
       merge_query_parameter(model[:buttons_url], {model[:buttons_param] => model[:pro]})
     else
       model[:buttons_url]
     end
+  end
+
+  # Used to render a collection if it contains items
+  def render_collection_if_present(model, key, &block)
+    (model[key][:collection] || model[key.to_s][:collection]).each(&block) if (model[key][:collection] || model[key.to_s][:collection])
   end
 
 end
