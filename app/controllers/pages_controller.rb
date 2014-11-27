@@ -8,8 +8,6 @@ class PagesController < ApplicationController
     render 'profiles/show'
   end
 
-
-
   def settings
     @page = Page.friendly.find params[:id]
     authorize @page, :update?

@@ -8,59 +8,10 @@
   left: 0;
   right: 0;
   z-index: -1;
-  background: asset-url('bg-bergen2.jpg') top;
+  background: asset-url('bg-bergen.jpg') top;
   height:100%;
   width:100%;
   position:fixed;
   -moz-background-size: cover; /* Firefox 3.6 */
   background-size: cover; /* Chrome, Firefox 4.0+, Safari 4.1+, Opera 10+ and IE9 */
-}
-
-.bg-landing-hong-kong {
-  background: image-url('bg-landing-hong-kong.jpg');
-  margin-top: -2em;
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 25%;
-  background-position-x: 50%;
-}
-
-.bg-landing-1 {
-  background: image-url('bg-landing-idee.jpg');
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 34%;
-  background-position-x: 50%;
-}
-
-.bg-landing-2 {
-  background: image-url('bg-landing-onderbouwd.jpg');
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 40%;
-  background-position-x: 50%;
-}
-
-.bg-landing-3 {
-  background: image-url('bg-landing-politiek.jpg');
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 47%;
-  background-position-x: 50%;
-}
-
-.bg-landing-4 {
-  background: image-url('bg-landing-lobby.jpg');
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 50%;
-  background-position-x: 50%;
-}
-
-.bg-landing-5 {
-  background: image-url('bg-landing-stemmen.jpg');
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 50%;
-  background-position-x: 50%;
 }

@@ -12,14 +12,12 @@ nav#navbar.navbar role="navigation"
           .dropdown-trigger.navbar-item
             span.fa.fa-tag.icon-left
             span forums
-            .dropdown-content
-              .dropdown-col-1-1
-                ul.tags-vertical
-                  - current_profile.memberships.each do |membership|
-                    li
-                      =link_to membership.forum.display_name, url_for(membership.forum)
+            ul.dropdown-content
+              - current_profile.memberships.each do |membership|
+                li
+                  =link_to membership.forum.display_name, url_for(membership.forum)
               /TODO: implement suggested (public) forums
-              .dropdown-col-1-1
+              /.dropdown-col-1-1
                 h3 _voorgesteld_
                 ul.tags-vertical
                   - current_profile.memberships.each do |membership|
@@ -64,10 +62,10 @@ nav#navbar.navbar role="navigation"
             span.fa.fa-user.icon-left
             span= current_profile.display_name
             ul.dropdown-content.dropdown-right
-              li= link_to profile_url(current_profile) do
+              li= link_to profile_url(current_profile.username) do
                 span.fa.fa-user.icon-left
                 span= t("profiles.display")
-              li= link_to edit_profile_path(current_profile) do
+              li= link_to edit_profile_path(current_profile.username) do
                 span.fa.fa-pencil.icon-left
                 span= t("profiles.edit.title")
               li= link_to settings_url do

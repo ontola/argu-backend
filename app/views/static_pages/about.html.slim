@@ -2,27 +2,26 @@
 - if defined?(show_sign_in) && show_sign_in.present?
   =link_to 'inloggen', '#', onclick: "$.ajax({url: '/sign_in_modal',cache: false,success: function(html){$('.container').append(html);}});"
 .landing-bg.bg-landing-hong-kong
-  h1.landing-header = "democratie = invloed hebben"
+  h1.landing-header = "politiek moet inhoudelijker"
 .landing-section.landing-white
   .col-1-small
-    p
-     b Politiek is te belangrijk om volledig over te laten aan een klein groepje volksvertegenwoordigers.
-    p Politieke beslissingen hebben grotere gevolgen dan alle anderen. Democratie betekent dat wij invloed hebben op die beslissingen. Democratie betekent meer dan eens in de zoveel jaar naar een stemhokje gaan; het betekent dat wij allemaal meedenken over hoe we onze grootste problemen gaan oplossen.
-    p Internet heeft veranderd hoe we met elkaar communiceren, hoe we leren en hoe we ons ontwikkelen. De manier waarop we vorm geven aan democratie is ook veranderd, maar nog niet genoeg. Social media heeft mensen een stem gegeven, maar heeft nog niet de inhoud en diepgang kunnne bieden die juist nu nodig is. Discussie over lastige onderwerpen past vaak niet in 140 karakters. Burgerparticipatie heeft een modern platform nodig.
-.landing-section.sta-bg.landing-filled
+    p Politiek gaat te veel over tv-optredens en te weinig over inhoud. Dat is zonde, want politieke beslissingen gaan ons allemaal aan. Democratie betekent meer dan eens in de zoveel jaar naar een stemhokje gaan; het betekent dat wij allemaal meedenken over hoe we onze grootste problemen gaan oplossen.
+    p Internet heeft veranderd hoe we met elkaar communiceren, hoe we leren en hoe we ons ontwikkelen. Social media heeft meer mensen een stem gegeven, maar heeft nog niet de inhoud en diepgang kunnen bieden die nodig is. Discussie over lastige onderwerpen past niet in 140 karakters. Burgerparticipatie heeft een modern platform nodig.
+.landing-section.landing-white
   .col-1-small
-    header
-      h1 ontmoet argu
+    .landing-logo
+      =image_tag 'logo.svg'
     p Argu is een online discussieplatform voor ieder die mee wilt denken over het oplossen van problemen. Wij maken discussies overzichtelijk door vraagstukken, voorstellen en argumenten centraal te stellen.
+.landing-section.landing-filled.sta-bg
+  header
+    h1 zo werkt argu
 .landing-section.landing-white
   .col-1-small
-    header
-      h1 zo werkt argu
     ol.numbered
       li
         = "Iemand plaatst een "
         b.que-t vraagstuk.
-        = " Hierin wordt een open vraag gesteld en het probleem uitgelegd."
+        = " Hierin wordt een probleem uitgelegd, en gevraagd hoe dit op moet worden gelost."
       li
         = "Mensen bedenken en plaatsen "
         b.sta-t voorstellen.
@@ -35,49 +34,39 @@
         = " voorstellen met argumenten. Door te stemmen op argumenten, komen de sterkste argumenten bovenaan te staan."
       li Iedereen kan stemmen op de voorstellen om aan te geven welke ideeën zij goed vinden.
       li Politieke partijen stemmen om aan te geven vinden welke ideeën zij steunen.
-    -unless current_user.present?
-      .center
-        a.btn href="/users/sign_in"
-          span.fa.fa-profile
-          span maak een account aan
-.landing-section.pro-bg.landing-filled
-  .col-1-small
+.landing-section.landing-filled.pro-bg
     header
-      h1 onze missie
-    p Wij hebben één hoofddoel: betere beslissingen. Dat geld voor de beslissingen die politici maken, maar ook op de beslissingen die wij zelf maken. Dit hoofddoel hebben wij opgesplitst in vijf kleinere doelen:
-    ol.numbered
-      li Innovatieve oplossingen voor maatschappelijke problemen
-      li Beter onderbouwde meningen
-      li Gestructureerde en overzichtelijke discussies
-      li Een transparant lobby proces
-      li Politieke partijen inhoudelijk kunnen vergelijken
-.landing-bg.bg-landing-1
-  h1 innovatieve oplossingen
+      h1 dit is ons doel
 .landing-section.landing-white
   .col-1-small
-    p Van onze vertegenwoordigers, de beslissingsmakers, wordt verwacht dat ze alles weten en altijd de juiste beslissingen maken. Daar tegenover staat dat de mensen die het meeste verstand hebben van een specifieke omgeving de mensen zijn die daar het meeste tijd doorbrengen. Inzichten in specifieke problemen en de mogelijke oplossingen ontstaan daardoor vaak op de werkvloer, in het klaslokaal of op straat. Helaas hebben de mensen die deze ideeën krijgen vaak slechts een beperkte invloed op het gevoerde beleid, en kost het veel moeite om deze ideeën te verspreiden.
-    p Via Argu is het makkelijk om eigen voorstellen te delen en te onderbouwen, zodat ze vervolgens draagvlak kunnen krijgen. De aanwezigheid van politieke partijen op Argu zorgt ervoor dat de verbinding tussen de burger met een idee en de beleidsmaker korter is dan ooit, waardoor constructieve en haalbare ideeën makkelijker en sneller kunnen worden omgezet naar wetgeving en beleid.
+    p Betere beslissingen. Dat geldt voor de beslissingen die politici maken, maar ook voor de beslissingen die wij als kiezers maken. Dit hoofddoel hebben wij opgesplitst in vijf kleinere doelen:
+.landing-bg.bg-landing-1
+  h1 innovatieve oplossingen verzamelen
+.landing-section.landing-white
+  .col-1-small
+    p Goede ideeën vind je overal. Inzichten in specifieke problemen en oplossingen ontstaan vaak op de werkvloer, in het klaslokaal of op straat.  Helaas hebben de mensen die deze ideeën krijgen vaak niet de middelen en het politieke netwerk om verandering te realiseren.
+    p Via Argu is het makkelijk om eigen voorstellen te delen, onderbouwen en handtekeningen te verzamelen. De aanwezigheid van politieke partijen op Argu zorgt ervoor dat de verbinding tussen de burger met een idee en de beslissingsmaker korter is dan ooit, waardoor goede ideeën makkelijker en sneller kunnen worden omgezet naar wetgeving en beleid.
 .landing-bg.bg-landing-2
   h1 onderbouwde meningen
 .landing-section.landing-white
   .col-1-small
     p Het hebben van een mening is gemakkelijk. Het hebben van een goed onderbouwde mening, daarentegen, kost veel tijd: je moet je verdiepen in het onderwerp en verschillende visies aanhoren. Opiniestukken zijn vaak te eenzijdig, en objectieve informatiebronnen geven weinig sturing.
-    p Op Argu wordt iedereen uitgedaagd om de redenen voor hun mening helder te maken. Zo zie je niet alleen wie wat vind, maar ook waarom iemand dit vind. Dit maakt het hebben van een onderbouwde mening stukken makkelijker.
+    p Op Argu wordt iedereen uitgedaagd om de redenen voor hun mening helder te maken. Zo zie je niet alleen wie wat vindt, maar ook waarom iemand dat vindt. Dit maakt het hebben van een onderbouwde mening stukken makkelijker.
 .landing-bg.bg-landing-3
   h1 gestructureerde discussies
 .landing-section.landing-white
   .col-1-small
     p Online discussies hebben vaak de neiging om na verloop van tijd te ontsporen en onoverzichtelijk  te worden. De hardste schreeuwers worden het best gehoord, terwijl de meest waardevolle reacties kunnen verdwijnen in een wolk van beledigingen.
-    p Argu is ontworpen om discussie te structureren op een inhoudelijke, neutrale en oplossingsgerichte manier. Het proces is simpel: identificeren welke problemen er opgelost moeten worden (vraagstukken), welke oplossingen er bestaan (voorstellen) en waarom een bepaalde oplossing wel of niet geschikt is (argumenten). Door gebruikers te laten stemmen op argumenten, komen de meest waardevolle inzichten naar boven drijven.
+    p Argu is ontworpen om discussie te structureren op een inhoudelijke, neutrale en oplossingsgerichte manier. Het proces is simpel: identificeren welke problemen er opgelost moeten worden (vraagstukken), welke oplossingen er bestaan (voorstellen) en waarom een bepaalde oplossing wel of niet geschikt is (argumenten). Doordat we voor- en tegenargumenten helder apart weergeven, krijgen minderheden een eerlijke kans om gehoord te worden en hun standpunt te verdedigen.
 .landing-bg.bg-landing-4
   h1 transparant lobby proces
 .landing-section.landing-white
   .col-1-small
-    p Lobbyisten (of belangenvertegenwoordigers) hebben doorgaans een slechte naam onder het volk. De realiteit is echter complex en genuanceerd: lobbyisten kunnen ieder mogelijk belang  vertegenwoordigen en zijn onmisbaar voor vele NGO’s, vakbonden en burgers zelf. Het feit dat een groot deel van de activiteiten van lobbyisten gebeurt via brieven en achter gesloten deuren, maakt het echter moeilijk voor burgers om vertrouwen te krijgen in de het lobby-proces.
-    p Door lobbyisten aan te moedigen om hun ideeën op Argu te delen en te onderbouwen, krijgen zij een eerlijke kans om hun punt helder en overtuigend te maken. Daarna krijgen ook anderen de kans om zich in de discussie te mengen. Hierdoor kan iedereen zijn of haar belang te vertegenwoordigen.
+    p Lobbyisten (of belangenvertegenwoordigers) hebben doorgaans een slechte naam. De realiteit is echter complex en genuanceerd: lobbyisten kunnen ieder mogelijk belang  vertegenwoordigen en zijn onmisbaar voor vele NGO’s, vakbonden en burgers zelf. Het feit dat een groot deel van de activiteiten van lobbyisten gebeurt via brieven en achter gesloten deuren, maakt het echter moeilijk voor burgers om vertrouwen te krijgen in de het lobby-proces.
+    p Door lobbyisten aan te moedigen om hun ideeën op Argu te delen en te onderbouwen, krijgen zij een eerlijke kans om hun punt helder en overtuigend te maken. Daarna krijgen ook anderen de kans om zich in de discussie te mengen. Hierdoor kan iedereen zijn of haar belang vertegenwoordigen, en kan iedereen direct zien wie welke belangen heeft.
 .landing-bg.bg-landing-5
   h1 inhoudelijk partijen vergelijken
 .landing-section.landing-white
   .col-1-small
     p Stemmen is een van de meest directe manieren om als burger invloed te hebben op beleid. Inhoudelijk en beleidsgericht stemmen is echter moeilijk. Politieke partijen begrijpen goed dat ze met vage, populistische uitspraken vaak meer kiezers trekken dan met concrete, harde uitspraken. Zelfs in partijprogramma’s is het soms moeilijk om heldere beleidsvoorstellen te vinden. Partijen concurreren te veel op aspecten die niets met beleid te maken hebben, en dat is zonde.
-    p Met Argu wordt het inhoudelijk vergelijken van politieke partijen een stuk eenvoudiger: onder een voorstel kan je direct zien wat politieke partijen er van vinden. In de profielpagina’s van partijen staat een duidelijke lijst van punten waar de partij het mee eens is, en waar niet. Binnen deze lijst kan je zoeken op thema, zodat je direct weet wat jouw partij vind van de onderwerpen die jij interessant vind.
+    p Met Argu wordt het inhoudelijk vergelijken van politieke partijen een stuk eenvoudiger: onder een voorstel kan je direct zien wat politieke partijen er van vinden. In de profielpagina’s van partijen staat een duidelijke lijst van punten waar de partij het mee eens is, en waar niet. Binnen deze lijst kan je zoeken op thema, zodat je direct weet wat jouw partij vindt van de onderwerpen die jij interessant vind.
