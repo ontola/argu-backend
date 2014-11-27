@@ -137,38 +137,77 @@
   }
 }
 
+.btns-list li {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  border: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  margin: 0;
+  cursor: hand;
+  display: block;
+  color: $g3;
+  padding: 0.5em .6em .4em .6em;
+  a {
+    color: $g3;
+  }
+  &:hover {
+    background-color: $darken1;
+    a {
+      color: $g4;
+    }
+  }
+  &:active {
+    background-color: $darken2;
+  }
+}
+
 .btns-opinion {
   display: block;
   margin-bottom: 1em;
+  width: 100%;
+  width: calc(100% + 1em);
+  margin-left: -0.5em;
+
+  @include bp-medium {
+    width: 100%;
+    margin-left: 0;
+  }
 
   li {
     display: inline-block;
-    margin: 0 1em;
+    margin: 0 0;
     margin-bottom: 0.5em;
+    width: 33.3%;
+    width: calc(33.3% - 1em);
+    margin: 0 .5em;
     @include bp-medium {
       display: block;
+      width: 100%;
+      margin: 0 0 .3em 0;
     }
   }
   a {
+    width: 100%;
     display: inline-block;
-    padding: 0.5em 1.4em;
-    padding-bottom: 0.4em;
+    padding: 0.7em 1.1em;
+    padding-bottom: 0.6em;
     font-weight: bold;
-    border-radius: 40px;
-    border: solid 5px white;
+    @include border-radius;
+    //border: solid 5px white;
     text-transform: uppercase;
     top: 0;
     position: relative;
     @include box-shadow;
     &:active{
-      top: 3px;
+      top: 2px;
       box-shadow: none;
     }
   }
   .btn-pro {
     background-color: white;
     color: $gre;
-    //border-color: $gre;
     &:hover{
       background-color: $grel;
     }
@@ -180,7 +219,6 @@
   .btn-neu {
     background-color: white;
     color: $g3;
-    //border-color: $g3;
     &:hover {
       background-color: $g1;
     }
@@ -192,7 +230,7 @@
   .btn-con {
     background-color: white;
     color: $red;
-    //border-color: $red;
+    margin-right: 0;
     &:hover {
       background-color: $redl;
     }
@@ -266,10 +304,4 @@ h1 + .btn {
 
 .icon-right {
   margin-left: .4em;
-}
-
-@media screen and (max-width: 699px) {
-  .btns-opinion .btn {
-    width: 15em;
-  }
 }

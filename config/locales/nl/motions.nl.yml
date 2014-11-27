@@ -48,7 +48,7 @@ nl:
         is_mod: 'is al een mod'
       show_moderation_panel: 'moderator'
     titles:
-      tags: "Zoek stellingen met het thema "
+      tags: "Zoek vraagstukken en voorstellen met het thema "
     #motion types
     type_social: "Maatschappelijk"
     type_political: "Politiek"

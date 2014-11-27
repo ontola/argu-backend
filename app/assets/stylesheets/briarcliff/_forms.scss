@@ -10,6 +10,7 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   display: inline-block;
   width: 70%;
   margin-bottom: 1.5em;
+  color: $g4;
   &:focus {
     background-color: $darken0;
     border: none;

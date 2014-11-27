@@ -8,11 +8,11 @@ nl:
       scope_local: "Argu Local"
     public_form:
       f_public: "Publiek"
-      f_public_desc: "Organisatie en stellingen zijn door iedereen te zien."
+      f_public_desc: "Organisatie en voorstellen zijn door iedereen te zien."
       f_hidden: "Verborgen"
-      f_hidden_desc: "Profiel van de organisatie is publiek, de stellingen zijn verborgen."
+      f_hidden_desc: "Profiel van de organisatie is publiek, de voorstellen zijn verborgen."
       f_private: "Prive"
-      f_private_desc: "Zowel het profiel als de stellingen zijn slechts voor de leden zichtbaar."
+      f_private_desc: "Zowel het profiel als de voorstellen zijn slechts voor de leden zichtbaar."
     application_form:
       f_open: "Open"
       f_open_desc: "Iedereen kan zich aanmelden voor de organisatie"

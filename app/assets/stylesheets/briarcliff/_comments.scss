@@ -28,9 +28,14 @@
 
 .top-comment {
   color: $g3;
-  background-color: rgba(128, 128, 128, 0.02);
+  background-color: $g0;
   position: relative;
-  border-top: solid 1px $g1;
+  &:hover {
+    background-color: $g1;
+  }
+  &:active {
+    background-color: $g0;
+  }
 }
 
 .top-comment p {

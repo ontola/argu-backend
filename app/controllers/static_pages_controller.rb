@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
     authorize :static_pages
   	#if signed_in?
       @questions = Question.index params[:trashed], params[:page]
-  		render 'static_pages/home'
+      render 'static_pages/home'
   	#else
   	#	render 'static_pages/home_new'
 	  #end

@@ -50,7 +50,7 @@ nl:
   status:
     400: "Fout in de aanvraag"
   header:
-    motions: "stellingen"
+    motions: "voorstellen"
     questions: "vraagstukken"
 #Controllers
 #Footer

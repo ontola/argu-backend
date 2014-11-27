@@ -8,26 +8,16 @@ nav#navbar.navbar role="navigation"
           span.fa.fa-home.icon-left
           span= home_text
       -if Rails.configuration.epics.forum_selector
-        li
-          .dropdown-trigger.navbar-item
-            span.fa.fa-tag.icon-left
-            span forums
-            .dropdown-content
-              .dropdown-col-1-1
-                ul.tags-vertical
-                  - current_user.profile.memberships.each do |membership|
-                    li
-                      =link_to membership.forum.display_name, url_for(membership.forum)
-              /TODO: implement suggested (public) forums
-              .dropdown-col-1-1
-                h3 _voorgesteld_
-                ul.tags-vertical
+        -if current_user.present?
+          li
+            .dropdown-trigger.navbar-item
+              span.fa.fa-tag.icon-left
+              span forums
+              ul.dropdown-content
+                - current_user.profile.memberships.each do |membership|
                   li
-                    a Nederland
-                  li
-                    a amsterdam
-                  li
-                    a EBU
+                    =link_to membership.forum.display_name, url_for(membership.forum)
+                /TODO: implement suggested (public) forums
       -if Rails.configuration.epics.tag_system
         li
           .dropdown-trigger.navbar-item href="/"

@@ -1,5 +1,6 @@
 module ArguExtensions
   module Context
+    # Descends down the context tree until a forum is found.
     def context_scope
       if self.present?
         if self.model.class == Forum
