@@ -1,0 +1,10 @@
+=render partial: 'manage_bar', locals: {resource: @forum}  if policy(@forum).update?
+small  <!-- for styling -->
+header
+  h1 forum instellingen
+.forum_id[id="#{@forum.id}"]
+  .box[style="width: 23em;"]
+    ul
+      li= link_to raw('&#9881; _algemeen_'), url_for([:settings, @forum, tab: :settings])
+      li= link_to raw('&#128188; _managers_'), url_for([:settings, @forum, tab: :managers])
+=render partial: "forums/setting_tabs/#{params[:tab] || 'settings'}", locals: {resource: @forum}

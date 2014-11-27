@@ -5,6 +5,7 @@ class Forum < ActiveRecord::Base
   has_many :questions, inverse_of: :forum
   has_many :motions, inverse_of: :forum
   has_many :memberships
+  accepts_nested_attributes_for :memberships
 
   friendly_id :web_url, use: [:slugged, :finders]
 

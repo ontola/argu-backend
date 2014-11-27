@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141124103420) do
+ActiveRecord::Schema.define(version: 20141127160457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,14 +79,16 @@ ActiveRecord::Schema.define(version: 20141124103420) do
     t.datetime "updated_at",                     null: false
     t.string   "slug"
     t.string   "web_url",           default: "", null: false
+    t.text     "bio",               default: "", null: false
+    t.text     "tags",              default: "", null: false
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
   add_index "forums", ["web_url"], name: "index_forums_on_web_url", unique: true, using: :btree
 
   create_table "memberships", force: true do |t|
-    t.integer "profile_id"
-    t.integer "forum_id"
+    t.integer "profile_id",             null: false
+    t.integer "forum_id",               null: false
     t.integer "role",       default: 0, null: false
   end
 

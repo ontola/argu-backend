@@ -6,7 +6,7 @@
     .box
       section
         h1= @forum.name
-        /p.quote = @forum.description
+        p.quote = @forum.bio
         -if !policy(@forum).member?
           =link_to 'join', forum_memberships_path(@forum.id), method: :create, class: 'btn'
           p

@@ -1,17 +1,17 @@
 nav#navbar.navbar role="navigation"
   .nav-container
-    ==link_to root_url, class: "navbar-logo"
+    =link_to root_url, class: "navbar-logo"
       =image_tag 'logo.svg'
     ul.navbar-links
       li
-        ==link_to url_for(current_scope.model), class: "navbar-item"
+        =link_to url_for(current_scope.model), class: "navbar-item"
           span.fa.fa-home.icon-left
-          span= t("home_title")
+          span= home_text
       -if Rails.configuration.epics.forum_selector
         li
           .dropdown-trigger.navbar-item
             span.fa.fa-tag.icon-left
-            span= 'forums'
+            span forums
             .dropdown-content
               .dropdown-col-1-1
                 ul.tags-vertical
@@ -47,7 +47,7 @@ nav#navbar.navbar role="navigation"
                       span energie
 
       -if Rails.configuration.epics.advanced_navigation
-        li=link_to tags_motions_path do
+        li= link_to tags_motions_path do
           span.fa.fa-lightbulb-o.icon-left
           span=t('header.motions')
 
@@ -67,23 +67,23 @@ nav#navbar.navbar role="navigation"
             span.fa.fa-user.icon-left
             span= current_user.display_name
             ul.dropdown-content.dropdown-right
-              li = link_to profile_url(current_user.username) do
-                  span.fa.fa-user.icon-left
-                  span = t("profiles.display")
-              li = link_to edit_profile_path(current_user.username) do
-                  span.fa.fa-pencil.icon-left
-                  span = t("profiles.edit.title")
-              li = link_to settings_url do
+              li= link_to profile_url(current_user.username) do
+                span.fa.fa-user.icon-left
+                span= t("profiles.display")
+              li= link_to edit_profile_path(current_user.username) do
+                span.fa.fa-pencil.icon-left
+                span= t("profiles.edit.title")
+              li= link_to settings_url do
                 span.fa.fa-gear.icon-left
-                span=t(:users_show_title)
+                span= t(:users_show_title)
               li = link_to(destroy_user_session_url, method: :delete) do
                 span.fa.fa-sign-out.icon-left
-                span = t("sign_out")
+                span= t("sign_out")
       -else
-        li = link_to new_user_session_url, id: 'account', class: 'navbar-item' do
+        li= link_to new_user_session_url, id: 'account', class: 'navbar-item' do
           span.fa.fa-sign-in.icon-left
           span = t("sign_in")
 
-      li = link_to about_url, class: 'navbar-item', id: 'info'
+      li= link_to about_url, class: 'navbar-item', id: 'info'
         span.fa.fa-question.icon-left
-        span = t("about_title")
+        span= t("about_title")
