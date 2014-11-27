@@ -39,6 +39,10 @@ class Profile < ActiveRecord::Base
     remove_role :frozen
   end
 
+  def username
+    User.where(profile_id: self.id).first.username || Pages.where(profile_id: self.id).first.web_url
+  end
+
 
   #######Utility#########
   def self.find_by_username(user)
