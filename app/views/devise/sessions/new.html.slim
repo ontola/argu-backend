@@ -31,6 +31,6 @@
           = f.password_field :password, placeholder: t("users_password")
           /- if devise_mapping.rememberable?
             .remember= f.check_box :remember_me
-          = render "devise/shared/links"
+          = render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}
           = f.actions do
             = f.action :submit, :as => :button, label: t("sign_in")

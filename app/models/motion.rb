@@ -19,7 +19,7 @@ class Motion < ActiveRecord::Base
   before_save :cap_title
 
   acts_as_ordered_taggable_on :tags
-  parentable :questions
+  parentable :questions, :forum
   resourcify
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }

@@ -1,5 +1,6 @@
 = provide :title, t(:about_title)
-
+- if defined?(show_sign_in) && show_sign_in.present?
+  =link_to 'inloggen', '#', onclick: "$.ajax({url: '/sign_in_modal',cache: false,success: function(html){$('.container').append(html);}});"
 .landing-bg.bg-landing-hong-kong
   h1.landing-header = "democratie = invloed hebben"
 .landing-section.landing-white

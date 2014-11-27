@@ -19,7 +19,7 @@ class MotionsController < ApplicationController
     authorize @motion
     @arguments = Argument.ordered @motion.arguments
     @opinions = Opinion.ordered @motion.opinions
-    @voted = Vote.where(voteable: @motion, voter: current_user.profile).last.try(:for) unless current_user.blank?
+    @voted = Vote.where(voteable: @motion, voter: current_profile).last.try(:for) unless current_user.blank?
 
     respond_to do |format|
       format.html # show.html.erb
@@ -55,11 +55,10 @@ class MotionsController < ApplicationController
   def create
     @question = Question.find params[:question_id]
     @motion = Motion.create permit_params
-    @motion.creator = current_user.profile
+    @motion.creator = current_profile
     @motion.questions << @question
     authorize @motion
-    @motion.forum = current_user._current_scope
-    #current_user.profile.add_role :mod, @motion
+    @motion.forum = current_scope.model
 
     respond_to do |format|
       if @motion.save

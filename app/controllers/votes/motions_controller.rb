@@ -4,7 +4,7 @@ class Votes::MotionsController < ApplicationController
     @motion = Motion.find(params[:motion_id])
     authorize @motion, :vote?
     if params[:for].in?(Vote.fors)
-      @vote = Vote.find_or_create_by(voteable: @motion, voter: current_user.profile)
+      @vote = Vote.find_or_create_by(voteable: @motion, voter: current_profile)
       if @vote.try(:for) == permit_params[:for]
         respond_to do |format|
           format.json { render json: {notifications: [{type: 'warning', message: '_Stem ongewijzigd_'}]} }
@@ -29,7 +29,7 @@ class Votes::MotionsController < ApplicationController
   # DELETE /motions/:motion_id/vote
   def destroy
     @motion = Motion.find(params[:motion_id])
-    @vote = Vote.find_or_create_by(voteable: @motion, voter: current_user.profile)
+    @vote = Vote.find_or_create_by(voteable: @motion, voter: current_profile)
     authorize @motion, :vote?
     if @vote.update for: :abstain
       save_vote_to_stats(@vote)

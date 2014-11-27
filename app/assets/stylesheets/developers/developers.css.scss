@@ -1,6 +1,6 @@
 @import "variables";
 
-.developers {
+div.developers#developers {
   display: flex;
   flex-direction: column;
   header.big {
@@ -69,4 +69,5 @@
       margin-top: 2em;
     }
   }
+
 }
