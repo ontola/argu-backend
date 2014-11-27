@@ -4,6 +4,7 @@
   = f.inputs do
     = f.input :name
     = f.input :bio
+    = f.input :tags, as: :string, class: "tag-list"
     -if policy(resource).web_url?
       = f.input :web_url
   = f.actions do

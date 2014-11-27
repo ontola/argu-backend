@@ -8,6 +8,7 @@ class Forum < ActiveRecord::Base
   accepts_nested_attributes_for :memberships
 
   friendly_id :web_url, use: [:slugged, :finders]
+  acts_as_ordered_taggable_on :tags
 
   mount_uploader :profile_photo, ImageUploader
   mount_uploader :cover_photo, ImageUploader

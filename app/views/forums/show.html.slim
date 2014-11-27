@@ -17,6 +17,6 @@
             span.fa.fa-gear.icon-left
             span beheer
     section.unpadded.tags
-      /- @forum.key_tags.each do |tag|
+      - @forum.tags.each do |tag|
         = link_to tag, tag_motions_url(tag), class: "tag", title: t("motions.titles.tags")+tag
 =render_columns({ questions: @forum.questions, motions: @forum.motions})

@@ -24,7 +24,6 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def update?
-    puts "=========#{(user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || super}========"
     (user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || super
   end
 
