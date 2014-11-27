@@ -69,12 +69,10 @@ Argu::Application.routes.draw do
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
-  ##get "users/new"
   get '/settings', to: 'users#edit', as: 'settings'
   post '/settings', to: 'users#update'
-  #match "/signup", to: "users#new"
-  #match "/signin", to: "sessions#new"
-  #get "/signout", to: "sessions#destroy", via: :delete
+
+  get '/sign_in_modal', to: 'static_pages#sign_in_modal'
   get '/about', to: 'static_pages#about'
 
   get '/portal', to: 'portal/portal#home'

@@ -1,4 +1,4 @@
-.developers
+.developers#developers
   - banner = ['prometheus', 'sanzio'].sample
   header.big[id="#{banner}" style=('background-image: url(' + root_url + asset_path("developers/#{banner}.jpg") + ');')]
     h1.jumbo debate the web
@@ -11,12 +11,12 @@
         a[href="#widgets"] widgets
       li
         a[href="#widgets"] cards
-  section
+  section.box
     h1#intro javascript SDK
     p De mogelijkheid om met argu te verbinden kan momenteel alleen via de javascript API.
     pre
       code= "<script src=\"//#{Rails.application.config.host}/argu.js\" async></script>"
-  section
+  section.box
     h1#widgets widgets
     p Met argu widgets kan je een aangemaakte stelling op je site tonen en gebruikers inzicht en interactie bieden. Na de JavaScript API geladen te hebben worden relevante elementen automatisch geladen.
     h2 stellingen
@@ -81,7 +81,7 @@
         pre
           code= '<argument id="5"></argument>'
         <argument id="#{Argument.first.id}"></argument>
-  section
+  section.box
     h1#cards cards
     p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet scelerisque eros, ut cursus augue. Sed lacinia ac lorem ac tempor. Suspendisse potenti. Sed feugiat a dolor a aliquam. Nam tempor risus eu eros lobortis, vitae vulputate sem fermentum. Sed at faucibus magna, in egestas lectus. In pellentesque pulvinar mi at dictum. Proin magna erat, rhoncus vel gravida id, faucibus eu tellus. Aliquam adipiscing semper porta. Nullam eu interdum sapien. Pellentesque aliquam consequat ullamcorper.
     h2 Popup

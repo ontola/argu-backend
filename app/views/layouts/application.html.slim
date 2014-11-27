@@ -15,6 +15,8 @@ head
 
   / unless current_user.blank?
   = stylesheet_link_tag "application", :media => "all"
+  - if request.original_url.include? developers_path
+    = stylesheet_link_tag "developers/developers", :media => "all"
   / Raleway font from google fonts
   link href='http://fonts.googleapis.com/css?family=Raleway:700,300' rel='stylesheet' type='text/css'
 
@@ -33,4 +35,4 @@ body
   .container
     = yield
     .push
-  =javascript_include_tag "application", async: Rails.env == 'development' ? false : true
+  =javascript_include_tag "application"

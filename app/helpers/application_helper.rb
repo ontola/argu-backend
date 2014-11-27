@@ -11,4 +11,8 @@ module ApplicationHelper
     uri.to_s
   end
 
+  def resource
+    @resource
+  end
+
 end

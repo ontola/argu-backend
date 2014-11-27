@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   # POST /resource/1/comments
   def create
     resource = get_commentable
-    @comment = Comment.build_from(resource, current_user.profile.id, params[:comment])
+    @comment = Comment.build_from(resource, current_profile.id, params[:comment])
     authorize @comment
     parent = Comment.find_by_id params[:parent_id] unless params[:parent_id].blank?
     #unless params[:parent_id].blank?
