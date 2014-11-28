@@ -20,4 +20,14 @@ class QuestionPolicy < RestrictivePolicy
   def index?
     (user._current_scope.present? && Forum.public_forms[user._current_scope.public_form] == Forum.public_forms[:f_public]) || (user && user.profile.memberships.where(forum: record).present?) || super
   end
+
+  def show?
+    is_member? || super
+  end
+
+  private
+
+  def is_member?
+    user.profile.member_of? record.forum
+  end
 end

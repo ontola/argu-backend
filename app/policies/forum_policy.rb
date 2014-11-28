@@ -12,6 +12,10 @@ class ForumPolicy < RestrictivePolicy
     true || super # Until forum scope settings are implemented
   end
 
+  def show_children?
+    member? || staff?
+  end
+
   def new?
     create?
   end

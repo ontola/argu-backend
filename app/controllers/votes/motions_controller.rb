@@ -18,11 +18,11 @@ class Votes::MotionsController < ApplicationController
             format.json { render json: {notifications: [{type: 'success', message: '_Gelukt_'}]} }
           end
         else
-          render_error
+          render_error(@vote.errors)
         end
       end
     else
-      render_error
+      render_error('_Ongeldige aanvraag_')
     end
   end
 
@@ -48,9 +48,9 @@ private
     params.permit :for, :motion_id
   end
 
-  def render_error
+  def render_error(message = nil)
     respond_to do |format|
-      format.json { render json: {notifications: [{type: 'error', message: t('status.400')}] } }
+      format.json { render json: {notifications: [{type: 'error', message: message || t('status.400')}] } }
     end
   end
 

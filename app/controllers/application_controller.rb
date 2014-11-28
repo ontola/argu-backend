@@ -31,6 +31,7 @@ class ApplicationController < ActionController::Base
     @current_context ||= Context.parse_from_uri(request.url, model)
   end
 
+  # @return #Profile
   def current_profile
     if current_user.present?
       current_user.profile

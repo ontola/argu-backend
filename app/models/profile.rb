@@ -37,6 +37,10 @@ class Profile < ActiveRecord::Base
     add_role :frozen
   end
 
+  def member_of?(forum)
+    self.memberships.where(forum_id: forum.id).present?
+  end
+
   def unfreeze
     remove_role :frozen
   end

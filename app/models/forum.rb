@@ -27,4 +27,8 @@ class Forum < ActiveRecord::Base
   def page=(value)
     super Page.friendly.find(value)
   end
+
+  def self.first_public
+    Forum.first
+  end
 end
