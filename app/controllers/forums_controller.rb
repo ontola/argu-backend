@@ -31,7 +31,7 @@ class ForumsController < ApplicationController
 
 private
   def permit_params
-    params.require(:forum).permit :name, :web_url, :bio, :tags,
+    params.require(:forum).permit :name, :web_url, :bio, :tags, :tag_list,
                                          {memberships_attributes: [:role, :id, :profile_id, :forum_id]}, :profile_photo, :cover_photo,
                                          :cover_photo_original_w, :cover_photo_original_h, :cover_photo_box_w, :cover_photo_crop_x, :cover_photo_crop_y, :cover_photo_crop_w, :cover_photo_crop_h, :cover_photo_aspect
   end
