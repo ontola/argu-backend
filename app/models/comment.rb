@@ -5,7 +5,7 @@ class Comment < ActiveRecord::Base
   after_destroy :decrease_counter_cache
 
   validates_presence_of :profile
-  validates :body, presence: true, minimum: 4
+  validates :body, presence: true, length: {minimum: 4}
 
   belongs_to :commentable, :polymorphic => true
   belongs_to :profile

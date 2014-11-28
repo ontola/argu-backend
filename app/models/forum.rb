@@ -13,7 +13,7 @@ class Forum < ActiveRecord::Base
   mount_uploader :profile_photo, ImageUploader
   mount_uploader :cover_photo, ImageUploader
 
-  validates :web_url, :name, presence: true, minimum: 4
+  validates :web_url, :name, presence: true, length: {minimum: 4}
   validates :page_id, presence: true
 
   def display_name

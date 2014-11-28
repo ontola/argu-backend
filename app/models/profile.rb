@@ -11,7 +11,7 @@ class Profile < ActiveRecord::Base
 
   pica_pica :profile_photo
 
-  validates :name, :about, presence: true, minimum: 3
+  validates :name, :about, presence: true, length: {minimum: 3}
 
   ######Attributes#######
   def display_name
