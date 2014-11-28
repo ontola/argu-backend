@@ -31,4 +31,8 @@ class Forum < ActiveRecord::Base
   def self.first_public
     Forum.first
   end
+
+  def tag_list=(value)
+    super(value.downcase.strip)
+  end
 end

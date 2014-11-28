@@ -28,5 +28,13 @@ class Question < ActiveRecord::Base
       .gsub(/\[([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)\]\(([\w\s]*)\)/, '<a href="\1">\2</a>')
   end
 
+  def tag_list
+    super.join(',')
+  end
+
+  def tag_list=(value)
+    super(value.downcase.strip)
+  end
+
   scope :index, ->(trashed, page) { trashed(trashed).page(page) }
 end
