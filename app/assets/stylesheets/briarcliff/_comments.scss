@@ -5,12 +5,17 @@
   position: relative;
 }
 
+.comment.trashed > .box {
+  background-color: gainsboro;
+}
+
 .comment .comment {
   padding-left: 1em;
 }
 
 .comment .box {
   margin: 0 0 1em 0;
+  color: transparent;
 }
 
 .comments {
