@@ -15,6 +15,7 @@
   cursor: hand;
   display: inline-block;
   border-bottom: solid 3px $darken2;
+  @include border-radius;
   &:hover {
     border-color: $darken3;
   }

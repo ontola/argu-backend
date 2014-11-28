@@ -119,9 +119,10 @@ input[type="text"].form-input-title {
   cursor: hand;
   width: auto;
   display: block;
-  border-bottom: solid 3px $darken1;
+  border-bottom: solid 3px $darken2;
   margin: 0 auto;
   margin-bottom: 1em;
+  @include border-radius;
   &:hover {
     border-color: $darken3;
   }
