@@ -31,12 +31,12 @@ nl:
       title_wiped: 'Gewiste argumenten'
     form:
       title: "Voorstel in enkele woorden"
-      content: "Toelichting op voorstel. Leg de huidige situatie uit, en licht toe wat jouw voorstel precies inhoudt. Probeer hier niet te overtuigen; dat doe je met argumenten."
+      content: "Leg hier uit wat je voorstel precies inhoudt. Leg de huidige situatie uit, en vertel wat er moet veranderen. Probeer hier niet te overtuigen; dat doe je later pas met argumenten."
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
       helper:
         title: "Vat de stelling zo bondig mogelijk samen."
-        content: "Beschrijf de stelling in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
+        content: "Beschrijf jouw voorstel in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
         themes: "Thema's of onderwerpen die aan deze stelling gerelateerd zijn. Plaats komma's tussen de thema's."
     mod:
       edit_moderators:
