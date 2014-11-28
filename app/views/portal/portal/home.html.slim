@@ -1,28 +1,33 @@
-h1= t('portal.portal')
-p= content_tag(:strong, current_user.username)
-nav
-  ul
-    li= link_to t('portal.new_organisation'), new_organisation_url
-h2 _organisaties_
--if @organisations.blank?
-  p=t('portal.none')
--else
-  table.styled
-    thead
-      tr
-        td= t('portal.name')
-        td= t('portal.created_at')
-        td= t('portal.updated_at')
-        td _Statement count_
-        td _Member count_
-    tbody
-      - @organisations.each do |t|
-        tr
-          td
-            = image_tag t.profile_photo, size: '16x16'
-            = link_to t.name.presence || t('portal.no_title'), organisation_path(t)
-          td=l t.created_at, format: :short
-          td=l t.updated_at, format: :short
-          td=t.statements_count
-          td=t.memberships_count
-  //=paginate @organisations, param_name: :published_page
+.col-1
+  header
+    h1= t('portal.portal')
+  .box
+    section
+      p= content_tag(:strong, current_user.username)
+      nav
+        ul
+          li= link_to t('portal.new_page'), new_portal_page_path
+      h2 _pages_
+      -if @pages.blank?
+        p=t('portal.none')
+      -else
+        table.styled
+          thead
+            tr
+              td= t('portal.name')
+              td= t('portal.created_at')
+              td= t('portal.updated_at')
+              td _has forum_
+              td _show_
+              td _edit_
+          tbody
+            - @pages.each do |t|
+              tr
+                td
+                  = link_to t.name.presence || t('portal.no_title'), page_path(t)
+                td=l t.created_at, format: :short
+                td=l t.updated_at, format: :short
+                td= t.forum.present? ? link_to(t.forum.web_url, forum_path(t.forum)) : link_to('_create_', new_portal_forum_path(page: t))
+                td=link_to '_show_', page_path(t)
+                td=link_to '_settings_', settings_page_path(t)
+        //=paginate @pages, param_name: :published_page

@@ -1,0 +1,6 @@
+.col-1
+  header
+    h1 = t("motions.plural")
+  - @motions.each do |motion|
+    = render partial: 'motions/show', locals: {model: motion}
+  = paginate @motions

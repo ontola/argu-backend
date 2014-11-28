@@ -1,0 +1,9 @@
+- @authentications.each do |authentication|
+  .form-item
+    = image_tag "favicon_#{authentication.provider}.svg", :size => "64x64"
+    /= authentication.provider.titleize
+    = authentication.uid
+    - unless current_user.isOmniOnly && (current_user.authentications.size == 1)
+      = link_to t("users_oauth_remove"), authentication, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove"
+    - else
+      = link_to t("users_oauth_remove"), cancel_user_registration_path(current_user), :confirm => ('Removing will result in account deletion. Create a username to use argu without ' + authentication.provider.titleize)

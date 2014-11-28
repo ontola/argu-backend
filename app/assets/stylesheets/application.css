@@ -8,11 +8,12 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require briarcliff/briarcliff
+ * require briarcliff/briarcliff
+ *= require briarcliff/_reset
  *= require fixedsticky
- *= require selectize
- *= require selectize.default
- *= require formtastic
+ * require selectize
+ * require selectize.default
+ * require formtastic
  *= require pica_pica/pica_pica
  *= require_self
  *= require_tree .

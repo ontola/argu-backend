@@ -1,0 +1,93 @@
+@import "variables";
+@import "mixins";
+
+.box {
+  position: relative;
+  background-color: white;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  @include border-radius;
+  @include box-shadow;
+}
+
+.box.box-link {
+  opacity: .8;
+  &:hover {
+    opacity: 1;
+  }
+  &:active {
+    position: relative;
+    top: 1px;
+    box-shadow: none;
+  }
+  h3 {
+    font-size: 1.2em;
+    margin-bottom: .8em;
+  }
+}
+
+.box-small{
+  max-width: 22em;
+}
+
+section {
+  position: relative;
+  padding: 1.1em 1.4em 0.1em 1.4em;
+}
+
+section.unpadded {
+  padding: 0;
+}
+
+section.smallpadded {
+  padding: 1.1em 1em 0em 1em;
+}
+
+section + section {
+  border-top: solid 1px $g1;
+}
+
+.box h3 a, .box a h3 {
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.box h1, .box h2, .box h3 {
+  font-weight: 800;
+  margin-bottom: .5em;
+}
+
+.box p {
+  margin-bottom: .9em;
+}
+
+.box ol, .box ul {
+  color: $g3;
+
+}
+
+.box-divider {
+  border-top: solid 1px #e8e8e8;
+  width: calc(100% + 2em);
+  margin-left: -1em;
+  z-index: 1;
+  display: block;
+  position: relative;
+}
+
+.box-divider-space {
+  margin-top: -.4em;
+  padding-bottom: .4em;
+}
+
+.box-list .box {
+  margin-bottom: 0;
+  border-bottom: solid 1px $g1;
+}
+
+.box-with-btns {
+  h1, h2, h3 {
+    padding-right: 1.5em;
+  }
+}

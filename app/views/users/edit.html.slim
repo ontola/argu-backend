@@ -2,47 +2,39 @@
   header
     h1= t("users_show_title")
   .box
-    =form_for @user, url: settings_path(method: :put), method: :put do |user|
+    =semantic_form_for @user, url: settings_path(method: :put), method: :put do |f|
       section
         label= t("users_username")
-        = user.text_field(:username)
+        = f.text_field(:username)
 
         label= t("users_name")
-        = user.fields_for :profile do |profile|
+        = f.fields_for :profile do |profile|
           = profile.text_field(:name, placeholder: t("users_name_placeholder"))
 
         label= t("users_email")
-        = user.email_field(:email, placeholder: current_user.email.blank? ? t("users_email_placeholder") : current_user.email)
+        = f.email_field(:email, placeholder: current_user.email.blank? ? t("users_email_placeholder") : current_user.email)
 
         label= t("users_password_edit")
-        = user.password_field("")
+        = f.password_field("")
 
         label= t("users_password_confirmation")
-        = user.password_field("")
+        = f.password_field("")
 
         /TODO fix this. Authentications are not showing up.
         - if @authentications.present?
           label= t("users_oauth_coupled")
-            - for authentication in @authentications
-              .authentication
-                = image_tag "favicon_#{authentication.provider}.svg", :size => "64x64"
-                .provider= authentication.provider.titleize
-                .uid= authentication.uid
-                - unless current_user.isOmniOnly && (current_user.authentications.size == 1)
-                  = link_to t("users_oauth_remove"), authentication, :confirm => t("users_oauth_remove_confirmation"), :method => :delete, :class => "remove"
-                - else
-                  = link_to t("users_oauth_remove"), cancel_user_registration_path(current_user), :confirm => (t("users_oauth_remove_confirmation")), :class => "remove"
+          = render 'authentications/login_providers_connected'
 
         /TODO Hide authentications that are already present.
         label= t("users_oauth_new")
-        .form-auth-icons
-          a href="/auth/twitter" class="btn-auth"
-            = image_tag "favicon_twitter.svg", :size => "64x64", alt: "Twitter"
-          a href="/auth/facebook" class="btn-auth"
-            = image_tag "favicon_facebook.svg", :size => "64x64", alt: "Facebook"
-          /a href="/auth/google_apps" class="btn-auth"
-            = image_tag "favicon_google.svg", :size => "64x64", alt: "Google"
-          /a href="/auth/openid" class="btn-auth"
-            = image_tag "favicon_openid.svg", :size => "64x64", alt: "OpenId"
+        .form-item
+          = render 'authentications/login_providers'
 
-        = user.submit(t("save"), class: "btn btn-sticky btn-sticky-bottom pro-bg")
+        label = t("users_cancel_title")
+        .form-item
+          = link_to t("users_cancel_title"), cancel_user_registration_path(current_user)
+
+        = f.actions do
+          = f.action :submit, :as => :button, label: t("save")
+        /= user.submit(t("save"), class: "btn btn-sticky btn-sticky-bottom pro-bg")
+

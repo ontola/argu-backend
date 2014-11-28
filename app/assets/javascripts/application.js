@@ -21,6 +21,6 @@
 //= require autocomplete-rails
 //= require fixedsticky
 //= require pica_pica/application
-//= require briarcliff/briarcliff
+// require briarcliff/briarcliff
 //= require cocoon
 //= require_tree .

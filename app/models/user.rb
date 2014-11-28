@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
-  has_one :profile, dependent: :destroy
+  belongs_to :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile
 
@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
-  attr_accessor :login, :current_password, :email, :_current_scope
+  attr_accessor :login, :current_password, :email
 
   USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][a-zA-Z0-9]*\z/i
 
@@ -26,12 +26,17 @@ class User < ActiveRecord::Base
            length: { in: 4..20 },
            format: { with: USERNAME_FORMAT_REGEX },
            uniqueness: { case_sensetive: false }
-  validates :email, allow_blank: true,
+  validates :email, allow_blank: false,
         format: { with: RFC822::EMAIL }
+  validates :profile_id, presence: true
 
 #######Attributes########
   def display_name
     self.profile.name.presence || self.username
+  end
+
+  def web_url
+    username
   end
 
 #######Utility########

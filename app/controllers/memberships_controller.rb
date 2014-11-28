@@ -3,8 +3,8 @@ class MembershipsController < ApplicationController
 
   def create
     user = User.find params[:id]
-    organisation = Organisation.find params[:organisation_id]
-    @membership = Membership.new user: user, organisation: organisation, role: permit_params[:role]
+    forum = Forum.find params[:forum_id]
+    @membership = Membership.new user: user, forum: forum, role: permit_params[:role]
     authorize @membership, :create?
 
     if @membership.save
@@ -15,7 +15,7 @@ class MembershipsController < ApplicationController
   end
 
   def update
-    @membership = Organisation.find params[:id]
+    @membership = Forum.find params[:id]
     authorize @membership, :update?
 
     if @membership.update permit_params
@@ -26,7 +26,7 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
-    @membership = Organisation.find(params[:organisation_id]).memberships.find params[:id]
+    @membership = Forum.find(params[:forum_id]).memberships.find params[:id]
     authorize @membership
     if @membership.destroy
       respond_to do |f|
@@ -41,6 +41,6 @@ class MembershipsController < ApplicationController
 
 private
   def permit_params
-    params.require(:organisation).permit :role
+    params.require(:forum).permit :role
   end
 end

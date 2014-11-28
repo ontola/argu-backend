@@ -5,7 +5,7 @@ module ProCon
     include Trashable
     include Parentable
 
-    belongs_to :statement, :dependent => :destroy
+    belongs_to :motion, :dependent => :destroy
     has_many :votes, as: :voteable
     belongs_to :creator, class_name: 'User'
 
@@ -14,9 +14,10 @@ module ProCon
 
     validates :content, presence: true, length: { minimum: 5, maximum: 1500 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
+    validates :creator_id, :motion_id, presence: true
 
     acts_as_commentable
-    parentable :statement
+    parentable :motion
 
     def creator
       super || User.first_or_create(username: 'Onbekend')
@@ -57,13 +58,10 @@ module ProCon
     self.comment_threads.where(:parent_id => nil)
   end
 
-  def is_moderator?(user)
-    self.statement.is_moderator?(user)
-  end
-
   module ClassMethods
     def ordered (coll=[])
-      HashWithIndifferentAccess.new(pro: [], con: []).merge(coll.group_by { |a| a.key })
+      grouped = coll.group_by { |a| a.key }
+      HashWithIndifferentAccess.new(pro: {collection: grouped[:pro]}, con: {collection: grouped[:con]})
     end
   end
 end

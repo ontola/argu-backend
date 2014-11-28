@@ -1,42 +1,18 @@
-/.comment
+.comment[class="#{'trashed' if c.is_trashed?}"]
   .box
     section
       p[id="#{c.id}"]= c.body
     = render c.profile, locals= {resource: c}
-    = render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false }
-    ul.btns-sticky.btns-sticky-bottom.btns-vertical
-      li.btn.btn-subtle= link_to t('reply'), polymorphic_url([resource], parent_id: c.id), html_options = { id: c.id, class: "btn-reply" } if policy(Comment).create?
-        span.fa.fa-gear.icon-left
-        span menu
-      li.btn.btn-subtle.dropdown-trigger
-        span.fa.fa-gear.icon-left
-        span menu
-        ul.dropdown-content.dropdown-right.icon-left
-          li
-            li= link_to t('report'), '#' if policy(c).report?
-            li= link_to t('trash'), polymorphic_url([resource, c]), method: :delete if policy(c).trash?
-  - if c.has_children?
-    - c.children.each do |ch|
-      = render partial: 'comments/comment', locals: { resource: resource, c: ch, depth: depth+1 }
-    = link_to t('opinions.comments.more'), '/' if c.children.length > 40
-
-.comment
-  .box
-    section
-      p[id="#{c.id}"]= c.body
-    = render c.profile, locals= {resource: c}
-    ul.btns-sticky.btns-sticky-bottom.btns-vertical
+    ul.btns-sticky.btns-sticky-bottom.btns-vertical.btns-list
       - if policy(Comment).create?
-        li= link_to polymorphic_url([resource], parent_id: c.id), html_options = { id: c.id, class: "btn btn-subtle btn-reply" } do
+        li= link_to polymorphic_url([resource], parent_id: c.id), html_options = { id: c.id, class: "btn-reply" } do
           span.fa.fa-reply.icon-left
           span = t('reply')
-      li.btn.btn-subtle.dropdown-trigger
-        span.fa.fa-gear.icon-left
-        span menu
-        ul.dropdown-content.dropdown-right.icon-left
-          li
-            li= link_to t('report'), '#' if policy(c).report?
-            li= link_to t('trash'), polymorphic_url([resource, c]), method: :delete if policy(c).trash?
+      end
+      - if policy(c).trash?
+        li= link_to polymorphic_url([resource, c]), method: :delete do
+          span.fa.fa-trash.icon-left
+          span = t('trash')
   .comment
     .box= render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false }
   - if c.has_children?

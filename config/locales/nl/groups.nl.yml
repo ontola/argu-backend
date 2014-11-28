@@ -21,7 +21,7 @@ nl:
     new_group: "Creëer groep"
   activerecord:
     attributes:
-      organisation:
+      forum:
         name: "Naam"
         web_url: "argu web url"
         description: "Omschrijving"

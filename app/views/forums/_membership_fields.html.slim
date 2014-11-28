@@ -1,0 +1,4 @@
+li.template
+  =image_tag '/profile_photos/original/missing.png', class: 'profile-photo'
+  =f.input :forum_id, as: :empty_select, input_html: {class: 'add-user'}
+  =f.input :role, as: :inline_select, collection: Membership.roles.keys

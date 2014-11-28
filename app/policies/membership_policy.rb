@@ -28,7 +28,7 @@ class MembershipPolicy < RestrictivePolicy
   end
 
   def destroy?
-    (OrganisationPolicy.new(user, record.organisation).update? || staff?) && record.organisation.memberships.where(role: Membership.roles[:manager]).where.not(id: record.id).present?
+    (ForumPolicy.new(user, record.forum).update? || staff?) && record.forum.memberships.where(role: Membership.roles[:manager]).where.not(id: record.id).present?
   end
 
 end

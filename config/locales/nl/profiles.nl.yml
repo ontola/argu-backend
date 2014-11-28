@@ -3,6 +3,7 @@
 nl:
   profiles:
     type: "profiel"
+    display: "profiel bekijken"
     show:
       title: "profiel"
       btn:
@@ -13,6 +14,6 @@ nl:
         unadmin: 'Degradeer admin'
     edit:
       title: "profiel bewerken"
-      name: "naam"
+      name: "Volledige naam"
       picture: "afbeelding"
-      about: "over"
+      about: "over jou"

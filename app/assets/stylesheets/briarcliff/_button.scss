@@ -1,0 +1,307 @@
+@import "variables";
+@import "mixins";
+
+.btn {
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  padding: .5em .8em .4em .8em;
+  background-color: $gre;
+  border: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  margin: 0;
+  cursor: hand;
+  display: inline-block;
+  border-bottom: solid 3px $darken2;
+  &:hover {
+    border-color: $darken3;
+  }
+  &:active {
+    border-color: $darken4;
+    border-bottom: none;
+    margin-top: 3px;
+  }
+}
+
+.btn-auth {
+  margin-right: 1em;
+}
+
+.btn-box {
+  color: white;
+}
+
+.btn-comments {
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+.btn-big {
+  background-color: white;
+  color: #828282;
+  font-family: raleway;
+  font-weight: 700;
+  font-size: 1.4em;
+  text-transform: none;
+  text-align: left;
+  width: 100%;
+}
+
+.btn-sticky {
+  position: absolute !important;
+  top: 0;
+  right: 0;
+}
+
+.btn-sticky-bottom {
+  top: auto;
+  bottom: 0;
+}
+
+.btn-sticky-left {
+  right: auto;
+  left: 0;
+}
+
+.btn-sticky-center {
+  top: 50%;
+  bottom: 50%;
+}
+
+.btn-subtle, .btns-subtle a {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  border: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  margin: 0;
+  cursor: hand;
+  display: inline-block;
+  color: $g2;
+  background: none;
+  padding: 0.5em .6em .4em .6em;
+  &:hover {
+    color: $g3;
+    background-color: $darken1;
+  }
+  &:active {
+    color: $g3;
+    background-color: $darken2;
+    margin-top: 0; //Negates the  "push"-effect of normal buttons
+  }
+}
+
+.btn-white {
+  background-color: white;
+  color: $g3;
+}
+
+.btn-subtle-active {
+  background-color: $g3;
+  color: white;
+  &:hover {
+    background-color: $g3;
+    color: white;
+  }
+}
+
+.btns-aside {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  margin-left: 1em;
+  li {
+    margin-bottom: .5em;
+  }
+}
+
+.btns-bottom {
+  padding-top: 1.5em;
+}
+
+.btns-devise {
+  padding: 0;
+  margin-bottom: .5em;
+  li {
+    list-style: none;
+  }
+  a {
+    text-transform: uppercase;
+    font-size: .7em;
+    padding: .3em 0;
+    display: inline-block;
+  }
+}
+
+.btns-list li {
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  border: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  margin: 0;
+  cursor: hand;
+  display: block;
+  color: $g3;
+  padding: 0.5em .6em .4em .6em;
+  a {
+    color: $g3;
+  }
+  &:hover {
+    background-color: $darken1;
+    a {
+      color: $g4;
+    }
+  }
+  &:active {
+    background-color: $darken2;
+  }
+}
+
+.btns-opinion {
+  display: block;
+  margin-bottom: 1em;
+  width: 100%;
+  width: calc(100% + 1em);
+  margin-left: -0.5em;
+
+  @include bp-medium {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  li {
+    display: inline-block;
+    margin: 0 0;
+    margin-bottom: 0.5em;
+    width: 33.3%;
+    width: calc(33.3% - 1em);
+    margin: 0 .5em;
+    @include bp-medium {
+      display: block;
+      width: 100%;
+      margin: 0 0 .3em 0;
+    }
+  }
+  a {
+    width: 100%;
+    display: inline-block;
+    padding: 0.7em 1.1em;
+    padding-bottom: 0.6em;
+    font-weight: bold;
+    @include border-radius;
+    //border: solid 5px white;
+    text-transform: uppercase;
+    top: 0;
+    position: relative;
+    @include box-shadow;
+    &:active{
+      top: 2px;
+      box-shadow: none;
+    }
+  }
+  .btn-pro {
+    background-color: white;
+    color: $gre;
+    &:hover{
+      background-color: $grel;
+    }
+    &.voted {
+      background-color: $gre;
+      color: white;
+    }
+  }
+  .btn-neu {
+    background-color: white;
+    color: $g3;
+    &:hover {
+      background-color: $g1;
+    }
+    &.voted {
+      background-color: $g3;
+      color: white;
+    }
+  }
+  .btn-con {
+    background-color: white;
+    color: $red;
+    margin-right: 0;
+    &:hover {
+      background-color: $redl;
+    }
+    &.voted {
+      background-color: $red;
+      color: white;
+    }
+  }
+}
+
+.btns-signup {
+  text-align: center;
+  margin: 2em auto 2.6em;
+  li {
+    margin-bottom: 1em;
+  }
+  .btn {
+    font-size: 1em;
+    width: 15em;
+    padding: 0.8em 1em;
+    text-transform: none;
+    text-align: left;
+  }
+  .fa {
+    width: 1em;
+  }
+}
+
+.btns-sticky {
+  position: absolute;
+  right: 0;
+  text-align: right;
+}
+
+.btns-sticky-center {
+  top: 50%;
+  bottom: 50%;
+}
+
+.btns-sticky-top {
+  top: 0;
+}
+
+.btns-sticky-bottom {
+  bottom: 0;
+}
+
+.btns-subtle li {
+  width: 100%;
+  a {
+    width: 100%;
+  }
+}
+
+.btns-vertical > li {
+  display: inline-block;
+}
+
+h1 + .btns-vertical {
+  margin-top: -1em;
+  margin-bottom: 1em;
+}
+
+h1 + .btn {
+  margin-bottom: 2em;
+}
+
+.icon-left {
+  margin-right: .4em;
+}
+
+.icon-right {
+  margin-left: .4em;
+}

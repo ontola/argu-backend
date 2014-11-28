@@ -7,12 +7,12 @@ uc = User.where(email: 'joepmeindertsma@gmail.com').first_or_create
 
 ua.update_attributes(username: 'fletcher91', password: 'foobar', password_confirmation:'foobar')
 ub.update_attributes(username: 'admin', password:'opendebate', password_confirmation:'opendebate')
-uc.update_attributes(username: 'joep', password: 'joepjoep', password_confirmation:'joepjoep')
+uc.update_attributes(username: 'user', password: 'useruser', password_confirmation:'useruser')
 
 
 pa = Profile.where(name: 'Thom van Kalkeren').first_or_create
 pb = Profile.where(name: 'Administrator').first_or_create
-pc = Profile.where(name: 'Joep').first_or_create
+pc = Profile.where(name: 'User').first_or_create
 
 pa.update_attributes(picture: 'http://www.wthex.com/images/coolcookie.gif', about: "I'm the coder!")
 pc.update_attributes(picture: 'https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg', about: "argu designer")
@@ -25,7 +25,7 @@ ua.profile = pa
 ub.profile = pb
 uc.profile = pc
 
-pa.add_role :coder
+pa.add_role :staff
+pb.add_role :staff
 pc.add_role :user
-pc.add_role :coder
 

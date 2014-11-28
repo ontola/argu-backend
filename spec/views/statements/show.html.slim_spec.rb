@@ -1,12 +1,12 @@
 require 'spec_helper'
 
-describe "statements/show" do
+describe "motions/show" do
   before(:each) do
-    @statement = FactoryGirl.create :statement
-    pro = [FactoryGirl.create(:argument, statement: @statement, pro: true), FactoryGirl.create(:argument, statement: @statement, pro: true)]
-    con = [FactoryGirl.create(:argument, statement: @statement, pro: false), FactoryGirl.create(:argument, statement: @statement, pro: false)]
+    @motion = FactoryGirl.create :motion
+    pro = [FactoryGirl.create(:argument, motion: @motion, pro: true), FactoryGirl.create(:argument, motion: @motion, pro: true)]
+    con = [FactoryGirl.create(:argument, motion: @motion, pro: false), FactoryGirl.create(:argument, motion: @motion, pro: false)]
     @arguments = {pro: pro, con: con}
-    assign(:statement, @statement)
+    assign(:motion, @motion)
     assign(:arguments, @arguments)
   end
 

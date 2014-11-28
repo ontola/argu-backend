@@ -1,5 +1,5 @@
 div[class='box #{pro_side}']
-  p=link_to t('arguments.new.header_short', side: pro_translation).capitalize + @argument.statement.title, statement_url(@argument.statement, host: Rails.application.config.host), class: "statement top", target: :_blank
+  p=link_to t('arguments.new.header_short', side: pro_translation).capitalize + @argument.motion.title, motion_url(@argument.motion, host: Rails.application.config.host), class: "motion top", target: :_blank
   =link_to @argument, host: Rails.application.config.host, target: :_blank
     h1[class=(@argument.pro ? 'title pro' : 'title con')]= @argument.title
   = content_tag :p, raw(@argument.supped_content), class: 'intro'

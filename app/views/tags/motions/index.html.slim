@@ -1,0 +1,11 @@
+h1.center
+  | _Themas_
+table
+  thead
+    tr
+      td Naam
+      td Hoofdstelling
+  -@tags.each do |tag|
+    tr
+      td= link_to tag.name, tag_motions_path(tag.name)
+      td= link_to tag.motion.title, motion_path(tag.motion) if tag.motion

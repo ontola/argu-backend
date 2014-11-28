@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
   # POST /resource/1/comments
   def create
     resource = get_commentable
-    @comment = Comment.build_from(resource, current_user.profile.id, params[:comment])
+    @comment = Comment.build_from(resource, current_profile.id, params[:comment])
     authorize @comment
     parent = Comment.find_by_id params[:parent_id] unless params[:parent_id].blank?
     #unless params[:parent_id].blank?
@@ -15,7 +15,8 @@ class CommentsController < ApplicationController
     #end
 
     respond_to do |format|
-      if @comment.save! && ((@comment.move_possible?(parent) && @comment.move_to_child_of(parent)) if parent.present?)
+      if @comment.save!
+        @comment.move_to_child_of(parent) if parent.present? # Apparently, move_possible? doesn't exists anymore
         format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: t('type_create_success', type: t('comments.type')) }
       else
         #@comment.destroy unless @comment.new_record? # TODO: this shit deletes all comments, so thats not really a great thing..

@@ -5,6 +5,8 @@ nl:
     type: "vraagstuk"
     new_question_path: "Nieuw vraagstuk"
     new_question: "Nieuw vraagstuk"
+    new_btn: "Vraagstuk toevoegen"
+    header: "vraagstukken"
     form:
       title: "Wat is jouw vraag?"
       content: "Waarom zit je met deze vraag? Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."

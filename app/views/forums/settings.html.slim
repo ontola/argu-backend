@@ -1,0 +1,17 @@
+.col-1
+  =render partial: 'manage_bar', locals: {resource: @forum}  if policy(@forum).update?
+  small  <!-- for styling -->
+  header
+    h1 forum instellingen
+  .forum_id[id="#{@forum.id}"]
+    .box.box-small
+      ul.btns-list
+        li = link_to url_for([:settings, @forum, tab: :settings]) do
+          span.fa.fa-gear.icon-left
+          span _algemene instellingen_
+        li = link_to url_for([:settings, @forum, tab: :managers])
+          span.fa.fa-group.icon-left
+          span _beheerders_
+  .box
+    section
+      =render partial: "forums/setting_tabs/#{params[:tab] || 'settings'}", locals: {resource: @forum}

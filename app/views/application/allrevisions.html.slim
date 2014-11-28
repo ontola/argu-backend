@@ -19,12 +19,12 @@ header
                 td= i.content[0,140] + ((i.content.length < 140) ? "" : "...")
                 td= u.getLogin
                 td= v.created_at.to_s
-                td= link_to('Goto', statement_rev_revisions_url(i, v))
-                td= link_to('Revert', statement_update_revision_url(i, v), method: :put)
+                td= link_to('Goto', motion_rev_revisions_url(i, v))
+                td= link_to('Revert', motion_update_revision_url(i, v), method: :put)
 -else
     h2= t("empty_type", type: 'revisies')
 -if @arguments.present?
-    h2= t 'statements.revisions.title_wiped'
+    h2= t 'motions.revisions.title_wiped'
 -elsif @comments.present?
     h2= t 'arguments.revisions.title_wiped'
     -@comments.each do |c|

@@ -2,5 +2,6 @@
 
 nl:
   portal:
-    new_organisation: "Organisatie aanmaken"
+    new_forum: "Forum aanmaken"
     none: "Nog geen"
+    new_page: "Nieuwe Page"

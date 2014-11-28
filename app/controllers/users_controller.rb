@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   def index
     scope = policy_scope(User).includes(:profile)
-    scope = scope.includes(:memberships).where('memberships IS NULL OR memberships.organisation_id != 1').references(:memberships) if params[:organisation_id].present?
+    scope = scope.includes(:memberships).where('memberships IS NULL OR memberships.forum_id != 1').references(:memberships) if params[:forum_id].present?
 
     if params[:q].present?
       @users = scope.where("lower(username) LIKE lower(?)", "%#{params[:q]}%").page params[:page]

@@ -24,22 +24,17 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :statements, only: [:show, :edit] do
-    post 'vote/:for'      => 'votes/statements#create',   as: 'vote'
-    delete 'vote'         => 'votes/statements#destroy',  as: 'vote_delete'
+  resources :motions, only: [:show, :edit, :update, :delete, :destroy] do
+    post 'vote/:for'      => 'votes/motions#create',   as: 'vote'
+    delete 'vote'         => 'votes/motions#destroy',  as: 'vote_delete'
 
-    get 'tags',      to: 'tags/statements#index', on: :collection
-    get 'tags/:tag', to: 'tags/statements#show',  on: :collection, as: :tag
-
-    namespace :moderators do# , except: [:new, :update], controller: 'moderators/statements'
-      get '' => 'statements#index', as: ''
-      post ':user_id' => 'statements#create', as: 'user'
-      delete ':user_id' => 'statements#destroy'
-    end
+    get 'tags',      to: 'tags/motions#index', on: :collection
+    get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
   end
 
-  resources :questions, only: [:show, :update] do
-    resources :statements, only: [:new, :create, :delete, :destroy]
+  resources :questions, only: [:show, :edit, :update] do
+    get 'tags',      to: 'tags/motions#index', on: :collection
+    get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
   end
 
   resources :arguments do
@@ -53,31 +48,35 @@ Argu::Application.routes.draw do
     resources :comments
   end
 
-  resources :organisations, except: [:index, :edit] do
+  resources :forums, except: [:index, :edit] do
     get :settings, on: :member
     resources :memberships, only: [:create, :destroy]
     resources :questions, only: [:index, :new, :create]
+    resources :motions, only: [:new, :create]
   end
 
-  resources :groups, except: [:index, :edit] do
+  resources :pages, only: :show do
     get :settings, on: :member
-    resources :group_memberships, path: 'memberships', only: [:create, :destroy]
   end
+
+  namespace :portal do
+    resources :pages, only: [:show, :new, :create]
+    resources :forums, only: [:new, :create]
+  end
+
   resources :profiles
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
-  ##get "users/new"
   get '/settings', to: 'users#edit', as: 'settings'
   post '/settings', to: 'users#update'
-  #match "/signup", to: "users#new"
-  #match "/signin", to: "sessions#new"
-  #get "/signout", to: "sessions#destroy", via: :delete
+
+  get '/sign_in_modal', to: 'static_pages#sign_in_modal'
   get '/about', to: 'static_pages#about'
 
   get '/portal', to: 'portal/portal#home'
 
   root to: 'static_pages#home'
-  get '/', to: 'statements#index'
-  get '/home', to: 'statements#index'
+  get '/', to: 'motions#index'
+  get '/home', to: 'motions#index'
 end
