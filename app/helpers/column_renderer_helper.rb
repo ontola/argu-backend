@@ -17,7 +17,9 @@ module ColumnRendererHelper
     end
 
     if partial == 'column_renderer/show'
-      columns.each { |k,v| columns[k] = v.merge(options) }
+      columns.each do |k,v|
+        columns[k] = options.merge(v||{})
+      end
     end
 
     render partial: partial, locals: {model: columns}.merge({options: options})
