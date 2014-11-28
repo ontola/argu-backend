@@ -8,7 +8,6 @@
           ul
             -@argument.errors.full_messages.each do |msg|
               li= msg
-
       = f.text_field "title", class: (%w(pro true).index(params[:pro] || @argument.pro.to_s) ? "pro" : "con") + "-t form-input-title", placeholder: t("arguments.form.title")
 
       = f.text_area "content", class: "form-input-content", placeholder: t("arguments.form.content"), rows: "10"

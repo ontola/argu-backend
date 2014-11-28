@@ -38,7 +38,6 @@ module ColumnRendererHelper
   end
 
   def show_new_buttons(options, key)
-
     if options[:buttons_form_on_empty] && options[:collection].blank?
       render partial: "#{options[:collection_model].name.tableize}/form", locals: options.merge({pro: key, resource: options[:collection_model].new(pro: key, motion: @motion)})
     elsif options[:buttons_url].present?

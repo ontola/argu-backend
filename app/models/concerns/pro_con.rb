@@ -38,6 +38,10 @@ module ProCon
     self.pro ? :pro : :con
   end
 
+  def pro=(value)
+    super value.to_s == 'pro' || value
+  end
+
   def trim_data
     self.title = title.strip
     self.content = content.strip
