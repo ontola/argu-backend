@@ -1,6 +1,6 @@
 - tag ||= nil
 .box
   section
-    h3.sta-t= contextual_link_to model.title, question_path(model)
-    p= model.supped_content
+    h3 = contextual_link_to model.title, question_path(model), class: "que-t"
+    p = model.supped_content
     .clearfix
