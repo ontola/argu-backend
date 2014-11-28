@@ -20,7 +20,7 @@ module ProCon
     parentable :motion
 
     def creator
-      super || User.first_or_create(username: 'Onbekend')
+      super || Profile.first_or_create(username: 'Onbekend')
     end
 
   end

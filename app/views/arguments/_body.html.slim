@@ -3,7 +3,6 @@
     h1[class=(@argument.pro ? 'pro-t' : 'con-t')]= @argument.title
     = content_tag :p, raw(@argument.supped_content)
     = print_references @argument
-    /TODO
   =render @argument.creator, locals= {resource: @argument}
   .btn.btn-subtle.btn-sticky.btn-sticky-bottom.dropdown-trigger
     span.fa.fa-gear.icon-left
