@@ -38,7 +38,7 @@ class Profile < ActiveRecord::Base
   end
 
   def member_of?(forum)
-    self.memberships.where(forum_id: forum.id).present?
+    forum.present? && self.memberships.where(forum_id: forum.id).present?
   end
 
   def unfreeze

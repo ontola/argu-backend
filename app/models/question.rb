@@ -4,7 +4,7 @@ class Question < ActiveRecord::Base
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
-  has_many :question_answers, inverse_of: :question
+  has_many :question_answers, inverse_of: :question, dependent: :destroy
   has_many :motions, through: :question_answers
 
   acts_as_ordered_taggable_on :tags
