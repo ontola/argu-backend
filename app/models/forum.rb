@@ -11,8 +11,12 @@ class Forum < ActiveRecord::Base
   acts_as_ordered_taggable_on :tags
 
   mount_uploader :profile_photo, ImageUploader
+  process_in_background :profile_photo
   mount_uploader :cover_photo, ImageUploader
 
+  validates_integrity_of :profile_photo
+  validates_processing_of :profile_photo
+  validates_download_of :profile_photo
   validates :web_url, :name, presence: true, length: {minimum: 4}
   validates :page_id, presence: true
 
@@ -22,5 +26,9 @@ class Forum < ActiveRecord::Base
 
   def page=(value)
     super Page.friendly.find(value)
+  end
+
+  def self.first_public
+    Forum.first
   end
 end

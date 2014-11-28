@@ -16,7 +16,8 @@ class MembershipPolicy < RestrictivePolicy
   end
 
   def create?
-    super
+    # TODO: when implementing forum scopes, change this to include whether membership isn't restricted
+    record.role == :member.to_s || super
   end
 
   def edit?
