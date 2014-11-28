@@ -1,0 +1,10 @@
+h1= "_create forum for #{@forum.page.name}_"
+= semantic_form_for [:portal, @forum] do |f|
+  = f.inputs do
+    = f.input :name
+    = f.input :web_url
+    = f.input :page_id, as: :hidden
+
+  = f.actions do
+    = f.action :submit, :as => :button
+    = f.action :cancel, :as => :link

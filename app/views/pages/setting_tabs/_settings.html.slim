@@ -1,0 +1,9 @@
+= semantic_form_for @page do |f|
+  - @page.errors.full_messages.each do |message|
+    = message
+  = f.inputs do
+    = f.input :name
+    -if policy(@page).web_url?
+      = f.input :web_url
+  = f.actions do
+    = f.action :submit, :as => :button

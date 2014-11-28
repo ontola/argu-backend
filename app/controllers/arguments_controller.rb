@@ -5,6 +5,7 @@ class ArgumentsController < ApplicationController
   def show
     @argument = Argument.includes(:comment_threads).find params[:id]
     authorize @argument
+    current_context @argument
     @parent_id = params[:parent_id].to_s
     
     @comments = @argument.comment_threads.where(:parent_id => nil, is_trashed: false).page(params[:page]).order('created_at ASC')
@@ -22,10 +23,11 @@ class ArgumentsController < ApplicationController
   def new
     @argument = Argument.new
     authorize @argument
-    @argument.assign_attributes({pro: %w(con pro).index(params[:pro]), statement_id: params[:statement_id]})
+    current_context @argument
+    @argument.assign_attributes({pro: %w(con pro).index(params[:pro]), motion_id: params[:motion_id]})
 
     respond_to do |format|
-      if params[:statement_id].present?
+      if params[:motion_id].present?
         format.html { render :form }
         format.json { render json: @argument }
       else
@@ -51,15 +53,15 @@ class ArgumentsController < ApplicationController
     @argument = Argument.new argument_params
     @argument.creator = current_user
     authorize @argument
-    @argument.statement_id = argument_params[:statement_id]
+    @argument.motion_id = argument_params[:motion_id]
     @argument.pro = argument_params[:pro]
 
     respond_to do |format|
       if @argument.save
-        format.html { redirect_to (argument_params[:statement_id].blank? ? @argument : Statement.find_by_id(argument_params[:statement_id])), notice: 'Argument was successfully created.' }
+        format.html { redirect_to (argument_params[:motion_id].blank? ? @argument : Motion.find_by_id(argument_params[:motion_id])), notice: 'Argument was successfully created.' }
         format.json { render json: @argument, status: :created, location: @argument }
       else
-        format.html { render action: "form", pro: argument_params[:pro], statement_id: argument_params[:statement_id] }
+        format.html { render action: "form", pro: argument_params[:pro], motion_id: argument_params[:motion_id] }
         format.json { render json: @argument.errors, status: :unprocessable_entity }
       end
     end
@@ -95,14 +97,14 @@ class ArgumentsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to statement_path(@argument.statement_id) }
+      format.html { redirect_to motion_path(@argument.motion_id) }
       format.json { head :no_content }
     end
   end
 
 private
   def argument_params
-    params.require(:argument).permit :title, :content, :pro, :statement_id
+    params.require(:argument).permit :title, :content, :pro, :motion_id
   end
 
 end

@@ -2,7 +2,7 @@ class SearchController < ApplicationController
 
 	def show
 		begin
-	    @search = Statement.search do
+	    @search = Motion.search do
 	    	fulltext params['q']
 	    	paginate page: params[:page]
 	    end

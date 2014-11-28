@@ -9,16 +9,17 @@ if(!window.Argu) {
 (function() {
     var fade = function (duration, _alert) {
         window.setTimeout(function(a) {
-            a.slideUp(function () {
+            a.addClass('alert-hidden');
+            window.setTimeout(function(a) {
                 a.remove();
-            });
+            }, 2000, a);
         }, duration, _alert);
     };
 
     Argu.Alert = function (message, messageType, instantShow, beforeSelector) {
         var alert = this,
            _alert = undefined,
-        _duration = 3000;
+        _duration = 4000;
         message        = typeof message        !== 'undefined' ? message : '';
         messageType    = typeof messageType    !== 'undefined' ? messageType : 'success';
         instantShow    = typeof instantShow    !== 'undefined' ? instantShow : false;

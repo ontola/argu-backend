@@ -1,0 +1,12 @@
+= semantic_form_for resource do |f|
+  - resource.errors.full_messages.each do |message|
+    = message
+  = f.inputs do
+    = f.input :name
+    = f.input :bio
+    = f.input :tag_list, placeholder: t("motions.form.themes"), as: :tags
+    /ActsAsTaggableOn::Tag::ActiveRecord_Associations_CollectionProxy
+    -if policy(resource).web_url?
+      = f.input :web_url
+  = f.actions do
+    = f.action :submit, :as => :button

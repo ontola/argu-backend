@@ -5,9 +5,11 @@ nl:
     type: "vraagstuk"
     new_question_path: "Nieuw vraagstuk"
     new_question: "Nieuw vraagstuk"
+    new_btn: "Vraagstuk toevoegen"
+    header: "vraagstukken"
     form:
-      title: "Kern van vraagstuk"
-      content: "Licht hier je vraagstuk toe. Waarom zitten jullie met dit probleem / deze vraag?"
+      title: "Wat is jouw vraag?"
+      content: "Waarom zit je met deze vraag? Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
       helper:

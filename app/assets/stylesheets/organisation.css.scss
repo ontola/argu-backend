@@ -1,18 +1,6 @@
 @import "variables";
 @import "mixins";
 
-.formtastic .radio {
-  .label {
-    width: auto;
-  }
-  fieldset .label label {
-    position: relative;
-    display:block;
-    float:left;
-    padding-top:.2em;
-  }
-}
-
 .profile-photo {
   width: 3em;
   height: 3em;

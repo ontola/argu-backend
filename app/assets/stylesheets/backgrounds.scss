@@ -1,0 +1,17 @@
+@import "variables";
+@import "mixins";
+
+.background {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  background: asset-url('bg-bergen.jpg') top;
+  height:100%;
+  width:100%;
+  position:fixed;
+  -moz-background-size: cover; /* Firefox 3.6 */
+  background-size: cover; /* Chrome, Firefox 4.0+, Safari 4.1+, Opera 10+ and IE9 */
+}

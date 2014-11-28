@@ -1,0 +1,64 @@
+@import "variables";
+@import "mixins";
+
+$maxCommentDepth: 10;
+
+
+.pro-bg {
+	background-color: $gre;
+}
+
+.con-bg {
+	background-color: $red;
+}
+
+.sta-bg {
+	background-color: $blu;
+}
+
+.neu-bg{
+	background-color: $g3;
+}
+
+.que-bg{
+	background-color: $bro;
+}
+
+.pro-t{
+	color: $gre;
+}
+
+.con-t{
+	color: $red;
+}
+
+.sta-t{
+	color: $blu;
+}
+
+.neu-t{
+	color: $g3;
+}
+
+.que-t{
+	color: $bro;
+}
+
+.argu-logo {
+	width: 5em;
+	height: 3em;
+}
+
+.options-bar {
+	position: absolute;
+	background-color: white;
+	z-index: 10;
+}
+
+.question {
+	color: $bro;
+}
+
+.motion {
+	color: $blu;
+}

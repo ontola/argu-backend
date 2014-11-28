@@ -62,15 +62,15 @@ class RestrictivePolicy
       scope
     end
 
-    def current_scope
-      user._current_scope if user.present?
-    end
+    #def current_scope
+    #  current_scope if user.present?
+    #end
   end
 
 private
-  def current_scope
-    user._current_scope if user.present?
-  end
+  #def current_scope
+  #  user._current_scope if user.present?
+  #end
 
 end
 

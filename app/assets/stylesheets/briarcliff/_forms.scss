@@ -1,0 +1,133 @@
+@import "variables";
+@import "mixins";
+
+input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
+  background-color: $darken1;
+  border: none;
+  padding: .5em;
+  font-size: 1em;
+  font-family: $font-sans;
+  display: inline-block;
+  width: 70%;
+  margin-bottom: 1.5em;
+  color: $g4;
+  &:focus {
+    background-color: $darken0;
+    border: none;
+    outline: none;
+  }
+  &.h1 {
+    font-family: $font-special;
+    font-size: 2.5em;
+    font-weight: 800;
+    width: 100%;
+    padding: .2em;
+  }
+  + input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
+    margin-top: 0em !important;
+  }
+  @include bp-medium {
+    width: 100%;
+    margin-bottom: 0.4em;
+  }
+}
+
+textarea {
+  resize: vertical;
+}
+
+label {
+  padding: 0.6em 0em;
+  display: inline-block;
+  text-transform: uppercase;
+  color: $g3;
+  font-size: 0.9em;
+  width: 30%;
+  letter-spacing: 0.1em;
+  vertical-align: top;
+  line-height: 1.5em;
+  @include bp-medium {
+    width: 100%;
+  }
+}
+
+.form-item {
+  padding-bottom: 1em;
+  width: 70%;
+  display: inline-block;
+  @include bp-medium {
+    width: 100%;
+  }
+}
+
+.form-input-content {
+  width: 100%;
+  margin-bottom: 1em;
+  background-color: $darken1;
+  border: none;
+  padding: .5em;
+  font-size: 1em;
+  font-family: $font-sans;
+  resize: vertical;
+  display: inline-block;
+}
+
+input[type="text"].form-input-title {
+  font-family: $font-special;
+  font-size: 2.5em;
+  font-weight: 800;
+  padding: .2em;
+  margin-bottom: 0.5em;
+  width: 100%;
+}
+
+.form-padded {
+  padding-bottom: 2em;
+}
+
+.form-small {
+  max-width: 15em;
+  padding-bottom: 1em;
+  padding-top: 1em;
+  margin: auto;
+}
+
+.form-small .btn {
+  display: block;
+  margin: auto;
+}
+
+.form-small input, .form-small button {
+  width: 100%;
+}
+
+.form-small label {
+  padding: 0;
+  width: 100%;
+}
+
+.formtastic button {
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  padding: .5em .8em .4em .8em;
+  background-color: $gre;
+  border: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  cursor: hand;
+  width: auto;
+  display: block;
+  border-bottom: solid 3px $darken1;
+  margin: 0 auto;
+  margin-bottom: 1em;
+  &:hover {
+    border-color: $darken3;
+  }
+  &:active {
+    border-color: $darken4;
+    border-bottom: none;
+    margin-top: 3px;
+  }
+}

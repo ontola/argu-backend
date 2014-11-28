@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
-  has_one :profile, dependent: :destroy
+  belongs_to :profile, dependent: :destroy
 
   accepts_nested_attributes_for :profile
 
@@ -12,14 +12,13 @@ class User < ActiveRecord::Base
          #:validatable, :omniauthable
 
   before_create :check_for_profile
-  before_create :mark_as_user
   after_destroy :cleanup
   before_save { |user| user.email = email.downcase unless email.blank? }
   before_save :normalize_blank_values
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
-  attr_accessor :login, :current_password, :email, :_current_scope
+  attr_accessor :login, :current_password, :email
 
   USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][a-zA-Z0-9]*\z/i
 
@@ -27,12 +26,17 @@ class User < ActiveRecord::Base
            length: { in: 4..20 },
            format: { with: USERNAME_FORMAT_REGEX },
            uniqueness: { case_sensetive: false }
-  validates :email, allow_blank: true,
+  validates :email, allow_blank: false,
         format: { with: RFC822::EMAIL }
+  validates :profile_id, presence: true
 
 #######Attributes########
   def display_name
     self.profile.name.presence || self.username
+  end
+
+  def web_url
+    username
   end
 
 #######Utility########
@@ -66,10 +70,6 @@ private
 
   def cleanup
     self.authentications.destroy_all
-  end
-
-  def mark_as_user
-    self.add_role :user
   end
 
   def normalize_blank_values

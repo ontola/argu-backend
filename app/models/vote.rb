@@ -6,6 +6,7 @@ class Vote < ActiveRecord::Base
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
 
+  validates :voteable_id, :voteable_type, :voter_id, :voter_type, :for, presence: true
 
   ##########methods###########
   def for? item

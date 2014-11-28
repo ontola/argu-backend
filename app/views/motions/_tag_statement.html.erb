@@ -1,0 +1,2 @@
+<% provide :title, (motion.title.nil? ? t(:motion_title) : motion.title) %>
+<%= render partial: 'motions/motionbody', locals: {motion: motion} %>

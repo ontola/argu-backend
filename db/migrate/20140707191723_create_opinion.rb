@@ -6,7 +6,7 @@ class CreateOpinion < ActiveRecord::Migration
       t.boolean :is_trashed
       t.integer :votes_count
       t.boolean :pro
-      t.references :statement
+      t.references :motion
     end
   end
 

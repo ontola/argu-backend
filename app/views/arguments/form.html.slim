@@ -1,24 +1,14 @@
-==cell(:context, @argument).call(:to_parent)
-.box
-  = form_for(@argument) do |f|
-    section
-      -if @argument.errors.any?
-        #error_explanation
-          h2= pluralize(@argument.errors.count, "error") + t("error_prohibited")
-          ul
-            -@argument.errors.full_messages.each do |msg|
-              li= msg
-
-      = f.text_field "title", class: (%w(pro true).index(params[:pro] || @argument.pro.to_s) ? "pro" : "con") + "-t h1", placeholder: t("arguments.form.title")
-      /p.helpertext= t("arguments.form.helper.title")
-
-      = f.text_area "content", placeholder: t("arguments.form.content"), rows: "10"
-      /p.helpertext= raw t("arguments.form.helper.content")
-      .row
-        .span8
-          fieldset.control-group
-          = f.hidden_field(:statement_id)
-          = f.hidden_field(:pro)
-    = render partial: 'profiles/profile_current'
-    fieldset.form-actions
-      = f.submit t("arguments.form.submit"), class: "btn btn-sticky btn-sticky-bottom"
+.col-3
+  .col-3-2
+    =to_parent
+    =render partial: 'arguments/form'
+  /TODO make translations, make content dependent on focus field
+  .col-3-1
+    .box
+      section
+        h2 Wat is een argument?
+        p Een argument is een enkele reden voor of tegen een voorstel.
+        h2 Tips:
+        ul.bullets
+          li Begin met het belangrijkste. De details komen daarna.
+          li Het argument moet niet al eerder geplaatst zijn bij dit voorstel.

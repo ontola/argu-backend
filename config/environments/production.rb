@@ -1,13 +1,15 @@
 Argu::Application.configure do
-  config.host = ENV['HOSTNAME'] || 'argu.nl'
+  config.host = ENV['HOSTNAME'] || 'argu.co'
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
-  config.epics.opinion_buttons = false
-  config.epics.opinion = true
-  config.epics.parties = false
+  config.epics.opinion = true                         # Opinion enabled?
+  config.epics.parties = false                        # Parties enabled?
+  config.epics.advanced_navigation = false            # Navigation by tags and such
+  config.epics.search = false                         # Search enabled?
+  config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
+  config.epics.forum_selector = false                 # Show forum selector in nav bar?
 
-  
   # Code is not reloaded between requests
   config.cache_classes = true
 
@@ -48,7 +50,7 @@ Argu::Application.configure do
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
-  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'argu.nl')
+  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'argu.co')
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store

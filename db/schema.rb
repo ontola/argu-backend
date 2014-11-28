@@ -11,228 +11,206 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141029171256) do
+ActiveRecord::Schema.define(version: 20141127160457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "arguments", force: true do |t|
-    t.text     "content",                             null: false
-    t.integer  "statement_id",                        null: false
-    t.boolean  "pro",                 default: true,  null: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "title"
-    t.boolean  "is_trashed",          default: false
-    t.integer  "votes_pro_count",     default: 0,     null: false
-    t.integer  "comments_count",      default: 0,     null: false
-    t.integer  "votes_abstain_count", default: 0,     null: false
+    t.text     "content",                                         null: false
+    t.integer  "motion_id",                                       null: false
+    t.boolean  "pro",                             default: true
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "title",               limit: 255
+    t.boolean  "is_trashed",                      default: false
+    t.integer  "votes_pro_count",                 default: 0,     null: false
+    t.integer  "comments_count",                  default: 0,     null: false
+    t.integer  "votes_abstain_count",             default: 0,     null: false
     t.integer  "creator_id"
+    t.integer  "votes_con_count",                 default: 0,     null: false
   end
 
   add_index "arguments", ["id"], name: "index_arguments_on_id", using: :btree
-  add_index "arguments", ["statement_id", "id", "pro"], name: "index_arguments_on_statement_id_and_id_and_pro", using: :btree
-  add_index "arguments", ["statement_id", "id"], name: "index_arguments_on_statement_id_and_id", using: :btree
-  add_index "arguments", ["statement_id", "is_trashed"], name: "index_arguments_on_statement_id_and_is_trashed", using: :btree
-  add_index "arguments", ["statement_id"], name: "statement_id", using: :btree
+  add_index "arguments", ["motion_id", "id", "pro"], name: "index_arguments_on_motion_id_and_id_and_pro", using: :btree
+  add_index "arguments", ["motion_id", "id"], name: "index_arguments_on_motion_id_and_id", using: :btree
+  add_index "arguments", ["motion_id", "is_trashed"], name: "index_arguments_on_motion_id_and_is_trashed", using: :btree
+  add_index "arguments", ["motion_id"], name: "statement_id", using: :btree
 
   create_table "authentications", force: true do |t|
-    t.integer  "user_id",    null: false
-    t.string   "provider",   null: false
-    t.string   "uid",        null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "user_id",                null: false
+    t.string   "provider",   limit: 255, null: false
+    t.string   "uid",        limit: 255, null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "authentications", ["user_id", "uid"], name: "user_id_and_uid", unique: true, using: :btree
   add_index "authentications", ["user_id"], name: "user_id", using: :btree
 
   create_table "comments", force: true do |t|
-    t.integer  "commentable_id",   default: 0
-    t.string   "commentable_type", default: ""
-    t.string   "title",            default: ""
-    t.text     "body",             default: ""
-    t.string   "subject",          default: ""
-    t.integer  "profile_id",       default: 0,     null: false
+    t.integer  "commentable_id",               default: 0
+    t.string   "commentable_type", limit: 255, default: ""
+    t.string   "title",            limit: 255, default: ""
+    t.text     "body",                         default: ""
+    t.string   "subject",          limit: 255, default: ""
+    t.integer  "profile_id",                   default: 0,     null: false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
-    t.boolean  "is_trashed",       default: false
+    t.datetime "created_at",                                   null: false
+    t.datetime "updated_at",                                   null: false
+    t.boolean  "is_trashed",                   default: false
   end
 
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["profile_id"], name: "index_comments_on_profile_id", using: :btree
 
-  create_table "delayed_jobs", force: true do |t|
-    t.integer  "priority",   default: 0, null: false
-    t.integer  "attempts",   default: 0, null: false
-    t.text     "handler",                null: false
-    t.text     "last_error"
-    t.datetime "run_at"
-    t.datetime "locked_at"
-    t.datetime "failed_at"
-    t.string   "locked_by"
-    t.string   "queue"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "forums", force: true do |t|
+    t.string   "name"
+    t.integer  "page_id"
+    t.integer  "questions_count",   default: 0,  null: false
+    t.integer  "motions_count",     default: 0,  null: false
+    t.integer  "memberships_count", default: 0,  null: false
+    t.string   "profile_photo"
+    t.string   "cover_photo"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "slug"
+    t.string   "web_url",           default: "", null: false
+    t.text     "bio",               default: "", null: false
+    t.text     "tags",              default: "", null: false
   end
 
-  add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+  add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
+  add_index "forums", ["web_url"], name: "index_forums_on_web_url", unique: true, using: :btree
 
-  create_table "group_memberships", force: true do |t|
-    t.integer "profile_id"
-    t.integer "group_id"
+  create_table "memberships", force: true do |t|
+    t.integer "profile_id",             null: false
+    t.integer "forum_id",               null: false
     t.integer "role",       default: 0, null: false
   end
 
-  create_table "groups", force: true do |t|
-    t.string   "name"
-    t.string   "website"
-    t.text     "description"
-    t.string   "slogan"
-    t.string   "key_tags"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "web_url"
-    t.integer  "memberships_count", null: false
-    t.integer  "statements_count",  null: false
-    t.integer  "scope",             null: false
-    t.integer  "application_form",  null: false
-    t.integer  "public_form",       null: false
-    t.string   "profile_photo"
-    t.string   "cover_photo"
-  end
-
-  add_index "groups", ["name"], name: "groups_name_idx", using: :btree
-  add_index "groups", ["web_url"], name: "groups_web_url_idx", using: :btree
-
-  create_table "memberships", force: true do |t|
-    t.integer "profile_id"
-    t.integer "organisation_id"
-    t.integer "role",            default: 0, null: false
-  end
-
-  add_index "memberships", ["profile_id", "organisation_id"], name: "index_memberships_on_profile_id_and_organisation_id", unique: true, using: :btree
-
-  create_table "motionarguments", force: true do |t|
-    t.integer "argument_id",                null: false
-    t.integer "motion_id",                  null: false
-    t.boolean "pro",         default: true, null: false
-    t.integer "votes_count", default: 0
-  end
-
-  add_index "motionarguments", ["argument_id", "motion_id"], name: "arg_state_index", using: :btree
+  add_index "memberships", ["profile_id", "forum_id"], name: "index_memberships_on_profile_id_and_forum_id", unique: true, using: :btree
 
   create_table "motions", force: true do |t|
-    t.string   "title",                   null: false
-    t.text     "content",                 null: false
-    t.integer  "statetype",  default: 6
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.integer  "pro_count",  default: 0
-    t.integer  "con_count",  default: 0
-    t.integer  "moderators", default: [],              array: true
+    t.string   "title",               limit: 255,                 null: false
+    t.text     "content",                                         null: false
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.integer  "pro_count",                       default: 0
+    t.integer  "con_count",                       default: 0
+    t.integer  "tag_id"
+    t.boolean  "is_trashed",                      default: false
+    t.integer  "votes_pro_count",                 default: 0,     null: false
+    t.integer  "votes_con_count",                 default: 0,     null: false
+    t.integer  "votes_neutral_count",             default: 0,     null: false
+    t.integer  "argument_pro_count",              default: 0,     null: false
+    t.integer  "argument_con_count",              default: 0,     null: false
+    t.integer  "opinion_pro_count",               default: 0,     null: false
+    t.integer  "opinion_con_count",               default: 0,     null: false
+    t.integer  "votes_abstain_count",             default: 0,     null: false
+    t.integer  "forum_id"
+    t.integer  "creator_id"
   end
 
+  add_index "motions", ["forum_id"], name: "index_motions_on_forum_id", using: :btree
+  add_index "motions", ["id"], name: "index_motions_on_id", using: :btree
+  add_index "motions", ["is_trashed"], name: "index_motions_on_is_trashed", using: :btree
+  add_index "motions", ["tag_id"], name: "index_motions_on_tag_id", using: :btree
+
   create_table "opinions", force: true do |t|
-    t.string   "title"
+    t.string   "title",               limit: 255
     t.text     "content"
-    t.boolean  "is_trashed",          default: false
-    t.boolean  "pro",                 default: false
-    t.integer  "statement_id"
+    t.boolean  "is_trashed",                      default: false
+    t.boolean  "pro",                             default: false
+    t.integer  "motion_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "votes_pro_count",     default: 0,     null: false
-    t.integer  "comments_count",      default: 0,     null: false
-    t.integer  "votes_abstain_count", default: 0,     null: false
+    t.integer  "votes_pro_count",                 default: 0,     null: false
+    t.integer  "comments_count",                  default: 0,     null: false
+    t.integer  "votes_abstain_count",             default: 0,     null: false
     t.integer  "creator_id"
   end
 
   add_index "opinions", ["id"], name: "index_opinions_on_id", using: :btree
-  add_index "opinions", ["statement_id", "id", "pro"], name: "index_opinions_on_statement_id_and_id_and_pro", using: :btree
-  add_index "opinions", ["statement_id", "id"], name: "index_opinions_on_statement_id_and_id", using: :btree
-  add_index "opinions", ["statement_id", "is_trashed"], name: "index_opinions_on_statement_id_and_is_trashed", using: :btree
+  add_index "opinions", ["motion_id", "id", "pro"], name: "index_opinions_on_motion_id_and_id_and_pro", using: :btree
+  add_index "opinions", ["motion_id", "id"], name: "index_opinions_on_motion_id_and_id", using: :btree
+  add_index "opinions", ["motion_id", "is_trashed"], name: "index_opinions_on_motion_id_and_is_trashed", using: :btree
 
-  create_table "organisations", force: true do |t|
+  create_table "pages", force: true do |t|
     t.string   "name"
-    t.string   "website"
-    t.text     "description"
-    t.string   "slogan"
-    t.string   "key_tags"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "web_url"
-    t.integer  "memberships_count", default: 0, null: false
-    t.integer  "statements_count",  default: 0, null: false
-    t.integer  "scope",             default: 0, null: false
-    t.integer  "application_form",  default: 0, null: false
-    t.integer  "public_form",       default: 0, null: false
-    t.string   "profile_photo"
-    t.string   "cover_photo"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.string   "slug"
+    t.string   "web_url",    default: "", null: false
+    t.integer  "profile_id"
   end
 
-  add_index "organisations", ["id"], name: "index_organisations_on_id", using: :btree
-  add_index "organisations", ["name"], name: "index_organisations_on_name", using: :btree
-  add_index "organisations", ["web_url"], name: "index_organisations_on_web_url", using: :btree
+  add_index "pages", ["profile_id"], name: "index_pages_on_profile_id", unique: true, using: :btree
+  add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true, using: :btree
+  add_index "pages", ["web_url"], name: "index_pages_on_web_url", unique: true, using: :btree
 
   create_table "profiles", force: true do |t|
-    t.integer  "user_id"
-    t.string   "name",          default: ""
-    t.text     "about",         default: ""
-    t.string   "picture",       default: ""
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.string   "profile_photo"
-    t.string   "cover_photo"
+    t.string   "name",          limit: 255, default: ""
+    t.text     "about",                     default: ""
+    t.string   "picture",       limit: 255, default: ""
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "profile_photo", limit: 255
+    t.string   "cover_photo",   limit: 255
+    t.string   "slug"
   end
 
-  add_index "profiles", ["user_id"], name: "profiles_by_user_id", unique: true, using: :btree
+  add_index "profiles", ["slug"], name: "index_profiles_on_slug", unique: true, using: :btree
 
-  create_table "profiles_roles", id: false, force: true do |t|
-    t.integer "profile_id"
-    t.integer "role_id"
+  create_table "profiles_roles", force: true do |t|
+    t.integer  "profile_id"
+    t.integer  "role_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "profiles_roles", ["profile_id", "role_id"], name: "index_profiles_roles_on_profile_id_and_role_id", using: :btree
 
   create_table "question_answers", force: true do |t|
     t.integer  "question_id"
-    t.integer  "statement_id"
+    t.integer  "motion_id"
     t.integer  "votes_pro_count", default: 0
     t.integer  "votes_con_count", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "question_answers", ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
+
   create_table "questions", force: true do |t|
-    t.string   "title",           default: ""
-    t.text     "content",         default: ""
-    t.integer  "organisation_id"
+    t.string   "title",           limit: 255, default: ""
+    t.text     "content",                     default: ""
+    t.integer  "forum_id"
     t.integer  "creator_id"
-    t.boolean  "is_trashed",      default: false
-    t.integer  "motions_count",   default: 0
-    t.integer  "votes_pro_count", default: 0
-    t.integer  "votes_con_count", default: 0
+    t.boolean  "is_trashed",                  default: false
+    t.integer  "motions_count",               default: 0
+    t.integer  "votes_pro_count",             default: 0
+    t.integer  "votes_con_count",             default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "roles", force: true do |t|
-    t.string   "name"
+    t.string   "name",          limit: 255
     t.integer  "resource_id"
-    t.string   "resource_type"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.string   "resource_type", limit: 255
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "sessions", force: true do |t|
-    t.string   "session_id", null: false
+    t.string   "session_id", limit: 255, null: false
     t.text     "data"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -241,38 +219,12 @@ ActiveRecord::Schema.define(version: 20141029171256) do
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
-  create_table "statements", force: true do |t|
-    t.string   "title",                               null: false
-    t.text     "content",                             null: false
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.integer  "pro_count",           default: 0
-    t.integer  "con_count",           default: 0
-    t.integer  "tag_id"
-    t.boolean  "is_trashed",          default: false
-    t.integer  "votes_pro_count",     default: 0,     null: false
-    t.integer  "votes_con_count",     default: 0,     null: false
-    t.integer  "votes_neutral_count", default: 0,     null: false
-    t.integer  "argument_pro_count",  default: 0,     null: false
-    t.integer  "argument_con_count",  default: 0,     null: false
-    t.integer  "opinion_pro_count",   default: 0,     null: false
-    t.integer  "opinion_con_count",   default: 0,     null: false
-    t.integer  "votes_abstain_count", default: 0,     null: false
-    t.integer  "organisation_id"
-    t.integer  "creator_id"
-  end
-
-  add_index "statements", ["id"], name: "index_statements_on_id", using: :btree
-  add_index "statements", ["is_trashed"], name: "index_statements_on_is_trashed", using: :btree
-  add_index "statements", ["organisation_id"], name: "index_statements_on_organisation_id", using: :btree
-  add_index "statements", ["tag_id"], name: "index_statements_on_tag_id", using: :btree
-
   create_table "taggings", force: true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
-    t.string   "taggable_type"
+    t.string   "taggable_type", limit: 255
     t.integer  "tagger_id"
-    t.string   "tagger_type"
+    t.string   "tagger_type",   limit: 255
     t.string   "context",       limit: 128
     t.datetime "created_at"
   end
@@ -281,39 +233,41 @@ ActiveRecord::Schema.define(version: 20141029171256) do
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
   create_table "tags", force: true do |t|
-    t.string  "name"
-    t.integer "taggings_count", default: 0
+    t.string  "name",           limit: 255
+    t.integer "taggings_count",             default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "email",                  default: ""
-    t.string   "encrypted_password",     default: ""
-    t.string   "reset_password_token"
+    t.string   "email",                  limit: 255, default: ""
+    t.string   "encrypted_password",     limit: 255, default: ""
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0
+    t.integer  "sign_in_count",                      default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "username"
-    t.string   "unconfirmed_email"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
+    t.datetime "created_at",                                      null: false
+    t.datetime "updated_at",                                      null: false
+    t.string   "username",               limit: 255
+    t.string   "unconfirmed_email",      limit: 255
+    t.integer  "profile_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["profile_id"], name: "index_users_on_profile_id", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "votes", force: true do |t|
     t.integer  "voteable_id"
-    t.string   "voteable_type"
+    t.string   "voteable_type", limit: 255
     t.integer  "voter_id"
-    t.string   "voter_type"
-    t.integer  "for",           default: 3, null: false
+    t.string   "voter_type",    limit: 255
+    t.integer  "for",                       default: 3, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

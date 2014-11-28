@@ -32,6 +32,10 @@ module Argu
       g.integration_tool :rspec, :fixture => true, :views => true
     end
 
+    config.to_prepare do
+      Devise::SessionsController.layout 'closed'
+    end
+
     config.middleware.use Rack::Cors do
       allow do
         origins '*'

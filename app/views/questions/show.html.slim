@@ -1,17 +1,10 @@
 -provide :title, @question.title
 .col-1
-  ==cell(:context, @question).call(:to_parent)
+  = to_parent
   .box
     section
       h1.que-t= @question.title
       p= @question.supped_content.html_safe
+    = render partial: 'tags/tags', locals: {resource: @question}
     =render @question.creator.profile, locals= {resource: @question}
-  /render partial: 'opinionbtns'
-.col-1
-  header
-    h1 voorstellen
-  -if @motions.present?
-    -@motions.each do |m|
-      ==cell(:statement, m)
-  .center
-    =link_to t("statements.newstatement"), new_question_statement_path(@question), class: "btn btn-white"
+==render_columns({'' => {collection: @motions}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))

@@ -7,7 +7,14 @@ nl:
   owner: "Thom van Kalkeren & Joep Meindertsma"
   system_not_allowed: "je hebt geen toestemming voor deze actie."
   sign_in: "inloggen"
-  sign_up: "aanmelden"
+  sign_in_facebook: "Log in met facebook"
+  sign_in_twitter: "Log in met twitter"
+  sign_in_existing: "Bestaand argu account:"
+  forgot_password: "Wachtwoord vergeten?"
+
+  sign_up: "account aanmaken"
+  sign_up_argu: "Argu account aanmaken"
+  sign_out: "uitloggen"
   learn_more: "meer info"
   not_found_type: "%{type} niet gevonden"
   edit: "bewerken"
@@ -25,7 +32,7 @@ nl:
   previous: "vorige"
   older: "ouder"
   newer: "niewer"
-  destroy: "verwijderen"
+  destroy: "vernietigen"
   trash: "Wissen"
   empty_type: "er zijn geen %{type}"
   history: "geschiendenis"
@@ -43,7 +50,8 @@ nl:
   status:
     400: "Fout in de aanvraag"
   header:
-    statements: "stellingen"
+    motions: "voorstellen"
+    questions: "vraagstukken"
 #Controllers
 #Footer
   footer_item_about: "over"
@@ -58,6 +66,7 @@ nl:
   about_title: "Over"
 #Users
   users_username: "gebruikersnaam"
+  users_username_or_email: "gebruikersnaam of email"
   users_name: "volledige naam"
   users_name_placeholder: "Vul hier jouw volledige naam in."
   users_email: "e-mail"
@@ -82,6 +91,11 @@ nl:
   users_new_create: "account aanmaken"
   #show
   users_show_title: "instellingen"
+  #cancel
+  users_cancel_title: "Argu account verwijderen"
+  users_cancel_info: "Als je jouw account verwijdert, verlies je permanent toegang tot alles wat je geplaatst, gevolgd en gestemd hebt. Weet je zeker dat je jouw account wilt verwijderen?"
+  users_cancel_confirm: "Ja, verwijder mijn account."
+
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
 

@@ -1,0 +1,114 @@
+@import "variables";
+@import "mixins";
+
+h1, h2, h3 {
+  font-family: $font-special;
+  margin-bottom: 0.4em;
+  color: $g4;
+  font-weight: 600;
+  span {
+    font-family: $font-special;
+  }
+}
+
+h1 {
+  font-size: 2.3em;
+  @include bp-large {
+    font-size: 2em;
+  }
+  @include bp-medium {
+    font-size: 1.8em;
+  }
+}
+
+h2 {
+  font-size: 1.7em;
+  @include bp-large {
+    font-size: 1.5em;
+  }
+  @include bp-medium {
+    font-size: 1.5em;
+  }
+}
+
+h3 {
+  font-size: 1.5em;
+  @include bp-large {
+    font-size: 1.3em;
+  }
+  @include bp-medium {
+    font-size: 1.2em;
+  }
+}
+
+br {
+  height: .5em;
+  display: block;
+}
+
+p, div, small, ol, ul, li, small, span {
+  font-family: $font-sans;
+}
+
+a {
+  text-decoration: none;
+  color: $blu;
+}
+
+b {
+  font-weight: bold;
+}
+
+p {
+  line-height: 1.4em;
+  color: $g4;
+}
+
+ol.numbered{
+  list-style-type: decimal;
+  font-style: $font-sans;
+  color: $g4;
+  padding-left: 1.5em;
+  li {
+    margin-bottom: 1em;
+    line-height: 1.4em;
+  }
+}
+
+ul.bullets{
+  list-style-type: disc;
+  font-style: $font-sans;
+  color: $g4;
+  padding-left: 1.5em;
+  li {
+    margin-bottom: 1em;
+    line-height: 1.4em;
+  }
+}
+
+.info {
+  text-transform: uppercase;
+  font-size: .7em;
+  color: $g2;
+  display: inline-block;
+  margin-bottom: 1em;
+}
+
+header {
+  clear: both;
+  text-align: center;
+}
+
+header h1 {
+  color: white;
+  margin-top: 1em;
+  margin-bottom: 0.8em;
+  @include text-shadow;
+}
+
+header h2 {
+  color: white;
+  margin-top: 1em;
+  margin-bottom: .66em;
+  @include text-shadow;
+}	

@@ -1,8 +1,10 @@
 class Membership < ActiveRecord::Base
   belongs_to :profile
-  belongs_to :organisation, inverse_of: :memberships
+  belongs_to :forum, inverse_of: :memberships
 
-  counter_culture :organisation
+  validates :profile_id, :forum_id, presence: true
 
-  enum role: {member: 0, moderator: 1, manager: 2}
+  counter_culture :forum
+
+  enum role: {member: 0, manager: 2} #moderator: 1,
 end

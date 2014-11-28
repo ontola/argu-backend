@@ -1,0 +1,32 @@
+@import "variables";
+@import "mixins";
+
+.alert {
+  position: fixed;
+  width: 100%;
+  font-size: 1.2em;
+  left: 0;
+  bottom: 3em;
+  right: 0;
+  padding: 1em;
+  background-color: $darken4;
+  color: white;
+  display: block;
+  z-index: 9;
+  text-align: center;
+  font-family: $font-sans;
+  @include animation(fade-in 1s both);
+  pointer-events: none;
+}
+
+.alert-hidden {
+  @include animation(fade-out 1s both);
+}
+
+.alert-notice {
+
+}
+
+.alert-alert {
+
+}

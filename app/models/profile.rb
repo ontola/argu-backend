@@ -1,9 +1,8 @@
 class Profile < ActiveRecord::Base
   rolify after_remove: :role_removed, before_add: :role_added
-  belongs_to :user
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy
-  has_many :organisations, through: :memberships
+  has_many :forums, through: :memberships
   has_many :group_memberships, dependent: :destroy
   has_many :groups, through: :group_memberships
 
@@ -12,9 +11,15 @@ class Profile < ActiveRecord::Base
 
   pica_pica :profile_photo
 
+  validates :name, :about, presence: true, length: {minimum: 3}
+
   ######Attributes#######
   def display_name
-    self.name.presence || self.user.username
+    self.name.presence
+  end
+
+  def web_url
+    User.where(profile_id: id).first.username || id
   end
 
   #######Methods########
@@ -25,15 +30,19 @@ class Profile < ActiveRecord::Base
   end
 
   def frozen?
-    !has_role? 'user'
+    has_role? 'frozen'
   end
 
   def freeze
-    remove_role :user
+    add_role :frozen
   end
 
   def unfreeze
-    add_role :user
+    remove_role :frozen
+  end
+
+  def username
+    User.where(profile_id: self.id).first.username || Pages.where(profile_id: self.id).first.web_url
   end
 
 

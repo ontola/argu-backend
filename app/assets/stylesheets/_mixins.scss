@@ -5,14 +5,14 @@
   &::-webkit-input-placeholder  { color: $color; opacity: $opacity} // Safari and Chrome
 }
 
-@mixin transition($opts) {
-  transition: $opts;
-  -moz-transition: $opts;
-  -webkit-transition: $opts;
-  -o-transition: $opts;
+@mixin transform($opts) {
+  transform: $opts;
+  -moz-transform: $opts;
+  -webkit-transform: $opts;
+  -o-transform: $opts;
 }
 
-@mixin text_settings($align: justify, $color: $g4, $family: $opensans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
+@mixin text_settings($align: justify, $color: $g4, $family: $font-sans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
   text-align: $align;
   color: $color;
   font-family: $family;
@@ -22,7 +22,104 @@
   line-height: $line-height;
 }
 
-@mixin header_settings($align: center, $color: $g4, $family: $raleway, $size: 1.6em, $weight: 200, $padding: 0) {
+@mixin header_settings($align: center, $color: $g4, $family: $font-special, $size: 1.6em, $weight: 200, $padding: 0) {
   @include text_settings($align: $align, $color: $color, $family: $family, $size: $size, $padding: $padding);
   font-weight: $weight;
+}
+
+@mixin box-shadow {
+  //box-shadow: 0em 0.1em 0.2em 0em rgba(0, 0, 0, 0.17);
+}
+
+@mixin text-shadow {
+  //text-shadow: 0em 0em 0.1em rgba(0, 0, 0, 0.47);
+}
+
+@mixin border-radius {
+  border-radius: 3px;
+}
+
+@mixin bp-large {
+  @media only screen and (max-width: 70em) {
+    @content;
+  }
+}
+
+@mixin bp-medium {
+  @media only screen and (max-width: 40em) {
+    @content;
+  }
+}
+
+@mixin bp-small {
+  @media only screen and (max-width: 30em) {
+    @content;
+  }
+}
+
+// ANIMATION basics//
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  transition: $args;
+}
+
+@mixin animation($animate...) {
+  $max: length($animate);
+  $animations: '';
+
+  @for $i from 1 through $max {
+    $animations: #{$animations + nth($animate, $i)};
+
+    @if $i < $max {
+      $animations: #{$animations + ", "};
+    }
+  }
+  -webkit-animation: $animations;
+  -moz-animation:    $animations;
+  -o-animation:      $animations;
+  animation:         $animations;
+}
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+
+//ANIMATIONS//
+@include keyframes(fade-out) {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@include keyframes(fade-in) {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@include keyframes(from-top) {
+  0% {
+    transform: translate(0,-2000px);
+  }
+  100% {
+    transform: translate(0,0);
+  }
+}
+
+@include keyframes(to-bottom) {
+  0% {
+    transform: translate(0,0);
+  }
+  100% {
+    transform: translate(0,2000px);
+  }
 }

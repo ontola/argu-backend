@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe StatementPolicy do
+describe MotionPolicy do
 
   let(:user) { User.new }
 
-  subject { StatementPolicy }
+  subject { MotionPolicy }
 
   permissions ".scope" do
     pending "add some examples to (or delete) #{__FILE__}"

@@ -14,7 +14,8 @@ class ProfilesController < ApplicationController
 
   #GET /1/edit
   def edit
-    @profile = User.find_by(username: params[:id]).profile
+    @user = User.find_by(username: params[:id])
+    @profile = @user.profile
     authorize @profile
 
     respond_to do |format|
@@ -24,12 +25,13 @@ class ProfilesController < ApplicationController
 
   #PUT /1
   def update
-    @profile = User.find_by(username: params[:id]).profile
+    @user = User.find_by(username: params[:id])
+    @profile = @user.profile
     authorize @profile
 
     respond_to do |format|
       if @profile.update_attributes permit_params
-        format.html { redirect_to profile_path(@profile.user.username), notice: "Profile was successfully updated." }
+        format.html { redirect_to profile_path(@user.username), notice: "Profile was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
