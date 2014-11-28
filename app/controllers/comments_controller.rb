@@ -15,7 +15,8 @@ class CommentsController < ApplicationController
     #end
 
     respond_to do |format|
-      if (parent.present? ? (@comment.move_possible?(parent) && @comment.move_to_child_of(parent)) : true) && @comment.save!
+      if @comment.save!
+        @comment.move_to_child_of(parent) if parent.present? # Apparently, move_possible? doesn't exists anymore
         format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: t('type_create_success', type: t('comments.type')) }
       else
         #@comment.destroy unless @comment.new_record? # TODO: this shit deletes all comments, so thats not really a great thing..
