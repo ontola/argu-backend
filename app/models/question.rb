@@ -15,7 +15,7 @@ class Question < ActiveRecord::Base
   validates :forum_id, :creator_id, presence: true
 
   def creator
-    super || User.first_or_create(username: 'Onbekend')
+    super || Profile.first_or_create(username: 'Onbekend')
   end
 
   def display_name
