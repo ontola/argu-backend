@@ -2,8 +2,7 @@ class Membership < ActiveRecord::Base
   belongs_to :profile
   belongs_to :forum, inverse_of: :memberships
 
-  validates :profile_id, presence: true
-  validates :forum_id, presence: true
+  validates :profile_id, :forum_id, presence: true
 
   counter_culture :forum
 

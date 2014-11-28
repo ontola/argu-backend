@@ -5,4 +5,7 @@ class Page < ActiveRecord::Base
   has_one :forum
 
   friendly_id :web_url, use: [:slugged, :finders]
+
+  validates :name, :web_url, presence: true, minimum: 3
+  validates :profile_id, presence: true
 end

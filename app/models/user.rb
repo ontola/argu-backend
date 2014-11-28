@@ -26,8 +26,9 @@ class User < ActiveRecord::Base
            length: { in: 4..20 },
            format: { with: USERNAME_FORMAT_REGEX },
            uniqueness: { case_sensetive: false }
-  validates :email, allow_blank: true,
+  validates :email, allow_blank: false,
         format: { with: RFC822::EMAIL }
+  validates :profile_id, presence: true
 
 #######Attributes########
   def display_name

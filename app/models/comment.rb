@@ -1,11 +1,11 @@
 class Comment < ActiveRecord::Base
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 
-  validates_presence_of :body
-  validates_presence_of :profile
-
   after_validation :increase_counter_cache
   after_destroy :decrease_counter_cache
+
+  validates_presence_of :profile
+  validates :body, presence: true, minimum: 4
 
   belongs_to :commentable, :polymorphic => true
   belongs_to :profile
@@ -50,10 +50,10 @@ class Comment < ActiveRecord::Base
   end
 
   def decrease_counter_cache
-    self.commentable.deccrement("comments_count")
+    self.commentable.decrement("comments_count").save
   end
   def increase_counter_cache
-    self.commentable.increment("comments_count")
+    self.commentable.increment("comments_count").save
   end
 
   def is_trashed?
