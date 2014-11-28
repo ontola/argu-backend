@@ -57,7 +57,7 @@ class MotionsController < ApplicationController
     get_context
     @motion = @forum.motions.new permit_params
     @motion.creator = current_profile
-    @question.motions << @motion
+    @motion.questions << @question if @question.present?
     authorize @motion
 
     respond_to do |format|
@@ -116,7 +116,9 @@ private
   end
 
   def get_context
-    @question = Question.find(params[:question_id] || params[:motion][:question_id]) if params[:question_id].present? || params[:motion][:question_id].present?
+    if params[:question_id].present? || defined?(params[:motion][:question_id]) && params[:motion][:question_id].present?
+      @question = Question.find(params[:question_id] || params[:motion][:question_id])
+    end
     @forum = Forum.friendly.find(params[:forum_id]) if params[:forum_id].present?
   end
 end
