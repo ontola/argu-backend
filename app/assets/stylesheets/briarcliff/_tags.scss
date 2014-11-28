@@ -18,6 +18,7 @@ ul.tags {
   display: inline-block;
   background-color: white;
   margin: .3em;
+  @include border-radius;
 }
 a.tag:hover {
   background-color: $blul;

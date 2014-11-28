@@ -10,7 +10,6 @@
               li= msg
 
       = f.text_field "title", class: (%w(pro true).index(params[:pro] || @argument.pro.to_s) ? "pro" : "con") + "-t form-input-title", placeholder: t("arguments.form.title")
-      /p.helpertext= t("arguments.form.helper.title")
 
       = f.text_area "content", class: "form-input-content", placeholder: t("arguments.form.content"), rows: "10"
       /p.helpertext= raw t("arguments.form.helper.content")
@@ -21,4 +20,4 @@
           = f.hidden_field(:pro)
     = render partial: 'profiles/profile_current'
     fieldset.form-actions
-      = f.submit t("arguments.form.submit"), class: "btn btn-sticky btn-sticky-bottom"
+      = f.submit t("arguments.form.submit"), class: (%w(pro true).index(params[:pro] || @argument.pro.to_s) ? "pro" : "con") +  "-bg btn btn-sticky btn-sticky-bottom"

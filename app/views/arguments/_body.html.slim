@@ -4,10 +4,13 @@
     = content_tag :p, raw(@argument.supped_content)
     = print_references @argument
   =render @argument.creator, locals= {resource: @argument}
-  .btn.btn-subtle.btn-sticky.btn-sticky-bottom.dropdown-trigger
+  /.btn.btn-subtle.btn-sticky.btn-sticky-bottom.dropdown-trigger
     span.fa.fa-gear.icon-left
     span menu
-    ul.dropdown-content.dropdown-right.icon-left
-      li= link_to(t("destroy"), argument_path(@argument), method: :delete, destroy: true) if policy(@argument).destroy?
-      li= link_to(t("trash"), argument_path(@argument), method: :delete) if policy(@argument).trash?
-      li= link_to(t("edit"), edit_argument_path(@argument)) if policy(@argument).update?
+  ul.btns-list.btns-vertical.btn-sticky.btn-sticky-bottom
+    - if policy(@argument).destroy?
+      li= link_to t("destroy"), argument_path(@argument), method: :delete, destroy: true
+    - if policy(@argument).trash?
+      li= link_to(t("trash"), argument_path(@argument), method: :delete)
+    - if policy(@argument).update?
+      li= link_to(t("edit"), edit_argument_path(@argument))

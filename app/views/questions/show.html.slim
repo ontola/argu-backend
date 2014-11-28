@@ -23,5 +23,5 @@
               span.fa.fa-pencil.icon-left
               span=t('edit')
     = render partial: 'tags/tags', locals: {resource: @question}
-    =render @question.creator, locals= {resource: @question}
+    = render @question.creator, locals= {resource: @question}
 ==render_columns({'' => {collection: @motions}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))

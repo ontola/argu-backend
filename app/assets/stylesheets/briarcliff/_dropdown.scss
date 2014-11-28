@@ -16,6 +16,8 @@
   width: 14em;
   z-index: 10;
   @include box-shadow;
+  @include border-radius;
+  border-top-left-radius: 0;
   li {
     min-width: 100%;
   }
@@ -45,6 +47,8 @@
 }
 
 .dropdown-right {
+  @include border-radius;
+  border-top-right-radius: 0;
   right: 0;
   left: auto;
 }
