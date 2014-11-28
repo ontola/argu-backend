@@ -8,10 +8,7 @@
         h1= @forum.name
         p.quote = @forum.bio
         -if !policy(@forum).member?
-          =link_to 'join', forum_memberships_path(@forum.id), method: :create, class: 'btn'
-          p
-            == '&#127757; '
-            = link_to @forum.website.sub(/^https?\:\/\//, ''), @forum.website
+          =link_to 'join', forum_memberships_path(@forum.web_url), method: :create, class: 'btn'
         -if policy(@forum).update?
           =link_to settings_forum_path(@forum), class: 'btn-subtle btn-sticky' do
             span.fa.fa-gear.icon-left

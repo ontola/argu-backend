@@ -2,13 +2,12 @@ class MembershipsController < ApplicationController
   #responds_to :js
 
   def create
-    user = User.find params[:id]
-    forum = Forum.find params[:forum_id]
-    @membership = Membership.new user: user, forum: forum, role: permit_params[:role]
+    forum = Forum.friendly.find params[:forum_id]
+    @membership = Membership.new profile: current_profile, forum: forum, role: (permit_params[:role] || Membership.roles[:member])
     authorize @membership, :create?
 
     if @membership.save
-      render
+      redirect_to @membership.forum
     else
       render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
     end
@@ -41,6 +40,6 @@ class MembershipsController < ApplicationController
 
 private
   def permit_params
-    params.require(:forum).permit :role
+    params.permit :forum_id, :role
   end
 end

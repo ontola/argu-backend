@@ -8,7 +8,8 @@ class ForumPolicy < RestrictivePolicy
 
   ######CRUD######
   def show?
-    (user && user.profile.memberships.where(forum: record).present?) || super
+    #(user && user.profile.memberships.where(forum: record).present?) || super
+    true || super # Until forum scope settings are implemented
   end
 
   def new?

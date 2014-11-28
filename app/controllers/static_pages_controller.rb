@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
   def home
     authorize :static_pages
   	if signed_in?
-      redirect_to current_profile.memberships.first.forum
+      redirect_to current_profile.memberships.present? ? current_profile.memberships.present.first.forum : Forum.first
   	else
   		render 'static_pages/about', layout: 'layouts/closed', locals: {show_sign_in: true}
 	  end

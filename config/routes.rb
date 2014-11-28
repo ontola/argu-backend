@@ -1,4 +1,6 @@
 Argu::Application.routes.draw do
+  require 'sidekiq/web'
+
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
   devise_for :users, :controllers => { :registrations => 'registrations' }
@@ -59,9 +61,12 @@ Argu::Application.routes.draw do
     get :settings, on: :member
   end
 
-  namespace :portal do
-    resources :pages, only: [:show, :new, :create]
-    resources :forums, only: [:new, :create]
+  authenticate :user, lambda { |p| p.profile.has_role? :staff } do
+    namespace :portal do
+      resources :pages, only: [:show, :new, :create]
+      resources :forums, only: [:new, :create]
+      mount Sidekiq::Web => '/sidekiq'
+    end
   end
 
   resources :profiles
