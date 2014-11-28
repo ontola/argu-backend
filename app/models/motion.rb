@@ -8,7 +8,7 @@ class Motion < ActiveRecord::Base
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy
   has_many :votes, as: :voteable
-  has_many :question_answers, inverse_of: :motion
+  has_many :question_answers, inverse_of: :motion, dependent: :destroy
   has_many :questions, through: :question_answers
   belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
@@ -52,19 +52,27 @@ class Motion < ActiveRecord::Base
     self.arguments.count(:conditions => ["pro = true"])
   end
 
-  def score
-    number_to_human(raw_score, :format => '%n%u', :units => { :thousand => 'K' })
-  end
-
   def raw_score
     # Neutral voters dont influence the relative score, but they do fluff it
     self.votes_pro_count*self.votes_neutral_count - self.votes_con_count*self.votes_neutral_count
+  end
+
+  def score
+    number_to_human(raw_score, :format => '%n%u', :units => { :thousand => 'K' })
   end
 
   def supped_content
     content \
       .gsub(/{([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)}\(([\w\s]*)\)/, '<a rel=tag name="\1" href="/cards/\1">\2</a>') \
       .gsub(/\[([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)\]\(([\w\s]*)\)/, '<a href="\1">\2</a>')
+  end
+
+  def tag_list
+    super.join(',')
+  end
+
+  def tag_list=(value)
+    super(value.downcase.strip)
   end
 
   def trim_data

@@ -11,7 +11,7 @@ class Tags::MotionsController < ApplicationController
   def show
     @tag = Tag.find_or_create_by(name: params[:tag])
     if params[:tag].present? 
-      @motions = Motion.tagged_with(params[:tag]) # TODO rewrite motion to exclude where motion.tag_id
+      @motions = {collection: Motion.tagged_with(params[:tag])} # TODO rewrite motion to exclude where motion.tag_id
     else
       @motions = Motion.postall
     end
