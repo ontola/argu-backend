@@ -10,6 +10,9 @@ class Question < ActiveRecord::Base
   acts_as_ordered_taggable_on :tags
   parentable :forum
 
+  validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
+  validates :title, presence: true, length: { minimum: 5, maximum: 500 }
+  validates :forum_id, presence: true
 
   def creator
     super || User.first_or_create(username: 'Onbekend')
