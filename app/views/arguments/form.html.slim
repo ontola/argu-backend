@@ -1,29 +1,7 @@
 .col-3
   .col-3-2
     =to_parent
-    .box
-      = form_for(@argument) do |f|
-        section.smallpadded
-          -if @argument.errors.any?
-            #error_explanation
-              h2= pluralize(@argument.errors.count, "error") + t("error_prohibited")
-              ul
-                -@argument.errors.full_messages.each do |msg|
-                  li= msg
-
-          = f.text_field "title", class: (%w(pro true).index(params[:pro] || @argument.pro.to_s) ? "pro" : "con") + "-t form-input-title", placeholder: t("arguments.form.title")
-          /p.helpertext= t("arguments.form.helper.title")
-
-          = f.text_area "content", class: "form-input-content", placeholder: t("arguments.form.content"), rows: "10"
-          /p.helpertext= raw t("arguments.form.helper.content")
-          .row
-            .span8
-              fieldset.control-group
-              = f.hidden_field(:motion_id)
-              = f.hidden_field(:pro)
-        = render partial: 'profiles/profile_current'
-        fieldset.form-actions
-          = f.submit t("arguments.form.submit"), class: "btn btn-sticky btn-sticky-bottom"
+    =render partial: 'arguments/form'
   /TODO make translations, make content dependent on focus field
   .col-3-1
     .box

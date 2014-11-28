@@ -6,6 +6,7 @@ class Vote < ActiveRecord::Base
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
 
+  validates :voteable_id, :voteable_type, :voter_id, :voter_type, :for, presence: true
 
   ##########methods###########
   def for? item
@@ -20,8 +21,9 @@ class Vote < ActiveRecord::Base
   end
 
   ##########Class methods###########
-  def self.ordered (votes)
-    HashWithIndifferentAccess.new(pro: [], neutral: [], con: []).merge votes.group_by { |a| a.for }
+  def self.ordered(votes)
+    grouped = votes.group_by(&:for)
+    HashWithIndifferentAccess.new(pro: {collection: grouped['pro']}, neutral: {collection: grouped['neutral']}, con: {collection: grouped['con']})
   end
 
 end

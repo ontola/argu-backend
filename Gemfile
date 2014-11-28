@@ -27,7 +27,7 @@ gem 'cocoon'
 ##################Features########################
 gem 'acts-as-taggable-on'
 gem 'awesome_nested_set', '~> 3.0.1'
-gem 'acts_as_commentable_with_threading', '~> 1.2.0'
+gem 'acts_as_commentable_with_threading', '~> 2.0.0'
 gem 'friendly_id', '~> 5.0.0'
 #Search
 
@@ -35,7 +35,7 @@ gem 'friendly_id', '~> 5.0.0'
 gem 'kaminari', '~>0.15.1'
 
 ##################Asset-y########################
-#gem 'haml' # TODO: convert haml to slim, then remove this gem
+gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
 gem 'jquery-rails'

@@ -7,13 +7,14 @@ module ProCon
 
     belongs_to :motion, :dependent => :destroy
     has_many :votes, as: :voteable
-    belongs_to :creator, class_name: 'User'
+    belongs_to :creator, class_name: 'Profile'
 
     before_save :trim_data
     before_save :cap_title
 
     validates :content, presence: true, length: { minimum: 5, maximum: 1500 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
+    validates :creator_id, :motion_id, presence: true
 
     acts_as_commentable
     parentable :motion
@@ -59,7 +60,8 @@ module ProCon
 
   module ClassMethods
     def ordered (coll=[])
-      HashWithIndifferentAccess.new(pro: [], con: []).merge(coll.group_by { |a| a.key })
+      grouped = coll.group_by { |a| a.key }
+      HashWithIndifferentAccess.new(pro: {collection: grouped[:pro]}, con: {collection: grouped[:con]})
     end
   end
 end

@@ -38,7 +38,7 @@ class Context
 
   # @return #Context of the parent of this #Context
   def parent
-    @parent_context
+    @parent_context || model && model.try(:get_parent)
   end
 
   def self.parse_from_uri(value, model=nil)

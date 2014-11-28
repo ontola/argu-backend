@@ -3,6 +3,7 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     authorize @question
+    @forum = @question.forum
     current_context @question
     #@voted = Vote.where(voteable: @question, voter: current_user).last.try(:for) unless current_user.blank?
     @motions = @question.motions
@@ -40,8 +41,8 @@ class QuestionsController < ApplicationController
     @forum = Forum.friendly.find params[:forum_id]
     authorize @forum, :add_question?
 
-    @question = Question.create permit_params
-    #@question.creator = current_user
+    @question = @forum.questions.new permit_params
+    @question.creator = current_profile
     authorize @question
 
     respond_to do |format|

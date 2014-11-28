@@ -33,8 +33,6 @@ Argu::Application.routes.draw do
   end
 
   resources :questions, only: [:show, :edit, :update] do
-    resources :motions, only: [:new, :create]
-
     get 'tags',      to: 'tags/motions#index', on: :collection
     get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
   end
@@ -54,6 +52,7 @@ Argu::Application.routes.draw do
     get :settings, on: :member
     resources :memberships, only: [:create, :destroy]
     resources :questions, only: [:index, :new, :create]
+    resources :motions, only: [:new, :create]
   end
 
   resources :pages, only: :show do

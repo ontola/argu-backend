@@ -3,5 +3,9 @@
 nl:
   votes:
     score: "score:"
+    header:
+      pro: "voor"
+      neutral: "weet nog niet"
+      con: "tegen"
     tooltips:
       argument: "belangrijk argument"

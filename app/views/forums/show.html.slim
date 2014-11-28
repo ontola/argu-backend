@@ -19,4 +19,5 @@
     section.unpadded.tags
       - @forum.tags.each do |tag|
         = link_to tag, tag_motions_url(tag), class: "tag", title: t("motions.titles.tags")+tag
-=render_columns({ questions: @forum.questions, motions: @forum.motions})
+=render_columns({ questions: {collection: @forum.questions, buttons_url: url_for([:new, @forum, :question]), collection_model: Question},
+                  motions: {collection: @forum.motions, buttons_url: url_for([:new, @forum, :motion]), collection_model: Motion}})

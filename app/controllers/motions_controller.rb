@@ -1,4 +1,5 @@
 class MotionsController < ApplicationController
+  before_action :get_context, only: [:new, :create]
 
   # GET /motions
   # GET /motions.json
@@ -31,7 +32,7 @@ class MotionsController < ApplicationController
   # GET /motions/new
   # GET /motions/new.json
   def new
-    @question = Question.find params[:question_id]
+    get_context
     @motion = Motion.new params[:motion]
     authorize @motion
     current_context @motion
@@ -53,12 +54,11 @@ class MotionsController < ApplicationController
   # POST /motions
   # POST /motions.json
   def create
-    @question = Question.find params[:question_id]
-    @motion = Motion.create permit_params
+    get_context
+    @motion = @forum.motions.new permit_params
     @motion.creator = current_profile
-    @motion.questions << @question
+    @motion.questions << @question if @question.present?
     authorize @motion
-    @motion.forum = current_scope.model
 
     respond_to do |format|
       if @motion.save
@@ -113,5 +113,12 @@ class MotionsController < ApplicationController
 private
   def permit_params
     params.require(:motion).permit(:id, :title, :content, :arguments, :statetype, :tag_list, :invert_arguments, :tag_id)
+  end
+
+  def get_context
+    if params[:question_id].present? || defined?(params[:motion][:question_id]) && params[:motion][:question_id].present?
+      @question = Question.find(params[:question_id] || params[:motion][:question_id])
+    end
+    @forum = Forum.friendly.find(params[:forum_id]) if params[:forum_id].present?
   end
 end
