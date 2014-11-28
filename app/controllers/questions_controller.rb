@@ -42,7 +42,7 @@ class QuestionsController < ApplicationController
     authorize @forum, :add_question?
 
     @question = @forum.questions.new permit_params
-    #@question.creator = current_user
+    @question.creator = current_profile
     authorize @question
 
     respond_to do |format|

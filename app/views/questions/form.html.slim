@@ -10,7 +10,7 @@
               = pluralize(@question.errors.count, "error")
               | prohibited this motion from being saved:
             ul
-              - @motion.errors.full_messages.each do |msg|
+              - @question.errors.full_messages.each do |msg|
                 li= msg
         = f.text_field :title, placeholder: t("questions.form.title").capitalize, class: "h1 sta-t form-input-title"
         /p.helpertext= t("motions.form.helper.title")

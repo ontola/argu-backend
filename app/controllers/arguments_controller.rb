@@ -51,7 +51,7 @@ class ArgumentsController < ApplicationController
   # POST /arguments.json
   def create
     @argument = Argument.new argument_params
-    @argument.creator = current_user
+    @argument.creator = current_profile
     authorize @argument
     @argument.motion_id = argument_params[:motion_id]
     @argument.pro = argument_params[:pro]

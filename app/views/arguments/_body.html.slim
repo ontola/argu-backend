@@ -4,7 +4,7 @@
     = content_tag :p, raw(@argument.supped_content)
     = print_references @argument
     /TODO
-  =render @argument.creator.profile, locals= {resource: @argument}
+  =render @argument.creator, locals= {resource: @argument}
   .btn.btn-subtle.btn-sticky.btn-sticky-bottom.dropdown-trigger
     span.fa.fa-gear.icon-left
     span menu

@@ -3,7 +3,7 @@ class Question < ActiveRecord::Base
   include Parentable
 
   belongs_to :forum, inverse_of: :questions
-  belongs_to :creator, class_name: 'User'
+  belongs_to :creator, class_name: 'Profile'
   has_many :question_answers, inverse_of: :question
   has_many :motions, through: :question_answers
 

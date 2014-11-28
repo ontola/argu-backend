@@ -7,7 +7,7 @@ module ProCon
 
     belongs_to :motion, :dependent => :destroy
     has_many :votes, as: :voteable
-    belongs_to :creator, class_name: 'User'
+    belongs_to :creator, class_name: 'Profile'
 
     before_save :trim_data
     before_save :cap_title
