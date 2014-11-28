@@ -5,19 +5,20 @@
   - if motion.tags.present?
     = render partial: 'tags/tags', locals: {resource: motion}
   =render partial: motion.creator, locals: {resource: motion}
-  .btn-subtle.btn-sticky.btn-sticky-bottom.dropdown-trigger
-    span.fa.fa-gear.icon-left
-    span menu
-    ul.dropdown-content.dropdown-right
-      -if policy(motion).destroy?
-        li= link_to motion_path(motion, destroy: true), method: :delete, confirm: t("destroy_confirmation") do
-          span.fa.fa-close.icon-left
-          span=t('destroy')
-      -if policy(motion).trash?
-        li= link_to motion_path(motion), method: :delete, confirm: t("trash_confirmation") do
-          span.fa.fa-trash.icon-left
-          span=t('trash')
-      -if policy(motion).update?
-        li= link_to edit_motion_path(motion) do
-          span.fa.fa-pencil.icon-left
-          span=t('edit')
+  -if policy(motion).update?
+    .btn-subtle.btn-sticky.btn-sticky-bottom.dropdown-trigger
+      span.fa.fa-gear.icon-left
+      span menu
+      ul.dropdown-content.dropdown-right
+        -if policy(motion).destroy?
+          li= link_to motion_path(motion, destroy: true), method: :delete, confirm: t("destroy_confirmation") do
+            span.fa.fa-close.icon-left
+            span=t('destroy')
+        -if policy(motion).trash?
+          li= link_to motion_path(motion), method: :delete, confirm: t("trash_confirmation") do
+            span.fa.fa-trash.icon-left
+            span=t('trash')
+        -if policy(motion).update?
+          li= link_to edit_motion_path(motion) do
+            span.fa.fa-pencil.icon-left
+            span=t('edit')
