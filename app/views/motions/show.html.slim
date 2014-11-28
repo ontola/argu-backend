@@ -3,7 +3,7 @@
   = to_parent
   =render partial: 'motionbody', locals: { motion: @motion }
   =render partial: 'opinionbtns'
-= render_columns(@arguments, buttons_url: new_argument_path(motion_id: @motion), collection_model: Argument, buttons_param: :pro)
+= render_columns(@arguments, buttons_url: new_argument_path(motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: true)
 -if Rails.configuration.epics.opinions
   = render_columns(@opinions, header: t("arguments.index.opinion"))
 -if Rails.configuration.epics.parties
