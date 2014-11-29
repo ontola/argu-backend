@@ -6,10 +6,11 @@ class Portal::PagesController < ApplicationController
 
   def create
     @page = Page.new permit_params
+    @page.build_profile permit_params
     authorize @page, :create?
 
-    if @page.save
-      redirect_to portal_page_path(@page)
+    if @page.save!
+      redirect_to portal_path
     else
       render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
     end
@@ -17,6 +18,6 @@ class Portal::PagesController < ApplicationController
 
   private
   def permit_params
-    params.require(:page).permit :name, :web_url
+    params.require(:page).permit :name, :web_url, profile_attributes: [:name, :about]
   end
 end

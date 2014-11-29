@@ -6,7 +6,9 @@
     section
       = semantic_form_for [:portal, @page] do |f|
         = f.inputs do
-          = f.input :name
+          = f.semantic_fields_for :profile do |p|
+            = p.input :name
+            = p.input :about
           = f.input :web_url
 
         = f.actions do
