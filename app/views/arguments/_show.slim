@@ -1,4 +1,4 @@
-.box.box-with-btns
+.box.box-with-btns.argument[id="#{model.id.present? ? 'argument_' + model.id.to_s : ''}" class="side-#{model.pro ? 'pro' : 'con'}"]
   section
     = contextual_link_to argument_path(model) do
       h3[class="#{model.pro ? 'pro-t' : 'con-t'}"]= model.title

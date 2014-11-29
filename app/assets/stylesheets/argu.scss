@@ -3,6 +3,21 @@
 
 $maxCommentDepth: 10;
 
+.side-con .form-input-title {
+  color: $red;
+}
+
+.side-con input[type="submit"] {
+  background-color: $red;
+}
+
+.side-pro .form-input-title {
+  color: $gre;
+}
+
+.side-pro input[type="submit"] {
+  background-color: $gre;
+}
 
 .pro-bg {
 	background-color: $gre !important;

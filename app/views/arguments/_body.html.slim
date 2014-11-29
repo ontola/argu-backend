@@ -1,12 +1,9 @@
-.box
+.box[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
   section
     h1[class=(@argument.pro ? 'pro-t' : 'con-t')]= @argument.title
     = content_tag :p, raw(@argument.supped_content)
     = print_references @argument
   =render @argument.creator, locals= {resource: @argument}
-  /.btn.btn-subtle.btn-sticky.btn-sticky-bottom.dropdown-trigger
-    span.fa.fa-gear.icon-left
-    span menu
   ul.btns-list.btns-vertical.btn-sticky.btn-sticky-bottom
     - if policy(@argument).destroy?
       li= link_to t("destroy"), argument_path(@argument), method: :delete, destroy: true

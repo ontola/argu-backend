@@ -35,6 +35,9 @@ nl:
       content: "Toelichting op argument. Waarom ondersteunt of weerlegt dit het voorstel? Probeer helder te onderbouwden en gebruik betrouwbare bronnen."
       type: "type"
       submit: "argument plaatsen"
+      side:
+        pro: "argument voor"
+        con: "argument tegen"
       helper:
         content: "Bespreek je argument hier in meer detail. Noem waarom het van toepassing is op de stelling.
 

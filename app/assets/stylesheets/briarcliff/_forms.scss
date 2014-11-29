@@ -11,6 +11,7 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   width: 70%;
   margin-bottom: 1.5em;
   color: $g4;
+  line-height: 1.4em;
   &:focus {
     background-color: $darken0;
     border: none;
@@ -83,6 +84,44 @@ input[type="text"].form-input-title {
 
 .form-padded {
   padding-bottom: 2em;
+}
+
+.form-toggle {
+  legend {
+    display: none;
+  }
+  li {
+    list-style: none;
+  }
+  li.choice {
+    list-style: none;
+    display: block;
+    width: 50%;
+    float: left;
+    text-align: center;
+    label {
+      width: 100%;
+    }
+  }
+  input {
+    // Hide radio button when JS provides visual feedback on the toggled button.
+    width: 0;
+    height: 0;
+  }
+  label[for="argument_pro_con"]{
+    color: $red;
+  }
+  label[for="argument_pro_con"].checked{
+    background-color: $red;
+    color: white;
+  }
+  label[for="argument_pro_pro"]{
+    color: $gre;
+  }
+  label[for="argument_pro_pro"].checked{
+    background-color: $gre;
+    color: white;
+  }
 }
 
 .form-small {

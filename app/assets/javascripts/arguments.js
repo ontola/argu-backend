@@ -19,4 +19,12 @@
          span.after(after.click(_onclick));
      });
 
+     $('.form-toggle input[type="radio"]').change(function() {
+         var tmp=$(this).attr('name'),
+             _this = $(this);
+         $('input[name="'+tmp+'"]').parent("label").removeClass("checked");
+         _this.parent("label").toggleClass("checked", this.selected);
+         window.argblaat = _this;
+         $(':not(.formtastic).argument').removeClass('side-pro side-con').addClass('side-' + _this.attr('value'));
+     });
  });

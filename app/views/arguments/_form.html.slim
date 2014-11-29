@@ -1,6 +1,8 @@
 -@argument ||= resource
-.box
-  = form_for(@argument) do |f|
+= semantic_form_for(@argument) do |f|
+  .box.form-toggle
+    = f.input :pro, as: :toggle_radio, :collection => radio_values_for_pro_con(@argument)
+  .box.argument[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
     section.smallpadded
       -if @argument.errors.any?
         #error_explanation
@@ -8,7 +10,7 @@
           ul
             -@argument.errors.full_messages.each do |msg|
               li= msg
-      = f.text_field "title", class: (%w(pro true).index(params[:pro] || @argument.pro.to_s) ? "pro" : "con") + "-t form-input-title", placeholder: t("arguments.form.title")
+      = f.text_field "title", class: "form-input-title", placeholder: t("arguments.form.title")
 
       = f.text_area "content", class: "form-input-content", placeholder: t("arguments.form.content"), rows: "10"
       /p.helpertext= raw t("arguments.form.helper.content")
@@ -16,7 +18,7 @@
         .span8
           fieldset.control-group
           = f.hidden_field(:motion_id)
-          = f.hidden_field(:pro)
+          //= f.hidden_field(:pro)
     = render partial: 'profiles/profile_current'
     fieldset.form-actions
-      = f.submit t("arguments.form.submit"), class: (%w(pro true).index(params[:pro] || @argument.pro.to_s) ? "pro" : "con") +  "-bg btn btn-sticky btn-sticky-bottom"
+      = f.submit t("arguments.form.submit"), class: "btn btn-sticky btn-sticky-bottom"
