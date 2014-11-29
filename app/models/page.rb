@@ -19,4 +19,12 @@ class Page < ActiveRecord::Base
     end
   end
 
+  def display_name
+    if self.profile.present?
+      self.profile.name || self.web_url
+    else
+     self.web_url
+    end
+  end
+
 end

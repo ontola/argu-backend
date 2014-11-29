@@ -63,7 +63,7 @@ Argu::Application.routes.draw do
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     namespace :portal do
-      resources :pages, only: [:show, :new, :create]
+      resources :pages, only: [:show, :new, :create, :destroy]
       resources :forums, only: [:new, :create]
       mount Sidekiq::Web => '/sidekiq'
     end
