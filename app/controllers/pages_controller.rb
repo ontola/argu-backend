@@ -32,6 +32,6 @@ class PagesController < ApplicationController
 
 private
   def permit_params
-    params.require(:page).permit :name
+    params.require(:page).permit(*policy(@page || Post).permitted_attributes)
   end
 end

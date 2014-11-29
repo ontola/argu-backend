@@ -46,6 +46,11 @@ class RestrictivePolicy
     staff?
   end
 
+  # Can the current user change the forum web_url? (currently a subdomain)
+  def web_url?
+    staff?
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end

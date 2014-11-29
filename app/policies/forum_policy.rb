@@ -6,6 +6,14 @@ class ForumPolicy < RestrictivePolicy
 
   end
 
+  def permitted_attributes
+    attributes = []
+    attributes << [:name, :bio, :tag_list] if update?
+    attributes << :page_id if change_owner?
+    attributes << :web_url if web_url?
+    attributes
+  end
+
   ######CRUD######
   def show?
     #(user && user.profile.memberships.where(forum: record).present?) || super
@@ -36,15 +44,14 @@ class ForumPolicy < RestrictivePolicy
     false || update?
   end
 
+  def change_owner?
+    staff?
+  end
+
   #######Attributes########
   # Is the current user a member of the group?
   def member?
     (user && user.profile.memberships.where(forum: record).present?) || staff?
-  end
-
-  # Can the current user change the forum web_url? (currently a subdomain)
-  def web_url?
-    staff?
   end
 
 end
