@@ -6,6 +6,12 @@ class RestrictivePolicy
     @record = record
   end
 
+  def permitted_attributes
+    attributes = []
+    attributes << :web_url if web_url?
+    attributes
+  end
+
   def staff?
     user && user.profile.has_role?(:staff)
   end

@@ -7,11 +7,12 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def permitted_attributes
-    attributes = []
-    attributes << [:name, :bio, :tag_list] if update?
+    attributes = super
+    attributes << [:name, :bio, :tags, :tag_list, :profile_photo, :cover_photo, :cover_photo_original_w,
+                   {memberships_attributes: [:role, :id, :profile_id, :forum_id]},
+                   :cover_photo_original_h, :cover_photo_box_w, :cover_photo_crop_x, :cover_photo_crop_y,
+                   :cover_photo_crop_w, :cover_photo_crop_h, :cover_photo_aspect] if update?
     attributes << :page_id if change_owner?
-    attributes << :web_url if web_url?
-    attributes
   end
 
   ######CRUD######

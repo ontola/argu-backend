@@ -18,7 +18,7 @@
               td= t('portal.name')
               td= t('portal.created_at')
               td= t('portal.updated_at')
-              td _has forum_
+              td _forums_
               td _show_
               td _edit_
               td _destroy_
@@ -28,7 +28,7 @@
                 td= link_to f.profile.name, page_path(f)
                 td= l f.created_at, format: :short
                 td= l f.updated_at, format: :short
-                td= f.forum.present? ? link_to(f.forum.web_url, forum_path(f.forum)) : link_to('_create_', new_portal_forum_path(page: f))
+                td= f.forums.present? ? f.forums.length : link_to('_create_', new_portal_forum_path(page: f))
                 td= link_to '_show_', page_path(f)
                 td= link_to '_settings_', settings_page_path(f)
                 td= link_to '_destroy_', portal_page_path(f), data: {remote: true, method: :delete, confirm: "_Weet je zeker dat je #{f.display_name}"}

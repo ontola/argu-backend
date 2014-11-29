@@ -4,7 +4,7 @@ class Page < ActiveRecord::Base
 
   belongs_to :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
-  has_one :forum
+  has_many :forums
 
   after_initialize :build_profile
 
