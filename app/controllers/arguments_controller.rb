@@ -41,6 +41,7 @@ class ArgumentsController < ApplicationController
   def edit
     @argument = Argument.find params[:id]
     authorize @argument
+    current_context @argument
 
     respond_to do |format|
       format.html { render :form}
