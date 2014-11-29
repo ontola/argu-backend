@@ -75,6 +75,10 @@ class Motion < ActiveRecord::Base
     super(value.downcase.strip)
   end
 
+  def tag_list=(value)
+    super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
+  end
+
   def trim_data
     self.title = title.strip
     self.content = content.strip
