@@ -33,7 +33,6 @@ gem 'friendly_id', '~> 5.0.4'
 gem 'kaminari', '~>0.16.1'
 
 ##################Asset-y########################
-gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
 gem 'jquery-rails'

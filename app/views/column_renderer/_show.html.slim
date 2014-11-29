@@ -1,9 +1,9 @@
-%div{class: "col-#{model.keys.length}"}
+div[class="col-#{model.keys.length}"]
   =header(options)
   -model.keys.each_with_index do |key,i|
-    %div{class: "col-#{model.keys.length}-1"}
-      %header
-        %h2= header_text(options, key)
+    div[class="col-#{model.keys.length}-1"]
+      header
+        h2= header_text(options, key)
       -render_collection_if_present model, key do |item|
         = render_columns item, options.merge(pro: key)
       = show_new_buttons(model[key], key)

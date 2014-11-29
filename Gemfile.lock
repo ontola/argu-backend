@@ -191,8 +191,6 @@ GEM
       activerecord (>= 4.0.0)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
-    haml (4.0.5)
-      tilt
     hashie (3.3.2)
     hike (1.2.3)
     hitimes (1.2.2)
@@ -435,7 +433,6 @@ DEPENDENCIES
   foreigner (~> 1.7.0)
   formtastic (~> 3.1.2)
   friendly_id (~> 5.0.4)
-  haml
   immigrant (~> 0.1.8)
   jbuilder (~> 2.2.5)
   jquery-rails
