@@ -2,6 +2,7 @@ include HasRestfulPermissions
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
+  include ArguBase
   include Trashable
   include Parentable
 
@@ -73,6 +74,10 @@ class Motion < ActiveRecord::Base
 
   def tag_list=(value)
     super(value.downcase.strip)
+  end
+
+  def tag_list=(value)
+    super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
   end
 
   def trim_data

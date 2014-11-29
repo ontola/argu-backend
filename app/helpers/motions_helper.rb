@@ -1,7 +1,7 @@
 include ActsAsTaggableOn::TagsHelper
 module MotionsHelper
   def back_to_motion(resource)
-    concat content_tag 'h1', t("#{resource.class.name.pluralize.downcase}.new.header", side: pro_translation(resource))
+    concat content_tag 'h1', t("#{resource.class_name}.new.header", side: pro_translation(resource))
     link_to resource.motion.title, motion_path(resource.motion), class: "btn btn-white"
   end
 

@@ -6,6 +6,12 @@ class RestrictivePolicy
     @record = record
   end
 
+  def permitted_attributes
+    attributes = []
+    attributes << :web_url if web_url?
+    attributes
+  end
+
   def staff?
     user && user.profile.has_role?(:staff)
   end
@@ -43,6 +49,11 @@ class RestrictivePolicy
   end
 
   def vote?
+    staff?
+  end
+
+  # Can the current user change the forum web_url? (currently a subdomain)
+  def web_url?
     staff?
   end
 

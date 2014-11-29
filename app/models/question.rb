@@ -1,4 +1,5 @@
 class Question < ActiveRecord::Base
+  include ArguBase
   include Trashable
   include Parentable
 

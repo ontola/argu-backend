@@ -18,19 +18,20 @@
               td= t('portal.name')
               td= t('portal.created_at')
               td= t('portal.updated_at')
-              td _has forum_
+              td _forums_
               td _show_
               td _edit_
+              td _destroy_
           tbody
-            - @pages.each do |t|
-              tr
-                td
-                  = link_to t.profile.name, page_path(t)
-                td=l t.created_at, format: :short
-                td=l t.updated_at, format: :short
-                td= t.forum.present? ? link_to(t.forum.web_url, forum_path(t.forum)) : link_to('_create_', new_portal_forum_path(page: t))
-                td=link_to '_show_', page_path(t)
-                td=link_to '_settings_', settings_page_path(t)
+            - @pages.each do |f|
+              tr[id=f.identifier]
+                td= link_to f.profile.name, page_path(f)
+                td= l f.created_at, format: :short
+                td= l f.updated_at, format: :short
+                td= f.forums.present? ? f.forums.length : link_to('_create_', new_portal_forum_path(page: f))
+                td= link_to '_show_', page_path(f)
+                td= link_to '_settings_', settings_page_path(f)
+                td= link_to '_destroy_', portal_page_path(f), data: {remote: true, method: :delete, confirm: "_Weet je zeker dat je #{f.display_name}"}
         //=paginate @pages, param_name: :published_page
       h2 _fora_
       -if @forums.blank?
@@ -49,14 +50,13 @@
               td _edit_
           tbody
             - @forums.each do |f|
-              tr
-                td
-                  = link_to f.name, forum_path(f)
-                td=l f.created_at, format: :short
-                td=l f.updated_at, format: :short
+              tr[id=f.identifier]
+                td= link_to f.name, forum_path(f)
+                td= l f.created_at, format: :short
+                td= l f.updated_at, format: :short
                 td= f.memberships_count || '-'
                 td= f.questions_count || '-'
                 td= f.motions_count || '-'
-                td=link_to '_show_', page_path(f)
-                td=link_to '_settings_', settings_forum_path(f)
+                td= link_to '_show_', page_path(f)
+                td= link_to '_settings_', settings_forum_path(f)
         //=paginate @pages, param_name: :published_page

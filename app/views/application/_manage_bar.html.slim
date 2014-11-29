@@ -1,7 +1,7 @@
 ul.box.btns-list.btns-vertical
   li=link_to url_for(resource) do
     span.fa.fa-eye.icon-left
-    span= t("#{resource.class.name.to_s}.resource_name")
+    span= t("#{resource.class_name}.resource_name")
   li=link_to url_for([:settings, resource]) do
     span.fa.fa-gear.icon-left
-    span= t("#{resource.class.name.to_s}.settings")
+    span= t("#{resource.class_name}.settings")

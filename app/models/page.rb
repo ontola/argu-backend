@@ -1,9 +1,10 @@
 class Page < ActiveRecord::Base
+  include ArguBase
   extend FriendlyId
 
   belongs_to :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
-  has_one :forum
+  has_many :forums
 
   after_initialize :build_profile
 
@@ -15,6 +16,14 @@ class Page < ActiveRecord::Base
   def build_profile(*options)
     if self.profile.nil?
       super(*options)
+    end
+  end
+
+  def display_name
+    if self.profile.present?
+      self.profile.name || self.web_url
+    else
+     self.web_url
     end
   end
 

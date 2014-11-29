@@ -1,10 +1,10 @@
 class Profile < ActiveRecord::Base
+  include ArguBase
+
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy
   has_many :forums, through: :memberships
-  has_many :group_memberships, dependent: :destroy
-  has_many :groups, through: :group_memberships
 
   mount_uploader :profile_photo, ImageUploader
   mount_uploader :cover_photo, ImageUploader

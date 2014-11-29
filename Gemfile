@@ -1,38 +1,36 @@
 source 'https://rubygems.org'
 source 'http://utility.argu.co:3000/'
 
-gem 'sass-rails',   '~> 5.0.0.beta1'                                         ###!
-gem 'rails', '~>4.2.0.beta4'                                ###!
+gem 'sass-rails',   '~> 5.0.0.beta1'                                          ###!
+gem 'rails', '~>4.2.0.rc1'                                                    ###!
 #gem 'rails', git: 'https://github.com/rails/rails.git', platform: :mswin     ###!
 
 ##################DB########################
 gem 'pg', '0.17.1'
 #gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
-gem 'foreigner', '~> 1.2.1'
-gem 'immigrant', '~> 0.1.2'
+gem 'foreigner', '~> 1.7.0'
+gem 'immigrant', '~> 0.1.8'
 gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 
-gem 'jbuilder', '~> 1.2'
-gem 'bcrypt-ruby', '3.0.1'
-gem 'rfc-822', '~> 0.3.0'
-gem 'counter_culture', '~> 0.1.25'
-gem 'rails-i18n', '~> 4.0.0'
-gem 'delayed_job', '~> 4.0.1'
-gem 'delayed_job_active_record', '~> 4.0.1'
+gem 'jbuilder', '~> 2.2.5'
+gem 'bcrypt-ruby', '>= 3.1.5'
+gem 'rfc-822', '~> 0.4.0'
+gem 'counter_culture', '~> 0.1.27'
+gem 'rails-i18n', '~> 4.0.3'
 gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
-gem 'formtastic', '~> 3.0'
-gem 'cocoon'
+gem 'formtastic', '~> 3.1.2'
+gem 'cocoon', '~> 1.2.6'
 
 ##################Features########################
-gem 'acts-as-taggable-on'
+gem 'acts-as-taggable-on', '~> 3.4.2'
 gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 2.0.0'
-gem 'friendly_id', '~> 5.0.0'
+gem 'friendly_id', '~> 5.0.4'
 #Search
 
 #Pagination
-gem 'kaminari', '~>0.15.1'
+gem 'kaminari', '~>0.16.1'
 
 ##################Asset-y########################
 gem 'haml' # TODO: convert haml to slim, then remove this gem
@@ -40,57 +38,53 @@ gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'rails3-jquery-autocomplete', '~> 1.0.12'
+gem 'rails3-jquery-autocomplete', '~> 1.0.14'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
 gem 'carrierwave', '~> 0.10.0'
-gem 'carrierwave_backgrounder'
-gem 'mini_magick'#, require: false                                        # Ruby connector for ImageMagick
-gem 'fog'                                                                 # Cloud storage connector for CW
-gem 'sidekiq'
+gem 'carrierwave_backgrounder', '~> 0.4.1'
+gem 'mini_magick', '~> 4.0.1'                                             # Ruby connector for ImageMagick
+gem 'fog', '~> 1.25.0'                                                    # Cloud storage connector for CW
+gem 'sidekiq', '~> 3.3.0'
 gem 'sinatra', '>= 1.3.0'
 
 ##################User management########################
-gem 'devise', "~> 3.4.1"
+gem 'devise', '~> 3.4.1'
 #gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
-gem "omniauth", "~> 1.2.1"
-gem "omniauth-oauth2"
-gem 'omniauth-facebook', "~> 1.4.0"
-gem 'omniauth-twitter', "~> 0.0.13"
+gem 'omniauth', '~> 1.2.2'
+gem 'omniauth-oauth2', '~> 1.2.0'
+gem 'omniauth-facebook', '~> 2.0.0'
+gem 'omniauth-twitter', '~> 1.1.0'
 #gem 'omniauth-openid'
-gem 'pundit', "~> 0.3.0"
-gem 'rolify'
+gem 'pundit', '~> 0.3.0'
+gem 'rolify', '~> 3.4.1'
 
 group :development, :test do
   gem 'thin'
   #gem 'puma', platform: :ruby
-  gem 'nokogiri', '1.6.3.1'
-  gem 'rspec', '2.8.0'
-  gem 'rspec-rails', '2.8.0'
-  gem 'factory_girl'
-  gem 'factory_girl_rails'
-  gem 'annotate','~> 2.4.1beta1'                      ###!
-  gem 'nifty-generators', '~> 0.4.6'
+  gem 'nokogiri', '1.6.5'
+  gem 'rspec', '3.1.0'
+  gem 'rspec-rails', '3.1.0'
+  gem 'factory_girl', '~> 4.5.0'
+  gem 'factory_girl_rails', '~> 4.5.0'
   #gem 'meta_request'
   #gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
-  gem 'spring'
-  gem 'coffee-rails', '~> 4.0.1'
-  gem 'uglifier', '>= 1.0.3'
+  gem 'spring', '~> 1.2.0'
+  gem 'coffee-rails', '~> 4.1.0'
+  gem 'uglifier', '>= 2.5.3'
   gem 'quiet_assets'
-  gem 'web-console', '~> 2.0.0.beta4'                 ###!
+  gem 'web-console', '~> 2.0.0'
   ####Capistrano#####
-  gem 'capistrano'
-  gem 'capistrano-rails'
-  gem 'capistrano-bundler', '~> 1.1.2'
-  gem 'capistrano-rvm'
+  gem 'capistrano', '~> 3.3.3'
+  gem 'capistrano-rails', '~> 1.1.2'
+  gem 'capistrano-bundler', '~> 1.1.3'
+  gem 'capistrano-rvm', '~> 0.1.2'
 end
 
-group :production do 
-  #gem 'newrelic_rpm'
-  gem 'therubyracer'
-  gem 'rails_12factor'
-  gem 'unicorn'
-  gem 'rack-test'
+group :production do
+  gem 'therubyracer', '~> 0.12.1'
+  gem 'unicorn', '~> 4.8.3'
+  gem 'rack-test', '~> 0.6.2'
 end
 
   gem 'briarcliff', '~> 0.0.9'
