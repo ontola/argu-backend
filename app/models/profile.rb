@@ -1,4 +1,6 @@
 class Profile < ActiveRecord::Base
+  include ArguBase
+
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy

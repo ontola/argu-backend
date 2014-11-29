@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include ArguBase
+
   has_many :authentications, dependent: :destroy
   belongs_to :profile, dependent: :destroy
 

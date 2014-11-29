@@ -2,6 +2,7 @@ include HasRestfulPermissions
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
+  include ArguBase
   include Trashable
   include Parentable
 

@@ -1,4 +1,5 @@
 class Page < ActiveRecord::Base
+  include ArguBase
   extend FriendlyId
 
   belongs_to :profile, dependent: :destroy

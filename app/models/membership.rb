@@ -1,4 +1,6 @@
 class Membership < ActiveRecord::Base
+  include ArguBase
+
   belongs_to :profile
   belongs_to :forum, inverse_of: :memberships
 

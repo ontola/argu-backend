@@ -2,6 +2,7 @@ module ProCon
   extend ActiveSupport::Concern
 
   included do
+    include ArguBase
     include Trashable
     include Parentable
 
