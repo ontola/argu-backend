@@ -8,6 +8,7 @@ class Question < ActiveRecord::Base
   has_many :motions, through: :question_answers
 
   acts_as_ordered_taggable_on :tags
+  counter_culture :forum
   parentable :forum
 
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
