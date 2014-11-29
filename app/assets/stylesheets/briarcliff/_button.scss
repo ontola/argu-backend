@@ -166,7 +166,7 @@
   width: calc(100% + 1em);
   margin-left: -0.5em;
 
-  @include bp-medium {
+  @include bp-small {
     width: 100%;
     margin-left: 0;
   }
@@ -178,7 +178,7 @@
     width: 33.3%;
     width: calc(33.3% - 1em);
     margin: 0 .5em;
-    @include bp-medium {
+    @include bp-small {
       display: block;
       width: 100%;
       margin: 0 0 .3em 0;
@@ -191,7 +191,7 @@
     padding-bottom: 0.6em;
     font-weight: bold;
     @include border-radius;
-    //border: solid 5px white;
+    line-height: 1.6em;
     text-transform: uppercase;
     top: 0;
     position: relative;
