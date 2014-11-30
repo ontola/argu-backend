@@ -16,6 +16,7 @@ class ForumsController < ApplicationController
   def statistics
     @forum = Forum.friendly.find params[:id]
     authorize @forum, :statistics?
+    current_context @forum
 
     @tags = []
     tag_ids = Tagging.where(forum_id: @forum.id).select(:tag_id).distinct.map(&:tag_id)
