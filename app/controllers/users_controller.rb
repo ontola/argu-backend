@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find current_user.id
+    @user = current_user
     authorize @user
 
     unless @user.nil?
@@ -32,16 +32,16 @@ class UsersController < ApplicationController
 
   # PUT /settings
   def update
-    @user = current_user unless current_user.blank?
+    @user = current_user
     authorize @user
 
     respond_to do |format|
-      if @user.update_attributes(params[:user]) && @user.profile.update_attributes(params[:profile])
+      if @user.update_attributes(permit_params)
         format.html { redirect_to settings_path, notice: "Wijzigingen opgeslagen." }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.jsoon { render json: @profile.errors, status: :unprocessable_entity }
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -58,5 +58,10 @@ class UsersController < ApplicationController
         format.js { render partial: params[:c].present? ? params[:c] + '/search' : 'search' }
         format.json { render json: @users }
     end
+  end
+
+  private
+  def permit_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, profile_attributes: [:name])
   end
 end

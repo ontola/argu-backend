@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable#,
          #:validatable, :omniauthable
 
@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
     self.profile.name.presence || self.username
   end
 
+  def invitations_left
+    invitation_limit - invitations_count
+  end
+
   def web_url
     username
   end
@@ -49,10 +53,6 @@ class User < ActiveRecord::Base
 #########Auth##############
   def apply_omniauth(omniauth)
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
-  end
-
-  def email_required?
-    (authentications.empty?) && super
   end
 
   def isOmniOnly

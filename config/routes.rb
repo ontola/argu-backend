@@ -52,6 +52,7 @@ Argu::Application.routes.draw do
 
   resources :forums, except: [:index, :edit] do
     get :settings, on: :member
+    get :statistics, on: :member
     resources :memberships, only: [:create, :destroy]
     resources :questions, only: [:index, :new, :create]
     resources :motions, only: [:new, :create]
@@ -74,7 +75,7 @@ Argu::Application.routes.draw do
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
   get '/settings', to: 'users#edit', as: 'settings'
-  post '/settings', to: 'users#update'
+  put '/settings', to: 'users#update'
 
   get '/sign_in_modal', to: 'static_pages#sign_in_modal'
   get '/about', to: 'static_pages#about'

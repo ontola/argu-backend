@@ -1,0 +1,25 @@
+.col-1.box
+  h2= t('devise.invitations.new.header')
+
+  =semantic_form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f|
+    section
+      = devise_error_messages!
+
+      p= "_Je hebt nog #{current_user.invitations_left} uitnodigingen tegoed_"
+
+      label= t("users_email")
+      = f.email_field(:email)
+      / Default placeholder doens't apply since it tells the user to enter their own email
+
+      = f.actions do
+        = f.action :submit, :as => :button, label: t("devise.invitations.new.submit_button")
+
+  /= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f|
+    = devise_error_messages!
+
+    - resource.class.invite_key_fields.each do |field|
+      p= f.label field
+        br
+        =f.text_field field
+
+      p= f.submit t("devise.invitations.new.submit_button")

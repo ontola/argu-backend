@@ -5,6 +5,7 @@ class Motion < ActiveRecord::Base
   include ArguBase
   include Trashable
   include Parentable
+  include ForumTaggable
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy
@@ -19,7 +20,6 @@ class Motion < ActiveRecord::Base
   before_save :trim_data
   before_save :cap_title
 
-  acts_as_ordered_taggable_on :tags
   parentable :questions, :forum
   resourcify
  
@@ -70,10 +70,6 @@ class Motion < ActiveRecord::Base
 
   def tag_list
     super.join(',')
-  end
-
-  def tag_list=(value)
-    super(value.downcase.strip)
   end
 
   def tag_list=(value)

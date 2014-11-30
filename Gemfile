@@ -49,6 +49,7 @@ gem 'sinatra', '>= 1.3.0'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'
+gem 'devise_invitable', '~> 1.3.4'
 #gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
 gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-oauth2', '~> 1.2.0'

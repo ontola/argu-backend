@@ -2,13 +2,13 @@ class Question < ActiveRecord::Base
   include ArguBase
   include Trashable
   include Parentable
+  include ForumTaggable
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
   has_many :question_answers, inverse_of: :question, dependent: :destroy
   has_many :motions, through: :question_answers
 
-  acts_as_ordered_taggable_on :tags
   counter_culture :forum
   parentable :forum
 
@@ -24,6 +24,11 @@ class Question < ActiveRecord::Base
     title
   end
 
+
+  #def save_taggings
+  #  self.taggings.save
+  #end
+
   def supped_content
     content \
       .gsub(/{([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)}\(([\w\s]*)\)/, '<a rel=tag name="\1" href="/cards/\1">\2</a>') \
@@ -32,10 +37,6 @@ class Question < ActiveRecord::Base
 
   def tag_list
     super.join(',')
-  end
-
-  def tag_list=(value)
-    super(value.downcase.strip)
   end
 
   scope :index, ->(trashed, page) { trashed(trashed).page(page) }
