@@ -53,7 +53,7 @@ module Argu
 
     config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]
     config.i18n.enforce_available_locales = true
-    I18n.enforce_available_locales = true
+    I18n.enforce_available_locales = false
     config.i18n.default_locale = :nl #zodat nederlands de standaard weergegeven taal is.
     #I18n.locale = :nl
   end
