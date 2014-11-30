@@ -62,6 +62,9 @@ nav#navbar.navbar role="navigation"
             span.fa.fa-user.icon-left
             span= current_profile.display_name
             ul.dropdown-content.dropdown-right
+              li= link_to new_user_invitation_path
+                span.fa.fa-comments-o.icon-left
+                span _betrek anderen_
               li= link_to profile_url(current_profile.username) do
                 span.fa.fa-user.icon-left
                 span= t("profiles.display")

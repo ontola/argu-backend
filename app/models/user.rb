@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable#,
          #:validatable, :omniauthable
 
@@ -35,6 +35,10 @@ class User < ActiveRecord::Base
 #######Attributes########
   def display_name
     self.profile.name.presence || self.username
+  end
+
+  def invitations_left
+    invitation_limit - invitations_count
   end
 
   def web_url
