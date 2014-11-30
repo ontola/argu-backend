@@ -51,10 +51,6 @@ class User < ActiveRecord::Base
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
 
-  def email_required?
-    (authentications.empty?) && super
-  end
-
   def isOmniOnly
     authentications.any? && password.blank?
   end

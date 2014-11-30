@@ -59,7 +59,7 @@ class QuestionsController < ApplicationController
   # PUT /motions/1
   # PUT /motions/1.json
   def update
-    @question = Question.find_by_id params[:id]
+    @question = Question.includes(:taggings).find_by_id(params[:id])
     authorize @question
     respond_to do |format|
       if @question.update_attributes(permit_params)

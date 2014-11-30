@@ -1,0 +1,13 @@
+.col-1
+  =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
+  small  <!-- for styling -->
+  header
+    h1 _Statistics_
+  .box
+     h2 _most used tags_
+     - if @tags.present?
+      ul
+      - @tags.each do |tag|
+        li= "#{tag[:count]} - #{tag[:name]}"
+     - else
+      p _No tags yet_

@@ -1,4 +1,4 @@
-class TagPolicy < RestrictivePolicy
+class TagPolicy < ForumPolicy
   class Scope < Scope
     def resolve
       scope

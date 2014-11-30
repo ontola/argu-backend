@@ -13,6 +13,19 @@ class ForumsController < ApplicationController
     current_context @forum
   end
 
+  def statistics
+    @forum = Forum.friendly.find params[:id]
+    authorize @forum, :statistics?
+
+    @tags = []
+    tag_ids = Tagging.where(forum_id: @forum.id).select(:tag_id).distinct.map(&:tag_id)
+    tag_ids.each do |tag_id|
+      taggings = Tagging.where(forum_id: @forum.id, tag_id: tag_id)
+      @tags << {name: Tag.find(taggings.first.tag_id).name, count: taggings.length}
+    end
+    @tags = @tags.sort  { |x,y| y[:count] <=> x[:count] }
+  end
+
   def update
     @forum = Forum.friendly.find params[:id]
     authorize @forum, :update?

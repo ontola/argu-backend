@@ -51,8 +51,9 @@ class ForumPolicy < RestrictivePolicy
 
   #######Attributes########
   # Is the current user a member of the group?
+  # @note This tells nothing about whether the user can make edits on the object
   def member?
-    (user && user.profile.memberships.where(forum: record).present?) || staff?
+    user && user.profile.memberships.where(forum: record).present?
   end
 
 end
