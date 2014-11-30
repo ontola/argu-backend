@@ -75,7 +75,7 @@ Argu::Application.routes.draw do
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
   get '/settings', to: 'users#edit', as: 'settings'
-  post '/settings', to: 'users#update'
+  put '/settings', to: 'users#update'
 
   get '/sign_in_modal', to: 'static_pages#sign_in_modal'
   get '/about', to: 'static_pages#about'
