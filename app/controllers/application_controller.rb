@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.js { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {
-        request.env['HTTP_REFERER'] ||= root_path
+        request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
         redirect_to :back, :alert => exception.message
       }
     end
