@@ -5,27 +5,18 @@ ua = User.where(email: 'thomvankalkeren@gmail.com').first_or_create
 ub = User.where(email: 'postmaster@argu.nl').first_or_create
 uc = User.where(email: 'joepmeindertsma@gmail.com').first_or_create
 
-ua.update_attributes(username: 'fletcher91', password: 'foobar', password_confirmation:'foobar')
-ub.update_attributes(username: 'admin', password:'opendebate', password_confirmation:'opendebate')
-uc.update_attributes(username: 'user', password: 'useruser', password_confirmation:'useruser')
+ua.attributes = {username: 'fletcher91', password: 'foobar', password_confirmation:'foobar'}
+ub.attributes = {username: 'admin', password:'opendebate', password_confirmation:'opendebate'}
+uc.attributes = {username: 'user', password: 'useruser', password_confirmation:'useruser'}
 
+ua.build_profile name: 'Thom van Kalkeren'
+ub.build_profile name: 'Administrator'
+uc.build_profile name: 'User'
 
-pa = Profile.where(name: 'Thom van Kalkeren').first_or_create
-pb = Profile.where(name: 'Administrator').first_or_create
-pc = Profile.where(name: 'User').first_or_create
+ua.profile.update_attributes(picture: 'http://www.wthex.com/images/coolcookie.gif', about: "I'm the coder!")
+uc.profile.update_attributes(picture: 'https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg', about: "argu designer")
 
-pa.update_attributes(picture: 'http://www.wthex.com/images/coolcookie.gif', about: "I'm the coder!")
-pc.update_attributes(picture: 'https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg', about: "argu designer")
-
-pa = pa.first if pa.respond_to? :first
-pb = pb.first if pb.respond_to? :first
-pc = pc.first if pc.respond_to? :first
-
-ua.profile = pa
-ub.profile = pb
-uc.profile = pc
-
-pa.add_role :staff
-pb.add_role :staff
-pc.add_role :user
+ua.profile.add_role :staff
+ub.profile.add_role :staff
+uc.profile.add_role :user
 
