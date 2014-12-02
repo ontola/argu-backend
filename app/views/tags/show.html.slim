@@ -1,7 +1,12 @@
-.center
-      span Resultaten voor
+header
+  h1= t("search")
+.col-1
+  .box.box-small
+    section.section-small
+      label= t("tag")
       .tag= @tag.name
-      span binnen forum
+    section.section-small
+      label= t("forum")
       .tag.tag-forum= @forum.display_name
 = render partial: 'motions/tag_motion', locals: { motion: @tag.motion } if @tag.motion
 =render_columns({'' => @collection}, header_text: false, collection_model: Motion)

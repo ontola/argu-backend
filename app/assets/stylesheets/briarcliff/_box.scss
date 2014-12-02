@@ -6,6 +6,7 @@
   background-color: white;
   margin: 0 auto;
   margin-bottom: 1em;
+  overflow: hidden;
   @include border-radius;
   @include box-shadow;
 }
@@ -45,6 +46,11 @@ section.smallpadded {
 
 section + section {
   border-top: solid 1px $g1;
+}
+
+.section-small {
+  position: relative;
+  padding: .3em 1.4em 0.1em 1.4em;
 }
 
 .box h3 a, .box a h3 {

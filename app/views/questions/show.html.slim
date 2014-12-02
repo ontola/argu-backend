@@ -5,6 +5,9 @@
     section
       h1.que-t= @question.title
       p= @question.supped_content.html_safe
+    - if @question.tags.present?
+      = render partial: 'tags/tags', locals: {resource: @question}
+    = render @question.creator, locals= {resource: @question}
     -if policy(@question).update?
       ul.btns-list.btns-sticky.btns-sticky-bottom.btns-vertical
         -if policy(@question).destroy?
@@ -18,6 +21,4 @@
         li= link_to url_for([:edit, @question]) do
           span.fa.fa-pencil
           span.icon-left=t('edit')
-    = render partial: 'tags/tags', locals: {resource: @question}
-    = render @question.creator, locals= {resource: @question}
 ==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))

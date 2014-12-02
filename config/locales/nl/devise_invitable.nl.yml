@@ -8,7 +8,7 @@ nl:
       no_invitations_remaining: "Je hebt geen uitnodigingen meer."
       invitation_removed: 'Jouw uitnodiging is verwijderd.'
       new:
-        header: "Uitnodigingen versturen"
+        header: "uitnodigingen versturen"
         submit_button: "Verstuur uitnodiging"
       edit:
         header: "Stel je wachtwoord in"
