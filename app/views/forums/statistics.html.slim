@@ -18,6 +18,6 @@
     - if @tags.present?
       ul
       - @tags.each do |tag|
-        li= "#{tag[:count]} - #{tag[:name]}"
+        li= link_to "#{tag[:count]} - #{tag[:name]}", forum_tag_url(@forum.web_url, id: tag[:name])
     - else
       p _No tags yet_
