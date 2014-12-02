@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  include ArguBase
+
   has_many :authentications, dependent: :destroy
   belongs_to :profile, dependent: :destroy
 
@@ -7,18 +9,17 @@ class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable
-  devise :database_authenticatable, :registerable,
+  devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable#,
          #:validatable, :omniauthable
 
   before_create :check_for_profile
   after_destroy :cleanup
   before_save { |user| user.email = email.downcase unless email.blank? }
-  before_save :normalize_blank_values
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
-  attr_accessor :login, :current_password, :email
+  attr_accessor :login, :current_password
 
   USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][a-zA-Z0-9]*\z/i
 
@@ -35,22 +36,23 @@ class User < ActiveRecord::Base
     self.profile.name.presence || self.username
   end
 
+  def invitations_left
+    invitation_limit - invitations_count
+  end
+
   def web_url
     username
   end
 
 #######Utility########
   def getLogin
-    return (:username.blank? ? email : username )
+    #return (:username.blank? ? email : username )
+    return (:email.blank? ? username : email )
   end
 
 #########Auth##############
   def apply_omniauth(omniauth)
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
-  end
-
-  def email_required?
-    (authentications.empty?) && super
   end
 
   def isOmniOnly
@@ -70,12 +72,6 @@ private
 
   def cleanup
     self.authentications.destroy_all
-  end
-
-  def normalize_blank_values
-    attributes.each do |column, value|
-      self[column].present? || self[column] = nil unless column.eql?(:roles) || column.eql?(:roles_mask)
-    end
   end
 
   def self.find_first_by_auth_conditions(warden_conditions)

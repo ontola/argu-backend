@@ -2,6 +2,8 @@
 
 nl:
   forums:
+    resource_name: "forum"
+    settings: "instellingen"
     scope_names:
       scope_group: "Groepen"
       scope_org: "Bedrijven"

@@ -1,4 +1,6 @@
 class Comment < ActiveRecord::Base
+  include ArguBase
+
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 
   after_validation :increase_counter_cache

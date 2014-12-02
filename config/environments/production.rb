@@ -8,7 +8,7 @@ Argu::Application.configure do
   config.epics.advanced_navigation = false            # Navigation by tags and such
   config.epics.search = false                         # Search enabled?
   config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
-  config.epics.forum_selector = false                 # Show forum selector in nav bar?
+  config.epics.forum_selector = true                  # Show forum selector in nav bar?
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -63,6 +63,18 @@ Argu::Application.configure do
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] || 'argu.co' }
+
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+      address:              'smtp.gmail.com',
+      port:                 587,
+      domain:               'argu.nl',
+      user_name:            'info@argu.nl',
+      password:             ENV['ARGU_GMAIL_PASS'] || Application.secrets.argu_gmail_pass,
+      authentication:       'plain',
+      enable_starttls_auto: true  }
 
   # Enable threaded mode
   # config.threadsafe!

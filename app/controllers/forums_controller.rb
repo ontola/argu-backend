@@ -10,6 +10,21 @@ class ForumsController < ApplicationController
   def settings
     @forum = Forum.friendly.find params[:id]
     authorize @forum, :update?
+    current_context @forum
+  end
+
+  def statistics
+    @forum = Forum.friendly.find params[:id]
+    authorize @forum, :statistics?
+    current_context @forum
+
+    @tags = []
+    tag_ids = Tagging.where(forum_id: @forum.id).select(:tag_id).distinct.map(&:tag_id)
+    tag_ids.each do |tag_id|
+      taggings = Tagging.where(forum_id: @forum.id, tag_id: tag_id)
+      @tags << {name: Tag.find(taggings.first.tag_id).name, count: taggings.length}
+    end
+    @tags = @tags.sort  { |x,y| y[:count] <=> x[:count] }
   end
 
   def update
@@ -31,8 +46,6 @@ class ForumsController < ApplicationController
 
 private
   def permit_params
-    params.require(:forum).permit :name, :web_url, :bio, :tags, :tag_list,
-                                         {memberships_attributes: [:role, :id, :profile_id, :forum_id]}, :profile_photo, :cover_photo,
-                                         :cover_photo_original_w, :cover_photo_original_h, :cover_photo_box_w, :cover_photo_crop_x, :cover_photo_crop_y, :cover_photo_crop_w, :cover_photo_crop_h, :cover_photo_aspect
+    params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)
   end
 end

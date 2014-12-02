@@ -6,6 +6,12 @@ class PagePolicy < RestrictivePolicy
 
   end
 
+  def permitted_attributes
+    attributes = super
+    attributes << [:name, :bio, :tag_list] if update?
+    attributes << :page_id if change_owner?
+  end
+
   ######CRUD######
   def show?
     super
@@ -29,12 +35,6 @@ class PagePolicy < RestrictivePolicy
 
   def add_question?
     false || update?
-  end
-
-  #######Attributes########
-  # Can the current user change the forum web_url? (currently a subdomain)
-  def web_url?
-    (user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || staff?
   end
 
 end

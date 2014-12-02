@@ -1,4 +1,6 @@
 class Vote < ActiveRecord::Base
+  include ArguBase
+
   belongs_to :voteable, polymorphic: true, autosave: true
   belongs_to :voter, polymorphic: true
 

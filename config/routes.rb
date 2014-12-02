@@ -34,7 +34,7 @@ Argu::Application.routes.draw do
     get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
   end
 
-  resources :questions, only: [:show, :edit, :update] do
+  resources :questions, only: [:show, :edit, :update, :destroy] do
     get 'tags',      to: 'tags/motions#index', on: :collection
     get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
   end
@@ -52,6 +52,7 @@ Argu::Application.routes.draw do
 
   resources :forums, except: [:index, :edit] do
     get :settings, on: :member
+    get :statistics, on: :member
     resources :memberships, only: [:create, :destroy]
     resources :questions, only: [:index, :new, :create]
     resources :motions, only: [:new, :create]
@@ -63,7 +64,7 @@ Argu::Application.routes.draw do
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     namespace :portal do
-      resources :pages, only: [:show, :new, :create]
+      resources :pages, only: [:show, :new, :create, :destroy]
       resources :forums, only: [:new, :create]
       mount Sidekiq::Web => '/sidekiq'
     end
@@ -74,7 +75,7 @@ Argu::Application.routes.draw do
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
   get '/settings', to: 'users#edit', as: 'settings'
-  post '/settings', to: 'users#update'
+  put '/settings', to: 'users#update'
 
   get '/sign_in_modal', to: 'static_pages#sign_in_modal'
   get '/about', to: 'static_pages#about'

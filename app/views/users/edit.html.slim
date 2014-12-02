@@ -2,23 +2,21 @@
   header
     h1= t("users_show_title")
   .box
-    =semantic_form_for @user, url: settings_path(method: :put), method: :put do |f|
+    =semantic_form_for @user, url: settings_path, method: :put do |f|
       section
+        = f.semantic_errors :email, :base
+
         label= t("users_username")
         = f.text_field(:username)
 
-        label= t("users_name")
-        = f.fields_for :profile do |profile|
-          = profile.text_field(:name, placeholder: t("users_name_placeholder"))
-
         label= t("users_email")
-        = f.email_field(:email, placeholder: current_user.email.blank? ? t("users_email_placeholder") : current_user.email)
+        = f.email_field(:email, value: @user.email, placeholder: @user.email.blank? ? t("users_email_placeholder") : @user.email)
 
         label= t("users_password_edit")
-        = f.password_field("")
+        = f.password_field :password
 
         label= t("users_password_confirmation")
-        = f.password_field("")
+        = f.password_field :password_confirmation
 
         /TODO fix this. Authentications are not showing up.
         - if @authentications.present?
@@ -36,5 +34,3 @@
 
         = f.actions do
           = f.action :submit, :as => :button, label: t("save")
-        /= user.submit(t("save"), class: "btn btn-sticky btn-sticky-bottom pro-bg")
-

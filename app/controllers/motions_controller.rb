@@ -16,8 +16,8 @@ class MotionsController < ApplicationController
   # GET /motions/1.json
   def show
     @motion = Motion.includes(:arguments, :opinions).find(params[:id])
-    current_context @motion
     authorize @motion
+    current_context @motion
     @arguments = Argument.ordered @motion.arguments
     @opinions = Opinion.ordered @motion.opinions
     @voted = Vote.where(voteable: @motion, voter: current_profile).last.try(:for) unless current_user.blank?

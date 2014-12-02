@@ -7,7 +7,7 @@ private
     values = []
     [:pro, :con].each do |side|
       is_checked = side == (model.pro ? :pro : :con)
-      values << [t("#{model.class.name.tableize}.form.side.#{side}"), side, {checked: is_checked, class: "#{'checked' if is_checked}"}]
+      values << [t("#{model.class_name}.form.side.#{side}"), side, {checked: is_checked, class: "#{'checked' if is_checked}"}]
     end
     values
   end

@@ -90,7 +90,7 @@ class Context
 
   # Generates a URL for the model
   def url
-    url_for(controller: @model.class.name.downcase.pluralize.to_sym, action: :show, id: (@model.try(:web_url) || @model.id), only_path: true) if @model
+    url_for(controller: @model.class_name.to_sym, action: :show, id: (@model.try(:web_url) || @model.id), only_path: true) if @model
   end
 
   # Generates a HTTP query compatible string to parse back the breadcrumb stack
