@@ -10,10 +10,11 @@ class TagsController < ApplicationController
   end
 
   def show
+    @forum = Forum.friendly.find params[:forum_id]
     @tag = Tag.find_or_create_by(name: params[:id])
     authorize @tag, :show?
 
-    @collection = (Motion.tagged_with(params[:id]).concat(Question.tagged_with(params[:id]))).sort_by(&:created_at).reverse
+    @collection = (Motion.tagged_with(params[:id]).where(forum_id: @forum.id).concat(Question.tagged_with(params[:id]).where(forum_id: @forum.id))).sort_by(&:created_at).reverse
 
     if params[:id].present?
       @motions = {collection: @collection } # TODO rewrite motion to exclude where motion.tag_id

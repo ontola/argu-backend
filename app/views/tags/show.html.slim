@@ -1,5 +1,5 @@
 h1.center
-  = '_tags_'
+  = @forum.display_name + ' |'
   a.tag.center.smallertag= @tag.name
 = render partial: 'motions/tag_motion', locals: { motion: @tag.motion } if @tag.motion
 =render_columns({'' => @motions}, collection_model: Motion)
