@@ -6,4 +6,12 @@ $(document).ready(function() {
     if (!("ontouchstart" in document.documentElement)) {
         document.documentElement.className += " no-touch";
     }
+    var bg = $(".background"),
+        _window = $(window);
+    var resizeBackground = function () {
+        bg.height(_window.height() + 160);
+    }
+    _window.resize(resizeBackground);
+    resizeBackground();
+
 });

@@ -6,8 +6,14 @@
   =render @argument.creator, locals= {resource: @argument}
   ul.btns-list.btns-vertical.btn-sticky.btn-sticky-bottom
     - if policy(@argument).destroy?
-      li= link_to t("destroy"), argument_path(@argument), method: :delete, destroy: true
+      li= link_to(argument_path(@argument), method: :delete, destroy: true) do
+        span.fa.fa-close
+        span.icon-left= t("destroy")
     - if policy(@argument).trash?
-      li= link_to(t("trash"), argument_path(@argument), method: :delete)
+      li= link_to(argument_path(@argument), method: :delete) do
+        span.fa.fa-trash
+        span.icon-left= t("trash")
     - if policy(@argument).update?
-      li= link_to(t("edit"), edit_argument_path(@argument))
+      li= link_to(edit_argument_path(@argument)) do
+        span.fa.fa-pencil
+        span.icon-left= t("edit")

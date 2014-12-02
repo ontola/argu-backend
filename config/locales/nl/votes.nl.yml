@@ -4,8 +4,8 @@ nl:
   votes:
     score: "score:"
     header:
-      pro: "voor"
+      pro: "ik ben voor"
       neutral: "weet nog niet"
-      con: "tegen"
+      con: "ik ben tegen"
     tooltips:
       argument: "belangrijk argument"

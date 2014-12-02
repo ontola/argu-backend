@@ -82,8 +82,19 @@ section + section {
 }
 
 .box-list .box {
+  border-radius: 0;
   margin-bottom: 0;
   border-bottom: solid 1px $g1;
+}
+
+.box-list:last-child{
+  @include border-radius;
+  border-top-radius: 0;
+}
+
+.box-list:first-child{
+  @include border-radius;
+  border-bottom-radius: 0;
 }
 
 .box-with-btns {
