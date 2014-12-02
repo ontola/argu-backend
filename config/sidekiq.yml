@@ -1,0 +1,4 @@
+user: deploy
+:queues:
+  - default
+  - [carrierwave, 2]

@@ -1,4 +1,4 @@
-class Tags::MotionsController < ApplicationController
+class TagsController < ApplicationController
 
   def index
     if params[:q].present?
@@ -10,12 +10,20 @@ class Tags::MotionsController < ApplicationController
   end
 
   def show
-    @tag = Tag.find_or_create_by(name: params[:tag])
+    @tag = Tag.find_or_create_by(name: params[:id])
     authorize @tag, :show?
-    if params[:tag].present? 
-      @motions = {collection: Motion.tagged_with(params[:tag])} # TODO rewrite motion to exclude where motion.tag_id
+
+    @collection = (Motion.tagged_with(params[:id]).concat(Question.tagged_with(params[:id]))).sort_by(&:created_at).reverse
+
+    if params[:id].present?
+      @motions = {collection: @collection } # TODO rewrite motion to exclude where motion.tag_id
     else
       @motions = Motion.postall
+    end
+
+    respond_to do |format|
+      format.html
+      format.json
     end
   end
 
