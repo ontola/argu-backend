@@ -41,7 +41,8 @@ class QuestionsController < ApplicationController
     @forum = Forum.friendly.find params[:forum_id]
     authorize @forum, :add_question?
 
-    @question = @forum.questions.new permit_params
+    @question = @forum.questions.new
+    @question.attributes= permit_params
     @question.creator = current_profile
     authorize @question
 

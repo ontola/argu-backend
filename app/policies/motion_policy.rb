@@ -10,14 +10,17 @@ class MotionPolicy < RestrictivePolicy
     def resolve
       scope
     end
+  end
 
-    def permitted_attributes
-      attributes = super
-      attributes << [:title, :content, :arguments, :tag_list] if create?
-      attributes << [:id] if edit?
-      attributes << [:invert_arguments, :tag_id] if staff?
-    end
+  def permitted_attributes
+    attributes = super
+    attributes << [:title, :content, :arguments, :tag_list] if create?
+    attributes << [:id] if edit?
+    attributes << [:invert_arguments, :tag_id] if staff?
+  end
 
+  def create?
+    is_member? || super
   end
 
   def edit?
