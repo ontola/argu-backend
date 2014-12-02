@@ -9,6 +9,7 @@ Argu::Application.configure do
   config.epics.search = false                         # Search enabled?
   config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
   config.epics.forum_selector = true                  # Show forum selector in nav bar?
+  config.epics.sign_up = false                        # Can users sign up outside of invitations
 
   # Code is not reloaded between requests
   config.cache_classes = true

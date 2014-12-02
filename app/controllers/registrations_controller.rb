@@ -1,6 +1,15 @@
 class RegistrationsController < Devise::RegistrationsController
 
+  def new
+    if !Rails.configuration.epics.sign_up
+      redirect_to :root
+    else
+      super
+    end
+  end
+
   def create
+    redirect_to :root if !Rails.configuration.epics.sign_up
     super
     session[:omniauth] = nil unless @user.new_record?
   end
