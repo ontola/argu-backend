@@ -16,11 +16,10 @@ class User < ActiveRecord::Base
   before_create :check_for_profile
   after_destroy :cleanup
   before_save { |user| user.email = email.downcase unless email.blank? }
-  before_save :normalize_blank_values
 
   # Virtual attribute for authenticating by either username or email
   # This is in addition to a real persisted field like 'username'
-  attr_accessor :login, :current_password, :email
+  attr_accessor :login, :current_password
 
   USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][a-zA-Z0-9]*\z/i
 
@@ -47,7 +46,8 @@ class User < ActiveRecord::Base
 
 #######Utility########
   def getLogin
-    return (:username.blank? ? email : username )
+    #return (:username.blank? ? email : username )
+    return (:email.blank? ? username : email )
   end
 
 #########Auth##############
@@ -72,12 +72,6 @@ private
 
   def cleanup
     self.authentications.destroy_all
-  end
-
-  def normalize_blank_values
-    attributes.each do |column, value|
-      self[column].present? || self[column] = nil unless column.eql?(:roles) || column.eql?(:roles_mask)
-    end
   end
 
   def self.find_first_by_auth_conditions(warden_conditions)

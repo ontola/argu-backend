@@ -32,14 +32,14 @@ class UsersController < ApplicationController
 
   # PUT /settings
   def update
-    @user = current_user
+    @user = User.find current_user.id
     authorize @user
-
     respond_to do |format|
       if @user.update_attributes(permit_params)
         format.html { redirect_to settings_path, notice: "Wijzigingen opgeslagen." }
         format.json { head :no_content }
       else
+        fdsas
         format.html { render action: "edit" }
         format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
@@ -62,6 +62,6 @@ class UsersController < ApplicationController
 
   private
   def permit_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation, profile_attributes: [:name])
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
 end
