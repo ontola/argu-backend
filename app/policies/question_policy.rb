@@ -11,11 +11,15 @@ class QuestionPolicy < RestrictivePolicy
       scope
     end
 
-    def permitted_attributes
-      attributes = super
-      attributes << [:id, :title, :content, :tag_list, :forum_id] if edit?
+    def is_member?
+      user.profile.member_of? record.forum
     end
 
+  end
+
+  def permitted_attributes
+    attributes = super
+    attributes << [:id, :title, :content, :tag_list, :forum_id] if edit?
   end
 
   def edit?

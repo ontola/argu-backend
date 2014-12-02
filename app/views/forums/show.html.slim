@@ -3,7 +3,7 @@
       section
         h1= @forum.name
         p.quote = @forum.bio
-        -if !policy(@forum).member?
+        -if !policy(@forum).is_member?
           =link_to 'join', forum_memberships_path(@forum.web_url), method: :create, class: 'btn'
         -if policy(@forum).update?
           =link_to settings_forum_path(@forum), class: 'btn-subtle btn-sticky' do

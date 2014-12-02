@@ -55,7 +55,11 @@ class MotionsController < ApplicationController
   # POST /motions.json
   def create
     get_context
-    @motion = @forum.motions.new permit_params
+    authorize @forum, :add_motion?
+
+    @motion = @forum.motions.new
+    @motion.attributes= permit_params
+    @question_id = params[:question_id] || params[:motion][:question_id]
     @motion.creator = current_profile
     @motion.questions << @question if @question.present?
     authorize @motion
@@ -105,7 +109,7 @@ class MotionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to @motion.get_parent }
+      format.html { redirect_to @motion.get_parent.model }
       format.json { head :no_content }
     end
   end
