@@ -105,7 +105,7 @@ class ArgumentsController < ApplicationController
 
 private
   def argument_params
-    params.require(:argument).permit :title, :content, :pro, :motion_id
+    params.require(:argument).permit(*policy(@argument || Argument).permitted_attributes)
   end
 
 end
