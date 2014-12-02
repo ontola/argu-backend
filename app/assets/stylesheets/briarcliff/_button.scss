@@ -144,6 +144,9 @@
   display: block;
   color: $g3;
   padding: 0.5em .6em .4em .6em;
+  @include bp-small {
+    font-size: 1em;
+  }
   &:hover {
     background-color: $darken1;
     color: $g4;
@@ -153,17 +156,18 @@
   }
 }
 
+.btns-list .icon-left, .btns-list .icon-left {
+  @include bp-small {
+    display: none;
+  }
+}
+
 .btns-opinion {
   display: block;
   margin-bottom: 1em;
   width: 100%;
   width: calc(100% + 1em);
   margin-left: -0.5em;
-
-  @include bp-small {
-    width: 100%;
-    margin-left: 0;
-  }
 
   li {
     display: inline-block;
@@ -301,9 +305,9 @@ h1 + .btn {
 }
 
 .icon-left {
-  margin-right: .4em;
+  margin-left: .4em;
 }
 
 .icon-right {
-  margin-left: .4em;
+  margin-right: .4em;
 }

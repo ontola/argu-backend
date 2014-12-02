@@ -4,6 +4,7 @@ nl:
   forums:
     resource_name: "forum"
     settings: "instellingen"
+    suggestions: "suggesties"
     scope_names:
       scope_group: "Groepen"
       scope_org: "Bedrijven"

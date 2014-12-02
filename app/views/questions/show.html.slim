@@ -9,15 +9,15 @@
       ul.btns-list.btns-sticky.btns-sticky-bottom.btns-vertical
         -if policy(@question).destroy?
           li= link_to url_for([@question, destroy: true]), method: :delete, confirm: t("destroy_confirmation") do
-            span.fa.fa-close.icon-left
-            span=t('destroy')
+            span.fa.fa-close
+            span.icon-left=t('destroy')
         -if policy(@question).trash?
           li= link_to url_for(@question), method: :delete, confirm: t("trash_confirmation") do
-            span.fa.fa-trash.icon-left
-            span=t('trash')
-          li= link_to url_for([:edit, @question]) do
-            span.fa.fa-pencil.icon-left
-            span=t('edit')
+            span.fa.fa-trash
+            span.icon-left=t('trash')
+        li= link_to url_for([:edit, @question]) do
+          span.fa.fa-pencil
+          span.icon-left=t('edit')
     = render partial: 'tags/tags', locals: {resource: @question}
     = render @question.creator, locals= {resource: @question}
 ==render_columns({'' => {collection: @motions}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))

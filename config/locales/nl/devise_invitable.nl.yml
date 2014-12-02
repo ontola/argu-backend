@@ -1,21 +1,22 @@
 nl:
   devise:
     invitations:
-      send_instructions: 'An invitation email has been sent to %{email}.'
-      invitation_token_invalid: 'The invitation token provided is not valid!'
-      updated: 'Your password was set successfully. You are now signed in.'
-      no_invitations_remaining: "No invitations remaining"
-      invitation_removed: 'Your invitation was removed.'
+      link: 'betrek anderen'
+      send_instructions: 'Een uitnodiging is verstuurd naar %{email}.'
+      invitation_token_invalid: 'Oeps! De code van de uitnodiging is ongeldig.'
+      updated: 'Je hebt je wachtwoord ingesteld. Je bent nu ingelogd.'
+      no_invitations_remaining: "Je hebt geen uitnodigingen meer."
+      invitation_removed: 'Jouw uitnodiging is verwijderd.'
       new:
         header: "Nodig anderen uit voor Argu"
         submit_button: "Verstuur uitnodiging"
       edit:
-        header: "Set your password"
-        submit_button: "Set my password"
+        header: "Stel je wachtwoord in"
+        submit_button: "Wachtwoord opslaan"
     mailer:
       invitation_instructions:
-        subject: 'Invitation instructions'
-        hello: 'Hello %{email}'
-        someone_invited_you: 'Someone has invited you to %{url}, you can accept it through the link below.'
-        accept: 'Accept invitation'
-        ignore: "If you don't want to accept the invitation, please ignore this email.<br />Your account won't be created until you access the link above and set your password."
+        subject: 'Uitnodiging voor Argu'
+        hello: 'Beste wereldverbeteraar,'
+        someone_invited_you: 'Gefeliciteerd! Iemand heeft je uitgenodigd voor de gesloten bètatest van Argu.  Je kan deze uitnodiging accepteren door op de onderstaande link te klikken.'
+        accept: 'Accepteer uitnodiging'
+        ignore: "Als je geen interesse hebt, kan je deze uitnodiging gewoo negeren. Jouw account wordt pas aangemaakt wanneer je de link opent en een wachtwoord instelt."

@@ -6,13 +6,13 @@
     ul.btns-sticky.btns-sticky-bottom.btns-vertical.btns-list
       - if policy(Comment).create?
         li= link_to polymorphic_url([resource], parent_id: c.id), html_options = { id: c.id, class: "btn-reply" } do
-          span.fa.fa-reply.icon-left
-          span = t('reply')
+          span.fa.fa-reply
+          span.icon-left = t('reply')
       end
       - if policy(c).trash?
         li= link_to polymorphic_url([resource, c]), method: :delete do
-          span.fa.fa-trash.icon-left
-          span = t('trash')
+          span.fa.fa-trash
+          span.icon-left = t('trash')
   .comment
     .box= render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false }
   - if c.has_children?
