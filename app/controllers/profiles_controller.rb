@@ -35,7 +35,7 @@ class ProfilesController < ApplicationController
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.jsoon { render json: @profile.errors, status: :unprocessable_entity }
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
     end
   end
