@@ -72,7 +72,7 @@ Argu::Application.configure do
       port:                 587,
       domain:               'argu.nl',
       user_name:            'info@argu.nl',
-      password:             ENV['ARGU_GMAIL_PASS'] || Application.secrets.argu_gmail_pass,
+      password:             ENV['ARGU_GMAIL_PASS'] || Rails.application.secrets.argu_gmail_pass,
       authentication:       'plain',
       enable_starttls_auto: true  }
 
