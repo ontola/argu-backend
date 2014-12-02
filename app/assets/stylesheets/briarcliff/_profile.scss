@@ -6,6 +6,7 @@
   padding: 0;
   height: 2.5em;
   overflow: hidden;
+  border-top: solid 1px $g1;
   @include border-radius;
   border-top-left-radius: 0;
   border-top-right-radius: 0;

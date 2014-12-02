@@ -67,6 +67,24 @@ section + section {
 
 }
 
+.box .read-more {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  text-transform: uppercase;
+  font-size: .7em;
+  padding: .4em;
+  color: $g2;
+  &:hover{
+    background-color: $darken0;
+    color: $g4 !important;
+  }
+}
+
+.box:hover .read-more {
+  color: $g3;
+}
+
 .box-divider {
   border-top: solid 1px #e8e8e8;
   width: calc(100% + 2em);

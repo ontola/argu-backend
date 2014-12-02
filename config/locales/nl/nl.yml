@@ -19,6 +19,7 @@ nl:
   not_found_type: "%{type} niet gevonden"
   edit: "bewerken"
   edit_type: "%{type} bewerken"
+  read-more: "lees meer"
   update: "bijwerken"
   update_type: "%{type} bijwerken"
   save: "opslaan"

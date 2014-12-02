@@ -1,5 +1,7 @@
-h1.center
-  = @forum.display_name + ' |'
-  a.tag.center.smallertag= @tag.name
+.center
+      span Resultaten voor
+      .tag= @tag.name
+      span binnen forum
+      .tag.tag-forum= @forum.display_name
 = render partial: 'motions/tag_motion', locals: { motion: @tag.motion } if @tag.motion
 =render_columns({'' => @collection}, header_text: false, collection_model: Motion)

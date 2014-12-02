@@ -9,7 +9,7 @@ ul.tags {
 }
 
 .tag {
-  color: #4c88a8 !important;
+  color: $blu;
   text-transform: uppercase;
   font-weight: bold;
   font-size: .8em;
@@ -20,6 +20,20 @@ ul.tags {
   margin: .3em;
   @include border-radius;
 }
+
 a.tag:hover {
   background-color: $blul;
+}
+
+.tag-forum {
+  color: $g4 !important;
+}
+
+
+.box .tags {
+  margin-left: .5em;
+}
+
+.tags-floating {
+  margin-left: -.25em;
 }
