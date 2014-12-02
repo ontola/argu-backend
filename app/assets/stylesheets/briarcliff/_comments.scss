@@ -23,6 +23,18 @@
   margin: 0 auto;
 }
 
+.comments-counter{
+  right: .5em;
+  bottom: .5em;
+  font-size: .8em;
+  position: absolute;
+  color: $g2;
+}
+
+.top-comment:hover .comments-counter{
+  color: $g4;
+}
+
 .comment:before {
   content: "";
   background-color: rgba(0, 0, 0, 0.0);

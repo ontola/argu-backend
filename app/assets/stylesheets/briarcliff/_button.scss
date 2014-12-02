@@ -34,12 +34,6 @@
   color: white;
 }
 
-.btn-comments {
-  right: 0;
-  bottom: 0;
-  position: absolute;
-}
-
 .btn-big {
   background-color: white;
   color: #828282;
@@ -178,27 +172,39 @@
     width: 33.3%;
     width: calc(33.3% - 1em);
     margin: 0 .5em;
-    @include bp-small {
-      display: block;
-      width: 100%;
-      margin: 0 0 .3em 0;
-    }
   }
   a {
     width: 100%;
     display: inline-block;
     padding: 0.7em 1.1em;
     padding-bottom: 0.6em;
-    font-weight: bold;
     @include border-radius;
     line-height: 1.6em;
     text-transform: uppercase;
     top: 0;
     position: relative;
     @include box-shadow;
+    font-size: .9em;
     &:active{
       top: 2px;
       box-shadow: none;
+    }
+    .fa {
+      font-size: 1.2em;
+      vertical-align: center;
+    }
+    @include bp-medium{
+      span{
+      display: block
+      }
+    }
+    @include bp-small{
+      span{
+        display: none;
+      }
+      span.fa{
+        display: initial;
+      }
     }
   }
   .btn-pro {

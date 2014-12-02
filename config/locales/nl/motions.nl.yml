@@ -16,7 +16,7 @@ nl:
     content: "inhoud"
     votes:
       pro: "ik ben voor"
-      neu: "ik weet het nog niet"
+      neu: "weet nog niet"
       con: "ik ben tegen"
     preview:
       pro:

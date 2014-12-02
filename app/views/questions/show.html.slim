@@ -6,22 +6,18 @@
       h1.que-t= @question.title
       p= @question.supped_content.html_safe
     -if policy(@question).update?
-      .btn-subtle.btn-sticky.btn-sticky-top.dropdown-trigger
-        span.fa.fa-gear.icon-left
-        span menu
-        ul.dropdown-content.dropdown-right
-          -if policy(@question).destroy?
-            li= link_to url_for([@question, destroy: true]), method: :delete, confirm: t("destroy_confirmation") do
-              span.fa.fa-close.icon-left
-              span=t('destroy')
-          -if policy(@question).trash?
-            li= link_to url_for(@question), method: :delete, confirm: t("trash_confirmation") do
-              span.fa.fa-trash.icon-left
-              span=t('trash')
-
-            li= link_to url_for([:edit, @question]) do
-              span.fa.fa-pencil.icon-left
-              span=t('edit')
+      ul.btns-list.btns-sticky.btns-sticky-bottom.btns-vertical
+        -if policy(@question).destroy?
+          li= link_to url_for([@question, destroy: true]), method: :delete, confirm: t("destroy_confirmation") do
+            span.fa.fa-close.icon-left
+            span=t('destroy')
+        -if policy(@question).trash?
+          li= link_to url_for(@question), method: :delete, confirm: t("trash_confirmation") do
+            span.fa.fa-trash.icon-left
+            span=t('trash')
+          li= link_to url_for([:edit, @question]) do
+            span.fa.fa-pencil.icon-left
+            span=t('edit')
     = render partial: 'tags/tags', locals: {resource: @question}
     = render @question.creator, locals= {resource: @question}
 ==render_columns({'' => {collection: @motions}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))
