@@ -16,7 +16,7 @@ class Profile < ActiveRecord::Base
 
   ######Attributes#######
   def display_name
-    self.name.presence
+    self.name.presence || ''
   end
 
   def web_url
