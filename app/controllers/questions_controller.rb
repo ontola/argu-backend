@@ -6,7 +6,7 @@ class QuestionsController < ApplicationController
     @forum = @question.forum
     current_context @question
     #@voted = Vote.where(voteable: @question, voter: current_user).last.try(:for) unless current_user.blank?
-    @motions = @question.motions
+    @motions = policy_scope(@question.motions)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -92,6 +92,6 @@ class QuestionsController < ApplicationController
 
 private
   def permit_params
-    params.require(:question).permit(:id, :title, :content, :tag_list, :forum_id)
+    params.require(:question).permit(*policy(@question || Question).permitted_attributes)
   end
 end

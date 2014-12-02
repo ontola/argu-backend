@@ -66,6 +66,10 @@ class RestrictivePolicy
     staff?
   end
 
+  def is_creator?
+    record.creator == user.profile
+  end
+
   def scope
     Pundit.policy_scope!(user, record.class)
   end
@@ -79,7 +83,7 @@ class RestrictivePolicy
     end
 
     def resolve
-      scope
+      scope if @user.profile.has_role? :staff
     end
   end
 

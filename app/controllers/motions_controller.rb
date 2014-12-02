@@ -18,8 +18,8 @@ class MotionsController < ApplicationController
     @motion = Motion.includes(:arguments, :opinions).find_by_id(params[:id])
     authorize @motion
     current_context @motion
-    @arguments = Argument.ordered @motion.arguments
-    @opinions = Opinion.ordered @motion.opinions
+    @arguments = Argument.ordered policy_scope(@motion.arguments)
+    @opinions = Opinion.ordered policy_scope(@motion.opinions)
     @voted = Vote.where(voteable: @motion, voter: current_profile).last.try(:for) unless current_user.blank?
 
     respond_to do |format|
@@ -97,7 +97,7 @@ class MotionsController < ApplicationController
   def destroy
     @motion = Motion.find_by_id params[:id]
     if params[:destroy].to_s == 'true'
-      authorize @motion
+      authorize @motion, :destroy?
       @motion.destroy
     else
       authorize @motion, :trash?
@@ -112,7 +112,7 @@ class MotionsController < ApplicationController
 
 private
   def permit_params
-    params.require(:motion).permit(:id, :title, :content, :arguments, :statetype, :tag_list, :invert_arguments, :tag_id)
+    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
   end
 
   def get_context
