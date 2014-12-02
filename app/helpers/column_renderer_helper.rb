@@ -27,14 +27,18 @@ module ColumnRendererHelper
 
   #
   def header(options)
-    content_tag :header do
-      content_tag :h1, options[:header]
+    if !(defined?(options[:header]) && options[:header] == false)
+        content_tag :header do
+          content_tag :h1, options[:header]
+        end
     end
   end
 
   # This generates the translations for the header text, e.g. "arguments.header.pro"
   def header_text(options, key)
-    I18n.t("#{options[:collection_model].to_s.pluralize.downcase}.header.#{key}")
+    if !(defined?(options[:header_text]) && options[:header_text] == false)
+      I18n.t("#{options[:collection_model].to_s.pluralize.downcase}.header.#{key}")
+    end
   end
 
   def show_new_buttons(options, key)
