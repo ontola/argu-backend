@@ -15,7 +15,7 @@ class MotionsController < ApplicationController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    @motion = Motion.includes(:arguments, :opinions).find(params[:id])
+    @motion = Motion.includes(:arguments, :opinions).find_by_id(params[:id])
     authorize @motion
     current_context @motion
     @arguments = Argument.ordered @motion.arguments
@@ -105,7 +105,7 @@ class MotionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to motions_url }
+      format.html { redirect_to @motion.get_parent }
       format.json { head :no_content }
     end
   end
