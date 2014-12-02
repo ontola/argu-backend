@@ -18,8 +18,8 @@ class MotionsController < ApplicationController
     @motion = Motion.includes(:arguments, :opinions).find_by_id(params[:id])
     authorize @motion
     current_context @motion
-    @arguments = Argument.ordered @motion.arguments
-    @opinions = Opinion.ordered @motion.opinions
+    @arguments = Argument.ordered policy_scope(@motion.arguments)
+    @opinions = Opinion.ordered policy_scope(@motion.opinions)
     @voted = Vote.where(voteable: @motion, voter: current_profile).last.try(:for) unless current_user.blank?
 
     respond_to do |format|
@@ -55,7 +55,11 @@ class MotionsController < ApplicationController
   # POST /motions.json
   def create
     get_context
-    @motion = @forum.motions.new permit_params
+    authorize @forum, :add_motion?
+
+    @motion = @forum.motions.new
+    @motion.attributes= permit_params
+    @question_id = params[:question_id] || params[:motion][:question_id]
     @motion.creator = current_profile
     @motion.questions << @question if @question.present?
     authorize @motion
@@ -97,7 +101,7 @@ class MotionsController < ApplicationController
   def destroy
     @motion = Motion.find_by_id params[:id]
     if params[:destroy].to_s == 'true'
-      authorize @motion
+      authorize @motion, :destroy?
       @motion.destroy
     else
       authorize @motion, :trash?
@@ -105,14 +109,14 @@ class MotionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.html { redirect_to @motion.get_parent }
+      format.html { redirect_to @motion.get_parent.model }
       format.json { head :no_content }
     end
   end
 
 private
   def permit_params
-    params.require(:motion).permit(:id, :title, :content, :arguments, :statetype, :tag_list, :invert_arguments, :tag_id)
+    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
   end
 
   def get_context

@@ -13,7 +13,7 @@ module ProCon
     before_save :trim_data
     before_save :cap_title
 
-    validates :content, presence: true, length: { minimum: 5, maximum: 1500 }
+    validates :content, presence: true, length: { minimum: 5, maximum: 3000 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
     validates :creator_id, :motion_id, presence: true
 

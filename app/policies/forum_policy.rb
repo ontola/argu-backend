@@ -22,7 +22,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def show_children?
-    member? || staff?
+    is_member? || staff?
   end
 
   def new?
@@ -30,7 +30,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def create?
-    super
+    is_member? || super
   end
 
   def edit?
@@ -38,11 +38,15 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def update?
-    (user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || super
+    is_member? || super
   end
 
   def add_question?
-    false || update?
+    is_member? || staff?
+  end
+
+  def add_motion?
+    add_question?
   end
 
   def change_owner?
@@ -52,7 +56,7 @@ class ForumPolicy < RestrictivePolicy
   #######Attributes########
   # Is the current user a member of the group?
   # @note This tells nothing about whether the user can make edits on the object
-  def member?
+  def is_member?
     user && user.profile.memberships.where(forum: record).present?
   end
 

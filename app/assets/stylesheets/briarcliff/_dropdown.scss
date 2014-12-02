@@ -53,9 +53,12 @@
   left: auto;
 }
 
-.dropdown-trigger:hover .dropdown-content, .on-touch .dropdown-content {
+.dropdown-trigger:hover .dropdown-content, .dropdown-show .dropdown-content {
   //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
   display: block;
+  span {
+    display: inline-block;
+  }
 }
 
 .dropdown-col-2-1 {

@@ -8,9 +8,9 @@ nl:
     pro: "voor"
     con: "tegen"
     header:
-      pro: "voor"
-      neutral: "weet nog niet"
-      con: "tegen"
+      pro: "opinie voor"
+      neutral: "onbesloten"
+      con: "opinie tegen"
     index:
       title: "argumenten"
       opinion: "opinie"

@@ -4,20 +4,21 @@
   header
     h1 _Statistics_
   .box
-    table
-      tr
-        td _Memberships_
-        td= @forum.memberships_count
-      tr
-        td _Questions_
-        td= @forum.questions_count
-      tr
-        td _Motions_
-        td= @forum.motions_count
-    h2 _most used tags_
-    - if @tags.present?
-      ul
-      - @tags.each do |tag|
-        li= "#{tag[:count]} - #{tag[:name]}"
-    - else
-      p _No tags yet_
+    section
+      table
+        tr
+          td _Memberships_
+          td= @forum.memberships_count
+        tr
+          td _Questions_
+          td= @forum.questions_count
+        tr
+          td _Motions_
+          td= @forum.motions_count
+      h2 _most used tags_
+      - if @tags.present?
+        ul
+        - @tags.each do |tag|
+          li= link_to "#{tag[:count]} - #{tag[:name]}", forum_tag_url(@forum.web_url, id: tag[:name])
+      - else
+        p _No tags yet_

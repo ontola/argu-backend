@@ -7,10 +7,28 @@ class MotionPolicy < RestrictivePolicy
       @scope = scope
     end
 
+    def resolve
+      scope
+    end
+  end
+
+  def permitted_attributes
+    attributes = super
+    attributes << [:title, :content, :arguments, :tag_list] if create?
+    attributes << [:id] if edit?
+    attributes << [:invert_arguments, :tag_id] if staff?
+  end
+
+  def create?
+    is_member? || super
+  end
+
+  def edit?
+    is_member? && is_creator? || super
   end
 
   def index?
-    user && user.profile.memberships.where(forum: record).present? || super
+    is_member? || super
   end
 
   def show?

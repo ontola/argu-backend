@@ -8,17 +8,26 @@ class QuestionPolicy < RestrictivePolicy
     end
 
     def resolve
-      if current_scope.present?
-        scope.where(forum_id: user._current_scope.id)
-      else
-        scope.where(forum_id: nil)
-      end
+      scope
+    end
+
+    def is_member?
+      user.profile.member_of? record.forum
     end
 
   end
 
+  def permitted_attributes
+    attributes = super
+    attributes << [:id, :title, :content, :tag_list, :forum_id] if edit?
+  end
+
+  def edit?
+    is_member? && is_creator? || super
+  end
+
   def index?
-    (user._current_scope.present? && Forum.public_forms[user._current_scope.public_form] == Forum.public_forms[:f_public]) || (user && user.profile.memberships.where(forum: record).present?) || super
+    is_member? || super
   end
 
   def show?

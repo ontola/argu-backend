@@ -5,8 +5,6 @@ class ForumsController < ApplicationController
     current_context @forum
   end
 
-
-
   def settings
     @forum = Forum.friendly.find params[:id]
     authorize @forum, :update?

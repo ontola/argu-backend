@@ -1,0 +1,16 @@
+@import "variables";
+@import "mixins";
+
+#error_explanation {
+  background-color: $g3;
+  padding: 1em;
+  @include border-radius;
+  margin-bottom: 1em;
+  * {
+    color: white;
+  }
+  ul {
+    list-style: disc;
+    margin-left: 1.1em;
+  }
+}

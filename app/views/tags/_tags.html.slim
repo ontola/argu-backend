@@ -1,5 +1,4 @@
 - unless resource.tags.nil?
-  section.unpadded
-    ul.tags[title="thema's"]
-      - resource.tags.each do |tag|
-        li= link_to tag.name, url_for([:tag, resource.class_name, tag: tag.name]), class: "tag", title: t("motions.titles.tags")+tag.name
+  ul.tags[title="thema's"]
+    - resource.tags.each do |tag|
+      li= link_to tag.name, forum_tag_url(resource.forum.web_url, tag.name), class: "tag", title: t("motions.titles.tags")+tag.name

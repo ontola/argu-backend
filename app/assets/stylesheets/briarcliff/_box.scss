@@ -6,6 +6,7 @@
   background-color: white;
   margin: 0 auto;
   margin-bottom: 1em;
+  overflow: hidden;
   @include border-radius;
   @include box-shadow;
 }
@@ -47,6 +48,11 @@ section + section {
   border-top: solid 1px $g1;
 }
 
+.section-small {
+  position: relative;
+  padding: .3em 1.4em 0.1em 1.4em;
+}
+
 .box h3 a, .box a h3 {
   &:hover {
     text-decoration: underline;
@@ -67,6 +73,24 @@ section + section {
 
 }
 
+.box .read-more {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  text-transform: uppercase;
+  font-size: .7em;
+  padding: .4em;
+  color: $g2;
+  &:hover{
+    background-color: $darken0;
+    color: $g4 !important;
+  }
+}
+
+.box:hover .read-more {
+  color: $g3;
+}
+
 .box-divider {
   border-top: solid 1px #e8e8e8;
   width: calc(100% + 2em);
@@ -82,8 +106,19 @@ section + section {
 }
 
 .box-list .box {
+  border-radius: 0;
   margin-bottom: 0;
   border-bottom: solid 1px $g1;
+}
+
+.box-list:last-child{
+  @include border-radius;
+  border-top-radius: 0;
+}
+
+.box-list:first-child{
+  @include border-radius;
+  border-bottom-radius: 0;
 }
 
 .box-with-btns {

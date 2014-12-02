@@ -51,6 +51,9 @@
     top: 50%;
     transform: translateY(-50%);
     @include text-shadow;
+    @include bp-medium {
+      font-size: 2em;
+    }
   }
 }
 

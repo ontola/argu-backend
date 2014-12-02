@@ -9,6 +9,7 @@ Argu::Application.configure do
   config.epics.search = false                         # Search enabled?
   config.epics.counters = true                        # Counter caches on models (e.g. x pro, y con args)
   config.epics.forum_selector = true                  # Show forum selector in nav bar?
+  config.epics.sign_up = false                        # Can users sign up outside of invitations
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

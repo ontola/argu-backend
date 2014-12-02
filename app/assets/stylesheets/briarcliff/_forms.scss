@@ -87,6 +87,7 @@ input[type="text"].form-input-title {
 }
 
 .form-toggle {
+  overflow: hidden;
   legend {
     display: none;
   }
@@ -101,12 +102,16 @@ input[type="text"].form-input-title {
     text-align: center;
     label {
       width: 100%;
+      cursor: pointer;
     }
   }
   input {
     // Hide radio button when JS provides visual feedback on the toggled button.
     width: 0;
     height: 0;
+  }
+  label.checked {
+    text-decoration: underline;
   }
   label[for="argument_pro_con"]{
     color: $red;

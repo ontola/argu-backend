@@ -29,15 +29,9 @@ Argu::Application.routes.draw do
   resources :motions, only: [:show, :edit, :update, :delete, :destroy] do
     post 'vote/:for'      => 'votes/motions#create',   as: 'vote'
     delete 'vote'         => 'votes/motions#destroy',  as: 'vote_delete'
-
-    get 'tags',      to: 'tags/motions#index', on: :collection
-    get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
   end
 
-  resources :questions, only: [:show, :edit, :update, :destroy] do
-    get 'tags',      to: 'tags/motions#index', on: :collection
-    get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
-  end
+  resources :questions, only: [:show, :edit, :update, :destroy]
 
   resources :arguments do
     resources :comments
@@ -56,6 +50,7 @@ Argu::Application.routes.draw do
     resources :memberships, only: [:create, :destroy]
     resources :questions, only: [:index, :new, :create]
     resources :motions, only: [:new, :create]
+    resources :tags, only: [:show]
   end
 
   resources :pages, only: :show do

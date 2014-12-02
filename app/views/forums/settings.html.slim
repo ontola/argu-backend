@@ -7,11 +7,11 @@
     .box.box-small
       ul.btns-list
         li = link_to url_for([:settings, @forum, tab: :settings]) do
-          span.fa.fa-gear.icon-left
-          span _algemene instellingen_
+          span.fa.fa-gear
+          span.icon-left _algemene instellingen_
         li = link_to url_for([:settings, @forum, tab: :managers])
-          span.fa.fa-group.icon-left
-          span _beheerders_
+          span.fa.fa-group
+          span.icon-left _beheerders_
   .box
     section
       =render partial: "forums/setting_tabs/#{params[:tab] || 'settings'}", locals: {resource: @forum}
