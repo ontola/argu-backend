@@ -34,9 +34,9 @@ Argu::Application.configure do
   config.action_mailer.smtp_settings = {
       address:              'smtp.gmail.com',
       port:                 587,
-      domain:               'argu.co',
-      user_name:            'info@argu.co',
-      password:             Rails.application.secrets.gmail_password,
+      domain:               'argu.nl',
+      user_name:            'info@argu.nl',
+      password:             Rails.application.secrets.argu_gmail_pass,
       authentication:       'plain',
       enable_starttls_auto: true  }
 

@@ -8,6 +8,8 @@ module ArguExtensions
         elsif self.parent.present?
           self.parent.context_scope
         end
+      else
+        ::Context.new Forum.first_public
       end
     end
 

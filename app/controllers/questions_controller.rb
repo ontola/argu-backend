@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
 
   def show
-    @question = Question.find(params[:id])
+    @question = Question.find_by_id(params[:id])
     authorize @question
     @forum = @question.forum
     current_context @question
@@ -56,8 +56,8 @@ class QuestionsController < ApplicationController
     end
   end
 
-  # PUT /motions/1
-  # PUT /motions/1.json
+  # PUT /questions/1
+  # PUT /questions/1.json
   def update
     @question = Question.includes(:taggings).find_by_id(params[:id])
     authorize @question
@@ -69,6 +69,24 @@ class QuestionsController < ApplicationController
         format.html { render 'form' }
         format.json { render json: @question.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  # DELETE /questions/1
+  # DELETE /questions/1.json
+  def destroy
+    @question = Question.find_by_id params[:id]
+    if params[:destroy].to_s == 'true'
+      authorize @question
+      @question.destroy
+    else
+      authorize @question, :trash?
+      @question.trash
+    end
+
+    respond_to do |format|
+      format.html { redirect_to @question.forum }
+      format.json { head :no_content }
     end
   end
 

@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable#,
          #:validatable, :omniauthable
 
-  before_create :check_for_profile
+  before_validation :check_for_profile
   after_destroy :cleanup
   before_save { |user| user.email = email.downcase unless email.blank? }
 

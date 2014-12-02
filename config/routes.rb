@@ -34,7 +34,7 @@ Argu::Application.routes.draw do
     get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
   end
 
-  resources :questions, only: [:show, :edit, :update] do
+  resources :questions, only: [:show, :edit, :update, :destroy] do
     get 'tags',      to: 'tags/motions#index', on: :collection
     get 'tags/:tag', to: 'tags/motions#show',  on: :collection, as: :tag
   end
