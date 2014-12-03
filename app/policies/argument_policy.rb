@@ -3,11 +3,15 @@ class ArgumentPolicy < RestrictivePolicy
     def resolve
       scope
     end
+  end
 
-    def permitted_attributes
-      attributes = super
-      attributes << [:title, :content, :pro, :motion_id] if create?
-    end
+  def permitted_attributes
+    attributes = super
+    attributes << [:title, :content, :pro, :motion_id] if create?
+  end
+
+  def create?
+    is_member? || super
   end
 
   def show?
