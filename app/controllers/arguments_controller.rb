@@ -21,10 +21,10 @@ class ArgumentsController < ApplicationController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    @argument = Argument.new
+    @argument = Argument.new motion_id: params[:motion_id]
     authorize @argument
     current_context @argument
-    @argument.assign_attributes({pro: %w(con pro).index(params[:pro]), motion_id: params[:motion_id]})
+    @argument.assign_attributes({pro: %w(con pro).index(params[:pro]) })
 
     respond_to do |format|
       if params[:motion_id].present?
@@ -51,11 +51,11 @@ class ArgumentsController < ApplicationController
   # POST /arguments
   # POST /arguments.json
   def create
-    @argument = Argument.new argument_params
+    @motion = Motion.find params[:argument][:motion_id]
+    @argument = Argument.new motion: @motion
+    @argument.attributes= argument_params
     @argument.creator = current_profile
     authorize @argument
-    @argument.motion_id = argument_params[:motion_id]
-    @argument.pro = argument_params[:pro]
 
     respond_to do |format|
       if @argument.save

@@ -9,7 +9,7 @@ class Portal::ForumsController < ApplicationController
     authorize @forum, :create?
 
     if @forum.save
-      redirect_to portal_forum_path(@forum)
+      redirect_to portal_path
     else
       render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
     end
