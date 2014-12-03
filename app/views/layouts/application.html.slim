@@ -32,6 +32,7 @@ body
   -flash.each do |key,value|
     .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
   = render 'header'
+  = render 'responsibility_notice'
   #fb-root
   .container
     = yield
