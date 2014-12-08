@@ -5,6 +5,7 @@ nl:
     resource_name: "forum"
     settings: "instellingen"
     suggestions: "suggesties"
+    mine: "mijn forums"
     scope_names:
       scope_group: "Groepen"
       scope_org: "Bedrijven"

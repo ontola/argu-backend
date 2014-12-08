@@ -108,7 +108,16 @@
 
 @include keyframes(from-top) {
   0% {
-    transform: translate(0,-2000px);
+    transform: translate(0,-100vh);
+  }
+  100% {
+    transform: translate(0,0);
+  }
+}
+
+@include keyframes(from-bottom) {
+  0% {
+    transform: translate(0,100vh);
   }
   100% {
     transform: translate(0,0);
