@@ -1,0 +1,32 @@
+footer {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  background-color: white;
+  padding: 1em 0;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      display: inline;
+      padding: 0em 1em;
+      a {
+        text-decoration: none;
+        font-size: 90%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 750px) {
+  footer {
+    height: auto;
+    ul {
+      li {
+        display: block;
+        width: 100%;
+      }
+    }
+  }
+}

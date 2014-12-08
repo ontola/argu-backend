@@ -36,5 +36,13 @@ body
   #fb-root
   .container
     = yield
+    footer
+      ul
+        li
+          small Copyright © Argu v.o.f.
+        li
+          =link_to "Kernwaarden", values_path
+        li
+          =link_to "Gebruiksvoorwaarden", policy_path
     .push
   =javascript_include_tag "application"
