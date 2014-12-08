@@ -78,6 +78,7 @@ Argu::Application.routes.draw do
 
   get '/portal', to: 'portal/portal#home'
 
+  get '/values', to: 'documents#show', name: 'values'
   get '/policy', to: 'documents#show', name: 'policy'
 
   root to: 'static_pages#home'
