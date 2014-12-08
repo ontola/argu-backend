@@ -58,6 +58,7 @@ Argu::Application.routes.draw do
   end
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
+    resources :documents, only: [:edit, :update, :index, :new, :create]
     namespace :portal do
       resources :pages, only: [:show, :new, :create, :destroy]
       resources :forums, only: [:new, :create]
@@ -76,6 +77,8 @@ Argu::Application.routes.draw do
   get '/about', to: 'static_pages#about'
 
   get '/portal', to: 'portal/portal#home'
+
+  get '/policy', to: 'documents#show', name: 'policy'
 
   root to: 'static_pages#home'
   get '/', to: 'motions#index'

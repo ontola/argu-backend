@@ -5,6 +5,8 @@ gem 'sass-rails',   '~> 5.0.0.beta1'                                          ##
 gem 'rails', '~>4.2.0.rc1'                                                    ###!
 #gem 'rails', git: 'https://github.com/rails/rails.git', platform: :mswin     ###!
 
+gem 'simple_text', '~> 0.0.9'
+
 ##################DB########################
 gem 'pg', '0.17.1'
 #gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
@@ -27,6 +29,7 @@ gem 'acts-as-taggable-on', '~> 3.4.2'
 gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 2.0.0'
 gem 'friendly_id', '~> 5.0.4'
+gem 'whodunnit', '0.0.5'
 #Search
 
 #Pagination
