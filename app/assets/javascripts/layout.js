@@ -14,4 +14,15 @@ $(document).ready(function() {
     _window.resize(resizeBackground);
     resizeBackground();
 
+    //Toggle dropdown content when clicked on trigger
+    $('.dropdown-trigger').tap(function(){
+        event.stopPropagation(); //
+        $(this).toggleClass("dropdown-active");
+    });
+
+    //Hide dropdown content when clicked anywhere
+    $(document).tap( function(){
+        $('.dropdown-trigger').removeClass("dropdown-active");
+    });
+
 });

@@ -43,7 +43,13 @@
     padding: .4em 0.6em;
     margin: 0;
     text-transform: none;
+    color: white;
+    background-color: $g3;
   }
+}
+
+.dropdown-active {
+  background-color: $g1 !important;
 }
 
 .dropdown-right {
@@ -53,22 +59,12 @@
   left: auto;
 }
 
-.dropdown-trigger:hover .dropdown-content, .dropdown-show .dropdown-content {
+.dropdown-trigger:hover .dropdown-content, .dropdown-active .dropdown-content {
   //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
   display: block;
+  text-transform: initial;
   span {
     display: inline-block;
+    text-transform: uppercase;
   }
-}
-
-.dropdown-col-2-1 {
-  display: inline-block;
-  width: 50%;
-  + .dropdown-col-2-1 {
-    border-left: solid 1px $g1;
-  }
-}
-
-.dropdown-col-2 {
-  min-width: 20em;
 }
