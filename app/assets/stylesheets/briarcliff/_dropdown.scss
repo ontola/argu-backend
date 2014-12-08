@@ -63,6 +63,7 @@
   //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
   display: block;
   text-transform: initial;
+  @include animation(fade-in .2s);
   span {
     display: inline-block;
     text-transform: uppercase;
