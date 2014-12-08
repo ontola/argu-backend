@@ -18,13 +18,14 @@
   @include box-shadow;
   @include border-radius;
   border-top-left-radius: 0;
+  overflow: hidden;
   li {
     min-width: 100%;
   }
 
   a {
     color: $g3;
-    padding: 0.6em 1em;
+    padding: .6em .7em;
     min-width: 100%;
     display: block;
 
@@ -57,6 +58,14 @@
   border-top-right-radius: 0;
   right: 0;
   left: auto;
+}
+
+span.dropdown-header {
+  padding: .4em;
+  padding-left: 1em;
+  background-color: $g2;
+  color: white;
+  width: 100%;
 }
 
 .dropdown-trigger:hover .dropdown-content, .dropdown-active .dropdown-content {

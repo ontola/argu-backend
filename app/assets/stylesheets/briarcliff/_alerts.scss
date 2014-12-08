@@ -17,7 +17,7 @@
   border-radius: 8px;
   text-align: center;
   font-family: $font-sans;
-  @include animation(fade-in 1s both, from-bottom 1s both);
+  @include animation(fade-in 1s both, from-bottom ease-out 1s both);
   pointer-events: none;
   @include bp-small{
     width: 100%;

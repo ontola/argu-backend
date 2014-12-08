@@ -131,6 +131,10 @@
   }
 }
 
+.btns-list {
+  display: inline-block;
+}
+
 .btns-list li a {
   text-transform: uppercase;
   text-decoration: none;
@@ -150,6 +154,9 @@
   }
   &:active {
     background-color: $darken2;
+  }
+  &#active{
+    background-color: $darken1;
   }
 }
 

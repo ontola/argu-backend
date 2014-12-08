@@ -30,7 +30,7 @@ nl:
     revisions:
       title_wiped: 'Gewiste argumenten'
     form:
-      title: "Voorstel in enkele woorden"
+      title: "Plaats hier jouw voorstel in enkele woorden"
       content: "Leg hier uit wat je voorstel precies inhoudt. Leg de huidige situatie uit, en vertel wat er moet veranderen. Probeer hier niet te overtuigen; dat doe je later pas met argumenten."
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"

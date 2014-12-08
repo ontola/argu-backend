@@ -36,4 +36,7 @@ a.tag:hover {
 .tags-floating {
   margin-left: -.25em;
   margin-top: -.25em;
+  .tag {
+    @include box-shadow;
+  }
 }
