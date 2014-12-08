@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141130201606) do
+ActiveRecord::Schema.define(version: 20141208184412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,29 @@ ActiveRecord::Schema.define(version: 20141130201606) do
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["profile_id"], name: "index_comments_on_profile_id", using: :btree
+
+  create_table "documents", force: true do |t|
+    t.string   "name"
+    t.string   "title"
+    t.text     "contents"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "edits", force: true do |t|
+    t.integer  "by_id"
+    t.string   "by_type"
+    t.integer  "item_id"
+    t.string   "item_type"
+    t.integer  "action"
+    t.text     "custom"
+    t.string   "ip_address"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "edits", ["by_type", "by_id"], name: "index_edits_on_by_type_and_by_id", using: :btree
+  add_index "edits", ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id", using: :btree
 
   create_table "forums", force: true do |t|
     t.string   "name"

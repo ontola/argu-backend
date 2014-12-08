@@ -3,20 +3,27 @@
 
 .alert {
   position: fixed;
-  width: 100%;
-  font-size: 1.2em;
-  left: 0;
+  left: calc(50% - 15em);
+  right: calc(50% - 15em);
+  width: 30em;
   bottom: 3em;
-  right: 0;
   padding: 1em;
-  background-color: $darken4;
-  color: white;
+  background-color: rgba(255, 255, 255, 1);
+  color: rgb(92, 92, 92);
   display: block;
+  font-weight: bold;
   z-index: 9;
+  border: solid 3px;
+  border-radius: 8px;
   text-align: center;
   font-family: $font-sans;
-  @include animation(fade-in 1s both);
+  @include animation(fade-in 1s both, from-bottom ease-out 1s both);
   pointer-events: none;
+  @include bp-small{
+    width: 100%;
+    left: 0;
+    right: 0;
+  }
 }
 
 .alert-hidden {
@@ -24,9 +31,11 @@
 }
 
 .alert-notice {
-
+  border-color: $gre;
+  color: $gre;
 }
 
 .alert-alert {
-
+  border-color: $red;
+  color: $red;
 }

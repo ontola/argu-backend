@@ -1,5 +1,6 @@
 class Membership < ActiveRecord::Base
   include ArguBase
+  scope :managers, -> { where(role: Membership::ROLES[:manager]) }
 
   belongs_to :profile
   belongs_to :forum, inverse_of: :memberships

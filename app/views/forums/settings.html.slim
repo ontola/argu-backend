@@ -4,8 +4,8 @@
   header
     h1 _forum instellingen_
   .forum_id[id="#{@forum.id}"]
-    .box.box-small
-      ul.btns-list
+    .center
+      ul.btns-list.box.btns-vertical
         li = link_to url_for([:settings, @forum, tab: :settings]) do
           span.fa.fa-gear
           span.icon-left _algemene instellingen_

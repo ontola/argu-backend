@@ -1,7 +1,7 @@
 =semantic_form_for resource do |f|
   =hidden_field_tag 'tab', 'managers'
   ul.role-list
-    = link_to_add_association 'add manager', f, :memberships, locals: {resource: resource}
+    = link_to_add_association 'add manager', f, :memberships, class: 'btn', locals: {resource: resource}
     = f.semantic_fields_for :memberships, where: {}, include_id: false do |manager|
       = render 'membership', :f => manager
   =f.actions do
