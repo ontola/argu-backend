@@ -6,6 +6,10 @@ class ApplicationPolicy
     @record = record
   end
 
+  def staff?
+    user && user.profile.has_role?(:staff)
+  end
+
   def index?
     @user
   end
