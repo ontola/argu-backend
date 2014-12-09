@@ -80,6 +80,8 @@ Argu::Application.routes.draw do
 
   get '/values', to: 'documents#show', name: 'values'
   get '/policy', to: 'documents#show', name: 'policy'
+  get '/privacy', to: 'documents#show', name: 'privacy'
+  get '/cookies', to: 'documents#show', name: 'cookies'
 
   root to: 'static_pages#home'
   get '/', to: 'motions#index'
