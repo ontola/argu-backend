@@ -1,4 +1,4 @@
-class DocumentPolicy < RestrictivePolicy
+class DocumentPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
       scope
@@ -16,7 +16,7 @@ class DocumentPolicy < RestrictivePolicy
   end
 
   def create?
-    super
+    staff?
   end
 
   def edit?
@@ -24,7 +24,7 @@ class DocumentPolicy < RestrictivePolicy
   end
 
   def update?
-    super
+    staff?
   end
 
 end
