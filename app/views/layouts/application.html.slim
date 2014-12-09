@@ -29,19 +29,19 @@ body
     =render partial: 'staff_sign'
   #fb-root
   .wrapper
-  /[if lt IE 8]
-    p.browsehappy=raw t("outdated_browser")
+    /[if lt IE 8]
+      p.browsehappy=raw t("outdated_browser")
     -flash.each do |key, value|
       .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
     = render 'header'
     = render 'responsibility_notice'
     .container
       = yield
-  .push
+    .push
   footer
     ul
-      li
-        small Copyright © Argu v.o.f.
+      li.footer-top
+        span Copyright © Argu v.o.f.
       li=link_to "Kernwaarden", values_path
       li=link_to "Gebruiksvoorwaarden", policy_path
       li=link_to "Privacy", privacy_path

@@ -5,8 +5,8 @@
       span.icon-left= t("#{resource.class_name}.resource_name")
     li=link_to url_for([:settings, resource]) do
       span.fa.fa-gear
-      span.icon-left= t("#{resource.class_name}.settings")
+      span.icon-left= t("#{resource.class_name}.settings.title")
     - if policy(resource).statistics?
       li=link_to url_for([:statistics, resource]) do
         span.fa.fa-pie-chart
-        span.icon-left= t("#{resource.class_name}.statistics")
+        span.icon-left= t("#{resource.class_name}.statistics.title")

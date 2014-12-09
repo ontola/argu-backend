@@ -3,7 +3,17 @@
 nl:
   forums:
     resource_name: "forum"
-    settings: "instellingen"
+    settings:
+      title: "instellingen"
+      general: "algemeen"
+      managers: "beheerders"
+    statistics:
+      title: "statistiek"
+      memberships: "leden"
+      questions: "vraagstukken"
+      motions: "voorstellen"
+      tags: "meest gebruikte tags"
+      no-tags: "er zijn nog geen tags gebruikt"
     suggestions: "suggesties"
     mine: "mijn forums"
     scope_names:
