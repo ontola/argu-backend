@@ -1,9 +1,29 @@
+@import "variables";
+@import "mixins";
+
+html, body {
+  height: 100%;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -4em; // Depends on size of footer
+}
+
+.push, footer {
+  height: 4em;
+}
+
 footer {
   display: inline-block;
   width: 100%;
   text-align: center;
   background-color: white;
   padding: 1em 0;
+  overflow: hidden;
+  margin-bottom: -1em;
   ul {
     margin: 0;
     padding: 0;
@@ -19,14 +39,9 @@ footer {
   }
 }
 
-@media screen and (max-width: 750px) {
-  footer {
-    height: auto;
-    ul {
-      li {
-        display: block;
-        width: 100%;
-      }
-    }
-  }
+.footer-top {
+  display: block;
+  position: relative;
+  width: 100%;
+  top: -.4em;
 }

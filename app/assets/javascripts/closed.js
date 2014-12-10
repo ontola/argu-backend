@@ -10,19 +10,9 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require application/jquery.jeditable.mini.js
 //= require jquery
+//= require application/jquery.jeditable.mini.js
 //= require jquery_ujs
-//= require jquery-ui/autocomplete
-//= require jquery-ui/sortable
-//= require microplugin
-//= require sifter
-//= require selectize
-//= require requirejs
 //= require parallax
-//= require autocomplete-rails
-//= require fixedsticky
-//= require pica_pica/application
-// require briarcliff/briarcliff
-//= require cocoon
-//= require_tree ./application
+//= require application/scroll_smooth.js
+//= require_tree ./application/briarcliff

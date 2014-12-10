@@ -4,6 +4,10 @@ class DocumentsController < SimpleText::DocumentsController
   after_action :make_authorized, except: :index
   after_action :make_scoped, only: :index
 
+  def show
+    super
+  end
+
   def make_authorized
     authorize @document
   end

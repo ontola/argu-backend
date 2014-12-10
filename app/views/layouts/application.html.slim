@@ -9,7 +9,7 @@ doctype html
 head
   title= (yield(:title).blank? ? "" : yield(:title) + " | ") + t('name')
   meta charset="UTF-8"
-  meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui"
+  meta name="viewport" content="width=device-width, initial-scale=1"
   = csrf_meta_tags
   = render 'shim'
 
@@ -19,7 +19,7 @@ head
     = stylesheet_link_tag "developers/developers", :media => "all"
 
   / Google fonts
-  link href='http://fonts.googleapis.com/css?family=Raleway:700' rel='stylesheet' type='text/css'
+  link href='//fonts.googleapis.com/css?family=Raleway:700' rel='stylesheet' type='text/css'
 
   / FontAwesome for icons
   link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
@@ -27,22 +27,23 @@ body
   .background
   - if current_user && current_user.profile.has_role?(:staff)
     =render partial: 'staff_sign'
-  /[if lt IE 8]
-    p.browsehappy=raw t("outdated_browser")
-  -flash.each do |key,value|
-    .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
-  = render 'header'
-  = render 'responsibility_notice'
   #fb-root
-  .container
-    = yield
-    footer
-      ul
-        li
-          small Copyright © Argu v.o.f.
-        li=link_to "Kernwaarden", values_path
-        li=link_to "Gebruiksvoorwaarden", policy_path
-        li=link_to "Privacy", privacy_path
-        li=link_to "Cookiebeleid", cookies_path
+  .wrapper
+    /[if lt IE 8]
+      p.browsehappy=raw t("outdated_browser")
+    -flash.each do |key, value|
+      .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
+    = render 'header'
+    = render 'responsibility_notice'
+    .container
+      = yield
     .push
+  footer
+    ul
+      li.footer-top
+        span Copyright © Argu v.o.f.
+      li=link_to "Kernwaarden", values_path
+      li=link_to "Gebruiksvoorwaarden", policy_path
+      li=link_to "Privacy", privacy_path
+      li=link_to "Cookiebeleid", cookies_path
   =javascript_include_tag "application"

@@ -1,12 +1,20 @@
 @import "variables";
 @import "mixins";
 
+.landing-buttons {
+  font-size: 90%;
+  max-width: 26em;
+  margin: auto;
+  margin-top: 3em;
+}
+
 .landing-logo {
   text-align: center;
-  margin-top: -2em;
+  margin-top: 2em;
   img {
     width: 30%;
-    margin-bottom: 2em;
+    margin-bottom: 3em;
+    min-width: 8em;
   }
 }
 
@@ -40,69 +48,8 @@
 }
 
 .landing-bg {
-  height: 30em;
-  text-align: center;
-  clear: both;
-  h1 {
-    font-weight: 700;
-    font-size: 3em;
-    color: white;
-    position: relative;
-    top: 50%;
-    transform: translateY(-50%);
-    @include text-shadow;
-    @include bp-medium {
-      font-size: 2em;
-    }
-  }
-}
-
-
-.bg-landing-hong-kong {
-  background: image-url('bg-landing-hong-kong.jpg');
-  margin-top: -2em;
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 100%;
-  background-position-x: 50%;
-}
-
-.bg-landing-1 {
-  background: image-url('bg-landing-idee.jpg');
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 34%;
-  background-position-x: 50%;
-}
-
-.bg-landing-2 {
-  background: image-url('bg-landing-onderbouwd.jpg');
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 40%;
-  background-position-x: 50%;
-}
-
-.bg-landing-3 {
-  background: image-url('bg-landing-politiek.jpg');
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 47%;
-  background-position-x: 50%;
-}
-
-.bg-landing-4 {
-  background: image-url('bg-landing-lobby.jpg');
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 50%;
-  background-position-x: 50%;
-}
-
-.bg-landing-5 {
-  background: image-url('bg-landing-stemmen.jpg');
-  -moz-background-size: cover;
-  background-size: cover;
-  background-position-y: 50%;
-  background-position-x: 50%;
+  padding: 4em 0 7em;
+  font-size: 120%;
+  min-height: 100vh;
+  padding-top: 20vh;
 }

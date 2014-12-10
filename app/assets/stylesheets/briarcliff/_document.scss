@@ -1,0 +1,59 @@
+@import "variables";
+@import "mixins";
+
+.document {
+  OL {
+    counter-reset: item;
+    padding-left: 1em;
+    list-style-type: none;
+    position: relative;
+    LI:before {
+      content: counters(item, ".") " ";
+      counter-increment: item;
+      position: absolute;
+      right: 100%;
+      right: calc(100% - 2.5em);
+      font-weight: bold;
+    }
+  }
+
+  ol, ul {
+    margin-bottom: 1em;
+    ol, ul {
+      margin-top: 1em;
+    }
+  }
+  li {
+    line-height: 1.4em;
+    margin-bottom: .5em;
+  }
+}
+
+
+/* line 1, /home/joep/.rvm/gems/ruby-2.1.3/gems/simple_text-0.0.20/app/assets/stylesheets/simple_text/documents.css.scss */
+.simple-text {
+  background-color: white;
+}
+/* line 4, /home/joep/.rvm/gems/ruby-2.1.3/gems/simple_text-0.0.20/app/assets/stylesheets/simple_text/documents.css.scss */
+.simple-text textarea {
+  min-height: 25em;
+}
+
+/* line 9, /home/joep/.rvm/gems/ruby-2.1.3/gems/simple_text-0.0.20/app/assets/stylesheets/simple_text/documents.css.scss */
+.document {
+  color: black;
+}
+/* line 12, /home/joep/.rvm/gems/ruby-2.1.3/gems/simple_text-0.0.20/app/assets/stylesheets/simple_text/documents.css.scss */
+
+/* line 14, /home/joep/.rvm/gems/ruby-2.1.3/gems/simple_text-0.0.20/app/assets/stylesheets/simple_text/documents.css.scss */
+.document ol > li {
+  margin-left: 2em;
+}
+/* line 19, /home/joep/.rvm/gems/ruby-2.1.3/gems/simple_text-0.0.20/app/assets/stylesheets/simple_text/documents.css.scss */
+.document strong {
+  font-weight: bold;
+}
+/* line 23, /home/joep/.rvm/gems/ruby-2.1.3/gems/simple_text-0.0.20/app/assets/stylesheets/simple_text/documents.css.scss */
+.document address {
+  white-space: pre;
+}
