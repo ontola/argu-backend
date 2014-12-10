@@ -25,7 +25,14 @@
     font-size: 1.2em;
     margin-bottom: .8em;
   }
+  &.box-link-fill{
+    h3 {
+      color: white;
+    }
+    opacity: 1;
+  }
 }
+
 
 .box-small{
   max-width: 22em;

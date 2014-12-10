@@ -18,6 +18,7 @@
 //= require sifter
 //= require selectize
 //= require requirejs
+//= require parallax
 //= require autocomplete-rails
 //= require fixedsticky
 //= require pica_pica/application
