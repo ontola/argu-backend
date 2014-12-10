@@ -7,7 +7,7 @@ module ProCon
     include Parentable
 
     belongs_to :motion, :dependent => :destroy
-    has_many :votes, as: :voteable
+    has_many :votes, as: :voteable, :dependent => :destroy
     belongs_to :creator, class_name: 'Profile'
 
     before_save :trim_data
