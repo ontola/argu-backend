@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(function() {
     //Toggle dropdown content when clicked on trigger
     $('.dropdown-trigger').on("tap", function(){
         event.stopPropagation(); //

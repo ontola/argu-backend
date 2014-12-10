@@ -11,9 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
+//= require application/jquery.jeditable.mini.js
 //= require jquery_ujs
-//= require jquery-ui/autocomplete
-//= require jquery-ui/sortable
 //= require parallax
-//= require fixedsticky
-//= require scroll_smooth
+//= require application/scroll_smooth.js
+//= require_tree ./application/briarcliff
