@@ -24,5 +24,14 @@
   height: 100%;
   overflow: hidden;
   background-color: $darken3;
-  @include animation('fade-in .5s ease-in');
+  @include animation(fade-in .5s ease-in);
+}
+
+// apply these classes when clicking on overlay of modals.
+.modal-hide {
+  @include animation(to-bottom .5s ease-in both);
+}
+
+.overlay-hide {
+  @include animation(fade-out .5s ease-in both);
 }

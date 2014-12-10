@@ -142,7 +142,7 @@ input[type="text"].form-input-title {
 }
 
 .form-small input, .form-small button {
-  width: 100%;
+  width: 100% !important;
 }
 
 .form-small label {
@@ -162,7 +162,7 @@ input[type="text"].form-input-title {
   border-radius: 0;
   cursor: hand;
   width: auto;
-  display: block;
+  display: inline-block;
   border-bottom: solid 3px $darken2;
   margin: 0 auto;
   margin-bottom: 1em;
