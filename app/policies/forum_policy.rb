@@ -30,7 +30,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def create?
-    is_member? || super
+    super
   end
 
   def edit?
@@ -38,7 +38,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def update?
-    is_member? || super
+    super
   end
 
   def add_question?
