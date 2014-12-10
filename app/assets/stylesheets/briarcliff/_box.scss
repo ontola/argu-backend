@@ -30,6 +30,12 @@
       color: white;
     }
     opacity: 1;
+    &:hover h3 {
+      text-decoration: underline;
+    }
+    &:active {
+      opacity: .8;
+    }
   }
 }
 
