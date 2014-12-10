@@ -16,11 +16,11 @@ head
   / unless current_user.blank?
   = stylesheet_link_tag "application", :media => "all"
   / Raleway font from google fonts
-  link href='http://fonts.googleapis.com/css?family=Raleway:700' rel='stylesheet' type='text/css'
+  link href='//fonts.googleapis.com/css?family=Raleway:700' rel='stylesheet' type='text/css'
 
   / FontAwesome for icons
   link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
 body
   .container
     = yield
-  =javascript_include_tag "landing"
+  =javascript_include_tag "closed"

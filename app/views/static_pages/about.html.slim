@@ -10,7 +10,7 @@
           section
             h3
               span.fa.fa-comments
-              span.icon-left Ik wil inhoudelijke discussie
+              span.icon-left Ik wil inhoudelijke discussies
       a[href="#idee"]
         .box.box-link.box-link-fill.sta-bg
           section
@@ -44,7 +44,7 @@
         p Politiek gaat te veel over marketing en te weinig over het oplossen van problemen. Dat is zonde, want politieke beslissingen gaan ons allemaal aan. Democratie betekent meer dan eens in de zoveel jaar naar een stemhokje gaan; het betekent dat wij allemaal mee kunnen denken over hoe we onze grootste problemen gaan oplossen.
         p Internet heeft veranderd hoe we met elkaar communiceren, hoe we leren en hoe we ons ontwikkelen. Social media heeft meer mensen een stem gegeven, maar heeft nog niet de inhoud en diepgang kunnen bieden die nodig is. Discussie over lastige onderwerpen past niet in 140 karakters. Burgerparticipatie heeft een modern platform nodig.
         - if defined?(show_sign_in) && show_sign_in.present?
-          p.center=link_to 'Word lid', '#', onclick: "$.ajax({url: '/sign_in_modal',cache: false,success: function(html){$('.container').append(html);}});", class:"btn center"
+          p.center=link_to 'Word lid', sign_in_modal_path, class:"btn center", remote: true
     a[href="#discussie"]
       .box.box-link
         section

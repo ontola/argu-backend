@@ -9,7 +9,7 @@ doctype html
 head
   title= (yield(:title).blank? ? "" : yield(:title) + " | ") + t('name')
   meta charset="UTF-8"
-  meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui"
+  meta name="viewport" content="width=device-width, initial-scale=1"
   = csrf_meta_tags
   = render 'shim'
 
@@ -19,7 +19,7 @@ head
     = stylesheet_link_tag "developers/developers", :media => "all"
 
   / Google fonts
-  link href='http://fonts.googleapis.com/css?family=Raleway:700' rel='stylesheet' type='text/css'
+  link href='//fonts.googleapis.com/css?family=Raleway:700' rel='stylesheet' type='text/css'
 
   / FontAwesome for icons
   link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
