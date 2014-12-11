@@ -19,6 +19,10 @@ class MotionPolicy < RestrictivePolicy
     attributes << [:invert_arguments, :tag_id] if staff?
   end
 
+  def new?
+    create?
+  end
+
   def create?
     is_member? || super
   end
@@ -42,6 +46,6 @@ class MotionPolicy < RestrictivePolicy
   private
 
   def is_member?
-    user.profile.member_of? record.forum
+    user.profile.member_of? (record.forum || record.forum_id)
   end
 end

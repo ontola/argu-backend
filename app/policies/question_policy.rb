@@ -22,6 +22,14 @@ class QuestionPolicy < RestrictivePolicy
     attributes << [:id, :title, :content, :tag_list, :forum_id] if edit?
   end
 
+  def new?
+    create?
+  end
+
+  def create?
+    is_member? || super
+  end
+
   def edit?
     is_member? && is_creator? || super
   end
@@ -37,6 +45,6 @@ class QuestionPolicy < RestrictivePolicy
   private
 
   def is_member?
-    user.profile.member_of? record.forum
+    user.profile.member_of? (record.forum || record.forum_id)
   end
 end
