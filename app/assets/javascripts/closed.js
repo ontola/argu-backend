@@ -11,8 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require application/jquery.jeditable.mini.js
 //= require jquery_ujs
+//= require application/jquery.jeditable.mini.js
 //= require parallax
 //= require application/scroll_smooth.js
 //= require_tree ./application/briarcliff
