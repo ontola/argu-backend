@@ -1,7 +1,7 @@
 $g0: rgb(245,245,245);
 $g1: rgb(232,232,232);
 $g2: rgb(170,170,170);
-$g3: rgb(130,130,130);
+$g3: rgb(102,102,102);
 $g4: rgb(92,92,92);
 
 $trashed: gainsboro;
@@ -11,12 +11,14 @@ $darken1: rgba(0,0,0,.05);
 $darken2: rgba(0,0,0,.15);
 $darken3: rgba(0,0,0,.35);
 $darken4: rgba(0,0,0,.5);
+$darken5: rgba(0,0,0,.8);
 
-$blu: rgb(76,136,168);
-$gre: rgb(118,150,110);
-$red: rgb(186,104,104);
+$blu: rgb(71,86,104);
+$gre: rgb(84,107,75);
+$red: rgb(114,61,61);
+$red-alert: rgb(158,46,46);
 $yel: rgb(147,112,71);
-$bro: #866161;
+$bro: rgb(91,62,53);
 
 $blul: rgb(226,237,222);
 $grel: rgb(231,244,228);
@@ -24,5 +26,5 @@ $redl: rgb(244,228,228);
 
 $overlay: rgba(241,241,241,0.9);
 
-$font-special: Raleway, sans-serif;
-$font-sans: Lato, open sans, Helvetica, sans-serif;
+$font-special: Open sans, Segoe UI, sans-serif;
+$font-sans: Open sans, Helvetica, sans-serif;

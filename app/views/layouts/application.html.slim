@@ -19,7 +19,7 @@ head
     = stylesheet_link_tag "developers/developers", :media => "all"
 
   / Google fonts
-  link href='//fonts.googleapis.com/css?family=Raleway:700' rel='stylesheet' type='text/css'
+  link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700' rel='stylesheet' type='text/css'
 
   / FontAwesome for icons
   link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
@@ -34,7 +34,7 @@ body
     -flash.each do |key, value|
       .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
     = render 'header'
-    = render 'responsibility_notice'
+    /= render 'responsibility_notice'
     .container
       = yield
     .push

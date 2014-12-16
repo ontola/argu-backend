@@ -1,7 +1,11 @@
 -provide :title, @question.title
+.cover-behind
+  .cover-image[style="background-image: url('http://www.nederlandfietsland.nl/uploads/image/foto-gallerij/LF14_fietspad_bij_De_Lutte_RvN_Mayke_van_der_Ploeg.JPG'); "]
 .col-1
   = to_parent
   .box
+    section.section-info.que-bg
+      span = t("questions.type")
     section
       h1.que-t= @question.title
       p= @question.supped_content.html_safe

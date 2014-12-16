@@ -36,9 +36,15 @@
 }
 
 @mixin border-radius {
-  border-radius: 3px;
+  //border-radius: 3px;
 }
 
+@mixin container-width {
+  max-width: 1200px;
+}
+
+
+// Responsive
 @mixin bp-large {
   @media only screen and (max-width: 70em) {
     @content;
@@ -130,5 +136,16 @@
   }
   100% {
     transform: translate(0,2000px);
+  }
+}
+
+@include keyframes(from-bottom-alt) {
+  0% {
+    transform: translate(0,100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0,0);
+    opacity: 1;
   }
 }

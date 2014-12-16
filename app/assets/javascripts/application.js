@@ -18,6 +18,7 @@
 //= require microplugin
 //= require sifter
 //= require selectize
+//= require masonry
 //= require requirejs
 //= require parallax
 //= require autocomplete-rails

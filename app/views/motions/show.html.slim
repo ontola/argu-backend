@@ -1,4 +1,6 @@
 -provide :title, (@motion.title.nil? ? t(:motion_title) : @motion.title)
+.cover-behind
+  .cover-image[style="background-image: url('https://unsplash.imgix.net/photo-1416424312427-baefa7707d85?q=75&fm=jpg&s=b2ec9ff1f29da95d081f2c1155020fcc'); "]
 .col-1
   = to_parent
   =render partial: 'motionbody', locals: { motion: @motion }

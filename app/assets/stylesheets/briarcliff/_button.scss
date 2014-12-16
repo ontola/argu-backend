@@ -131,6 +131,26 @@
   }
 }
 
+.btns-links {
+  margin-bottom: .6em;
+}
+
+.btns-links li {
+  display: inline-block;
+  margin-bottom: .5em;
+  font-size: .8em;
+}
+
+.btns-links li a {
+  text-transform: uppercase;
+  margin-right: 1em;
+  color: $g3;
+  &:hover {
+    text-decoration: underline;
+    color: $g4;
+  }
+}
+
 .btns-list {
   display: inline-block;
 }
@@ -147,7 +167,7 @@
   display: block;
   color: $g3;
   padding: 1em;
-  height: 3.1em;
+  height: 100%;
   &:hover {
     background-color: $darken1;
     color: $g4;
@@ -193,6 +213,7 @@
     position: relative;
     @include box-shadow;
     font-size: .9em;
+    color: white;
     &:active{
       top: 2px;
       box-shadow: none;
@@ -217,37 +238,25 @@
     }
   }
   .btn-pro {
-    background-color: white;
-    color: $gre;
+    background-color: $gre;
     &:hover{
-      background-color: $grel;
     }
     &.voted {
-      background-color: $gre;
-      color: white;
     }
   }
   .btn-neu {
-    background-color: white;
-    color: $g3;
+    background-color: $g3;
     &:hover {
-      background-color: $g1;
     }
     &.voted {
-      background-color: $g3;
-      color: white;
     }
   }
   .btn-con {
-    background-color: white;
-    color: $red;
+    background-color: $red;
     margin-right: 0;
     &:hover {
-      background-color: $redl;
     }
     &.voted {
-      background-color: $red;
-      color: white;
     }
   }
 }
@@ -315,10 +324,10 @@
   display: inline-block;
 }
 
-h1 + .btns-vertical {
-  margin-top: -1em;
-  margin-bottom: 1em;
-}
+//h1 + .btns-vertical {
+//  margin-top: -1em;
+//  margin-bottom: 1em;
+//}
 
 h1 + .btn {
   margin-bottom: 2em;

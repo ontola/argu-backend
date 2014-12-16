@@ -11,64 +11,6 @@
   @include box-shadow;
 }
 
-.box.box-link {
-  opacity: .8;
-  &:hover {
-    opacity: 1;
-  }
-  &:active {
-    position: relative;
-    top: 1px;
-    box-shadow: none;
-  }
-  h3 {
-    font-size: 1.2em;
-    margin-bottom: .8em;
-  }
-  .icon-left {
-    margin-left: .7em;
-  }
-  &.box-link-fill{
-    h3 {
-      color: white;
-    }
-    opacity: 1;
-    &:hover h3 {
-      text-decoration: underline;
-    }
-    &:active {
-      opacity: .8;
-    }
-  }
-}
-
-
-.box-small{
-  max-width: 22em;
-}
-
-section {
-  position: relative;
-  padding: 1.1em 1.4em 0.1em 1.4em;
-}
-
-section.unpadded {
-  padding: 0;
-}
-
-section.smallpadded {
-  padding: 1.1em 1em 0em 1em;
-}
-
-section + section {
-  border-top: solid 1px $g1;
-}
-
-.section-small {
-  position: relative;
-  padding: .3em 1.4em 0.1em 1.4em;
-}
-
 .box h3 a, .box a h3 {
   &:hover {
     text-decoration: underline;
@@ -120,6 +62,94 @@ section + section {
   padding-bottom: .4em;
 }
 
+.box-grid.box-big{
+  width: 100%;
+  width: calc(100% - 3em);
+  .box-image {
+    height: 10em;
+  }
+  h2 {
+    font-size: 2.2em;
+    &:hover {
+      text-decoration: underline;
+    }
+    @include bp-medium {
+      font-size: 1.5em;
+    }
+  }
+}
+
+.box-grid {
+  display: inline-block;
+  float: left;
+  margin: 1.5em 1.5em;
+  width: 45%;
+  width: calc(50% - 3em);
+  @include bp-medium{
+    width: 100%;
+    width: calc(100% - 3em);
+  }
+}
+
+.box-grid-sizer {
+  width: 50%;
+  display: inline-block;
+}
+
+.box-hidden {
+  position: absolute;
+  top: 100%;
+  background-color: white;
+  color: white;
+  width: 100%;
+  height: 100%;
+  @include transition(.5s);
+}
+
+.box:hover .box-hidden {
+  top: 0;
+  @include animation(fade-in .5s both)
+}
+
+.box-image{
+  height: 7em;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+}
+
+.box.box-link {
+  opacity: .8;
+  &:hover {
+    opacity: 1;
+  }
+  &:active {
+    position: relative;
+    top: 1px;
+    box-shadow: none;
+  }
+  h3 {
+    font-size: 1.2em;
+    margin-bottom: .8em;
+  }
+  .icon-left {
+    margin-left: .7em;
+  }
+  &.box-link-fill{
+    h3 {
+      color: white;
+    }
+    opacity: 1;
+    &:hover h3 {
+      text-decoration: underline;
+    }
+    &:active {
+      opacity: .8;
+    }
+  }
+}
+
 .box-list .box {
   border-radius: 0;
   margin-bottom: 0;
@@ -136,8 +166,58 @@ section + section {
   border-bottom-radius: 0;
 }
 
+.box-note {
+  position: absolute;
+  top: 0em;
+  right: 0em;
+  z-index: 3;
+  background-color: $red-alert;
+  padding: .4em;
+  span {
+    text-transform: uppercase;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+.box-small{
+  max-width: 22em;
+}
+
 .box-with-btns {
   h1, h2, h3 {
     padding-right: 1.5em;
   }
 }
+
+section {
+  position: relative;
+  padding: 1.1em 1.4em 0.1em 1.4em;
+}
+
+section.section-info {
+  padding-top: .1em;
+  line-height: 1.5em;
+  span {font-size: .8em;};
+  background-color: $g3;
+  color: white;
+  text-transform: uppercase;
+}
+
+section.unpadded {
+  padding: 0;
+}
+
+section.smallpadded {
+  padding: 1.1em 1em 0em 1em;
+}
+
+section + section {
+  //border-top: solid 1px $g1;
+}
+
+.section-small {
+  position: relative;
+  padding: .3em 1.4em 0.1em 1.4em;
+}
+

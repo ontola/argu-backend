@@ -90,7 +90,7 @@ input[type="submit"].nav-search-button {
 }
 
 .nav-container {
-  max-width: 1200px;
+  @include container-width;
   margin: auto;
   position: relative;
 }
