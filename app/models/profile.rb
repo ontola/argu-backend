@@ -38,8 +38,8 @@ class Profile < ActiveRecord::Base
     add_role :frozen
   end
 
-  def member_of?(forum)
-    forum.present? && self.memberships.where(forum_id: forum.id).present?
+  def member_of?(_forum)
+    _forum.present? && self.memberships.where(forum_id: _forum.is_a?(Forum) ? _forum.id : _forum).present?
   end
 
   def unfreeze
