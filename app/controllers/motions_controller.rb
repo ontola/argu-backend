@@ -33,7 +33,7 @@ class MotionsController < ApplicationController
   # GET /motions/new.json
   def new
     get_context
-    @motion = Motion.new params[:motion]
+    @motion = @forum.motions.new params[:motion]
     authorize @motion
     current_context @motion
     respond_to do |format|
