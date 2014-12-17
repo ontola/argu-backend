@@ -67,6 +67,8 @@ class RestrictivePolicy
   end
 
   def is_creator?
+    creator = record.creator
+    profile = user.profile
     record.creator == user.profile
   end
 

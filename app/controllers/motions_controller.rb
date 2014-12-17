@@ -1,17 +1,6 @@
 class MotionsController < ApplicationController
   before_action :get_context, only: [:new, :create]
 
-  # GET /motions
-  # GET /motions.json
-  def index
-    @motions = policy_scope(Motion.index(params[:trashed], params[:page]))
-    authorize @motions
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @motions }
-    end
-  end
-
   # GET /motions/1
   # GET /motions/1.json
   def show
@@ -79,6 +68,7 @@ class MotionsController < ApplicationController
   # PUT /motions/1.json
   def update
     @motion = Motion.find_by_id params[:id]
+    @creator = @motion.creator
     authorize @motion
     respond_to do |format|
       if @motion.update_attributes(permit_params)
@@ -116,7 +106,9 @@ class MotionsController < ApplicationController
 
 private
   def permit_params
-    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+    pol = policy(@motion || Motion)
+    pars = pol.permitted_attributes
+    params.require(:motion).permit(*pars)
   end
 
   def get_context
