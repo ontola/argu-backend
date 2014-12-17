@@ -1,7 +1,7 @@
 .cover
   .cover-image[style="background-image: url('http://upload.wikimedia.org/wikipedia/commons/d/d8/Panorama_Utrecht.jpg')"]
     -if policy(@forum).update?
-    =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
+  =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
   .cover-header
     .cover-container
       h1= @forum.name

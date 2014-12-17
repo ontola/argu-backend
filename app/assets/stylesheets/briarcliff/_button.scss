@@ -183,7 +183,7 @@
   }
 }
 
-.btns-list .icon-left, .btns-list .icon-left {
+.box .btns-list .icon-left,.box  .btns-list .icon-left {
   @include bp-small {
     display: none;
   }
@@ -223,6 +223,9 @@
     @include box-shadow;
     font-size: .9em;
     color: white;
+    &:hover {
+      opacity: 1;
+    }
     &:active{
       top: 2px;
       box-shadow: none;
@@ -248,26 +251,13 @@
   }
   .btn-pro {
     background-color: $gre;
-    &:hover{
-    }
-    &.voted-on {
-    }
   }
   .btn-neu {
     background-color: $g3;
-    &:hover {
-    }
-    &.voted-on {
-    }
   }
   .btn-con {
     background-color: $red;
     margin-right: 0;
-    &:hover {
-    }
-    &.voted-on {
-      opacity: 1;
-    }
   }
 }
 
@@ -351,5 +341,16 @@ h1 + .btn {
 
 .tabs {
   text-align: center;
-  margin-bottom: -.2em;
+  margin-bottom: 0em;
+  .tabs-current {
+    background-color: white !important;
+    pointer-events: none;
+  }
+}
+
+.cover .tabs {
+  margin-top: -2.5em;
+  li {
+    background-color: $lighten5;
+  }
 }
