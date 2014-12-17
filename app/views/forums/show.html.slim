@@ -1,7 +1,6 @@
 .cover
   .cover-image[style="background-image: url('http://upload.wikimedia.org/wikipedia/commons/d/d8/Panorama_Utrecht.jpg')"]
     -if policy(@forum).update?
-      =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
   .cover-header
     .cover-container
       h1= @forum.name
@@ -11,17 +10,17 @@
             span.fa.fa-join
             span = t("join")
         li=link_to url_for([:new, @forum, :question]) do
-          span= t("questions.new_btn")
+          span.fa.fa-question
+          span.icon-left= t("questions.new_btn")
         li=link_to url_for([:new, @forum, :motion]) do
-          span= t("motions.new_btn")
+          span.fa.fa-lightbulb-o
+          span.icon-left= t("motions.new_btn")
 .col-1.col-1-big
   .tags
     - @forum.tag_list.each do |tag|
       = contextual_link_to tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag
 .center
-  .btns-subtle
-
-
+  =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
 =render partial: 'motions/flex_example'
 
 - if policy(@forum).show_children?

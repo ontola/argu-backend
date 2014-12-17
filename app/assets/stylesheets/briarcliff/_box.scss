@@ -68,11 +68,8 @@
   .box-image {
     height: 10em;
   }
-  h2 {
+  h1 {
     font-size: 2.2em;
-    &:hover {
-      text-decoration: underline;
-    }
     @include bp-medium {
       font-size: 1.5em;
     }
@@ -88,6 +85,11 @@
   @include bp-medium{
     width: 100%;
     width: calc(100% - 3em);
+  }
+  h1,h2,h3 {
+    &:hover {
+      text-decoration: underline;
+    }
   }
 }
 
@@ -117,6 +119,9 @@
   background-size: cover;
   background-position: center;
   z-index: -1;
+  &:hover{
+    opacity: .9;
+  }
 }
 
 .box.box-link {

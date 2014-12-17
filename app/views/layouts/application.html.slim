@@ -24,16 +24,15 @@ head
   / FontAwesome for icons
   link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"
 body
-  .background
   - if current_user && current_user.profile.has_role?(:staff)
     =render partial: 'staff_sign'
   #fb-root
+  = render 'header'
   .wrapper
     /[if lt IE 8]
       p.browsehappy=raw t("outdated_browser")
     -flash.each do |key, value|
       .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
-    = render 'header'
     /= render 'responsibility_notice'
     .container
       = yield
