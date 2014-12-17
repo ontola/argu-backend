@@ -21,7 +21,8 @@ ul.tags {
 }
 
 a.tag:hover {
-  background-color: $blul;
+  background-color: $blu;
+  color: white;
 }
 
 .tag-forum {
@@ -29,7 +30,7 @@ a.tag:hover {
 }
 
 
-.box .tags {
+.box > .tags {
   margin-left: .5em;
 }
 

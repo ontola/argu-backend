@@ -180,3 +180,9 @@ input[type="text"].form-input-title {
 .formtastic .actions {
   text-align: center;
 }
+
+input[type="file"], select {
+  padding: 0.3em 0em;
+  margin-bottom: 1.2em;
+  font-size: 1em;
+}

@@ -1,11 +1,11 @@
 .center
-  ul.btns-opinion
-   li = link_to motion_vote_path(@motion, 'pro'), class: "btn-pro#{ ' voted' if @voted.eql?('pro')}", remote: true, method: :post do
+  ul.btns-opinion[class= "#{'voted' if @voted.present? && !@voted.eql?('abstain')}"]
+   li = link_to motion_vote_path(@motion, 'pro'), class: "btn-pro#{ ' voted-on' if @voted.eql?('pro')}", remote: true, method: :post do
     span.fa.fa-thumbs-up
     span.icon-left = t('motions.votes.pro')
-   li = link_to motion_vote_path(@motion, 'neutral'), class: "btn-neu#{ ' voted' if @voted.eql?('neutral')}", remote: true, method: :post do
+   li = link_to motion_vote_path(@motion, 'neutral'), class: "btn-neu#{ ' voted-on' if @voted.eql?('neutral')}", remote: true, method: :post do
      span.fa.fa-question
      span.icon-left = t('motions.votes.neu')
-   li = link_to motion_vote_path(@motion, 'con'), class: "btn-con#{ ' voted' if @voted.eql?('con')}", remote: true, method: :post do
+   li = link_to motion_vote_path(@motion, 'con'), class: "btn-con#{ ' voted-on' if @voted.eql?('con')}", remote: true, method: :post do
      span.fa.fa-thumbs-down
      span.icon-left = t('motions.votes.con')

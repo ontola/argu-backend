@@ -13,7 +13,6 @@ nav#navbar.navbar role="navigation"
             span.fa.fa-tag
             span.icon-left forums
             ul.dropdown-content
-              span.dropdown-header = t('forums.mine')
               - current_profile.present? && current_profile.memberships.each do |membership|
                 li
                   =link_to membership.forum.display_name, url_for(membership.forum)

@@ -64,7 +64,7 @@
 
 .box-grid.box-big{
   width: 100%;
-  width: calc(100% - 3em);
+  width: calc(100% - 2em);
   .box-image {
     height: 10em;
   }
@@ -79,12 +79,12 @@
 .box-grid {
   display: inline-block;
   float: left;
-  margin: 1.5em 1.5em;
+  margin: 1em 1em;
   width: 45%;
-  width: calc(50% - 3em);
+  width: calc(50% - 2em);
   @include bp-medium{
     width: 100%;
-    width: calc(100% - 3em);
+    width: calc(100% - 2em);
   }
   h1,h2,h3 {
     &:hover {

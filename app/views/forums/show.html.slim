@@ -1,6 +1,7 @@
 .cover
   .cover-image[style="background-image: url('http://upload.wikimedia.org/wikipedia/commons/d/d8/Panorama_Utrecht.jpg')"]
     -if policy(@forum).update?
+    =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
   .cover-header
     .cover-container
       h1= @forum.name
@@ -15,12 +16,10 @@
         li=link_to url_for([:new, @forum, :motion]) do
           span.fa.fa-lightbulb-o
           span.icon-left= t("motions.new_btn")
-.col-1.col-1-big
+.center
   .tags
     - @forum.tag_list.each do |tag|
       = contextual_link_to tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag
-.center
-  =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
 =render partial: 'motions/flex_example'
 
 - if policy(@forum).show_children?
