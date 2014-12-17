@@ -26,8 +26,8 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_difference('Motion.count') do
       post :create, forum_id: :utrecht, motion: {title: 'Motion', content: 'Contents'}
-      assert_not_nil assigns(:motion)
     end
+    assert_not_nil assigns(:motion)
     assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:motion))
   end

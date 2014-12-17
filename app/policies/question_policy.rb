@@ -19,7 +19,7 @@ class QuestionPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:id, :title, :content, :tag_list, :forum_id] if edit?
+    attributes << [:id, :title, :content, :tag_list, :forum_id] if create?
     attributes
   end
 
