@@ -66,10 +66,8 @@ group :development, :test do
   gem 'thin'
   #gem 'puma', platform: :ruby
   gem 'nokogiri', '1.6.5'
-  gem 'rspec', '3.1.0'
-  gem 'rspec-rails', '3.1.0'
-  gem 'factory_girl', '~> 4.5.0'
-  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'minitest-rails', '~> 2.1.1'
+  gem 'minitest-reporters', '~> 1.0.8'
   #gem 'meta_request'
   #gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!

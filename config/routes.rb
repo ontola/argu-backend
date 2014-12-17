@@ -84,6 +84,5 @@ Argu::Application.routes.draw do
   get '/cookies', to: 'documents#show', name: 'cookies'
 
   root to: 'static_pages#home'
-  get '/', to: 'motions#index'
-  get '/home', to: 'motions#index'
+  get '/', to: 'static_pages#home'
 end
