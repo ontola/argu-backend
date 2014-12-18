@@ -11,11 +11,11 @@
     -if policy(@question).update?
       ul.btns-list.btns-sticky.btns-sticky-bottom.btns-vertical
         -if policy(@question).destroy?
-          li= link_to url_for([@question, destroy: true]), method: :delete, confirm: t("destroy_confirmation") do
+          li= link_to url_for([@question, destroy: true]), method: :delete, data: {confirm: t("destroy_confirmation")} do
             span.fa.fa-close
             span.icon-left=t('destroy')
         -if policy(@question).trash?
-          li= link_to url_for(@question), method: :delete, confirm: t("trash_confirmation") do
+          li= link_to url_for(@question), method: :delete, data: { confirm: t("trash_confirmation") } do
             span.fa.fa-trash
             span.icon-left=t('trash')
         li= link_to url_for([:edit, @question]) do
