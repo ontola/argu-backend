@@ -1,6 +1,10 @@
 @import "variables";
 @import "mixins";
 
+html, body {
+  height: calc(100% - 2.5em);
+}
+
 body {
   background-color: #ECECEC;
 }
@@ -20,6 +24,7 @@ body {
 
 .container {
   margin: 0 auto;
+  margin-top: 5em;
   position: relative;
 }
 
