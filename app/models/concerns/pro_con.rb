@@ -60,7 +60,7 @@ module ProCon
   end
 
   def root_comments
-    self.comment_threads.where(:parent_id => nil)
+    self.comment_threads.where(is_trashed: false, :parent_id => nil)
   end
 
   module ClassMethods

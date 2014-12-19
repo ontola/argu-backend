@@ -4,6 +4,11 @@ class Argument < ActiveRecord::Base
   include ProCon
   scope :argument_comments, -> { includes(:comment_threads).order(votes_pro_count: :desc).references(:comment_threads) }
 
+  def top_comment(show_trashed = nil)
+    c = self.comment_threads.trashed(show_trashed)
+    c.first
+  end
+
   counter_culture :motion,
                   column_name: Proc.new { |a| a.is_trashed ? nil : "argument_#{a.pro? ? 'pro' : 'con'}_count" },
                   column_names: {

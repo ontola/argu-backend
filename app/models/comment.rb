@@ -1,5 +1,6 @@
 class Comment < ActiveRecord::Base
   include ArguBase
+  include Trashable
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 
@@ -58,10 +59,4 @@ class Comment < ActiveRecord::Base
     self.commentable.increment("comments_count").save
   end
 
-  def is_trashed?
-    read_attribute :is_trashed
-  end
-  def trash
-    update_attribute :is_trashed, true
-  end
 end

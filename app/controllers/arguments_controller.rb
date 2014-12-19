@@ -8,7 +8,7 @@ class ArgumentsController < ApplicationController
     current_context @argument
     @parent_id = params[:parent_id].to_s
     
-    @comments = @argument.comment_threads.where(:parent_id => nil, is_trashed: false).page(params[:page]).order('created_at ASC')
+    @comments = @argument.comment_threads.where(:parent_id => nil).trashed(show_trashed?).page(params[:page]).order('created_at ASC')
     @length = @argument.root_comments.length
 
     respond_to do |format|
