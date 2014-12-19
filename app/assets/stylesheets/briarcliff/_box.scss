@@ -11,9 +11,31 @@
   @include box-shadow;
 }
 
-.box h3 a, .box a h3 {
+.box h3 a, .box a h1, .box a h2,.box a h3 {
+  display: inline-block;
+  position: relative;
+  @include transition(.2s);
+  transform: translateY(-0em);
+  &:after {
+    content: "";
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: .0em;
+    opacity: 0;
+    background-color: $darken2;
+    @include transition(.3s);
+  }
   &:hover {
-    text-decoration: underline;
+    transform: translateY(-.1em);
+  }
+  &:hover:after{
+    opacity: 1;
+    height: .15em;
+  }
+  &:active:after{
+   background-color: $darken4;
   }
 }
 
@@ -66,7 +88,7 @@
   width: 100%;
   width: calc(100% - 2em);
   .box-image {
-    height: 10em;
+    height: 14em;
   }
   h1 {
     font-size: 2.2em;
@@ -85,11 +107,6 @@
   @include bp-medium{
     width: 100%;
     width: calc(100% - 2em);
-  }
-  h1,h2,h3 {
-    &:hover {
-      text-decoration: underline;
-    }
   }
 }
 
@@ -114,18 +131,23 @@
 }
 
 .box-image{
-  height: 7em;
+  height: 10em;
   width: 100%;
   background-size: cover;
   background-position: center;
   z-index: -1;
+  @include transition(.3s);
   &:hover{
     opacity: .9;
+  }
+  &:active{
+    opacity: .7;
   }
 }
 
 .box.box-link {
   opacity: .8;
+  @include transition(.2s);
   &:hover {
     opacity: 1;
   }
@@ -191,7 +213,6 @@
 
 .box-with-btns {
   h1, h2, h3 {
-    padding-right: 1.5em;
   }
 }
 

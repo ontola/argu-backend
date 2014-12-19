@@ -18,6 +18,13 @@
   padding: 0em 0.7em;
   font-size: 1em;
   text-transform: uppercase;
+  @include transition(.1s);
+  > .fa {
+    line-height: 3em;
+  }
+  &:hover {
+    background-color: $lighten1;
+  }
 }
 
 .navbar-item span {
@@ -31,15 +38,6 @@
     &.fa{
       display: inline-block;
     }
-  }
-}
-
-.navbar-item {
-  > .fa {
-    line-height: 3em;
-  }
-  &:hover {
-    background-color: $lighten1;
   }
 }
 

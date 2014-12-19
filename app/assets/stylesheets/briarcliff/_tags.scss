@@ -18,6 +18,7 @@ ul.tags {
   background-color: white;
   margin: .3em;
   @include border-radius;
+  @include transition(.3s);
 }
 
 a.tag:hover {
@@ -30,8 +31,13 @@ a.tag:hover {
 }
 
 
-.box > .tags {
-  margin-left: .5em;
+.box > ul.tags {
+  border-top: solid 1px rgb(232, 232, 232);
+  display: block;
+  width: 100%;
+  .tag {
+    margin: 0;
+  }
 }
 
 .tags-floating {

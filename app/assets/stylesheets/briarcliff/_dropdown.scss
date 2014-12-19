@@ -29,6 +29,7 @@
     padding: .6em .7em;
     min-width: 100%;
     display: block;
+    @include transition(.1s);
 
     &:hover {
       background-color: $darken1;

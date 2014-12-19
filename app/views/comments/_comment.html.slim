@@ -13,7 +13,7 @@
         li= link_to polymorphic_url([resource, c]), method: :delete do
           span.fa.fa-trash
           span.icon-left = t('trash')
-  .comment
+  .comment.comment-form
     .box= render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false }
   - if c.has_children?
     - c.children.each do |ch|
