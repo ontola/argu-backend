@@ -7,8 +7,8 @@ class MotionsController < ApplicationController
     @motion = Motion.includes(:arguments, :opinions).find_by_id(params[:id])
     authorize @motion
     current_context @motion
-    @arguments = Argument.ordered policy_scope(@motion.arguments)
-    @opinions = Opinion.ordered policy_scope(@motion.opinions)
+    @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
+    @opinions = Opinion.ordered policy_scope(@motion.opinions.trashed(show_trashed?))
     @voted = Vote.where(voteable: @motion, voter: current_profile).last.try(:for) unless current_user.blank?
 
     respond_to do |format|

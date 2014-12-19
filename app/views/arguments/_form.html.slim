@@ -14,6 +14,9 @@
 
       = f.text_area "content", class: "form-input-content", placeholder: t("arguments.form.content"), rows: "10"
       /p.helpertext= raw t("arguments.form.helper.content")
+      - if policy(@argument).trash?
+        = f.label :is_trashed
+        = f.check_box :is_trashed
       .row
         .span8
           fieldset.control-group

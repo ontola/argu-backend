@@ -10,6 +10,7 @@ class RestrictivePolicy
   def permitted_attributes
     attributes = []
     attributes << :web_url if web_url?
+    attributes << :is_trashed if trash?
     attributes
   end
 

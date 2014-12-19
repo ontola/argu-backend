@@ -19,6 +19,10 @@
           = f.text_field :tag_list, placeholder: t("questions.form.themes"), class: "tag-list"
           /p.helpertext= t("motions.form.helper.themes")
 
+          - if policy(@question).trash?
+            = f.label :is_trashed
+            = f.check_box :is_trashed
+
           /TODO invert arguments only visible when in edit, not in new.
             <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
             <%= f.check_box :invert_arguments %>
