@@ -2,6 +2,9 @@ class ForumsController < ApplicationController
   def show
     @forum = Forum.friendly.find params[:id]
     authorize @forum, :show?
+    @questions = policy_scope(@forum.questions.trashed(show_trashed?))
+    @motions = policy_scope(@forum.motions.trashed(show_trashed?))
+
     current_context @forum
   end
 

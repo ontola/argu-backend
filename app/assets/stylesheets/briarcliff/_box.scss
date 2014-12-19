@@ -11,6 +11,10 @@
   @include box-shadow;
 }
 
+.box.trashed {
+  background-color: $trashed;
+}
+
 .box.box-link {
   opacity: .8;
   &:hover {

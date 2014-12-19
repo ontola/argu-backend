@@ -11,6 +11,8 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:question)
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:motions)
+
+    assert_not assigns(:motions).any?(&:is_trashed?), "Trashed motions are visible"
   end
 
   test "should post create" do

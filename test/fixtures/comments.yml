@@ -6,19 +6,12 @@
 # below each fixture, per the syntax in the comments below
 #
 one:
-  title: 'Vraagstuk'
-  content: 'Inhoud van het vraagstuk'
-  forum: :utrecht
-  creator: :one
-one_trashed:
-  title: 'Vraagstuk'
-  content: 'Inhoud van het vraagstuk'
-  forum: :utrecht
-  is_trashed: true
-  creator: :one
+  commentable: one (Argument)
+  profile: :one
+  body: "Just a comment"
 #
 two:
-  title: 'Vraagstuk2'
-  content: 'Inhoud van vraagstuk2'
-  forum: :utrecht
-  creator: :two
+  commentable: one (Argument)
+  profile: :one
+  is_trashed: true
+  body: "Just a second comment"

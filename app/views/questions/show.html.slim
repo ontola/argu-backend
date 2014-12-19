@@ -1,7 +1,7 @@
 -provide :title, @question.title
 .col-1
   = to_parent
-  .box
+  .box[class="#{'trashed' if @question.is_trashed?}"]
     section
       h1.que-t= @question.title
       p= @question.supped_content.html_safe

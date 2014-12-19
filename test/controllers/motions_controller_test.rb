@@ -6,17 +6,21 @@ class MotionsControllerTest < ActionController::TestCase
   test "should get show" do
     sign_in users(:user)
 
-    get :show, id: motions(:one).id
+    get :show, id: motions(:one)
+
     assert_response :success
     assert_not_nil assigns(:motion)
     assert_not_nil assigns(:arguments)
     assert_not_nil assigns(:opinions)
+
+    assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) }, "Trashed arguments are visible"
   end
 
   test "should get new" do
     sign_in users(:user)
 
     get :new, forum_id: forums(:utrecht)
+
     assert_response :success
     assert_not_nil assigns(:motion)
   end

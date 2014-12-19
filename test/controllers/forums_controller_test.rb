@@ -9,6 +9,11 @@ class ForumsControllerTest < ActionController::TestCase
     get :show, id: forums(:utrecht)
     assert_response :success
     assert_not_nil assigns(:forum)
+    assert_not_nil assigns(:motions)
+    assert_not_nil assigns(:questions)
+
+    assert_not assigns(:motions).any?(&:is_trashed?), "Trashed motions are visible"
+    assert_not assigns(:questions).any?(&:is_trashed?), "Trashed questions are visible"
   end
 
   test "should not show settings" do

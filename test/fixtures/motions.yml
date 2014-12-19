@@ -11,6 +11,13 @@ one:
   forum: :utrecht
   creator: :one
 #
+one_trashed:
+  title: 'Voorstel'
+  content: 'Inhoud van het voorstel'
+  is_trashed: true
+  forum: :utrecht
+  creator: :one
+#
 two:
   title: 'Voorstel2'
   content: 'Inhoud van voorstel2'
