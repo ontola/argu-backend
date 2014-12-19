@@ -41,7 +41,9 @@
 
 .box h1, .box h2, .box h3 {
   font-weight: 800;
+  letter-spacing: .04em;
   margin-bottom: .5em;
+  line-height: 1.45em;
 }
 
 .box p {
@@ -104,6 +106,9 @@
   margin: 1em 1em;
   width: 45%;
   width: calc(50% - 2em);
+  section.section-info{
+    display: none;
+  }
   @include bp-medium{
     width: 100%;
     width: calc(100% - 2em);
@@ -136,12 +141,12 @@
   background-size: cover;
   background-position: center;
   z-index: -1;
-  @include transition(.3s);
+  @include transition(.2s);
   &:hover{
-    opacity: .9;
+    opacity: .8;
   }
   &:active{
-    opacity: .7;
+    opacity: .6;
   }
 }
 
@@ -222,13 +227,12 @@ section {
 }
 
 section.section-info {
-  padding-top: .1em;
-  line-height: 1.5em;
   span {font-size: .8em;};
+  padding-top: 0.1em;
+  line-height: 1.1em;
   background-color: $g3;
   color: white;
-  text-transform: uppercase;
-}
+  text-transform: uppercase;}
 
 section.unpadded {
   padding: 0;

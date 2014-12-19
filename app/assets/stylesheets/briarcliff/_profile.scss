@@ -22,10 +22,13 @@
   }
 
   .name {
-    display: block;
+    display: inline-block;
     font-weight: bold;
     color: $g3;
     font-size: 0.8em;
+    position: absolute;
+    top: 1.7em;
+    left: 0.4em;
   }
 }
 

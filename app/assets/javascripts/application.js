@@ -19,8 +19,8 @@
 //= require sifter
 //= require selectize
 //= require masonry
-//= require requirejs
 //= require parallax
+//= require requirejs
 //= require autocomplete-rails
 //= require fixedsticky
 //= require pica_pica/application
