@@ -9,17 +9,17 @@ one:
   title: 'Voorstel'
   content: 'Inhoud van het voorstel'
   forum: :utrecht
-  creator: :one
+  creator: :profile_one
 #
 one_trashed:
   title: 'Voorstel'
   content: 'Inhoud van het voorstel'
   is_trashed: true
   forum: :utrecht
-  creator: :one
+  creator: :profile_one
 #
 two:
   title: 'Voorstel2'
   content: 'Inhoud van voorstel2'
   forum: :utrecht
-  creator: :two
+  creator: :profile_two

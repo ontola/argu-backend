@@ -10,14 +10,14 @@ one:
   content: "Contents of argument one"
   motion: :one
   pro: true
-  creator: :user
+  creator: :profile_one
 #
 two:
   title: "Argument two"
   content: "Contents of argument two"
   motion: :one
   pro: false
-  creator: :user2
+  creator: :profile_two
 #
 trashed:
   title: "Argument trashed"
@@ -25,4 +25,4 @@ trashed:
   motion: :one
   is_trashed: true
   pro: true
-  creator: :user
+  creator: :profile_one

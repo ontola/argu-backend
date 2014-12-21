@@ -5,14 +5,19 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+user_thom:
+  email: 'thom@argu.co'
+  encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
+  username: 'fletcher91'
+  profile: :profile_fletcher91
 user:
   email: 'user@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   username: 'user'
-  profile: :one
+  profile: :profile_one
 #
 user2:
   email: 'user2@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   username: 'user2'
-  profile: :two
+  profile: :profile_two

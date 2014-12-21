@@ -5,10 +5,13 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one:
+profile_fletcher91:
+  name: 'Thom van Kalkeren'
+  about: "I'm the coder!"
+profile_one:
   name: 'User'
   about: 'Im a user'
 #
-two:
+profile_two:
   name: 'User2'
   about: 'Im also a user'

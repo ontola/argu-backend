@@ -7,11 +7,11 @@
 #
 one:
   commentable: one (Argument)
-  profile: :one
+  profile: :profile_one
   body: "Just a comment"
 #
 two:
   commentable: one (Argument)
-  profile: :one
+  profile: :profile_one
   is_trashed: true
   body: "Just a second comment"

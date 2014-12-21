@@ -9,16 +9,16 @@ one:
   title: 'Vraagstuk'
   content: 'Inhoud van het vraagstuk'
   forum: :utrecht
-  creator: :one
+  creator: :profile_one
 one_trashed:
   title: 'Vraagstuk'
   content: 'Inhoud van het vraagstuk'
   forum: :utrecht
   is_trashed: true
-  creator: :one
+  creator: :profile_one
 #
 two:
   title: 'Vraagstuk2'
   content: 'Inhoud van vraagstuk2'
   forum: :utrecht
-  creator: :two
+  creator: :profile_two

@@ -6,5 +6,5 @@
 # below each fixture, per the syntax in the comments below
 #
 user_utrecht:
-  profile: :one
+  profile: :profile_one
   forum: :utrecht

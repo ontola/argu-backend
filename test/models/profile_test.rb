@@ -3,7 +3,7 @@ require "test_helper"
 class ProfileTest < ActiveSupport::TestCase
 
   def profile
-    @profile ||= profiles(:one)
+    @profile ||= profiles(:profile_one)
   end
 
   def test_valid

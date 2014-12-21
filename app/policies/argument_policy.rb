@@ -11,8 +11,20 @@ class ArgumentPolicy < RestrictivePolicy
     attributes
   end
 
+  def new?
+    create?
+  end
+
   def create?
     is_member? || super
+  end
+
+  def update?
+    is_member? && is_creator? || super
+  end
+
+  def edit?
+    update?
   end
 
   def show?

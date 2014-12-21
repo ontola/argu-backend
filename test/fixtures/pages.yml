@@ -8,7 +8,7 @@
 argu:
   slug: 'argu'
   web_url: 'argu'
-  profile_id: 1
+  profile: :profile_fletcher91
 #
 two: {}
 #  column: value
