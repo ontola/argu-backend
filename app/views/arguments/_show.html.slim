@@ -18,7 +18,7 @@
   -if (top_comment = model.top_comment(show_trashed?)).present?
     = link_to argument_path(model) + "#commentstitle" do
       section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]
-        p= top_comment.body[0..150] + (top_comment.body[151] ? "..." : "")
+        p= top_comment.is_trashed? ? '[DELETED]' : top_comment.body[0..150] + (top_comment.body[151] ? "..." : "")
         .comments-counter
           -if Rails.configuration.epics.counters
             span.icon-right= model.comments_count.to_s

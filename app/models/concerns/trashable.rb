@@ -13,7 +13,6 @@ module Trashable
     update_column :is_trashed, true
   end
 
-
   module ClassMethods
 
   end

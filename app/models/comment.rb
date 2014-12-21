@@ -10,6 +10,8 @@ class Comment < ActiveRecord::Base
   validates_presence_of :profile
   validates :body, presence: true, length: {minimum: 4}
 
+  attr_accessor :is_processed
+
   belongs_to :commentable, :polymorphic => true
   belongs_to :profile
 
