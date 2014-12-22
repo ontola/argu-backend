@@ -10,6 +10,7 @@ class PagePolicy < RestrictivePolicy
     attributes = super
     attributes << [:name, :bio, :tag_list] if update?
     attributes << :page_id if change_owner?
+    attributes
   end
 
   ######CRUD######

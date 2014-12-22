@@ -20,6 +20,10 @@
           /p.helpertext= t("motions.form.helper.themes")
           = f.input :cover_photo
 
+          - if policy(@question).trash?
+            = f.label :is_trashed
+            = f.check_box :is_trashed
+
           /TODO invert arguments only visible when in edit, not in new.
             <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
             <%= f.check_box :invert_arguments %>

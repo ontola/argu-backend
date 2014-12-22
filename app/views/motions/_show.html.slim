@@ -1,5 +1,5 @@
 - tag ||= nil
-.box
+.box[class="#{'trashed' if model.is_trashed?}"]
   section
     h3.sta-t= contextual_link_to model.title, motion_path(model)
     p= model.supped_content[0..150] + (model.supped_content[151] ? "..." : "")

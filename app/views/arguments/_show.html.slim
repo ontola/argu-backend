@@ -1,4 +1,4 @@
-.box.box-with-btns.argument[id="#{model.id.present? ? 'argument_' + model.id.to_s : ''}" class="side-#{model.pro ? 'pro' : 'con'}"]
+.box.box-with-btns.argument[id="#{model.id.present? ? 'argument_' + model.id.to_s : ''}" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed}"]
   section
     = contextual_link_to argument_path(model) do
       h3[class="#{model.pro ? 'pro-t' : 'con-t'}"]= model.title
@@ -15,10 +15,10 @@
       li=link_to argument_vote_path(model), :remote => true, method: :delete, class: "btn-subtle" do
         span.icon-right= model.votes_con_count.to_s
         span.fa.fa-arrow-down
-  -if model.comment_threads.present?
+  -if (top_comment = model.top_comment(show_trashed?)).present?
     = link_to argument_path(model) + "#commentstitle" do
-      section.top-comment
-        p= model.comment_threads.first.body[0..150] + (model.comment_threads.first.body[151] ? "..." : "")
+      section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]
+        p= top_comment.is_trashed? ? '[DELETED]' : top_comment.body[0..150] + (top_comment.body[151] ? "..." : "")
         .comments-counter
           -if Rails.configuration.epics.counters
             span.icon-right= model.comments_count.to_s

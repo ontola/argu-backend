@@ -19,7 +19,8 @@ class QuestionPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:id, :title, :content, :tag_list, :forum_id] if edit?
+    attributes << [:id, :title, :content, :tag_list, :forum_id] if create?
+    attributes
   end
 
   def new?
@@ -30,8 +31,12 @@ class QuestionPolicy < RestrictivePolicy
     is_member? || super
   end
 
-  def edit?
+  def update?
     is_member? && is_creator? || super
+  end
+
+  def edit?
+     update?
   end
 
   def index?

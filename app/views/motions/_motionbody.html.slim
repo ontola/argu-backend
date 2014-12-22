@@ -1,4 +1,4 @@
-.box
+.box[class="#{'trashed' if motion.is_trashed?}"]
   section.section-info.sta-bg
     span = t("motions.type")
   section
@@ -9,11 +9,11 @@
   =render partial: motion.creator, locals: {resource: motion}
   ul.btns-list.btns-vertical.btn-sticky-bottom.btn-sticky
     -if policy(motion).destroy?
-      li= link_to motion_path(motion, destroy: true), method: :delete, confirm: t("destroy_confirmation") do
+      li= link_to motion_path(motion, destroy: true), method: :delete, data: {confirm: t("destroy_confirmation")} do
         span.fa.fa-close
         span.icon-left=t('destroy')
     -if policy(motion).trash?
-      li= link_to motion_path(motion), method: :delete, confirm: t("trash_confirmation") do
+      li= link_to motion_path(motion), method: :delete, data: {confirm: t("trash_confirmation")} do
         span.fa.fa-trash
         span.icon-left=t('trash')
     -if policy(motion).update?

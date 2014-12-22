@@ -23,5 +23,5 @@
 =render partial: 'motions/flex_example'
 
 - if policy(@forum).show_children?
-  =render_columns({ questions: {collection: policy_scope(@forum.questions), buttons_url: url_for([:new, @forum, :question]), collection_model: Question},
-                  motions: {collection: policy_scope(@forum.motions), buttons_url: url_for([:new, @forum, :motion]), collection_model: Motion}})
+  =render_columns({ questions: {collection: @questions, buttons_url: url_for([:new, @forum, :question]), collection_model: Question},
+                  motions: {collection: @motions, buttons_url: url_for([:new, @forum, :motion]), collection_model: Motion}})

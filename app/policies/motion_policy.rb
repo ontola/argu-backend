@@ -17,6 +17,7 @@ class MotionPolicy < RestrictivePolicy
     attributes << [:title, :content, :arguments, :tag_list] if create?
     attributes << [:id] if edit?
     attributes << [:invert_arguments, :tag_id] if staff?
+    attributes
   end
 
   def new?
@@ -27,8 +28,12 @@ class MotionPolicy < RestrictivePolicy
     is_member? || super
   end
 
-  def edit?
+  def update?
     is_member? && is_creator? || super
+  end
+
+  def edit?
+    update?
   end
 
   def index?

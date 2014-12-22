@@ -27,6 +27,26 @@
     background-color: $darken2;
     @include transition(.3s);
   }
+}
+
+.box.trashed {
+  background-color: $trashed;
+}
+
+.box.box-link {
+  opacity: .8;
+  &:hover {
+    opacity: 1;
+  }
+  &:active {
+    position: relative;
+    top: 1px;
+    box-shadow: none;
+  }
+  h3 {
+    font-size: 1.2em;
+    margin-bottom: .8em;
+  }
   &:hover {
     transform: translateY(-.1em);
     color: $g5 !important;

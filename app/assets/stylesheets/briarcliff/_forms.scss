@@ -33,6 +33,10 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   }
 }
 
+input[type="checkbox"] {
+  margin: 1.2em;
+}
+
 textarea {
   resize: vertical;
 }
