@@ -4,7 +4,7 @@
   =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
   .cover-header
     .cover-container
-      h1[data-intro= t("intro.forum.name")]= @forum.name
+      h1[data-intro= t("intro.forum.name", name: @forum.name)]= @forum.name
       ul.btns-list.btns-vertical
         -if !policy(@forum).is_member?
           li=link_to forum_memberships_path(@forum.web_url), method: :create do
@@ -20,10 +20,9 @@
   .tags
     - @forum.tag_list.each do |tag|
       = contextual_link_to tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag
-/=render partial: 'motions/flex_example'
 
 - if policy(@forum).show_children?
-  .grid
+  .grid[data-intro=t('intro.forum.grid') data-position="top"]
     .box.box-grid-sizer
     -@items.each do |item|
       = render item

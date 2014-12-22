@@ -6,7 +6,8 @@ nl:
     next: 'volgende'
     previous: 'vorige'
     forum:
-      name: 'Hier staat de naam van het forum. Er zijn nog veel andere forums te ontdekken!'
+      grid: 'Alle voorstellen en vraagstukken staan hier. Klik op een item om in de discussie te duiken!'
+      name: 'Hier staat %{name} de naam van het forum. Er zijn nog veel andere forums te ontdekken!'
     motion:
       create: 'Hier kan je jouw eigen ideeën delen. Dus als jij weet wat er zou moeten veranderen, kan je hier een voorstel toevoegen.'
     start: 'Hoe werkt deze pagina?'
