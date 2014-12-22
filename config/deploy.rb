@@ -7,9 +7,7 @@ set :repo_url, 'git@bitbucket.org:arguweb/argu.git'
 # Default branch is :master
 # ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }.call
 set :branch, ENV['REVISION'] || ENV['BRANCH_NAME'] || 'master'
-set :deploy_to, '/home/rails/argu'
 set :scm, :git
-set :environment, :production
 
 set :ssh_options, {
       forward_agent: true,
@@ -42,19 +40,6 @@ set :assets_roles, [:web, :app]
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 namespace :deploy do
-
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      #pidfile = '/home/unicorn/pids/unicorn.pid'
-      #pid = File.read(pidfile).to_i
-      #syscmd = "kill -s HUP #{pid}"
-      #puts "Running syscmd: #{syscmd}"
-      #system(syscmd)
-      #FileUtils.rm_f(pidfile)
-      execute 'service unicorn restart'
-    end
-  end
 
   after :updated, :compile_assets
   after :publishing, :restart
