@@ -2,7 +2,7 @@
   .col-3-2
     = to_parent
     .box
-      = form_for([@forum, @question]) do |f|
+      = form_for([@forum, @question], multipart: true) do |f|
         section.smallpadded
           - if @question.errors.any?
             #error_explanation
@@ -18,7 +18,7 @@
           /p.helpertext= t("motions.form.helper.content")
           = f.text_field :tag_list, placeholder: t("questions.form.themes"), class: "tag-list"
           /p.helpertext= t("motions.form.helper.themes")
-          = f.input :cover_photo
+          = f.file_field :cover_photo
 
           - if policy(@question).trash?
             = f.label :is_trashed

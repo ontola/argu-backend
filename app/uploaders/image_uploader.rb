@@ -23,7 +23,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "#{model.class.to_s.pluralize.underscore}/#{model.id}-#{model.name.gsub(' ', '+')}"
+    "#{model.class.to_s.pluralize.underscore}/#{model.id}-#{model.display_name.gsub(' ', '+')}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -48,6 +48,10 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   version :cover do
     process :resize_to_fit => [1500, 1000]
+  end
+
+  version :box do
+    process :resize_to_fit => [568, 400]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

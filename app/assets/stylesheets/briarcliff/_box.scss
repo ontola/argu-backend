@@ -27,6 +27,17 @@
     background-color: $darken2;
     @include transition(.3s);
   }
+  &:hover {
+    transform: translateY(-.1em);
+    color: $g5 !important;
+  }
+  &:hover:after {
+    opacity: 1;
+    height: .15em;
+  }
+  &:active:after {
+    background-color: $darken4;
+  }
 }
 
 .box.trashed {
@@ -46,17 +57,6 @@
   h3 {
     font-size: 1.2em;
     margin-bottom: .8em;
-  }
-  &:hover {
-    transform: translateY(-.1em);
-    color: $g5 !important;
-  }
-  &:hover:after{
-    opacity: 1;
-    height: .15em;
-  }
-  &:active:after{
-   background-color: $darken4;
   }
 }
 

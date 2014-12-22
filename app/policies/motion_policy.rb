@@ -14,7 +14,7 @@ class MotionPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:title, :content, :arguments, :tag_list] if create?
+    attributes << [:title, :content, :arguments, :tag_list, :cover_photo] if create?
     attributes << [:id] if edit?
     attributes << [:invert_arguments, :tag_id] if staff?
     attributes
