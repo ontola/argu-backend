@@ -1,0 +1,14 @@
+$(function() {
+
+    introJs = introJs().setOptions({
+                 'skipLabel': '<%= I18n.t('intro.skip') %>',
+                 'nextLabel': '<%= I18n.t('intro.next') %>',
+                 'prevLabel': '<%= I18n.t('intro.previous') %>',
+                 'showStepNumbers': false
+                 });
+    //start introJs on click
+    $('.intro-trigger').on("click", function() {
+        introJs.start();
+    });
+
+});

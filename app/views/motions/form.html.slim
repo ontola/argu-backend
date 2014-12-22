@@ -16,6 +16,7 @@
           = f.text_field :title, placeholder: t("motions.form.title").capitalize, class: "h1 sta-t form-input-title"
           = f.text_area :content, placeholder: t("motions.form.content"), rows: "8", class: "form-input-content"
           = f.text_field :tag_list, placeholder: t("motions.form.themes"), class: "tag-list"
+          = f.file_field :cover_photo
 
           /TODO invert arguments only visible when in edit, not in new.
             <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>

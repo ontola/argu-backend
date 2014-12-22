@@ -4,17 +4,17 @@
   =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
   .cover-header
     .cover-container
-      h1= @forum.name
+      h1[data-intro= t("intro.forum.name")]= @forum.name
       ul.btns-list.btns-vertical
         -if !policy(@forum).is_member?
           li=link_to forum_memberships_path(@forum.web_url), method: :create do
             span.fa.fa-join
             span = t("join")
         li=link_to url_for([:new, @forum, :question]) do
-          span.fa.fa-question
+          span.fa.fa-plus
           span.icon-left= t("questions.new_btn")
-        li=link_to url_for([:new, @forum, :motion]) do
-          span.fa.fa-lightbulb-o
+        li[data-intro=t('intro.motion.create')]=link_to url_for([:new, @forum, :motion]) do
+          span.fa.fa-plus
           span.icon-left= t("motions.new_btn")
 .center
   .tags

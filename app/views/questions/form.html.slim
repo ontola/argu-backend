@@ -18,6 +18,7 @@
           /p.helpertext= t("motions.form.helper.content")
           = f.text_field :tag_list, placeholder: t("questions.form.themes"), class: "tag-list"
           /p.helpertext= t("motions.form.helper.themes")
+          = f.input :cover_photo
 
           /TODO invert arguments only visible when in edit, not in new.
             <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>

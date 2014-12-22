@@ -21,7 +21,7 @@
     padding: 0;
   }
 
-  .name {
+  .profile-name {
     display: inline-block;
     font-weight: bold;
     color: $g3;
@@ -29,6 +29,9 @@
     position: absolute;
     top: 1.7em;
     left: 0.4em;
+    &:hover{
+
+    }
   }
 }
 

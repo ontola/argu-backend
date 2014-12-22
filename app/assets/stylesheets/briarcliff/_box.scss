@@ -29,6 +29,7 @@
   }
   &:hover {
     transform: translateY(-.1em);
+    color: $g5 !important;
   }
   &:hover:after{
     opacity: 1;

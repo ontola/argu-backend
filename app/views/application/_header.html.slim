@@ -81,6 +81,16 @@ nav#navbar.navbar role="navigation"
           span.fa.fa-sign-in
           span.icon-left = t("sign_in")
 
-      li= link_to about_url, class: 'navbar-item', id: 'info'
-        span.fa.fa-question
-        span.icon-left= t("about_title")
+
+      li
+        .dropdown-trigger.navbar-item
+          span.fa.fa-question
+          span.icon-left= t("about_title")
+          ul.dropdown-content.dropdown-right
+            li =link_to about_url, id: 'info'
+              span.fa.fa-question
+              span.icon-left= t("about_title")
+            li
+              a[class="intro-trigger"]
+                span.fa.fa-question
+                span.icon-left=t("intro.start")

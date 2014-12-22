@@ -20,6 +20,7 @@
 //= require selectize
 //= require masonry
 //= require parallax
+//= require intro
 //= require requirejs
 //= require autocomplete-rails
 //= require fixedsticky

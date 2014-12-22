@@ -11,6 +11,7 @@ class Question < ActiveRecord::Base
 
   counter_culture :forum
   parentable :forum
+  mount_uploader :cover_photo, ImageUploader
 
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 255 }

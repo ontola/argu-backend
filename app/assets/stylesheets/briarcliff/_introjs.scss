@@ -1,0 +1,58 @@
+@import "variables";
+@import "mixins";
+
+.introjs-button {
+  border-radius: 0;
+  border: none;
+  text-shadow: none;
+  font-size: .8em;
+  text-transform: uppercase;
+
+  &:hover{
+    box-shadow: none !important;
+    background: $g3 !important;
+    color: white !important;
+  }
+}
+
+.introjs-helperLayer {
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  border: solid 3px $blu;
+  box-sizing: border-box;
+}
+
+.introjs-nextbutton {
+  background: $blu !important;
+  color: white;
+}
+
+
+.introjs-disabled {
+  display: none;
+  &:hover{
+    background: inherit !important;
+    color: initial;
+  }
+}
+
+.introjs-overlay {
+  background: $darken4;
+}
+
+.introjs-tooltip {
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  padding: 20px;
+}
+
+.introjs-tooltiptext {
+  line-height: 1.6em;
+}
+
+
+.introjs-helperNumberLayer {
+  display: none;
+}
