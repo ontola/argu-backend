@@ -26,7 +26,7 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do
-      execute 'cat /home/unicorn/pids/unicorn_staging.pid | xargs kill -HUP'
+      execute 'service unicorn_staging reload'
     end
   end
 end
