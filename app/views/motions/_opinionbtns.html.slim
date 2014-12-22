@@ -1,5 +1,5 @@
 .center
-  ul.btns-opinion[class= "#{'voted' if @voted.present? && !@voted.eql?('abstain')}"]
+  ul.btns-opinion[class= "#{'voted' if @voted.present? && !@voted.eql?('abstain')}" data-intro= t("intro.motion.vote")]
    li = link_to motion_vote_path(@motion, 'pro'), class: "btn-pro#{ ' voted-on' if @voted.eql?('pro')}", remote: true, method: :post do
     span.fa.fa-thumbs-up
     span.icon-left = t('motions.votes.pro')

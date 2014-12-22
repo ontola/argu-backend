@@ -2,12 +2,16 @@
 
 nl:
   intro:
-    skip: 'overslaan'
     next: 'volgende'
     previous: 'vorige'
     forum:
       grid: 'Alle voorstellen en vraagstukken staan hier. Klik op een item om in de discussie te duiken!'
-      name: 'Hier staat %{name} de naam van het forum. Er zijn nog veel andere forums te ontdekken!'
+      name: 'Op Argu staan discussies in forums. Dit forum heet dus "%{name}". Er zijn veel forums te ontdekken!'
+    tags: 'Klik op een thema om naar relevante discussies te zoeken.'
     motion:
       create: 'Hier kan je jouw eigen ideeën delen. Dus als jij weet wat er zou moeten veranderen, kan je hier een voorstel toevoegen.'
+      back: 'Klik hier om terug te gaan naar het bijbehorende forum of vraagstuk.'
+      body: 'Dit is het voorstel wat hier wordt besproken.'
+      vote: 'Hiermee kan je stemmen op het voorstel. Je kan jouw stem later nog wijzigen.'
+      arguments: 'Op Argu delen we discussie in met voor- en tegenargumenten. Klik op een argument om reacties te bekijken of te plaatsen.'
     start: 'Hoe werkt deze pagina?'

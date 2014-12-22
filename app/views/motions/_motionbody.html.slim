@@ -5,7 +5,7 @@
     h1.sta-t= motion.title
     p= motion.supped_content.html_safe
   - if motion.tags.present?
-    = render partial: 'tags/tags', locals: {resource: motion}
+    div[data-intro= t("intro.tags")]= render partial: 'tags/tags', locals: {resource: motion}
   =render partial: motion.creator, locals: {resource: motion}
   ul.btns-list.btns-vertical.btn-sticky-bottom.btn-sticky
     -if policy(motion).destroy?

@@ -13,7 +13,7 @@
         li=link_to url_for([:new, @forum, :question]) do
           span.fa.fa-plus
           span.icon-left= t("questions.new_btn")
-        li[data-intro=t('intro.motion.create')]=link_to url_for([:new, @forum, :motion]) do
+        li[data-intro=t('intro.motion.create') data-position="left"]=link_to url_for([:new, @forum, :motion]) do
           span.fa.fa-plus
           span.icon-left= t("motions.new_btn")
 .center
@@ -22,7 +22,7 @@
       = contextual_link_to tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag
 
 - if policy(@forum).show_children?
-  .grid[data-intro=t('intro.forum.grid') data-position="top"]
-    .box.box-grid-sizer
+  .grid
+    .box.box-grid-sizer[data-intro=t('intro.forum.grid') data-position="top"]
     -@items.each do |item|
       = render item
