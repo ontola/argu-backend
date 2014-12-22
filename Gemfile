@@ -12,7 +12,6 @@ gem 'pg', '0.17.1'
 #gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
 gem 'foreigner', '~> 1.7.0'
 gem 'immigrant', '~> 0.1.8'
-gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 
 gem 'jbuilder', '~> 2.2.5'
 gem 'bcrypt-ruby', '>= 3.1.5'
@@ -83,7 +82,7 @@ group :development, :test do
   gem 'capistrano-rvm', '~> 0.1.2'
 end
 
-group :production do
+group :production, :staging do
   gem 'therubyracer', '~> 0.12.1'
   gem 'unicorn', '~> 4.8.3'
   gem 'rack-test', '~> 0.6.2'
