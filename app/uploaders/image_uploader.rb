@@ -7,7 +7,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
 
-  unless Rails.env.development?
+  unless Rails.env.development? || Rails.env.test?
     storage :fog
     CarrierWave.configure do |config|
       config.fog_credentials = {
