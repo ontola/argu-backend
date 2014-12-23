@@ -9,7 +9,7 @@ class Motion < ActiveRecord::Base
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy
-  has_many :votes, as: :voteable
+  has_many :votes, as: :voteable, :dependent => :destroy
   has_many :question_answers, inverse_of: :motion, dependent: :destroy
   has_many :questions, through: :question_answers
   belongs_to :forum, inverse_of: :motions
@@ -22,6 +22,7 @@ class Motion < ActiveRecord::Base
 
   parentable :questions, :forum
   resourcify
+  mount_uploader :cover_photo, ImageUploader
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }

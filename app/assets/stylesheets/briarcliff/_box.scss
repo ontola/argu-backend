@@ -11,6 +11,40 @@
   @include box-shadow;
 }
 
+.box h3 a, .box a h1, .box a h2,.box a h3 {
+  display: inline-block;
+  position: relative;
+  @include transition(.2s);
+  transform: translateY(-0em);
+  &:after {
+    content: "";
+    width: 100%;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    height: .0em;
+    opacity: 0;
+    background-color: $darken2;
+    @include transition(.3s);
+  }
+  &:hover {
+    transform: translateY(-.1em);
+    color: $g5 !important;
+  }
+  &:hover:after {
+    opacity: 1;
+    height: .15em;
+  }
+  &:active:after {
+    background-color: $darken4;
+  }
+}
+
+.box.trashed, .trashed > .box {
+ // background-color: $trashed;
+  opacity: .5;
+}
+
 .box.box-link {
   opacity: .8;
   &:hover {
@@ -25,59 +59,13 @@
     font-size: 1.2em;
     margin-bottom: .8em;
   }
-  .icon-left {
-    margin-left: .7em;
-  }
-  &.box-link-fill{
-    h3 {
-      color: white;
-    }
-    opacity: 1;
-    &:hover h3 {
-      text-decoration: underline;
-    }
-    &:active {
-      opacity: .8;
-    }
-  }
-}
-
-
-.box-small{
-  max-width: 22em;
-}
-
-section {
-  position: relative;
-  padding: 1.1em 1.4em 0.1em 1.4em;
-}
-
-section.unpadded {
-  padding: 0;
-}
-
-section.smallpadded {
-  padding: 1.1em 1em 0em 1em;
-}
-
-section + section {
-  border-top: solid 1px $g1;
-}
-
-.section-small {
-  position: relative;
-  padding: .3em 1.4em 0.1em 1.4em;
-}
-
-.box h3 a, .box a h3 {
-  &:hover {
-    text-decoration: underline;
-  }
 }
 
 .box h1, .box h2, .box h3 {
   font-weight: 800;
+  letter-spacing: .04em;
   margin-bottom: .5em;
+  line-height: 1.45em;
 }
 
 .box p {
@@ -120,6 +108,102 @@ section + section {
   padding-bottom: .4em;
 }
 
+.box-grid.box-big{
+  width: 100%;
+  width: calc(100% - 2em);
+  .box-image {
+    height: 14em;
+  }
+  h1 {
+    font-size: 2.2em;
+    @include bp-medium {
+      font-size: 1.5em;
+    }
+  }
+}
+
+.box-grid {
+  display: inline-block;
+  float: left;
+  margin: 1em 1em;
+  width: 45%;
+  width: calc(50% - 2em);
+  section.section-info{
+    display: none;
+  }
+  @include bp-medium{
+    width: 100%;
+    width: calc(100% - 2em);
+  }
+}
+
+.box-grid-sizer {
+  width: 50%;
+  display: inline-block;
+}
+
+.box-hidden {
+  position: absolute;
+  top: 100%;
+  background-color: white;
+  color: white;
+  width: 100%;
+  height: 100%;
+  @include transition(.5s);
+}
+
+.box:hover .box-hidden {
+  top: 0;
+  @include animation(fade-in .5s both)
+}
+
+.box-image{
+  height: 10em;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  @include transition(.2s);
+  &:hover{
+    opacity: .8;
+  }
+  &:active{
+    opacity: .6;
+  }
+}
+
+.box.box-link {
+  opacity: .8;
+  @include transition(.2s);
+  &:hover {
+    opacity: 1;
+  }
+  &:active {
+    position: relative;
+    top: 1px;
+    box-shadow: none;
+  }
+  h3 {
+    font-size: 1.2em;
+    margin-bottom: .8em;
+  }
+  .icon-left {
+    margin-left: .7em;
+  }
+  &.box-link-fill{
+    h3 {
+      color: white;
+    }
+    opacity: 1;
+    &:hover h3 {
+      text-decoration: underline;
+    }
+    &:active {
+      opacity: .8;
+    }
+  }
+}
+
 .box-list .box {
   border-radius: 0;
   margin-bottom: 0;
@@ -136,8 +220,55 @@ section + section {
   border-bottom-radius: 0;
 }
 
+.box-note {
+  position: absolute;
+  top: 0em;
+  right: 0em;
+  z-index: 3;
+  background-color: $red-alert;
+  padding: .4em;
+  span {
+    text-transform: uppercase;
+    color: white;
+    font-weight: bold;
+  }
+}
+
+.box-small{
+  max-width: 22em;
+}
+
 .box-with-btns {
   h1, h2, h3 {
-    padding-right: 1.5em;
   }
+}
+
+section {
+  position: relative;
+  padding: 1.1em 1.4em 0.1em 1.4em;
+}
+
+section.section-info {
+  span {font-size: .8em;};
+  padding-top: 0.1em;
+  line-height: 1.1em;
+  background-color: $g3;
+  color: white;
+  text-transform: uppercase;}
+
+section.unpadded {
+  padding: 0;
+}
+
+section.smallpadded {
+  padding: 1.1em 1em 0em 1em;
+}
+
+section + section {
+  border-top: solid 1px $g1;
+}
+
+.section-small {
+  position: relative;
+  padding: .3em 1.4em 0.1em 1.4em;
 }

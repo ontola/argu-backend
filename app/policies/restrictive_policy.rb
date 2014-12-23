@@ -10,6 +10,7 @@ class RestrictivePolicy
   def permitted_attributes
     attributes = []
     attributes << :web_url if web_url?
+    attributes << :is_trashed if trash?
     attributes
   end
 
@@ -67,6 +68,8 @@ class RestrictivePolicy
   end
 
   def is_creator?
+    creator = record.creator
+    profile = user.profile
     record.creator == user.profile
   end
 

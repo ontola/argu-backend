@@ -5,6 +5,7 @@
     = f.input :name
     = f.input :bio
     = f.input :tag_list, placeholder: t("motions.form.themes"), as: :tags
+    = f.input :cover_photo
     = f.input :profile_photo
     -if policy(resource).web_url?
       = f.input :web_url

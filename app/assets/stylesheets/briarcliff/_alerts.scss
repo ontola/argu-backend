@@ -14,7 +14,6 @@
   font-weight: bold;
   z-index: 9;
   border: solid 3px;
-  border-radius: 8px;
   text-align: center;
   font-family: $font-sans;
   @include animation(fade-in 1s both, from-bottom ease-out 1s both);

@@ -12,16 +12,19 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require application/jquery.jeditable.mini.js
 //= require jquery-ui/autocomplete
 //= require jquery-ui/sortable
 //= require microplugin
 //= require sifter
 //= require selectize
-//= require requirejs
+//= require masonry
 //= require parallax
+//= require intro
+//= require requirejs
 //= require autocomplete-rails
 //= require fixedsticky
 //= require pica_pica/application
 // require briarcliff/briarcliff
 //= require cocoon
-//= require_tree .
+//= require_tree ./application

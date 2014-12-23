@@ -5,26 +5,35 @@
   position: relative;
 }
 
-.comment.trashed > .box {
-  background-color: $trashed;
-}
-
 .comment .comment {
   padding-left: 1em;
+  &:before{
+    content: "";
+    background-color: $g00;
+    width: 0.5em;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: -0.5em;
+  }
 }
 
 .comment .box {
-  margin: 0 0 .2em 0;
+  margin: 0 0 .5em 0;
   color: transparent;
+}
+
+.comment_form input[type="submit"]{
+  height: 3em;
+}
+
+.comment-form .box{
+  margin: 0;
 }
 
 .comments {
   margin-left: -1em;
   margin: 0 auto;
-}
-
-.comments > .comment {
-  margin-bottom: .8em;
 }
 
 .comments-counter{
@@ -39,23 +48,16 @@
   color: $g4;
 }
 
-.comment:before {
-  content: "";
-  background-color: rgba(0, 0, 0, 0.0);
-  width: 1em;
-  height: 100%;
-  position: absolute;
-}
-
 .top-comment {
   color: $g3;
-  background-color: $g0;
+  background-color: $g00;
   position: relative;
+  @include transition(.2s);
   &:hover {
-    background-color: $g1;
+    background-color: $g0;
   }
   &:active {
-    background-color: $g0;
+    background-color: $g1;
   }
 }
 

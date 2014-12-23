@@ -1,7 +1,11 @@
 -provide :title, @question.title
+.cover-behind
+  .cover-image[style="background-image: url('#{@question.cover_photo.url}'); "]
 .col-1
-  = to_parent
-  .box
+  div[data-intro= t("intro.question.back")]= to_parent
+  .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t("intro.question.body")]
+    section.section-info.que-bg
+      span = t("questions.type")
     section
       h1.que-t= @question.title
       p= @question.supped_content.html_safe
@@ -11,14 +15,15 @@
     -if policy(@question).update?
       ul.btns-list.btns-sticky.btns-sticky-bottom.btns-vertical
         -if policy(@question).destroy?
-          li= link_to url_for([@question, destroy: true]), method: :delete, confirm: t("destroy_confirmation") do
+          li= link_to url_for([@question, destroy: true]), method: :delete, data: {confirm: t("destroy_confirmation")} do
             span.fa.fa-close
             span.icon-left=t('destroy')
         -if policy(@question).trash?
-          li= link_to url_for(@question), method: :delete, confirm: t("trash_confirmation") do
+          li= link_to url_for(@question), method: :delete, data: { confirm: t("trash_confirmation") } do
             span.fa.fa-trash
             span.icon-left=t('trash')
         li= link_to url_for([:edit, @question]) do
           span.fa.fa-pencil
           span.icon-left=t('edit')
-==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))
+div[data-intro= t("intro.question.motions")]
+  ==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))

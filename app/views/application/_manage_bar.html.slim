@@ -1,8 +1,8 @@
-.center
-  ul.box.btns-list.btns-vertical
+.tabs
+  ul.btns-list.btns-vertical
     li=link_to url_for(resource) do
-      span.fa.fa-eye
-      span.icon-left= t("#{resource.class_name}.resource_name")
+      span.fa.fa-home
+      span.icon-left= resource.name
     li=link_to url_for([:settings, resource]) do
       span.fa.fa-gear
       span.icon-left= t("#{resource.class_name}.settings.title")
@@ -10,3 +10,6 @@
       li=link_to url_for([:statistics, resource]) do
         span.fa.fa-pie-chart
         span.icon-left= t("#{resource.class_name}.statistics.title")
+    li = link_to url_for([:settings, resource, tab: :managers])
+      span.fa.fa-group
+      span.icon-left = t("forums.settings.managers")

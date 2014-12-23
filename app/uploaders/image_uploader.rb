@@ -7,14 +7,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
 
-  if ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'].present? && ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'].present?
-    storage = :fog
-    fog_credentials = {
-        :provider                         => 'Google',
-        :google_storage_access_key_id     => ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'] || Rails.application.secrets.google_storage_access_key_id,
-        :google_storage_secret_access_key => ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'] || Rails.application.secrets.google_storage_secret_access_key
-    }
-    fog_directory = 'argu-logos'
+  if (ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'] || Rails.application.secrets.google_storage_access_key_id).present? && (ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'] || Rails.application.secrets.google_storage_secret_access_key).present?
   else
     storage = :local
   end
@@ -23,7 +16,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "#{model.class.to_s.pluralize.underscore}/#{model.id}-#{model.name.gsub(' ', '+')}"
+    "#{model.class.to_s.pluralize.underscore}/#{model.id}-#{model.display_name.gsub(' ', '+')}"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -48,6 +41,10 @@ class ImageUploader < CarrierWave::Uploader::Base
 
   version :cover do
     process :resize_to_fit => [1500, 1000]
+  end
+
+  version :box do
+    process :resize_to_fit => [568, 400]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

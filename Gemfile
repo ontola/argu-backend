@@ -12,7 +12,6 @@ gem 'pg', '0.17.1'
 #gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
 gem 'foreigner', '~> 1.7.0'
 gem 'immigrant', '~> 0.1.8'
-gem 'yaml_db', github: 'jetthoughts/yaml_db', ref: 'fb4b6bd7e12de3cffa93e0a298a1e5253d7e92ba'
 
 gem 'jbuilder', '~> 2.2.5'
 gem 'bcrypt-ruby', '>= 3.1.5'
@@ -66,10 +65,8 @@ group :development, :test do
   gem 'thin'
   #gem 'puma', platform: :ruby
   gem 'nokogiri', '1.6.5'
-  gem 'rspec', '3.1.0'
-  gem 'rspec-rails', '3.1.0'
-  gem 'factory_girl', '~> 4.5.0'
-  gem 'factory_girl_rails', '~> 4.5.0'
+  gem 'minitest-rails', '~> 2.1.1'
+  gem 'minitest-reporters', '~> 1.0.8'
   #gem 'meta_request'
   #gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
@@ -85,7 +82,7 @@ group :development, :test do
   gem 'capistrano-rvm', '~> 0.1.2'
 end
 
-group :production do
+group :production, :staging do
   gem 'therubyracer', '~> 0.12.1'
   gem 'unicorn', '~> 4.8.3'
   gem 'rack-test', '~> 0.6.2'

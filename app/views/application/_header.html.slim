@@ -1,7 +1,7 @@
 nav#navbar.navbar role="navigation"
   .nav-container
     =link_to root_url, class: "navbar-logo"
-      =image_tag 'logo.svg'
+      =image_tag 'logo-white.svg'
     ul.navbar-links
       li
         =link_to url_for(current_scope.model), class: "navbar-item"
@@ -13,7 +13,6 @@ nav#navbar.navbar role="navigation"
             span.fa.fa-tag
             span.icon-left forums
             ul.dropdown-content
-              span.dropdown-header = t('forums.mine')
               - current_profile.present? && current_profile.memberships.each do |membership|
                 li
                   =link_to membership.forum.display_name, url_for(membership.forum)
@@ -62,9 +61,6 @@ nav#navbar.navbar role="navigation"
             // Regex to only show first name of user
             span.icon-left= current_profile.display_name.split(/\s+/, 2)[0...1].join(' ')
             ul.dropdown-content.dropdown-right
-              li= link_to new_user_invitation_path
-                span.fa.fa-bullhorn
-                span.icon-left= t('devise.invitations.link')
               li= contextual_link_to profile_url(current_profile.username) do
                 span.fa.fa-user
                 span.icon-left= t("profiles.display")
@@ -74,6 +70,9 @@ nav#navbar.navbar role="navigation"
               li= link_to settings_url do
                 span.fa.fa-gear
                 span.icon-left= t(:users_show_title)
+              li= link_to new_user_invitation_path
+                span.fa.fa-bullhorn
+                span.icon-left= t('devise.invitations.link')
               li = link_to(destroy_user_session_url, method: :delete) do
                 span.fa.fa-sign-out
                 span.icon-left= t("sign_out")
@@ -82,6 +81,16 @@ nav#navbar.navbar role="navigation"
           span.fa.fa-sign-in
           span.icon-left = t("sign_in")
 
-      li= link_to about_url, class: 'navbar-item', id: 'info'
-        span.fa.fa-question
-        span.icon-left= t("about_title")
+
+      li
+        .dropdown-trigger.navbar-item
+          span.fa.fa-question
+          span.icon-left= t("info")
+          ul.dropdown-content.dropdown-right
+            li =link_to about_url, id: 'info'
+              span.fa.fa-puzzle-piece
+              span.icon-left= t("about_title")
+            li
+              a[class="intro-trigger"]
+                span.fa.fa-question
+                span.icon-left=t("intro.start")

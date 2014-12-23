@@ -2,16 +2,24 @@
 @import "mixins";
 
 .modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 2;
-  @include animation(from-top .5s ease-out)
+  pointer-events: none;
+  @include animation(from-top .5s ease-out);
+  .box {
+    pointer-events: auto;
+  }
+  @include bp-medium {
+    position: absolute;
+  }
 }
 
 .modal h1 {
   margin-bottom: 1em;
+  color: white;
 }
 
 .overlay{
@@ -23,15 +31,17 @@
   z-index: 1;
   height: 100%;
   overflow: hidden;
-  background-color: $darken3;
+  background-color: $darken4;
   @include animation(fade-in .5s ease-in);
 }
 
 // apply these classes when clicking on overlay of modals.
 .modal-hide {
-  @include animation(to-bottom .5s ease-in both);
+  .modal {
+    @include animation(to-bottom .5s ease-in both);
+  }
+  .overlay {
+    @include animation(fade-out .5s ease-in both);
+  }
 }
 
-.overlay-hide {
-  @include animation(fade-out .5s ease-in both);
-}

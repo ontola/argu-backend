@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit
-  helper_method :current_profile, :current_context, :current_scope
+  helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery secret: "Nl4EV8Fm3LdKayxNtIBwrzMdH9BD18KcQwSczxh1EdDbtyf045rFuVces8AdPtobC9pp044KsDkilWfvXoDADZWi6Gnwk1vf3GghCIdKXEh7yYg41Tu1vWaPdyzH7solN33liZppGlJlNTlJjFKjCoGjZP3iJhscsYnPVwY15XqWqmpPqjNiluaSpCmOBpbzWLPexWwBSOvTcd6itoUdWUSQJEVL3l0rwyJ76fznlNu6DUurFb8bOL2ItPiSit7g"
   skip_before_filter  :verify_authenticity_token
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -44,6 +44,10 @@ class ApplicationController < ActionController::Base
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale
     end
+  end
+
+  def show_trashed?
+    params[:trashed] == 'true' if policy(current_scope.model).update?
   end
 
   protected

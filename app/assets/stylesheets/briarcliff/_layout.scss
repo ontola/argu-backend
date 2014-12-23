@@ -1,8 +1,12 @@
 @import "variables";
 @import "mixins";
 
+html, body {
+  height: calc(100% - 2.5em);
+}
+
 body {
-  background-color: #9EB5C2;
+  background-color: #ECECEC;
 }
 
 .bg {
@@ -20,6 +24,7 @@ body {
 
 .container {
   margin: 0 auto;
+  margin-top: 5em;
   position: relative;
 }
 
@@ -35,6 +40,10 @@ body {
   }
 }
 
+.col-1-big {
+  @include container-width;
+}
+
 .col-1-small {
   position: relative;
   clear: both;
@@ -48,7 +57,7 @@ body {
   position: relative;
   clear: both;
   margin: 0 auto;
-  max-width: 1200px;
+  @include container-width;
 }
 
 .col-2-1 {
@@ -65,7 +74,7 @@ body {
   position: relative;
   clear: both;
   margin: 0 auto;
-  max-width: 1200px;
+  @include container-width;
 }
 
 .col-3-1 {
@@ -86,6 +95,11 @@ body {
   @include bp-medium(){
     width: 100%;
   }
+}
+
+.grid {
+  @include container-width;
+  margin: auto;
 }
 
 .margin-bottom {

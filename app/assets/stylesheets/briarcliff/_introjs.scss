@@ -1,0 +1,101 @@
+@import "variables";
+@import "mixins";
+
+.introjs-bullets {
+  padding-bottom: 2em;
+}
+
+.introjs-bullets ul li a {
+  width: 10px;
+  height: 10px;
+}
+
+.introjs-button {
+  border-radius: 0;
+  border: none;
+  text-shadow: none;
+  font-size: .8em;
+  text-transform: uppercase;
+  padding: 0.8em 1.7em;
+  width: 50%;
+  text-align: center;
+  letter-spacing: .1em;
+  &:hover{
+    box-shadow: none !important;
+    background: $g5 !important;
+    color: white !important;
+  }
+}
+
+.introjs-helperLayer {
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  border: solid 3px $blu;
+  box-sizing: border-box;
+}
+
+.introjs-nextbutton {
+  background: $blu !important;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.introjs-prevbutton {
+  background: $g3 !important;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+.introjs-skipbutton{
+  position: absolute;
+  top: 0;
+  font-weight: bold;
+  width: 23px;
+  height: 23px;
+  display: block;
+  padding: 0;
+  font-size: 18px;
+  line-height: 25px;
+  overflow: hidden;
+  text-align: 10px;
+  right: 0;
+  text-align: center;
+  margin: 0;
+  background-color: #e8e8e8;
+  &:hover{
+    background-color: $g2 !important;
+  }
+}
+
+.introjs-disabled {
+  display: none;
+  &:hover{
+    background: inherit !important;
+    color: initial;
+  }
+}
+
+.introjs-overlay {
+  background: $darken4;
+}
+
+.introjs-tooltip {
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  padding: 20px;
+  width: 300px;
+}
+
+.introjs-tooltiptext {
+  line-height: 1.6em;
+}
+
+.introjs-helperNumberLayer {
+  display: none;
+}

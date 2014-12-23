@@ -16,6 +16,7 @@
  * require formtastic
  *= require simple_text/application
  *= require pica_pica/pica_pica
+ *= require introjs
  *= require_self
  *= require_tree .
 */

@@ -1,9 +1,11 @@
 -provide :title, (@motion.title.nil? ? t(:motion_title) : @motion.title)
+.cover-behind
+  .cover-image[style="background-image: url('#{@motion.cover_photo.url(:cover)}'); "]
 .col-1
-  = to_parent
-  =render partial: 'motionbody', locals: { motion: @motion }
+  div[data-intro= t("intro.motion.back")]= to_parent
+  div[data-intro= t("intro.motion.body")]=render partial: 'motionbody', locals: { motion: @motion }
   =render partial: 'opinionbtns'
-= render_columns(@arguments, buttons_url: new_argument_path(motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false)
+div[data-intro= t("intro.motion.arguments") data-position= "top"]= render_columns(@arguments, buttons_url: new_argument_path(motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false)
 -if Rails.configuration.epics.opinions
   = render_columns(@opinions, header: t("arguments.index.opinion"))
 -if Rails.configuration.epics.parties

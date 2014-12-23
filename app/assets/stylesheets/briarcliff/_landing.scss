@@ -1,9 +1,17 @@
 @import "variables";
 @import "mixins";
 
+#top {
+  margin-top: -5em;
+}
+
+#ss-submit {
+  position: relative;
+}
+
 .landing-buttons {
   font-size: 90%;
-  max-width: 26em;
+  max-width: 28em;
   margin: auto;
   margin-top: 3em;
 }
@@ -52,4 +60,7 @@
   font-size: 120%;
   min-height: 100vh;
   padding-top: 20vh;
+  header h1 {
+    color: white;
+  }
 }

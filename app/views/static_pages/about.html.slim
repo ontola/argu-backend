@@ -3,14 +3,20 @@
   .col-1-small
     .landing-logo
       =image_tag 'logo.svg'
-    p Argu is een online discussieplatform voor ieder die mee wil denken over het oplossen van problemen. Wij maken discussies overzichtelijk door vraagstukken, voorstellen en argumenten centraal te stellen.
+    p.center Argu is een online discussieplatform voor ieder die mee wil denken over het oplossen van problemen. Wij maken discussies overzichtelijk door vraagstukken, voorstellen en argumenten centraal te stellen.
     .landing-buttons
+      a[href="#inhoudelijker"]
+        .box.box-link.box-link-fill[style="background-color: #3C3C3C;"]
+          section
+            h3
+              span.fa.fa-gavel
+              span.icon-left Ik wil politiek met inhoud
       a[href="#discussie"]
         .box.box-link.box-link-fill.neu-bg
           section
             h3
               span.fa.fa-comments
-              span.icon-left Ik wil inhoudelijke discussie
+              span.icon-left Ik wil betere online discussies
       a[href="#idee"]
         .box.box-link.box-link-fill.sta-bg
           section
@@ -35,23 +41,25 @@
             h3
               span.fa.fa-bullhorn
               span.icon-left Ik vertegenwoordig een organisatie
+  - if defined?(show_sign_in) && show_sign_in.present?
+    .center=link_to 'log in', sign_in_modal_path, remote: true, class: "btn-subtle"
 .landing-bg[id="inhoudelijker" ass="parallax-window" data-parallax="scroll" data-image-src=asset_path('bg-landing-hong-kong.jpg') data-z-index="0"]
   header
-    h1= "politiek moet inhoudelijker"
+    h1 = "politiek moet inhoudelijker"
   .col-1-small
     .box
       section
         p Politiek gaat te veel over marketing en te weinig over het oplossen van problemen. Dat is zonde, want politieke beslissingen gaan ons allemaal aan. Democratie betekent meer dan eens in de zoveel jaar naar een stemhokje gaan; het betekent dat wij allemaal mee kunnen denken over hoe we onze grootste problemen gaan oplossen.
         p Internet heeft veranderd hoe we met elkaar communiceren, hoe we leren en hoe we ons ontwikkelen. Social media heeft meer mensen een stem gegeven, maar heeft nog niet de inhoud en diepgang kunnen bieden die nodig is. Discussie over lastige onderwerpen past niet in 140 karakters. Burgerparticipatie heeft een modern platform nodig.
         - if defined?(show_sign_in) && show_sign_in.present?
-          p.center=link_to 'Word lid', '#', onclick: "$.ajax({url: '/sign_in_modal',cache: false,success: function(html){$('.container').append(html);}});", class:"btn center"
+          p.center=link_to 'houd me op de hoogte', sign_in_modal_path, class:"btn center", remote: true
     a[href="#discussie"]
       .box.box-link
         section
           h3
             span.fa.fa-arrow-down
-            span.icon-left volgende
-.landing-bg[id="discussie" class="parallax-window" data-parallax="scroll" data-image-src=asset_path('bg-landing-stemmen.jpg') data-z-index="0"]
+            span.icon-left lees verder
+.landing-bg[id="discussie" class="parallax-window" data-parallax="scroll" data-image-src=asset_path('bg-landing-stemmen.jpg') data-z-index="0" style="padding-top: 12vh;"]
   header
     h1 gestructureerde discussies
   .col-1-small
@@ -77,45 +85,45 @@
             = " voorstellen met argumenten. Door te stemmen op argumenten, komen de sterkste argumenten bovenaan te staan."
           li Iedereen kan stemmen op de voorstellen om aan te geven welke ideeën zij goed vinden.
         - if defined?(show_sign_in) && show_sign_in.present?
-          p.center=link_to 'Word lid', '#', onclick: "$.ajax({url: '/sign_in_modal',cache: false,success: function(html){$('.container').append(html);}});", class:"btn center"
+          p.center=link_to 'houd me op de hoogte', sign_in_modal_path, class: "btn center", remote: true
     a[href="#idee"]
       .box.box-link
         section
           h3
             span.fa.fa-arrow-down
-            span.icon-left volgende
-.landing-bg[id="idee" class="parallax-window" data-parallax="scroll" data-image-src=asset_path('bg-landing-idee.jpg') data-z-index="0" style="padding-top: 30vh;"]
+            span.icon-left lees verder
+.landing-bg[id="idee" class="parallax-window" data-parallax="scroll" data-image-src=asset_path('bg-landing-idee.jpg') data-z-index="0"]
   header
-    h1 van idee naar beleid
+    h1[style="color: rgb(55, 55, 55);"] van idee naar beleid
   .col-1-small
     .box
       section
         p Goede ideeën vind je overal. Inzichten in specifieke problemen en oplossingen ontstaan vaak op de werkvloer, in het klaslokaal of op straat.  Helaas hebben de mensen die deze ideeën krijgen vaak niet de middelen en het politieke netwerk om verandering te realiseren.
         p Via Argu is het makkelijk om eigen voorstellen te delen, onderbouwen en handtekeningen te verzamelen. De aanwezigheid van politieke partijen op Argu zorgt ervoor dat de verbinding tussen de burger met een idee en de beslissingsmaker korter is dan ooit, waardoor goede ideeën makkelijker en sneller kunnen worden omgezet naar wetgeving en beleid.
         - if defined?(show_sign_in) && show_sign_in.present?
-          p.center=link_to 'Word lid', '#', onclick: "$.ajax({url: '/sign_in_modal',cache: false,success: function(html){$('.container').append(html);}});", class:"btn center"
+          p.center=link_to 'houd me op de hoogte', sign_in_modal_path, class: "btn center", remote: true
     a[href="#onderbouwd"]
       .box.box-link
         section
           h3
             span.fa.fa-arrow-down
-            span.icon-left volgende
+            span.icon-left lees verder
 .landing-bg[id="onderbouwd" class="parallax-window" data-parallax="scroll" data-image-src=asset_path('bg-landing-onderbouwd.jpg') data-z-index="0"]
   header
-    h1 onderbouwde meningen
+    h1[style="color: rgb(55, 55, 55);"] onderbouwde meningen
   .col-1-small
     .box
       section
         p Het hebben van een mening is gemakkelijk. Het hebben van een goed onderbouwde mening, daarentegen, kost veel tijd: je moet je verdiepen in het onderwerp en verschillende visies aanhoren. Opiniestukken zijn vaak te eenzijdig, en objectieve informatiebronnen geven weinig sturing.
         p Op Argu wordt iedereen uitgedaagd om de redenen achter een mening helder te maken. Zo zie je niet alleen wie wat vindt, maar ook waarom iemand dat vindt. Een heldere lijst van argumenten en een inhoudelijke discussie maakt het hebben van een onderbouwde mening stukken makkelijker.
         - if defined?(show_sign_in) && show_sign_in.present?
-          p.center=link_to 'Word lid', '#', onclick: "$.ajax({url: '/sign_in_modal',cache: false,success: function(html){$('.container').append(html);}});", class:"btn center"
+          p.center=link_to 'houd me op de hoogte', sign_in_modal_path, class: "btn center", remote: true
     a[href="#vergelijken"]
       .box.box-link
         section
           h3
             span.fa.fa-arrow-down
-            span.icon-left volgende
+            span.icon-left lees verder
 
 .landing-bg[id="vergelijken" class="parallax-window" data-parallax="scroll" data-image-src=asset_path('bg-landing-politiek.jpg') data-z-index="0"]
   header
@@ -126,13 +134,13 @@
         p Stemmen is een van de meest directe manieren om als burger invloed te hebben op beleid. Inhoudelijk en beleidsgericht stemmen is echter moeilijk. Politieke partijen begrijpen goed dat ze met vage, populistische uitspraken vaak meer kiezers trekken dan met concrete, harde uitspraken. Zelfs in partijprogramma’s is het soms moeilijk om heldere beleidsvoorstellen te vinden. Partijen concurreren te veel op aspecten die niets met beleid te maken hebben, en dat is zonde.
         p Met Argu wordt het inhoudelijk vergelijken van politieke partijen een stuk eenvoudiger: onder een voorstel kan je direct zien wat politieke partijen er van vinden. In de profielpagina’s van partijen staat een duidelijke lijst van punten waar de partij het mee eens is, en waar niet. Binnen deze lijst kan je zoeken op thema, zodat je direct weet wat jouw partij vindt van de onderwerpen die jij interessant vind.
         - if defined?(show_sign_in) && show_sign_in.present?
-          p.center=link_to 'Word lid', '#', onclick: "$.ajax({url: '/sign_in_modal',cache: false,success: function(html){$('.container').append(html);}});", class:"btn center"
+          p.center=link_to 'houd me op de hoogte', sign_in_modal_path, class: "btn center", remote: true
     a[href="#lobby"]
       .box.box-link
         section
           h3
             span.fa.fa-arrow-down
-            span.icon-left volgende
+            span.icon-left lees verder
 .landing-bg[id="lobby" class="parallax-window" data-parallax="scroll" data-image-src=asset_path('bg-landing-lobby.jpg') data-z-index="0"]
   header
     h1 sociaal lobbyen
@@ -142,7 +150,7 @@
         p Lobbyisten (of belangenvertegenwoordigers) hebben doorgaans een slechte naam. De realiteit is echter complex en genuanceerd: lobbyisten kunnen ieder mogelijk belang  vertegenwoordigen en zijn onmisbaar voor vele NGO’s, vakbonden en burgers zelf. Het feit dat een groot deel van de activiteiten van lobbyisten gebeurt via brieven en achter gesloten deuren, maakt het echter moeilijk voor burgers om vertrouwen te krijgen in de het lobby-proces.
         p Op Argu krijgt iedereen een eerlijke kans om eigen ideeën te delen en te onderbouwen. Daarna krijgen ook anderen de kans om zich in de discussie te mengen. Hierdoor kan iedereen zijn of haar belang vertegenwoordigen op een transparante en sociale manier.
         - if defined?(show_sign_in) && show_sign_in.present?
-          p.center=link_to 'Word lid', '#', onclick: "$.ajax({url: '/sign_in_modal',cache: false,success: function(html){$('.container').append(html);}});", class:"btn center"
+          p.center=link_to 'houd me op de hoogte', sign_in_modal_path, class: "btn center", remote: true
     a[href="#top"]
       .box.box-link
         section

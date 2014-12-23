@@ -4,4 +4,5 @@
     -unless parent_id.blank?
       input[type="hidden" class= "btn" name="parent_id" value ="#{parent_id}"]
   =render current_profile, locals= {resource: resource}
-  =submit_tag t("opinions.show.reply"), class: "btn btn-sticky btn-sticky-bottom sta-bg"
+  .actions
+    =submit_tag t("opinions.show.reply"), class: "btn btn-sticky btn-sticky-bottom"

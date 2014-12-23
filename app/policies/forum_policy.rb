@@ -13,6 +13,7 @@ class ForumPolicy < RestrictivePolicy
                    :cover_photo_original_h, :cover_photo_box_w, :cover_photo_crop_x, :cover_photo_crop_y,
                    :cover_photo_crop_w, :cover_photo_crop_h, :cover_photo_aspect] if update?
     attributes << :page_id if change_owner?
+    attributes
   end
 
   ######CRUD######
@@ -30,7 +31,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def create?
-    is_member? || super
+    super
   end
 
   def edit?
@@ -38,7 +39,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def update?
-    is_member? || super
+    super
   end
 
   def add_question?

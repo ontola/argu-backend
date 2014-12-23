@@ -1,0 +1,28 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  title: "Argument one"
+  content: "Contents of argument one"
+  motion: :one
+  pro: true
+  creator: :profile_one
+#
+two:
+  title: "Argument two"
+  content: "Contents of argument two"
+  motion: :one
+  pro: false
+  creator: :profile_two
+#
+trashed:
+  title: "Argument trashed"
+  content: "Contents of argument trashed"
+  motion: :one
+  is_trashed: true
+  pro: true
+  creator: :profile_one

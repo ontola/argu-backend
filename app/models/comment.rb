@@ -1,5 +1,6 @@
 class Comment < ActiveRecord::Base
   include ArguBase
+  include Trashable
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 
@@ -8,6 +9,8 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :profile
   validates :body, presence: true, length: {minimum: 4}
+
+  attr_accessor :is_processed
 
   belongs_to :commentable, :polymorphic => true
   belongs_to :profile
@@ -58,10 +61,4 @@ class Comment < ActiveRecord::Base
     self.commentable.increment("comments_count").save
   end
 
-  def is_trashed?
-    read_attribute :is_trashed
-  end
-  def trash
-    update_attribute :is_trashed, true
-  end
 end

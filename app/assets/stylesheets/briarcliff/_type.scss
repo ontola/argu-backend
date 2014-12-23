@@ -5,6 +5,7 @@ h1, h2, h3 {
   font-family: $font-special;
   margin-bottom: 0.4em;
   color: $g4;
+  font-weight: bold;
   font-weight: 700;
   span {
     font-family: $font-special;
@@ -100,16 +101,25 @@ header {
   text-align: center;
 }
 
-header h1 {
-  color: white;
+header h1, header h2 {
+  color: $g4;
   margin-top: 1em;
   margin-bottom: 0.8em;
+  text-transform: uppercase;
+  font-size: 1.3em;
+  letter-spacing: .1em;
   @include text-shadow;
 }
 
 header h2 {
-  color: white;
-  margin-top: 1em;
   margin-bottom: .66em;
-  @include text-shadow;
+}
+
+h3.title-alt {
+  position: absolute;
+  color: white;
+  bottom: 0;
+  padding: 1em;
+  font-size: 2em;
+  margin: 0;
 }

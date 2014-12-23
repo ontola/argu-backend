@@ -1,57 +1,58 @@
+.modal-container
+  .overlay
+  .modal
+    header
+      h1 = t("sign_in")
+    .box.box-small
+      - if Rails.configuration.epics.sign_up
+        section
+          ul.btns-signup
+            li
+              a.btn.facebook-bg href="/auth/facebook"
+                span.fa.fa-facebook.icon-left
+                span = t("sign_in_facebook")
+            li
+              a.btn.twitter-bg href="/auth/twitter"
+                span.fa.fa-twitter.icon-left
+                span = t("sign_in_twitter")
+            li
+              a.btn.btn-subtle href="/users/sign_up"
+                span.fa.fa-plus.icon-left
+                span = t("sign_up_argu")
+      -else
+        section.unpadded[style="margin-top: 1em;"]
+          .form-small
+            p
+              b Argu is momenteel alleen op uitnodiging toegankelijk.
+            p Laat jouw e-mailadres achter als je op de hoogte wilt worden gehouden.
 
-.overlay
-.modal
-  header
-    h1 = t("sign_in")
-  .box.box-small
-    - if Rails.configuration.epics.sign_up
+            form class="formtastic" action="https://docs.google.com/forms/d/10JzNzARmKqRF1bQpLyw141UQyhM1Ul8xKYdQCVDjFQk/formResponse" method="POST" id="ss-form" target="_self" onsubmit="" _lpchecked="1"
+              ol role="list" class="ss-question-list" style="padding-left: 0"
+                div class="ss-form-question errorbox-good" role="listitem"
+                div dir="ltr" class="ss-item ss-item-required ss-text"
+                  .ss-form-entry
+                    input type="email" style="float: left;" name="entry.1283330446" value="" class="ss-q-short required" id="entry_1283330446" dir="auto" aria-label="E-mailadres  " aria-required="true" required="" title="" placeholder="Jouw e-mailadres"
+                div class="error-message" id="739960280_errorMessage"
+
+                input type="hidden" name="draftResponse" value="[,,&quot;-773395212550021648&quot;]"
+                input type="hidden" name="pageHistory" value="0"
+                input type="hidden" name="fbzx" value="-773395212550021648"
+                .actions
+                  button type="submit" name="submit" id="ss-submit" Houd mij op de hoogte
       section
-        ul.btns-signup
-          li
-            a.btn.facebook-bg href="/auth/facebook"
-              span.fa.fa-facebook.icon-left
-              span = t("sign_in_facebook")
-          li
-            a.btn.twitter-bg href="/auth/twitter"
-              span.fa.fa-twitter.icon-left
-              span = t("sign_in_twitter")
-          li
-            a.btn.btn-subtle href="/users/sign_up"
-              span.fa.fa-plus.icon-left
-              span = t("sign_up_argu")
-    -else
-      section.unpadded[style="margin-top: 1em;"]
-        .form-small
-          p
-            b Argu is momenteel alleen op uitnodiging toegankelijk.
-          p Laat jouw e-mailadres achter als je op de hoogte wilt worden gehouden.
-
-          form class="formtastic" action="https://docs.google.com/forms/d/10JzNzARmKqRF1bQpLyw141UQyhM1Ul8xKYdQCVDjFQk/formResponse" method="POST" id="ss-form" target="_self" onsubmit="" _lpchecked="1"
-            ol role="list" class="ss-question-list" style="padding-left: 0"
-              div class="ss-form-question errorbox-good" role="listitem"
-              div dir="ltr" class="ss-item ss-item-required ss-text"
-                .ss-form-entry
-                  input type="email" style="float: left;" name="entry.1283330446" value="" class="ss-q-short required" id="entry_1283330446" dir="auto" aria-label="E-mailadres  " aria-required="true" required="" title="" placeholder="Jouw e-mailadres"
-              div class="error-message" id="739960280_errorMessage"
-
-              input type="hidden" name="draftResponse" value="[,,&quot;-773395212550021648&quot;]"
-              input type="hidden" name="pageHistory" value="0"
-              input type="hidden" name="fbzx" value="-773395212550021648"
-              button type="submit" name="submit" id="ss-submit" class="sta-bg" Houd mij op de hoogte
-    section
-      = semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f|
-        - if resource.errors.any?
-          #error_explanation
-            ul
-              - resource.errors.full_messages.each do |msg|
-                li= msg
-        = devise_error_messages!
-        .form-small
-          .info.info-signup = t("sign_in_existing")
-          = f.text_field :login, placeholder: t("users_username_or_email"), autofocus: :autofocus
-          = f.password_field :password, placeholder: t("users_password")
-          /- if devise_mapping.rememberable?
-            .remember= f.check_box :remember_me
-          = render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}
-          = f.actions do
-            = f.action :submit, :as => :button, label: t("sign_in")
+        = semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f|
+          - if resource.errors.any?
+            #error_explanation
+              ul
+                - resource.errors.full_messages.each do |msg|
+                  li= msg
+          = devise_error_messages!
+          .form-small
+            .info.info-signup = t("sign_in_existing")
+            = f.text_field :login, placeholder: t("users_username_or_email"), autofocus: :autofocus
+            = f.password_field :password, placeholder: t("users_password")
+            /- if devise_mapping.rememberable?
+              .remember= f.check_box :remember_me
+            = render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}
+            = f.actions do
+              = f.action :submit, :as => :button, label: t("sign_in")

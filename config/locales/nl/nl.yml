@@ -41,6 +41,7 @@ nl:
   con: "tegen"
   search: "zoeken"
   edited: "bewerkt"
+  deleted: "verwijderd"
   reply: "reageer"
   report: "rapporteer"
   clearance: "bevoegdheid"
@@ -65,7 +66,8 @@ nl:
   home_new_header: "Welkom bij "
   home_new_text: "Nederlands awesome slogan."
 #About
-  about_title: "Over"
+  info: "info"
+  about_title: "Over Argu"
 #Users
   users_username: "gebruikersnaam"
   users_username_or_email: "gebruikersnaam of email"
