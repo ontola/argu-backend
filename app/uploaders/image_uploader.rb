@@ -12,13 +12,13 @@ class ImageUploader < CarrierWave::Uploader::Base
     CarrierWave.configure do |config|
       config.fog_credentials = {
           :provider                         => 'Google',
-          :google_storage_access_key_id     => ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'] || Rails.application.secrets.google_storage_access_key_id,
-          :google_storage_secret_access_key => ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'] || Rails.application.secrets.google_storage_secret_access_key
+          :google_storage_access_key_id     => ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'] || Rails.application.secrets.google_storage_access_key_id || '',
+          :google_storage_secret_access_key => ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'] || Rails.application.secrets.google_storage_secret_access_key || ''
       }
       config.fog_directory = 'argu'
     end
   else
-    storage :local
+    storage :file
   end
 
 
