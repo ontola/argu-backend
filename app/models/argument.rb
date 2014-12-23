@@ -17,7 +17,7 @@ class Argument < ActiveRecord::Base
   def wipe
     Proc.new do |c|
       if c.is_trashed?
-        c.body= I18n.t('deleted')
+        c.body= '[DELETED]'
         c.profile = nil
         c.is_processed = true
       end
