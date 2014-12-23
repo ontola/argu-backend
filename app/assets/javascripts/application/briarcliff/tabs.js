@@ -1,6 +1,5 @@
 //Adds a ".tabs-current" class to tab buttons that direct to the current page
 
-$(document).ready(function(){
     var str=location.href.toLowerCase();
     $(".tabs li a").each(function() {
         if (str.indexOf(this.href.toLowerCase()) > -1) {
@@ -8,4 +7,3 @@ $(document).ready(function(){
             $(this).parent().addClass("tabs-current");
       }
     });
-})

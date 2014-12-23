@@ -19,6 +19,7 @@
 
 .modal h1 {
   margin-bottom: 1em;
+  color: white;
 }
 
 .overlay{
@@ -30,7 +31,7 @@
   z-index: 1;
   height: 100%;
   overflow: hidden;
-  background-color: $darken3;
+  background-color: $darken4;
   @include animation(fade-in .5s ease-in);
 }
 

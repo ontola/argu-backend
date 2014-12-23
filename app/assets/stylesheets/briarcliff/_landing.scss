@@ -1,6 +1,14 @@
 @import "variables";
 @import "mixins";
 
+#top {
+  margin-top: -5em;
+}
+
+#ss-submit {
+  position: relative;
+}
+
 .landing-buttons {
   font-size: 90%;
   max-width: 28em;

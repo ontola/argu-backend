@@ -1,17 +1,5 @@
 .col-1
   =render partial: 'manage_bar', locals: {resource: @forum}  if policy(@forum).update?
-  small  <!-- for styling -->
-  header
-    h1 = t("forums.settings.title")
-  .forum_id[id="#{@forum.id}"]
-    .tabs
-      ul.btns-list.btns-vertical
-        li = link_to url_for([:settings, @forum, tab: :settings]) do
-          span.fa.fa-gear
-          span.icon-left = t("forums.settings.general")
-        li = link_to url_for([:settings, @forum, tab: :managers])
-          span.fa.fa-group
-          span.icon-left = t("forums.settings.managers")
   .box
     section
       =render partial: "forums/setting_tabs/#{params[:tab] || 'settings'}", locals: {resource: @forum}

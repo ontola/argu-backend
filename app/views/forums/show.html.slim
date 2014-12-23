@@ -1,19 +1,19 @@
 .cover
-  .cover-image[style="background-image: url('http://upload.wikimedia.org/wikipedia/commons/d/d8/Panorama_Utrecht.jpg')"]
-    -if policy(@forum).update?
+  /-if @forum.cover_photo.url.present?
+  .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
   =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
   .cover-header
     .cover-container
       h1[data-intro= t("intro.forum.name", name: @forum.name)]= @forum.name
       ul.btns-list.btns-vertical
         -if !policy(@forum).is_member?
-          li=link_to forum_memberships_path(@forum.web_url), method: :create do
+          li=link_to forum_memberships_path(@forum.web_url), method: :create, class: "btn-focus" do
             span.fa.fa-join
             span = t("join")
-        li=link_to url_for([:new, @forum, :question]) do
+        li[data-intro=t('intro.question.create', name: @forum.name) data-position="left"]=link_to url_for([:new, @forum, :question]) do
           span.fa.fa-plus
           span.icon-left= t("questions.new_btn")
-        li[data-intro=t('intro.motion.create') data-position="left"]=link_to url_for([:new, @forum, :motion]) do
+        li[data-intro=t('intro.motion.create', name: @forum.name) data-position="left"]=link_to url_for([:new, @forum, :motion]) do
           span.fa.fa-plus
           span.icon-left= t("motions.new_btn")
 .center

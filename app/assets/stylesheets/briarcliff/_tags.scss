@@ -18,12 +18,17 @@ ul.tags {
   background-color: white;
   margin: .3em;
   @include border-radius;
-  @include transition(.3s);
+  @include transition(.15s);
 }
 
 a.tag:hover {
   background-color: $blu;
   color: white;
+}
+
+a.tag:active {
+  background-color: $blud;
+  color:white;
 }
 
 .tag-forum {

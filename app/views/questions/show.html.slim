@@ -2,8 +2,8 @@
 .cover-behind
   .cover-image[style="background-image: url('#{@question.cover_photo.url}'); "]
 .col-1
-  = to_parent
-  .box[class="#{'trashed' if @question.is_trashed?}"]
+  div[data-intro= t("intro.question.back")]= to_parent
+  .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t("intro.question.body")]
     section.section-info.que-bg
       span = t("questions.type")
     section
@@ -25,4 +25,5 @@
         li= link_to url_for([:edit, @question]) do
           span.fa.fa-pencil
           span.icon-left=t('edit')
-==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))
+div[data-intro= t("intro.question.motions")]
+  ==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))

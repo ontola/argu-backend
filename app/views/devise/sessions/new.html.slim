@@ -37,7 +37,8 @@
                 input type="hidden" name="draftResponse" value="[,,&quot;-773395212550021648&quot;]"
                 input type="hidden" name="pageHistory" value="0"
                 input type="hidden" name="fbzx" value="-773395212550021648"
-                button type="submit" name="submit" id="ss-submit" class="sta-bg" Houd mij op de hoogte
+                .actions
+                  button type="submit" name="submit" id="ss-submit" Houd mij op de hoogte
       section
         = semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f|
           - if resource.errors.any?

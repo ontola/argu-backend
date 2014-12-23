@@ -40,8 +40,9 @@
   }
 }
 
-.box.trashed {
-  background-color: $trashed;
+.box.trashed, .trashed > .box {
+ // background-color: $trashed;
+  opacity: .5;
 }
 
 .box.box-link {
@@ -264,11 +265,10 @@ section.smallpadded {
 }
 
 section + section {
-  //border-top: solid 1px $g1;
+  border-top: solid 1px $g1;
 }
 
 .section-small {
   position: relative;
   padding: .3em 1.4em 0.1em 1.4em;
 }
-

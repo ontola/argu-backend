@@ -7,28 +7,59 @@
   text-decoration: none;
   font-size: .8em;
   padding: .5em .8em .4em .8em;
-  background-color: $gre;
+  background-color: $blu;
   border: none;
   -webkit-appearance: none;
-  margin: 0;
-  cursor: hand;
+  border-radius: 0;
+  width: auto;
   display: inline-block;
-  @include border-radius;
+  line-height: 2em;
+  height: 3em;
+  position: relative;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 1em;
+  cursor: pointer;
   &:hover {
-    border-color: $darken3;
+    background-color: $blud;
   }
   &:active {
-    border-color: $darken4;
-    border-bottom: none;
+    background-color: $g5;
   }
+}
+
+.actions .btn, .form-actions .btn {
+  position: absolute;
+  margin: 0;
 }
 
 .btn-auth {
   margin-right: 1em;
+  position: relative;
+  display: inline-block;
+  &:hover:after{
+    content: "+";
+    text-align: center;
+    color: white;
+    font-size: 3em;
+    line-height: 1.35em;
+    position: absolute;
+    background-color: $darken3;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 }
 
 .btn-box {
   color: white;
+}
+
+.btn-focus {
+
 }
 
 .btn-big {
@@ -347,11 +378,17 @@ h1 + .btn {
     background-color: white !important;
     pointer-events: none;
   }
+  a:hover{
+    background-color: white !important;
+  }
+  a:active {
+    background-color: $g0 !important;
+  }
 }
 
 .cover .tabs {
   margin-top: -2.5em;
-  li {
+  li a {
     background-color: $lighten5;
   }
 }

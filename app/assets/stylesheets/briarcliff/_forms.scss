@@ -160,29 +160,30 @@ input[type="text"].form-input-title {
   text-decoration: none;
   font-size: .8em;
   padding: .5em .8em .4em .8em;
-  background-color: $gre;
+  background-color: $blu;
   border: none;
   -webkit-appearance: none;
   border-radius: 0;
   cursor: hand;
   width: auto;
   display: inline-block;
-  border-bottom: solid 3px $darken2;
-  margin: 0 auto;
   margin-bottom: 1em;
-  @include border-radius;
+  height: 3em;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  cursor: pointer;
   &:hover {
-    border-color: $darken3;
+    background-color: $blud;
   }
   &:active {
-    border-color: $darken4;
-    border-bottom: none;
-    margin-top: 3px;
+    background-color: $g5;
   }
 }
 
 .formtastic .actions {
-  text-align: center;
+  margin-top: 2em;
 }
 
 input[type="file"], select {
