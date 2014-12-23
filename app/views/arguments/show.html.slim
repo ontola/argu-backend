@@ -1,5 +1,5 @@
 -provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title)
 .col-1
-  = to_parent
-  =render 'body'
+  div[data-intro= t("intro.argument.back")]= to_parent
+  div[data-intro= t("intro.argument.body")]=render 'body'
   =render template: 'comments/show', locals: { resource: @argument }

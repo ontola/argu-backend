@@ -19,6 +19,10 @@ nl:
       body: 'Een voorstel is een suggestie voor een verandering in beleid of wet.'
       vote: 'Hiermee kan je stemmen op het voorstel. Je kan jouw stem later nog wijzigen.'
       arguments: 'Op Argu structureren we discussie aan de hand van voor- en tegenargumenten. Klik op een argument om reacties te bekijken of te plaatsen.'
+    argument:
+      back: 'Klik hier om terug te gaan naar het bijbehorende voorstel.'
+      body: 'Een argument is een enkele reden voor of tegen een voorstel. Door een argument te openen kan je de gehele tekst lezen, de bronnen bekijken en een reactie plaatsen.'
+      comments: 'Hieronder verschijnen de reacties op een argument. De meest omhoog gestemde reactie wordt weergegeven direct onder het argument.'
     start: 'Hoe werkt deze pagina?'
     profile:
       show: 'In een profiel kan een gebruiker wat over zichzelf laten weten.'

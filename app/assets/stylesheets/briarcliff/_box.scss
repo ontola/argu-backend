@@ -162,7 +162,6 @@
   width: 100%;
   background-size: cover;
   background-position: center;
-  z-index: -1;
   @include transition(.2s);
   &:hover{
     opacity: .8;
