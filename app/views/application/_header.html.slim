@@ -3,15 +3,11 @@ nav#navbar.navbar role="navigation"
     =link_to root_url, class: "navbar-logo"
       =image_tag 'logo-white.svg'
     ul.navbar-links
-      li
-        =link_to url_for(current_scope.model), class: "navbar-item"
-          span.fa.fa-home
-          span.icon-left= home_text
       -if Rails.configuration.epics.forum_selector
         li
           .dropdown-trigger.navbar-item
-            span.fa.fa-tag
-            span.icon-left forums
+            span.fa.fa-home
+            span.icon-left= home_text
             ul.dropdown-content
               - current_profile.present? && current_profile.memberships.each do |membership|
                 li
@@ -21,6 +17,11 @@ nav#navbar.navbar role="navigation"
                 - Forum.all.each do |forum|
                   li
                     =link_to forum.display_name, url_for(forum)
+      -else
+        li
+          =link_to url_for(current_scope.model), class: "navbar-item"
+            span.fa.fa-home
+            span.icon-left= home_text
       -if Rails.configuration.epics.tag_system
         li
           .dropdown-trigger.navbar-item href="/"

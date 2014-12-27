@@ -35,19 +35,6 @@
   }
 }
 
-.profile-big .box {
-  margin-left: 10em;
-  @include bp-medium(){
-    margin: 0 auto;
-  }
-}
-
-.profile-big section {
-  @include bp-medium(){
-    margin-left: auto;
-  }
-}
-
 .profile-picture {
   width: 10em;
   height: 10em;
@@ -65,7 +52,6 @@
 .profile-picture-show {
   margin: 0em 0em 0em 0em;
   float: left;
-  border: solid 4px white;
   width: 8em;
   height: 8em;
   overflow: hidden;
@@ -74,6 +60,8 @@
     margin: 0em auto 2em auto;
     display: block;
     float: none;
+    width: 5em;
+    height: 5em;
   }
 }
 

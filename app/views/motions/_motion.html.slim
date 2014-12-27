@@ -3,8 +3,6 @@
   -if motion.cover_photo.present?
     = contextual_link_to motion_path(motion) do
       .box-image[style="background-image: url('#{motion.cover_photo.url(:box)}'); "]
-  section.section-info.sta-bg
-    span voorstel
   section
     = contextual_link_to motion_path(motion) do
       h2.sta-t = motion.title

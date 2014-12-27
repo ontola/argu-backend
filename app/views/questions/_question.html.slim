@@ -11,8 +11,6 @@
   -if question.cover_photo.present?
     = contextual_link_to question_path(question) do
       .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
-  section.section-info.que-bg
-    span= t('questions.header')
   section
     = contextual_link_to question_path(question) do
       h2.que-t = question.title

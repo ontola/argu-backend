@@ -13,13 +13,14 @@
   margin: 0;
   position: absolute;
   text-align: left;
-  top: 100%;
+  top: 200%;
   width: 14em;
   z-index: 10;
   @include box-shadow;
   @include border-radius;
   border-top-left-radius: 0;
   overflow: hidden;
+  @include transition(.3s);
   li {
     min-width: 100%;
   }
@@ -53,6 +54,7 @@
 
 .dropdown-active {
   background-color: $g1 !important;
+  top: 200%;
 }
 
 .dropdown-right {
@@ -74,7 +76,9 @@ span.dropdown-header {
   //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
   display: block;
   text-transform: initial;
-  @include animation(fade-in .2s);
+  top: 100%;
+
+  //@include animation(fade-in .2s);
   span {
     display: inline-block;
     text-transform: uppercase;
