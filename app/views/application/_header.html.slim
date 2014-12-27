@@ -73,9 +73,13 @@ nav#navbar.navbar role="navigation"
               li= link_to new_user_invitation_path
                 span.fa.fa-bullhorn
                 span.icon-left= t('devise.invitations.link')
-              li = link_to(destroy_user_session_url, method: :delete) do
+              li= link_to(destroy_user_session_url, method: :delete) do
                 span.fa.fa-sign-out
                 span.icon-left= t("sign_out")
+              - if current_user.managed_pages.present?
+                li= link_to current_user.display_name, actors_path(na: current_user.profile.id), method: :put
+                - current_user.managed_pages.each do |p|
+                  li= link_to p.page.display_name, actors_path(na: p.page.profile.id), method: :put
       -else
         li= link_to new_user_session_url, id: 'account', class: 'navbar-item' do
           span.fa.fa-sign-in

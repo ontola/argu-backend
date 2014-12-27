@@ -1,6 +1,7 @@
 class Profile < ActiveRecord::Base
   include ArguBase
 
+  has_one :profileable
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy
@@ -20,7 +21,7 @@ class Profile < ActiveRecord::Base
   end
 
   def web_url
-    User.where(profile_id: id).first.username || id
+    username || id
   end
 
   #######Methods########
@@ -47,7 +48,11 @@ class Profile < ActiveRecord::Base
   end
 
   def username
-    User.where(profile_id: self.id).first.username || Pages.where(profile_id: self.id).first.web_url
+    owner.username
+  end
+
+  def owner
+    User.where(profile: self).first || Page.where(profile: self).first
   end
 
 

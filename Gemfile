@@ -66,6 +66,7 @@ group :development, :test do
   gem 'nokogiri', '1.6.5'
   gem 'minitest-rails', '~> 2.1.1'
   gem 'minitest-reporters', '~> 1.0.8'
+  gem 'byebug'
   #gem 'meta_request'
   #gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
