@@ -1,17 +1,15 @@
 nav#navbar.navbar role="navigation"
   .nav-container
-    =link_to root_url, class: "navbar-logo"
-      =image_tag 'logo-white.svg'
+    .navbar-logo[data-intro= t("intro.header.logo")]
+      =link_to root_url
+        =image_tag 'logo-white.svg'
     ul.navbar-links
-      li
-        =link_to url_for(current_scope.model), class: "navbar-item"
-          span.fa.fa-home
-          span.icon-left= home_text
       -if Rails.configuration.epics.forum_selector
-        li
+        li[data-intro= t("intro.header.forums", name: @forum.name) data-position="right"]
           .dropdown-trigger.navbar-item
-            span.fa.fa-tag
-            span.icon-left forums
+            span.fa.fa-home
+            span.icon-left= home_text
+            span.fa.fa-angle-down
             ul.dropdown-content
               - current_profile.present? && current_profile.memberships.each do |membership|
                 li
@@ -21,6 +19,11 @@ nav#navbar.navbar role="navigation"
                 - Forum.all.each do |forum|
                   li
                     =link_to forum.display_name, url_for(forum)
+      -else
+        li
+          =link_to url_for(current_scope.model), class: "navbar-item"
+            span.fa.fa-home
+            span.icon-left= home_text
       -if Rails.configuration.epics.tag_system
         li
           .dropdown-trigger.navbar-item href="/"
@@ -55,7 +58,7 @@ nav#navbar.navbar role="navigation"
                 input.nav-search-text type="text" placeholder= t("search.placeholder")
 
       -if current_profile.present?
-        li
+        li[data-intro= t("intro.header.profile", name: @forum.name) data-position="left"]
           .dropdown-trigger.navbar-item href="/"
             span.fa.fa-user
             // Regex to only show first name of user
@@ -82,7 +85,7 @@ nav#navbar.navbar role="navigation"
           span.icon-left = t("sign_in")
 
 
-      li
+      li[data-intro= t("intro.header.info", name: @forum.name) data-position="left"]
         .dropdown-trigger.navbar-item
           span.fa.fa-question
           span.icon-left= t("info")

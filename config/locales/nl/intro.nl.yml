@@ -6,15 +6,19 @@ nl:
     previous: 'vorige'
     forum:
       grid: 'Alle voorstellen en vraagstukken staan hieronder. Klik op een item om in de discussie te duiken en jouw mening te geven!'
-      name: 'Op Argu staan discussies in forums. Dit is het forum van "%{name}". Er bestaan forums voor diverse gemeenten, bedrijven, scholen en andere organisaties.'
     tags: 'Klik op een thema om naar relevante discussies te zoeken.'
+    header:
+      logo: 'Argu is een online discussieplatform waar iedereen op een inhoudelijke manier mee kan denken over het oplossen van maatschappelijke problemen.'
+      forums: 'Op Argu staan discussies in forums. Dit is het forum voor %{name}. Er bestaan forums voor diverse gemeenten, bedrijven, scholen en andere organisaties.'
+      profile: 'Hier kan je jouw profiel bekijken en bewerken.'
+      info: 'Hier vind je meer informatie over wat Argu is, hoe het werkt en wie wij zijn.'
     question:
-      create: 'Welk probleem moet er worden opgelost in "%{name}"? Plaats een vraagstuk en laat anderen meedenken.'
+      create: 'Weet jij welk probleem er opgelost moet worden in %{name}? Plaats een vraagstuk en laat anderen meedenken.'
       back: 'Klik hier om terug te gaan naar het forum.'
       body: 'Een vraagstuk presenteert een probleem en vraagt hoe dit zou moeten worden opgelost.'
       motions: 'Hier staan voorstellen van andere gebruikers. Weet jij hoe dit vraagstuk kan worden opgelost? Deel jouw idee!'
     motion:
-      create: 'Wat zou jij veranderen in "%{name}"? Deel jouw voorstel op Argu en overtuig anderen.'
+      create: 'Wat zou jij veranderen in %{name}? Deel jouw voorstel op Argu en overtuig anderen.'
       back: 'Klik hier om terug te gaan naar het bijbehorende forum of vraagstuk.'
       body: 'Een voorstel is een suggestie voor een verandering in beleid of wet.'
       vote: 'Hiermee kan je stemmen op het voorstel. Je kan jouw stem later nog wijzigen.'
