@@ -50,10 +50,6 @@ class ForumPolicy < RestrictivePolicy
     add_question?
   end
 
-  def change_owner?
-    staff?
-  end
-
   #######Attributes########
   # Is the current user a member of the group?
   # @note This tells nothing about whether the user can make edits on the object

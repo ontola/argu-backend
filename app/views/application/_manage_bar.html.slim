@@ -2,7 +2,7 @@
   ul.btns-list.btns-vertical
     li=link_to url_for(resource) do
       span.fa.fa-home
-      span.icon-left= resource.name
+      span.icon-left= resource.display_name
     li=link_to url_for([:settings, resource]) do
       span.fa.fa-gear
       span.icon-left= t("#{resource.class_name}.settings.title")

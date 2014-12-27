@@ -5,6 +5,8 @@ class Page < ActiveRecord::Base
   belongs_to :profile, dependent: :destroy
   accepts_nested_attributes_for :profile
   has_many :forums
+  has_many :memberships, class_name: 'PageMembership'
+  has_many :managers, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
 
   after_initialize :build_profile
 
@@ -25,6 +27,10 @@ class Page < ActiveRecord::Base
     else
      self.web_url
     end
+  end
+
+  def username
+    web_url
   end
 
 end
