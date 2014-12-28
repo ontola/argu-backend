@@ -24,7 +24,7 @@ class ForumsControllerTest < ActionController::TestCase
   test "should not show statistics" do
     sign_in users(:user)
 
-    get :settings, id: forums(:utrecht)
+    get :statistics, id: forums(:utrecht)
     assert_redirected_to root_path
   end
 
@@ -33,6 +33,29 @@ class ForumsControllerTest < ActionController::TestCase
 
     put :update, id: forums(:utrecht), question: {title: 'New title', content: 'new contents'}
     assert_redirected_to root_path
+  end
+
+
+  ####################################
+  # For managers
+  ####################################
+
+  test "should show settings" do
+    sign_in users(:user_utrecht_manager)
+
+    get :settings, id: forums(:utrecht)
+    assert_response :success
+    assert assigns(:forum)
+  end
+
+  test "should show statistics" do
+    sign_in users(:user_utrecht_manager)
+
+    get :statistics, id: forums(:utrecht)
+    assert_response :success
+    assert assigns(:forum)
+    assert assigns(:tags), "Doesn't assign tags"
+    assert_equal 1, assigns(:tags).length
   end
 
 end

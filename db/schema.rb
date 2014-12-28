@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141227152157) do
+ActiveRecord::Schema.define(version: 20141228145913) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,7 +103,7 @@ ActiveRecord::Schema.define(version: 20141227152157) do
     t.string   "slug"
     t.string   "web_url",           default: "", null: false
     t.text     "bio",               default: "", null: false
-    t.text     "tag_list",          default: "", null: false
+    t.text     "featured_tags",     default: "", null: false
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree

@@ -34,7 +34,11 @@ class Forum < ActiveRecord::Base
     Forum.first
   end
 
-  def tag_list=(value)
+  def featured_tags
+    super.split(',')
+  end
+
+  def featured_tags=(value)
     super(value.downcase.strip)
   end
 end

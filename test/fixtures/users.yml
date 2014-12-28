@@ -10,6 +10,11 @@ user_thom:
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
   username: 'fletcher91'
   profile: :profile_fletcher91
+user_utrecht_manager:
+  email: 'user@utrecht.nl'
+  encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
+  username: 'utrecht_manager'
+  profile: :profile_utrecht_manager
 user:
   email: 'user@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>

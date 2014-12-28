@@ -5,14 +5,12 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-utrecht:
-  name: 'Gemeente Utrecht'
-  slug: 'utrecht'
-  web_url: 'utrecht'
-  page: utrecht
+nature_question_one:
+  tag_id: <%= Tag.first.id %>
+  taggable_type: 'Question'
+  taggable_id: <%= Question.where(title: 'Vraagstuk').first.id %>
+  forum_id: <%= Forum.where(web_url: :utrecht).first.id %>
+# column: value
 #
-amsterdam:
-  name: 'Gemeente Amsterdam'
-  slug: 'amsterdam'
-  web_url: 'amsterdam'
-  page: argu
+two: {}
+#  column: value
