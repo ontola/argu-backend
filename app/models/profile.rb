@@ -5,6 +5,7 @@ class Profile < ActiveRecord::Base
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy
+  has_many :page_memberships, dependent: :destroy
   has_many :forums, through: :memberships
 
   mount_uploader :profile_photo, ImageUploader
