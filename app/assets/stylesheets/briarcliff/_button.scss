@@ -234,6 +234,8 @@
     width: 33.3%;
     width: calc(33.3% - 1em);
     margin: 0 .5em;
+    @include box-shadow;
+
   }
   &.voted a {
     opacity: .4;
@@ -251,7 +253,6 @@
     text-transform: uppercase;
     top: 0;
     position: relative;
-    @include box-shadow;
     font-size: .9em;
     color: white;
     @include transition(.2s);

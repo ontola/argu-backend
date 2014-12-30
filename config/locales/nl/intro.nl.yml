@@ -6,12 +6,13 @@ nl:
     previous: 'vorige'
     forum:
       grid: 'Alle <b class="sta-t">voorstellen</b> en <b class="que-t">vraagstukken</b> staan hieronder. Klik op een item om in de discussie te duiken en jouw mening te geven!'
+      filter: 'Pas een filter toe om alleen items van een bepaald thema te zien.'
     tags: 'Klik op een thema om naar relevante discussies te zoeken.'
     header:
       logo: 'Argu is een online discussieplatform waar iedereen op een inhoudelijke manier mee kan denken over het oplossen van maatschappelijke problemen.'
       forums: 'Op Argu staan discussies in <b>forums</b>. Dit is het forum voor %{name}. Er bestaan forums voor diverse gemeenten, bedrijven, scholen en andere organisaties.'
       profile: 'Hier kan je jouw <b>profiel</b> bekijken en bewerken. Ook vind je hier de instellingen van jouw account.'
-      info: 'Hier vind je meer informatie over wat Argu is, hoe het werkt en wie wij zijn.'
+      about: 'Hier vind je meer informatie over wat Argu is wie wij zijn.'
     question:
       create: 'Weet jij welk probleem er opgelost moet worden in %{name}? Plaats een <b class="que-t">vraagstuk</b> en laat anderen meedenken.'
       back: 'Klik hier om terug te gaan naar het <b>forum</b>.'
@@ -24,7 +25,7 @@ nl:
       vote: 'Hiermee kan je <b>stemmen</b> op het voorstel. Je kan jouw stem later nog wijzigen.'
       arguments: 'Op Argu structureren we discussie aan de hand van <b class="pro-t">voor</b>- en <b class="con-t">tegen</b>argumenten. Klik op een argument om reacties te bekijken of te plaatsen.'
       help: 'Wil je deze tutorial nogmaals zien? Gewoon hier klikken.'
-    start: 'Hoe werkt deze pagina?'
+    start: 'Help'
     start_short: 'Help'
     profile:
       show: 'In een profiel kan een gebruiker wat over zichzelf laten weten.'

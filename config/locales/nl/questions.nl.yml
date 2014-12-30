@@ -8,7 +8,7 @@ nl:
     new_btn: "Vraagstuk toevoegen"
     header: "vraagstukken"
     form:
-      title: "Wat is jouw vraag?"
+      title: "Hoe lossen we probleem x op?"
       content: "Waarom zit je met deze vraag? Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"

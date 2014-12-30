@@ -1,5 +1,5 @@
 - tag ||= nil
-.box.box-grid[class="#{'trashed' if motion.is_trashed?}"]
+.box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-tags="#{motion.tags.join(',')}"]
   -if motion.cover_photo.present?
     = contextual_link_to motion_path(motion) do
       .box-image[style="background-image: url('#{motion.cover_photo.url(:box)}'); "]

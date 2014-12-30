@@ -10,20 +10,27 @@
           li=link_to forum_memberships_path(@forum.web_url), method: :create, class: "btn-focus" do
             span.fa.fa-join
             span = t("join")
-        li[data-intro=t('intro.question.create', name: @forum.name) data-position="right"]=link_to url_for([:new, @forum, :question]) do
+        li[data-intro=t('intro.question.create', name: @forum.name)]=link_to url_for([:new, @forum, :question]) do
           span.fa.fa-plus.que-t
           span.icon-left.que-t= t("questions.type")
         li[data-intro=t('intro.motion.create', name: @forum.name)]=link_to url_for([:new, @forum, :motion]) do
           span.fa.fa-plus.sta-t
           span.icon-left.sta-t= t("motions.type")
-        li[data-intro=t('intro.motion.help')]
-          a.intro-trigger
-            span.fa.fa-question
-            span.icon-left=t("intro.start_short")
 .center
-  .tags
+  /.tags
     - @forum.featured_tags.each do |tag|
       = contextual_link_to(tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag)
+  #filters[data-intro=t('intro.forum.filter')]
+    ul.tags
+      li
+        a.tag.tag-questions[data-filter=".motion"]= t("motions.header")
+      li
+        a.tag.tag-motions[data-filter=".question"]= t("questions.header")
+    ul.tags
+      - @forum.featured_tags.each do |tag|
+        li
+          /a = contextual_link_to(tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag, 'data-filter'=>'filterByTag', 'data-filter-value'=>tag)
+          a[class="tag" data-filter='filterByTag' data-filter-value=tag] = tag
 
 - if policy(@forum).show_children?
   .grid

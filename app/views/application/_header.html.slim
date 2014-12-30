@@ -84,15 +84,10 @@ nav#navbar.navbar role="navigation"
         li= link_to new_user_session_url, id: 'account', class: 'navbar-item' do
           span.fa.fa-sign-in
           span.icon-left = t("sign_in")
-      li[data-intro= t("intro.header.info", name: current_scope.model.name) data-position="left"]
-        .dropdown-trigger.navbar-item
+      li[data-intro= t("intro.header.about", name: current_scope.model.name) data-position="left"] =link_to about_url, id: 'info', class: 'navbar-item'
+        span.fa.fa-puzzle-piece
+        span.icon-left= t("about_title")
+      li
+        a[class="intro-trigger navbar-item"]
           span.fa.fa-question
-          span.icon-left= t("info")
-          ul.dropdown-content.dropdown-right
-            li =link_to about_url, id: 'info'
-              span.fa.fa-puzzle-piece
-              span.icon-left= t("about_title")
-            li
-              a[class="intro-trigger"]
-                span.fa.fa-question
-                span.icon-left=t("intro.start")
+          span.icon-left=t("intro.start")

@@ -24,10 +24,11 @@ ul.tags {
 a.tag:hover {
   background-color: $blu;
   color: white;
+  cursor: pointer;
 }
 
-a.tag:active {
-  background-color: $blud;
+a.tag:active, a.tag.is-checked {
+  background-color: $blu;
   color:white;
 }
 
@@ -35,6 +36,16 @@ a.tag:active {
   color: $g4 !important;
 }
 
+
+.tag-motions {
+  color: $blu;
+  font-weight: bold;
+}
+
+.tag-questions {
+  color: $bro;
+  font-weight: bold;
+}
 
 .box > ul.tags {
   border-top: solid 1px rgb(232, 232, 232);

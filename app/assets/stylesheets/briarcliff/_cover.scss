@@ -6,7 +6,6 @@
 }
 
 .cover {
-  overflow: hidden;
   position: relative;
   margin-bottom: 1em;
 }
@@ -40,6 +39,7 @@
   background-color: white;
   width: 100%;
   height: auto;
+  @include box-shadow;
   .cover-container {
     position: relative;
     @include container-width;
