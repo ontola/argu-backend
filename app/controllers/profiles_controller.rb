@@ -5,7 +5,7 @@ class ProfilesController < ApplicationController
     @profile = User.find_by(username: params[:id]).profile
     authorize @profile, :show?
 
-    @collection =  Vote.ordered @profile.votes
+    @collection =  Vote.ordered @profile.votes_questions_motions
 
     respond_to do |format|
       format.html # show.html.erb
