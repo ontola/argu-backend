@@ -104,6 +104,13 @@ nl:
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
 
+#sort
+  sort:
+    newest: "nieuwste"
+    name: "naam"
+    score: "score"
+    random: "willekeurig"
+
 #datetime
   datetime_ago: "geleden"
   datetime:

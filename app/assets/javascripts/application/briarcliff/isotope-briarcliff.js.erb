@@ -2,7 +2,17 @@ $( function() {
     // init Isotope
     var $container = $('.grid').isotope({
         itemSelector: '.box-grid',
-        columnWidth: '.box-grid-sizer'
+        columnWidth: '.box-grid-sizer',
+        getSortData: {
+            date: '[data-date]',
+            name: 'h2',
+            score: '[data-score]',
+        },
+        sortAscending: {
+            date: false,
+            name: true,
+            score: false,
+        }
     });
     // filter functions
     var lastFilter = "";
@@ -17,6 +27,7 @@ $( function() {
             }
         }
     };
+
     // bind filter button click
     $('#filters').on( 'click', 'a', function() {
         var filterValue = $( this ).attr('data-filter');
@@ -25,7 +36,22 @@ $( function() {
         filterValue = filterFns[ filterValue ] || filterValue;
         $container.isotope({ filter: filterValue });
     });
+
+    // bind sort button click
+    $('#sorts').on( 'click', 'a', function() {
+        var sortValue = $(this).attr('data-sort-value');
+        $container.isotope({ sortBy: sortValue });
+    });
+
     // change is-checked class on buttons
+    $('#sorts').each( function( i, buttonGroup ) {
+        var $buttonGroup = $( buttonGroup );
+        $buttonGroup.on( 'click', 'a', function() {
+            $buttonGroup.find('.is-checked').removeClass('is-checked');
+            $( this ).addClass('is-checked');
+        });
+    });
+
     $('#filters').each( function( i, buttonGroup ) {
         var $buttonGroup = $( buttonGroup );
         $buttonGroup.on( 'click', 'a', function() {

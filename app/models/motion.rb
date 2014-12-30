@@ -56,8 +56,7 @@ class Motion < ActiveRecord::Base
   end
 
   def raw_score
-    # Neutral voters dont influence the relative score, but they do fluff it
-    self.votes_pro_count*self.votes_neutral_count - self.votes_con_count*self.votes_neutral_count
+    self.votes_pro_count - self.votes_con_count
   end
 
   def score

@@ -7,7 +7,7 @@
     p.info
       /= question.motions_count.to_s + " " + t("motions.plural")
       = "1 voorstel"
-.box.box-grid.question[class="#{'trashed' if question.is_trashed?}"]
+.box.box-grid.question[class="#{'trashed' if question.is_trashed?}" data-tags="#{question.tags.join(',')}" data-date=question.created_at]
   -if question.cover_photo.present?
     = contextual_link_to question_path(question) do
       .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
