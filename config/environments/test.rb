@@ -16,7 +16,7 @@ Argu::Application.configure do
   config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = false
+  config.serve_static_files = false
   config.static_cache_control = "public, max-age=3600"
 
   # Log error messages when you accidentally call methods on nil
