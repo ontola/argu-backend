@@ -39,9 +39,9 @@ nl:
         content: "Beschrijf jouw voorstel in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
         themes: "Thema's of onderwerpen die aan deze stelling gerelateerd zijn. Plaats komma's tussen de thema's."
         side: "<h2>Wat is een voorstel?</h2>
-               <p>Een voorstel is een idee om een of meerdere problemen op te lossen.</p>
-               <p>Een goed voorstel is concreet en implementeerbaar: het beschrijft wat er moet gebeuren, en hoe dit moet gebeuren.</p>
-               <p> In een voorstel staan geen argumenten. Je hoeft er dus niet in te overtuigen.</p>"
+               <p>Een <b class='sta-t'>voorstel</b> is een idee om een of meerdere problemen op te lossen.</p>
+               <p>Een goed voorstel is <b>concreet en implementeerbaar</b>: het beschrijft wat er moet gebeuren en hoe dit moet gebeuren.</p>
+               <p>In een voorstel staan <b>geen argumenten</b>. Die plaats je later onder het voorstel.</p>"
     mod:
       edit_moderators:
         title: 'Moderators van %{title}'
