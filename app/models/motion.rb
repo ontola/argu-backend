@@ -30,8 +30,9 @@ class Motion < ActiveRecord::Base
 
 # Custom methods
 
-  def cap_title 
-    self.title = self.title.capitalize
+  def cap_title
+    self.title[0] = self.title[0].upcase
+    self.title
   end
 
   def con_count

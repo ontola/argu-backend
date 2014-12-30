@@ -50,6 +50,12 @@ nl:
             In het geval van geschreven werk:
 
             <code>[](A. Achternaam, jaartal, titel, pagina)</code>"
+        side: "        h2 Wat is een argument?
+                       p Een argument is een enkele reden voor of tegen een voorstel.
+                       h2 Tips:
+                       ul.bullets
+                         li Begin met het belangrijkste. De details komen daarna.
+                         li Het argument moet niet al eerder geplaatst zijn bij dit voorstel."
     comments:
       title: "reacties"
       favorite: "favoriet"

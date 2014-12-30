@@ -1,6 +1,6 @@
 - @authentications.each do |authentication|
   .form-item
-    = image_tag "favicon_#{authentication.provider}.svg", :size => "64x64"
+    = image_tag "favicon_#{authentication.provider}.svg", :size => "20x20"
     /= authentication.provider.titleize
     = authentication.uid
     - unless current_user.isOmniOnly && (current_user.authentications.size == 1)
