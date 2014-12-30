@@ -188,7 +188,7 @@
   height: 100%;
 }
 
-.btns-list li a {
+.btns-list > li {
   text-transform: uppercase;
   text-decoration: none;
   font-size: .8em;
@@ -379,10 +379,10 @@ h1 + .btn {
     background-color: white !important;
     pointer-events: none;
   }
-  a:hover{
+  li:hover{
     background-color: white !important;
   }
-  a:active {
+  li:active {
     background-color: $g0 !important;
   }
 }

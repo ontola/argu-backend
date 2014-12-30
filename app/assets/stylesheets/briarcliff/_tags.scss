@@ -9,7 +9,7 @@ ul.tags {
 }
 
 .tag {
-  color: $blu;
+  color: $g4;
   text-transform: uppercase;
   font-size: .8em;
   line-height: 1.5em;
@@ -17,18 +17,19 @@ ul.tags {
   display: inline-block;
   background-color: white;
   margin: .3em;
+  @include box-shadow;
   @include border-radius;
   @include transition(.15s);
 }
 
 a.tag:hover {
-  background-color: $blu;
+  background-color: $g4;
   color: white;
   cursor: pointer;
 }
 
 a.tag:active, a.tag.is-checked {
-  background-color: $blu;
+  background-color: $g4;
   color:white;
 }
 
@@ -40,11 +41,19 @@ a.tag:active, a.tag.is-checked {
 .tag-motions {
   color: $blu;
   font-weight: bold;
+  &.is-checked, &:hover {
+    background-color: $blu !important;
+    color: white !important;
+  }
 }
 
 .tag-questions {
   color: $bro;
   font-weight: bold;
+  &.is-checked, &:hover {
+    background-color: $bro !important;
+    color: white !important;
+  }
 }
 
 .box > ul.tags {
@@ -53,6 +62,8 @@ a.tag:active, a.tag.is-checked {
   width: 100%;
   .tag {
     margin: 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 }
 

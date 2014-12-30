@@ -1,7 +1,6 @@
 .cover
   /-if @forum.cover_photo.url.present?
   .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
-  =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
   .cover-header
     .cover-container
       h1= @forum.name
@@ -16,6 +15,20 @@
         li[data-intro=t('intro.motion.create', name: @forum.name)]=link_to url_for([:new, @forum, :motion]) do
           span.fa.fa-plus.sta-t
           span.icon-left.sta-t= t("motions.type")
+        li.dropdown-trigger
+          span.fa.fa-gear.sta-t
+          span.icon-left.sta-t= t("forum")
+          ul.dropdown-content.dropdown-right
+            li=link_to url_for([:settings, @forum]) do
+              span.fa.fa-gear
+              span.icon-left= t("forums.settings.title")
+            - if policy(@forum).statistics?
+              li=link_to url_for([:statistics, @forum]) do
+                span.fa.fa-pie-chart
+                span.icon-left= t("forums.statistics.title")
+            li = link_to url_for([:settings, @forum, tab: :managers])
+              span.fa.fa-group
+              span.icon-left = t("forums.settings.managers")
 .center
   /.tags
     - @forum.featured_tags.each do |tag|
@@ -23,9 +36,9 @@
   #filters[data-intro=t('intro.forum.filter')]
     ul.tags
       li
-        a.tag.tag-questions[data-filter=".motion"]= t("motions.header")
+        a.tag.tag-motions[data-filter=".motion"]= t("motions.header")
       li
-        a.tag.tag-motions[data-filter=".question"]= t("questions.header")
+        a.tag.tag-questions[data-filter=".question"]= t("questions.header")
     ul.tags
       - @forum.featured_tags.each do |tag|
         li

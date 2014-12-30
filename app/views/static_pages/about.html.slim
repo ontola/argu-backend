@@ -43,7 +43,7 @@
               span.icon-left Ik vertegenwoordig een organisatie
   - if defined?(show_sign_in) && show_sign_in.present?
     .center=link_to 'log in', sign_in_modal_path, remote: true, class: "btn-subtle"
-.landing-bg[id="inhoudelijker" ass="parallax-window" data-parallax="scroll" data-image-src=asset_path('bg-landing-hong-kong.jpg') data-z-index="0"]
+.landing-bg[id="inhoudelijker" class="parallax-window" data-parallax="scroll" data-image-src=asset_path('bg-landing-hong-kong.jpg') data-z-index="0"]
   header
     h1 = "politiek moet inhoudelijker"
   .col-1-small
