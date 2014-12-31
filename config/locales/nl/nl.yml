@@ -108,7 +108,7 @@ nl:
   sort:
     newest: "nieuwste"
     name: "naam"
-    score: "score"
+    score: "beste score"
     random: "willekeurig"
 
 #datetime

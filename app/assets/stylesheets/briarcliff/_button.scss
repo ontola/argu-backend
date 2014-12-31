@@ -203,9 +203,11 @@
   cursor: pointer;
   display: block;
   color: $g3;
-  padding: 1em;
   @include transition(.2s);
-
+  a {
+    padding: 1em;
+    display: inline-block;
+  }
   &:hover {
     background-color: $darken1;
     color: $g4;

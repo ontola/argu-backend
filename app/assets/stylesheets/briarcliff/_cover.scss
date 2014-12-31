@@ -25,12 +25,12 @@
       display: block;
       right: 0;
       text-align: center;
-      > li {
+      > a {
         line-height: .7em !important;
         padding: .8em;
       }
     }
-    li {
+    li > a {
       line-height: 1.8em;
     }
   }
