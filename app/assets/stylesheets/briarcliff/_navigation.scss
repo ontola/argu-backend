@@ -17,7 +17,6 @@
   display: block;
   padding: 0em 0.7em;
   font-size: 1em;
-  text-transform: uppercase;
   background-color: $blu;
   @include transition(.1s);
   > .fa {
@@ -29,11 +28,6 @@
 }
 
 .navbar-item span {
-  font-size: .8em;
-  vertical-align: middle;
-  &.fa {
-    font-size: 1em;
-  }
   @include bp-medium(){
     display: none;
     &.fa{

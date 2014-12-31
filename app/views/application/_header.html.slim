@@ -5,20 +5,20 @@ nav#navbar.navbar role="navigation"
         =image_tag 'logo-white.svg'
     ul.navbar-links
       -if Rails.configuration.epics.forum_selector
-        li[data-intro= t("intro.header.forums", name: current_scope.model.name) data-position="right"]
-          .dropdown-trigger.navbar-item
+        li.dropdown[data-intro= t("intro.header.forums", name: current_scope.model.name) data-position="right"]
+          .dropdown-trigger.navbar-item[href="#"]
             span.fa.fa-home
             span.icon-left= home_text
             span.fa.fa-angle-down
-            ul.dropdown-content
-              - current_profile.present? && current_profile.memberships.each do |membership|
+          ul.dropdown-content
+            - current_profile.present? && current_profile.memberships.each do |membership|
+              li
+                =link_to membership.forum.display_name, url_for(membership.forum)
+            span.dropdown-header = t('forums.suggestions')
+            ul.tags-vertical
+              - Forum.all.each do |forum|
                 li
-                  =link_to membership.forum.display_name, url_for(membership.forum)
-              span.dropdown-header = t('forums.suggestions')
-              ul.tags-vertical
-                - Forum.all.each do |forum|
-                  li
-                    =link_to forum.display_name, url_for(forum)
+                  =link_to forum.display_name, url_for(forum)
       -else
         li
           =link_to url_for(current_scope.model), class: "navbar-item"
@@ -26,7 +26,7 @@ nav#navbar.navbar role="navigation"
             span.icon-left= home_text
       -if Rails.configuration.epics.tag_system
         li
-          .dropdown-trigger.navbar-item href="/"
+          .dropdown-trigger.navbar-item href="#"
             span.fa.fa-tags
             span.icon-left= t("tags.type")
             .dropdown-content.dropdown-col-2
@@ -48,38 +48,38 @@ nav#navbar.navbar role="navigation"
     ul.navbar-links.navbar-links-right
       -if Rails.configuration.epics.search
         li
-          .navbar-item.dropdown-trigger href="/"
+          .navbar-item.dropdown-trigger href="#"
             span.fa.fa-search
             span.icon-left= t("search.type")
             .dropdown-content.dropdown-right.nav-search
               form
                 input.nav-search-text type="text" placeholder= t("search.placeholder")
       -if current_profile.present?
-        li[data-intro= t("intro.header.profile", name: current_scope.model.name) data-position="left"]
-          .dropdown-trigger.navbar-item href="/"
+        li.dropdown[data-intro= t("intro.header.profile", name: current_scope.model.name) data-position="left"]
+          .dropdown-trigger.navbar-item href="#"
             span.fa.fa-user
             // Regex to only show first name of user
             span.icon-left= current_profile.display_name.split(/\s+/, 2)[0...1].join(' ')
-            ul.dropdown-content.dropdown-right
-              li= contextual_link_to profile_url(current_profile.username) do
-                span.fa.fa-user
-                span.icon-left= t("profiles.display")
-              li= link_to edit_profile_path(current_profile.username) do
-                span.fa.fa-pencil
-                span.icon-left= t("profiles.edit.title")
-              li= link_to settings_url do
-                span.fa.fa-gear
-                span.icon-left= t(:users_show_title)
-              li= link_to new_user_invitation_path
-                span.fa.fa-bullhorn
-                span.icon-left= t('devise.invitations.link')
-              li= link_to(destroy_user_session_url, method: :delete) do
-                span.fa.fa-sign-out
-                span.icon-left= t("sign_out")
-              - if current_user.managed_pages.present?
-                li= link_to current_user.display_name, actors_path(na: current_user.profile.id), method: :put
-                - current_user.managed_pages.each do |p|
-                  li= link_to p.page.display_name, actors_path(na: p.page.profile.id), method: :put
+          ul.dropdown-content.dropdown-right
+            li= contextual_link_to profile_url(current_profile.username) do
+              span.fa.fa-user
+              span.icon-left= t("profiles.display")
+            li= link_to edit_profile_path(current_profile.username) do
+              span.fa.fa-pencil
+              span.icon-left= t("profiles.edit.title")
+            li= link_to settings_url do
+              span.fa.fa-gear
+              span.icon-left= t(:users_show_title)
+            li= link_to new_user_invitation_path
+              span.fa.fa-bullhorn
+              span.icon-left= t('devise.invitations.link')
+            li= link_to(destroy_user_session_url, method: :delete) do
+              span.fa.fa-sign-out
+              span.icon-left= t("sign_out")
+            - if current_user.managed_pages.present?
+              li= link_to current_user.display_name, actors_path(na: current_user.profile.id), method: :put
+              - current_user.managed_pages.each do |p|
+                li= link_to p.page.display_name, actors_path(na: p.page.profile.id), method: :put
       -else
         li= link_to new_user_session_url, id: 'account', class: 'navbar-item' do
           span.fa.fa-sign-in

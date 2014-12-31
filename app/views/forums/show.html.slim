@@ -15,8 +15,8 @@
         li[data-intro=t('intro.motion.create', name: @forum.name)]=link_to url_for([:new, @forum, :motion]) do
           span.fa.fa-plus.sta-t
           span.icon-left.sta-t= t("motions.type")
-        li.dropdown-trigger
-          a
+        li.dropdown
+          a.dropdown-trigger
             span.fa.fa-gear.sta-t
             span.icon-left.sta-t= t("forum")
           ul.dropdown-content.dropdown-right

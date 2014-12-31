@@ -195,7 +195,7 @@
 .btns-list > li {
   text-transform: uppercase;
   text-decoration: none;
-  font-size: .8em;
+  span {font-size: .8em;}
   border: none;
   -webkit-appearance: none;
   border-radius: 0;
@@ -204,9 +204,12 @@
   display: block;
   color: $g3;
   @include transition(.2s);
-  a {
+  > a {
     padding: 1em;
     display: inline-block;
+    @include bp-medium{
+      padding: .5em;
+    }
   }
   &:hover {
     background-color: $darken1;
