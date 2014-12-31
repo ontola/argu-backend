@@ -26,13 +26,12 @@ nl:
       vote: 'Hiermee kan je <b>stemmen</b> op het voorstel. Je kan jouw stem later nog wijzigen.'
       arguments: 'Op Argu structureren we discussie aan de hand van <b class="pro-t">voor</b>- en <b class="con-t">tegen</b>argumenten. Klik op een argument om reacties te bekijken of te plaatsen.'
       help: 'Wil je deze tutorial nogmaals zien? Gewoon hier klikken.'
-    start: 'Help'
-    start_short: 'Help'
     argument:
       back: 'Klik hier om terug te gaan naar het bijbehorende voorstel.'
       body: 'Een argument is een enkele reden voor of tegen een voorstel. Door een argument te openen kan je de gehele tekst lezen, de bronnen bekijken en een reactie plaatsen.'
       comments: 'Hieronder verschijnen de reacties op een argument. De meest omhoog gestemde reactie wordt weergegeven direct onder het argument.'
-    start: 'Hoe werkt deze pagina?'
+    start: 'Help'
+    start_short: 'Help'
     profile:
       show: 'In een profiel kan een gebruiker wat over zichzelf laten weten.'
       votes: 'Standaard worden de voorstellen waar je op stemt in je profiel weergegeven. Zo kan je duidelijk maken waar je voor staat. Als je dat liever niet deelt, kan je het uitzetten bij "instellingen".'

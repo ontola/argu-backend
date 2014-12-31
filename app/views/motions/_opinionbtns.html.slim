@@ -4,7 +4,7 @@
     span.fa.fa-thumbs-up
     span.icon-left = t('motions.votes.pro')
    li = link_to motion_vote_path(@motion, 'neutral'), class: "btn-neu#{ ' voted-on' if @voted.eql?('neutral')}", remote: true, method: :post do
-     span.fa.fa-pause
+     span.fa.fa-pause[style="font-size: 0.9em"]
      span.icon-left = t('motions.votes.neu')
    li = link_to motion_vote_path(@motion, 'con'), class: "btn-con#{ ' voted-on' if @voted.eql?('con')}", remote: true, method: :post do
      span.fa.fa-thumbs-down

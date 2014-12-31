@@ -27,7 +27,7 @@
               li=link_to url_for([:statistics, @forum]) do
                 span.fa.fa-pie-chart
                 span.icon-left= t("forums.statistics.title")
-            li = link_to url_for([:settings, @forum, tab: :managers])
+            li = link_to url_for([:settings, @forum, tab: :managers]) do
               span.fa.fa-group
               span.icon-left = t("forums.settings.managers")
 .filter-and-sort

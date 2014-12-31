@@ -6,7 +6,6 @@
 }
 
 .cover {
-  overflow: hidden;
   position: relative;
   margin-bottom: 1em;
 }
@@ -26,7 +25,7 @@
       display: block;
       right: 0;
       text-align: center;
-      > a {
+      > li > a {
         line-height: .7em !important;
         padding: .8em;
       }
