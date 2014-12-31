@@ -7,9 +7,18 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
 
-  if (ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'] || Rails.application.secrets.google_storage_access_key_id).present? && (ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'] || Rails.application.secrets.google_storage_secret_access_key).present?
+  unless Rails.env.development? || Rails.env.test?
+    storage :fog
+    CarrierWave.configure do |config|
+      config.fog_credentials = {
+          :provider                         => 'Google',
+          :google_storage_access_key_id     => ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'] || Rails.application.secrets.google_storage_access_key_id || '',
+          :google_storage_secret_access_key => ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'] || Rails.application.secrets.google_storage_secret_access_key || ''
+      }
+      config.fog_directory = 'argu'
+    end
   else
-    storage = :local
+    storage :file
   end
 
 

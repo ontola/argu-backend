@@ -40,6 +40,10 @@ class User < ActiveRecord::Base
     invitation_limit - invitations_count
   end
 
+  def managed_pages
+    PageMembership.where(profile: self.profile.id, role: PageMembership.roles[:manager])
+  end
+
   def web_url
     username
   end

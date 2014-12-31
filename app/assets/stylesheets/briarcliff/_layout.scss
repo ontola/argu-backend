@@ -97,6 +97,10 @@ body {
   }
 }
 
+.filter-and-sort {
+  text-align: center;
+}
+
 .grid {
   @include container-width;
   margin: auto;

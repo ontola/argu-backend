@@ -1,9 +1,11 @@
 class Profile < ActiveRecord::Base
   include ArguBase
 
+  has_one :profileable
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy
+  has_many :page_memberships, dependent: :destroy
   has_many :forums, through: :memberships
 
   mount_uploader :profile_photo, ImageUploader
@@ -16,11 +18,11 @@ class Profile < ActiveRecord::Base
 
   ######Attributes#######
   def display_name
-    self.name.presence || ''
+    self.name.presence || self.owner.display_name
   end
 
   def web_url
-    User.where(profile_id: id).first.username || id
+    username || id
   end
 
   #######Methods########
@@ -47,7 +49,11 @@ class Profile < ActiveRecord::Base
   end
 
   def username
-    User.where(profile_id: self.id).first.username || Pages.where(profile_id: self.id).first.web_url
+    owner.username
+  end
+
+  def owner
+    User.where(profile: self).first || Page.where(profile: self).first
   end
 
 

@@ -1,4 +1,7 @@
 Argu::Application.routes.draw do
+
+  put 'actors', to: 'actors#update'
+
   require 'sidekiq/web'
 
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
@@ -53,7 +56,7 @@ Argu::Application.routes.draw do
     resources :tags, only: [:show]
   end
 
-  resources :pages, only: :show do
+  resources :pages, only: [:show, :update] do
     get :settings, on: :member
   end
 

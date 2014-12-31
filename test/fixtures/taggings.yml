@@ -1,0 +1,16 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+nature_question_one:
+  tag_id: <%= Tag.first.id %>
+  taggable_type: 'Question'
+  taggable_id: <%= Question.first.id %>
+  forum_id: <%= Forum.where(web_url: :utrecht).first.id %>
+# column: value
+#
+two: {}
+#  column: value

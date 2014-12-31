@@ -7,6 +7,7 @@ h1, h2, h3 {
   color: $g4;
   font-weight: bold;
   font-weight: 700;
+  word-wrap: break-word;
   span {
     font-family: $font-special;
   }
@@ -58,6 +59,10 @@ a {
 
 b {
   font-weight: bold;
+}
+
+i {
+  font-style: italic;
 }
 
 p {

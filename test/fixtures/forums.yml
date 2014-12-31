@@ -9,7 +9,7 @@ utrecht:
   name: 'Gemeente Utrecht'
   slug: 'utrecht'
   web_url: 'utrecht'
-  page: argu
+  page: utrecht
 #
 amsterdam:
   name: 'Gemeente Amsterdam'

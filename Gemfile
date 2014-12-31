@@ -1,9 +1,8 @@
 source 'https://rubygems.org'
 source 'http://utility.argu.co:3000/'
 
-gem 'sass-rails',   '~> 5.0.0.beta1'                                          ###!
-gem 'rails', '~>4.2.0.rc1'                                                    ###!
-#gem 'rails', git: 'https://github.com/rails/rails.git', platform: :mswin     ###!
+gem 'sass-rails',   '~> 5.0.0'
+gem 'rails', '~>4.2.0'
 
 gem 'simple_text', '~> 0.0.21'
 
@@ -44,8 +43,8 @@ gem 'rails3-jquery-autocomplete', '~> 1.0.14'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
 gem 'carrierwave', '~> 0.10.0'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
-gem 'mini_magick', '~> 4.0.1'                                             # Ruby connector for ImageMagick
-gem 'fog', '~> 1.25.0'                                                    # Cloud storage connector for CW
+gem 'mini_magick', '~> 3.8.1'                                             # Ruby connector for ImageMagick
+gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'sidekiq', '~> 3.3.0'
 gem 'sinatra', '>= 1.3.0'
 
@@ -67,6 +66,7 @@ group :development, :test do
   gem 'nokogiri', '1.6.5'
   gem 'minitest-rails', '~> 2.1.1'
   gem 'minitest-reporters', '~> 1.0.8'
+  gem 'byebug'
   #gem 'meta_request'
   #gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!

@@ -18,6 +18,10 @@ class RestrictivePolicy
     user && user.profile.has_role?(:staff)
   end
 
+  def change_owner?
+    staff?
+  end
+
   def create?
     staff?
   end

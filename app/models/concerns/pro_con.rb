@@ -27,7 +27,8 @@ module ProCon
   end
 
   def cap_title
-    self.title = self.title.capitalize
+    self.title[0] = self.title[0].upcase
+    self.title
   end
 
   def display_name
