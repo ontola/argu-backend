@@ -29,12 +29,14 @@ $( function() {
     };
 
     // bind filter button click
-    $('#filters').on( 'click', 'a', function() {
+    $('#filters').on( 'click', 'a', function(e) {
         var filterValue = $( this ).attr('data-filter');
         lastFilter = this.dataset.filterValue;
         // use filterFn if matches value
         filterValue = filterFns[ filterValue ] || filterValue;
         $container.isotope({ filter: filterValue });
+        // this prevents selecting the words in chrome on android
+        e.preventDefault();
     });
 
     // bind sort button click
@@ -59,5 +61,7 @@ $( function() {
             $( this ).addClass('is-checked');
         });
     });
+
+    //TODO: When clicked on .is-check, disable that class and go back to 'original-order'
 
 });

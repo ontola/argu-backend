@@ -45,6 +45,9 @@
   background-position: center;
   height: 100%;
   height: 17.8em;
+}
+
+.cover .cover-image {
   @include bp-medium {
     height: 10em;
   }
@@ -60,6 +63,12 @@
   height: auto;
   min-height: 3em;
   @include box-shadow;
+  .btns-list > li > a {
+    padding: 1em;
+    @include bp-medium{
+      padding: .5em;
+    }
+  }
   h1 {
     font-size: 1.8em;
     position: relative;

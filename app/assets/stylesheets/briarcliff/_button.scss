@@ -205,7 +205,7 @@
   color: $g3;
   @include transition(.2s);
   > a {
-    padding: 1em;
+    padding: .7em;
     display: inline-block;
     @include bp-medium{
       padding: .5em;

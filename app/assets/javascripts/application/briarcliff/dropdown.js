@@ -1,6 +1,7 @@
 $(function() {
     //Toggle dropdown content when clicked on trigger
     $('.dropdown-trigger').on("tap click", function (e){
+        // Prevents opening the neighboring link in Chrome for android
         e.preventDefault(); //
         $(this).toggleClass("dropdown-active");
     });
