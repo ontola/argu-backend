@@ -14,8 +14,8 @@ private
 
   def print_references(argument)
     if argument.references.present?
-      concat content_tag :p, t("arguments.references") + ":", class: 'referencestitle'
-      content_tag :ol do
+      concat content_tag :p, t("arguments.references") + ":", class: 'references-title'
+      content_tag :ol, class: 'references-list' do
         argument.references.each do |ref|
           if ref[0].blank?
             concat content_tag :li, content_tag(:p, ref[1], id: ref[2])
