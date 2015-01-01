@@ -132,3 +132,8 @@ nl:
   type_create_success: "%{type} successvol aangemaakt"
   users:
     logged_in_banner_text: "Ingelogd als %{name}"
+  references_helper: "<h2> Referenties toevoegen </h2>
+                   <p> Als je een link wil toevoegen: </p>
+                   <p><code>[www.voorbeeld.nl](Voorbeeld 2014)</code></p>
+                   <p>Als je een boek of tijdschrift wil toevoegen: </code></p>
+                   <p><code>[](Tijdschrift 2015)</code></p>"
