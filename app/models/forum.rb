@@ -5,7 +5,9 @@ class Forum < ActiveRecord::Base
   belongs_to :page
   has_many :questions, inverse_of: :forum
   has_many :motions, inverse_of: :forum
+  has_many :arguments, inverse_of: :forum
   has_many :memberships
+  has_many :votes, inverse_of: :forum
   accepts_nested_attributes_for :memberships
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
 
@@ -22,6 +24,8 @@ class Forum < ActiveRecord::Base
   validates :web_url, :name, presence: true, length: {minimum: 4}
   validates :page_id, presence: true
 
+  enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
+
   def display_name
     name
   end
@@ -34,7 +38,11 @@ class Forum < ActiveRecord::Base
     Forum.first
   end
 
-  def tag_list=(value)
+  def featured_tags
+    super.split(',')
+  end
+
+  def featured_tags=(value)
     super(value.downcase.strip)
   end
 end

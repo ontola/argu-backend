@@ -8,7 +8,7 @@
         p= "Vraag je meest betrokken vrienden om mee te doen met het oplossen van maatschappelijke problemen op Argu."
 
         p
-          b = "Je hebt nog #{current_user.invitations_left} uitnodigingen tegoed. Gebruik ze verstandig."
+          b = "Je hebt nog #{current_user.invitation_limit} uitnodigingen tegoed. Gebruik ze verstandig."
 
         label= t("users_email")
         = f.email_field(:email)

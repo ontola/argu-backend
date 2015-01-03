@@ -50,6 +50,14 @@ nl:
             In het geval van geschreven werk:
 
             <code>[](A. Achternaam, jaartal, titel, pagina)</code>"
+        side: "<h2>Wat is een argument?</h2>
+              <p>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='sta-t'>voorstel</b>.</p>
+              <h2>Tips</h2>
+              <ul class='bullets'>
+                <li>Begin met het belangrijkste. De eerste regels worden het meest gelezen.</li>
+                <li>Het argument moet niet al eerder geplaatst zijn bij dit voorstel.</li>
+                <li>Gebruik betrouwbare bronnen om je punt overtuigender te maken.</li>
+              <ul>"
     comments:
       title: "reacties"
       favorite: "favoriet"

@@ -19,6 +19,7 @@
 //= require sifter
 //= require selectize
 //= require masonry
+//= require isotope.pkgd.min
 //= require parallax
 //= require intro
 //= require requirejs

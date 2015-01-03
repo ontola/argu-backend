@@ -8,7 +8,7 @@ class PagePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:name, :bio, :tag_list] if update?
+    attributes << [:bio, :tag_list, {profile_attributes: [:id, :name, :profile_photo]}] if update?
     attributes << :page_id if change_owner?
     attributes
   end
@@ -36,6 +36,10 @@ class PagePolicy < RestrictivePolicy
 
   def add_question?
     false || update?
+  end
+
+  def statistics?
+    false
   end
 
 end

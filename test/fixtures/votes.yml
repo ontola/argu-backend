@@ -1,0 +1,20 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+one:
+  voteable: one (Motion)
+  voter: profile_two
+  voter_type: 'Profile'
+  for: <%= Vote.fors[:con] %>
+  forum: :utrecht
+#
+two:
+  voteable: three (Motion)
+  voter: profile_two
+  voter_type: 'Profile'
+  for: <%= Vote.fors[:pro] %>
+  forum: :amsterdam

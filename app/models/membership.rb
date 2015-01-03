@@ -9,5 +9,5 @@ class Membership < ActiveRecord::Base
 
   counter_culture :forum
 
-  enum role: {member: 0, manager: 2} #moderator: 1,
+  enum role: {member: 0, owner: 1, manager: 2}
 end

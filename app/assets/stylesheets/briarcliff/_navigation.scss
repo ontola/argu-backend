@@ -17,7 +17,7 @@
   display: block;
   padding: 0em 0.7em;
   font-size: 1em;
-  text-transform: uppercase;
+  background-color: $blu;
   @include transition(.1s);
   > .fa {
     line-height: 3em;
@@ -28,11 +28,6 @@
 }
 
 .navbar-item span {
-  font-size: .8em;
-  vertical-align: middle;
-  &.fa {
-    font-size: 1em;
-  }
   @include bp-medium(){
     display: none;
     &.fa{
@@ -69,9 +64,14 @@ a.navbar-item:active{
   right: 0;
   text-align: center;
   width: 5.8em;
+  background-color: $blu;
   img {
     width: 82%;
     margin-top: 4.6%;
+    @include bp-small{
+      width: 60%;
+      margin-top: 10.6%;
+    }
   }
 }
 

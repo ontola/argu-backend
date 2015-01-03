@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141222172724) do
+ActiveRecord::Schema.define(version: 20141230175551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "arguments", force: true do |t|
+  create_table "arguments", force: :cascade do |t|
     t.text     "content",                                         null: false
     t.integer  "motion_id",                                       null: false
     t.boolean  "pro",                             default: true
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
     t.integer  "votes_abstain_count",             default: 0,     null: false
     t.integer  "creator_id"
     t.integer  "votes_con_count",                 default: 0,     null: false
+    t.integer  "forum_id"
   end
 
   add_index "arguments", ["id"], name: "index_arguments_on_id", using: :btree
@@ -37,7 +38,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "arguments", ["motion_id", "is_trashed"], name: "index_arguments_on_motion_id_and_is_trashed", using: :btree
   add_index "arguments", ["motion_id"], name: "statement_id", using: :btree
 
-  create_table "authentications", force: true do |t|
+  create_table "authentications", force: :cascade do |t|
     t.integer  "user_id",                null: false
     t.string   "provider",   limit: 255, null: false
     t.string   "uid",        limit: 255, null: false
@@ -48,7 +49,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "authentications", ["user_id", "uid"], name: "user_id_and_uid", unique: true, using: :btree
   add_index "authentications", ["user_id"], name: "user_id", using: :btree
 
-  create_table "comments", force: true do |t|
+  create_table "comments", force: :cascade do |t|
     t.integer  "commentable_id",               default: 0
     t.string   "commentable_type", limit: 255, default: ""
     t.string   "title",            limit: 255, default: ""
@@ -67,7 +68,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["profile_id"], name: "index_comments_on_profile_id", using: :btree
 
-  create_table "documents", force: true do |t|
+  create_table "documents", force: :cascade do |t|
     t.string   "name"
     t.string   "title"
     t.text     "contents"
@@ -75,7 +76,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
     t.datetime "updated_at"
   end
 
-  create_table "edits", force: true do |t|
+  create_table "edits", force: :cascade do |t|
     t.integer  "by_id"
     t.string   "by_type"
     t.integer  "item_id"
@@ -90,7 +91,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "edits", ["by_type", "by_id"], name: "index_edits_on_by_type_and_by_id", using: :btree
   add_index "edits", ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id", using: :btree
 
-  create_table "forums", force: true do |t|
+  create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.integer  "page_id"
     t.integer  "questions_count",   default: 0,  null: false
@@ -103,13 +104,14 @@ ActiveRecord::Schema.define(version: 20141222172724) do
     t.string   "slug"
     t.string   "web_url",           default: "", null: false
     t.text     "bio",               default: "", null: false
-    t.text     "tag_list",          default: "", null: false
+    t.text     "featured_tags",     default: "", null: false
+    t.integer  "visibility",        default: 1
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
   add_index "forums", ["web_url"], name: "index_forums_on_web_url", unique: true, using: :btree
 
-  create_table "memberships", force: true do |t|
+  create_table "memberships", force: :cascade do |t|
     t.integer "profile_id",             null: false
     t.integer "forum_id",               null: false
     t.integer "role",       default: 0, null: false
@@ -117,7 +119,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
 
   add_index "memberships", ["profile_id", "forum_id"], name: "index_memberships_on_profile_id_and_forum_id", unique: true, using: :btree
 
-  create_table "motions", force: true do |t|
+  create_table "motions", force: :cascade do |t|
     t.string   "title",               limit: 255,                 null: false
     t.text     "content",                                         null: false
     t.datetime "created_at",                                      null: false
@@ -144,7 +146,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "motions", ["is_trashed"], name: "index_motions_on_is_trashed", using: :btree
   add_index "motions", ["tag_id"], name: "index_motions_on_tag_id", using: :btree
 
-  create_table "opinions", force: true do |t|
+  create_table "opinions", force: :cascade do |t|
     t.string   "title",               limit: 255
     t.text     "content"
     t.boolean  "is_trashed",                      default: false
@@ -163,7 +165,13 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "opinions", ["motion_id", "id"], name: "index_opinions_on_motion_id_and_id", using: :btree
   add_index "opinions", ["motion_id", "is_trashed"], name: "index_opinions_on_motion_id_and_is_trashed", using: :btree
 
-  create_table "pages", force: true do |t|
+  create_table "page_memberships", force: :cascade do |t|
+    t.integer "profile_id",             null: false
+    t.integer "page_id",                null: false
+    t.integer "role",       default: 0, null: false
+  end
+
+  create_table "pages", force: :cascade do |t|
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
     t.string   "slug"
@@ -175,7 +183,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true, using: :btree
   add_index "pages", ["web_url"], name: "index_pages_on_web_url", unique: true, using: :btree
 
-  create_table "profiles", force: true do |t|
+  create_table "profiles", force: :cascade do |t|
     t.string   "name",          limit: 255, default: ""
     t.text     "about",                     default: ""
     t.string   "picture",       limit: 255, default: ""
@@ -188,7 +196,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
 
   add_index "profiles", ["slug"], name: "index_profiles_on_slug", unique: true, using: :btree
 
-  create_table "profiles_roles", force: true do |t|
+  create_table "profiles_roles", force: :cascade do |t|
     t.integer  "profile_id"
     t.integer  "role_id"
     t.datetime "created_at"
@@ -197,7 +205,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
 
   add_index "profiles_roles", ["profile_id", "role_id"], name: "index_profiles_roles_on_profile_id_and_role_id", using: :btree
 
-  create_table "question_answers", force: true do |t|
+  create_table "question_answers", force: :cascade do |t|
     t.integer  "question_id"
     t.integer  "motion_id"
     t.integer  "votes_pro_count", default: 0
@@ -208,7 +216,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
 
   add_index "question_answers", ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
 
-  create_table "questions", force: true do |t|
+  create_table "questions", force: :cascade do |t|
     t.string   "title",           limit: 255, default: ""
     t.text     "content",                     default: ""
     t.integer  "forum_id"
@@ -222,7 +230,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
     t.string   "cover_photo",                 default: ""
   end
 
-  create_table "roles", force: true do |t|
+  create_table "roles", force: :cascade do |t|
     t.string   "name",          limit: 255
     t.integer  "resource_id"
     t.string   "resource_type", limit: 255
@@ -233,7 +241,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
-  create_table "sessions", force: true do |t|
+  create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255, null: false
     t.text     "data"
     t.datetime "created_at"
@@ -243,7 +251,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id", unique: true, using: :btree
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at", using: :btree
 
-  create_table "taggings", force: true do |t|
+  create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
     t.string   "taggable_type", limit: 255
@@ -257,14 +265,14 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
   add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
 
-  create_table "tags", force: true do |t|
+  create_table "tags", force: :cascade do |t|
     t.string  "name",           limit: 255
     t.integer "taggings_count",             default: 0
   end
 
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
 
-  create_table "users", force: true do |t|
+  create_table "users", force: :cascade do |t|
     t.string   "email",                  limit: 255, default: ""
     t.string   "encrypted_password",     limit: 255, default: ""
     t.string   "reset_password_token",   limit: 255
@@ -298,7 +306,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
-  create_table "votes", force: true do |t|
+  create_table "votes", force: :cascade do |t|
     t.integer  "voteable_id"
     t.string   "voteable_type", limit: 255
     t.integer  "voter_id"
@@ -306,6 +314,7 @@ ActiveRecord::Schema.define(version: 20141222172724) do
     t.integer  "for",                       default: 3, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "forum_id",                              null: false
   end
 
   add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "index_votes_on_voter_and_voteable_and_trashed", using: :btree

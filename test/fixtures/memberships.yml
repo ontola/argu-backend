@@ -8,3 +8,9 @@
 user_utrecht:
   profile: :profile_one
   forum: :utrecht
+user2_utrecht:
+  profile: :profile_two
+  forum: :utrecht
+user2_amsterdam:
+  profile: :profile_two
+  forum: :amsterdam

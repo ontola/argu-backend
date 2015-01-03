@@ -1,6 +1,10 @@
 @import "variables";
 @import "mixins";
 
+.intro-trigger {
+  cursor: pointer;
+}
+
 .introjs-bullets {
   padding-bottom: 2em;
 }
@@ -81,7 +85,7 @@
 }
 
 .introjs-overlay {
-  background: $darken4;
+  background: $darken5;
 }
 
 .introjs-tooltip {
@@ -90,6 +94,7 @@
   border: none;
   padding: 20px;
   width: 300px;
+  z-index: 1000000;
 }
 
 .introjs-tooltiptext {
@@ -98,4 +103,8 @@
 
 .introjs-helperNumberLayer {
   display: none;
+}
+
+.introjs-tooltipReferenceLayer{
+  z-index: 1000000;
 }

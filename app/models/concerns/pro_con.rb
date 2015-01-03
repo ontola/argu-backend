@@ -6,19 +6,20 @@ module ProCon
     include Trashable
     include Parentable
 
-    belongs_to :motion, :dependent => :destroy
+    belongs_to :motion
     has_many :votes, as: :voteable, :dependent => :destroy
     belongs_to :creator, class_name: 'Profile'
+    belongs_to :forum
 
     before_save :trim_data
     before_save :cap_title
 
     validates :content, presence: true, length: { minimum: 5, maximum: 3000 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
-    validates :creator_id, :motion_id, presence: true
+    validates :creator_id, :motion_id, :forum_id, presence: true
 
     acts_as_commentable
-    parentable :motion
+    parentable :motion, :forum
 
     def creator
       super || Profile.first_or_create(username: 'Onbekend')
@@ -27,7 +28,8 @@ module ProCon
   end
 
   def cap_title
-    self.title = self.title.capitalize
+    self.title[0] = self.title[0].upcase
+    self.title
   end
 
   def display_name

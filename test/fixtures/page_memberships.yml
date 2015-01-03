@@ -1,0 +1,8 @@
+mem_utrecht:
+  profile: :profile_utrecht_manager
+  page: :utrecht
+  role: 2
+mem_argu:
+  profile: :profile_fletcher91
+  page: :argu
+  role: 2

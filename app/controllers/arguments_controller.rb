@@ -21,7 +21,8 @@ class ArgumentsController < ApplicationController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    @argument = Argument.new motion_id: params[:motion_id]
+    @forum = Forum.friendly.find params[:forum_id]
+    @argument = @forum.arguments.new motion_id: params[:motion_id]
     authorize @argument
     current_context @argument
     @argument.assign_attributes({pro: %w(con pro).index(params[:pro]) })
@@ -51,8 +52,9 @@ class ArgumentsController < ApplicationController
   # POST /arguments
   # POST /arguments.json
   def create
+    @forum = Forum.friendly.find params[:forum_id]
     @motion = Motion.find params[:argument][:motion_id]
-    @argument = Argument.new motion: @motion
+    @argument = @forum.arguments.new motion: @motion
     @argument.attributes= argument_params
     @argument.creator = current_profile
     authorize @argument

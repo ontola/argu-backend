@@ -11,7 +11,7 @@ one:
   forum: :utrecht
   creator: :profile_one
 one_trashed:
-  title: 'Vraagstuk'
+  title: 'Vraagstuk_trashed'
   content: 'Inhoud van het vraagstuk'
   forum: :utrecht
   is_trashed: true

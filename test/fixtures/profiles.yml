@@ -8,6 +8,9 @@
 profile_fletcher91:
   name: 'Thom van Kalkeren'
   about: "I'm the coder!"
+profile_utrecht_manager:
+  name: "Manager of Utrecht"
+  about: "It's all in the name"
 profile_one:
   name: 'User'
   about: 'Im a user'
@@ -15,3 +18,9 @@ profile_one:
 profile_two:
   name: 'User2'
   about: 'Im also a user'
+profile_utrecht:
+  name: 'Gemeente Utrecht'
+  about: ''
+profile_argu:
+  name: 'Argu org'
+  about: "We're the creators of this platform"
