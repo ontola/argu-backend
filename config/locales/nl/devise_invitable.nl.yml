@@ -11,7 +11,7 @@ nl:
         header: "uitnodigingen versturen"
         submit_button: "Verstuur uitnodiging"
       edit:
-        header: "Stel je wachtwoord in"
+        header: "Maak jouw account aan"
         submit_button: "Wachtwoord opslaan"
     mailer:
       invitation_instructions:

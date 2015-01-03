@@ -9,17 +9,60 @@
           li=link_to forum_memberships_path(@forum.web_url), method: :create, class: "btn-focus" do
             span.fa.fa-join
             span = t("join")
-        li[data-intro=t('intro.question.create', name: @forum.name) data-position="left"]=link_to url_for([:new, @forum, :question]) do
+        li[data-intro=t('intro.question.create', name: @forum.name)]=link_to url_for([:new, @forum, :question]) do
           span.fa.fa-plus.que-t
-          span.icon-left.que-t= t("questions.new_btn")
-        li[data-intro=t('intro.motion.create', name: @forum.name) data-position="left"]=link_to url_for([:new, @forum, :motion]) do
+          span.icon-left.que-t= t("questions.type")
+        li[data-intro=t('intro.motion.create', name: @forum.name)]=link_to url_for([:new, @forum, :motion]) do
           span.fa.fa-plus.sta-t
-          span.icon-left.sta-t= t("motions.new_btn")
-=render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
-.center
-  .tags
+          span.icon-left.sta-t= t("motions.type")
+        li.dropdown
+          a.dropdown-trigger
+            span.fa.fa-gear.sta-t
+            span.icon-left.sta-t= t("forum")
+          ul.dropdown-content.dropdown-right
+            li=link_to url_for([:settings, @forum]) do
+              span.fa.fa-gear
+              span.icon-left= t("forums.settings.title")
+            - if policy(@forum).statistics?
+              li=link_to url_for([:statistics, @forum]) do
+                span.fa.fa-pie-chart
+                span.icon-left= t("forums.statistics.title")
+            li = link_to url_for([:settings, @forum, tab: :managers])
+              span.fa.fa-group
+              span.icon-left = t("forums.settings.managers")
+.filter-and-sort
+  /.tags
     - @forum.featured_tags.each do |tag|
       = contextual_link_to(tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag)
+  #filters[data-intro=t('intro.forum.filter')]
+    ul.tags
+      li
+        a.tag.tag-motions[data-filter=".motion"]= t("motions.header")
+      li
+        a.tag.tag-questions[data-filter=".question"]= t("questions.header")
+    ul.tags
+      - @forum.featured_tags.each do |tag|
+        li
+          /a = contextual_link_to(tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag, 'data-filter'=>'filterByTag', 'data-filter-value'=>tag)
+          a[class="tag" data-filter='filterByTag' data-filter-value=tag] = tag
+  #sorts[data-intro=t('intro.forum.sort')]
+    ul.btns-list.btns-vertical
+      li
+        a[data-sort-value="date"]
+          span.fa.fa-clock-o
+          span.icon-left= t("sort.newest")
+      /li
+        a[data-sort-value="name"]
+          span.fa.fa-sort-alpha-asc
+          span.icon-left= t("sort.name")
+      li
+        a[data-sort-value="score"]
+          span.fa.fa-sort-amount-desc
+          span.icon-left= t("sort.score")
+      /li
+        a[data-sort-value="random"]
+          span.fa.fa-gift
+          span.icon-left= t("sort.random")
 
 - if policy(@forum).show_children?
   .grid

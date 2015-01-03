@@ -30,8 +30,9 @@ class Motion < ActiveRecord::Base
 
 # Custom methods
 
-  def cap_title 
-    self.title = self.title.capitalize
+  def cap_title
+    self.title[0] = self.title[0].upcase
+    self.title
   end
 
   def con_count
@@ -55,8 +56,7 @@ class Motion < ActiveRecord::Base
   end
 
   def raw_score
-    # Neutral voters dont influence the relative score, but they do fluff it
-    self.votes_pro_count*self.votes_neutral_count - self.votes_con_count*self.votes_neutral_count
+    self.votes_pro_count - self.votes_con_count
   end
 
   def score

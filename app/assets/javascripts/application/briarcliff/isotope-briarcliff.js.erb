@@ -1,0 +1,67 @@
+$( function() {
+    // init Isotope
+    var $container = $('.grid').isotope({
+        itemSelector: '.box-grid',
+        columnWidth: '.box-grid-sizer',
+        getSortData: {
+            date: '[data-date]',
+            name: 'h2',
+            score: '[data-score]',
+        },
+        sortAscending: {
+            date: false,
+            name: true,
+            score: false,
+        }
+    });
+    // filter functions
+    var lastFilter = "";
+    var filterFns = {
+        // filter by tag using data-tags
+        filterByTag: function () {
+            if (this.dataset.tags) {
+                var tags = this.dataset.tags.split(',');
+                return tags.indexOf(lastFilter) != -1;
+            } else {
+                false
+            }
+        }
+    };
+
+    // bind filter button click
+    $('#filters').on( 'click', 'a', function(e) {
+        var filterValue = $( this ).attr('data-filter');
+        lastFilter = this.dataset.filterValue;
+        // use filterFn if matches value
+        filterValue = filterFns[ filterValue ] || filterValue;
+        $container.isotope({ filter: filterValue });
+        // this prevents selecting the words in chrome on android
+        e.preventDefault();
+    });
+
+    // bind sort button click
+    $('#sorts').on( 'click', 'a', function() {
+        var sortValue = $(this).attr('data-sort-value');
+        $container.isotope({ sortBy: sortValue });
+    });
+
+    // change is-checked class on buttons
+    $('#sorts').each( function( i, buttonGroup ) {
+        var $buttonGroup = $( buttonGroup );
+        $buttonGroup.on( 'click', 'a', function() {
+            $buttonGroup.find('.is-checked').removeClass('is-checked');
+            $( this ).addClass('is-checked');
+        });
+    });
+
+    $('#filters').each( function( i, buttonGroup ) {
+        var $buttonGroup = $( buttonGroup );
+        $buttonGroup.on( 'click', 'a', function() {
+            $buttonGroup.find('.is-checked').removeClass('is-checked');
+            $( this ).addClass('is-checked');
+        });
+    });
+
+    //TODO: When clicked on .is-check, disable that class and go back to 'original-order'
+
+});

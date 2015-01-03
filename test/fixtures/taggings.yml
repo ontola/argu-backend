@@ -8,8 +8,8 @@
 nature_question_one:
   tag_id: <%= Tag.first.id %>
   taggable_type: 'Question'
-  taggable_id: <%= Question.where(title: 'Vraagstuk').first.id %>
-  forum_id: <%= Forum.where(web_url: :utrecht).first.id %>
+  taggable_id: <%= Question.first.id %>
+  forum: :utrecht
 # column: value
 #
 two: {}

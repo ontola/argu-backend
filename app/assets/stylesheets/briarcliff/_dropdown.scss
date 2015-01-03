@@ -1,6 +1,10 @@
 @import "variables";
 @import "mixins";
 
+.dropdown {
+  position: relative;
+}
+
 .dropdown-trigger {
   position: relative;
   cursor: pointer;
@@ -70,13 +74,16 @@ span.dropdown-header {
   width: 100%;
 }
 
-.dropdown-trigger:hover .dropdown-content, .dropdown-active .dropdown-content {
+.dropdown:hover .dropdown-content, .dropdown-active .dropdown-content {
   //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
   display: block;
   text-transform: initial;
   @include animation(fade-in .2s);
   span {
     display: inline-block;
-    text-transform: uppercase;
   }
+}
+
+.btns-list .dropdown-content {
+  font-size: 120%;
 }
