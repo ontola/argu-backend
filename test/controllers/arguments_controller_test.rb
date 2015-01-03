@@ -18,7 +18,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test "should get new pro" do
     sign_in users(:user)
 
-    get :new, motion_id: motions(:one).id, pro: 'pro'
+    get :new, forum_id: forums(:utrecht), motion_id: motions(:one).id, pro: 'pro'
 
     assert_response 200
     assert assigns(:argument)
@@ -29,7 +29,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test "should get new con" do
     sign_in users(:user)
 
-    get :new, motion_id: motions(:one).id, pro: 'con'
+    get :new, forum_id: forums(:utrecht), motion_id: motions(:one).id, pro: 'con'
 
     assert_response 200
     assert assigns(:argument)
@@ -41,7 +41,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     assert_difference('Argument.count') do
-      post :create, argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents'}
+      post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents'}
     end
 
     assert assigns(:argument)
@@ -56,7 +56,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     assert_difference('Argument.count') do
-      post :create, argument: {motion_id: motions(:one).id, pro: 'con', title: 'Test argument con', content: 'Test argument con-tents'}
+      post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'con', title: 'Test argument con', content: 'Test argument con-tents'}
     end
 
     assert assigns(:argument)

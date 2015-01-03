@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141228145913) do
+ActiveRecord::Schema.define(version: 20141230175551) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20141228145913) do
     t.integer  "votes_abstain_count",             default: 0,     null: false
     t.integer  "creator_id"
     t.integer  "votes_con_count",                 default: 0,     null: false
+    t.integer  "forum_id"
   end
 
   add_index "arguments", ["id"], name: "index_arguments_on_id", using: :btree
@@ -104,6 +105,7 @@ ActiveRecord::Schema.define(version: 20141228145913) do
     t.string   "web_url",           default: "", null: false
     t.text     "bio",               default: "", null: false
     t.text     "featured_tags",     default: "", null: false
+    t.integer  "visibility",        default: 1
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
@@ -312,6 +314,7 @@ ActiveRecord::Schema.define(version: 20141228145913) do
     t.integer  "for",                       default: 3, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "forum_id",                              null: false
   end
 
   add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "index_votes_on_voter_and_voteable_and_trashed", using: :btree

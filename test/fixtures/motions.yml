@@ -23,3 +23,9 @@ two:
   content: 'Inhoud van voorstel2'
   forum: :utrecht
   creator: :profile_two
+#
+three:
+  title: 'Voorstel voor Amsterdam'
+  content: 'Inhoud van voorstel3'
+  forum: :amsterdam
+  creator: :profile_two

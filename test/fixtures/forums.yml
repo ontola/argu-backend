@@ -16,3 +16,4 @@ amsterdam:
   slug: 'amsterdam'
   web_url: 'amsterdam'
   page: argu
+  visibility: <%= Forum.visibilities[:closed] %>

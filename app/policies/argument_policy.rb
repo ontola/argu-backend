@@ -7,7 +7,7 @@ class ArgumentPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:title, :content, :pro, :motion_id] if create?
+    attributes << [:title, :content, :pro, :motion_id, :forum_id] if create?
     attributes
   end
 
