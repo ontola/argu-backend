@@ -6,5 +6,7 @@
 # below each fixture, per the syntax in the comments below
 #
 nature:
+  id: 182999886
   name: 'nature'
+  taggings_count: 0
 #
