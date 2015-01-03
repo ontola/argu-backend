@@ -6,10 +6,10 @@ module ProCon
     include Trashable
     include Parentable
 
-    belongs_to :motion, :dependent => :destroy
+    belongs_to :motion
     has_many :votes, as: :voteable, :dependent => :destroy
     belongs_to :creator, class_name: 'Profile'
-    belongs_to :forum, inverse_of: :motions
+    belongs_to :forum
 
     before_save :trim_data
     before_save :cap_title
