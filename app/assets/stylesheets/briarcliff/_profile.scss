@@ -36,10 +36,7 @@
 }
 
 .profile-big .box {
-  margin-left: 10em;
-  @include bp-medium(){
-    margin: 0 auto;
-  }
+  min-height: 8em;
 }
 
 .profile-big section {
@@ -65,7 +62,6 @@
 .profile-picture-show {
   margin: 0em 0em 0em 0em;
   float: left;
-  border: solid 4px white;
   width: 8em;
   height: 8em;
   overflow: hidden;
