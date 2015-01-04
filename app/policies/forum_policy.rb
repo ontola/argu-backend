@@ -12,7 +12,7 @@ class ForumPolicy < RestrictivePolicy
                    {memberships_attributes: [:role, :id, :profile_id, :forum_id]},
                    :cover_photo_original_h, :cover_photo_box_w, :cover_photo_crop_x, :cover_photo_crop_y,
                    :cover_photo_crop_w, :cover_photo_crop_h, :cover_photo_aspect] if update?
-    attributes << :page_id if change_owner?
+    attributes << [:visibility, :page_id] if change_owner?
     attributes
   end
 
@@ -64,6 +64,10 @@ class ForumPolicy < RestrictivePolicy
   # Is the user a manager of the page or of the forum?
   def is_manager?
     user && (user.profile.page_memberships.where(page: record.page, role: PageMembership.roles[:manager]).present? || user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?)
+  end
+
+  def is_owner?
+    user && record.memberships.where(role: Membership.roles[:owner], profile: user.profile).present? || staff?
   end
 
 end

@@ -29,14 +29,14 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :motions, only: [:show, :edit, :update, :delete, :destroy] do
+  resources :questions, except: [:index, :new, :create]
+
+  resources :motions, except: [:index, :new, :create] do
     post 'vote/:for'      => 'votes/motions#create',   as: 'vote'
     delete 'vote'         => 'votes/motions#destroy',  as: 'vote_delete'
   end
 
-  resources :questions, only: [:show, :edit, :update, :destroy]
-
-  resources :arguments do
+  resources :arguments, except: [:index, :new, :create] do
     resources :comments
 
     post   'vote' => 'votes/arguments#create'
@@ -53,6 +53,7 @@ Argu::Application.routes.draw do
     resources :memberships, only: [:create, :destroy]
     resources :questions, only: [:index, :new, :create]
     resources :motions, only: [:new, :create]
+    resources :arguments, only: [:new, :create]
     resources :tags, only: [:show]
   end
 

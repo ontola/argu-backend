@@ -85,12 +85,16 @@ class RestrictivePolicy
     attr_reader :user, :scope
 
     def initialize(user, scope)
-      @user = user
+      @profile = user.profile
       @scope = scope
     end
 
     def resolve
-      scope if @user.profile.has_role? :staff
+      scope if staff?
+    end
+
+    def staff?
+      user && @profile.has_role?(:staff)
     end
   end
 

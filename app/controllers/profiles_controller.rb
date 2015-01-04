@@ -5,7 +5,8 @@ class ProfilesController < ApplicationController
     @profile = User.find_by(username: params[:id]).profile
     authorize @profile, :show?
 
-    @collection =  Vote.ordered @profile.votes
+    # TODO: Refactor into arel or something..
+    @collection =  Vote.ordered @profile.votes_questions_motions.find_by_sql('SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" WHERE ("forums"."visibility" = '+Forum.visibilities[:open].to_s+' OR "forums"."id" IN ('+current_profile.memberships.map(&:forum_id).join(',')+'))')
 
     respond_to do |format|
       format.html # show.html.erb

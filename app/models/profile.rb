@@ -21,6 +21,18 @@ class Profile < ActiveRecord::Base
     self.name.presence || self.owner.display_name
   end
 
+  def frozen?
+    has_role? 'frozen'
+  end
+
+  def username
+    owner.username
+  end
+
+  def owner
+    User.where(profile: self).first || Page.where(profile: self).first
+  end
+
   def web_url
     username || id
   end
@@ -32,8 +44,8 @@ class Profile < ActiveRecord::Base
         .try(:for) == 'pro'
   end
 
-  def frozen?
-    has_role? 'frozen'
+  def votes_questions_motions
+    votes.where("voteable_type = 'Question' OR voteable_type = 'Motion'")
   end
 
   def freeze
@@ -47,15 +59,6 @@ class Profile < ActiveRecord::Base
   def unfreeze
     remove_role :frozen
   end
-
-  def username
-    owner.username
-  end
-
-  def owner
-    User.where(profile: self).first || Page.where(profile: self).first
-  end
-
 
   #######Utility#########
   def self.find_by_username(user)

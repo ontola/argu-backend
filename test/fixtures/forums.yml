@@ -6,7 +6,6 @@
 # below each fixture, per the syntax in the comments below
 #
 utrecht:
-  id: 1
   name: 'Gemeente Utrecht'
   slug: 'utrecht'
   web_url: 'utrecht'
@@ -17,3 +16,4 @@ amsterdam:
   slug: 'amsterdam'
   web_url: 'amsterdam'
   page: argu
+  visibility: <%= Forum.visibilities[:closed] %>
