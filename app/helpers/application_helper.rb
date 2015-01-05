@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def process_cover_photo(object, _params)
-    if params[object.class.name.downcase][:cover_photo].present? &&
+    if params[object.class.name.downcase][:cover_photo].present?
       object.assign_attributes(_params.except(:cover_photo))
       if object.valid?
         object.remove_cover_photo!

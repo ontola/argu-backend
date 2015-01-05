@@ -9,7 +9,7 @@ one:
   voteable: one (Motion)
   voter: profile_two
   voter_type: 'Profile'
-  for: <%= Vote.fors[:con] %>
+  for: <%= Vote.fors[:neutral] %>
   forum: :utrecht
 #
 two:
@@ -17,4 +17,18 @@ two:
   voter: profile_two
   voter_type: 'Profile'
   for: <%= Vote.fors[:pro] %>
+  forum: :amsterdam
+#
+three:
+  voteable: three (Motion)
+  voter: profile_one
+  voter_type: 'Profile'
+  for: <%= Vote.fors[:con] %>
+  forum: :amsterdam
+#
+four:
+  voteable: three (Motion)
+  voter: profile_three
+  voter_type: 'Profile'
+  for: <%= Vote.fors[:con] %>
   forum: :amsterdam
