@@ -62,7 +62,7 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.includes(:taggings).find_by_id(params[:id])
     authorize @question
-    
+
     process_cover_photo @question
     respond_to do |format|
       if @question.update(permit_params)
