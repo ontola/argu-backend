@@ -42,7 +42,7 @@ namespace :deploy do
   desc 'Update build number file'
   task :update_build_number do
     on roles(:all) do
-      execute :echo, "BUILD='#{ENV['SEMAPHORE_BUILD_NUMBER']}'", '>>', "#{current_path}/config/initializers/build.rb"
+      execute :echo, "BUILD='#{ENV['SEMAPHORE_BUILD_NUMBER']}'", '>', "#{current_path}/config/initializers/build.rb"
     end
   end
 
