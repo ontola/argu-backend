@@ -41,7 +41,9 @@ namespace :deploy do
 
   desc "Links the assets directory of staging in the public folder of production to make apache serve staging assets safely"
   task :link_staging_assets do
-    execute "ln -s /home/rails/argu_staging/current/public/ /home/rails/argu/current/public/staging"
+    on roles(:all) do
+      execute :ln, "-s /home/rails/argu_staging/current/public/ /home/rails/argu/current/public/staging"
+    end
   end
 
   after :updated, :compile_assets
