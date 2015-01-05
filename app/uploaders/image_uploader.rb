@@ -8,7 +8,6 @@ class ImageUploader < CarrierWave::Uploader::Base
   include CarrierWave::MiniMagick
 
   unless Rails.env.development? || Rails.env.test?
-    storage :aws
     CarrierWave.configure do |config|
       config.storage    = :aws
       config.aws_bucket = 'argu-logos'
@@ -27,6 +26,7 @@ class ImageUploader < CarrierWave::Uploader::Base
                              })
       }
     end
+    storage :aws
   else
     storage :file
   end
