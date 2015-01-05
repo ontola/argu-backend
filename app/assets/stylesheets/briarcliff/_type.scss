@@ -7,7 +7,7 @@ h1, h2, h3 {
   color: $g4;
   font-weight: bold;
   font-weight: 700;
-  word-wrap: break-word;
+  word-break: break-word;
   span {
     font-family: $font-special;
   }
@@ -19,7 +19,7 @@ h1 {
     font-size: 2em;
   }
   @include bp-medium {
-    font-size: 1.8em;
+    font-size: 1.5em;
   }
 }
 
@@ -29,7 +29,7 @@ h2 {
     font-size: 1.5em;
   }
   @include bp-medium {
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
 }
 
@@ -39,7 +39,7 @@ h3 {
     font-size: 1.3em;
   }
   @include bp-medium {
-    font-size: 1.2em;
+    font-size: 1.1em;
   }
 }
 
@@ -127,4 +127,8 @@ h3.title-alt {
   padding: 1em;
   font-size: 2em;
   margin: 0;
+}
+
+code {
+  font-family: monospace;
 }
