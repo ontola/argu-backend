@@ -7,7 +7,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
 
-  unless Rails.env.development? || Rails.env.test?
+  unless false #Rails.env.development? || Rails.env.test?
     CarrierWave.configure do |config|
       config.storage    = :aws
       config.aws_bucket = 'argu-logos'

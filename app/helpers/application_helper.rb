@@ -16,7 +16,7 @@ module ApplicationHelper
   end
 
   def process_cover_photo(object)
-    if params[:cover_photo].present? && object.valid?
+    if params[:cover_photo].present? && object.assign_attributes(params.delete :cover_photo).valid?
       object.remove_cover_photo!
       object.save
     end

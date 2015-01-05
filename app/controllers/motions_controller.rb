@@ -71,7 +71,7 @@ class MotionsController < ApplicationController
     @creator = @motion.creator
     authorize @motion
 
-    process_cover_photo @motion
+    @motion.reload if process_cover_photo @motion
     respond_to do |format|
       if @motion.update(permit_params)
         if params[:motion].present? && params[:motion][:tag_id].present? && @motion.tags.reject { |a,b| a.motion==b }.first.present?
