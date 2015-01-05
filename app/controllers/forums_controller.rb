@@ -34,7 +34,7 @@ class ForumsController < ApplicationController
     @forum = Forum.friendly.find params[:id]
     authorize @forum, :update?
 
-    @forum.reload if process_cover_photo @forum
+    @forum.reload if process_cover_photo @forum, permit_params
     if @forum.update permit_params
       redirect_to settings_forum_path(@forum, tab: params[:tab])
     else
