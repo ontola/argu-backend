@@ -18,6 +18,7 @@ module ApplicationHelper
   def process_cover_photo(object)
     if params[:cover_photo].present?
       object.remove_cover_photo!
+      object.save
     end
   end
 
