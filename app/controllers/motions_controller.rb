@@ -71,7 +71,7 @@ class MotionsController < ApplicationController
     @creator = @motion.creator
     authorize @motion
     respond_to do |format|
-      if @motion.update_attributes(permit_params)
+      if @motion.update(permit_params)
         if params[:motion].present? && params[:motion][:tag_id].present? && @motion.tags.reject { |a,b| a.motion==b }.first.present?
           format.html { redirect_to tag_motions_url(Tag.find_by_id(@motion.tag_id).name)}
           format.json { head :no_content }

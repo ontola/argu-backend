@@ -63,7 +63,7 @@ class QuestionsController < ApplicationController
     @question = Question.includes(:taggings).find_by_id(params[:id])
     authorize @question
     respond_to do |format|
-      if @question.update_attributes(permit_params)
+      if @question.update(permit_params)
         format.html { redirect_to @question, notice: 'Motion was successfully updated.' }
         format.json { head :no_content }
       else
