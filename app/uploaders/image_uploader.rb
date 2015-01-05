@@ -12,7 +12,7 @@ class ImageUploader < CarrierWave::Uploader::Base
       config.storage    = :aws
       config.aws_bucket = 'argu-logos'
       config.aws_acl    = :public_read
-      config.asset_host = 'https://s3.amazonaws.com'
+      config.asset_host = 'https://argu-logos.s3.amazonaws.com'
       config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
 
       config.aws_credentials = {
