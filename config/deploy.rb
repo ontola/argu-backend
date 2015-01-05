@@ -39,7 +39,23 @@ set :assets_roles, [:web, :app]
 
 namespace :deploy do
 
+  desc 'Update build number file'
+  task :update_build_number do
+    on roles(:all) do
+      execute :echo, "BUILD='#{ENV['SEMAPHORE_BUILD_NUMBER']}'", '>', "#{current_path}/config/initializers/build.rb"
+    end
+  end
+
+  desc 'Links the assets directory of staging in the public folder of production to make apache serve staging assets safely'
+  task :link_staging_assets do
+    on roles(:all) do
+      execute :ln, '-s /home/rails/argu_staging/current/public/ /home/rails/argu/current/public/staging'
+    end
+  end
+
   after :updated, :compile_assets
+  after :publishing, :update_build_number
+  after :publishing, :link_staging_assets
   after :publishing, :restart
 
   after :restart, :clear_cache do

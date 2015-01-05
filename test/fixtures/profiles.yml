@@ -18,6 +18,9 @@ profile_one:
 profile_two:
   name: 'User2'
   about: 'Im also a user'
+profile_three:
+  name: 'User3'
+  about: 'Im a user too'
 profile_utrecht:
   name: 'Gemeente Utrecht'
   about: ''

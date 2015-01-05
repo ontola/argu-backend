@@ -62,8 +62,10 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.includes(:taggings).find_by_id(params[:id])
     authorize @question
+
+    @question.reload if process_cover_photo @question, permit_params
     respond_to do |format|
-      if @question.update_attributes(permit_params)
+      if @question.update(permit_params)
         format.html { redirect_to @question, notice: 'Motion was successfully updated.' }
         format.json { head :no_content }
       else

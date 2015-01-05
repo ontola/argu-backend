@@ -7,16 +7,26 @@ class ImageUploader < CarrierWave::Uploader::Base
   # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
 
-  unless Rails.env.development? || Rails.env.test? || Rails.env.production?
-    storage :fog
+  unless Rails.env.development? || Rails.env.test?
     CarrierWave.configure do |config|
-      config.fog_credentials = {
-          :provider                         => 'Google',
-          :google_storage_access_key_id     => ENV['GOOGLE_STORAGE_ACCESS_KEY_ID'] || Rails.application.secrets.google_storage_access_key_id || '',
-          :google_storage_secret_access_key => ENV['GOOGLE_STORAGE_SECRET_ACCESS_KEY'] || Rails.application.secrets.google_storage_secret_access_key || ''
+      config.storage    = :aws
+      config.aws_bucket = 'argu-logos'
+      config.aws_acl    = :public_read
+      config.asset_host = 'https://argu-logos.s3.amazonaws.com'
+      config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
+
+      config.aws_credentials = {
+          access_key_id:     Rails.application.secrets.aws_id,
+          secret_access_key: Rails.application.secrets.aws_key,
+          region:            'eu-central-1',
+          config: AWS.config({
+                                 access_key_id:     Rails.application.secrets.aws_id,
+                                 secret_access_key: Rails.application.secrets.aws_key,
+                                 region:            'eu-central-1'
+                             })
       }
-      config.fog_directory = 'argu'
     end
+    storage :aws
   else
     storage :file
   end
@@ -44,16 +54,16 @@ class ImageUploader < CarrierWave::Uploader::Base
   # end
 
   # Create different versions of your uploaded files:
-  version :icon do
-    process :resize_to_fit => [16, 16]
+  version :box do
+    process :resize_to_fit => [568, 400]
   end
 
   version :cover do
     process :resize_to_fit => [1500, 1000]
   end
 
-  version :box do
-    process :resize_to_fit => [568, 400]
+  version :icon do
+    process :resize_to_fit => [16, 16]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

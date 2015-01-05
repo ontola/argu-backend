@@ -1,4 +1,4 @@
 pre#staff_sign
   = select 'rails', 'env', STAGES, {include_blank: false, selected: cookies[:env]}, onchange: "document.cookie='env='+$('#rails_env').val()+';domain=.argu.co;path=/'; location.reload();"
   =link_to t('users.logged_in_banner_text', name: current_user.username), portal_path
-  span= "v#{::VERSION}"
+  span= "v#{::VERSION}/#{::BUILD}"

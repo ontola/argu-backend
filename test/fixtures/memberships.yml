@@ -14,3 +14,6 @@ user2_utrecht:
 user2_amsterdam:
   profile: :profile_two
   forum: :amsterdam
+user3_amsterdam:
+  profile: :profile_three
+  forum: :amsterdam
