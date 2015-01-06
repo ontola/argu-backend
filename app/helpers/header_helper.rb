@@ -6,6 +6,6 @@ module HeaderHelper
   end
 
   def suggested_forums
-    @suggested_forums ||= Forum.where("id NOT IN (#{current_profile.memberships.map(&:forum_id).join(',')}) AND visibility = #{Forum.visibilities[:open]}") if current_user.present?
+    @suggested_forums ||= Forum.where("id NOT IN (#{current_profile.memberships.map(&:forum_id).join(',').presence || '0'}) AND visibility = #{Forum.visibilities[:open]}") if current_user.present?
   end
 end
