@@ -18,29 +18,37 @@ class ForumsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     get :settings, id: forums(:utrecht)
-    assert_redirected_to root_path
+    assert_redirected_to root_path, "Settings are publicly visible"
   end
 
   test "should not show statistics" do
     sign_in users(:user)
 
     get :statistics, id: forums(:utrecht)
-    assert_redirected_to root_path
+    assert_redirected_to root_path, "Statistics are publicly visible"
   end
 
-  test "should not show closed for non-members" do
+  test "should not leak closed children to non-members" do
     sign_in users(:user)
 
     get :show, id: forums(:amsterdam)
-    assert_redirected_to root_path
+    assert_response :success
 
+    assert_nil assigns(:items), "Closed forums are leaking content"
+  end
+
+  test "should not show hidden to non-members" do
+    sign_in users(:user)
+
+    get :show, id: forums(:hidden)
+    assert_redirected_to root_path, "Hidden forums are visible"
   end
 
   test "should not put update on others question" do
     sign_in users(:user)
 
     put :update, id: forums(:utrecht), question: {title: 'New title', content: 'new contents'}
-    assert_redirected_to root_path
+    assert_redirected_to root_path, "Others can update questions"
   end
 
 

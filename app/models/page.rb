@@ -29,6 +29,10 @@ class Page < ActiveRecord::Base
     end
   end
 
+  def email
+
+  end
+
   def username
     web_url
   end

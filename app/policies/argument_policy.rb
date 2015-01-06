@@ -28,7 +28,7 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def show?
-    is_member? || super
+    Pundit.policy(user, record.forum).show? || super
   end
 
   private
