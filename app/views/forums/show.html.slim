@@ -3,7 +3,22 @@
   .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
   .cover-header
     .cover-container
-      h1= @forum.name
+      .dropdown
+        h1.dropdown-trigger[href="#"]
+          span.icon-left= @forum.name
+          -if Rails.configuration.epics.forum_selector
+            span.fa.fa-angle-down
+        -if Rails.configuration.epics.forum_selector
+          ul.dropdown-content
+            - current_profile.present? && current_profile.memberships.each do |membership|
+              li
+                =link_to membership.forum.display_name, url_for(membership.forum)
+            - if suggested_forums.present?
+              span.dropdown-header = t('forums.suggestions')
+              ul.tags-vertical
+                - suggested_forums.each do |forum|
+                  li
+                    =link_to forum.display_name, url_for(forum)
       ul.btns-list.btns-vertical
         -if !policy(@forum).is_member?
           li=link_to forum_memberships_path(@forum.web_url), method: :create, class: "btn-focus" do
@@ -53,7 +68,7 @@
           a[data-sort-value="date"]
             span.fa.fa-clock-o
             span.icon-left= t("sort.newest")
-        /li
+        li
           a[data-sort-value="name"]
             span.fa.fa-sort-alpha-asc
             span.icon-left= t("sort.name")

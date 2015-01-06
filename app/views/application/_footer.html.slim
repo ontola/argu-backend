@@ -1,0 +1,42 @@
+footer
+  /TODO:ul.footer-list
+    li
+      h3.footer-heading forums
+    li
+      a Bekijk alle forums
+    li
+      a Een eigen forum?
+    li
+      a Jouw gemeente op Argu?
+
+  ul.footer-list
+    li
+      h3.footer-heading= t("about_title")
+    li=link_to "Over Argu", about_path
+    li=link_to "Kernwaarden", values_path
+    /TODO: li
+      a Ons team
+    li
+      a[href="mailo:info@argu.co"] Contact
+  ul.footer-list
+    li
+      h3.footer-heading voorwaarden
+    li=link_to "Gebruiksvoorwaarden", policy_path
+    li=link_to "Privacy", privacy_path
+    li=link_to "Cookiebeleid", cookies_path
+  ul.footer-list
+    li
+      h3.footer-heading volg ons
+    li
+      div[class="fb-like" data-href="https://www.facebook.com/argu.co" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"]
+    li
+      a[href="https://twitter.com/argu_nl" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false"] Follow @argu_nl
+      javascript:
+        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
+    li
+      script[src="//platform.linkedin.com/in.js" type="text/javascript"]
+        lang: en_US
+      script[type="IN/FollowCompany" data-id="5170898" data-counter="right"]
+
+  .footer-bottom
+    span Copyright © Argu v.o.f.
