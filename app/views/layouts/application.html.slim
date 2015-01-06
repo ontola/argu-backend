@@ -39,5 +39,5 @@ body
     .push
   = render 'footer'
   =javascript_include_tag "application"
-  - if Rails.env.production?
-    = render partial: :analytics
+  - if Rails.env.production? || Rails.env.test?
+    = render partial: 'analytics'
