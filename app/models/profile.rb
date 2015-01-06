@@ -8,7 +8,7 @@ class Profile < ActiveRecord::Base
   has_many :page_memberships, dependent: :destroy
   has_many :forums, through: :memberships
 
-  mount_uploader :profile_photo, ImageUploader
+  mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, ImageUploader
 
   pica_pica :profile_photo
@@ -19,6 +19,10 @@ class Profile < ActiveRecord::Base
   ######Attributes#######
   def display_name
     self.name.presence || self.owner.display_name
+  end
+
+  def email
+    owner.email
   end
 
   def frozen?

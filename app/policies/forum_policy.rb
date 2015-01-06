@@ -18,12 +18,7 @@ class ForumPolicy < RestrictivePolicy
 
   ######CRUD######
   def show?
-    #(user && user.profile.memberships.where(forum: record).present?) || super
-    true || super # Until forum scope settings are implemented
-  end
-
-  def show_children?
-    is_member? || staff?
+    record.open? || is_member? || is_manager? || super
   end
 
   def statistics?
@@ -44,6 +39,10 @@ class ForumPolicy < RestrictivePolicy
 
   def update?
     is_manager? || super
+  end
+  
+  def list?
+    record.closed? || show?
   end
 
   def add_question?

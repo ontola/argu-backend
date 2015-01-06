@@ -46,11 +46,17 @@ class RestrictivePolicy
     create?
   end
 
+  # Used when an item displays nested content, therefore this should use the heaviest restrictions
   def show?
     staff?
   end
 
   def statistics?
+    staff?
+  end
+
+  # Used when items won't include nested content, this is a less restrictive version of show?
+  def list?
     staff?
   end
 

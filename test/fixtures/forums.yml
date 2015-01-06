@@ -17,3 +17,10 @@ amsterdam:
   web_url: 'amsterdam'
   page: argu
   visibility: <%= Forum.visibilities[:closed] %>
+#
+hidden:
+  name: 'Secret shit'
+  slug: 'secret'
+  web_url: 'secret'
+  page: argu
+  visibility: <%= Forum.visibilities[:hidden] %>
