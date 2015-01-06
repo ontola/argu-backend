@@ -2,12 +2,13 @@ class ForumsController < ApplicationController
   def show
     @forum = Forum.friendly.find params[:id]
     authorize @forum, :show?
+    current_context @forum
+
     questions = policy_scope(@forum.questions.trashed(show_trashed?))
     motions = policy_scope(@forum.motions.trashed(show_trashed?))
 
     @items = (questions + motions).sort_by(&:updated_at).reverse
 
-    current_context @forum
   end
 
   def settings
