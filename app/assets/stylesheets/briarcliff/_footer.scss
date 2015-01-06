@@ -9,39 +9,68 @@ html, body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -4em; // Depends on size of footer
+  margin: 0 auto -15em; // Depends on size of footer + margin of footer
 }
 
 .push, footer {
-  height: 4em;
+  height: 12em; //Change the wrapper bottom margin as wel;
 }
 
 footer {
   display: inline-block;
+  position: relative;
   width: 100%;
   text-align: center;
-  background-color: white;
+  background-color: $g4;
   padding: 1em 0;
   overflow: hidden;
   margin-bottom: -5em;
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    li {
-      display: inline;
-      padding: 0em 1em;
-      a {
-        text-decoration: none;
-        font-size: 90%;
-      }
+  min-height: 12em;
+  margin-top: 3em;
+  @include bp-large {
+    height: auto;
+  }
+  h3 {
+    color: white;
+  }
+  a {
+    color: $g2;
+    &:hover{
+      color: $g1;
+      text-decoration: underline;
     }
+  }
+  span {
+    color: $g2;
   }
 }
 
-.footer-top {
+.footer-list {
+  text-align: left;
+  display: inline-block;
+  vertical-align: top;
+  min-width: 11em;
+  margin: 0 3em;
+  margin-bottom: 1em;
+  li {
+    margin-bottom: .8em;
+  }
+}
+
+.footer-heading {
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .8em;
+  margin-top: .7em;
+  font-size: 1.2em;
+}
+
+.footer-bottom {
   display: block;
-  position: relative;
+  position: absolute;
   width: 100%;
-  top: -.4em;
+  bottom: 1em;
+}
+
+.footer-logo {
 }

@@ -37,12 +37,5 @@ body
     .container
       = yield
     .push
-  footer
-    ul
-      li.footer-top
-        span Copyright © Argu v.o.f.
-      li=link_to "Kernwaarden", values_path
-      li=link_to "Gebruiksvoorwaarden", policy_path
-      li=link_to "Privacy", privacy_path
-      li=link_to "Cookiebeleid", cookies_path
+  = render 'footer'
   =javascript_include_tag "application"
