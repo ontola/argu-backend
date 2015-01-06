@@ -1,5 +1,5 @@
 footer
-  ul.footer-list
+  /TODO:ul.footer-list
     li
       h3.footer-heading forums
     li
@@ -11,9 +11,11 @@ footer
 
   ul.footer-list
     li
-      h3.footer-heading over Argu
-    li=link_to t("about_title"), about_path
+      h3.footer-heading= t("about_title")
+    li=link_to "Over Argu", about_path
     li=link_to "Kernwaarden", values_path
+    /TODO: li
+      a Ons team
     li
       a[href="mailo:info@argu.co"] Contact
   ul.footer-list

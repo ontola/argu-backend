@@ -114,6 +114,8 @@ input[type="text"].form-input-title {
     // Hide radio button when JS provides visual feedback on the toggled button.
     width: 0;
     height: 0;
+    -webkit-appearance: none;
+    visibility: hidden;
   }
   label.checked {
     text-decoration: underline;
