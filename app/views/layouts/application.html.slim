@@ -46,3 +46,5 @@ body
       li=link_to "Privacy", privacy_path
       li=link_to "Cookiebeleid", cookies_path
   =javascript_include_tag "application"
+  - if Rails.env.production?
+    = render partial: :analytics
