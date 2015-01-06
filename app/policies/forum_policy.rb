@@ -22,7 +22,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def show_children?
-    is_member? || staff?
+    record.open? || is_member? || staff?
   end
 
   def statistics?
