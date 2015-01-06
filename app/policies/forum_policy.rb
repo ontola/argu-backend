@@ -21,10 +21,6 @@ class ForumPolicy < RestrictivePolicy
     record.open? || is_member? || is_manager? || super
   end
 
-  def show_children?
-    record.open? || is_member? || staff?
-  end
-
   def statistics?
     is_manager? || super
   end
@@ -43,6 +39,10 @@ class ForumPolicy < RestrictivePolicy
 
   def update?
     is_manager? || super
+  end
+  
+  def list?
+    record.closed? || show?
   end
 
   def add_question?
