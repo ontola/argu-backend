@@ -26,3 +26,9 @@ user2:
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   username: 'user2'
   profile: :profile_two
+#
+user3:
+  email: 'user3@argu.co'
+  encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
+  username: 'user3'
+  profile: :profile_three

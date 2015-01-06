@@ -28,6 +28,14 @@ class ForumsControllerTest < ActionController::TestCase
     assert_redirected_to root_path
   end
 
+  test "should not show closed for non-members" do
+    sign_in users(:user)
+
+    get :show, id: forums(:amsterdam)
+    assert_redirected_to root_path
+
+  end
+
   test "should not put update on others question" do
     sign_in users(:user)
 
