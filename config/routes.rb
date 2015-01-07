@@ -6,7 +6,7 @@ Argu::Application.routes.draw do
 
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
-  devise_for :users, :controllers => { :registrations => 'registrations' }
+  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions' }
 
   resource :admin do
     get 'list' => 'administration#list'
