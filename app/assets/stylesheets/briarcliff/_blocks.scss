@@ -1,0 +1,127 @@
+@import "variables";
+@import "mixins";
+
+$primary: $blu;
+$secondary: $g4;
+
+.blocks{
+  margin: auto;
+  max-width: 1200px;
+  position: relative;
+}
+
+.block{
+  width: 50%;
+  background-color: #ffffff;
+  padding: 2em;
+  text-align: center;
+  float: left;
+  overflow: hidden;
+  height: 24em;
+  * {
+    color: $primary;
+  }
+  p {
+    line-height: 1.8em;
+  }
+  h2 {
+    margin-bottom: 0.8em;
+    text-transform: uppercase;
+    font-size: 1.3em;
+    letter-spacing: .1em;
+  }
+  @include bp-medium{
+    width: 100%;
+    height: auto;
+    padding: 4em 2em;
+  }
+}
+
+.block--img {
+  padding: 0;
+  @include bp-medium{
+    max-height: 20em;
+  }
+}
+
+.block--right {
+  float: right;
+}
+
+.block--fill {
+  background-color: $primary;
+  * {
+    color: white;
+  }
+}
+
+.block--full {
+  width: 100%;
+  height: auto;
+  padding-top: 4em;
+  padding-bottom: 4em;
+}
+
+.block-text{
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+  @include bp-medium{
+    transform: none;
+  }
+}
+
+.block-features {
+  li {
+    display: inline-block;
+    width: 33.3%;
+    vertical-align: top;
+    padding: 1.6em 1.2em;
+    @include bp-medium {
+      width: 50%;
+    }
+    @include bp-small {
+      width: 100%;
+    }
+  }
+  h2 {
+    font-size: 1.1em;
+    margin: 0.6em 0;
+  }
+  .fa {
+    display: block;
+    font-size: 4em;
+    width: 100%;
+  }
+}
+
+.block-references {
+  li {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    padding: 1.6em 1.2em;
+    @include bp-medium {
+      width: 100%;
+    }
+  }
+  h2 {
+    font-size: 1.1em;
+  }
+  i {
+    font-size: 120%;
+    margin: 1em 0 0.5em 0;
+    display: block;
+  }
+  img{
+    display: block;
+    margin: auto;
+    width: 5em;
+    height: 5em;
+    border-radius: 9999px;
+  }
+}
+
+.block-subtle {
+  opacity: .8;
+}

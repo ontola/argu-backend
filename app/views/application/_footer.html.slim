@@ -1,19 +1,17 @@
 footer
-  /TODO:ul.footer-list
+  ul.footer-list
     li
       h3.footer-heading forums
+    /li=link_to "Een eigen forum?", "/product"
     li
-      a Bekijk alle forums
+      a[href="/forums/nederland"] Nederland
     li
-      a Een eigen forum?
-    li
-      a Jouw gemeente op Argu?
-
+      a[href="/forums/feedback"] Argu Feedback
   ul.footer-list
     li
       h3.footer-heading= t("about_title")
     li=link_to "Over Argu", about_path
-    li=link_to "Kernwaarden", values_path
+    /li=link_to "Kernwaarden", values_path
     /TODO: li
       a Ons team
     li
@@ -23,7 +21,7 @@ footer
       h3.footer-heading voorwaarden
     li=link_to "Gebruiksvoorwaarden", policy_path
     li=link_to "Privacy", privacy_path
-    li=link_to "Cookiebeleid", cookies_path
+    /li=link_to "Cookiebeleid", cookies_path
   ul.footer-list
     li
       h3.footer-heading volg ons
@@ -39,4 +37,4 @@ footer
       script[type="IN/FollowCompany" data-id="5170898" data-counter="right"]
 
   .footer-bottom
-    span Copyright © Argu v.o.f.
+    span Copyright © 2014-2015 Argu v.o.f.

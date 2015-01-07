@@ -7,6 +7,10 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
     true
   end
 
+  def product?
+    true
+  end
+
   def sign_in_modal?
     true
   end
