@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141230175551) do
+ActiveRecord::Schema.define(version: 20150107164930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -177,6 +177,8 @@ ActiveRecord::Schema.define(version: 20141230175551) do
     t.string   "slug"
     t.string   "web_url",    default: "", null: false
     t.integer  "profile_id"
+    t.integer  "visibility", default: 1
+    t.integer  "owner_id"
   end
 
   add_index "pages", ["profile_id"], name: "index_pages_on_profile_id", unique: true, using: :btree
@@ -314,7 +316,7 @@ ActiveRecord::Schema.define(version: 20141230175551) do
     t.integer  "for",                       default: 3, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "forum_id",                              null: false
+    t.integer  "forum_id"
   end
 
   add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "index_votes_on_voter_and_voteable_and_trashed", using: :btree

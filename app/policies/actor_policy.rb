@@ -19,7 +19,7 @@ class ActorPolicy < ApplicationPolicy
     if owner.class == User
       owner == user
     else
-      owner.managers.where(profile: user.profile).present?
+      owner.owner == user.profile || owner.managers.where(profile: user.profile).present?
     end
   end
 

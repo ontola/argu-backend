@@ -1,18 +1,11 @@
 class QuestionPolicy < RestrictivePolicy
-  class Scope < Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
-
+  class Scope < RestrictivePolicy::Scope
     def resolve
       scope
     end
 
     def is_member?
-      user.profile.member_of? record.forum
+      @user.profile.member_of? @record.forum
     end
 
   end
@@ -44,12 +37,12 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def show?
-    Pundit.policy(user, record.forum).show? || super
+    Pundit.policy(@user, @record.forum).show? || super
   end
 
   private
 
   def is_member?
-    user.profile.member_of? (record.forum || record.forum_id)
+    @user.profile.member_of? (@record.forum || @record.forum_id)
   end
 end

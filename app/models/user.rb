@@ -37,7 +37,8 @@ class User < ActiveRecord::Base
   end
 
   def managed_pages
-    PageMembership.where(profile: self.profile.id, role: PageMembership.roles[:manager])
+  t = Page.arel_table
+  Page.where(t[:id].eq(self.profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:id)).or(t[:owner_id].eq(self.profile.id)))
   end
 
   def web_url

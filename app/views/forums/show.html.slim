@@ -31,22 +31,7 @@
           li[data-intro=t('intro.motion.create', name: @forum.name)]=link_to url_for([:new, @forum, :motion]) do
             span.fa.fa-plus.sta-t
             span.icon-left.sta-t= t("motions.type")
-          - if policy(@forum).is_manager? 
-            li.dropdown
-              a.dropdown-trigger
-                span.fa.fa-gear.sta-t
-                span.icon-left.sta-t= t("forum")
-              ul.dropdown-content.dropdown-right
-                li=link_to url_for([:settings, @forum]) do
-                  span.fa.fa-gear
-                  span.icon-left= t("forums.settings.title")
-                - if policy(@forum).statistics?
-                  li=link_to url_for([:statistics, @forum]) do
-                    span.fa.fa-pie-chart
-                    span.icon-left= t("forums.statistics.title")
-                li = link_to url_for([:settings, @forum, tab: :managers])
-                  span.fa.fa-group
-                  span.icon-left = t("forums.settings.managers")
+          =render partial: 'application/menus/settings', locals: { resource: @forum }
 - if policy(@forum).show?
   .filter-and-sort
     /.tags

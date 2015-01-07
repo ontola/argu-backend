@@ -8,7 +8,7 @@
         ul
           li= link_to 'Sidekiq', '/portal/sidekiq'
           li= link_to '_documents_', documents_path
-          li= link_to t('portal.new_page'), new_portal_page_path
+          li= link_to t('portal.new_page'), new_page_path
       h2 _pages_
       -if @pages.blank?
         p=t('portal.none')
@@ -32,7 +32,7 @@
                 td= f.forums.present? ? f.forums.length : link_to('_create_', new_portal_forum_path(page: f))
                 td= link_to '_show_', page_path(f)
                 td= link_to '_settings_', settings_page_path(f)
-                td= link_to '_destroy_', portal_page_path(f), data: {remote: true, method: :delete, confirm: "_Weet je zeker dat je #{f.display_name}"}
+                td= link_to '_destroy_', page_path(f), data: {remote: true, method: :delete, confirm: "_Weet je zeker dat je #{f.display_name}"}
         //=paginate @pages, param_name: :published_page
       h2 _fora_
       -if @forums.blank?

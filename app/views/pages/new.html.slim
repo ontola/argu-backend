@@ -4,7 +4,7 @@
 
   .box
     section
-      = semantic_form_for [:portal, @page] do |f|
+      = semantic_form_for @page do |f|
         = f.inputs do
           = f.semantic_fields_for :profile do |p|
             = p.input :name

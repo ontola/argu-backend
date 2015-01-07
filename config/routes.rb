@@ -57,14 +57,14 @@ Argu::Application.routes.draw do
     resources :tags, only: [:show]
   end
 
-  resources :pages, only: [:show, :update] do
+  resources :pages, only: [:new, :create, :show, :update, :delete, :destroy] do
+    get :delete, on: :member
     get :settings, on: :member
   end
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
     namespace :portal do
-      resources :pages, only: [:show, :new, :create, :destroy]
       resources :forums, only: [:new, :create]
       mount Sidekiq::Web => '/sidekiq'
     end

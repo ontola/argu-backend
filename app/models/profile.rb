@@ -7,6 +7,7 @@ class Profile < ActiveRecord::Base
   has_many :memberships, dependent: :destroy
   has_many :page_memberships, dependent: :destroy
   has_many :forums, through: :memberships
+  has_many :pages, inverse_of: :owner
 
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, ImageUploader
