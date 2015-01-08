@@ -51,6 +51,10 @@ footer {
   vertical-align: top;
   margin: 0 3em;
   margin-bottom: 1em;
+  @include bp-medium{
+    width: 11em;
+    margin: 0 1em;
+  }
   li {
     margin-bottom: .8em;
   }

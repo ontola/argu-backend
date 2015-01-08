@@ -20,6 +20,7 @@
                   li
                     =link_to forum.display_name, url_for(forum)
       ul.btns-list.btns-vertical
+        /TODO: Make this check the current profile, not the user
         - if !policy(@forum).is_member?
           li=link_to forum_memberships_path(@forum.web_url), method: :create, class: "btn-focus" do
             span.fa.fa-join
