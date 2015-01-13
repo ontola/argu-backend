@@ -1,6 +1,8 @@
 .col-1.col-1-big
   header
-    h1= t('portal.portal')
+    h1
+      = t('portal.portal')
+      = image_tag asset_path('portal_logo.svg'), style: 'height: 1em; position: absolute;'
   .box
     section
       p= content_tag(:strong, current_user.username)
@@ -21,7 +23,7 @@
               td= t('portal.updated_at')
               td= t('portal.forums')
               td= t('portal.forum_create')
-              td= t('portal.edit')
+              td= t('portal.settings')
           tbody
             - @pages.each do |f|
               tr[id=f.identifier]
@@ -30,7 +32,7 @@
                 td= l f.updated_at, format: :short
                 td= f.forums.length
                 td= link_to t('portal.forum_create'), new_portal_forum_path(page: f)
-                td= link_to t('portal.edit'), settings_page_path(f)
+                td= link_to t('portal.settings'), settings_page_path(f)
         //=paginate @pages, param_name: :published_page
       h2= t('portal.forums')
       -if @forums.blank?
@@ -45,7 +47,7 @@
               td= t('portal.members')
               td= t('portal.questions')
               td= t('portal.motions')
-              td= t('portal.edit')
+              td= t('portal.settings')
           tbody
             - @forums.each do |f|
               tr[id=f.identifier]
@@ -55,5 +57,5 @@
                 td= f.memberships_count || '-'
                 td= f.questions_count || '-'
                 td= f.motions_count || '-'
-                td= link_to t('portal.edit'), settings_forum_path(f)
+                td= link_to t('portal.settings'), settings_forum_path(f)
         //=paginate @pages, param_name: :published_page
