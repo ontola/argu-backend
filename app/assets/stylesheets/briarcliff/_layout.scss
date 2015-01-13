@@ -104,11 +104,6 @@ body {
   }
 }
 
-.grid {
-  @include container-width;
-  margin: auto;
-}
-
 .margin-bottom {
   margin-bottom: 1em;
 }
