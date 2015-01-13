@@ -19,6 +19,10 @@ class StaticPagesController < ApplicationController
     authorize :static_pages
   end
 
+  def product
+    authorize :static_pages
+  end
+
   def developers
     authorize :static_pages
   end

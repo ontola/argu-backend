@@ -1,0 +1,15 @@
+.col-1
+  -if @profile == current_profile
+    =render partial: 'profiles/profile_bar'
+  /=image_tag @profile.cover_photo.url
+  .profile-big[data-intro= t("intro.profile.show", name: @profile.display_name)]
+    .profile-picture.profile-picture-show
+      = pica_pica @profile.profile_photo, container_class: 'profile'
+    .box
+      section
+        h1 = @profile.display_name
+        p.quote = @profile.about
+    =render partial: 'application/menus/settings', locals: { resource: @page }
+
+.box-list[data-intro= t("intro.profile.votes")]
+  =render_columns(@collection, collection_model: Vote)

@@ -4,6 +4,7 @@ nl:
   profiles:
     type: "profiel"
     display: "profiel bekijken"
+    switch: "Argu gebruiken als:"
     show:
       title: "profiel"
       btn:

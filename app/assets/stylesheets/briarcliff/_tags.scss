@@ -26,6 +26,8 @@ a.tag:hover {
   background-color: $g4;
   color: white;
   cursor: pointer;
+  text-decoration: none;
+
 }
 
 a.tag:active, a.tag.is-checked {

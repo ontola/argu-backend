@@ -5,3 +5,21 @@ nl:
     new_forum: "Forum aanmaken"
     none: "Nog geen"
     new_page: "Nieuwe Page"
+    name: "Naam"
+    created_at: "Aangemaakt"
+    updated_at: "Bijgewerkt"
+    forums: "Forums"
+    forum_create: "Nieuw forum"
+    show: "Weergeven"
+    edit: "Bewerken"
+    destroy: "Vernietigen"
+    settings: "Instellingen"
+    pages: "Pagina's"
+    members: "Leden"
+    questions: "Vraagstukken"
+    motions: "Voorstellen"
+  users:
+    registrations:
+      placeholders:
+        password: "Minimaal 8 karakters"
+        username: "4+ letters, cijfers en _"

@@ -18,7 +18,7 @@ class ForumPolicy < RestrictivePolicy
 
   ######CRUD######
   def show?
-    record.open? || is_member? || is_manager? || super
+    @record.open? || is_member? || is_manager? || super
   end
 
   def statistics?
@@ -42,7 +42,7 @@ class ForumPolicy < RestrictivePolicy
   end
   
   def list?
-    record.closed? || show?
+    @record.closed? || show?
   end
 
   def add_question?
@@ -57,16 +57,17 @@ class ForumPolicy < RestrictivePolicy
   # Is the current user a member of the group?
   # @note This tells nothing about whether the user can make edits on the object
   def is_member?
-    user && user.profile.memberships.where(forum: record).present?
+    @user && @user.profile.memberships.where(forum: @record).present?
   end
 
   # Is the user a manager of the page or of the forum?
   def is_manager?
-    user && (user.profile.page_memberships.where(page: record.page, role: PageMembership.roles[:manager]).present? || user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?)
+    _mems = @user.profile
+    @user && (@user.profile.page_memberships.where(page: @record.page, role: PageMembership.roles[:manager]).present? || @user.profile.memberships.where(forum: @record, role: Membership.roles[:manager]).present?)
   end
 
   def is_owner?
-    user && record.memberships.where(role: Membership.roles[:owner], profile: user.profile).present? || staff?
+    @user && @record.memberships.where(role: Membership.roles[:owner], profile: @user.profile).present? || staff?
   end
 
 end

@@ -185,9 +185,19 @@ input[type="text"].form-input-title {
   }
 }
 
+.form-small button {
+  position: relative;
+}
+
 .formtastic .actions {
   margin-top: 2em;
 }
+
+
+.form-small .actions {
+  margin-top: 0;
+}
+
 
 input[type="file"], select {
   padding: 0.3em 0em;

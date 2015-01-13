@@ -39,7 +39,7 @@ class RestrictivePolicy
   end
 
   def logged_in?
-    user.present?
+    @user.present?
   end
 
   def new?
@@ -78,13 +78,11 @@ class RestrictivePolicy
   end
 
   def is_creator?
-    creator = record.creator
-    profile = user.profile
-    record.creator == user.profile
+    @record.creator == @user.profile
   end
 
   def scope
-    Pundit.policy_scope!(user, record.class)
+    Pundit.policy_scope!(@user, @record.class)
   end
 
   class Scope

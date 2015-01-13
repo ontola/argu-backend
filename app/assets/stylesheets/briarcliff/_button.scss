@@ -22,6 +22,7 @@
   cursor: pointer;
   &:hover {
     background-color: $blud;
+    text-decoration: none;
   }
   &:active {
     background-color: $g5;
@@ -110,6 +111,7 @@
   &:hover {
     color: $g3;
     background-color: $darken1;
+    text-decoration: none;
   }
   &:active {
     color: $g3;
@@ -129,6 +131,7 @@
   &:hover {
     background-color: $g3;
     color: white;
+    text-decoration: none;
   }
 }
 
@@ -207,6 +210,10 @@
   > a {
     padding: .7em;
     display: inline-block;
+    &:hover {
+      text-decoration: none;
+
+    }
     @include bp-medium{
       padding: .5em;
     }
@@ -214,6 +221,8 @@
   &:hover {
     background-color: $darken1;
     color: $g4;
+    text-decoration: none;
+
   }
   &:active {
     background-color: $darken2;
@@ -267,6 +276,7 @@
     @include transition(.2s);
     &:hover {
       opacity: 1;
+      text-decoration: none;
     }
     &:active{
       top: 2px;
@@ -379,29 +389,4 @@ h1 + .btn {
 .fa {
   width: 1em;
   text-align: center;
-}
-
-.tabs {
-  text-align: center;
-  margin-bottom: 0em;
-  .tabs-current {
-    background-color: white !important;
-    pointer-events: none;
-  }
-  li:hover{
-    background-color: white !important;
-  }
-  li:active {
-    background-color: $g0 !important;
-  }
-}
-
-.cover .tabs {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  li a {
-    background-color: $lighten5;
-  }
 }

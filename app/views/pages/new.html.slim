@@ -1,0 +1,20 @@
+.col-3
+  header
+    h1=t("pages.create")
+  .col-3-2
+    .box
+      section
+        = semantic_form_for @page do |f|
+          = f.inputs do
+            = f.semantic_fields_for :profile do |p|
+              = p.input :name
+              = p.input :about
+              = p.input :profile_photo
+            = f.input :web_url
+          p= t("pages.legal")
+          = f.actions do
+            = f.action :submit, :as => :button
+            = f.action :cancel, :as => :link
+  .col-3-1
+    .box
+      section= raw t("pages.helper.side")

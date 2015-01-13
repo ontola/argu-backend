@@ -62,10 +62,10 @@ nav#navbar.navbar role="navigation"
             // Regex to only show first name of user
             span.icon-left= current_profile.display_name.split(/\s+/, 2)[0...1].join(' ')
           ul.dropdown-content.dropdown-right
-            li= contextual_link_to profile_url(current_profile.username) do
+            li= contextual_link_to profile_url(current_profile.display_name) do
               span.fa.fa-user
               span.icon-left= t("profiles.display")
-            li= link_to edit_profile_path(current_profile.username) do
+            li= link_to edit_profile_path(current_profile.display_name) do
               span.fa.fa-pencil
               span.icon-left= t("profiles.edit.title")
             li= link_to settings_url do
@@ -74,13 +74,18 @@ nav#navbar.navbar role="navigation"
             li= link_to new_user_invitation_path
               span.fa.fa-bullhorn
               span.icon-left= t('devise.invitations.link')
+            li= link_to new_page_url
+              span.fa.fa-plus
+              span.icon-left= t('pages.create')
             li= link_to(destroy_user_session_url, method: :delete) do
               span.fa.fa-sign-out
               span.icon-left= t("sign_out")
+
             - if current_user.managed_pages.present?
+              span.dropdown-header = t('profiles.switch')
               li= link_to current_user.display_name, actors_path(na: current_user.profile.id), method: :put
               - current_user.managed_pages.each do |p|
-                li= link_to p.page.display_name, actors_path(na: p.page.profile.id), method: :put
+                li= link_to p.display_name, actors_path(na: p.profile.id), method: :put
       -else
         li= link_to new_user_session_url, id: 'account', class: 'navbar-item' do
           span.fa.fa-sign-in

@@ -1,5 +1,6 @@
 .col-1
-  =render partial: 'profiles/profile_bar'
+  header
+    h1= t("devise.invitations.new.header")
   .box
     section
       =semantic_form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f|

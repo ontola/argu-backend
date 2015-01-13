@@ -1,0 +1,33 @@
+@import "variables";
+@import "mixins";
+
+.tabs {
+  text-align: center;
+  position: relative;
+  top: .5em;
+  li {
+    margin-bottom: .3em;
+    margin: .3em;
+  }
+  .tabs-current {
+    pointer-events: none;
+  }
+  li:hover, .tabs-current{
+    background-color: white !important;
+    @include border-radius;
+    @include box-shadow;
+  }
+  li:active {
+    background-color: $g0 !important;
+  }
+}
+
+.cover .tabs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  li a {
+    background-color: $lighten5;
+  }
+}

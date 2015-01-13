@@ -1,0 +1,41 @@
+@import "variables";
+@import "mixins";
+
+.grid {
+  @include container-width;
+  margin: auto;
+}
+
+.box-grid.box-big{
+  width: 100%;
+  width: calc(100% - 2em);
+  .box-image {
+    height: 14em;
+  }
+  h1 {
+    font-size: 2.2em;
+    @include bp-medium {
+      font-size: 1.5em;
+    }
+  }
+}
+
+.box-grid {
+  display: inline-block;
+  float: left;
+  margin: 1em 1em;
+  width: 45%;
+  width: calc(50% - 2em);
+  section.section-info{
+    display: none;
+  }
+  @include bp-medium{
+    width: 100%;
+    width: calc(100% - 2em);
+  }
+}
+
+.box-grid-sizer {
+  width: 50%;
+  display: inline-block;
+}
