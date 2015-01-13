@@ -9,13 +9,13 @@
         .form-small
 
           = f.label :username, t("users_username")
-          = f.text_field :username, autofocus: :autofocus
+          = f.text_field :username, autofocus: :autofocus, placeholder: t('users.registrations.placeholders.username')
 
           = f.label :email, t("users_email")
           = f.text_field :email
 
           = f.label :password, t("users_password")
-          = f.password_field :password
+          = f.password_field :password, placeholder: t('users.registrations.placeholders.password')
 
           = f.label :password_confirmation, t("users_password_confirmation")
           = f.password_field :password_confirmation
