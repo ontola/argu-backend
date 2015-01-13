@@ -21,9 +21,7 @@
               td= t('portal.updated_at')
               td= t('portal.forums')
               td= t('portal.forum_create')
-              td= t('portal.show')
               td= t('portal.edit')
-              td= t('portal.destroy')
           tbody
             - @pages.each do |f|
               tr[id=f.identifier]
@@ -32,9 +30,7 @@
                 td= l f.updated_at, format: :short
                 td= f.forums.length
                 td= link_to t('portal.forum_create'), new_portal_forum_path(page: f)
-                td= link_to t('portal.show'), page_path(f)
                 td= link_to t('portal.edit'), settings_page_path(f)
-                td= link_to t('portal.destroy'), page_path(f), data: {remote: true, method: :delete, confirm: "_Weet je zeker dat je #{f.display_name}"}
         //=paginate @pages, param_name: :published_page
       h2= t('portal.forums')
       -if @forums.blank?
@@ -49,7 +45,6 @@
               td= t('portal.members')
               td= t('portal.questions')
               td= t('portal.motions')
-              td= t('portal.show')
               td= t('portal.edit')
           tbody
             - @forums.each do |f|
@@ -60,6 +55,5 @@
                 td= f.memberships_count || '-'
                 td= f.questions_count || '-'
                 td= f.motions_count || '-'
-                td= link_to t('portal.show'), page_path(f)
                 td= link_to t('portal.edit'), settings_forum_path(f)
         //=paginate @pages, param_name: :published_page
