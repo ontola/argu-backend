@@ -65,12 +65,17 @@ nav#navbar.navbar role="navigation"
             span.icon-left= current_profile.display_name.split(/\s+/, 2)[0...1].join(' ')
             span.fa.fa-angle-down
           ul.dropdown-content.dropdown-right
-            li= contextual_link_to profile_url(current_profile.display_name) do
-              span.fa.fa-user
-              span.icon-left= t("profiles.display")
-            li= link_to edit_profile_path(current_profile.display_name) do
-              span.fa.fa-pencil
-              span.icon-left= t("profiles.edit.title")
+            - if current_profile.owner.is_a? User
+              li= contextual_link_to profile_url(current_profile.web_url) do
+                span.fa.fa-user
+                span.icon-left= t("profiles.display")
+              li= link_to edit_profile_path(current_profile.web_url) do
+                span.fa.fa-pencil
+                span.icon-left= t("profiles.edit.title")
+            - elsif current_profile.owner.is_a? Page
+              li= contextual_link_to page_url(current_profile.web_url) do
+                span.fa.fa-user
+                span.icon-left= t('pages.display')
             li= link_to settings_url do
               span.fa.fa-gear
               span.icon-left= t(:users_show_title)

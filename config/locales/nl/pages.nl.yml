@@ -1,7 +1,9 @@
 nl:
   pages:
     resource_name: "pagina"
-    settings: "instellingen"
+    settings:
+      title: "instellingen"
+    display: "Pagina bekijken"
     create: "start een pagina"
     legal: "Door deze pagina aan te maken verklaar je toestemming te hebben om de organisatie waarvoor je een pagina maakt officieel op Argu te vertegenwoordigen."
     helper:

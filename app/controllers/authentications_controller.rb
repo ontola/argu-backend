@@ -11,7 +11,7 @@ class AuthenticationsController < ApplicationController
       flash[:notice] = t("users_oauth_notices_linked")
       redirect_to authentications_url
     else
-      omniauth['info']['nickname'] = User.isValidUsername?(omniauth['info']['nickname']) ? omniauth['info']['nickname'] : ('u'+'%010d' % rand(10 ** 10)).to_s
+      omniauth['info']['nickname'] = User.is_valid_username?(omniauth['info']['nickname']) ? omniauth['info']['nickname'] : ('u'+'%010d' % rand(10 ** 10)).to_s
       user = User.create(username: omniauth['info']['nickname'],
                          email: omniauth['info']['email'],
                          profile: Profile.create(name: omniauth['info']['name'],

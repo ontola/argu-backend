@@ -25,6 +25,10 @@ class ForumPolicy < RestrictivePolicy
     is_manager? || super
   end
 
+  def managers?
+    false
+  end
+
   def new?
     create?
   end
