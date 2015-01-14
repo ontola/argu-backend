@@ -18,10 +18,13 @@
 //= require microplugin
 //= require sifter
 //= require selectize
-//= require masonry
-//= require isotope.pkgd.min
+// require masonry
 //= require parallax
+// Briarcliff dependencies :: GO
+//= require isotope.pkgd.min
+//= require simpleexpand
 //= require intro
+// Briarcliff dependencies :: END
 //= require requirejs
 //= require autocomplete-rails
 //= require fixedsticky

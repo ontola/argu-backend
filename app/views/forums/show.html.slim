@@ -34,7 +34,13 @@
             span.icon-left.sta-t= t("motions.type")
           =render partial: 'application/menus/settings', locals: { resource: @forum }
 - if policy(@forum).show?
-  .filter-and-sort
+  .expander.center
+    ul.btns-list
+      li
+        a
+          span.fa.fa-sort
+          span=t("filter_&_sort")
+  .filter-and-sort.expander-content
     /.tags
       - @forum.featured_tags.each do |tag|
         = contextual_link_to(tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag)
