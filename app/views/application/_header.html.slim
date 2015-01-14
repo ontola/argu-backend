@@ -4,11 +4,12 @@ nav#navbar.navbar role="navigation"
       =link_to root_url
         =image_tag 'logo-white.svg'
     ul.navbar-links
+      li= link_to root_url, class: "navbar-item" do
+        span.fa.fa-home
       -if Rails.configuration.epics.forum_selector
         li.dropdown[data-intro= t("intro.header.forums", name: current_scope.model.name) data-position="right"]
           .dropdown-trigger.navbar-item[href="#"]
-            span.fa.fa-home
-            span.icon-left= home_text
+            span= home_text
             span.fa.fa-angle-down
           ul.dropdown-content
             - current_profile.present? && current_profile.memberships.each do |membership|
@@ -61,6 +62,7 @@ nav#navbar.navbar role="navigation"
             span.fa.fa-user
             // Regex to only show first name of user
             span.icon-left= current_profile.display_name.split(/\s+/, 2)[0...1].join(' ')
+            span.fa.fa-angle-down
           ul.dropdown-content.dropdown-right
             - if current_profile.owner.is_a? User
               li= contextual_link_to profile_url(current_profile.web_url) do

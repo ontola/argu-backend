@@ -1,8 +1,6 @@
 .col-1
   =render partial: 'manage_bar', locals: {resource: @page}  if policy(@page).update?
   small  <!-- for styling -->
-  header
-    h1 organisatie instellingen
   .box
     section
       =render partial: "pages/setting_tabs/#{params[:tab] || 'settings'}"

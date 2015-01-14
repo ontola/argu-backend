@@ -49,6 +49,7 @@
   opacity: .8;
   &:hover {
     opacity: 1;
+    text-decoration: none !important;
   }
   &:active {
     position: relative;

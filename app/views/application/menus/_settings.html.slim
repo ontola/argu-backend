@@ -11,6 +11,7 @@
         li=link_to url_for([:statistics, resource]) do
           span.fa.fa-pie-chart
           span.icon-left= t("forums.statistics.title")
-      li = link_to url_for([:settings, resource, tab: :managers])
-        span.fa.fa-group
-        span.icon-left = t("forums.settings.managers")
+      - if policy(resource).managers?
+        li = link_to url_for([:settings, resource, tab: :managers])
+          span.fa.fa-group
+          span.icon-left = t("forums.settings.managers")

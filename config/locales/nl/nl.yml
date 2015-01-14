@@ -49,6 +49,7 @@ nl:
   trash_confirmation: "Dit object zal niet zichtbaar zijn in de publieke discussie, deze actie is ongedaan te maken."
   destroy_confirmation: "Dit object en alle bijbehorende data zal permanent verwijderd worden, deze actie is niet ongedaan te maken."
   not_allowed: "actie niet toegestaan."
+  error: "fout"
   error_prohibited: " bij het opslaan:"
   outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
   status:

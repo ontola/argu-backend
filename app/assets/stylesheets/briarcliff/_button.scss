@@ -60,7 +60,16 @@
 }
 
 .btn-focus {
-
+  background-color: $gre;
+  * {
+    color: white;
+  }
+  &:hover {
+    background-color: $gred;
+  }
+  &:active {
+    background-color: $grel;
+  }
 }
 
 .btn-big {
@@ -275,7 +284,7 @@
     color: white;
     @include transition(.2s);
     &:hover {
-      opacity: 1;
+      opacity: .8;
       text-decoration: none;
     }
     &:active{
@@ -331,13 +340,9 @@
 .btns-signup {
   text-align: center;
   margin: 2em auto 2.6em;
-  li {
-    margin-bottom: 1em;
-  }
   .btn {
     font-size: 1em;
-    width: 15em;
-    padding: 0.8em 1em;
+    width: 16em;
     text-transform: none;
     text-align: left;
   }

@@ -19,7 +19,7 @@ class Profile < ActiveRecord::Base
 
   ######Attributes#######
   def display_name
-    self.name.presence || self.owner.display_name
+    self.name.presence || self.owner.try(:display_name)
   end
 
   def email

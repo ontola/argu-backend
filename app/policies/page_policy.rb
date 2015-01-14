@@ -52,6 +52,10 @@ class PagePolicy < RestrictivePolicy
     false
   end
 
+  def managers?
+    false
+  end
+
   #######Attributes########
   # Is the user a manager of the page or of the forum?
   def is_manager?

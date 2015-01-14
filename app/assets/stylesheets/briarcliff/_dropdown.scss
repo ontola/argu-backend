@@ -57,7 +57,9 @@
 }
 
 .dropdown-active {
-  background-color: $g1 !important;
+  .dropdown-trigger{
+    background-color: $lighten2 !important;
+  }
 }
 
 .dropdown-right {
@@ -75,10 +77,11 @@ span.dropdown-header {
   width: 100%;
 }
 
-.dropdown:hover .dropdown-content, .dropdown-active .dropdown-content {
+//.dropdown:hover .dropdown-content,
+.dropdown-active .dropdown-content {
   //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
   display: block;
-  text-transform: initial;
+  //text-transform: initial;
   @include animation(fade-in .2s);
   span {
     display: inline-block;

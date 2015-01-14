@@ -8,5 +8,5 @@
         = f.inputs
           = f.input :email, label: t('users_email')
         = f.actions
-          = f.submit t('devise.confirmations.edit.submit')
+          = f.submit t('devise.confirmations.edit.submit'), :as => :button
         = render "devise/shared/links"
