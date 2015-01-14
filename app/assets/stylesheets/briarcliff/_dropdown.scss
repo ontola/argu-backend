@@ -24,6 +24,7 @@
   @include border-radius;
   border-top-left-radius: 0;
   overflow: hidden;
+  text-transform: none;
   li {
     min-width: 100%;
   }
@@ -72,9 +73,11 @@
 span.dropdown-header {
   padding: .4em;
   padding-left: 1em;
-  background-color: $blu;
+  background-color: $g2;
   color: white;
   width: 100%;
+  text-transform: uppercase;
+  font-size: .8em;
 }
 
 //.dropdown:hover .dropdown-content,

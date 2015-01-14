@@ -55,6 +55,13 @@
   }
 }
 
+.btn--warning {
+  background-color: $red;
+  &:hover{
+    background-color: $redd;
+  }
+}
+
 .btn-box {
   color: white;
 }
@@ -219,6 +226,7 @@
   > a {
     padding: .7em;
     display: inline-block;
+    //height: 2.45em;
     &:hover {
       text-decoration: none;
 
