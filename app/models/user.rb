@@ -37,18 +37,12 @@ class User < ActiveRecord::Base
   end
 
   def managed_pages
-  t = Page.arel_table
-  Page.where(t[:id].eq(self.profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:id)).or(t[:owner_id].eq(self.profile.id)))
+    t = Page.arel_table
+    Page.where(t[:id].eq(self.profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:id)).or(t[:owner_id].eq(self.profile.id)))
   end
 
   def web_url
     username
-  end
-
-#######Utility########
-  def getLogin
-    #return (:username.blank? ? email : username )
-    return (:email.blank? ? username : email )
   end
 
 #########Auth##############
@@ -56,13 +50,13 @@ class User < ActiveRecord::Base
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
 
-  def isOmniOnly
+  def is_omni_only
     authentications.any? && password.blank?
   end
 
   #######Methods########
 
-  def self.isValidUsername?(name)
+  def self.is_valid_username?(name)
     USERNAME_FORMAT_REGEX.match(name.to_s)
   end
 
