@@ -3,10 +3,11 @@
     h2= t('devise.passwords.edit.header')
   .box
     section
-      = semantic_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+      = semantic_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f|
         = devise_error_messages!
         = f.hidden_field :reset_password_token
         = f.inputs
+          = f.input :login, label: t('devise.activerecord.attributes.user.login')
           = f.input :password, label: t('users_password')
           = f.input :password_confirmation, label: t('users_password_confirmation')
         = f.actions
