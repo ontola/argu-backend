@@ -26,6 +26,9 @@ class Forum < ActiveRecord::Base
 
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
 
+  scope :public_forums, -> { where(visibility: Forum.visibilities[:open]) }
+  scope :top_public_forums, -> { where(visibility: Forum.visibilities[:open]).order('motions_count DESC').first(50) }
+
   def display_name
     name
   end
@@ -35,7 +38,7 @@ class Forum < ActiveRecord::Base
   end
 
   def self.first_public
-    Forum.first
+    Forum.public_forums.first
   end
 
   def featured_tags

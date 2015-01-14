@@ -7,4 +7,4 @@
         /TODO Show current profile_photo, use Pica_Pica
         = f.input :profile_photo, label: t("profiles.edit.picture")
       = f.actions do
-        = f.action :submit, :as => :button, label: t("save")
+        = f.action :submit, :as => :button, label: current_user.finished_intro? ? t('save') : t('next')
