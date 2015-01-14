@@ -49,6 +49,28 @@ class ForumsController < ApplicationController
   def destroy
   end
 
+  def selector
+    @forums = Forum.top_public_forums
+    authorize Forum, :selector?
+
+    render layout: 'closed'
+  end
+
+  # POST /forums/memberships
+  def memberships
+    @forums = Forum.public_forums.where('id in (?)', params[:profile][:membership_ids].reject(&:blank?).map(&:to_i))
+    authorize @forums.first, :show?
+
+    @memberships = @forums.map { |f| Membership.find_or_initialize_by forum: f, profile: current_user.profile  }
+
+    Membership.transaction do
+      if @memberships.length >= 2 && @memberships.all?(&:save!)
+        current_user.update_attribute :finished_intro, true
+        redirect_to root_path
+      end
+    end
+  end
+
 private
   def permit_params
     params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)

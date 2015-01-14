@@ -1,0 +1,24 @@
+@import 'variables';
+
+.selector {
+  .forum {
+    display: inline-block;
+    width: 20em;
+
+    p, img {
+      float: left;
+    }
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"] + div{
+    border: 2px solid $blul;
+  }
+
+  input[type="checkbox"]:checked + div{
+    border: 2px solid lighten($gre, 30%);
+  }
+}

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery secret: "Nl4EV8Fm3LdKayxNtIBwrzMdH9BD18KcQwSczxh1EdDbtyf045rFuVces8AdPtobC9pp044KsDkilWfvXoDADZWi6Gnwk1vf3GghCIdKXEh7yYg41Tu1vWaPdyzH7solN33liZppGlJlNTlJjFKjCoGjZP3iJhscsYnPVwY15XqWqmpPqjNiluaSpCmOBpbzWLPexWwBSOvTcd6itoUdWUSQJEVL3l0rwyJ76fznlNu6DUurFb8bOL2ItPiSit7g"
   skip_before_filter  :verify_authenticity_token
+  before_action :check_finished_intro
   before_action :configure_permitted_parameters, if: :devise_controller?
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
@@ -55,6 +56,20 @@ class ApplicationController < ActionController::Base
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << :username
     devise_parameter_sanitizer.for(:accept_invitation).concat [:username]
+  end
+
+  def check_finished_intro
+    if current_user && !current_user.finished_intro? && !request.original_url.in?(intro_urls)
+      if current_user.profile.name.present?
+        redirect_to selector_forums_url
+      else
+        redirect_to edit_profile_url(current_user.username)
+      end
+    end
+  end
+
+  def intro_urls
+    [selector_forums_url, edit_profile_url(current_user.username), memberships_forums_url]
   end
 
 end

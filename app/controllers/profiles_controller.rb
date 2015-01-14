@@ -19,8 +19,14 @@ class ProfilesController < ApplicationController
     @profile = @user.profile
     authorize @profile
 
-    respond_to do |format|
-      format.html # edit.html.erb
+    if @user.finished_intro?
+      respond_to do |format|
+        format.html # edit.html.erb
+      end
+    else
+      respond_to do |format|
+        format.html { render layout: 'closed' } # edit.html.erb
+      end
     end
   end
 
@@ -32,7 +38,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if @profile.update_attributes permit_params
-        format.html { redirect_to profile_path(@user.username), notice: "Profile was successfully updated." }
+        format.html { redirect_to profile_update_path, notice: "Profile was successfully updated." }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -44,5 +50,9 @@ class ProfilesController < ApplicationController
 private
   def permit_params
     params.require(:profile).permit :name, :about, :profile_photo
+  end
+
+  def profile_update_path
+    @user.finished_intro? ? profile_path(@user.username) : selector_forums_path
   end
 end

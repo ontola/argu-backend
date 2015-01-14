@@ -35,3 +35,11 @@ nl:
     profile:
       show: 'In een profiel kan een gebruiker wat over zichzelf laten weten.'
       votes: 'Standaard worden de voorstellen waar je op stemt in je profiel weergegeven. Zo kan je duidelijk maken waar je voor staat. Als je dat liever niet deelt, kan je het uitzetten bij "instellingen".'
+
+    initial:
+      headers:
+        profile: "Geef jezelf karakter met een profiel"
+        selector: "Neem deel aan de discussie"
+      body:
+        profile: "Voordat we doorgaan naar de site hebben we eerst nog wat extra informatie nodig.<br/><br/> <b>Argu gaat om samenwerken aan oplossingen, met je profiel kun je laten zien wie je bent en waar je voor staat.</b> De informatie op je profiel is voor andere leden zichtbaar."
+        selector: "Binnen argu zijn discussies opgedeelt in forums. Elk forum richt zich op een gebied of onderwerp.<br/><br/> <b>Kies hieronder (ten minste twee) forums welke je interessant lijken:</b>"
