@@ -4,7 +4,7 @@
   /=image_tag @profile.cover_photo.url
   .profile-big[data-intro= t("intro.profile.show", name: @profile.display_name)]
     .profile-picture.profile-picture-show
-      = pica_pica @profile.profile_photo, container_class: 'profile'
+      = pica_pica @profile.profile_photo.url(:avatar), container_class: 'profile'
     .box
       section
         h1 = @profile.display_name

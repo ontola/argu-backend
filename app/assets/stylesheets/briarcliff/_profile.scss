@@ -30,7 +30,7 @@
     top: 1.7em;
     left: 0.4em;
     &:hover{
-
+      text-decoration: underline;
     }
   }
 }
@@ -72,6 +72,32 @@
     display: block;
     float: none;
   }
+}
+
+.profile-switcher {
+
+  li {
+    height: 2em;
+  }
+
+  a{
+    height: 2em;
+    padding: 0;
+  }
+
+  img {
+    height: 100%;
+    max-width: 2em;
+  }
+
+  span {
+    vertical-align: top;
+    padding: 0.5em;
+  }
+}
+
+.profile-switcher-current {
+  background-color: $darken1;
 }
 
 .info-block {

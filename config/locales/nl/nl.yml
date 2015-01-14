@@ -37,6 +37,7 @@ nl:
   trash: "Wissen"
   empty_type: "er zijn geen %{type}"
   history: "geschiendenis"
+  image: "afbeelding"
   pro: "voor"
   con: "tegen"
   search: "zoeken"
