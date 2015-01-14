@@ -7,7 +7,6 @@
         = devise_error_messages!
         = f.hidden_field :reset_password_token
         = f.inputs
-          = f.input :login, label: t('devise.activerecord.attributes.user.login')
           = f.input :password, label: t('users_password')
           = f.input :password_confirmation, label: t('users_password_confirmation')
         = f.actions
