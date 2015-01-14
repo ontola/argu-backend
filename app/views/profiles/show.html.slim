@@ -1,5 +1,5 @@
 .col-1
-  -if @profile == current_profile
+  -if policy(@profile).edit?
     =render partial: 'profiles/profile_bar'
   /=image_tag @profile.cover_photo.url
   .profile-big[data-intro= t("intro.profile.show", name: @profile.display_name)]

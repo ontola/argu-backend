@@ -39,7 +39,7 @@ class Profile < ActiveRecord::Base
   end
 
   def web_url
-    username || id
+    username.presence || owner.web_url.presence || id
   end
 
   #######Methods########
