@@ -1,9 +1,9 @@
 .col-1
   =render partial: 'manage_bar', locals: {resource: @page}  if policy(@page).update?
   small  <!-- for styling -->
-  header
+  /header
     h1 organisatie instellingen
-  .forum_id[id="#{@page.id}"]
+  /.forum_id[id="#{@page.id}"]
     .box.box-small
       ul.btns-list
         li = link_to settings_page_path(@page, tab: :settings) do

@@ -10,5 +10,5 @@
           = f.input :password, label: t('users_password')
           = f.input :password_confirmation, label: t('users_password_confirmation')
         = f.actions
-          = f.submit t('devise.passwords.edit.submit')
+          = f.submit t('devise.passwords.edit.submit'), :as => :button
         = render "devise/shared/links"

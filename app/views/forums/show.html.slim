@@ -5,7 +5,7 @@
     .cover-container
       .dropdown
         h1.dropdown-trigger[href="#"]
-          span.icon-left= @forum.name
+          span= @forum.name
           -if Rails.configuration.epics.forum_selector
             span.fa.fa-angle-down
         -if Rails.configuration.epics.forum_selector
@@ -23,8 +23,8 @@
         /TODO: Make this check the current profile, not the user
         - if !policy(@forum).is_member?
           li=link_to forum_memberships_path(@forum.web_url), method: :create, class: "btn-focus" do
-            span.fa.fa-join
-            span = t("join")
+            span.fa.fa-group
+            span.icon-left = t("join")
         - else
           li[data-intro=t('intro.question.create', name: @forum.name)]=link_to url_for([:new, @forum, :question]) do
             span.fa.fa-plus.que-t

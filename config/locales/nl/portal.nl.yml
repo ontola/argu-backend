@@ -21,5 +21,7 @@ nl:
   users:
     registrations:
       placeholders:
+        email: "voorbeeld@example.com"
         password: "Minimaal 8 karakters"
-        username: "4+ letters, cijfers en _"
+        username: "Letters, cijfers en _"
+        password_confirmation: "Zelfde als hierboven"

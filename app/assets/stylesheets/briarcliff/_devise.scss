@@ -1,0 +1,9 @@
+@import "variables";
+@import "mixins";
+
+.inline-errors {
+  margin: -1.5em 0em 1em 0;
+  color: white;
+  background-color: $red;
+  padding: 0.2em .5em;
+}
