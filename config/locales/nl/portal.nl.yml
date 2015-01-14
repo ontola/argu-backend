@@ -18,3 +18,8 @@ nl:
     members: "Leden"
     questions: "Vraagstukken"
     motions: "Voorstellen"
+  users:
+    registrations:
+      placeholders:
+        password: "Minimaal 8 karakters"
+        username: "4+ letters, cijfers en _"

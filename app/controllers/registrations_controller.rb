@@ -27,8 +27,7 @@ class RegistrationsController < Devise::RegistrationsController
   def update
       @user = User.find(current_user.id)
       email_changed = @user.email != params[:email]
-      password_changed = !params[:password].blank?
-      successfully_updated = if email_changed or password_changed
+      successfully_updated = if email_changed or !params[:password].blank? or @user.invitation_token.present?
         @user.update_with_password(params[:user])
       else
         @user.update_without_password(params[:user])

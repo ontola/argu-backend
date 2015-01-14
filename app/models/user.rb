@@ -21,7 +21,7 @@ class User < ActiveRecord::Base
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login, :current_password
 
-  USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][a-zA-Z0-9]*\z/i
+  USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][_a-zA-Z0-9]*\z/i
 
   validates :username, presence: true,
            length: { in: 4..20 },
