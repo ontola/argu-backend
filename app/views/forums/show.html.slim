@@ -44,12 +44,15 @@
     /.tags
       - @forum.featured_tags.each do |tag|
         = contextual_link_to(tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag)
-    #filters
+    #type
       ul.tags
         li
-          a.tag.tag-motions[data-filter=".motion"]= t("filtersort.motions")
+          a.tag.tag-motions[data-filter=""]= t("filtersort.all")
         li
-          a.tag.tag-questions[data-filter=".question"]= t("filtersort.questions")
+          a.tag.tag-motions[data-filter="motion"]= t("filtersort.motions")
+        li
+          a.tag.tag-questions[data-filter="question"]= t("filtersort.questions")
+    #tags
       ul.tags
         - @forum.featured_tags.each do |tag|
           li

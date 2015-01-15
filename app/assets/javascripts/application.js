@@ -18,6 +18,7 @@
 //= require microplugin
 //= require sifter
 //= require selectize
+//= require handlebars-v2.0.0
 // require masonry
 //= require parallax
 // Briarcliff dependencies :: GO
