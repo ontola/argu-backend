@@ -47,7 +47,6 @@ nl:
   report: "rapporteer"
   clearance: "bevoegdheid"
   forum: "forum"
-  filter_&_sort: "filter & sorteer"
   trash_confirmation: "Dit object zal niet zichtbaar zijn in de publieke discussie, deze actie is ongedaan te maken."
   destroy_confirmation: "Dit object en alle bijbehorende data zal permanent verwijderd worden, deze actie is niet ongedaan te maken."
   not_allowed: "actie niet toegestaan."
@@ -106,13 +105,6 @@ nl:
 
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
-
-#sort
-  sort:
-    newest: "nieuwste"
-    name: "naam"
-    score: "beste score"
-    random: "willekeurig"
 
 #datetime
   datetime_ago: "geleden"

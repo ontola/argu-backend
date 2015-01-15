@@ -59,7 +59,11 @@ class ImageUploader < CarrierWave::Uploader::Base
   end
 
   version :cover do
-    process :resize_to_fill => [1500, 1000, gravity="center"]
+    process :resize_to_fill => [1500, 600, gravity="center"]
+  end
+
+  version :avatar do
+    process :resize_to_fill => [256, 256, gravity="center"]
   end
 
   version :icon do

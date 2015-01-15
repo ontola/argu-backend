@@ -1,0 +1,9 @@
+nl:
+  filtersort:
+    filter_&_sort: "filter & sorteer"
+    newest: "nieuwste"
+    name: "naam"
+    score: "beste score"
+    random: "willekeurig"
+    questions: "alleen vraagstukken"
+    motions: "alleen voorstellen"
