@@ -17,6 +17,7 @@ nl:
       no-tags: "er zijn nog geen tags gebruikt"
     suggestions: "suggesties"
     mine: "mijn forums"
+    navheader: "Ga naar forum:"
     scope_names:
       scope_group: "Groepen"
       scope_org: "Bedrijven"

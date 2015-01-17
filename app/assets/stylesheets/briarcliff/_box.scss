@@ -6,7 +6,7 @@
   background-color: white;
   margin: 0 auto;
   margin-bottom: 1em;
-  overflow: hidden;
+  //overflow: hidden;
   @include border-radius;
   @include box-shadow;
 }
@@ -129,6 +129,8 @@
   background-position: center;
   z-index: -1;
   @include transition(.2s);
+  @include border-radius;
+  border-bottom-radius: 0;
   &:hover{
     opacity: .8;
   }
@@ -210,34 +212,4 @@
   h1, h2, h3 {
     padding-right: .7em;
   }
-}
-
-section {
-  position: relative;
-  padding: 1.1em 1.4em 0.1em 1.4em;
-}
-
-section.section-info {
-  span {font-size: .8em;};
-  padding-top: 0.1em;
-  line-height: 1.1em;
-  background-color: $g3;
-  color: white;
-  text-transform: uppercase;}
-
-section.unpadded {
-  padding: 0;
-}
-
-section.smallpadded {
-  padding: 1.1em 1em 0em 1em;
-}
-
-section + section {
-  border-top: solid 1px $g1;
-}
-
-.section-small {
-  position: relative;
-  padding: .3em 1.4em 0.1em 1.4em;
 }

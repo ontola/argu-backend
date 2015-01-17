@@ -99,6 +99,7 @@
 .btn-sticky-bottom {
   top: auto;
   bottom: 0;
+  margin-bottom: 0;
 }
 
 .btn-sticky-left {
@@ -226,6 +227,7 @@
   > a {
     padding: .7em;
     display: inline-block;
+    color: $g3;
     //height: 2.45em;
     &:hover {
       text-decoration: none;
@@ -402,4 +404,8 @@ h1 + .btn {
 .fa {
   width: 1em;
   text-align: center;
+}
+
+.expander-content {
+  display: none;
 }

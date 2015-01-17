@@ -6,8 +6,7 @@ nl:
     previous: 'vorige'
     forum:
       grid: 'Alle <b class="sta-t">voorstellen</b> en <b class="que-t">vraagstukken</b> staan hieronder. Klik op een item om in de discussie te duiken en jouw mening te geven!'
-      filter: 'Pas een filter toe om alleen items van een bepaald thema te zien.'
-      sort: 'Sorteer items op datum of op popupariteit.'
+      filter: 'Hiermee kan je items zoeken met een bepaald thema, of bijvoorbeeld sorteren op score.'
     tags: 'Klik op een thema om naar relevante discussies te zoeken.'
     header:
       logo: 'Argu is een online discussieplatform waar iedereen op een inhoudelijke manier mee kan denken over het oplossen van maatschappelijke problemen.'

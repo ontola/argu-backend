@@ -65,6 +65,7 @@
   width: 8em;
   height: 8em;
   overflow: hidden;
+  z-index: 1;
   @include box-shadow;
   @include border-radius;
   @include bp-medium(){

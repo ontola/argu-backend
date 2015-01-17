@@ -1,24 +1,51 @@
 @import 'variables';
+@import "mixins";
 
 .selector {
-  .forum {
-    display: inline-block;
-    width: 20em;
-
-    p, img {
-      float: left;
-    }
-  }
 
   input[type="checkbox"] {
     display: none;
   }
 
   input[type="checkbox"] + div{
-    border: 2px solid $blul;
   }
 
   input[type="checkbox"]:checked + div{
-    border: 2px solid lighten($gre, 30%);
+    background-color: lighten($gre, 50%);
+    .selector-check{
+      display: inline-block;
+    }
   }
+}
+
+.selector-profile{
+  display: inline-block;
+  width: 25em;
+  text-transform: none;
+  letter-spacing: normal;
+
+  img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5em;
+    height: 5em;
+  }
+
+  h3 {
+    margin-left: 3em;
+    height: 2.4em;
+  }
+}
+
+.selector-check {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  color: $gre;
+  display: none;
+}
+
+.forum-small {
+
 }
