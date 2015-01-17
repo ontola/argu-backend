@@ -39,6 +39,14 @@ a.tag:active, a.tag.is-checked {
   color: $g4 !important;
 }
 
+.tag-all {
+  color: $g3;
+  font-weight: bold;
+  &.is-checked, &:hover {
+    background-color: $g3 !important;
+    color: white !important;
+  }
+}
 
 .tag-motions {
   color: $blu;
