@@ -23,6 +23,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    @quote = Setting.get(:quotes).split(';').sample
+    respond_to do |format|
+      format.html { render 'status/404' }
+    end
+  end
+
   def current_scope
     current_context.context_scope || current_context
   end

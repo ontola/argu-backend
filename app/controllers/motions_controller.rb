@@ -4,7 +4,7 @@ class MotionsController < ApplicationController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    @motion = Motion.includes(:arguments, :opinions).find_by_id(params[:id])
+    @motion = Motion.includes(:arguments, :opinions).find(params[:id])
     authorize @motion
     current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
