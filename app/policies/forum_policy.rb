@@ -25,6 +25,10 @@ class ForumPolicy < RestrictivePolicy
     is_manager? || super
   end
 
+  def managers?
+    false
+  end
+
   def new?
     create?
   end
@@ -51,6 +55,10 @@ class ForumPolicy < RestrictivePolicy
 
   def add_motion?
     add_question?
+  end
+
+  def selector?
+    true
   end
 
   #######Attributes########

@@ -1,4 +1,6 @@
-$( function() {
+$(function() {
+    "use strict";
+
     // init Isotope
     var $container = $('.grid').isotope({
         itemSelector: '.box-grid',
@@ -6,62 +8,143 @@ $( function() {
         getSortData: {
             date: '[data-date]',
             name: 'h2',
-            score: '[data-score]',
+            score: '[data-score]'
         },
         sortAscending: {
             date: false,
             name: true,
-            score: false,
+            score: false
         }
     });
+
     // filter functions
-    var lastFilter = "";
+    var lastFilter = "",
+        lastType   = "";
     var filterFns = {
         // filter by tag using data-tags
-        filterByTag: function () {
-            if (this.dataset.tags) {
+        combined: function () {
+            var correctTag,
+                correctType;
+            if(lastFilter != "") {
                 var tags = this.dataset.tags.split(',');
-                return tags.indexOf(lastFilter) != -1;
-            } else {
-                false
-            }
+                correctTag = tags.indexOf(lastFilter) != -1;
+            } else correctTag = true;
+
+            if (lastType != "") correctType = this.className.indexOf(lastType) != -1;
+            else correctType = true;
+
+            return correctTag && correctType;
         }
     };
 
+    var filters   = $('#filters, #tags'),
+        sorts     = $('#sorts'),
+        _document = $(document),
+        source    = $("#motion-template").html(),
+        template  = Handlebars.compile(source);
+
+    function activateFilter(type, filter, value) {
+        $container.isotope({ filter: filterFns['combined'] });
+        if ((filterFns[filter] || filter || '') == '') setHighlight('tags', '');
+    }
+
+    function filterForType(filter, value) {
+        lastType = value;
+        if (filter == "") lastFilter = "";
+        activateFilter(filter, filter, value);
+        setHighlight('type', value);
+        if(lastFilter != "") activateFilter('tags', 'tags', lastFilter);
+    }
+
+    function filterForTag(tag) {
+        lastFilter = tag;
+        activateFilter('tags', 'tags', tag);
+        setHighlight('tags', lastFilter);
+        if(lastType != "") activateFilter('type', lastType, lastType);
+    }
+
+    function setHighlight(type, value) {
+        _document.find('#'+type+' .is-checked').removeClass('is-checked');
+        _document.find('#' + type + ' [data-filter-value="'+value+'"]').addClass('is-checked');
+    }
+
     // bind filter button click
-    $('#filters').on( 'click', 'a', function(e) {
-        var filterValue = $( this ).attr('data-filter');
-        lastFilter = this.dataset.filterValue;
-        // use filterFn if matches value
-        filterValue = filterFns[ filterValue ] || filterValue;
-        $container.isotope({ filter: filterValue });
-        // this prevents selecting the words in chrome on android
-        e.preventDefault();
+    $('#tags').on('click', 'a', function (e) {
+        e.preventDefault();   // this prevents selecting the words in chrome on android
+        var filter = $(this).attr('data-filter'),
+                value  = this.dataset.filterValue;
+        filterForTag(value);
+        history.pushState({filter: filter, filterValue: value}, value + '<%= I18n.t('header_title') %>', '/' + value);
+    });
+
+    $('#type').on('click', 'a', function (e) {
+        e.preventDefault();   // this prevents selecting the words in chrome on android
+        var filter = $(this).attr('data-filter'),
+                value  = this.dataset.filterValue || "";
+        filterForType(filter, filter);
+        if (filter == '') {
+            history.pushState({
+                filter: filter,
+                filterValue: value
+            }, value + '<%= I18n.t('header_title') %>', '/' + value);
+        }
     });
 
     // bind sort button click
-    $('#sorts').on( 'click', 'a', function() {
+    sorts.on('click', 'a', function () {
         var sortValue = $(this).attr('data-sort-value');
         $container.isotope({ sortBy: sortValue });
     });
 
     // change is-checked class on buttons
-    $('#sorts').each( function( i, buttonGroup ) {
-        var $buttonGroup = $( buttonGroup );
-        $buttonGroup.on( 'click', 'a', function() {
+    sorts.each(function (i, buttonGroup) {
+        var $buttonGroup = $(buttonGroup);
+        $buttonGroup.on('click', 'a', function () {
             $buttonGroup.find('.is-checked').removeClass('is-checked');
-            $( this ).addClass('is-checked');
+            $(this).addClass('is-checked');
         });
     });
 
-    $('#filters').each( function( i, buttonGroup ) {
-        var $buttonGroup = $( buttonGroup );
-        $buttonGroup.on( 'click', 'a', function() {
-            $buttonGroup.find('.is-checked').removeClass('is-checked');
-            $( this ).addClass('is-checked');
-        });
-    });
+    window.onpopstate = function(event) {
+        var state = event.state || {};
+        filterForTag(state.filterValue);
+    };
+    if ($('.tags-bar')) {
+        var tag =  '';//location.pathname.split('/')[1];
+        if (tag !== null && tag !== "") {
+            filterForTag(tag);
+        }
+    }
 
     //TODO: When clicked on .is-check, disable that class and go back to 'original-order'
 
+    $('.load-more').on('click', function () {
+        var _this       = $(this),
+                filterQuery = lastFilter ? '[data-tags*="'+lastFilter + '"]' : '';
+        _this.text('<%= I18n.t('articles.loading'); %>');
+
+        $.ajax("/articles.json", {
+                    dataType: 'json',
+                    data: {
+                        'from_time': $('.grid article'+filterQuery+':last time').attr('datetime'),  // TODO: take into account the current filter
+                        'filter_tag': lastFilter
+                    },
+                    cache: false,
+                    success: function (d, s, xhr) {
+                        window.d= d;
+                        if (xhr.status == 200 || xhr.status == 304) {
+                            var item;
+                            $.each(d.articles, function (i, a) {
+                                item = $(template(a));
+                                $container.append(item).isotope('insert', item);
+                            });
+                            _this.text('<%= I18n.t('articles.load_more'); %>');
+                        } else if (xhr.status == 204) {
+                            _this.text('<%= I18n.t('articles.no_more_articles'); %>');
+                        }
+                    }
+                }
+        );
+
+    });
 });

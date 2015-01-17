@@ -1,5 +1,5 @@
 Argu::Application.configure do
-  config.host = ENV['HOSTNAME'] || 'argu.co'
+  config.host = ENV['HOSTNAME'] || 'https://argu.co'
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
@@ -51,7 +51,7 @@ Argu::Application.configure do
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
-  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'argu.co')
+  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'https://argu.co')
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
@@ -65,7 +65,7 @@ Argu::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] || 'argu.co' }
+  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] || 'https://argu.co' }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

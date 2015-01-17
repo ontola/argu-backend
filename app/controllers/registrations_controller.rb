@@ -55,6 +55,11 @@ class RegistrationsController < Devise::RegistrationsController
     super
   end
 
+protected
+  def after_sign_up_path_for(resource)
+    edit_profile_url(resource.profile)
+  end
+
 private
 
   def build_resource(*args)

@@ -45,7 +45,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :icon do
-    process :resize_to_fit => [16, 16]
+    process :resize_to_fill => [64, 64, gravity= 'center']
+  end
+
+  version :avatar do
+    process :resize_to_fill => [256, 256, gravity= 'center']
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

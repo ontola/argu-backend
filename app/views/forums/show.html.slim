@@ -5,7 +5,7 @@
     .cover-container
       .dropdown
         h1.dropdown-trigger[href="#"]
-          span.icon-left= @forum.name
+          span= @forum.name
           -if Rails.configuration.epics.forum_selector
             span.fa.fa-angle-down
         -if Rails.configuration.epics.forum_selector
@@ -23,52 +23,68 @@
         /TODO: Make this check the current profile, not the user
         - if !policy(@forum).is_member?
           li=link_to forum_memberships_path(@forum.web_url), method: :create, class: "btn-focus" do
-            span.fa.fa-join
-            span = t("join")
+            span.fa.fa-group
+            span.icon-left = t("join")
         - else
-          li[data-intro=t('intro.question.create', name: @forum.name)]=link_to url_for([:new, @forum, :question]) do
-            span.fa.fa-plus.que-t
-            span.icon-left.que-t= t("questions.type")
           li[data-intro=t('intro.motion.create', name: @forum.name)]=link_to url_for([:new, @forum, :motion]) do
-            span.fa.fa-plus.sta-t
-            span.icon-left.sta-t= t("motions.type")
+            span.fa.fa-plus
+            span.icon-left= t("motions.type")
+          li[data-intro=t('intro.question.create', name: @forum.name)]=link_to url_for([:new, @forum, :question]) do
+            span.fa.fa-plus
+            span.icon-left= t("questions.type")
           =render partial: 'application/menus/settings', locals: { resource: @forum }
 - if policy(@forum).show?
-  .filter-and-sort
+  .center
+    ul.btns-list
+      li
+        a.expander[data-intro=t('intro.forum.filter')]
+          span=t("filtersort.filter_&_sort")
+          span.fa.fa-angle-down
+  .filter-and-sort.expander-content
     /.tags
       - @forum.featured_tags.each do |tag|
         = contextual_link_to(tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag)
-    #filters[data-intro=t('intro.forum.filter')]
+    #type
       ul.tags
         li
-          a.tag.tag-motions[data-filter=".motion"]= t("motions.header")
+          a.tag.tag-motions[data-filter=""]= t("filtersort.all")
         li
-          a.tag.tag-questions[data-filter=".question"]= t("questions.header")
+          a.tag.tag-motions[data-filter="motion"]= t("filtersort.motions")
+        li
+          a.tag.tag-questions[data-filter="question"]= t("filtersort.questions")
+    #tags
       ul.tags
         - @forum.featured_tags.each do |tag|
           li
             /a = contextual_link_to(tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag, 'data-filter'=>'filterByTag', 'data-filter-value'=>tag)
             a[class="tag" data-filter='filterByTag' data-filter-value=tag] = tag
-    #sorts[data-intro=t('intro.forum.sort')]
+    #sorts
       ul.btns-list.btns-vertical
         li
           //TODO: Make date the default one to be checked.s
           a[data-sort-value="date"]
             span.fa.fa-clock-o
-            span.icon-left= t("sort.newest")
+            span.icon-left= t("filtersort.newest")
         li
           a[data-sort-value="name"]
             span.fa.fa-sort-alpha-asc
-            span.icon-left= t("sort.name")
+            span.icon-left= t("filtersort.name")
         li
           a[data-sort-value="score"]
             span.fa.fa-sort-amount-desc
-            span.icon-left= t("sort.score")
+            span.icon-left= t("filtersort.score")
         /li
           a[data-sort-value="random"]
             span.fa.fa-gift
-            span.icon-left= t("sort.random")
+            span.icon-left= t("filtersort.random")
   .grid
     .box.box-grid-sizer[data-intro=t('intro.forum.grid') data-position="top"]
     -@items.each do |item|
       = render item
+    .box.box-grid.motion[ data-date="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]=link_to url_for([:new, @forum, :motion]) do
+      section.section-fill.sta-bg
+        h2 = t("motions.call_to_action.title")
+
+      section
+        p = t("motions.call_to_action.action")
+

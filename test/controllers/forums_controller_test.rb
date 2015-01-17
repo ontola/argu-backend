@@ -51,6 +51,14 @@ class ForumsControllerTest < ActionController::TestCase
     assert_redirected_to root_path, "Others can update questions"
   end
 
+  test "should get selector" do
+    sign_in users(:user)
+
+    get :selector
+    assert_response :success, "Selector broke"
+    assert_not_nil assigns(:forums)
+  end
+
 
   ####################################
   # For managers

@@ -47,12 +47,18 @@ a.navbar-item:active{
   > li {
     float: left;
   }
+  @include bp-small {
+    margin-left: 0;
+  }
 }
 
 .navbar-links-right {
   float: right;
   margin-right: 1em;
   margin-left: 0em;
+  @include bp-small {
+    margin-right: 0;
+  }
 }
 
 .navbar-link-description {

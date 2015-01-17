@@ -2,7 +2,9 @@
   .col-3-2
     = to_parent
     .box
-      = form_for([@forum, @motion]) do |f|
+      section.section-info.sta-bg
+        span = t("motions.type")
+      = semantic_form_for([@forum, @motion]) do |f|
         section.smallpadded
           - if @motion.errors.any?
             #error_explanation
@@ -12,22 +14,22 @@
               ul
                 - @motion.errors.full_messages.each do |msg|
                   li= msg
+          = f.inputs
+            = f.text_field :title, placeholder: t("motions.form.title").capitalize, class: "h1 sta-t form-input-title"
+            = f.text_area :content, placeholder: t("motions.form.content"), rows: "8", class: "form-input-content"
+            = f.text_field :tag_list, placeholder: t("motions.form.themes"), class: "tag-list"
+            = f.input :cover_photo, label: t("image")
 
-          = f.text_field :title, placeholder: t("motions.form.title").capitalize, class: "h1 sta-t form-input-title"
-          = f.text_area :content, placeholder: t("motions.form.content"), rows: "8", class: "form-input-content"
-          = f.text_field :tag_list, placeholder: t("motions.form.themes"), class: "tag-list"
-          = f.file_field :cover_photo
-
-          - if policy(@motion).trash?
-            = f.label :is_trashed
-            = f.check_box :is_trashed
-          /TODO invert arguments only visible when in edit, not in new.
-            <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
-            <%= f.check_box :invert_arguments %>
+            - if policy(@motion).trash?
+              = f.label :is_trashed
+              = f.check_box :is_trashed
+            /TODO invert arguments only visible when in edit, not in new.
+              <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
+              <%= f.check_box :invert_arguments %>
         = render partial: 'profiles/profile_current'
 
         = f.hidden_field :question_id, value: @question_id || params[:question_id]
-        .actions= f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"
+        .actions[style="margin-top: 0"]= f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"
   /TODO make translations, make content dependent on focus field
   .col-3-1
     .box

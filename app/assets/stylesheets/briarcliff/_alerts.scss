@@ -16,6 +16,8 @@
   border: solid 3px;
   text-align: center;
   font-family: $font-sans;
+  @include border-radius;
+  @include box-shadow;
   @include animation(fade-in 1s both, from-bottom ease-out 1s both);
   pointer-events: none;
   @include bp-small{

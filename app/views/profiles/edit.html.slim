@@ -1,3 +1,7 @@
 .col-1
-  =render partial: 'profile_bar'
+  -if current_user.finished_intro?
+    =render partial: 'profile_bar'
+  -else
+    h1= t('intro.initial.headers.profile')
+    p= raw t('intro.initial.body.profile')
   = render 'form'

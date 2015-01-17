@@ -7,7 +7,7 @@ class Votes::MotionsController < ApplicationController
       @vote = Vote.find_or_create_by(voteable: @motion, voter: current_profile, forum: @motion.forum)
       if @vote.try(:for) == permit_params[:for]
         respond_to do |format|
-          format.json { render json: {notifications: [{type: 'warning', message: '_Stem ongewijzigd_'}]} }
+          /*format.json { render json: {notifications: [{type: 'warning', message: '_Stem ongewijzigd_'}]} }*/
         end
       else
         if @vote.update(for: permit_params[:for])

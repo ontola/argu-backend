@@ -50,6 +50,8 @@ Argu::Application.routes.draw do
   resources :forums, except: [:index, :edit] do
     get :settings, on: :member
     get :statistics, on: :member
+    get :selector, on: :collection
+    post :memberships, on: :collection
     resources :memberships, only: [:create, :destroy]
     resources :questions, only: [:index, :new, :create]
     resources :motions, only: [:new, :create]

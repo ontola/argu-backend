@@ -33,9 +33,10 @@ nl:
       no_token: "Je kan geen toegang krijgen tot deze pagina zonder doorverwezen te worden van een wachtwoord reset mail. Controleer het ingevoerde webadres."
       edit:
         header: 'Wachtwoord wijzigen'
-        submit: 'Verzend reset instructies'
+        submit: 'Opslaan'
       new:
         header: 'Wachtwoord vergeten?'
+        helper: 'Geen probleem. Vul je e-mailadres of gebruikersnaam in en wij zullen jou een mail sturen met een link waarmee je een nieuw wachtwoord kan instellen.'
         submit: 'Verzend reset instructies'
     confirmations:
       send_instructions: 'Je zal binnen enkele minuten een mail ontvangen met  instructies om jouw account te bevestigen.'

@@ -10,25 +10,30 @@ user_thom:
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
   username: 'fletcher91'
   profile: :profile_fletcher91
+  finished_intro: true
 user_utrecht_manager:
   email: 'user@utrecht.nl'
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
   username: 'utrecht_manager'
   profile: :profile_utrecht_manager
+  finished_intro: true
 user:
   email: 'user@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   username: 'user'
   profile: :profile_one
+  finished_intro: true
 #
 user2:
   email: 'user2@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   username: 'user2'
   profile: :profile_two
+  finished_intro: true
 #
 user3:
   email: 'user3@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   username: 'user3'
   profile: :profile_three
+  finished_intro: true

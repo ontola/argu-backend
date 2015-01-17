@@ -1,8 +1,9 @@
 - if policy(resource).is_manager?
   li.dropdown
     a.dropdown-trigger
-      span.fa.fa-gear.sta-t
-      span.icon-left.sta-t= t("#{resource.class_name}.resource_name")
+      span.fa.fa-gear
+      span.icon-left= t("#{resource.class_name}.resource_name")
+      span.fa.fa-angle-down
     ul.dropdown-content.dropdown-right
       li=link_to url_for([:settings, resource]) do
         span.fa.fa-gear
@@ -11,6 +12,7 @@
         li=link_to url_for([:statistics, resource]) do
           span.fa.fa-pie-chart
           span.icon-left= t("forums.statistics.title")
-      li = link_to url_for([:settings, resource, tab: :managers])
-        span.fa.fa-group
-        span.icon-left = t("forums.settings.managers")
+      - if policy(resource).managers?
+        li = link_to url_for([:settings, resource, tab: :managers])
+          span.fa.fa-group
+          span.icon-left = t("forums.settings.managers")

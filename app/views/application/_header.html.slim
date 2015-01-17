@@ -4,13 +4,15 @@ nav#navbar.navbar role="navigation"
       =link_to root_url
         =image_tag 'logo-white.svg'
     ul.navbar-links
+      li= link_to root_url, class: "navbar-item" do
+        span.fa.fa-home
       -if Rails.configuration.epics.forum_selector
         li.dropdown[data-intro= t("intro.header.forums", name: current_scope.model.name) data-position="right"]
           .dropdown-trigger.navbar-item[href="#"]
-            span.fa.fa-home
-            span.icon-left= home_text
+            span= home_text
             span.fa.fa-angle-down
           ul.dropdown-content
+            span.dropdown-header =t("forums.navheader")
             - current_profile.present? && current_profile.memberships.each do |membership|
               li
                 =link_to membership.forum.display_name, url_for(membership.forum)
@@ -59,15 +61,22 @@ nav#navbar.navbar role="navigation"
         li.dropdown[data-intro= t("intro.header.profile", name: current_scope.model.name) data-position="left"]
           .dropdown-trigger.navbar-item href="#"
             span.fa.fa-user
+            //img[src=current_profile.profile_photo.url(:icon) alt="profile picture"]
             // Regex to only show first name of user
             span.icon-left= current_profile.display_name.split(/\s+/, 2)[0...1].join(' ')
+            span.fa.fa-angle-down
           ul.dropdown-content.dropdown-right
-            li= contextual_link_to profile_url(current_profile.display_name) do
-              span.fa.fa-user
-              span.icon-left= t("profiles.display")
-            li= link_to edit_profile_path(current_profile.display_name) do
-              span.fa.fa-pencil
-              span.icon-left= t("profiles.edit.title")
+            - if current_profile.owner.is_a? User
+              li= contextual_link_to profile_url(current_profile.web_url) do
+                span.fa.fa-user
+                span.icon-left= t("profiles.display")
+              li= link_to edit_profile_path(current_profile.web_url) do
+                span.fa.fa-pencil
+                span.icon-left= t("profiles.edit.title")
+            - elsif current_profile.owner.is_a? Page
+              li= contextual_link_to page_url(current_profile.web_url) do
+                span.fa.fa-user
+                span.icon-left= t('pages.display')
             li= link_to settings_url do
               span.fa.fa-gear
               span.icon-left= t(:users_show_title)
@@ -83,9 +92,14 @@ nav#navbar.navbar role="navigation"
 
             - if current_user.managed_pages.present?
               span.dropdown-header = t('profiles.switch')
-              li= link_to current_user.display_name, actors_path(na: current_user.profile.id), method: :put
-              - current_user.managed_pages.each do |p|
-                li= link_to p.display_name, actors_path(na: p.profile.id), method: :put
+              .profile-switcher
+                li= link_to actors_path(na: current_user.profile.id), method: :put
+                  img[src=current_profile.profile_photo.url(:icon) alt="profile picture"]
+                  span.icon-left= current_user.display_name
+                - current_user.managed_pages.each do |p|
+                  li= link_to actors_path(na: p.profile.id), method: :put do
+                    img[src=p.profile.profile_photo.url(:icon) alt="profile picture"]
+                    span.icon-left= p.display_name
       -else
         li= link_to new_user_session_url, id: 'account', class: 'navbar-item' do
           span.fa.fa-sign-in

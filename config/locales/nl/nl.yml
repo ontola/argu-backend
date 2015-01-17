@@ -37,6 +37,7 @@ nl:
   trash: "Wissen"
   empty_type: "er zijn geen %{type}"
   history: "geschiendenis"
+  image: "afbeelding"
   pro: "voor"
   con: "tegen"
   search: "zoeken"
@@ -49,6 +50,7 @@ nl:
   trash_confirmation: "Dit object zal niet zichtbaar zijn in de publieke discussie, deze actie is ongedaan te maken."
   destroy_confirmation: "Dit object en alle bijbehorende data zal permanent verwijderd worden, deze actie is niet ongedaan te maken."
   not_allowed: "actie niet toegestaan."
+  error: "fout"
   error_prohibited: " bij het opslaan:"
   outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
   status:
@@ -103,13 +105,6 @@ nl:
 
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
-
-#sort
-  sort:
-    newest: "nieuwste"
-    name: "naam"
-    score: "beste score"
-    random: "willekeurig"
 
 #datetime
   datetime_ago: "geleden"

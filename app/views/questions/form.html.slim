@@ -2,6 +2,8 @@
   .col-3-2
     = to_parent
     .box
+      section.section-info.que-bg
+        span = t("questions.type")
       = form_for([@forum, @question], multipart: true) do |f|
         section.smallpadded
           - if @question.errors.any?
