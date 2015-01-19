@@ -7,7 +7,7 @@ nav#navbar.navbar role="navigation"
       li= link_to root_url, class: "navbar-item" do
         span.fa.fa-home
       -if Rails.configuration.epics.forum_selector
-        li.dropdown[data-intro= t("intro.header.forums", name: current_scope.model.name) data-position="right"]
+        li.dropdown[data-intro= t("intro.header.forums") data-position="right"]
           .dropdown-trigger.navbar-item[href="#"]
             span= home_text
             span.fa.fa-angle-down
@@ -58,7 +58,7 @@ nav#navbar.navbar role="navigation"
               form
                 input.nav-search-text type="text" placeholder= t("search.placeholder")
       -if current_profile.present?
-        li.dropdown[data-intro= t("intro.header.profile", name: current_scope.model.name) data-position="left"]
+        li.dropdown[data-intro= t("intro.header.profile") data-position="left"]
           .dropdown-trigger.navbar-item href="#"
             span.fa.fa-user
             //img[src=current_profile.profile_photo.url(:icon) alt="profile picture"]
@@ -104,7 +104,7 @@ nav#navbar.navbar role="navigation"
         li= link_to new_user_session_url, id: 'account', class: 'navbar-item' do
           span.fa.fa-sign-in
           span.icon-left = t("sign_in")
-      li[data-intro= t("intro.header.about", name: current_scope.model.name) data-position="left"] =link_to about_url, id: 'info', class: 'navbar-item'
+      li[data-intro= t("intro.header.about") data-position="left"] =link_to about_url, id: 'info', class: 'navbar-item'
         span.fa.fa-info
         span.icon-left= t("about_title")
       li
