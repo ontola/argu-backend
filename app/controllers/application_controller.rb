@@ -76,7 +76,7 @@ class ApplicationController < ActionController::Base
   end
 
   def intro_urls
-    [selector_forums_url, edit_profile_url(current_user.username), memberships_forums_url]
+    [selector_forums_url, profile_url(current_user.username), edit_profile_url(current_user.username), memberships_forums_url, ]
   end
 
 end
