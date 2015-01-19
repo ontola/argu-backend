@@ -88,7 +88,12 @@
     }
     @include bp-medium{
       display: inline-block;
+      text-align: center;
     }
+  }
+
+  @include bp-medium{
+    text-align: center;
   }
   .dropdown{
     display: inline-block;

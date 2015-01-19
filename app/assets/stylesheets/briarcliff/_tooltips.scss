@@ -1,0 +1,18 @@
+@import "variables";
+@import "mixins";
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip:hover:after {
+  padding: .3em .6em;
+  background: $blu;
+  color: white;
+  content: attr(data-title);
+  position: absolute;
+  right: -40px;
+  top: -26px;
+  @include border-radius;
+  @include box-shadow;
+}
