@@ -70,6 +70,11 @@ class Profile < ActiveRecord::Base
     remove_role :frozen
   end
 
+  # Hasn't been though through, so disable for the moment.
+  def destroy
+    false
+  end
+
   #######Utility#########
   def self.find_by_username(user)
     return (User.find_by_username(user)).try(:profile)
