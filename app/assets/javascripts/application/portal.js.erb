@@ -1,0 +1,18 @@
+<% environment.context_class.instance_eval { include Rails.application.routes.url_helpers } %>
+
+$(function() {
+    var settings;
+    if ((settings = $('.settings-table'))) {
+        settings.find('.setting .value').editable('', {
+            onsubmit: function (settings) {
+                window._that = this;
+                settings.target = '<%= portal_settings_path %>/';
+            },
+            submitdata : function(value, settings) {
+                return {key: this.getAttribute('id')};
+            },
+            indicator : 'Saving...',
+            tooltip   : 'Click to edit...'
+        });
+    }
+});

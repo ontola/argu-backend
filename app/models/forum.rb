@@ -38,7 +38,10 @@ class Forum < ActiveRecord::Base
   end
 
   def self.first_public
-    Forum.public_forums.first
+    if (setting = Setting.get(:default_forum))
+      forum = Forum.find_by(web_url: setting)
+    end
+    forum || Forum.public_forums.first
   end
 
   def featured_tags

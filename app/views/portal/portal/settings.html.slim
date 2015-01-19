@@ -1,0 +1,19 @@
+.col-1.col-1-big
+  header
+    h1
+      = t('portal.portal')
+      = image_tag asset_path('portal_logo.svg'), style: 'height: 1em; position: absolute;'
+  .box.settings-table
+    section
+      h2= t('portal.settings')
+      table.styled
+        thead
+          tr
+            td= t('portal.key')
+            td= t('portal.value')
+            td= t('portal.destroy')
+        tbody
+          - @settings.each do |s|
+            tr.setting
+              td.key= s.key
+              td.test.value[id="#{s.key}"]= s.value

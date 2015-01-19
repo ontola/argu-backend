@@ -57,6 +57,11 @@ class Profile < ActiveRecord::Base
     add_role :frozen
   end
 
+  # Proxy for first_public until users are able to select their own preferred forum, or it's based on last visited etc.
+  def preferred_forum
+    Forum.first_public
+  end
+
   def member_of?(_forum)
     _forum.present? && self.memberships.where(forum_id: _forum.is_a?(Forum) ? _forum.id : _forum).present?
   end

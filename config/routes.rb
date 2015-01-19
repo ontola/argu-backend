@@ -67,6 +67,8 @@ Argu::Application.routes.draw do
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
     namespace :portal do
+      get :settings, to: 'portal#settings'
+      post 'settings', to: 'portal#set_setting', as: :update_setting
       resources :forums, only: [:new, :create]
       mount Sidekiq::Web => '/sidekiq'
     end

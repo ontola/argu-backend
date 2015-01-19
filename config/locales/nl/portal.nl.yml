@@ -18,6 +18,8 @@ nl:
     members: "Leden"
     questions: "Vraagstukken"
     motions: "Voorstellen"
+    value: "Value"
+    key: "Key"
   users:
     registrations:
       placeholders:
