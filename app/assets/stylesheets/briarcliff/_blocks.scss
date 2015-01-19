@@ -3,11 +3,13 @@
 
 $primary: $blu;
 $secondary: $g4;
+$grey_light: $g0;
 
 .blocks{
   margin: auto;
   max-width: 1200px;
   position: relative;
+  clear: both;
 }
 
 .block{
@@ -23,12 +25,30 @@ $secondary: $g4;
   }
   p {
     line-height: 1.8em;
+    max-width: 40em;
+    margin: auto;
+    margin-bottom: 1em;
+    a {
+      font-weight: bold;
+    }
   }
   h2 {
     margin-bottom: 0.8em;
     text-transform: uppercase;
     font-size: 1.3em;
     letter-spacing: .1em;
+    line-height: 1.5em;
+    &:after {
+      content: "";
+      width: 50%;
+      background-color: $primary;
+      height: 1px;
+      display: block;
+      position: relative;
+      top: 0.4em;
+      margin: auto;
+      opacity: .3;
+    }
   }
   @include bp-medium{
     width: 100%;
@@ -39,6 +59,13 @@ $secondary: $g4;
 
 .block--img {
   padding: 0;
+  .img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    min-height: 18em;
+  }
   @include bp-medium{
     max-height: 20em;
   }
@@ -53,6 +80,16 @@ $secondary: $g4;
   * {
     color: white;
   }
+  h2:after {
+    background-color: white;
+  }
+}
+
+.block--hidden {
+  background-color: $grey-light;
+  * {
+    color: $secondary;
+  }
 }
 
 .block--full {
@@ -60,6 +97,14 @@ $secondary: $g4;
   height: auto;
   padding-top: 4em;
   padding-bottom: 4em;
+}
+
+.block .expander{
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-size: 1em;
+  margin-top: 1em;
+  display: block;
 }
 
 .block-text{
@@ -124,4 +169,21 @@ $secondary: $g4;
 
 .block-subtle {
   opacity: .8;
+}
+
+.block-slogan {
+  line-height: 1.8em;
+  font-size: 1.1em;
+  font-weight: bold;
+  max-width: 50em;
+  margin: auto;
+}
+
+.block--big-text {
+  p {
+    max-width: 40em;
+    margin: auto;
+    margin-bottom: 1em;
+    text-align: left;
+  }
 }
