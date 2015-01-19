@@ -10,8 +10,8 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable
   devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable#,
-         #:validatable, :omniauthable
+         :recoverable, :rememberable, :trackable, :validatable
+         #, :omniauthable
 
   before_validation :check_for_profile
   after_destroy :cleanup
