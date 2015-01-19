@@ -1,0 +1,6 @@
+#Dutch general translations
+
+nl:
+  status:
+    s_404:
+      header: "Niet gevonden"

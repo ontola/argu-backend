@@ -28,6 +28,7 @@ gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 2.0.0'
 gem 'friendly_id', '~> 5.0.4'
 gem 'whodunnit', '0.0.5'
+gem 'simple_settings', '1.0.2'
 #Search
 
 #Pagination

@@ -1,3 +1,4 @@
+-provide :title, @forum.display_name
 .cover
   -if @forum.cover_photo.url.present?
     .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
