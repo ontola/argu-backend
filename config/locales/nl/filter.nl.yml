@@ -1,10 +1,11 @@
 nl:
   filtersort:
     filter_&_sort: "filter & sorteer"
-    newest: "nieuwste"
+    updated_at: "laatst actief"
+    created_at: "nieuwste"
     name: "naam"
-    score: "beste score"
+    score: "hoogste score"
     random: "willekeurig"
-    questions: "alleen vraagstukken"
-    motions: "alleen voorstellen"
+    questions: "vraagstukken"
+    motions: "voorstellen"
     all: "alles"

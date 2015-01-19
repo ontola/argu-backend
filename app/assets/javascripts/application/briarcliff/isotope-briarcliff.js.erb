@@ -6,12 +6,14 @@ $(function() {
         itemSelector: '.box-grid',
         columnWidth: '.box-grid-sizer',
         getSortData: {
-            date: '[data-date]',
+            updated_at: '[data-updated-at]',
+            created_at: '[data-created-at]',
             name: 'h2',
             score: '[data-score]'
         },
         sortAscending: {
-            date: false,
+            created_at: false,
+            updated_at: false,
             name: true,
             score: false
         }
@@ -37,7 +39,7 @@ $(function() {
         }
     };
 
-    var filters   = $('#filters, #tags'),
+    var filters   = $('#type, #tags'),
         sorts     = $('#sorts'),
         _document = $(document),
         source    = $("#motion-template").html(),
@@ -64,7 +66,7 @@ $(function() {
     }
 
     function setHighlight(type, value) {
-        _document.find('#'+type+' .is-checked').removeClass('is-checked');
+        _document.find('#' + type + ' .is-checked').removeClass('is-checked');
         _document.find('#' + type + ' [data-filter-value="'+value+'"]').addClass('is-checked');
     }
 
@@ -116,7 +118,7 @@ $(function() {
         }
     }
 
-    //TODO: When clicked on .is-check, disable that class and go back to 'original-order'
+    //TODO: When clicked on .is-check, disable that class and go back to 'original-order'. This only applies to Tags, not for sorts.
 
     $('.load-more').on('click', function () {
         var _this       = $(this),
@@ -146,5 +148,11 @@ $(function() {
                 }
         );
 
+    });
+
+    $('#sort-random').click( function() {
+        $container.isotope('updateSortData').isotope({
+            sortBy: 'random'
+        });
     });
 });

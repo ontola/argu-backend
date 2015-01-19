@@ -3,6 +3,7 @@ class ProfilesController < ApplicationController
   #GET /profiles/1
   def show
     @profile = User.find_by(username: params[:id]).profile
+    raise ActiveRecord::RecordNotFound if @profile.blank?
     authorize @profile, :show?
 
     # TODO: Refactor into arel or something..

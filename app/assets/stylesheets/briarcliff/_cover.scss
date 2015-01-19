@@ -87,8 +87,15 @@
       //background-color: $g4;
     }
     @include bp-medium{
-      width: 100%;
+      display: inline-block;
       text-align: center;
     }
+  }
+
+  @include bp-medium{
+    text-align: center;
+  }
+  .dropdown{
+    display: inline-block;
   }
 }

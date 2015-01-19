@@ -1,7 +1,7 @@
 class QuestionsController < ApplicationController
 
   def show
-    @question = Question.find_by_id(params[:id])
+    @question = Question.find(params[:id])
     authorize @question
     @forum = @question.forum
     current_context @question
