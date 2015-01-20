@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150120132908) do
+ActiveRecord::Schema.define(version: 20150120143550) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -94,18 +94,19 @@ ActiveRecord::Schema.define(version: 20150120132908) do
   create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.integer  "page_id"
-    t.integer  "questions_count",   default: 0,  null: false
-    t.integer  "motions_count",     default: 0,  null: false
-    t.integer  "memberships_count", default: 0,  null: false
+    t.integer  "questions_count",         default: 0,  null: false
+    t.integer  "motions_count",           default: 0,  null: false
+    t.integer  "memberships_count",       default: 0,  null: false
     t.string   "profile_photo"
     t.string   "cover_photo"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "slug"
-    t.string   "web_url",           default: "", null: false
-    t.text     "bio",               default: "", null: false
-    t.text     "featured_tags",     default: "", null: false
-    t.integer  "visibility",        default: 1
+    t.string   "web_url",                 default: "", null: false
+    t.text     "bio",                     default: "", null: false
+    t.text     "featured_tags",           default: "", null: false
+    t.integer  "visibility",              default: 1
+    t.string   "cover_photo_attribution", default: ""
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
@@ -120,25 +121,26 @@ ActiveRecord::Schema.define(version: 20150120132908) do
   add_index "memberships", ["profile_id", "forum_id"], name: "index_memberships_on_profile_id_and_forum_id", unique: true, using: :btree
 
   create_table "motions", force: :cascade do |t|
-    t.string   "title",               limit: 255,                 null: false
-    t.text     "content",                                         null: false
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.integer  "pro_count",                       default: 0
-    t.integer  "con_count",                       default: 0
+    t.string   "title",                   limit: 255,                 null: false
+    t.text     "content",                                             null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.integer  "pro_count",                           default: 0
+    t.integer  "con_count",                           default: 0
     t.integer  "tag_id"
-    t.boolean  "is_trashed",                      default: false
-    t.integer  "votes_pro_count",                 default: 0,     null: false
-    t.integer  "votes_con_count",                 default: 0,     null: false
-    t.integer  "votes_neutral_count",             default: 0,     null: false
-    t.integer  "argument_pro_count",              default: 0,     null: false
-    t.integer  "argument_con_count",              default: 0,     null: false
-    t.integer  "opinion_pro_count",               default: 0,     null: false
-    t.integer  "opinion_con_count",               default: 0,     null: false
-    t.integer  "votes_abstain_count",             default: 0,     null: false
+    t.boolean  "is_trashed",                          default: false
+    t.integer  "votes_pro_count",                     default: 0,     null: false
+    t.integer  "votes_con_count",                     default: 0,     null: false
+    t.integer  "votes_neutral_count",                 default: 0,     null: false
+    t.integer  "argument_pro_count",                  default: 0,     null: false
+    t.integer  "argument_con_count",                  default: 0,     null: false
+    t.integer  "opinion_pro_count",                   default: 0,     null: false
+    t.integer  "opinion_con_count",                   default: 0,     null: false
+    t.integer  "votes_abstain_count",                 default: 0,     null: false
     t.integer  "forum_id"
     t.integer  "creator_id"
-    t.string   "cover_photo",                     default: ""
+    t.string   "cover_photo",                         default: ""
+    t.string   "cover_photo_attribution",             default: ""
   end
 
   add_index "motions", ["forum_id"], name: "index_motions_on_forum_id", using: :btree
@@ -220,17 +222,18 @@ ActiveRecord::Schema.define(version: 20150120132908) do
   add_index "question_answers", ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.string   "title",           limit: 255, default: ""
-    t.text     "content",                     default: ""
+    t.string   "title",                   limit: 255, default: ""
+    t.text     "content",                             default: ""
     t.integer  "forum_id"
     t.integer  "creator_id"
-    t.boolean  "is_trashed",                  default: false
-    t.integer  "motions_count",               default: 0
-    t.integer  "votes_pro_count",             default: 0
-    t.integer  "votes_con_count",             default: 0
+    t.boolean  "is_trashed",                          default: false
+    t.integer  "motions_count",                       default: 0
+    t.integer  "votes_pro_count",                     default: 0
+    t.integer  "votes_con_count",                     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "cover_photo",                 default: ""
+    t.string   "cover_photo",                         default: ""
+    t.string   "cover_photo_attribution",             default: ""
   end
 
   create_table "roles", force: :cascade do |t|

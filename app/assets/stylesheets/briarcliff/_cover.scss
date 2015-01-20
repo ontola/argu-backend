@@ -10,6 +10,16 @@
   margin-bottom: 1em;
 }
 
+.header-attribution {
+  color: whitesmoke;
+  background-color: transparentize(dimgray, .4);
+  position: absolute;
+  top: 0em;
+  right: 0em;
+  font-size: 0.8em;
+  z-index: 5;
+}
+
 .cover-container {
   position: relative;
   @include container-width;

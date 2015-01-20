@@ -1,8 +1,5 @@
 class Question < ActiveRecord::Base
-  include ArguBase
-  include Trashable
-  include Parentable
-  include ForumTaggable
+  include ArguBase, Trashable, Parentable, ForumTaggable, Attribution
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'

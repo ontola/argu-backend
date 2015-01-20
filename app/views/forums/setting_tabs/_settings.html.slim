@@ -6,7 +6,11 @@
     = f.input :bio
     = f.input :featured_tags, placeholder: t("motions.form.themes"), as: :tags
     = f.input :cover_photo
+    = f.input :cover_photo, as: :preview_image, html_options: { style: 'max-height: 256px;' }
+    = f.input :remove_cover_photo, as: :reverse_boolean
+    = f.input :cover_photo_attribution
     = f.input :profile_photo
+    = f.input :remove_profile_photo, as: :reverse_boolean
     -if policy(resource).web_url?
       = f.input :web_url
     - if policy(resource).is_owner?

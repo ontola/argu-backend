@@ -2,10 +2,7 @@ include HasRestfulPermissions
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
-  include ArguBase
-  include Trashable
-  include Parentable
-  include ForumTaggable
+  include ArguBase, Trashable, Parentable, ForumTaggable, Attribution
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy

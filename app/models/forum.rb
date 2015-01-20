@@ -1,5 +1,5 @@
 class Forum < ActiveRecord::Base
-  include ArguBase
+  include ArguBase, Attribution
   extend FriendlyId
 
   belongs_to :page

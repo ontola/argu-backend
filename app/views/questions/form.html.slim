@@ -25,8 +25,7 @@
           -if policy(@question).trash?
             =render layout: 'application/danger_zone' do
               - if policy(@question).trash?
-                = f.label :is_trashed
-                = f.check_box :is_trashed
+                = f.input :is_trashed, as: :reverse_boolean
               -if policy(@question).move?
                 = f.input :f_move, as: :link, url: question_move_url(@question), input_html: {data: {remote: true}, class: 'btn btn--warning'}
 
