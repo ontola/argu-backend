@@ -1,6 +1,6 @@
 .box.selector-profile
   section
-    = image_tag forum.cover_photo.url(:avatar), size: '64x64'
+    = image_tag forum.profile_photo.url(:avatar), size: '64x64'
     h3= forum.display_name
     .selector-check
       .fa.fa-check

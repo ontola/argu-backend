@@ -2,8 +2,8 @@
 
 $(function() {
     var settings;
-    if ((settings = $('.settings-table'))) {
-        settings.find('.setting .value').editable('', {
+    if ((settings = $('.portal-settings'))) {
+        var editableOptions = {
             onsubmit: function (settings) {
                 window._that = this;
                 settings.target = '<%= portal_settings_path %>/';
@@ -13,6 +13,17 @@ $(function() {
             },
             indicator : 'Saving...',
             tooltip   : 'Click to edit...'
+        };
+
+        settings.find('.setting .value').editable('', editableOptions);
+
+        settings.find('.add-setting').click(function () {
+            var key = window.prompt('Enter the key', '');
+            if (key !== null && key.length > 0) {
+                var newSetting = $('<tr class="setting"><td class="key">'+key+'</td><td class="value" id="'+key+'" title="Click to edit..."></td></tr>');
+                $('.settings-table tbody').append(newSetting);
+                newSetting.find('.value').editable('', editableOptions);
+            }
         });
     }
 });
