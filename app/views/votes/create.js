@@ -1,0 +1,1 @@
+$('#votebtn<%= @model.id %>').replaceWith('<%= escape_javascript(render(partial: "votes/shr", locals: {model: @model}))%>');
