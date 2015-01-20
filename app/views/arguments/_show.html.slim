@@ -8,7 +8,7 @@
       = contextual_link_to argument_path(model), class: "read-more" do
         span.icon-right = t("read-more")
         span.fa.fa-arrow-right
-    = render partial: 'votes/shr', locals: {model: model}
+    = render partial: 'arguments/shr', locals: {model: model}
   -if (top_comment = model.top_comment(show_trashed?)).present?
     = link_to argument_path(model) + "#commentstitle" do
       section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]

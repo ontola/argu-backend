@@ -9,7 +9,8 @@ class MotionsController < ApplicationController
     current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
     @opinions = Opinion.ordered policy_scope(@motion.opinions.trashed(show_trashed?))
-    @voted = Vote.where(voteable: @motion, voter: current_profile).last.try(:for) unless current_user.blank?
+    @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
+    @vote ||= Vote.new
 
     respond_to do |format|
       format.html # show.html.erb

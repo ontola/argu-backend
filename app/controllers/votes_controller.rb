@@ -7,7 +7,7 @@ class VotesController < ApplicationController
       @model = Motion.find params[:motion_id]
     end
     authorize @model, :vote?
-    @vote = Vote.find_or_create_by(voteable: @model, voter: current_profile, forum: @model.forum).update(for: params[:for])
+    (@vote = Vote.find_or_create_by(voteable: @model, voter: current_profile, forum: @model.forum)).update(for: params[:for])
     respond_to do |format|
       if @vote
         @model.reload

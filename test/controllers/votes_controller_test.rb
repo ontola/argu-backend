@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Votes::MotionsControllerTest < ActionController::TestCase
+class VotesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   test "should post create" do
@@ -11,20 +11,19 @@ class Votes::MotionsControllerTest < ActionController::TestCase
     end
 
     assert_response :success
-    assert assigns(:motion)
+    assert assigns(:model)
     assert assigns(:vote)
   end
 
-  test "should return 304 if vote already exists" do
+  test "should not create new vote when existing one is present" do
     sign_in users(:user2)
 
     assert_no_difference('Vote.count') do
       post :create, motion_id: motions(:one), for: :neutral, format: :js
     end
 
-    assert_response 304
-    assert assigns(:motion)
+    assert_response 200
+    assert assigns(:model)
     assert assigns(:vote)
   end
-
 end
