@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117165637) do
+ActiveRecord::Schema.define(version: 20150120132908) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 20150117165637) do
     t.integer  "comments_count",                  default: 0,     null: false
     t.integer  "votes_abstain_count",             default: 0,     null: false
     t.integer  "creator_id"
+    t.integer  "forum_id"
   end
 
   add_index "opinions", ["id"], name: "index_opinions_on_id", using: :btree

@@ -1,0 +1,16 @@
+.modal-container
+  .overlay
+  .modal.col-1
+    header
+      h1= t('motions.move.header')
+    .box
+      section
+        .form
+          p= t('motions.move.body')
+
+        = semantic_form_for resource, method: :put do |f|
+          p= t('move.current_forum') + resource.forum.web_url
+          = f.inputs do
+            = f.input :forum
+          = f.actions do
+            = f.action :submit, :as => :button, label: t('move.button_label')

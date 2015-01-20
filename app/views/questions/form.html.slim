@@ -4,7 +4,7 @@
     .box
       section.section-info.que-bg
         span = t("questions.type")
-      = form_for([@forum, @question], multipart: true) do |f|
+      = semantic_form_for([@forum, @question], multipart: true) do |f|
         section.smallpadded
           - if @question.errors.any?
             #error_explanation
@@ -22,9 +22,13 @@
           /p.helpertext= t("motions.form.helper.themes")
           = f.file_field :cover_photo
 
-          - if policy(@question).trash?
-            = f.label :is_trashed
-            = f.check_box :is_trashed
+          -if policy(@question).trash?
+            =render layout: 'application/danger_zone' do
+              - if policy(@question).trash?
+                = f.label :is_trashed
+                = f.check_box :is_trashed
+              -if policy(@question).move?
+                = f.input :f_move, as: :link, url: question_move_url(@question), input_html: {data: {remote: true}, class: 'btn btn--warning'}
 
           /TODO invert arguments only visible when in edit, not in new.
             <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>

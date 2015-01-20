@@ -60,6 +60,11 @@ class RestrictivePolicy
     staff?
   end
 
+  # Move items between forums
+  def move?
+    staff?
+  end
+
   def trash?
     staff?
   end

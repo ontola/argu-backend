@@ -71,3 +71,5 @@ nl:
     type_technological: "Technologisch"
     type_discussion: "In discussie"
     type_other: "Overig"
+    move:
+      body: "Alle bijbehorende argumenten enz. zullen meeverplaatst worden"

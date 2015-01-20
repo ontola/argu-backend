@@ -28,8 +28,6 @@ class Motion < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }
   validates :forum_id, :creator_id, presence: true
 
-# Custom methods
-
   def cap_title
     self.title[0] = self.title[0].upcase
     self.title
@@ -47,8 +45,36 @@ class Motion < ActiveRecord::Base
     title
   end
 
+  def invert_arguments
+    false
+  end
+
+  def invert_arguments=(invert)
+    if invert != "0"
+      self.arguments.each do |a|
+        a.update_attributes pro: !a.pro
+      end
+    end
+  end
+
   def is_main_motion?(tag)
     self.tags.reject { |a,b| a.motion == b }.first == tag
+  end
+
+  def move_to(forum, unlink_questions = true)
+    Motion.transaction do
+      old_forum = self.forum
+      self.forum = forum
+      self.save
+      self.arguments.update_all forum_id: forum.id
+      self.opinions.update_all forum_id: forum.id
+      self.votes.update_all forum_id: forum.id
+      self.question_answers.delete_all if unlink_questions
+      self.taggings.update_all forum_id: forum.id
+      old_forum.decrement :motions_count
+      forum.increment :motions_count
+    end
+    return true
   end
 
   def pro_count
@@ -80,18 +106,6 @@ class Motion < ActiveRecord::Base
   def trim_data
     self.title = title.strip
     self.content = content.strip
-  end
-
-  def invert_arguments
-    false
-  end
-
-  def invert_arguments=(invert)
-    if invert != "0"
-      self.arguments.each do |a|
-        a.update_attributes pro: !a.pro
-      end
-    end
   end
 
 # Scopes

@@ -8,8 +8,7 @@
     -if policy(@page).web_url?
       = f.input :web_url
     - if policy(@page).is_owner?
-      .danger[style="border: 0.15em solid indianred; margin-bottom: 0.5em;"]
-        pre[style="background-color: indianred; line-height: 2.3em; color: whitesmoke; margin-bottom: 0.5em;"]= t('forums.settings.danger')
+      =render layout: 'danger_zone' do
         = f.input :visibility, as: :select, collection: Forum.visibilities.keys, include_blank: false
         = f.input :f_delete, as: :link, url: delete_page_url(@page), input_html: {data: {remote: true}, class: 'btn btn--warning'}
 

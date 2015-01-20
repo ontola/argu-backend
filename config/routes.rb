@@ -29,9 +29,14 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :questions, except: [:index, :new, :create]
+  resources :questions, except: [:index, :new, :create] do
+    get 'move'            => 'questions#move'
+    put 'move'            => 'questions#move!'
+  end
 
   resources :motions, except: [:index, :new, :create] do
+    get 'move'            => 'motions#move'
+    put 'move'            => 'motions#move!'
     post 'vote/:for'      => 'votes/motions#create',   as: 'vote'
     delete 'vote'         => 'votes/motions#destroy',  as: 'vote_delete'
   end

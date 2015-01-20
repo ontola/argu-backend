@@ -106,11 +106,28 @@ class MotionsController < ApplicationController
     end
   end
 
+  # GET /motions/1/move
+  def move
+    @motion = Motion.find_by_id params[:motion_id]
+    authorize @motion, :move?
+  end
+
+  def move!
+    @motion = Motion.find_by_id params[:id]
+    authorize @motion, :move?
+    @forum = Forum.find_by_id permit_params[:forum_id]
+    authorize @forum, :update?
+
+    if @motion.move_to @forum
+      redirect_to @motion
+    else
+      redirect_to edit_motion_url @motion
+    end
+  end
+
 private
   def permit_params
-    pol = policy(@motion || Motion)
-    pars = pol.permitted_attributes
-    params.require(:motion).permit(*pars)
+    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
   end
 
   def get_context

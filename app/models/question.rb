@@ -18,6 +18,8 @@ class Question < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5, maximum: 255 }
   validates :forum_id, :creator_id, presence: true
 
+  attr_accessor :include_motions
+
   def creator
     super || Profile.first_or_create(username: 'Onbekend')
   end
@@ -26,10 +28,24 @@ class Question < ActiveRecord::Base
     title
   end
 
-
-  #def save_taggings
-  #  self.taggings.save
-  #end
+  def move_to(forum, include_motions = false)
+    ActiveRecord::Base.transaction do
+      old_forum = self.forum
+      self.forum = forum
+      self.save
+      self.votes.update_all forum_id: forum.id
+      if include_motions
+        self.motions.each do |m|
+          m.move_to forum, false
+        end
+      else
+        self.question_answers.delete_all
+      end
+      old_forum.decrement :questions_count
+      forum.increment :questions_count
+    end
+    return true
+  end
 
   def supped_content
     content \

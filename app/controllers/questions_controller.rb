@@ -93,6 +93,25 @@ class QuestionsController < ApplicationController
     end
   end
 
+  # GET /motions/1/move
+  def move
+    @question = Question.find_by_id params[:question_id]
+    authorize @question, :move?
+  end
+
+  def move!
+    @question = Question.find_by_id params[:question_id]
+    authorize @question, :move?
+    @forum = Forum.find_by_id permit_params[:forum_id]
+    authorize @forum, :update?
+
+    if @question.move_to @forum, permit_params[:include_motions]
+      redirect_to @question
+    else
+      redirect_to edit_question_url @question
+    end
+  end
+
 private
   def permit_params
     params.require(:question).permit(*policy(@question || Question).permitted_attributes)
