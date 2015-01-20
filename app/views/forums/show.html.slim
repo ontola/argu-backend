@@ -27,7 +27,7 @@
             span.fa.fa-group
             span.icon-left = t("join")
         - else
-          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title="test"]=link_to url_for([:new, @forum, :motion]) do
+          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title="Deel jouw idee op Argu. Deel jouw idee op Argu. Deel jouw idee op Argu. "]=link_to url_for([:new, @forum, :motion]) do
             span.fa.fa-plus
             span.icon-left= t("motions.type")
           li[data-intro=t('intro.question.create', name: @forum.name)]=link_to url_for([:new, @forum, :question]) do
