@@ -22,7 +22,7 @@ class Motion < ActiveRecord::Base
 
   parentable :questions, :forum
   resourcify
-  mount_uploader :cover_photo, ImageUploader
+  mount_uploader :cover_photo, CoverUploader
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }

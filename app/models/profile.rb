@@ -10,7 +10,7 @@ class Profile < ActiveRecord::Base
   has_many :pages, inverse_of: :owner
 
   mount_uploader :profile_photo, AvatarUploader
-  mount_uploader :cover_photo, ImageUploader
+  mount_uploader :cover_photo, CoverUploader
 
   pica_pica :profile_photo
 

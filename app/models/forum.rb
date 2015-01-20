@@ -14,9 +14,9 @@ class Forum < ActiveRecord::Base
   friendly_id :web_url, use: [:slugged, :finders]
   acts_as_ordered_taggable_on :tags
 
-  mount_uploader :profile_photo, ImageUploader
+  mount_uploader :profile_photo, AvatarUploader
   process_in_background :profile_photo
-  mount_uploader :cover_photo, ImageUploader
+  mount_uploader :cover_photo, CoverUploader
 
   validates_integrity_of :profile_photo
   validates_processing_of :profile_photo

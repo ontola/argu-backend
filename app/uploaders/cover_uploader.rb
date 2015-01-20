@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class ImageUploader < CarrierWave::Uploader::Base
+class CoverUploader < CarrierWave::Uploader::Base
   include ::CarrierWave::Backgrounder::Delay
 
   # Include RMagick or MiniMagick support:
@@ -35,7 +35,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "#{model.class.to_s.pluralize.underscore}/#{model.id}"
+    "#{model.class.to_s.pluralize.underscore}/#{model.id}/cover"
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
