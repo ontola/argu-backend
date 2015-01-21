@@ -70,8 +70,8 @@ group :development, :test do
   gem 'minitest-rails', '~> 2.1.1'
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'byebug'
-  #gem 'meta_request'
-  #gem 'better_errors'
+  gem 'meta_request'
+  gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
   gem 'spring', '~> 1.2.0'
   gem 'coffee-rails', '~> 4.1.0'

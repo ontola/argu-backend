@@ -7,7 +7,8 @@ class MembershipsController < ApplicationController
     authorize @membership, :create?
 
     if @membership.save
-      redirect_to params[:r].presence || @membership.forum
+      redirect_to params[:r].presence || @membership.forum,
+                  status: request.fullpath.include?('vote') ? 307 : 302
     else
       render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
     end

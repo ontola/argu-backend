@@ -6,10 +6,13 @@ class VotesController < ApplicationController
     elsif params[:motion_id].present?
       @model = Motion.find params[:motion_id]
     end
-    authorize @model, :vote?
-    (@vote = Vote.find_or_create_by(voteable: @model, voter: current_profile, forum: @model.forum)).update(for: params[:for])
+    authorize @model.forum, :show?
+
     respond_to do |format|
-      if @vote
+      if !current_profile.member_of? @model.forum
+        format.js { render partial: 'forums/join', layout: false, locals: { forum: @model.forum, r: request.fullpath } }
+        format.html { render template: 'forums/join', locals: { forum: @model.forum, r: request.fullpath } }
+      elsif (@vote = Vote.find_or_create_by(voteable: @model, voter: current_profile, forum: @model.forum)).update(for: params[:for])
         @model.reload
         save_vote_to_stats @vote
         format.html { redirect_to @model, notice: '_Successfully voted_' }
