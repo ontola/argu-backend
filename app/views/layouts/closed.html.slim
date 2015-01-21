@@ -45,3 +45,5 @@ body
   .container
     = yield
   =javascript_include_tag "closed"
+  - if Rails.env.production? || Rails.env.test?
+    = render partial: 'analytics'

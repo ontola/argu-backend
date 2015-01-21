@@ -27,8 +27,13 @@ class MotionsController < ApplicationController
     authorize @motion
     current_context @motion
     respond_to do |format|
-      format.html { render 'form' }
-      format.json { render json: @motion }
+      if !current_profile.member_of? @motion.forum
+        format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath } }
+        format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath } }
+      else
+        format.html { render 'form' }
+        format.json { render json: @motion }
+      end
     end
   end
 
@@ -104,6 +109,26 @@ class MotionsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to @motion.get_parent.model }
       format.json { head :no_content }
+    end
+  end
+
+  # GET /motions/1/convert
+  def convert
+    @motion = Motion.find_by_id params[:motion_id]
+    authorize @motion, :move?
+  end
+
+  def convert!
+    @motion = Motion.find_by_id params[:motion_id]
+    authorize @motion, :move?
+    @forum = Forum.find_by_id permit_params[:forum_id]
+    authorize @motion.forum, :update?
+
+    result = @motion.convert_to convertible_param_to_model(permit_params[:f_convert])
+    if result
+      redirect_to result[:new]
+    else
+      redirect_to edit_motion_url @motion
     end
   end
 

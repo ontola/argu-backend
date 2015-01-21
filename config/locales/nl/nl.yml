@@ -135,3 +135,6 @@ nl:
   move:
     current_forum: "Huidig forum:"
     button_label: "Verplaats"
+  convert:
+    current_class: "Huidig type:"
+  join: "Word lid"

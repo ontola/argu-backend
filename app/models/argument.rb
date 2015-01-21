@@ -1,4 +1,3 @@
-include HasRestfulPermissions              # This seems superfluous
 
 class Argument < ActiveRecord::Base
   include ProCon

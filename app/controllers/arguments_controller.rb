@@ -28,7 +28,11 @@ class ArgumentsController < ApplicationController
     @argument.assign_attributes({pro: %w(con pro).index(params[:pro]) })
 
     respond_to do |format|
-      if params[:motion_id].present?
+      if !current_profile.member_of? @argument.forum
+        format.js { render partial: 'forums/join', layout: false, locals: { forum: @argument.forum, r: request.fullpath } }
+        format.html { render template: 'forums/join', locals: { forum: @argument.forum, r: request.fullpath } }
+      elsif params[:motion_id].present?
+        format.js { render js: "window.location = #{request.url.to_json}" }
         format.html { render :form }
         format.json { render json: @argument }
       else

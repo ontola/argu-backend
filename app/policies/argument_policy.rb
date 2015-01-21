@@ -12,7 +12,7 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def new?
-    create?
+    record.forum.open? || create?
   end
 
   def create?

@@ -1,4 +1,16 @@
 Argu::Application.routes.draw do
+  concern :moveable do
+    get 'move', action: 'move'
+    put 'move', action: 'move!'
+  end
+  concern :convertible do
+    get 'convert', action: 'convert'
+    put 'convert', action: 'convert!'
+  end
+  concern :votable do
+    post 'vote/:for' => 'votes#create', shallow: true, as: :vote
+  end
+
 
   put 'actors', to: 'actors#update'
 
@@ -29,22 +41,14 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :questions, except: [:index, :new, :create] do
-    get 'move'            => 'questions#move'
-    put 'move'            => 'questions#move!'
-  end
-
   post 'vote/:for' => 'votes#create', as: :vote
 
-  resources :motions, except: [:index, :new, :create] do
-    get 'move'            => 'motions#move'
-    put 'move'            => 'motions#move!'
-    post 'vote/:for' => 'votes#create', shallow: true, as: :vote
-  end
+  resources :questions, except: [:index, :new, :create], concerns: [:moveable, :convertible]
 
-  resources :arguments, except: [:index, :new, :create] do
+  resources :motions, except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable]
+
+  resources :arguments, except: [:index, :new, :create], concerns: [:votable] do
     resources :comments
-    post 'vote/:for' => 'votes#create', shallow: true, as: :vote
   end
 
   resources :opinions do
@@ -72,7 +76,7 @@ Argu::Application.routes.draw do
     resources :documents, only: [:edit, :update, :index, :new, :create]
     namespace :portal do
       get :settings, to: 'portal#settings'
-      post 'settings', to: 'portal#set_setting', as: :update_setting
+      post 'settings', to: 'portal#setting!', as: :update_setting
       resources :forums, only: [:new, :create]
       mount Sidekiq::Web => '/sidekiq'
     end
