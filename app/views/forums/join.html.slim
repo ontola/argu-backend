@@ -3,10 +3,11 @@
   .modal.col-1
     header
       h1= t('forums.join.header')
-    .box
+    .box.box-small
       section
         .form
           p= t('forums.join.body', forum: forum.display_name)
-          =link_to forum_memberships_path(forum.web_url, r: r||=nil), method: :post, class: 'btn btn-focus' do
-            span.fa.fa-group
-            span.icon-left= t('join')
+          .center
+            =link_to forum_memberships_path(forum.web_url, r: r||=nil), method: :post, class: 'btn btn-focus' do
+              span.fa.fa-group
+              span.icon-left= t('join')

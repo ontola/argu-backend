@@ -25,10 +25,10 @@
           li=link_to forum_memberships_path(@forum.web_url), method: :post, class: "btn-focus" do
             span.fa.fa-group
             span.icon-left= t("join")
-        li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title="Deel jouw idee op Argu. Deel jouw idee op Argu. Deel jouw idee op Argu. "]=link_to url_for([:new, @forum, :motion]), data: {remote: true} do
+        li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]=link_to url_for([:new, @forum, :motion]), data: {remote: true} do
           span.fa.fa-plus
           span.icon-left= t("motions.type")
-        li[data-intro=t('intro.question.create', name: @forum.name)]=link_to url_for([:new, @forum, :question]), data: {remote: true} do
+        li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]=link_to url_for([:new, @forum, :question]), data: {remote: true} do
           span.fa.fa-plus
           span.icon-left= t("questions.type")
         =render partial: 'application/menus/settings', locals: { resource: @forum }
