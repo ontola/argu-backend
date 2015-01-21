@@ -15,12 +15,11 @@
 //= require application/jquery.jeditable.mini.js
 //= require jquery-ui/autocomplete
 //= require jquery-ui/sortable
+//= require touche
 //= require microplugin
 //= require sifter
 //= require selectize
 //= require handlebars-v2.0.0
-// require masonry
-//= require parallax
 // Briarcliff dependencies :: GO
 //= require isotope.pkgd.min
 //= require simpleexpand
@@ -30,6 +29,5 @@
 //= require autocomplete-rails
 //= require fixedsticky
 //= require pica_pica/application
-// require briarcliff/briarcliff
 //= require cocoon
 //= require_tree ./application

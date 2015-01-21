@@ -13,6 +13,8 @@
 //= require jquery
 //= require jquery_ujs
 //= require application/jquery.jeditable.mini.js
-//= require parallax
-//= require application/scroll_smooth.js
-//= require_tree ./application/briarcliff
+//= require touche
+//= require simpleexpand
+//= require ./application/briarcliff/expand
+//= require ./application/briarcliff/scroll_smooth
+//= require ./application/briarcliff/modal
