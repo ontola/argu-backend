@@ -12,7 +12,7 @@ class Portal::PortalController < Portal::PortalBaseController
 
 
   # This routes from portal/settings instead of /portal/settings/:value b/c of jeditable's crappy implementation..
-  def set_setting
+  def setting!
     authorize :portal, :home?
 
     if Setting.set(params[:key], params[:value])
