@@ -1,4 +1,3 @@
-include HasRestfulPermissions
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
