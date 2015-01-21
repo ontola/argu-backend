@@ -19,9 +19,10 @@
             = f.text_area :content, placeholder: t("motions.form.content"), rows: "8", class: "form-input-content"
             = f.text_field :tag_list, placeholder: t("motions.form.themes"), class: "tag-list"
             = f.input :cover_photo, label: t("image")
-            = f.input :remove_cover_photo, as: :reverse_boolean
+            -if !@motion.new_record?
+              = f.input :remove_cover_photo, as: :reverse_boolean
 
-            -if policy(@motion).trash?
+            -if !@motion.new_record? && policy(@motion).trash?
               =render layout: 'application/danger_zone' do
                 - if policy(@motion).trash?
                   = f.input :is_trashed, as: :reverse_boolean
