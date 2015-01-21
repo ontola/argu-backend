@@ -4,11 +4,23 @@ class Argument < ActiveRecord::Base
   scope :argument_comments, -> { includes(:comment_threads).order(votes_pro_count: :desc).references(:comment_threads) }
 
   def top_comment(show_trashed = nil)
-    self.filtered_threads(show_trashed).first
+    comments = self.filtered_comments(show_trashed).reject(&:is_trashed)
+    root_comments = comments.reject(&:parent_id)
+    if root_comments.length > 0
+      root_comments.first
+    else
+      comments.first
+    end
   end
 
   def filtered_threads(show_trashed = nil, page = nil, order = 'created_at ASC')
-    i = comment_threads(show_trashed).where(:parent_id => nil).order(order).page(page)
+    i = comment_threads.where(:parent_id => nil).order(order).page(page)
+    i.each(&wipe) unless show_trashed
+    i
+  end
+
+  def filtered_comments(show_trashed = nil, page = nil, order = 'created_at ASC')
+    i = comment_threads.order(order).page(page)
     i.each(&wipe) unless show_trashed
     i
   end
