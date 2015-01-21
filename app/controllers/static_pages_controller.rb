@@ -12,7 +12,10 @@ class StaticPagesController < ApplicationController
   def sign_in_modal
     authorize :static_pages
     @resource ||= User.new
-    render 'devise/sessions/new', layout: false, locals: {resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user]}
+    respond_to do |format|
+      format.js { render 'devise/sessions/new', layout: false, locals: {resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
+      format.html { render 'devise/sessions/new', layout: 'closed', locals: {resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
+    end
   end
 
   def about
