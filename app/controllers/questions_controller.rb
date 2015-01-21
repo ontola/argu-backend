@@ -26,6 +26,7 @@ class QuestionsController < ApplicationController
         format.js { render partial: 'forums/join', layout: false, locals: { forum: @question.forum, r: request.fullpath } }
         format.html { render template: 'forums/join', locals: { forum: @question.forum, r: request.fullpath } }
       else
+        format.js { render js: "window.location = #{request.url.to_json}" }
         format.html { render 'form' }
         format.json { render json: @question }
       end
