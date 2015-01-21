@@ -135,3 +135,10 @@ nl:
   move:
     current_forum: "Huidig forum:"
     button_label: "Verplaats"
+  convert:
+    current_class: "Huidig type:"
+  motions:
+    convert:
+      header: "Converteer object"
+      body: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
+      body_2: "GEBRUIK DIT NIET ZOMAAR, DATA GAAT WAARSCHIJNLIJK VERLOREN"

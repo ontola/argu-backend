@@ -107,6 +107,26 @@ class MotionsController < ApplicationController
     end
   end
 
+  # GET /motions/1/convert
+  def convert
+    @motion = Motion.find_by_id params[:motion_id]
+    authorize @motion, :move?
+  end
+
+  def convert!
+    @motion = Motion.find_by_id params[:motion_id]
+    authorize @motion, :move?
+    @forum = Forum.find_by_id permit_params[:forum_id]
+    authorize @motion.forum, :update?
+
+    result = @motion.convert_to convertible_param_to_model(permit_params[:f_convert])
+    if result
+      redirect_to result[:new]
+    else
+      redirect_to edit_motion_url @motion
+    end
+  end
+
   # GET /motions/1/move
   def move
     @motion = Motion.find_by_id params[:motion_id]

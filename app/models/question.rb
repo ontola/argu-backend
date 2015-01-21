@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, ForumTaggable, Attribution
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
@@ -9,6 +9,7 @@ class Question < ActiveRecord::Base
 
   counter_culture :forum
   parentable :forum
+  convertible :votes, :taggings
   mount_uploader :cover_photo, CoverUploader
 
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }

@@ -60,7 +60,7 @@ class RestrictivePolicy
     staff?
   end
 
-  # Move items between forums
+  # Move items between forums or converting items
   def move?
     staff?
   end

@@ -93,6 +93,26 @@ class QuestionsController < ApplicationController
     end
   end
 
+  # GET /motions/1/convert
+  def convert
+    @question = Question.find_by_id params[:question_id]
+    authorize @question, :move?
+  end
+
+  def convert!
+    @question = Question.find_by_id params[:question_id]
+    authorize @question, :move?
+    @forum = Forum.find_by_id permit_params[:forum_id]
+    authorize @question.forum, :update?
+
+    result = @question.convert_to convertible_param_to_model(permit_params[:f_convert])
+    if result
+      redirect_to result[:new]
+    else
+      redirect_to edit_question_url @question
+    end
+  end
+
   # GET /motions/1/move
   def move
     @question = Question.find_by_id params[:question_id]

@@ -28,7 +28,7 @@
                 = f.input :is_trashed, as: :reverse_boolean
               -if policy(@question).move?
                 = f.input :f_move, as: :link, url: question_move_url(@question), input_html: {data: {remote: true}, class: 'btn btn--warning'}
-
+                = f.input :f_convert, as: :link, url: question_convert_url(@question), input_html: {data: {remote: true}, class: 'btn btn--warning'}
           /TODO invert arguments only visible when in edit, not in new.
             <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
             <%= f.check_box :invert_arguments %>
