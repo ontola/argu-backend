@@ -27,8 +27,13 @@ class MotionsController < ApplicationController
     authorize @motion
     current_context @motion
     respond_to do |format|
-      format.html { render 'form' }
-      format.json { render json: @motion }
+      if !current_profile.member_of? @motion.forum
+        format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath } }
+        format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath } }
+      else
+        format.html { render 'form' }
+        format.json { render json: @motion }
+      end
     end
   end
 

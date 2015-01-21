@@ -22,8 +22,13 @@ class QuestionsController < ApplicationController
     authorize @question
     current_context @question
     respond_to do |format|
-      format.html { render 'form' }
-      format.json { render json: @question }
+      if !current_profile.member_of? @question.forum
+        format.js { render partial: 'forums/join', layout: false, locals: { forum: @question.forum, r: request.fullpath } }
+        format.html { render template: 'forums/join', locals: { forum: @question.forum, r: request.fullpath } }
+      else
+        format.html { render 'form' }
+        format.json { render json: @question }
+      end
     end
   end
 
