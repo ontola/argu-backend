@@ -1,8 +1,7 @@
-.developers#developers
+.col-1.col-1-big.developers#developers
   - banner = ['prometheus', 'sanzio'].sample
   header.big[id="#{banner}" style=('background-image: url(' + root_url + asset_path("developers/#{banner}.jpg") + ');')]
     h1.jumbo debate the web
-    h2 in lower case
   nav.fixedsticky
     ul
       li
@@ -11,17 +10,20 @@
         a[href="#widgets"] widgets
       li
         a[href="#widgets"] cards
-  section.box
+  header
     h1#intro javascript SDK
-    p De mogelijkheid om met argu te verbinden kan momenteel alleen via de javascript API.
-    pre
+  .box
+    section
+      p De mogelijkheid om met argu te verbinden kan momenteel alleen via de javascript API.
       code= "<script src=\"//#{Rails.application.config.host}/argu.js\" async></script>"
-  section.box
+  header
     h1#widgets widgets
-    p Met argu widgets kan je een aangemaakte stelling op je site tonen en gebruikers inzicht en interactie bieden. Na de JavaScript API geladen te hebben worden relevante elementen automatisch geladen.
-    h2 stellingen
-    .exanation
-      table.explanation
+  .box
+    section
+      p Met argu widgets kan je een aangemaakte stelling op je site tonen en gebruikers inzicht en interactie bieden. Na de JavaScript API geladen te hebben worden relevante elementen automatisch geladen.
+    section
+      h2 voorstellen
+      table
         caption= '<motion> tag'
         thead
           tr
@@ -56,14 +58,46 @@
             td "false"
             td Als deze op "true" staat kunnen ingelogte gebruikers stemmen.
       .example
-        h2 voorbeeld
-        pre
+        p
+          b voorbeeld:
           code= '<motion id="5"></motion>'
         <motion id="#{Motion.first.id}" arguments="true"></motion>
-    h2 argumenten
-    .exanation
-      table.explanation
-        caption= '<argument> tag'
+    section
+      h2 argumenten
+      .exanation
+        table.explanation
+          caption= '<argument> tag'
+          thead
+            tr
+              th attribuut
+              th waarde
+              th standaard
+              th notities
+          tbody
+            tr
+              td id*
+              td integer
+              td
+              td id van het argument welke geladen moet worden.
+        .example
+          p
+            b voorbeeld
+            code= '<argument id="5"></argument>'
+          <argument id="#{Argument.first.id}"></argument>
+  header
+    h1#cards cards
+  .box
+    section
+      p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet scelerisque eros, ut cursus augue. Sed lacinia ac lorem ac tempor. Suspendisse potenti. Sed feugiat a dolor a aliquam. Nam tempor risus eu eros lobortis, vitae vulputate sem fermentum. Sed at faucibus magna, in egestas lectus. In pellentesque pulvinar mi at dictum. Proin magna erat, rhoncus vel gravida id, faucibus eu tellus. Aliquam adipiscing semper porta. Nullam eu interdum sapien. Pellentesque aliquam consequat ullamcorper.
+    section
+      h2 Popup
+      p De simpelste manier is om een hyperlink te gebruiken:
+      pre
+        code '<a href="" ></a>'
+    section
+      h2 Inline
+      table
+        caption= 'inline <card>'
         thead
           tr
             th attribuut
@@ -75,41 +109,14 @@
             td id*
             td integer
             td
-            td id van het argument welke geladen moet worden.
-      .example
-        h2 voorbeeld
-        pre
-          code= '<argument id="5"></argument>'
-        <argument id="#{Argument.first.id}"></argument>
-  section.box
-    h1#cards cards
-    p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus sit amet scelerisque eros, ut cursus augue. Sed lacinia ac lorem ac tempor. Suspendisse potenti. Sed feugiat a dolor a aliquam. Nam tempor risus eu eros lobortis, vitae vulputate sem fermentum. Sed at faucibus magna, in egestas lectus. In pellentesque pulvinar mi at dictum. Proin magna erat, rhoncus vel gravida id, faucibus eu tellus. Aliquam adipiscing semper porta. Nullam eu interdum sapien. Pellentesque aliquam consequat ullamcorper.
-    h2 Popup
-    p De simpelste manier is om een hyperlink te gebruiken:
-    pre
-      code '<a href="" ></a>'
-    h2 inline
-    table
-      caption= 'inline <card>'
-      thead
-        tr
-          th attribuut
-          th waarde
-          th standaard
-          th notities
-      tbody
-        tr
-          td id*
-          td integer
-          td
-          td id van de stelling welke geladen moet worden.
-        tr
-          td arguments
-          td "true"/"false"
-          td "false"
-          td Als deze op "true" staat worden ook de eerste argumenten getoond.
-        tr
-          td parties
-          td "true"/"false"
-          td "false"
-          td Als deze op "true" staat worden ook de eerste partijen getoond.
+            td id van de stelling welke geladen moet worden.
+          tr
+            td arguments
+            td "true"/"false"
+            td "false"
+            td Als deze op "true" staat worden ook de eerste argumenten getoond.
+          tr
+            td parties
+            td "true"/"false"
+            td "false"
+            td Als deze op "true" staat worden ook de eerste partijen getoond.

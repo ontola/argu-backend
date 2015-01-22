@@ -141,3 +141,5 @@ nl:
   convert:
     current_class: "Huidig type:"
   join: "Word lid"
+  view_on_argu: "bekijk & reageer op Argu"
+  embed: "embed"

@@ -3,4 +3,5 @@
 nl:
   status:
     s_404:
-      header: "Niet gevonden"
+      header: "Pagina niet gevonden"
+      body: "De link bestaat niet. Dit kan zijn doordat het object wat je zoekt verwijderd is of nooit bestaan heeft."

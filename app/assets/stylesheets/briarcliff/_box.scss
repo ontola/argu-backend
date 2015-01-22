@@ -23,6 +23,7 @@
     top: 100%;
     left: 0;
     height: .0em;
+    height: .0em;
     opacity: 0;
     background-color: $darken2;
     @include transition(.3s);
@@ -66,12 +67,16 @@
   font-weight: 800;
   letter-spacing: .04em;
   margin-bottom: .5em;
-  line-height: 1.45em;
+  line-height: 1em;
 }
 
 .box p {
   margin-bottom: .9em;
   white-space: pre-wrap;
+}
+
+.box code {
+  margin-bottom: .9em;
 }
 
 .box ol, .box ul {

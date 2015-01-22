@@ -1,145 +1,146 @@
-.blocks
-  .block.block--fill.block--full
-    .img[style='background-image: url(#{asset_path "logo-white.svg"}); height: 5em;margin: auto;background-repeat: no-repeat;background-position: center;background-size: contain;']
-.blocks
-  .block.block--full[style="padding-bottom: 2em"]
-    p.block-slogan Argu is een online discussieplatform voor ieder die mee wil denken over het oplossen van problemen. Argu maakt discussies overzichtelijk door vraagstukken, voorstellen en argumenten centraal te stellen.
-    =link_to sign_in_modal_path, class: "btn center btn-subtle btn-sticky", remote: true do
-      span.fa.fa-sign-in
-      span.icon-left login
-.blocks
-  .block.block--img
-    .img[style='background-image: url(#{asset_path "bg-landing-hong-kong.jpg"})']
-  .block.block--fill
-    .block-text
+.blocks-container
+  .blocks
+    .block.block--fill.block--full
+      .img[style='background-image: url(#{asset_path "logo-white.svg"}); height: 5em;margin: auto;background-repeat: no-repeat;background-position: center;background-size: contain;']
+  .blocks
+    .block.block--full[style="padding-bottom: 2em"]
+      p.block-slogan Argu is een online discussieplatform voor ieder die mee wil denken over het oplossen van problemen. Argu maakt discussies overzichtelijk door vraagstukken, voorstellen en argumenten centraal te stellen.
+      =link_to sign_in_modal_path, class: "btn center btn-subtle btn-sticky", remote: true do
+        span.fa.fa-sign-in
+        span.icon-left login
+  .blocks
+    .block.block--img
+      .img[style='background-image: url(#{asset_path "bg-landing-hong-kong.jpg"})']
+    .block.block--fill
+      .block-text
+        h2 politiek moet inhoudelijker
+        p.block-subtle Politieke discussies moeten gaan over het oplossen van problemen; niet over TV-optredens en one-liners.
+        a[href="#inhoud" class="expander block-link"  data-expander-target="#inhoud"]
+          span.icon-right lees meer
+          span.fa.fa-angle-down
+  .blocks.expander-content#inhoud
+    .block.block--hidden.block--full.block--big-text
       h2 politiek moet inhoudelijker
-      p.block-subtle Politieke discussies moeten gaan over het oplossen van problemen; niet over TV-optredens en one-liners.
-      a[href="#inhoud" class="expander block-link"  data-expander-target="#inhoud"]
-        span.icon-right lees meer
-        span.fa.fa-angle-down
-.blocks.expander-content#inhoud
-  .block.block--hidden.block--full.block--big-text
-    h2 politiek moet inhoudelijker
-    p Politiek bestaat te veel uit marketing en te weinig uit zinvolle, oplossingsgerichte discussies. Dat is zonde, want politieke beslissingen gaan ons allemaal aan. Leven in een democratie betekent meer dan eens in de zoveel jaar naar een stemhokje gaan; het betekent dat wij allemaal mee kunnen denken over hoe we onze grootste problemen gaan oplossen.
-    p Internet heeft veranderd hoe we met elkaar communiceren, hoe we leren en hoe we ons ontwikkelen. Social media heeft meer mensen een stem gegeven, maar heeft nog niet de inhoud en diepgang kunnen bieden die nodig is voor inhoudelijke discussies. Discussies over lastige onderwerpen passen niet in 140 karakters. Democratie heeft een modern platform nodig.
-.blocks
-  .block.block--img.block--right
-    .img[style='background-image: url(#{asset_path "bg-landing-stemmen.jpg"})']
-  .block
-    .block-text
-      h2 betere discussies
-      p.block-subtle Discussies op internet kunnen veel beter. Argu introduceert een unieke structuur om discussies overzichtelijk en oplossingsgericht te houden.
-      a[href="#beslissen" class="expander block-link"  data-expander-target="#beslissen"]
-        span.icon-right lees meer
-        span.fa.fa-angle-down
-.blocks.expander-content#beslissen
-  .block.block--hidden.block--full.block--big-text
-    h2 tijd voor goede online discussies
-    p Online discussies hebben een aantal problemen. Ze hebben vaak de neiging om na verloop van tijd onoverzichtelijk te worden. De hardste schreeuwers worden het best gehoord, terwijl de meest waardevolle reacties kunnen verdwijnen in een wolk van beledigingen. Reacties worden gepresenteerd als ellenlange welles-nietes discussies. Meningen van minderheden worden vaak ondergesneeuwd door populaire opinie.
-    p Argu is ontworpen om discussie te structureren op een inhoudelijke, neutrale en oplossingsgerichte manier. We beginnen met het identificeren van een vraagstuk (het probleem). Vervolgens mag iedereen een eigen voorstel indienen. Op deze voorstellen kan vervolgend gereageerd worden in de vorm van argumenten voor en tegen. Doordat we werken met een oplossingsgerichte structuur, houden we discussies overzichtelijk en inhoudelijk. We geven de argumenten van voorstanders en tegenstanders in eigen kolommen weer, zodat beiden de kans krijgen om hun mening zo goed mogelijk kunnen vertegenwoordigen. Discussies worden afgebakend per argument, zodat er ruimte is om de verdieping op te zoeken in een discussie. Wij laten mensen stemmen op de argumenten die zij het meest waardevol vinden in een discussie, zodat de belangrijkste redenen bovenaan komen te staan.
-.blocks
-  .block.block--img
-    .img[style='background-image: url(#{asset_path "bg-landing-idee.jpg"})']
-  .block.block--fill
-    .block-text
-      h2 nieuwe ideeën
-      p.block-subtle Deel, ontdek en bespreek innovatieve beleidsvoorstellen. Argu maakt het gemakkelijker dan ooit om een eigen voorstel te delen, handtekeningen te verzamelen en het geheel kritisch te evalueren.
-      a[href="#ideeen" class="expander block-link" data-expander-target="#ideeen"]
-        span.icon-right lees meer
-        span.fa.fa-angle-down
-.blocks.expander-content#ideeen
-  .block.block--hidden.block--full.block--big-text
-    h2 van idee naar beleid
-    p Goede ideeën zijn overal. Inzichten in specifieke problemen en oplossingen ontstaan vaak op de werkvloer, in het klaslokaal of op straat.  Helaas hebben de mensen die deze ideeën krijgen vaak niet de middelen en het politieke netwerk om verandering te realiseren.
-    p Via Argu is het makkelijk om eigen voorstellen te delen, te onderbouwen en handtekeningen te verzamelen. De aanwezigheid van politieke partijen op Argu zorgt ervoor dat de verbinding tussen de burger met een idee en de beslissingsmaker korter is dan ooit, waardoor goede ideeën makkelijker en sneller kunnen worden omgezet naar wetgeving en beleid.
-.blocks
-  .block.block--img.block--right
-    .img[style='background-image: url(#{asset_path "bg-landing-onderbouwd.jpg"})']
-  .block
-    .block-text
-      h2 een onderbouwde mening
-      p.block-subtle We worden geacht overal wat van te vinden. Argu geeft heldere lijsten van voor- en tegenargumenten, zodat een genuanceerde en onderbouwde mening voor iedereen toegankelijk is.
-      a[href="#mening" class="expander block-link" data-expander-target="#mening"]
-        span.icon-right lees meer
-        span.fa.fa-angle-down
-.blocks.expander-content#mening
-  .block.block--hidden.block--full.block--big-text
-    h2 niet alle meningen zijn gelijk
-    p Het hebben van een mening is gemakkelijk. Het hebben van een goed onderbouwde mening over lastige kwesties is dat niet: je moet je verdiepen in het onderwerp, veel informatie verzamelen uit diverse hoeken, luisteren naar verschillende voor- en tegenstanders, betrouwbare bronnen gebruiken en goed nadenken over de gevolgen voor alle betrokken belanghebbenden.
-    p Op Argu wordt iedereen uitgedaagd om de redenen achter een mening helder te maken. Zo zie je niet alleen wie wat vindt, maar ook waarom iemand dat vindt. Een heldere lijst van argumenten en een inhoudelijke discussie maakt het hebben van een onderbouwde mening stukken makkelijker.
-.blocks
-  .block.block--img
-    .img[style='background-image: url(#{asset_path "bg-landing-politiek.jpg"})']
-  .block.block--fill.block--right
-    .block-text
-      h2 kritisch stemmen
-      p.block-subtle Om politieke partijen te kunnen vergelijken, moet je weten goed weten wat ze vinden en waarom ze dat vinden. Argu maakt het inhoudelijk vergelijken van partijen makkelijker dan ooit.
-      a[href="#stemmen" class="expander block-link" data-expander-target="#stemmen"]
-        span.icon-right lees meer
-        span.fa.fa-angle-down
-.blocks.expander-content#stemmen
-  .block.block--hidden.block--full.block--big-text
-    h2 inhoudelijk partijen vergelijken
-    p Stemmen is een van de meest directe manieren om als burger invloed te hebben op beleid. Inhoudelijk en beleidsgericht stemmen is echter moeilijk. Politieke partijen begrijpen goed dat ze met vage uitspraken vaak meer kiezers trekken dan met concrete voorstellen. Zelfs in partijprogramma’s is het soms moeilijk om heldere beleidsvoorstellen te vinden. Online stemhulpen zoals de stemwijzer geven een fijn alternatief, maar laten genoeg ruimte over voor verbetering.
-    p Met Argu wordt het inhoudelijk vergelijken van politieke partijen een stuk eenvoudiger: onder een voorstel kan je direct zien wat politieke partijen er van vinden. Op de profielpagina’s van partijen staat een duidelijke lijst van punten waar de partij het mee eens is, en waar niet. Binnen deze lijst kan je zoeken op thema, zodat je direct weet wat een partij vindt van de onderwerpen die jij interessant vind.
+      p Politiek bestaat te veel uit marketing en te weinig uit zinvolle, oplossingsgerichte discussies. Dat is zonde, want politieke beslissingen gaan ons allemaal aan. Leven in een democratie betekent meer dan eens in de zoveel jaar naar een stemhokje gaan; het betekent dat wij allemaal mee kunnen denken over hoe we onze grootste problemen gaan oplossen.
+      p Internet heeft veranderd hoe we met elkaar communiceren, hoe we leren en hoe we ons ontwikkelen. Social media heeft meer mensen een stem gegeven, maar heeft nog niet de inhoud en diepgang kunnen bieden die nodig is voor inhoudelijke discussies. Discussies over lastige onderwerpen passen niet in 140 karakters. Democratie heeft een modern platform nodig.
+  .blocks
+    .block.block--img.block--right
+      .img[style='background-image: url(#{asset_path "bg-landing-stemmen.jpg"})']
+    .block
+      .block-text
+        h2 betere discussies
+        p.block-subtle Discussies op internet kunnen veel beter. Argu introduceert een unieke structuur om discussies overzichtelijk en oplossingsgericht te houden.
+        a[href="#beslissen" class="expander block-link"  data-expander-target="#beslissen"]
+          span.icon-right lees meer
+          span.fa.fa-angle-down
+  .blocks.expander-content#beslissen
+    .block.block--hidden.block--full.block--big-text
+      h2 tijd voor goede online discussies
+      p Online discussies hebben een aantal problemen. Ze hebben vaak de neiging om na verloop van tijd onoverzichtelijk te worden. De hardste schreeuwers worden het best gehoord, terwijl de meest waardevolle reacties kunnen verdwijnen in een wolk van beledigingen. Reacties worden gepresenteerd als ellenlange welles-nietes discussies. Meningen van minderheden worden vaak ondergesneeuwd door populaire opinie.
+      p Argu is ontworpen om discussie te structureren op een inhoudelijke, neutrale en oplossingsgerichte manier. We beginnen met het identificeren van een vraagstuk (het probleem). Vervolgens mag iedereen een eigen voorstel indienen. Op deze voorstellen kan gereageerd worden in de vorm van argumenten voor en argumenten tegen. We geven de argumenten van voorstanders en tegenstanders in eigen kolommen weer, zodat beiden de kans krijgen om hun mening zo goed mogelijk te vertegenwoordigen. Discussies worden afgebakend per argument, waardoor er ruimte is voor diepgaande discussies. Mensen stemmen op de argumenten die zij het meest waardevol vinden in een discussie, zodat de belangrijkste redenen bovenaan komen te staan.
+  .blocks
+    .block.block--img
+      .img[style='background-image: url(#{asset_path "bg-landing-idee.jpg"})']
+    .block.block--fill
+      .block-text
+        h2 nieuwe ideeën
+        p.block-subtle Deel, ontdek en bespreek innovatieve beleidsvoorstellen. Argu maakt het gemakkelijker dan ooit om een eigen voorstel te delen, handtekeningen te verzamelen en het geheel kritisch te evalueren.
+        a[href="#ideeen" class="expander block-link" data-expander-target="#ideeen"]
+          span.icon-right lees meer
+          span.fa.fa-angle-down
+  .blocks.expander-content#ideeen
+    .block.block--hidden.block--full.block--big-text
+      h2 van idee naar beleid
+      p Goede ideeën zijn overal. Inzichten in specifieke problemen en oplossingen ontstaan vaak op de werkvloer, in het klaslokaal of op straat.  Helaas hebben de mensen die deze ideeën krijgen vaak niet de middelen en het politieke netwerk om verandering te realiseren.
+      p Via Argu is het makkelijk om eigen voorstellen te delen, te onderbouwen en handtekeningen te verzamelen. De aanwezigheid van politieke partijen op Argu zorgt ervoor dat de verbinding tussen de burger met een idee en de beslissingsmaker korter is dan ooit, waardoor goede ideeën makkelijker en sneller kunnen worden omgezet naar wetgeving en beleid.
+  .blocks
+    .block.block--img.block--right
+      .img[style='background-image: url(#{asset_path "bg-landing-onderbouwd.jpg"})']
+    .block
+      .block-text
+        h2 een onderbouwde mening
+        p.block-subtle We worden geacht overal wat van te vinden. Argu geeft heldere lijsten van voor- en tegenargumenten, zodat een genuanceerde en onderbouwde mening voor iedereen toegankelijk is.
+        a[href="#mening" class="expander block-link" data-expander-target="#mening"]
+          span.icon-right lees meer
+          span.fa.fa-angle-down
+  .blocks.expander-content#mening
+    .block.block--hidden.block--full.block--big-text
+      h2 niet alle meningen zijn gelijk
+      p Het hebben van een mening is gemakkelijk. Het hebben van een goed onderbouwde mening over lastige kwesties is dat niet: je moet je verdiepen in het onderwerp, veel informatie verzamelen uit diverse hoeken, luisteren naar verschillende voor- en tegenstanders, betrouwbare bronnen gebruiken en goed nadenken over de gevolgen voor alle betrokken belanghebbenden.
+      p Op Argu wordt iedereen uitgedaagd om de redenen achter een mening helder te maken. Zo zie je niet alleen wie wat vindt, maar ook waarom iemand dat vindt. Een heldere lijst van argumenten en een inhoudelijke discussie maakt het hebben van een onderbouwde mening stukken makkelijker.
+  .blocks
+    .block.block--img
+      .img[style='background-image: url(#{asset_path "bg-landing-politiek.jpg"})']
+    .block.block--fill.block--right
+      .block-text
+        h2 kritisch stemmen
+        p.block-subtle Om politieke partijen te kunnen vergelijken, moet je weten goed weten wat ze vinden en waarom ze dat vinden. Argu maakt het inhoudelijk vergelijken van partijen makkelijker dan ooit.
+        a[href="#stemmen" class="expander block-link" data-expander-target="#stemmen"]
+          span.icon-right lees meer
+          span.fa.fa-angle-down
+  .blocks.expander-content#stemmen
+    .block.block--hidden.block--full.block--big-text
+      h2 inhoudelijk partijen vergelijken
+      p Stemmen is een van de meest directe manieren om als burger invloed te hebben op beleid. Inhoudelijk en beleidsgericht stemmen is echter moeilijk. Politieke partijen begrijpen goed dat ze met vage uitspraken vaak meer kiezers trekken dan met concrete voorstellen. Zelfs in partijprogramma’s is het soms moeilijk om heldere beleidsvoorstellen te vinden. Online stemhulpen zoals de stemwijzer geven een fijn alternatief, maar laten genoeg ruimte over voor verbetering.
+      p Met Argu wordt het inhoudelijk vergelijken van politieke partijen een stuk eenvoudiger: onder een voorstel kan je direct zien wat politieke partijen er van vinden. Op de profielpagina’s van partijen staat een duidelijke lijst van punten waar de partij het mee eens is, en waar niet. Binnen deze lijst kan je zoeken op thema, zodat je direct weet wat een partij vindt van de onderwerpen die jij interessant vind.
 
-- if defined?(show_sign_in) && show_sign_in.present?
-.blocks
-  .block.block--full.block--big-text
-    h2 Geïnteresseerd?
-    p Momenteel is Argu nog in ontwikkeling. We werken met een team van drie man voltijd aan het ontwikkelen van Argu. Als je een mailtje wilt ontvangen wanneer Argu publiek wordt gelanceerd, kan je jouw e-mailadres achterlaten.
-    p In de tussentijd kan je ons vinden op <a href="https://www.facebook.com/argu.co">facebook</a>. Vragen of feedback? Stuur een <a href="mailto:info@argu.nl">mail</a>.
-    =link_to 'houd me op de hoogte', sign_in_modal_path, class: "block-link", remote: true
+  - if defined?(show_sign_in) && show_sign_in.present?
+  .blocks
+    .block.block--full.block--big-text
+      h2 Geïnteresseerd?
+      p Momenteel is Argu nog in ontwikkeling. We werken met een team van drie man voltijd aan het ontwikkelen van Argu. Als je een mailtje wilt ontvangen wanneer Argu publiek wordt gelanceerd, kan je jouw e-mailadres achterlaten.
+      p In de tussentijd kan je ons vinden op <a href="https://www.facebook.com/argu.co">facebook</a>. Vragen of feedback? Stuur een <a href="mailto:info@argu.nl">mail</a>.
+      =link_to 'houd me op de hoogte', sign_in_modal_path, class: "block-link", remote: true
 
-/.blocks
-  .block.block--full
-    ul.block-references
-      li
-        img[src="http://famous-wallpapers.com/wp-content/uploads/2011/01/Clive-Owen-5-1600.jpg"]
-        p
-          i "Gewelig product. Ik zou er zo mijn naam en profielfoto bij zetten!"
-        p.block-subtle
-          b Gerard Hoofdman
-          | , hoofd van bedrijf x
-      li
-        img[src="http://wallpaperest.com/wallpapers/rachel-mcadams-face-actress_774254.jpg"]
-        p
-          i "Je neemt mij niet serieus, omdat ik aantrekkelijk ben."
-        p.block-subtle
-          b Carice van Knaphout
-          | , fotomodel x
-/.blocks
-  .block.block--full.block--fill
-    ul.block-features
-      li
-        span.fa.fa-gavel
-        h2 BEHEER
-        p.block-subtle U bepaalt wie wat mag doen en wie niet.
-      li
-        span.fa.fa-lock
-        h2 PRIVACY
-        p.block-subtle Uw forum mag volledig gesloten of openbaar zijn.
-      li
-        span.fa.fa-pie-chart
-        h2 STATISTIEKEN
-        p.block-subtle Krijg gedetailleerde statistieken over het stemgedrag en de besproken onderwerpen.
-      li
-        span.fa.fa-shield
-        h2 BEVEILIGING
-        p.block-subtle Wij stellen de hoogste eisen aan onze beveiliging.
-      li
-        span.fa.fa-life-ring
-        h2 SUPPORT
-        p.block-subtle Bij problemen helpen wij altijd snel en vriendelijk.
-      li
-        span.fa.fa-cloud
-        h2 CLOUD
-        p.block-subtle Geen gedoe. Wij hosten het forum en zorgen voor alle techniek.
-      li
-        span.fa.fa-refresh
-        h2 UPDATES
-        p.block-subtle Wij blijven Argu verbeteren zonder u te beperken.
-      li
-        span.fa.fa-bullhorn
-        h2 GO PUBLIC
-        p.block-subtle Wilt u dat uw voorstel wordt gehoor door heel Nederland? Dat kan.
+  /.blocks
+    .block.block--full
+      ul.block-references
+        li
+          img[src="http://famous-wallpapers.com/wp-content/uploads/2011/01/Clive-Owen-5-1600.jpg"]
+          p
+            i "Gewelig product. Ik zou er zo mijn naam en profielfoto bij zetten!"
+          p.block-subtle
+            b Gerard Hoofdman
+            | , hoofd van bedrijf x
+        li
+          img[src="http://wallpaperest.com/wallpapers/rachel-mcadams-face-actress_774254.jpg"]
+          p
+            i "Je neemt mij niet serieus, omdat ik aantrekkelijk ben."
+          p.block-subtle
+            b Carice van Knaphout
+            | , fotomodel x
+  /.blocks
+    .block.block--full.block--fill
+      ul.block-features
+        li
+          span.fa.fa-gavel
+          h2 BEHEER
+          p.block-subtle U bepaalt wie wat mag doen en wie niet.
+        li
+          span.fa.fa-lock
+          h2 PRIVACY
+          p.block-subtle Uw forum mag volledig gesloten of openbaar zijn.
+        li
+          span.fa.fa-pie-chart
+          h2 STATISTIEKEN
+          p.block-subtle Krijg gedetailleerde statistieken over het stemgedrag en de besproken onderwerpen.
+        li
+          span.fa.fa-shield
+          h2 BEVEILIGING
+          p.block-subtle Wij stellen de hoogste eisen aan onze beveiliging.
+        li
+          span.fa.fa-life-ring
+          h2 SUPPORT
+          p.block-subtle Bij problemen helpen wij altijd snel en vriendelijk.
+        li
+          span.fa.fa-cloud
+          h2 CLOUD
+          p.block-subtle Geen gedoe. Wij hosten het forum en zorgen voor alle techniek.
+        li
+          span.fa.fa-refresh
+          h2 UPDATES
+          p.block-subtle Wij blijven Argu verbeteren zonder u te beperken.
+        li
+          span.fa.fa-bullhorn
+          h2 GO PUBLIC
+          p.block-subtle Wilt u dat uw voorstel wordt gehoor door heel Nederland? Dat kan.
