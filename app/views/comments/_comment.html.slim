@@ -1,7 +1,7 @@
-.comment[class="#{'trashed' if c.is_trashed?}"]
+.comment[id=c.identifier class="#{'trashed' if c.is_trashed?}" itemscope itemtype="Comment"]
   .box
     section
-      p[id="#{c.id}"]= c.is_trashed? ? I18n.t('deleted') : c.body
+      p[id=c.id]= c.is_trashed? ? I18n.t('deleted') : c.body
     = render c.profile, locals= {resource: c} if c.profile.present?
     ul.btns-sticky.btns-sticky-bottom.btns-vertical.btns-list
       - if policy(c).destroy?
@@ -20,5 +20,5 @@
     .box= render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false }
   - if c.has_children?
     - c.children.each do |ch|
-      = render partial: 'comments/comment', locals: { resource: resource, c: ch, depth: depth+1 }
+      = render partial: 'comments/comment', locals: { resource: resource, c: ch }
     = link_to t('opinions.comments.more'), '/' if c.children.length > 40

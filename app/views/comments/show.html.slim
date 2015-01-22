@@ -2,8 +2,9 @@ header
   h1= t("arguments.comments.title")
 .comments
   -if @comments.present?
+    span.hidden[itemprop="commentCount"]= @argument.comments_count
     - @comments.each do |c|
-      = render partial: 'comments/comment', locals: { resource: resource, c: c, depth: 1 }
+      = render partial: 'comments/comment', locals: { resource: resource, c: c }
     = paginate @comments
 -if policy(resource).show?
   .box

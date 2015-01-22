@@ -15,8 +15,14 @@ class CommentsController < ApplicationController
     #end
 
     respond_to do |format|
-      if @comment.save!
+      if !current_profile.member_of? resource.forum
+        redirect_url = URI.parse(request.fullpath)
+        redirect_url.query= [[:comment, params[:comment]], [:parent_id, params[:parent_id]]].map { |a| a.join('=') }.join('&')
+        format.js { render partial: 'forums/join', layout: false, locals: { forum: resource.forum, r: redirect_url.to_s } }
+        format.html { render template: 'forums/join', locals: { forum: resource.forum, r: redirect_url.to_s } }
+      elsif @comment.save!
         @comment.move_to_child_of(parent) if parent.present? # Apparently, move_possible? doesn't exists anymore
+        format.js { render }
         format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: t('type_create_success', type: t('comments.type')) }
       else
         #@comment.destroy unless @comment.new_record? # TODO: this shit deletes all comments, so thats not really a great thing..

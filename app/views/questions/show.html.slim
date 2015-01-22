@@ -1,14 +1,26 @@
+-content_for :connected_web
+  meta[name="description" content="#{@question.content}"]
+  meta[property="og:title" content="#{@question.display_name}"]
+  meta[property="og:url" content="#{motion_url(@question)}"]
+  meta[property="og:description" content="#{@question.content}"]
+  meta[property="og:image" content="#{@question.cover_photo.url}"]
+  meta[property="twitter:card" content="summary"]
+  meta[property="twitter:title" content="#{@question.display_name}"]
+  meta[property="twitter:description" content="#{@question.content}"]
+  /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
+  meta[property="twitter:image" content="#{@question.cover_photo.url}" ]
 -provide :title, @question.title
 .cover-behind
   .cover-image[style="background-image: url('#{@question.cover_photo.url}'); "]
 .col-1
   div[data-intro= t("intro.question.back")]= to_parent
-  .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t("intro.question.body")]
+  .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t("intro.question.body") itemscope itemtype="http://schema.org/Question"]
     section.section-info.que-bg
       span = t("questions.type")
     section
-      h1.que-t= @question.title
-      p= @question.supped_content.html_safe
+      h1.que-t[itemprop="headline"]= @question.title
+      p[itemprop="text"]= @question.supped_content.html_safe
+      span.hidden[itemprop="answerCount"]= @question.motions_count
     - if @question.tags.present?
       = render partial: 'tags/tags', locals: {resource: @question}
     = render @question.creator, locals= {resource: @question}

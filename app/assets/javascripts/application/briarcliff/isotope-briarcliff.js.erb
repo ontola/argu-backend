@@ -73,22 +73,24 @@ $(function() {
     // bind filter button click
     $('#tags').on('click', 'a', function (e) {
         e.preventDefault();   // this prevents selecting the words in chrome on android
-        var filter = $(this).attr('data-filter'),
-                value  = this.dataset.filterValue;
+        var  _this = $(this),
+            filter = _this.attr('data-filter'),
+            value  = this.dataset.filterValue;
         filterForTag(value);
-        history.pushState({filter: filter, filterValue: value}, value + '<%= I18n.t('header_title') %>', '/' + value);
+        history.pushState({filter: filter, filterValue: value}, value + '<%= I18n.t('header_title') %>', _this.attr('data-forum-path')+'/tags/' + value);
     });
 
     $('#type').on('click', 'a', function (e) {
         e.preventDefault();   // this prevents selecting the words in chrome on android
-        var filter = $(this).attr('data-filter'),
+        var  _this = $(this),
+            filter = _this.attr('data-filter'),
                 value  = this.dataset.filterValue || "";
         filterForType(filter, filter);
         if (filter == '') {
             history.pushState({
                 filter: filter,
                 filterValue: value
-            }, value + '<%= I18n.t('header_title') %>', '/' + value);
+            }, value + '<%= I18n.t('header_title') %>', _this.attr('data-forum-path') + '/' + value);
         }
     });
 

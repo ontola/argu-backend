@@ -10,7 +10,7 @@ class CommentPolicy < RestrictivePolicy
   end
 
   def create?
-    is_member? || super
+    record.commentable.forum.open? || is_member? || super
   end
 
   def update?

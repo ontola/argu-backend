@@ -2,8 +2,8 @@
   section.section-info[class="#{@argument.pro ? 'pro' : 'con'}-bg"]
     span= @argument.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con')
   section
-    h1[class=(@argument.pro ? 'pro-t' : 'con-t')]= @argument.title
-    = content_tag :p, raw(@argument.supped_content)
+    h1[class=(@argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= @argument.title
+    = content_tag :p, raw(@argument.supped_content), itemprop: 'text'
     = print_references @argument
   =render @argument.creator, locals= {resource: @argument}
   ul.btns-list.btns-vertical.btn-sticky.btn-sticky-bottom
