@@ -12,7 +12,11 @@ section.section-info {
   line-height: 1.1em;
   background-color: $g3;
   color: white;
-  text-transform: uppercase;}
+  text-transform: uppercase;
+  + section {
+    border-top: none;
+  }
+}
 
 section.unpadded {
   padding: 0;

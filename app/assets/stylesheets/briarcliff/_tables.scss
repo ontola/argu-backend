@@ -1,10 +1,11 @@
 @import "variables";
 @import "mixins";
 
-table.styled {
+table {
   width: 100%;
   margin-bottom: 1em;
-  td, tr {
+  text-align: left;
+  td, tr, th {
     padding: .2em;
   }
   thead {
@@ -17,5 +18,15 @@ table.styled {
         background-color: $g1;
       }
     }
+  }
+  caption {
+    font-family: $font-special;
+    color: $g4;
+    font-weight: bold;
+    font-weight: 700;
+    background-color: $g0;
+    font-size: 1.2em;
+    text-align: center;
+    padding: 1em;
   }
 }
