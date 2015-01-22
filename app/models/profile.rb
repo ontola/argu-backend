@@ -57,9 +57,11 @@ class Profile < ActiveRecord::Base
     add_role :frozen
   end
 
-  # Proxy for first_public until users are able to select their own preferred forum, or it's based on last visited etc.
+  # Returns the preffered forum of the user, based on their last forum visit
   def preferred_forum
-    Forum.first_public
+    @redis ||= Redis.new
+    last_forum = @redis.get("profiles.#{self.id}.last_forum")
+    (Forum.find(last_forum) if last_forum.present?) || Forum.first_public
   end
 
   def member_of?(_forum)

@@ -32,10 +32,6 @@ class StaticPagesController < ApplicationController
 
   private
   def default_forum_path
-    if current_profile.present? && defined?(current_profile.memberships) && !current_profile.memberships.empty?
-      current_profile.preferred_forum
-    else
-      Forum.first_public
-    end
+    current_profile.present? ? current_profile.preferred_forum : Forum.first_public
   end
 end
