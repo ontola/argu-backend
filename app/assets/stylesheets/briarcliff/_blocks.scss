@@ -224,3 +224,9 @@ p.block-slogan {
     text-align: left;
   }
 }
+
+@media screen and (max-width: 1200px) {
+  .blocks-container {
+    margin-top: -5em;
+  }
+}

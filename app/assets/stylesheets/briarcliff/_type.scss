@@ -48,7 +48,7 @@ br {
   display: block;
 }
 
-p, div, small, ol, ul, li, small, span {
+p, div, small, ol, ul, li, small, span, blockquote {
   font-family: $font-sans;
 }
 
@@ -134,4 +134,24 @@ h3.title-alt {
 
 code {
   font-family: monospace;
+}
+
+blockquote {
+  font-style: italic;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  color: $g4;
+  text-align: center;
+  line-height: 1.3em;
+  quotes: "“" "”" "‘" "’";
+  &:after {
+    content: close-quote;
+    font-size: 1.5em;
+    color: $g2;
+  }
+  &:before{
+    content: open-quote;
+    font-size: 1.5em;
+    color: $g2;
+  }
 }
