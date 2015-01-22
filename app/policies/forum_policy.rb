@@ -45,7 +45,11 @@ class ForumPolicy < RestrictivePolicy
   def update?
     is_manager? || super
   end
-  
+
+  def invite?
+    @record.open? || is_manager? || is_owner?
+  end
+
   def list?
     @record.closed? || show?
   end
