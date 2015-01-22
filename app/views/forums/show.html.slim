@@ -1,90 +1,102 @@
+-content_for :connected_web
+  meta[name="description" content="#{@forum.bio}"]
+  meta[property="og:title" content="#{@forum.display_name}"]
+  meta[property="og:url" content="#{forum_url(@forum)}"]
+  meta[property="og:description" content="#{@forum.bio}"]
+  meta[property="og:image" content="#{@forum.cover_photo.url}"]
+  meta[property="twitter:card" content="summary"]
+  meta[property="twitter:title" content="#{@forum.display_name}"]
+  meta[property="twitter:description" content="#{@forum.bio}"]
+  /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
+  meta[property="twitter:image" content="#{@forum.cover_photo.url}" ]
 -provide :title, @forum.display_name
-.cover
-  -if @forum.cover_photo.url.present?
-    .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
-    span.header-attribution=@forum.cover_photo_attribution
-  .cover-header
-    .cover-container
-      .dropdown
-        h1.dropdown-trigger[href="#"]
-          span= @forum.name
+div[itemscope itemtype="Thing"]
+  .cover
+    -if @forum.cover_photo.url.present?
+      .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
+      span.header-attribution=@forum.cover_photo_attribution
+    .cover-header
+      .cover-container
+        .dropdown
+          h1.dropdown-trigger[href="#"]
+            span[itemprop="headline"]= @forum.name
+            -if Rails.configuration.epics.forum_selector
+              span.fa.fa-angle-down
           -if Rails.configuration.epics.forum_selector
+            ul.dropdown-content
+              - current_profile.present? && current_profile.memberships.each do |membership|
+                li=link_to membership.forum.display_name, url_for(membership.forum)
+              - if suggested_forums.present?
+                span.dropdown-header = t('forums.suggestions')
+                ul.tags-vertical
+                  - suggested_forums.each do |forum|
+                    li=link_to forum.display_name, url_for(forum)
+        ul.btns-list.btns-vertical
+          /TODO: Make this check the current profile, not the user
+          - if !policy(@forum).is_member?
+            li=link_to forum_memberships_path(@forum.web_url), method: :post, class: "btn-focus" do
+              span.fa.fa-group
+              span.icon-left= t("join")
+          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]=link_to url_for([:new, @forum, :motion]), data: {remote: true} do
+            span.fa.fa-plus
+            span.icon-left= t("motions.type")
+          li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]=link_to url_for([:new, @forum, :question]), data: {remote: true} do
+            span.fa.fa-plus
+            span.icon-left= t("questions.type")
+          =render partial: 'application/menus/settings', locals: { resource: @forum }
+  - if policy(@forum).show?
+    .center
+      ul.btns-list
+        li
+          a.expander[data-intro=t('intro.forum.filter')]
+            span=t("filtersort.filter_&_sort")
             span.fa.fa-angle-down
-        -if Rails.configuration.epics.forum_selector
-          ul.dropdown-content
-            - current_profile.present? && current_profile.memberships.each do |membership|
-              li=link_to membership.forum.display_name, url_for(membership.forum)
-            - if suggested_forums.present?
-              span.dropdown-header = t('forums.suggestions')
-              ul.tags-vertical
-                - suggested_forums.each do |forum|
-                  li=link_to forum.display_name, url_for(forum)
-      ul.btns-list.btns-vertical
-        /TODO: Make this check the current profile, not the user
-        - if !policy(@forum).is_member?
-          li=link_to forum_memberships_path(@forum.web_url), method: :post, class: "btn-focus" do
-            span.fa.fa-group
-            span.icon-left= t("join")
-        li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]=link_to url_for([:new, @forum, :motion]), data: {remote: true} do
-          span.fa.fa-plus
-          span.icon-left= t("motions.type")
-        li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]=link_to url_for([:new, @forum, :question]), data: {remote: true} do
-          span.fa.fa-plus
-          span.icon-left= t("questions.type")
-        =render partial: 'application/menus/settings', locals: { resource: @forum }
-- if policy(@forum).show?
-  .center
-    ul.btns-list
-      li
-        a.expander[data-intro=t('intro.forum.filter')]
-          span=t("filtersort.filter_&_sort")
-          span.fa.fa-angle-down
-  .filter-and-sort.expander-content
-    #type
-      ul.tags.tags-type
-        li
-          a.tag.tag-all.is-checked[data-filter=""]= t("filtersort.all")
-        li
-          a.tag.tag-motions[data-filter="motion"]= t("filtersort.motions")
-        li
-          a.tag.tag-questions[data-filter="question"]= t("filtersort.questions")
-    - if @forum.featured_tags.present?
-      #tags
-        ul.tags
-          a[class="tag" data-filter="filterByTag" data-filter-value=""]
-            .span.fa.fa-eraser
-          - @forum.featured_tags.each do |tag|
-            li
-              a[class="tag" data-filter='filterByTag' data-filter-value=tag]= tag
-    #sorts
-      ul.btns-list.btns-vertical
-        li
-          //TODO: Make date the default one to be checked.s
-          a[data-sort-value="updated_at" class="is-checked"]
-            span.fa.fa-fire
-            span.icon-left= t("filtersort.updated_at")
-        li
-          a[data-sort-value="created_at"]
-            span.fa.fa-clock-o
-            span.icon-left= t("filtersort.created_at")
-        /li
-          a[data-sort-value="name"]
-            span.fa.fa-sort-alpha-asc
-            span.icon-left= t("filtersort.name")
-        li
-          a[data-sort-value="score"]
-            span.fa.fa-thumbs-up
-            span.icon-left= t("filtersort.score")
-        li
-          a[data-sort-value="random" id="sort-random"]
-            span.fa.fa-gift
-            span.icon-left= t("filtersort.random")
-  .grid
-    .box.box-grid-sizer[data-intro=t('intro.forum.grid') data-position="top"]
-    -@items.each do |item|
-      = render item
-    .box.box-grid.motion[ data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]=link_to url_for([:new, @forum, :motion]), data: {remote: true} do
-      section.section-fill.sta-bg
-        h2 = t("motions.call_to_action.title")
-      section
-        p = t("motions.call_to_action.action")
+    .filter-and-sort.expander-content
+      #type
+        ul.tags.tags-type
+          li
+            a.tag.tag-all.is-checked[data-filter="" data-forum-path="#{forum_path(@forum)}"]= t("filtersort.all")
+          li
+            a.tag.tag-motions[data-filter="motion"]= t("filtersort.motions")
+          li
+            a.tag.tag-questions[data-filter="question"]= t("filtersort.questions")
+      - if @forum.featured_tags.present?
+        #tags
+          ul.tags[itemprop="keywords"]
+            a[class="tag" data-filter="filterByTag" data-filter-value="" data-forum-path="#{forum_path(@forum)}"]
+              .span.fa.fa-eraser
+            - @forum.featured_tags.each do |tag|
+              li
+                a[class="tag" rel="tag" href="#{forum_tag_path(@forum, tag)}" data-filter='filterByTag' data-filter-value=tag data-forum-path="#{forum_path(@forum)}"]= tag
+      #sorts
+        ul.btns-list.btns-vertical
+          li
+            //TODO: Make date the default one to be checked.s
+            a[data-sort-value="updated_at" class="is-checked"]
+              span.fa.fa-fire
+              span.icon-left= t("filtersort.updated_at")
+          li
+            a[data-sort-value="created_at"]
+              span.fa.fa-clock-o
+              span.icon-left= t("filtersort.created_at")
+          /li
+            a[data-sort-value="name"]
+              span.fa.fa-sort-alpha-asc
+              span.icon-left= t("filtersort.name")
+          li
+            a[data-sort-value="score"]
+              span.fa.fa-thumbs-up
+              span.icon-left= t("filtersort.score")
+          li
+            a[data-sort-value="random" id="sort-random"]
+              span.fa.fa-gift
+              span.icon-left= t("filtersort.random")
+    .grid
+      .box.box-grid-sizer[data-intro=t('intro.forum.grid') data-position="top"]
+      -@items.each do |item|
+        = render item
+      .box.box-grid.motion[ data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]=link_to url_for([:new, @forum, :motion]), data: {remote: true} do
+        section.section-fill.sta-bg
+          h2 = t("motions.call_to_action.title")
+        section
+          p = t("motions.call_to_action.action")

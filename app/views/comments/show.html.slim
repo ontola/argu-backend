@@ -2,6 +2,7 @@ header
   h1= t("arguments.comments.title")
 .comments
   -if @comments.present?
+    span.hidden[itemprop="commentCount"]= @comments.count
     - @comments.each do |c|
       = render partial: 'comments/comment', locals: { resource: resource, c: c, depth: 1 }
     = paginate @comments

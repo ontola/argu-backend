@@ -1,5 +1,14 @@
+-content_for :connected_web
+  meta[name="description" content="#{@argument.content}"]
+  meta[property="og:title" content="#{@argument.display_name}"]
+  meta[property="og:url" content="#{motion_url(@argument)}"]
+  meta[property="og:description" content="#{@argument.content}"]
+  meta[property="twitter:card" content="summary"]
+  meta[property="twitter:title" content="#{@argument.display_name}"]
+  meta[property="twitter:description" content="#{@argument.content}"]
+  /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
 -provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title)
-.col-1
+.col-1[itemscope]
   = to_parent
   =render 'body'
   =render template: 'comments/show', locals: { resource: @argument }

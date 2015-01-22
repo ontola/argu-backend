@@ -1,4 +1,4 @@
-.comment[class="#{'trashed' if c.is_trashed?}"]
+.comment[class="#{'trashed' if c.is_trashed?}" itemscope itemtype="http://schema.org/Comment"]
   .box
     section
       p[id="#{c.id}"]= c.is_trashed? ? I18n.t('deleted') : c.body
