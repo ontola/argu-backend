@@ -13,6 +13,7 @@
 
         label= t("users_email")
         = f.email_field(:email)
+        input[type='hidden' name='forum_id' value=2]
         / Default placeholder doens't apply since it tells the user to enter their own email
 
         = f.actions do

@@ -41,6 +41,7 @@ nl:
     join:
       header: "Word lid"
       body: "Word lid van het forum ''%{forum}'' en doe mee aan de discussie!"
+    invite_others: "Betrek anderen"
   activerecord:
     attributes:
       forum:
