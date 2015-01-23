@@ -6,4 +6,16 @@
   color: white;
   background-color: $red;
   padding: 0.2em .5em;
+  @include bp-medium {
+    margin-top: .3em;
+  }
+}
+
+.formtastic .inline-errors {
+  float: right;
+  width: 70%;
+  @include bp-medium{
+    width: 100%;
+    float: none;
+  }
 }

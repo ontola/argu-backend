@@ -3,33 +3,26 @@
   .box
     =semantic_form_for @user, url: settings_path, method: :put do |f|
       section
-        = f.semantic_errors :email, :base
+        = f.inputs
+          = f.semantic_errors :email, :base
 
-        label= t("users_username")
-        = f.text_field(:username)
+          = f.input :username, label: t("users_username")
+          = f.input :email, label: t("users_email") ,value: @user.email, placeholder: @user.email.blank? ? t("users_email_placeholder") : @user.email
+          = f.input :password, label: t("users_password_edit")
+          = f.input :password_confirmation, label: t("users_password_confirmation")
 
-        label= t("users_email")
-        = f.email_field(:email, value: @user.email, placeholder: @user.email.blank? ? t("users_email_placeholder") : @user.email)
+          - if @authentications.present?
+            label= t("users_oauth_coupled")
+            = render 'authentications/login_providers_connected'
 
-        label= t("users_password_edit")
-        = f.password_field :password
+          /TODO Hide authentications that are already present.
+          label= t("users_oauth_new")
+          .form-item
+            = render 'authentications/login_providers'
 
-        label= t("users_password_confirmation")
-        = f.password_field :password_confirmation
-
-        /TODO fix this. Authentications are not showing up.
-        - if @authentications.present?
-          label= t("users_oauth_coupled")
-          = render 'authentications/login_providers_connected'
-
-        /TODO Hide authentications that are already present.
-        label= t("users_oauth_new")
-        .form-item
-          = render 'authentications/login_providers'
-
-        label = t("users_cancel_title")
-        .form-item
-          = link_to t("users_cancel_title"), cancel_user_registration_path(current_user)
+          label = t("users_cancel_title")
+          .form-item
+            = link_to t("users_cancel_title"), cancel_user_registration_path(current_user)
 
         = f.actions do
           = f.action :submit, :as => :button, label: t("save")

@@ -105,6 +105,7 @@ input[type="text"].form-input-title {
     width: 50%;
     float: left;
     text-align: center;
+    clear: none;
     label {
       width: 100%;
       cursor: pointer;
@@ -196,6 +197,9 @@ input[type="text"].form-input-title {
   margin-top: 2em;
 }
 
+.formtastic li {
+  clear: both;
+}
 
 .form-small .actions {
   margin-top: 0;
