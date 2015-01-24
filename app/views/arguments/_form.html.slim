@@ -14,7 +14,7 @@
 
       = f.text_area "content", class: "form-input-content", placeholder: t("arguments.form.content"), rows: "10"
       /p.helpertext= raw t("arguments.form.helper.content")
-      - if policy(@argument).trash?
+      - if policy(@argument).trash? && !@argument.new_record?
         = f.input :is_trashed, as: :reverse_boolean
       .row
         .span8

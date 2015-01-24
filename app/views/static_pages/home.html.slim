@@ -1,18 +1,21 @@
-.col-1
-  -if current_user.present?
-    .box
-      section
-        .profile
-          =link_to profile_path(current_user.username) do
-            =image_tag current_profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
-            p=current_user.display_name
-        .group
-          ul
-            -current_profile.forums.select(:id, :profile_photo).each do |o|
-              li
-                /=link_to root_url(o, subdomain: o.web_url)
-                =link_to forum_path(o)
-                  = image_tag o.profile_photo.url(:icon), size: '16x16'
-                  = o.name
 .content
-  ==render_columns({'' => @questions}, collection_model: Question)
+  .col-3-1
+    -if current_user.present?
+      .box
+        section
+          .profile
+            =link_to profile_path(current_user.username) do
+              =image_tag current_profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
+              p=current_user.display_name
+          .group
+            ul
+              -current_profile.forums.select(:id, :slug, :name, :profile_photo).each do |o|
+                li
+                  /=link_to root_url(o, subdomain: o.web_url)
+                  =link_to forum_path(o)
+                    = image_tag o.profile_photo.url(:icon), size: '16x16'
+                    = o.name
+  .col-3-2
+    -@activities.each do |q|
+      ==render_columns(q.trackable)
+      /= render_activities(@activities)

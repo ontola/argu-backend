@@ -1,7 +1,7 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, PublicActivity::Model
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy
@@ -20,6 +20,7 @@ class Motion < ActiveRecord::Base
   convertible :votes, :taggings
   resourcify
   mount_uploader :cover_photo, CoverUploader
+  tracked owner: Proc.new{ |controller, model| controller.current_profile }
  
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }

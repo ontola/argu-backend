@@ -1,9 +1,11 @@
 class Vote < ActiveRecord::Base
-  include ArguBase
+  include ArguBase, PublicActivity::Model
 
   belongs_to :voteable, polymorphic: true, autosave: true
   belongs_to :voter, polymorphic: true
   belongs_to :forum
+
+  tracked
 
   after_validation :update_counter_cache
 

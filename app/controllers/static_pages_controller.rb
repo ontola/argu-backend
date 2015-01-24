@@ -3,7 +3,12 @@ class StaticPagesController < ApplicationController
   def home
     authorize :static_pages
   	if signed_in?
-      redirect_to default_forum_path
+      if policy(current_user).staff?
+        @activities = PublicActivity::Activity.all.order(created_at: :desc)
+        render
+      else
+        redirect_to current_profile.preferred_forum
+      end
   	else
   		render 'static_pages/about', layout: 'layouts/closed', locals: {show_sign_in: true}
 	  end

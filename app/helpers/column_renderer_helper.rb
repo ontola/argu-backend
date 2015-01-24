@@ -13,6 +13,7 @@ module ColumnRendererHelper
       when Vote then 'votes/show'
       when Opinion then 'opinions/show'
       when Question then 'questions/show'
+      when Comment then 'comments/show'
       else 'column_renderer/show'
     end
 
