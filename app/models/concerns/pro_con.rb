@@ -2,9 +2,7 @@ module ProCon
   extend ActiveSupport::Concern
 
   included do
-    include ArguBase
-    include Trashable
-    include Parentable
+    include ArguBase, Trashable, Parentable, HasReferences
 
     belongs_to :motion
     has_many :votes, as: :voteable, :dependent => :destroy
@@ -48,17 +46,6 @@ module ProCon
   def trim_data
     self.title = title.strip
     self.content = content.strip
-  end
-
-  #TODO escape content=(text)
-  def supped_content
-    refs = 0
-    content.gsub(/(\[[\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*\])(\([\w\s]*\))/) {|url,text| '<a class="reference-inline" href="%s#ref%d">%d</a>' % [Rails.application.routes.url_helpers.argument_path(self), refs += 1, refs] }
-  end
-
-  def references
-    refs = 0
-    content.scan(/\[([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)\]\(([\w\s]*)\)/).each { |r| r << 'ref' + (refs += 1).to_s }
   end
 
   def root_comments
