@@ -1,0 +1,11 @@
+.box
+  section.profile-small
+    =link_to profile_path(activity.owner.web_url) do
+      img[src=activity.owner.profile_photo.url(:icon)]
+    .info-block[style="padding: 0;"]
+      p[style="margin-bottom: 0;"]
+        b
+          =link_to activity.owner.display_name, profile_path(activity.owner.web_url)
+          |  #{yield}
+      small[style="font-size: 0.8em; color: grey;"]=l(activity.created_at, format: :long)
+  = render_columns activity.trackable

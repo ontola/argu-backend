@@ -1,0 +1,4 @@
+-if activity.trackable.questions.present?
+  | added a motion to #{link_to activity.trackable.questions.first.class_name.singularize.indefinitize, activity.trackable.questions.first}
+-else
+  | added a motion to #{link_to activity.trackable.forum.class_name.singularize.indefinitize, activity.trackable.forum}
