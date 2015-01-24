@@ -22,6 +22,7 @@ class Forum < ActiveRecord::Base
   validates_processing_of :profile_photo
   validates_download_of :profile_photo
   validates :web_url, :name, presence: true, length: {minimum: 4}
+  validates_format_of :web_url, with: /\A[a-zA-Z]\w{3,}/, message: '_moet met een letter beginnen_'
   validates :page_id, presence: true
 
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
@@ -50,5 +51,9 @@ class Forum < ActiveRecord::Base
 
   def featured_tags=(value)
     super(value.downcase.strip)
+  end
+
+  def should_generate_new_friendly_id?
+    web_url_changed?
   end
 end
