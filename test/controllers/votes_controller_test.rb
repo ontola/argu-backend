@@ -22,7 +22,7 @@ class VotesControllerTest < ActionController::TestCase
       post :create, motion_id: motions(:one), for: :neutral, format: :js
     end
 
-    assert_response 200
+    assert_response 304
     assert assigns(:model)
     assert assigns(:vote)
   end

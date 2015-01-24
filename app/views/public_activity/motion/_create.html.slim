@@ -1,4 +1,7 @@
 -if activity.trackable.questions.present?
-  | added a motion to #{link_to activity.trackable.questions.first.class_name.singularize.indefinitize, activity.trackable.questions.first}
+  - item = activity.trackable.questions.first
 -else
-  | added a motion to #{link_to activity.trackable.forum.class_name.singularize.indefinitize, activity.trackable.forum}
+  - item = activity.trackable.forum
+-content_for "activity-#{activity.id}" do
+  == t('activities.motions.create', thing: link_to(t("#{item.class_name}.type"), item, title: item.display_name))
+== render_columns item

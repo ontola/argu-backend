@@ -30,6 +30,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def create_activity(model, params)
+    destroy_recent_similar_activities model, params
+    model.create_activity params
+  end
+
   def current_scope
     current_context.context_scope(current_profile) || current_context
   end
@@ -52,6 +57,10 @@ class ApplicationController < ActionController::Base
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale
     end
+  end
+
+  def destroy_recent_similar_activities(model, params)
+    PublicActivity::Activity.delete PublicActivity::Activity.where("created_at >= :date", :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
   end
 
   def show_trashed?

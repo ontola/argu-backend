@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, PublicActivity::Model
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, PublicActivity::Common
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
@@ -11,7 +11,6 @@ class Question < ActiveRecord::Base
   parentable :forum
   convertible :votes, :taggings
   mount_uploader :cover_photo, CoverUploader
-  tracked owner: Proc.new{ |controller, model| controller.current_profile }
 
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 255 }

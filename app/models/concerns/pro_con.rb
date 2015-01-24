@@ -2,7 +2,7 @@ module ProCon
   extend ActiveSupport::Concern
 
   included do
-    include ArguBase, Trashable, Parentable, HasReferences, PublicActivity::Model
+    include ArguBase, Trashable, Parentable, HasReferences, PublicActivity::Common
 
     belongs_to :motion
     has_many :votes, as: :voteable, :dependent => :destroy
@@ -18,7 +18,6 @@ module ProCon
 
     acts_as_commentable
     parentable :motion, :forum
-    tracked owner: Proc.new{ |controller, model| controller.current_profile }
 
     def creator
       super || Profile.first_or_create(username: 'Onbekend')

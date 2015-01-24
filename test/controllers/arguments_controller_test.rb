@@ -10,9 +10,9 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     assert_response :success
     assert assigns(:argument)
-    assert assigns(:comment)
+    assert assigns(:comments)
 
-    assert_not assigns(:comment).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, "Trashed comments are visible"
+    assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, "Trashed comments are visible"
   end
 
   test "should get new pro" do

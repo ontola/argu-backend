@@ -54,3 +54,6 @@ nl:
         key_tags: "Sleuteltags"
         scope: "Vorm"
         visibility: "Zichtbaarheid"
+  votes:
+    alerts:
+      not_modified: ""

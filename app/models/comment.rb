@@ -1,8 +1,7 @@
 class Comment < ActiveRecord::Base
-  include ArguBase, Trashable, PublicActivity::Model
+  include ArguBase, Trashable, PublicActivity::Common
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
-  tracked owner: :profile
 
   after_validation :increase_counter_cache
   after_destroy :decrease_counter_cache

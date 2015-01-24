@@ -1,11 +1,9 @@
 class Vote < ActiveRecord::Base
   include ArguBase, PublicActivity::Model
 
-  belongs_to :voteable, polymorphic: true, autosave: true
+  belongs_to :voteable, polymorphic: true
   belongs_to :voter, polymorphic: true
   belongs_to :forum
-
-  tracked
 
   after_validation :update_counter_cache
 
@@ -20,8 +18,8 @@ class Vote < ActiveRecord::Base
 
   def update_counter_cache
     if self.for_was != self.for
-      self.voteable.decrement("votes_#{self.for_was}_count") if self.for_was
-      self.voteable.increment("votes_#{self.for}_count")
+      voteable.class.decrement_counter("votes_#{self.for_was}_count", voteable.id) if self.for_was
+      voteable.class.increment_counter("votes_#{self.for}_count", voteable.id)
     end
   end
 

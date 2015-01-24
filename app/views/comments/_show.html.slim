@@ -1,10 +1,8 @@
 .comment[id=model.identifier class="#{'trashed' if model.is_trashed?}" itemscope itemtype="Comment"]
   .box
     section
-      p[id=model.id]= model.is_trashed? ? I18n.t('deleted') : model.body
-    = render model.profile, locals= {resource: model} if model.profile.present?
-    ul.btns-sticky.btns-sticky-bottom.btns-vertical.btns-list
-      - if !model.is_trashed? && policy(model).create?
-        li= link_to polymorphic_url([model.commentable], parent_id: model.id), html_options = {id: model.id, class: "btn-reply"} do
-          span.fa.fa-reply
-          span.icon-left = t('reply')
+      = contextual_link_to argument_path(model.commentable) do
+        h3[class="#{model.commentable.pro ? 'pro-t' : 'con-t'}"]= model.commentable.title
+      p[id=model.id]
+        span.fa.fa-comment-o
+        = model.is_trashed? ? I18n.t('deleted') : model.body
