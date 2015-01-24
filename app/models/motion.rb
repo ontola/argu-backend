@@ -100,10 +100,51 @@ class Motion < ActiveRecord::Base
     super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
   end
 
+  def total_vote_count
+    votes_pro_count + votes_con_count + votes_neutral_count
+  end
+
   def trim_data
     self.title = title.strip
     self.content = content.strip
   end
+
+  def votes_pro_percentage
+    if votes_pro_count == 0
+      if total_vote_count == 0
+        33
+      else
+        0
+      end
+    else
+      (votes_pro_count.to_f / total_vote_count * 100).round
+    end
+  end
+
+  def votes_neutral_percentage
+    if votes_neutral_count == 0
+      if total_vote_count == 0
+        33
+      else
+        0
+      end
+    else
+      (votes_neutral_count.to_f / total_vote_count * 100).round
+    end
+  end
+
+  def votes_con_percentage
+    if votes_con_count == 0
+      if total_vote_count == 0
+        33
+      else
+        0
+      end
+    else
+      (votes_con_count.to_f / total_vote_count * 100).round
+    end
+  end
+
 
 # Scopes
 

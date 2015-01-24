@@ -10,5 +10,5 @@ nl:
     tooltips:
       argument: "belangrijk argument"
     alerts:
-      success: "Dank voor je stem!"
+      success: "Bedankt voor je stem!"
       failed: "Daar ging iets mis. Foutje aan onze kant!"
