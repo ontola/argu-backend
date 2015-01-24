@@ -37,10 +37,6 @@ div[itemscope itemtype="Thing"]
             li=link_to forum_memberships_path(@forum.web_url), method: :post, class: "btn-focus" do
               span.fa.fa-group
               span.icon-left= t("join")
-          - if policy(@forum).invite?
-            li=link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: "btn-focus" do
-              span.fa.fa-group
-              span.icon-left= t('forums.invite_others')
           li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]=link_to url_for([:new, @forum, :motion]), data: {remote: true} do
             span.fa.fa-plus
             span.icon-left= t("motions.type")
@@ -48,6 +44,10 @@ div[itemscope itemtype="Thing"]
             span.fa.fa-plus
             span.icon-left= t("questions.type")
           =render partial: 'application/menus/settings', locals: { resource: @forum }
+          - if policy(@forum).invite?
+            li=link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: "btn-focus tooltip", data: {title: t('tooltips.forum.invite')} do
+              span.fa.fa-group
+              span.icon-left= t('forums.invite_others')
   - if policy(@forum).show?
     .center
       ul.btns-list
