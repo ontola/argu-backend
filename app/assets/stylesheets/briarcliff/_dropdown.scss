@@ -25,6 +25,8 @@
   border-top-left-radius: 0;
   overflow: hidden;
   text-transform: none;
+  border: 1px solid $g2;
+  border-top: none;
   li {
     min-width: 100%;
   }
