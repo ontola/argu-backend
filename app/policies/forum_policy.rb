@@ -1,7 +1,17 @@
 class ForumPolicy < RestrictivePolicy
   class Scope < Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
     def resolve
-      scope
+      t = Forum.arel_table
+
+      scope.where(t[:visibility].eq(Forum.visibilities[:open]).
+                  or(t[:id].in(user.profile.memberships_ids)))
     end
 
   end

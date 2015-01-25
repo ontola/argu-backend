@@ -16,6 +16,10 @@
       display: inline-block;
     }
   }
+  .choices-group .choice {
+    float: left;
+    clear: none;
+  }
 }
 
 .selector-profile{
@@ -23,18 +27,32 @@
   width: 25em;
   text-transform: none;
   letter-spacing: normal;
-
-  img {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 5em;
-    height: 5em;
+  margin: 0.5em;
+  
+  .header {
+    display: inline-block;
+    h3 {
+      margin: 0.5em 0.5em 0 0;
+    }
+    .info-block {
+      margin-left: 0;
+      font-size: 0.8em;
+      color: $g2;
+      font-style: italic;
+      li {
+        line-height: 1em;
+      }
+    }
   }
 
-  h3 {
-    margin-left: 3em;
-    height: 2.4em;
+  a {
+    float: left;
+    clear: right;
+  }
+
+  img {
+    width: 5em;
+    height: 5em;
   }
 }
 
@@ -44,8 +62,4 @@
   right: 1em;
   color: $gre;
   display: none;
-}
-
-.forum-small {
-
 }

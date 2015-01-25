@@ -17,11 +17,7 @@ nav#navbar.navbar role="navigation"
               li
                 =link_to membership.forum.display_name, url_for(membership.forum)
             - if suggested_forums.present?
-              span.dropdown-header = t('forums.suggestions')
-              ul.tags-vertical
-                - suggested_forums.each do |forum|
-                  li
-                    =link_to forum.display_name, url_for(forum)
+              =link_to t('forums.discover'), forums_url, style: 'color: white;', class: 'btn-focus'
       -else
         li
           =link_to url_for(current_scope.model), class: "navbar-item"

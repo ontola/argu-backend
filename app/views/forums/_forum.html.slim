@@ -1,9 +1,13 @@
 .box.selector-profile
-  section
-    = image_tag forum.profile_photo.url(:avatar), size: '64x64'
-    h3= forum.display_name
-    .selector-check
-      .fa.fa-check
-  - if forum.bio?
-    section.section-description
-      p= forum.bio
+  .header
+    =link_to forum_path(forum) do
+      = image_tag forum.profile_photo.url(:avatar), size: '64x64'
+    =link_to forum_path(forum) do
+      h3= forum.display_name
+      /TODO: change letters for icons
+      ul.info-block
+        li= "#{forum.memberships_count} #{t('forums.statistics.memberships')}"
+        li="#{forum.questions_count} #{t('forums.statistics.questions')}"
+        li="#{forum.motions_count} #{t('forums.statistics.motions')}"
+  section.section-description
+    p= forum.bio.presence || t('forums.no_bio')

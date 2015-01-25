@@ -17,6 +17,8 @@
                   =link_to forum_path(o)
                     = image_tag o.profile_photo.url(:icon), size: '16x16'
                     = o.name
+          .group
+            =link_to t('forums.discover'), forums_url
   .activity-feed
     .activities.col-3-2
       = render_activities(@activities, layout: 'activity')

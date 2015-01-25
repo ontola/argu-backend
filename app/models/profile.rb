@@ -30,6 +30,10 @@ class Profile < ActiveRecord::Base
     has_role? 'frozen'
   end
 
+  def memberships_ids
+    memberships.pluck(:forum_id).join(',').presence
+  end
+
   def username
     owner.username
   end

@@ -8,7 +8,7 @@ class ActivityPolicy < RestrictivePolicy
     end
 
     def resolve
-      scope.where(['forum_id IN (%s)', user.profile.memberships.pluck(:forum_id).join(',')])
+      scope.where(['forum_id IN (%s)', user.profile.memberships_ids])
     end
   end
 

@@ -55,7 +55,7 @@ Argu::Application.routes.draw do
     resources :comments
   end
 
-  resources :forums, except: [:index, :edit] do
+  resources :forums, except: [:edit] do
     get :settings, on: :member
     get :statistics, on: :member
     get :selector, on: :collection

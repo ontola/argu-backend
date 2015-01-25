@@ -5,7 +5,7 @@ module ArguExtensions
       @redis ||= Redis.new
       if self.present?
         if self.model.class == Forum
-          @redis.set("profiles.#{current_profile.id}.last_forum", self.model.id) if current_profile
+          @redis.set("profiles.#{current_profile.id}.last_forum", self.model.id) if current_profile && current_profile.memberships.pluck(:forum_id).include?(self.model.id)
           self
         elsif self.parent.present?
           self.parent.context_scope(current_profile)
