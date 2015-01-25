@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
     authorize :static_pages
   	if signed_in?
       if policy(current_user).staff?
-        @activities = PublicActivity::Activity.all.order(created_at: :desc).limit(10)
+        @activities = policy_scope(Activity).order(created_at: :desc).limit(10)
         render
       else
         redirect_to current_profile.preferred_forum

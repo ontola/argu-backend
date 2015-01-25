@@ -60,7 +60,7 @@ class ApplicationController < ActionController::Base
   end
 
   def destroy_recent_similar_activities(model, params)
-    PublicActivity::Activity.delete PublicActivity::Activity.where("created_at >= :date", :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
+    Activity.delete Activity.where("created_at >= :date", :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
   end
 
   def show_trashed?

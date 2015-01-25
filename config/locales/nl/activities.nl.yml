@@ -12,3 +12,7 @@ nl:
       create: "heeft een argument geplaatst voor een %{thing}"
     comments:
       create: "heeft gereageerd op een %{thing}"
+    ui:
+      load_more: "Laad meer"
+      no_more_artivities: "Geen oudere activiteiten"
+      loading: "Bezig.."

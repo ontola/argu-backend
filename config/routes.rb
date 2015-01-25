@@ -100,6 +100,7 @@ Argu::Application.routes.draw do
   get '/privacy', to: 'documents#show', name: 'privacy'
   get '/cookies', to: 'documents#show', name: 'cookies'
 
+  get '/activities', to: 'activities#index'
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'
 end
