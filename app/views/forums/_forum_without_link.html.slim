@@ -1,0 +1,12 @@
+.box.selector-profile
+  .header
+    = image_tag forum.profile_photo.url(:avatar), size: '64x64'
+    .additional-info
+      h3= forum.display_name
+      /TODO: change letters for icons
+      ul.info-block
+        li= "#{forum.memberships_count} #{t('forums.statistics.memberships')}"
+        li="#{forum.questions_count} #{t('forums.statistics.questions')}"
+        li="#{forum.motions_count} #{t('forums.statistics.motions')}"
+  section.section-description
+    p= forum.bio.presence || t('forums.no_bio')

@@ -4,6 +4,6 @@
 
   .selector
     =semantic_form_for current_user.profile, url: memberships_forums_path, method: :post do |f|
-      =f.input :memberships, as: :partial_check_boxes, collection: @forums, class: "partial"
+      =f.input :memberships, as: :partial_check_boxes, collection: @forums, partial: 'forums/forum_without_link', class: "partial", no_links: true
       = f.actions do
         = f.action :submit, :as => :button, label: current_user.finished_intro? ? t('save') : t('intro.initial.start_argu')

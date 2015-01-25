@@ -14,7 +14,7 @@ class PartialCheckBoxesInput < Formtastic::Inputs::CheckBoxesInput
                     false,
                     extra_html_options(choice).merge(:id => choice_input_dom_id(choice), :required => false)
                 )
-                template.concat  template.render partial: 'forums/forum', object: choice
+                template.concat  template.render partial: (options[:partial].presence ? options[:partial] : 'forums/forum'), object: choice, locals: {forum: choice}
               end
             end
           }.join("\n").html_safe
