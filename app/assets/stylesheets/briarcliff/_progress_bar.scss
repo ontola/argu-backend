@@ -1,46 +1,17 @@
 @import "variables";
 @import "mixins";
 
-.btn {
-  color: white;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: .8em;
-  padding: .5em .8em .4em .8em;
-  background-color: $blu;
-  border: none;
-  -webkit-appearance: none;
-  border-radius: 0;
-  width: auto;
-  display: inline-block;
-  line-height: 2em;
-  height: 3em;
-  position: relative;
-  right: 0;
-  bottom: 0;
-  margin-bottom: 1em;
-  cursor: pointer;
-  &:hover {
-    background-color: $blud;
-    text-decoration: none;
-  }
-  &:active {
-    background-color: $g5;
-  }
-}
-
 .progress-bar {
   display: block;
   margin-bottom: 1em;
   width: 100%;
   overflow: hidden;
-  @include border-radius;
 
   li {
     display: inline-block;
     margin: 0 0;
     width: 33.3%;
-    @include box-shadow;
+    //@include box-shadow;
   }
   span {
     width: 100%;
@@ -51,10 +22,14 @@
     position: relative;
     font-size: .9em;
     color: white;
-
+    border-left: solid .3em $transparant;
+    border-right: solid .3em $transparant;
+    @include border-radius;
+    @include box-shadow;
   }
   .btn-pro {
     background-color: $gre;
+    border-left: none;
   }
   .btn-neu {
     background-color: $g3;
@@ -62,5 +37,6 @@
   .btn-con {
     background-color: $red;
     margin-right: 0;
+    border-right: none;
   }
 }
