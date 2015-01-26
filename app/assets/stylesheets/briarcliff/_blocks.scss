@@ -224,20 +224,18 @@ p.block-slogan {
   }
 }
 
-.expander.expanded {
-  display: inline-block;
-}
-.expander.collapsed:after{
-  content: "lees meer";
-}
-.expander.expanded:after{
-  content: "inklappen";
-}
+.block {
+  .expander.collapsed:after {
+    content: "lees meer";
+  }
+  .expander.expanded:after {
+    content: "inklappen";
+  }
 
-.expander--hidden.collapsed {
-  display: none;
+  .expander--hidden.collapsed {
+    display: none;
+  }
 }
-
 @media screen and (max-width: 1200px) {
   .blocks-container {
     margin-top: -5em;
