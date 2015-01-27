@@ -101,6 +101,7 @@ $grey_light: $g0;
     border-color: white !important;
     &:hover, &.expanded  {
       background-color: white !important;
+      color: $primary !important;
       * {
         color: $primary !important;
       }
@@ -118,8 +119,6 @@ $grey_light: $g0;
 .block--full {
   width: 100%;
   height: auto;
-  padding-top: 4em;
-  padding-bottom: 4em;
 }
 
 .block-link{
@@ -225,6 +224,18 @@ p.block-slogan {
   }
 }
 
+.block {
+  .expander.collapsed:after {
+    content: "lees meer";
+  }
+  .expander.expanded:after {
+    content: "inklappen";
+  }
+
+  .expander--hidden.collapsed {
+    display: none;
+  }
+}
 @media screen and (max-width: 1200px) {
   .blocks-container {
     margin-top: -5em;

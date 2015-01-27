@@ -1,4 +1,7 @@
 .blocks-container
+  /.blocks
+    .block.block--img-head
+      .img[style='background-image: url(#{asset_path "bg-landing-hong-kong.jpg"})']
   .blocks
     .block.block--fill.block--full
       .img[style='background-image: url(#{asset_path "logo-white.svg"}); height: 5em;margin: auto;background-repeat: no-repeat;background-position: center;background-size: contain;']
@@ -16,8 +19,6 @@
         h2 politiek moet inhoudelijker
         p.block-subtle Politieke discussies moeten gaan over het oplossen van problemen; niet over TV-optredens en one-liners.
         a[href="#inhoud" class="expander block-link"  data-expander-target="#inhoud"]
-          span.icon-right lees meer
-          span.fa.fa-angle-down
   .blocks.expander-content#inhoud
     .block.block--hidden.block--full.block--big-text
       h2 politiek moet inhoudelijker
@@ -31,8 +32,6 @@
         h2 betere discussies
         p.block-subtle Discussies op internet kunnen veel beter. Argu introduceert een unieke structuur om discussies overzichtelijk en oplossingsgericht te houden.
         a[href="#beslissen" class="expander block-link"  data-expander-target="#beslissen"]
-          span.icon-right lees meer
-          span.fa.fa-angle-down
   .blocks.expander-content#beslissen
     .block.block--hidden.block--full.block--big-text
       h2 tijd voor goede online discussies
@@ -46,8 +45,6 @@
         h2 nieuwe ideeën
         p.block-subtle Deel, ontdek en bespreek innovatieve beleidsvoorstellen. Argu maakt het gemakkelijker dan ooit om een eigen voorstel te delen, handtekeningen te verzamelen en het geheel kritisch te evalueren.
         a[href="#ideeen" class="expander block-link" data-expander-target="#ideeen"]
-          span.icon-right lees meer
-          span.fa.fa-angle-down
   .blocks.expander-content#ideeen
     .block.block--hidden.block--full.block--big-text
       h2 van idee naar beleid
@@ -61,8 +58,6 @@
         h2 een onderbouwde mening
         p.block-subtle We worden geacht overal wat van te vinden. Argu geeft heldere lijsten van voor- en tegenargumenten, zodat een genuanceerde en onderbouwde mening voor iedereen toegankelijk is.
         a[href="#mening" class="expander block-link" data-expander-target="#mening"]
-          span.icon-right lees meer
-          span.fa.fa-angle-down
   .blocks.expander-content#mening
     .block.block--hidden.block--full.block--big-text
       h2 niet alle meningen zijn gelijk
@@ -76,17 +71,27 @@
         h2 kritisch stemmen
         p.block-subtle Om politieke partijen te kunnen vergelijken, moet je weten goed weten wat ze vinden en waarom ze dat vinden. Argu maakt het inhoudelijk vergelijken van partijen makkelijker dan ooit.
         a[href="#stemmen" class="expander block-link" data-expander-target="#stemmen"]
-          span.icon-right lees meer
-          span.fa.fa-angle-down
   .blocks.expander-content#stemmen
     .block.block--hidden.block--full.block--big-text
       h2 inhoudelijk partijen vergelijken
       p Stemmen is een van de meest directe manieren om als burger invloed te hebben op beleid. Inhoudelijk en beleidsgericht stemmen is echter moeilijk. Politieke partijen begrijpen goed dat ze met vage uitspraken vaak meer kiezers trekken dan met concrete voorstellen. Zelfs in partijprogramma’s is het soms moeilijk om heldere beleidsvoorstellen te vinden. Online stemhulpen zoals de stemwijzer geven een fijn alternatief, maar laten genoeg ruimte over voor verbetering.
       p Met Argu wordt het inhoudelijk vergelijken van politieke partijen een stuk eenvoudiger: onder een voorstel kan je direct zien wat politieke partijen er van vinden. Op de profielpagina’s van partijen staat een duidelijke lijst van punten waar de partij het mee eens is, en waar niet. Binnen deze lijst kan je zoeken op thema, zodat je direct weet wat een partij vindt van de onderwerpen die jij interessant vind.
-
+  .blocks
+    .block.block--img.block--right
+      .img[style='background-image: url(#{asset_path "bg-landing-lobby.jpg"})']
+    .block
+      .block-text
+        h2 sociaal lobbyen
+        p.block-subtle Invloed hebben op politiek is niet voor iedereen even toegankelijk. Argu introduceert een nieuwe manier van lobbyen waarmee iedereen met een goed idee wordt gehoord.
+        a[href="#lobby" class="expander block-link" data-expander-target="#lobby"]
+  .blocks.expander-content#lobby
+    .block.block--hidden.block--full.block--big-text
+      h2 een lobby voor ieders belang
+      p Lobbyisten hebben niet de best denkbare naam. Dat is jammer, want iedereen kan een lobbyist zijn. Iedereen kan een belang behartigen en zich inzetten voor politieke vooruitgang. Het is echter zo dat dit een lastig proces is, waardoor organisaties met veel geld er behoorlijk goed in zijn. Dat schept een kromme verhouding tussen de kiezer en de beslisser.
+      p Op Argu krijgt iedereen een eerlijke kans om eigen ideeën te delen en te onderbouwen. Daarna krijgen ook anderen de kans om zich in de discussie te mengen, waardoor iedereen zijn of haar belang kan vertegenwoordigen op een transparante en sociale manier.
   - if defined?(show_sign_in) && show_sign_in.present?
   .blocks
-    .block.block--full.block--big-text
+    .block.block--full.block--big-text.block--fill
       h2 Geïnteresseerd?
       p Momenteel is Argu nog in ontwikkeling. We werken met een team van drie man voltijd aan het ontwikkelen van Argu. Als je een mailtje wilt ontvangen wanneer Argu publiek wordt gelanceerd, kan je jouw e-mailadres achterlaten.
       p In de tussentijd kan je ons vinden op <a href="https://www.facebook.com/argu.co">facebook</a>. Vragen of feedback? Stuur een <a href="mailto:info@argu.nl">mail</a>.

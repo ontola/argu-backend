@@ -8,8 +8,8 @@ $(document).ready(function() {
                 if (target.length) {
                     history.pushState(null, null, '#' + this.hash.slice(1));
                     $('html,body').animate({
-                        scrollTop: target.offset().top
-                    }, 1000);
+                        scrollTop: target.offset().top - 200
+                    }, 600);
                     return false;
                 }
             }
