@@ -2,12 +2,17 @@
 @import "mixins";
 
 .selector {
+  li {
+    list-style: none;
+    clear: none;
+  }
 
   input[type="checkbox"] {
     display: none;
   }
 
-  input[type="checkbox"] + div{
+  input[type="checkbox"] + div:hover{
+    background-color: lighten($gre, 56%);
   }
 
   input[type="checkbox"]:checked + div{
@@ -16,44 +21,18 @@
       display: inline-block;
     }
   }
-  .choices-group .choice {
-    float: left;
-    clear: none;
+  label{
+    width: auto;
+    display: initial;
+    padding: 0;
+    margin: 0;
+    line-height: initial;
   }
 }
 
 .selector-profile{
-  display: inline-block;
-  width: 25em;
   text-transform: none;
   letter-spacing: normal;
-  margin: 0.5em;
-  
-  .header {
-    display: inline-block;
-    h3 {
-      margin: 0.5em 0.5em 0 0;
-    }
-    .info-block {
-      margin-left: 0;
-      font-size: 0.8em;
-      color: $g2;
-      font-style: italic;
-      li {
-        line-height: 1em;
-      }
-    }
-  }
-
-  a, .additional-info, img {
-    float: left;
-    clear: right;
-  }
-
-  img {
-    width: 5em;
-    height: 5em;
-  }
 }
 
 .selector-check {

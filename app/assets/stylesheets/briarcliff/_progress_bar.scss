@@ -6,12 +6,12 @@
   margin-bottom: 1em;
   width: 100%;
   overflow: hidden;
-
+  @include box-shadow;
+  @include border-radius;
   li {
     display: inline-block;
     margin: 0 0;
     width: 33.3%;
-    //@include box-shadow;
   }
   span {
     width: 100%;
@@ -22,10 +22,8 @@
     position: relative;
     font-size: .9em;
     color: white;
-    border-left: solid .3em $transparant;
-    border-right: solid .3em $transparant;
-    @include border-radius;
-    @include box-shadow;
+    border-left: solid .1em white;
+    border-right: solid .1em white;
   }
   .btn-pro {
     background-color: $gre;

@@ -111,3 +111,31 @@
   margin-left: 1.8em;
   margin-right: -1em;
 }
+
+.profile-box {
+  .header {
+    display: inline-block;
+    h3 {
+      margin: 0.5em 0em 0.1em 0.2em;
+    }
+    .info-block {
+      margin-left: 0;
+      font-size: 0.8em;
+      color: $g2;
+      font-style: italic;
+      li {
+        line-height: 1em;
+      }
+    }
+  }
+
+  a, .additional-info, img {
+    float: left;
+    clear: right;
+  }
+
+  img {
+    width: 5em;
+    height: 5em;
+  }
+}

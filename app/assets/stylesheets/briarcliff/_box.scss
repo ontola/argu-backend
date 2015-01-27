@@ -6,7 +6,8 @@
   background-color: white;
   margin: 0 auto;
   margin-bottom: 1em;
-  //overflow: hidden;
+  overflow: hidden;
+  display: block;
   @include border-radius;
   @include box-shadow;
 }
@@ -51,6 +52,9 @@
   &:hover {
     opacity: 1;
     text-decoration: none !important;
+    *{
+      text-decoration: none !important;
+    }
   }
   &:active {
     position: relative;
@@ -67,7 +71,7 @@
   font-weight: 800;
   letter-spacing: .04em;
   margin-bottom: .5em;
-  line-height: 1em;
+  line-height: 1.15em;
 }
 
 .box p {

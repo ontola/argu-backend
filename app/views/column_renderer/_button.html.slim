@@ -1,6 +1,5 @@
-= contextual_link_to buttons_url({buttons_param: defined?(buttons_param) && buttons_param, buttons_url: buttons_url, pro: pro}), (buttons_options||=nil) do
-  .box.box-link
-    section
-      h3
-        span.fa.fa-plus
-        span.icon-left = I18n.t("#{collection_model.name.pluralize.downcase}.new_btn")
+.box.box-link= contextual_link_to buttons_url({buttons_param: defined?(buttons_param) && buttons_param, buttons_url: buttons_url, pro: pro}), (buttons_options||=nil) do
+  section
+    h3
+      span.fa.fa-plus
+      span.icon-left = I18n.t("#{collection_model.name.pluralize.downcase}.new_btn")

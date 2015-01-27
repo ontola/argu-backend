@@ -8,12 +8,13 @@
   right: 0;
   z-index: 20;
   pointer-events: none;
+  overflow-y: auto;
   @include animation(from-top .5s ease-out);
   .box {
     pointer-events: auto;
   }
-  @include bp-medium {
-    position: absolute;
+  @include bp-medium{
+    height: 100%;
   }
 }
 
