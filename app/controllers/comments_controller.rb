@@ -22,7 +22,7 @@ class CommentsController < ApplicationController
         format.html { render template: 'forums/join', locals: { forum: resource.forum, r: redirect_url.to_s } }
       elsif @comment.save!
         @comment.move_to_child_of(parent) if parent.present? # Apparently, move_possible? doesn't exists anymore
-        @comment.create_activity action: :create, recipient: resource, parameters: { parent: parent.id }, owner: current_profile, forum_id: resource.forum.id
+        @comment.create_activity action: :create, recipient: resource, parameters: { parent: parent.try(:id) }, owner: current_profile, forum_id: resource.forum.id
         format.js { render }
         format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: t('type_create_success', type: t('comments.type')) }
       else

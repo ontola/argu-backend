@@ -20,7 +20,6 @@ class VotesController < ApplicationController
         format.json { render json: @vote, status: :not_modified }
       elsif @vote.update(for: params[:for])
         create_activity @vote, action: :create, parameters: {for: @vote.for}, recipient: @vote.voteable, owner: current_profile, forum_id: @vote.forum.id
-        #@vote.create_activity action: :create, parameters: {for: @vote.for}, recipient: @vote.voteable, owner: current_profile
         @model.reload
         save_vote_to_stats @vote
         format.html { redirect_to @model, notice: t('votes.alerts.success') }

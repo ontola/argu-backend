@@ -14,8 +14,7 @@
     -if policy(resource).web_url?
       = f.input :web_url
     - if policy(resource).is_owner?
-      .danger[style="border: 0.15em solid indianred; margin-bottom: 0.5em;"]
-        pre[style="background-color: indianred; line-height: 2.3em; color: whitesmoke; margin-bottom: 0.5em;"]= t('forums.settings.danger')
+      = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
         = f.input :visibility, as: :select, collection: Forum.visibilities.keys, include_blank: false
         -if policy(resource).change_owner?
           = f.input :page
