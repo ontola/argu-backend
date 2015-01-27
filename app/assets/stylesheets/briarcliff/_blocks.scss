@@ -236,6 +236,13 @@ p.block-slogan {
     display: none;
   }
 }
+
+.blocks-container {
+  @include bp-small {
+    font-size: .9em;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .blocks-container {
     margin-top: -5em;

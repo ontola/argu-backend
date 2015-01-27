@@ -10,6 +10,7 @@ Argu::Application.configure do
   config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
   config.epics.forum_selector = true                  # Show forum selector in nav bar?
   config.epics.sign_up = false                        # Can users sign up outside of invitations
+  config.epics.activities = true                      # Can users see the activity index / timeline?
 
   # Code is not reloaded between requests
   config.cache_classes = true

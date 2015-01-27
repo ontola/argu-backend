@@ -34,7 +34,7 @@ div[itemscope itemtype="Thing"]
         ul.btns-list.btns-vertical
           /TODO: Make this check the current profile, not the user
           - if !policy(@forum).is_member?
-            li=link_to forum_memberships_path(@forum.web_url), method: :post, class: "btn-focus" do
+            li=link_to forum_memberships_path(@forum.web_url), method: :post do
               span.fa.fa-group
               span.icon-left= t("join")
           li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]=link_to url_for([:new, @forum, :motion]), data: {remote: true} do

@@ -9,7 +9,8 @@ nav#navbar.navbar role="navigation"
       -if Rails.configuration.epics.forum_selector
         li.dropdown[data-intro= t("intro.header.forums") data-position="right"]
           .dropdown-trigger.navbar-item[href="#"]
-            span= home_text
+            span.fa.fa-tags
+            span.icon-left= home_text
             span.fa.fa-angle-down
           ul.dropdown-content
             span.dropdown-header =t("forums.navheader")
@@ -17,31 +18,18 @@ nav#navbar.navbar role="navigation"
               li
                 =link_to membership.forum.display_name, url_for(membership.forum)
             - if suggested_forums.present?
-              =link_to t('forums.discover'), forums_url, style: 'color: white;', class: 'btn-focus'
+            =link_to t('forums.discover'), forums_url, style: 'color: white;', class: 'btn-focus'
       -else
         li
           =link_to url_for(current_scope.model), class: "navbar-item"
             span.fa.fa-home
             span.icon-left= home_text
-      -if Rails.configuration.epics.tag_system
-        li
-          .dropdown-trigger.navbar-item href="#"
-            span.fa.fa-tags
-            span.icon-left= t("tags.type")
-            .dropdown-content.dropdown-col-2
-              .dropdown-col-2-1
-                h3= t("tags.trending")
-                ul.tags-vertical
-                  li
-                    a.tag href="" geertwilders
-              .dropdown-col-2-1
-                h3= t("tags.my")
-                ul
-                  li
-                    a.tag href=""
-                      span energie
+      -if Rails.configuration.epics.activities
+        li= link_to activities_path, class: "navbar-item" do
+          span.fa.fa-rss
+          span.icon-left=t('header.activities')
       -if Rails.configuration.epics.advanced_navigation
-        li= link_to tags_motions_path do
+        li= link_to tags_motions_path, class: "navbar-item" do
           span.fa.fa-lightbulb-o
           span.icon-left=t('header.motions')
     ul.navbar-links.navbar-links-right

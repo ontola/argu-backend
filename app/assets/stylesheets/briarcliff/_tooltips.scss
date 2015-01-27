@@ -15,10 +15,10 @@
   content: attr(data-title);
   text-transform: none;
   position: absolute;
-  left: 0%;
+  right: 0%;
   bottom: 100%;
   min-width: 15em;
   pointer-events: none;
   @include border-radius;
-  @include box-shadow;
+  @include box-shadow-intense;
 }

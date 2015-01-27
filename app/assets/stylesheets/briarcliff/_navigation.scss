@@ -29,7 +29,7 @@
 }
 
 .navbar-item span {
-  @include bp-medium(){
+  @include bp-medium-large(){
     display: none;
     &.fa{
       display: inline-block;

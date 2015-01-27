@@ -57,6 +57,7 @@ nl:
     400: "Fout in de aanvraag"
   header:
     motions: "voorstellen"
+    activities: "Activiteit"
     questions: "vraagstukken"
   site:
     description: "Argu is een online discussieplatform waar argumenten centraal staan."
