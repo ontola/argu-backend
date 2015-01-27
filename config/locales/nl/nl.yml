@@ -143,3 +143,5 @@ nl:
   join: "Word lid"
   view_on_argu: "bekijk & reageer op Argu"
   embed: "embed"
+  forms:
+    danger_zone: "Gevarenzone"

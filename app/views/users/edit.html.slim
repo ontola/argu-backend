@@ -20,9 +20,10 @@
           .form-item
             = render 'authentications/login_providers'
 
-          label = t("users_cancel_title")
-          .form-item
-            = link_to t("users_cancel_title"), cancel_user_registration_path(current_user)
+          = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+            label = t("users_cancel_title")
+            .form-item
+              = link_to t("users_cancel_title"), cancel_user_registration_path(current_user)
 
         = f.actions do
           = f.action :submit, :as => :button, label: t("save")

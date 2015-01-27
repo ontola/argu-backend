@@ -7,7 +7,6 @@ nl:
       title: "instellingen"
       general: "algemeen"
       managers: "beheerders"
-      danger: "Pas op!"
     statistics:
       title: "statistiek"
       memberships: "leden"
