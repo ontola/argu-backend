@@ -1,7 +1,7 @@
 div[itemscope itemtype="http://schema.org/BreadcrumbList"]
   div[itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"]
-    =link_to current_context.parent.contextized_url, itemprop: 'item' do
-      .box.box-link
+    =link_to current_context.parent.contextized_url, itemprop: 'item', class:"" do
+     .box.box-link
         section
           h3[class=current_context.parent.model.class.to_s.downcase]
             span.fa.fa-arrow-up

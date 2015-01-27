@@ -1,4 +1,6 @@
 .col-1
-  h1= t('intro.initial.headers.selector')
-  .selector
+  header
+    h1= t('intro.initial.headers.selector')
+  .selector.grid
+    .box-grid-sizer
     =render collection: @forums, partial: 'forums/forum'

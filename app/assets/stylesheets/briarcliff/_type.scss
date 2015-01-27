@@ -55,6 +55,9 @@ p, div, small, ol, ul, li, small, span, blockquote {
 a {
   text-decoration: none;
   color: $blu;
+}
+
+p a {
   &:hover {
     text-decoration: underline;
   }
