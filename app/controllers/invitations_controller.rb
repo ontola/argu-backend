@@ -25,7 +25,11 @@ class InvitationsController < Devise::InvitationsController
     end
   end
 
+  def update
+    super
+  end
+
   def after_accept_path_for(resource)
-    edit_profile_path(resource.profile)
+    edit_profile_path(resource.username)
   end
 end

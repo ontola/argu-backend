@@ -34,6 +34,10 @@ class Forum < ActiveRecord::Base
     name
   end
 
+  def creator
+    page.owner
+  end
+
   def page=(value)
     super Page.friendly.find(value)
   end

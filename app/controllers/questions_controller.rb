@@ -54,7 +54,7 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
-        @question.create_activity action: :create, recipient: @question.forum, owner: current_profile, forum_id: @forum.id
+        create_activity @question, action: :create, recipient: @question.forum, owner: current_profile, forum_id: @forum.id
         format.html { redirect_to @question, notice: t('type_save_success', type: t('motions.type')) }
         format.json { render json: @question, status: :created, location: @question }
       else

@@ -1,0 +1,17 @@
+@import "variables";
+@import "mixins";
+
+.notification-settings-header {
+  i {
+    font-size: 2em;
+    width: 50%;
+  }
+}
+.notification-settings-half-block {
+  display: inline-block;
+  width: 70%;
+  span.center {
+    width: 50%;
+    display: inline-block;
+  }
+}

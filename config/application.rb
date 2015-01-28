@@ -9,6 +9,7 @@ if defined?(Bundler)
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
   Bundler.require(:default, Rails.env)
+  require 'sidekiq/middleware/i18n'
 end
 
 module Argu
@@ -55,6 +56,6 @@ module Argu
     config.i18n.enforce_available_locales = true
     I18n.enforce_available_locales = false
     config.i18n.default_locale = :nl #zodat nederlands de standaard weergegeven taal is.
-    #I18n.locale = :nl
+    I18n.locale = :nl
   end
 end

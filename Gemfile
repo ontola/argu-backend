@@ -5,7 +5,6 @@ gem 'sass-rails',   '~> 5.0.0'
 gem 'rails', '~>4.2.0'
 
 gem 'simple_text', '~> 0.0.21'
-gem 'indefinite_article'
 
 ##################DB########################
 gem 'pg', '0.17.1'
@@ -23,6 +22,9 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.1.2'
 gem 'cocoon', '~> 1.2.6'
 gem 'redis', '~> 3.2.0'
+gem 'indefinite_article'
+gem 'rest-client'
+gem 'multimap'
 gem 'bugsnag'
 
 ##################Features########################

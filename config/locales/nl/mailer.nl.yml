@@ -1,0 +1,8 @@
+#Dutch motions translations
+
+nl:
+  mailer:
+    subject: "Er is een %{type} toegevoegd aan %{item}"
+    direct_mail:
+      header: "Hoi %recipient.name%"
+      first_paragraph: "Iemand heeft een bericht voor je achtergelaten"
