@@ -23,7 +23,7 @@
               = f.input :remove_cover_photo, as: :reverse_boolean
 
             -if !@motion.new_record? && policy(@motion).trash?
-              =render layout: 'application/danger_zone' do
+              = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
                 - if policy(@motion).trash?
                   = f.input :is_trashed, as: :reverse_boolean
                 -if policy(@motion).move?
