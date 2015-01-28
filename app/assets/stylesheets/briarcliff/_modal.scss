@@ -14,7 +14,7 @@
     pointer-events: auto;
   }
   @include bp-medium{
-    height: 100%;
+    position: absolute;
   }
 }
 
@@ -32,7 +32,7 @@
   z-index: 11;
   height: 100%;
   overflow: hidden;
-  background-color: $darken4;
+  background-color: $darken_overlay;
   @include animation(fade-in .5s ease-in);
 }
 
