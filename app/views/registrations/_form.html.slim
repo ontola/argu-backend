@@ -1,0 +1,13 @@
+= semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name, r: (defined?(r) ? r : ''))) do |f|
+  .form-small
+    /= devise_error_messages!
+    = f.inputs do
+
+      = f.input :username, autofocus: :autofocus, placeholder: t('users.registrations.placeholders.username'), label: t("users_username")
+      = f.input :email, label: t("users_email"), placeholder: t('users.registrations.placeholders.email')
+      = f.input :password, label: t("users_password"), placeholder: t('users.registrations.placeholders.password')
+      = f.input :password_confirmation, label: t("users_password_confirmation"), placeholder: t('users.registrations.placeholders.password_confirmation')
+      = f.input :r, as: :hidden
+
+    = f.actions do
+      = f.action :submit, :as => :button, label: t("sign_up")

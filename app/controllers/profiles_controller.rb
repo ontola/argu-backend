@@ -37,8 +37,24 @@ class ProfilesController < ApplicationController
     @profile = @user.profile
     authorize @profile
 
+    updated = nil
+    Profile.transaction do
+      updated = @profile.update_attributes(permit_params)
+
+      if has_valid_token?(@user)
+        @user.update finished_intro: true
+        get_access_tokens(@user).each do |at|
+          @profile.memberships.create(forum: at.item) if at.item.class == Forum
+        end
+      end
+    end
     respond_to do |format|
-      if @profile.update_attributes permit_params
+      if updated && @user.r.present?
+        r = @user.r
+        @user.update r: ''
+        format.html { redirect_to r,
+                      status: r.match(/vote|comments/) ? 307 : 302 }
+      elsif updated
         format.html { redirect_to profile_update_path, notice: "Profile was successfully updated." }
         format.json { head :no_content }
       else

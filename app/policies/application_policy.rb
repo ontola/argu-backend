@@ -1,10 +1,14 @@
 class ApplicationPolicy
-  attr_reader :user, :record
+  attr_reader :context, :user, :record, :session
 
-  def initialize(user, record)
-    @user = user
+  def initialize(context, record)
+    #raise Pundit::NotAuthorizedError, "must be logged in" unless user
+    @context = context
     @record = record
   end
+
+  delegate :user, to: :context
+  delegate :session, to: :context
 
   def staff?
     user && user.profile.has_role?(:staff)
@@ -19,7 +23,7 @@ class ApplicationPolicy
   end
 
   def create?
-    @user
+    user
   end
 
   def new?
@@ -27,7 +31,7 @@ class ApplicationPolicy
   end
 
   def update?
-    @user
+    user
   end
 
   def edit?
@@ -35,15 +39,15 @@ class ApplicationPolicy
   end
 
   def trash?
-    !record.is_trashed && @user
+    !record.is_trashed && user
   end
 
   def destroy?
-    @user
+    user
   end
 
   def vote?
-    @user
+    user
   end
 
   def scope

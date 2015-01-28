@@ -8,7 +8,11 @@
         =semantic_form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f|
           = devise_error_messages!
 
-          p= "Vraag je meest betrokken vrienden om mee te doen met het oplossen van maatschappelijke problemen op Argu."
+          p Vraag je meest betrokken vrienden om mee te doen met het oplossen van maatschappelijke problemen op Argu.
+
+          -if @forum.present?
+            p
+              i= t('devise.invitations.new.forum_notice', forum: @forum.display_name)
 
           p
             b = "Je hebt nog #{current_user.invitation_limit} uitnodigingen tegoed. Gebruik ze verstandig."

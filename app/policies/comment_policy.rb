@@ -22,7 +22,7 @@ class CommentPolicy < RestrictivePolicy
   end
 
   def show?
-    Pundit.policy(user, record.forum).show? || super
+    Pundit.policy(context, record.forum).show? || super
   end
 
   def report?
@@ -32,6 +32,6 @@ class CommentPolicy < RestrictivePolicy
 private
 
   def is_member?
-    user.profile.member_of? record.commentable.forum
+    user && user.profile.member_of?(record.commentable.forum)
   end
 end

@@ -9,8 +9,10 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    redirect_to :root if !Rails.configuration.epics.sign_up
-    super
+    redirect_to :root if has_valid_token? || !Rails.configuration.epics.sign_up
+    super do |user|
+      user.update access_tokens: get_safe_raw_access_tokens
+    end
     session[:omniauth] = nil unless @user.new_record?
   end
 

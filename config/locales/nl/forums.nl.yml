@@ -42,6 +42,8 @@ nl:
       header: "Word lid"
       body: "Word lid van het forum ''%{forum}'' en doe mee aan de discussie!"
     invite_others: "Betrek anderen"
+    sign_up:
+      header: "Word lid van Argu en discussieer mee"
   activerecord:
     attributes:
       forum:

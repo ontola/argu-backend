@@ -28,12 +28,12 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def show?
-    Pundit.policy(user, record.forum).show? || super
+    Pundit.policy(context, record.forum).show? || super
   end
 
   private
 
   def is_member?
-    user.profile.member_of? record.motion.forum
+    user && user.profile.member_of?(record.motion.forum)
   end
 end

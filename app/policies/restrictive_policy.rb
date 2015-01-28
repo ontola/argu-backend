@@ -1,11 +1,14 @@
 class RestrictivePolicy
-  attr_reader :user, :record
+  attr_reader :context, :user, :record, :session
 
-  def initialize(user, record)
-    raise Pundit::NotAuthorizedError, "must be logged in" unless user
-    @user = user
+  def initialize(context, record)
+    #raise Pundit::NotAuthorizedError, "must be logged in" unless user
+    @context = context
     @record = record
   end
+
+  delegate :user, to: :context
+  delegate :session, to: :context
 
   def permitted_attributes
     attributes = []
@@ -39,7 +42,7 @@ class RestrictivePolicy
   end
 
   def logged_in?
-    @user.present?
+    user.present?
   end
 
   def new?
@@ -83,27 +86,31 @@ class RestrictivePolicy
   end
 
   def is_creator?
-    @record.creator == @user.profile
+    record.creator == user.profile
   end
 
   def scope
-    Pundit.policy_scope!(@user, @record.class)
+    Pundit.policy_scope!(user, record.class)
   end
 
   class Scope
-    attr_reader :user, :scope
+    attr_reader :context, :user, :scope, :session
 
-    def initialize(user, scope)
-      @profile = user.profile
+    def initialize(context, scope)
+      @context = context
+      @profile = user.profile if user
       @scope = scope
     end
+
+    delegate :user, to: :context
+    delegate :session, to: :context
 
     def resolve
       scope if staff?
     end
 
     def staff?
-      user && @profile.has_role?(:staff)
+      user && profile.has_role?(:staff)
     end
   end
 

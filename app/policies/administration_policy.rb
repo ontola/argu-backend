@@ -6,10 +6,10 @@ class AdministrationPolicy < Struct.new(:user, :administration)
   end
 
   def show?
-    @user.has_role? :staff
+    user.has_role? :staff
   end
 
   def list?
-    @user.has_role? :staff
+    user.has_role? :staff
   end
 end

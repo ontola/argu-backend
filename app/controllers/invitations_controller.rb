@@ -1,5 +1,10 @@
 class InvitationsController < Devise::InvitationsController
 
+  def new
+    @forum = Forum.friendly.find params[:forum]
+    super
+  end
+
   def create
     @forum = Forum.friendly.find params[:forum]
     if @forum.present?

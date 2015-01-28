@@ -49,6 +49,7 @@ Argu::Application.routes.draw do
 
   resources :arguments, except: [:index, :new, :create], concerns: [:votable] do
     resources :comments
+    patch 'comments' => 'comments#create'
   end
 
   resources :opinions do

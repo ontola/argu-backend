@@ -16,7 +16,7 @@ class PagePolicy < RestrictivePolicy
 
   ######CRUD######
   def show?
-    @record.open? || is_manager? || super
+    record.open? || is_manager? || super
   end
 
   def new?
@@ -25,7 +25,7 @@ class PagePolicy < RestrictivePolicy
 
   def create?
     # This basically means everyone, change when users can report spammers/offenders and such
-    @user.present? || super
+    user.present? || super
   end
 
   def delete?
@@ -45,7 +45,7 @@ class PagePolicy < RestrictivePolicy
   end
 
   def list?
-    @record.closed? || show?
+    record.closed? || show?
   end
 
   def statistics?
@@ -59,15 +59,15 @@ class PagePolicy < RestrictivePolicy
   #######Attributes########
   # Is the user a manager of the page or of the forum?
   def is_manager?
-    @user && @user.profile.page_memberships.where(page: @record, role: PageMembership.roles[:manager]).present? || is_owner? || staff?
+    user && user.profile.page_memberships.where(page: record, role: PageMembership.roles[:manager]).present? || is_owner? || staff?
   end
 
   def is_owner?
-    @user && @user.profile.id == @record.owner_id || staff?
+    user && user.profile.id == record.owner_id || staff?
   end
 
   def new_record?
-    @record == Page || @record.new_record?
+    record == Page || record.new_record?
   end
 
 end

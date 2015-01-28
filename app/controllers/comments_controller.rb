@@ -6,28 +6,39 @@ class CommentsController < ApplicationController
   # POST /resource/1/comments
   def create
     resource = get_commentable
-    @comment = Comment.build_from(resource, current_profile.id, params[:comment])
-    authorize @comment
-    parent = Comment.find_by_id params[:parent_id] unless params[:parent_id].blank?
-    #unless params[:parent_id].blank?
-    #  #@TODO Just let them go nuts for now, infinite parenting
-    #  @comment.move_to_child_of Comment.find_by_id params[:parent_id]
-    #end
+    if current_profile.blank?
+      authorize resource, :show?
+      redirect_url = URI.parse(request.fullpath)
+      redirect_url.query= [[:comment, CGI::escape(params[:comment])], [:parent_id, params[:parent_id]]].map { |a| a.join('=') }.join('&')
+      @resource ||= User.new r: redirect_url.to_s
+      respond_to do |format|
+        format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: redirect_url.to_s } }
+        format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: redirect_url.to_s } }
+      end
+    else
+      @comment = Comment.build_from(resource, current_profile.id, params[:comment])
+      authorize @comment
+      parent = Comment.find_by_id params[:parent_id] unless params[:parent_id].blank?
+      #unless params[:parent_id].blank?
+      #  #@TODO Just let them go nuts for now, infinite parenting
+      #  @comment.move_to_child_of Comment.find_by_id params[:parent_id]
+      #end
 
-    respond_to do |format|
-      if !current_profile.member_of? resource.forum
-        redirect_url = URI.parse(request.fullpath)
-        redirect_url.query= [[:comment, CGI::escape(params[:comment])], [:parent_id, params[:parent_id]]].map { |a| a.join('=') }.join('&')
-        format.js { render partial: 'forums/join', layout: false, locals: { forum: resource.forum, r: redirect_url.to_s } }
-        format.html { render template: 'forums/join', locals: { forum: resource.forum, r: redirect_url.to_s } }
-      elsif @comment.save!
-        @comment.move_to_child_of(parent) if parent.present? # Apparently, move_possible? doesn't exists anymore
-        @comment.create_activity action: :create, recipient: resource, parameters: { parent: parent.try(:id) }, owner: current_profile, forum_id: resource.forum.id
-        format.js { render }
-        format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: t('type_create_success', type: t('comments.type')) }
-      else
-        #@comment.destroy unless @comment.new_record? # TODO: this shit deletes all comments, so thats not really a great thing..
-        format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: '_niet gelukt_' }
+      respond_to do |format|
+        if !current_profile.member_of? resource.forum
+          redirect_url = URI.parse(request.fullpath)
+          redirect_url.query= [[:comment, CGI::escape(params[:comment])], [:parent_id, params[:parent_id]]].map { |a| a.join('=') }.join('&')
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: resource.forum, r: redirect_url.to_s } }
+          format.html { render template: 'forums/join', locals: { forum: resource.forum, r: redirect_url.to_s } }
+        elsif @comment.save!
+          @comment.move_to_child_of(parent) if parent.present? # Apparently, move_possible? doesn't exists anymore
+          @comment.create_activity action: :create, recipient: resource, parameters: { parent: parent.try(:id) }, owner: current_profile, forum_id: resource.forum.id
+          format.js { render }
+          format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: t('type_create_success', type: t('comments.type')) }
+        else
+          #@comment.destroy unless @comment.new_record? # TODO: this shit deletes all comments, so thats not really a great thing..
+          format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: '_niet gelukt_' }
+        end
       end
     end
   end
@@ -55,7 +66,7 @@ class CommentsController < ApplicationController
 private
   def get_commentable
     resource, id = request.path.split('/')[1,2]
-    return resource.singularize.classify.constantize.find(id) # TODO: this might pose a security threat
+    return resource.singularize.classify.constantize.find(id) # TODO: [SEC] this might pose a security threat
   end
 
 end

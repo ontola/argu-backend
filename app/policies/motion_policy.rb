@@ -41,7 +41,7 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def show?
-    Pundit.policy(user, record.forum).show? || super
+    Pundit.policy(context, record.forum).show? || super
   end
 
   def vote?
@@ -51,6 +51,6 @@ class MotionPolicy < RestrictivePolicy
   private
 
   def is_member?
-    user.profile.member_of? (record.forum || record.forum_id)
+    user && user.profile.member_of?(record.forum || record.forum_id)
   end
 end

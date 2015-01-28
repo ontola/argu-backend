@@ -13,7 +13,6 @@ class Forum < ActiveRecord::Base
 
   friendly_id :web_url, use: [:slugged, :finders]
   acts_as_ordered_taggable_on :tags
-
   mount_uploader :profile_photo, AvatarUploader
   process_in_background :profile_photo
   mount_uploader :cover_photo, CoverUploader
@@ -25,10 +24,22 @@ class Forum < ActiveRecord::Base
   validates_format_of :web_url, with: /\A[a-zA-Z]\w{3,}/, message: '_moet met een letter beginnen_'
   validates :page_id, presence: true
 
+  after_validation :check_access_token, if: :visible_with_a_link_changed?
+
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
 
   scope :public_forums, -> { where(visibility: Forum.visibilities[:open]) }
   scope :top_public_forums, -> { where(visibility: Forum.visibilities[:open]).order('motions_count DESC').first(50) }
+
+  def access_token
+    AccessToken.where(item: self).first.try(:access_token)
+  end
+
+  def check_access_token
+    if visible_with_a_link && access_token.blank?
+      AccessToken.create(item: self, profile: self.page.profile)
+    end
+  end
 
   def display_name
     name
