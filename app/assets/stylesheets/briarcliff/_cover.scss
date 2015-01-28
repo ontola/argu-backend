@@ -12,12 +12,13 @@
 
 .header-attribution {
   color: whitesmoke;
-  background-color: transparentize(dimgray, .4);
+  background-color: $darken3;
   position: absolute;
   top: 0em;
   right: 0em;
   font-size: 0.8em;
   z-index: 5;
+  padding: .4em;
 }
 
 .cover-container {

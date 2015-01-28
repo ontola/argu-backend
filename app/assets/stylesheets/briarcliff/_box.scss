@@ -138,8 +138,6 @@
   background-position: center;
   z-index: -1;
   @include transition(.2s);
-  @include border-radius;
-  border-bottom-radius: 0;
   &:hover{
     opacity: .8;
   }
