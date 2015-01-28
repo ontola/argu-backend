@@ -17,6 +17,7 @@ nl:
     suggestions: "suggesties"
     mine: "mijn forums"
     navheader: "Ga naar forum:"
+    leave_confirmation: "Weet je zeker dat je dit forum wilt verlaten? Je gemaakte content op het forum zal blijven bestaan."
     scope_names:
       scope_group: "Groepen"
       scope_org: "Bedrijven"

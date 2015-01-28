@@ -26,14 +26,19 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
-    @membership = Forum.find(params[:forum_id]).memberships.find params[:id]
-    authorize @membership
+    @forum = Forum.friendly.find(params[:forum_id])
+    authorize @forum, :list?
+    @membership = @forum.memberships.find_by profile_id: params[:id]
+    authorize @membership, :destroy?
+
     if @membership.destroy
       respond_to do |f|
+        f.html { redirect_to preferred_forum }
         f.js { render }
       end
     else
       respond_to do |f|
+        f.html { redirect_to preferred_forum }
         f.js { render json: {notifications: [{type: 'error', message: '_niet gelukt_'}]} }
       end
     end

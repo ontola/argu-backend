@@ -53,6 +53,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def preferred_forum
+    policy(current_profile.preferred_forum).show? ? current_profile.preferred_forum : current_profile.memberships.first.try(:forum) || Forum.first_public
+  end
+
   def set_locale
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale

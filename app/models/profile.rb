@@ -65,7 +65,8 @@ class Profile < ActiveRecord::Base
   def preferred_forum
     @redis ||= Redis.new
     last_forum = @redis.get("profiles.#{self.id}.last_forum")
-    (Forum.find(last_forum) if last_forum.present?) || Forum.first_public
+
+    (Forum.find(last_forum) if last_forum.present?) || self.memberships.first.try(:forum) || Forum.first_public
   end
 
   def member_of?(_forum)

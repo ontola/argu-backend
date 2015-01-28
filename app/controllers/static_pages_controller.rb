@@ -7,7 +7,7 @@ class StaticPagesController < ApplicationController
         @activities = policy_scope(Activity).order(created_at: :desc).limit(10)
         render
       else
-        redirect_to current_profile.preferred_forum
+        redirect_to preferred_forum
       end
   	else
   		render 'static_pages/about', layout: 'layouts/closed', locals: {show_sign_in: true}
@@ -37,6 +37,6 @@ class StaticPagesController < ApplicationController
 
   private
   def default_forum_path
-    current_profile.present? ? current_profile.preferred_forum : Forum.first_public
+    current_profile.present? ? preferred_forum : Forum.first_public
   end
 end
