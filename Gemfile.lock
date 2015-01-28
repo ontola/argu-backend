@@ -69,6 +69,8 @@ GEM
     bootstrap-sass (2.0.4.2)
     briarcliff (0.0.9)
       railties (>= 4.0)
+    bugsnag (2.7.1)
+      multi_json (~> 1.0)
     builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
@@ -378,6 +380,7 @@ DEPENDENCIES
   binding_of_caller (>= 0.7.3.pre1)
   bootstrap-sass (~> 2.0.1)
   briarcliff (~> 0.0.9)
+  bugsnag
   byebug
   capistrano (~> 3.3.3)
   capistrano-bundler (~> 1.1.3)
