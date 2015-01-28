@@ -23,6 +23,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.1.2'
 gem 'cocoon', '~> 1.2.6'
 gem 'redis', '~> 3.2.0'
+gem 'bugsnag'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
