@@ -14,7 +14,7 @@
     pointer-events: auto;
   }
   @include bp-medium{
-    height: 100%;
+    position: absolute;
   }
 }
 
