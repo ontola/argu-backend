@@ -11,10 +11,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150117165637) do
+ActiveRecord::Schema.define(version: 20150124134213) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "activities", force: :cascade do |t|
+    t.integer  "trackable_id"
+    t.string   "trackable_type"
+    t.integer  "forum_id"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+    t.string   "key"
+    t.text     "parameters"
+    t.integer  "recipient_id"
+    t.string   "recipient_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "activities", ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type", using: :btree
+  add_index "activities", ["forum_id", "trackable_id", "trackable_type"], name: "forum_trackable", using: :btree
+  add_index "activities", ["forum_id"], name: "index_activities_on_forum_id", using: :btree
+  add_index "activities", ["owner_id", "owner_type"], name: "index_activities_on_owner_id_and_owner_type", using: :btree
+  add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
+  add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
   create_table "arguments", force: :cascade do |t|
     t.text     "content",                                         null: false
@@ -94,18 +115,19 @@ ActiveRecord::Schema.define(version: 20150117165637) do
   create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.integer  "page_id"
-    t.integer  "questions_count",   default: 0,  null: false
-    t.integer  "motions_count",     default: 0,  null: false
-    t.integer  "memberships_count", default: 0,  null: false
+    t.integer  "questions_count",         default: 0,  null: false
+    t.integer  "motions_count",           default: 0,  null: false
+    t.integer  "memberships_count",       default: 0,  null: false
     t.string   "profile_photo"
     t.string   "cover_photo"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "slug"
-    t.string   "web_url",           default: "", null: false
-    t.text     "bio",               default: "", null: false
-    t.text     "featured_tags",     default: "", null: false
-    t.integer  "visibility",        default: 1
+    t.string   "web_url",                 default: "", null: false
+    t.text     "bio",                     default: "", null: false
+    t.text     "featured_tags",           default: "", null: false
+    t.integer  "visibility",              default: 1
+    t.string   "cover_photo_attribution", default: ""
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
@@ -120,25 +142,26 @@ ActiveRecord::Schema.define(version: 20150117165637) do
   add_index "memberships", ["profile_id", "forum_id"], name: "index_memberships_on_profile_id_and_forum_id", unique: true, using: :btree
 
   create_table "motions", force: :cascade do |t|
-    t.string   "title",               limit: 255,                 null: false
-    t.text     "content",                                         null: false
-    t.datetime "created_at",                                      null: false
-    t.datetime "updated_at",                                      null: false
-    t.integer  "pro_count",                       default: 0
-    t.integer  "con_count",                       default: 0
+    t.string   "title",                   limit: 255,                 null: false
+    t.text     "content",                                             null: false
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
+    t.integer  "pro_count",                           default: 0
+    t.integer  "con_count",                           default: 0
     t.integer  "tag_id"
-    t.boolean  "is_trashed",                      default: false
-    t.integer  "votes_pro_count",                 default: 0,     null: false
-    t.integer  "votes_con_count",                 default: 0,     null: false
-    t.integer  "votes_neutral_count",             default: 0,     null: false
-    t.integer  "argument_pro_count",              default: 0,     null: false
-    t.integer  "argument_con_count",              default: 0,     null: false
-    t.integer  "opinion_pro_count",               default: 0,     null: false
-    t.integer  "opinion_con_count",               default: 0,     null: false
-    t.integer  "votes_abstain_count",             default: 0,     null: false
+    t.boolean  "is_trashed",                          default: false
+    t.integer  "votes_pro_count",                     default: 0,     null: false
+    t.integer  "votes_con_count",                     default: 0,     null: false
+    t.integer  "votes_neutral_count",                 default: 0,     null: false
+    t.integer  "argument_pro_count",                  default: 0,     null: false
+    t.integer  "argument_con_count",                  default: 0,     null: false
+    t.integer  "opinion_pro_count",                   default: 0,     null: false
+    t.integer  "opinion_con_count",                   default: 0,     null: false
+    t.integer  "votes_abstain_count",                 default: 0,     null: false
     t.integer  "forum_id"
     t.integer  "creator_id"
-    t.string   "cover_photo",                     default: ""
+    t.string   "cover_photo",                         default: ""
+    t.string   "cover_photo_attribution",             default: ""
   end
 
   add_index "motions", ["forum_id"], name: "index_motions_on_forum_id", using: :btree
@@ -158,6 +181,7 @@ ActiveRecord::Schema.define(version: 20150117165637) do
     t.integer  "comments_count",                  default: 0,     null: false
     t.integer  "votes_abstain_count",             default: 0,     null: false
     t.integer  "creator_id"
+    t.integer  "forum_id"
   end
 
   add_index "opinions", ["id"], name: "index_opinions_on_id", using: :btree
@@ -219,17 +243,18 @@ ActiveRecord::Schema.define(version: 20150117165637) do
   add_index "question_answers", ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
 
   create_table "questions", force: :cascade do |t|
-    t.string   "title",           limit: 255, default: ""
-    t.text     "content",                     default: ""
+    t.string   "title",                   limit: 255, default: ""
+    t.text     "content",                             default: ""
     t.integer  "forum_id"
     t.integer  "creator_id"
-    t.boolean  "is_trashed",                  default: false
-    t.integer  "motions_count",               default: 0
-    t.integer  "votes_pro_count",             default: 0
-    t.integer  "votes_con_count",             default: 0
+    t.boolean  "is_trashed",                          default: false
+    t.integer  "motions_count",                       default: 0
+    t.integer  "votes_pro_count",                     default: 0
+    t.integer  "votes_con_count",                     default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "cover_photo",                 default: ""
+    t.string   "cover_photo",                         default: ""
+    t.string   "cover_photo_attribution",             default: ""
   end
 
   create_table "roles", force: :cascade do |t|
@@ -328,6 +353,7 @@ ActiveRecord::Schema.define(version: 20150117165637) do
   end
 
   add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "index_votes_on_voter_and_voteable_and_trashed", using: :btree
+  add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "no_duplicate_votes", unique: true, using: :btree
   add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 

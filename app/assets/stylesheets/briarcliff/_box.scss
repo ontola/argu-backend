@@ -6,7 +6,8 @@
   background-color: white;
   margin: 0 auto;
   margin-bottom: 1em;
-  //overflow: hidden;
+  overflow: hidden;
+  display: block;
   @include border-radius;
   @include box-shadow;
 }
@@ -22,6 +23,7 @@
     position: absolute;
     top: 100%;
     left: 0;
+    height: .0em;
     height: .0em;
     opacity: 0;
     background-color: $darken2;
@@ -50,6 +52,9 @@
   &:hover {
     opacity: 1;
     text-decoration: none !important;
+    *{
+      text-decoration: none !important;
+    }
   }
   &:active {
     position: relative;
@@ -66,12 +71,16 @@
   font-weight: 800;
   letter-spacing: .04em;
   margin-bottom: .5em;
-  line-height: 1.45em;
+  line-height: 1.15em;
 }
 
 .box p {
   margin-bottom: .9em;
   white-space: pre-wrap;
+}
+
+.box code {
+  margin-bottom: .9em;
 }
 
 .box ol, .box ul {

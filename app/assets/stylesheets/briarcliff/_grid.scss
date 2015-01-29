@@ -26,9 +26,6 @@
   margin: 1em 1em;
   width: 45%;
   width: calc(50% - 2em);
-  section.section-info{
-    display: none;
-  }
   @include bp-medium{
     width: 100%;
     width: calc(100% - 2em);

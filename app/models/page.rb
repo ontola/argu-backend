@@ -42,4 +42,8 @@ class Page < ActiveRecord::Base
     web_url
   end
 
+  def should_generate_new_friendly_id?
+    web_url_changed?
+  end
+
 end

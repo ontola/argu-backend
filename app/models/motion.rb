@@ -1,11 +1,7 @@
-include HasRestfulPermissions
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
-  include ArguBase
-  include Trashable
-  include Parentable
-  include ForumTaggable
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, PublicActivity::Common
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy
@@ -21,14 +17,13 @@ class Motion < ActiveRecord::Base
   before_save :cap_title
 
   parentable :questions, :forum
+  convertible :votes, :taggings
   resourcify
-  mount_uploader :cover_photo, ImageUploader
- 
+  mount_uploader :cover_photo, CoverUploader
+
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 500 }
   validates :forum_id, :creator_id, presence: true
-
-# Custom methods
 
   def cap_title
     self.title[0] = self.title[0].upcase
@@ -47,8 +42,36 @@ class Motion < ActiveRecord::Base
     title
   end
 
+  def invert_arguments
+    false
+  end
+
+  def invert_arguments=(invert)
+    if invert != "0"
+      self.arguments.each do |a|
+        a.update_attributes pro: !a.pro
+      end
+    end
+  end
+
   def is_main_motion?(tag)
     self.tags.reject { |a,b| a.motion == b }.first == tag
+  end
+
+  def move_to(forum, unlink_questions = true)
+    Motion.transaction do
+      old_forum = self.forum
+      self.forum = forum
+      self.save
+      self.arguments.update_all forum_id: forum.id
+      self.opinions.update_all forum_id: forum.id
+      self.votes.update_all forum_id: forum.id
+      self.question_answers.delete_all if unlink_questions
+      self.taggings.update_all forum_id: forum.id
+      old_forum.decrement :motions_count
+      forum.increment :motions_count
+    end
+    return true
   end
 
   def pro_count
@@ -77,22 +100,51 @@ class Motion < ActiveRecord::Base
     super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
   end
 
+  def total_vote_count
+    votes_pro_count + votes_con_count + votes_neutral_count
+  end
+
   def trim_data
     self.title = title.strip
     self.content = content.strip
   end
 
-  def invert_arguments
-    false
-  end
-
-  def invert_arguments=(invert)
-    if invert != "0"
-      self.arguments.each do |a|
-        a.update_attributes pro: !a.pro
+  def votes_pro_percentage
+    if votes_pro_count == 0
+      if total_vote_count == 0
+        33
+      else
+        0
       end
+    else
+      (votes_pro_count.to_f / total_vote_count * 100).round
     end
   end
+
+  def votes_neutral_percentage
+    if votes_neutral_count == 0
+      if total_vote_count == 0
+        33
+      else
+        0
+      end
+    else
+      (votes_neutral_count.to_f / total_vote_count * 100).round
+    end
+  end
+
+  def votes_con_percentage
+    if votes_con_count == 0
+      if total_vote_count == 0
+        33
+      else
+        0
+      end
+    else
+      (votes_con_count.to_f / total_vote_count * 100).round
+    end
+  end
+
 
 # Scopes
 

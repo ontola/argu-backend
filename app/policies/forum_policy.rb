@@ -1,15 +1,26 @@
 class ForumPolicy < RestrictivePolicy
   class Scope < Scope
+    attr_reader :user, :scope
+
+    def initialize(user, scope)
+      @user = user
+      @scope = scope
+    end
+
     def resolve
-      scope
+      t = Forum.arel_table
+
+      scope.where(t[:visibility].eq(Forum.visibilities[:open]).
+                  or(t[:id].in(user.profile.memberships_ids)))
     end
 
   end
 
   def permitted_attributes
     attributes = super
-    attributes << [:name, :bio, :tags, :featured_tags, :profile_photo, :cover_photo, :cover_photo_original_w,
-                   {memberships_attributes: [:role, :id, :profile_id, :forum_id]},
+    attributes << [:name, :bio, :tags, :featured_tags, :profile_photo, :remove_profile_photo,
+                   :cover_photo, :remove_cover_photo, :cover_photo_attribution,
+                   :cover_photo_original_w, {memberships_attributes: [:role, :id, :profile_id, :forum_id]},
                    :cover_photo_original_h, :cover_photo_box_w, :cover_photo_crop_x, :cover_photo_crop_y,
                    :cover_photo_crop_w, :cover_photo_crop_h, :cover_photo_aspect] if update?
     attributes << [:visibility, :page_id] if change_owner?
@@ -44,7 +55,11 @@ class ForumPolicy < RestrictivePolicy
   def update?
     is_manager? || super
   end
-  
+
+  def invite?
+    @record.open? || is_manager? || is_owner?
+  end
+
   def list?
     @record.closed? || show?
   end

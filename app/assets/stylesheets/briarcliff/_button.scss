@@ -67,15 +67,15 @@
 }
 
 .btn-focus {
-  background-color: $gre;
+  background-color: $gre !important;
   * {
-    color: white;
+    color: white !important;
   }
   &:hover {
-    background-color: $gred;
+    background-color: $gred !important;
   }
   &:active {
-    background-color: $grel;
+    background-color: $gredd !important;
   }
 }
 

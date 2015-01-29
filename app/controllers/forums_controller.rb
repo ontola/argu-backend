@@ -1,4 +1,12 @@
 class ForumsController < ApplicationController
+
+  def index
+    @forums = policy_scope(Forum).top_public_forums
+    authorize Forum, :selector?
+
+    render
+  end
+
   def show
     @forum = Forum.friendly.find params[:id]
     authorize @forum, :list?

@@ -7,7 +7,6 @@ nl:
       title: "instellingen"
       general: "algemeen"
       managers: "beheerders"
-      danger: "Pas op!"
     statistics:
       title: "statistiek"
       memberships: "leden"
@@ -38,6 +37,10 @@ nl:
       f_invite_desc: "Leden kunnen anderen uitnodigen om lid te worden."
       f_management_invite: "Door de beheerder(s)"
       f_management_invite_desc: "Alleen de beheerder(s) kunnen nieuwe leden toevoegen."
+    join:
+      header: "Word lid"
+      body: "Word lid van het forum ''%{forum}'' en doe mee aan de discussie!"
+    invite_others: "Betrek anderen"
   activerecord:
     attributes:
       forum:
@@ -50,3 +53,6 @@ nl:
         key_tags: "Sleuteltags"
         scope: "Vorm"
         visibility: "Zichtbaarheid"
+  votes:
+    alerts:
+      not_modified: ""

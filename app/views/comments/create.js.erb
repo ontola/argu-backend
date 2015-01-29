@@ -1,0 +1,8 @@
+var _parent = $('<%= @comment.parent.present? ? "##{@comment.parent.identifier}" : 'section' %>');
+<% if @comment.parent.present? %>
+_parent.find('.comment_form').hide().find('textarea').val('');
+_parent.append('<%= escape_javascript render partial: 'comments/comment', locals: { resource: @comment.commentable, c: @comment } %>');
+<% else %>
+_parent.find('textarea').last().val('');
+_parent.find('.comments').append('<%= escape_javascript render partial: 'comments/comment', locals: { resource: @comment.commentable, c: @comment } %>');
+<% end %>

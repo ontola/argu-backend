@@ -10,7 +10,7 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_response :success
     assert_not_nil assigns(:motion)
-    assert_not_nil assigns(:arguments)
+    assert_not_nil assigns(:vote)
     assert_not_nil assigns(:opinions)
 
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) }, "Trashed arguments are visible"

@@ -8,13 +8,7 @@
       = contextual_link_to argument_path(model), class: "read-more" do
         span.icon-right = t("read-more")
         span.fa.fa-arrow-right
-    ul.btns-sticky.btns-sticky-top[id="votebtn#{model.id}"]
-      li=link_to argument_vote_path(model), :remote => true, method: :post, class: 'btn-subtle' do
-        span.icon-right=(model.votes_pro_count >= 1 ? '+' : '') + model.votes_pro_count.to_s
-        span.fa.fa-arrow-up
-      li=link_to argument_vote_path(model), :remote => true, method: :delete, class: "btn-subtle" do
-        span.icon-right= model.votes_con_count.to_s
-        span.fa.fa-arrow-down
+    = render partial: 'arguments/shr', locals: {model: model}
   -if (top_comment = model.top_comment(show_trashed?)).present?
     = link_to argument_path(model) + "#commentstitle" do
       section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]

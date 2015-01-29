@@ -6,12 +6,15 @@
     = f.input :bio
     = f.input :featured_tags, placeholder: t("motions.form.themes"), as: :tags
     = f.input :cover_photo
+    = f.input :cover_photo, as: :preview_image, html_options: { style: 'max-height: 256px;' }
+    = f.input :remove_cover_photo, as: :reverse_boolean
+    = f.input :cover_photo_attribution
     = f.input :profile_photo
+    = f.input :remove_profile_photo, as: :reverse_boolean
     -if policy(resource).web_url?
       = f.input :web_url
     - if policy(resource).is_owner?
-      .danger[style="border: 0.15em solid indianred; margin-bottom: 0.5em;"]
-        pre[style="background-color: indianred; line-height: 2.3em; color: whitesmoke; margin-bottom: 0.5em;"]= t('forums.settings.danger')
+      = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
         = f.input :visibility, as: :select, collection: Forum.visibilities.keys, include_blank: false
         -if policy(resource).change_owner?
           = f.input :page

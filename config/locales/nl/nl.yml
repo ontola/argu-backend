@@ -58,8 +58,11 @@ nl:
   header:
     motions: "voorstellen"
     questions: "vraagstukken"
+  site:
+    description: "Argu is een online discussieplatform waar argumenten centraal staan."
 #Controllers
-#Footer
+
+    copyright: "Copyright © 2014-2015 Argu v.o.f."#Footer
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
@@ -132,3 +135,13 @@ nl:
                    <p><code>[www.voorbeeld.nl](Voorbeeld 2014)</code></p>
                    <p>Als je een boek of tijdschrift wil toevoegen:</code></p>
                    <p><code>[](Tijdschrift 2015)</code></p>"
+  move:
+    current_forum: "Huidig forum:"
+    button_label: "Verplaats"
+  convert:
+    current_class: "Huidig type:"
+  join: "Word lid"
+  view_on_argu: "bekijk & reageer op Argu"
+  embed: "embed"
+  forms:
+    danger_zone: "Gevarenzone"

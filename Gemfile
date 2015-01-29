@@ -5,6 +5,7 @@ gem 'sass-rails',   '~> 5.0.0'
 gem 'rails', '~>4.2.0'
 
 gem 'simple_text', '~> 0.0.21'
+gem 'indefinite_article'
 
 ##################DB########################
 gem 'pg', '0.17.1'
@@ -21,6 +22,8 @@ gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.1.2'
 gem 'cocoon', '~> 1.2.6'
+gem 'redis', '~> 3.2.0'
+gem 'bugsnag'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
@@ -29,6 +32,7 @@ gem 'acts_as_commentable_with_threading', '~> 2.0.0'
 gem 'friendly_id', '~> 5.0.4'
 gem 'whodunnit', '0.0.5'
 gem 'simple_settings', '1.0.2'
+gem 'public_activity'
 #Search
 
 #Pagination
@@ -69,8 +73,8 @@ group :development, :test do
   gem 'minitest-rails', '~> 2.1.1'
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'byebug'
-  #gem 'meta_request'
-  #gem 'better_errors'
+  gem 'meta_request'
+  gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
   gem 'spring', '~> 1.2.0'
   gem 'coffee-rails', '~> 4.1.0'

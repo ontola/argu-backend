@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit, ActorsHelper, ApplicationHelper
+  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery secret: "Nl4EV8Fm3LdKayxNtIBwrzMdH9BD18KcQwSczxh1EdDbtyf045rFuVces8AdPtobC9pp044KsDkilWfvXoDADZWi6Gnwk1vf3GghCIdKXEh7yYg41Tu1vWaPdyzH7solN33liZppGlJlNTlJjFKjCoGjZP3iJhscsYnPVwY15XqWqmpPqjNiluaSpCmOBpbzWLPexWwBSOvTcd6itoUdWUSQJEVL3l0rwyJ76fznlNu6DUurFb8bOL2ItPiSit7g"
   skip_before_filter  :verify_authenticity_token
@@ -30,8 +30,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def create_activity(model, params)
+    destroy_recent_similar_activities model, params
+    model.create_activity params
+  end
+
   def current_scope
-    current_context.context_scope || current_context
+    current_context.context_scope(current_profile) || current_context
   end
 
   # Returns the current context, if a param is given, it will serve as the start of the current context
@@ -52,6 +57,10 @@ class ApplicationController < ActionController::Base
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale
     end
+  end
+
+  def destroy_recent_similar_activities(model, params)
+    Activity.delete Activity.where("created_at >= :date", :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
   end
 
   def show_trashed?
@@ -76,7 +85,7 @@ class ApplicationController < ActionController::Base
   end
 
   def intro_urls
-    [selector_forums_url, edit_profile_url(current_user.username), memberships_forums_url]
+    [selector_forums_url, profile_url(current_user.username), edit_profile_url(current_user.username), memberships_forums_url, ]
   end
 
 end

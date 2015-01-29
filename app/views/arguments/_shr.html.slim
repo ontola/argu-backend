@@ -1,7 +1,7 @@
-ul.btns-sticky.btns-sticky-top[id="votebtn#{id}"]
-  li=link_to argument_vote_path(model), :remote => true, method: :post, class: 'btn-subtle' do
-    span=(votes_pro_count >= 1 ? '+' : '') + votes_pro_count.to_s
-    span.fa.fa-arrow-up.icon-right
-  li=link_to argument_vote_path(model), :remote => true, method: :delete, class: "btn-subtle" do
-    span= 0
-    span.fa.fa-arrow-down.icon-right
+ul.btns-sticky.btns-sticky-top[id="votebtn#{model.id}"]
+  li=link_to polymorphic_url([model, :vote], for: :pro), :remote => true, method: :post, class: 'btn-subtle' do
+    span.icon-right= model.votes_pro_count.to_s
+    span.fa.fa-arrow-up
+  li=link_to polymorphic_url([model, :vote], for: :con), :remote => true, method: :post, class: 'btn-subtle' do
+    span.icon-right= model.votes_con_count.to_s
+    span.fa.fa-arrow-down

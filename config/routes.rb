@@ -1,4 +1,16 @@
 Argu::Application.routes.draw do
+  concern :moveable do
+    get 'move', action: 'move'
+    put 'move', action: 'move!'
+  end
+  concern :convertible do
+    get 'convert', action: 'convert'
+    put 'convert', action: 'convert!'
+  end
+  concern :votable do
+    post 'vote/:for' => 'votes#create', shallow: true, as: :vote
+  end
+
 
   put 'actors', to: 'actors#update'
 
@@ -6,7 +18,7 @@ Argu::Application.routes.draw do
 
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
-  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions' }
+  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions', :invitations => 'invitations' }
 
   resource :admin do
     get 'list' => 'administration#list'
@@ -29,25 +41,21 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :questions, except: [:index, :new, :create]
+  post 'vote/:for' => 'votes#create', as: :vote
 
-  resources :motions, except: [:index, :new, :create] do
-    post 'vote/:for'      => 'votes/motions#create',   as: 'vote'
-    delete 'vote'         => 'votes/motions#destroy',  as: 'vote_delete'
-  end
+  resources :questions, except: [:index, :new, :create], concerns: [:moveable, :convertible]
 
-  resources :arguments, except: [:index, :new, :create] do
+  resources :motions, except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable]
+
+  resources :arguments, except: [:index, :new, :create], concerns: [:votable] do
     resources :comments
-
-    post   'vote' => 'votes/arguments#create'
-    delete 'vote' => 'votes/arguments#destroy'
   end
 
   resources :opinions do
     resources :comments
   end
 
-  resources :forums, except: [:index, :edit] do
+  resources :forums, except: [:edit] do
     get :settings, on: :member
     get :statistics, on: :member
     get :selector, on: :collection
@@ -67,6 +75,8 @@ Argu::Application.routes.draw do
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
     namespace :portal do
+      get :settings, to: 'portal#settings'
+      post 'settings', to: 'portal#setting!', as: :update_setting
       resources :forums, only: [:new, :create]
       mount Sidekiq::Web => '/sidekiq'
     end
@@ -90,6 +100,7 @@ Argu::Application.routes.draw do
   get '/privacy', to: 'documents#show', name: 'privacy'
   get '/cookies', to: 'documents#show', name: 'cookies'
 
+  get '/activities', to: 'activities#index'
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'
 end

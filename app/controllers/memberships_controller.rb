@@ -7,7 +7,8 @@ class MembershipsController < ApplicationController
     authorize @membership, :create?
 
     if @membership.save
-      redirect_to @membership.forum
+      redirect_to params[:r].presence || @membership.forum,
+                  status: request.fullpath.match(/vote|comments/) ? 307 : 302
     else
       render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
     end
@@ -40,6 +41,6 @@ class MembershipsController < ApplicationController
 
 private
   def permit_params
-    params.permit :forum_id, :role
+    params.permit :forum_id, :role, :r
   end
 end

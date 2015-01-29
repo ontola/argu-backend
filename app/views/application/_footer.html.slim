@@ -4,18 +4,27 @@ footer
       h3.footer-heading forums
     /li=link_to "Een eigen forum?", "/product"
     li
+      a[href="/forums"] Bekijk alle forums
+    li
       a[href="/forums/nederland"] Nederland
     li
       a[href="/forums/feedback"] Argu Feedback
   ul.footer-list
     li
       h3.footer-heading= t("about_title")
-    li=link_to "Over Argu", about_path
-    /li=link_to "Kernwaarden", values_path
+    / Do NOT edit the class names below, this is an hCard (see: http://microformats.org/wiki/hcard)
+    li.vcard
+      p.fn.org Argu v.o.f.
+      address.adr.h-adr
+        p.street-address.p-street-address Padualaan 8
+        p
+          span.postal-code.p-postal-code' 3584 CH
+          span.locality.p-locality Utrecht
+      a.email[href="mailto:info@argu.co"] info@argu.co
+      .photo[href=asset_path("favicons/favicon-192x192.png")]
     /TODO: li
       a Ons team
-    li
-      a[href="mailo:info@argu.co"] Contact
+    li=link_to "Meer", about_path
   ul.footer-list
     li
       h3.footer-heading voorwaarden
@@ -35,6 +44,5 @@ footer
       script[src="//platform.linkedin.com/in.js" type="text/javascript"]
         lang: en_US
       script[type="IN/FollowCompany" data-id="5170898" data-counter="right"]
-
   .footer-bottom
-    span Copyright © 2014-2015 Argu v.o.f.
+    span= t('site.copyright')

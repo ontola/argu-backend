@@ -1,0 +1,21 @@
+
+nl:
+  activities:
+    votes:
+      voted:
+        pro: "is voor een %{thing}"
+        neutral: "heeft nog geen mening over %{thing}"
+        con: "is tegen een %{thing}"
+    motions:
+      create: "heeft een voorstel geplaatst voor een %{thing}"
+    arguments:
+      create: "heeft een argument geplaatst voor een %{thing}"
+    comments:
+      create: "heeft gereageerd op een %{thing}"
+    ui:
+      load_more: "Laad meer"
+      no_more_artivities: "Geen oudere activiteiten"
+      loading: "Bezig.."
+  forums:
+    discover: "Ontdek forums"
+    no_bio: "Geen omschrijving"

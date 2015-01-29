@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   include ArguBase
 
   has_many :authentications, dependent: :destroy
-  belongs_to :profile, dependent: :destroy
+  belongs_to :profile, dependent: :destroy, autosave: true
 
   accepts_nested_attributes_for :profile
 
@@ -10,8 +10,8 @@ class User < ActiveRecord::Base
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable
   devise :invitable, :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable#,
-         #:validatable, :omniauthable
+         :recoverable, :rememberable, :trackable, :validatable
+         #, :omniauthable
 
   before_validation :check_for_profile
   after_destroy :cleanup
@@ -29,11 +29,15 @@ class User < ActiveRecord::Base
            uniqueness: { case_sensetive: false }
   validates :email, allow_blank: false,
         format: { with: RFC822::EMAIL }
-  validates :profile_id, presence: true
+  validates :profile, presence: true
 
 #######Attributes########
   def display_name
     self.profile.name.presence || self.username
+  end
+
+  def profile
+    super || create_profile
   end
 
   def managed_pages
@@ -62,7 +66,7 @@ class User < ActiveRecord::Base
 
 private
   def check_for_profile
-    self.profile ||= Profile.create
+    self.profile || self.create_profile
   end
 
   def cleanup

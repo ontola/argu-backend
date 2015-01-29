@@ -9,3 +9,10 @@ nl:
       con: "ik ben tegen"
     tooltips:
       argument: "belangrijk argument"
+    alerts:
+      success: "Bedankt voor je stem!"
+      failed: "Daar ging iets mis. Foutje aan onze kant!"
+    type:
+      pro: "voor"
+      neutral: "onbesloten"
+      con: "tegen"

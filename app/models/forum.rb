@@ -1,5 +1,5 @@
 class Forum < ActiveRecord::Base
-  include ArguBase
+  include ArguBase, Attribution
   extend FriendlyId
 
   belongs_to :page
@@ -14,14 +14,15 @@ class Forum < ActiveRecord::Base
   friendly_id :web_url, use: [:slugged, :finders]
   acts_as_ordered_taggable_on :tags
 
-  mount_uploader :profile_photo, ImageUploader
+  mount_uploader :profile_photo, AvatarUploader
   process_in_background :profile_photo
-  mount_uploader :cover_photo, ImageUploader
+  mount_uploader :cover_photo, CoverUploader
 
   validates_integrity_of :profile_photo
   validates_processing_of :profile_photo
   validates_download_of :profile_photo
   validates :web_url, :name, presence: true, length: {minimum: 4}
+  validates_format_of :web_url, with: /\A[a-zA-Z]\w{3,}/, message: '_moet met een letter beginnen_'
   validates :page_id, presence: true
 
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
@@ -38,7 +39,10 @@ class Forum < ActiveRecord::Base
   end
 
   def self.first_public
-    Forum.public_forums.first
+    if (setting = Setting.get(:default_forum))
+      forum = Forum.find_by(web_url: setting)
+    end
+    forum || Forum.public_forums.first
   end
 
   def featured_tags
@@ -47,5 +51,9 @@ class Forum < ActiveRecord::Base
 
   def featured_tags=(value)
     super(value.downcase.strip)
+  end
+
+  def should_generate_new_friendly_id?
+    web_url_changed?
   end
 end

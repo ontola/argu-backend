@@ -1,8 +1,8 @@
 - tag ||= nil
 .box[class="#{'trashed' if model.is_trashed?}"]
-  section
-    h3.sta-t= contextual_link_to model.title, motion_path(model)
-    p= model.supped_content[0..150] + (model.supped_content[151] ? "..." : "")
+  section[itemscope itemtype="http://www.schema.org/Answer"]
+    h3.sta-t[itemprop="headline"]= contextual_link_to model.title, motion_path(model)
+    p[itemprop="text"]= model.supped_content[0..150] + (model.supped_content[151] ? "..." : "")
     = contextual_link_to motion_path(model), class: "read-more" do
       span.icon-right = t("read-more")
       span.fa.fa-arrow-right

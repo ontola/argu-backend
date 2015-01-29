@@ -56,6 +56,32 @@ label {
   }
 }
 
+legend {
+  width: 100%;
+  margin-bottom: .5em;
+  padding: .3em .8em;
+  color: $g00;
+  background-color: $gred;
+
+  .danger-zone & {
+    background-color: indianred;
+    position: relative;
+    top: 0.8em;
+    margin-bottom: 0.8em;
+  }
+}
+
+fieldset {
+  //Fieldset within fieldset since formtastic makes the form's top level a fieldset too
+  fieldset ol {
+    margin-left: 0.5em;
+  }
+  & .danger-zone {
+    border: 0.15em solid indianred;
+    margin-bottom: 0.5em;
+  }
+}
+
 .form-item {
   padding-bottom: 1em;
   padding-top: 0.6em;
@@ -105,6 +131,7 @@ input[type="text"].form-input-title {
     width: 50%;
     float: left;
     text-align: center;
+    clear: none;
     label {
       width: 100%;
       cursor: pointer;
@@ -196,6 +223,9 @@ input[type="text"].form-input-title {
   margin-top: 2em;
 }
 
+.formtastic li {
+  clear: both;
+}
 
 .form-small .actions {
   margin-top: 0;
@@ -206,4 +236,8 @@ input[type="file"], select {
   padding: 0.3em 0em;
   margin-bottom: 1.2em;
   font-size: 1em;
+}
+
+.preview_image img {
+  max-width: 100%;
 }

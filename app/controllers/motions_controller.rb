@@ -9,7 +9,8 @@ class MotionsController < ApplicationController
     current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
     @opinions = Opinion.ordered policy_scope(@motion.opinions.trashed(show_trashed?))
-    @voted = Vote.where(voteable: @motion, voter: current_profile).last.try(:for) unless current_user.blank?
+    @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
+    @vote ||= Vote.new
 
     respond_to do |format|
       format.html # show.html.erb
@@ -26,8 +27,14 @@ class MotionsController < ApplicationController
     authorize @motion
     current_context @motion
     respond_to do |format|
-      format.html { render 'form' }
-      format.json { render json: @motion }
+      if !current_profile.member_of? @motion.forum
+        format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath } }
+        format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath } }
+      else
+        format.js { render js: "window.location = #{request.url.to_json}" }
+        format.html { render 'form' }
+        format.json { render json: @motion }
+      end
     end
   end
 
@@ -55,6 +62,7 @@ class MotionsController < ApplicationController
 
     respond_to do |format|
       if @motion.save
+        @motion.create_activity action: :create, recipient: (@question.presence || @motion.forum), owner: current_profile, forum_id: @motion.forum.id
         format.html { redirect_to @motion, notice: t('type_save_success', type: t('motions.type')) }
         format.json { render json: @motion, status: :created, location: @motion }
       else
@@ -106,11 +114,48 @@ class MotionsController < ApplicationController
     end
   end
 
+  # GET /motions/1/convert
+  def convert
+    @motion = Motion.find_by_id params[:motion_id]
+    authorize @motion, :move?
+  end
+
+  def convert!
+    @motion = Motion.find_by_id params[:motion_id]
+    authorize @motion, :move?
+    @forum = Forum.find_by_id permit_params[:forum_id]
+    authorize @motion.forum, :update?
+
+    result = @motion.convert_to convertible_param_to_model(permit_params[:f_convert])
+    if result
+      redirect_to result[:new]
+    else
+      redirect_to edit_motion_url @motion
+    end
+  end
+
+  # GET /motions/1/move
+  def move
+    @motion = Motion.find_by_id params[:motion_id]
+    authorize @motion, :move?
+  end
+
+  def move!
+    @motion = Motion.find_by_id params[:id]
+    authorize @motion, :move?
+    @forum = Forum.find_by_id permit_params[:forum_id]
+    authorize @forum, :update?
+
+    if @motion.move_to @forum
+      redirect_to @motion
+    else
+      redirect_to edit_motion_url @motion
+    end
+  end
+
 private
   def permit_params
-    pol = policy(@motion || Motion)
-    pars = pol.permitted_attributes
-    params.require(:motion).permit(*pars)
+    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
   end
 
   def get_context

@@ -71,3 +71,9 @@ nl:
     type_technological: "Technologisch"
     type_discussion: "In discussie"
     type_other: "Overig"
+    move:
+      body: "Alle bijbehorende argumenten enz. zullen meeverplaatst worden"
+    convert:
+      header: "Converteer object"
+      body: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
+      body_2: "GEBRUIK DIT NIET ZOMAAR, DATA GAAT WAARSCHIJNLIJK VERLOREN"

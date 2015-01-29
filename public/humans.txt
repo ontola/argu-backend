@@ -1,0 +1,31 @@
+/* TEAM */
+	Developer: Thom van Kalkeren
+	Contact: thom \at/ argu.co
+	Twitter/GitHub: @fletcher91
+	From: Utrecht, The Netherlands
+
+	UI/UX design & development, branding: Joep Meindertsma
+	Contact: joep \at/ argu.com
+	From: Utrecht, The Netherlands
+
+/* SITE */
+	Standards: HTML5, CSS3
+	Tech: The beautiful Ruby on Rails, Slim, SASS, PostgreSQL, Redis, Capistrano
+	IDE: RubyMine 7, Sublime Text, SSH, Illustrator, phpPgAdmin
+	Gem highlights: Devise, slim, acts-as-taggable-on, carrierwave, unicorn, friendly_id, better_errors, meta_request, pundit
+	Our Open Source contributions:
+	    SimpleText, gem for managing basic markdown documents like our policy pages, https://github.com/fletcher91/simple_text
+	    SimpleSettings, a basic key-value store for Rails, https://github.com/fletcher91/simple_settings
+	    Whodunnit, keep track of who changes what when with additional data, https://github.com/fletcher91/whodunnit
+
+/* Much love to the following websites */
+    Mozilla Developer Network (//developer.mozilla.org/en-US/)
+    Can I use (//beta.caniuse.com/)
+    StackOverflow / StackExchange network (//stackoverflow.com)
+    Ruby-Doc (//ruby-doc.org)
+    Rubular (//rubular.com)
+    GitHub (//github.com)
+    Semaphore (//semaphoreapp.com)
+
+/* Special notes */
+    Ryan (@rbates), thanks for the amazing tutorials, relax and hope you get better soon!

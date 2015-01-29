@@ -18,6 +18,8 @@ nl:
     members: "Leden"
     questions: "Vraagstukken"
     motions: "Voorstellen"
+    value: "Value"
+    key: "Key"
   users:
     registrations:
       placeholders:
@@ -28,3 +30,6 @@ nl:
   intro:
     initial:
       start_argu: "Begin met argu"
+  motions:
+    move:
+      header: "Verplaats voorstel"

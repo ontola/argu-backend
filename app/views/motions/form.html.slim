@@ -19,10 +19,16 @@
             = f.text_area :content, placeholder: t("motions.form.content"), rows: "8", class: "form-input-content"
             = f.text_field :tag_list, placeholder: t("motions.form.themes"), class: "tag-list"
             = f.input :cover_photo, label: t("image")
+            -if !@motion.new_record?
+              = f.input :remove_cover_photo, as: :reverse_boolean
 
-            - if policy(@motion).trash?
-              = f.label :is_trashed
-              = f.check_box :is_trashed
+            -if !@motion.new_record? && policy(@motion).trash?
+              =render layout: 'application/danger_zone' do
+                - if policy(@motion).trash?
+                  = f.input :is_trashed, as: :reverse_boolean
+                -if policy(@motion).move?
+                  = f.input :f_move, as: :link, url: motion_move_url(@motion), input_html: {data: {remote: true}, class: 'btn btn--warning'}
+                  = f.input :f_convert, as: :link, url: motion_convert_url(@motion), input_html: {data: {remote: true}, class: 'btn btn--warning'}
             /TODO invert arguments only visible when in edit, not in new.
               <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
               <%= f.check_box :invert_arguments %>

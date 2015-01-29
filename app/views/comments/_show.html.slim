@@ -1,0 +1,8 @@
+.comment[id=model.identifier class="#{'trashed' if model.is_trashed?}" itemscope itemtype="Comment"]
+  .box
+    section
+      = contextual_link_to argument_path(model.commentable) do
+        h3[class="#{model.commentable.pro ? 'pro-t' : 'con-t'}"]= model.commentable.title
+      p[id=model.id]
+        span.fa.fa-comment-o
+        = model.is_trashed? ? I18n.t('deleted') : model.body

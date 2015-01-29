@@ -1,6 +1,5 @@
 class Comment < ActiveRecord::Base
-  include ArguBase
-  include Trashable
+  include ArguBase, Trashable, PublicActivity::Common
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
 

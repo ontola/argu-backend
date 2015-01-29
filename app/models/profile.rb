@@ -10,7 +10,7 @@ class Profile < ActiveRecord::Base
   has_many :pages, inverse_of: :owner
 
   mount_uploader :profile_photo, AvatarUploader
-  mount_uploader :cover_photo, ImageUploader
+  mount_uploader :cover_photo, CoverUploader
 
   pica_pica :profile_photo
 
@@ -28,6 +28,10 @@ class Profile < ActiveRecord::Base
 
   def frozen?
     has_role? 'frozen'
+  end
+
+  def memberships_ids
+    memberships.pluck(:forum_id).join(',').presence
   end
 
   def username
@@ -57,12 +61,24 @@ class Profile < ActiveRecord::Base
     add_role :frozen
   end
 
+  # Returns the preffered forum of the user, based on their last forum visit
+  def preferred_forum
+    @redis ||= Redis.new
+    last_forum = @redis.get("profiles.#{self.id}.last_forum")
+    (Forum.find(last_forum) if last_forum.present?) || Forum.first_public
+  end
+
   def member_of?(_forum)
     _forum.present? && self.memberships.where(forum_id: _forum.is_a?(Forum) ? _forum.id : _forum).present?
   end
 
   def unfreeze
     remove_role :frozen
+  end
+
+  # Hasn't been though through, so disable for the moment.
+  def destroy
+    false
   end
 
   #######Utility#########

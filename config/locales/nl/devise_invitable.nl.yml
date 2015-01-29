@@ -18,5 +18,6 @@ nl:
         subject: 'Uitnodiging voor Argu'
         hello: 'Beste wereldverbeteraar,'
         someone_invited_you: 'Gefeliciteerd! Iemand heeft je uitgenodigd voor de gesloten bètatest van Argu.  Je kan deze uitnodiging accepteren door op de onderstaande link te klikken.'
+        someone_invited_you_forum: 'Gefeliciteerd! Iemand heeft je uitgenodigd voor het forum van %{forum} op Argu.  Je kan deze uitnodiging accepteren door op de onderstaande link te klikken.'
         accept: 'Accepteer uitnodiging'
         ignore: "Als je geen interesse hebt, kan je deze uitnodiging gewoon negeren. Jouw account wordt pas aangemaakt wanneer je de link opent en een wachtwoord instelt."

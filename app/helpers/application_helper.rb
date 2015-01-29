@@ -1,5 +1,17 @@
 module ApplicationHelper
 
+  def awesome_time_ago_in_words (date)
+    if date.present?
+      if 1.day.ago < date
+        distance_of_time_in_words(date, Time.now)
+      elsif 1.year.ago < date
+        date.strftime("%B #{date.day.ordinalize} %H:%M")
+      else
+        date.strftime('%Y-%m-%d %H:%M')
+      end
+    end
+  end
+
   def merge_query_parameter(uri, params)
     uri =  URI.parse(uri)
     if params.class != Hash

@@ -60,16 +60,23 @@ GEM
       bcrypt (>= 3.1.3)
     bcrypt-ruby (3.1.5-x86-mingw32)
       bcrypt (>= 3.1.3)
+    better_errors (2.0.0)
+      coderay (>= 1.0.0)
+      erubis (>= 2.6.6)
+      rack (>= 0.9.0)
     binding_of_caller (0.7.3.pre1)
       debug_inspector (>= 0.0.1)
     bootstrap-sass (2.0.4.2)
     briarcliff (0.0.9)
       railties (>= 4.0)
+    bugsnag (2.7.1)
+      multi_json (~> 1.0)
     builder (3.2.2)
     byebug (3.5.1)
       columnize (~> 0.8)
       debugger-linecache (~> 1.2)
       slop (~> 3.6)
+    callsite (0.0.11)
     capistrano (3.3.5)
       capistrano-stats (~> 1.1.0)
       i18n
@@ -98,6 +105,7 @@ GEM
     celluloid (0.16.0)
       timers (~> 4.0.0)
     cocoon (1.2.6)
+    coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -146,6 +154,8 @@ GEM
     immigrant (0.1.8)
       activerecord (>= 3.0)
       foreigner (>= 1.2.1)
+    indefinite_article (0.2.0)
+      activesupport
     jbuilder (2.2.6)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -166,6 +176,10 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    meta_request (0.3.4)
+      callsite (~> 0.0, >= 0.0.11)
+      rack-contrib (~> 1.1)
+      railties (>= 3.0.0, < 5.0.0)
     mime-types (2.4.3)
     mini_magick (3.8.1)
       subexec (~> 0.2.1)
@@ -217,11 +231,18 @@ GEM
     pg (0.17.1-x86-mingw32)
     pica_pica (0.0.1)
       slim (>= 2.0.0)
+    public_activity (1.4.2)
+      actionpack (>= 3.0.0)
+      activerecord (>= 3.0)
+      i18n (>= 0.5.0)
+      railties (>= 3.0.0)
     pundit (0.3.0)
       activesupport (>= 3.0.0)
     quiet_assets (1.1.0)
       railties (>= 3.1, < 5.0)
     rack (1.6.0)
+    rack-contrib (1.1.0)
+      rack (>= 0.9.1)
     rack-cors (0.3.1)
     rack-protection (1.5.3)
       rack
@@ -355,9 +376,11 @@ DEPENDENCIES
   acts_as_commentable_with_threading (~> 2.0.0)
   awesome_nested_set (~> 3.0.1)
   bcrypt-ruby (>= 3.1.5)
+  better_errors
   binding_of_caller (>= 0.7.3.pre1)
   bootstrap-sass (~> 2.0.1)
   briarcliff (~> 0.0.9)
+  bugsnag
   byebug
   capistrano (~> 3.3.3)
   capistrano-bundler (~> 1.1.3)
@@ -376,10 +399,12 @@ DEPENDENCIES
   friendly_id (~> 5.0.4)
   haml
   immigrant (~> 0.1.8)
+  indefinite_article
   jbuilder (~> 2.2.5)
   jquery-rails
   jquery-ui-rails
   kaminari (~> 0.16.1)
+  meta_request
   mini_magick (~> 3.8.1)
   minitest-rails (~> 2.1.1)
   minitest-reporters (~> 1.0.8)
@@ -390,6 +415,7 @@ DEPENDENCIES
   omniauth-twitter (~> 1.1.0)
   pg (= 0.17.1)
   pica_pica (~> 0.0.1)
+  public_activity
   pundit (~> 0.3.0)
   quiet_assets
   rack-cors
@@ -397,6 +423,7 @@ DEPENDENCIES
   rails (~> 4.2.0)
   rails-i18n (~> 4.0.3)
   rails3-jquery-autocomplete (~> 1.0.14)
+  redis (~> 3.2.0)
   rfc-822 (~> 0.4.0)
   rolify (~> 3.4.1)
   sass-rails (~> 5.0.0)
