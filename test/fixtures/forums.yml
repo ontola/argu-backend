@@ -19,8 +19,19 @@ amsterdam:
   visibility: <%= Forum.visibilities[:closed] %>
 #
 hidden:
+  id: 140372415
   name: 'Secret shit'
   slug: 'secret'
   web_url: 'secret'
   page: argu
+  visible_with_a_link: true
+  visibility: <%= Forum.visibilities[:hidden] %>
+#
+super_hidden:
+  id: 32812423
+  name: 'Super secret shit'
+  slug: 'super_secret'
+  web_url: 'super_secret'
+  page: argu
+  visible_with_a_link: false
   visibility: <%= Forum.visibilities[:hidden] %>
