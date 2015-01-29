@@ -14,8 +14,7 @@ module AccessTokenHelper
   end
 
   def has_access_token_access_to(record=nil)
-    record.class == Comment ? fdsfs : ''
-    record && AccessToken.where(item: record.get_parent.model, access_token: get_access_tokens.map(&:access_token)).present?
+    record && AccessToken.where(item: record.try(:get_parent).try(:model), access_token: get_access_tokens.map(&:access_token)).present?
   end
 
   def get_access_token(user=nil)

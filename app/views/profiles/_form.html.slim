@@ -4,7 +4,6 @@
       = f.inputs
         = f.input :name, label: t("profiles.edit.name")
         = f.input :about, label: t("profiles.edit.about"), input_html: { :rows => 5 }
-        /TODO Show current profile_photo, use Pica_Pica
         = f.input :profile_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }
         = f.input :profile_photo, label: t("profiles.edit.picture")
       = f.actions do

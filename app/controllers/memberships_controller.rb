@@ -5,7 +5,7 @@ class MembershipsController < ApplicationController
     forum = Forum.friendly.find params[:forum_id]
     authorize forum, :show?
     if current_profile.blank?
-      render_register_modal(false)
+      render_register_modal(forum_path(forum.web_url))
     else
       @membership = Membership.new profile: current_profile, forum: forum, role: (permit_params[:role] || Membership.roles[:member])
       authorize @membership, :create?

@@ -19,7 +19,7 @@ class ProfilesController < ApplicationController
   def edit
     @user = User.find_by!(username: params[:id])
     @profile = @user.profile
-    authorize @profile
+    authorize @profile, :edit?
 
     if @user.finished_intro?
       respond_to do |format|
@@ -36,7 +36,7 @@ class ProfilesController < ApplicationController
   def update
     @user = User.find_by!(username: params[:id])
     @profile = @user.profile
-    authorize @profile
+    authorize @profile, :update?
 
     updated = nil
     Profile.transaction do
@@ -54,7 +54,7 @@ class ProfilesController < ApplicationController
         r = @user.r
         @user.update r: ''
         format.html { redirect_to r,
-                      status: r.match(/vote|comments|memberships/) ? 307 : 302 }
+                      status: r.match(/vote|comments/) ? 307 : 302 }
       elsif updated
         format.html { redirect_to profile_update_path, notice: "Profile was successfully updated." }
         format.json { head :no_content }

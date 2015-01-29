@@ -9,7 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    redirect_to :root if has_valid_token? || !Rails.configuration.epics.sign_up
+    redirect_to :root unless has_valid_token? || Rails.configuration.epics.sign_up
     super do |user|
       user.update access_tokens: get_safe_raw_access_tokens
     end
@@ -59,7 +59,7 @@ class RegistrationsController < Devise::RegistrationsController
 
 protected
   def after_sign_up_path_for(resource)
-    edit_profile_url(resource.profile)
+    edit_profile_url(resource.username)
   end
 
 private

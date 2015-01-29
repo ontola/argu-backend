@@ -63,9 +63,9 @@ class ApplicationController < ActionController::Base
     UserContext.new(current_user, session)
   end
 
-  def render_register_modal(*r_options)
+  def render_register_modal(base_url=nil, *r_options)
     if !r_options || r_options.first != false   # Only skip if r_options is false
-      r = URI.parse(request.fullpath)
+      r = URI.parse(base_url || request.fullpath)
       r.query= [r_options].map { |a| a.join('=') }.join('&')
     else
       r = nil

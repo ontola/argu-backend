@@ -1,4 +1,4 @@
-class ProfilePolicy < ApplicationPolicy
+class ProfilePolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :user, :scope, :session
 
@@ -16,5 +16,15 @@ class ProfilePolicy < ApplicationPolicy
     end
   end
 
+  def show?
+    record.owner.finished_intro? || super
+  end
 
+  def update?
+    record.owner == user || super
+  end
+
+  def edit?
+    update?
+  end
 end
