@@ -16,4 +16,11 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should register and become a member with an access token" do
+    get forum_path(forums(:hidden).web_url, at: access_tokens(:token_hidden).access_token)
+    assert_response :success
+
+
+  end
+
 end

@@ -1,6 +1,6 @@
 .box
   section
-    = semantic_form_for @profile, url: profile_path(@user.username) do |f|
+    = semantic_form_for @profile, url: profile_path(@user.username), method: @user.r.present? ? :post : :put  do |f|
       = f.inputs
         = f.input :name, label: t("profiles.edit.name")
         = f.input :about, label: t("profiles.edit.about"), input_html: { :rows => 5 }

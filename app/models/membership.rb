@@ -1,5 +1,5 @@
 class Membership < ActiveRecord::Base
-  include ArguBase
+  include ArguBase, Parentable
   scope :managers, -> { where(role: Membership::ROLES[:manager]) }
 
   belongs_to :profile
@@ -8,6 +8,7 @@ class Membership < ActiveRecord::Base
   validates :profile_id, :forum_id, presence: true
 
   counter_culture :forum
+  parentable :forum
 
   enum role: {member: 0, manager: 2}
 end

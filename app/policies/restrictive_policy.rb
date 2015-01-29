@@ -1,10 +1,12 @@
 class RestrictivePolicy
+  include AccessTokenHelper
   attr_reader :context, :user, :record, :session
 
   def initialize(context, record)
-    #raise Pundit::NotAuthorizedError, "must be logged in" unless user
     @context = context
     @record = record
+
+    raise Pundit::NotAuthorizedError, "must be logged in" unless has_access_to_platform?
   end
 
   delegate :user, to: :context
@@ -89,11 +91,16 @@ class RestrictivePolicy
     record.creator == user.profile
   end
 
+  def has_access_to_platform?
+    user || has_access_token_access_to(record)
+  end
+
   def scope
-    Pundit.policy_scope!(user, record.class)
+    Pundit.policy_scope!(context, record.class)
   end
 
   class Scope
+    include AccessTokenHelper
     attr_reader :context, :user, :scope, :session
 
     def initialize(context, scope)

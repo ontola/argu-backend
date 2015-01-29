@@ -63,6 +63,20 @@ class ApplicationController < ActionController::Base
     UserContext.new(current_user, session)
   end
 
+  def render_register_modal(*r_options)
+    if !r_options || r_options.first != false   # Only skip if r_options is false
+      r = URI.parse(request.fullpath)
+      r.query= [r_options].map { |a| a.join('=') }.join('&')
+    else
+      r = nil
+    end
+    @resource ||= User.new r: r.to_s
+    respond_to do |format|
+      format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: r.to_s } }
+      format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: r.to_s } }
+    end
+  end
+
   def set_locale
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale

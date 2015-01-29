@@ -83,7 +83,10 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :profiles
+  resources :profiles do
+    # This is to make requests POST if the user has an 'r' (which nearly all use POST)
+    post ':id' => 'profiles#update', on: :collection
+  end
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 

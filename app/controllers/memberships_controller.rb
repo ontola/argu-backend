@@ -3,14 +3,19 @@ class MembershipsController < ApplicationController
 
   def create
     forum = Forum.friendly.find params[:forum_id]
-    @membership = Membership.new profile: current_profile, forum: forum, role: (permit_params[:role] || Membership.roles[:member])
-    authorize @membership, :create?
-
-    if @membership.save
-      redirect_to params[:r].presence || @membership.forum,
-                  status: request.fullpath.match(/vote|comments/) ? 307 : 302
+    authorize forum, :show?
+    if current_profile.blank?
+      render_register_modal(false)
     else
-      render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
+      @membership = Membership.new profile: current_profile, forum: forum, role: (permit_params[:role] || Membership.roles[:member])
+      authorize @membership, :create?
+
+      if @membership.save
+        redirect_to params[:r].presence || @membership.forum,
+                    status: request.fullpath.match(/vote|comments/) ? 307 : 302
+      else
+        render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
+      end
     end
   end
 
