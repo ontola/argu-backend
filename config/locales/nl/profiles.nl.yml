@@ -18,3 +18,7 @@ nl:
       name: "Volledige naam"
       picture: "profielfoto"
       about: "over jou"
+  activerecord:
+    attributes:
+      profile:
+        profile_photo: "huidige foto"
