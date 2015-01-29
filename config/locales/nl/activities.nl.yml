@@ -6,6 +6,8 @@ nl:
         pro: "is voor een %{thing}"
         neutral: "heeft nog geen mening over %{thing}"
         con: "is tegen een %{thing}"
+    questions:
+      create: "heeft een vraagstuk geplaatst voor het forum %{thing}"
     motions:
       create: "heeft een voorstel geplaatst voor een %{thing}"
     arguments:
