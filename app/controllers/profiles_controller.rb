@@ -2,7 +2,9 @@ class ProfilesController < ApplicationController
 
   #GET /profiles/1
   def show
-    @profile = User.find_by(username: params[:id]).profile
+    user = User.find_by_username params[:id]
+    raise ActiveRecord::RecordNotFound if user.blank?
+    @profile = user.profile
     raise ActiveRecord::RecordNotFound if @profile.blank?
     authorize @profile, :show?
 
