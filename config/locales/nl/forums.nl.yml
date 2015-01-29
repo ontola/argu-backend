@@ -4,19 +4,21 @@ nl:
   forums:
     resource_name: "forum"
     settings:
-      title: "instellingen"
-      general: "algemeen"
-      managers: "beheerders"
+      title: "Instellingen"
+      general: "Algemeen"
+      managers: "Beheerders"
     statistics:
-      title: "statistiek"
-      memberships: "leden"
-      questions: "vraagstukken"
-      motions: "voorstellen"
-      tags: "meest gebruikte tags"
-      no-tags: "er zijn nog geen tags gebruikt"
-    suggestions: "suggesties"
-    mine: "mijn forums"
+      title: "Statistiek"
+      memberships: "Leden"
+      questions: "Vraagstukken"
+      motions: "Voorstellen"
+      tags: "Meest gebruikte tags"
+      no-tags: "Er zijn nog geen tags gebruikt."
+    suggestions: "Suggesties"
+    mine: "Mijn forums"
     navheader: "Ga naar forum:"
+    member: "Lid"
+    leave: "Dit forum verlaten"
     leave_confirmation: "Weet je zeker dat je dit forum wilt verlaten? Je gemaakte content op het forum zal blijven bestaan."
     scope_names:
       scope_group: "Groepen"
@@ -44,6 +46,7 @@ nl:
     invite_others: "Betrek anderen"
     sign_up:
       header: "Word lid van Argu en discussieer mee"
+    new_question_or_motion: "Nieuw vraagstuk of voorstel"
   activerecord:
     attributes:
       forum:

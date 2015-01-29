@@ -7,8 +7,12 @@ nl:
     new_question: "Nieuw vraagstuk"
     new_btn: "Vraagstuk toevoegen"
     header: "vraagstukken"
+    call_to_action:
+      title: "Welk probleem heeft een oplossing nodig?"
+      body: "Ben jij op zoek naar goede ideeën? Heb jij een vraagstuk waar je voorstellen voor zou willen?"
+      action: "Deel jouw vraagstuk!"
     form:
-      title: "Hoe lossen we probleem x op?"
+      title: "Plaats hier jouw vraag in enkele woorden."
       content: "Waarom zit je met deze vraag? Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"

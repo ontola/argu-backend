@@ -18,7 +18,7 @@ nav#navbar.navbar role="navigation"
               li
                 =link_to membership.forum.display_name, url_for(membership.forum)
             - if suggested_forums.present?
-            =link_to t('forums.discover'), forums_url, style: 'color: white;', class: 'btn-focus'
+            =link_to t('forums.discover'), forums_url, class: 'btn-focus'
       -else
         li
           =link_to url_for(current_scope.model), class: "navbar-item"

@@ -60,7 +60,8 @@ nl:
       tags: "Zoek vraagstukken en voorstellen met het thema "
     call_to_action:
       title: "Wat stel jij voor?"
-      action: "Heb jij een goed idee? Deel jouw voorstel!"
+      body: "Heb jij een goed idee?"
+      action: "Deel jouw voorstel!"
 
     #motion types
     type_social: "Maatschappelijk"
