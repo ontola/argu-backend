@@ -5,7 +5,9 @@
       h1 = t("sign_in")
     .box.box-small
       - if defined?(r)
-        = render partial: 'registrations/form', locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping, r: r}
+        section
+          .form-small
+            = render partial: 'registrations/form', locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping, r: r}
       - elsif Rails.configuration.epics.sign_up
         section
           ul.btns-signup

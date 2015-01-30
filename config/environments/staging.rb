@@ -12,6 +12,7 @@ Argu::Application.configure do
   config.epics.sign_up = false                        # Can users sign up outside of invitations
   config.epics.activities = true                      # Can users see the activity index / timeline button in header?
   config.epics.share_links = true                     # Can first-time users visit forum urls, and can members share them?
+  config.epics.open_auth = true                       # Facebook, twitter, google, openID login & account linking
 
   # Code is not reloaded between requests
   config.cache_classes = true
