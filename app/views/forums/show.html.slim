@@ -41,7 +41,11 @@ div[itemscope itemtype="Thing"]
                 li=link_to forums_url, class: 'btn-focus' do
                   span.fa.fa-compass
                   span.icon-left= t('forums.discover')
-          p.cover-oneliner = @forum.bio
+          p.cover-oneliner
+            = @forum.bio
+            a[href="#forum-info"]
+              span.fa.fa-info
+              span.icon-left= t('forums.more_info') + "."
           /p.cover-oneliner Een Argu forum is een discussie omgeving waar op een inhoudelijke en kritische manier oplossingen kan worden gevonden voor vraagstukken.
         ul.btns-list.btns-vertical
           /TODO: Make this check the current profile, not the user
@@ -130,7 +134,7 @@ div[itemscope itemtype="Thing"]
               span.fa.fa-plus
               span.icon-left= t("questions.call_to_action.action")
     .col-1
-      header
+      header#forum-info
         h1 = t("forums.about.header")
       .box
         section
