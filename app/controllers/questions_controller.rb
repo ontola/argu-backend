@@ -19,16 +19,21 @@ class QuestionsController < ApplicationController
     @forum = Forum.friendly.find params[:forum_id]
     @question = Question.new params[:question]
     @question.forum= @forum
-    authorize @question
-    current_context @question
-    respond_to do |format|
-      if !current_profile.member_of? @question.forum
-        format.js { render partial: 'forums/join', layout: false, locals: { forum: @question.forum, r: request.fullpath } }
-        format.html { render template: 'forums/join', locals: { forum: @question.forum, r: request.fullpath } }
-      else
-        format.js { render js: "window.location = #{request.url.to_json}" }
-        format.html { render 'form' }
-        format.json { render json: @question }
+    if current_profile.blank?
+      authorize @question, :show?
+      render_register_modal(nil)
+    else
+      authorize @question
+      current_context @question
+      respond_to do |format|
+        if !current_profile.member_of? @question.forum
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: @question.forum, r: request.fullpath } }
+          format.html { render template: 'forums/join', locals: { forum: @question.forum, r: request.fullpath } }
+        else
+          format.js { render js: "window.location = #{request.url.to_json}" }
+          format.html { render 'form' }
+          format.json { render json: @question }
+        end
       end
     end
   end
