@@ -2,8 +2,7 @@ class ProfilesController < ApplicationController
 
   #GET /profiles/1
   def show
-    user = User.find_by_username params[:id]
-    raise ActiveRecord::RecordNotFound if user.blank?
+    user = User.find_by! username: params[:id]
     @profile = user.profile
     raise ActiveRecord::RecordNotFound if @profile.blank?
     authorize @profile, :show?
@@ -18,9 +17,9 @@ class ProfilesController < ApplicationController
 
   #GET /1/edit
   def edit
-    @user = User.find_by(username: params[:id])
+    @user = User.find_by!(username: params[:id])
     @profile = @user.profile
-    authorize @profile
+    authorize @profile, :edit?
 
     if @user.finished_intro?
       respond_to do |format|
@@ -35,9 +34,9 @@ class ProfilesController < ApplicationController
 
   #PUT /1
   def update
-    @user = User.find_by(username: params[:id])
+    @user = User.find_by!(username: params[:id])
     @profile = @user.profile
-    authorize @profile
+    authorize @profile, :update?
 
     updated = nil
     Profile.transaction do

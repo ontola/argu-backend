@@ -29,9 +29,10 @@ div[itemscope itemtype="Thing"]
                 - current_profile.present? && current_profile.memberships.each do |membership|
                   li=link_to membership.forum.display_name, url_for(membership.forum)
                 .dropdown-divider
-                li=link_to forum_membership_path(@forum.web_url, current_profile), method: :delete, data: {confirm: t('forums.leave_confirmation')} do
-                  span.fa.fa-sign-out
-                  span.icon-left= t('forums.leave')
+                - if policy(@forum).is_member?
+                  li=link_to forum_membership_path(@forum.web_url, current_profile), method: :delete, data: {confirm: t('forums.leave_confirmation')} do
+                    span.fa.fa-sign-out
+                    span.icon-left= t('forums.leave')
                 - if suggested_forums.present?
                   span.dropdown-header = t('forums.suggestions')
                   ul.tags-vertical
@@ -40,20 +41,10 @@ div[itemscope itemtype="Thing"]
                 li=link_to t('forums.discover'), forums_url, class: 'btn-focus'
         ul.btns-list.btns-vertical
           /TODO: Make this check the current profile, not the user
-          - if !policy(@forum).is_member?
+          - unless policy(@forum).is_member?
             li=link_to forum_memberships_path(@forum.web_url), method: :post do
               span.fa.fa-user
               span.icon-left= t('join')
-          - else
-            /li.dropdown
-              a.dropdown-trigger
-                span.fa.fa-user
-                span.icon-left= t('forums.member')
-                span.fa.fa-angle-down
-              ul.dropdown-content.dropdown-right
-                li=link_to forum_membership_path(@forum.web_url, current_profile), method: :delete, data: {confirm: t('forums.leave_confirmation')} do
-                  span.fa.fa-sign-out
-                  span.icon-left= t('forums.leave')
           li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]=link_to url_for([:new, @forum, :motion]), data: {remote: true}, class: "sta-t btn-focus" do
             span.fa.fa-plus
             span.icon-left= t('motions.type')

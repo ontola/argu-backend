@@ -20,7 +20,9 @@ module Parentable
 
   def reflect_parent(relation_name, options)
     parent = Context.new
-    if self.class.reflect_on_association(relation_name).macro == :belongs_to
+    if relation_name == :self
+      parent.model = self
+    elsif self.class.reflect_on_association(relation_name).macro == :belongs_to
       parent.model = send(relation_name)
     else
       begin

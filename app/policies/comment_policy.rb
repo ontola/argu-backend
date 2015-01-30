@@ -40,6 +40,10 @@ class CommentPolicy < RestrictivePolicy
     true
   end
 
+  def has_access_to_platform?
+    user || has_access_token_access_to(record.commentable)
+  end
+
 private
 
   def is_member?

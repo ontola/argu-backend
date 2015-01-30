@@ -6,11 +6,15 @@ module AccessTokenHelper
   end
 
   def grant_viewing_rights_for(item)
-    session[:a_tokens] = (session[:a_tokens] || []) << item.access_token
+    session[:a_tokens] = Set.new((session[:a_tokens] || [])).add item.access_token
   end
 
   def has_valid_token?(user=nil)
     !!get_access_token(user)
+  end
+
+  def has_access_token_access_to(record=nil)
+    record && AccessToken.where(item: record.try(:get_parent).try(:model), access_token: get_access_tokens.map(&:access_token)).present?
   end
 
   def get_access_token(user=nil)
@@ -23,7 +27,7 @@ module AccessTokenHelper
   end
 
   def get_access_tokens(user=nil)
-    ((eval(user.access_tokens) if user) || session[:a_tokens]).map { |at| AccessToken.find_by_access_token(at) }
+    ((eval(user.access_tokens) if user) || session[:a_tokens] || []).map { |at| AccessToken.find_by_access_token(at) }
   end
 
   # This must be done via the database, since it ensures the eval function can be run safely later on

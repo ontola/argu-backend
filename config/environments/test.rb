@@ -1,5 +1,5 @@
 Argu::Application.configure do
-  config.host = ENV['HOSTNAME'] || "logos.argu.nl"
+  config.host = ENV['HOSTNAME'] || 'www.example.com'
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
@@ -37,7 +37,7 @@ Argu::Application.configure do
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection    = false
 
-  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'logos.argu.nl')
+  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'www.example.com')
   #config.session_store :active_record_store, key: '_Argu_session', domain: 'logos.argu.nl'
 
   # Tell Action Mailer not to deliver emails to the real world.
@@ -50,7 +50,7 @@ Argu::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.active_support.test_order = :sorted
+  config.active_support.test_order = :random
 
   config.i18n.available_locales = [:nl, :en]
 end

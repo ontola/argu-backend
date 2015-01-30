@@ -23,7 +23,7 @@ class Profile < ActiveRecord::Base
   end
 
   def email
-    owner.email
+    owner.try :email
   end
 
   def frozen?
@@ -35,7 +35,7 @@ class Profile < ActiveRecord::Base
   end
 
   def username
-    owner.username
+    owner.try :username
   end
 
   def owner
@@ -43,7 +43,7 @@ class Profile < ActiveRecord::Base
   end
 
   def web_url
-    username.presence || owner.web_url.presence || id
+    username.presence || owner.try(:web_url).presence || id
   end
 
   #######Methods########

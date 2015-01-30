@@ -8,13 +8,7 @@ class CommentsController < ApplicationController
     resource = get_commentable
     if current_profile.blank?
       authorize resource, :show?
-      redirect_url = URI.parse(request.fullpath)
-      redirect_url.query= [[:comment, CGI::escape(params[:comment])], [:parent_id, params[:parent_id]]].map { |a| a.join('=') }.join('&')
-      @resource ||= User.new r: redirect_url.to_s
-      respond_to do |format|
-        format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: redirect_url.to_s } }
-        format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: redirect_url.to_s } }
-      end
+      render_register_modal(nil, [:comment, CGI::escape(params[:comment])], [:parent_id, params[:parent_id]])
     else
       @comment = Comment.build_from(resource, current_profile.id, params[:comment])
       authorize @comment
