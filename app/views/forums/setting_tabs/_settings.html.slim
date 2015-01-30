@@ -19,7 +19,7 @@
       = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
         = f.input :visibility, as: :select, collection: Forum.visibilities.keys, include_blank: false
         = f.input :visible_with_a_link, as: :reverse_boolean
-        input[type="text" onClick="this.setSelectionRange(0, this.value.length)" value="#{forum_url(resource)}?at=#{resource.access_token}" readonly]
+        = text_field_tag 'link', "#{forum_url(resource)}?at=#{resource.access_token}", onClick: 'this.setSelectionRange(0, this.value.length)'
         -if policy(resource).change_owner?
           = f.input :page
   = f.actions do

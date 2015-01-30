@@ -77,14 +77,14 @@ class ApplicationController < ActionController::Base
   def render_register_modal(base_url=nil, *r_options)
     if !r_options || r_options.first != false   # Only skip if r_options is false
       r = URI.parse(base_url || request.fullpath)
-      r.query= [r_options].map { |a| a.join('=') }.join('&')
+      r.query= r_options.reject { |a| a.to_a.last.blank? }.map { |a| a.to_a.join('=') }.join('&')
     else
       r = nil
     end
     @resource ||= User.new r: r.to_s
     respond_to do |format|
-      format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: r.to_s } }
-      format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: r.to_s } }
+      format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
+      format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
     end
   end
 
@@ -106,6 +106,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:username, :email, :r]
+    devise_parameter_sanitizer.for(:sign_in) << [:r]
     devise_parameter_sanitizer.for(:accept_invitation).concat [:username]
   end
 

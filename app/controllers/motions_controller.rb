@@ -24,16 +24,21 @@ class MotionsController < ApplicationController
   def new
     get_context
     @motion = @forum.motions.new params[:motion]
-    authorize @motion
-    current_context @motion
-    respond_to do |format|
-      if !current_profile.member_of? @motion.forum
-        format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath } }
-        format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath } }
-      else
-        format.js { render js: "window.location = #{request.url.to_json}" }
-        format.html { render 'form' }
-        format.json { render json: @motion }
+    if current_profile.blank?
+      authorize @motion, :show?
+      render_register_modal(nil)
+    else
+      authorize @motion
+      current_context @motion
+      respond_to do |format|
+        if !current_profile.member_of? @motion.forum
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath } }
+          format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath } }
+        else
+          format.js { render js: "window.location = #{request.url.to_json}" }
+          format.html { render 'form' }
+          format.json { render json: @motion }
+        end
       end
     end
   end

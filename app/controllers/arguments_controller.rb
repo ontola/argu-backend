@@ -4,7 +4,7 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1.json
   def show
     @argument = Argument.includes(:comment_threads).find params[:id]
-    authorize @argument
+    authorize @argument, :show?
     current_context @argument
     @parent_id = params[:parent_id].to_s
     
@@ -23,21 +23,26 @@ class ArgumentsController < ApplicationController
   def new
     @forum = Forum.friendly.find params[:forum_id]
     @argument = @forum.arguments.new motion_id: params[:motion_id]
-    authorize @argument
-    current_context @argument
-    @argument.assign_attributes({pro: %w(con pro).index(params[:pro]) })
+    if current_profile.blank?
+      authorize @argument, :show?
+      render_register_modal(nil, [:motion_id, params[:motion_id]], [:pro, params[:pro]])
+    else
+      authorize @argument, :new?
+      current_context @argument
+      @argument.assign_attributes({pro: %w(con pro).index(params[:pro]) })
 
-    respond_to do |format|
-      if !current_profile.member_of? @argument.forum
-        format.js { render partial: 'forums/join', layout: false, locals: { forum: @argument.forum, r: request.fullpath } }
-        format.html { render template: 'forums/join', locals: { forum: @argument.forum, r: request.fullpath } }
-      elsif params[:motion_id].present?
-        format.js { render js: "window.location = #{request.url.to_json}" }
-        format.html { render :form }
-        format.json { render json: @argument }
-      else
-        format.html { render text: 'Bad request', status: 400 }
-        format.json { head 400 }
+      respond_to do |format|
+        if !current_profile.member_of? @argument.forum
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: @argument.forum, r: request.fullpath } }
+          format.html { render template: 'forums/join', locals: { forum: @argument.forum, r: request.fullpath } }
+        elsif params[:motion_id].present?
+          format.js { render js: "window.location = #{request.url.to_json}" }
+          format.html { render :form }
+          format.json { render json: @argument }
+        else
+          format.html { render text: 'Bad request', status: 400 }
+          format.json { head 400 }
+        end
       end
     end
   end
@@ -45,7 +50,7 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1/edit
   def edit
     @argument = Argument.find params[:id]
-    authorize @argument
+    authorize @argument, :edit?
     current_context @argument
 
     respond_to do |format|
@@ -61,7 +66,7 @@ class ArgumentsController < ApplicationController
     @argument = @forum.arguments.new motion: @motion
     @argument.attributes= argument_params
     @argument.creator = current_profile
-    authorize @argument
+    authorize @argument, :create?
 
     respond_to do |format|
       if @argument.save
@@ -79,7 +84,7 @@ class ArgumentsController < ApplicationController
   # PUT /arguments/1.json
   def update
     @argument = Argument.find params[:id]
-    authorize @argument
+    authorize @argument, :update?
 
     respond_to do |format|
       if @argument.update_attributes(argument_params)
@@ -97,7 +102,7 @@ class ArgumentsController < ApplicationController
   def destroy
     @argument = Argument.find params[:id]
     if params[:destroy].to_s == 'true'
-      authorize @argument
+      authorize @argument, :destroy?
       @argument.destroy
     else
       authorize @argument, :trash?
