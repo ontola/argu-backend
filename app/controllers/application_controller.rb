@@ -25,6 +25,17 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from Argu::NotLoggedInError do |exception|
+    respond_to do |format|
+      format.js { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.html {
+        r = request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
+        @resource ||= User.new r: r.to_s
+        render 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: r, preview: exception.preview }
+      }
+    end
+  end
+
   rescue_from ActiveRecord::RecordNotFound do |exception|
     @quote = Setting.get(:quotes).split(';').sample
     respond_to do |format|
