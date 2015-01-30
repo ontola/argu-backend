@@ -6,7 +6,7 @@ class RestrictivePolicy
     @context = context
     @record = record
 
-    raise Pundit::NotAuthorizedError, "must be logged in" unless has_access_to_platform?
+    raise Argu::NotLoggedInError.new(nil, record), "must be logged in" unless has_access_to_platform?
   end
 
   delegate :user, to: :context
