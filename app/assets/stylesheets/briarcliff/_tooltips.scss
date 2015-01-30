@@ -8,12 +8,13 @@
   text-align: left;
 }
 
-.tooltip:hover:after {
+.tooltip:after {
+  @include transition (opacity .2s ease-in-out);
+  content: attr(data-title);
   padding: .3em .6em;
   background: $g3;
   line-height: 1.5em;
   color: white;
-  content: attr(data-title);
   text-transform: none;
   position: absolute;
   right: 0%;
@@ -24,4 +25,9 @@
   font-weight: normal;
   @include border-radius;
   @include box-shadow-intense;
+  opacity:0;
+}
+
+.tooltip:hover:after {
+  opacity: 1;
 }

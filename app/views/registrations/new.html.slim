@@ -4,5 +4,6 @@
     h1 = t("sign_up")
   .box.box-small
     section
-      = render partial: 'form'
-      = render "devise/shared/links" unless defined?(r)
+      .form-small
+        = render partial: 'form'
+        = render "devise/shared/links" unless defined?(r)

@@ -149,3 +149,13 @@ nl:
   embed: "embed"
   forms:
     danger_zone: "Gevarenzone"
+  users:
+    registrations:
+      hints:
+        password: "Minimaal 8 karakters"
+        username: "Gebruik alleen letters, cijfers en _."
+      placeholders:
+        email: "voorbeeld@example.com"
+        password: "wachtwoord"
+        username: "gebruikersnaam"
+        password_confirmation: "Zelfde als hierboven"

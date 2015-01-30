@@ -50,11 +50,12 @@
                   li= msg
           = devise_error_messages!
           .form-small
-            .info.info-signup = t("sign_in_existing")
-            = f.text_field :login, placeholder: t("users_username_or_email"), autofocus: :autofocus
-            = f.password_field :password, placeholder: t("users_password")
-            /- if devise_mapping.rememberable?
-              .remember= f.check_box :remember_me
+            =f.inputs
+              .info.info-signup = t("sign_in_existing")
+              = f.input :login, placeholder: t("users_username_or_email"), autofocus: :autofocus, label: false
+              = f.input :password, placeholder: t("users_password"), label: false
+              /- if devise_mapping.rememberable?
+                .remember= f.check_box :remember_me
             = f.actions do
               = f.action :submit, :as => :button, label: t("sign_in")
             /= render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}

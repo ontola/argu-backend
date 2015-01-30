@@ -1,10 +1,8 @@
-.box
-  section
-    = semantic_form_for @profile, url: profile_path(@user.username) do |f|
-      = f.inputs
-        = f.input :name, label: t("profiles.edit.name")
-        = f.input :about, label: t("profiles.edit.about"), input_html: { :rows => 5 }
-        /TODO Show current profile_photo, use Pica_Pica
-        = f.input :profile_photo, label: t("profiles.edit.picture")
-      = f.actions do
-        = f.action :submit, :as => :button, label: current_user.finished_intro? ? t('save') : t('next')
+= semantic_form_for @profile, url: profile_path(@user.username) do |f|
+  = f.inputs
+    = f.input :name, label: t("profiles.edit.name")
+    = f.input :about, label: t("profiles.edit.about"), input_html: { :rows => 5 }
+    /TODO Show current profile_photo, use Pica_Pica
+    = f.input :profile_photo, label: t("profiles.edit.picture")
+  = f.actions do
+    = f.action :submit, :as => :button, label: current_user.finished_intro? ? t('save') : t('next')

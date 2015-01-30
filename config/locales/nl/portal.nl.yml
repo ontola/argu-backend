@@ -20,13 +20,6 @@ nl:
     motions: "Voorstellen"
     value: "Value"
     key: "Key"
-  users:
-    registrations:
-      placeholders:
-        email: "voorbeeld@example.com"
-        password: "Minimaal 8 karakters"
-        username: "Letters, cijfers en _"
-        password_confirmation: "Zelfde als hierboven"
   intro:
     initial:
       start_argu: "Begin met argu"
