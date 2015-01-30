@@ -25,7 +25,7 @@ class ArgumentsController < ApplicationController
     @argument = @forum.arguments.new motion_id: params[:motion_id]
     if current_profile.blank?
       authorize @argument, :show?
-      render_register_modal(nil)
+      render_register_modal(nil, [:motion_id, params[:motion_id]], [:pro, params[:pro]])
     else
       authorize @argument, :new?
       current_context @argument
