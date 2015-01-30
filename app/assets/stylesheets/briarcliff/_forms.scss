@@ -32,7 +32,6 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   }
   @include bp-medium {
     width: 100%;
-    margin-bottom: 0.4em;
   }
 }
 
@@ -250,4 +249,19 @@ input[type="file"], select {
 
 .inline-hints {
   color: $g2;
+}
+
+.inline-errors {
+  color: white;
+  background-color: $red;
+  padding: 0.2em .5em;
+}
+
+.formtastic .inline-errors {
+  float: right;
+  width: 70%;
+  @include bp-medium{
+    width: 100%;
+    float: none;
+  }
 }
