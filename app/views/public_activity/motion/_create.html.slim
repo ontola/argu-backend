@@ -4,4 +4,4 @@
   - item = activity.trackable.forum
 -content_for "activity-#{activity.id}" do
   == t('activities.motions.create', thing: link_to(t("#{item.class_name}.type"), item, title: item.display_name))
-== render_columns item
+== render_columns activity.trackable

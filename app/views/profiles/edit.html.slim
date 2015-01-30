@@ -2,6 +2,11 @@
   -if current_user.finished_intro?
     =render partial: 'profile_bar'
   -else
-    h1= t('intro.initial.headers.profile')
-    p= raw t('intro.initial.body.profile')
-  = render 'form'
+    header
+      h1= t('intro.initial.headers.profile')
+    .box
+      section
+        p= raw t('intro.initial.body.profile')
+  .box
+    section
+      = render 'form'

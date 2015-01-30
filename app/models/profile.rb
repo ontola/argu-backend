@@ -23,7 +23,7 @@ class Profile < ActiveRecord::Base
   end
 
   def email
-    owner.email
+    owner.try :email
   end
 
   def frozen?
@@ -35,7 +35,7 @@ class Profile < ActiveRecord::Base
   end
 
   def username
-    owner.username
+    owner.try :username
   end
 
   def owner
@@ -43,7 +43,7 @@ class Profile < ActiveRecord::Base
   end
 
   def web_url
-    username.presence || owner.web_url.presence || id
+    username.presence || owner.try(:web_url).presence || id
   end
 
   #######Methods########
@@ -65,7 +65,8 @@ class Profile < ActiveRecord::Base
   def preferred_forum
     @redis ||= Redis.new
     last_forum = @redis.get("profiles.#{self.id}.last_forum")
-    (Forum.find(last_forum) if last_forum.present?) || Forum.first_public
+
+    (Forum.find(last_forum) if last_forum.present?) || self.memberships.first.try(:forum) || Forum.first_public
   end
 
   def member_of?(_forum)

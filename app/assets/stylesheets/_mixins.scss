@@ -55,6 +55,12 @@
   }
 }
 
+@mixin bp-medium-large {
+  @media only screen and (max-width: 55em) {
+    @content;
+  }
+}
+
 @mixin bp-medium {
   @media only screen and (max-width: 40em) {
     @content;

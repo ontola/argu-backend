@@ -1,11 +1,15 @@
 class MotionPolicy < RestrictivePolicy
   class Scope < Scope
-    attr_reader :user, :scope
+    attr_reader :context, :user, :scope, :session
 
-    def initialize(user, scope)
-      @user = user
+    def initialize(context, scope)
+      @context = context
+      @profile = user.profile if user
       @scope = scope
     end
+
+    delegate :user, to: :context
+    delegate :session, to: :context
 
     def resolve
       scope
@@ -41,7 +45,7 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def show?
-    Pundit.policy(user, record.forum).show? || super
+    Pundit.policy(context, record.forum).show? || super
   end
 
   def vote?
@@ -51,6 +55,6 @@ class MotionPolicy < RestrictivePolicy
   private
 
   def is_member?
-    user.profile.member_of? (record.forum || record.forum_id)
+    user && user.profile.member_of?(record.forum || record.forum_id)
   end
 end

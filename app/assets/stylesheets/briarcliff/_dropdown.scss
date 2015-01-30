@@ -95,3 +95,9 @@ span.dropdown-header {
 .btns-list .dropdown-content {
   font-size: 120%;
 }
+
+.dropdown-divider {
+  display: block;
+  width: 100%;
+  border-top: solid 1px $g2;
+}

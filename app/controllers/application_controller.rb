@@ -1,8 +1,9 @@
 class ApplicationController < ActionController::Base
-  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController
+  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery secret: "Nl4EV8Fm3LdKayxNtIBwrzMdH9BD18KcQwSczxh1EdDbtyf045rFuVces8AdPtobC9pp044KsDkilWfvXoDADZWi6Gnwk1vf3GghCIdKXEh7yYg41Tu1vWaPdyzH7solN33liZppGlJlNTlJjFKjCoGjZP3iJhscsYnPVwY15XqWqmpPqjNiluaSpCmOBpbzWLPexWwBSOvTcd6itoUdWUSQJEVL3l0rwyJ76fznlNu6DUurFb8bOL2ItPiSit7g"
   skip_before_filter  :verify_authenticity_token
+  prepend_before_action :check_for_access_token
   before_action :check_finished_intro
   before_action :configure_permitted_parameters, if: :devise_controller?
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
@@ -14,11 +15,23 @@ class ApplicationController < ActionController::Base
   }
 
   rescue_from Pundit::NotAuthorizedError do |exception|
+    Rails.logger.error exception
     respond_to do |format|
       format.js { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {
         request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
         redirect_to :back, :alert => exception.message
+      }
+    end
+  end
+
+  rescue_from Argu::NotLoggedInError do |exception|
+    respond_to do |format|
+      format.js { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.html {
+        r = request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
+        @resource ||= User.new r: r.to_s
+        render 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: r, preview: exception.preview }
       }
     end
   end
@@ -53,6 +66,28 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def preferred_forum
+    policy(current_profile.preferred_forum).show? ? current_profile.preferred_forum : current_profile.memberships.first.try(:forum) || Forum.first_public
+  end
+
+  def pundit_user
+    UserContext.new(current_user, session)
+  end
+
+  def render_register_modal(base_url=nil, *r_options)
+    if !r_options || r_options.first != false   # Only skip if r_options is false
+      r = URI.parse(base_url || request.fullpath)
+      r.query= [r_options].map { |a| a.join('=') }.join('&')
+    else
+      r = nil
+    end
+    @resource ||= User.new r: r.to_s
+    respond_to do |format|
+      format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: r.to_s } }
+      format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: r.to_s } }
+    end
+  end
+
   def set_locale
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale
@@ -70,7 +105,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << :username
+    devise_parameter_sanitizer.for(:sign_up) << [:username, :email, :r]
     devise_parameter_sanitizer.for(:accept_invitation).concat [:username]
   end
 

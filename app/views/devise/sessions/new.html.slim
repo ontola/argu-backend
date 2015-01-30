@@ -4,7 +4,14 @@
     header
       h1 = t("sign_in")
     .box.box-small
-      - if Rails.configuration.epics.sign_up
+      -if defined?(preview) && preview.present?
+        h2 Je hebt een account nodig om dit te bekijken
+        - if can_show_display_name?(preview)
+          .preview
+            h3= preview.display_name
+      - if has_valid_token? && defined?(r)
+        = render partial: 'registrations/form', locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping, r: r}
+      - elsif Rails.configuration.epics.sign_up
         section
           ul.btns-signup
             li
@@ -48,11 +55,12 @@
                   li= msg
           = devise_error_messages!
           .form-small
-            .info.info-signup = t("sign_in_existing")
-            = f.text_field :login, placeholder: t("users_username_or_email"), autofocus: :autofocus
-            = f.password_field :password, placeholder: t("users_password")
-            /- if devise_mapping.rememberable?
-              .remember= f.check_box :remember_me
+            =f.inputs
+              .info.info-signup = t("sign_in_existing")
+              = f.input :login, placeholder: t("users_username_or_email"), autofocus: :autofocus, label: false
+              = f.input :password, placeholder: t("users_password"), label: false
+              /- if devise_mapping.rememberable?
+                .remember= f.check_box :remember_me
             = f.actions do
               = f.action :submit, :as => :button, label: t("sign_in")
             /= render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}

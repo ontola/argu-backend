@@ -10,6 +10,7 @@ nl:
       new:
         header: "uitnodigingen versturen"
         submit_button: "Verstuur uitnodiging"
+        forum_notice: "Je nodigt mensen uit voor het forum %{forum}"
       edit:
         header: "Maak jouw account aan"
         submit_button: "Wachtwoord opslaan"

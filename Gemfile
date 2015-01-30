@@ -10,8 +10,6 @@ gem 'indefinite_article'
 ##################DB########################
 gem 'pg', '0.17.1'
 #gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
-gem 'foreigner', '~> 1.7.0'
-gem 'immigrant', '~> 0.1.8'
 
 gem 'jbuilder', '~> 2.2.5'
 gem 'bcrypt-ruby', '>= 3.1.5'
@@ -23,7 +21,7 @@ gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.1.2'
 gem 'cocoon', '~> 1.2.6'
 gem 'redis', '~> 3.2.0'
-gem 'bugsnag'
+gem 'has_secure_token'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
@@ -92,6 +90,7 @@ group :production, :staging do
   gem 'therubyracer', '~> 0.12.1'
   gem 'unicorn', '~> 4.8.3'
   gem 'rack-test', '~> 0.6.2'
+  gem 'bugsnag'
 end
 
   gem 'briarcliff', '~> 0.0.9'

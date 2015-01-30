@@ -9,7 +9,7 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   font-family: $font-sans;
   display: inline-block;
   width: 70%;
-  margin-bottom: 1.5em;
+  //margin-bottom: 1.5em;
   color: $g4;
   line-height: 1.4em;
   &:focus {
@@ -26,6 +26,9 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   }
   + input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
     margin-top: 0em !important;
+  }
+  &.input--full {
+    width: 100%;
   }
   @include bp-medium {
     width: 100%;
@@ -79,6 +82,9 @@ fieldset {
   & .danger-zone {
     border: 0.15em solid indianred;
     margin-bottom: 0.5em;
+  }
+  li {
+    margin-bottom: 1.5em;
   }
 }
 
@@ -220,7 +226,7 @@ input[type="text"].form-input-title {
 }
 
 .formtastic .actions {
-  margin-top: 2em;
+  margin-top: 1em;
 }
 
 .formtastic li {
@@ -240,4 +246,8 @@ input[type="file"], select {
 
 .preview_image img {
   max-width: 100%;
+}
+
+.inline-hints {
+  color: $g2;
 }

@@ -3,7 +3,7 @@
 
 .modal {
   position: fixed;
-  top: 3em;
+  top: 0;
   left: 0;
   right: 0;
   z-index: 20;
@@ -32,7 +32,7 @@
   z-index: 11;
   height: 100%;
   overflow: hidden;
-  background-color: $darken4;
+  background-color: $darken_overlay;
   @include animation(fade-in .5s ease-in);
 }
 

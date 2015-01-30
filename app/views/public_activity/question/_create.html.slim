@@ -1,0 +1,3 @@
+-content_for "activity-#{activity.id}" do
+  == t('activities.questions.create', thing: link_to(activity.recipient.display_name, activity.recipient, title: activity.recipient.display_name))
+== render_columns activity.trackable

@@ -49,6 +49,7 @@ Argu::Application.routes.draw do
 
   resources :arguments, except: [:index, :new, :create], concerns: [:votable] do
     resources :comments
+    patch 'comments' => 'comments#create'
   end
 
   resources :opinions do
@@ -82,7 +83,10 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :profiles
+  resources :profiles do
+    # This is to make requests POST if the user has an 'r' (which nearly all use POST)
+    post ':id' => 'profiles#update', on: :collection
+  end
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 

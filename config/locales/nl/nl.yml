@@ -53,10 +53,14 @@ nl:
   error: "fout"
   error_prohibited: " bij het opslaan:"
   outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
+  share_link:
+    header: "Link delen"
+    body: "Deel onderstaande link om direct mensen uit te nodigen naar dit forum."
   status:
     400: "Fout in de aanvraag"
   header:
     motions: "voorstellen"
+    activities: "Activiteit"
     questions: "vraagstukken"
   site:
     description: "Argu is een online discussieplatform waar argumenten centraal staan."
@@ -145,3 +149,13 @@ nl:
   embed: "embed"
   forms:
     danger_zone: "Gevarenzone"
+  users:
+    registrations:
+      hints:
+        password: "Minimaal 8 karakters"
+        username: "Gebruik alleen letters, cijfers en _."
+      placeholders:
+        email: "voorbeeld@example.com"
+        password: "wachtwoord"
+        username: "gebruikersnaam"
+        password_confirmation: "Zelfde als hierboven"

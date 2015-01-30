@@ -137,8 +137,6 @@
   background-size: cover;
   background-position: center;
   @include transition(.2s);
-  @include border-radius;
-  border-bottom-radius: 0;
   &:hover{
     opacity: .8;
   }

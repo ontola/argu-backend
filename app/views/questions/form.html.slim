@@ -24,7 +24,7 @@
           -if !@question.new_record?
             = f.input :remove_cover_photo, as: :reverse_boolean
           -if !@question.new_record? && policy(@question).trash?
-            =render layout: 'application/danger_zone' do
+            = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
               - if policy(@question).trash?
                 = f.input :is_trashed, as: :reverse_boolean
               -if policy(@question).move?
@@ -34,7 +34,7 @@
             <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
             <%= f.check_box :invert_arguments %>
         = render partial: 'profiles/profile_current'
-        .actions= f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"
+        .actions[style="margin-top: 0;"]= f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"
   /TODO: make translations
   .col-3-1
     .box

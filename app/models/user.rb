@@ -71,6 +71,7 @@ private
 
   def cleanup
     self.authentications.destroy_all
+    self.profile.update name: '', about: '', picture: '', profile_photo: '', cover_photo: ''
   end
 
   def self.find_first_by_auth_conditions(warden_conditions)
