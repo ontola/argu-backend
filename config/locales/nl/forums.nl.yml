@@ -47,6 +47,9 @@ nl:
     sign_up:
       header: "Word lid van Argu en discussieer mee"
     new_question_or_motion: "Nieuw vraagstuk of voorstel"
+    about:
+      header: "Waarvoor is dit forum?"
+      body: "Een Argu forum is een discussie omgeving waar op een inhoudelijke en kritische manier oplossingen kan worden gevonden voor vraagstukken."
   activerecord:
     attributes:
       forum:

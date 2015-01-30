@@ -3,7 +3,8 @@
     = message
   = f.inputs do
     = f.input :name
-    = f.input :bio
+    = f.input :bio, hint: "max 140 chars"
+    = f.input :bio_long, hint: "long description"
     = f.input :featured_tags, placeholder: t("motions.form.themes"), as: :tags
     = f.input :cover_photo
     = f.input :cover_photo, as: :preview_image, html_options: { style: 'max-height: 256px;' }

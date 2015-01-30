@@ -24,6 +24,7 @@ class Forum < ActiveRecord::Base
   validates :web_url, :name, presence: true, length: {minimum: 4}
   validates_format_of :web_url, with: /\A[a-zA-Z]\w{3,}/, message: '_moet met een letter beginnen_'
   validates :page_id, presence: true
+  validates :bio, length: {maximum: 140}
 
   after_validation :check_access_token, if: :visible_with_a_link_changed?
 

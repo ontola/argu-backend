@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150128223828) do
+ActiveRecord::Schema.define(version: 20150130165749) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20150128223828) do
     t.string   "cover_photo_attribution", default: ""
     t.boolean  "visible_with_a_link",     default: false
     t.boolean  "signup_with_token?",      default: false
+    t.text     "bio_long",                default: ""
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree

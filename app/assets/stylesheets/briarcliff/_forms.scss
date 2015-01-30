@@ -9,7 +9,6 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   font-family: $font-sans;
   display: inline-block;
   width: 70%;
-  //margin-bottom: 1.5em;
   color: $g4;
   line-height: 1.4em;
   &:focus {
@@ -99,7 +98,6 @@ fieldset {
 
 .form-input-content {
   width: 100%;
-  margin-bottom: 1em;
   background-color: $darken1;
   border: none;
   padding: .5em;
@@ -137,6 +135,7 @@ input[type="text"].form-input-title {
     float: left;
     text-align: center;
     clear: none;
+    margin: 0;
     label {
       width: 100%;
       cursor: pointer;
@@ -202,7 +201,6 @@ input[type="text"].form-input-title {
   cursor: hand;
   width: auto;
   display: inline-block;
-  margin-bottom: 1em;
   height: 3em;
   position: absolute;
   right: 0;
@@ -239,7 +237,6 @@ input[type="text"].form-input-title {
 
 input[type="file"], select {
   padding: 0.3em 0em;
-  margin-bottom: 1.2em;
   font-size: 1em;
 }
 
@@ -249,6 +246,7 @@ input[type="file"], select {
 
 .inline-hints {
   color: $g2;
+  padding: 0.2em .5em;
 }
 
 .inline-errors {
