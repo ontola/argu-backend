@@ -34,7 +34,7 @@ div[itemscope itemtype="Thing"]
                     span.fa.fa-sign-out
                     span.icon-left= t('forums.leave')
                 - if suggested_forums.present?
-                  span.dropdown-header = t('forums.suggestions')
+                  span.dropdown-header= t('forums.suggestions')
                   ul.tags-vertical
                     - suggested_forums.each do |forum|
                       li=link_to forum.display_name, url_for(forum)
@@ -45,10 +45,10 @@ div[itemscope itemtype="Thing"]
             li=link_to forum_memberships_path(@forum.web_url), method: :post do
               span.fa.fa-user
               span.icon-left= t('join')
-          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]=link_to url_for([:new, @forum, :motion]), data: {remote: true}, class: "sta-t btn-focus" do
+          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: {remote: true}, class: "sta-t btn-focus" do
             span.fa.fa-plus
             span.icon-left= t('motions.type')
-          li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]=link_to url_for([:new, @forum, :question]), data: {remote: true}, class: "que-t btn-focus" do
+          li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: {remote: true}, class: "que-t btn-focus" do
             span.fa.fa-plus
             span.icon-left= t('questions.type')
           - if policy(@forum).invite?
@@ -109,15 +109,15 @@ div[itemscope itemtype="Thing"]
         = render item
       .box.box-grid.motion[ data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]=link_to url_for([:new, @forum, :motion]), data: {remote: true} do
         section.section-fill.sta-bg
-          h2 = t("motions.call_to_action.title")
+          h2= t("motions.call_to_action.title")
         section
-          p = t("motions.call_to_action.body")
+          p= t("motions.call_to_action.body")
           p
             b = t("motions.call_to_action.action")
       .box.box-grid.question[ data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]=link_to url_for([:new, @forum, :question]), data: {remote: true} do
         section.section-fill.que-bg
-          h2 = t("questions.call_to_action.title")
+          h2= t("questions.call_to_action.title")
         section
-          p = t("questions.call_to_action.body")
+          p= t("questions.call_to_action.body")
           p
-            b = t("questions.call_to_action.action")
+            b= t("questions.call_to_action.action")
