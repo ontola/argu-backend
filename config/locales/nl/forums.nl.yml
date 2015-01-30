@@ -7,6 +7,10 @@ nl:
       title: "Instellingen"
       general: "Algemeen"
       managers: "Beheerders"
+      bio: "Doel van forum"
+      bio_long: "Meer informatie"
+      hints:
+        bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de titel van het forum. Maximaal 140 karakters."
     statistics:
       title: "Statistiek"
       memberships: "Leden"
@@ -47,6 +51,9 @@ nl:
     sign_up:
       header: "Word lid van Argu en discussieer mee"
     new_question_or_motion: "Nieuw vraagstuk of voorstel"
+    about:
+      header: "Waarvoor is dit forum?"
+      body: "Een Argu forum is een discussie omgeving waar op een inhoudelijke en kritische manier oplossingen kan worden gevonden voor vraagstukken."
   activerecord:
     attributes:
       forum:

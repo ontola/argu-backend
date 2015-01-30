@@ -39,6 +39,8 @@ div[itemscope itemtype="Thing"]
                     - suggested_forums.each do |forum|
                       li=link_to forum.display_name, url_for(forum)
                 li=link_to t('forums.discover'), forums_url, class: 'btn-focus'
+          p.cover-oneliner = @forum.bio
+          /p.cover-oneliner Een Argu forum is een discussie omgeving waar op een inhoudelijke en kritische manier oplossingen kan worden gevonden voor vraagstukken.
         ul.btns-list.btns-vertical
           /TODO: Make this check the current profile, not the user
           - unless policy(@forum).is_member?
@@ -121,3 +123,13 @@ div[itemscope itemtype="Thing"]
           p= t("questions.call_to_action.body")
           p
             b= t("questions.call_to_action.action")
+    .col-1
+      header
+        h1 = t("forums.about.header")
+      .box
+        section
+          p
+            b = t("forums.about.body")
+        - if @forum.bio.present?
+          section
+            p= @forum.bio_long
