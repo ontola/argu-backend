@@ -19,7 +19,9 @@ nav#navbar.navbar role="navigation"
                 =link_to membership.forum.display_name, url_for(membership.forum)
             - if suggested_forums.present?
             .dropdown-divider
-            =link_to t('forums.discover'), forums_url, class: 'btn-focus'
+            =link_to forums_url, class: 'btn-focus' do
+              span.fa.fa-compass
+              span.icon-left= t('forums.discover')
       -else
         li
           =link_to url_for(current_scope.model), class: "navbar-item"
