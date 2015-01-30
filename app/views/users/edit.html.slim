@@ -11,14 +11,15 @@
           = f.input :password, label: t("users_password_edit")
           = f.input :password_confirmation, label: t("users_password_confirmation")
 
-          - if @authentications.present?
-            label= t("users_oauth_coupled")
-            = render 'authentications/login_providers_connected'
+          -if Rails.configuration.epics.open_auth
+            - if @authentications.present?
+              label= t("users_oauth_coupled")
+              = render 'authentications/login_providers_connected'
 
-          /TODO Hide authentications that are already present.
-          label= t("users_oauth_new")
-          .form-item
-            = render 'authentications/login_providers'
+            /TODO Hide authentications that are already present.
+            label= t("users_oauth_new")
+            .form-item
+              = render 'authentications/login_providers'
 
           = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
             label = t("users_cancel_title")
