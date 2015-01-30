@@ -43,9 +43,9 @@ div[itemscope itemtype="Thing"]
                   span.icon-left= t('forums.discover')
           p.cover-oneliner
             = @forum.bio
-            a[href="#forum-info"]
-              span.fa.fa-info
-              span.icon-left= t('forums.more_info') + "."
+            - if @forum.bio_long.present?
+              a[href="#forum-info"]
+                span.icon-left= t('forums.more_info')
           /p.cover-oneliner Een Argu forum is een discussie omgeving waar op een inhoudelijke en kritische manier oplossingen kan worden gevonden voor vraagstukken.
         ul.btns-list.btns-vertical
           /TODO: Make this check the current profile, not the user
@@ -140,6 +140,6 @@ div[itemscope itemtype="Thing"]
         section
           p
             b = t("forums.about.body")
-        - if @forum.bio.present?
+        - if @forum.bio_long.present?
           section
             p= @forum.bio_long
