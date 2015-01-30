@@ -12,7 +12,7 @@ module AccessTokenHelper
   # Only works after check_for_access_token or grant_viewing_rights_for has been called,
   # since it doesn't read params
   def has_valid_token?(user=nil)
-    !!get_access_tokens(user)
+    get_access_tokens(user).present?
   end
 
   def has_access_token_access_to(record=nil)
