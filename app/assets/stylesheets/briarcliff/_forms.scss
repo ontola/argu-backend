@@ -255,7 +255,7 @@ input[type="file"], select {
   padding: 0.2em .5em;
 }
 
-.formtastic .inline-errors {
+.formtastic .inline-errors, .formtastic .inline-hints {
   float: right;
   width: 70%;
   @include bp-medium{
