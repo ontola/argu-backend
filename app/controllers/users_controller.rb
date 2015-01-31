@@ -39,7 +39,6 @@ class UsersController < ApplicationController
         format.html { redirect_to settings_path, notice: "Wijzigingen opgeslagen." }
         format.json { head :no_content }
       else
-        fdsas
         format.html { render action: "edit" }
         format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
