@@ -16,6 +16,9 @@ Argu::Application.configure do
   config.epics.link_to_motion = true                  # Button in questions.show to find & link motions
 
 
+  config.logstasher.enabled = true
+  config.logstasher.log_controller_parameters = true
+
   # Code is not reloaded between requests
   config.cache_classes = true
 

@@ -6,6 +6,7 @@ gem 'rails', '~>4.2.0'
 
 gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
+gem 'logstasher'
 
 ##################DB########################
 gem 'pg', '0.17.1'
