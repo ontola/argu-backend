@@ -39,3 +39,11 @@
           span.icon-left=t('edit')
 div[data-intro= t("intro.question.motions")]
   ==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))
+  -if Rails.configuration.epics.link_to_motion
+    .col-1
+      .box.box-link
+        a.
+          section
+            h3
+              span.fa.fa-search
+              span.icon-left = t("questions.link_to_motion")

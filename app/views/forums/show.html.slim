@@ -34,21 +34,29 @@ div[itemscope itemtype="Thing"]
                     span.fa.fa-sign-out
                     span.icon-left= t('forums.leave')
                 - if suggested_forums.present?
-                  span.dropdown-header = t('forums.suggestions')
+                  span.dropdown-header= t('forums.suggestions')
                   ul.tags-vertical
                     - suggested_forums.each do |forum|
                       li=link_to forum.display_name, url_for(forum)
-                li=link_to t('forums.discover'), forums_url, class: 'btn-focus'
+                li=link_to forums_url, class: 'btn-focus' do
+                  span.fa.fa-compass
+                  span.icon-left= t('forums.discover')
+          p.cover-oneliner
+            = @forum.bio
+            - if @forum.bio_long.present?
+              a[href="#forum-info"]
+                span.icon-left= t('forums.more_info')
+          /p.cover-oneliner Een Argu forum is een discussie omgeving waar op een inhoudelijke en kritische manier oplossingen kan worden gevonden voor vraagstukken.
         ul.btns-list.btns-vertical
           /TODO: Make this check the current profile, not the user
           - unless policy(@forum).is_member?
             li=link_to forum_memberships_path(@forum.web_url), method: :post do
               span.fa.fa-user
               span.icon-left= t('join')
-          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]=link_to url_for([:new, @forum, :motion]), data: {remote: true}, class: "sta-t btn-focus" do
+          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: {remote: true}, class: "sta-t btn-focus" do
             span.fa.fa-plus
             span.icon-left= t('motions.type')
-          li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]=link_to url_for([:new, @forum, :question]), data: {remote: true}, class: "que-t btn-focus" do
+          li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: {remote: true}, class: "que-t btn-focus" do
             span.fa.fa-plus
             span.icon-left= t('questions.type')
           - if policy(@forum).invite?
@@ -109,15 +117,29 @@ div[itemscope itemtype="Thing"]
         = render item
       .box.box-grid.motion[ data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]=link_to url_for([:new, @forum, :motion]), data: {remote: true} do
         section.section-fill.sta-bg
-          h2 = t("motions.call_to_action.title")
+          h2= t("motions.call_to_action.title")
         section
-          p = t("motions.call_to_action.body")
+          p= t("motions.call_to_action.body")
           p
-            b = t("motions.call_to_action.action")
+            b.sta-t
+              span.fa.fa-plus
+              span.icon-left= t("motions.call_to_action.action")
       .box.box-grid.question[ data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]=link_to url_for([:new, @forum, :question]), data: {remote: true} do
         section.section-fill.que-bg
-          h2 = t("questions.call_to_action.title")
+          h2= t("questions.call_to_action.title")
         section
-          p = t("questions.call_to_action.body")
+          p= t("questions.call_to_action.body")
           p
-            b = t("questions.call_to_action.action")
+            b.que-t
+              span.fa.fa-plus
+              span.icon-left= t("questions.call_to_action.action")
+    .col-1
+      header#forum-info
+        h1 = t("forums.about.header")
+      .box
+        section
+          p
+            b = t("forums.about.body")
+        - if @forum.bio_long.present?
+          section
+            p= @forum.bio_long

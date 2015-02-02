@@ -5,10 +5,12 @@
       h1 = t("sign_in")
     .box.box-small
       -if defined?(preview) && preview.present?
-        h2 Je hebt een account nodig om dit te bekijken
-        - if can_show_display_name?(preview)
-          .preview
-            h3= preview.display_name
+        section
+          - if can_show_display_name?(preview)
+            .preview
+              h3= preview.display_name
+          p
+            b Je hebt een account nodig om dit te bekijken.
       - if has_valid_token? && defined?(r)
         section
           .form-small
@@ -61,6 +63,7 @@
               .info.info-signup = t("sign_in_existing")
               = f.input :login, placeholder: t("users_username_or_email"), autofocus: :autofocus, label: false
               = f.input :password, placeholder: t("users_password"), label: false
+              = f.input :r, as: :hidden
               /- if devise_mapping.rememberable?
                 .remember= f.check_box :remember_me
             = f.actions do

@@ -8,7 +8,7 @@ class CommentsController < ApplicationController
     resource = get_commentable
     if current_profile.blank?
       authorize resource, :show?
-      render_register_modal(nil, [:comment, CGI::escape(params[:comment])], [:parent_id, params[:parent_id]])
+      render_register_modal(nil, [:comment, params[:comment]], [:parent_id, params[:parent_id]])
     else
       @comment = Comment.build_from(resource, current_profile.id, params[:comment])
       authorize @comment

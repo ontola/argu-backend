@@ -71,6 +71,9 @@ private
 
   def cleanup
     self.authentications.destroy_all
+    self.profile.activities.destroy_all
+    self.profile.memberships.destroy_all
+    self.profile.page_memberships.destroy_all
     self.profile.update name: '', about: '', picture: '', profile_photo: '', cover_photo: ''
   end
 

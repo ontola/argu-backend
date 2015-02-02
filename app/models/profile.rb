@@ -8,6 +8,7 @@ class Profile < ActiveRecord::Base
   has_many :page_memberships, dependent: :destroy
   has_many :forums, through: :memberships
   has_many :pages, inverse_of: :owner
+  has_many :activities, as: :owner, dependent: :destroy
 
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, CoverUploader
@@ -77,7 +78,7 @@ class Profile < ActiveRecord::Base
     remove_role :frozen
   end
 
-  # Hasn't been though through, so disable for the moment.
+  # Hasn't been thought through, so disable for the moment.
   def destroy
     false
   end
