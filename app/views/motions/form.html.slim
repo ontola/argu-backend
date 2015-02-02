@@ -5,7 +5,7 @@
       section.section-info.sta-bg
         span = t("motions.type")
       = semantic_form_for([@forum, @motion]) do |f|
-        section.smallpadded
+        section.smallpadded.form-filled
           - if @motion.errors.any?
             #error_explanation
               h2
@@ -15,10 +15,10 @@
                 - @motion.errors.full_messages.each do |msg|
                   li= msg
           = f.inputs
-            = f.text_field :title, placeholder: t("motions.form.title").capitalize, class: "h1 sta-t form-input-title"
-            = f.text_area :content, placeholder: t("motions.form.content"), rows: "8", class: "form-input-content"
-            = f.text_field :tag_list, placeholder: t("motions.form.themes"), class: "tag-list"
-            = f.input :cover_photo, label: t("image")
+            = f.input :title, input_html: {class: "h1 sta-t form-input-title"}, label: false
+            = f.input :content, input_html: {class: "form-input-content", rows: "8"}, label: false
+            = f.input :tag_list, input_html: {class: "tag-list"}, label: false
+            = f.input :cover_photo
             -if !@motion.new_record?
               = f.input :remove_cover_photo, as: :reverse_boolean
 

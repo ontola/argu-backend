@@ -112,7 +112,6 @@ input[type="text"].form-input-title {
   font-size: 1.8em;
   font-weight: 800;
   padding: .2em;
-  margin-bottom: 0.5em;
   width: 100%;
   @include bp-medium{
     font-size: 1.3em;
@@ -182,7 +181,7 @@ input[type="text"].form-input-title {
   margin: auto;
 }
 
-.form-small input, .form-small button, .form-small .inline-errors, .form-small .inline-hints {
+.form-small input, .form-small button, .form-small .inline-errors, .form-filled .inline-errors, .form-small .inline-hints, .form-filled .inline-hints {
   width: 100% !important;
   float: none;
 }
@@ -202,14 +201,9 @@ input[type="text"].form-input-title {
   border: none;
   -webkit-appearance: none;
   border-radius: 0;
-  cursor: hand;
   width: auto;
   display: inline-block;
   height: 3em;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  margin: 0;
   cursor: pointer;
   &:hover {
     background-color: $blud;
@@ -227,7 +221,7 @@ input[type="text"].form-input-title {
 }
 
 .formtastic .actions {
-  margin-top: 1em;
+  text-align: center;
 }
 
 .formtastic li {

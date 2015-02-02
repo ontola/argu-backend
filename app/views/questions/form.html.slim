@@ -5,7 +5,7 @@
       section.section-info.que-bg
         span = t("questions.type")
       = semantic_form_for([@forum, @question], multipart: true) do |f|
-        section.smallpadded
+        section.smallpadded.form-filled
           - if @question.errors.any?
             #error_explanation
               h2
@@ -14,26 +14,29 @@
               ul
                 - @question.errors.full_messages.each do |msg|
                   li= msg
-          = f.text_field :title, placeholder: t("questions.form.title").capitalize, class: "h1 sta-t form-input-title"
-          /p.helpertext= t("motions.form.helper.title")
-          = f.text_area :content, placeholder: t("questions.form.content"), class: "form-input-content", rows: "8"
-          /p.helpertext= t("motions.form.helper.content")
-          = f.text_field :tag_list, placeholder: t("questions.form.themes"), class: "tag-list"
-          /p.helpertext= t("motions.form.helper.themes")
-          = f.file_field :cover_photo
-          -if !@question.new_record?
-            = f.input :remove_cover_photo, as: :reverse_boolean
-          -if !@question.new_record? && policy(@question).trash?
-            = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-              - if policy(@question).trash?
-                = f.input :is_trashed, as: :reverse_boolean
-              -if policy(@question).move?
-                = f.input :f_move, as: :link, url: question_move_url(@question), input_html: {data: {remote: true}, class: 'btn btn--warning'}
-                = f.input :f_convert, as: :link, url: question_convert_url(@question), input_html: {data: {remote: true}, class: 'btn btn--warning'}
-          /TODO invert arguments only visible when in edit, not in new.
-            <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
-            <%= f.check_box :invert_arguments %>
+          = f.inputs
+            = f.input :title, input_html: {class: "h1 que-t form-input-title"}, label: false
+            /p.helpertext= t("motions.form.helper.title")
+            = f.input :content, input_html: {class: "form-input-content", rows: "8"}, label: false
+            /p.helpertext= t("motions.form.helper.content")
+            = f.input :tag_list, input_html: {class: "tag-list"}, label: false
+            /p.helpertext= t("motions.form.helper.themes")
+            = f.input :cover_photo
+            -if !@question.new_record?
+              = f.input :remove_cover_photo, as: :reverse_boolean
+            -if !@question.new_record? && policy(@question).trash?
+              = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+                - if policy(@question).trash?
+                  = f.input :is_trashed, as: :reverse_boolean
+                -if policy(@question).move?
+                  = f.input :f_move, as: :link, url: question_move_url(@question), input_html: {data: {remote: true}, class: 'btn btn--warning'}
+                  = f.input :f_convert, as: :link, url: question_convert_url(@question), input_html: {data: {remote: true}, class: 'btn btn--warning'}
+            /TODO invert arguments only visible when in edit, not in new.
+              <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
+              <%= f.check_box :invert_arguments %>
         = render partial: 'profiles/profile_current'
+        /= f.actions
+          = f.submit
         .actions[style="margin-top: 0;"]= f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"
   /TODO: make translations
   .col-3-1

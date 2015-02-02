@@ -6,8 +6,8 @@
         = f.inputs
           = f.semantic_errors :email, :base
 
-          = f.input :username, label: t("users_username")
-          = f.input :email, label: t("users_email") ,value: @user.email, placeholder: @user.email.blank? ? t("users_email_placeholder") : @user.email
+          = f.input :username
+          = f.input :email, value: @user.email
           = f.input :password, label: t("users_password_edit")
           = f.input :password_confirmation, label: t("users_password_confirmation")
 

@@ -5,6 +5,7 @@ nl:
     type: "profiel"
     display: "profiel bekijken"
     switch: "Argu gebruiken als:"
+    heads_up: "Jouw profiel is zichtbaar voor andere bezoekers van Argu."
     show:
       title: "profiel"
       btn:
@@ -15,10 +16,3 @@ nl:
         unadmin: 'Degradeer admin'
     edit:
       title: "profiel bewerken"
-      name: "Volledige naam"
-      picture: "profielfoto"
-      about: "over jou"
-  activerecord:
-    attributes:
-      profile:
-        profile_photo: "huidige foto"
