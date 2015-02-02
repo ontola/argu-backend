@@ -14,6 +14,8 @@ Argu::Application.configure do
   config.epics.share_links = false                    # Can first-time users visit forum urls, and can members share them?
   config.epics.open_auth = false                       # Facebook, twitter, google, openID login & account linking
 
+  config.logstasher.enabled = true
+
 
   # Code is not reloaded between requests
   config.cache_classes = true
