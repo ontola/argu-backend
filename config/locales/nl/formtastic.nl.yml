@@ -36,7 +36,7 @@ nl:
         scope: "Vorm"
     hints:
       tag_list: "Kies thema's die te maken hebben met jouw ondwerp."
-      username: "Minstens 4 karakters. Alleen cijfers, letters en '_'. Jouw gebruikersnaam is ook jouw Argu URL."
+      username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."
       cover_photo_attribution: "Als jij niet de auteursrechten de afbeelding zit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"
       web_url: "Hiermee bepaal je via welke URL de pagina toegankelijk is. Het wijzigen van de URL kan er voor zorgen dat bestaande gedeelde links niet meer werken."
       question:
@@ -50,7 +50,6 @@ nl:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
     placeholders:
       email: "email@voorbeeld.nl"
-      password: "********"
       login: "email of gebruikersnaam"
       tag_list: "thema1, thema2 ..."
       question:

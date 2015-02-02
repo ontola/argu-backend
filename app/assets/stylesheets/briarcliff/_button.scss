@@ -4,33 +4,6 @@
 .btn {
   @include button();
   margin-bottom: 1em;
-  /*
-  color: white;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: .8em;
-  padding: .5em .8em .4em .8em;
-  background-color: $blu;
-  border: none;
-  -webkit-appearance: none;
-  border-radius: 0;
-  width: auto;
-  display: inline-block;
-  line-height: 2em;
-  height: 3em;
-  position: relative;
-  right: 0;
-  bottom: 0;
-  margin-bottom: 1em;
-  cursor: pointer;
-  &:hover {
-    background-color: $blud;
-    text-decoration: none;
-  }
-  &:active {
-    background-color: $g5;
-  }
-  */
 }
 
 .actions .btn, .form-actions .btn {
@@ -61,7 +34,27 @@
 }
 
 .btn--warning {
+  @include button($red-alert);
+}
+
+.btn--con {
   @include button($red);
+}
+
+.btn--sta {
+  @include button($blu);
+}
+
+.btn--que {
+  @include button($bro);
+}
+
+.btn--twitter {
+  @include button(#55ACEE);
+}
+
+.btn--facebook {
+  @include button(#3B5998);
 }
 
 .btn-box {
@@ -69,11 +62,7 @@
 }
 
 .btn-focus {
-  //color: $gre !important;
   font-weight: bold !important;
-  *{
-    //color: $gre !important;
-  }
   .fa {
     font-weight: normal !important;
   }
@@ -124,8 +113,8 @@
   display: inline-block;
   color: $g2;
   background: none;
-  padding: 0.5em .6em .4em .6em;
-  padding: 1em 1.2em;
+  //padding: 0.5em .6em .4em .6em;
+  //padding: 1em 1.2em;
   &:hover {
     color: $g3;
     background-color: $darken1;
@@ -387,6 +376,10 @@
   display: inline-block;
 }
 
+.btns--vote a{
+  padding: .5em;
+}
+
 //h1 + .btns-vertical {
 //  margin-top: -1em;
 //  margin-bottom: 1em;
@@ -411,12 +404,4 @@ h1 + .btn {
 
 .expander-content {
   display: none;
-}
-
-.btn--twitter {
-  @include button(#55ACEE);
-}
-
-.btn--facebook {
-  @include button(#3B5998);
 }
