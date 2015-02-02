@@ -70,9 +70,10 @@ nav#navbar.navbar role="navigation"
             li= link_to new_user_invitation_path
               span.fa.fa-bullhorn
               span.icon-left= t('devise.invitations.link')
-            li= link_to new_page_url
-              span.fa.fa-plus
-              span.icon-left= t('pages.create')
+            - if Rails.configuration.epics.page_create || current_user.profile.has_role?(:staff)
+              li= link_to new_page_url
+                span.fa.fa-plus
+                span.icon-left= t('pages.create')
             li= link_to(destroy_user_session_url, method: :delete) do
               span.fa.fa-sign-out
               span.icon-left= t("sign_out")

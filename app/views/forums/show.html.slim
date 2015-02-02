@@ -33,7 +33,7 @@ div[itemscope itemtype="Thing"]
                   li=link_to forum_membership_path(@forum.web_url, current_profile), method: :delete, data: {confirm: t('forums.leave_confirmation')} do
                     span.fa.fa-sign-out
                     span.icon-left= t('forums.leave')
-                - if suggested_forums.present?
+                /- if suggested_forums.present?
                   span.dropdown-header= t('forums.suggestions')
                   ul.tags-vertical
                     - suggested_forums.each do |forum|

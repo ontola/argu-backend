@@ -6,14 +6,6 @@
         span = t("questions.type")
       = semantic_form_for([@forum, @question], multipart: true) do |f|
         section.smallpadded.form-filled
-          - if @question.errors.any?
-            #error_explanation
-              h2
-                = pluralize(@question.errors.count, "error")
-                | prohibited this motion from being saved:
-              ul
-                - @question.errors.full_messages.each do |msg|
-                  li= msg
           = f.inputs
             = f.input :title, input_html: {class: "h1 que-t form-input-title"}, label: false
             /p.helpertext= t("motions.form.helper.title")
@@ -37,7 +29,7 @@
         = render partial: 'profiles/profile_current'
         /= f.actions
           = f.submit
-        .actions[style="margin-top: 0;"]= f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"
+        .actions[style="margin-top: 0;"]= f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom que-bg"
   /TODO: make translations
   .col-3-1
     .box

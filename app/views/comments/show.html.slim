@@ -1,13 +1,15 @@
 / Because Javascript
 .comments-container
-  header
-    h1= t("arguments.comments.title")
   .comments
     -if @comments.present?
+      header
+        h1= t("arguments.comments.title")
       span.hidden[itemprop="commentCount"]= @argument.comments_count
       - @comments.each do |c|
         = render partial: 'comments/comment', locals: { resource: resource, c: c }
       = paginate @comments
   -if policy(resource).show?
+    header
+      h2 Reageer op dit argument
     .box
       =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true }
