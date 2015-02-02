@@ -6,10 +6,11 @@
     .box.box-small
       -if defined?(preview) && preview.present?
         section
-          h2 Je hebt een account nodig om dit te bekijken
           - if can_show_display_name?(preview)
             .preview
               h3= preview.display_name
+          p
+            b Je hebt een account nodig om dit te bekijken.
       - if has_valid_token? && defined?(r)
         section
           .form-small

@@ -35,7 +35,7 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
 }
 
 input[type="checkbox"] {
-  margin: 1.2em;
+  margin: 1em 1em 1em 0em;
 }
 
 textarea {
@@ -114,6 +114,9 @@ input[type="text"].form-input-title {
   padding: .2em;
   margin-bottom: 0.5em;
   width: 100%;
+  @include bp-medium{
+    font-size: 1.3em;
+  }
 }
 
 .form-padded {
@@ -179,8 +182,9 @@ input[type="text"].form-input-title {
   margin: auto;
 }
 
-.form-small input, .form-small button {
+.form-small input, .form-small button, .form-small .inline-errors, .form-small .inline-hints {
   width: 100% !important;
+  float: none;
 }
 
 .form-small label {
@@ -244,15 +248,18 @@ input[type="file"], select {
   max-width: 100%;
 }
 
+.inline-errors, .inline-hints {
+  padding: 0.2em .5em;
+  font-size: .8em;
+}
+
 .inline-hints {
   color: $g2;
-  padding: 0.2em .5em;
 }
 
 .inline-errors {
   color: white;
   background-color: $red;
-  padding: 0.2em .5em;
 }
 
 .formtastic .inline-errors, .formtastic .inline-hints {

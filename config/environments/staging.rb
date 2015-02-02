@@ -12,7 +12,9 @@ Argu::Application.configure do
   config.epics.sign_up = false                        # Can users sign up outside of invitations
   config.epics.activities = true                      # Can users see the activity index / timeline button in header?
   config.epics.share_links = true                     # Can first-time users visit forum urls, and can members share them?
-  config.epics.open_auth = true                       # Facebook, twitter, google, openID login & account linking
+  config.epics.open_auth = true                       # Facebook, twitter, google, openID login & account linking shown in profile
+  config.epics.link_to_motion = true                  # Button in questions.show to find & link motions
+
 
   config.logstasher.enabled = true
   config.logstasher.log_controller_parameters = true

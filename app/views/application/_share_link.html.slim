@@ -1,0 +1,10 @@
+header
+  h1= t("share_link.header")
+.box
+  section
+    p= t("share_link.body")
+    form.formtastic
+      fieldset
+        ol
+          li
+            input.input--full[type="text" onClick="this.setSelectionRange(0, this.value.length)" value="#{forum_url(@forum)}?at=#{@forum.access_token}" readonly]
