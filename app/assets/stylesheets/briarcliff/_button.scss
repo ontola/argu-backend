@@ -2,6 +2,9 @@
 @import "mixins";
 
 .btn {
+  @include button();
+  margin-bottom: 1em;
+  /*
   color: white;
   text-transform: uppercase;
   text-decoration: none;
@@ -27,11 +30,13 @@
   &:active {
     background-color: $g5;
   }
+  */
 }
 
 .actions .btn, .form-actions .btn {
   position: absolute;
   margin: 0;
+  height: 3em;
 }
 
 .btn-auth {
@@ -56,10 +61,7 @@
 }
 
 .btn--warning {
-  background-color: $red;
-  &:hover{
-    background-color: $redd;
-  }
+  @include button($red);
 }
 
 .btn-box {
@@ -123,12 +125,15 @@
   color: $g2;
   background: none;
   padding: 0.5em .6em .4em .6em;
+  padding: 1em 1.2em;
   &:hover {
     color: $g3;
     background-color: $darken1;
     text-decoration: none;
+    border: none;
   }
   &:active {
+    border: none;
     color: $g3;
     background-color: $darken2;
     margin-top: 0; //Negates the  "push"-effect of normal buttons
@@ -406,4 +411,12 @@ h1 + .btn {
 
 .expander-content {
   display: none;
+}
+
+.btn--twitter {
+  @include button(#55ACEE);
+}
+
+.btn--facebook {
+  @include button(#3B5998);
 }

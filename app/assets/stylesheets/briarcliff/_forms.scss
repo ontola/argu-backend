@@ -192,28 +192,7 @@ input[type="text"].form-input-title {
 }
 
 .formtastic button {
-  color: white;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: .8em;
-  padding: .4em 2.5em;
-  background-color: $gre;
-  border: none;
-  -webkit-appearance: none;
-  border-radius: 0;
-  width: auto;
-  display: inline-block;
-  height: 3em;
-  cursor: pointer;
-  &:hover {
-    background-color: $gred;
-  }
-  &:active {
-    background-color: $g5;
-  }
-  &:disabled{
-    background-color: $g2;
-  }
+  @include button;
 }
 
 .form-small button {
@@ -263,7 +242,6 @@ input[type="file"], select {
 
 .formtastic .inline-errors, .formtastic .inline-hints {
   margin-left: 30%;
-  width: 100%;
   @include bp-medium{
     margin-left: 0 !important;
     width: 100%;

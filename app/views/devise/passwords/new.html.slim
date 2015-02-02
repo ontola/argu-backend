@@ -5,7 +5,6 @@
     section
       = semantic_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
         p= t('devise.passwords.new.helper')
-        = devise_error_messages!
         = f.inputs
           = f.input :login, label: t('devise.activerecord.attributes.user.login')
         /= render "devise/shared/links"

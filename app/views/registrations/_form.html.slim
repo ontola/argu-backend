@@ -7,6 +7,6 @@
     = f.input :password, label: t("users_password"), placeholder: t('users.registrations.placeholders.password'), hint: t("users.registrations.hints.password")
     = f.input :password_confirmation, label: t("users_password_confirmation"), placeholder: t('users.registrations.placeholders.password_confirmation')
     = f.input :r, as: :hidden
-
+  =render partial: "legal"
   = f.actions do
     = f.action :submit, :as => :button, label: t("sign_up")
