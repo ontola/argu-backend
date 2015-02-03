@@ -67,7 +67,7 @@ class ForumsController < ApplicationController
   # POST /forums/memberships
   def memberships
     @forums = Forum.public_forums.where('id in (?)', params[:profile][:membership_ids].reject(&:blank?).map(&:to_i))
-    authorize @forums.first, :show?
+    @forums.each { |f| authorize f, :join? }
 
     @memberships = @forums.map { |f| Membership.find_or_initialize_by forum: f, profile: current_user.profile  }
 

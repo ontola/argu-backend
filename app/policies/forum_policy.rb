@@ -65,6 +65,10 @@ class ForumPolicy < RestrictivePolicy
     is_open? || is_manager? || is_owner?
   end
 
+  def join?
+    is_open? || has_access_token? || staff?
+  end
+
   def list?
     @record.closed? || show?
   end
