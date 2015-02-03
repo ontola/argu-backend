@@ -7,9 +7,10 @@ class Forum < ActiveRecord::Base
   has_many :motions, inverse_of: :forum
   has_many :arguments, inverse_of: :forum
   has_many :memberships
-  has_many :votes, inverse_of: :forum
   accepts_nested_attributes_for :memberships
+  has_many :votes, inverse_of: :forum
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
+  has_many :activities, as: :trackable, dependent: :destroy
 
   friendly_id :web_url, use: [:slugged, :finders]
   acts_as_ordered_taggable_on :tags

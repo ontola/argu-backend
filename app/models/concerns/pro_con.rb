@@ -6,6 +6,7 @@ module ProCon
 
     belongs_to :motion
     has_many :votes, as: :voteable, :dependent => :destroy
+    has_many :activities, as: :trackable, dependent: :destroy
     belongs_to :creator, class_name: 'Profile'
     belongs_to :forum
 

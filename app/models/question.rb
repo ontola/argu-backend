@@ -6,6 +6,7 @@ class Question < ActiveRecord::Base
   has_many :question_answers, inverse_of: :question, dependent: :destroy
   has_many :votes, as: :voteable, :dependent => :destroy
   has_many :motions, through: :question_answers
+  has_many :activities, as: :trackable, dependent: :destroy
 
   counter_culture :forum
   parentable :forum
