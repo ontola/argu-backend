@@ -35,6 +35,10 @@ class StaticPagesController < ApplicationController
     authorize :static_pages
   end
 
+  def how_argu_works
+    authorize :static_pages
+  end
+
   private
   def default_forum_path
     current_profile.present? ? preferred_forum : Forum.first_public

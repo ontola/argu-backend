@@ -15,6 +15,10 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
     true
   end
 
+  def how_argu_works?
+    true
+  end
+
   def developers?
     user && user.profile.has_role?(:staff)
   end

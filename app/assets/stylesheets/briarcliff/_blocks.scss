@@ -21,6 +21,11 @@ $grey_light: $g0;
   overflow: hidden;
   height: 24em;
   position: relative;
+  @include bp-medium{
+    width: 100%;
+    height: auto;
+    padding: 4em 2em;
+  }
   * {
     color: $primary;
   }
@@ -51,10 +56,28 @@ $grey_light: $g0;
       opacity: .3;
     }
   }
-  @include bp-medium{
+  h3 {
+    font-size: 1.2em;
+  }
+}
+
+.block-alt {
+  width: 50%;
+  background-color: $g1;
+  padding: 2em;
+  float: left;
+  overflow: hidden;
+  height: 24em;
+  position: relative;
+  @include bp-medium {
     width: 100%;
     height: auto;
     padding: 4em 2em;
+  }
+  .col-2, .col-3 {
+    margin-left: -1em;
+    margin-right: -1em;
+    font-size: .8em;
   }
 }
 
@@ -119,6 +142,16 @@ $grey_light: $g0;
 .block--full {
   width: 100%;
   height: auto;
+}
+
+.block--left-aligned {
+  text-align: left;
+  h2 {
+    font-size: 1.5em;
+  }
+  h2:after{
+    display: none;
+  }
 }
 
 .block-link{
@@ -206,7 +239,7 @@ $grey_light: $g0;
 }
 
 .block-subtle {
-  opacity: .8;
+  opacity: .9;
 }
 
 p.block-slogan {
@@ -245,6 +278,5 @@ p.block-slogan {
 
 @media screen and (max-width: 1200px) {
   .blocks-container {
-    margin-top: -5em;
   }
 }

@@ -77,7 +77,6 @@ nav#navbar.navbar role="navigation"
             li= link_to(destroy_user_session_url, method: :delete) do
               span.fa.fa-sign-out
               span.icon-left= t("sign_out")
-
             - if current_user.managed_pages.present?
               span.dropdown-header = t('profiles.switch')
               .profile-switcher

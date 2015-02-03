@@ -13,7 +13,7 @@ nl:
   forgot_password: "Wachtwoord vergeten?"
 
   sign_up: "account aanmaken"
-  sign_up_argu: "Argu account aanmaken"
+  sign_up_argu: "Maak Argu account"
   sign_out: "uitloggen"
   learn_more: "meer info"
   not_found_type: "%{type} niet gevonden"
