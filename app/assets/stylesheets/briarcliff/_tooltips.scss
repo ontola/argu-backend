@@ -29,6 +29,11 @@
   opacity:0;
 }
 
+.tooltip--left:after{
+  right: 0em;
+  left: -15em;
+}
+
 .tooltip:hover:after {
   opacity: 1;
 }

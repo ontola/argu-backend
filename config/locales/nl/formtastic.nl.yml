@@ -50,7 +50,6 @@ nl:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
     placeholders:
       email: "email@voorbeeld.nl"
-      password: "********"
       login: "email of gebruikersnaam"
       tag_list: "thema1, thema2 ..."
       question:

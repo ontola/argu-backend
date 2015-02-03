@@ -166,10 +166,12 @@ blockquote {
     content: close-quote;
     font-size: 1.5em;
     color: $g2;
+    position: absolute;
   }
   &:before{
     content: open-quote;
     font-size: 1.5em;
     color: $g2;
+    position: relative;
   }
 }

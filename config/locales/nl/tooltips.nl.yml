@@ -6,3 +6,6 @@ nl:
       create: "Stel een vraag aan alle leden en verzamel voorstellen."
     forum:
       invite: "Nodig anderen uit om in dit forum mee te discussiëren."
+    argument:
+      vote_up: "Belangrijk argument; het moet hoger staan."
+      vote_down: "Onbelangrijk argument; het moet lager staan."

@@ -77,4 +77,4 @@ nl:
     activerecord:
       attributes:
         user:
-          login: "gebruikersnaam of email"
+          login: "email of gebruikersnaam"
