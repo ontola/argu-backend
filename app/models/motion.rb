@@ -18,7 +18,7 @@ class Motion < ActiveRecord::Base
   before_save :cap_title
 
   parentable :questions, :forum
-  convertible :votes, :taggings
+  convertible :votes, :taggings, :activities
   resourcify
   mount_uploader :cover_photo, CoverUploader
 

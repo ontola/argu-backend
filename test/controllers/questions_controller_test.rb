@@ -45,4 +45,76 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_equal questions(:one), assigns(:question)
   end
 
+  test 'should not get convert' do
+    sign_in users(:user)
+
+    get :convert, question_id: questions(:one)
+    assert_redirected_to root_url
+  end
+
+  test 'should not put convert' do
+    sign_in users(:user)
+
+    put :convert, question_id: questions(:one)
+    assert_redirected_to root_url
+  end
+
+  test 'should not get move' do
+    sign_in users(:user)
+
+    get :move, question_id: questions(:one)
+    assert_redirected_to root_url
+  end
+
+  test 'should not put move' do
+    sign_in users(:user)
+
+    put :move, question_id: questions(:one)
+    assert_redirected_to root_url
+  end
+
+  ####################################
+  # For managers
+  ####################################
+
+  # Currently only staffers can convert items
+  test 'should get convert' do
+    sign_in users(:user_thom)
+
+    get :convert, question_id: questions(:one)
+    assert_response :success
+  end
+
+  # Currently only staffers can convert items
+  test 'should put convert' do
+    sign_in users(:user_thom)
+
+    put :convert!, question_id: questions(:one), question: {f_convert: 'motions'}
+    assert assigns(:result)
+    assert_redirected_to assigns(:result)[:new]
+
+    assert_equal Motion, assigns(:result)[:new].class
+    assert assigns(:result)[:old].destroyed?
+
+    # Test direct relations
+    assert_equal 0, assigns(:result)[:old].taggings.count
+    assert_equal 1, assigns(:result)[:new].taggings.count
+
+    assert_equal 0, assigns(:result)[:old].votes.count
+    assert_equal 1, assigns(:result)[:new].votes.count
+
+    assert_equal 0, assigns(:result)[:old].activities.count
+    assert_equal 1, assigns(:result)[:new].activities.count
+
+  end
+
+
+  # Currently only staffers can move items
+  test 'should get move' do
+    sign_in users(:user_thom)
+
+    get :move, question_id: questions(:one)
+    assert_response :success
+  end
+
 end

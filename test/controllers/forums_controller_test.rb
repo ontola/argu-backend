@@ -79,7 +79,9 @@ class ForumsControllerTest < ActionController::TestCase
     assert_response :success
     assert assigns(:forum)
     assert assigns(:tags), "Doesn't assign tags"
-    assert_equal 1, assigns(:tags).length
+    assert_equal 2, assigns(:tags).length
   end
+
+
 
 end

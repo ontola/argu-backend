@@ -109,6 +109,11 @@ class QuestionsController < ApplicationController
   def convert
     @question = Question.find_by_id params[:question_id]
     authorize @question, :move?
+
+    respond_to do |format|
+      format.html { render locals: {resource: @question} }
+      format.js { render }
+    end
   end
 
   def convert!
@@ -117,9 +122,9 @@ class QuestionsController < ApplicationController
     @forum = Forum.find_by_id permit_params[:forum_id]
     authorize @question.forum, :update?
 
-    result = @question.convert_to convertible_param_to_model(permit_params[:f_convert])
-    if result
-      redirect_to result[:new]
+    @result = @question.convert_to convertible_param_to_model(permit_params[:f_convert])
+    if @result
+      redirect_to @result[:new]
     else
       redirect_to edit_question_url @question
     end
@@ -129,6 +134,11 @@ class QuestionsController < ApplicationController
   def move
     @question = Question.find_by_id params[:question_id]
     authorize @question, :move?
+
+    respond_to do |format|
+      format.html { render locals: {resource: @question} }
+      format.js { render }
+    end
   end
 
   def move!

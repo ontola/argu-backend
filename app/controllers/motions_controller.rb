@@ -123,17 +123,21 @@ class MotionsController < ApplicationController
   def convert
     @motion = Motion.find_by_id params[:motion_id]
     authorize @motion, :move?
+
+    respond_to do |format|
+      format.html { render locals: {resource: @motion} }
+      format.js { render }
+    end
   end
 
   def convert!
     @motion = Motion.find_by_id params[:motion_id]
     authorize @motion, :move?
-    @forum = Forum.find_by_id permit_params[:forum_id]
     authorize @motion.forum, :update?
 
-    result = @motion.convert_to convertible_param_to_model(permit_params[:f_convert])
-    if result
-      redirect_to result[:new]
+    @result = @motion.convert_to convertible_param_to_model(permit_params[:f_convert])
+    if @result
+      redirect_to @result[:new]
     else
       redirect_to edit_motion_url @motion
     end
@@ -143,6 +147,11 @@ class MotionsController < ApplicationController
   def move
     @motion = Motion.find_by_id params[:motion_id]
     authorize @motion, :move?
+
+    respond_to do |format|
+      format.html { render locals: {resource: @motion} }
+      format.js { render }
+    end
   end
 
   def move!

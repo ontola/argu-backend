@@ -5,12 +5,16 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-nature:
-  id: 182999886
-  name: 'nature'
-  taggings_count: 2
+motion_one_create:
+  trackable: one (Motion)
+  forum_id: utrecht.id
+  owner: profile_one (Profile)
+  key: motion.create
+  recipient: one (Question)
 #
-something:
-  id: 182999774
-  name: 'something'
-  taggings_count: 1
+question_one_create:
+  trackable: one (Question)
+  forum_id: utrecht.id
+  owner: profile_one (Profile)
+  key: motion.create
+  recipient: utrecht (Forum)

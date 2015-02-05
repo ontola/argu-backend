@@ -55,4 +55,77 @@ class MotionsControllerTest < ActionController::TestCase
     assert_equal motions(:one), assigns(:motion)
   end
 
+  test 'should not get convert' do
+    sign_in users(:user)
+
+    get :convert, motion_id: motions(:one)
+    assert_redirected_to root_url
+  end
+
+  test 'should not put convert' do
+    sign_in users(:user)
+
+    put :convert, motion_id: motions(:one)
+    assert_redirected_to root_url
+  end
+
+  test 'should not get move' do
+    sign_in users(:user)
+
+    get :move, motion_id: motions(:one)
+    assert_redirected_to root_url
+  end
+
+  test 'should not put move' do
+    sign_in users(:user)
+
+    put :move, motion_id: motions(:one)
+    assert_redirected_to root_url
+  end
+
+  ####################################
+  # For managers
+  ####################################
+
+  # Currently only staffers can convert items
+  test 'should get convert' do
+    sign_in users(:user_thom)
+
+    get :convert, motion_id: motions(:one)
+    assert_response :success
+  end
+
+  # Currently only staffers can convert items
+  test 'should put convert' do
+    sign_in users(:user_thom)
+
+    put :convert!, motion_id: motions(:one), motion: {f_convert: 'questions'}
+    assert assigns(:result)
+    assert_redirected_to assigns(:result)[:new]
+
+    assert_equal Question, assigns(:result)[:new].class
+    assert assigns(:result)[:old].destroyed?
+
+    # Test direct relations
+    assert_equal 0, assigns(:result)[:old].arguments.count
+
+    assert_equal 0, assigns(:result)[:old].taggings.count
+    assert_equal 2, assigns(:result)[:new].taggings.count
+
+    assert_equal 0, assigns(:result)[:old].votes.count
+    assert_equal 1, assigns(:result)[:new].votes.count
+
+    assert_equal 0, assigns(:result)[:old].activities.count
+    assert_equal 1, assigns(:result)[:new].activities.count
+
+  end
+
+  # Currently only staffers can move items
+  test 'should get move' do
+    sign_in users(:user_thom)
+
+    get :move, motion_id: motions(:one)
+    assert_response :success
+  end
+
 end

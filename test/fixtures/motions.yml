@@ -29,3 +29,10 @@ three:
   content: 'Inhoud van voorstel3'
   forum: :amsterdam
   creator: :profile_two
+#
+hidden_one:
+  title: 'Voorstel'
+  content: 'Inhoud van het voorstel'
+  is_trashed: false
+  forum: :hidden
+  creator: :profile_fletcher91

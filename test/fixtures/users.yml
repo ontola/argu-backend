@@ -4,33 +4,38 @@
 # This model initially had no columns defined.  If you add columns to the
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
-#
+
+
+# That's me, a staffer. Able to do nearly anything
+# Owner of page argu and of utrecht
 user_thom:
   email: 'thom@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
   username: 'fletcher91'
   profile: :profile_fletcher91
   finished_intro: true
+# Manager of the page and forum of utrecht
 user_utrecht_manager:
   email: 'user@utrecht.nl'
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
   username: 'utrecht_manager'
   profile: :profile_utrecht_manager
   finished_intro: true
+# A general user, member of utrecht
 user:
   email: 'user@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   username: 'user'
   profile: :profile_one
   finished_intro: true
-#
+# A general user, member of utrecht and amsterdam
 user2:
   email: 'user2@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   username: 'user2'
   profile: :profile_two
   finished_intro: true
-#
+# A general user, member of amsterdam
 user3:
   email: 'user3@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>

@@ -9,3 +9,14 @@ nature_question_one:
   tag_id: 182999886
   taggable: one (Question)
   forum: :utrecht
+  context: tags
+nature_motion_one:
+  tag_id: 182999886
+  taggable: one (Motion)
+  forum: :utrecht
+  context: tags
+something_motion_one:
+  tag_id: 182999774
+  taggable: one (Motion)
+  forum: :utrecht
+  context: tags

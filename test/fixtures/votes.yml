@@ -38,3 +38,9 @@ five:
   voter_type: 'Profile'
   for: <%= Vote.fors[:neutral] %>
   forum: :utrecht
+six:
+  voteable: one (Question)
+  voter: profile_two
+  voter_type: 'Profile'
+  for: <%= Vote.fors[:con] %>
+  forum: :utrecht
