@@ -40,7 +40,7 @@ five:
   forum: :utrecht
 six:
   voteable: one (Question)
-  voter: profile_two
+  voter: profile_one
   voter_type: 'Profile'
   for: <%= Vote.fors[:con] %>
   forum: :utrecht
