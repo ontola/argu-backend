@@ -1,15 +1,13 @@
-# Read about fixtures at
-# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+# If adding a new question:
+#   -Update forums.yml questions_count
 
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
 #
 one:
   title: 'Vraagstuk'
   content: 'Inhoud van het vraagstuk'
   forum: :utrecht
   creator: :profile_one
+#
 one_trashed:
   title: 'Vraagstuk_trashed'
   content: 'Inhoud van het vraagstuk'

@@ -1,9 +1,9 @@
-require "test_helper"
+require 'test_helper'
 
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test "should get show" do
+  test 'should get show' do
     sign_in users(:user)
 
     get :show, id: motions(:one)
@@ -16,7 +16,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) }, "Trashed arguments are visible"
   end
 
-  test "should get new" do
+  test 'should get new' do
     sign_in users(:user)
 
     get :new, forum_id: forums(:utrecht)
@@ -25,10 +25,10 @@ class MotionsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:motion)
   end
 
-  test "should post create" do
+  test 'should post create' do
     sign_in users(:user)
 
-    assert_difference('Motion.count') do
+    assert_difference 'Motion.count' do
       post :create, forum_id: :utrecht, motion: {title: 'Motion', content: 'Contents'}
     end
     assert_not_nil assigns(:motion)
@@ -36,7 +36,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_redirected_to motion_path(assigns(:motion))
   end
 
-  test "should put update on own motion" do
+  test 'should put update on own motion' do
     sign_in users(:user)
 
     put :update, id: motions(:one), motion: {title: 'New title', content: 'new contents'}
@@ -47,7 +47,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_redirected_to motion_url(assigns(:motion))
   end
 
-  test "should not put update on others motion" do
+  test 'should not put update on others motion' do
     sign_in users(:user2)
 
     put :update, id: motions(:one), motion: {title: 'New title', content: 'new contents'}
@@ -126,6 +126,34 @@ class MotionsControllerTest < ActionController::TestCase
 
     get :move, motion_id: motions(:one)
     assert_response :success
+  end
+
+  # Currently only staffers can convert items
+  test 'should put move' do
+    sign_in users(:user_thom)
+
+    assert_differences [['forums(:utrecht).reload.motions_count', -1], ['forums(:amsterdam).reload.motions_count', 1]] do
+      put :move!, motion_id: motions(:one), forum_id: forums(:amsterdam).id
+    end
+    assert_redirected_to assigns(:motion)
+
+    assert assigns(:motion)
+    assert_equal forums(:amsterdam), assigns(:motion).forum
+    forum_id = forums(:amsterdam).id
+    assigns(:motion).arguments.pluck(:forum_id).each do |id|
+      assert_equal forum_id, id
+    end
+    assigns(:motion).opinions.pluck(:forum_id).each do |id|
+      assert_equal forum_id, id
+    end
+    assert assigns(:motion).questions.blank?
+    assigns(:motion).activities.pluck(:forum_id).each do |id|
+      assert_equal forum_id, id
+    end
+    assigns(:motion).taggings.pluck(:forum_id).each do |id|
+      assert_equal forum_id, id
+    end
+
   end
 
 end

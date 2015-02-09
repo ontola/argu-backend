@@ -155,9 +155,9 @@ class MotionsController < ApplicationController
   end
 
   def move!
-    @motion = Motion.find_by_id params[:id]
+    @motion = Motion.find_by_id params[:motion_id]
     authorize @motion, :move?
-    @forum = Forum.find_by_id permit_params[:forum_id]
+    @forum = Forum.find_by_id params[:forum_id]
     authorize @forum, :update?
 
     if @motion.move_to @forum
