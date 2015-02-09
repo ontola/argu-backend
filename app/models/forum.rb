@@ -17,6 +17,7 @@ class Forum < ActiveRecord::Base
   mount_uploader :profile_photo, AvatarUploader
   process_in_background :profile_photo
   mount_uploader :cover_photo, CoverUploader
+  acts_as_followable
 
   validates_integrity_of :profile_photo
   validates_processing_of :profile_photo

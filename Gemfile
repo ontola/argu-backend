@@ -35,6 +35,7 @@ gem 'friendly_id', '~> 5.0.4'
 gem 'whodunnit', '0.0.5'
 gem 'simple_settings', '1.0.2'
 gem 'public_activity'
+gem 'acts_as_follower'
 #Search
 
 #Pagination
