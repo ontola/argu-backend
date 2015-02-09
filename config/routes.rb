@@ -11,7 +11,6 @@ Argu::Application.routes.draw do
     post 'vote/:for' => 'votes#create', shallow: true, as: :vote
   end
 
-
   put 'actors', to: 'actors#update'
 
   require 'sidekiq/web'
@@ -86,6 +85,10 @@ Argu::Application.routes.draw do
   resources :profiles do
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post ':id' => 'profiles#update', on: :collection
+  end
+
+  resources :follows, only: :create do
+    delete :destroy, on: :collection
   end
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]

@@ -301,6 +301,7 @@ GEM
       netrc (~> 0.7)
     rfc-822 (0.4.0)
     rolify (3.4.1)
+    rollout (2.1.0)
     ruby-progressbar (1.7.1)
     sass (3.4.9)
     sass-rails (5.0.0)
@@ -442,6 +443,7 @@ DEPENDENCIES
   rest-client
   rfc-822 (~> 0.4.0)
   rolify (~> 3.4.1)
+  rollout
   sass-rails (~> 5.0.0)
   sidekiq (~> 3.3.0)
   simple_settings (= 1.0.2)

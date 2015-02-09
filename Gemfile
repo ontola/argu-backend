@@ -35,6 +35,7 @@ gem 'whodunnit', '0.0.5'
 gem 'simple_settings', '1.0.2'
 gem 'public_activity'
 gem 'acts_as_follower'
+gem 'rollout'
 #Search
 
 #Pagination

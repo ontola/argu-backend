@@ -49,10 +49,25 @@ div[itemscope itemtype="Thing"]
           /p.cover-oneliner Een Argu forum is een discussie omgeving waar op een inhoudelijke en kritische manier oplossingen kan worden gevonden voor vraagstukken.
         ul.btns-list.btns-vertical
           /TODO: Make this check the current profile, not the user
-          - unless policy(@forum).is_member?
+          - if !policy(@forum).is_member?
             li=link_to forum_memberships_path(@forum.web_url), method: :post do
               span.fa.fa-user
               span.icon-left= t('join')
+          - elsif active_for_user?(:notifications, current_user)
+            li.dropdown
+              a.dropdown-trigger href="#"
+                span[class="fa #{ current_profile.following?(@forum) ? 'fa-check' : 'fa-times'}"]
+                span.icon-left notificaties
+                span.fa.fa-angle-down
+              ul.dropdown-content.dropdown-right
+                - if current_profile.following?(@forum)
+                  li=link_to follows_path(forum_id: @forum.web_url), method: :delete do
+                    span.fa.fa-times
+                    span.icon-left _unfollow_
+                -else
+                  li=link_to follows_path(forum_id: @forum.web_url), method: :create do
+                    span.fa.fa-check
+                    span.icon-left _follow_
           li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: {remote: true}, class: "sta-t btn-focus" do
             span.fa.fa-plus
             span.icon-left= t('motions.type')

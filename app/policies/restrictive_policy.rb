@@ -39,6 +39,10 @@ class RestrictivePolicy
     update?
   end
 
+  def follow?
+    staff?
+  end
+
   def index?
     staff?
   end
