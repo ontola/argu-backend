@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
   # This is in addition to a real persisted field like 'username'
   attr_accessor :login, :current_password
 
+  enum follows_email: { never_follows_email: 0, direct_follows_email: 1, daily_follows_email: 2, weekly_follows_email: 3 }
+  enum memberships_email: { never_memberships_email: 0, direct_memberships_email: 1, daily_memberships_email: 2, weekly_memberships_email: 3 }
+  enum created_email: { never_created_email: 0, direct_created_email: 1, daily_created_email: 2, weekly_created_email: 3 }
+
   USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][_a-zA-Z0-9]*\z/i
 
   validates :username, presence: true,

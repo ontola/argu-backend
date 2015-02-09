@@ -5,13 +5,40 @@
       section
         = f.inputs
           = f.semantic_errors :email, :base
+          = f.inputs name: t('users.registrations.categories.general') do
+            = f.input :username, label: t("users_username")
+            = f.input :email, label: t("users_email") ,value: @user.email, placeholder: @user.email.blank? ? t("users_email_placeholder") : @user.email
+          = f.inputs name: t('users.registrations.categories.notifications') do
+            .notification-settings-header
+              label
+              .notification-settings-half-block
+                i.fa.fa-envelope-o[title="_email notificaties_"]
+                i.fa.fa-mobile[title="_Mobiele notificaties_"]
+            li
+              label Items I follow
+              .notification-settings-half-block
+                span.center
+                  = f.input :follows_email, as: :inline_select, collection: options_for_follows_email, include_blank: false, label: false
+                span.center
+                  = f.check_box :follows_mobile
+            li
+              label Forums
+              .notification-settings-half-block
+                span.center
+                  = f.input :memberships_email, as: :inline_select, collection: options_for_memberships_email, include_blank: false, label: false
+                span.center
+                  = f.check_box :memberships_mobile
+            li
+              label My items
+              .notification-settings-half-block
+                span.center
+                  = f.input :created_email, as: :inline_select, collection: options_for_created_email, include_blank: false, label: false
+                span.center
+                  = f.check_box :created_mobile
 
-          = f.input :username
-          = f.input :email, value: @user.email
-          = f.input :password, label: t("users_password_edit")
-          = f.input :password_confirmation, label: t("users_password_confirmation")
-
-          -if Rails.configuration.epics.open_auth
+          = f.inputs name: t('users.registrations.categories.authentication') do
+            = f.input :password, label: t("users_password_edit")
+            = f.input :password_confirmation, label: t("users_password_confirmation")
             - if @authentications.present?
               label= t("users_oauth_coupled")
               = render 'authentications/login_providers_connected'
@@ -21,9 +48,10 @@
             .form-item
               = render 'authentications/login_providers'
 
-          label = t("users_cancel_title")
-          .form-item
-            = link_to t("users_cancel_title"), cancel_user_registration_path(current_user)
+          = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+            label = t("users_cancel_title")
+            .form-item
+              = link_to t("users_cancel_title"), cancel_user_registration_path(current_user)
 
         = f.actions do
           = f.action :submit, :as => :button, label: t("save")

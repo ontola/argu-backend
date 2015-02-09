@@ -1,7 +1,7 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, PublicActivity::Common
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, PublicActivity::Common, Mailable
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy
@@ -19,6 +19,7 @@ class Motion < ActiveRecord::Base
 
   parentable :questions, :forum
   convertible :votes, :taggings, :activities
+  mailable MotionsMailer, :directly, :daily, :weekly
   resourcify
   mount_uploader :cover_photo, CoverUploader
 

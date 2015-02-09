@@ -14,6 +14,7 @@ class Profile < ActiveRecord::Base
   mount_uploader :cover_photo, CoverUploader
 
   pica_pica :profile_photo
+  acts_as_follower
 
   #validates :name, presence: true, length: {minimum: 3}
   #validates :about, presence: true

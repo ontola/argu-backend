@@ -23,6 +23,8 @@ gem 'formtastic', '~> 3.1.2'
 gem 'cocoon', '~> 1.2.6'
 gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
+gem 'rest-client'
+gem 'multimap'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
@@ -32,6 +34,7 @@ gem 'friendly_id', '~> 5.0.4'
 gem 'whodunnit', '0.0.5'
 gem 'simple_settings', '1.0.2'
 gem 'public_activity'
+gem 'acts_as_follower'
 #Search
 
 #Pagination

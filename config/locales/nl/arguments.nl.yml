@@ -10,7 +10,6 @@ nl:
     vote: "stem"
     new_btn: "Argument toevoegen"
     neu: "neutraal"
-    type: "type"
     references: "referenties"
     header:
       pro: "argumenten voor"
