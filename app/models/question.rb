@@ -33,6 +33,7 @@ class Question < ActiveRecord::Base
       self.forum = forum
       self.save
       self.votes.update_all forum_id: forum.id
+      self.activities.update_all forum_id: forum.id
       if include_motions
         self.motions.each do |m|
           m.move_to forum, false
@@ -41,7 +42,9 @@ class Question < ActiveRecord::Base
         self.question_answers.delete_all
       end
       old_forum.decrement :questions_count
+      old_forum.save
       forum.increment :questions_count
+      forum.save
     end
     return true
   end

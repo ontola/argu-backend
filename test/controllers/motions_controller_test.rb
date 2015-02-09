@@ -129,11 +129,11 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   # Currently only staffers can convert items
-  test 'should put move' do
+  test 'should put move!' do
     sign_in users(:user_thom)
 
     assert_differences [['forums(:utrecht).reload.motions_count', -1], ['forums(:amsterdam).reload.motions_count', 1]] do
-      put :move!, motion_id: motions(:one), forum_id: forums(:amsterdam).id
+      put :move!, motion_id: motions(:one), motion: { forum_id: forums(:amsterdam).id }
     end
     assert_redirected_to assigns(:motion)
 
