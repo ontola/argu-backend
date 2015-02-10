@@ -149,7 +149,7 @@
 }
 
 @include keyframes(fade-in) {
-  0% { opacity: 0; }
+  0% { opacity: 0; opacity: 0; }
   100% { opacity: 1; }
 }
 
@@ -162,6 +162,17 @@
   }
 }
 
+@include keyframes(from-top-fade) {
+  0% {
+    transform: translate(0,-5em);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0,0);
+    opacity: 1;
+  }
+}
+
 @include keyframes(from-bottom) {
   0% {
     transform: translate(0,100vh);
@@ -171,12 +182,34 @@
   }
 }
 
+@include keyframes(from-bottom-fade) {
+  0% {
+    transform: translate(0,5em);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0,0);
+    opacity: 1;
+  }
+}
+
 @include keyframes(to-bottom) {
   0% {
     transform: translate(0,0);
   }
   100% {
     transform: translate(0,2000px);
+  }
+}
+
+@include keyframes(to-bottom-fade) {
+  0% {
+    transform: translate(0,0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0,5em);
+    opacity: 0;
   }
 }
 

@@ -9,7 +9,7 @@
   z-index: 20;
   pointer-events: none;
   overflow-y: auto;
-  @include animation(from-top .5s ease-out);
+  @include animation(from-top-fade .5s ease-out);
   .box {
     pointer-events: auto;
     max-height: 85vh;
@@ -41,7 +41,8 @@
 // apply these classes when clicking on overlay of modals.
 .modal-hide {
   .modal {
-    @include animation(to-bottom .5s ease-in both);
+    //@include animation(to-bottom .5s ease-in both);
+    @include animation(to-bottom-fade .5s ease-in both);
   }
   .overlay {
     @include animation(fade-out .5s ease-in both);

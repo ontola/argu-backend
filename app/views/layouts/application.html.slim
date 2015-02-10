@@ -68,7 +68,7 @@ body
     /= render 'responsibility_notice'
     .container
       = yield
-    .push
+    .push-footer
   = render 'footer'
   =javascript_include_tag "application"
   - if Rails.env.production? || Rails.env.test?
