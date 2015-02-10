@@ -6,7 +6,11 @@ module AccessTokenHelper
   end
 
   def grant_viewing_rights_for(item)
-    session[:a_tokens] = Set.new((session[:a_tokens] || [])).add item.access_token
+    current_access_tokens = session[:a_tokens] || []
+    unless current_access_tokens.include? item.access_token
+      session[:a_tokens] = Set.new(current_access_tokens).add item.access_token
+      increment_token_usages(item)
+    end
   end
 
   # Only works after check_for_access_token or grant_viewing_rights_for has been called,
@@ -38,5 +42,9 @@ module AccessTokenHelper
   # This must be done via the database, since it ensures the eval function can be run safely later on
   def get_safe_raw_access_tokens(user=nil)
     get_access_tokens(user).map(&:access_token)
+  end
+
+  def increment_token_usages(item)
+    item.increment! :usages
   end
 end
