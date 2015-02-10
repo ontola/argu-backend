@@ -64,8 +64,6 @@ nl:
     questions: "vraagstukken"
   site:
     description: "Argu is een online discussieplatform waar argumenten centraal staan."
-#Controllers
-
     copyright: "Copyright © 2014-2015 Argu v.o.f."#Footer
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
@@ -132,8 +130,6 @@ nl:
       truncate: "..."
   type_save_success: "%{type} successvol opgeslagen"
   type_create_success: "%{type} successvol aangemaakt"
-  users:
-    logged_in_banner_text: "Ingelogd als %{name}"
   references_helper: "<h2>Referenties toevoegen</h2>
                    <p>Als je een link wil toevoegen:</p>
                    <p><code>[www.voorbeeld.nl](Voorbeeld 2014)</code></p>
@@ -150,6 +146,7 @@ nl:
   forms:
     danger_zone: "Gevarenzone"
   users:
+    logged_in_banner_text: "Ingelogd als %{name}"
     registrations:
       hints:
         password: "Minimaal 8 karakters"
