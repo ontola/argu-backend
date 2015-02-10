@@ -79,9 +79,9 @@ nl:
   info: "info"
   about_title: "Over"
   about:
-    vision: "Over onze visie"
+    vision: "Onze visie"
   how_argu_works:
-    title: "Hoe werkt Argu?"
+    title: "Hoe Argu werkt"
 #Users
   users_username: "gebruikersnaam"
   users_username_or_email: "email of gebruikersnaam"

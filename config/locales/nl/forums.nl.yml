@@ -55,7 +55,7 @@ nl:
     new_question_or_motion: "Nieuw vraagstuk of voorstel"
     about:
       header: "Waarvoor is dit forum?"
-      body: "Een Argu forum is een discussie omgeving waar oplossingen voor vraagstukken worden gedeeld en besproken."
+      body: "Een Argu forum is een discussie omgeving waar oplossingen voor vraagstukken worden gedeeld en besproken. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"
   activerecord: #These currently aren't used for forms.
     attributes:
       forum:

@@ -12,19 +12,9 @@ footer
   ul.footer-list
     li
       h3.footer-heading= t("about_title")
-    / Do NOT edit the class names below, this is an hCard (see: http://microformats.org/wiki/hcard)
-    li.vcard
-      p.fn.org Argu v.o.f.
-      address.adr.h-adr
-        p.street-address.p-street-address Padualaan 8
-        p
-          span.postal-code.p-postal-code' 3584 CH
-          span.locality.p-locality Utrecht
-      a.email[href="mailto:info@argu.co"] info@argu.co
-      .photo[href=asset_path("favicons/favicon-192x192.png")]
-    /TODO: li
-      a Ons team
-    li=link_to "Meer", about_path
+      /= render partial: "vcard"
+    li=link_to "Onze visie", about_path
+    li=link_to "Hoe argu werkt", how_argu_works_path
   ul.footer-list
     li
       h3.footer-heading voorwaarden

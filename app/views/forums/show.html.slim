@@ -137,9 +137,9 @@ div[itemscope itemtype="Thing"]
       header#forum-info
         h1 = t("forums.about.header")
       .box
-        section
-          p
-            b = t("forums.about.body")
         - if @forum.bio_long.present?
           section
             p= @forum.bio_long
+        section
+          p
+            b == t("forums.about.body")
