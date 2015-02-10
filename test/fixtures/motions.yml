@@ -1,9 +1,6 @@
-# Read about fixtures at
-# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+# If adding a new Motion:
+#   -Update forums.yml motions_count
 
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
 #
 one:
   title: 'Voorstel'
@@ -29,3 +26,10 @@ three:
   content: 'Inhoud van voorstel3'
   forum: :amsterdam
   creator: :profile_two
+#
+hidden_one:
+  title: 'Voorstel'
+  content: 'Inhoud van het voorstel'
+  is_trashed: false
+  forum: :hidden
+  creator: :profile_fletcher91
