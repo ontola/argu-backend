@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150209210021) do
+ActiveRecord::Schema.define(version: 20150210112648) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150209210021) do
     t.integer  "usages",       default: 0
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "sign_ups",     default: 0
   end
 
   create_table "activities", force: :cascade do |t|
@@ -130,6 +131,7 @@ ActiveRecord::Schema.define(version: 20150209210021) do
     t.boolean  "blocked",         default: false, null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "send_email",      default: false
   end
 
   add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree

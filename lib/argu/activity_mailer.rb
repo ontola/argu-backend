@@ -1,11 +1,13 @@
 # Mailer class for mailing users when an activity is created
-class ActivityMailer
+class Argu::ActivityMailer
 
   def initialize(a)
     @activity = a
   end
 
   def collect_recipients
+    recipients = Set.new
+    recipients.merge @activity.collect_recipients
 
   end
 
