@@ -41,6 +41,7 @@ div[itemscope itemtype="Thing"]
                 li=link_to forums_url, class: 'btn-focus' do
                   span.fa.fa-compass
                   span.icon-left= t('forums.discover')
+          ul.btns-sticky.btns-list.btns-subtle=render partial: 'application/menus/settings', locals: {resource: @forum}
           p.cover-oneliner
             = @forum.bio
             - if @forum.bio_long.present?
@@ -63,7 +64,6 @@ div[itemscope itemtype="Thing"]
             li=link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: "pro-t btn-focus tooltip", data: {title: t('tooltips.forum.invite')} do
               span.fa.fa-group
               span.icon-left= t('forums.invite_others')
-          =render partial: 'application/menus/settings', locals: {resource: @forum}
   - if policy(@forum).show?
     .center
       ul.btns-list

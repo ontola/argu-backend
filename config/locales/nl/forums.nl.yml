@@ -3,6 +3,8 @@
 nl:
   forums:
     resource_name: "forum"
+    resource_name:
+      management: "forum beheer"
     settings:
       title: "Instellingen"
       general: "Algemeen"

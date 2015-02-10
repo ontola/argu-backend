@@ -6,7 +6,7 @@ section {
   padding: 1.1em 1.4em 0.1em 1.4em;
 }
 
-section.section-info {
+.section-info {
   span {font-size: .8em;};
   padding-top: 0.1em;
   line-height: 1.1em;
@@ -51,4 +51,11 @@ section + section {
 
 .section-description {
   background-color: $g00;
+}
+
+.section-countdown {
+  background-color: $red-alert;
+  position: absolute;
+  top: 0;
+  right: 0;
 }
