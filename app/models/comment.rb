@@ -14,6 +14,7 @@ class Comment < ActiveRecord::Base
 
   belongs_to :commentable, :polymorphic => true
   belongs_to :profile
+  has_many :activities, as: :trackable, dependent: :destroy
 
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text

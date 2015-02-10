@@ -14,6 +14,7 @@ Argu::Application.configure do
   config.epics.share_links = false                    # Can first-time users visit forum urls, and can members share them?
   config.epics.open_auth = false                      # Facebook, twitter, google, openID login & account linking shown in profile
   config.epics.link_to_motion = false                 # Button in questions.show to find & link motions
+  config.epics.page_create = false                     # Create a page button in header menu
 
   config.logstasher.enabled = true
 

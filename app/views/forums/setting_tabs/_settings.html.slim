@@ -3,9 +3,9 @@
     = message
   = f.inputs do
     = f.input :name
-    = f.input :bio, hint: t("forums.settings.hints.bio"), input_html: { rows: 2}, label: t("forums.settings.bio")
-    = f.input :bio_long, label: t("forums.settings.bio_long")
-    = f.input :featured_tags, placeholder: t("motions.form.themes"), as: :tags
+    = f.input :bio, input_html: { rows: 2}
+    = f.input :bio_long
+    = f.input :featured_tags, as: :tags
     = f.input :cover_photo
     = f.input :cover_photo, as: :preview_image, html_options: { style: 'max-height: 256px;' }
     = f.input :remove_cover_photo, as: :reverse_boolean

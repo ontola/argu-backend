@@ -112,7 +112,6 @@ input[type="text"].form-input-title {
   font-size: 1.8em;
   font-weight: 800;
   padding: .2em;
-  margin-bottom: 0.5em;
   width: 100%;
   @include bp-medium{
     font-size: 1.3em;
@@ -182,9 +181,9 @@ input[type="text"].form-input-title {
   margin: auto;
 }
 
-.form-small input, .form-small button, .form-small .inline-errors, .form-small .inline-hints {
+.form-small input, .form-small button, .form-small .inline-errors, .form-filled p.inline-errors, .form-small p.inline-hints, .form-filled p.inline-hints {
   width: 100% !important;
-  float: none;
+  margin-left: 0;
 }
 
 .form-small label {
@@ -193,33 +192,7 @@ input[type="text"].form-input-title {
 }
 
 .formtastic button {
-  color: white;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: .8em;
-  padding: .5em .8em .4em .8em;
-  background-color: $blu;
-  border: none;
-  -webkit-appearance: none;
-  border-radius: 0;
-  cursor: hand;
-  width: auto;
-  display: inline-block;
-  height: 3em;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  margin: 0;
-  cursor: pointer;
-  &:hover {
-    background-color: $blud;
-  }
-  &:active {
-    background-color: $g5;
-  }
-  &:disabled{
-    background-color: $g2;
-  }
+  @include button;
 }
 
 .form-small button {
@@ -227,7 +200,7 @@ input[type="text"].form-input-title {
 }
 
 .formtastic .actions {
-  margin-top: 1em;
+  text-align: center;
 }
 
 .formtastic li {
@@ -248,9 +221,14 @@ input[type="file"], select {
   max-width: 100%;
 }
 
+.form-small p.inline-hints, .form-small p.inline-errors{
+  margin-left: 0;
+}
+
 .inline-errors, .inline-hints {
   padding: 0.2em .5em;
   font-size: .8em;
+  margin-bottom: 0 !important;
 }
 
 .inline-hints {
@@ -263,10 +241,9 @@ input[type="file"], select {
 }
 
 .formtastic .inline-errors, .formtastic .inline-hints {
-  float: right;
-  width: 70%;
+  margin-left: 30%;
   @include bp-medium{
+    margin-left: 0 !important;
     width: 100%;
-    float: none;
   }
 }

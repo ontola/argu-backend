@@ -8,6 +8,7 @@ class Motion < ActiveRecord::Base
   has_many :votes, as: :voteable, :dependent => :destroy
   has_many :question_answers, inverse_of: :motion, dependent: :destroy
   has_many :questions, through: :question_answers
+  has_many :activities, as: :trackable, dependent: :destroy
   belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
 
@@ -17,7 +18,7 @@ class Motion < ActiveRecord::Base
   before_save :cap_title
 
   parentable :questions, :forum
-  convertible :votes, :taggings
+  convertible :votes, :taggings, :activities
   resourcify
   mount_uploader :cover_photo, CoverUploader
 
@@ -67,9 +68,12 @@ class Motion < ActiveRecord::Base
       self.opinions.update_all forum_id: forum.id
       self.votes.update_all forum_id: forum.id
       self.question_answers.delete_all if unlink_questions
+      self.activities.update_all forum_id: forum.id
       self.taggings.update_all forum_id: forum.id
       old_forum.decrement :motions_count
       forum.increment :motions_count
+      old_forum.save
+      forum.save
     end
     return true
   end

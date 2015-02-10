@@ -10,9 +10,6 @@
           = f.input :username, label: t("users_username"), placeholder: t('users.registrations.placeholders.username')
           = f.input :password, label: t("users_password"), placeholder: t('users.registrations.placeholders.password')
           = f.input :password_confirmation, label: t("users_password_confirmation")
-        p
-          = " Door je aan te melden voor Argu ga je akkoord met de "
-          = link_to t('legal.documents.policy'), policy_path
-          = "."
+        =render partial: "legal"
         = f.actions
           = f.action :submit, label: t("legal.agree_and_create"), :as => :button

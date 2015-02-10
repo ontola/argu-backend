@@ -27,6 +27,37 @@
   font-weight: $weight;
 }
 
+@mixin button ($color: $gre){
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  padding: 1em 2.5em .8em;
+  background-color: $color;
+  border: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  width: auto;
+  display: inline-block;
+  cursor: pointer;
+  @include border-radius;
+  border-bottom: solid 3px darken($color, 5%);
+  &:hover {
+    background-color: darken($color, 5%);
+    border-bottom-color: darken($color, 15%);
+  }
+  &:active {
+    background-color: darken($color, 10%);
+    border-bottom: none;
+    border-top: solid 3px darken($color, 15%);
+  }
+  &:disabled{
+    opacity: .6;
+    cursor: default;
+    border: none;
+  }
+}
+
 @mixin box-shadow {
   box-shadow: 0em 0.2em 0.25em 0em rgba(0, 0, 0, 0.05);
 }

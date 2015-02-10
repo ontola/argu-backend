@@ -80,7 +80,7 @@ nl:
   about_title: "Over"
 #Users
   users_username: "gebruikersnaam"
-  users_username_or_email: "gebruikersnaam of email"
+  users_username_or_email: "email of gebruikersnaam"
   users_name: "volledige naam"
   users_name_placeholder: "Vul hier jouw volledige naam in."
   users_email: "e-mail"

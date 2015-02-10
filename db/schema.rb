@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150130165749) do
+ActiveRecord::Schema.define(version: 20150210130031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20150130165749) do
     t.integer  "usages",       default: 0
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "sign_ups",     default: 0
   end
 
   create_table "activities", force: :cascade do |t|
@@ -121,6 +122,20 @@ ActiveRecord::Schema.define(version: 20150130165749) do
 
   add_index "edits", ["by_type", "by_id"], name: "index_edits_on_by_type_and_by_id", using: :btree
   add_index "edits", ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id", using: :btree
+
+  create_table "follows", force: :cascade do |t|
+    t.integer  "followable_id",                   null: false
+    t.string   "followable_type",                 null: false
+    t.integer  "follower_id",                     null: false
+    t.string   "follower_type",                   null: false
+    t.boolean  "blocked",         default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "send_email",      default: false
+  end
+
+  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
+  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
 
   create_table "forums", force: :cascade do |t|
     t.string   "name"

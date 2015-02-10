@@ -8,7 +8,7 @@ $maxCommentDepth: 10;
 }
 
 .side-con input[type="submit"] {
-  background-color: $red;
+  @include button($red);
 }
 
 .side-pro .form-input-title {
@@ -16,7 +16,7 @@ $maxCommentDepth: 10;
 }
 
 .side-pro input[type="submit"] {
-  background-color: $gre;
+  @include button($gre);
 }
 
 .pro-bg {

@@ -8,5 +8,9 @@
 nature:
   id: 182999886
   name: 'nature'
-  taggings_count: 0
+  taggings_count: 2
 #
+something:
+  id: 182999774
+  name: 'something'
+  taggings_count: 1

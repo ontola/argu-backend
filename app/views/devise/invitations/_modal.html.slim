@@ -1,7 +1,7 @@
 .modal-container
   .overlay
   .modal.col-1
-    -if Rails.configuration.epics.share_links && @forum.visible_with_a_link
+    -if Rails.configuration.epics.share_links && @forum.present? && @forum.visible_with_a_link
       = render partial: "share_link"
     header
       h1= t("devise.invitations.new.header")

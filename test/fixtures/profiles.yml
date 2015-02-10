@@ -14,7 +14,7 @@ profile_utrecht_manager:
 profile_one:
   name: 'User'
   about: 'Im a user'
-#
+# Can't have con votes since those are used to test whether votes are shown correctly
 profile_two:
   name: 'User2'
   about: 'Im also a user'

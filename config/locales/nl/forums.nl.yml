@@ -54,7 +54,7 @@ nl:
     about:
       header: "Waarvoor is dit forum?"
       body: "Een Argu forum is een discussie omgeving waar oplossingen voor vraagstukken worden gedeeld en besproken."
-  activerecord:
+  activerecord: #These currently aren't used for forms.
     attributes:
       forum:
         name: "Naam"
