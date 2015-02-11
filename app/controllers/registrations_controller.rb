@@ -10,9 +10,7 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     redirect_to :root unless has_valid_token? || Rails.configuration.epics.sign_up
-    super do |user|
-      user.update access_tokens: get_safe_raw_access_tokens
-    end
+    super
     session[:omniauth] = nil unless @user.new_record?
   end
 
@@ -65,7 +63,7 @@ protected
 private
 
   def build_resource(*args)
-    super
+    super args.first.merge(access_tokens: get_safe_raw_access_tokens)
     if session[:omniauth]
       @user.apply_omniauth(session[:omniauth])
       @user.valid?

@@ -18,6 +18,43 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should update counters accordingly' do
+    assert_differences [['access_tokens(:token_hidden).reload.sign_ups', 0],
+                        ['access_tokens(:token_hidden).reload.usages', 1]] do
+      get forum_path(forums(:hidden).web_url, at: access_tokens(:token_hidden).access_token)
+    end
+    assert_response :success
+
+    assert_differences [['access_tokens(:token_hidden).reload.sign_ups', 0],
+                        ['access_tokens(:token_hidden).reload.usages', 0]],
+                        'Usages or sign_ups counter changed on secondary get w/ token' do
+      get forum_path(forums(:hidden).web_url, at: access_tokens(:token_hidden).access_token)
+      assert_response :success
+    end
+
+    assert_differences [['access_tokens(:token_hidden).reload.sign_ups', 0],
+                        ['access_tokens(:token_hidden).reload.usages', 0]] do
+      post forum_memberships_path(forums(:hidden).web_url, r: forum_path(forums(:hidden).web_url), at: access_tokens(:token_hidden).access_token)
+    end
+    assert_response :success
+    assert assigns(:resource)
+
+    assert_differences [['User.count', 1],
+                        ['access_tokens(:token_hidden).reload.sign_ups', 1],
+                        ['access_tokens(:token_hidden).reload.usages', 0]] do
+      post user_registration_path, {user: {
+                                     username: 'newuser',
+                                     email: 'newuser@example.com',
+                                     password: 'useruser',
+                                     password_confirmation: 'useruser',
+                                     r: forums(:hidden).web_url
+                                 },
+                                    at: access_tokens(:token_hidden).access_token}
+    end
+
+  end
+
+  # Note: The :at params are duplicated everywhere because integration tests apparently don't support session variables
   test 'should register and become a member with an access token' do
     get forum_path(forums(:hidden).web_url, at: access_tokens(:token_hidden).access_token)
     assert_response :success

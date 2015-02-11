@@ -5,6 +5,9 @@ if LogStasher.enabled
     fields[:environment] = Rails.env
     fields[:user] = current_user && current_user.id
     fields[:profile] = current_profile && current_profile.id
-
+    fields[:a_params] = request.try(:params).try(:slice, 'at', 'r')
+    if current_context.has_parent?
+      fields[:forum] = current_context.model.get_parent.model.web_url
+    end
   end
 end

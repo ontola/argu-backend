@@ -53,6 +53,10 @@ class Forum < ActiveRecord::Base
     page.owner
   end
 
+  def full_access_token
+    AccessToken.where(item: self).first
+  end
+
   def page=(value)
     super Page.friendly.find(value)
   end

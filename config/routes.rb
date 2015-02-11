@@ -99,6 +99,7 @@ Argu::Application.routes.draw do
   get '/sign_in_modal', to: 'static_pages#sign_in_modal'
   get '/about', to: 'static_pages#about'
   get '/product', to: 'static_pages#product'
+  get '/how_argu_works', to: 'static_pages#how_argu_works'
 
   get '/portal', to: 'portal/portal#home'
 

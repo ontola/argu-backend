@@ -393,5 +393,5 @@ ActiveRecord::Schema.define(version: 20150210112648) do
   add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
-  add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
+  add_foreign_key "access_tokens", "profiles"
 end

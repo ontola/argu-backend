@@ -110,7 +110,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:username, :email, :r]
+    devise_parameter_sanitizer.for(:sign_up) << [:username, :email, :r, :access_tokens]
     devise_parameter_sanitizer.for(:sign_in) << [:r]
     devise_parameter_sanitizer.for(:accept_invitation).concat [:username]
   end

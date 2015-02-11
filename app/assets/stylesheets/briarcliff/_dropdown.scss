@@ -26,6 +26,8 @@
   overflow: hidden;
   text-transform: none;
   border-top: none;
+  max-height: 30em;
+  overflow-y: auto;
   li {
     min-width: 100%;
   }

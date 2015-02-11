@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
 
   before_validation :check_for_profile
   after_destroy :cleanup
+  after_create :update_acesss_token_counts
   before_save { |user| user.email = email.downcase unless email.blank? }
 
   # Virtual attribute for authenticating by either username or email
@@ -66,6 +67,13 @@ class User < ActiveRecord::Base
 
   def self.is_valid_username?(name)
     USERNAME_FORMAT_REGEX.match(name.to_s)
+  end
+
+  def update_acesss_token_counts
+    if access_tokens.present?
+      access_tokens = AccessToken.where(access_token: eval(self.access_tokens)).pluck :id
+      AccessToken.increment_counter :sign_ups, access_tokens
+    end
   end
 
 private

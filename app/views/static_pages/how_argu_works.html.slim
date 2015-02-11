@@ -1,0 +1,324 @@
+.col-1.margin-bottom--big
+  header
+    h1 Hoe werkt Argu?
+  .box
+    section
+      p Argu is een discussieplatform voor het <b>oplossen van problemen</b>. We werken met een unieke structuur, zodat discussies inhoudelijk en oplossingsgericht zijn.
+.col-2.margin-bottom--big
+  header
+    h1 vraagstukken
+  .col-2-1
+    .box
+      section
+        h3 Welke problemen moeten er worden opgelost?
+        p Een vraagstuk is een <b>open vraag</b> waarmee er wordt gezocht naar oplossingen voor een probleem. Veel discussies op Argu beginnen als vraagstuk.
+  .col-2-1
+    .box.question
+      section.section-info.que-bg
+        span vraagstuk
+      section
+        h3.que-t Hoe kunnen we klimaatverandering tegen gaan?
+  .clear
+.col-2.margin-bottom--big
+  header
+    h1 voorstellen
+  .col-2-1
+    .box
+      section
+        h3 Welke oplossingen zijn er?
+        p Een voorstel is een idee waarmee een probleem kan worden opgelost. Voorstellen zijn concrete plannen die naar beleid of wetgeving om zijn te zetten.
+  .col-2-1
+    /.box.question
+      section.section-info.que-bg
+        span vraagstuk
+      section
+        h3.que-t Hoe kunnen we ondernemerschap stimuleren?
+    /.center
+      p.fa.fa-arrow-down.margin-bottom
+    .box.statement
+      section.section-info.sta-bg
+        span voorstel
+      section
+        h3.sta-t CO2 uitstoot belasten
+  .clear
+.col-2.margin-bottom--big
+  header
+    h1 argumenten
+  .col-2-1
+    .box
+      section
+        h3 Wat zijn de voor- en nadelen van de voorstellen?
+        p Op ieder voorstel kunnen argumenten voor en tegen worden geplaatst.
+  .col-2-1
+    .box.statement
+      section.section-info.sta-bg
+        span voorstel
+      section
+        h3.sta-t CO2 uitstoot belasten
+    /.center
+      p.fa.fa-arrow-down.margin-bottom
+    .col-2
+      .col-2-1
+        .box.argument.side-pro
+          section.section-info.pro-bg
+            span argument voor
+          section
+            h3.pro-t Belast direct de bron
+      .col-2-1
+        .box.argument.side-pro
+          section.section-info.con-bg
+            span argument tegen
+          section
+            h3.con-t Lastig meetbaar
+  .clear
+.col-2.margin-bottom--big
+  header
+    h1 stemmen
+  .col-2-1
+    .box
+      section
+        h3 Wat vind jij er van?
+        p Iedereen kan op voorstellen stemmen. Zo houden we bij hoe veel mensen het met een voorstel eens of oneens zijn.
+  .col-2-1
+    .box.statement
+      section.section-info.sta-bg
+        span voorstel
+      section
+        h3.sta-t CO2 uitstoot belasten
+    .center.motion-shr
+      ul.btns-opinion
+        li
+          a.btn-pro
+            span.fa.fa-thumbs-up
+            span.icon-left = t('motions.votes.pro')
+        li
+          a.btn-neu
+            span.fa.fa-pause
+            span.icon-left = t('motions.votes.neu')
+        li
+          a.btn-con
+            span.fa.fa-thumbs-down
+            span.icon-left = t('motions.votes.con')
+      /ul class="progress-bar progress-bar-stacked"
+        li[style="width: 55%;"]
+          span class="btn-pro"= "55%"
+        li[style="width: 15%;"]
+          span class="btn-neu"= "15%"
+        li[style="width: 30%;"]
+          span class="btn-con"= "30%"
+  .clear
+.col-2.margin-bottom--big
+  header
+    h1 politiek
+  .col-2-1
+    .box
+      section
+        h3 Wat vinden zij er van?
+        p Niet alleen kiezers, maar ook politieke partijen kunnen aangeven wat ze van een idee vinden. Zo wordt onderbouwd kiezen een stuk gemakkelijker.
+  .col-2-1
+    .box.statement
+      section.section-info.sta-bg
+        span voorstel
+      section
+        h3.sta-t CO2 uitstoot belasten
+    /.center
+      p.fa.fa-arrow-down.margin-bottom
+    .col-3
+      .col-3-1
+        .box
+          section.section-info.pro-bg
+            span voor
+          section
+            h3.pro-t Partij A
+        .box
+          section.section-info.pro-bg
+            span voor
+          section
+            h3.pro-t Partij B
+      .col-3-1
+        .box
+          section.section-info.neu-bg
+            span neutraal
+          section
+            h3.neu-t Partij C
+      .col-3-1
+        .box
+          section.section-info.con-bg
+            span tegen
+          section
+            h3.con-t Partij D
+    .clear
+  .clear
+.col-1
+  header
+    h1 Forums
+  .box
+    section
+      h3 Voor wie is de discussie relevant?
+      p Op Argu worden discussies geplaatst in forums. Sommige discussie gaan heel Nederland aan, terwijl anderen slechts in één gemeente of in een enkele vereniging van belang zijn.
+      p Iedere organisatie, gemeente, provincie, bedrijf, vereniging of projectgroep zou een eigen forum op Argu kunnen krijgen. Neem <b><a href="mailto:info@argu.co">contact</a></b> op voor prijzen en meer informatie.
+  .center
+    =link_to "/forums", class: "btn" do
+      | Bekijk hier alle forums
+  /.blocks
+    .block.block--left-aligned
+      .block-text
+        h2 Forums
+        h3 Waar gaan we over discussiëren?
+        p.block-subtle Iedereen kan op voorstellen stemmen. Zo houden we bij hoe veel mensen het met een voorstel eens of oneens zijn.
+    .block.block--img
+      .img[style='background-image: url(#{asset_path "bg-landing-hong-kong.jpg"})']
+
+
+
+/.blocks-container
+  .blocks
+    .block.block--full
+      header
+        h1 Hoe werkt Argu?
+      p.block-slogan Argu is een online discussieplatform voor ieder die mee wil denken over het oplossen van problemen. We werken met een heldere structuur, zodat discussies inhoudelijk en oplossingsgericht zijn.
+  .blocks
+    .block.block--full.block--fill
+      header
+        h1 Onze discussiestructuur
+  .blocks
+    .block.block--left-aligned
+      .block-text
+        h2 Vraagstukken
+        h3 Welke problemen moeten er worden opgelost?
+        p.block-subtle Een vraagstuk is een <b>open vraag</b> waarmee er wordt gezocht naar oplossingen voor een probleem.
+    .block-alt
+      .block-text
+        /.box.question
+          section.section-info.que-bg
+            span vraagstuk
+          section
+            h3.que-t Hoe gaan we de wereld verbeteren?
+        .box.question
+          section.section-info.que-bg
+            span vraagstuk
+          section
+            h3.que-t Hoe kunnen we ondernemerschap stimuleren?
+
+  .blocks
+    .block.block--left-aligned
+      .block-text
+        h2 Voorstellen
+        h3 Welke oplossingen zijn er?
+        p.block-subtle Een voorstel is een idee waarmee een probleem kan worden opgelost. Voorstellen zijn concrete plannen die naar beleid of wetgeving om zijn te zetten.
+    .block-alt
+      .block-text
+        .box.question
+          section.section-info.que-bg
+            span vraagstuk
+          section
+            h3.que-t Hoe kunnen we ondernemerschap stimuleren?
+        .center
+          p.fa.fa-arrow-down.margin-bottom
+        .box.statement
+          section.section-info.sta-bg
+            span voorstel
+          section
+            h3.sta-t Gratis geld voor ondernemers
+  .blocks
+    .block.block--left-aligned
+      .block-text
+        h2 Argumenten
+        h3 Wat zijn de voor- en nadelen van de voorstellen?
+        p.block-subtle Op ieder voorstel kunnen argumenten voor en tegen worden geplaatst.
+    .block-alt
+      .block-text
+        .box.statement
+          section.section-info.sta-bg
+            span voorstel
+          section
+            h3.sta-t Gratis geld voor ondernemers
+        .center
+          p.fa.fa-arrow-down.margin-bottom
+        .col-2
+          .col-2-1
+            .box.argument.side-pro
+              section.section-info.pro-bg
+                span argument voor
+              section
+                h3.pro-t Stimuleert innovatie
+          .col-2-1
+            .box.argument.side-pro
+              section.section-info.con-bg
+                span argument tegen
+              section
+                h3.con-t Hoge kosten
+  .blocks
+    .block.block--left-aligned
+      .block-text
+        h2 Stemmen
+        h3 Wat vind jij er van?
+        p.block-subtle Iedereen kan op voorstellen stemmen. Zo houden we bij hoe veel mensen het met een voorstel eens of oneens zijn.
+    .block-alt
+      .block-text
+        .box.statement
+          section.section-info.sta-bg
+            span voorstel
+          section
+            h3.sta-t Gratis geld voor ondernemers
+        .center.motion-shr
+          ul.btns-opinion
+            li
+              a.btn-pro
+                span.fa.fa-thumbs-up
+                span.icon-left = t('motions.votes.pro')
+            li
+              a.btn-neu
+                span.fa.fa-pause
+                span.icon-left = t('motions.votes.neu')
+            li
+              a.btn-con
+                span.fa.fa-thumbs-down
+                span.icon-left = t('motions.votes.con')
+  /ul class="progress-bar progress-bar-stacked"
+              li[style="width: 55%;"]
+                span class="btn-pro"= "55%"
+              li[style="width: 15%;"]
+                span class="btn-neu"= "15%"
+              li[style="width: 30%;"]
+                span class="btn-con"= "30%"
+  .blocks
+    .block.block--left-aligned
+      .block-text
+        h2 Politiek
+        h3 Wat vinden zij er van?
+        p.block-subtle Niet alleen het volk, maar ook politieke partijen kunnen aangeven wat zij vinden van voorstellen.
+    .block-alt
+      .block-text
+        .box.statement
+          section.section-info.sta-bg
+            span voorstel
+          section
+            h3.sta-t Gratis geld voor ondernemers
+        .center
+          p.fa.fa-arrow-down.margin-bottom
+        .col-3
+          .col-3-1
+            .box
+              section.section-info.pro-bg
+                span voor
+              section
+                h3.pro-t Partij A
+            .box
+              section.section-info.pro-bg
+                span voor
+              section
+                h3.pro-t Partij B
+          .col-3-1
+            .box
+              section.section-info.neu-bg
+                span neutraal
+              section
+                h3.neu-t Partij C
+          .col-3-1
+            .box
+              section.section-info.con-bg
+                span tegen
+              section
+                h3.con-t Partij D
+        .clear
