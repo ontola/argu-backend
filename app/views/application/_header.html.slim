@@ -98,11 +98,14 @@ nav#navbar.navbar role="navigation"
           //span.fa.fa-angle-down
         ul.dropdown-content.dropdown-right
           li=link_to about_url do
-            span.fa.fa-info
+            span.fa.fa-info-circle
             span.icon-left= t("about.vision")
           li=link_to how_argu_works_url do
-            span.fa.fa-question
+            span.fa.fa-question-circle
             span.icon-left= t("how_argu_works.title")
+          li=link_to team_url do
+            span.fa.fa-group
+            span.icon-left= t("team.title")
       li
         a[class="intro-trigger navbar-item"]
           span.fa.fa-question

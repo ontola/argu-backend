@@ -12,6 +12,13 @@
   -o-transform: $opts;
 }
 
+@mixin filter($opts) {
+  filter: $opts;
+  -moz-filter: $opts;
+  -webkit-filter: $opts;
+  -ms-filter: $opts;
+}
+
 @mixin text_settings($align: justify, $color: $g4, $family: $font-sans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
   text-align: $align;
   color: $color;

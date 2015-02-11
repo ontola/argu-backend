@@ -1,0 +1,42 @@
+-provide :title, t('team.title')
+
+- if @document.present? && @document.has_key?('sections')
+  .blocks-container
+    - @document['sections'].each do |section|
+      - if section['type'] == 'block--full'
+        .blocks
+          .block.block--full[class=(section['fill'] ? 'block--fill' : '')]
+            header
+              h2= section['header']
+            p[class=(section['slogan'] ? 'block-slogan' : '')]= section['body']
+            - if section['advisors'].present?
+              ul.block-references
+                - section['advisors'].each do |advisor|
+                  li
+                    .block-head[style="background-image: url(#{asset_path advisor['avatar']})"]
+                    blockquote = advisor['quote']
+                    p.block-subtle
+                      b = advisor['name']
+                      = ", "
+                      == advisor['function']
+            - if section['link'].present?
+              a.block-link[href=section['link']['url']]=section['link']['title']
+
+      - elsif section['type'] == 'blocks'
+        .blocks
+          .block.block--img[class=(section['right'] ? 'block--right' : '')]
+            .img[style="background-image: url(#{asset_path section['image']})"]
+          .block[class=(section['fill'] ? 'block--fill' : '')]
+            .block-text
+              - if section['avatar']
+                .block-head[style="background-image: url(#{asset_path section['avatar']})"]
+              h2 = section['header']
+              p.block-subtle = section['body']
+              - if section['expand'].present?
+                a[href=("#" + section['expand']['id']) class="expander block-link" data-expander-target=("#" + section['expand']['id'])]
+        - if section['expand'].present?
+          .blocks.expander-content[id=section['expand']['id']]
+            .block.block--hidden.block--full.block--big-text
+              h2=section['expand']['title']
+              - section['expand']['body'].each do |body|
+                p=body
