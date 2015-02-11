@@ -1,7 +1,9 @@
 class Profile < ActiveRecord::Base
   include ArguBase
 
-  has_one :profileable
+  # Currently hardcoded to User (whilst it can also be a Profile)
+  # to make the mailer implementation more efficient
+  has_one :profileable, class_name: 'User'
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy

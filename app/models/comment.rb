@@ -5,7 +5,7 @@ class Comment < ActiveRecord::Base
   parentable :commentable
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
-  mailable CommentsMailer, :directly, :daily, :weekly
+  mailable CommentMailer, :directly, :daily, :weekly
 
   after_validation :increase_counter_cache
   after_destroy :decrease_counter_cache

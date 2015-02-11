@@ -1,2 +1,21 @@
-h1= I18n.t('mailer.direct_mail.header')
-p= I18n.t('mailer.direct_mail.first_paragraph')
+html
+  head
+    div[itemscope="" itemtype="http://schema.org/EmailMessage"]
+      div[itemprop="action" itemscope="" itemtype="http://schema.org/ViewAction"]
+        link[href=polymorphic_url(activity.trackable, host: 'https://argu.co') itemprop="url"]
+        meta[content=t('mailer.view_type', type: t("#{activity.trackable.class_name}.type")) itemprop="name"]
+      meta[content=t('mailer.view_type_on_argu', type: t("#{activity.trackable.class_name}.type")) itemprop="description"]
+      div[itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization"]
+        meta[content="Argu" itemprop="name"]
+        link[href="https://argu.co" itemprop="url"]
+        link itemprop="url/googlePlus" href="https://plus.google.com/"
+  body
+    h1= t('mailer.direct_mail.header')
+
+    = render partial: "mailer/#{activity.key.gsub('.', '/')}", locals: { activity: activity }
+
+    = link_to t('mailer.view_type', type: t("#{activity.trackable.class_name}.type")),
+             polymorphic_url(activity.trackable, host: 'https://argu.co')
+
+    p
+      small= t('mailer.sent_at_date', date: Time.now.utc.strftime("%Y-%m-%d %H:%M:%S"))

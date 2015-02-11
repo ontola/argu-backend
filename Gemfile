@@ -56,6 +56,7 @@ gem 'mini_magick', '~> 3.8.1'                                             # Ruby
 gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'
 gem 'sinatra', '>= 1.3.0'
+gem 'render_anywhere', :require => false
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'

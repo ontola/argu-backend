@@ -1,33 +1,52 @@
+require 'render_anywhere'
+
 # Mailer class for mailing users when an activity is created
 class Argu::ActivityMailer
+  include Sidekiq::Worker
+  include RenderAnywhere
 
   def initialize(a)
     @activity = a
   end
 
+  # Current implementation only mails directly until we enable weekly email
   def collect_recipients
-    recipients = Set.new
-    recipients.merge @activity.collect_recipients
+    if @recipients.present?
+      @recipients
+    else
+      recipients = Set.new
+      recipients.merge recipients_for_activity(@activity)
+      @recipients = recipients.select { |u| u.direct_follows_email? }.map(&:user_to_recipient_option).reduce({}, :merge)
+    end
+  end
 
+  def recipients_for_activity(a)
+    items = a.key.split('.')
+    "#{items.first}_mailer".classify.safe_constantize.new(a).send(items.last)
   end
 
   # Renders the accompanying view for the activity
-  def render
-    Slim::Template.new("app/views/mailer/direct/#{@activity.trackable.class_name}.html.slim").render()
+  def render_mail
+    @rendered_html = render 'mailer/direct_mail', layout: false, locals: { activity: @activity }
   end
 
   # Sends the actual messages
   def send!
     begin
-      RestClient.post "https://api:key-#{Rails.application.secrets.mailgun_api_token}"\
-  "@api.mailgun.net/v2/sandbox45cac23aba3c496ab26b566ddae1bd5b.mailgun.org/messages",
-                      from: Rails.application.secrets.mailgun_sender,
-                      to: recipient_variables.keys.join(','),
-                      'recipient-variables' => collect_recipients.to_json,
-                      subject: subject,
-                      text: "",
-                      html: render
-      logger.info "Sent a mail to: #{recipient_variables.to_s}"
+      render_mail
+      if collect_recipients.length > 0
+        RestClient.post "https://api:key-#{Rails.application.secrets.mailgun_api_token}"\
+    "@api.mailgun.net/v2/sandbox45cac23aba3c496ab26b566ddae1bd5b.mailgun.org/messages",
+                        from: Rails.application.secrets.mailgun_sender,
+                        to: collect_recipients.keys.join(','),
+                        'recipient-variables' => collect_recipients.to_json,
+                        subject: subject,
+                        text: 'text',
+                        html: render_mail.to_str # This MUST say .to_str otherwise it will crash on SafeBuffer
+        logger.info "Sent a mail to: #{collect_recipients.to_s}"
+      else
+        logger.info 'No recepients'
+      end
     rescue => e
       logger.error e.response
       raise e
