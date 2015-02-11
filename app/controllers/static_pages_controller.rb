@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+  before_action :get_document, only: [:team, :about, :product]
 
   def home
     authorize :static_pages
@@ -39,8 +40,18 @@ class StaticPagesController < ApplicationController
     authorize :static_pages
   end
 
+  def team
+    authorize :static_pages
+  end
+
   private
   def default_forum_path
     current_profile.present? ? preferred_forum : Forum.first_public
   end
+
+  def get_document
+    @document = JSON.parse Setting.get(params[:action]) || '{}'
+    # parsing is neccessary, since the _simple_settings gem converts the JSON to a string
+  end
+
 end

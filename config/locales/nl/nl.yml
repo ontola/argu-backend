@@ -80,6 +80,8 @@ nl:
     vision: "Onze visie"
   how_argu_works:
     title: "Hoe Argu werkt"
+  team:
+    title: "Ons team"
 #Users
   users_username: "gebruikersnaam"
   users_username_or_email: "email of gebruikersnaam"
