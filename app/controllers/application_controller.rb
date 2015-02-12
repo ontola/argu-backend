@@ -43,9 +43,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def create_activity(model, params)
+  def create_activity_with_cleanup(model, params)
     destroy_recent_similar_activities model, params
-    model.create_activity params
+    create_activity model, params
+  end
+
+  def create_activity(model, params)
+    a = model.create_activity params
+    Argu::Notification.perform_async(a.id)
   end
 
   def current_scope

@@ -67,7 +67,7 @@ class MotionsController < ApplicationController
 
     respond_to do |format|
       if @motion.save
-        @motion.create_activity action: :create, recipient: (@question.presence || @motion.forum), owner: current_profile, forum_id: @motion.forum.id
+        create_activity @motion, action: :create, recipient: (@question.presence || @motion.forum), owner: current_profile, forum_id: @motion.forum.id
         format.html { redirect_to @motion, notice: t('type_save_success', type: t('motions.type')) }
         format.json { render json: @motion, status: :created, location: @motion }
       else

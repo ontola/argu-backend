@@ -18,6 +18,7 @@ class Forum < ActiveRecord::Base
   process_in_background :profile_photo
   mount_uploader :cover_photo, CoverUploader
   parentable :self
+  acts_as_followable
 
   validates_integrity_of :profile_photo
   validates_processing_of :profile_photo
@@ -46,6 +47,10 @@ class Forum < ActiveRecord::Base
 
   def display_name
     name
+  end
+
+  def creator
+    page.owner
   end
 
   def full_access_token

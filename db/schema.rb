@@ -123,6 +123,20 @@ ActiveRecord::Schema.define(version: 20150210130031) do
   add_index "edits", ["by_type", "by_id"], name: "index_edits_on_by_type_and_by_id", using: :btree
   add_index "edits", ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id", using: :btree
 
+  create_table "follows", force: :cascade do |t|
+    t.integer  "followable_id",                   null: false
+    t.string   "followable_type",                 null: false
+    t.integer  "follower_id",                     null: false
+    t.string   "follower_type",                   null: false
+    t.boolean  "blocked",         default: false, null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "send_email",      default: false
+  end
+
+  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
+  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
+
   create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.integer  "page_id"
@@ -345,6 +359,12 @@ ActiveRecord::Schema.define(version: 20150210130031) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                  default: 0
     t.boolean  "finished_intro",                     default: false
+    t.integer  "follows_email",                      default: 1,     null: false
+    t.boolean  "follows_mobile",                     default: true,  null: false
+    t.integer  "memberships_email",                  default: 1,     null: false
+    t.boolean  "memberships_mobile",                 default: true,  null: false
+    t.integer  "created_email",                      default: 1,     null: false
+    t.boolean  "created_mobile",                     default: true,  null: false
     t.text     "r"
     t.text     "access_tokens"
   end

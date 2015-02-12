@@ -57,6 +57,10 @@ class ForumPolicy < RestrictivePolicy
     update?
   end
 
+  def follow?
+    is_open? || is_member? || is_manager? || staff?
+  end
+
   def update?
     is_manager? || super
   end

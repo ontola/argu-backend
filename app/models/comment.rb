@@ -1,8 +1,11 @@
 class Comment < ActiveRecord::Base
-  include ArguBase, Parentable, Trashable, PublicActivity::Common
+  include ArguBase, Parentable, Trashable, PublicActivity::Common, Mailable
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   parentable :commentable
+
+  acts_as_nested_set :scope => [:commentable_id, :commentable_type]
+  mailable CommentMailer, :directly, :daily, :weekly
 
   after_validation :increase_counter_cache
   after_destroy :decrease_counter_cache
@@ -26,6 +29,13 @@ class Comment < ActiveRecord::Base
     c.body = comment
     c.profile_id = profile_id
     c
+  end
+
+  def collect_recipients(type)
+    profiles = Set.new
+    if type == :directly
+      profiles.merge commentable.parent.creator if comment.parent && comment.parent.creator.owner.direct_created_email?
+    end
   end
 
   def creator

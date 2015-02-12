@@ -1,5 +1,9 @@
 module ApplicationHelper
 
+  def active_for_user?(feature, user)
+    $rollout.active?(feature, user)
+  end
+
   def awesome_time_ago_in_words (date)
     if date.present?
       if 1.day.ago < date
