@@ -12,8 +12,8 @@
   -if vote.present?
     ul class="progress-bar progress-bar-stacked"
       li[style="width: #{progress_bar_width(model, :pro)}%;"]
-        span class="btn-pro"= "#{model.votes_pro_percentage}%"
+        span class="btn-pro"= "#{model.votes_pro_count}"
       li[style="width: #{progress_bar_width(model, :neutral)}%;"]
-        span class="btn-neu"= "#{model.votes_neutral_percentage}%"
+        span class="btn-neu"= "#{model.votes_neutral_count}"
       li[style="width: #{progress_bar_width(model, :con)}%;"]
-        span class="btn-con"= "#{model.votes_con_percentage}%"
+        span class="btn-con"= "#{model.votes_con_count}"
