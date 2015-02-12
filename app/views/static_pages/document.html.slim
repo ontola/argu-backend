@@ -34,9 +34,17 @@
             .block-text
               - if section['avatar']
                 .block-avatar[style="background-image: url(#{asset_path section['avatar']})"]
-              h2 = section['header']
+              - if section['header']
+                h2 = section['header']
               - section['body'].each do |body|
                 p.block-subtle = body
+              - if section['social']
+                ul.block-social-buttons
+                  - section['social'].each do |social|
+                    li
+                      =link_to social['url'] do
+                        span.fa[class=('fa-' + social['icon'])]
+
               - if section['expand'].present?
                 a[href=("#" + section['expand']['id']) class="expander block-link" data-expander-target=("#" + section['expand']['id'])]
         - if section['expand'].present?
