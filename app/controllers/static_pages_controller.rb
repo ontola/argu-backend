@@ -26,10 +26,12 @@ class StaticPagesController < ApplicationController
 
   def about
     authorize :static_pages
+    render 'document'
   end
 
   def product
     authorize :static_pages
+    render 'document'
   end
 
   def developers
@@ -42,6 +44,7 @@ class StaticPagesController < ApplicationController
 
   def team
     authorize :static_pages
+    render 'document'
   end
 
   private

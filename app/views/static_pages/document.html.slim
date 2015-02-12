@@ -3,35 +3,41 @@
 - if @document.present? && @document.has_key?('sections')
   .blocks-container
     - @document['sections'].each do |section|
-      - if section['type'] == 'block--full'
+      - if section['type'] == 'single'
         .blocks
-          .block.block--full[class=(section['fill'] ? 'block--fill' : '')]
-            header
-              h2= section['header']
-            p[class=(section['slogan'] ? 'block-slogan' : '')]= section['body']
+          .block.block--full[class=((section['fill'] ? 'block--fill' : '') + " " + (section['big-text'] ? 'block--big-text' : ''))]
+            - if section['header'].present?
+              header
+                h2= section['header']
+            - if section['body'].present?
+              - section['body'].each do |body|
+                p[class=(section['slogan'] ? 'block-slogan' : '')]== body
             - if section['advisors'].present?
               ul.block-references
                 - section['advisors'].each do |advisor|
                   li
-                    .block-head[style="background-image: url(#{asset_path advisor['avatar']})"]
-                    blockquote = advisor['quote']
+                    .block-avatar[style="background-image: url(#{asset_path advisor['avatar']})"]
+                    - if advisor['quote'].present?
+                      blockquote = advisor['quote']
                     p.block-subtle
                       b = advisor['name']
-                      = ", "
-                      == advisor['function']
+                      - if advisor['function'].present?
+                        = ", "
+                        == advisor['function']
             - if section['link'].present?
               a.block-link[href=section['link']['url']]=section['link']['title']
 
-      - elsif section['type'] == 'blocks'
+      - elsif section['type'] == 'double'
         .blocks
           .block.block--img[class=(section['right'] ? 'block--right' : '')]
             .img[style="background-image: url(#{asset_path section['image']})"]
           .block[class=(section['fill'] ? 'block--fill' : '')]
             .block-text
               - if section['avatar']
-                .block-head[style="background-image: url(#{asset_path section['avatar']})"]
+                .block-avatar[style="background-image: url(#{asset_path section['avatar']})"]
               h2 = section['header']
-              p.block-subtle = section['body']
+              - section['body'].each do |body|
+                p.block-subtle = body
               - if section['expand'].present?
                 a[href=("#" + section['expand']['id']) class="expander block-link" data-expander-target=("#" + section['expand']['id'])]
         - if section['expand'].present?

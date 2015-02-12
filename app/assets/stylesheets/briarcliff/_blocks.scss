@@ -237,21 +237,25 @@ $grey_light: $g0;
   h2 {
     font-size: 1.1em;
   }
+  blockquote {
+    margin: 0 0 .2em 0;
+  }
 }
 
-.block-references blockquote {
-  margin: .3em 0 .2em 0;
-}
-
-.block-head {
+.block-avatar{
   display: block;
   margin: auto;
-  width: 5em;
-  height: 5em;
+  margin-bottom: .5em;
+  width: 100px;
+  height: 100px;
   border-radius: 9999px;
   background-position: center;
   background-size: cover;
   @include filter(grayscale(1));
+  @include transition(.5s);
+  &:hover{
+    @include filter(grayscale(0));
+  }
 }
 
 .block-subtle {
