@@ -26,7 +26,6 @@
                         == advisor['function']
             - if section['link'].present?
               a.block-link[href=section['link']['url']]=section['link']['title']
-
       - elsif section['type'] == 'double'
         .blocks
           .block.block--img[class=(section['right'] ? 'block--right' : '')]
