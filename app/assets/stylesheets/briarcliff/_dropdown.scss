@@ -103,3 +103,22 @@ span.dropdown-header {
   width: 100%;
   border-top: solid 1px $g2;
 }
+
+.dropdown-header {
+  background-color: $g0;
+  width: 100%;
+  text-align: right;
+  li{
+    display: inline-block !important;
+    min-width: 0;
+    font-size: .8em;
+  }
+  border-bottom: solid 1px $g1;
+}
+
+.dropdown-title {
+  float: left;
+  font-weight: bold;
+  padding: .6em;
+  color: $g4;
+}
