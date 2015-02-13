@@ -15,6 +15,7 @@ Rails.application.configure do
   config.epics.open_auth = true                       # Facebook, twitter, google, openID login & account linking shown in profile
   config.epics.link_to_motion = true                  # Button in questions.show to find & link motions
   config.epics.page_create = true                     # Create a page button in header menu
+  config.epics.notifications = true                   # Show notifications button in header menu
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development

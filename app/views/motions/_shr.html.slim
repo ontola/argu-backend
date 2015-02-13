@@ -10,10 +10,9 @@
       span.fa.fa-thumbs-down
       span.icon-left = t('motions.votes.con')
   //TODO: Hide voting results when user is signed in, but hasn't voted yet. Show voting results when user clicks on "show votes" button.
-  a.btn.btn-subtle
+  /a.btn.btn-subtle
     span.fa.fa-pie-chart
     span.icon-left = t('motions.votes.show')
-
   -if vote.present?
     ul class="progress-bar progress-bar-stacked"
       li[style="width: #{progress_bar_width(model, :pro)}%;"]
