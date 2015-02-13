@@ -1,0 +1,85 @@
+@import "variables";
+@import "mixins";
+
+.notifications {
+  width: 25em;
+}
+
+.notifications li {
+  position: relative;
+  display: block;
+  border-bottom: solid 1px $g1;
+  cursor: pointer;
+  &:hover .notification-settings{
+    opacity: 1;
+  }
+}
+
+.notifications > li > a {
+  min-height: 4.2em;
+  display: inline-block;
+}
+
+.notification-avatar {
+  display: block;
+  width: 15%;
+  float: left;
+  padding-right: .4em;
+}
+
+.notification-description {
+  width: 85%;
+  font-size: 1em;
+  display: block;
+  line-height: 1.4em;
+  float: right;
+  color: #g4;
+  margin-top: 0em;
+  margin-bottom: 1.3em;
+}
+
+.notification-icon {
+  color: $g2;
+}
+
+.notification-time {
+  color: $g2;
+}
+
+.notification-settings {
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 1em !important;
+  min-height: 1em !important;
+  width: 1.3em;
+  padding: 0.2em !important;
+  color: $g2 !important;
+  &:hover{
+    color: $g3 !important;
+  }
+}
+
+.notification-bottom{
+  left: 17%;
+  position: absolute;
+  bottom: 0.7em;
+}
+
+.notification-counter {
+  background-color: $red-alert;
+  @include border-radius(99px);
+  @include box-shadow(0em 0.1em 0.25em 0em rgba(0, 0, 0, 0.2));
+  color: white;
+  font-weight: bold;
+  font-size: .7em;
+  position: absolute;
+  top: .3em;
+  left: .3em;
+  width: 1.6em;
+  height: 1.6em;
+  padding: 0.3em;
+  text-align: center;
+  pointer-events: none;
+}

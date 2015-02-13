@@ -4,7 +4,7 @@ module ProCon
   included do
     include ArguBase, Trashable, Parentable, HasReferences, PublicActivity::Common
 
-    belongs_to :motion
+    belongs_to :motion, touch: true
     has_many :votes, as: :voteable, :dependent => :destroy
     has_many :activities, as: :trackable, dependent: :destroy
     belongs_to :creator, class_name: 'Profile'

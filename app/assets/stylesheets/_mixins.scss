@@ -19,6 +19,10 @@
   -ms-filter: $opts;
 }
 
+@mixin border-radius($opts:3px){
+  border-radius: $opts;
+}
+
 @mixin text_settings($align: justify, $color: $g4, $family: $font-sans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
   text-align: $align;
   color: $color;
@@ -65,8 +69,8 @@
   }
 }
 
-@mixin box-shadow {
-  box-shadow: 0em 0.2em 0.25em 0em rgba(0, 0, 0, 0.05);
+@mixin box-shadow($opts: 0em 0.2em 0.25em 0em rgba(0, 0, 0, 0.05)) {
+  box-shadow: $opts;
 }
 
 @mixin box-shadow-intense {
@@ -75,10 +79,6 @@
 
 @mixin text-shadow {
   //text-shadow: 0em 0em 0.1em rgba(0, 0, 0, 0.47);
-}
-
-@mixin border-radius {
-  border-radius: 3px;
 }
 
 @mixin container-width {

@@ -7,7 +7,7 @@ class Comment < ActiveRecord::Base
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   mailable CommentMailer, :directly, :daily, :weekly
 
-  after_validation :increase_counter_cache
+  after_validation :increase_counter_cache, :touch_parent
   after_destroy :decrease_counter_cache
 
   validates_presence_of :profile
@@ -58,6 +58,10 @@ class Comment < ActiveRecord::Base
   scope :find_comments_for_commentable, lambda { |commentable_str, commentable_id|
     where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
   }
+
+  def touch_parent
+    self.get_parent.model.touch
+  end
 
   # Helper class method to look up a commentable object
   # given the commentable class name and id

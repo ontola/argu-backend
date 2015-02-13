@@ -296,6 +296,17 @@ p.block-slogan {
   }
 }
 
+.block-social-buttons li{
+  display: inline;
+  font-size: 1.3em;
+  opacity: .5;
+  margin: .4em;
+  @include transition(.5s);
+  &:hover{
+    opacity: 1;
+  }
+}
+
 @media screen and (max-width: 1200px) {
   .blocks-container {
   }

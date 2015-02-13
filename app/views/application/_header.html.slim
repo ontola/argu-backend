@@ -91,11 +91,61 @@ nav#navbar.navbar role="navigation"
         li= link_to new_user_session_url, id: 'account', class: 'navbar-item' do
           span.fa.fa-sign-in
           span.icon-left = t("sign_in")
-      li.dropdown[data-intro= t("intro.header.about") data-position="left"] =link_to about_url, id: 'info', class: 'navbar-item'
-        a.dropdown-trigger.navbar-item id="info"
+      -if current_profile.present?
+        li.dropdown
+          a.dropdown-trigger.navbar-item
+            span.fa.fa-bell
+            /span.icon-left= t("notifications.type")
+          ul.dropdown-content.dropdown-right.notifications
+            ul.dropdown-header
+              li.dropdown-title
+                span = t('notifications.type')
+              li
+                a
+                  span.fa.fa-check
+                  span.icon-left = t('notifications.mark_as_read')
+              li
+                a
+                  span.fa.fa-gear
+                  span.icon-left = t('notifications.settings')
+            - (1..20).each do
+              li
+                a
+                  img.notification-avatar[src=current_profile.profile_photo.url(:icon) alt="profile picture"]
+                  span.notification-description == "<b>Jan</b> reageerde op <span class='con-t'>Lage kosten</span>."
+                  .notification-bottom
+                    span.notification-icon.fa.fa-comment
+                    span.notification-time.icon-left= "5 minuten geleden"
+                a.notification-settings.fa.fa-close
+              li
+                a
+                  img.notification-avatar[src=current_profile.profile_photo.url(:icon) alt="profile picture"]
+                  span.notification-description == "<b>Pietje</b> stemde <span class='pro-t'>voor</span> <span class='sta-t'>Meer windmolens op de Uithof</span>."
+                  .notification-bottom
+                    span.notification-icon.fa.fa-thumbs-up.pro-t
+                    span.notification-time.icon-left= "10 minuten geleden"
+                a.notification-settings.fa.fa-close
+              li
+                a
+                  img.notification-avatar[src=current_profile.profile_photo.url(:icon) alt="profile picture"]
+                  span.notification-description == "<b>Henk</b> stemde <span class='con-t'>tegen</span> <span class='pro-t'>Lage kosten</span>."
+                  .notification-bottom
+                    span.notification-icon.fa.fa-arrow-down.con-t
+                    span.notification-time.icon-left= "15 jaar geleden"
+                a.notification-settings.fa.fa-close
+              li
+                a
+                  img.notification-avatar[src=current_profile.profile_photo.url(:icon) alt="profile picture"]
+                  span.notification-description == "<b>Henk</b> plaatste een <span class='pro-t'>argument voor</span> <span class='sta-t'>Meer windmolens op de Uithof</span>."
+                  .notification-bottom
+                    span.notification-icon.fa.fa-plus.pro-t
+                    span.notification-time.icon-left= "25 jaar geleden"
+                a.notification-settings.fa.fa-close
+          span.notification-counter 2
+      li.dropdown
+        a.dropdown-trigger.navbar-item
           span.fa.fa-info
           span.icon-left= t("about_title")
-          //span.fa.fa-angle-down
         ul.dropdown-content.dropdown-right
           li=link_to about_url do
             span.fa.fa-info-circle

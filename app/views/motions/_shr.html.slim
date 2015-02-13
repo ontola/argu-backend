@@ -9,11 +9,16 @@
     li = link_to motion_vote_path(model, 'con'), class: "btn-con#{' voted-on' if vote.for?('con')}", remote: true, method: :post do
       span.fa.fa-thumbs-down
       span.icon-left = t('motions.votes.con')
+  //TODO: Hide voting results when user is signed in, but hasn't voted yet. Show voting results when user clicks on "show votes" button.
+  a.btn.btn-subtle
+    span.fa.fa-pie-chart
+    span.icon-left = t('motions.votes.show')
+
   -if vote.present?
     ul class="progress-bar progress-bar-stacked"
       li[style="width: #{progress_bar_width(model, :pro)}%;"]
-        span class="btn-pro"= "#{model.votes_pro_percentage}%"
+        span class="btn-pro"= "#{model.votes_pro_count}"
       li[style="width: #{progress_bar_width(model, :neutral)}%;"]
-        span class="btn-neu"= "#{model.votes_neutral_percentage}%"
+        span class="btn-neu"= "#{model.votes_neutral_count}"
       li[style="width: #{progress_bar_width(model, :con)}%;"]
-        span class="btn-con"= "#{model.votes_con_percentage}%"
+        span class="btn-con"= "#{model.votes_con_count}"

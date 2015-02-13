@@ -137,9 +137,10 @@ nl:
   type_save_success: "%{type} successvol opgeslagen"
   type_create_success: "%{type} successvol aangemaakt"
   references_helper: "<h2>Referenties toevoegen</h2>
-                   <p>Als je een link wil toevoegen:</p>
+                   <p>Bronnen maken een argument overtuigend en verifieerbaar. Ze verschijnen onder jouw item als losse referenties. Op de plek waar je een referentie plaatst verschijnt een getal dat verwijst naar de referentie.</p>
+                   <p>Als je een <b>link</b> wil toevoegen:</p>
                    <p><code>[www.voorbeeld.nl](Voorbeeld 2014)</code></p>
-                   <p>Als je een boek of tijdschrift wil toevoegen:</code></p>
+                   <p>Als je een <b>boek of tijdschrift</b> wil toevoegen:</code></p>
                    <p><code>[](Tijdschrift 2015)</code></p>"
   move:
     current_forum: "Huidig forum:"
