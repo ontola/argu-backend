@@ -1,6 +1,5 @@
--provide :title, t('team.title')
-
 - if @document.present? && @document.has_key?('sections')
+  -provide :title, @document['title']
   .blocks-container
     - @document['sections'].each do |section|
       - if section['type'] == 'single'
@@ -24,6 +23,14 @@
                       - if advisor['function'].present?
                         = ", "
                         == advisor['function']
+            - if section['features'].present?
+              ul.block-features
+                - section['features'].each do |feature|
+                  li
+                    span.fa[class=('fa-' + feature['icon'])]
+                    h2 = feature['header']
+                    p.block-subtle = feature['body']
+                end
             - if section['link'].present?
               a.block-link[href=section['link']['url']]=section['link']['title']
       - elsif section['type'] == 'double'
