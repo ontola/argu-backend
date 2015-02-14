@@ -1,7 +1,14 @@
 module ApplicationHelper
 
   def active_for_user?(feature, user)
-    $rollout.active?(feature, user)
+    begin
+      $rollout.active?(feature, user)
+    rescue RuntimeError => e
+      Rails.logger.error 'Redis not available'
+      ::Bugsnag.notify(e, {
+          :severity => 'error',
+      })
+    end
   end
 
   def awesome_time_ago_in_words (date)

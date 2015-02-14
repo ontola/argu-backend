@@ -7,6 +7,7 @@ gem 'rails', '~>4.2.0'
 gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
 gem 'logstasher'
+gem 'bugsnag'
 
 ##################DB########################
 gem 'pg', '0.17.1'
@@ -96,7 +97,6 @@ group :production, :staging do
   gem 'therubyracer', '~> 0.12.1'
   gem 'unicorn', '~> 4.8.3'
   gem 'rack-test', '~> 0.6.2'
-  gem 'bugsnag'
 end
 
   gem 'briarcliff', '~> 0.0.9'
