@@ -11,7 +11,6 @@ gem 'bugsnag'
 
 ##################DB########################
 gem 'pg', '0.17.1'
-#gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
 
 gem 'jbuilder', '~> 2.2.5'
 gem 'bcrypt-ruby', '>= 3.1.5'
@@ -42,6 +41,11 @@ gem 'rollout'
 #Pagination
 gem 'kaminari', '~>0.16.1'
 
+
+##################Front-end########################
+gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
+gem 'js-routes'
+
 ##################Asset-y########################
 gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~> 2.1.0'
@@ -58,6 +62,7 @@ gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
+gem 'pjax_rails'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'

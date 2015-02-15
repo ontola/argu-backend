@@ -12,9 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require react
+//= require js-routes
 //= require application/jquery.jeditable.mini.js
 //= require jquery-ui/autocomplete
 //= require jquery-ui/sortable
+//= require jquery.pjax
 //= require touche
 //= require microplugin
 //= require sifter

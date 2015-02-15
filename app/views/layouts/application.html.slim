@@ -59,14 +59,14 @@ body
   - if current_user && current_user.profile.has_role?(:staff)
     =render partial: 'staff_sign'
   #fb-root
-  = render 'header'
+  nav#navbar.navbar role="navigation"
   .wrapper
     /[if lt IE 8]
       p.browsehappy=raw t("outdated_browser")
     -flash.each do |key, value|
       .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
     /= render 'responsibility_notice'
-    .container
+    #pjax-container.container
       = yield
     .push-footer
   = render 'footer'

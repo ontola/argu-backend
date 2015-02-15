@@ -69,10 +69,10 @@ div[itemscope itemtype="Thing"]
                   li=link_to follows_path(forum_id: @forum.web_url), method: :create do
                     span.fa.fa-check
                     span.icon-left _follow_
-          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: {remote: true}, class: "sta-t btn-focus" do
+          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: "sta-t btn-focus" do
             span.fa.fa-plus
             span.icon-left= t('motions.type')
-          li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: {remote: true}, class: "que-t btn-focus" do
+          li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: remote_unless_user, class: "que-t btn-focus" do
             span.fa.fa-plus
             span.icon-left= t('questions.type')
           - if policy(@forum).invite?

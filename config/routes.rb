@@ -95,6 +95,7 @@ Argu::Application.routes.draw do
 
   get '/settings', to: 'users#edit', as: 'settings'
   put '/settings', to: 'users#update'
+  get '/c_a', to: 'users#current_actor'
 
   get '/sign_in_modal', to: 'static_pages#sign_in_modal'
   get '/about', to: 'static_pages#about'

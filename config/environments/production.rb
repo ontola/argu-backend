@@ -18,6 +18,8 @@ Argu::Application.configure do
   config.epics.notifications = false                   # Show notifications button in header menu
   config.logstasher.enabled = true
 
+  config.react.variant = :production
+
 
   # Code is not reloaded between requests
   config.cache_classes = true

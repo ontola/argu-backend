@@ -21,6 +21,8 @@ Argu::Application.configure do
   config.logstasher.enabled = true
   config.logstasher.log_controller_parameters = true
 
+  config.react.variant = :production
+
   # Code is not reloaded between requests
   config.cache_classes = true
 
