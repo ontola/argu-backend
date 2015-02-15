@@ -102,3 +102,16 @@ input[type="submit"].nav-search-button {
 .nav-search {
   width: 19em;
 }
+
+.profile-picture--navbar img{
+  height: 2.9em;
+  width: 2.9em;
+  padding: 3px;
+  @include border-radius(999px);
+}
+
+.profile-picture--navbar > a > .icon-left {
+  vertical-align: top;
+  margin-top: 1em;
+  display: inline-block;
+}
