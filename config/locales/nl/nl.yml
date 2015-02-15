@@ -75,9 +75,14 @@ nl:
   home_new_text: "Nederlands awesome slogan."
 #About
   info: "info"
-  about_title: "Over"
   about:
+    title: "Over"
     vision: "Onze visie"
+    how_argu_works: "Hoe Argu werkt"
+    team: "Ons team"
+    product: "Een eigen forum"
+    organisations: "Argu voor organisaties"
+    governments: "Argu voor overheden"
   how_argu_works:
     title: "Hoe Argu werkt"
   team:

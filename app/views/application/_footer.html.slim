@@ -11,11 +11,12 @@ footer
       a[href="/forums/feedback"] Argu Feedback
   ul.footer-list
     li
-      h3.footer-heading= t("about_title")
+      h3.footer-heading= t("about.title")
       /= render partial: "vcard"
     li=link_to t("about.vision"), about_path
-    li=link_to t("how_argu_works.title"), how_argu_works_path
-    li=link_to t("team.title"), team_path
+    li=link_to t("about.how_argu_works"), how_argu_works_path
+    li=link_to t("about.team"), team_path
+    li=link_to t("about.governments"), governments_path
   ul.footer-list
     li
       h3.footer-heading voorwaarden

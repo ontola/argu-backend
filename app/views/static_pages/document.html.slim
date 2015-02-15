@@ -26,10 +26,11 @@
             - if section['features'].present?
               ul.block-features
                 - section['features'].each do |feature|
-                  li
-                    span.fa[class=('fa-' + feature['icon'])]
-                    h2 = feature['header']
-                    p.block-subtle = feature['body']
+                  - unless feature['hidden']
+                    li
+                      span.fa[class=('fa-' + feature['icon'])]
+                      h2 = feature['header']
+                      p.block-subtle == feature['body']
                 end
             - if section['link'].present?
               a.block-link[href=section['link']['url']]=section['link']['title']
@@ -44,7 +45,7 @@
               - if section['header']
                 h2 = section['header']
               - section['body'].each do |body|
-                p.block-subtle = body
+                p.block-subtle == body
               - if section['social']
                 ul.block-social-buttons
                   - section['social'].each do |social|
@@ -58,7 +59,7 @@
             .block.block--hidden.block--full.block--big-text
               h2=section['expand']['title']
               - section['expand']['body'].each do |body|
-                p=body
+                p==body
 - else
   .col-1
     .box

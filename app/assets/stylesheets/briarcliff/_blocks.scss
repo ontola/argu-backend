@@ -10,6 +10,7 @@ $grey_light: $g0;
   max-width: 1200px;
   position: relative;
   clear: both;
+  padding: 0;
 }
 
 .block{
@@ -206,7 +207,7 @@ $grey_light: $g0;
     width: 33.3%;
     vertical-align: top;
     padding: 1.6em 1.2em;
-    @include bp-medium {
+    @include bp-large {
       width: 50%;
     }
     @include bp-small {
@@ -259,7 +260,11 @@ $grey_light: $g0;
 }
 
 .block-subtle {
-  opacity: .9;
+  color: lighten($primary, 5);
+}
+
+.block--fill .block-subtle {
+  color: #DBDBDB;
 }
 
 p.block-slogan {

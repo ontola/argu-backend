@@ -145,17 +145,23 @@ nav#navbar.navbar role="navigation"
       li.dropdown
         a.dropdown-trigger.navbar-item
           span.fa.fa-info
-          span.icon-left= t("about_title")
+          span.icon-left= t("about.title")
         ul.dropdown-content.dropdown-right
           li=link_to about_url do
-            span.fa.fa-info-circle
+            /span.fa.fa-info-circle
             span.icon-left= t("about.vision")
           li=link_to how_argu_works_url do
-            span.fa.fa-question-circle
-            span.icon-left= t("how_argu_works.title")
+            /span.fa.fa-question-circle
+            span.icon-left= t("about.how_argu_works")
           li=link_to team_url do
-            span.fa.fa-group
-            span.icon-left= t("team.title")
+            /span.fa.fa-group
+            span.icon-left= t("about.team")
+          li=link_to product_url do
+            /span.fa.fa-group
+            span.icon-left= t("about.product")
+          li=link_to governments_url do
+            /span.fa.fa-institution
+            span.icon-left= t("about.governments")
       li
         a[class="intro-trigger navbar-item"]
           span.fa.fa-question
