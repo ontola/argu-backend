@@ -96,7 +96,8 @@ var ProfileDropdown = React.createClass({
                 icon: {
                     url: ''
                 }
-            }
+            },
+            managed_pages: []
         };
     },
 
@@ -109,6 +110,10 @@ var ProfileDropdown = React.createClass({
     },
 
     render: function () {
+        var managedPages;
+        if (this.state.managed_pages.length > 0) {
+            managedPages = (<span className="dropdown-header"><%= I18n.t('profiles.switch') %></span>);
+        }
         return (
             <li tabIndex="0" className="dropdown" data-intro="<%= I18n.t('intro.header.profile') %>" data-position="left" >
                 <a href="#" className="dropdown-trigger navbar-item">
@@ -116,10 +121,46 @@ var ProfileDropdown = React.createClass({
                     <span className="icon-left">{this.state.username}</span>
                 </a>
                 <ul className="dropdown-content dropdown-right">
-                    <a href={this.state.url} >
-                        <span className="fa fa-user"></span>
-                        <span className="icon-left"><%= I18n.t('profiles.display') %></span>
-                    </a>
+                    <li>
+                        <a href={this.state.url} >
+                            <span className="fa fa-user"></span>
+                            <span className="icon-left"><%= I18n.t('profiles.display') %></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href={Routes.settings_path()} >
+                            <span className="fa fa-gear"></span>
+                            <span className="icon-left"><%= I18n.t(:users_show_title) %></span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href={Routes.new_user_invitation_path()} >
+                            <span className="fa fa-bullhorn"></span>
+                            <span className="icon-left"><%= I18n.t('devise.invitations.link') %></span>
+                        </a>
+                    </li>
+                    <% if Rails.configuration.epics.page_create %>
+                        <li>
+                            <a href={Routes.new_page_path()} >
+                                <span className="fa fa-plus"></span>
+                                <span className="icon-left"><%= I18n.t('pages.create') %></span>
+                            </a>
+                        </li>
+                    <% end %>
+                    <li>
+                        <a href={Routes.destroy_user_session_path()} method="delete" data-skip-pjax>
+                            <span className="fa fa-sign-out"></span>
+                            <span className="icon-left"><%= I18n.t('sign_out') %></span>
+                        </a>
+                    </li>
+                    {managedPages}
+                    <div className="profile-switcher">
+                        {this.state.managed_pages.map(function(page) {
+                            return (<li key={page.title}>
+                                <a href={page.update_url} data-method="put" rel="nofollow">{page.title}</a>
+                            </li>);
+                        })}
+                    </div>
                 </ul>
             </li>
         );
