@@ -14,15 +14,3 @@
       li = link_to url_for([:settings, resource, tab: :managers])
         span.fa.fa-group
         span.icon-left = t("forums.settings.managers")
-
-
-- if current_user.managed_pages.present?
-  span.dropdown-header = t('profiles.switch')
-  .profile-switcher
-    li= link_to actors_path(na: current_user.profile.id), method: :put
-      img[src=current_profile.profile_photo.url(:icon) alt="profile picture"]
-      span.icon-left= current_user.display_name
-    - current_user.managed_pages.each do |p|
-      li= link_to actors_path(na: p.profile.id), method: :put do
-        img[src=p.profile.profile_photo.url(:icon) alt="profile picture"]
-        span.icon-left= p.display_name

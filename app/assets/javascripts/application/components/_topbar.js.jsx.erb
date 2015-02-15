@@ -44,7 +44,7 @@ var NavbarLinksLeft = React.createClass({
                     </a>
                 </li>
                 <li tabIndex="0" className="dropdown" data-intro="<%= I18n.t('intro.header.forums') %>" data-position="right">
-                    <a href="#" className="dropdown-trigger navbar-item">
+                    <a href="#" className="dropdown-trigger navbar-item" data-skip-pjax>
                         <span className="fa fa-tags"></span>
                         <span className="icon-left">{this.state.home_text}</span>
                         <span className="fa fa-angle-down"></span>
@@ -116,7 +116,7 @@ var ProfileDropdown = React.createClass({
         }
         return (
             <li tabIndex="0" className="dropdown" data-intro="<%= I18n.t('intro.header.profile') %>" data-position="left" >
-                <a href="#" className="dropdown-trigger navbar-item">
+                <a href="#" className="dropdown-trigger navbar-item" data-skip-pjax>
                     <img src={this.state.profile_photo.icon.url} alt="profile picture" className="profile-picture--navbar" />
                     <span className="icon-left">{this.state.username}</span>
                 </a>
@@ -194,7 +194,7 @@ var ArguInfoDropdown = React.createClass({
     render: function () {
         return (
                 <li tabIndex="0" className="dropdown">
-                    <a href="#" className="dropdown-trigger navbar-item">
+                    <a href="#" className="dropdown-trigger navbar-item" data-skip-pjax>
                         <span className="fa fa-info" />
                         <span className="icon-left"><%= I18n.t('about_title') %></span>
                     </a>
