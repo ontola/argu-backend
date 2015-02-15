@@ -18,6 +18,8 @@ Argu::Application.configure do
 
   config.logstasher.enabled = true
 
+  config.react.variant = :production
+
 
   # Code is not reloaded between requests
   config.cache_classes = true

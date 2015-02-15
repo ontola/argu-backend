@@ -16,6 +16,8 @@ Rails.application.configure do
   config.epics.link_to_motion = true                  # Button in questions.show to find & link motions
   config.epics.page_create = true                     # Create a page button in header menu
 
+  config.react.variant = :development
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.

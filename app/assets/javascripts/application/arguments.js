@@ -1,7 +1,7 @@
  $(document).ready(function() {
     $('#expand').css("height", "2.5em");
 
-    $('#expand').click(function() {
+    $(document).on('click', '#expand', function() {
         var reducedHeight = $(this).height();
         $(this).css('height', 'auto');
         var fullHeight = $(this).height();
@@ -10,6 +10,7 @@
         $(this).animate({height: newHeight}, 500);
     });
 
+     //TODO: refactor into non-page load dependent code
      $('.collapsible').each(function(i, e) {
          var span   = $(this).find('span').toggle(),
              before = $('<span>...<a href="#">meer</a></span>'),
@@ -19,12 +20,11 @@
          span.after(after.click(_onclick));
      });
 
-     $('.form-toggle input[type="radio"]').change(function() {
+     $(document).on('change', '.form-toggle input[type="radio"]', function() {
          var tmp=$(this).attr('name'),
              _this = $(this);
          $('input[name="'+tmp+'"]').parent("label").removeClass("checked");
          _this.parent("label").toggleClass("checked", this.selected);
-         window.argblaat = _this;
          $(':not(.formtastic).argument').removeClass('side-pro side-con').addClass('side-' + _this.attr('value'));
      });
  });

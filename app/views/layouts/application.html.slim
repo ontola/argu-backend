@@ -66,7 +66,7 @@ body
     -flash.each do |key, value|
       .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
     /= render 'responsibility_notice'
-    .container
+    #pjax-container.container
       = yield
     .push-footer
   = render 'footer'

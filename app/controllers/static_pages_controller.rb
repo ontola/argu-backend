@@ -6,7 +6,7 @@ class StaticPagesController < ApplicationController
   	if signed_in?
       if policy(current_user).staff?
         @activities = policy_scope(Activity).order(created_at: :desc).limit(10)
-        render
+        render #stream: true
       else
         redirect_to preferred_forum
       end

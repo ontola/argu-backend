@@ -13,7 +13,7 @@
           span.fa.fa-trash
           span.icon-left = t('trash')
       - if !c.is_trashed? && policy(c).create?
-        li= link_to polymorphic_url([resource], parent_id: c.id), html_options = {id: c.id, class: "btn-reply"} do
+        li= link_to polymorphic_url([resource], parent_id: c.id), html_options = {id: c.id, class: "btn-reply", :'data-skip-pjax' => true} do
           span.fa.fa-reply
           span.icon-left = t('reply')
   .comment.comment-form

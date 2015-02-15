@@ -10,6 +10,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    # Currently only displays the current user, might be extended to include more.
+    # To keep it REST, we're just using the proper route for now
+    @profile = current_profile
+    authorize @profile, :show?
+
+    render
+  end
+
+  def current_actor
+    @profile = current_profile
+    authorize @profile, :show?
+
+    render
+  end
+
   def edit
     @user = current_user
     authorize @user

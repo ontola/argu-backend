@@ -34,6 +34,14 @@ module ApplicationHelper
     uri.to_s
   end
 
+  def remote_if_user
+    current_profile.present? ? { remote: true } : {}
+  end
+
+  def remote_unless_user
+    current_profile.present? ? {} : { remote: true }
+  end
+
   def resource
     @resource
   end
