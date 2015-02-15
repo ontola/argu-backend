@@ -101,6 +101,7 @@ Argu::Application.routes.draw do
   get '/product', to: 'static_pages#product'
   get '/how_argu_works', to: 'static_pages#how_argu_works'
   get '/team', to: 'static_pages#team'
+  get '/governments', to: 'static_pages#governments'
 
   get '/portal', to: 'portal/portal#home'
 

@@ -51,7 +51,6 @@
                     li
                       =link_to social['url'] do
                         span.fa[class=('fa-' + social['icon'])]
-
               - if section['expand'].present?
                 a[href=("#" + section['expand']['id']) class="expander block-link" data-expander-target=("#" + section['expand']['id'])]
         - if section['expand'].present?
@@ -60,3 +59,8 @@
               h2=section['expand']['title']
               - section['expand']['body'].each do |body|
                 p=body
+- else
+  .col-1
+    .box
+      section
+        h1 = t('document_missing')

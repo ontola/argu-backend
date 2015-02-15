@@ -1,5 +1,5 @@
 class StaticPagesController < ApplicationController
-  before_action :get_document, only: [:team, :about, :product]
+  before_action :get_document, only: [:team, :about, :product, :governments]
 
   def home
     authorize :static_pages
@@ -43,6 +43,11 @@ class StaticPagesController < ApplicationController
   end
 
   def team
+    authorize :static_pages
+    render 'document'
+  end
+
+  def governments
     authorize :static_pages
     render 'document'
   end
