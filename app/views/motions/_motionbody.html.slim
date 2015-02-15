@@ -4,7 +4,8 @@
   section
     h1.sta-t= motion.title
     p= motion.supped_content.html_safe
-  - if motion.tags.present?
+  /TODO: Fix tags link
+  /- if motion.tags.present?
     ul[class="tags" data-intro= t("intro.tags")]= render partial: 'tags/tags', locals: {resource: motion}
   =render partial: motion.creator, locals: {resource: motion}
   ul.btns-list.btns-vertical.btn-sticky-bottom.btn-sticky

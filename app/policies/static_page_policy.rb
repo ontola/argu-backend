@@ -35,6 +35,10 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
     true
   end
 
+  def governments?
+    user && user.profile.has_role?(:staff)
+  end
+
   def developers?
     user && user.profile.has_role?(:staff)
   end

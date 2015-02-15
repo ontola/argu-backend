@@ -15,6 +15,7 @@ Argu::Application.configure do
   config.epics.open_auth = true                       # Facebook, twitter, google, openID login & account linking shown in profile
   config.epics.link_to_motion = true                  # Button in questions.show to find & link motions
   config.epics.page_create = true                     # Create a page button in header menu
+  config.epics.notifications = true                   # Show notifications button in header menu
 
 
   config.logstasher.enabled = true
