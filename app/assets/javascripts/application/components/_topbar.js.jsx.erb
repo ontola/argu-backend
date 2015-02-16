@@ -115,10 +115,8 @@ var ProfileDropdown = React.createClass({
             managedPages = (<span className="dropdown-header"><%= I18n.t('profiles.switch') %></span>);
         }
         return (
-            <li tabIndex="0" className="dropdown" data-intro="<%= I18n.t('intro.header.profile') %>" data-position="left" >
+            <li tabIndex="0" className="dropdown profile-picture--navbar" data-intro="<%= I18n.t('intro.header.profile') %>" data-position="left" >
                 <a href="#" className="dropdown-trigger navbar-item" data-skip-pjax>
-            <li tabIndex="0" className="dropdown  profile-picture--navbar" data-intro="<%= I18n.t('intro.header.profile') %>" data-position="left" >
-                <a href="#" className="dropdown-trigger navbar-item">
                     <img src={this.state.profile_photo.icon.url} alt="profile picture" className="profile-picture--navbar" />
                     <span className="icon-left">{this.state.username}</span>
                 </a>
