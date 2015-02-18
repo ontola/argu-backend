@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   prepend_before_action :check_for_access_token
   before_action :check_finished_intro
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_layout
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
 
@@ -94,6 +95,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+
   def set_locale
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale
@@ -130,4 +132,15 @@ class ApplicationController < ActionController::Base
     [selector_forums_url, profile_url(current_user.username), edit_profile_url(current_user.username), memberships_forums_url, ]
   end
 
+  def set_layout
+    if request.headers['X-PJAX']
+      self.class.layout false
+    elsif current_user.present? && current_user.finished_intro?
+      self.class.layout 'application'
+    elsif has_valid_token?
+      self.class.layout 'guest'
+    else
+      self.class.layout 'closed'
+    end
+  end
 end

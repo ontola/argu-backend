@@ -62,7 +62,8 @@ gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
-gem 'pjax_rails'
+gem 'jquery-pjax-rails'
+gem 'rack-pjax'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'

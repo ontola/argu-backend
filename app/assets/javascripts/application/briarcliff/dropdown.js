@@ -1,7 +1,7 @@
 $(function() {
     var _document = $(document);
 
-    _document.on('focus', '.dropdown', function (e) {
+    _document.on('click tap', '.dropdown', function (e) {
         var _this = $(this),
             isActive = _this.hasClass('dropdown-active');
         _document.find('.dropdown').removeClass('dropdown-active');

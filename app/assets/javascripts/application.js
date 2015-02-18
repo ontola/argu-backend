@@ -33,4 +33,5 @@
 //= require fixedsticky
 //= require pica_pica/application
 //= require cocoon
+//= require components
 //= require_tree ./application
