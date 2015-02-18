@@ -61,6 +61,19 @@
     color: white;
     background-color: $g3;
   }
+  .link{
+    position: relative;
+    img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      & + span {
+        position: relative;
+        left: 1.4em;
+      }
+    }
+  }
 }
 
 .dropdown-active {
@@ -115,7 +128,6 @@ span.dropdown-header {
     min-width: 0;
     font-size: .8em;
   }
-  border-bottom: solid 1px $g1;
 }
 
 .dropdown-title {

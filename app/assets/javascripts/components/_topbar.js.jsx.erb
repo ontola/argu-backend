@@ -85,8 +85,7 @@ var HyperDropdown = React.createClass({
                                     divider = <div className="dropdown-divider"></div>;
                                 }
 
-
-                                return (<li>
+                                return (<li className={item.type}>
                                     {divider}
                                     <a href={item.url} >
                                         {_image(item)}
