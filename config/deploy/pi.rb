@@ -11,6 +11,7 @@ set :unicorn_config_path, '/home/unicorn/unicorn_staging.conf'
 
 set :deploy_to, '/home/rails/argu_staging'
 set :environment, :staging
+set :branch, :development
 
 
 # Extended Server Syntax
