@@ -56,7 +56,7 @@ module HeaderHelper
 
   def info_dropdown_items
     {
-        title: t('about_title'),
+        title: t('about.title'),
         fa: 'fa-info',
         sections: [
           {

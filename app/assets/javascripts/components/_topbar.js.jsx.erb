@@ -70,7 +70,7 @@ var HyperDropdown = React.createClass({
 
         var sections;
         if (this.props.sections) {
-            sections = (<ul className="dropdown-content dropdown-right">
+            sections = (<ul className="dropdown-content">
                 {this.props.sections.map(function(section) {
                     var title;
                     if (section.title && section.items.length > 0) {
