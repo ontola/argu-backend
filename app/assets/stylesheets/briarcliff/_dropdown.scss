@@ -3,6 +3,9 @@
 
 .dropdown {
   position: relative;
+  &:focus {
+    outline: none;
+  }
 }
 
 .dropdown-trigger {

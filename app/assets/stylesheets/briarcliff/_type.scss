@@ -24,9 +24,9 @@ h1 {
 }
 
 h2 {
-  font-size: 1.7em;
+  font-size: 1.5em;
   @include bp-large {
-    font-size: 1.5em;
+    font-size: 1.4em;
   }
   @include bp-medium {
     font-size: 1.3em;
@@ -34,7 +34,7 @@ h2 {
 }
 
 h3 {
-  font-size: 1.5em;
+  font-size: 1.4em;
   @include bp-large {
     font-size: 1.3em;
   }
@@ -72,7 +72,7 @@ i {
 }
 
 p {
-  line-height: 1.4em;
+  line-height: 1.5em;
   color: $g4;
 }
 
@@ -116,8 +116,7 @@ header h1, header h2 {
   color: $g4;
   margin-top: 1em;
   margin-bottom: 0.8em;
-  text-transform: uppercase;
-  letter-spacing: .1em;
+  @include uppercase;
   @include text-shadow;
 }
 
@@ -174,4 +173,8 @@ blockquote {
     color: $g2;
     position: relative;
   }
+}
+
+.wrap-normal {
+  white-space: normal !important;
 }

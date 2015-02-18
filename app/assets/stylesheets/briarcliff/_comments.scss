@@ -10,6 +10,7 @@
   &:before{
     content: "";
     background-color: $g00;
+    opacity: .5;
     width: 0.5em;
     height: 100%;
     position: absolute;
@@ -36,7 +37,8 @@
   bottom: .6em;
   font-size: .8em;
   position: absolute;
-  color: $g3;
+  text-transform: uppercase;
+  span {color: $g3;}
 }
 
 .top-comment:hover .comments-counter{

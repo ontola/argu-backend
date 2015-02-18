@@ -2,17 +2,21 @@
   section
     = contextual_link_to argument_path(model) do
       h3[class="#{model.pro ? 'pro-t' : 'con-t'}"]= model.title
-    p[class='collapsible']
+    = render partial: 'arguments/shr', locals: {model: model}
+    p[class='collapsible wrap-normal']
       ==model.supped_content[0..250] + (model.supped_content[251] ? "..." : "")
     -if model.supped_content[251]
       = contextual_link_to argument_path(model), class: "read-more" do
         span.icon-right = t("read-more")
         span.fa.fa-arrow-right
-    = render partial: 'arguments/shr', locals: {model: model}
+  -unless (model.top_comment(show_trashed?)).present?
+    .comments-counter= contextual_link_to argument_path(model) do
+      span.icon-right reageer
+      span.fa.fa-comments
   -if (top_comment = model.top_comment(show_trashed?)).present?
     = link_to argument_path(model) + "#commentstitle" do
       section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]
-        p= top_comment.is_trashed? ? '[DELETED]' : top_comment.body[0..150] + (top_comment.body[151] ? "..." : "")
+        p.wrap-normal= top_comment.is_trashed? ? '[DELETED]' : top_comment.body[0..150] + (top_comment.body[151] ? "..." : "")
         .comments-counter
           -if Rails.configuration.epics.counters
             span.icon-right= model.comments_count.to_s

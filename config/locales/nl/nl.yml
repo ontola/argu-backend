@@ -113,7 +113,7 @@ nl:
   users_new_confirmation: "bevestigen"
   users_new_create: "account aanmaken"
   #show
-  users_show_title: "instellingen"
+  users_show_title: "Instellingen"
   #cancel
   users_cancel_title: "Argu account verwijderen"
   users_cancel_info: "Als je jouw account verwijdert, verlies je permanent toegang tot alles wat je geplaatst, gevolgd en gestemd hebt. Weet je zeker dat je jouw account wilt verwijderen?"

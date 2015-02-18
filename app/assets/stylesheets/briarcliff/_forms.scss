@@ -62,13 +62,20 @@ legend {
   margin-bottom: .5em;
   padding: .3em .8em;
   color: $g00;
-  background-color: $gred;
+  //background-color: $gred;
+
+  width: 100%;
+  margin-bottom: .5em;
+  padding: 0.3em 0.5em;
+  color: $g2;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  text-align: left;
+  border-bottom: solid $g1 1px;
 
   .danger-zone & {
-    background-color: indianred;
-    position: relative;
-    top: 0.7em;
-    margin-bottom: 0.8em;
+    color: $red;
+    border-bottom-color: $red;
   }
 }
 
@@ -76,10 +83,6 @@ fieldset {
   //Fieldset within fieldset since formtastic makes the form's top level a fieldset too
   fieldset ol {
     margin-left: 0.5em;
-  }
-  & .danger-zone {
-    border: 0.15em solid indianred;
-    margin-bottom: 0.5em;
   }
   li {
     margin-bottom: 1.5em;
@@ -105,6 +108,7 @@ fieldset {
   font-family: $font-sans;
   resize: vertical;
   display: inline-block;
+  margin-bottom: 1em;
 }
 
 input[type="text"].form-input-title {
@@ -205,6 +209,7 @@ input[type="text"].form-input-title {
 
 .formtastic li {
   clear: both;
+  position: relative;
 }
 
 .form-small .actions {
@@ -234,6 +239,23 @@ input[type="file"], select {
 .inline-hints {
   color: $g2;
 }
+
+input:focus + p.inline-hints, textarea:focus + p.inline-hints {
+  opacity: 1;
+  @include box-shadow-intense
+}
+
+//Test
+p.inline-hints {
+  opacity: 0;
+  position: absolute;
+  background-color: $g3;
+  color: white;
+  bottom: 100%;
+  @include border-radius();
+  @include transition(.2s ease-in-out);
+}
+//Endtest
 
 .inline-errors {
   color: white;
