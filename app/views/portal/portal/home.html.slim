@@ -5,13 +5,21 @@
       = image_tag asset_path('portal_logo.svg'), style: 'height: 1em; position: absolute;'
   .box
     section
-      p= content_tag(:strong, current_user.username)
+      /p= content_tag(:strong, current_user.username)
       nav
-        ul
-          li= link_to 'Sidekiq', '/portal/sidekiq'
-          li= link_to '_documents_', documents_path
-          li= link_to '_settings_', portal_settings_path
-          li= link_to t('portal.new_page'), new_page_path
+        ul.btns-list.btns-vertical
+          li= link_to '/portal/sidekiq' do
+            span.fa.fa-pie-chart
+            span.icon-left = 'Sidekiq'
+          li= link_to documents_path do
+            span.fa.fa-file-text
+            span.icon-left = 'Documents'
+          li= link_to portal_settings_path do
+            span.fa.fa-gear
+            span.icon-left = 'Settings'
+          li= link_to new_page_path do
+            span.fa.fa-plus
+            span.icon-left = t('portal.new_page')
       h2= t('portal.pages')
       -if @pages.blank?
         p=t('portal.none')

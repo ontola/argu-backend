@@ -16,6 +16,7 @@ Argu::Application.configure do
   config.epics.link_to_motion = true                  # Button in questions.show to find & link motions
   config.epics.page_create = true                     # Create a page button in header menu
   config.epics.notifications = true                   # Show notifications button in header menu
+  config.epics.motions_in_question_partial = false     # Show motions in question partial
 
 
   config.logstasher.enabled = true

@@ -38,6 +38,10 @@
   @include animation(fade-in .3s linear);
 }
 
+.modal-body{
+  overflow: hidden;
+}
+
 // apply these classes when clicking on overlay of modals.
 .modal-hide {
   .modal {

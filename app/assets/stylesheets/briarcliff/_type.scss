@@ -89,9 +89,9 @@ ol.numbered{
 
 ul.bullets{
   list-style-type: disc;
+  padding-left: 1.5em;
   font-style: $font-sans;
   color: $g4;
-  padding-left: 1.5em;
   li {
     margin-bottom: 1em;
     line-height: 1.4em;
@@ -177,4 +177,16 @@ blockquote {
 
 .wrap-normal {
   white-space: normal !important;
+}
+
+.smaller {
+  font-size: .9em;
+}
+
+.smaller-8 {
+  font-size: .8em;
+}
+
+.smaller-7 {
+  font-size: .7em;
 }

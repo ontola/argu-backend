@@ -17,6 +17,7 @@ Argu::Application.configure do
   config.epics.page_create = false                     # Create a page button in header menu
   config.epics.notifications = false                   # Show notifications button in header menu
   config.logstasher.enabled = true
+  config.epics.motions_in_question_partial = false     # Show motions in question partial
 
   config.react.variant = :production
 
