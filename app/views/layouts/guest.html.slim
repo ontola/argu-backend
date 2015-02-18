@@ -16,8 +16,6 @@ head
 
   / unless current_user.blank?
   = stylesheet_link_tag 'application', :media => 'all'
-  - if request.original_url.include? developers_path
-    = stylesheet_link_tag 'developers/developers', :media => 'all'
 
   / Google fonts
   link[href='//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700' rel='stylesheet' type='text/css']
@@ -56,13 +54,11 @@ head
 
   link[rel="copyright" content="#{t('site.copyright')}"]
 body
-  - if current_user && current_user.profile.has_role?(:staff)
-    =render partial: 'staff_sign'
   #fb-root
-  = render 'navbar'
+  = render 'guest/navbar'
   .wrapper
     /[if lt IE 8]
-      p.browsehappy=raw t("outdated_browser")
+      p.browsehappy=raw t('outdated_browser')
     -flash.each do |key, value|
       .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
     /= render 'responsibility_notice'
@@ -70,8 +66,8 @@ body
       = yield
     .push-footer
   = render 'footer'
-  =javascript_include_tag "application"
+  =javascript_include_tag 'application'
   - if Rails.env.production? || Rails.env.test?
     = render partial: 'analytics'
   script[id="motion-template" type="text/x-handlebars-template"]
-    = render partial: "motions/motion_template"
+    = render partial: 'motions/motion_template'
