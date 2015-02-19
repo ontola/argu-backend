@@ -3,9 +3,26 @@
 <head>
   <title>Argu - Fout op server</title>
   <style type="text/css">
-    body { background-color: #ECECEC; color: rgb(92,92,92); text-align: center; font-family: arial, sans-serif; }
-    h1 { font-size: 200%; rgb(92,92,92); line-height: 2em; margin: 0px; text-align: left}
-    p { color: rgb(92,92,92); margin: 0px; margin-bottom: 1em}
+    body {
+      background-color: #ECECEC;
+      color: rgb(92,92,92);
+      text-align: center;
+      font-family: arial, sans-serif;
+    }
+    h1 {
+      font-size: 200%;
+      margin: 0px;
+      text-align: left;
+      font-weight: bold;
+      margin-bottom: 0.2em;
+    }
+    p {
+      color: rgb(92,92,92);
+      margin: 0px;
+      margin-bottom: 1em;
+      text-align: left;
+      line-height: 1.5em
+    }
     body {
       background-color: #ECECEC;
     }
@@ -24,15 +41,28 @@
       position: relative;
       padding: 1.1em 1.4em 0.1em 1.4em;
     }
+    header h1, header h2 {
+      color: rgb(92,92,92);
+      margin-top: 1em;
+      margin-bottom: 0.8em;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      text-align: center;
+    }
+
   </style>
 </head>
 
 <body>
   <!-- This file lives in public/500.html -->
+  <header>
+    <h1>
+      Sorry!
+    </h1>
+  </header>
   <div class="box">
     <section>
-      <h1>Sorry!</h1>
-      <p>Daar ging iets fout. We zijn op de hoogte van dat er iets mis is gegaan. We zullen het zo snel mogelijk proberen op te lossen.</p>
+      <p>Daar ging iets fout. We zijn op de hoogte van dat er iets mis is gegaan. We zullen het probleem zo snel mogelijk proberen op te lossen.</p>
     </section>
   </div>
 </body>
