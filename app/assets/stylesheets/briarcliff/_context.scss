@@ -1,0 +1,19 @@
+
+
+.context {
+  position: absolute;
+  top: 0;
+  width: 15em;
+  h3{
+    font-size: 1em !important;
+  }
+}
+
+.context--next {
+  left: 100%;
+  margin-left: 1em;
+}
+.context--previous {
+  right: 100%;
+  margin-right: 1em;
+}
