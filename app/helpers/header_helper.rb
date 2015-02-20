@@ -9,7 +9,8 @@ module HeaderHelper
             {
                 items: forum_selector_memberships
             }
-        ]
+        ],
+        triggerClass: 'navbar-item'
     }
   end
 
@@ -50,7 +51,8 @@ module HeaderHelper
               title: t('profiles.switch'),
               items: managed_pages_items
           }
-        ]
+        ],
+        triggerClass: 'navbar-item'
     }
   end
 
@@ -67,7 +69,8 @@ module HeaderHelper
                   link_item(t('about.team'), team_path  )
               ]
           }
-        ]
+        ],
+        triggerClass: 'navbar-item'
     }
   end
 
