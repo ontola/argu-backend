@@ -6,16 +6,12 @@ var HyperDropdown = React.createClass({
     },
 
     handleMouseUp: function (e) {
+        window.clearTimeout(this.state.timeout);
         this.setState({openState: !this.state.openState});
     },
 
     handleBlur: function (e) {
-        // Fixes an issue where firefox bubbles events instead of capturing them
-        // See: https://github.com/facebook/react/issues/2011
-        var _this = this;
-        window.setTimeout(function () {
-            _this.setState({openState: false});
-        }, 30);
+        this.setState({openState: false});
     },
 
     render: function () {
@@ -43,18 +39,7 @@ var HyperDropdown = React.createClass({
                         {title}
                         {section.items.map(function(item) {
                             if (item.type == 'link') {
-                                var divider;
-                                if (item.divider && item.divider == 'top') {
-                                    divider = <div className="dropdown-divider"></div>;
-                                }
-
-                                return (<li key={item.title} className={item.type}>
-                                    {divider}
-                                    <a href={item.url} >
-                                        {_image(item)}
-                                        <span className="icon-left">{item.title}</span>
-                                    </a>
-                                </li>);
+                                return (<LinkItem key={item.title} {...item} />);
                             }
                         })}
                     </div>);
@@ -63,12 +48,12 @@ var HyperDropdown = React.createClass({
         }
         var image_after = _image({fa: this.props.fa_after});
 
-        return (<li tabIndex="0" onMouseUp={this.handleMouseUp} onBlur={this.handleBlur} className="dropdown" data-intro="" data-position="">
-            <a href="#" className="dropdown-trigger navbar-item" data-skip-pjax>
+        return (<li tabIndex="0" onMouseUp={this.handleMouseUp} onBlurCapture={this.handleBlur} className="dropdown" data-intro="" data-position="">
+            <div className="dropdown-trigger navbar-item">
                 {_image(this.props)}
                 <span className="icon-left">{this.props.title}</span>
                 {image_after}
-            </a>
+            </div>
             {sections}
         </li>);
     }
@@ -88,5 +73,40 @@ var IntroStart = React.createClass({
                 </a>
             </li>
         );
+    }
+});
+
+var LinkItem = React.createClass({
+    getInitialState: function () {
+        return {};
+    },
+
+    handleMouseDown: function (e) {
+        // Fixes an issue where firefox bubbles events instead of capturing them
+        // See: https://github.com/facebook/react/issues/2011
+        this.getDOMNode().getElementsByTagName('a')[0].click();
+    },
+
+    render: function () {
+        function _image(props) {
+            if (props.image) {
+                return <img src={props.image.url} alt={props.image.title} className={props.image.className} />;
+            } else if (props.fa) {
+                return <span className={['fa', props.fa].join(' ')} />;
+            }
+        }
+
+        var divider;
+        if (this.props.divider && this.props.divider == 'top') {
+            divider = <div className="dropdown-divider"></div>;
+        }
+
+        return (<li className={this.props.type}>
+            {divider}
+            <a href={this.props.url} onMouseDownCapture={this.handleMouseDown} >
+                {_image(this.props)}
+                <span className="icon-left">{this.props.title}</span>
+            </a>
+        </li>);
     }
 });

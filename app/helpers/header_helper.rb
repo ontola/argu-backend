@@ -70,6 +70,14 @@ module HeaderHelper
     }
   end
 
+  def dropdown_options(title, sections, opts = {})
+    options = {
+        title: title,
+        sections: sections
+    }
+    options.merge opts
+  end
+
   def link_item(title, url, opts = {})
     item = {
         type: 'link',
