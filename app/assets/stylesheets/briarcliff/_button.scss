@@ -93,7 +93,7 @@
 .btn-subtle{
   @include button();
   margin-bottom: 1em;
-  color: $g3;
+  color: $g2;
   border: none;
   background: none;
   border-radius: 0;
@@ -352,6 +352,8 @@
 
 .btns-sticky-bottom {
   bottom: 0;
+  top: auto;
+  margin-bottom: 0;
 }
 
 .btns-vertical > li {
@@ -361,6 +363,7 @@
 .btns--vote a{
   padding: .5em;
   margin: 0;
+  color: $g2;
 }
 
 //h1 + .btns-vertical {

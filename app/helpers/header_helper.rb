@@ -61,9 +61,10 @@ module HeaderHelper
         sections: [
           {
               items: [
-                  link_item(t('about.vision'), about_path, fa: 'info-circle'),
-                  link_item(t('how_argu_works.title'), how_argu_works_path, fa: 'question-circle'),
-                  link_item(t('team.title'), team_path, fa: 'group')
+                  link_item(t('about.vision'), about_path),
+                  link_item(t('about.how_argu_works'), how_argu_works_path),
+                  link_item(t('about.governments'), governments_path),
+                  link_item(t('about.team'), team_path  )
               ]
           }
         ]

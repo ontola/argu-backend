@@ -10,19 +10,19 @@
   section
     = contextual_link_to question_path(question) do
       h2.que-t = question.title
-  -if Rails.configuration.epics.motions_in_question_partial
-    ul.box-list
-      li
-        a[href=""]
-          h3.sta-t Vennootschapsbelasting afschaffen, btw verhogen
-      li
-        a[href=""]
-          h3.sta-t Verbod op onvrijwillige jongensbesnijdenis
-      //If more than 2 motions are present
-      li
-        a[href=""]
-          h3.sta-t Bekijk 4 voorstellen...
-      // When no motions are present
-      li
-        a
-          h3.sta-t Deel jouw voorstel!
+    -if Rails.configuration.epics.motions_in_question_partial
+      ul.box-list
+        li
+          a[href=""]
+            h3.sta-t Vennootschapsbelasting afschaffen, btw verhogen
+        li
+          a[href=""]
+            h3.sta-t Verbod op onvrijwillige jongensbesnijdenis
+        //If more than 2 motions are present
+        li
+          a[href=""]
+            h3.sta-t Bekijk 4 voorstellen...
+        // When no motions are present
+        li
+          a
+            h3.sta-t Deel jouw voorstel!
