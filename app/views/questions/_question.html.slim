@@ -1,5 +1,5 @@
 .box.box-grid.question[class="#{'trashed' if question.is_trashed?}" data-tags="#{question.tags.join(',')}" data-created-at=question.created_at  data-updated-at=question.updated_at]
-  -if question.cover_photo.present?
+  - if question.cover_photo.present?
     = contextual_link_to question_path(question) do
       .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
   section.section-info.que-bg
@@ -9,20 +9,18 @@
       span.tooltip.tooltip--left[data-title="Dit vraagstuk wordt binnenkort gesloten."] nog 5 dagen
   section
     = contextual_link_to question_path(question) do
-      h2.que-t = question.title
-    -if Rails.configuration.epics.motions_in_question_partial
+      h2.que-t= question.title
+    - if Rails.configuration.epics.motions_in_question_partial & question.motions.present?
       ul.box-list
-        li
-          a[href=""]
-            h3.sta-t Vennootschapsbelasting afschaffen, btw verhogen
-        li
-          a[href=""]
-            h3.sta-t Verbod op onvrijwillige jongensbesnijdenis
-        //If more than 2 motions are present
-        li
-          a[href=""]
-            h3.sta-t Bekijk 4 voorstellen...
-        // When no motions are present
-        li
-          a
-            h3.sta-t Deel jouw voorstel!
+        - question.motions.order(updated_at: :desc).select(:id, :title, :updated_at)[0,3].each do |motion|
+          li
+            = contextual_link_to motion_path(motion) do
+              h3.sta-t= motion.title
+        - if question.motions.count > 3
+          li
+            = contextual_link_to question_path(question) do
+              h3.sta-t= t('questions.view_all_motions', amount: question.motions.count)
+        /- unless question.motions.present?
+          li
+            a
+              h3.sta-t Deel jouw voorstel!

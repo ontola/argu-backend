@@ -38,3 +38,13 @@
     border-right: none;
   }
 }
+
+.collapse-me{
+  @include transition(1s ease-in-out);
+  height: auto;
+}
+
+.collapsed {
+  height: 0;
+  margin: 0;
+}

@@ -8,6 +8,7 @@ nl:
     new_btn: "Vraagstuk toevoegen"
     header: "vraagstukken"
     link_to_motion: "Koppel bestaand voorstel aan dit vraagstuk"
+    view_all_motions: "Bekijk alle %{amount} voorstellen..."
     call_to_action:
       title: "Oplossing nodig?"
       body: "Ben jij op zoek naar goede ideeën? Heb jij een vraagstuk waar je voorstellen voor zou willen?"

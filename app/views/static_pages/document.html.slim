@@ -34,6 +34,9 @@
                 end
             - if section['link'].present?
               a.block-link[href=section['link']['url']]=section['link']['body']
+          - if section['image'].present?
+            .block--img.block--img--full
+              .img[style="background-image: url(#{asset_path section['image']})"]
       - elsif section['type'] == 'double'
         .blocks
           .block.block--img[class=(section['right'] ? 'block--right' : '')]
@@ -60,6 +63,9 @@
               h2=section['expand']['header']
               - section['expand']['body'].each do |body|
                 p==body
+            - if section['expand']['image'].present?
+              .block--img.block--img--full
+                .img[style="background-image: url(#{asset_path section['expand']['image']})"]
 - else
   .col-1
     .box
