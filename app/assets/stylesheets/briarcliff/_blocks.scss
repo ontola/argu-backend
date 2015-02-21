@@ -113,6 +113,16 @@ $grey_light: $g0;
   }
 }
 
+.block--img--full {
+  height: 34em;
+  display: block;
+  position: relative;
+  clear: both;
+  &:before {
+    content: none;
+  }
+}
+
 .block--right {
   float: right;
 }
