@@ -118,9 +118,6 @@ $grey_light: $g0;
   display: block;
   position: relative;
   clear: both;
-  &:before {
-    content: none;
-  }
 }
 
 .block--right {
