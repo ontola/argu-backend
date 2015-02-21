@@ -34,7 +34,7 @@ nl:
   older: "ouder"
   newer: "niewer"
   destroy: "vernietigen"
-  trash: "Wissen"
+  trash: "verbergen"
   empty_type: "er zijn geen %{type}"
   history: "geschiendenis"
   image: "afbeelding"

@@ -40,7 +40,7 @@ nl:
       cover_photo_attribution: "Als jij niet de auteursrechten de afbeelding zit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"
       web_url: "Hiermee bepaal je via welke URL de pagina toegankelijk is. Het wijzigen van de URL kan er voor zorgen dat bestaande gedeelde links niet meer werken."
       question:
-        title: "Een vraagstuk begint meestal met ''Hoe...''."
+        title: "Een vraagstuk begint meestal met 'Hoe...' of 'Wat...'."
         content: "Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."
       motion:
         title: "Wat stel je voor? Houd de titel zo kort mogelijk."
