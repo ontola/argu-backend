@@ -16,6 +16,7 @@ class Question < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 255 }
   validates :forum_id, :creator_id, presence: true
+  #TODO validate expires_at
 
   attr_accessor :include_motions
 

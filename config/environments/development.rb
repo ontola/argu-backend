@@ -17,6 +17,7 @@ Rails.application.configure do
   config.epics.page_create = true                     # Create a page button in header menu
   config.epics.notifications = true                   # Show notifications button in header menu
   config.epics.motions_in_question_partial = true     # Show motions in question partial
+  config.epics.expires_at = true                      # Deadline date in question form and question preview
 
   config.react.variant = :development
 

@@ -16,6 +16,7 @@ nl:
       content: "Inhoud"
       cover_photo: "Cover afbeelding"
       remove_cover_photo: "Cover afbeelding verwijderen"
+      remove_image: "Afbeelding verwijderen"
       cover_photo_attribution: "Auteursrechten afbeelding"
       profile_photo: "Profielfoto"
       remove_profile_photo: "Profielfoto verwijderen"
@@ -26,6 +27,10 @@ nl:
       web_url: "Web URL"
       visibility: "Zichtbaarheid"
       about: "Over"
+      expires_at: "Verloopt op"
+      is_trashed: "Is verborgen"
+      f_move: "Verplaatsen"
+      f_convert: "Omzetten"
       profile:
         name: "Volledige naam"
       page:
