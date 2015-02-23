@@ -31,6 +31,7 @@ nl:
       is_trashed: "Is verborgen"
       f_move: "Verplaatsen"
       f_convert: "Omzetten"
+      invert_arguments: "Argumenten omdraaien"
       profile:
         name: "Volledige naam"
       page:
