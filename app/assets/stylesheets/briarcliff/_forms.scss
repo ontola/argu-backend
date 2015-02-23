@@ -11,9 +11,10 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   width: 70%;
   color: $g4;
   line-height: 1.4em;
+  border: solid 1px $g1;
   &:focus {
     background-color: $darken0;
-    border: none;
+    border: solid 1px $g2;
     outline: none;
   }
   &.h1 {
@@ -59,14 +60,8 @@ label {
 
 legend {
   width: 100%;
-  margin-bottom: .5em;
-  padding: .3em .8em;
-  color: $g00;
-  //background-color: $gred;
-
-  width: 100%;
-  margin-bottom: .5em;
-  padding: 0.3em 0.5em;
+  margin-bottom: 1em;
+  padding: 0.3em 0em;
   color: $g2;
   text-transform: uppercase;
   letter-spacing: .1em;
@@ -101,13 +96,6 @@ fieldset {
 
 .form-input-content {
   width: 100%;
-  background-color: $darken1;
-  border: none;
-  padding: .5em;
-  font-size: 1em;
-  font-family: $font-sans;
-  resize: vertical;
-  display: inline-block;
 }
 
 input[type="text"].form-input-title {
@@ -248,10 +236,9 @@ input:focus + p.inline-hints, textarea:focus + p.inline-hints {
 p.inline-hints {
   opacity: 0;
   position: absolute;
-  background-color: $g3;
+  background-color: $blu;
   color: white;
   bottom: 100%;
-  @include border-radius();
   @include transition(.2s ease-in-out);
 }
 //Endtest

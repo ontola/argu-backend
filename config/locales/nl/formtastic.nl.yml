@@ -52,7 +52,6 @@ nl:
         title: "Wat stel je voor? Houd de titel zo kort mogelijk."
         content: "Wat moet er precies veranderen? Hoe moet dit gebeuren?"
       forum:
-        name: "De naam wordt weergegeven"
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
     placeholders:
       email: "email@voorbeeld.nl"

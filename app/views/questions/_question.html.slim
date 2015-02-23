@@ -21,7 +21,7 @@
       ul.box-list
         - question.motions.order(updated_at: :desc).select(:id, :title, :updated_at)[0,3].each do |motion|
           li
-            = contextual_link_to motion_path(motion) do
+            = link_to motion_path(motion) do
               h3.sta-t= motion.title
         - if question.motions.count > 3
           li
