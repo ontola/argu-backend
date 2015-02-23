@@ -14,7 +14,7 @@
     span.fa.fa-pie-chart
     span.icon-left = t('motions.votes.show')
   -if vote.present?
-    ul class="progress-bar progress-bar-stacked collapse-me collapse-closed"
+    ul class="progress-bar progress-bar-stacked collapse-me collapse-open"
       li[style="width: #{progress_bar_width(model, :pro)}%;"]
         span class="btn-pro"= "#{model.votes_pro_count}"
       li[style="width: #{progress_bar_width(model, :neutral)}%;"]
