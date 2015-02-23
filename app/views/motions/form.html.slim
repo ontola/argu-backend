@@ -21,9 +21,11 @@
                 -if policy(@motion).move?
                   = f.input :f_move, as: :link, url: motion_move_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
                   = f.input :f_convert, as: :link, url: motion_convert_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
-            /TODO invert arguments only visible when in edit, not in new.
-              <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
-              <%= f.check_box :invert_arguments %>
+                  = f.input :invert_arguments, as: :reverse_boolean
+                    /TODO invert arguments only visible when in edit, not in new.
+                    <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
+                    <%= f.check_box :invert_arguments %>
+        /TODO invert arguments only visible when in edit, not in new.
         = render partial: 'profiles/profile_current'
 
         = f.hidden_field :question_id, value: @question_id || params[:question_id]

@@ -16,6 +16,7 @@ nl:
       content: "Inhoud"
       cover_photo: "Cover afbeelding"
       remove_cover_photo: "Cover afbeelding verwijderen"
+      remove_image: "Afbeelding verwijderen"
       cover_photo_attribution: "Auteursrechten afbeelding"
       profile_photo: "Profielfoto"
       remove_profile_photo: "Profielfoto verwijderen"
@@ -26,6 +27,11 @@ nl:
       web_url: "Web URL"
       visibility: "Zichtbaarheid"
       about: "Over"
+      expires_at: "Verloopt op"
+      is_trashed: "Is verborgen"
+      f_move: "Verplaatsen"
+      f_convert: "Omzetten"
+      invert_arguments: "Argumenten omdraaien"
       profile:
         name: "Volledige naam"
       page:
@@ -40,13 +46,12 @@ nl:
       cover_photo_attribution: "Als jij niet de auteursrechten de afbeelding zit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"
       web_url: "Hiermee bepaal je via welke URL de pagina toegankelijk is. Het wijzigen van de URL kan er voor zorgen dat bestaande gedeelde links niet meer werken."
       question:
-        title: "Een vraagstuk begint meestal met ''Hoe...''."
+        title: "Een vraagstuk begint meestal met 'Hoe...' of 'Wat...'."
         content: "Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."
       motion:
         title: "Wat stel je voor? Houd de titel zo kort mogelijk."
         content: "Wat moet er precies veranderen? Hoe moet dit gebeuren?"
       forum:
-        name: "De naam wordt weergegeven"
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
     placeholders:
       email: "email@voorbeeld.nl"

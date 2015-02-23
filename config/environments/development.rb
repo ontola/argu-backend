@@ -7,7 +7,7 @@ Rails.application.configure do
   config.epics.parties = false                        # Parties enabled?
   config.epics.advanced_navigation = false            # Navigation by tags and such
   config.epics.search = false                         # Search enabled?
-  config.epics.counters = true                        # Counter caches on models (e.g. x pro, y con args)
+  config.epics.counters = false                        # Counter caches on models (e.g. x pro, y con args)
   config.epics.forum_selector = true                  # Show forum selector in nav bar?
   config.epics.sign_up = true                         # Can users sign up outside of invitations
   config.epics.activities = true                      # Can users see the activity index / timeline button in header?
@@ -17,6 +17,7 @@ Rails.application.configure do
   config.epics.page_create = true                     # Create a page button in header menu
   config.epics.notifications = true                   # Show notifications button in header menu
   config.epics.motions_in_question_partial = true     # Show motions in question partial
+  config.epics.expires_at = true                      # Deadline date in question form and question preview
 
   config.react.variant = :development
 

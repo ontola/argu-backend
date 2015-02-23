@@ -90,10 +90,12 @@
 }
 
 .box .read-more {
-  position: relative;
+  position: absolute;
   text-transform: uppercase;
   font-size: 0.8em;
-  top: -0.7em;
+  bottom: 0;
+  padding: 0.7em;
+  right: 0;
   color: $g2;
   &:hover{
     color: $g4 !important;
@@ -189,16 +191,6 @@
   }
 }
 
-.box-list:last-child{
-  @include border-radius;
-  border-top-radius: 0;
-}
-
-.box-list:first-child{
-  @include border-radius;
-  border-bottom-radius: 0;
-}
-
 .box-note {
   position: absolute;
   top: 0em;
@@ -228,4 +220,18 @@
   padding-left: 1.5em;
   font-size: .8em;
   margin-bottom: 1em;
+}
+
+.box-list--arguments {
+  list-style-type: none;
+  width: 50%;
+  width: calc(50% + 0.5em);
+  margin-left: -0.5em;
+  padding: 0.5em;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.box--extra-margin{
+  margin: 2em 0;
 }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210130031) do
+ActiveRecord::Schema.define(version: 20150222142905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -283,6 +283,7 @@ ActiveRecord::Schema.define(version: 20150210130031) do
     t.datetime "updated_at"
     t.string   "cover_photo",                         default: ""
     t.string   "cover_photo_attribution",             default: ""
+    t.datetime "expires_at"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -359,14 +360,14 @@ ActiveRecord::Schema.define(version: 20150210130031) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                  default: 0
     t.boolean  "finished_intro",                     default: false
+    t.text     "r"
+    t.text     "access_tokens"
     t.integer  "follows_email",                      default: 1,     null: false
     t.boolean  "follows_mobile",                     default: true,  null: false
     t.integer  "memberships_email",                  default: 1,     null: false
     t.boolean  "memberships_mobile",                 default: true,  null: false
     t.integer  "created_email",                      default: 1,     null: false
     t.boolean  "created_mobile",                     default: true,  null: false
-    t.text     "r"
-    t.text     "access_tokens"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

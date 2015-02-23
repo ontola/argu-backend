@@ -71,20 +71,19 @@
   height: auto;
   min-height: 3em;
   @include box-shadow;
-  .btns-list > li > a {
+  .btns-list li .dropdown-trigger {
     padding: 1em;
     @include bp-medium{
       padding: .5em;
     }
   }
   h1 {
-    font-size: 1.8em;
+    font-size: 1.4em;
     position: relative;
     display: inline-block;
     height: 1.3em;
     margin-bottom: 0;
-    margin-top: .3em;
-    font-weight: 100;
+    margin-top: 0.6em;
     &:after {
       content: "";
       position: absolute;

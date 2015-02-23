@@ -11,8 +11,9 @@ module Parentable
       parent = reflect_parent(parent_is, options)
     elsif parent_is.class == Array
       parent_is.each do |_parent|
-        parent = reflect_parent(_parent, options)
-        parent || break
+        __parent = reflect_parent(_parent, options)
+        parent ||= __parent if __parent.model.present?
+        parent && break
       end
     end
     parent || Context.new
@@ -26,7 +27,9 @@ module Parentable
       parent.model = send(relation_name)
     else
       begin
-        parent.model = send(relation_name).find(options["#{relation_name.to_s.singularize}_id"])
+        #@TODO This might not stand when using generic has_many relations
+        #parent.model = send(relation_name).find(options["#{relation_name.to_s.singularize}_id"])
+        parent.model = send(relation_name)
       rescue ActiveRecord::RecordNotFound
         parent.model = nil
       end

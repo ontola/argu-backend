@@ -13,7 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require application/jquery.jeditable.mini.js
-//= require touche
+//= require fastclick
 //= require simpleexpand
 //= require ./application/briarcliff/expand
 //= require ./application/briarcliff/scroll_smooth

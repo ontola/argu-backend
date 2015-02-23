@@ -18,36 +18,13 @@ div[itemscope itemtype="Thing"]
     .cover-header
       .cover-container
         .center
-          .dropdown.cover-title
-            a
-              h1.dropdown-trigger
-                span[itemprop="headline"]= @forum.name
-                -if Rails.configuration.epics.forum_selector
-                  span.fa.fa-angle-down
-            -if Rails.configuration.epics.forum_selector
-              ul.dropdown-content
-                - current_profile.present? && current_profile.memberships.each do |membership|
-                  li=link_to membership.forum.display_name, url_for(membership.forum)
-                .dropdown-divider
-                - if policy(@forum).is_member?
-                  li=link_to forum_membership_path(@forum.web_url, current_profile), method: :delete, data: {confirm: t('forums.leave_confirmation')} do
-                    span.fa.fa-sign-out
-                    span.icon-left= t('forums.leave')
-                /- if suggested_forums.present?
-                  span.dropdown-header= t('forums.suggestions')
-                  ul.tags-vertical
-                    - suggested_forums.each do |forum|
-                      li=link_to forum.display_name, url_for(forum)
-                li=link_to forums_url, class: 'btn-focus' do
-                  span.fa.fa-compass
-                  span.icon-left= t('forums.discover')
+          = react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
           ul.btns-sticky.btns-list.btns-subtle=render partial: 'application/menus/settings', locals: {resource: @forum}
           p.cover-oneliner
             = @forum.bio
             - if @forum.bio_long.present?
               a[href="#forum-info"]
                 span.icon-left= t('forums.more_info')
-          /p.cover-oneliner Een Argu forum is een discussie omgeving waar op een inhoudelijke en kritische manier oplossingen kan worden gevonden voor vraagstukken.
         ul.btns-list.btns-vertical
           /TODO: Make this check the current profile, not the user
           - if !policy(@forum).is_member?

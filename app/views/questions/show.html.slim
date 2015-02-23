@@ -39,8 +39,13 @@
           span.icon-left=t('edit')
 div[data-intro= t("intro.question.motions")]
   ==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))
-  -if Rails.configuration.epics.link_to_motion
-    .col-1
+  //This basically does the same as the column renderer, except for the "new button". I'm not sure whether we should use the column renderer in this specific view
+  /.col-1
+    header
+      h2= t('motions.header')
+    - @question.motions.each() do |motion|
+      = render partial: 'motions/show', locals: {model: motion}
+    -if Rails.configuration.epics.link_to_motion
       .box.box-link
         a.
           section

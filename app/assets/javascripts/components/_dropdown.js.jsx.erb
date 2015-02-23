@@ -1,3 +1,13 @@
+/*global React, $*/
+
+var _image = function (props) {
+    if (props.image) {
+        return <img src={props.image.url} alt={props.image.title} className={props.image.className} />;
+    } else if (props.fa) {
+        return <span className={['fa', props.fa].join(' ')} />;
+    }
+};
+
 var HyperDropdown = React.createClass({
     getInitialState: function () {
         return {
@@ -15,14 +25,6 @@ var HyperDropdown = React.createClass({
     },
 
     render: function () {
-        function _image(props) {
-            if (props.image) {
-                return <img src={props.image.url} alt={props.image.title} className={props.image.className} />;
-            } else if (props.fa) {
-                return <span className={['fa', props.fa].join(' ')} />;
-            }
-        }
-
         var collapseStyle = {
             display: this.state.openState ? 'block' : 'none'
         };
@@ -46,33 +48,24 @@ var HyperDropdown = React.createClass({
                 })}
             </ul>);
         }
-        var image_after = _image({fa: this.props.fa_after});
+        var image_after  = _image({fa: this.props.fa_after});
+        var triggerClass = "dropdown-trigger " + this.props.triggerClass;
+
+        var TriggerTags = {
+            h1: React.DOM.h1,
+            div: React.DOM.div
+        };
+
+        var TriggerContainer = TriggerTags[this.props.triggerTag] || React.DOM.div;
 
         return (<li tabIndex="0" onMouseUp={this.handleMouseUp} onBlurCapture={this.handleBlur} className="dropdown" data-intro="" data-position="">
-            <div className="dropdown-trigger navbar-item">
+            <TriggerContainer className={triggerClass}>
                 {_image(this.props)}
-                <span className="icon-left">{this.props.title}</span>
+                <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
                 {image_after}
-            </div>
+            </TriggerContainer>
             {sections}
         </li>);
-    }
-});
-
-var IntroStart = React.createClass({
-    getInitialState: function () {
-        return {};
-    },
-
-    render: function () {
-        return (
-            <li tabIndex="0" className="dropdown">
-                <a className="intro-trigger navbar-item">
-                    <span className="fa fa-question" />
-                    <span className="icon-left"><%= I18n.t('intro.start') %></span>
-                </a>
-            </li>
-        );
     }
 });
 
@@ -88,14 +81,6 @@ var LinkItem = React.createClass({
     },
 
     render: function () {
-        function _image(props) {
-            if (props.image) {
-                return <img src={props.image.url} alt={props.image.title} className={props.image.className} />;
-            } else if (props.fa) {
-                return <span className={['fa', props.fa].join(' ')} />;
-            }
-        }
-
         var divider;
         if (this.props.divider && this.props.divider == 'top') {
             divider = <div className="dropdown-divider"></div>;
@@ -105,7 +90,7 @@ var LinkItem = React.createClass({
             {divider}
             <a href={this.props.url} onMouseDownCapture={this.handleMouseDown} >
                 {_image(this.props)}
-                <span className="icon-left">{this.props.title}</span>
+                <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
         </li>);
     }

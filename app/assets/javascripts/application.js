@@ -19,12 +19,12 @@
 //= require jquery-ui/autocomplete
 //= require jquery-ui/sortable
 //= require jquery.pjax
-//= require touche
 //= require microplugin
 //= require sifter
 //= require selectize
 //= require handlebars-v2.0.0
 // Briarcliff dependencies :: GO
+//= require fastclick
 //= require isotope.pkgd.min
 //= require simpleexpand
 //= require intro

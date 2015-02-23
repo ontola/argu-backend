@@ -12,4 +12,7 @@ nav#navbar.navbar role="navigation"
       = react_component 'HyperDropdown', profile_dropdown_items, {prerender: true}
       /= react_component 'Notifications', {}, {prerender: true}
       = react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
-      = react_component 'IntroStart', {}, {prerender: true}
+      li.dropdown[tabIndex="0"]
+        a.intro-trigger.navbar-item
+          span.fa.fa-question
+          span.icon-left= I18n.t('intro.start')

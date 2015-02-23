@@ -1,18 +1,37 @@
 - tag ||= nil
-.box[class="#{'trashed' if model.is_trashed?}"]
+.box.box--extra-margin[class="#{'trashed' if model.is_trashed?}"]
+  -if model.cover_photo.present?
+    = contextual_link_to motion_path(model) do
+      .box-image[style="background-image: url('#{model.cover_photo.url(:box)}'); "]
+  section.section-info.sta-bg
+    span= t('motions.type')
   section[itemscope itemtype="http://www.schema.org/Answer"]
-    h3.sta-t[itemprop="headline"]= contextual_link_to model.title, motion_path(model)
-    p[itemprop="text"]= model.supped_content[0..150] + (model.supped_content[151] ? "..." : "")
+    = contextual_link_to motion_path(model) do
+      h3.sta-t[itemprop="headline"] = model.title
+    p[itemprop="text" class='wrap-normal']= model.supped_content[0..150] + (model.supped_content[151] ? "..." : "")
+    -if Rails.configuration.epics.counters
+      span.info= "#{t("motions.preview.pro", count: model.argument_pro_count)}, #{t("motions.preview.con", count: model.argument_con_count)}"
+    - if model.arguments.present?
+      ul.box-list.box-list--arguments
+        - model.arguments.where(pro: true).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0,3].each do |argument|
+          li
+            = link_to argument_path(argument) do
+              h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
+                span.fa.fa-plus
+                span.icon-left= argument.title
+      ul.box-list.box-list--arguments
+        - model.arguments.where(pro: false).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0, 3].each do |argument|
+          li
+            = link_to argument_path(argument) do
+              h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
+                span.fa.fa-minus
+                span.icon-left= argument.title
     = contextual_link_to motion_path(model), class: "read-more" do
       span.icon-right = t("read-more")
       span.fa.fa-arrow-right
-    .clearfix
-    -if Rails.configuration.epics.counters
-      span.info= "#{t("motions.preview.pro", count: model.argument_pro_count)}, #{t("motions.preview.con", count: model.argument_con_count)}"
     ul.btns-sticky.btns-sticky-bottom
       - if tag.present?
         - if model.is_main_motion? tag
           li= link_to '_ontkoppel_', motion_path(model, "motion[tag_id]" => 'nil'), method: :put, :confirm => "Sure?", class: ("btn btn-subtle")
         - else
           li= link_to '_make hoofdstelling_', motion_path(model, "motion[tag_id]" => tag.id), method: :put, :confirm => "Sure?", class: ("btn btn-subtle")
-    .clearfix

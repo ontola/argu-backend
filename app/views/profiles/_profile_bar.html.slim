@@ -1,5 +1,5 @@
 .tabs
-  ul.btns-list.btns-vertical
+  ul
     / These use current_user so that this menu is still functional when :a_a is a Page
     li= contextual_link_to profile_url(current_user.username) do
       span.fa.fa-user

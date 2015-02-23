@@ -3,11 +3,13 @@
 
 .progress-bar {
   display: block;
-  margin-bottom: 1em;
+  //margin-bottom: 1em;
   width: 100%;
   overflow: hidden;
+  height: 2.5em;
   @include box-shadow;
   @include border-radius;
+  @include transition(1s ease-in-out);
   li {
     display: inline-block;
     margin: 0 0;
@@ -36,5 +38,15 @@
     background-color: $red;
     margin-right: 0;
     border-right: none;
+  }
+  //Use these classes to show and hide the progress bar
+  &.collapse-closed {
+    height: 0;
+    opacity: 0;
+  }
+
+  &.collapse-open {
+    height: 2.5em;
+    opacity: 1;
   }
 }
