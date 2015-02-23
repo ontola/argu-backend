@@ -79,6 +79,14 @@ class Motion < ActiveRecord::Base
     return true
   end
 
+  def next
+    self.forum.motions.where('updated_at > :date', date: self.updated_at).order('updated_at').first
+  end
+
+  def previous
+    self.forum.motions.where('updated_at < :date', date: self.updated_at).order('updated_at').last
+  end
+
   def pro_count
     self.arguments.count(:conditions => ["pro = true"])
   end
