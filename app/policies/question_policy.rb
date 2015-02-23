@@ -52,6 +52,10 @@ class QuestionPolicy < RestrictivePolicy
     Pundit.policy(context, record.forum).show? || super
   end
 
+  def set_expire_as?
+    staff? || super
+  end
+
   private
 
   def is_member?

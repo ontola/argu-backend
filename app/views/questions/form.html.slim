@@ -14,8 +14,11 @@
             = f.input :cover_photo, label: t('image')
             -if !@question.new_record?
               = f.input :remove_cover_photo, as: :reverse_boolean, label: t('formtastic.labels.remove_image')
-            //TODO Add Checkbox for using expires_at. Hide expires_at input unless checkbox is checked. Use current datetime as default input.
-            -if Rails.configuration.epics.expires_at && policy(@question).expires?
+
+            /TODO Add Checkbox for using expires_at.
+            /TODO Hide expires_at input unless checkbox is checked.
+            /TODO Use current datetime as default input.
+            -if Rails.configuration.epics.expires_at && policy(@question).set_expire_as?
               = f.input :expires_at, as: :datetime_picker, input_html: {class: "tooltip", data: {title: "Vul alle velden in als je een deadline in wil stellen"} }
           -if !@question.new_record? && policy(@question).trash?
             = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
@@ -31,7 +34,6 @@
         /= f.actions
           = f.submit
         .actions[style="margin-top: 0;"]= f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"
-  /TODO: make translations
   .col-3-1
     .box
       section
