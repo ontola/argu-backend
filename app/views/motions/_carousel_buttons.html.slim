@@ -1,18 +1,19 @@
-- if item.previous.present?
-  = link_to item.previous, class: 'context context--previous' do
-    .box.box-link
-      section.section-info.sta-bg
-        span.fa.fa-arrow-left
-        span.icon-left = t("#{item.class_name}.type")
-      section
-        h3.sta-t
-          span = item.previous.title
-- if item.next.present?
-  = link_to item.next, class: 'context context--next' do
-    .box.box-link
-      section.section-info.sta-bg
-        span.icon-right = t("#{item.class_name}.type")
-        span.fa.fa-arrow-right
-      section
-        h3.sta-t
-          span = item.next.title
+- if $rollout.active?(:carousel_buttons, current_user)
+  - if item.previous.present?
+    = link_to item.previous, class: 'context context--previous' do
+      .box.box-link
+        section.section-info.sta-bg
+          span.fa.fa-arrow-left
+          span.icon-left = t("#{item.class_name}.type")
+        section
+          h3.sta-t
+            span = item.previous.title
+  - if item.next.present?
+    = link_to item.next, class: 'context context--next' do
+      .box.box-link
+        section.section-info.sta-bg
+          span.icon-right = t("#{item.class_name}.type")
+          span.fa.fa-arrow-right
+        section
+          h3.sta-t
+            span = item.next.title

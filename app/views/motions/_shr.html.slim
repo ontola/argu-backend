@@ -9,7 +9,8 @@
     li = link_to motion_vote_path(model, 'con'), class: "btn-con#{' voted-on' if vote.for?('con')}", remote: true, method: :post do
       span.fa.fa-thumbs-down
       span.icon-left = t('motions.votes.con')
-  //TODO: Hide voting results when user is signed in, but hasn't voted yet. Show voting results when user clicks on "show votes" button.
+  /TODO: Hide voting results when user is signed in, but hasn't voted yet. Show voting results when user clicks on "show votes" button.
+  /USE THE collapse-open AND .collapse-close CLASSES
   /a.btn.btn-subtle
     span.fa.fa-pie-chart
     span.icon-left = t('motions.votes.show')

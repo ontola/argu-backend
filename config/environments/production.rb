@@ -18,7 +18,6 @@ Argu::Application.configure do
   config.epics.notifications = false                   # Show notifications button in header menu
   config.logstasher.enabled = true
   config.epics.motions_in_question_partial = false     # Show motions in question partial
-  config.epics.expires_at = false                      # Deadline date in question form and question preview
 
   config.react.variant = :production
 
