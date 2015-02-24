@@ -50,6 +50,14 @@ class Question < ActiveRecord::Base
     return true
   end
 
+  def next
+    self.forum.questions.where('updated_at > :date', date: self.updated_at).order('updated_at').first
+  end
+
+  def previous
+    self.forum.questions.where('updated_at < :date', date: self.updated_at).order('updated_at').last
+  end
+
   def supped_content
     content \
       .gsub(/{([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)}\(([\w\s]*)\)/, '<a rel=tag name="\1" href="/cards/\1">\2</a>') \

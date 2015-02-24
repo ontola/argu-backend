@@ -14,6 +14,7 @@
   .cover-image[style="background-image: url('#{@question.cover_photo.url}'); "]
 .col-1
   div[data-intro= t("intro.question.back")]= to_parent
+  =render partial: 'contextualize/carousel_buttons', locals: {item: @question, type: 'que'}
   .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t("intro.question.body") itemscope itemtype="http://schema.org/Question"]
     section.section-info.que-bg
       span = t("questions.type")

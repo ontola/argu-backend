@@ -15,11 +15,11 @@ div[itemscope itemtype="http://www.schema.org/Answer"]
     .cover-image[style="background-image: url('#{@motion.cover_photo.url(:cover)}'); "]
   .col-1
     div[data-intro= t("intro.motion.back")]= to_parent
+    =render partial: 'contextualize/carousel_buttons', locals: {item: @motion, type: 'sta'}
     .col--motion
       div[data-intro= t("intro.motion.body") itemprop="text"]= render partial: 'motionbody', locals: { motion: @motion }
       =render partial: 'shr', locals: { model: @motion, vote: @vote }
       /e=render partial: 'vote_results'
-      =render partial: 'carousel_buttons', locals: { item: @motion}
 div[data-intro= t("intro.motion.arguments") data-position= "top"]= render_columns(@arguments, buttons_url: new_forum_argument_path(@motion.forum, motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false, buttons_options: {data: remote_unless_user})
 -if Rails.configuration.epics.opinions
   = render_columns(@opinions, header: t("arguments.index.opinion"))

@@ -49,6 +49,16 @@ module ProCon
     self.pro ? :pro : :con
   end
 
+  def next
+    _next = self.motion.arguments.order(votes_pro_count: :asc).reverse_order.select(:id, :title).to_a
+    _next[(_next.index { |a| a.id == self.id } + 1) % _next.length]
+  end
+
+  def previous
+    prev = self.motion.arguments.order(votes_pro_count: :desc).select(:id, :title).to_a
+    prev[(prev.index { |a| a.id == self.id } + 1) % prev.length]
+  end
+
   def pro=(value)
     super value.to_s == 'pro' || value
   end

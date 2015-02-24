@@ -10,5 +10,6 @@
 -provide(:title, @argument.title.nil? ? t('arguments.show.title') : @argument.title)
 .col-1[itemscope]
   = to_parent
+  =render partial: 'contextualize/carousel_buttons', locals: {item: @argument, type: 'argument'}
   =render 'body'
   =render template: 'comments/show', locals: { resource: @argument }

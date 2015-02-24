@@ -1,4 +1,10 @@
+@import "variables";
+@import "mixins";
 
+
+.carousel-buttons {
+  position: relative;
+}
 
 .context {
   position: absolute;
