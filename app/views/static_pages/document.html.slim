@@ -2,6 +2,9 @@
   -provide :title, @document['title']
   .blocks-container
     - @document['sections'].each do |section|
+      - if section['type'] == 'image-wide'
+        .blocks
+          img.block-image-wide[src="#{asset_path section['image']}"]
       - if section['type'] == 'single'
         .blocks
           .block.block--full[class=((section['fill'] ? 'block--fill' : '') + " " + (section['big-text'] ? 'block--big-text' : ''))]
@@ -32,8 +35,8 @@
                       h2 = feature['header']
                       p.block-subtle == feature['body']
                 end
-            - if section['link'].present?
-              a.block-link[href=section['link']['url']]=section['link']['body']
+              - if section['link'].present?
+                a.block-link[href=section['link']['url']]=section['link']['body']
           - if section['image'].present?
             .block--img.block--img--full
               .img[style="background-image: url(#{asset_path section['image']})"]
