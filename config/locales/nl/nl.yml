@@ -20,6 +20,7 @@ nl:
   edit: "bewerken"
   edit_type: "%{type} bewerken"
   read-more: "lees meer"
+  collapse: "inklappen"
   update: "bijwerken"
   update_type: "%{type} bijwerken"
   save: "opslaan"
@@ -159,7 +160,7 @@ nl:
   forms:
     danger_zone: "Gevarenzone"
   users:
-    logged_in_banner_text: "Ingelogd als %{name}"
+    logged_in_banner_text: "%{name}"
     registrations:
       hints:
         password: "Minimaal 8 karakters"

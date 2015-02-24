@@ -50,12 +50,12 @@ class Question < ActiveRecord::Base
     return true
   end
 
-  def next
-    self.forum.questions.where(is_trashed: false).where('updated_at > :date', date: self.updated_at).order('updated_at').first
+  def next(show_trashed = false)
+    self.forum.questions.trashed(show_trashed).where('updated_at < :date', date: self.updated_at).order('updated_at').last
   end
 
-  def previous
-    self.forum.questions.where(is_trashed: false).where('updated_at < :date', date: self.updated_at).order('updated_at').last
+  def previous(show_trashed = false)
+    self.forum.questions.trashed(show_trashed).where('updated_at > :date', date: self.updated_at).order('updated_at').first
   end
 
   def supped_content

@@ -290,11 +290,14 @@ p.block-slogan {
 }
 
 .block {
-  .expander.collapsed:after {
-    content: "lees meer";
+  .expander .expanded-label {
+    display: none;
   }
-  .expander.expanded:after {
-    content: "inklappen";
+  .expander.expanded .expanded-label {
+    display: inline-block;
+  }
+  .expander.expanded .collapsed-label {
+    display: none;
   }
 
   .expander--hidden.collapsed {
@@ -317,6 +320,10 @@ p.block-slogan {
   &:hover{
     opacity: 1;
   }
+}
+
+.block-image-wide {
+  width: 100%;
 }
 
 @media screen and (max-width: 1200px) {

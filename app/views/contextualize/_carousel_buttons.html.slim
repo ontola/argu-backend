@@ -1,20 +1,22 @@
 - if $rollout.active?(:carousel_buttons, current_user)
+  - previous = item.previous(show_trashed?)
+  - _next = item.next(show_trashed?)
   .carousel-buttons
-    - if item.previous.present? && item.previous != item
-      = link_to item.previous, class: 'context context--previous' do
+    - if previous.present? && item.previous != item
+      = link_to previous, class: 'context context--previous' do
         .box.box-link
-          section.section-info class=("#{ type != 'argument' ? type : (item.previous.pro ? 'pro' : 'con')}-bg")
+          section.section-info class=("#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-bg")
             span.fa.fa-arrow-left
-            span.icon-left = ("#{ type != 'argument' ? t("#{item.class_name}.type") : (item.previous.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}")
+            span.icon-left = ("#{ type != 'argument' ? t("#{item.class_name}.type") : (previous.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}")
           section
-            h3 class=("#{ type != 'argument' ? type : (item.previous.pro ? 'pro' : 'con')}-t")
-              span = item.previous.title
-    - if item.next.present?  && item.next != item
-      = link_to item.next, class: 'context context--next' do
+            h3 class=("#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-t")
+              span = previous.title
+    - if _next.present?  && _next != item
+      = link_to _next, class: 'context context--next' do
         .box.box-link
-          section.section-info class=("#{ type != 'argument' ? type : (item.next.pro ? 'pro' : 'con')}-bg")
-            span.icon-right = ("#{ type != 'argument' ? t("#{item.class_name}.type") : (item.next.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}")
+          section.section-info class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-bg")
+            span.icon-right = ("#{ type != 'argument' ? t("#{_next.class_name}.type") : (_next.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}")
             span.fa.fa-arrow-right
           section
-            h3 class=("#{ type != 'argument' ? type : (item.next.pro ? 'pro' : 'con')}-t")
-              span = item.next.title
+            h3 class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-t")
+              span = _next.title
