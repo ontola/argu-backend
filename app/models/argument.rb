@@ -25,6 +25,17 @@ class Argument < ActiveRecord::Base
     i
   end
 
+  def next(show_trashed = false)
+    #TODO Improve these functions. Currently, it seems that the order is not maintained.
+    _next = self.motion.arguments.trashed(show_trashed).order(votes_pro_count: :desc).select(:id, :title).reverse
+    _next[(_next.index { |a| a.id == self.id } + 1) % _next.length]
+  end
+
+  def previous(show_trashed = false)
+    prev = self.motion.arguments.trashed(show_trashed).order(votes_pro_count: :desc).select(:id, :title)
+    prev[(prev.index { |a| a.id == self.id } + 1) % prev.length]
+  end
+
   def wipe
     Proc.new do |c|
       if c.is_trashed?
