@@ -8,7 +8,7 @@ var _image = function (props) {
     }
 };
 
-var HyperDropdown = React.createClass({
+window.HyperDropdown = React.createClass({
     getInitialState: function () {
         return {
             openState: false
@@ -51,12 +51,7 @@ var HyperDropdown = React.createClass({
         var image_after  = _image({fa: this.props.fa_after});
         var triggerClass = "dropdown-trigger " + this.props.triggerClass;
 
-        var TriggerTags = {
-            h1: React.DOM.h1,
-            div: React.DOM.div
-        };
-
-        var TriggerContainer = TriggerTags[this.props.triggerTag] || React.DOM.div;
+        var TriggerContainer = this.props.triggerTag || 'div';
 
         return (<li tabIndex="0" onMouseUp={this.handleMouseUp} onBlurCapture={this.handleBlur} className="dropdown" data-intro="" data-position="">
             <TriggerContainer className={triggerClass}>
@@ -95,3 +90,7 @@ var LinkItem = React.createClass({
         </li>);
     }
 });
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = HyperDropdown;
+}
