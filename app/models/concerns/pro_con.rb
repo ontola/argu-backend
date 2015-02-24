@@ -50,12 +50,13 @@ module ProCon
   end
 
   def next
-    _next = self.motion.arguments.order(votes_pro_count: :asc).reverse_order.select(:id, :title).to_a
+    #TODO Improve these functions. Currently, it seems that the order is not maintained.
+    _next = self.motion.arguments.where(is_trashed: false).order(votes_pro_count: :asc).reverse_order.select(:id, :title).to_a
     _next[(_next.index { |a| a.id == self.id } + 1) % _next.length]
   end
 
   def previous
-    prev = self.motion.arguments.order(votes_pro_count: :desc).select(:id, :title).to_a
+    prev = self.motion.arguments.where(is_trashed: false).order(votes_pro_count: :desc).select(:id, :title).to_a
     prev[(prev.index { |a| a.id == self.id } + 1) % prev.length]
   end
 
