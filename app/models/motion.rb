@@ -80,11 +80,11 @@ class Motion < ActiveRecord::Base
   end
 
   def next
-    self.forum.motions.where('updated_at > :date', date: self.updated_at).order('updated_at').first
+    self.forum.motions.where(is_trashed: false).where('updated_at > :date', date: self.updated_at).order('updated_at').first
   end
 
   def previous
-    self.forum.motions.where('updated_at < :date', date: self.updated_at).order('updated_at').last
+    self.forum.motions.where(is_trashed: false).where('updated_at < :date', date: self.updated_at).order('updated_at').last
   end
 
   def pro_count

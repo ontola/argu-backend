@@ -10,7 +10,7 @@
       h2.que-t= question.title
     - if Rails.configuration.epics.motions_in_question_partial & question.motions.present?
       ul.box-list
-        - question.motions.order(updated_at: :desc).select(:id, :title, :updated_at)[0,3].each do |motion|
+        - question.motions.where(is_trashed: false).order(updated_at: :desc).select(:id, :title, :updated_at)[0,3].each do |motion|
           li
             = link_to motion_path(motion) do
               h3.sta-t= motion.title
