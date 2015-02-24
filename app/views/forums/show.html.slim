@@ -60,10 +60,8 @@ div[itemscope itemtype="Thing"]
     .center
       ul.btns-list
         li
-          a.expander[data-intro=t('intro.forum.filter')]
-            span=t("filtersort.filter_&_sort")
-            span.fa.fa-angle-down
-    .filter-and-sort.expander-content
+          = react_component 'Expander', {label: t('filtersort.filter_&_sort'), expanderTarget: 'filter-and-sort', showCaret: true}, {prerender: true}
+    #filter-and-sort.filter-and-sort.expander-content
       #type
         ul.tags.tags-type
           li
@@ -79,7 +77,7 @@ div[itemscope itemtype="Thing"]
               .span.fa.fa-eraser
             - @forum.featured_tags.each do |tag|
               li
-                a[class="tag" rel="tag" href="#{forum_tag_path(@forum, tag)}" data-filter='filterByTag' data-filter-value=tag data-forum-path="#{forum_path(@forum)}"]= tag
+                a[class="tag" rel="tag" href="#{forum_tag_path(@forum, tag)}" data-filter='filterByTag' data-filter-value=tag data-forum-path="#{forum_path(@forum)}" data-skip-pjax]= tag
       #sorts
         ul.btns-list.btns-vertical
           li

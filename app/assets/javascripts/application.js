@@ -26,7 +26,6 @@
 // Briarcliff dependencies :: GO
 //= require fastclick
 //= require isotope.pkgd.min
-//= require simpleexpand
 //= require intro
 // Briarcliff dependencies :: END
 //= require requirejs

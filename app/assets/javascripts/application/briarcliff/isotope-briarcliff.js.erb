@@ -1,27 +1,32 @@
- $(window).load(function(){
-    "use strict";
+$(function () {
+    function checkForGrid () {
+        var grid = $('.grid');
 
-    // init Isotope
-    var $container = $('.grid').isotope({
-        itemSelector: '.box-grid',
-        columnWidth: '.box-grid-sizer',
-        getSortData: {
-            updated_at: '[data-updated-at]',
-            created_at: '[data-created-at]',
-            name: 'h2',
-            score: '[data-score]'
-        },
-        sortAscending: {
-            created_at: false,
-            updated_at: false,
-            name: true,
-            score: false
+        if (grid.length > 0) {
+            $container = grid.isotope({
+                itemSelector: '.box-grid',
+                columnWidth: '.box-grid-sizer',
+                getSortData: {
+                    updated_at: '[data-updated-at]',
+                    created_at: '[data-created-at]',
+                    name: 'h2',
+                    score: '[data-score]'
+                },
+                sortAscending: {
+                    created_at: false,
+                    updated_at: false,
+                    name: true,
+                    score: false
+                }
+            });
         }
-    });
+    }
+    checkForGrid();
 
     // filter functions
     var lastFilter = "",
         lastType   = "";
+
     var filterFns = {
         // filter by tag using data-tags
         combined: function () {
@@ -40,7 +45,6 @@
     };
 
     var filters   = $('#type, #tags'),
-        sorts     = $('#sorts'),
         _document = $(document),
         source    = $("#motion-template").html(),
         template  = Handlebars.compile(source);
@@ -70,59 +74,10 @@
         _document.find('#' + type + ' [data-filter-value="'+value+'"]').addClass('is-checked');
     }
 
-    // bind filter button click
-    $('#tags').on('click', 'a', function (e) {
-        e.preventDefault();   // this prevents selecting the words in chrome on android
-        var  _this = $(this),
-            filter = _this.attr('data-filter'),
-            value  = this.dataset.filterValue;
-        filterForTag(value);
-        history.pushState({filter: filter, filterValue: value}, value + '<%= I18n.t('header_title') %>', _this.attr('data-forum-path')+'/tags/' + value);
-    });
-
-    $('#type').on('click', 'a', function (e) {
-        e.preventDefault();   // this prevents selecting the words in chrome on android
-        var  _this = $(this),
-            filter = _this.attr('data-filter'),
-                value  = this.dataset.filterValue || "";
-        filterForType(filter, filter);
-        if (filter == '') {
-            history.pushState({
-                filter: filter,
-                filterValue: value
-            }, value + '<%= I18n.t('header_title') %>', _this.attr('data-forum-path') + '/' + value);
-        }
-    });
-
-    // bind sort button click
-    sorts.on('click', 'a', function () {
-        var sortValue = $(this).attr('data-sort-value');
-        $container.isotope({ sortBy: sortValue });
-    });
-
-    // change is-checked class on buttons
-    sorts.each(function (i, buttonGroup) {
-        var $buttonGroup = $(buttonGroup);
-        $buttonGroup.on('click', 'a', function () {
-            $buttonGroup.find('.is-checked').removeClass('is-checked');
-            $(this).addClass('is-checked');
-        });
-    });
-
-    window.onpopstate = function(event) {
-        var state = event.state || {filterValue: ''};
-        filterForTag(state.filterValue);
-    };
-    if ($('.tags-bar')) {
-        var tag =  '';//location.pathname.split('/')[1];
-        if (tag !== null && tag !== "") {
-            filterForTag(tag);
-        }
-    }
-
-    //TODO: When clicked on .is-check, disable that class and go back to 'original-order'. This only applies to Tags, not for sorts.
-
-    $('.grid .load-more').on('click', function () {
+    $(document).on('pjax:complete pjax:end', function () {
+        checkForGrid();
+    }).on('click', '.grid .load-more', function () {
+        //TODO: When clicked on .is-check, disable that class and go back to 'original-order'. This only applies to Tags, not for sorts.
         var _this       = $(this),
                 filterQuery = lastFilter ? '[data-tags*="'+lastFilter + '"]' : '';
         _this.text('<%= I18n.t('articles.loading'); %>');
@@ -149,12 +104,53 @@
                     }
                 }
         );
-
-    });
-
-    $('#sort-random').click( function() {
+    }).on('click', '#sort-random', function () {
         $container.isotope('updateSortData').isotope({
             sortBy: 'random'
         });
+    }).on('click', '#tags a', function (e) {
+        // bind filter button click
+        e.preventDefault();   // this prevents selecting the words in chrome on android
+        var  _this = $(this),
+            filter = _this.attr('data-filter'),
+            value  = this.dataset.filterValue;
+        filterForTag(value);
+        history.pushState({filter: filter, filterValue: value}, value + '<%= I18n.t('header_title') %>', _this.attr('data-forum-path')+'/tags/' + value);
+    }).on('click', '#type a', function (e) {
+        e.preventDefault();   // this prevents selecting the words in chrome on android
+        var  _this = $(this),
+            filter = _this.attr('data-filter'),
+            value  = this.dataset.filterValue || "";
+        filterForType(filter, filter);
+        if (filter == '') {
+            history.pushState({
+                filter: filter,
+                filterValue: value
+            }, value + '<%= I18n.t('header_title') %>', _this.attr('data-forum-path') + '/' + value);
+        }
+    }).on('click', '#sorts a', function () {
+        var sortValue = $(this).attr('data-sort-value');
+        $container.isotope({ sortBy: sortValue });
     });
+
+    // change is-checked class on buttons
+    $('#sorts').each(function (i, buttonGroup) {
+        var $buttonGroup = $(buttonGroup);
+        $buttonGroup.on('click', 'a', function () {
+            $buttonGroup.find('.is-checked').removeClass('is-checked');
+            $(this).addClass('is-checked');
+        });
+    });
+
+    window.onpopstate = function(event) {
+        var state = event.state || {filterValue: ''};
+        filterForTag(state.filterValue);
+    };
+    if ($('.tags-bar')) {
+        var tag =  '';//location.pathname.split('/')[1];
+        if (tag !== null && tag !== "") {
+            filterForTag(tag);
+        }
+    }
+
 });
