@@ -57,6 +57,8 @@
                         span.fa[class=('fa-' + social['icon'])]
               - if section['expand'].present?
                 a[href=("#" + section['expand']['id']) class="expander block-link" data-expander-target=("#" + section['expand']['id'])]
+                  span.collapsed-label= t('read-more')
+                  span.expanded-label= t('collapse')
         - if section['expand'].present?
           .blocks.expander-content[id=section['expand']['id']]
             .block.block--hidden.block--full.block--big-text

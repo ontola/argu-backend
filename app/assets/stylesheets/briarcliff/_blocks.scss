@@ -290,11 +290,14 @@ p.block-slogan {
 }
 
 .block {
-  .expander.collapsed:after {
-    content: "lees meer";
+  .expander .expanded-label {
+    display: none;
   }
-  .expander.expanded:after {
-    content: "inklappen";
+  .expander.expanded .expanded-label {
+    display: inline-block;
+  }
+  .expander.expanded .collapsed-label {
+    display: none;
   }
 
   .expander--hidden.collapsed {
