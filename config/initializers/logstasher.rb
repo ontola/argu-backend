@@ -6,10 +6,8 @@ if LogStasher.enabled
     fields[:user] = current_user && current_user.id
     fields[:profile] = current_profile && current_profile.id
     fields[:a_params] = request.try(:params).try(:slice, 'at', 'r', 'q')
-    if current_context.has_parent?
-      first_parent = current_context.model.get_parent.single_model
-      web_url = first_parent.class == Forum ? first_parent.web_url : first_parent.get_parent.single_model.web_url
-      fields[:forum] = web_url
+    if (cs = current_context.context_scope(current_profile)).present?
+      fields[:forum] = cs.model.web_url
     end
   end
 end

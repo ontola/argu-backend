@@ -1,7 +1,7 @@
 module ArguExtensions
   module Context
     # Descends down the context tree until a forum is found.
-    def context_scope(current_profile)
+    def context_scope(current_profile, default_nil = false)
       @redis ||= Redis.new
       if self.present?
         if self.model.class == Forum
@@ -18,7 +18,11 @@ module ArguExtensions
           self.parent.context_scope(current_profile)
         end
       else
-        ::Context.new current_profile.present? ? current_profile.preferred_forum : Forum.first_public
+        if default_nil
+          ::Context.new
+        else
+          ::Context.new current_profile.present? ? current_profile.preferred_forum : Forum.first_public
+        end
       end
     end
 
