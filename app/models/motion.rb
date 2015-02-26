@@ -114,7 +114,7 @@ class Motion < ActiveRecord::Base
   end
 
   def total_vote_count
-    votes_pro_count + votes_con_count + votes_neutral_count
+    votes_pro_count.abs + votes_con_count.abs + votes_neutral_count.abs
   end
 
   def trim_data
@@ -130,7 +130,7 @@ class Motion < ActiveRecord::Base
         0
       end
     else
-      (votes_pro_count.to_f / total_vote_count * 100).round
+      (votes_pro_count.to_f / total_vote_count * 100).round.abs
     end
   end
 
@@ -142,7 +142,7 @@ class Motion < ActiveRecord::Base
         0
       end
     else
-      (votes_neutral_count.to_f / total_vote_count * 100).round
+      (votes_neutral_count.to_f / total_vote_count * 100).round.abs
     end
   end
 
@@ -154,7 +154,7 @@ class Motion < ActiveRecord::Base
         0
       end
     else
-      (votes_con_count.to_f / total_vote_count * 100).round
+      (votes_con_count.to_f / total_vote_count * 100).round.abs
     end
   end
 
