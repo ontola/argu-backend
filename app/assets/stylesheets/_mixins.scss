@@ -91,6 +91,12 @@
 }
 
 // Responsive
+@mixin bp-large-2 {
+  @media only screen and (max-width: 100em) {
+    @content;
+  }
+}
+
 @mixin bp-large {
   @media only screen and (max-width: 70em) {
     @content;
