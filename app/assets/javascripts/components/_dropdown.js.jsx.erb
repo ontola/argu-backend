@@ -20,6 +20,11 @@ window.HyperDropdown = React.createClass({
         this.setState({openState: !this.state.openState});
     },
 
+    handleTap: function (e) {
+        this.getDOMNode().focus();
+        this.handleMouseUp();
+    },
+
     handleBlur: function (e) {
         this.setState({openState: false});
     },
@@ -53,7 +58,7 @@ window.HyperDropdown = React.createClass({
 
         var TriggerContainer = this.props.triggerTag || 'div';
 
-        return (<li tabIndex="0" onMouseUp={this.handleMouseUp} onTouchEnd={this.handleMouseUp} onBlurCapture={this.handleBlur} className="dropdown" data-intro="" data-position="">
+        return (<li tabIndex="1" onMouseUp={this.handleMouseUp} onTouchEnd={this.handleTap} onBlurCapture={this.handleBlur} className="dropdown" data-intro="" data-position="">
             <TriggerContainer className={triggerClass}>
                 {_image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
