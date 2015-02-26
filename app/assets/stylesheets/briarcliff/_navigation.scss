@@ -23,7 +23,7 @@
   span {
     line-height: 3em;
     display: inline-block;
-    float: right;
+    vertical-align: top;
     @include bp-medium-large() {
       display: none;
       &.fa {

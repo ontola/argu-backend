@@ -34,9 +34,8 @@
                       span.fa[class=('fa-' + feature['icon'])]
                       h2 = feature['header']
                       p.block-subtle == feature['body']
-                end
-              - if section['link'].present?
-                a.block-link[href=section['link']['url']]=section['link']['body']
+            - if section['link'].present?
+              a.block-link[href=section['link']['url']]=section['link']['body']
           - if section['image'].present?
             .block--img.block--img--full
               .img[style="background-image: url(#{asset_path section['image']})"]

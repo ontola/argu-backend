@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require application/jquery.jeditable.mini.js
 //= require fastclick
-//= require simpleexpand
-//= require ./application/briarcliff/expand
+//= require components
 //= require ./application/briarcliff/scroll_smooth
 //= require ./application/briarcliff/modal
