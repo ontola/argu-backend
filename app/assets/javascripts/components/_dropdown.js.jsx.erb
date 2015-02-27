@@ -26,17 +26,29 @@ window.HyperDropdown = React.createClass({
     close: function () {
         var elem = this.state.dropdownElement;
         elem.style.display = 'none';
-        window.setTimeout(function () {
+        this.timerItem = window.setTimeout(function () {
             elem.style.display = 'block';
         }, 50);
         this.setState({openState: false});
+    },
+
+    componentDidMount: function () {
+        this.setState({referenceDropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0],
+            dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[1]});
+        this.calculateRenderLeft();
+        window.addEventListener('resize', this.handleResize);
+    },
+
+    componentWillUnmount: function () {
+        window.clearTimeout(this.timerItem);
+        window.removeEventListener('resize', this.handleResize);
     },
 
     handleMouseUp: function (e) {
         if (this.state.openState) {
             this.close();
         } else {
-            this.setState({openState: true});
+            this.open();
         }
     },
 
@@ -53,15 +65,9 @@ window.HyperDropdown = React.createClass({
         this.calculateRenderLeft();
     },
 
-    componentDidMount: function () {
-        this.setState({referenceDropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0],
-                       dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[1]});
-        this.calculateRenderLeft();
-        window.addEventListener('resize', this.handleResize);
-    },
-
-    componentWillUnmount: function () {
-        window.removeEventListener('resize', this.handleResize);
+    open: function () {
+        window.clearTimeout(this.timerItem);
+        this.setState({openState: true});
     },
 
     render: function () {
