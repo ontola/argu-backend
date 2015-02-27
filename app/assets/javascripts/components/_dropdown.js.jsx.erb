@@ -12,8 +12,16 @@ window.HyperDropdown = React.createClass({
     getInitialState: function () {
         return {
             openState: false,
-            renderLeft: false
+            renderLeft: false,
+            dropdownElement: undefined
         };
+    },
+
+    calculateRenderLeft: function () {
+        this.state.dropdownElement.style.left = '0';
+        this.state.dropdownElement.style.right = 'auto';
+        var elemRect = this.state.dropdownElement.getBoundingClientRect();
+        this.setState({renderLeft: (elemRect.width + elemRect.left) > window.innerWidth});
     },
 
     handleMouseUp: function (e) {
@@ -29,10 +37,18 @@ window.HyperDropdown = React.createClass({
         this.setState({openState: false});
     },
 
+    handleResize: function () {
+        this.calculateRenderLeft();
+    },
+
     componentDidMount: function () {
-        var bodyRect = document.body.getBoundingClientRect(),
-            elemRect = this.getDOMNode().getElementsByClassName('dropdown-content')[0].getBoundingClientRect();
-        this.setState({renderLeft: (elemRect.width + elemRect.left) > bodyRect.width});
+        this.setState({dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0]});
+        this.calculateRenderLeft();
+        window.addEventListener('resize', this.handleResize);
+    },
+
+    componentWillUnmount: function () {
+        window.removeEventListener('resize', this.handleResize);
     },
 
     render: function () {
@@ -72,6 +88,7 @@ window.HyperDropdown = React.createClass({
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
                 {image_after}
             </TriggerContainer>
+            <ul className="dropdown-content"></ul><%# This makes sure renderLeft is calculated correctly %>
             {sections}
         </li>);
     }
