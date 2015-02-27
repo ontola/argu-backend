@@ -13,6 +13,14 @@
   h3{
     font-size: 1em !important;
   }
+  @include bp-large-2 {
+    position: relative;
+    width: 45%;
+    width: calc( 50% - 1em);
+    left: auto !important;
+    right: auto !important;
+    display: inline-block;
+  }
 }
 
 .context--next {

@@ -18,13 +18,13 @@ div[itemscope itemtype="Thing"]
     .cover-header
       .cover-container
         .center
-          = react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
-          ul.btns-sticky.btns-list.btns-subtle=render partial: 'application/menus/settings', locals: {resource: @forum}
+          =react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
           p.cover-oneliner
             = @forum.bio
             - if @forum.bio_long.present?
               a[href="#forum-info"]
                 span.icon-left= t('forums.more_info')
+          =render partial: 'application/menus/settings', locals: {resource: @forum}
         ul.btns-list.btns-vertical
           /TODO: Make this check the current profile, not the user
           - if !policy(@forum).is_member?

@@ -102,6 +102,8 @@ nl:
   users_password_confirmation: "wachtwoord bevestigen"
   users_password_old: "oud wachtwoord"
   users_password_edit: "wachtwoord wijzigen"
+  users_password_confirmation_page_header: "Wachtwoord reset mail is verzonden"
+  users_password_confirmation_page_body: "Ga naar jouw e-mail inbox om de wachtwoord reset link te openen. Mocht je de mail niet vinden, kijk dan ook in je spam map."
   users_oauth_coupled: "gekoppelde accounts"
   users_oauth_new: "account toevoegen"
   users_oauth_login: "inloggen met"

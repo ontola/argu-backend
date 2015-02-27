@@ -71,12 +71,6 @@
   height: auto;
   min-height: 3em;
   @include box-shadow;
-  .btns-list li .dropdown-trigger {
-    padding: 1em;
-    @include bp-medium{
-      padding: .5em;
-    }
-  }
   h1 {
     font-size: 1.4em;
     position: relative;

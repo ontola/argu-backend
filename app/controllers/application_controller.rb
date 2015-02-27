@@ -95,7 +95,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-
   def set_locale
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale
@@ -142,5 +141,9 @@ class ApplicationController < ActionController::Base
     else
       self.class.layout 'closed'
     end
+  end
+
+  def after_sending_reset_password_instructions_path_for(resource_name)
+    password_reset_confirm_path
   end
 end
