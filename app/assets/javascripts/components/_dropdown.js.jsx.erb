@@ -12,20 +12,32 @@ window.HyperDropdown = React.createClass({
     getInitialState: function () {
         return {
             openState: false,
-            renderLeft: false,
-            dropdownElement: undefined
+            renderLeft: false
         };
     },
 
     calculateRenderLeft: function () {
-        this.state.dropdownElement.style.left = '0';
-        this.state.dropdownElement.style.right = 'auto';
-        var elemRect = this.state.dropdownElement.getBoundingClientRect();
+        this.state.referenceDropdownElement.style.left = '0';
+        this.state.referenceDropdownElement.style.right = 'auto';
+        var elemRect = this.state.referenceDropdownElement.getBoundingClientRect();
         this.setState({renderLeft: (elemRect.width + elemRect.left) > window.innerWidth});
     },
 
+    close: function () {
+        var elem = this.state.dropdownElement;
+        elem.style.display = 'none';
+        window.setTimeout(function () {
+            elem.style.display = 'block';
+        }, 50);
+        this.setState({openState: false});
+    },
+
     handleMouseUp: function (e) {
-        this.setState({openState: !this.state.openState});
+        if (this.state.openState) {
+            this.close();
+        } else {
+            this.setState({openState: true});
+        }
     },
 
     handleTap: function (e) {
@@ -34,7 +46,7 @@ window.HyperDropdown = React.createClass({
     },
 
     handleBlur: function (e) {
-        this.setState({openState: false});
+        this.close()
     },
 
     handleResize: function () {
@@ -42,7 +54,8 @@ window.HyperDropdown = React.createClass({
     },
 
     componentDidMount: function () {
-        this.setState({dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0]});
+        this.setState({referenceDropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0],
+                       dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[1]});
         this.calculateRenderLeft();
         window.addEventListener('resize', this.handleResize);
     },
