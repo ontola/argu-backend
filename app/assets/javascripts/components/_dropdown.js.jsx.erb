@@ -11,12 +11,12 @@ var _image = function (props) {
 window.HyperDropdown = React.createClass({
     getInitialState: function () {
         return {
-            openState: false
+            openState: false,
+            renderLeft: false
         };
     },
 
     handleMouseUp: function (e) {
-        window.clearTimeout(this.state.timeout);
         this.setState({openState: !this.state.openState});
     },
 
@@ -29,9 +29,17 @@ window.HyperDropdown = React.createClass({
         this.setState({openState: false});
     },
 
+    componentDidMount: function () {
+        var bodyRect = document.body.getBoundingClientRect(),
+            elemRect = this.getDOMNode().getElementsByClassName('dropdown-content')[0].getBoundingClientRect();
+        this.setState({renderLeft: (elemRect.width + elemRect.left) > bodyRect.width});
+    },
+
     render: function () {
         var collapseStyle = {
-            display: this.state.openState ? 'block' : 'none'
+            visibility: this.state.openState ? 'visible' : 'hidden',
+            left: this.state.renderLeft ? 'auto' : 0,
+            right: this.state.renderLeft ? 0 : undefined
         };
 
         var sections;
