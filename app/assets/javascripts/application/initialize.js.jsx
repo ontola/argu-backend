@@ -10,7 +10,6 @@ $(function (){
         var nodes = document.querySelectorAll('#pjax-container [data-react-class]');
 
         for (var i = 0; i < nodes.length; ++i) {
-            console.log('shallowMount');
             var node = nodes[i];
             var className = node.getAttribute(window.ReactRailsUJS.CLASS_NAME_ATTR);
 
@@ -28,11 +27,9 @@ $(function (){
         var nodes = document.querySelectorAll('#pjax-container [data-react-class]');
 
         for (var i = 0; i < nodes.length; ++i) {
-            console.log('shallowUnmount');
             var node = nodes[i];
 
             React.unmountComponentAtNode(node);
-            console.log(node);
             // now remove the `data-react-class` wrapper as well
             //node.parentElement && node.parentElement.removeChild(node);
         }

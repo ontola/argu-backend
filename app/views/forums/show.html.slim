@@ -57,10 +57,9 @@ div[itemscope itemtype="Thing"]
               span.fa.fa-group
               span.icon-left= t('forums.invite_others')
   - if policy(@forum).show?
-    .center
+    /.center
       ul.btns-list
-        li
-          = react_component 'Expander', {label: t('filtersort.filter_&_sort'), expanderTarget: 'filter-and-sort', showCaret: true}, {prerender: true}
+        li= react_component 'Expander', {label: t('filtersort.filter_&_sort'), expanderTarget: 'filter-and-sort', showCaret: true}, {prerender: true}
     #filter-and-sort.filter-and-sort.expander-content
       #type
         ul.tags.tags-type
