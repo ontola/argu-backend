@@ -11,8 +11,8 @@ head
   meta[charset="UTF-8"]
   meta[name="viewport" content="width=device-width, initial-scale=1"]
   meta[http-equiv="X-UA-Compatible" content="IE=edge"]
-  = csrf_meta_tags
-  = render 'shim'
+  =csrf_meta_tags
+  =render 'shim'
 
   / Google fonts
   link[href='//fonts.googleapis.com/css?family=Open+Sans:400italic,400,700' rel='stylesheet' type='text/css']
@@ -20,9 +20,9 @@ head
   link[href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"]
 
   / unless current_user.blank?
-  = stylesheet_link_tag 'application', :media => 'all'
+  =stylesheet_link_tag 'application', :media => 'all'
   - if request.original_url.include? developers_path
-    = stylesheet_link_tag 'developers/developers', :media => 'all'
+    =stylesheet_link_tag 'developers/developers', :media => 'all'
 
   meta[name="url" content="https://argu.co"]
   meta[name="language" content="#{I18n.locale}"]
@@ -32,7 +32,7 @@ head
   meta[property="twitter:site" content="@argu_nl"]
   meta[property="og:image" content="#{asset_url('favicon-608x608.png')}"]
   meta[property="twitter:domain" content="https://argu.co"]
-  = yield :connected_web
+  =yield :connected_web
 
   / Favicons
   link[rel="apple-touch-icon" sizes="57x57" href=asset_path("favicons/apple-touch-icon-57x57.png")]
@@ -61,17 +61,17 @@ body
   #fb-root
   = render 'navbar'
   .wrapper
-    /[if lt IE 8]
-      p.browsehappy=raw t("outdated_browser")
+    /[if lt IE 10]
+      p.browsehappy= raw t('outdated_browser')
     -flash.each do |key, value|
       .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
-    /= render 'responsibility_notice'
+    /=render 'responsibility_notice'
     #pjax-container.container
-      = yield
+      =yield
     .push-footer
-  = render 'footer'
-  =javascript_include_tag "application"
+  =render 'footer'
+  =javascript_include_tag 'application'
   - if Rails.env.production? || Rails.env.test?
-    = render partial: 'analytics'
+    =render partial: 'analytics'
   script[id="motion-template" type="text/x-handlebars-template"]
-    = render partial: "motions/motion_template"
+    =render partial: 'motions/motion_template'

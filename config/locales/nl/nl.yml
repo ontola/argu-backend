@@ -54,7 +54,7 @@ nl:
   not_allowed: "actie niet toegestaan."
   error: "fout"
   error_prohibited: " bij het opslaan:"
-  outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
+  outdated_browser: "Je gebruikt een <strong>achterhaalde en waarschijnlijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
   share_link:
     header: "Link delen"
     body: "Deel onderstaande link om direct mensen uit te nodigen naar dit forum."
