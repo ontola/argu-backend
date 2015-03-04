@@ -23,4 +23,3 @@
             input[type='hidden' name='forum' value=params[:forum]]
           = f.actions do
             = f.action :submit, :as => :button, label: t("devise.invitations.new.submit_button")
-    /TODO: Share unique URL's for forums, questions & motions. Should preferably even work when forum is hidden, by adding a token / string to the url to validate it.

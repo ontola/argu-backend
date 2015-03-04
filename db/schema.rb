@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150210130031) do
+ActiveRecord::Schema.define(version: 20150222142905) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -283,6 +283,7 @@ ActiveRecord::Schema.define(version: 20150210130031) do
     t.datetime "updated_at"
     t.string   "cover_photo",                         default: ""
     t.string   "cover_photo_attribution",             default: ""
+    t.datetime "expires_at"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -359,14 +360,14 @@ ActiveRecord::Schema.define(version: 20150210130031) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                  default: 0
     t.boolean  "finished_intro",                     default: false
+    t.text     "r"
+    t.text     "access_tokens"
     t.integer  "follows_email",                      default: 1,     null: false
     t.boolean  "follows_mobile",                     default: true,  null: false
     t.integer  "memberships_email",                  default: 1,     null: false
     t.boolean  "memberships_mobile",                 default: true,  null: false
     t.integer  "created_email",                      default: 1,     null: false
     t.boolean  "created_mobile",                     default: true,  null: false
-    t.text     "r"
-    t.text     "access_tokens"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -393,5 +394,5 @@ ActiveRecord::Schema.define(version: 20150210130031) do
   add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
-  add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
+  add_foreign_key "access_tokens", "profiles"
 end

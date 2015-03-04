@@ -10,6 +10,7 @@
   &:before{
     content: "";
     background-color: $g00;
+    opacity: .5;
     width: 0.5em;
     height: 100%;
     position: absolute;
@@ -32,11 +33,16 @@
 }
 
 .comments-counter{
-  right: .5em;
-  bottom: .5em;
+  right: 0;
+  bottom: 0;
+  padding: 0.5em 0.5em;
   font-size: .8em;
   position: absolute;
-  color: $g2;
+  text-transform: uppercase;
+  span {color: $g2;}
+  &:hover span{
+    color: $g3;
+  }
 }
 
 .top-comment:hover .comments-counter{
@@ -50,6 +56,9 @@
   @include transition(.2s);
   &:hover {
     background-color: $g0;
+    .comments-counter span{
+      color: $g3;
+    }
   }
   &:active {
     background-color: $g1;

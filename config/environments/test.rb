@@ -1,4 +1,4 @@
-Argu::Application.configure do
+Rails.application.configure do
   config.host = ENV['HOSTNAME'] || 'www.example.com'
   # Settings specified here will take precedence over those in config/application.rb
 

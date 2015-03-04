@@ -1,3 +1,4 @@
+=set_title (@motion.title.nil? ? t(:motion_title) : @motion.title)
 -content_for :connected_web
   meta[name="description" content="#{@motion.content}"]
   meta[property="og:title" content="#{@motion.display_name}"]
@@ -9,19 +10,21 @@
   meta[property="twitter:description" content="#{@motion.content}"]
   /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
   meta[property="twitter:image" content="#{@motion.cover_photo.url}" ]
--provide :title, (@motion.title.nil? ? t(:motion_title) : @motion.title)
 div[itemscope itemtype="http://www.schema.org/Answer"]
   .cover-behind
     .cover-image[style="background-image: url('#{@motion.cover_photo.url(:cover)}'); "]
   .col-1
     div[data-intro= t("intro.motion.back")]= to_parent
-    div[data-intro= t("intro.motion.body") itemprop="text"]= render partial: 'motionbody', locals: { motion: @motion }
-    =render partial: 'shr', locals: { model: @motion, vote: @vote }
-    /e=render partial: 'vote_results'
-div[data-intro= t("intro.motion.arguments") data-position= "top"]= render_columns(@arguments, buttons_url: new_forum_argument_path(@motion.forum, motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false, buttons_options: {data: {remote: true}})
+    =render partial: 'contextualize/carousel_buttons', locals: {item: @motion, type: 'sta'}
+    .col--motion
+      div[data-intro= t("intro.motion.body") itemprop="text"]= render partial: 'motionbody', locals: { motion: @motion }
+      =render partial: 'shr', locals: { model: @motion, vote: @vote }
+      /e=render partial: 'vote_results'
+div[data-intro= t("intro.motion.arguments") data-position= "top"]= render_columns(@arguments, buttons_url: new_forum_argument_path(@motion.forum, motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false, buttons_options: {data: remote_unless_user})
 -if Rails.configuration.epics.opinions
   = render_columns(@opinions, header: t("arguments.index.opinion"))
 -if Rails.configuration.epics.parties
   header
     h1=t("arguments.index.parties")
   =render partial: 'parties', locals: { motion: @motion }
+// Render four random motions / questions from the same forum

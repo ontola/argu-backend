@@ -23,8 +23,8 @@ class ArgumentsController < ApplicationController
   def new
     @forum = Forum.friendly.find params[:forum_id]
     @argument = @forum.arguments.new motion_id: params[:motion_id]
+    authorize @forum, :show?
     if current_profile.blank?
-      authorize @argument, :show?
       render_register_modal(nil, [:motion_id, params[:motion_id]], [:pro, params[:pro]])
     else
       authorize @argument, :new?
@@ -70,7 +70,7 @@ class ArgumentsController < ApplicationController
 
     respond_to do |format|
       if @argument.save
-        @argument.create_activity action: :create, recipient: @argument.motion, owner: current_profile, forum_id: @argument.forum.id
+        create_activity @argument, action: :create, recipient: @argument.motion, owner: current_profile, forum_id: @argument.forum.id
         format.html { redirect_to (argument_params[:motion_id].blank? ? @argument : Motion.find_by_id(argument_params[:motion_id])), notice: 'Argument was successfully created.' }
         format.json { render json: @argument, status: :created, location: @argument }
       else

@@ -12,9 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require react
+//= require react_ujs
 //= require application/jquery.jeditable.mini.js
-//= require touche
-//= require simpleexpand
-//= require ./application/briarcliff/expand
+//= require fastclick
+//= require components
 //= require ./application/briarcliff/scroll_smooth
 //= require ./application/briarcliff/modal

@@ -10,6 +10,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    # Currently only displays the current user, might be extended to include more.
+    # To keep it REST, we're just using the proper route for now
+    @profile = current_profile
+    authorize @profile, :show?
+
+    render
+  end
+
+  def current_actor
+    @profile = current_profile
+    authorize @profile, :show?
+
+    render
+  end
+
   def edit
     @user = current_user
     authorize @user
@@ -25,7 +41,7 @@ class UsersController < ApplicationController
       request.env['HTTP_REFERER'] ||= root_path
       respond_to do |format|
         format.html { redirect_to :back }
-        format.json { render json: "Error: user not found" }
+        format.json { render json: 'Error: user not found' }
       end
     end
   end
@@ -35,12 +51,12 @@ class UsersController < ApplicationController
     @user = User.find current_user.id
     authorize @user
     respond_to do |format|
-      if @user.update_attributes(permit_params)
-        format.html { redirect_to settings_path, notice: "Wijzigingen opgeslagen." }
+      if permit_params[:password_confirmation].present? ? @user.update_attributes(permit_params) : @user.update_without_password(passwordless_permit_params)
+        format.html { redirect_to settings_path, notice: 'Wijzigingen opgeslagen.' }
         format.json { head :no_content }
       else
-        format.html { render action: "edit" }
-        format.json { render json: @profile.errors, status: :unprocessable_entity }
+        format.html { render action: 'edit' }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -62,5 +78,11 @@ class UsersController < ApplicationController
   private
   def permit_params
     params.require(:user).permit(:username, :email, :password, :password_confirmation)
+  end
+
+  def passwordless_permit_params
+    params.require(:user).permit(:follows_email, :follows_mobile,
+                                 :memberships_email, :memberships_mobile,
+                                 :created_email, :created_mobile)
   end
 end

@@ -1,10 +1,10 @@
 nl:
   pages:
-    resource_name: "pagina"
+    resource_name: "Pagina"
     settings:
-      title: "instellingen"
-    display: "pagina bekijken"
-    create: "start een pagina"
+      title: "Instellingen"
+    display: "Pagina bekijken"
+    create: "Start een pagina"
     legal: "Door deze pagina aan te maken verklaar je toestemming te hebben om de organisatie waarvoor je een pagina maakt officieel op Argu te vertegenwoordigen."
     helper:
       side: "<h2>Wat is een pagina?</h2>
@@ -18,6 +18,6 @@ nl:
     attributes:
       page:
         name: 'Naam'
-        web_url: 'argu url'
+        web_url: 'Argu url'
         visibility: 'Zichtbaarheid'
         f_delete: 'Verwijderen'

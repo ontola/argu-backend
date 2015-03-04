@@ -10,6 +10,7 @@ $grey_light: $g0;
   max-width: 1200px;
   position: relative;
   clear: both;
+  padding: 0;
 }
 
 .block{
@@ -21,6 +22,11 @@ $grey_light: $g0;
   overflow: hidden;
   height: 24em;
   position: relative;
+  @include bp-medium{
+    width: 100%;
+    height: auto;
+    padding: 4em 2em;
+  }
   * {
     color: $primary;
   }
@@ -51,10 +57,28 @@ $grey_light: $g0;
       opacity: .3;
     }
   }
-  @include bp-medium{
+  h3 {
+    font-size: 1.2em;
+  }
+}
+
+.block-alt {
+  width: 50%;
+  background-color: $g1;
+  padding: 2em;
+  float: left;
+  overflow: hidden;
+  height: 24em;
+  position: relative;
+  @include bp-medium {
     width: 100%;
     height: auto;
     padding: 4em 2em;
+  }
+  .col-2, .col-3 {
+    margin-left: -1em;
+    margin-right: -1em;
+    font-size: .8em;
   }
 }
 
@@ -82,7 +106,18 @@ $grey_light: $g0;
     right: 0;
     background-color: $primary;
     opacity: .2;
+    @include transition(.5s)
   }
+  &:hover:before{
+    opacity: 0;
+  }
+}
+
+.block--img--full {
+  height: 34em;
+  display: block;
+  position: relative;
+  clear: both;
 }
 
 .block--right {
@@ -119,6 +154,25 @@ $grey_light: $g0;
 .block--full {
   width: 100%;
   height: auto;
+  padding-bottom: 4em;
+  h2 {
+    font-size: 2.3em;
+    margin-top: 1em;
+    @include bp-medium{
+      font-size: 1.3em;
+      margin-top: 0;
+    }
+  }
+}
+
+.block--left-aligned {
+  text-align: left;
+  h2 {
+    font-size: 1.5em;
+  }
+  h2:after{
+    display: none;
+  }
 }
 
 .block-link{
@@ -160,7 +214,7 @@ $grey_light: $g0;
     width: 33.3%;
     vertical-align: top;
     padding: 1.6em 1.2em;
-    @include bp-medium {
+    @include bp-large {
       width: 50%;
     }
     @include bp-small {
@@ -191,22 +245,33 @@ $grey_light: $g0;
   h2 {
     font-size: 1.1em;
   }
-  i {
-    font-size: 120%;
-    margin: 1em 0 0.5em 0;
-    display: block;
+  blockquote {
+    margin: 0 0 .2em 0;
   }
-  img{
-    display: block;
-    margin: auto;
-    width: 5em;
-    height: 5em;
-    border-radius: 9999px;
+}
+
+.block-avatar{
+  display: block;
+  margin: auto;
+  margin-bottom: .5em;
+  width: 100px;
+  height: 100px;
+  border-radius: 9999px;
+  background-position: center;
+  background-size: cover;
+  @include filter(grayscale(1));
+  @include transition(.5s);
+  &:hover{
+    @include filter(grayscale(0));
   }
 }
 
 .block-subtle {
-  opacity: .8;
+  color: lighten($primary, 5);
+}
+
+.block--fill .block-subtle {
+  color: #DBDBDB;
 }
 
 p.block-slogan {
@@ -225,11 +290,14 @@ p.block-slogan {
 }
 
 .block {
-  .expander.collapsed:after {
-    content: "lees meer";
+  .expander .expanded-label {
+    display: none;
   }
-  .expander.expanded:after {
-    content: "inklappen";
+  .expander.expanded .expanded-label {
+    display: inline-block;
+  }
+  .expander.expanded .collapsed-label {
+    display: none;
   }
 
   .expander--hidden.collapsed {
@@ -243,8 +311,22 @@ p.block-slogan {
   }
 }
 
+.block-social-buttons li{
+  display: inline;
+  font-size: 1.3em;
+  opacity: .5;
+  margin: .4em;
+  @include transition(.5s);
+  &:hover{
+    opacity: 1;
+  }
+}
+
+.block-image-wide {
+  width: 100%;
+}
+
 @media screen and (max-width: 1200px) {
   .blocks-container {
-    margin-top: -5em;
   }
 }

@@ -15,9 +15,12 @@ Argu::Application.configure do
   config.epics.open_auth = false                      # Facebook, twitter, google, openID login & account linking shown in profile
   config.epics.link_to_motion = false                 # Button in questions.show to find & link motions
   config.epics.page_create = false                     # Create a page button in header menu
+  config.epics.notifications = false                   # Show notifications button in header menu
+  config.epics.motions_in_question_partial = false     # Show motions in question partial
 
   config.logstasher.enabled = true
 
+  config.react.variant = :production
 
   # Code is not reloaded between requests
   config.cache_classes = true

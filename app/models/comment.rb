@@ -1,10 +1,13 @@
 class Comment < ActiveRecord::Base
-  include ArguBase, Parentable, Trashable, PublicActivity::Common
+  include ArguBase, Parentable, Trashable, PublicActivity::Common, Mailable
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   parentable :commentable
 
-  after_validation :increase_counter_cache
+  acts_as_nested_set :scope => [:commentable_id, :commentable_type]
+  mailable CommentMailer, :directly, :daily, :weekly
+
+  after_validation :increase_counter_cache, :touch_parent
   after_destroy :decrease_counter_cache
 
   validates_presence_of :profile
@@ -28,6 +31,13 @@ class Comment < ActiveRecord::Base
     c
   end
 
+  def collect_recipients(type)
+    profiles = Set.new
+    if type == :directly
+      profiles.merge commentable.parent.creator if comment.parent && comment.parent.creator.owner.direct_created_email?
+    end
+  end
+
   def creator
     self.profile
   end
@@ -48,6 +58,10 @@ class Comment < ActiveRecord::Base
   scope :find_comments_for_commentable, lambda { |commentable_str, commentable_id|
     where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
   }
+
+  def touch_parent
+    self.get_parent.model.touch
+  end
 
   # Helper class method to look up a commentable object
   # given the commentable class name and id

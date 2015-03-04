@@ -1,7 +1,7 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, PublicActivity::Common
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, PublicActivity::Common, Mailable
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :opinions, -> { opinion_comments }, :dependent => :destroy
@@ -19,6 +19,7 @@ class Motion < ActiveRecord::Base
 
   parentable :questions, :forum
   convertible :votes, :taggings, :activities
+  mailable MotionMailer, :directly, :daily, :weekly
   resourcify
   mount_uploader :cover_photo, CoverUploader
 
@@ -78,6 +79,14 @@ class Motion < ActiveRecord::Base
     return true
   end
 
+  def next(show_trashed = false)
+    self.forum.motions.trashed(show_trashed).where('updated_at < :date', date: self.updated_at).order('updated_at').last
+  end
+
+  def previous(show_trashed = false)
+    self.forum.motions.trashed(show_trashed).where('updated_at > :date', date: self.updated_at).order('updated_at').first
+  end
+
   def pro_count
     self.arguments.count(:conditions => ["pro = true"])
   end
@@ -105,7 +114,7 @@ class Motion < ActiveRecord::Base
   end
 
   def total_vote_count
-    votes_pro_count + votes_con_count + votes_neutral_count
+    votes_pro_count.abs + votes_con_count.abs + votes_neutral_count.abs
   end
 
   def trim_data
@@ -121,7 +130,7 @@ class Motion < ActiveRecord::Base
         0
       end
     else
-      (votes_pro_count.to_f / total_vote_count * 100).round
+      (votes_pro_count.to_f / total_vote_count * 100).round.abs
     end
   end
 
@@ -133,7 +142,7 @@ class Motion < ActiveRecord::Base
         0
       end
     else
-      (votes_neutral_count.to_f / total_vote_count * 100).round
+      (votes_neutral_count.to_f / total_vote_count * 100).round.abs
     end
   end
 
@@ -145,7 +154,7 @@ class Motion < ActiveRecord::Base
         0
       end
     else
-      (votes_con_count.to_f / total_vote_count * 100).round
+      (votes_con_count.to_f / total_vote_count * 100).round.abs
     end
   end
 

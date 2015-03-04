@@ -11,20 +11,12 @@ footer
       a[href="/forums/feedback"] Argu Feedback
   ul.footer-list
     li
-      h3.footer-heading= t("about_title")
-    / Do NOT edit the class names below, this is an hCard (see: http://microformats.org/wiki/hcard)
-    li.vcard
-      p.fn.org Argu v.o.f.
-      address.adr.h-adr
-        p.street-address.p-street-address Padualaan 8
-        p
-          span.postal-code.p-postal-code' 3584 CH
-          span.locality.p-locality Utrecht
-      a.email[href="mailto:info@argu.co"] info@argu.co
-      .photo[href=asset_path("favicons/favicon-192x192.png")]
-    /TODO: li
-      a Ons team
-    li=link_to "Meer", about_path
+      h3.footer-heading= t("about.title")
+      /= render partial: "vcard"
+    li=link_to t("about.vision"), about_path
+    li=link_to t("about.how_argu_works"), how_argu_works_path
+    li=link_to t("about.team"), team_path
+    li=link_to t("about.governments"), governments_path
   ul.footer-list
     li
       h3.footer-heading voorwaarden
@@ -39,7 +31,7 @@ footer
           span.fa.fa-facebook-square
         a[href="https://www.linkedin.com/company/5322073"]
           span.fa.fa-linkedin
-        a[href="https://twitter.com/argu_nl"]
+        a[href="https://twitter.com/argu_co"]
           span.fa.fa-twitter
     /li
       div[class="fb-like" data-href="https://www.facebook.com/argu.co" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"]

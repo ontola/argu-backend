@@ -1,11 +1,12 @@
 class StaticPagesController < ApplicationController
+  before_action :get_document, only: [:team, :about, :product, :governments]
 
   def home
     authorize :static_pages
   	if signed_in?
       if policy(current_user).staff?
         @activities = policy_scope(Activity).order(created_at: :desc).limit(10)
-        render
+        render #stream: true
       else
         redirect_to preferred_forum
       end
@@ -25,18 +26,40 @@ class StaticPagesController < ApplicationController
 
   def about
     authorize :static_pages
+    render 'document'
   end
 
   def product
     authorize :static_pages
+    render 'document'
   end
 
   def developers
     authorize :static_pages
   end
 
+  def how_argu_works
+    authorize :static_pages
+  end
+
+  def team
+    authorize :static_pages
+    render 'document'
+  end
+
+  def governments
+    authorize :static_pages
+    render 'document'
+  end
+
   private
   def default_forum_path
     current_profile.present? ? preferred_forum : Forum.first_public
   end
+
+  def get_document
+    @document = JSON.parse Setting.get(params[:action]) || '{}'
+    # parsing is neccessary, since the _simple_settings gem converts the JSON to a string
+  end
+
 end

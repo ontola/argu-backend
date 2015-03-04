@@ -1,7 +1,7 @@
 = semantic_form_for resource, multipart: true do |f|
   - resource.errors.full_messages.each do |message|
     = message
-  = f.inputs do
+  = f.inputs name: t('forums.settings.profile') do
     = f.input :name
     = f.input :bio, input_html: { rows: 2}
     = f.input :bio_long
@@ -15,12 +15,15 @@
     = f.input :remove_profile_photo, as: :reverse_boolean
     -if policy(resource).web_url?
       = f.input :web_url
-    - if policy(resource).is_owner?
-      = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-        = f.input :visibility, as: :select, collection: Forum.visibilities.keys, include_blank: false
-        = f.input :visible_with_a_link, as: :reverse_boolean
+  - if policy(resource).is_owner?
+    = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+      = f.input :visibility, as: :select, collection: Forum.visibilities.keys, include_blank: false
+      = f.input :visible_with_a_link, as: :reverse_boolean
+      - if resource.full_access_token.present?
         = text_field_tag 'link', "#{forum_url(resource)}?at=#{resource.access_token}", onClick: 'this.setSelectionRange(0, this.value.length)'
-        -if policy(resource).change_owner?
-          = f.input :page
+        p= "Follows: #{resource.full_access_token.usages}"
+        p= "Sign-ups: #{resource.full_access_token.sign_ups}"
+      -if policy(resource).change_owner?
+        = f.input :page
   = f.actions do
     = f.action :submit, :as => :button

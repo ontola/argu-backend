@@ -12,17 +12,20 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require react
+//= require react_ujs
+//= require js-routes
 //= require application/jquery.jeditable.mini.js
 //= require jquery-ui/autocomplete
 //= require jquery-ui/sortable
-//= require touche
+//= require jquery.pjax
 //= require microplugin
 //= require sifter
 //= require selectize
 //= require handlebars-v2.0.0
 // Briarcliff dependencies :: GO
+//= require fastclick
 //= require isotope.pkgd.min
-//= require simpleexpand
 //= require intro
 // Briarcliff dependencies :: END
 //= require requirejs
@@ -30,4 +33,5 @@
 //= require fixedsticky
 //= require pica_pica/application
 //= require cocoon
+//= require components
 //= require_tree ./application

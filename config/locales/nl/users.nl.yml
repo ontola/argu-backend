@@ -1,0 +1,24 @@
+#Dutch motions translations
+
+nl:
+  users:
+    registrations:
+      categories:
+        general: "Algemeen"
+        authentication: "Authenticatie"
+        notifications: "Notificaties"
+    follows_email:
+      never_follows_email: 'Nooit'
+      direct_follows_email: 'Onmiddelijk'
+      daily_follows_email: 'Dagelijks'
+      weekly_follows_email: 'Wekelijks'
+    memberships_email:
+      never_memberships_email: 'Nooit'
+      direct_memberships_email: 'Onmiddelijk'
+      daily_memberships_email: 'Dagelijks'
+      weekly_memberships_email: 'Wekelijks'
+    created_email:
+      never_created_email: 'Nooit'
+      direct_created_email: 'Onmiddelijk'
+      daily_created_email: 'Dagelijks'
+      weekly_created_email: 'Wekelijks'

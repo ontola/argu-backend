@@ -3,6 +3,9 @@
 
 .dropdown {
   position: relative;
+  &:focus {
+    outline: none;
+  }
 }
 
 .dropdown-trigger {
@@ -12,7 +15,8 @@
 
 .dropdown-content {
   background-color: white;
-  display: none;
+  // This isn't display: none; to make javascript return bounding box dimensions
+  visibility: hidden;
   left: 0;
   margin: 0;
   position: absolute;
@@ -26,6 +30,8 @@
   overflow: hidden;
   text-transform: none;
   border-top: none;
+  max-height: 30em;
+  overflow-y: auto;
   li {
     min-width: 100%;
   }
@@ -56,6 +62,19 @@
     color: white;
     background-color: $g3;
   }
+  .link{
+    position: relative;
+    img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      & + span {
+        position: relative;
+        left: 1.4em;
+      }
+    }
+  }
 }
 
 .dropdown-active {
@@ -79,12 +98,13 @@ span.dropdown-header {
   width: 100%;
   text-transform: uppercase;
   font-size: .8em;
+  display: inline-block;
 }
 
 //.dropdown:hover .dropdown-content,
 .dropdown-active .dropdown-content {
   //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
-  display: block;
+  visibility: visible;
   //text-transform: initial;
   @include animation(fade-in .2s);
   span {
@@ -100,4 +120,21 @@ span.dropdown-header {
   display: block;
   width: 100%;
   border-top: solid 1px $g2;
+}
+
+.dropdown-header {
+  background-color: $g0;
+  width: 100%;
+  li{
+    display: inline-block !important;
+    min-width: 0;
+    font-size: .8em;
+  }
+}
+
+.dropdown-title {
+  float: left;
+  font-weight: bold;
+  padding: .6em;
+  color: $g4;
 }

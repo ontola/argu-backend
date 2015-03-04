@@ -16,6 +16,7 @@ class Question < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 255 }
   validates :forum_id, :creator_id, presence: true
+  #TODO validate expires_at
 
   attr_accessor :include_motions
 
@@ -47,6 +48,14 @@ class Question < ActiveRecord::Base
       forum.save
     end
     return true
+  end
+
+  def next(show_trashed = false)
+    self.forum.questions.trashed(show_trashed).where('updated_at < :date', date: self.updated_at).order('updated_at').last
+  end
+
+  def previous(show_trashed = false)
+    self.forum.questions.trashed(show_trashed).where('updated_at > :date', date: self.updated_at).order('updated_at').first
   end
 
   def supped_content

@@ -1,0 +1,84 @@
+@import "variables";
+@import "mixins";
+
+
+.col-1 {
+  position: relative;
+  clear: both;
+  margin: 0 auto;
+  padding: .01em 1em; //unpadded means margins are negated
+  margin-bottom: 1em;
+  max-width: 55em;
+  @include bp-medium(){
+    width: 100%;
+  }
+}
+
+.col-1-big {
+  @include container-width;
+}
+
+.col-1-small {
+  position: relative;
+  clear: both;
+  margin: 0 auto;
+  padding: 0em 1em;
+  margin-bottom: 1em;
+  max-width: 35em;
+}
+
+.col-2 {
+  position: relative;
+  clear: both;
+  margin: 0 auto;
+  @include container-width;
+  .col-2 {
+    margin-left: -1em;
+    margin-right: -1em;
+  }
+  .col-3 {
+    margin-left: -1em;
+    margin-right: -1em;
+  }
+}
+
+.col-2-1 {
+  position: relative;
+  float: left;
+  width: 50%;
+  padding: 0em 1em;
+  @include bp-medium(){
+    width: 100%;
+  }
+}
+
+.col-3 {
+  position: relative;
+  clear: both;
+  margin: 0 auto;
+  @include container-width;
+}
+
+.col-3-1 {
+  position: relative;
+  float: left;
+  width: 33.33%;
+  padding: 0em 1em;
+  @include bp-medium(){
+    width: 100%;
+  }
+}
+
+.col-3-2 {
+  position: relative;
+  float: left;
+  width: 66.66%;
+  padding: 0em 1em;
+  @include bp-medium(){
+    width: 100%;
+  }
+}
+
+.col--motion {
+  position: relative;
+}

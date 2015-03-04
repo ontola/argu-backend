@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   prepend_before_action :check_for_access_token
   before_action :check_finished_intro
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :set_layout
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
 
@@ -39,13 +40,19 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound do |exception|
     @quote = Setting.get(:quotes).split(';').sample
     respond_to do |format|
-      format.html { render 'status/404' }
+      format.html { render 'status/404', status: 404 }
+      format.json { render json: { title: t('status.s_404.header'), message: t('status.s_404.body'), quote: @quote}, status: 404 }
     end
   end
 
-  def create_activity(model, params)
+  def create_activity_with_cleanup(model, params)
     destroy_recent_similar_activities model, params
-    model.create_activity params
+    create_activity model, params
+  end
+
+  def create_activity(model, params)
+    a = model.create_activity params
+    Argu::Notification.perform_async(a.id)
   end
 
   def current_scope
@@ -124,4 +131,19 @@ class ApplicationController < ActionController::Base
     [selector_forums_url, profile_url(current_user.username), edit_profile_url(current_user.username), memberships_forums_url, ]
   end
 
+  def set_layout
+    if request.headers['X-PJAX']
+      self.class.layout false
+    elsif current_user.present? && current_user.finished_intro?
+      self.class.layout 'application'
+    elsif has_valid_token?
+      self.class.layout 'guest'
+    else
+      self.class.layout 'closed'
+    end
+  end
+
+  def after_sending_reset_password_instructions_path_for(resource_name)
+    password_reset_confirm_path
+  end
 end

@@ -1,7 +1,7 @@
 .comment[id=c.identifier class="#{'trashed' if c.is_trashed?}" itemscope itemtype="Comment"]
   .box
     section
-      p[id=c.id]= c.is_trashed? ? I18n.t('deleted') : c.body
+      p[id=c.id]= c.is_trashed? ? I18n.t('trashed') : c.body
     = render c.profile, locals= {resource: c} if c.profile.present?
     ul.btns-sticky.btns-sticky-bottom.btns-vertical.btns-list
       - if policy(c).destroy?
@@ -13,7 +13,7 @@
           span.fa.fa-trash
           span.icon-left = t('trash')
       - if !c.is_trashed? && policy(c).create?
-        li= link_to polymorphic_url([resource], parent_id: c.id), html_options = {id: c.id, class: "btn-reply"} do
+        li= link_to polymorphic_url([resource], parent_id: c.id), html_options = {id: c.id, class: "btn-reply", :'data-skip-pjax' => true} do
           span.fa.fa-reply
           span.icon-left = t('reply')
   .comment.comment-form

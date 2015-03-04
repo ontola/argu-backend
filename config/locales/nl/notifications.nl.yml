@@ -1,0 +1,6 @@
+nl:
+  notifications:
+    type: "Meldingen"
+    all: "Alle meldingen"
+    settings: "Instellingen"
+    mark_as_read: "Markeer als gelezen"

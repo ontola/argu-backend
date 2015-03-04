@@ -7,10 +7,10 @@ gem 'rails', '~>4.2.0'
 gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
 gem 'logstasher'
+gem 'bugsnag'
 
 ##################DB########################
 gem 'pg', '0.17.1'
-#gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
 
 gem 'jbuilder', '~> 2.2.5'
 gem 'bcrypt-ruby', '>= 3.1.5'
@@ -23,6 +23,8 @@ gem 'formtastic', '~> 3.1.2'
 gem 'cocoon', '~> 1.2.6'
 gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
+gem 'rest-client'
+gem 'multimap'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
@@ -32,10 +34,17 @@ gem 'friendly_id', '~> 5.0.4'
 gem 'whodunnit', '0.0.5'
 gem 'simple_settings', '1.0.2'
 gem 'public_activity'
+gem 'acts_as_follower'
+gem 'rollout'
 #Search
 
 #Pagination
 gem 'kaminari', '~>0.16.1'
+
+
+##################Front-end########################
+gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
+gem 'js-routes'
 
 ##################Asset-y########################
 gem 'haml' # TODO: convert haml to slim, then remove this gem
@@ -52,6 +61,9 @@ gem 'mini_magick', '~> 3.8.1'                                             # Ruby
 gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'
 gem 'sinatra', '>= 1.3.0'
+gem 'render_anywhere', :require => false
+gem 'jquery-pjax-rails'
+gem 'rack-pjax'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'
@@ -91,7 +103,6 @@ group :production, :staging do
   gem 'therubyracer', '~> 0.12.1'
   gem 'unicorn', '~> 4.8.3'
   gem 'rack-test', '~> 0.6.2'
-  gem 'bugsnag'
 end
 
   gem 'briarcliff', '~> 0.0.9'

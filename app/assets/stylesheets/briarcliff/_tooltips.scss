@@ -6,6 +6,7 @@
 .tooltip {
   position: relative;
   text-align: left;
+  overflow: visible;
 }
 
 .tooltip:after {
@@ -31,7 +32,12 @@
 
 .tooltip--left:after{
   right: 0em;
-  left: -15em;
+  left: auto;
+}
+
+.tooltip--right:after{
+  right: auto;
+  left: 0em;
 }
 
 .tooltip:hover:after {

@@ -1,0 +1,25 @@
+@import "variables";
+@import "mixins";
+
+.mail-header{
+  background-color: white;
+  text-align: center;
+}
+
+.mail-body{
+  background-color: $g1;
+}
+
+.mail-footer{
+  background-color: $g4;
+  a {
+    color: $g2;
+    &:hover{
+      text-decoration: underline;
+      color: $g1;
+    }
+    &:hover span {
+      color: $g1;
+    }
+  }
+}

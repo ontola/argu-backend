@@ -25,6 +25,16 @@ class Argument < ActiveRecord::Base
     i
   end
 
+  def next(show_trashed = false)
+    _next = self.motion.arguments.trashed(show_trashed).order(votes_pro_count: :desc).limit(50).select(:id, :title).reverse
+    _next[((_next.index { |a| a.id == self.id } || 0) + 1) % _next.length]
+  end
+
+  def previous(show_trashed = false)
+    prev = self.motion.arguments.trashed(show_trashed).order(votes_pro_count: :desc).limit(50).select(:id, :title)
+    prev[(prev.index { |a| a.id == self.id } + 1) % prev.length]
+  end
+
   def wipe
     Proc.new do |c|
       if c.is_trashed?

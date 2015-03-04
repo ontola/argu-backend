@@ -11,7 +11,6 @@ Argu::Application.routes.draw do
     post 'vote/:for' => 'votes#create', shallow: true, as: :vote
   end
 
-
   put 'actors', to: 'actors#update'
 
   require 'sidekiq/web'
@@ -88,14 +87,22 @@ Argu::Application.routes.draw do
     post ':id' => 'profiles#update', on: :collection
   end
 
+  resources :follows, only: :create do
+    delete :destroy, on: :collection
+  end
+
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
   get '/settings', to: 'users#edit', as: 'settings'
   put '/settings', to: 'users#update'
+  get '/c_a', to: 'users#current_actor'
 
   get '/sign_in_modal', to: 'static_pages#sign_in_modal'
   get '/about', to: 'static_pages#about'
   get '/product', to: 'static_pages#product'
+  get '/how_argu_works', to: 'static_pages#how_argu_works'
+  get '/team', to: 'static_pages#team'
+  get '/governments', to: 'static_pages#governments'
 
   get '/portal', to: 'portal/portal#home'
 

@@ -1,5 +1,16 @@
 module ApplicationHelper
 
+  def active_for_user?(feature, user)
+    begin
+      $rollout.active?(feature, user)
+    rescue RuntimeError => e
+      Rails.logger.error 'Redis not available'
+      ::Bugsnag.notify(e, {
+          :severity => 'error',
+      })
+    end
+  end
+
   def awesome_time_ago_in_words (date)
     if date.present?
       if 1.day.ago < date
@@ -23,8 +34,24 @@ module ApplicationHelper
     uri.to_s
   end
 
+  def remote_if_user
+    current_profile.present? ? { remote: true } : {}
+  end
+
+  def remote_unless_user
+    current_profile.present? ? {} : { remote: true, 'skip-pjax' => true }
+  end
+
   def resource
     @resource
+  end
+
+  def set_title(title= "")
+    if request.env['HTTP_X_PJAX']
+      return raw "<title>#{[title, (' | ' if title), t('name')].compact.join.capitalize}</title>"
+    else
+      provide :title, title
+    end
   end
 
   def process_cover_photo(object, _params)
@@ -36,6 +63,14 @@ module ApplicationHelper
       end
     end
     false
+  end
+
+  def dual_profile_path(profile)
+    if profile.owner.class == User
+      profile_path(profile.username)
+    else
+      pages_path(profile.web_url)
+    end
   end
 
   def can_show_display_name?(preview)

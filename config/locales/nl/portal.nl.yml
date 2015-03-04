@@ -2,6 +2,7 @@
 
 nl:
   portal:
+    title: "Portal"
     new_forum: "Forum aanmaken"
     none: "Nog geen"
     new_page: "Nieuwe Page"

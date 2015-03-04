@@ -1,3 +1,4 @@
+=set_title @question.title
 -content_for :connected_web
   meta[name="description" content="#{@question.content}"]
   meta[property="og:title" content="#{@question.display_name}"]
@@ -9,14 +10,15 @@
   meta[property="twitter:description" content="#{@question.content}"]
   /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
   meta[property="twitter:image" content="#{@question.cover_photo.url}" ]
--provide :title, @question.title
 .cover-behind
   .cover-image[style="background-image: url('#{@question.cover_photo.url}'); "]
 .col-1
   div[data-intro= t("intro.question.back")]= to_parent
+  =render partial: 'contextualize/carousel_buttons', locals: {item: @question, type: 'que'}
   .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t("intro.question.body") itemscope itemtype="http://schema.org/Question"]
     section.section-info.que-bg
       span = t("questions.type")
+      =render partial: "questions/expires_at", locals: {deadline: @question.expires_at}
     section
       h1.que-t[itemprop="headline"]= @question.title
       p[itemprop="text"]= @question.supped_content.html_safe
@@ -39,8 +41,13 @@
           span.icon-left=t('edit')
 div[data-intro= t("intro.question.motions")]
   ==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))
-  -if Rails.configuration.epics.link_to_motion
-    .col-1
+  //This basically does the same as the column renderer, except for the "new button". I'm not sure whether we should use the column renderer in this specific view
+  /.col-1
+    header
+      h2= t('motions.header')
+    - @question.motions.each() do |motion|
+      = render partial: 'motions/show', locals: {model: motion}
+    -if Rails.configuration.epics.link_to_motion
       .box.box-link
         a.
           section

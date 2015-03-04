@@ -18,8 +18,8 @@ set :log_level, :debug
 set :linked_files, %w{config/database.yml config/secrets.yml}
 set :linked_dirs, %w{bin log tmp vendor/bundle public/system}
 
-SSHKit.config.command_map[:rake]  = "bundle exec rake" #8
-SSHKit.config.command_map[:rails] = "bundle exec rails"
+SSHKit.config.command_map[:rake]  = 'bundle exec rake' #8
+SSHKit.config.command_map[:rails] = 'bundle exec rails'
 
 set :keep_releases, 20
 
@@ -49,7 +49,7 @@ namespace :deploy do
   desc 'Links the assets directory of staging in the public folder of production to make apache serve staging assets safely'
   task :link_staging_assets do
     on roles(:all) do
-      execute :ln, '-s /home/rails/argu_staging/current/public/ /home/rails/argu/current/public/staging'
+      execute :ln, '-s /home/rails/argu_staging/current/public/ /home/rails/argu/current/public/staging' #@safe kernelmethod
     end
   end
 

@@ -13,13 +13,15 @@ nl:
   forgot_password: "Wachtwoord vergeten?"
 
   sign_up: "account aanmaken"
-  sign_up_argu: "Argu account aanmaken"
+  argu_sign_up: "Argu account aanmaken"
+  sign_up_argu: "Maak Argu account"
   sign_out: "uitloggen"
   learn_more: "meer info"
   not_found_type: "%{type} niet gevonden"
   edit: "bewerken"
   edit_type: "%{type} bewerken"
   read-more: "lees meer"
+  collapse: "inklappen"
   update: "bijwerken"
   update_type: "%{type} bijwerken"
   save: "opslaan"
@@ -34,7 +36,7 @@ nl:
   older: "ouder"
   newer: "niewer"
   destroy: "vernietigen"
-  trash: "Wissen"
+  trash: "verbergen"
   empty_type: "er zijn geen %{type}"
   history: "geschiendenis"
   image: "afbeelding"
@@ -43,6 +45,7 @@ nl:
   search: "zoeken"
   edited: "bewerkt"
   deleted: "verwijderd"
+  trashed: "verborgen"
   reply: "reageer"
   report: "rapporteer"
   clearance: "bevoegdheid"
@@ -52,7 +55,7 @@ nl:
   not_allowed: "actie niet toegestaan."
   error: "fout"
   error_prohibited: " bij het opslaan:"
-  outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
+  outdated_browser: "Je gebruikt een <strong>achterhaalde en waarschijnlijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
   share_link:
     header: "Link delen"
     body: "Deel onderstaande link om direct mensen uit te nodigen naar dit forum."
@@ -64,20 +67,31 @@ nl:
     questions: "vraagstukken"
   site:
     description: "Argu is een online discussieplatform waar argumenten centraal staan."
-#Controllers
-
     copyright: "Copyright © 2014-2015 Argu v.o.f."#Footer
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
 #Home
-  home_title: "Home"
+  home_title: "Argu"
   #Not logged in
   home_new_header: "Welkom bij "
   home_new_text: "Nederlands awesome slogan."
 #About
   info: "info"
-  about_title: "Over"
+  about:
+    title: "Over"
+    vision: "Onze visie"
+    how_argu_works: "Hoe Argu werkt"
+    team: "Ons team"
+    product: "Een eigen forum"
+    organisations: "Argu voor organisaties"
+    governments: "Argu voor overheden"
+  how_argu_works:
+    title: "Hoe Argu werkt"
+  product:
+    title: ""
+  team:
+    title: "Ons team"
 #Users
   users_username: "gebruikersnaam"
   users_username_or_email: "email of gebruikersnaam"
@@ -91,6 +105,8 @@ nl:
   users_password_confirmation: "wachtwoord bevestigen"
   users_password_old: "oud wachtwoord"
   users_password_edit: "wachtwoord wijzigen"
+  users_password_confirmation_page_header: "Wachtwoord reset mail is verzonden"
+  users_password_confirmation_page_body: "Ga naar jouw e-mail inbox om de wachtwoord reset link te openen. Mocht je de mail niet vinden, kijk dan ook in je spam map."
   users_oauth_coupled: "gekoppelde accounts"
   users_oauth_new: "account toevoegen"
   users_oauth_login: "inloggen met"
@@ -104,7 +120,7 @@ nl:
   users_new_confirmation: "bevestigen"
   users_new_create: "account aanmaken"
   #show
-  users_show_title: "instellingen"
+  users_show_title: "Instellingen"
   #cancel
   users_cancel_title: "Argu account verwijderen"
   users_cancel_info: "Als je jouw account verwijdert, verlies je permanent toegang tot alles wat je geplaatst, gevolgd en gestemd hebt. Weet je zeker dat je jouw account wilt verwijderen?"
@@ -132,12 +148,11 @@ nl:
       truncate: "..."
   type_save_success: "%{type} successvol opgeslagen"
   type_create_success: "%{type} successvol aangemaakt"
-  users:
-    logged_in_banner_text: "Ingelogd als %{name}"
   references_helper: "<h2>Referenties toevoegen</h2>
-                   <p>Als je een link wil toevoegen:</p>
+                   <p>Bronnen maken een argument overtuigend en verifieerbaar. Ze verschijnen onder jouw item als losse referenties. Op de plek waar je een referentie plaatst verschijnt een getal dat verwijst naar de referentie.</p>
+                   <p>Als je een <b>link</b> wil toevoegen:</p>
                    <p><code>[www.voorbeeld.nl](Voorbeeld 2014)</code></p>
-                   <p>Als je een boek of tijdschrift wil toevoegen:</code></p>
+                   <p>Als je een <b>boek of tijdschrift</b> wil toevoegen:</code></p>
                    <p><code>[](Tijdschrift 2015)</code></p>"
   move:
     current_forum: "Huidig forum:"
@@ -150,6 +165,7 @@ nl:
   forms:
     danger_zone: "Gevarenzone"
   users:
+    logged_in_banner_text: "%{name}"
     registrations:
       hints:
         password: "Minimaal 8 karakters"
@@ -159,3 +175,4 @@ nl:
         password: "wachtwoord"
         username: "gebruikersnaam"
         password_confirmation: "Zelfde als hierboven"
+  document_missing: "Dit document lijkt niet te bestaan."

@@ -15,9 +15,10 @@ nl:
     new_btn: "Voorstel toevoegen"
     content: "inhoud"
     votes:
-      pro: "ik ben voor"
-      neu: "weet nog niet"
-      con: "ik ben tegen"
+      pro: "Ik ben voor"
+      neu: "Geen van beiden"
+      con: "Ik ben tegen"
+      show: "Laat stemresultaten zien"
     preview:
       pro:
         zero: "geen voorargumenten"

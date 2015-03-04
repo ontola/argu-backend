@@ -1,21 +1,22 @@
+=set_title t('forums.statistics.title')
 .col-1
   =render partial: 'manage_bar', locals: {resource: @forum} if policy(@forum).update?
   .box
     section
       table.styled
         tr
-          td  = t("forums.statistics.memberships")
+          td= t("forums.statistics.memberships")
           td= @forum.memberships_count
         tr
-          td  = t("forums.statistics.questions")
+          td= t("forums.statistics.questions")
           td= @forum.questions_count
         tr
-          td  = t("forums.statistics.motions")
+          td= t("forums.statistics.motions")
           td= @forum.motions_count
-      h2 = t("forums.statistics.tags")
+      h2= t("forums.statistics.tags")
       - if @tags.present?
         ul
         - @tags.each do |tag|
           li= link_to "#{tag[:count]} - #{tag[:name]}", forum_tag_url(@forum.web_url, id: tag[:name])
       - else
-        p = t("forums.statistics.no-tags")
+        p= t("forums.statistics.no-tags")

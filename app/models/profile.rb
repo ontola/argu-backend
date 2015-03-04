@@ -1,7 +1,9 @@
 class Profile < ActiveRecord::Base
   include ArguBase
 
-  has_one :profileable
+  # Currently hardcoded to User (whilst it can also be a Profile)
+  # to make the mailer implementation more efficient
+  has_one :profileable, class_name: 'User'
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy
@@ -14,6 +16,7 @@ class Profile < ActiveRecord::Base
   mount_uploader :cover_photo, CoverUploader
 
   pica_pica :profile_photo
+  acts_as_follower
 
   #validates :name, presence: true, length: {minimum: 3}
   #validates :about, presence: true
@@ -64,8 +67,15 @@ class Profile < ActiveRecord::Base
 
   # Returns the preffered forum of the user, based on their last forum visit
   def preferred_forum
-    @redis ||= Redis.new
-    last_forum = @redis.get("profiles.#{self.id}.last_forum")
+    begin
+      @redis ||= Redis.new
+      last_forum = @redis.get("profiles.#{self.id}.last_forum")
+    rescue RuntimeError => e
+      Rails.logger.error 'Redis not available'
+      ::Bugsnag.notify(e, {
+          :severity => 'error',
+      })
+    end
 
     (Forum.find(last_forum) if last_forum.present?) || self.memberships.first.try(:forum) || Forum.first_public
   end

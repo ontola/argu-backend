@@ -68,17 +68,6 @@
   }
 }
 
-.btn-big {
-  background-color: white;
-  color: #828282;
-  font-family: raleway;
-  font-weight: 700;
-  font-size: 1.4em;
-  text-transform: none;
-  text-align: left;
-  width: 100%;
-}
-
 .btn-sticky {
   position: absolute !important;
   top: 0;
@@ -101,29 +90,22 @@
   bottom: 50%;
 }
 
-.btn-subtle, .btns-subtle a {
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: .8em;
-  border: none;
-  -webkit-appearance: none;
-  border-radius: 0;
-  margin: 0;
-  cursor: hand;
-  display: inline-block;
+.btn-subtle{
+  @include button();
+  margin-bottom: 1em;
   color: $g2;
+  border: none;
   background: none;
-  //padding: 0.5em .6em .4em .6em;
-  //padding: 1em 1.2em;
+  border-radius: 0;
   &:hover {
-    color: $g3;
+    color: $g4;
     background-color: $darken1;
     text-decoration: none;
     border: none;
   }
   &:active {
     border: none;
-    color: $g3;
+    color: $g4;
     background-color: $darken2;
     margin-top: 0; //Negates the  "push"-effect of normal buttons
   }
@@ -370,6 +352,8 @@
 
 .btns-sticky-bottom {
   bottom: 0;
+  top: auto;
+  margin-bottom: 0;
 }
 
 .btns-vertical > li {
@@ -378,6 +362,8 @@
 
 .btns--vote a{
   padding: .5em;
+  margin: 0;
+  color: $g2;
 }
 
 //h1 + .btns-vertical {

@@ -1,35 +1,35 @@
+=set_title @motion.new_record? ? t('new_type', type: t('motions.type')) : t('edit_type', type: t('motions.type'))
 .col-3
   .col-3-2
-    = to_parent
+    =to_parent
     .box
       section.section-info.sta-bg
-        span = t("motions.type")
+        span= t('motions.type')
       = semantic_form_for([@forum, @motion]) do |f|
         section.smallpadded.form-filled
-          = f.inputs
-            = f.input :title, input_html: {class: "h1 sta-t form-input-title"}, label: false
-            = f.input :content, input_html: {class: "form-input-content", rows: "8"}, label: false
-            = f.input :tag_list, input_html: {class: "tag-list"}, label: false
-            = f.input :cover_photo
+          =f.inputs
+            =f.input :title, input_html: {class: 'h1 sta-t form-input-title'}, label: false
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false
+            =f.input :tag_list, input_html: {class: 'tag-list'}, label: false
+            =f.input :cover_photo
             -if !@motion.new_record?
-              = f.input :remove_cover_photo, as: :reverse_boolean
+              =f.input :remove_cover_photo, as: :reverse_boolean
 
             -if !@motion.new_record? && policy(@motion).trash?
-              = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+              =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
                 - if policy(@motion).trash?
-                  = f.input :is_trashed, as: :reverse_boolean
-                -if policy(@motion).move?
-                  = f.input :f_move, as: :link, url: motion_move_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
-                  = f.input :f_convert, as: :link, url: motion_convert_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
-            /TODO invert arguments only visible when in edit, not in new.
-              <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
-              <%= f.check_box :invert_arguments %>
-        = render partial: 'profiles/profile_current'
+                  =f.input :is_trashed, as: :reverse_boolean
+                - if policy(@motion).move?
+                  =f.input :f_move, as: :link, url: motion_move_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
+                  =f.input :f_convert, as: :link, url: motion_convert_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
+                  =f.input :invert_arguments, as: :reverse_boolean
+                  /TODO invert arguments only visible when in edit, not in new.
+        =render partial: 'profiles/profile_current'
 
-        = f.hidden_field :question_id, value: @question_id || params[:question_id]
-        .actions[style="margin-top: 0"]= f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"
+        =f.hidden_field :question_id, value: @question_id || params[:question_id]
+        .actions[style="margin-top: 0"]= f.submit t('save'), class: 'btn btn-sticky btn-sticky-bottom'
   /TODO make translations, make content dependent on focus field
   .col-3-1
     .box
       section
-        =raw t("motions.form.helper.side")
+        =raw t('motions.form.helper.side')
