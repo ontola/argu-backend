@@ -57,6 +57,14 @@ module ApplicationHelper
     false
   end
 
+  def dual_profile_path(profile)
+    if profile.owner.class == User
+      profile_path(profile.username)
+    else
+      pages_path(profile.web_url)
+    end
+  end
+
   def can_show_display_name?(preview)
     if preview.respond_to?(:get_parent)
       preview.get_parent.model.open?

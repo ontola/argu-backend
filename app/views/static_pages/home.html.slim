@@ -8,7 +8,7 @@
               =image_tag current_profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
             .info-block
               p= current_user.display_name
-              = link_to edit_profile_path(current_profile.web_url) do
+              = link_to edit_profile_path(current_user.username) do
                 small= t("profiles.edit.title")
           .group
             ul
