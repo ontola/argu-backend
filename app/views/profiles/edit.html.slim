@@ -1,3 +1,4 @@
+=set_title t('profiles.edit.title')
 .col-1
   -if current_user.finished_intro?
     =render partial: 'profile_bar'
@@ -9,4 +10,4 @@
         p= raw t('intro.initial.body.profile')
   .box
     section
-      = render 'form'
+      =render 'form'

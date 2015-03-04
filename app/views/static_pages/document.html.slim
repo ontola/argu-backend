@@ -1,5 +1,5 @@
 - if @document.present? && @document.has_key?('sections')
-  -provide :title, @document['title']
+  =set_title @document['title']
   .blocks-container
     - @document['sections'].each do |section|
       - if section['type'] == 'image-wide'

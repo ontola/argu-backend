@@ -1,4 +1,4 @@
--provide(:title, @opinion.title.nil? ? t('arguments.show.title') : @opinion.title)
+=set_title @opinion.title.nil? ? t('arguments.show.title') : @opinion.title
 .centercont
   =back_to_motion @opinion
   =render 'body'

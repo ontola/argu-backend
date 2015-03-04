@@ -1,3 +1,4 @@
+=set_title (@motion.title.nil? ? t(:motion_title) : @motion.title)
 -content_for :connected_web
   meta[name="description" content="#{@motion.content}"]
   meta[property="og:title" content="#{@motion.display_name}"]
@@ -9,7 +10,6 @@
   meta[property="twitter:description" content="#{@motion.content}"]
   /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
   meta[property="twitter:image" content="#{@motion.cover_photo.url}" ]
--provide :title, (@motion.title.nil? ? t(:motion_title) : @motion.title)
 div[itemscope itemtype="http://www.schema.org/Answer"]
   .cover-behind
     .cover-image[style="background-image: url('#{@motion.cover_photo.url(:cover)}'); "]

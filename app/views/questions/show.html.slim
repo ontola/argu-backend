@@ -1,3 +1,4 @@
+=set_title @question.title
 -content_for :connected_web
   meta[name="description" content="#{@question.content}"]
   meta[property="og:title" content="#{@question.display_name}"]
@@ -9,7 +10,6 @@
   meta[property="twitter:description" content="#{@question.content}"]
   /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
   meta[property="twitter:image" content="#{@question.cover_photo.url}" ]
--provide :title, @question.title
 .cover-behind
   .cover-image[style="background-image: url('#{@question.cover_photo.url}'); "]
 .col-1

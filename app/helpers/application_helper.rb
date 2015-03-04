@@ -46,6 +46,14 @@ module ApplicationHelper
     @resource
   end
 
+  def set_title(title= "")
+    if request.env['HTTP_X_PJAX']
+      return raw "<title>#{[title, (' | ' if title), t('name')].compact.join.capitalize}</title>"
+    else
+      provide :title, title
+    end
+  end
+
   def process_cover_photo(object, _params)
     if params[object.class.name.downcase][:cover_photo].present?
       object.assign_attributes(_params.except(:cover_photo))

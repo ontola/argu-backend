@@ -1,8 +1,8 @@
 class Portal::PortalController < Portal::PortalBaseController
   def home
     authorize :portal, :home?
-    @forums = Forum.order(memberships_count: :desc).all
-    @pages = Page.all
+    @forums = Forum.order(memberships_count: :desc).page params[:forums_page]
+    @pages = Page.all.page params[:pages_page]
   end
 
   def settings

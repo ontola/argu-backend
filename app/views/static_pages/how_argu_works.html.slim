@@ -90,15 +90,15 @@
         li
           a.btn-pro
             span.fa.fa-thumbs-up
-            span.icon-left = t('motions.votes.pro')
+            span.icon-left= t('motions.votes.pro')
         li
           a.btn-neu
             span.fa.fa-pause
-            span.icon-left = t('motions.votes.neu')
+            span.icon-left= t('motions.votes.neu')
         li
           a.btn-con
             span.fa.fa-thumbs-down
-            span.icon-left = t('motions.votes.con')
+            span.icon-left= t('motions.votes.con')
       /ul class="progress-bar progress-bar-stacked"
         li[style="width: 55%;"]
           span class="btn-pro"= "55%"
@@ -159,9 +159,9 @@
       p Iedere organisatie, gemeente, provincie, bedrijf, vereniging of projectgroep zou een eigen forum op Argu kunnen krijgen. Neem <b><a href="mailto:info@argu.co">contact</a></b> op voor prijzen en meer informatie.
   .center
     .btns-list.btns-vertical
-      li=link_to "/forums" do
+      li= link_to "/forums" do
         span Bekijk alle forums
-      li=link_to product_path do
+      li= link_to product_path do
         span Een eigen forum?
-      li=link_to governments_path do
+      li= link_to governments_path do
         span Argu in jouw gemeente?

@@ -13,6 +13,7 @@ nl:
   forgot_password: "Wachtwoord vergeten?"
 
   sign_up: "account aanmaken"
+  argu_sign_up: "Argu account aanmaken"
   sign_up_argu: "Maak Argu account"
   sign_out: "uitloggen"
   learn_more: "meer info"
@@ -71,7 +72,7 @@ nl:
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
 #Home
-  home_title: "Home"
+  home_title: "Argu"
   #Not logged in
   home_new_header: "Welkom bij "
   home_new_text: "Nederlands awesome slogan."
@@ -87,6 +88,8 @@ nl:
     governments: "Argu voor overheden"
   how_argu_works:
     title: "Hoe Argu werkt"
+  product:
+    title: ""
   team:
     title: "Ons team"
 #Users

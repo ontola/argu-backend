@@ -1,6 +1,7 @@
+=set_title @profile.display_name
 .col-1
   /=image_tag @profile.cover_photo.url
-  .profile-big[data-intro= t("intro.profile.show", name: @profile.display_name)]
+  .profile-big[data-intro= t('intro.profile.show', name: @profile.display_name)]
     .profile-picture.profile-picture-show
       = pica_pica @profile.profile_photo, container_class: 'profile'
     .box
@@ -12,5 +13,5 @@
   - if current_user.profile.has_role?(:staff)
     .center
       ul.btns-list=render partial: 'application/menus/settings', locals: {resource: @page}
-.box-list[data-intro= t("intro.profile.votes")]
+.box-list[data-intro= t('intro.profile.votes')]
   =render_columns(@collection, collection_model: Vote)
