@@ -7,11 +7,9 @@ nav#navbar.navbar role="navigation"
       li
         a.navbar-item[href="/"]
           span.fa.fa-home
-      /=react_component 'HyperDropdown', forum_selector_items, {prerender: true}
     ul.navbar-links.navbar-links-right
-      /=react_component 'HyperDropdown', profile_dropdown_items, {prerender: true}
       =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
-      li.dropdown[tabIndex="0"]
-        a.intro-trigger.navbar-item
-          span.fa.fa-question
-          span.icon-left= I18n.t('intro.start')
+      li[tabIndex="0"]
+        =link_to sign_in_modal_path, class: 'navbar-item center', remote: true do
+          span.fa.fa-sign-in
+          span.icon-left login
