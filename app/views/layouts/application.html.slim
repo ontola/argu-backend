@@ -59,7 +59,7 @@ body
   - if current_user && current_user.profile.has_role?(:staff)
     =render partial: 'staff_sign'
   #fb-root
-  = render 'navbar'
+  =render 'navbar'
   .wrapper
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')

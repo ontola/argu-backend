@@ -39,7 +39,7 @@ module ApplicationHelper
   end
 
   def remote_unless_user
-    current_profile.present? ? {} : { remote: true }
+    current_profile.present? ? {} : { remote: true, 'skip-pjax' => true }
   end
 
   def resource
