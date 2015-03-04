@@ -102,10 +102,11 @@ window.HyperDropdown = React.createClass({
         }
         var image_after  = _image({fa: this.props.fa_after});
         var triggerClass = "dropdown-trigger " + this.props.triggerClass;
+        var dropdownClass = "dropdown" + (this.state.openState ? ' dropdown-active' :'');
 
         var TriggerContainer = this.props.triggerTag || 'div';
 
-        return (<li tabIndex="1" onMouseUp={this.handleMouseUp} onTouchEnd={this.handleTap} onBlurCapture={this.handleBlur} className="dropdown" >
+        return (<li tabIndex="1" onMouseUp={this.handleMouseUp} onTouchEnd={this.handleTap} onBlurCapture={this.handleBlur} className={dropdownClass} data-intro="" data-position="">
             <TriggerContainer className={triggerClass}>
                 {_image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>

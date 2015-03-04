@@ -20,7 +20,7 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
   end
 
   def product?
-    user && user.profile.has_role?(:staff)
+    true
   end
 
   def sign_in_modal?
@@ -36,7 +36,7 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
   end
 
   def governments?
-    user && user.profile.has_role?(:staff)
+    true
   end
 
   def developers?

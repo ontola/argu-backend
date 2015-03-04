@@ -13,6 +13,7 @@ nl:
   forgot_password: "Wachtwoord vergeten?"
 
   sign_up: "account aanmaken"
+  argu_sign_up: "Argu account aanmaken"
   sign_up_argu: "Maak Argu account"
   sign_out: "uitloggen"
   learn_more: "meer info"
@@ -54,7 +55,7 @@ nl:
   not_allowed: "actie niet toegestaan."
   error: "fout"
   error_prohibited: " bij het opslaan:"
-  outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
+  outdated_browser: "Je gebruikt een <strong>achterhaalde en waarschijnlijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
   share_link:
     header: "Link delen"
     body: "Deel onderstaande link om direct mensen uit te nodigen naar dit forum."
@@ -71,7 +72,7 @@ nl:
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
 #Home
-  home_title: "Home"
+  home_title: "Argu"
   #Not logged in
   home_new_header: "Welkom bij "
   home_new_text: "Nederlands awesome slogan."
@@ -87,6 +88,8 @@ nl:
     governments: "Argu voor overheden"
   how_argu_works:
     title: "Hoe Argu werkt"
+  product:
+    title: ""
   team:
     title: "Ons team"
 #Users

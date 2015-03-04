@@ -13,16 +13,8 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_equal 'block--full', assigns(:document)['sections'].first['type']
   end
 
-  test "should not get product" do
+  test "should get product" do
     sign_in users(:user)
-
-    get :product
-
-    assert_redirected_to root_path
-  end
-
-  test "staff should get product" do
-    sign_in users(:user_thom)
 
     get :product
 

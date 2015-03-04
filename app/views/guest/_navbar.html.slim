@@ -1,1 +1,15 @@
 nav#navbar.navbar role="navigation"
+  .nav-container
+    .navbar-logo data-intro=t('intro.header.logo')
+      =link_to root_path
+        =image_tag('logo-white.svg')
+    ul.navbar-links
+      li
+        a.navbar-item[href="/"]
+          span.fa.fa-home
+    ul.navbar-links.navbar-links-right
+      =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
+      li[tabIndex="0"]
+        =link_to sign_in_modal_path, class: 'navbar-item center', remote: true do
+          span.fa.fa-sign-in
+          span.icon-left login

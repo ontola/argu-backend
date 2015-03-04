@@ -1,4 +1,5 @@
-h1= "_create forum for #{@forum.page.profile.name}_"
+=set_title "_Create forum for #{@forum.page.profile.name}_"
+h1= "_Create forum for #{@forum.page.profile.name}_"
 = semantic_form_for [:portal, @forum] do |f|
   = f.inputs do
     = f.input :name

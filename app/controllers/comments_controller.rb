@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
           redirect_url.query= [[:comment, CGI::escape(params[:comment])], [:parent_id, params[:parent_id]]].map { |a| a.join('=') }.join('&')
           format.js { render partial: 'forums/join', layout: false, locals: { forum: resource.forum, r: redirect_url.to_s } }
           format.html { render template: 'forums/join', locals: { forum: resource.forum, r: redirect_url.to_s } }
-        elsif @comment.save!
+        elsif @comment.save
           @comment.move_to_child_of(parent) if parent.present? # Apparently, move_possible? doesn't exists anymore
           create_activity @comment, action: :create, recipient: resource, parameters: { parent: parent.try(:id) }, owner: current_profile, forum_id: resource.forum.id
           format.js { render }
@@ -32,6 +32,7 @@ class CommentsController < ApplicationController
         else
           #@comment.destroy unless @comment.new_record? # TODO: this shit deletes all comments, so thats not really a great thing..
           format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: '_niet gelukt_' }
+          format.js { render 'failed', status: 400 }
         end
       end
     end

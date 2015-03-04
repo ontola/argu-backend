@@ -39,11 +39,19 @@ module ApplicationHelper
   end
 
   def remote_unless_user
-    current_profile.present? ? {} : { remote: true }
+    current_profile.present? ? {} : { remote: true, 'skip-pjax' => true }
   end
 
   def resource
     @resource
+  end
+
+  def set_title(title= "")
+    if request.env['HTTP_X_PJAX']
+      return raw "<title>#{[title, (' | ' if title), t('name')].compact.join.capitalize}</title>"
+    else
+      provide :title, title
+    end
   end
 
   def process_cover_photo(object, _params)

@@ -1,28 +1,15 @@
+=set_title t('portal.title')
 .col-1.col-1-big
   header
     h1
-      = t('portal.portal')
-      = image_tag asset_path('portal_logo.svg'), style: 'height: 1em; position: absolute;'
+      =t('portal.title')
+      =image_tag asset_path('portal_logo.svg'), style: 'height: 1em; position: absolute;'
   .box
     section
-      /p= content_tag(:strong, current_user.username)
-      nav
-        ul.btns-list.btns-vertical
-          li= link_to '/portal/sidekiq' do
-            span.fa.fa-pie-chart
-            span.icon-left = 'Sidekiq'
-          li= link_to documents_path do
-            span.fa.fa-file-text
-            span.icon-left = 'Documents'
-          li= link_to portal_settings_path do
-            span.fa.fa-gear
-            span.icon-left = 'Settings'
-          li= link_to new_page_path do
-            span.fa.fa-plus
-            span.icon-left = t('portal.new_page')
+      =render partial: 'portal/navbar'
       h2= t('portal.pages')
       -if @pages.blank?
-        p=t('portal.none')
+        p= t('portal.none')
       -else
         table.styled
           thead
@@ -42,10 +29,10 @@
                 td= f.forums.length
                 td= link_to t('portal.forum_create'), new_portal_forum_path(page: f)
                 td= link_to t('portal.settings'), settings_page_path(f)
-        //=paginate @pages, param_name: :published_page
+        =paginate @pages, param_name: :pages_page
       h2= t('portal.forums')
       -if @forums.blank?
-        p=t('portal.none')
+        p= t('portal.none')
       -else
         table.styled
           thead
@@ -67,4 +54,4 @@
                 td= f.questions_count || '-'
                 td= f.motions_count || '-'
                 td= link_to t('portal.settings'), settings_forum_path(f)
-        //=paginate @pages, param_name: :published_page
+        =paginate @pages, param_name: :forums_page

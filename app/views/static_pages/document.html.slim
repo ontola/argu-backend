@@ -1,5 +1,5 @@
 - if @document.present? && @document.has_key?('sections')
-  -provide :title, @document['title']
+  =set_title @document['title']
   .blocks-container
     - @document['sections'].each do |section|
       - if section['type'] == 'image-wide'
@@ -20,22 +20,21 @@
                   li
                     .block-avatar[style="background-image: url(#{asset_path advisor['avatar']})"]
                     - if advisor['quote'].present?
-                      blockquote = advisor['quote']
+                      blockquote= advisor['quote']
                     p.block-subtle
-                      b = advisor['name']
+                      b= advisor['name']
                       - if advisor['function'].present?
-                        = ", "
-                        == advisor['function']
+                        == ", #{advisor['function']}"
             - if section['features'].present?
               ul.block-features
                 - section['features'].each do |feature|
                   - unless feature['hidden']
                     li
                       span.fa[class=('fa-' + feature['icon'])]
-                      h2 = feature['header']
-                      p.block-subtle == feature['body']
+                      h2= feature['header']
+                      p.block-subtle== feature['body']
             - if section['link'].present?
-              a.block-link[href=section['link']['url']]=section['link']['body']
+              a.block-link[href=section['link']['url']]= section['link']['body']
           - if section['image'].present?
             .block--img.block--img--full
               .img[style="background-image: url(#{asset_path section['image']})"]
@@ -48,23 +47,22 @@
               - if section['avatar']
                 .block-avatar[style="background-image: url(#{asset_path section['avatar']})"]
               - if section['header']
-                h2 = section['header']
+                h2= section['header']
               - section['body'].each do |body|
                 p.block-subtle == body
               - if section['social']
                 ul.block-social-buttons
                   - section['social'].each do |social|
-                    li
-                      =link_to social['url'] do
-                        span.fa[class=('fa-' + social['icon'])]
+                    li= link_to social['url'] do
+                      span.fa[class=('fa-' + social['icon'])]
               - if section['expand'].present?
-                = react_component 'Expander', {label: {opened: t('collapse'), closed: t('read-more')}, className: 'block-link', expanderTarget: section['expand']['id'], url: section['expand']['id']}, {prerender: true}
+                =react_component 'Expander', {label: {opened: t('collapse'), closed: t('read-more')}, className: 'block-link', expanderTarget: section['expand']['id'], url: section['expand']['id']}, {prerender: true}
         - if section['expand'].present?
           .blocks.expander-content[id=section['expand']['id'] opened="closed"]
             .block.block--hidden.block--full.block--big-text
-              h2=section['expand']['header']
+              h2= section['expand']['header']
               - section['expand']['body'].each do |body|
-                p==body
+                p== body
             - if section['expand']['image'].present?
               .block--img.block--img--full
                 .img[style="background-image: url(#{asset_path section['expand']['image']})"]
@@ -72,4 +70,4 @@
   .col-1
     .box
       section
-        h1 = t('document_missing')
+        h1= t('document_missing')
