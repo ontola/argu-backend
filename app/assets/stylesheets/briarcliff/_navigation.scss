@@ -117,6 +117,9 @@ input[type="submit"].nav-search-button {
   padding: 7px;
   @include border-radius(999px);
   margin-left: -0.6em;
+  @include bp-large{
+    margin-left: 0;
+  }
 }
 
 .profile-picture--navbar > a > .icon-left {
