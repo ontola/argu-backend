@@ -6,17 +6,15 @@
     span= t('questions.type')
     =render partial: "questions/expires_at", locals: {deadline: question.expires_at}
   section
-    = contextual_link_to question_path(question) do
+    =contextual_link_to question_path(question) do
       h2.que-t= question.title
     - if question.motions.present?
       ul.box-list
         - question.motions.trashed(false).order(updated_at: :desc).select(:id, :title, :updated_at)[0,3].each do |motion|
-          li
-            = link_to motion_path(motion) do
+          li= link_to motion_path(motion) do
               h3.sta-t= motion.title
         - if question.motions.count > 3
-          li
-            = contextual_link_to question_path(question) do
+          li= contextual_link_to question_path(question)
               h3.sta-t= t('questions.view_all_motions', amount: question.motions.count)
                 /- unless question.motions.present?
           /li
