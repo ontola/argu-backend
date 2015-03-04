@@ -41,10 +41,10 @@ module HeaderHelper
         sections: [
           {
               items: [
-                  link_item(t('profiles.display'), profile_path(current_profile.username), fa: 'user'),
+                  link_item(t('profiles.display'), dual_profile_path(current_profile), fa: 'user'),
                   link_item(t('users_show_title'), settings_url, fa: 'gear'),
                   link_item(t('devise.invitations.link'), new_user_invitation_path, fa: 'bullhorn'),
-                  link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out')
+                  link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'})
               ]
           },
           {
@@ -98,9 +98,9 @@ module HeaderHelper
   def managed_pages_items
     items = []
     if current_user.managed_pages.present?
-      items << link_item(current_user.display_name, actors_path(na: current_user.profile.id), image: current_profile.profile_photo.url(:icon))
+      items << link_item(current_user.display_name, actors_path(na: current_user.profile.id), image: current_user.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
       current_user.managed_pages.each do |p|
-        items << link_item(p.display_name, actors_path(na: p.profile.id), image: p.profile.profile_photo.url(:icon))
+        items << link_item(p.display_name, actors_path(na: p.profile.id), image: p.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
       end
     end
     items
