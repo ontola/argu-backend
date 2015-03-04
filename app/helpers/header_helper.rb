@@ -2,8 +2,8 @@ module HeaderHelper
 
   def forum_selector_items
     {
-        title: t('home_title'),
-        fa: 'fa-tags',
+        title: t('forums.mine'),
+        fa: 'fa-group',
         fa_after: 'fa-angle-down',
         sections: [
             {
