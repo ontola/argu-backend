@@ -10,8 +10,9 @@ class StaticPagesController < ApplicationController
       else
         redirect_to preferred_forum
       end
-  	else
-  		render 'static_pages/about', layout: 'layouts/closed', locals: {show_sign_in: true}
+    else
+      @document = JSON.parse Setting.get('about') || '{}'
+      render 'document', layout: 'layouts/closed'
 	  end
   end
 
