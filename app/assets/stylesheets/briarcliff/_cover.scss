@@ -26,20 +26,6 @@
   @include container-width;
   margin: auto;
   padding: 0 1em;
-  margin-bottom: -4em;
-  top: -4.2em;
-  width: 100%;
-  > .btns-list {
-    display: inline-block;
-    margin-left: .8em;
-
-    @include bp-medium {
-      > a {
-        line-height: .7em !important;
-        padding: .8em;
-      }
-    }
-  }
 }
 
 .cover-behind {
@@ -71,23 +57,31 @@
   display: inline-block;
   background-color: white;
   .profile-picture {
-    height: 8em;
-    width: 8em;
-    position: relative;
+    height: 64px;
+    width: 64px;
     background-size: cover;
-    float: left;
+    bottom: 100%;
+    display: inline-block;
+    vertical-align: bottom;
+  }
+  .btns-list {
+    display: block;
+    clear: both;
   }
 }
 
 .cover-oneliner {
   max-width: 51em;
-  margin-left: 1.5em;
-  margin-top: 0.8em;
-  margin-bottom: 0.3em;
+  margin-left: 0.8em;
+  margin-top: 1em;
+  margin-bottom: 0em;
   float: left;
 }
 
 .cover-switcher {
+  height: 64px;
+  display: inline-block;
+  vertical-align: bottom;
   .dropdown {
     display: inline-block;
   }
@@ -95,17 +89,26 @@
     padding: 1em;
     position: relative;
     display: inline-block;
-    background-color: $lighten4;
+    background-color: $lighten5;
     margin-bottom: 0;
     font-size: 1.39em;
+    height: 64px;
   }
 }
 
+.cover-image-empty {
+  height: 64px;
+  background-color: $g2;
+}
 
 .cover-switcher .dropdown-active .dropdown-trigger {
-  background-color: $lighten5 !important;
+  background-color: $lighten6 !important;
 }
 
 .cover-header-bottom {
   background-color: white;
+}
+.cover-header-top {
+  position: absolute;
+  bottom: 100%;
 }

@@ -15,11 +15,13 @@ div[itemscope itemtype="Thing"]
     -if @forum.cover_photo.url.present?
       .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
       span.header-attribution= @forum.cover_photo_attribution
+    -else
+      .cover-image-empty
     .cover-header
       .cover-container
-        -if @forum.profile_photo.url.present?
-          .profile-picture[style="background-image: url('http://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg')"]
         .cover-header-top
+          -if @forum.profile_photo.url.present?
+           .profile-picture[style="background-image: url('http://upload.wikimedia.org/wikipedia/en/a/ae/Flag_of_the_United_Kingdom.svg')"]
           .cover-switcher=react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
         .cover-header-bottom
           p.cover-oneliner
@@ -44,31 +46,6 @@ div[itemscope itemtype="Thing"]
                 span.fa.fa-group
                 span.icon-left= t('forums.invite_others')
             li.dropdown-in-list=render partial: 'application/menus/settings', locals: {resource: @forum}
-          .clear
-      /.cover-container
-        =react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
-        p.cover-oneliner
-          =@forum.bio
-          - if @forum.bio_long.present?
-            a[href="#forum-info"]
-              span.icon-left= t('forums.more_info')
-        =render partial: 'application/menus/settings', locals: {resource: @forum}
-        ul.btns-list.btns-vertical
-          /TODO: Make this check the current profile, not the user
-          - if !policy(@forum).is_member?
-            li=link_to forum_memberships_path(@forum.web_url), data: {method: :post, 'skip-pjax' => true}
-              span.fa.fa-user
-              span.icon-left= t('join')
-          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: 'sta-t btn-focus'
-            span.fa.fa-plus
-            span.icon-left= t('motions.type')
-          li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: remote_unless_user, class: 'que-t btn-focus'
-            span.fa.fa-plus
-            span.icon-left= t('questions.type')
-          - if policy(@forum).invite?
-            li= link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite')}
-              span.fa.fa-group
-              span.icon-left= t('forums.invite_others')
   - if policy(@forum).show?
     /.center
       ul.btns-list
