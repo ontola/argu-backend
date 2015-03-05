@@ -63,6 +63,10 @@
     bottom: 100%;
     display: inline-block;
     vertical-align: bottom;
+    @include bp-medium {
+      height: 50px;
+      width: 50px;
+    }
   }
   .btns-list {
     display: block;
@@ -79,7 +83,6 @@
 }
 
 .cover-switcher {
-  height: 64px;
   display: inline-block;
   vertical-align: bottom;
   .dropdown {
@@ -89,10 +92,19 @@
     padding: 1em;
     position: relative;
     display: inline-block;
-    background-color: $lighten5;
+    background-color: $lighten4;
+    @include bp-medium {
+      font-size: 1em;
+    }
+    &:hover{
+      background-color: $lighten5;
+    }
     margin-bottom: 0;
-    font-size: 1.39em;
-    height: 64px;
+    font-size: 1.3em;
+    min-height: 64px;
+    @include bp-medium {
+      min-height: 50px;
+    }
   }
 }
 
