@@ -115,7 +115,7 @@ input[type="submit"].nav-search-button {
 .profile-picture--navbar{
   height: 100%;
   padding: 7px;
-  @include border-radius(999px);
+  border-radius: 999px;
   margin-left: -0.6em;
   @include bp-large{
     margin-left: 0;

@@ -11,8 +11,10 @@
   img {
     position: absolute;
     left: 0;
-    min-height: 2.5em;
-    width: 2.5em;
+    min-height: 2em;
+    width: 2em;
+    border-radius: 999px;
+    margin: 0.2em;
   }
 
   .info {
@@ -103,7 +105,7 @@
 }
 
 .info-block {
-  margin-left: 2.7em;
+  margin-left: 2.3em;
   padding: .3em;
   position: relative;
 }
