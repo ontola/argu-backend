@@ -41,6 +41,14 @@ $(function (){
         .on('pjax:start pjax:beforeReplace', shallowUnmountComponents)
         .on('pjax:end', shallowMountComponents);
 
+    function ConsoleComponent() {
+        actorStore.listen(function(actor) {
+            console.log('actor: ', actor);
+        });
+    }
+
+    new ConsoleComponent();
+
     /*React.render(
         <Navbar />,
         document.getElementById('navbar')

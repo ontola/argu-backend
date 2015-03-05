@@ -22,4 +22,23 @@ module MotionsHelper
     return supplemented_values[1] - (overflow*(model.votes_neutral_percentage/100.to_f)) if side == :neutral
     return supplemented_values[2] - (overflow*(model.votes_con_percentage/100.to_f)) if side == :con
   end
+
+  def motion_vote_props(motion, vote)
+    {
+        object_type: 'motion',
+        object_id: motion.id,
+        current_vote: vote.for,
+        distribution: {
+          pro: motion.votes_pro_count,
+          neutral: motion.votes_neutral_count,
+          con: motion.votes_con_count
+        },
+        percent: {
+            pro: motion.votes_pro_percentage,
+            neutral: motion.votes_neutral_percentage,
+            con: motion.votes_con_percentage
+        }
+    }
+  end
+
 end

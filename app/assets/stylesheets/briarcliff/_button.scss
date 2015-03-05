@@ -248,9 +248,9 @@
     @include box-shadow;
 
   }
-  &.voted a {
+  &[data-voted] a {
     opacity: .4;
-    &.voted-on{
+    &[data-voted-on]{
       opacity: 1;
     }
   }

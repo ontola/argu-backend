@@ -33,10 +33,14 @@ module HeaderHelper
 
   def profile_dropdown_items
     {
-        title: current_profile.display_name,
-        image: {
-            url: current_profile.profile_photo.url(:icon),
-            className: 'profile-picture--navbar'
+        trigger: {
+            type: 'current_user',
+            title: current_profile.display_name,
+            image: {
+                url: current_profile.profile_photo.url(:icon),
+                className: 'profile-picture--navbar'
+            },
+            triggerClass: 'navbar-item'
         },
         sections: [
           {
@@ -51,8 +55,7 @@ module HeaderHelper
               title: t('profiles.switch'),
               items: managed_pages_items
           }
-        ],
-        triggerClass: 'navbar-item'
+        ]
     }
   end
 
@@ -82,9 +85,9 @@ module HeaderHelper
     options.merge opts
   end
 
-  def link_item(title, url, opts = {})
+  def item(type, title, url, opts= {})
     item = {
-        type: 'link',
+        type: type,
         title: title,
         url: url
     }
@@ -95,12 +98,20 @@ module HeaderHelper
     item.merge(opts)
   end
 
+  def link_item(title, url, opts= {})
+    item('link', title, url, opts)
+  end
+
+  def actor_item(title, url, opts= {})
+    item('actor', title, url, opts)
+  end
+
   def managed_pages_items
     items = []
     if current_user.managed_pages.present?
-      items << link_item(current_user.display_name, actors_path(na: current_user.profile.id), image: current_user.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
+      items << actor_item(current_user.display_name, actors_path(na: current_user.profile.id), image: current_user.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
       current_user.managed_pages.each do |p|
-        items << link_item(p.display_name, actors_path(na: p.profile.id), image: p.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
+        items << actor_item(p.display_name, actors_path(na: p.profile.id), image: p.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
       end
     end
     items

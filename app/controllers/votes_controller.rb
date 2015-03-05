@@ -21,18 +21,18 @@ class VotesController < ApplicationController
         elsif @vote.for == params[:for]
           format.html { redirect_to @model, notice: t('votes.alerts.not_modified') }
           format.js { head :not_modified }
-          format.json { render json: @vote, status: :not_modified }
+          format.json { render status: :not_modified }
         elsif @vote.update(for: params[:for])
           create_activity_with_cleanup @vote, action: :create, parameters: {for: @vote.for}, recipient: @vote.voteable, owner: current_profile, forum_id: @vote.forum.id
           @model.reload
           save_vote_to_stats @vote
           format.html { redirect_to @model, notice: t('votes.alerts.success') }
           format.js
-          format.json { render json: @vote, status: :created, location: @vote }
+          format.json { render status: :created, location: @vote }
         else
           format.html { redirect_to @model, notice: t('votes.alerts.failed') }
           format.js { head :bad_request }
-          format.json { render json: @vote.errors, status: :bad_request }
+          format.json { render @vote.errors, status: :bad_request }
         end
       end
     end

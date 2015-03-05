@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require react
 //= require react_ujs
+//= require reflux.min
 //= require js-routes
 //= require application/jquery.jeditable.mini.js
 //= require jquery-ui/autocomplete
@@ -33,5 +34,6 @@
 //= require fixedsticky
 //= require pica_pica/application
 //= require cocoon
+//= require_tree ./stores
 //= require components
 //= require_tree ./application
