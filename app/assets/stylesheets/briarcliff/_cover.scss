@@ -25,12 +25,13 @@
   position: relative;
   @include container-width;
   margin: auto;
-  margin-bottom: 0;
   padding: 0 1em;
-  text-align: center;
-
+  margin-bottom: -4em;
+  top: -4.2em;
+  width: 100%;
   > .btns-list {
     display: inline-block;
+    margin-left: .8em;
 
     @include bp-medium {
       > a {
@@ -66,42 +67,45 @@
 
 .cover-header {
   margin: auto;
-  background-color: white;
   width: 100%;
-  height: auto;
-  min-height: 3em;
-  @include box-shadow;
-  h1 {
-    font-size: 1.4em;
+  display: inline-block;
+  background-color: white;
+  .profile-picture {
+    height: 8em;
+    width: 8em;
     position: relative;
-    display: inline-block;
-    height: 1.3em;
-    margin-bottom: 0;
-    margin-top: 0.6em;
-    &:after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      //background-color: $g4;
-    }
-    @include bp-medium{
-      display: inline-block;
-      text-align: center;
-    }
-  }
-
-  @include bp-medium{
-    text-align: center;
-  }
-  .dropdown{
-    display: inline-block;
+    background-size: cover;
+    float: left;
   }
 }
 
 .cover-oneliner {
   max-width: 51em;
-  margin: 0.4em auto 0em;
+  margin-left: 1.5em;
+  margin-top: 0.8em;
+  margin-bottom: 0.3em;
+  float: left;
+}
+
+.cover-switcher {
+  .dropdown {
+    display: inline-block;
+  }
+  .dropdown-trigger {
+    padding: 1em;
+    position: relative;
+    display: inline-block;
+    background-color: $lighten4;
+    margin-bottom: 0;
+    font-size: 1.39em;
+  }
+}
+
+
+.cover-switcher .dropdown-active .dropdown-trigger {
+  background-color: $lighten5 !important;
+}
+
+.cover-header-bottom {
+  background-color: white;
 }
