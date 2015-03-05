@@ -21,7 +21,7 @@ div[itemscope itemtype="Thing"]
       .cover-container
         .cover-header-top
           -if @forum.profile_photo.url.present?
-            .profile-picture[style="background-image: url('http://www.evenementenindustrie.nl/images/nieuws/gerardjoling.jpg')"]
+            .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
           .cover-switcher=react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
         .cover-header-bottom
           - if @forum.bio.present?
