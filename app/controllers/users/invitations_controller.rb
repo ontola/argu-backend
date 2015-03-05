@@ -37,4 +37,8 @@ class Users::InvitationsController < Devise::InvitationsController
   def after_accept_path_for(resource)
     edit_profile_path(resource.username)
   end
+
+  def after_invite_path_for(resource)
+    redirect_to @forum
+  end
 end

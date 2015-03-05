@@ -11,7 +11,7 @@ nl:
       argument: "belangrijk argument"
     alerts:
       success: "Bedankt voor je stem!"
-      failed: "Daar ging iets mis. Foutje aan onze kant!"
+      failed: "Er is iets fout gegaan, probeer het opnieuw."
     type:
       pro: "voor"
       neutral: "onbesloten"
