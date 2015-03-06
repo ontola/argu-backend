@@ -198,7 +198,7 @@
   display: block;
   color: $g3;
   @include transition(.2s);
-  > a {
+  > a, .dropdown-trigger {
     padding: .7em;
     display: inline-block;
     color: $g3;
