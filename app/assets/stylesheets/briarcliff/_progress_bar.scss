@@ -40,7 +40,7 @@
     border-right: none;
   }
   //Use these classes to show and hide the progress bar
-  &.collapse-closed {
+  &[data-collapsed] {
     height: 0;
     opacity: 0;
   }

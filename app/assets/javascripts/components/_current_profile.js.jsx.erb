@@ -1,0 +1,40 @@
+/*global React, $*/
+
+window.CurrentProfile = React.createClass({
+    getInitialState: function () {
+        return {
+            display_name: this.props.display_name,
+            image: this.props.image
+        };
+    },
+
+    onActorChange: function (data) {
+        console.log('fsdfsdfsdf');
+        console.log(data);
+        console.log('fsdfsdfsdf');
+        this.setState(data);
+    },
+
+    componentDidMount: function () {
+        this.unsubscribe = actorStore.listen(this.onActorChange);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+    },
+
+    render: function () {
+
+        return (<section className="profile-small">
+            {_image(this.state)}
+            <div className="info-block">
+                <div className="info">plaatsen als:</div>
+                <div className="profile-name">{this.state.display_name}</div>
+            </div>
+        </section>);
+    }
+});
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = CurrentProfile;
+}

@@ -78,7 +78,7 @@ class ApplicationController < ActionController::Base
   end
 
   def pundit_user
-    UserContext.new(current_user, session)
+    UserContext.new(current_user, current_profile, session)
   end
 
   def render_register_modal(base_url=nil, *r_options)

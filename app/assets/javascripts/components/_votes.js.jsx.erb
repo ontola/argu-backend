@@ -94,7 +94,7 @@ window.BigVote = React.createClass({
 
         if (this.state.distribution) {
             results = (
-                <ul className="progress-bar progress-bar-stacked">
+                <ul className="progress-bar progress-bar-stacked" data-collapsed={(this.state.current_vote.length == 0 || this.state.current_vote == 'abstain') || null}>
                     <li style={this.voteWidth('pro')}><span className="btn-pro">{this.state.distribution.pro}</span></li>
                     <li style={this.voteWidth('neutral')}><span className="btn-neu">{this.state.distribution.neutral}</span></li>
                     <li style={this.voteWidth('con')}><span className="btn-con">{this.state.distribution.con}</span></li>

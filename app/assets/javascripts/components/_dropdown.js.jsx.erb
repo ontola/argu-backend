@@ -1,13 +1,5 @@
 /*global React, $*/
 
-var _image = function (props) {
-    if (props.image) {
-        return <img src={props.image.url} alt={props.image.title} className={props.image.className} />;
-    } else if (props.fa) {
-        return <span className={['fa', props.fa].join(' ')} />;
-    }
-};
-
 window.HyperDropdown = React.createClass({
     getInitialState: function () {
         return {
@@ -96,8 +88,8 @@ window.HyperDropdown = React.createClass({
                         if (item.type == 'link') {
                             return <LinkItem key={item.title} {...item} />;
                         } else if (item.type == 'actor') {
-                            ItemTag = 'ActorItem'
-                        return <ActorItem key={item.title} {...item} />;
+                            ItemTag = 'ActorItem';
+                            return <ActorItem key={item.title} {...item} />;
                         }
                     });
 
@@ -239,7 +231,7 @@ var CurrentUserTrigger = React.createClass({
         var TriggerContainer = this.props.triggerTag || 'div';
 
         return (<TriggerContainer className={triggerClass}>
-            {_image(this.state)}
+            {_image({image: {url: this.state.image.url, title: this.state.image.title, className: 'profile-picture--navbar'}})}
             <span className="icon-left">{this.state.display_name}</span>
         </TriggerContainer>);
     }
