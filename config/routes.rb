@@ -66,9 +66,14 @@ Argu::Application.routes.draw do
     resources :motions, only: [:new, :create]
     resources :arguments, only: [:new, :create]
     resources :tags, only: [:show]
+    resources :groups, only: [:new, :create] do
+      get 'add', on: :member
+      post 'add', on: :member, action: :add!
+    end
   end
 
   resources :pages, only: [:new, :create, :show, :update, :delete, :destroy] do
+    get :index, on: :collection
     get :delete, on: :member
     get :settings, on: :member
   end

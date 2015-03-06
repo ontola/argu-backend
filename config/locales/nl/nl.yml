@@ -27,6 +27,7 @@ nl:
   save: "opslaan"
   new: "nieuw"
   new_type: "nieuw %{type}"
+  newe_type: "nieuwe %{type}"
   back: "terug"
   cancel: "annuleren"
   show: "tonen"

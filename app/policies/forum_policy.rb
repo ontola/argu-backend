@@ -45,12 +45,20 @@ class ForumPolicy < RestrictivePolicy
     false
   end
 
+  def groups?
+    is_manager? || staff?
+  end
+
   def new?
     create?
   end
 
   def create?
     super
+  end
+
+  def create_group?
+    is_manager? || staff?
   end
 
   def edit?

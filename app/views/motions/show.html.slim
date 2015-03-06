@@ -19,12 +19,11 @@ div[itemscope itemtype="http://www.schema.org/Answer"]
     .col--motion
       div[data-intro= t("intro.motion.body") itemprop="text"]= render partial: 'motionbody', locals: { motion: @motion }
       =react_component 'BigVote', motion_vote_props(@motion, @vote), {prerender: true}
-      /e=render partial: 'vote_results'
 div[data-intro= t("intro.motion.arguments") data-position= "top"]= render_columns(@arguments, buttons_url: new_forum_argument_path(@motion.forum, motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false, buttons_options: {data: remote_unless_user})
 -if Rails.configuration.epics.opinions
-  =render_columns(@opinions, header: t("arguments.index.opinion"))
+  =render_columns(@opinions, header: t('arguments.index.opinion'))
 -if Rails.configuration.epics.parties
-  header
-    h1= t("arguments.index.parties")
-  =render partial: 'parties', locals: { motion: @motion }
+  -@group_responses.each do |k,v|
+    =render_columns(v, header: k.name, collection_model: GroupResponse, show_new_buttons: profile_in_group?(current_profile, k))
+
 // Render four random motions / questions from the same forum

@@ -1,4 +1,4 @@
-class ActorPolicy < ApplicationPolicy
+class GroupPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :user, :scope, :session
 
@@ -16,24 +16,33 @@ class ActorPolicy < ApplicationPolicy
     end
   end
 
-  def show?
-    is_manager?
+  def permitted_attributes
+    attributes = super
+    attributes << [:name] if create?
+    attributes << [:id] if staff?
+    attributes
+  end
+
+  def new?
+    create?
+  end
+
+  def create?
+    is_manager? || super
   end
 
   def update?
-    is_manager?
+    is_manager? || super
   end
 
-  private
+  def edit?
+    update?
+  end
+
+private
+
   def is_manager?
-    owner = record.owner
-    if owner.class == User
-      owner == user
-    elsif owner.class == Page
-      owner.managers.where(profile: user.profile).present?
-    else
-      owner.owner == user.profile
-    end
+    Pundit.policy(context, record.forum).is_manager?
   end
 
 end

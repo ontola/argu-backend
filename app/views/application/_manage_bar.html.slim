@@ -1,15 +1,19 @@
 ul.tabs
-  li=link_to url_for(resource) do
+  li= link_to url_for(resource)
     span.fa.fa-home
     span.icon-left= resource.display_name
-  li=link_to url_for([:settings, resource]) do
+  li= link_to url_for([:settings, resource])
     span.fa.fa-gear
     span.icon-left= t("#{resource.class_name}.settings.title")
   - if policy(resource).statistics?
-    li=link_to url_for([:statistics, resource]) do
+    li= link_to url_for([:statistics, resource])
       span.fa.fa-pie-chart
       span.icon-left= t("#{resource.class_name}.statistics.title")
   - if policy(resource).managers?
-    li = link_to url_for([:settings, resource, tab: :managers])
+    li= link_to url_for([:settings, resource, tab: :managers])
       span.fa.fa-group
-      span.icon-left = t("forums.settings.managers")
+      span.icon-left= t('forums.settings.managers')
+  - if policy(resource).groups?
+    li= link_to url_for([:settings, resource, tab: :groups])
+      span.fa.fa-group
+      span.icon-left= t('forums.settings.groups')

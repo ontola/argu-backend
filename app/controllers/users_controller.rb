@@ -2,11 +2,12 @@ class UsersController < ApplicationController
   autocomplete :user, :name, :extra_data => [:profile_photo]
 
   def index
+    authorize User, :index?
     scope = policy_scope(User).includes(:profile)
     scope = scope.includes(:memberships).where('memberships IS NULL OR memberships.forum_id != 1').references(:memberships) if params[:forum_id].present?
 
     if params[:q].present?
-      @users = scope.where("lower(username) LIKE lower(?)", "%#{params[:q]}%").page params[:page]
+      @users = scope.where('lower(username) LIKE lower(?)', "%#{params[:q]}%").page params[:page]
     end
   end
 
@@ -65,6 +66,7 @@ class UsersController < ApplicationController
   # POST /users/search
   def search
     #@users = User.where(User.arel_table[:username].matches("%#{params[:username]}%")) if params[:username].present?
+    authorize User, :index?
     @users = User.search do
       fulltext params['username']
       paginate page: params[:page]

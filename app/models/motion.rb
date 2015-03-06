@@ -9,6 +9,7 @@ class Motion < ActiveRecord::Base
   has_many :question_answers, inverse_of: :motion, dependent: :destroy
   has_many :questions, through: :question_answers
   has_many :activities, as: :trackable, dependent: :destroy
+  has_many :group_responses
   belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
 
