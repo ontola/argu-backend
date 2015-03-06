@@ -7,7 +7,7 @@ class VotesControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     assert_difference('Vote.count') do
-      post :create, motion_id: motions(:one), for: :pro, format: :js
+      post :create, motion_id: motions(:one), for: :pro, format: :json
     end
 
     assert_response :success

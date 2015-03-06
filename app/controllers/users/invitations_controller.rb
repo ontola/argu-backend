@@ -1,7 +1,7 @@
 class Users::InvitationsController < Devise::InvitationsController
 
   def new
-    @forum = Forum.friendly.find_by id: params[:forum]
+    @forum = Forum.friendly.find params[:forum]
     super
   end
 
