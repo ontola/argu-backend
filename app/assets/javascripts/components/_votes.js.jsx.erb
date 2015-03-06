@@ -11,6 +11,49 @@ window.BigVote = React.createClass({
         };
     },
 
+    refresh: function () {
+        var _this = this;
+        $.ajax({
+            type: 'GET',
+            url: [this.state.object_id, 'vote'].join('/'),
+            dataType: 'json',
+            async: true,
+            success: function (data) {
+                if (data.vote) {
+                    _this.setState(data.vote);
+                }
+            },
+            error: function () {
+                console.log('failed');
+            }
+        });
+    },
+
+    onActorChange: function (data) {
+        this.refresh();
+    },
+
+    componentDidMount: function () {
+        this.unsubscribe = actorStore.listen(this.onActorChange);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+    },
+
+    proHandler: function (e) {
+        e.preventDefault();
+        this.vote('pro')
+    },
+    neutralHandler: function (e) {
+        e.preventDefault();
+        this.vote('neutral')
+    },
+    conHandler: function (e) {
+        e.preventDefault();
+        this.vote('con')
+    },
+
     vote: function (side) {
         var _this = this;
         $.ajax({
@@ -28,19 +71,6 @@ window.BigVote = React.createClass({
                 console.log('failed');
             }
         });
-    },
-
-    proHandler: function (e) {
-        e.preventDefault();
-        this.vote('pro')
-    },
-    neutralHandler: function (e) {
-        e.preventDefault();
-        this.vote('neutral')
-    },
-    conHandler: function (e) {
-        e.preventDefault();
-        this.vote('con')
     },
 
     voteWidth: function (side) {

@@ -8,6 +8,7 @@ Argu::Application.routes.draw do
     put 'convert', action: 'convert!'
   end
   concern :votable do
+    get 'vote' => 'votes#show', shallow: true, as: :show_vote
     post 'vote/:for' => 'votes#create', shallow: true, as: :vote
   end
 

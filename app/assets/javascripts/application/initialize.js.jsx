@@ -49,11 +49,6 @@ $(function (){
 
     new ConsoleComponent();
 
-    /*React.render(
-        <Navbar />,
-        document.getElementById('navbar')
-    );*/
-
     if (!("ontouchstart" in document.documentElement)) {
         document.documentElement.className += " no-touch";
     }

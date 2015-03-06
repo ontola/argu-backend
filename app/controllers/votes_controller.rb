@@ -1,4 +1,32 @@
 class VotesController < ApplicationController
+
+  # GET /model/:model_id/vote
+  def show
+    if params[:argument_id].present?
+      @model = Argument.find params[:argument_id]
+    elsif params[:motion_id].present?
+      @model = Motion.find params[:motion_id]
+    end
+    if current_profile.blank?
+      authorize @model, :show?
+      render_register_modal(nil)
+    else
+      authorize @model.forum, :show?
+
+      @vote = Vote.find_by(voteable: @model, voter: current_profile, forum: @model.forum)
+
+      respond_to do |format|
+        if !current_profile.member_of? @model.forum
+          format.html { render template: 'forums/join', locals: { forum: @model.forum, r: request.fullpath } }
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: @model.forum, r: request.fullpath } }
+          format.json { render 'create', location: @vote }
+        else
+          format.json { render 'create', location: @vote }
+        end
+      end
+    end
+  end
+
   # POST /model/:model_id/vote/:for
   def create
     if params[:argument_id].present?
