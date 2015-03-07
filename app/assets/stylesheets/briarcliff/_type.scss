@@ -122,6 +122,9 @@ header h1, header h2 {
 
 header h1 {
   font-size: 1.8em;
+  @include bp-medium {
+    font-size: 1.3em;
+  }
 }
 
 header h2 {

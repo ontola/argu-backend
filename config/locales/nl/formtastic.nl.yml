@@ -32,6 +32,10 @@ nl:
       f_move: "Verplaatsen"
       f_convert: "Omzetten"
       invert_arguments: "Argumenten omdraaien"
+      notifications:
+        follows: "Items die ik volg"
+        memberships: "Mijn forums"
+        created: "Mijn items"
       profile:
         name: "Volledige naam"
       page:

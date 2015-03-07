@@ -22,7 +22,7 @@
   position: absolute;
   text-align: left;
   top: 100%;
-  width: 14em;
+  width: 15em;
   z-index: 10;
   @include box-shadow-intense;
   @include border-radius;
@@ -81,7 +81,7 @@
 
 .dropdown-active {
   .dropdown-trigger{
-    background-color: $lighten2 !important;
+    background-color: $lighten3 !important;
   }
 }
 

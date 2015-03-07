@@ -1,14 +1,14 @@
 nl:
   devise:
     invitations:
-      link: 'betrek anderen'
+      link: 'Betrek anderen'
       send_instructions: 'Een uitnodiging is verstuurd naar %{email}.'
       invitation_token_invalid: 'Oeps! De code van de uitnodiging is ongeldig.'
       updated: 'Je hebt je wachtwoord ingesteld. Je bent nu ingelogd.'
       no_invitations_remaining: "Je hebt geen uitnodigingen meer."
       invitation_removed: 'Jouw uitnodiging is verwijderd.'
       new:
-        header: "uitnodigingen versturen"
+        header: "Uitnodigingen versturen"
         submit_button: "Verstuur uitnodiging"
         forum_notice: "Je nodigt mensen uit voor het forum %{forum}"
       edit:

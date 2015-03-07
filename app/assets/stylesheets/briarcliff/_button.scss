@@ -16,7 +16,11 @@
   margin-right: 1em;
   position: relative;
   display: inline-block;
-  &:hover:after{
+  img {
+    display: block;
+    height: 100%;
+  }
+  &:after{
     content: "+";
     text-align: center;
     color: white;
@@ -30,6 +34,14 @@
     bottom: 0;
     left: 0;
     right: 0;
+    opacity: 0;
+    @include transition(.2s)
+  }
+  &:hover:after{
+    opacity: .6;
+  }
+  &:active:after{
+    opacity: 1;
   }
 }
 
