@@ -72,6 +72,8 @@ class Motion < ActiveRecord::Base
       self.question_answers.delete_all if unlink_questions
       self.activities.update_all forum_id: forum.id
       self.taggings.update_all forum_id: forum.id
+      self.groups.update_all forum_id: forum.id
+      self.group_responses.update_all forum_id: forum.id
       old_forum.decrement :motions_count
       forum.increment :motions_count
       old_forum.save

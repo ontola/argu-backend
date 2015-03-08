@@ -6,10 +6,11 @@ class RestrictivePolicy
     @context = context
     @record = record
 
-    raise Argu::NotLoggedInError.new(nil, record), "must be logged in" unless has_access_to_platform?
+    raise Argu::NotLoggedInError.new(nil, record), 'must be logged in' unless has_access_to_platform?
   end
 
   delegate :user, to: :context
+  delegate :actor, to: :context
   delegate :session, to: :context
 
   def permitted_attributes

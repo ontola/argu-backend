@@ -1,0 +1,22 @@
+.col-3
+  -@group_response ||= resource
+  = semantic_form_for(@group_response, url: @group_response.new_record? ? motion_group_responses_path : response_path(@group_response)) do |f|
+    .box.form-toggle.choices-3
+      =f.input :side, as: :toggle_radio, :collection => radio_values_for_sides(@group_response)
+    .box.argument[id="#{@group_response.id.present? ? 'argument_' + @group_response.id.to_s : ''}" class="side-#{@group_response.side}"]
+      section.smallpadded
+        - if @group_response.errors.any?
+          #error_explanation
+            h2= pluralize(@group_response.errors.count, 'error') + t('error_prohibited')
+            ul
+              - @group_response.errors.full_messages.each do |msg|
+                li= msg
+        =f.inputs
+          =f.input :text, input_html: {class: 'form-input-content', rows: '10'}, label: false
+          .row
+            .span8
+              fieldset.control-group
+              =f.hidden_field(:motion_id)
+      =render partial: 'profiles/profile_current'
+      fieldset.form-actions
+        =f.submit t('groupresponses.form.submit', name: @group_response.group.name.singularize), class: 'btn btn-sticky btn-sticky-bottom'

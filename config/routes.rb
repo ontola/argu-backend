@@ -45,7 +45,11 @@ Argu::Application.routes.draw do
 
   resources :questions, except: [:index, :new, :create], concerns: [:moveable, :convertible]
 
-  resources :motions, except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable]
+  resources :motions, except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
+    resources :groups, only: [] do
+      resources :group_responses, path: 'responses', as: 'responses', only: [:new, :create]
+    end
+  end
 
   resources :arguments, except: [:index, :new, :create], concerns: [:votable] do
     resources :comments
@@ -55,6 +59,8 @@ Argu::Application.routes.draw do
   resources :opinions do
     resources :comments
   end
+
+  resources :group_responses, only: [:edit, :update, :destroy], as: :responses
 
   resources :forums, except: [:edit] do
     get :settings, on: :member
@@ -68,7 +74,7 @@ Argu::Application.routes.draw do
     resources :tags, only: [:show]
     resources :groups, only: [:new, :create] do
       get 'add', on: :member
-      post 'add', on: :member, action: :add!
+      post on: :member, action: :add!, as: ''
     end
   end
 

@@ -3,7 +3,7 @@ class Page < ActiveRecord::Base
   extend FriendlyId
 
   belongs_to :profile, dependent: :destroy
-  belongs_to :owner, class_name: 'Profile', inverse_of: :page
+  belongs_to :owner, class_name: 'Profile', inverse_of: :pages
   accepts_nested_attributes_for :profile
   has_many :forums
   has_many :group_memberships, inverse_of: :pages

@@ -4,7 +4,6 @@ module GroupsHelper
     if profile.owner.class == Page
       profile.owner.groups.include?(group)
     end
-
   end
 
 end

@@ -134,6 +134,9 @@ input[type="text"].form-input-title {
       cursor: pointer;
     }
   }
+  &.choices-3 li.choice {
+    width: 33.33%;
+  }
   input {
     // Hide radio button when JS provides visual feedback on the toggled button.
     width: 0;
@@ -155,6 +158,29 @@ input[type="text"].form-input-title {
     color: $gre;
   }
   label[for="argument_pro_pro"].checked{
+    background-color: $gre;
+    color: white;
+  }
+
+
+  label[for="group_response_side_con"]{
+    color: $red;
+  }
+  label[for="group_response_side_con"].checked{
+    background-color: $red;
+    color: white;
+  }
+  label[for="group_response_side_neutral"]{
+    color: $g3;
+  }
+  label[for="group_response_side_neutral"].checked{
+    background-color: $g3;
+    color: white;
+  }
+  label[for="group_response_side_pro"]{
+    color: $gre;
+  }
+  label[for="group_response_side_pro"].checked{
     background-color: $gre;
     color: white;
   }

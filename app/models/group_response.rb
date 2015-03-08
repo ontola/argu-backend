@@ -10,7 +10,11 @@ class GroupResponse < ActiveRecord::Base
 
   parentable :motion, :forum
 
-  enum side: {neutral: 0, pro: 1, con: 2}
+  enum side: {pro: 1, neutral: 0, con: 2}
+
+  def creator
+    self.profile
+  end
 
   def self.ordered (coll=[])
     dest = {'pro' => {collection: []}, 'neutral' => {collection: []}, 'con' => {collection: []}}

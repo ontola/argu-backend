@@ -2,4 +2,4 @@
   section
     h3
       span.fa.fa-plus
-      span.icon-left = I18n.t("#{collection_model.name.pluralize.downcase}.new_btn")
+      span.icon-left= I18n.t("#{collection_model.name.pluralize.downcase}.new_btn", type: I18n.t("#{collection_model.name.pluralize.downcase}.type"))

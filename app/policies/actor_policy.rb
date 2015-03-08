@@ -29,10 +29,8 @@ class ActorPolicy < ApplicationPolicy
     owner = record.owner
     if owner.class == User
       owner == user
-    elsif owner.class == Page
-      owner.managers.where(profile: user.profile).present?
     else
-      owner.owner == user.profile
+      owner.owner == user.profile || owner.managers.where(profile: user.profile).present?
     end
   end
 

@@ -3,7 +3,7 @@
   =render partial: 'manage_bar', locals: {resource: @forum}  if policy(@forum).update?
   .box
     section
-      =semantic_form_for([:add, @forum, @group], method: :post) do |f|
+      =semantic_form_for([@forum, @group], method: :post) do |f|
         - @membership.errors.full_messages.each do |message|
           =message
         =f.inputs name: t('newe_type', type: t('groups.type')) do
