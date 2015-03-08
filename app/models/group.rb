@@ -13,7 +13,7 @@ class Group < ActiveRecord::Base
 
   def self.ordered (coll=[])
     grouped = coll.group_by { |g| g.group }
-    grouped.keys.map { |g| {g => GroupResponse.ordered(grouped[g]) } }.reduce(&:merge)
+    grouped.keys.map { |g| {g => GroupResponse.ordered(grouped[g]) } }.reduce(&:merge) || []
   end
 
 end
