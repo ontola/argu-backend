@@ -1,6 +1,6 @@
 json.notifications do
   json.unread @unread
-  json.lastNotification @notifications.first.created_at
+  json.lastNotification @notifications.first && @notifications.first.created_at
   json.notifications @notifications do |notification|
     json.id notification.id
     json.title notification.activity.trackable.display_name
