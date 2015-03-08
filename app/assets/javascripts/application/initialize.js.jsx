@@ -35,19 +35,78 @@ $(function (){
         }
     }
 
-    $.pjax.defaults.timeout = 5000;
+    $.pjax.defaults.timeout = 10000;
     $(document)
         .pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container')
         .on('pjax:start pjax:beforeReplace', shallowUnmountComponents)
         .on('pjax:end', shallowMountComponents);
 
-    function ConsoleComponent() {
-        actorStore.listen(function(actor) {
-            console.log('actor: ', actor);
-        });
+    var refreshing = false,
+        lastNotificationCheck = Date.now(),
+        timeoutValue = 30000,
+        notificationTimeout;
+
+    function refreshComments() {
+        if (!refreshing && Date.now() - lastNotificationCheck >= 15000) {
+            window.clearTimeout(notificationTimeout);
+            refreshing = true;
+            lastNotificationCheck = Date.now();
+            $.ajax({
+                type: 'GET',
+                url: '/notifications',
+                dataType: 'json',
+                async: true,
+                success: function (data) {
+                    NotificationActions.notificationUpdate(data.notifications);
+                },
+                error: function () {
+                    console.log('failed');
+                },
+                complete: function () {
+                    refreshing = false;
+                    resetTimeout();
+                }
+            });
+        } else if (!refreshing) {
+            resetTimeout();
+        }
     }
 
-    new ConsoleComponent();
+    function resetTimeout() {
+        window.clearTimeout(notificationTimeout);
+        notificationTimeout = window.setTimeout(refreshComments, timeoutValue);
+    }
+    resetTimeout();
+
+    $(function () {
+        var hidden, visibilityChange;
+        if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+            hidden = "hidden";
+            visibilityChange = "visibilitychange";
+        } else if (typeof document.mozHidden !== "undefined") {
+            hidden = "mozHidden";
+            visibilityChange = "mozvisibilitychange";
+        } else if (typeof document.msHidden !== "undefined") {
+            hidden = "msHidden";
+            visibilityChange = "msvisibilitychange";
+        } else if (typeof document.webkitHidden !== "undefined") {
+            hidden = "webkitHidden";
+            visibilityChange = "webkitvisibilitychange";
+        }
+
+        function handleVisibilityChange() {
+            if (document[hidden]) {
+                timeoutValue = 120000;
+                resetTimeout();
+            } else {
+                timeoutValue = 30000;
+                refreshComments();
+            }
+        }
+
+        document.addEventListener(visibilityChange, handleVisibilityChange, false);
+        $(document).on('pjax:complete', refreshComments);
+    });
 
     if (!("ontouchstart" in document.documentElement)) {
         document.documentElement.className += " no-touch";

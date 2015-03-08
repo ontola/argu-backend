@@ -1,4 +1,6 @@
 module ForumsHelper
+  include DropdownHelper
+
   def application_form_member_label(value)
     t("forums.application_form.#{value}")
   end

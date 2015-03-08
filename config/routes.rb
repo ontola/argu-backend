@@ -103,6 +103,8 @@ Argu::Application.routes.draw do
     delete :destroy, on: :collection
   end
 
+  resources :notifications, only: [:index, :update]
+
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
   get '/settings', to: 'users#edit', as: 'settings'

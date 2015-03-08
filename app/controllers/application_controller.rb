@@ -53,7 +53,7 @@ class ApplicationController < ActionController::Base
 
   def create_activity(model, params)
     a = model.create_activity params
-    Argu::Notification.perform_async(a.id)
+    Argu::NotificationWorker.perform_async(a.id)
   end
 
   def current_scope

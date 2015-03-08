@@ -78,25 +78,29 @@ window.HyperDropdown = React.createClass({
         if (this.props.sections) {
             sections = (<ul className="dropdown-content" style={collapseStyle}>
                 {this.props.sections.map(function(section) {
-                    var title;
-                    if (section.title && section.items.length > 0) {
-                        title = <span className="dropdown-header">{section.title}</span>
-                    }
-
-                    var items = section.items.map(function(item) {
-                        var ItemTag;
-                        if (item.type == 'link') {
-                            return <LinkItem key={item.title} {...item} />;
-                        } else if (item.type == 'actor') {
-                            ItemTag = 'ActorItem';
-                            return <ActorItem key={item.title} {...item} />;
+                    if (typeof(section.type) == "string") {
+                        return (<Notifications {...section} />);
+                    } else {
+                        var title;
+                        if (section.title && section.items.length > 0) {
+                            title = <span className="dropdown-header">{section.title}</span>
                         }
-                    });
 
-                    return (<div>
-                        {title}
-                        {items}
-                    </div>);
+                        var items = section.items.map(function(item) {
+                            var ItemTag;
+                            if (item.type == 'link') {
+                                return <LinkItem key={item.title} {...item} />;
+                            } else if (item.type == 'actor') {
+                                ItemTag = 'ActorItem';
+                                return <ActorItem key={item.title} {...item} />;
+                            }
+                        });
+
+                        return (<div>
+                            {title}
+                            {items}
+                        </div>);
+                    }
                 })}
             </ul>);
         }
@@ -106,6 +110,8 @@ window.HyperDropdown = React.createClass({
         if (this.props.trigger) {
             if (this.props.trigger.type == 'current_user') {
                 trigger = <CurrentUserTrigger {...this.props.trigger}/>
+            } else if (this.props.trigger.type == 'notifications') {
+                trigger = <NotificationTrigger {...this.props}/>
             }
         } else {
             var image_after  = _image({fa: this.props.fa_after});

@@ -1,0 +1,108 @@
+/*global React, $*/
+
+var NotificationTrigger = React.createClass({
+    getInitialState: function () {
+        return {
+            unread: this.props.sections[0].unread
+        };
+    },
+
+    onNotificationChange: function (data) {
+        if (typeof(data.unread) != "undefined") {
+            this.setState({unread: data.unread});
+        }
+    },
+
+    componentDidMount: function () {
+        this.unsubscribe = notificationStore.listen(this.onNotificationChange);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+    },
+
+    render: function () {
+        var triggerClass = "dropdown-trigger " + this.props.trigger.triggerClass;
+        var label = this.state.unread > 0 ? <span className='icon-left'>{this.state.unread}</span> : null;
+
+        return (<div className={triggerClass}>
+            {_image({fa: this.state.unread > 0 ? 'fa-dot-circle-o' : 'fa-circle-o'})}
+            {label}
+        </div>);
+    }
+});
+
+var Notifications = React.createClass({
+    getInitialState: function () {
+        return this.props;
+    },
+
+    onNotificationChange: function (notifications) {
+        if (typeof(notifications.unread) != "undefined") {
+            this.setState(notifications);
+        }
+    },
+
+    componentDidMount: function () {
+        NotificationActions.notificationUpdate(this.props);
+        this.unsubscribe = notificationStore.listen(this.onNotificationChange);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+    },
+
+    render: function () {
+        var notifications = this.state.notifications.map(function(item) {
+            return <NotificationItem key={item.id} read={item.read} {...item} />
+        });
+
+        return (<ul className="notifications">
+            <p>Unread: {this.state.unread}</p>
+            {notifications}
+        </ul>);
+    }
+});
+
+var NotificationItem = React.createClass({
+    getInitialState: function () {
+        return {};
+    },
+
+    handleMouseDown: function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'PUT',
+            url: ['/notifications', this.props.id].join('/'),
+            dataType: 'json',
+            async: true,
+            success: function (data) {
+                NotificationActions.notificationUpdate(data.notifications);
+            },
+            error: function () {
+                console.log('failed');
+            }
+        });
+        // Fixes an issue where firefox bubbles events instead of capturing them
+        // See: https://github.com/facebook/react/issues/2011
+        this.getDOMNode().getElementsByTagName('a')[0].click();
+    },
+
+    render: function () {
+        var method, remote, skipPjax,
+            className = [this.props.type, this.props.read ? 'read' : 'unread'].join(' ');
+        if (this.props.data) {
+            method = this.props.data.method;
+            remote = this.props.data.remote;
+            skipPjax = this.props.data['skip-pjax'];
+        }
+
+        return (<li className={className}>
+            <a href={this.props.url} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax}>
+                {_image(this.props)}
+                <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
+            </a>
+        </li>);
+    }
+});
+

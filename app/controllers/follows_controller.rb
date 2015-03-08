@@ -19,7 +19,8 @@ class FollowsController < ApplicationController
   def destroy
     authorize @thing, :follow?
 
-    if current_profile.stop_following @thing
+    resp = current_profile.stop_following @thing
+    if resp == nil || resp
       respond_to do |format|
         format.html { redirect_to :back, notification: '_notifications disabled_' }
         format.json { head 200 }
@@ -34,6 +35,7 @@ class FollowsController < ApplicationController
 private
   def set_thing
     klass = [Forum, Question, Motion, Argument].detect { |c| params["#{c.name.underscore}_id"] }
-    @thing = klass.friendly.find(params["#{klass.name.underscore}_id"])
+    method = klass.respond_to?(:friendly) ? klass.friendly : klass
+    @thing = method.find(params["#{klass.name.underscore}_id"])
   end
 end

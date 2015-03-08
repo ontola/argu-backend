@@ -10,7 +10,7 @@ nav#navbar.navbar role="navigation"
       =react_component 'HyperDropdown', forum_selector_items, {prerender: true}
     ul.navbar-links.navbar-links-right
       =react_component 'HyperDropdown', profile_dropdown_items, {prerender: true}
-      /= react_component 'Notifications', {}, {prerender: true}
+      =react_component 'HyperDropdown', notification_dropdown_items(notifications_for(current_user, 1)), {prerender: true}
       =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
       li.dropdown[tabIndex="0"]
         a.intro-trigger.navbar-item

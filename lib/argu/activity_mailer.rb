@@ -33,7 +33,6 @@ class Argu::ActivityMailer
   # Sends the actual messages
   def send!
     begin
-      render_mail
       if collect_recipients.length > 0
         RestClient.post "https://api:key-#{Rails.application.secrets.mailgun_api_token}"\
     "@api.mailgun.net/v2/sandbox45cac23aba3c496ab26b566ddae1bd5b.mailgun.org/messages",

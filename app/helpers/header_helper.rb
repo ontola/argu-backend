@@ -1,4 +1,5 @@
 module HeaderHelper
+  include DropdownHelper
 
   def forum_selector_items
     {
@@ -59,6 +60,18 @@ module HeaderHelper
     }
   end
 
+  def notification_dropdown_items(items=[])
+    dropdown_options('', [
+                        {type: 'notifications', unread: items.reject { |i| i[:read] }.length, lastNotification: (items.first && items.first[:created_at]), notifications: items}
+                       ],
+                     trigger: {
+                         type: 'notifications',
+                         triggerClass: 'navbar-item'
+                     },
+                     fa: 'fa-circle',
+                     triggerClass: 'navbar-item')
+  end
+
   def info_dropdown_items
     {
         title: t('about.title'),
@@ -77,30 +90,7 @@ module HeaderHelper
     }
   end
 
-  def dropdown_options(title, sections, opts = {})
-    options = {
-        title: title,
-        sections: sections
-    }
-    options.merge opts
-  end
 
-  def item(type, title, url, opts= {})
-    item = {
-        type: type,
-        title: title,
-        url: url
-    }
-
-    image = opts.delete(:image) if opts[:image].present?
-    item[:image]= {url: image} if image.present?
-    item[:fa]= "fa-#{opts.delete :fa}" if opts[:fa].present?
-    item.merge(opts)
-  end
-
-  def link_item(title, url, opts= {})
-    item('link', title, url, opts)
-  end
 
   def actor_item(title, url, opts= {})
     item('actor', title, url, opts)
