@@ -4,15 +4,15 @@ nl:
   votes:
     score: "score"
     header:
-      pro: "ik ben voor"
-      neutral: "weet nog niet"
-      con: "ik ben tegen"
+      pro: "Is voor"
+      neutral: "Geen van beiden"
+      con: "Is tegen"
     tooltips:
-      argument: "belangrijk argument"
+      argument: "Belangrijk argument"
     alerts:
       success: "Bedankt voor je stem!"
       failed: "Er is iets fout gegaan, probeer het opnieuw."
     type:
-      pro: "voor"
-      neutral: "onbesloten"
-      con: "tegen"
+      pro: "Voor"
+      neutral: "Onbesloten"
+      con: "Tegen"

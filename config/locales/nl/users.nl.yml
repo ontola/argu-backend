@@ -6,7 +6,7 @@ nl:
       categories:
         general: "Algemeen"
         authentication: "Authenticatie"
-        notifications: "Notificaties"
+        notifications: "Meldingen"
     follows_email:
       never_follows_email: 'Nooit'
       direct_follows_email: 'Onmiddelijk'
