@@ -116,7 +116,7 @@ input[type="submit"].nav-search-button {
   height: 69%;
   margin: 7px;
   border-radius: 999px;
-  @include bp-large{
+  @include bp-medium-large{
     margin-left: 0;
     margin-right: 0;
   }
