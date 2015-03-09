@@ -2,7 +2,11 @@ class NotificationsController < ApplicationController
 
   def index
     since = DateTime.parse(request.headers[:lastNotification]).to_s(:db) if request.headers[:lastNotification]
-    @notifications = get_notifications(since)
+    new_available = true
+    if since.present?
+      new_available = policy_scope(Notification).order(created_at: :desc).where('created_at > ?', since).count > 0
+    end
+    @notifications = get_notifications(since) if new_available
     if @notifications.present?
       @unread = get_unread
       render
