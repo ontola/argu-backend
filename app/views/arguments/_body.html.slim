@@ -20,3 +20,5 @@
       li= link_to(edit_argument_path(@argument)) do
         span.fa.fa-pencil
         span.icon-left= t("edit")
+    - if active_for_user? :notifications, current_user
+      =react_component 'HyperDropdown', argument_items(@argument), {prerender: true}

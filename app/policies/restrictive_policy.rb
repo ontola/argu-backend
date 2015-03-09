@@ -41,7 +41,7 @@ class RestrictivePolicy
   end
 
   def follow?
-    staff?
+    is_member? || staff?
   end
 
   def index?
@@ -94,6 +94,10 @@ class RestrictivePolicy
 
   def is_creator?
     record.creator == user.profile
+  end
+
+  def is_member?
+    user && user.profile.member_of?(record.forum || record.forum_id)
   end
 
   def has_access_to_platform?

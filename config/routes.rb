@@ -99,6 +99,8 @@ Argu::Application.routes.draw do
     post ':id' => 'profiles#update', on: :collection
   end
 
+  resources :comments, only: :show
+
   resources :follows, only: :create do
     delete :destroy, on: :collection
   end

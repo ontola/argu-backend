@@ -7,6 +7,7 @@ class Comment < ActiveRecord::Base
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   mailable CommentMailer, :directly, :daily, :weekly
 
+  after_save :creator_follow
   after_validation :increase_counter_cache, :touch_parent
   after_destroy :decrease_counter_cache
 
@@ -40,6 +41,14 @@ class Comment < ActiveRecord::Base
 
   def creator
     self.profile
+  end
+
+  def creator_follow
+    self.creator.follow self
+  end
+
+  def display_name
+    self.body
   end
 
   #helper method to check if a comment has children

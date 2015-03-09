@@ -17,6 +17,7 @@ class Motion < ActiveRecord::Base
 
   before_save :trim_data
   before_save :cap_title
+  after_save :creator_follow
 
   parentable :questions, :forum
   convertible :votes, :taggings, :activities
@@ -39,6 +40,10 @@ class Motion < ActiveRecord::Base
 
   def creator
     super || Profile.first_or_create(name: 'Onbekend')
+  end
+
+  def creator_follow
+    self.creator.follow self
   end
 
   def display_name

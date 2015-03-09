@@ -21,3 +21,5 @@
       li= link_to edit_motion_path(motion) do
         span.fa.fa-pencil
         span.icon-left=t('edit')
+    - if active_for_user? :notifications, current_user
+      =react_component 'HyperDropdown', motion_items(motion), {prerender: true}

@@ -41,4 +41,17 @@ module MotionsHelper
     }
   end
 
+  def motion_items(motion)
+    if active_for_user?(:notifications, current_user)
+      divided = true
+      link_items = []
+      if current_profile.following?(motion)
+        link_items << link_item(t('forums.unfollow'), follows_path(motion_id: motion.id), fa: 'times', divider: 'top', data: {method: 'delete', 'skip-pjax' => 'true'})
+      else
+        link_items << link_item(t('forums.follow'), follows_path(motion_id: motion.id), fa: 'check', divider: 'top', data: {method: 'create', 'skip-pjax' => 'true'})
+      end
+      dropdown_options('motion', [{items: link_items}], fa: 'fa-gear')
+    end
+  end
+
 end

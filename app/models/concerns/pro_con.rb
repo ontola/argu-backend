@@ -12,6 +12,7 @@ module ProCon
 
     before_save :trim_data
     before_save :cap_title
+    after_save :creator_follow
 
     validates :content, presence: true, length: { minimum: 5, maximum: 3000 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
@@ -24,6 +25,10 @@ module ProCon
       super || Profile.first_or_create(username: 'Onbekend')
     end
 
+  end
+
+  def creator_follow
+    self.creator.follow self
   end
 
   def cap_title
