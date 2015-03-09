@@ -3,7 +3,8 @@
     = contextual_link_to question_path(question) do
       .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
   section.section-info.que-bg
-    span= t('questions.type')
+    span.fa.fa-question
+    span.icon-left= t('questions.type')
     =render partial: "questions/expires_at", locals: {deadline: question.expires_at}
   section
     =contextual_link_to question_path(question) do

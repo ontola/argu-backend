@@ -3,6 +3,7 @@
 nl:
   forums:
     resource_name: "forum"
+    type: "Forum"
     resource_name:
       management: "forum beheer"
     settings:

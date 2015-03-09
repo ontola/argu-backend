@@ -4,7 +4,8 @@
     = contextual_link_to motion_path(motion) do
       .box-image[style="background-image: url('#{motion.cover_photo.url(:box)}'); "]
   section.section-info.sta-bg
-    span= t('motions.type')
+    span.fa.fa-lightbulb-o
+    span.icon-left= t('motions.type')
   section
     = contextual_link_to motion_path(motion) do
       h2.sta-t[itemprop="headline"]= motion.title

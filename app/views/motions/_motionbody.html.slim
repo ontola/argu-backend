@@ -1,6 +1,7 @@
 .box[class="#{'trashed' if motion.is_trashed?}"]
   section.section-info.sta-bg
-    span = t("motions.type")
+    span.fa.fa-lightbulb-o
+    span.icon-left = t("motions.type")
   section
     h1.sta-t= motion.title
     p= motion.supped_content.html_safe

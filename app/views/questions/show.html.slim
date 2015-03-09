@@ -17,7 +17,8 @@
   =render partial: 'contextualize/carousel_buttons', locals: {item: @question, type: 'que'}
   .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t("intro.question.body") itemscope itemtype="http://schema.org/Question"]
     section.section-info.que-bg
-      span= t('questions.type')
+      span.fa.fa-question
+      span.icon-left= t('questions.type')
       =render partial: 'questions/expires_at', locals: {deadline: @question.expires_at}
     section
       h1.que-t[itemprop="headline"]= @question.title
