@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :set_layout
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
+  after_action :set_notification_header
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
     flash[:warning] = t(:vote_same_twice_warning)
@@ -102,8 +103,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_notification_header
+    if current_user.present?
+      response.headers[:lastNotification] = policy_scope(Notification).order(created_at: :desc).limit(1).pluck(:created_at)[0]
+    end
+  end
+
   def destroy_recent_similar_activities(model, params)
-    Activity.delete Activity.where("created_at >= :date", :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
+    Activity.delete Activity.where('created_at >= :date', :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
   end
 
   def show_trashed?

@@ -1,8 +1,14 @@
 class NotificationsController < ApplicationController
 
   def index
-    @notifications = get_notifications
-    @unread = get_unread
+    since = DateTime.parse(request.headers[:lastNotification]).to_s(:db) if request.headers[:lastNotification]
+    @notifications = get_notifications(since)
+    if @notifications.present?
+      @unread = get_unread
+      render
+    else
+      head 204
+    end
   end
 
   def update
@@ -20,8 +26,8 @@ class NotificationsController < ApplicationController
 
 private
 
-  def get_notifications
-    policy_scope(current_user.profile.notifications).includes(activity: :trackable).order(created_at: :desc).page params[:page]
+  def get_notifications(since=nil)
+    policy_scope(Notification).includes(activity: :trackable).order(created_at: :desc).where(since ? ['created_at > ?', since] : nil).page params[:page]
   end
 
   def get_unread

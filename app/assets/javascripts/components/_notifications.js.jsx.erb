@@ -39,7 +39,30 @@ var Notifications = React.createClass({
 
     onNotificationChange: function (notifications) {
         if (typeof(notifications.unread) != "undefined") {
-            this.setState(notifications);
+            if (notifications.notifications.length > 0) {
+                var newNotifications = [];
+
+                for (var i = 0; i < notifications.notifications.length; i++) {
+                    var _new = notifications.notifications[i];
+                    for (var c_i = 0; c_i < this.state.notifications.length; c_i++) {
+                        if (this.state.notifications[c_i] === notifications.notifications[i] ||
+                                notifications.notifications[i] && this.state.notifications[c_i].id === notifications.notifications[i].id) {
+                            _new = undefined;
+                            this.state.notifications[c_i].read = notifications.notifications[i].read;
+                            break;
+                        }
+                    }
+                    if (_new !== undefined) {
+                        newNotifications.push(_new);
+                    }
+                }
+                Array.prototype.unshift.apply(this.state.notifications, newNotifications);
+            }
+            this.setState({
+                unread: notifications.unread || this.state.unread,
+                lastNotification: notifications.lastNotification || this.state.lastNotification,
+                notifications: this.state.notifications
+            });
         }
     },
 

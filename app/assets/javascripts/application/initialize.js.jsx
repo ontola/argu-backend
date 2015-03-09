@@ -56,8 +56,13 @@ $(function (){
                 url: '/notifications',
                 dataType: 'json',
                 async: true,
-                success: function (data) {
-                    NotificationActions.notificationUpdate(data.notifications);
+                headers: {
+                    lastNotification: lastNotification
+                },
+                success: function (data, status, xhr) {
+                    if (xhr.status == 200) {
+                        NotificationActions.notificationUpdate(data.notifications);
+                    }
                 },
                 error: function () {
                     console.log('failed');
@@ -105,7 +110,13 @@ $(function (){
         }
 
         document.addEventListener(visibilityChange, handleVisibilityChange, false);
-        $(document).on('pjax:complete', refreshComments);
+        $(document).on('pjax:complete', function (e,xhr) {
+            if (Date.parse(xhr.getResponseHeader('lastNotification')) > Date.parse(lastNotification)) {
+                refreshComments();
+            } else {
+                resetTimeout();
+            }
+        });
     });
 
     if (!("ontouchstart" in document.documentElement)) {

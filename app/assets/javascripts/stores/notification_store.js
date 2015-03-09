@@ -15,6 +15,7 @@ window.notificationStore = Reflux.createStore({
                 document.getElementById('notificationSound').play();
             }
             this.lastNotification = notifications.lastNotification;
+            window.lastNotification = this.lastNotification;
         }
         // Pass on to listeners
         this.trigger(notifications);
