@@ -111,7 +111,7 @@ $(function (){
 
         document.addEventListener(visibilityChange, handleVisibilityChange, false);
         $(document).on('pjax:complete', function (e,xhr) {
-            if (Date.parse(xhr.getResponseHeader('lastNotification')) > Date.parse(lastNotification)) {
+            if (Date.parse(xhr.getResponseHeader('lastNotification')) > Date.parse(window.lastNotification)) {
                 refreshComments();
             } else {
                 resetTimeout();
