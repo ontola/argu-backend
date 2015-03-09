@@ -40,6 +40,7 @@
           span.fa.fa-pencil
           span.icon-left=t('edit')
         - if active_for_user? :notifications, current_user
-          =react_component 'HyperDropdown', question_items(@question), {prerender: true}
+          li
+            ul=react_component 'HyperDropdown', question_items(@question), {prerender: true}
 div[data-intro= t("intro.question.motions")]
   ==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))

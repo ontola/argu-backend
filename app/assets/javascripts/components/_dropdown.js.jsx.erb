@@ -124,7 +124,7 @@ window.HyperDropdown = React.createClass({
                        </TriggerContainer>);
         }
 
-        return (<li tabIndex="1" onMouseUp={this.handleMouseUp} onTouchEnd={this.handleTap} onBlurCapture={this.handleBlur} className={dropdownClass} data-intro="" data-position="">
+        return (<li tabIndex="1" onMouseUp={this.handleMouseUp} onTouchEnd={this.handleTap} onBlurCapture={this.handleBlur} className={dropdownClass}>
             {trigger}
             <ul className="dropdown-content"></ul><%# This makes sure renderLeft is calculated correctly %>
             {sections}
