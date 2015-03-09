@@ -13,7 +13,7 @@ ul.tabs
     li= link_to url_for([:settings, resource, tab: :managers]), data: {intro: t("intro.#{resource.class_name}.settings.managers")}
       span.fa.fa-group
       span.icon-left= t('forums.settings.managers')
-  - if policy(resource).groups?
+  - if resource.class == Forum && policy(resource).groups?
     li= link_to url_for([:settings, resource, tab: :groups]), data: {intro: t("intro.#{resource.class_name}.settings.groups")}
       span.fa.fa-group
       span.icon-left= t('forums.settings.groups')
