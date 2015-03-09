@@ -1,9 +1,9 @@
 -@argument ||= resource
 = semantic_form_for([@forum, @argument]) do |f|
-  .box.form-toggle
+  .box.form-toggle[data-intro= t("intro.argument.toggle")]
     = f.input :pro, as: :toggle_radio, :collection => radio_values_for_pro_con(@argument)
   .box.argument[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
-    section.smallpadded
+    section.smallpadded.form-filled
       -if @argument.errors.any?
         #error_explanation
           h2= pluralize(@argument.errors.count, "error") + t("error_prohibited")

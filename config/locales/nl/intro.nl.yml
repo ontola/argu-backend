@@ -4,19 +4,28 @@ nl:
   intro:
     next: 'volgende'
     previous: 'vorige'
-    forum:
+    forums:
       grid: 'Alle <b class="sta-t">voorstellen</b> en <b class="que-t">vraagstukken</b> staan hieronder. Klik op een item om in de discussie te duiken en jouw mening te geven!'
       filter: 'Hiermee kan je items zoeken met een bepaald thema, of bijvoorbeeld sorteren op score.'
+      invite: 'Nodig anderen uit om deel te nemen aan de discussie.'
+      switcher: 'Op Argu staan discussies in <b>forums</b>. Er bestaan forums voor diverse gemeenten, bedrijven, organisaties scholen en diverse projecten.'
+      settings:
+       home: 'Klik hier om terug te gaan naar het forum.'
+       settings: 'Stel zaken in als de naam en afbeelding van het forum.'
+       statistics: 'Bekijk diverse statistieken over het gebruik van dit forum.'
+       groups: 'Groepen kan je gebruiken om bepaalde groepen gebruikers extra rechten te geven. Zo kan je bijvoorbeeld politieke partijen in jouw forum maken.'
+       managers: 'Bepaal wie er items kan verwijderen en bewerken.'
     tags: 'Klik op een thema om naar relevante discussies te zoeken.'
     header:
       logo: 'Argu is een online discussieplatform waar iedereen op een inhoudelijke manier mee kan denken over het oplossen van maatschappelijke problemen.'
-      forums: 'Op Argu staan discussies in <b>forums</b>. Er bestaan forums voor diverse gemeenten, bedrijven, organisaties scholen en diverse projecten  .'
+      forums: 'Op Argu staan discussies in <b>forums</b>. Er bestaan forums voor diverse gemeenten, bedrijven, organisaties scholen en diverse projecten.'
       profile: 'Hier kan je jouw <b>profiel</b> bekijken en bewerken. Ook vind je hier de instellingen van jouw account.'
       about: 'Hier vind je meer informatie over wat Argu is wie wij zijn.'
     question:
       create: 'Weet jij welk probleem er opgelost moet worden in %{name}? Plaats een <b class="que-t">vraagstuk</b> en laat anderen meedenken.'
       back: 'Klik hier om terug te gaan naar het <b>forum</b>.'
       body: 'Een <b class="que-t">vraagstuk</b> presenteert een probleem en vraagt hoe dit zou moeten worden opgelost.'
+      motions: 'Hier staan <b class="sta-t">voorstellen</b> van andere gebruikers. Weet jij hoe dit vraagstuk kan worden opgelost? Deel jouw idee!'
       motions: 'Hier staan <b class="sta-t">voorstellen</b> van andere gebruikers. Weet jij hoe dit vraagstuk kan worden opgelost? Deel jouw idee!'
     motion:
       create: 'Wat zou jij veranderen in %{name}? Deel jouw <b class="sta-t">voorstel</b> op Argu en overtuig anderen.'
@@ -29,12 +38,16 @@ nl:
       back: 'Klik hier om terug te gaan naar het <b class="sta-t">voorstel</b>.'
       body: 'Een argument is een enkele reden <b class="pro-t">voor</b> of <b class="con-t">tegen</b> een voorstel.'
       comments: 'Iedereen kan reageren op argumenten en reageren op andere reacties. Zo kan er specifieke discussie ontstaan.'
-    start: 'Help'
+      form: 'Lees onze tips als je overtuigend wilt zijn.'
+      toggle: 'Kies hier of je een voor- of tegenargument wilt plaatsen.'
+    comments:
+      show: 'Hieronder staan de reacties op dit item.'
+      form: 'Als je wilt reageren, kan je dat hier doen.'
+    start: 'Hoe werkt deze pagina?'
     start_short: 'Help'
     profile:
       show: 'In een profiel kan een gebruiker wat over zichzelf laten weten.'
       votes: 'Standaard worden de voorstellen waar je op stemt in je profiel weergegeven. Zo kan je duidelijk maken waar je voor staat. Als je dat liever niet deelt, kan je het uitzetten bij "instellingen".'
-
     initial:
       headers:
         profile: "Profiel invullen"

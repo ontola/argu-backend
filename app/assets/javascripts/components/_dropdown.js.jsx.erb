@@ -148,16 +148,17 @@ var LinkItem = React.createClass({
         if (this.props.divider && this.props.divider == 'top') {
             divider = <div className="dropdown-divider"></div>;
         }
-        var method, remote, skipPjax;
+        var method, remote, skipPjax, className;
         if (this.props.data) {
             method = this.props.data.method;
             remote = this.props.data.remote;
             skipPjax = this.props.data['skip-pjax'];
         }
+        className = this.props.className;
 
         return (<li className={this.props.type}>
             {divider}
-            <a href={this.props.url} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax}>
+            <a href={this.props.url} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} className={className}>
                 {_image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
