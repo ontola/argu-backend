@@ -3,7 +3,7 @@
 
 #
 one:
-  title: 'Voorstel'
+  title: 'Idee'
   content: 'Inhoud van het voorstel'
   forum: :utrecht
   creator: :profile_one
@@ -28,7 +28,7 @@ three:
   creator: :profile_two
 #
 hidden_one:
-  title: 'Voorstel'
+  title: 'Idee'
   content: 'Inhoud van het voorstel'
   is_trashed: false
   forum: :hidden

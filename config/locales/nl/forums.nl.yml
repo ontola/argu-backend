@@ -19,7 +19,7 @@ nl:
       title: "Statistiek"
       memberships: "Leden"
       questions: "Vraagstukken"
-      motions: "Voorstellen"
+      motions: "Ideeën"
       tags: "Meest gebruikte tags"
       no-tags: "Er zijn nog geen tags gebruikt."
     suggestions: "Suggesties"
@@ -36,7 +36,7 @@ nl:
       f_public: "Publiek"
       f_public_desc: "Organisatie en voorstellen zijn door iedereen te zien."
       f_hidden: "Verborgen"
-      f_hidden_desc: "Profiel van de organisatie is publiek, de voorstellen zijn verborgen."
+      f_hidden_desc: "Profiel van de organisatie is publiek, de ideeën zijn verborgen."
       f_private: "Prive"
       f_private_desc: "Zowel het profiel als de voorstellen zijn slechts voor de leden zichtbaar."
     application_form:
@@ -54,7 +54,7 @@ nl:
     invite_others: "Betrek anderen"
     sign_up:
       header: "Word lid van Argu en discussieer mee"
-    new_question_or_motion: "Nieuw vraagstuk of voorstel"
+    new_question_or_motion: "Nieuw vraagstuk of idee"
     about:
       header: "Waarvoor is dit forum?"
       body: "Een Argu forum is een discussie omgeving waar oplossingen voor vraagstukken worden gedeeld en besproken. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"

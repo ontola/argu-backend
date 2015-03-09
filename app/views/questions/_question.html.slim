@@ -17,7 +17,3 @@
         - if question.motions.count > 3
           li= contextual_link_to question_path(question)
               h3.sta-t= t('questions.view_all_motions', amount: question.motions.count)
-                /- unless question.motions.present?
-          /li
-            a
-              h3.sta-t Deel jouw voorstel!
