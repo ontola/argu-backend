@@ -8,12 +8,16 @@ nl:
         con: "is tegen een %{thing}"
     questions:
       create: "heeft een vraagstuk geplaatst voor het forum %{thing}"
+      create_your: "heeft een vraagstuk geplaatst voor het forum %{thing}"
     motions:
       create: "heeft een voorstel geplaatst voor een %{thing}"
+      create_your: "heeft een voorstel geplaatst voor jouw %{thing}"
     arguments:
       create: "heeft een argument geplaatst voor een %{thing}"
+      create_your: "heeft een argument geplaatst voor jouw %{thing}"
     comments:
       create: "heeft gereageerd op een %{thing}"
+      create_your: "heeft gereageerd op jouw %{thing}"
     ui:
       load_more: "Laad meer"
       no_more_artivities: "Geen oudere activiteiten"
