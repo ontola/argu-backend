@@ -204,7 +204,7 @@ $grey_light: $g0;
   @include transform(translateY(-50%));
   //transform: translateY(-50%);
   @include bp-medium{
-    transform: none;
+    @include transform(none);
   }
 }
 
@@ -327,9 +327,4 @@ p.block-slogan {
 
 .block-image-wide {
   width: 100%;
-}
-
-@media screen and (max-width: 1200px) {
-  .blocks-container {
-  }
 }
