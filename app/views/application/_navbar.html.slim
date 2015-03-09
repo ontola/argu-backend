@@ -1,6 +1,6 @@
 nav#navbar.navbar role="navigation"
   .nav-container
-    .navbar-logo data-intro=t('intro.header.logo')
+    .navbar-logo
       =link_to root_path
         =image_tag('logo-white.svg')
     ul.navbar-links
@@ -13,7 +13,3 @@ nav#navbar.navbar role="navigation"
       - if active_for_user? :notifications, current_user
         =react_component 'HyperDropdown', notification_dropdown_items(notifications_for(current_user, 1)), {prerender: true}
       =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
-      li.dropdown[tabIndex="0"]
-        a.intro-trigger.navbar-item
-          span.fa.fa-question
-          span.icon-left= I18n.t('intro.start')

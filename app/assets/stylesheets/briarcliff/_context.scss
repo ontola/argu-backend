@@ -4,6 +4,9 @@
 
 .carousel-buttons {
   position: relative;
+  @include bp-small{
+    font-size: .8em;
+  }
 }
 
 .context {

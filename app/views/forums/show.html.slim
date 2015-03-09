@@ -36,14 +36,14 @@ div[itemscope itemtype="Thing"]
               li=link_to forum_memberships_path(@forum.web_url), data: {method: :post, 'skip-pjax' => true}
                 span.fa.fa-user
                 span.icon-left= t('join')
-            li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip tooltip--right" data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: 'sta-t btn-focus'
+            li[data-intro=t('intro.motion.create', name: @forum.name) data-position='right' class="tooltip tooltip--right" data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: 'sta-t btn-focus'
               span.fa.fa-plus
               span.icon-left= t('motions.type')
             li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: remote_unless_user, class: 'que-t btn-focus'
               span.fa.fa-plus
               span.icon-left= t('questions.type')
             - if policy(@forum).invite?
-              li= link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite')}
+              li= link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite')}
                 span.fa.fa-group
                 span.icon-left= t('forums.invite_others')
             - if policy(@forum).is_manager?
@@ -95,7 +95,7 @@ div[itemscope itemtype="Thing"]
               span.fa.fa-gift
               span.icon-left= t('filtersort.random')
     .grid
-      .box.box-grid-sizer[data-intro=t('intro.forum.grid') data-position="top"]
+      .box.box-grid-sizer[data-intro=t('intro.forums.grid') data-position="top"]
       -@items.each do |item|
         =render item
       .box.box-grid.motion[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :motion]), data: {remote: true}

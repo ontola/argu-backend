@@ -57,6 +57,9 @@ nl:
       motion:
         title: "Wat stel je voor? Houd de titel zo kort mogelijk."
         content: "Wat moet er precies veranderen? Hoe moet dit gebeuren?"
+      argument:
+        title: "Probeer jouw argument kernachtig samen te vatten."
+        content: "Leg uit waarom dit een belangrijk argument is. Geef bronnen om jouw argument te onderbouwen."
       forum:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
     placeholders:

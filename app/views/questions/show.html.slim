@@ -13,7 +13,7 @@
 .cover-behind
   .cover-image[style="background-image: url('#{@question.cover_photo.url}'); "]
 .col-1
-  div[data-intro= t("intro.question.back")]= to_parent
+  div[data-intro= t('intro.question.back')]= to_parent
   =render partial: 'contextualize/carousel_buttons', locals: {item: @question, type: 'que'}
   .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t("intro.question.body") itemscope itemtype="http://schema.org/Question"]
     section.section-info.que-bg
@@ -40,6 +40,7 @@
           span.fa.fa-pencil
           span.icon-left=t('edit')
         - if active_for_user? :notifications, current_user
-          =react_component 'HyperDropdown', question_items(@question), {prerender: true}
+          li
+            ul=react_component 'HyperDropdown', question_items(@question), {prerender: true}
 div[data-intro= t("intro.question.motions")]
   ==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]))

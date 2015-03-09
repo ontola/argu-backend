@@ -1,19 +1,19 @@
 ul.tabs
-  li= link_to url_for(resource)
+  li= link_to url_for(resource), data: {intro: t("intro.#{resource.class_name}.settings.home")}
     span.fa.fa-home
     span.icon-left= resource.display_name
-  li= link_to url_for([:settings, resource])
+  li= link_to url_for([:settings, resource]), data: {intro: t("intro.#{resource.class_name}.settings.settings")}
     span.fa.fa-gear
     span.icon-left= t("#{resource.class_name}.settings.title")
   - if policy(resource).statistics?
-    li= link_to url_for([:statistics, resource])
+    li= link_to url_for([:statistics, resource]), data: {intro: t("intro.#{resource.class_name}.settings.statistics")}
       span.fa.fa-pie-chart
       span.icon-left= t("#{resource.class_name}.statistics.title")
   - if policy(resource).managers?
-    li= link_to url_for([:settings, resource, tab: :managers])
+    li= link_to url_for([:settings, resource, tab: :managers]), data: {intro: t("intro.#{resource.class_name}.settings.managers")}
       span.fa.fa-group
       span.icon-left= t('forums.settings.managers')
   - if policy(resource).groups?
-    li= link_to url_for([:settings, resource, tab: :groups])
+    li= link_to url_for([:settings, resource, tab: :groups]), data: {intro: t("intro.#{resource.class_name}.settings.groups")}
       span.fa.fa-group
       span.icon-left= t('forums.settings.groups')
