@@ -4,7 +4,8 @@
     = to_parent
     .box
       section.section-info.que-bg
-        span = t("questions.type")
+        span.fa.fa-question
+        span.icon-left = t("questions.type")
       = semantic_form_for([@forum, @question], multipart: true) do |f|
         section.smallpadded.form-filled
           = f.inputs

@@ -15,7 +15,7 @@ div[itemscope itemtype="http://www.schema.org/Answer"]
     .cover-image[style="background-image: url('#{@motion.cover_photo.url(:cover)}'); "]
   .col-1
     div[data-intro= t('intro.motion.back')]= to_parent
-    =render partial: 'contextualize/carousel_buttons', locals: {item: @motion, type: 'sta'}
+    =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'sta'}
     .col--motion
       div[data-intro= t('intro.motion.body') itemprop="text"]= render partial: 'motionbody', locals: { motion: @motion }
       =react_component 'BigVote', motion_vote_props(@motion, @vote), {prerender: true}
