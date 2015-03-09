@@ -69,7 +69,8 @@ module HeaderHelper
                          triggerClass: 'navbar-item'
                      },
                      fa: 'fa-circle',
-                     triggerClass: 'navbar-item')
+                     triggerClass: 'navbar-item',
+                     contentClassName: 'notifications')
   end
 
   def info_dropdown_items
@@ -82,6 +83,7 @@ module HeaderHelper
                   link_item(t('about.vision'), about_path),
                   link_item(t('about.team'), team_path  ),
                   link_item(t('about.governments'), governments_path),
+                  link_item(t('about.team'), team_path),
                   link_item(t('about.how_argu_works'), how_argu_works_path),
                   link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true})
               ]

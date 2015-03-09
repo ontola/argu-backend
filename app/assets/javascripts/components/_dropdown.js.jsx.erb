@@ -1,6 +1,7 @@
 /*global React, $*/
 
 window.HyperDropdown = React.createClass({
+
     getInitialState: function () {
         return {
             openState: false,
@@ -76,7 +77,7 @@ window.HyperDropdown = React.createClass({
 
         var sections;
         if (this.props.sections) {
-            sections = (<ul className="dropdown-content" style={collapseStyle}>
+            sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle}>
                 {this.props.sections.map(function(section) {
                     if (typeof(section.type) == "string") {
                         return (<Notifications {...section} />);
@@ -126,7 +127,7 @@ window.HyperDropdown = React.createClass({
 
         return (<li tabIndex="1" onMouseUp={this.handleMouseUp} onTouchEnd={this.handleTap} onBlurCapture={this.handleBlur} className={dropdownClass}>
             {trigger}
-            <ul className="dropdown-content"></ul><%# This makes sure renderLeft is calculated correctly %>
+            <ul className={'dropdown-content ' + this.props.contentClassName}></ul><%# This makes sure renderLeft is calculated correctly %>
             {sections}
         </li>);
     }
