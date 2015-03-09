@@ -64,6 +64,7 @@ gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
 gem 'jquery-pjax-rails'
 gem 'rack-pjax'
+gem 'uglifier', '>= 2.5.3'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'
@@ -89,7 +90,6 @@ group :development, :test do
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
   gem 'spring', '~> 1.2.0'
   gem 'coffee-rails', '~> 4.1.0'
-  gem 'uglifier', '>= 2.5.3'
   gem 'quiet_assets'
   gem 'web-console', '~> 2.0.0'
   ####Capistrano#####
