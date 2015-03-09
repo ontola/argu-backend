@@ -10,4 +10,5 @@ var _image = function (props) {
 
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = _image;
+    module.exports = ScrollLockMixin;
 }
