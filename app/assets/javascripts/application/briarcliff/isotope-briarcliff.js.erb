@@ -45,9 +45,7 @@ $(function () {
     };
 
     var filters   = $('#type, #tags'),
-        _document = $(document),
-        source    = $("#motion-template").html(),
-        template  = Handlebars.compile(source);
+        _document = $(document);
 
     function activateFilter(type, filter, value) {
         $container.isotope({ filter: filterFns['combined'] });
@@ -76,34 +74,6 @@ $(function () {
 
     $(document).on('pjax:complete pjax:end', function () {
         checkForGrid();
-    }).on('click', '.grid .load-more', function () {
-        //TODO: When clicked on .is-check, disable that class and go back to 'original-order'. This only applies to Tags, not for sorts.
-        var _this       = $(this),
-                filterQuery = lastFilter ? '[data-tags*="'+lastFilter + '"]' : '';
-        _this.text('<%= I18n.t('articles.loading'); %>');
-
-        $.ajax("/articles.json", {
-                    dataType: 'json',
-                    data: {
-                        'from_time': $('.grid article'+filterQuery+':last time').attr('datetime'),  // TODO: take into account the current filter
-                        'filter_tag': lastFilter
-                    },
-                    cache: false,
-                    success: function (d, s, xhr) {
-                        window.d= d;
-                        if (xhr.status == 200 || xhr.status == 304) {
-                            var item;
-                            $.each(d.articles, function (i, a) {
-                                item = $(template(a));
-                                $container.append(item).isotope('insert', item);
-                            });
-                            _this.text('<%= I18n.t('articles.load_more'); %>');
-                        } else if (xhr.status == 204) {
-                            _this.text('<%= I18n.t('articles.no_more_articles'); %>');
-                        }
-                    }
-                }
-        );
     }).on('click', '#sort-random', function () {
         $container.isotope('updateSortData').isotope({
             sortBy: 'random'
