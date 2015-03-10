@@ -1,14 +1,5 @@
 class PagesController < ApplicationController
 
-  def index
-    authorize Page, :index?
-    scope = policy_scope(Page).includes(:profile)
-
-    if params[:q].present?
-      @pages = scope.where('lower(web_url) LIKE lower(?)', "%#{params[:q]}%").page params[:page]
-    end
-  end
-
   def show
     @page = Page.friendly.find(params[:id])
     @profile = @page.profile

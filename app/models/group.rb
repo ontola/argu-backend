@@ -3,7 +3,7 @@ class Group < ActiveRecord::Base
 
   belongs_to :forum
   has_many :group_memberships
-  has_many :pages, through: :group_memberships
+  has_many :members, through: :group_memberships, class_name: 'Profile'
   has_many :group_responses
 
 

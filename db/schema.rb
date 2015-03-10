@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308143807) do
+ActiveRecord::Schema.define(version: 20150310132953) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -163,13 +163,13 @@ ActiveRecord::Schema.define(version: 20150308143807) do
 
   create_table "group_memberships", force: :cascade do |t|
     t.integer  "group_id"
-    t.integer  "page_id"
+    t.integer  "member_id"
     t.integer  "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "group_memberships", ["group_id", "page_id"], name: "index_group_memberships_on_group_id_and_page_id", unique: true, using: :btree
+  add_index "group_memberships", ["group_id", "member_id"], name: "index_group_memberships_on_group_id_and_member_id", unique: true, using: :btree
 
   create_table "group_responses", force: :cascade do |t|
     t.integer  "forum_id"
@@ -403,14 +403,14 @@ ActiveRecord::Schema.define(version: 20150308143807) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                  default: 0
     t.boolean  "finished_intro",                     default: false
-    t.text     "r"
-    t.text     "access_tokens"
     t.integer  "follows_email",                      default: 1,     null: false
     t.boolean  "follows_mobile",                     default: true,  null: false
     t.integer  "memberships_email",                  default: 1,     null: false
     t.boolean  "memberships_mobile",                 default: true,  null: false
     t.integer  "created_email",                      default: 1,     null: false
     t.boolean  "created_mobile",                     default: true,  null: false
+    t.text     "r"
+    t.text     "access_tokens"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -437,5 +437,5 @@ ActiveRecord::Schema.define(version: 20150308143807) do
   add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
-  add_foreign_key "access_tokens", "profiles"
+  add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
 end

@@ -3,8 +3,8 @@ class GroupMembership < ActiveRecord::Base
 
   belongs_to :profile
   belongs_to :group
-  belongs_to :page, inverse_of: :group_memberships
+  belongs_to :member, inverse_of: :group_memberships, class_name: 'Profile'
 
-  validates :group_id, :page_id, presence: true
+  validates :group_id, :member_id, presence: true
 
 end

@@ -5,7 +5,7 @@ ul
     li
       h3= group.display_name
       table.styled
-        -group.pages.each do |member|
+        -group.members.each do |member|
           tr
             td= member.display_name
       =link_to 'add member', add_forum_group_path(@forum, group)

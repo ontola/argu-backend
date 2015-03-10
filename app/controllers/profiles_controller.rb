@@ -1,5 +1,14 @@
 class ProfilesController < ApplicationController
 
+  def index
+    authorize Profile, :index?
+    scope = policy_scope(Profile)
+
+    if params[:q].present?
+      @profiles = scope.where('lower(name) LIKE lower(?)', "%#{params[:q]}%").page params[:profile]
+    end
+  end
+
   #GET /profiles/1
   def show
     user = User.find_by! username: params[:id]
