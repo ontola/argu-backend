@@ -25,13 +25,13 @@ window.NewMembership = React.createClass({
             },
             render: {
                 option: function(item, escape) {
-                    return '<div class="search-result" data-id="' + escape(item.id) + '" data-src="' + escape(item.profile.profile_photo.icon.url) + '"><span><img class="profile-xs" src="' + escape(item.profile.profile_photo.icon.url) + '"></span><span class="label">' + escape(item.profile.name) + '</span></div>';
+                    return '<div class="search-result" data-id="' + escape(item.id) + '" data-src="' + escape(item.profile_photo.icon.url) + '"><span><img class="profile-xs" src="' + escape(item.profile_photo.icon.url) + '"></span><span class="label">' + escape(item.name) + '</span></div>';
                 }
             },
             load: function(query, callback) {
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/pages.json',
+                    url: '/profiles.json',
                     type: 'GET',
                     dataType: 'json',
                     data: {
@@ -41,7 +41,7 @@ window.NewMembership = React.createClass({
                         callback();
                     },
                     success: function (res) {
-                        callback(res.pages);
+                        callback(res.profiles);
                     }
                 });
             }
@@ -52,7 +52,7 @@ window.NewMembership = React.createClass({
 
         return (<li className="template">
             <img src="/profile_photos/original/missing.png"  className="profile-photo" />
-            <select name="page_id" className="add-page"></select>
+            <select name="profile_id" className="add-page"></select>
         </li>);
     }
 });

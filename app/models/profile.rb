@@ -12,6 +12,7 @@ class Profile < ActiveRecord::Base
   has_many :pages, inverse_of: :owner
   has_many :activities, as: :owner, dependent: :destroy
   has_many :notifications, dependent: :destroy
+  has_many :group_memberships, inverse_of: :member
 
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, CoverUploader
@@ -44,7 +45,7 @@ class Profile < ActiveRecord::Base
   end
 
   def owner
-    User.where(profile: self).first || Page.where(profile: self).first
+    User.find_by(profile: self) || Page.find_by(profile: self)
   end
 
   def web_url
@@ -87,11 +88,6 @@ class Profile < ActiveRecord::Base
 
   def unfreeze
     remove_role :frozen
-  end
-
-  # Hasn't been thought through, so disable for the moment.
-  def destroy
-    false
   end
 
   #######Utility#########

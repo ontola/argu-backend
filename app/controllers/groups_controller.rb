@@ -33,9 +33,9 @@ class GroupsController < ApplicationController
     @forum = Forum.friendly.find params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.find params[:id]
-    page = Page.find params[:page_id]
+    profile = Profile.find params[:profile_id]
 
-    @membership = @group.group_memberships.new page: page, profile: current_user.profile
+    @membership = @group.group_memberships.new member: profile, profile: current_user.profile
     respond_to do |format|
       if @membership.save
         format.html { redirect_to url_for([:settings, @forum, tab: :groups]) }

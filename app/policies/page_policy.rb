@@ -64,7 +64,7 @@ class PagePolicy < RestrictivePolicy
   end
 
   def managers?
-    false
+    is_owner?
   end
 
   #######Attributes########
