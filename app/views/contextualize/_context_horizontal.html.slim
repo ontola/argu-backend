@@ -1,9 +1,9 @@
 - if $rollout.active?(:carousel_buttons, current_user)
   - previous = item.previous(show_trashed?)
   - _next = item.next(show_trashed?)
-  .carousel-buttons
+  .context.context--horizontal
     - if previous.present? && item.previous != item
-      = link_to previous, class: 'context context--previous' do
+      = link_to previous, class: 'context--horizontal-button context--previous' do
         .box.box-link
           section.section-info class=("#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-bg")
             span.fa.fa-arrow-left
@@ -12,7 +12,7 @@
             h3 class=("#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-t")
               span = previous.title
     - if _next.present?  && _next != item
-      = link_to _next, class: 'context context--next' do
+      = link_to _next, class: 'context--horizontal-button context--next' do
         .box.box-link
           section.section-info class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-bg")
             span.icon-right = ("#{ type != 'argument' ? t("#{_next.class_name}.type") : (_next.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}")

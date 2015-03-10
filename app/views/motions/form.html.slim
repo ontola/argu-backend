@@ -4,7 +4,8 @@
     =to_parent
     .box
       section.section-info.sta-bg
-        span= t('motions.type')
+        span.fa.fa-lightbulb-o
+        span.icon-left= t('motions.type')
       = semantic_form_for([@forum, @motion]) do |f|
         section.smallpadded.form-filled
           =f.inputs

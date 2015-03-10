@@ -1,15 +1,17 @@
 @import "variables";
 @import "mixins";
 
-
-.carousel-buttons {
-  position: relative;
-  @include bp-small{
+.context {
+  @include bp-medium-large{
     font-size: .8em;
   }
 }
 
-.context {
+.context--horizontal {
+  position: relative;
+}
+
+.context--horizontal-button {
   position: absolute;
   top: 0;
   width: 15em;

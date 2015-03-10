@@ -10,8 +10,8 @@ nl:
       create: "heeft een vraagstuk geplaatst voor het forum %{thing}"
       create_your: "heeft een vraagstuk geplaatst voor het forum %{thing}"
     motions:
-      create: "heeft een voorstel geplaatst voor een %{thing}"
-      create_your: "heeft een voorstel geplaatst voor jouw %{thing}"
+      create: "heeft een idee geplaatst voor een %{thing}"
+      create_your: "heeft een idee geplaatst voor jouw %{thing}"
     arguments:
       create: "heeft een argument geplaatst voor een %{thing}"
       create_your: "heeft een argument geplaatst voor jouw %{thing}"

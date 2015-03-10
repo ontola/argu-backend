@@ -3,7 +3,6 @@
 
 input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
   background-color: $darken1;
-  border: none;
   padding: .5em;
   font-size: 1em;
   font-family: $font-sans;
@@ -12,6 +11,8 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   color: $g4;
   line-height: 1.4em;
   border: solid 1px $g1;
+  -webkit-appearance: none;
+  @include border-radius(0);
   &:focus {
     background-color: $darken0;
     border: solid 1px $g2;
