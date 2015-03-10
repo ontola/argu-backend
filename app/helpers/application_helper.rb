@@ -69,7 +69,7 @@ module ApplicationHelper
     if profile.owner.class == User
       profile_path(profile.username)
     else
-      pages_path(profile.web_url)
+      page_path(profile.web_url)
     end
   end
 
