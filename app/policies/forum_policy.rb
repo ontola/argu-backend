@@ -42,7 +42,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def managers?
-    false
+    staff?
   end
 
   def groups?
