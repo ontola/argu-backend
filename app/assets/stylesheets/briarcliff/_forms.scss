@@ -266,6 +266,7 @@ p.inline-hints {
   background-color: $blu;
   color: white;
   bottom: 100%;
+  pointer-events: none;
   @include transition(.2s ease-in-out);
 }
 //Endtest
