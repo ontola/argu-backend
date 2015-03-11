@@ -1,9 +1,1 @@
--if activity.trackable.questions.present?
-  - item = activity.trackable.questions.first
-  - item_type = question_type(item.forum)
--else
-  - item = activity.trackable.forum
-  - item_type = t("#{item.class_name}.type")
--content_for "activity-#{activity.id}" do
-  == t('activities.motions.create', type: motion_type(item.forum), thing: link_to(item_type, item, title: item.display_name))
-== render_columns activity.trackable
+==render_columns activity.trackable

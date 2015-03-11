@@ -1,3 +1,1 @@
--content_for "activity-#{activity.id}" do
-  == t("activities.votes.voted.#{activity.parameters[:for]}", thing: link_to(type_for(activity.trackable.voteable), activity.trackable.voteable, title: activity.trackable.voteable.display_name))
-== render_columns activity.trackable.voteable
+==render_columns activity.trackable.voteable
