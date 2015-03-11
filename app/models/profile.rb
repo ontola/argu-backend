@@ -12,7 +12,7 @@ class Profile < ActiveRecord::Base
   has_many :pages, inverse_of: :owner
   has_many :activities, as: :owner, dependent: :destroy
   has_many :notifications, dependent: :destroy
-  has_many :group_memberships, inverse_of: :member
+  has_many :group_memberships, foreign_key: :member_id, inverse_of: :member
   has_many :groups, through: :group_memberships
 
   mount_uploader :profile_photo, AvatarUploader
