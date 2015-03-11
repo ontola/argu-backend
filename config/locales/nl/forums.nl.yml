@@ -11,6 +11,7 @@ nl:
       general: "Algemene instellingen"
       profile: "Profiel instellingen"
       managers: "Beheerders"
+      advanced: "Geavanceerd"
       bio: "Doel van forum"
       bio_long: "Meer informatie"
       hints:

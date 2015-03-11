@@ -6,7 +6,6 @@ class Page < ActiveRecord::Base
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
   accepts_nested_attributes_for :profile
   has_many :forums
-  has_many :groups, through: :group_memberships
   has_many :memberships, class_name: 'PageMembership', dependent: :destroy
   has_many :managers, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
 

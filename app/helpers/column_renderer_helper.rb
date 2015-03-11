@@ -38,8 +38,10 @@ module ColumnRendererHelper
 
   # This generates the translations for the header text, e.g. "arguments.header.pro"
   def header_text(options, key)
-    if !(defined?(options[:header_text]) && options[:header_text] == false)
+    if !defined?(options[:header_text]) || options[:header_text].blank? || options[:header_text] == false
       I18n.t("#{options[:collection_model].to_s.pluralize.downcase}.header.#{key}")
+    elsif defined?(options[:header_text]) && options[:header_text].present?
+      options[:header_text]
     end
   end
 

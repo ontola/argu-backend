@@ -50,7 +50,7 @@ module MotionsHelper
       else
         link_items << link_item(t('forums.follow'), follows_path(motion_id: motion.id), fa: 'check', divider: 'top', data: {method: 'create', 'skip-pjax' => 'true'})
       end
-      dropdown_options('motion', [{items: link_items}], fa: 'fa-gear')
+      dropdown_options(motion_type, [{items: link_items}], fa: 'fa-gear')
     end
   end
 

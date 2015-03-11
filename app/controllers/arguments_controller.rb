@@ -5,6 +5,7 @@ class ArgumentsController < ApplicationController
   def show
     @argument = Argument.includes(:comment_threads).find params[:id]
     authorize @argument, :show?
+    @forum = @argument.forum
     current_context @argument
     @parent_id = params[:parent_id].to_s
     

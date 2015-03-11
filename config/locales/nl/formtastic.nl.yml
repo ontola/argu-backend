@@ -67,11 +67,11 @@ nl:
       login: "email of gebruikersnaam"
       tag_list: "thema1, thema2 ..."
       question:
-        title: "Plaats hier de kern van jouw vraagstuk"
-        content: "Plaats hier de details en achtergrondinformatie van jouw vraagstuk."
+        title: "Plaats hier de kern van jouw %{type}"
+        content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
       motion:
-        title: "Plaats hier de kern van jouw idee"
-        content: "Plaats hier de details en achtergrondinformatie van jouw idee."
+        title: "Plaats hier de kern van jouw %{type}"
+        content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
       argument:
         title: "Plaats hier de kern van jouw argument"
         content: "Plaats hier de details en achtergrondinformatie van jouw argument."

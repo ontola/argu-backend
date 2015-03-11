@@ -28,6 +28,7 @@ nl:
   new: "Nieuw"
   new_type: "Nieuw %{type}"
   newe_type: "Nieuwe %{type}"
+  add_type: "%{type} toevoegen"
   back: "Terug"
   cancel: "Annuleren"
   show: "Tonen"
