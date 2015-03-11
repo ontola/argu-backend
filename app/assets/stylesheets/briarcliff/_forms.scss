@@ -278,6 +278,7 @@ p.inline-hints {
 
 .formtastic .inline-errors, .formtastic .inline-hints {
   margin-left: 30%;
+  width: 70%;
   @include bp-medium{
     margin-left: 0 !important;
     width: 100%;
