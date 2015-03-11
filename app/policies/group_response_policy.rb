@@ -28,11 +28,11 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def create?
-    page_in_group? && creator? || super
+    profile_in_group?
   end
 
   def update?
-    page_in_group? && creator? || super
+    profile_in_group?
   end
 
   def edit?
@@ -40,7 +40,7 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def destroy?
-    page_in_group? && creator? || super
+    profile_in_group? && creator? || super
   end
 
 private
@@ -49,10 +49,8 @@ private
     Pundit.policy(context, record.forum).is_manager?
   end
 
-  def page_in_group?
-    if actor.owner.try(:groups)
-      (record.forum.groups & actor.owner.groups).present?
-    end
+  def profile_in_group?
+    (record.forum.groups & actor.groups).present?
   end
 
   def creator?
