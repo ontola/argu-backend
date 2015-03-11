@@ -222,6 +222,20 @@
   margin-bottom: 1em;
 }
 
+.box-list--icons {
+  list-style-type: none;
+  padding-left: 0em;
+  span.fa{
+    position: absolute;
+    font-size: 0.8em;
+    line-height: 1.4em;
+  }
+  span.icon-left {
+    margin-left: 1.3em;
+    display: block;
+  }
+}
+
 .box-list--arguments {
   list-style-type: none;
   width: 50%;

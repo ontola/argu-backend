@@ -2,8 +2,8 @@
   - resource.errors.full_messages.each do |message|
     =message
   - if policy(resource).is_owner?
-    =f.inputs name: t('forums.settings.profile') do
-      =f.input :uses_alternative_names
+    =f.inputs name: t('forums.settings.terminology') do
+      =f.input :uses_alternative_names, as: :reverse_boolean
 
       =f.input :questions_title
       =f.input :questions_title_singular
