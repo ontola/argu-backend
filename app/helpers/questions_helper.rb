@@ -10,7 +10,7 @@ module QuestionsHelper
       else
         link_items << link_item(t('forums.follow'), follows_path(question_id: question.id), fa: 'check', divider: 'top', data: {method: 'create', 'skip-pjax' => 'true'})
       end
-      dropdown_options('question', [{items: link_items}], fa: 'fa-gear')
+      dropdown_options(question_type, [{items: link_items}], fa: 'fa-gear')
     end
   end
 end

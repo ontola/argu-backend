@@ -12,6 +12,8 @@ class GroupResponse < ActiveRecord::Base
 
   enum side: {pro: 1, neutral: 0, con: 2}
 
+  validates_presence_of :side, :group, :forum, :motion, :profile
+
   def creator
     self.profile
   end

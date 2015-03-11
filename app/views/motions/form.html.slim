@@ -4,13 +4,13 @@
     =to_parent
     .box
       section.section-info.sta-bg
-        span.fa.fa-lightbulb-o
-        span.icon-left= t('motions.type')
-      = semantic_form_for([@forum, @motion]) do |f|
+        span[class="fa fa-#{motion_icon}"]
+        span.icon-left= motion_type
+      = semantic_form_for((@motion.new_record? ? [@forum, @motion] : @motion)) do |f|
         section.smallpadded.form-filled
           =f.inputs
-            =f.input :title, input_html: {class: 'h1 sta-t form-input-title'}, label: false
-            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false
+            =f.input :title, input_html: {class: 'h1 sta-t form-input-title'}, label: false, placeholder: placeholder_for(@motion, :title, motion_type)
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, placeholder: placeholder_for(@motion, :content, motion_type)
             =f.input :tag_list, input_html: {class: 'tag-list'}, label: false
             =f.input :cover_photo
             -if !@motion.new_record?
@@ -29,8 +29,8 @@
 
         =f.hidden_field :question_id, value: @question_id || params[:question_id]
         .actions[style="margin-top: 0"]= f.submit t('save'), class: 'btn btn-sticky btn-sticky-bottom'
-  /TODO make translations, make content dependent on focus field
-  .col-3-1
-    .box
-      section
-        =raw t('motions.form.helper.side')
+  - unless alternative_motions?
+    /TODO make translations, make content dependent on focus field
+    .col-3-1
+      .box
+        section=raw t('motions.form.helper.side')

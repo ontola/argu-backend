@@ -1,23 +1,23 @@
-- if $rollout.active?(:carousel_buttons, current_user)
+- if active_for_user?(:carousel_buttons, current_user)
   - previous = item.previous(show_trashed?)
   - _next = item.next(show_trashed?)
   .context.context--horizontal
     - if previous.present? && item.previous != item
-      = link_to previous, class: 'context--horizontal-button context--previous' do
+      =link_to previous, class: 'context--horizontal-button context--previous'
         .box.box-link
           section.section-info class=("#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-bg")
             span.fa.fa-arrow-left
-            span.icon-left = ("#{ type != 'argument' ? t("#{item.class_name}.type") : (previous.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}")
+            span.icon-left= "#{ type != 'argument' ? t("#{item.class_name}.type") : (previous.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}"
           section
-            h3 class=("#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-t")
-              span = previous.title
-    - if _next.present?  && _next != item
-      = link_to _next, class: 'context--horizontal-button context--next' do
+            h3[class="#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-t"]
+              span= previous.title
+    - if _next.present? && _next != item
+      =link_to _next, class: 'context--horizontal-button context--next'
         .box.box-link
           section.section-info class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-bg")
-            span.icon-right = ("#{ type != 'argument' ? t("#{_next.class_name}.type") : (_next.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}")
+            span.icon-right= "#{ type != 'argument' ? t("#{_next.class_name}.type") : (_next.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}"
             span.fa.fa-arrow-right
           section
-            h3 class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-t")
-              span = _next.title
+            h3[class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-t")]
+              span= _next.title
   .clear

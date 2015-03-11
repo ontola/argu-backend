@@ -204,6 +204,10 @@ input[type="text"].form-input-title {
   margin-left: 0;
 }
 
+.form-small input[type="checkbox"] {
+  width: auto;
+}
+
 .form-small label {
   padding: 0;
   width: 100%;
