@@ -5,8 +5,8 @@ nl:
     type: "Item"
     new_btn: "%{type} toevoegen"
     header:
-      pro: "voor"
-      neutral: "geen van beiden"
-      con: "tegen"
+      pro: "%{type} voor"
+      neutral: "geen van beide"
+      con: "%{type} tegen"
     form:
       submit: "%{name} plaatsen"

@@ -5,7 +5,7 @@ nl:
     score: "score"
     header:
       pro: "Is voor"
-      neutral: "Geen van beiden"
+      neutral: "Geen van beide"
       con: "Is tegen"
     tooltips:
       argument: "Belangrijk argument"

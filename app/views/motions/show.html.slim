@@ -24,6 +24,6 @@ div[data-intro= t('intro.motion.arguments') data-position= "top"]= render_column
   =render_columns(@opinions, header: t('arguments.index.opinion'))
 -if Rails.configuration.epics.parties
   -@group_responses.each do |k,v|
-    =render_columns(v, header: k.name, collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: profile_in_group?(current_profile, k), buttons_param: :side)
+    =render_columns(v, header: k.name, collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: profile_in_group?(current_profile, k), buttons_param: :side, header_text: header_values(k))
 
 // Render four random motions / questions from the same forum
