@@ -162,8 +162,6 @@ input[type="text"].form-input-title {
     background-color: $gre;
     color: white;
   }
-
-
   label[for="group_response_side_con"]{
     color: $red;
   }
@@ -205,7 +203,8 @@ input[type="text"].form-input-title {
 }
 
 .form-small input[type="checkbox"] {
-  width: auto;
+  width: auto !important;
+  margin: 0 1em 0em 0em;
 }
 
 .form-small label {
