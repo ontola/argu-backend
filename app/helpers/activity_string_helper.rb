@@ -34,7 +34,7 @@ module ActivityStringHelper
       item_type = t("#{item.class_name}.type")
     end
     thing = embedded_link ? link_to(item_type, item, title: item.display_name) : item_type
-    activity_string = t("activities.motions.create#{your}", type: motion_type(item.forum), thing: thing)
+    activity_string = t("activities.motions.create#{your}", type: item_type, thing: thing)
     "#{owner_string} #{activity_string}"
   end
 
