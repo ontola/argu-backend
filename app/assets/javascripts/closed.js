@@ -19,3 +19,5 @@
 //= require components
 //= require ./application/briarcliff/scroll_smooth
 //= require ./application/briarcliff/modal
+//= require ./application/ie
+//= require ./application/alert

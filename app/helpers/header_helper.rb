@@ -37,7 +37,7 @@ module HeaderHelper
         trigger: {
             type: 'current_user',
             title: current_profile.display_name,
-            image: {
+            profile_photo: {
                 url: current_profile.profile_photo.url(:icon),
                 className: 'profile-picture--navbar'
             },

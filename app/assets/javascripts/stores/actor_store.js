@@ -10,9 +10,9 @@ window.actorStore = Reflux.createStore({
     },
 
     // Callback
-    output: function(flag) {
+    output: function(data) {
         // Pass on to listeners
-        this.trigger(flag);
+        this.trigger(data.current_actor);
     }
 
 });

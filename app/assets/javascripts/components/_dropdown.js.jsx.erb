@@ -218,7 +218,7 @@ var CurrentUserTrigger = React.createClass({
     getInitialState: function () {
         return {
             display_name: this.props.title,
-            image: this.props.image
+            profile_photo: this.props.profile_photo
         };
     },
 
@@ -239,7 +239,7 @@ var CurrentUserTrigger = React.createClass({
         var TriggerContainer = this.props.triggerTag || 'div';
 
         return (<TriggerContainer className={triggerClass}>
-            {_image({image: {url: this.state.image.url, title: this.state.image.title, className: 'profile-picture--navbar'}})}
+            {_image({image: {url: this.state.profile_photo.url, title: this.state.profile_photo.title, className: 'profile-picture--navbar'}})}
             <span className="icon-left">{this.state.display_name}</span>
         </TriggerContainer>);
     }

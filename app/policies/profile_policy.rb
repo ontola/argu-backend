@@ -18,7 +18,11 @@ class ProfilePolicy < RestrictivePolicy
   end
 
   def show?
-    record.owner.finished_intro? || super
+    if record.owner.class == Page
+      record.is_public?
+    else
+      record.owner.finished_intro? || super
+    end
   end
 
   def update?
