@@ -1,6 +1,6 @@
 $(function () {
     "use strict";
-    $(document).on('click', '.modal-container .overlay', function () {
+    $(document).on('click', '.modal-container .overlay:not(.no-close)', function () {
         var container = $(this).parent('.modal-container');
 
         container.addClass('modal-hide');

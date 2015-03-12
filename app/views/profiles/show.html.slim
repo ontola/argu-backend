@@ -20,6 +20,10 @@
           a.tag href=""
             span windmolens
 
-.boxes-list
-  .intro-filler[data-intro= t("intro.profile.votes") data-position="top"]
-  =render_columns(@collection, collection_model: Vote)
+.boxes-list[data-intro= t('intro.profile.votes') data-position="top"]
+  - if @profile.votes.count > 0
+    .col-1
+      .intro-filler[data-intro= t("intro.profile.votes") data-position="top"]
+    =render_columns(@collection, collection_model: Vote)
+  - else
+    h2.center= t('profiles.didnt_vote_name', name: @profile.display_name).capitalize

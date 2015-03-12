@@ -61,14 +61,21 @@ window.BigVote = React.createClass({
             url: [this.state.object_id, 'vote', side].join('/'),
             dataType: 'json',
             async: true,
-            success: function (data) {
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader('accepts', 'application/json, application/javascript, */*');
+            },
+            success: function (data, status, xhr) {
                 if (data.vote) {
                     _this.setState(data.vote);
                     //Actions.actorUpdate(data);
                 }
             },
-            error: function () {
-                console.log('failed');
+            error: function (request, status, error) {
+                if(status == "parsererror" && request.statusText == "OK") {
+                    $.globalEval(request.responseText)
+                } else {
+                    console.log('failed');
+                }
             }
         });
     },

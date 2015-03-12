@@ -35,11 +35,29 @@ $(function (){
         }
     }
 
+    function refreshCurrentActor () {
+        $.ajax({
+            type: 'GET',
+            url: '/c_a',
+            dataType: 'json',
+            async: true,
+            success: function (data, status, xhr) {
+                if (xhr.status == 200) {
+                    Actions.actorUpdate(data);
+                }
+            },
+            error: function () {
+                console.log('failed');
+            }
+        });
+    }
+
     $.pjax.defaults.timeout = 10000;
     $(document)
         .pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container')
         .on('pjax:start pjax:beforeReplace', shallowUnmountComponents)
-        .on('pjax:end', shallowMountComponents);
+        .on('pjax:end', shallowMountComponents)
+        .on('pjax:end', refreshCurrentActor);
 
     var refreshing = false,
         lastNotificationCheck = Date.now(),

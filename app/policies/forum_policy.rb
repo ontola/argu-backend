@@ -107,7 +107,7 @@ class ForumPolicy < RestrictivePolicy
   # Is the current user a member of the group?
   # @note This tells nothing about whether the user can make edits on the object
   def is_member?
-    user && user.profile.memberships.where(forum: record).present?
+    actor && actor.memberships.where(forum: record).present?
   end
 
   # Is the user a manager of the page or of the forum?

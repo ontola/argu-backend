@@ -48,8 +48,7 @@ div[itemscope itemtype="Thing"]
                 span.icon-left= t('forums.invite_others')
             - if policy(@forum).is_manager?
               li
-                ul
-                  =render partial: 'application/menus/settings', locals: {resource: @forum}
+                ul=render partial: 'application/menus/settings', locals: {resource: @forum}
   - if policy(@forum).show?
     =render partial: 'filter_and_sort'
     .grid

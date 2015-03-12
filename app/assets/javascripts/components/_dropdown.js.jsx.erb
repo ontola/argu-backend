@@ -6,7 +6,8 @@ window.HyperDropdown = React.createClass({
         return {
             openState: false,
             renderLeft: false,
-            dropdownElement: {}
+            dropdownElement: {},
+            current_actor: this.props.current_actor
         };
     },
 
@@ -27,6 +28,7 @@ window.HyperDropdown = React.createClass({
     },
 
     componentDidMount: function () {
+        this.unsubscribe = actorStore.listen(this.onActorChange);
         this.setState({referenceDropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0],
             dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[1]});
         this.calculateRenderLeft();
@@ -34,6 +36,7 @@ window.HyperDropdown = React.createClass({
     },
 
     componentWillUnmount: function () {
+        this.unsubscribe();
         window.clearTimeout(this.timerItem);
         window.removeEventListener('resize', this.handleResize);
     },
@@ -68,6 +71,10 @@ window.HyperDropdown = React.createClass({
         this.setState({openState: true});
     },
 
+    onActorChange: function (data) {
+        this.setState({current_actor: data});
+    },
+
     render: function () {
         var collapseStyle = {
             visibility: this.state.openState ? 'visible' : 'hidden',
@@ -75,7 +82,8 @@ window.HyperDropdown = React.createClass({
             right: this.state.renderLeft ? 0 : undefined
         };
 
-        var sections;
+        var sections,
+            _this = this;
         if (this.props.sections) {
             sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle}>
                 {this.props.sections.map(function(section) {
@@ -90,7 +98,7 @@ window.HyperDropdown = React.createClass({
                         var items = section.items.map(function(item) {
                             var ItemTag;
                             if (item.type == 'link') {
-                                return <LinkItem key={item.title} {...item} />;
+                                return <LinkItem key={item.title} current_actor={_this.state.current_actor} {...item} />;
                             } else if (item.type == 'actor') {
                                 ItemTag = 'ActorItem';
                                 return <ActorItem key={item.title} {...item} />;
@@ -159,7 +167,7 @@ var LinkItem = React.createClass({
 
         return (<li className={this.props.type}>
             {divider}
-            <a href={this.props.url} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} className={className}>
+            <a href={_url(this.props.url, this.props)} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} className={className}>
                 {_image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
