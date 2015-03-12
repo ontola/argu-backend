@@ -1,5 +1,5 @@
 .modal-container
-  .overlay
+  div[class=['overlay', ('no-close' unless defined?(no_close) && no_close == false)].compact.join(' ')]
   .modal
     header
       h1= t('sign_in')

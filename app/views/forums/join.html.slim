@@ -1,5 +1,5 @@
 .modal-container
-  .overlay
+  div[class=['overlay', !!defined?(no_close) ? 'no-close' : nil ].compact.join(' ')]
   .modal.col-1
     header
       h1= t('forums.join.header')

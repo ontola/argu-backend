@@ -48,7 +48,7 @@ module HeaderHelper
               items: [
                   link_item(t('profiles.display'), dual_profile_path(current_profile), fa: 'user'),
                   link_item(t('users_show_title'), settings_url, fa: 'gear'),
-                  link_item(t('devise.invitations.link'), new_user_invitation_path, fa: 'bullhorn'),
+                  link_item(t('devise.invitations.link'), new_user_invitation_path(forum: current_user.profile.preferred_forum), fa: 'bullhorn'),
                   link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'})
               ]
           },
