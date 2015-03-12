@@ -32,6 +32,12 @@ head
   meta[property="twitter:site" content="@argu_nl"]
   meta[property="og:image" content="#{asset_url('favicon-608x608.png')}"]
   meta[property="twitter:domain" content="https://argu.co"]
+  / Changes color of Chrome bar on Android
+  meta[name="theme-color" content="#475668"]
+  / Hides Chrome for Android browser bar
+  meta[name="mobile-web-app-capable" content="yes"]
+  / Hides iOS browser bar
+  meta[name="apple-mobile-web-app-capable" content="yes"]
   =yield :connected_web
 
   / Favicons
