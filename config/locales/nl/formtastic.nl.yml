@@ -32,6 +32,18 @@ nl:
       f_move: "Verplaatsen"
       f_convert: "Omzetten"
       invert_arguments: "Argumenten omdraaien"
+      remember_me: "Gegevens onthouden"
+      uses_alternative_names: "Alternatieve terminologie gebruiken"
+      questions_title: "Vraagstukken"
+      questions_title_singular: "Vraagstuk"
+      motions_title: "Ideeën"
+      motions_title_singular: "Idee"
+      arguments_title: "Argumenten"
+      arguments_title_singular: "Argument"
+      notifications:
+        follows: "Items die ik volg"
+        memberships: "Mijn forums"
+        created: "Mijn items"
       profile:
         name: "Volledige naam"
       page:
@@ -40,6 +52,8 @@ nl:
         bio: "Doel van forum"
         bio_long: "Meer informatie"
         scope: "Vorm"
+      group:
+        name: "Naam"
     hints:
       tag_list: "Kies thema's die te maken hebben met jouw ondwerp."
       username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."
@@ -51,6 +65,9 @@ nl:
       motion:
         title: "Wat stel je voor? Houd de titel zo kort mogelijk."
         content: "Wat moet er precies veranderen? Hoe moet dit gebeuren?"
+      argument:
+        title: "Probeer jouw argument kernachtig samen te vatten."
+        content: "Leg uit waarom dit een belangrijk argument is. Geef bronnen om jouw argument te onderbouwen."
       forum:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
     placeholders:
@@ -58,11 +75,11 @@ nl:
       login: "email of gebruikersnaam"
       tag_list: "thema1, thema2 ..."
       question:
-        title: "Plaats hier de kern van jouw vraagstuk"
-        content: "Plaats hier de details en achtergrondinformatie van jouw vraagstuk."
+        title: "Plaats hier de kern van jouw %{type}"
+        content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
       motion:
-        title: "Plaats hier de kern van jouw voorstel"
-        content: "Plaats hier de details en achtergrondinformatie van jouw voorstel."
+        title: "Plaats hier de kern van jouw %{type}"
+        content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
       argument:
         title: "Plaats hier de kern van jouw argument"
         content: "Plaats hier de details en achtergrondinformatie van jouw argument."

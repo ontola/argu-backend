@@ -2,7 +2,8 @@ class Vote < ActiveRecord::Base
   include ArguBase, PublicActivity::Model
 
   belongs_to :voteable, polymorphic: true
-  belongs_to :voter, polymorphic: true
+  belongs_to :voter, class_name: 'Profile'
+  has_many :activities, as: :trackable, dependent: :destroy
   belongs_to :forum
 
   after_validation :update_counter_cache
@@ -27,6 +28,10 @@ class Vote < ActiveRecord::Base
   def self.ordered(votes)
     grouped = votes.to_a.group_by(&:for)
     HashWithIndifferentAccess.new(pro: {collection: grouped['pro'] || []}, neutral: {collection: grouped['neutral'] || []}, con: {collection: grouped['con'] || []})
+  end
+
+  def voter_type
+    'Profile'
   end
 
 end

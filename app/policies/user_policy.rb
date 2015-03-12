@@ -16,6 +16,10 @@ class UserPolicy < ApplicationPolicy
     end
   end
 
+  def index?
+    staff?
+  end
+
   def edit?
     record.id == user.id
   end

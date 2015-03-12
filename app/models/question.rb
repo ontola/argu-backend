@@ -20,12 +20,18 @@ class Question < ActiveRecord::Base
 
   attr_accessor :include_motions
 
+  after_save :creator_follow
+
   def creator
     super || Profile.first_or_create(username: 'Onbekend')
   end
 
   def display_name
     title
+  end
+
+  def creator_follow
+    self.creator.follow self
   end
 
   def move_to(forum, include_motions = false)

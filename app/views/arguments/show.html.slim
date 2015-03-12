@@ -9,7 +9,9 @@
   meta[property="twitter:description" content="#{@argument.content}"]
   /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
 .col-1[itemscope]
-  = to_parent
-  =render partial: 'contextualize/carousel_buttons', locals: {item: @argument, type: 'argument'}
-  =render 'body'
+  div[data-intro= t('intro.argument.back')]
+    =to_parent
+  =render partial: 'contextualize/context_horizontal', locals: {item: @argument, type: 'argument'}
+  div[data-intro= t('intro.argument.body')]
+    =render 'body'
   =render template: 'comments/show', locals: { resource: @argument }

@@ -1,5 +1,1 @@
-section.profile-small
-  img[src=current_profile.profile_photo.url(:icon) alt="profile picture"]
-  .info-block
-    .info= "plaatsen als:"
-    .profile-name=current_profile.display_name
+=react_component 'CurrentProfile', {display_name: current_profile.display_name, profile_photo: {url: current_profile.profile_photo.url(:icon), title: 'profile picture' }}, {prerender: true}

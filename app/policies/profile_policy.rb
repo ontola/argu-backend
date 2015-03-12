@@ -12,12 +12,17 @@ class ProfilePolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      scope
+      raise Pundit::NotAuthorizedError, 'must be logged in' unless user
+      scope.where(is_public: true)
     end
   end
 
   def show?
-    record.owner.finished_intro? || super
+    if record.owner.class == Page
+      record.is_public?
+    else
+      record.owner.finished_intro? || super
+    end
   end
 
   def update?

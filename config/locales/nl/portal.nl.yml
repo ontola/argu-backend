@@ -18,7 +18,7 @@ nl:
     pages: "Pagina's"
     members: "Leden"
     questions: "Vraagstukken"
-    motions: "Voorstellen"
+    motions: "Ideeën"
     value: "Value"
     key: "Key"
   intro:
@@ -26,4 +26,4 @@ nl:
       start_argu: "Begin met argu"
   motions:
     move:
-      header: "Verplaats voorstel"
+      header: "Verplaats idee"

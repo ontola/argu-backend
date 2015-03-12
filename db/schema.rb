@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150222142905) do
+ActiveRecord::Schema.define(version: 20150311124537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -140,26 +140,68 @@ ActiveRecord::Schema.define(version: 20150222142905) do
   create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.integer  "page_id"
-    t.integer  "questions_count",         default: 0,     null: false
-    t.integer  "motions_count",           default: 0,     null: false
-    t.integer  "memberships_count",       default: 0,     null: false
+    t.integer  "questions_count",          default: 0,     null: false
+    t.integer  "motions_count",            default: 0,     null: false
+    t.integer  "memberships_count",        default: 0,     null: false
     t.string   "profile_photo"
     t.string   "cover_photo"
-    t.datetime "created_at",                              null: false
-    t.datetime "updated_at",                              null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.string   "slug"
-    t.string   "web_url",                 default: "",    null: false
-    t.text     "bio",                     default: "",    null: false
-    t.text     "featured_tags",           default: "",    null: false
-    t.integer  "visibility",              default: 1
-    t.string   "cover_photo_attribution", default: ""
-    t.boolean  "visible_with_a_link",     default: false
-    t.boolean  "signup_with_token?",      default: false
-    t.text     "bio_long",                default: ""
+    t.string   "web_url",                  default: "",    null: false
+    t.text     "bio",                      default: "",    null: false
+    t.text     "featured_tags",            default: "",    null: false
+    t.integer  "visibility",               default: 1
+    t.string   "cover_photo_attribution",  default: ""
+    t.boolean  "visible_with_a_link",      default: false
+    t.boolean  "signup_with_token?",       default: false
+    t.text     "bio_long",                 default: ""
+    t.boolean  "uses_alternative_names",   default: false, null: false
+    t.string   "questions_title"
+    t.string   "questions_title_singular"
+    t.string   "motions_title"
+    t.string   "motions_title_singular"
+    t.string   "arguments_title"
+    t.string   "arguments_title_singular"
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
   add_index "forums", ["web_url"], name: "index_forums_on_web_url", unique: true, using: :btree
+
+  create_table "group_memberships", force: :cascade do |t|
+    t.integer  "group_id"
+    t.integer  "member_id"
+    t.integer  "profile_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "group_memberships", ["group_id", "member_id"], name: "index_group_memberships_on_group_id_and_member_id", unique: true, using: :btree
+
+  create_table "group_responses", force: :cascade do |t|
+    t.integer  "forum_id"
+    t.integer  "group_id"
+    t.integer  "profile_id"
+    t.integer  "motion_id"
+    t.text     "text",            default: ""
+    t.integer  "created_by_id"
+    t.string   "created_by_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "side",            default: 0
+  end
+
+  add_index "group_responses", ["group_id", "forum_id"], name: "index_group_responses_on_group_id_and_forum_id", using: :btree
+  add_index "group_responses", ["group_id", "motion_id"], name: "index_group_responses_on_group_id_and_motion_id", using: :btree
+
+  create_table "groups", force: :cascade do |t|
+    t.integer  "forum_id"
+    t.string   "name",       default: ""
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "groups", ["forum_id", "name"], name: "index_groups_on_forum_id_and_name", unique: true, using: :btree
 
   create_table "memberships", force: :cascade do |t|
     t.integer "profile_id",             null: false
@@ -196,6 +238,14 @@ ActiveRecord::Schema.define(version: 20150222142905) do
   add_index "motions", ["id"], name: "index_motions_on_id", using: :btree
   add_index "motions", ["is_trashed"], name: "index_motions_on_is_trashed", using: :btree
   add_index "motions", ["tag_id"], name: "index_motions_on_tag_id", using: :btree
+
+  create_table "notifications", force: :cascade do |t|
+    t.integer  "profile_id"
+    t.integer  "activity_id"
+    t.datetime "read_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "opinions", force: :cascade do |t|
     t.string   "title",               limit: 255
@@ -238,14 +288,16 @@ ActiveRecord::Schema.define(version: 20150222142905) do
   add_index "pages", ["web_url"], name: "index_pages_on_web_url", unique: true, using: :btree
 
   create_table "profiles", force: :cascade do |t|
-    t.string   "name",          limit: 255, default: ""
-    t.text     "about",                     default: ""
-    t.string   "picture",       limit: 255, default: ""
-    t.datetime "created_at",                             null: false
-    t.datetime "updated_at",                             null: false
-    t.string   "profile_photo", limit: 255
-    t.string   "cover_photo",   limit: 255
+    t.string   "name",             limit: 255, default: ""
+    t.text     "about",                        default: ""
+    t.string   "picture",          limit: 255, default: ""
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
+    t.string   "profile_photo",    limit: 255
+    t.string   "cover_photo",      limit: 255
     t.string   "slug"
+    t.boolean  "is_public",                    default: true
+    t.boolean  "are_votes_public",             default: true
   end
 
   add_index "profiles", ["slug"], name: "index_profiles_on_slug", unique: true, using: :btree

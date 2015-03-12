@@ -1,12 +1,17 @@
 @import "variables";
 @import "mixins";
 
+.context {
+  @include bp-medium-large{
+    font-size: .8em;
+  }
+}
 
-.carousel-buttons {
+.context--horizontal {
   position: relative;
 }
 
-.context {
+.context--horizontal-button {
   position: absolute;
   top: 0;
   width: 15em;
@@ -17,8 +22,6 @@
     position: relative;
     width: 45%;
     width: calc( 50% - 1em);
-    left: auto !important;
-    right: auto !important;
     display: inline-block;
   }
 }
@@ -26,8 +29,15 @@
 .context--next {
   left: 100%;
   margin-left: 1em;
+  @include bp-large-2{
+    left: 0% !important;
+    float: right;
+  }
 }
 .context--previous {
   right: 100%;
   margin-right: 1em;
+  @include bp-large-2{
+    right: 0% !important;
+  }
 }

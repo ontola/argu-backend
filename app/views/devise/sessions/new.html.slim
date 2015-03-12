@@ -1,12 +1,12 @@
 .modal-container
-  .overlay
+  div[class=['overlay', ('no-close' unless defined?(no_close) && no_close == false)].compact.join(' ')]
   .modal
     header
-      h1 = t("sign_in")
+      h1= t('sign_in')
     .box.box-small
       -if defined?(preview) && preview.present?
         section
-          - if can_show_display_name?(preview)
+          - if false && can_show_display_name?(preview)
             .preview
               h3= preview.display_name
           p
@@ -21,15 +21,15 @@
             li
               a.btn.btn--facebook href="/auth/facebook"
                 span.fa.fa-facebook
-                span.icon-left = t("sign_in_facebook")
+                span.icon-left= t('sign_in_facebook')
             li
               a.btn.btn--twitter href="/auth/twitter"
                 span.fa.fa-twitter
-                span.icon-left = t("sign_in_twitter")
+                span.icon-left= t('sign_in_twitter')
             li
               a.btn.btn-subtle href="/users/sign_up"
                 span.fa.fa-plus
-                span.icon-left = t("sign_up_argu")
+                span.icon-left= t('sign_up_argu')
       -else
         section.unpadded[style="margin-top: 1em;"]
           .form-small
@@ -60,14 +60,14 @@
           = devise_error_messages!
           .form-small
             =f.inputs
-              .info.info-signup = t("sign_in_existing")
-              = f.input :login, placeholder: t("users_username_or_email"), autofocus: :autofocus, label: false
-              = f.input :password, placeholder: t("users_password"), label: false
+              .info.info-signup= t('sign_in_existing')
+              = f.input :login, placeholder: t('users_username_or_email'), autofocus: :autofocus, label: false
+              = f.input :password, placeholder: t('users_password'), label: false
               = f.input :r, as: :hidden
-              /- if devise_mapping.rememberable?
-                .remember= f.check_box :remember_me
+              - if devise_mapping.rememberable?
+                .remember= f.input :remember_me, as: :boolean
             = f.actions do
-              = f.action :submit, :as => :button, label: t("sign_in")
+              = f.action :submit, :as => :button, label: t('sign_in')
             /= render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}
             ul.btns-devise
-              li= link_to t("forgot_password"), new_password_path(resource_name)
+              li= link_to t('forgot_password'), new_password_path(resource_name)

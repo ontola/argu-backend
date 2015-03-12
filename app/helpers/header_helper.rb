@@ -1,9 +1,10 @@
 module HeaderHelper
+  include DropdownHelper
 
   def forum_selector_items
     {
-        title: t('home_title'),
-        fa: 'fa-tags',
+        title: t('forums.mine'),
+        fa: 'fa-group',
         fa_after: 'fa-angle-down',
         sections: [
             {
@@ -32,18 +33,23 @@ module HeaderHelper
   end
 
   def profile_dropdown_items
+    @profile = current_profile
     {
-        title: current_profile.display_name,
-        image: {
-            url: current_profile.profile_photo.url(:icon),
-            className: 'profile-picture--navbar'
+        trigger: {
+            type: 'current_user',
+            title: current_profile.display_name,
+            profile_photo: {
+                url: current_profile.profile_photo.url(:icon),
+                className: 'profile-picture--navbar'
+            },
+            triggerClass: 'navbar-item'
         },
         sections: [
           {
               items: [
                   link_item(t('profiles.display'), dual_profile_path(current_profile), fa: 'user'),
                   link_item(t('users_show_title'), settings_url, fa: 'gear'),
-                  link_item(t('devise.invitations.link'), new_user_invitation_path, fa: 'bullhorn'),
+                  link_item(t('devise.invitations.link'), new_user_invitation_path(forum: '{{current_actor.current_forum.web_url}}'), fa: 'bullhorn'),
                   link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'})
               ]
           },
@@ -52,8 +58,21 @@ module HeaderHelper
               items: managed_pages_items
           }
         ],
-        triggerClass: 'navbar-item'
+        current_actor: JSON.parse(render(template: 'users/current_actor.json', with_format: :json))['current_actor']
     }
+  end
+
+  def notification_dropdown_items(items=[])
+    dropdown_options('', [
+                        {type: 'notifications', unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count, lastNotification: (items.first && items.first[:created_at]), notifications: items}
+                       ],
+                     trigger: {
+                         type: 'notifications',
+                         triggerClass: 'navbar-item'
+                     },
+                     fa: 'fa-circle',
+                     triggerClass: 'navbar-item',
+                     contentClassName: 'notifications')
   end
 
   def info_dropdown_items
@@ -64,9 +83,11 @@ module HeaderHelper
           {
               items: [
                   link_item(t('about.vision'), about_path),
-                  link_item(t('about.how_argu_works'), how_argu_works_path),
+                  link_item(t('about.team'), team_path  ),
                   link_item(t('about.governments'), governments_path),
-                  link_item(t('about.team'), team_path  )
+                  link_item(t('about.team'), team_path),
+                  link_item(t('about.how_argu_works'), how_argu_works_path),
+                  link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true})
               ]
           }
         ],
@@ -74,33 +95,18 @@ module HeaderHelper
     }
   end
 
-  def dropdown_options(title, sections, opts = {})
-    options = {
-        title: title,
-        sections: sections
-    }
-    options.merge opts
-  end
 
-  def link_item(title, url, opts = {})
-    item = {
-        type: 'link',
-        title: title,
-        url: url
-    }
 
-    image = opts.delete(:image) if opts[:image].present?
-    item[:image]= {url: image} if image.present?
-    item[:fa]= "fa-#{opts.delete :fa}" if opts[:fa].present?
-    item.merge(opts)
+  def actor_item(title, url, opts= {})
+    item('actor', title, url, opts)
   end
 
   def managed_pages_items
     items = []
     if current_user.managed_pages.present?
-      items << link_item(current_user.display_name, actors_path(na: current_user.profile.id), image: current_user.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
+      items << actor_item(current_user.display_name, actors_path(na: current_user.profile.id), image: current_user.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
       current_user.managed_pages.each do |p|
-        items << link_item(p.display_name, actors_path(na: p.profile.id), image: p.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
+        items << actor_item(p.display_name, actors_path(na: p.profile.id), image: p.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
       end
     end
     items

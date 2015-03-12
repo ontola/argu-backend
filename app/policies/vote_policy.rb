@@ -17,6 +17,8 @@ class VotePolicy < RestrictivePolicy
         scope
       else
         scope
+        profiles = Profile.arel_table
+        scope.joins(:voter).where(profiles[:are_votes_public].eq(true))
       end
     end
 

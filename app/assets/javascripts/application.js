@@ -10,11 +10,11 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery
+//= require jquery2
 //= require jquery_ujs
 //= require react
 //= require react_ujs
-//= require js-routes
+//= require reflux.min
 //= require application/jquery.jeditable.mini.js
 //= require jquery-ui/autocomplete
 //= require jquery-ui/sortable
@@ -22,7 +22,6 @@
 //= require microplugin
 //= require sifter
 //= require selectize
-//= require handlebars-v2.0.0
 // Briarcliff dependencies :: GO
 //= require fastclick
 //= require isotope.pkgd.min
@@ -30,8 +29,8 @@
 // Briarcliff dependencies :: END
 //= require requirejs
 //= require autocomplete-rails
-//= require fixedsticky
 //= require pica_pica/application
 //= require cocoon
+//= require_tree ./stores
 //= require components
 //= require_tree ./application

@@ -3,7 +3,6 @@
 
 input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
   background-color: $darken1;
-  border: none;
   padding: .5em;
   font-size: 1em;
   font-family: $font-sans;
@@ -12,6 +11,8 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   color: $g4;
   line-height: 1.4em;
   border: solid 1px $g1;
+  -webkit-appearance: none;
+  @include border-radius(0);
   &:focus {
     background-color: $darken0;
     border: solid 1px $g2;
@@ -134,6 +135,9 @@ input[type="text"].form-input-title {
       cursor: pointer;
     }
   }
+  &.choices-3 li.choice {
+    width: 33.33%;
+  }
   input {
     // Hide radio button when JS provides visual feedback on the toggled button.
     width: 0;
@@ -158,6 +162,27 @@ input[type="text"].form-input-title {
     background-color: $gre;
     color: white;
   }
+  label[for="group_response_side_con"]{
+    color: $red;
+  }
+  label[for="group_response_side_con"].checked{
+    background-color: $red;
+    color: white;
+  }
+  label[for="group_response_side_neutral"]{
+    color: $g3;
+  }
+  label[for="group_response_side_neutral"].checked{
+    background-color: $g3;
+    color: white;
+  }
+  label[for="group_response_side_pro"]{
+    color: $gre;
+  }
+  label[for="group_response_side_pro"].checked{
+    background-color: $gre;
+    color: white;
+  }
 }
 
 .form-small {
@@ -175,6 +200,11 @@ input[type="text"].form-input-title {
 .form-small input, .form-small button, .form-small .inline-errors, .form-filled p.inline-errors, .form-small p.inline-hints, .form-filled p.inline-hints {
   width: 100% !important;
   margin-left: 0;
+}
+
+.form-small input[type="checkbox"] {
+  width: auto !important;
+  margin: 0 1em 0em 0em;
 }
 
 .form-small label {
@@ -239,6 +269,7 @@ p.inline-hints {
   background-color: $blu;
   color: white;
   bottom: 100%;
+  pointer-events: none;
   @include transition(.2s ease-in-out);
 }
 //Endtest
@@ -250,6 +281,7 @@ p.inline-hints {
 
 .formtastic .inline-errors, .formtastic .inline-hints {
   margin-left: 30%;
+  width: 70%;
   @include bp-medium{
     margin-left: 0 !important;
     width: 100%;

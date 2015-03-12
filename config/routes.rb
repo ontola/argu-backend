@@ -8,6 +8,7 @@ Argu::Application.routes.draw do
     put 'convert', action: 'convert!'
   end
   concern :votable do
+    get 'vote' => 'votes#show', shallow: true, as: :show_vote
     post 'vote/:for' => 'votes#create', shallow: true, as: :vote
   end
 
@@ -44,7 +45,11 @@ Argu::Application.routes.draw do
 
   resources :questions, except: [:index, :new, :create], concerns: [:moveable, :convertible]
 
-  resources :motions, except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable]
+  resources :motions, except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
+    resources :groups, only: [] do
+      resources :group_responses, path: 'responses', as: 'responses', only: [:new, :create]
+    end
+  end
 
   resources :arguments, except: [:index, :new, :create], concerns: [:votable] do
     resources :comments
@@ -54,6 +59,8 @@ Argu::Application.routes.draw do
   resources :opinions do
     resources :comments
   end
+
+  resources :group_responses, only: [:edit, :update, :destroy], as: :responses
 
   resources :forums, except: [:edit] do
     get :settings, on: :member
@@ -65,9 +72,14 @@ Argu::Application.routes.draw do
     resources :motions, only: [:new, :create]
     resources :arguments, only: [:new, :create]
     resources :tags, only: [:show]
+    resources :groups, only: [:new, :create] do
+      get 'add', on: :member
+      post on: :member, action: :add!, as: ''
+    end
   end
 
   resources :pages, only: [:new, :create, :show, :update, :delete, :destroy] do
+    get :index, on: :collection
     get :delete, on: :member
     get :settings, on: :member
   end
@@ -87,9 +99,13 @@ Argu::Application.routes.draw do
     post ':id' => 'profiles#update', on: :collection
   end
 
+  resources :comments, only: :show
+
   resources :follows, only: :create do
     delete :destroy, on: :collection
   end
+
+  resources :notifications, only: [:index, :update]
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 

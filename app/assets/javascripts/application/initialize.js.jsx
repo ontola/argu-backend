@@ -35,16 +35,107 @@ $(function (){
         }
     }
 
-    $.pjax.defaults.timeout = 5000;
+    function refreshCurrentActor () {
+        $.ajax({
+            type: 'GET',
+            url: '/c_a',
+            dataType: 'json',
+            async: true,
+            success: function (data, status, xhr) {
+                if (xhr.status == 200) {
+                    Actions.actorUpdate(data);
+                }
+            },
+            error: function () {
+                console.log('failed');
+            }
+        });
+    }
+
+    $.pjax.defaults.timeout = 10000;
     $(document)
         .pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container')
         .on('pjax:start pjax:beforeReplace', shallowUnmountComponents)
-        .on('pjax:end', shallowMountComponents);
+        .on('pjax:end', shallowMountComponents)
+        .on('pjax:end', refreshCurrentActor);
 
-    /*React.render(
-        <Navbar />,
-        document.getElementById('navbar')
-    );*/
+    var refreshing = false,
+        lastNotificationCheck = Date.now(),
+        timeoutValue = 30000,
+        notificationTimeout;
+
+    function refreshComments() {
+        if (!refreshing && Date.now() - lastNotificationCheck >= 15000) {
+            window.clearTimeout(notificationTimeout);
+            refreshing = true;
+            lastNotificationCheck = Date.now();
+            $.ajax({
+                type: 'GET',
+                url: '/notifications',
+                dataType: 'json',
+                async: true,
+                headers: {
+                    lastNotification: lastNotification
+                },
+                success: function (data, status, xhr) {
+                    if (xhr.status == 200) {
+                        NotificationActions.notificationUpdate(data.notifications);
+                    }
+                },
+                error: function () {
+                    console.log('failed');
+                },
+                complete: function () {
+                    refreshing = false;
+                    resetTimeout();
+                }
+            });
+        } else if (!refreshing) {
+            resetTimeout();
+        }
+    }
+
+    function resetTimeout() {
+        window.clearTimeout(notificationTimeout);
+        notificationTimeout = window.setTimeout(refreshComments, timeoutValue);
+    }
+    resetTimeout();
+
+    $(function () {
+        var hidden, visibilityChange;
+        if (typeof document.hidden !== "undefined") { // Opera 12.10 and Firefox 18 and later support
+            hidden = "hidden";
+            visibilityChange = "visibilitychange";
+        } else if (typeof document.mozHidden !== "undefined") {
+            hidden = "mozHidden";
+            visibilityChange = "mozvisibilitychange";
+        } else if (typeof document.msHidden !== "undefined") {
+            hidden = "msHidden";
+            visibilityChange = "msvisibilitychange";
+        } else if (typeof document.webkitHidden !== "undefined") {
+            hidden = "webkitHidden";
+            visibilityChange = "webkitvisibilitychange";
+        }
+
+        function handleVisibilityChange() {
+            if (document[hidden]) {
+                timeoutValue = 120000;
+                resetTimeout();
+            } else {
+                timeoutValue = 30000;
+                refreshComments();
+            }
+        }
+
+        document.addEventListener(visibilityChange, handleVisibilityChange, false);
+        $(document).on('pjax:complete', function (e,xhr) {
+            if (Date.parse(xhr.getResponseHeader('lastNotification')) > Date.parse(window.lastNotification)) {
+                refreshComments();
+            } else {
+                resetTimeout();
+            }
+        });
+    });
 
     if (!("ontouchstart" in document.documentElement)) {
         document.documentElement.className += " no-touch";

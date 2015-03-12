@@ -1,0 +1,188 @@
+/*global React, $*/
+
+
+var cancelScrollEvent = function (e) {
+    e.stopImmediatePropagation();
+    e.preventDefault();
+    e.returnValue = false;
+    return false;
+};
+
+var addScrollEventListener = function (elem, handler) {
+    elem.addEventListener('wheel', handler, false);
+};
+
+var removeScrollEventListener = function (elem, handler) {
+    elem.removeEventListener('wheel', handler, false);
+};
+
+var ScrollLockMixin = {
+    scrollLock: function (elem) {
+        elem = elem || this.getDOMNode();
+        this.scrollElem = elem;
+        addScrollEventListener(elem, this.onScrollHandler);
+    },
+
+    scrollRelease: function (elem) {
+        elem = elem || this.scrollElem;
+        removeScrollEventListener(elem, this.onScrollHandler);
+    },
+
+    onScrollHandler: function (e) {
+        var elem = this.scrollElem;
+        var scrollTop = elem.scrollTop;
+        var scrollHeight = elem.scrollHeight;
+        var height = elem.clientHeight;
+        var wheelDelta = e.deltaY;
+        var isDeltaPositive = wheelDelta > 0;
+
+        if (isDeltaPositive && wheelDelta > scrollHeight - height - scrollTop) {
+            elem.scrollTop = scrollHeight;
+            console.log('canceled');
+            return cancelScrollEvent(e);
+        }
+        else if (!isDeltaPositive && -wheelDelta > scrollTop) {
+            console.log(wheelDelta, scrollTop);
+            elem.scrollTop = 0;
+            return cancelScrollEvent(e);
+        }
+    }
+};
+
+var NotificationTrigger = React.createClass({
+    getInitialState: function () {
+        return {
+            unread: this.props.sections[0].unread
+        };
+    },
+
+    onNotificationChange: function (data) {
+        if (typeof(data.unread) != "undefined") {
+            this.setState({unread: data.unread});
+        }
+    },
+
+    componentDidMount: function () {
+        this.unsubscribe = notificationStore.listen(this.onNotificationChange);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+    },
+
+    render: function () {
+        var triggerClass = "dropdown-trigger " + this.props.trigger.triggerClass;
+        var label = this.state.unread > 0 ? <span className='icon-left'>{this.state.unread}</span> : null;
+
+        return (<div className={triggerClass}>
+            {_image({fa: this.state.unread > 0 ? 'fa-dot-circle-o' : 'fa-circle-o'})}
+            {label}
+        </div>);
+    }
+});
+
+var Notifications = React.createClass({
+    mixins: [ScrollLockMixin],
+
+    getInitialState: function () {
+        return this.props;
+    },
+
+    onNotificationChange: function (notifications) {
+        if (typeof(notifications.unread) != "undefined") {
+            if (notifications.notifications.length > 0) {
+                var newNotifications = [];
+
+                for (var i = 0; i < notifications.notifications.length; i++) {
+                    var _new = notifications.notifications[i];
+                    for (var c_i = 0; c_i < this.state.notifications.length; c_i++) {
+                        if (this.state.notifications[c_i] === notifications.notifications[i] ||
+                                notifications.notifications[i] && this.state.notifications[c_i].id === notifications.notifications[i].id) {
+                            _new = undefined;
+                            this.state.notifications[c_i].read = notifications.notifications[i].read;
+                            break;
+                        }
+                    }
+                    if (_new !== undefined) {
+                        newNotifications.push(_new);
+                    }
+                }
+                Array.prototype.unshift.apply(this.state.notifications, newNotifications);
+            }
+            this.setState({
+                unread: notifications.unread || this.state.unread,
+                lastNotification: notifications.lastNotification || this.state.lastNotification,
+                notifications: this.state.notifications
+            });
+        }
+    },
+
+    componentDidMount: function () {
+        NotificationActions.notificationUpdate(this.props);
+        this.unsubscribe = notificationStore.listen(this.onNotificationChange);
+        this.scrollLock(this.getDOMNode().parentElement);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+        this.scrollRelease();
+    },
+
+    render: function () {
+        var notifications = this.state.notifications.map(function(item) {
+            return <NotificationItem key={item.id} read={item.read} {...item} />
+        });
+
+        return (<ul className="notifications">
+            <p>Unread: {this.state.unread}</p>
+            {notifications}
+        </ul>);
+    }
+});
+
+var NotificationItem = React.createClass({
+    getInitialState: function () {
+        return {};
+    },
+
+    handleMouseDown: function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'PUT',
+            url: ['/notifications', this.props.id].join('/'),
+            dataType: 'json',
+            async: true,
+            success: function (data) {
+                NotificationActions.notificationUpdate(data.notifications);
+            },
+            error: function () {
+                console.log('failed');
+            }
+        });
+        // Fixes an issue where firefox bubbles events instead of capturing them
+        // See: https://github.com/facebook/react/issues/2011
+        this.getDOMNode().getElementsByTagName('a')[0].click();
+    },
+
+    render: function () {
+        var method, remote, skipPjax,
+            className = [this.props.type, this.props.read ? 'read' : 'unread'].join(' ');
+        if (this.props.data) {
+            method = this.props.data.method;
+            remote = this.props.data.remote;
+            skipPjax = this.props.data['skip-pjax'];
+        }
+
+        return (<li className={className}>
+            <a href={this.props.url} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax}>
+                <img src={this.props.creator.avatar.url} className="notification-avatar" />
+                <span className='notification-description'>{this.props.title}</span>
+                <div className='notification-bottom'>
+                    <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.created_at}</span>
+                    {_image(this.props)}
+                </div>
+            </a>
+        </li>);
+    }
+});
+

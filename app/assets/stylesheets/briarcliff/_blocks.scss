@@ -204,7 +204,7 @@ $grey_light: $g0;
   @include transform(translateY(-50%));
   //transform: translateY(-50%);
   @include bp-medium{
-    transform: none;
+    @include transform(none);
   }
 }
 
@@ -247,6 +247,9 @@ $grey_light: $g0;
   }
   blockquote {
     margin: 0 0 .2em 0;
+    font-size: 1em;
+    line-height: 1.5em;
+    margin-bottom: 0.5em;
   }
 }
 
@@ -324,9 +327,4 @@ p.block-slogan {
 
 .block-image-wide {
   width: 100%;
-}
-
-@media screen and (max-width: 1200px) {
-  .blocks-container {
-  }
 }

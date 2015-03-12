@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper
+  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery secret: "Nl4EV8Fm3LdKayxNtIBwrzMdH9BD18KcQwSczxh1EdDbtyf045rFuVces8AdPtobC9pp044KsDkilWfvXoDADZWi6Gnwk1vf3GghCIdKXEh7yYg41Tu1vWaPdyzH7solN33liZppGlJlNTlJjFKjCoGjZP3iJhscsYnPVwY15XqWqmpPqjNiluaSpCmOBpbzWLPexWwBSOvTcd6itoUdWUSQJEVL3l0rwyJ76fznlNu6DUurFb8bOL2ItPiSit7g"
   skip_before_filter  :verify_authenticity_token
@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :set_layout
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
+  after_action :set_notification_header
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
     flash[:warning] = t(:vote_same_twice_warning)
@@ -19,6 +20,7 @@ class ApplicationController < ActionController::Base
     Rails.logger.error exception
     respond_to do |format|
       format.js { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.json { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {
         request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
         redirect_to :back, :alert => exception.message
@@ -52,7 +54,7 @@ class ApplicationController < ActionController::Base
 
   def create_activity(model, params)
     a = model.create_activity params
-    Argu::Notification.perform_async(a.id)
+    Argu::NotificationWorker.perform_async(a.id)
   end
 
   def current_scope
@@ -78,7 +80,7 @@ class ApplicationController < ActionController::Base
   end
 
   def pundit_user
-    UserContext.new(current_user, session)
+    UserContext.new(current_user, current_profile, session)
   end
 
   def render_register_modal(base_url=nil, *r_options)
@@ -101,8 +103,14 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_notification_header
+    if current_user.present?
+      response.headers[:lastNotification] = policy_scope(Notification).order(created_at: :desc).limit(1).pluck(:created_at)[0]
+    end
+  end
+
   def destroy_recent_similar_activities(model, params)
-    Activity.delete Activity.where("created_at >= :date", :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
+    Activity.delete Activity.where('created_at >= :date', :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
   end
 
   def show_trashed?

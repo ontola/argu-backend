@@ -6,7 +6,6 @@ $(function() {
         if ((settings = $('.portal-settings'))) {
             var editableOptions = {
                 onsubmit: function (settings) {
-                    window._that = this;
                     settings.target = '<%= portal_settings_path %>/';
                 },
                 submitdata : function(value, settings) {

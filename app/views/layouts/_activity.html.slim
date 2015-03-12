@@ -1,15 +1,12 @@
 .activity.box
   section.profile-small
-    =link_to profile_path(activity.owner.web_url) do
+    =link_to dual_profile_path(activity.owner) do
       img[src=activity.owner.profile_photo.url(:icon)]
     .info-block[style="padding: 0;"]
       p[style="margin-bottom: 0;"]
-        b
-          ='link_to activity.owner.display_name, profile_path(activity.owner.web_url)
-          -if content_for? "activity-#{activity.id}"
-            = content_for "activity-#{activity.id}"
+        b==activity_string_for(activity, true)
       time[datetime=activity.created_at]
-        small[style="font-size: 0.8em; color: grey;"]=awesome_time_ago_in_words activity.created_at
+        small[style="font-size: 0.8em; color: grey;"]= awesome_time_ago_in_words activity.created_at
   .test
     = render partial: "public_activity/#{activity.key.gsub('.','/')}", locals: {activity: activity}
     /= render_columns activity.trackable

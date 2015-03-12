@@ -1,10 +1,11 @@
 .col-3
   .col-3-2
-    =to_parent
+    div[data-intro= t("intro.argument.back")]
+      =to_parent
     =render partial: 'arguments/form'
   /TODO make translations, make content dependent on focus field
   .col-3-1
-    .box
+    .box[data-intro= t("intro.argument.form")]
       section
-        =raw t("arguments.form.helper.side")
+        =raw t('arguments.form.helper.side')
     =render partial: 'references_helper'

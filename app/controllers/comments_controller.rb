@@ -1,6 +1,12 @@
 class CommentsController < ApplicationController
 
   def show
+    @comment = Comment.find params[:id]
+    authorize @comment, :show?
+
+    respond_to do |format|
+      format.html { redirect_to url_for([@comment.commentable, anchor: @comment.identifier]) }
+    end
   end
 
   # POST /resource/1/comments

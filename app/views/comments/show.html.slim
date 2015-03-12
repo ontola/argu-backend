@@ -4,7 +4,7 @@
     h1= t("arguments.comments.title")
   .comments
     -if @comments.present?
-      header
+      header[data-intro= t("intro.comments.show")]
         h1= t("arguments.comments.title")
       span.hidden[itemprop="commentCount"]= @argument.comments_count
       - @comments.each do |c|
@@ -13,5 +13,5 @@
   -if policy(resource).show?
     header
       h2 Reageer op dit argument
-    .box
+    .box[data-intro= t("intro.comments.form")]
       =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true }

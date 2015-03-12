@@ -2,32 +2,4 @@
 
 nl:
   groups:
-    public_form:
-      f_public: "Publiek"
-      f_public_desc: "De groep en stellingen zijn door iedereen te zien."
-      f_hidden: "Verborgen"
-      f_hidden_desc: "Profiel van de groep is publiek, de stellingen zijn verborgen."
-      f_private: "Prive"
-      f_private_desc: "Zowel het profiel als de stellingen zijn slechts voor de leden zichtbaar."
-    application_form:
-      f_open: "Open"
-      f_open_desc: "Iedereen kan zich aanmelden voor de groep"
-      f_request: "Op verzoek"
-      f_request_desc: "Iedereen kan een verzoek voor aanmelding sturen."
-      f_invite: "Op uitnodiging"
-      f_invite_desc: "Leden kunnen anderen uitnodigen om lid te worden."
-      f_management_invite: "Door de beheerder(s)"
-      f_management_invite_desc: "Alleen de beheerder(s) kunnen nieuwe leden toevoegen."
-    new_group: "Creëer groep"
-  activerecord:
-    attributes:
-      forum:
-        name: "Naam"
-        web_url: "argu web url"
-        description: "Omschrijving"
-        slogan: "Slogan"
-        website: "Web adres"
-        profile_photo: "Profielfoto"
-        public_form: "Privacy"
-        application_form: "Verzoeken"
-        key_tags: "Sleuteltags"
+    type: 'Groep'

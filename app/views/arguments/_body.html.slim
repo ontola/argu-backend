@@ -1,6 +1,7 @@
 .box[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
   section.section-info[class="#{@argument.pro ? 'pro' : 'con'}-bg"]
-    span= @argument.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con')
+    span[class="fa #{@argument.pro ? 'fa-plus' : 'fa-minus'}"]
+    span.icon-left= @argument.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con')
   section
     h1[class=(@argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= @argument.title
     = render partial: 'arguments/shr', locals: {model: @argument}
@@ -20,3 +21,7 @@
       li= link_to(edit_argument_path(@argument)) do
         span.fa.fa-pencil
         span.icon-left= t("edit")
+    - if active_for_user? :notifications, current_user
+      li
+        ul
+          =react_component 'HyperDropdown', argument_items(@argument), {prerender: true}

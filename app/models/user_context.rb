@@ -1,8 +1,9 @@
 class UserContext
-  attr_reader :user, :session
+  attr_reader :user, :actor, :session
 
-  def initialize(user, session)
+  def initialize(user, profile, session)
     @user = user
+    @actor = profile
     @session = session
   end
 end

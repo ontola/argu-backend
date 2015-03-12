@@ -1,7 +1,5 @@
 =set_title @profile.display_name
 .col-1
-  -if policy(@profile).edit?
-    =render partial: 'profiles/profile_bar'
   /=image_tag @profile.cover_photo.url
   .profile-big[data-intro= t("intro.profile.show", name: @profile.display_name)]
     .profile-picture.profile-picture-show
@@ -22,5 +20,8 @@
           a.tag href=""
             span windmolens
 
-.boxes-list[data-intro= t("intro.profile.votes") data-position="top"]
-  =render_columns(@collection, collection_model: Vote)
+.boxes-list[data-intro= t('intro.profile.votes') data-position="top"]
+  - if @profile.are_votes_public? && @profile.votes.count > 0
+    =render_columns(@collection, collection_model: Vote)
+  - elsif @profile.are_votes_public?
+    h2.center= t('profiles.didnt_vote_name', name: @profile.display_name).capitalize

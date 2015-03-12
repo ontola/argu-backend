@@ -4,7 +4,7 @@ Rails.application.configure do
 
   config.epics = ActiveSupport::OrderedOptions.new
   config.epics.opinion = false                        # Opinion enabled?
-  config.epics.parties = false                        # Parties enabled?
+  config.epics.parties = true                         # Parties enabled?
   config.epics.advanced_navigation = false            # Navigation by tags and such
   config.epics.search = false                         # Search enabled?
   config.epics.counters = false                        # Counter caches on models (e.g. x pro, y con args)

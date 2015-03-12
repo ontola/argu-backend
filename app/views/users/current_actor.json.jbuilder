@@ -1,7 +1,13 @@
 json.current_actor do
   json.username @profile.username
+  json.display_name @profile.display_name
   json.name @profile.name
-  json.url @profile.owner.class == User ? profile_path(@profile.username) : page_path(@profile.owner.web_url)
+  json.url dual_profile_path(@profile)
+  json.current_forum do
+    json.display_name @profile.preferred_forum.display_name
+    json.web_url @profile.preferred_forum.web_url
+    json.cover_photo @profile.preferred_forum.cover_photo
+  end
   json.profile_photo do
     json.url @profile.profile_photo.url
     json.icon do
@@ -11,7 +17,11 @@ json.current_actor do
       json.url @profile.profile_photo.url(:avatar)
     end
   end
-  json.managed_pages @profile.owner.managed_pages do |page|
+  json.groups @profile.groups do |group|
+    json.id group.id
+    json.name group.name
+  end
+  json.managed_pages current_user.managed_pages do |page|
     json.title page.display_name
     json.url page_path(page)
     json.update_url actors_path(na: page.profile.id)

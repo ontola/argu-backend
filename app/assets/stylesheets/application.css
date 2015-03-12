@@ -10,7 +10,6 @@
  *
  * require briarcliff/briarcliff
  *= require briarcliff/_reset
- *= require fixedsticky
  * require selectize
  * require selectize.default
  * require formtastic

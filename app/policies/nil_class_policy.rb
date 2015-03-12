@@ -2,7 +2,7 @@ class NilClassPolicy < RestrictivePolicy
   attr_reader :user, :record
 
   def initialize(user, record)
-    raise Pundit::NotAuthorizedError, "An error occurred"
+    raise Pundit::NotAuthorizedError, 'An error occurred'
   end
 
   def permitted_attributes

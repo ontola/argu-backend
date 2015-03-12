@@ -5,10 +5,12 @@ class MotionsController < ApplicationController
   # GET /motions/1.json
   def show
     @motion = Motion.includes(:arguments, :opinions).find(params[:id])
+    @forum = @motion.forum
     authorize @motion
     current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
     @opinions = Opinion.ordered policy_scope(@motion.opinions.trashed(show_trashed?))
+    @group_responses = Group.ordered @motion.group_responses
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
 
@@ -32,8 +34,8 @@ class MotionsController < ApplicationController
       current_context @motion
       respond_to do |format|
         if !current_profile.member_of? @motion.forum
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath } }
-          format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath } }
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath} }
+          format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath, no_close: true } }
         else
           format.js { render js: "window.location = #{request.url.to_json}" }
           format.html { render 'form' }
@@ -46,6 +48,7 @@ class MotionsController < ApplicationController
   # GET /motions/1/edit
   def edit
     @motion = Motion.find_by_id(params[:id])
+    @forum = @motion.forum
     authorize @motion
     respond_to do |format|
       format.html { render 'form' }
@@ -68,7 +71,7 @@ class MotionsController < ApplicationController
     respond_to do |format|
       if @motion.save
         create_activity @motion, action: :create, recipient: (@question.presence || @motion.forum), owner: current_profile, forum_id: @motion.forum.id
-        format.html { redirect_to @motion, notice: t('type_save_success', type: t('motions.type')) }
+        format.html { redirect_to @motion, notice: t('type_save_success', type: motions_type) }
         format.json { render json: @motion, status: :created, location: @motion }
       else
         format.html { render 'form' }
@@ -83,6 +86,7 @@ class MotionsController < ApplicationController
     @motion = Motion.find_by_id params[:id]
     @creator = @motion.creator
     authorize @motion
+    @forum = @motion.forum
 
     @motion.reload if process_cover_photo @motion, permit_params
     respond_to do |format|
@@ -91,7 +95,7 @@ class MotionsController < ApplicationController
           format.html { redirect_to tag_motions_url(Tag.find_by_id(@motion.tag_id).name)}
           format.json { head :no_content }
         else
-          format.html { redirect_to @motion, notice: 'Motion was successfully updated.' }
+          format.html { redirect_to @motion, notice: t('type_save_success', type: motion_type) }
           format.json { head :no_content }
         end
       else
@@ -113,8 +117,9 @@ class MotionsController < ApplicationController
       @motion.trash
     end
 
+    parent = @motion.get_parent.model.try(:first) || @motion.get_parent.model
     respond_to do |format|
-      format.html { redirect_to @motion.get_parent.model }
+      format.html { redirect_to parent }
       format.json { head :no_content }
     end
   end

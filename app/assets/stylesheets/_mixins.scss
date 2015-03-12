@@ -20,7 +20,7 @@
 }
 
 @mixin border-radius($opts:3px){
-  border-radius: $opts;
+  //border-radius: $opts;
 }
 
 @mixin text_settings($align: justify, $color: $g4, $family: $font-sans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
@@ -92,7 +92,7 @@
 
 // Responsive
 @mixin bp-large-2 {
-  @media only screen and (max-width: 100em) {
+  @media only screen and (max-width: 85em) {
     @content;
   }
 }

@@ -5,6 +5,7 @@ class ArgumentsController < ApplicationController
   def show
     @argument = Argument.includes(:comment_threads).find params[:id]
     authorize @argument, :show?
+    @forum = @argument.forum
     current_context @argument
     @parent_id = params[:parent_id].to_s
     
@@ -74,7 +75,7 @@ class ArgumentsController < ApplicationController
         format.html { redirect_to (argument_params[:motion_id].blank? ? @argument : Motion.find_by_id(argument_params[:motion_id])), notice: 'Argument was successfully created.' }
         format.json { render json: @argument, status: :created, location: @argument }
       else
-        format.html { render action: "form", pro: argument_params[:pro], motion_id: argument_params[:motion_id] }
+        format.html { render action: 'form', pro: argument_params[:pro], motion_id: argument_params[:motion_id] }
         format.json { render json: @argument.errors, status: :unprocessable_entity }
       end
     end

@@ -3,5 +3,5 @@ section.profile-small[itemscope itemprop="creator" itemtype="http://schema.org/P
     img[src=profile.profile_photo.url(:icon) alt="profile picture" itemprop="image"]
   .info-block
     =link_to profile_path(resource.creator.web_url) do
-      .info=l(resource.created_at, format: :long)
+      time.info[datetime=resource.created_at ]=l(resource.created_at, format: :long)
       .profile-name[itemprop="name"]=profile.display_name

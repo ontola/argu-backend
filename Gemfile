@@ -44,7 +44,6 @@ gem 'kaminari', '~>0.16.1'
 
 ##################Front-end########################
 gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
-gem 'js-routes'
 
 ##################Asset-y########################
 gem 'haml' # TODO: convert haml to slim, then remove this gem
@@ -64,6 +63,7 @@ gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
 gem 'jquery-pjax-rails'
 gem 'rack-pjax'
+gem 'uglifier', '>= 2.5.3'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'
@@ -89,7 +89,6 @@ group :development, :test do
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
   gem 'spring', '~> 1.2.0'
   gem 'coffee-rails', '~> 4.1.0'
-  gem 'uglifier', '>= 2.5.3'
   gem 'quiet_assets'
   gem 'web-console', '~> 2.0.0'
   ####Capistrano#####

@@ -9,6 +9,7 @@ class Motion < ActiveRecord::Base
   has_many :question_answers, inverse_of: :motion, dependent: :destroy
   has_many :questions, through: :question_answers
   has_many :activities, as: :trackable, dependent: :destroy
+  has_many :group_responses
   belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
 
@@ -16,6 +17,7 @@ class Motion < ActiveRecord::Base
 
   before_save :trim_data
   before_save :cap_title
+  after_save :creator_follow
 
   parentable :questions, :forum
   convertible :votes, :taggings, :activities
@@ -38,6 +40,10 @@ class Motion < ActiveRecord::Base
 
   def creator
     super || Profile.first_or_create(name: 'Onbekend')
+  end
+
+  def creator_follow
+    self.creator.follow self
   end
 
   def display_name
@@ -71,6 +77,7 @@ class Motion < ActiveRecord::Base
       self.question_answers.delete_all if unlink_questions
       self.activities.update_all forum_id: forum.id
       self.taggings.update_all forum_id: forum.id
+      self.group_responses.delete_all
       old_forum.decrement :motions_count
       forum.increment :motions_count
       old_forum.save

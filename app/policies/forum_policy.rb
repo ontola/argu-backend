@@ -27,7 +27,9 @@ class ForumPolicy < RestrictivePolicy
                    :cover_photo, :remove_cover_photo, :cover_photo_attribution,
                    :cover_photo_original_w, {memberships_attributes: [:role, :id, :profile_id, :forum_id]},
                    :cover_photo_original_h, :cover_photo_box_w, :cover_photo_crop_x, :cover_photo_crop_y,
-                   :cover_photo_crop_w, :cover_photo_crop_h, :cover_photo_aspect] if update?
+                   :cover_photo_crop_w, :cover_photo_crop_h, :cover_photo_aspect,
+                   :uses_alternative_names, :questions_title, :questions_title_singular, :motions_title,
+                   :motions_title_singular, :arguments_title, :arguments_title_singular] if update?
     attributes << [:visibility, :visible_with_a_link, :page_id] if change_owner?
     attributes
   end
@@ -42,7 +44,11 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def managers?
-    false
+    staff?
+  end
+
+  def groups?
+    is_manager? || staff?
   end
 
   def new?
@@ -51,6 +57,10 @@ class ForumPolicy < RestrictivePolicy
 
   def create?
     super
+  end
+
+  def create_group?
+    is_manager? || staff?
   end
 
   def edit?
@@ -97,13 +107,13 @@ class ForumPolicy < RestrictivePolicy
   # Is the current user a member of the group?
   # @note This tells nothing about whether the user can make edits on the object
   def is_member?
-    user && user.profile.memberships.where(forum: record).present?
+    actor && actor.memberships.where(forum: record).present?
   end
 
   # Is the user a manager of the page or of the forum?
   def is_manager?
     _mems = user.profile if user
-    user && (user.profile.page_memberships.where(page: record.page, role: PageMembership.roles[:manager]).present? || user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?)
+    user && (user.profile.page_memberships.where(page: record.page, role: PageMembership.roles[:manager]).present? || user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || staff?
   end
 
   # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta

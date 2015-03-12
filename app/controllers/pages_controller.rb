@@ -1,11 +1,11 @@
 class PagesController < ApplicationController
+
   def show
     @page = Page.friendly.find(params[:id])
     @profile = @page.profile
     authorize @page, :show?
 
     @collection =  Vote.ordered @profile.votes
-
   end
 
   def new

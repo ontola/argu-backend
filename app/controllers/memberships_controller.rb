@@ -1,5 +1,4 @@
 class MembershipsController < ApplicationController
-  #responds_to :js
 
   def create
     forum = Forum.friendly.find params[:forum_id]

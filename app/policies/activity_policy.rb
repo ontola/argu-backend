@@ -12,7 +12,9 @@ class ActivityPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      scope.where(['forum_id IN (%s)', user.profile.memberships_ids])
+      activities = Activity.arel_table
+      profiles = Profile.arel_table
+      scope.where(['forum_id IN (%s)', user.profile.memberships_ids]).joins(:owner).where(activities[:key].not_eq('vote.create').or(profiles[:are_votes_public].eq(true)))
     end
   end
 

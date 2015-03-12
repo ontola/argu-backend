@@ -15,32 +15,40 @@ div[itemscope itemtype="Thing"]
     -if @forum.cover_photo.url.present?
       .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
       span.header-attribution= @forum.cover_photo_attribution
+    -else
+      .cover-image-empty
     .cover-header
       .cover-container
-        .center
-          =react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
-          p.cover-oneliner
-            =@forum.bio
-            - if @forum.bio_long.present?
-              a[href="#forum-info"]
-                span.icon-left= t('forums.more_info')
-          =render partial: 'application/menus/settings', locals: {resource: @forum}
-        ul.btns-list.btns-vertical
-          /TODO: Make this check the current profile, not the user
-          - if !policy(@forum).is_member?
-            li=link_to forum_memberships_path(@forum.web_url), data: {method: :post, 'skip-pjax' => true}
-              span.fa.fa-user
-              span.icon-left= t('join')
-          li[data-intro=t('intro.motion.create', name: @forum.name) class="tooltip" data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: 'sta-t btn-focus'
-            span.fa.fa-plus
-            span.icon-left= t('motions.type')
-          li[data-intro=t('intro.question.create', name: @forum.name) class="tooltip" data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: remote_unless_user, class: 'que-t btn-focus'
-            span.fa.fa-plus
-            span.icon-left= t('questions.type')
-          - if policy(@forum).invite?
-            li= link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite')}
-              span.fa.fa-group
-              span.icon-left= t('forums.invite_others')
+        .cover-header-top
+          -if @forum.profile_photo.url.present?
+            .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
+          .cover-switcher=react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
+        .cover-header-bottom
+          - if @forum.bio.present?
+            p.cover-oneliner
+              =@forum.bio
+              - if @forum.bio_long.present?
+                a[href="#forum-info"]
+                  span.icon-left= t('forums.more_info')
+          ul.btns-list.btns-vertical
+            /TODO: Make this check the current profile, not the user
+            - if !policy(@forum).is_member?
+              li=link_to forum_memberships_path(@forum.web_url), data: {method: :post, 'skip-pjax' => true}
+                span.fa.fa-user
+                span.icon-left= t('join')
+            li[data-intro=t('intro.motion.create', name: @forum.name) data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: 'sta-t btn-focus'
+              span.fa.fa-plus
+              span.icon-left= motion_type
+            li[data-intro=t('intro.question.create', name: @forum.name) class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: remote_unless_user, class: 'que-t btn-focus'
+              span.fa.fa-plus
+              span.icon-left= t('questions.type')
+            - if policy(@forum).invite?
+              li= link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite')}
+                span.fa.fa-group
+                span.icon-left= t('forums.invite_others')
+            - if policy(@forum).is_manager?
+              li
+                ul=render partial: 'application/menus/settings', locals: {resource: @forum}
   - if policy(@forum).show?
     /.center
       ul.btns-list
@@ -80,16 +88,16 @@ div[itemscope itemtype="Thing"]
           li
             a[data-sort-value="score"]
               span.fa.fa-thumbs-up
-              span.icon-left= t("filtersort.score")
+              span.icon-left= t('filtersort.score')
           li
             a[data-sort-value="random" id="sort-random"]
               span.fa.fa-gift
               span.icon-left= t('filtersort.random')
     .grid
-      .box.box-grid-sizer[data-intro=t('intro.forum.grid') data-position="top"]
+      .box.box-grid-sizer[data-intro=t('intro.forums.grid') data-position="top"]
       -@items.each do |item|
-        = render item
-      .box.box-grid.motion[ data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :motion]), data: {remote: true}
+        =render item
+      .box.box-grid.motion[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :motion]), data: {remote: true}
         section.section-fill.sta-bg
           h2= t('motions.call_to_action.title')
         section
@@ -98,7 +106,7 @@ div[itemscope itemtype="Thing"]
             b.sta-t
               span.fa.fa-plus
               span.icon-left= t('motions.call_to_action.action')
-      .box.box-grid.question[ data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :question]), data: {remote: true}
+      .box.box-grid.question[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :question]), data: {remote: true}
         section.section-fill.que-bg
           h2= t('questions.call_to_action.title')
         section
@@ -109,7 +117,7 @@ div[itemscope itemtype="Thing"]
               span.icon-left= t('questions.call_to_action.action')
     .col-1
       header#forum-info
-        h1 = t('forums.about.header')
+        h1= t('forums.about.header')
       .box
         - if @forum.bio_long.present?
           section

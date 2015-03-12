@@ -1,18 +1,13 @@
 /*global React, $*/
 
-var _image = function (props) {
-    if (props.image) {
-        return <img src={props.image.url} alt={props.image.title} className={props.image.className} />;
-    } else if (props.fa) {
-        return <span className={['fa', props.fa].join(' ')} />;
-    }
-};
-
 window.HyperDropdown = React.createClass({
+
     getInitialState: function () {
         return {
             openState: false,
-            renderLeft: false
+            renderLeft: false,
+            dropdownElement: {},
+            current_actor: this.props.current_actor
         };
     },
 
@@ -33,6 +28,7 @@ window.HyperDropdown = React.createClass({
     },
 
     componentDidMount: function () {
+        this.unsubscribe = actorStore.listen(this.onActorChange);
         this.setState({referenceDropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0],
             dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[1]});
         this.calculateRenderLeft();
@@ -40,6 +36,7 @@ window.HyperDropdown = React.createClass({
     },
 
     componentWillUnmount: function () {
+        this.unsubscribe();
         window.clearTimeout(this.timerItem);
         window.removeEventListener('resize', this.handleResize);
     },
@@ -74,6 +71,10 @@ window.HyperDropdown = React.createClass({
         this.setState({openState: true});
     },
 
+    onActorChange: function (data) {
+        this.setState({current_actor: data});
+    },
+
     render: function () {
         var collapseStyle = {
             visibility: this.state.openState ? 'visible' : 'hidden',
@@ -81,38 +82,60 @@ window.HyperDropdown = React.createClass({
             right: this.state.renderLeft ? 0 : undefined
         };
 
-        var sections;
+        var sections,
+            _this = this;
         if (this.props.sections) {
-            sections = (<ul className="dropdown-content" style={collapseStyle}>
+            sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle}>
                 {this.props.sections.map(function(section) {
-                    var title;
-                    if (section.title && section.items.length > 0) {
-                        title = <span className="dropdown-header">{section.title}</span>
-                    }
-                    return (<div>
-                        {title}
-                        {section.items.map(function(item) {
+                    if (typeof(section.type) == "string") {
+                        return (<Notifications {...section} />);
+                    } else {
+                        var title;
+                        if (section.title && section.items.length > 0) {
+                            title = <span className="dropdown-header">{section.title}</span>
+                        }
+
+                        var items = section.items.map(function(item) {
+                            var ItemTag;
                             if (item.type == 'link') {
-                                return (<LinkItem key={item.title} {...item} />);
+                                return <LinkItem key={item.title} current_actor={_this.state.current_actor} {...item} />;
+                            } else if (item.type == 'actor') {
+                                ItemTag = 'ActorItem';
+                                return <ActorItem key={item.title} {...item} />;
                             }
-                        })}
-                    </div>);
+                        });
+
+                        return (<div>
+                            {title}
+                            {items}
+                        </div>);
+                    }
                 })}
             </ul>);
         }
-        var image_after  = _image({fa: this.props.fa_after});
-        var triggerClass = "dropdown-trigger " + this.props.triggerClass;
         var dropdownClass = "dropdown" + (this.state.openState ? ' dropdown-active' :'');
 
-        var TriggerContainer = this.props.triggerTag || 'div';
+        var trigger;
+        if (this.props.trigger) {
+            if (this.props.trigger.type == 'current_user') {
+                trigger = <CurrentUserTrigger {...this.props.trigger}/>
+            } else if (this.props.trigger.type == 'notifications') {
+                trigger = <NotificationTrigger {...this.props}/>
+            }
+        } else {
+            var image_after  = _image({fa: this.props.fa_after});
+            var triggerClass = "dropdown-trigger " + this.props.triggerClass;
+            var TriggerContainer = this.props.triggerTag || 'div';
+            trigger = (<TriggerContainer className={triggerClass}>
+                          {_image(this.props)}
+                          <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
+                          {image_after}
+                       </TriggerContainer>);
+        }
 
-        return (<li tabIndex="1" onMouseUp={this.handleMouseUp} onTouchEnd={this.handleTap} onBlurCapture={this.handleBlur} className={dropdownClass} data-intro="" data-position="">
-            <TriggerContainer className={triggerClass}>
-                {_image(this.props)}
-                <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
-                {image_after}
-            </TriggerContainer>
-            <ul className="dropdown-content"></ul><%# This makes sure renderLeft is calculated correctly %>
+        return (<li tabIndex="1" onMouseUp={this.handleMouseUp} onTouchEnd={this.handleTap} onBlurCapture={this.handleBlur} className={dropdownClass}>
+            {trigger}
+            <ul className={'dropdown-content ' + this.props.contentClassName}></ul><%# This makes sure renderLeft is calculated correctly %>
             {sections}
         </li>);
     }
@@ -134,6 +157,54 @@ var LinkItem = React.createClass({
         if (this.props.divider && this.props.divider == 'top') {
             divider = <div className="dropdown-divider"></div>;
         }
+        var method, remote, skipPjax, className;
+        if (this.props.data) {
+            method = this.props.data.method;
+            remote = this.props.data.remote;
+            skipPjax = this.props.data['skip-pjax'];
+        }
+        className = this.props.className;
+
+        return (<li className={this.props.type}>
+            {divider}
+            <a href={_url(this.props.url, this.props)} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} className={className}>
+                {_image(this.props)}
+                <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
+            </a>
+        </li>);
+    }
+});
+
+var ActorItem = React.createClass({
+    getInitialState: function () {
+        return {};
+    },
+
+    handleClick: function (e) {
+        e.preventDefault();
+    },
+
+    handleMouseDown: function (e) {
+        e.preventDefault();
+        $.ajax({
+            type: 'PUT',
+            url: this.props.url,
+            dataType: 'json',
+            async: true,
+            success: function (data) {
+                Actions.actorUpdate(data);
+            },
+            error: function () {
+                console.log('failed');
+            }
+        });
+    },
+
+    render: function () {
+        var divider;
+        if (this.props.divider && this.props.divider == 'top') {
+            divider = <div className="dropdown-divider"></div>;
+        }
         var method, remote, skipPjax;
         if (this.props.data) {
             method = this.props.data.method;
@@ -141,13 +212,44 @@ var LinkItem = React.createClass({
             skipPjax = this.props.data['skip-pjax'];
         }
 
-        return (<li className={this.props.type}>
+        return (<li className={'link ' + this.props.type}>
             {divider}
-            <a href={this.props.url} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax}>
+            <a href='#' onMouseDownCapture={this.handleMouseDown} onClick={this.handleClick} data-skip-pjax={skipPjax}>
                 {_image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
         </li>);
+    }
+});
+
+var CurrentUserTrigger = React.createClass({
+    getInitialState: function () {
+        return {
+            display_name: this.props.title,
+            profile_photo: this.props.profile_photo
+        };
+    },
+
+    onActorChange: function (data) {
+        this.setState(data);
+    },
+
+    componentDidMount: function () {
+        this.unsubscribe = actorStore.listen(this.onActorChange);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+    },
+
+    render: function () {
+        var triggerClass = "dropdown-trigger " + this.props.triggerClass;
+        var TriggerContainer = this.props.triggerTag || 'div';
+
+        return (<TriggerContainer className={triggerClass}>
+            {_image({image: {url: this.state.profile_photo.url, title: this.state.profile_photo.title, className: 'profile-picture--navbar'}})}
+            <span className="icon-left">{this.state.display_name}</span>
+        </TriggerContainer>);
     }
 });
 

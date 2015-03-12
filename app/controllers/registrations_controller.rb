@@ -38,7 +38,7 @@ class RegistrationsController < Devise::RegistrationsController
         sign_in @user, :bypass => true
         redirect_to root_path
       else
-        render "edit"
+        render 'edit'
       end
     end
 
@@ -46,7 +46,7 @@ class RegistrationsController < Devise::RegistrationsController
     unless current_user.nil?
       render 'cancel'
     else
-      flash[:error] = "Not signed in"
+      flash[:error] = 'Not signed in'
       redirect_to root_path
     end
   end

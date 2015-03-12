@@ -42,6 +42,7 @@ class QuestionsController < ApplicationController
   def edit
     @question = Question.find_by_id(params[:id])
     authorize @question
+    @forum = @question.forum
     current_context @question
     respond_to do |format|
       format.html { render 'form' }
@@ -60,7 +61,7 @@ class QuestionsController < ApplicationController
     respond_to do |format|
       if @question.save
         create_activity @question, action: :create, recipient: @question.forum, owner: current_profile, forum_id: @forum.id
-        format.html { redirect_to @question, notice: t('type_save_success', type: t('motions.type')) }
+        format.html { redirect_to @question, notice: t('type_save_success', type: question_type) }
         format.json { render json: @question, status: :created, location: @question }
       else
         format.html { render 'form' }
@@ -74,11 +75,12 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.includes(:taggings).find_by_id(params[:id])
     authorize @question
+    @forum = @question.forum
 
     @question.reload if process_cover_photo @question, permit_params
     respond_to do |format|
       if @question.update(permit_params)
-        format.html { redirect_to @question, notice: 'Motion was successfully updated.' }
+        format.html { redirect_to @question, notice: t('type_save_success', type: question_type) }
         format.json { head :no_content }
       else
         format.html { render 'form' }

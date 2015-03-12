@@ -4,7 +4,7 @@ Argu::Application.configure do
 
   config.epics = ActiveSupport::OrderedOptions.new
   config.epics.opinion = true                         # Opinion enabled?
-  config.epics.parties = false                        # Parties enabled?
+  config.epics.parties = true                         # Parties enabled?
   config.epics.advanced_navigation = false            # Navigation by tags and such
   config.epics.search = false                         # Search enabled?
   config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
@@ -37,7 +37,8 @@ Argu::Application.configure do
   config.serve_static_files = false
 
   # Compress JavaScripts and CSS
-  config.assets.compress = true
+  config.assets.js_compressor = :uglifier
+  config.assets.css_compressor = :sass
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
