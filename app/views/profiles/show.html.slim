@@ -20,5 +20,6 @@
           a.tag href=""
             span windmolens
 
-.boxes-list[data-intro= t("intro.profile.votes") data-position="top"]
+.boxes-list
+  .intro-filler[data-intro= t("intro.profile.votes") data-position="top"]
   =render_columns(@collection, collection_model: Vote)

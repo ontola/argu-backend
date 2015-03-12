@@ -41,10 +41,8 @@ nl:
                <p>Een <b class='sta-t'>idee</b> is een voorstel om een of meerdere problemen op te lossen.</p>
                <h2>Tips:</h2>
                <ul class='bullets'>
-                <li><p>Houd het <b>kort</b>. Bespreek <b>wat je idee inhoud</b>, maar houd geen betoog.</p></li>
                 <li><p>Een goed idee is <b>concreet en implementeerbaar</b>: het beschrijft wat er moet gebeuren en hoe dit moet gebeuren.</p></li>
-                <li><p>In een idee staan <b>geen argumenten</b>. Argumenten plaats je later onder het idee.</p></li>
-
+                <li><p>Geef achtergrondinformatie. Wat is de huidige situatie? Wat is er al gebeurt? Hoe gaat jouw idee bestaande problemen oplossen?</p></li>
                "
     mod:
       edit_moderators:

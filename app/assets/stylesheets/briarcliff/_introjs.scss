@@ -110,3 +110,10 @@
 .introjs-tooltipReferenceLayer{
   z-index: 1000000;
 }
+
+.intro-filler {
+  width: 100%;
+  width: calc(100% - 2em);
+  margin: 0 1em;
+  height: 0;
+}

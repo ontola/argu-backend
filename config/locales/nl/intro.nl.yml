@@ -31,7 +31,7 @@ nl:
       create: 'Weet jij welk probleem er opgelost moet worden in %{name}? Plaats een <b class="que-t">vraagstuk</b> en laat anderen meedenken.'
       back: 'Klik hier om terug te gaan naar het <b>forum</b>.'
       body: 'Een <b class="que-t">vraagstuk</b> presenteert een probleem en vraagt hoe dit zou moeten worden opgelost.'
-      motions: 'Hier staan <b class="sta-t">ideeën</b> van andere gebruikers. Weet jij hoe dit vraagstuk kan worden opgelost? Deel jouw idee!'
+      motions: 'Hier onder staan de <b class="sta-t">ideeën</b> van andere gebruikers. Weet jij hoe dit vraagstuk kan worden opgelost? Deel jouw idee!'
     motion:
       create: 'Wat zou jij veranderen in %{name}? Deel jouw <b class="sta-t">voorstel</b> op Argu en overtuig anderen.'
       back: 'Klik hier om terug te gaan naar het bijbehorende forum of vraagstuk.'
@@ -39,6 +39,7 @@ nl:
       vote: 'Hiermee kan je <b>stemmen</b> op het idee. Je kan jouw stem later nog wijzigen.'
       arguments: 'Op Argu structureren we discussie aan de hand van <b class="pro-t">voor</b>- en <b class="con-t">tegen</b>argumenten. Klik op een argument om reacties te bekijken of te plaatsen.'
       help: 'Wil je deze tutorial nogmaals zien? Gewoon hier klikken.'
+      groups: 'Speciale gebruikers kunnen hier aangeven wat hun mening is over het idee.'
     argument:
       back: 'Klik hier om terug te gaan naar het <b class="sta-t">idee</b>.'
       body: 'Een argument is een enkele reden <b class="pro-t">voor</b> of <b class="con-t">tegen</b> een idee.'

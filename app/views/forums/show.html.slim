@@ -51,51 +51,10 @@ div[itemscope itemtype="Thing"]
                 ul
                   =render partial: 'application/menus/settings', locals: {resource: @forum}
   - if policy(@forum).show?
-    /.center
-      ul.btns-list
-        li= react_component 'Expander', {label: t('filtersort.filter_&_sort'), expanderTarget: 'filter-and-sort', showCaret: true}, {prerender: true}
-    #filter-and-sort.filter-and-sort.expander-content
-      #type
-        ul.tags.tags-type
-          li
-            a.tag.tag-all.is-checked[data-filter="" data-forum-path="#{forum_path(@forum)}"]= t('filtersort.all')
-          li
-            a.tag.tag-motions[data-filter="motion"]= t('filtersort.motions')
-          li
-            a.tag.tag-questions[data-filter="question"]= t('filtersort.questions')
-      - if @forum.featured_tags.present?
-        #tags
-          ul.tags[itemprop="keywords"]
-            a[class="tag" data-filter="filterByTag" data-filter-value="" data-forum-path="#{forum_path(@forum)}"]
-              .span.fa.fa-eraser
-            - @forum.featured_tags.each do |tag|
-              li
-                a[class="tag" rel="tag" href="#{forum_tag_path(@forum, tag)}" data-filter='filterByTag' data-filter-value=tag data-forum-path="#{forum_path(@forum)}" data-skip-pjax]= tag
-      #sorts
-        ul.btns-list.btns-vertical
-          li
-            //TODO: Make date the default one to be checked.s
-            a[data-sort-value="updated_at" class="is-checked"]
-              span.fa.fa-fire
-              span.icon-left= t('filtersort.updated_at')
-          li
-            a[data-sort-value="created_at"]
-              span.fa.fa-clock-o
-              span.icon-left= t('filtersort.created_at')
-          /li
-            a[data-sort-value="name"]
-              span.fa.fa-sort-alpha-asc
-              span.icon-left= t("filtersort.name")
-          li
-            a[data-sort-value="score"]
-              span.fa.fa-thumbs-up
-              span.icon-left= t('filtersort.score')
-          li
-            a[data-sort-value="random" id="sort-random"]
-              span.fa.fa-gift
-              span.icon-left= t('filtersort.random')
+    =render partial: 'filter_and_sort'
     .grid
-      .box.box-grid-sizer[data-intro=t('intro.forums.grid') data-position="top"]
+      .box.box-grid-sizer
+      .intro-filler[data-intro=t('intro.forums.grid') data-position="top"]
       -@items.each do |item|
         =render item
       .box.box-grid.motion[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :motion]), data: {remote: true}

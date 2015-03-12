@@ -150,12 +150,12 @@ nl:
       truncate: "..."
   type_save_success: "%{type} successvol opgeslagen"
   type_create_success: "%{type} successvol aangemaakt"
-  references_helper: "<h2>Referenties toevoegen</h2>
-                   <p>Bronnen maken een argument overtuigend en verifieerbaar. Ze verschijnen onder jouw item als losse referenties. Op de plek waar je een referentie plaatst verschijnt een getal dat verwijst naar de referentie.</p>
-                   <p>Als je een <b>link</b> wil toevoegen:</p>
-                   <p><code>[www.voorbeeld.nl](Voorbeeld 2014)</code></p>
-                   <p>Als je een <b>boek of tijdschrift</b> wil toevoegen:</code></p>
-                   <p><code>[](Tijdschrift 2015)</code></p>"
+  links_helper: "<h2>Links toevoegen</h2>
+                   <p>Je kan in jouw tekst links toevoegen met blokhaken en normale haakjes. Dat doe je als volgt:</p>
+                   <p><code>Dit is [www.argu.co](mijn website).</code></p>
+                   <p>Verschijnt als:</p>
+                   <p><code>Dit is <a href='http://www.argu.co'>mijn website</a>.</code></p>
+                   "
   move:
     current_forum: "Huidig forum:"
     button_label: "Verplaats"
