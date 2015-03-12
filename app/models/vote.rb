@@ -30,4 +30,8 @@ class Vote < ActiveRecord::Base
     HashWithIndifferentAccess.new(pro: {collection: grouped['pro'] || []}, neutral: {collection: grouped['neutral'] || []}, con: {collection: grouped['con'] || []})
   end
 
+  def voter_type
+    'Profile'
+  end
+
 end
