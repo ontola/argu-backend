@@ -16,3 +16,4 @@ nl:
         unadmin: 'Degradeer admin'
     edit:
       title: "profiel bewerken"
+    didnt_vote_name: "%{name} heeft nog niet gestemd"

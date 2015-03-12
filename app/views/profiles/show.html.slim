@@ -24,4 +24,4 @@
   - if @profile.votes.count > 0
     =render_columns(@collection, collection_model: Vote)
   - else
-    h2 NOG GEEN
+    h2.center= t('profiles.didnt_vote_name', name: @profile.display_name).capitalize

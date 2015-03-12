@@ -10,7 +10,6 @@ var _image = function (props) {
 
 Object.resolve = function(path, obj) {
     return [obj || self].concat(path.split('.')).reduce(function(prev, curr) {
-        console.log(prev, curr);
         return prev && prev[curr]
     });
 };
