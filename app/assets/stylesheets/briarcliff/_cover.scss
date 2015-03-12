@@ -17,7 +17,7 @@
   top: 0em;
   right: 0em;
   font-size: 0.8em;
-  z-index: 5;
+  z-index: 3;
   padding: .4em;
 }
 
@@ -93,7 +93,7 @@
     position: relative;
     display: inline-block;
     background-color: $lighten4;
-    color: $g4;
+    color: #303030;
     @include bp-medium {
       font-size: 1em;
     }
