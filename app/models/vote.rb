@@ -2,7 +2,7 @@ class Vote < ActiveRecord::Base
   include ArguBase, PublicActivity::Model
 
   belongs_to :voteable, polymorphic: true
-  belongs_to :voter, polymorphic: true
+  belongs_to :voter, class_name: 'Profile'
   has_many :activities, as: :trackable, dependent: :destroy
   belongs_to :forum
 
