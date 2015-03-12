@@ -18,3 +18,5 @@
 //= require fastclick
 //= require components
 //= require ./application/briarcliff/modal
+//= require ./application/ie
+//= require ./application/alert

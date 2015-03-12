@@ -4,14 +4,11 @@ window.CurrentProfile = React.createClass({
     getInitialState: function () {
         return {
             display_name: this.props.display_name,
-            image: this.props.image
+            profile_photo: this.props.profile_photo
         };
     },
 
     onActorChange: function (data) {
-        console.log('fsdfsdfsdf');
-        console.log(data);
-        console.log('fsdfsdfsdf');
         this.setState(data);
     },
 
@@ -26,7 +23,7 @@ window.CurrentProfile = React.createClass({
     render: function () {
 
         return (<section className="profile-small">
-            {_image(this.state)}
+            {_image({image: this.state.profile_photo})}
             <div className="info-block">
                 <div className="info">plaatsen als:</div>
                 <div className="profile-name">{this.state.display_name}</div>

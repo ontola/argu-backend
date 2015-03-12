@@ -1,10 +1,10 @@
 class ActorsController < ApplicationController
   def update
-    @new_actor = Profile.find params[:na]
+    @profile = Profile.find params[:na]
 
-    if @new_actor.present?
-      authorize @new_actor
-      cookies[:a_a] = @new_actor.id
+    if @profile.present?
+      authorize @profile
+      cookies[:a_a] = @profile.id
       status = 200
     else
       status = 404
@@ -13,7 +13,7 @@ class ActorsController < ApplicationController
     respond_to do |format|
       if status == 200
         format.html { redirect_to :back }
-        format.json { render }
+        format.json { render 'users/current_actor' }
       else
         format.html { render 404 }
         format.json { head status: 404 }
