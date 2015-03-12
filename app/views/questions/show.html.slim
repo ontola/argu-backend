@@ -24,7 +24,7 @@
       h1.que-t[itemprop="headline"]= @question.title
       p[itemprop="text"]= @question.supped_content.html_safe
       span.hidden[itemprop="answerCount"]= @question.motions_count
-    - if @question.tags.present?
+    /- if @question.tags.present?
       =render partial: 'tags/tags', locals: {resource: @question}
     =render @question.creator, locals= {resource: @question}
     -if policy(@question).update?

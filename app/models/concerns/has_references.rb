@@ -7,13 +7,9 @@ module HasReferences
 
   #TODO escape content=(text)
   def supped_content
-    refs = 0
-    content.gsub(/(\[[\w\\\/\:\?\(\)\&\%\_\=\.\+\-\,\#]*\])(\([\w\s!@#\$%^&*,.<>?|\(\)\\\/]*\))/) {|url,text| '<a class="reference-inline" href="%s#ref%d">%d</a>' % [Rails.application.routes.url_helpers.argument_path(self), refs += 1, refs] }
-  end
-
-  def references
-    refs = 0
-    content.scan(/\[([\w\\\/\:\?\(\)\&\%\_\=\.\+\-\,\#]*)\]\(([\w\s!@#\$%^&*,.<>?\(\)|\\\/]*)\)/).each { |r| r << 'ref' + (refs += 1).to_s }
+    content \
+      .gsub(/{([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)}\(([\w\s]*)\)/, '<a rel=tag name="\1" href="/cards/\1">\2</a>') \
+      .gsub(/\[([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)\]\(([\w\s]*)\)/, '<a href="\1">\2</a>')
   end
 
   module ClassMethods
