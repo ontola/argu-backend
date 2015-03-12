@@ -58,7 +58,7 @@ class VotesController < ApplicationController
           format.js
           format.html { redirect_to @model, notice: t('votes.alerts.success') }
         else
-          format.json { render @vote.errors, status: :bad_request }
+          format.json { render json: @vote.errors, status: :bad_request }
           format.js { head :bad_request }
           format.html { redirect_to @model, notice: t('votes.alerts.failed') }
         end
