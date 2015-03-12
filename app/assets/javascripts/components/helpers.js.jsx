@@ -16,12 +16,12 @@ Object.resolve = function(path, obj) {
 
 var _url = function (url, obj) {
     "use strict";
-    if (typeof(obj) === "object") {
+    if (typeof(obj) === "string" && typeof(obj) === "object") {
         var res = decodeURIComponent(url).replace(/{{([^{}]+)}}/g, function (match, p1, p2, p3, offset, string) {
             return Object.resolve(p1, obj);
         });
         return res || decodeURIComponent(url);
-    } else {
+    } else if (url !== null) {
         return decodeURIComponent(url);
     }
 };
