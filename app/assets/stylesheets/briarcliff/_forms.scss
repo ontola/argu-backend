@@ -270,6 +270,7 @@ p.inline-hints {
   background-color: $blu;
   color: white;
   bottom: 100%;
+  pointer-events: none;
   @include transition(.2s ease-in-out);
 }
 //Endtest
@@ -281,6 +282,7 @@ p.inline-hints {
 
 .formtastic .inline-errors, .formtastic .inline-hints {
   margin-left: 30%;
+  width: 70%;
   @include bp-medium{
     margin-left: 0 !important;
     width: 100%;

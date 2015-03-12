@@ -113,7 +113,7 @@ class ForumPolicy < RestrictivePolicy
   # Is the user a manager of the page or of the forum?
   def is_manager?
     _mems = user.profile if user
-    user && (user.profile.page_memberships.where(page: record.page, role: PageMembership.roles[:manager]).present? || user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?)
+    user && (user.profile.page_memberships.where(page: record.page, role: PageMembership.roles[:manager]).present? || user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || staff?
   end
 
   # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta
