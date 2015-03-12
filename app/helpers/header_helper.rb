@@ -33,6 +33,7 @@ module HeaderHelper
   end
 
   def profile_dropdown_items
+    @profile = current_profile
     {
         trigger: {
             type: 'current_user',
@@ -48,7 +49,7 @@ module HeaderHelper
               items: [
                   link_item(t('profiles.display'), dual_profile_path(current_profile), fa: 'user'),
                   link_item(t('users_show_title'), settings_url, fa: 'gear'),
-                  link_item(t('devise.invitations.link'), new_user_invitation_path(forum: current_user.profile.preferred_forum), fa: 'bullhorn'),
+                  link_item(t('devise.invitations.link'), new_user_invitation_path(forum: '{{current_actor.current_forum.web_url}}'), fa: 'bullhorn'),
                   link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'})
               ]
           },
@@ -56,7 +57,8 @@ module HeaderHelper
               title: t('profiles.switch'),
               items: managed_pages_items
           }
-        ]
+        ],
+        current_actor: JSON.parse(render(template: 'users/current_actor.json', with_format: :json))['current_actor']
     }
   end
 

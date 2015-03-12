@@ -3,6 +3,7 @@ class Vote < ActiveRecord::Base
 
   belongs_to :voteable, polymorphic: true
   belongs_to :voter, polymorphic: true
+  has_many :activities, as: :trackable, dependent: :destroy
   belongs_to :forum
 
   after_validation :update_counter_cache
