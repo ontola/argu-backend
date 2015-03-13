@@ -6,7 +6,10 @@
       =image_tag @profile.profile_photo.url(:avatar), container_class: 'profile'
     .box
       section
-        h1= @profile.display_name
+        h1
+          =@profile.display_name
+          - if @profile.roles.pluck(:name).include?('staff')
+            span.role Staff
         p.quote= @profile.about
     /TODO Tags
       ul.tags

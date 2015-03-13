@@ -64,7 +64,7 @@ $(function (){
         notificationTimeout;
 
     function refreshComments() {
-        if (!refreshing && Date.now() - lastNotificationCheck >= 15000) {
+        if (lastNotification && !refreshing && Date.now() - lastNotificationCheck >= 15000) {
             window.clearTimeout(notificationTimeout);
             refreshing = true;
             lastNotificationCheck = Date.now();
