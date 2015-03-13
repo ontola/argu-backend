@@ -5,8 +5,8 @@
     = contextual_link_to argument_path(model) do
       h3[class="#{model.pro ? 'pro-t' : 'con-t'}"]= model.title
     = render partial: 'arguments/shr', locals: {model: model}
-    p[class='collapsible wrap-normal']
-      ==model.supped_content[0..250] + (model.supped_content[251] ? "..." : "")
+    p[class='wrap-normal']
+      ==model.supped_content.[0..250] + (model.supped_content[251] ? "..." : "")
     -if model.supped_content[251]
       = contextual_link_to argument_path(model), class: "read-more" do
         span.icon-right = t("read-more")
