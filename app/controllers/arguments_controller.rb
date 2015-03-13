@@ -53,6 +53,7 @@ class ArgumentsController < ApplicationController
     @argument = Argument.find params[:id]
     authorize @argument, :edit?
     current_context @argument
+    @forum = @argument.forum
 
     respond_to do |format|
       format.html { render :form}
