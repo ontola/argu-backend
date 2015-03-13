@@ -2,10 +2,10 @@ require 'test_helper'
 
 class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
-  test 'should render sessions/new when accessing a forum without an access token' do
+  test 'should redirect to root when accessing a forum without an access token' do
     get forum_path(forums(:hidden).web_url)
     assert_not assigns(:items), 'render not interuppted with an NotLoggedInException'
-    assert_response :success
+    assert_redirected_to root_path
   end
 
   test 'should not view forum when access tokens are disabled' do
@@ -86,8 +86,6 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert assigns(:profile)
     assert_equal 1, assigns(:profile).memberships.count
 
-    follow_redirect!
-    assert_response :success
   end
 
   test 'should register and become a member with an access token and preserve vote' do
