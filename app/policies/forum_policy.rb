@@ -76,7 +76,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def invite?
-    is_open? || is_manager? || is_owner?
+    user && (is_open? || is_manager? || is_owner?)
   end
 
   def join?
