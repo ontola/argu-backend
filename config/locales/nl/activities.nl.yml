@@ -4,14 +4,14 @@ nl:
     votes:
       voted:
         pro: "is voor een %{thing}"
-        pro_your: "is voor een %{thing}"
+        pro_your: "is voor jouw %{thing}"
         neutral: "heeft nog geen mening over een %{thing}"
-        neutral_your: "heeft nog geen mening over een %{thing}"
-        con_your: "is tegen een %{thing}"
-        con_your: "is tegen een %{thing}"
+        neutral_your: "heeft nog geen mening over jouw %{thing}"
+        con: "is tegen een %{thing}"
+        con_your: "is tegen jouw %{thing}"
     questions:
       create: "heeft een %{type} geplaatst voor het forum %{thing}"
-      create_your: "heeft een %{type} geplaatst voor het forum %{thing}"
+      create_your: "heeft een %{type} geplaatst voor jouw forum %{thing}"
     motions:
       create: "heeft een %{type} geplaatst voor een %{thing}"
       create_your: "heeft een %{type} geplaatst voor jouw %{thing}"
