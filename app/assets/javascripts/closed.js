@@ -14,9 +14,11 @@
 //= require jquery_ujs
 //= require react
 //= require react_ujs
+//= require reflux.min
 //= require application/jquery.jeditable.mini.js
 //= require fastclick
 //= require onclickoutside
+//= require_tree ./stores
 //= require components
 //= require ./application/briarcliff/modal
 //= require ./application/ie
