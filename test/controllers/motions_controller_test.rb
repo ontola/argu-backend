@@ -25,6 +25,16 @@ class MotionsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:motion)
   end
 
+  test 'should get edit' do
+    sign_in users(:user)
+
+    get :edit, id: motions(:one)
+
+    assert_response 200
+    assert assigns(:motion)
+    assert assigns(:forum)
+  end
+
   test 'should post create' do
     sign_in users(:user)
 

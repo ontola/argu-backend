@@ -12,6 +12,6 @@
   div[data-intro= t('intro.argument.back')]
     =to_parent
   =render partial: 'contextualize/context_horizontal', locals: {item: @argument, type: 'argument'}
-  div[data-intro= t('intro.argument.body')]
-    =render 'body'
+  .intro-filler[data-intro= t('intro.argument.body')]
+  =render 'body'
   =render template: 'comments/show', locals: { resource: @argument }

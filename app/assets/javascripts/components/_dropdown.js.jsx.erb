@@ -1,6 +1,9 @@
 /*global React, $*/
 
 window.HyperDropdown = React.createClass({
+    mixins: [
+        (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
+    ],
 
     getInitialState: function () {
         return {
@@ -19,6 +22,7 @@ window.HyperDropdown = React.createClass({
     },
 
     close: function () {
+        console.log('close');
         var elem = this.state.dropdownElement;
         elem.style.display = 'none';
         this.timerItem = window.setTimeout(function () {
@@ -41,25 +45,37 @@ window.HyperDropdown = React.createClass({
         window.removeEventListener('resize', this.handleResize);
     },
 
-    handleMouseUp: function (e) {
+    handleClick: function (e) {
+        console.log('handleClick',e , e.nativeEvent);
+        //if (!e.nativeEvent.forwardedTouchEvent) {
+            console.log('handledClick');
+            if (this.state.openState) {
+                this.close();
+            } else {
+                this.open();
+            }
+        //}
+    },
+
+    handleClickOutside: function (e) {
         if (this.state.openState) {
+            console.log('handleClickOutside', e);
             this.close();
-        } else {
-            this.open();
         }
     },
 
     handleTap: function (e) {
-        if (this.state.openState) {
-            this.getDOMNode().blur();
-        } else {
-            this.getDOMNode().focus();
-        }
-        this.handleMouseUp();
-    },
-
-    handleBlur: function (e) {
-        this.close()
+        console.log(e.target);
+        console.log(e.target.className);
+        console.log(e.target.className.indexOf('dropdown-trigger'));
+        /*if (e.target.className.indexOf('dropdown-trigger')) {
+            console.log('handleTap', e.nativeEvent, e.target, e.nativeEvent.target, e.nativeEvent.relatedTarget);
+            if (this.state.openState) {
+                this.close();
+            } else {
+                this.open();
+            }
+        }*/
     },
 
     handleResize: function () {
@@ -67,6 +83,7 @@ window.HyperDropdown = React.createClass({
     },
 
     open: function () {
+        console.log('open');
         window.clearTimeout(this.timerItem);
         this.setState({openState: true});
     },
@@ -88,7 +105,7 @@ window.HyperDropdown = React.createClass({
             sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle}>
                 {this.props.sections.map(function(section) {
                     if (typeof(section.type) == "string") {
-                        return (<Notifications {...section} />);
+                        return (<Notifications done={_this.close} {...section} />);
                     } else {
                         var title;
                         if (section.title && section.items.length > 0) {
@@ -98,10 +115,10 @@ window.HyperDropdown = React.createClass({
                         var items = section.items.map(function(item) {
                             var ItemTag;
                             if (item.type == 'link') {
-                                return <LinkItem key={item.title} current_actor={_this.state.current_actor} {...item} />;
+                                return <LinkItem key={item.title} done={_this.close} current_actor={_this.state.current_actor} {...item} />;
                             } else if (item.type == 'actor') {
                                 ItemTag = 'ActorItem';
-                                return <ActorItem key={item.title} {...item} />;
+                                return <ActorItem key={item.title} done={_this.close} {...item} />;
                             }
                         });
 
@@ -118,22 +135,22 @@ window.HyperDropdown = React.createClass({
         var trigger;
         if (this.props.trigger) {
             if (this.props.trigger.type == 'current_user') {
-                trigger = <CurrentUserTrigger {...this.props.trigger}/>
+                trigger = <CurrentUserTrigger handleClick={this.handleClick} handleTap={this.handleTap} {...this.props.trigger} />
             } else if (this.props.trigger.type == 'notifications') {
-                trigger = <NotificationTrigger {...this.props}/>
+                trigger = <NotificationTrigger handleClick={this.handleClick} handleTap={this.handleTap} {...this.props} />
             }
         } else {
             var image_after  = _image({fa: this.props.fa_after});
             var triggerClass = "dropdown-trigger " + this.props.triggerClass;
             var TriggerContainer = this.props.triggerTag || 'div';
-            trigger = (<TriggerContainer className={triggerClass}>
+            trigger = (<TriggerContainer className={triggerClass} onClick={this.handleClick} onTouchEnd={this.handleTap} done={this.close}>
                           {_image(this.props)}
                           <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
                           {image_after}
                        </TriggerContainer>);
         }
 
-        return (<li tabIndex="1" onMouseUp={this.handleMouseUp} onTouchEnd={this.handleTap} onBlurCapture={this.handleBlur} className={dropdownClass}>
+        return (<li tabIndex="1"  className={dropdownClass}>
             {trigger}
             <ul className={'dropdown-content ' + this.props.contentClassName}></ul><%# This makes sure renderLeft is calculated correctly %>
             {sections}
@@ -150,6 +167,7 @@ var LinkItem = React.createClass({
         // Fixes an issue where firefox bubbles events instead of capturing them
         // See: https://github.com/facebook/react/issues/2011
         this.getDOMNode().getElementsByTagName('a')[0].click();
+        this.props.done();
     },
 
     render: function () {
@@ -186,6 +204,8 @@ var ActorItem = React.createClass({
 
     handleMouseDown: function (e) {
         e.preventDefault();
+        console.log('actorItem');
+        this.props.done();
         $.ajax({
             type: 'PUT',
             url: this.props.url,
@@ -198,6 +218,10 @@ var ActorItem = React.createClass({
                 console.log('failed');
             }
         });
+    },
+
+    handleTap: function (e) {
+        console.log('tapActorItem', e.nativeEvent);
     },
 
     render: function () {
@@ -214,7 +238,7 @@ var ActorItem = React.createClass({
 
         return (<li className={'link ' + this.props.type}>
             {divider}
-            <a href='#' onMouseDownCapture={this.handleMouseDown} onClick={this.handleClick} data-skip-pjax={skipPjax}>
+            <a href='#' onMouseDownCapture={this.handleMouseDown} onClickCapture={this.handleClick} data-skip-pjax={skipPjax}>
                 {_image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
@@ -235,6 +259,7 @@ var CurrentUserTrigger = React.createClass({
     },
 
     componentDidMount: function () {
+        console.log('currentUserTrigger', this.props.triggerEventContext, this.props.handleClick);
         this.unsubscribe = actorStore.listen(this.onActorChange);
     },
 
@@ -246,7 +271,7 @@ var CurrentUserTrigger = React.createClass({
         var triggerClass = "dropdown-trigger " + this.props.triggerClass;
         var TriggerContainer = this.props.triggerTag || 'div';
 
-        return (<TriggerContainer className={triggerClass}>
+        return (<TriggerContainer className={triggerClass} onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
             {_image({image: {url: this.state.profile_photo.url, title: this.state.profile_photo.title, className: 'profile-picture--navbar'}})}
             <span className="icon-left">{this.state.display_name}</span>
         </TriggerContainer>);

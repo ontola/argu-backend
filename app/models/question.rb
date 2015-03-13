@@ -1,5 +1,5 @@
 class Question < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, PublicActivity::Common
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, HasLinks, Attribution, PublicActivity::Common
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
@@ -62,12 +62,6 @@ class Question < ActiveRecord::Base
 
   def previous(show_trashed = false)
     self.forum.questions.trashed(show_trashed).where('updated_at > :date', date: self.updated_at).order('updated_at').first
-  end
-
-  def supped_content
-    content \
-      .gsub(/{([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)}\(([\w\s]*)\)/, '<a rel=tag name="\1" href="/cards/\1">\2</a>') \
-      .gsub(/\[([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)\]\(([\w\s]*)\)/, '<a href="\1">\2</a>')
   end
 
   def tag_list

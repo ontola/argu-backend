@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require react
 //= require react_ujs
+//= require onclickoutside
 //= require reflux.min
 //= require application/jquery.jeditable.mini.js
 //= require jquery-ui/autocomplete

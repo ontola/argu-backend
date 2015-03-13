@@ -3,7 +3,7 @@ require "test_helper"
 class ArgumentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test "should get show" do
+  test 'should get show' do
     sign_in users(:user)
 
     get :show, id: arguments(:one)
@@ -15,7 +15,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, "Trashed comments are visible"
   end
 
-  test "should get new pro" do
+  test 'should get new pro' do
     sign_in users(:user)
 
     get :new, forum_id: forums(:utrecht), motion_id: motions(:one).id, pro: 'pro'
@@ -26,7 +26,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert assigns(:argument).pro === true, "isn't assigned pro attribute"
   end
 
-  test "should get new con" do
+  test 'should get new con' do
     sign_in users(:user)
 
     get :new, forum_id: forums(:utrecht), motion_id: motions(:one).id, pro: 'con'
@@ -37,7 +37,17 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert assigns(:argument).pro === false, "isn't assigned pro attribute"
   end
 
-  test "should post create pro" do
+  test 'should get edit' do
+    sign_in users(:user)
+
+    get :edit, id: arguments(:one)
+
+    assert_response 200
+    assert assigns(:argument)
+    assert assigns(:forum)
+  end
+
+  test 'should post create pro' do
     sign_in users(:user)
 
     assert_difference('Argument.count') do
@@ -52,7 +62,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_redirected_to assigns(:argument).motion
   end
 
-  test "should post create con" do
+  test 'should post create con' do
     sign_in users(:user)
 
     assert_difference('Argument.count') do
@@ -67,7 +77,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_redirected_to assigns(:argument).motion
   end
 
-  test "should put update on own argument" do
+  test 'should put update on own argument' do
     sign_in users(:user)
 
     put :update, id: arguments(:one), argument: {title: 'New title', content: 'new contents'}
@@ -78,7 +88,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_redirected_to assigns(:argument)
   end
 
-  test "should not put update on others' argument" do
+  test "'should not put update on others' argument'" do
     sign_in users(:user2)
 
     put :update, id: arguments(:one), argument: {title: 'New title', content: 'new contents'}

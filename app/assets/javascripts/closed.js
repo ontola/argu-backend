@@ -16,6 +16,7 @@
 //= require react_ujs
 //= require application/jquery.jeditable.mini.js
 //= require fastclick
+//= require onclickoutside
 //= require components
 //= require ./application/briarcliff/modal
 //= require ./application/ie

@@ -14,17 +14,17 @@
             - if section['body'].present?
               - section['body'].each do |body|
                 p[class=(section['slogan'] ? 'block-slogan' : '')]== body
-            - if section['advisors'].present?
+            - if section['people'].present?
               ul.block-references
-                - section['advisors'].each do |advisor|
+                - section['people'].each do |person|
                   li
-                    .block-avatar[style="background-image: url(#{asset_path advisor['avatar']})"]
-                    - if advisor['quote'].present?
-                      blockquote= advisor['quote']
+                    .block-avatar[style="background-image: url(#{asset_path person['avatar']})"]
+                    - if person['quote'].present?
+                      blockquote= person['quote']
                     p.block-subtle
-                      b= advisor['name']
-                      - if advisor['function'].present?
-                        == ", #{advisor['function']}"
+                      b= person['name']
+                      - if person['function'].present?
+                        == ", #{person['function']}"
             - if section['features'].present?
               ul.block-features
                 - section['features'].each do |feature|
