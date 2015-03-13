@@ -40,6 +40,7 @@ nl:
       motions_title_singular: "Idee"
       arguments_title: "Argumenten"
       arguments_title_singular: "Argument"
+      are_votes_public: "Laat zien wat ik stem"
       notifications:
         follows: "Items die ik volg"
         memberships: "Mijn forums"
