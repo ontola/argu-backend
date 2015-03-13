@@ -46,6 +46,7 @@ nl:
         created: "Mijn items"
       profile:
         name: "Volledige naam"
+        are_votes_public: "Stemmen weergeven in profiel"
       page:
         name: "Naam van pagina"
         web_url: "Gebruikersaam URL"
