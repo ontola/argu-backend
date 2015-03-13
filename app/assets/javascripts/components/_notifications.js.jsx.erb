@@ -74,7 +74,7 @@ var NotificationTrigger = React.createClass({
         var triggerClass = "dropdown-trigger " + this.props.trigger.triggerClass;
         var label = this.state.unread > 0 ? <span className='icon-left'>{this.state.unread}</span> : null;
 
-        return (<div className={triggerClass}>
+        return (<div className={triggerClass} onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
             {_image({fa: this.state.unread > 0 ? 'fa-dot-circle-o' : 'fa-circle-o'})}
             {label}
         </div>);
@@ -129,8 +129,9 @@ var Notifications = React.createClass({
     },
 
     render: function () {
+        var _this = this;
         var notifications = this.state.notifications.map(function(item) {
-            return <NotificationItem key={item.id} read={item.read} {...item} />
+            return <NotificationItem key={item.id} read={item.read} done={_this.props.done} {...item} />
         });
 
         return (<ul className="notifications">
@@ -162,6 +163,7 @@ var NotificationItem = React.createClass({
         // Fixes an issue where firefox bubbles events instead of capturing them
         // See: https://github.com/facebook/react/issues/2011
         this.getDOMNode().getElementsByTagName('a')[0].click();
+        this.props.done();
     },
 
     render: function () {
