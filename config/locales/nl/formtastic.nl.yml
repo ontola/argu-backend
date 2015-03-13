@@ -48,6 +48,7 @@ nl:
         name: "Volledige naam"
       page:
         name: "Naam van pagina"
+        web_url: "Gebruikersaam URL"
       forum:
         bio: "Doel van forum"
         bio_long: "Meer informatie"
