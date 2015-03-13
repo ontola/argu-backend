@@ -2,7 +2,7 @@ module ProCon
   extend ActiveSupport::Concern
 
   included do
-    include ArguBase, Trashable, Parentable, HasReferences, PublicActivity::Common
+    include ArguBase, Trashable, Parentable, HasLinks, PublicActivity::Common
 
     belongs_to :motion, touch: true
     has_many :votes, as: :voteable, :dependent => :destroy
