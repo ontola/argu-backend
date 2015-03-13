@@ -56,8 +56,7 @@ $(function (){
     $(document)
         .pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container')
         .on('pjax:start pjax:beforeReplace', shallowUnmountComponents)
-        .on('pjax:end', shallowMountComponents)
-        .on('pjax:end', refreshCurrentActor);
+        .on('pjax:end', shallowMountComponents);
 
     var refreshing = false,
         lastNotificationCheck = Date.now(),

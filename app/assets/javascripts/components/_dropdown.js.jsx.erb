@@ -22,7 +22,6 @@ window.HyperDropdown = React.createClass({
     },
 
     close: function () {
-        console.log('close');
         var elem = this.state.dropdownElement;
         elem.style.display = 'none';
         this.timerItem = window.setTimeout(function () {
@@ -46,14 +45,11 @@ window.HyperDropdown = React.createClass({
     },
 
     handleClick: function (e) {
-        console.log('handleClick',e , e.nativeEvent);
-        //if (!e.nativeEvent.forwardedTouchEvent) {
-            if (this.state.openState) {
-                this.close();
-            } else {
-                this.open();
-            }
-        //}
+        if (this.state.openState) {
+            this.close();
+        } else {
+            this.open();
+        }
     },
 
     handleClickOutside: function (e) {
@@ -62,25 +58,11 @@ window.HyperDropdown = React.createClass({
         }
     },
 
-    handleTap: function (e) {
-        console.log(e.target);
-        console.log(e.target.className);
-        /*if (e.target.className.indexOf('dropdown-trigger')) {
-            console.log('handleTap', e.nativeEvent, e.target, e.nativeEvent.target, e.nativeEvent.relatedTarget);
-            if (this.state.openState) {
-                this.close();
-            } else {
-                this.open();
-            }
-        }*/
-    },
-
     handleResize: function () {
         this.calculateRenderLeft();
     },
 
     open: function () {
-        console.log('open');
         window.clearTimeout(this.timerItem);
         this.setState({openState: true});
     },
@@ -199,7 +181,6 @@ var ActorItem = React.createClass({
 
     handleMouseDown: function (e) {
         e.preventDefault();
-        console.log('actorItem');
         this.props.done();
         $.ajax({
             type: 'PUT',
@@ -213,10 +194,6 @@ var ActorItem = React.createClass({
                 console.log('failed');
             }
         });
-    },
-
-    handleTap: function (e) {
-        console.log('tapActorItem', e.nativeEvent);
     },
 
     render: function () {
