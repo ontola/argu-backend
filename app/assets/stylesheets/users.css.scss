@@ -16,9 +16,13 @@
   }
 }
 
-span.role {
-  font-size: 0.3em;
-  border: 1px solid;
-  border-radius: 0.3em;
-  padding: .1em .2em;
+.role {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: $g2;
+  color: white;
+  padding: .3em;
+  @include uppercase;
+  font-size: .8em;
 }

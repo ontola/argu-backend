@@ -93,8 +93,6 @@ module HeaderHelper
     }
   end
 
-
-
   def actor_item(title, url, opts= {})
     item('actor', title, url, opts)
   end
