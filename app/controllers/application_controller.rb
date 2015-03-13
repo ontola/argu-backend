@@ -151,7 +151,7 @@ class ApplicationController < ActionController::Base
     elsif has_valid_token?
       self.class.layout 'guest'
     else
-      self.class.layout 'closed'
+      self.class.layout 'guest'
     end
   end
 
