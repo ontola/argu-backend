@@ -244,6 +244,9 @@
   padding: 0.5em;
   display: inline-block;
   vertical-align: top;
+  @include bp-medium{
+    width: 100%;
+  }
 }
 
 .box--extra-margin{
