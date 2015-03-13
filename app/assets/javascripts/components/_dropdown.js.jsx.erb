@@ -47,14 +47,14 @@ window.HyperDropdown = React.createClass({
 
     handleClick: function (e) {
         console.log('handleClick',e , e.nativeEvent);
-        if (!e.nativeEvent.forwardedTouchEvent) {
+        //if (!e.nativeEvent.forwardedTouchEvent) {
             console.log('handledClick');
             if (this.state.openState) {
                 this.close();
             } else {
                 this.open();
             }
-        }
+        //}
     },
 
     handleClickOutside: function (e) {
@@ -68,14 +68,14 @@ window.HyperDropdown = React.createClass({
         console.log(e.target);
         console.log(e.target.className);
         console.log(e.target.className.indexOf('dropdown-trigger'));
-        if (e.target.className.indexOf('dropdown-trigger')) {
+        /*if (e.target.className.indexOf('dropdown-trigger')) {
             console.log('handleTap', e.nativeEvent, e.target, e.nativeEvent.target, e.nativeEvent.relatedTarget);
             if (this.state.openState) {
                 this.close();
             } else {
                 this.open();
             }
-        }
+        }*/
     },
 
     handleResize: function () {
