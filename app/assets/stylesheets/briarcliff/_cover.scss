@@ -107,6 +107,12 @@
       min-height: 50px;
     }
   }
+  .dropdown-content{
+    width: 20em;
+    @include bp-medium{
+      width: 16em;
+    }
+  }
 }
 
 .cover-image-empty {
