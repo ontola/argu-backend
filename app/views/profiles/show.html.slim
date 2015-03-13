@@ -1,13 +1,13 @@
 =set_title @profile.display_name
 .col-1
   /=image_tag @profile.cover_photo.url
-  .profile-big[data-intro= t("intro.profile.show", name: @profile.display_name)]
+  .profile-big[data-intro= t('intro.profile.show', name: @profile.display_name)]
     .profile-picture.profile-picture-show
       =image_tag @profile.profile_photo.url(:avatar), container_class: 'profile'
     .box
       section
         h1= @profile.display_name
-        p.quote = @profile.about
+        p.quote= @profile.about
     /TODO Tags
       ul.tags
         li
