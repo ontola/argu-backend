@@ -46,7 +46,7 @@ window.HyperDropdown = React.createClass({
     },
 
     handleClick: function (e) {
-        console.log('handleClick');
+        console.log('handleClick',e , e.nativeEvent);
         if (!e.nativeEvent.forwardedTouchEvent) {
             console.log('handledClick');
             if (this.state.openState) {
