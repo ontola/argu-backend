@@ -48,7 +48,6 @@ window.HyperDropdown = React.createClass({
     handleClick: function (e) {
         console.log('handleClick',e , e.nativeEvent);
         //if (!e.nativeEvent.forwardedTouchEvent) {
-            console.log('handledClick');
             if (this.state.openState) {
                 this.close();
             } else {
@@ -59,7 +58,6 @@ window.HyperDropdown = React.createClass({
 
     handleClickOutside: function (e) {
         if (this.state.openState) {
-            console.log('handleClickOutside', e);
             this.close();
         }
     },
@@ -67,7 +65,6 @@ window.HyperDropdown = React.createClass({
     handleTap: function (e) {
         console.log(e.target);
         console.log(e.target.className);
-        console.log(e.target.className.indexOf('dropdown-trigger'));
         /*if (e.target.className.indexOf('dropdown-trigger')) {
             console.log('handleTap', e.nativeEvent, e.target, e.nativeEvent.target, e.nativeEvent.relatedTarget);
             if (this.state.openState) {
@@ -103,9 +100,9 @@ window.HyperDropdown = React.createClass({
             _this = this;
         if (this.props.sections) {
             sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle}>
-                {this.props.sections.map(function(section) {
+                {this.props.sections.map(function(section, i) {
                     if (typeof(section.type) == "string") {
-                        return (<Notifications done={_this.close} {...section} />);
+                        return (<Notifications key={i} done={_this.close} {...section} />);
                     } else {
                         var title;
                         if (section.title && section.items.length > 0) {
@@ -113,16 +110,14 @@ window.HyperDropdown = React.createClass({
                         }
 
                         var items = section.items.map(function(item) {
-                            var ItemTag;
                             if (item.type == 'link') {
                                 return <LinkItem key={item.title} done={_this.close} current_actor={_this.state.current_actor} {...item} />;
                             } else if (item.type == 'actor') {
-                                ItemTag = 'ActorItem';
                                 return <ActorItem key={item.title} done={_this.close} {...item} />;
                             }
                         });
 
-                        return (<div>
+                        return (<div key={i}>
                             {title}
                             {items}
                         </div>);
@@ -259,7 +254,6 @@ var CurrentUserTrigger = React.createClass({
     },
 
     componentDidMount: function () {
-        console.log('currentUserTrigger', this.props.triggerEventContext, this.props.handleClick);
         this.unsubscribe = actorStore.listen(this.onActorChange);
     },
 
