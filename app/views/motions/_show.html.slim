@@ -9,7 +9,9 @@
   section[itemscope itemtype="http://www.schema.org/Answer"]
     = contextual_link_to motion_path(model)
       h3.sta-t[itemprop="headline"]= model.title
-    p[itemprop="text" class='wrap-normal']= model.supped_content[0..150] + (model.supped_content[151] ? '...' : '')
+    p[itemprop="text" class='wrap-normal']
+      /= model.supped_content[0..150] + (model.supped_content[151] ? '...' : '')
+      ==model.truncate_preview(150, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read-more'), motion_path(model))})
     -if Rails.configuration.epics.counters
       span.info= "#{t('motions.preview.pro', count: model.argument_pro_count)}, #{t('motions.preview.con', count: model.argument_con_count)}"
     - if model.arguments.present?

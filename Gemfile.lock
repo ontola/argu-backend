@@ -165,6 +165,8 @@ GEM
     hike (1.2.3)
     hitimes (1.2.2)
     hitimes (1.2.2-x86-mingw32)
+    html_truncator (0.4.1)
+      nokogiri (~> 1.5)
     i18n (0.7.0)
     indefinite_article (0.2.0)
       activesupport
@@ -433,6 +435,7 @@ DEPENDENCIES
   friendly_id (~> 5.0.4)
   haml
   has_secure_token
+  html_truncator (~> 0.2)
   indefinite_article
   jbuilder (~> 2.2.5)
   jquery-pjax-rails

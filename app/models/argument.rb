@@ -1,6 +1,7 @@
 
 class Argument < ActiveRecord::Base
   include ProCon
+
   scope :argument_comments, -> { includes(:comment_threads).order(votes_pro_count: :desc).references(:comment_threads) }
 
   def top_comment(show_trashed = nil)

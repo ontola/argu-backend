@@ -36,6 +36,7 @@ gem 'simple_settings', '1.0.2'
 gem 'public_activity'
 gem 'acts_as_follower'
 gem 'rollout'
+gem 'html_truncator', '~>0.2'
 #Search
 
 #Pagination
