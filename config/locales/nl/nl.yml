@@ -138,11 +138,11 @@ nl:
   datetime:
     distance_in_words:
       x_days:
-        one: '1 dag geleden'
-        other: '%{count} dagen geleden'
+        one: '1 dag'
+        other: '%{count} dagen'
       about_x_hours:
-        one: '%{count} uur geleden'
-        other: '%{count} uur geleden'
+        one: '%{count} uur'
+        other: '%{count} uur'
   views:
     pagination:
       first: "&laquo; eerste"

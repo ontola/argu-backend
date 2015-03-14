@@ -5,7 +5,7 @@
   section.section-info.que-bg
     span.fa.fa-question
     span.icon-left= t('questions.type')
-    =render partial: "questions/expires_at", locals: {deadline: question.expires_at}
+    =render partial: 'questions/expires_at', locals: {deadline: question.expires_at}
   section
     =contextual_link_to question_path(question) do
       h2.que-t= question.title
