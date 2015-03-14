@@ -75,3 +75,11 @@ nl:
       header: "Converteer object"
       body: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
       body_2: "GEBRUIK DIT NIET ZOMAAR, DATA GAAT WAARSCHIJNLIJK VERLOREN"
+    expired_at:
+      tooltip: "Dit idee sloot op %{date}."
+    expires_at:
+      tooltip: "Dit idee wordt gesloten op %{date}."
+    accepted:
+      tooltip: "Dit voorstel is aangenomen op %{date}."
+    rejected:
+      tooltip: "Dit voorstel is afgewezen op %{date}."

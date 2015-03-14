@@ -43,6 +43,9 @@
 }
 
 .cover .cover-image {
+  @include bp-large{
+    height: 12em;
+  }
   @include bp-medium {
     height: 10em;
   }

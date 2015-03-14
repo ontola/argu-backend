@@ -75,6 +75,9 @@ nl:
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
+  closed: "Gesloten"
+  accepted: "Aangenomen"
+  rejected: "Afgewezen"
 #Home
   home_title: "Argu"
   #Not logged in

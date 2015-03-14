@@ -55,9 +55,24 @@ section + section {
   background-color: $g00;
 }
 
-.section-countdown {
-  background-color: $red;
+.section-info--right {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.section-info--countdown {
+  background-color: $red-alert;
+}
+
+.section-info--closed {
+  background-color: $g3;
+}
+
+.section-info--accepted {
+  background-color: $gre;
+}
+
+.section-info--rejected {
+  background-color: $red;
 }
