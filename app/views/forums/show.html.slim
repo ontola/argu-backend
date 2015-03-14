@@ -37,14 +37,14 @@ div[itemscope itemtype="Thing"]
                 span.fa.fa-user
                 span.icon-left= t('join')
             li[data-intro=t('intro.motion.create', name: @forum.name) data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: 'sta-t btn-focus'
-              span.fa.fa-plus
+              span.fa[class="fa-#{motion_icon}"]
               span.icon-left= motion_type
             li[data-intro=t('intro.question.create', name: @forum.name) class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: remote_unless_user, class: 'que-t btn-focus'
-              span.fa.fa-plus
+              span.fa[class="fa-#{question_icon}"]
               span.icon-left= t('questions.type')
             - if policy(@forum).invite?
               li= link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite')}
-                span.fa.fa-group
+                span.fa.fa-user-plus
                 span.icon-left= t('forums.invite_others')
             - if policy(@forum).is_manager?
               li

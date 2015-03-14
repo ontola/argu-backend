@@ -121,6 +121,18 @@
   }
 }
 
+@mixin bp-smaller {
+  @media only screen and (max-width: 27em) {
+    @content;
+  }
+}
+
+@mixin bp-smallest {
+  @media only screen and (max-width: 20em) {
+    @content;
+  }
+}
+
 // ANIMATION basics//
 @mixin transition($args...) {
   -webkit-transition: $args;

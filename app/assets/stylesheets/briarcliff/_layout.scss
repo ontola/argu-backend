@@ -7,6 +7,12 @@ html, body {
 
 body {
   background-color: $g1;
+  @include bp-smaller{
+    font-size: .9em;
+  }
+  @include bp-smallest{
+    font-size: .8em;
+  }
 }
 
 .bg {
