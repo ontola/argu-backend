@@ -7,9 +7,12 @@
   left: 0;
   right: 0;
   z-index: 20;
-  pointer-events: auto;
+  pointer-events: none;
   max-height: 100vh;
   overflow-y: auto;
+  .box {
+    pointer-events: auto;
+  }
   @include animation(from-top-fade .3s ease-out);
   @include bp-medium{
     //position: absolute;
