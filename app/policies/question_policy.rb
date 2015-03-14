@@ -53,7 +53,7 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def set_expire_as?
-    staff? || super
+    staff?
   end
 
   private

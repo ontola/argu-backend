@@ -26,7 +26,7 @@ class NotificationPolicy < RestrictivePolicy
   end
 
   def update?
-    user.profile == record.profile
+    user && user.profile == record.profile
   end
 
   def permitted_attributes

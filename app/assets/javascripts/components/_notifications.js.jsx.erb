@@ -38,11 +38,9 @@ var ScrollLockMixin = {
 
         if (isDeltaPositive && wheelDelta > scrollHeight - height - scrollTop) {
             elem.scrollTop = scrollHeight;
-            console.log('canceled');
             return cancelScrollEvent(e);
         }
         else if (!isDeltaPositive && -wheelDelta > scrollTop) {
-            console.log(wheelDelta, scrollTop);
             elem.scrollTop = 0;
             return cancelScrollEvent(e);
         }

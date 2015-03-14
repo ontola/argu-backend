@@ -250,6 +250,9 @@ $grey_light: $g0;
     font-size: 1.2em;
     line-height: 1.5em;
     margin-bottom: 0.5em;
+    @include bp-medium {
+      font-size: 1em;
+    }
   }
 }
 

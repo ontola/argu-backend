@@ -50,7 +50,7 @@ private
   end
 
   def profile_in_group?
-    (record.forum.groups & actor.groups).present?
+    actor && (record.forum.groups & actor.groups).present?
   end
 
   def creator?

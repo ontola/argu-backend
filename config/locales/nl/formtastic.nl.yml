@@ -33,19 +33,21 @@ nl:
       f_convert: "Omzetten"
       invert_arguments: "Argumenten omdraaien"
       remember_me: "Gegevens onthouden"
-      uses_alternative_names: "Alternatieve terminologie gebruiken"
+      uses_alternative_names: "Andere bewoording gebruiken"
       questions_title: "Vraagstukken"
       questions_title_singular: "Vraagstuk"
       motions_title: "Ideeën"
       motions_title_singular: "Idee"
       arguments_title: "Argumenten"
       arguments_title_singular: "Argument"
+      are_votes_public: "Laat zien wat ik stem"
       notifications:
         follows: "Items die ik volg"
         memberships: "Mijn forums"
         created: "Mijn items"
       profile:
         name: "Volledige naam"
+        are_votes_public: "Stemmen weergeven in profiel"
       page:
         name: "Naam van pagina"
         web_url: "Gebruikersaam URL"

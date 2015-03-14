@@ -76,7 +76,11 @@ class ApplicationController < ActionController::Base
   end
 
   def preferred_forum
-    policy(current_profile.preferred_forum).show? ? current_profile.preferred_forum : current_profile.memberships.first.try(:forum) || Forum.first_public
+    if current_profile.present?
+      policy(current_profile.preferred_forum).show? ? current_profile.preferred_forum : current_profile.memberships.first.try(:forum) || Forum.first_public
+    else
+      Forum.first_public
+    end
   end
 
   def pundit_user
@@ -147,7 +151,7 @@ class ApplicationController < ActionController::Base
     elsif has_valid_token?
       self.class.layout 'guest'
     else
-      self.class.layout 'closed'
+      self.class.layout 'guest'
     end
   end
 

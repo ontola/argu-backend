@@ -9,14 +9,14 @@ Argu::Application.configure do
   config.epics.search = false                         # Search enabled?
   config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
   config.epics.forum_selector = true                  # Show forum selector in nav bar?
-  config.epics.sign_up = false                        # Can users sign up outside of invitations
+  config.epics.sign_up = true                         # Can users sign up outside of invitations
   config.epics.activities = true                      # Can users see the activity index / timeline button in header?
   config.epics.share_links = true                     # Can first-time users visit forum urls, and can members share them?
-  config.epics.open_auth = true                       # Facebook, twitter, google, openID login & account linking shown in profile
+  config.epics.open_auth = false                      # Facebook, twitter, google, openID login & account linking shown in profile
   config.epics.link_to_motion = true                  # Button in questions.show to find & link motions
   config.epics.page_create = true                     # Create a page button in header menu
   config.epics.notifications = true                   # Show notifications button in header menu
-  config.epics.motions_in_question_partial = false     # Show motions in question partial
+  config.epics.motions_in_question_partial = false    # Show motions in question partial
 
 
   config.logstasher.enabled = true

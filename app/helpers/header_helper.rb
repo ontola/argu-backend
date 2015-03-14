@@ -49,7 +49,6 @@ module HeaderHelper
               items: [
                   link_item(t('profiles.display'), dual_profile_path(current_profile), fa: 'user'),
                   link_item(t('users_show_title'), settings_url, fa: 'gear'),
-                  link_item(t('devise.invitations.link'), new_user_invitation_path(forum: '{{current_actor.current_forum.web_url}}'), fa: 'bullhorn'),
                   link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'})
               ]
           },
@@ -85,7 +84,6 @@ module HeaderHelper
                   link_item(t('about.vision'), about_path),
                   link_item(t('about.team'), team_path  ),
                   link_item(t('about.governments'), governments_path),
-                  link_item(t('about.team'), team_path),
                   link_item(t('about.how_argu_works'), how_argu_works_path),
                   link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true})
               ]
@@ -94,8 +92,6 @@ module HeaderHelper
         triggerClass: 'navbar-item'
     }
   end
-
-
 
   def actor_item(title, url, opts= {})
     item('actor', title, url, opts)

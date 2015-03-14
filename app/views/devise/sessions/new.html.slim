@@ -2,7 +2,7 @@
   div[class=['overlay', ('no-close' unless defined?(no_close) && no_close == false)].compact.join(' ')]
   .modal
     header
-      h1= t('sign_in')
+      h1= t('sign_up_sign_in')
     .box.box-small
       -if defined?(preview) && preview.present?
         section
@@ -11,9 +11,10 @@
               h3= preview.display_name
           p
             b Je hebt een account nodig om dit te bekijken.
-      - if has_valid_token? && defined?(r)
+      -elsif defined?(r)
         section
           .form-small
+            p= t('sign_up_description')
             = render partial: 'registrations/form', locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping, r: r}
       - elsif Rails.configuration.epics.sign_up
         section
@@ -50,6 +51,7 @@
                 input type="hidden" name="fbzx" value="-773395212550021648"
                 .actions
                   button type="submit" name="submit" id="ss-submit" Houd mij op de hoogte
+    .box.box-small
       section
         = semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f|
           - if resource.errors.any?

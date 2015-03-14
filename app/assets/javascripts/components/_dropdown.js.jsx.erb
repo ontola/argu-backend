@@ -22,7 +22,6 @@ window.HyperDropdown = React.createClass({
     },
 
     close: function () {
-        console.log('close');
         var elem = this.state.dropdownElement;
         elem.style.display = 'none';
         this.timerItem = window.setTimeout(function () {
@@ -46,36 +45,17 @@ window.HyperDropdown = React.createClass({
     },
 
     handleClick: function (e) {
-        console.log('handleClick',e , e.nativeEvent);
-        //if (!e.nativeEvent.forwardedTouchEvent) {
-            console.log('handledClick');
-            if (this.state.openState) {
-                this.close();
-            } else {
-                this.open();
-            }
-        //}
+        if (this.state.openState) {
+            this.close();
+        } else {
+            this.open();
+        }
     },
 
     handleClickOutside: function (e) {
         if (this.state.openState) {
-            console.log('handleClickOutside', e);
             this.close();
         }
-    },
-
-    handleTap: function (e) {
-        console.log(e.target);
-        console.log(e.target.className);
-        console.log(e.target.className.indexOf('dropdown-trigger'));
-        /*if (e.target.className.indexOf('dropdown-trigger')) {
-            console.log('handleTap', e.nativeEvent, e.target, e.nativeEvent.target, e.nativeEvent.relatedTarget);
-            if (this.state.openState) {
-                this.close();
-            } else {
-                this.open();
-            }
-        }*/
     },
 
     handleResize: function () {
@@ -83,7 +63,6 @@ window.HyperDropdown = React.createClass({
     },
 
     open: function () {
-        console.log('open');
         window.clearTimeout(this.timerItem);
         this.setState({openState: true});
     },
@@ -103,9 +82,9 @@ window.HyperDropdown = React.createClass({
             _this = this;
         if (this.props.sections) {
             sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle}>
-                {this.props.sections.map(function(section) {
+                {this.props.sections.map(function(section, i) {
                     if (typeof(section.type) == "string") {
-                        return (<Notifications done={_this.close} {...section} />);
+                        return (<Notifications key={i} done={_this.close} {...section} />);
                     } else {
                         var title;
                         if (section.title && section.items.length > 0) {
@@ -113,16 +92,14 @@ window.HyperDropdown = React.createClass({
                         }
 
                         var items = section.items.map(function(item) {
-                            var ItemTag;
                             if (item.type == 'link') {
                                 return <LinkItem key={item.title} done={_this.close} current_actor={_this.state.current_actor} {...item} />;
                             } else if (item.type == 'actor') {
-                                ItemTag = 'ActorItem';
                                 return <ActorItem key={item.title} done={_this.close} {...item} />;
                             }
                         });
 
-                        return (<div>
+                        return (<div key={i}>
                             {title}
                             {items}
                         </div>);
@@ -204,7 +181,6 @@ var ActorItem = React.createClass({
 
     handleMouseDown: function (e) {
         e.preventDefault();
-        console.log('actorItem');
         this.props.done();
         $.ajax({
             type: 'PUT',
@@ -218,10 +194,6 @@ var ActorItem = React.createClass({
                 console.log('failed');
             }
         });
-    },
-
-    handleTap: function (e) {
-        console.log('tapActorItem', e.nativeEvent);
     },
 
     render: function () {
@@ -259,7 +231,6 @@ var CurrentUserTrigger = React.createClass({
     },
 
     componentDidMount: function () {
-        console.log('currentUserTrigger', this.props.triggerEventContext, this.props.handleClick);
         this.unsubscribe = actorStore.listen(this.onActorChange);
     },
 

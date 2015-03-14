@@ -76,7 +76,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def invite?
-    is_open? || is_manager? || is_owner?
+    user && (is_open? || is_manager? || is_owner?)
   end
 
   def join?
@@ -96,7 +96,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def selector?
-    user.present?
+    true || user.present?
   end
 
   #######Attributes########
@@ -118,7 +118,7 @@ class ForumPolicy < RestrictivePolicy
 
   # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta
   def is_open?
-    user && @record.open?
+    @record.open?
   end
 
   def is_owner?
