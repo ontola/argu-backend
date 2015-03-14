@@ -10,7 +10,7 @@ class ActivitiesController < ApplicationController
     end
 
     activities = Activity.arel_table
-    @activities = policy_scope(Activity).since(from_time).order(activities[:created_at].desc).limit(10)
+    @activities = policy_scope(Activity).where(activities[:created_at].lt(from_time)).order(activities[:created_at].desc).limit(10)
     Comment if Rails.env.development? # Fixes error in development where Comment isn't loaded yet
 
     respond_to do |format|
