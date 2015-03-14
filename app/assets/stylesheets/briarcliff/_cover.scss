@@ -8,7 +8,6 @@
 .cover {
   position: relative;
   margin-bottom: 1em;
-  overflow: hidden;
 }
 
 .header-attribution {
@@ -93,13 +92,13 @@
     padding: 1em;
     position: relative;
     display: inline-block;
-    background-color: $lighten4;
+    background-color: white;
     color: #303030;
     @include bp-medium {
       font-size: 1em;
     }
     &:hover{
-      background-color: $lighten5;
+      background-color: $lighten6;
     }
     margin-bottom: 0;
     font-size: 1.3em;
@@ -122,7 +121,7 @@
 }
 
 .cover-switcher .dropdown-active .dropdown-trigger {
-  background-color: $lighten6 !important;
+  background-color: $lighten5 !important;
 }
 
 .cover-header-bottom {

@@ -28,6 +28,9 @@
   @include border-radius;
   @include box-shadow-intense;
   opacity:0;
+  @include bp-medium {
+    display: none;
+  }
 }
 
 .tooltip--left:after{

@@ -1,10 +1,10 @@
 =semantic_form_for @profile, url: profile_path(@user.username), method: @user.r.present? ? :post : :put  do |f|
+  p= t('profiles.heads_up')
   =f.inputs
     =f.input :name
     =f.input :about, input_html: { :rows => 5 }
     =f.input :profile_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }
     =f.input :profile_photo
     =f.input :are_votes_public, as: :reverse_boolean
-  p= t('profiles.heads_up')
   =f.actions do
     =f.action :submit, :as => :button, label: current_user.finished_intro? ? t('save') : t('next')
