@@ -1,0 +1,22 @@
+=set_title t('portal.settings')
+.col-1.col-1-big
+  header
+    h1
+      =t('portal.portal')
+      =image_tag asset_path('portal_logo.svg'), style: 'height: 1em; position: absolute;'
+  .box.portal-settings
+    section
+      =render partial: 'portal/navbar'
+      h2= t('portal.settings')
+      table.styled.settings-table
+        thead
+          tr
+            td= t('portal.key')
+            td= t('portal.value')
+            td= t('portal.destroy')
+        tbody
+          - @settings.each do |s|
+            tr.setting
+              td.key= s.key
+              td.value[id="#{s.key}"]= s.value
+      =button_tag :add_setting, class: 'add-setting'

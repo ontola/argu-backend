@@ -6,11 +6,17 @@
 # below each fixture, per the syntax in the comments below
 #
 nature_question_one:
-  tag_id: <%= Tag.first.id %>
-  taggable_type: 'Question'
-  taggable_id: <%= Question.first.id %>
-  forum_id: <%= Forum.where(web_url: :utrecht).first.id %>
-# column: value
-#
-two: {}
-#  column: value
+  tag_id: 182999886
+  taggable: one (Question)
+  forum: :utrecht
+  context: tags
+nature_motion_one:
+  tag_id: 182999886
+  taggable: one (Motion)
+  forum: :utrecht
+  context: tags
+something_motion_one:
+  tag_id: 182999774
+  taggable: one (Motion)
+  forum: :utrecht
+  context: tags

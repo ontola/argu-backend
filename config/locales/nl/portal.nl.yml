@@ -2,6 +2,28 @@
 
 nl:
   portal:
+    title: "Portal"
     new_forum: "Forum aanmaken"
     none: "Nog geen"
     new_page: "Nieuwe Page"
+    name: "Naam"
+    created_at: "Aangemaakt"
+    updated_at: "Bijgewerkt"
+    forums: "Forums"
+    forum_create: "Nieuw forum"
+    show: "Weergeven"
+    edit: "Bewerken"
+    destroy: "Vernietigen"
+    settings: "Instellingen"
+    pages: "Pagina's"
+    members: "Leden"
+    questions: "Vraagstukken"
+    motions: "Ideeën"
+    value: "Value"
+    key: "Key"
+  intro:
+    initial:
+      start_argu: "Begin met argu"
+  motions:
+    move:
+      header: "Verplaats idee"

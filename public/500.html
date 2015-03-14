@@ -1,28 +1,67 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>We're sorry, but something went wrong (500)</title>
+  <title>Argu - Fout op server</title>
   <style type="text/css">
-    body { background-color: #F2F2F2; color: #AA6D6D; text-align: center; font-family: arial, sans-serif; }
-    div.dialog {
-      display: inline-block;
-      margin: 4em auto 0 auto;
-      border-bottom: 2px solid #E2E2E2;
-      background-color: white;
-      border-radius: 3px;
-      padding: 0.5em;
-      font-size: 100%;
+    body {
+      background-color: #ECECEC;
+      color: rgb(92,92,92);
+      text-align: center;
+      font-family: arial, sans-serif;
     }
-    h1 { font-size: 200%; color: #AA6D6D; line-height: 2em; margin: 0px;}
-    p { color: #5b5b5b; margin: 0px;}
+    h1 {
+      font-size: 200%;
+      margin: 0px;
+      text-align: left;
+      font-weight: bold;
+      margin-bottom: 0.2em;
+    }
+    p {
+      color: rgb(92,92,92);
+      margin: 0px;
+      margin-bottom: 1em;
+      text-align: left;
+      line-height: 1.5em
+    }
+    body {
+      background-color: #ECECEC;
+    }
+    .box {
+      position: relative;
+      background-color: white;
+      margin: 0 auto;
+      margin-bottom: 1em;
+      overflow: hidden;
+      display: block;
+      border-radius: 3px;
+      max-width: 30em;
+    }
+    section {
+      position: relative;
+      padding: 1.1em 1.4em 0.1em 1.4em;
+    }
+    header h1, header h2 {
+      color: rgb(92,92,92);
+      margin-top: 1em;
+      margin-bottom: 0.8em;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      text-align: center;
+    }
+
   </style>
 </head>
 
 <body>
-  <!-- This file lives in public/500.html -->
-  <div class="dialog">
-    <h1>Sorry!</h1>
-    <p>Daar ging iets fout.</p>
+  <header>
+    <h1>
+      Sorry!
+    </h1>
+  </header>
+  <div class="box">
+    <section>
+      <p>Daar ging iets fout. We zijn op de hoogte van dat er iets mis is gegaan. We zullen het probleem zo snel mogelijk proberen op te lossen.</p>
+    </section>
   </div>
 </body>
 </html>

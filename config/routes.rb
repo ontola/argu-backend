@@ -1,4 +1,16 @@
 Argu::Application.routes.draw do
+  concern :moveable do
+    get 'move', action: 'move'
+    put 'move', action: 'move!'
+  end
+  concern :convertible do
+    get 'convert', action: 'convert'
+    put 'convert', action: 'convert!'
+  end
+  concern :votable do
+    get 'vote' => 'votes#show', shallow: true, as: :show_vote
+    post 'vote/:for' => 'votes#create', shallow: true, as: :vote
+  end
 
   put 'actors', to: 'actors#update'
 
@@ -6,7 +18,7 @@ Argu::Application.routes.draw do
 
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
-  devise_for :users, :controllers => { :registrations => 'registrations' }
+  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions', :invitations => 'users/invitations' }
 
   resource :admin do
     get 'list' => 'administration#list'
@@ -29,55 +41,84 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :motions, only: [:show, :edit, :update, :delete, :destroy] do
-    post 'vote/:for'      => 'votes/motions#create',   as: 'vote'
-    delete 'vote'         => 'votes/motions#destroy',  as: 'vote_delete'
+  post 'vote/:for' => 'votes#create', as: :vote
+
+  resources :questions, except: [:index, :new, :create], concerns: [:moveable, :convertible]
+
+  resources :motions, except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
+    resources :groups, only: [] do
+      resources :group_responses, path: 'responses', as: 'responses', only: [:new, :create]
+    end
   end
 
-  resources :questions, only: [:show, :edit, :update, :destroy]
-
-  resources :arguments do
+  resources :arguments, except: [:index, :new, :create], concerns: [:votable] do
     resources :comments
-
-    post   'vote' => 'votes/arguments#create'
-    delete 'vote' => 'votes/arguments#destroy'
+    patch 'comments' => 'comments#create'
   end
 
   resources :opinions do
     resources :comments
   end
 
-  resources :forums, except: [:index, :edit] do
+  resources :group_responses, only: [:edit, :update, :destroy], as: :responses
+
+  resources :forums, except: [:edit] do
     get :settings, on: :member
     get :statistics, on: :member
+    get :selector, on: :collection
+    post :memberships, on: :collection
     resources :memberships, only: [:create, :destroy]
     resources :questions, only: [:index, :new, :create]
     resources :motions, only: [:new, :create]
+    resources :arguments, only: [:new, :create]
     resources :tags, only: [:show]
+    resources :groups, only: [:new, :create] do
+      get 'add', on: :member
+      post on: :member, action: :add!, as: ''
+    end
   end
 
-  resources :pages, only: [:show, :update] do
+  resources :pages, only: [:new, :create, :show, :update, :delete, :destroy] do
+    get :index, on: :collection
+    get :delete, on: :member
     get :settings, on: :member
   end
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
     namespace :portal do
-      resources :pages, only: [:show, :new, :create, :destroy]
+      get :settings, to: 'portal#settings'
+      post 'settings', to: 'portal#setting!', as: :update_setting
       resources :forums, only: [:new, :create]
       mount Sidekiq::Web => '/sidekiq'
     end
   end
 
-  resources :profiles
+  resources :profiles do
+    # This is to make requests POST if the user has an 'r' (which nearly all use POST)
+    post ':id' => 'profiles#update', on: :collection
+  end
+
+  resources :comments, only: :show
+
+  resources :follows, only: :create do
+    delete :destroy, on: :collection
+  end
+
+  resources :notifications, only: [:index, :update]
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
   get '/settings', to: 'users#edit', as: 'settings'
   put '/settings', to: 'users#update'
+  get '/c_a', to: 'users#current_actor'
 
   get '/sign_in_modal', to: 'static_pages#sign_in_modal'
   get '/about', to: 'static_pages#about'
+  get '/product', to: 'static_pages#product'
+  get '/how_argu_works', to: 'static_pages#how_argu_works'
+  get '/team', to: 'static_pages#team'
+  get '/governments', to: 'static_pages#governments'
 
   get '/portal', to: 'portal/portal#home'
 
@@ -86,6 +127,7 @@ Argu::Application.routes.draw do
   get '/privacy', to: 'documents#show', name: 'privacy'
   get '/cookies', to: 'documents#show', name: 'cookies'
 
+  get '/activities', to: 'activities#index'
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'
 end

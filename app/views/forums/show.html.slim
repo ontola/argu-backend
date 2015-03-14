@@ -1,71 +1,86 @@
-.cover
-  /-if @forum.cover_photo.url.present?
-  .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
-  .cover-header
-    .cover-container
-      h1= @forum.name
-      ul.btns-list.btns-vertical
-        -if !policy(@forum).is_member?
-          li=link_to forum_memberships_path(@forum.web_url), method: :create, class: "btn-focus" do
-            span.fa.fa-join
-            span = t("join")
-        li[data-intro=t('intro.question.create', name: @forum.name)]=link_to url_for([:new, @forum, :question]) do
-          span.fa.fa-plus.que-t
-          span.icon-left.que-t= t("questions.type")
-        li[data-intro=t('intro.motion.create', name: @forum.name)]=link_to url_for([:new, @forum, :motion]) do
-          span.fa.fa-plus.sta-t
-          span.icon-left.sta-t= t("motions.type")
-        li.dropdown-trigger
-          a
-            span.fa.fa-gear.sta-t
-            span.icon-left.sta-t= t("forum")
-          ul.dropdown-content.dropdown-right
-            li=link_to url_for([:settings, @forum]) do
-              span.fa.fa-gear
-              span.icon-left= t("forums.settings.title")
-            - if policy(@forum).statistics?
-              li=link_to url_for([:statistics, @forum]) do
-                span.fa.fa-pie-chart
-                span.icon-left= t("forums.statistics.title")
-            li = link_to url_for([:settings, @forum, tab: :managers]) do
-              span.fa.fa-group
-              span.icon-left = t("forums.settings.managers")
-.filter-and-sort
-  /.tags
-    - @forum.featured_tags.each do |tag|
-      = contextual_link_to(tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag)
-  #filters[data-intro=t('intro.forum.filter')]
-    ul.tags
-      li
-        a.tag.tag-motions[data-filter=".motion"]= t("motions.header")
-      li
-        a.tag.tag-questions[data-filter=".question"]= t("questions.header")
-    ul.tags
-      - @forum.featured_tags.each do |tag|
-        li
-          /a = contextual_link_to(tag, forum_tag_url(@forum.web_url, tag), class: "tag", title: t("motions.titles.tags")+tag, 'data-filter'=>'filterByTag', 'data-filter-value'=>tag)
-          a[class="tag" data-filter='filterByTag' data-filter-value=tag] = tag
-  #sorts[data-intro=t('intro.forum.sort')]
-    ul.btns-list.btns-vertical
-      li
-        a[data-sort-value="date"]
-          span.fa.fa-clock-o
-          span.icon-left= t("sort.newest")
-      /li
-        a[data-sort-value="name"]
-          span.fa.fa-sort-alpha-asc
-          span.icon-left= t("sort.name")
-      li
-        a[data-sort-value="score"]
-          span.fa.fa-sort-amount-desc
-          span.icon-left= t("sort.score")
-      /li
-        a[data-sort-value="random"]
-          span.fa.fa-gift
-          span.icon-left= t("sort.random")
-
-- if policy(@forum).show_children?
-  .grid
-    .box.box-grid-sizer[data-intro=t('intro.forum.grid') data-position="top"]
-    -@items.each do |item|
-      = render item
+=set_title @forum.display_name
+-content_for :connected_web
+  meta[name="description" content="#{@forum.bio}"]
+  meta[property="og:title" content="#{@forum.display_name}"]
+  meta[property="og:url" content="#{forum_url(@forum)}"]
+  meta[property="og:description" content="#{@forum.bio}"]
+  meta[property="og:image" content="#{@forum.cover_photo.url}"]
+  meta[property="twitter:card" content="summary"]
+  meta[property="twitter:title" content="#{@forum.display_name}"]
+  meta[property="twitter:description" content="#{@forum.bio}"]
+  /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
+  meta[property="twitter:image" content="#{@forum.cover_photo.url}" ]
+div[itemscope itemtype="Thing"]
+  .cover
+    -if @forum.cover_photo.url.present?
+      .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
+      span.header-attribution= @forum.cover_photo_attribution
+    -else
+      .cover-image-empty
+    .cover-header
+      .cover-container
+        .cover-header-top
+          -if @forum.profile_photo.url.present?
+            .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
+          .cover-switcher[data-intro=t('intro.forums.switcher')]=react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
+        .cover-header-bottom
+          - if @forum.bio.present?
+            p.cover-oneliner
+              =@forum.bio
+              - if @forum.bio_long.present?
+                a[href="#forum-info"]
+                  span.icon-left= t('forums.more_info')
+          ul.btns-list.btns-vertical
+            /TODO: Make this check the current profile, not the user
+            - if !policy(@forum).is_member?
+              li=link_to forum_memberships_path(@forum.web_url), data: {method: :post, 'skip-pjax' => true}
+                span.fa.fa-user
+                span.icon-left= t('join')
+            li[data-intro=t('intro.motion.create', name: @forum.name) data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: 'sta-t btn-focus'
+              span.fa.fa-plus
+              span.icon-left= motion_type
+            li[data-intro=t('intro.question.create', name: @forum.name) class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: remote_unless_user, class: 'que-t btn-focus'
+              span.fa.fa-plus
+              span.icon-left= t('questions.type')
+            - if policy(@forum).invite?
+              li= link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite')}
+                span.fa.fa-group
+                span.icon-left= t('forums.invite_others')
+            - if policy(@forum).is_manager?
+              li
+                ul=render partial: 'application/menus/settings', locals: {resource: @forum}
+  - if policy(@forum).show?
+    =render partial: 'filter_and_sort'
+    .grid
+      .box.box-grid-sizer
+      .intro-filler[data-intro=t('intro.forums.grid') data-position="top"]
+      -@items.each do |item|
+        =render item
+      .box.box-grid.motion[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :motion]), data: {remote: true}
+        section.section-fill.sta-bg
+          h2= t('motions.call_to_action.title')
+        section
+          p= t('motions.call_to_action.body')
+          p
+            b.sta-t
+              span.fa.fa-plus
+              span.icon-left= t('motions.call_to_action.action')
+      .box.box-grid.question[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :question]), data: {remote: true}
+        section.section-fill.que-bg
+          h2= t('questions.call_to_action.title')
+        section
+          p= t('questions.call_to_action.body')
+          p
+            b.que-t
+              span.fa.fa-plus
+              span.icon-left= t('questions.call_to_action.action')
+    .col-1
+      header#forum-info
+        h1= t('forums.about.header')
+      .box
+        - if @forum.bio_long.present?
+          section
+            p= @forum.bio_long
+        section
+          p
+            b== t('forums.about.body')

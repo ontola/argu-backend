@@ -1,0 +1,44 @@
+@import 'variables';
+@import "mixins";
+
+.selector {
+  li {
+    list-style: none;
+    clear: none;
+  }
+
+  input[type="checkbox"] {
+    display: none;
+  }
+
+  input[type="checkbox"] + div:hover{
+    background-color: lighten($gre, 56%);
+  }
+
+  input[type="checkbox"]:checked + div{
+    background-color: lighten($gre, 50%);
+    .selector-check{
+      display: inline-block;
+    }
+  }
+  label{
+    width: auto;
+    display: initial;
+    padding: 0;
+    margin: 0;
+    line-height: initial;
+  }
+}
+
+.selector-profile{
+  text-transform: none;
+  letter-spacing: normal;
+}
+
+.selector-check {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  color: $gre;
+  display: none;
+}

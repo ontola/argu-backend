@@ -1,10 +1,14 @@
 class Comment < ActiveRecord::Base
-  include ArguBase
-  include Trashable
+  include ArguBase, Parentable, Trashable, PublicActivity::Common, Mailable
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
+  parentable :commentable
 
-  after_validation :increase_counter_cache
+  acts_as_nested_set :scope => [:commentable_id, :commentable_type]
+  mailable CommentMailer, :directly, :daily, :weekly
+
+  after_save :creator_follow
+  after_validation :increase_counter_cache, :touch_parent
   after_destroy :decrease_counter_cache
 
   validates_presence_of :profile
@@ -14,6 +18,7 @@ class Comment < ActiveRecord::Base
 
   belongs_to :commentable, :polymorphic => true
   belongs_to :profile
+  has_many :activities, as: :trackable, dependent: :destroy
 
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
@@ -27,8 +32,23 @@ class Comment < ActiveRecord::Base
     c
   end
 
+  def collect_recipients(type)
+    profiles = Set.new
+    if type == :directly
+      profiles.merge commentable.parent.creator if comment.parent && comment.parent.creator.owner.direct_created_email?
+    end
+  end
+
   def creator
     self.profile
+  end
+
+  def creator_follow
+    self.creator.follow self
+  end
+
+  def display_name
+    self.body
   end
 
   #helper method to check if a comment has children
@@ -48,6 +68,10 @@ class Comment < ActiveRecord::Base
     where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
   }
 
+  def touch_parent
+    self.get_parent.model.touch
+  end
+
   # Helper class method to look up a commentable object
   # given the commentable class name and id
   def self.find_commentable(commentable_str, commentable_id)
@@ -59,6 +83,10 @@ class Comment < ActiveRecord::Base
   end
   def increase_counter_cache
     self.commentable.increment("comments_count").save
+  end
+
+  def forum
+    commentable.forum
   end
 
 end

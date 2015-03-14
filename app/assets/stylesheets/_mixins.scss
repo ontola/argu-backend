@@ -12,6 +12,17 @@
   -o-transform: $opts;
 }
 
+@mixin filter($opts) {
+  filter: $opts;
+  -moz-filter: $opts;
+  -webkit-filter: $opts;
+  -ms-filter: $opts;
+}
+
+@mixin border-radius($opts:3px){
+  //border-radius: $opts;
+}
+
 @mixin text_settings($align: justify, $color: $g4, $family: $font-sans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
   text-align: $align;
   color: $color;
@@ -27,26 +38,73 @@
   font-weight: $weight;
 }
 
-@mixin box-shadow {
-  box-shadow: 0em 0.3em 0.4em 0em rgba(0, 0, 0, 0.05)
+@mixin button ($color: $gre){
+  color: white;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-size: .8em;
+  padding: 1em 2.5em .8em;
+  background-color: $color;
+  border: none;
+  -webkit-appearance: none;
+  border-radius: 0;
+  width: auto;
+  display: inline-block;
+  cursor: pointer;
+  @include border-radius;
+  border-bottom: solid 3px darken($color, 5%);
+  &:hover {
+    background-color: darken($color, 5%);
+    border-bottom-color: darken($color, 15%);
+  }
+  &:active {
+    background-color: darken($color, 10%);
+    border-bottom: none;
+    border-top: solid 3px darken($color, 15%);
+  }
+  &:disabled{
+    opacity: .6;
+    cursor: default;
+    border: none;
+  }
+}
+
+@mixin box-shadow($opts: 0em 0.2em 0.25em 0em rgba(0, 0, 0, 0.05)) {
+  //box-shadow: $opts;
+}
+
+@mixin box-shadow-intense {
+  box-shadow: 0em 0.1em 0.55em 0em rgba(0, 0, 0, 0.25);
 }
 
 @mixin text-shadow {
   //text-shadow: 0em 0em 0.1em rgba(0, 0, 0, 0.47);
 }
 
-@mixin border-radius {
-  border-radius: 3px;
-}
-
 @mixin container-width {
   max-width: 1200px;
 }
 
+@mixin uppercase {
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
 
 // Responsive
+@mixin bp-large-2 {
+  @media only screen and (max-width: 85em) {
+    @content;
+  }
+}
+
 @mixin bp-large {
   @media only screen and (max-width: 70em) {
+    @content;
+  }
+}
+
+@mixin bp-medium-large {
+  @media only screen and (max-width: 55em) {
     @content;
   }
 }
@@ -108,7 +166,7 @@
 }
 
 @include keyframes(fade-in) {
-  0% { opacity: 0; }
+  0% { opacity: 0; opacity: 0; }
   100% { opacity: 1; }
 }
 
@@ -121,6 +179,17 @@
   }
 }
 
+@include keyframes(from-top-fade) {
+  0% {
+    transform: translate(0,-5em);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0,0);
+    opacity: 1;
+  }
+}
+
 @include keyframes(from-bottom) {
   0% {
     transform: translate(0,100vh);
@@ -130,12 +199,34 @@
   }
 }
 
+@include keyframes(from-bottom-fade) {
+  0% {
+    transform: translate(0,5em);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(0,0);
+    opacity: 1;
+  }
+}
+
 @include keyframes(to-bottom) {
   0% {
     transform: translate(0,0);
   }
   100% {
     transform: translate(0,2000px);
+  }
+}
+
+@include keyframes(to-bottom-fade) {
+  0% {
+    transform: translate(0,0);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(0,5em);
+    opacity: 0;
   }
 }
 

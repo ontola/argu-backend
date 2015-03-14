@@ -1,15 +1,25 @@
-Argu::Application.configure do
+Rails.application.configure do
   config.host = ENV['HOSTNAME'] || 'local.host:3000'
   # Settings specified here will take precedence over those in config/application.rb#
 
   config.epics = ActiveSupport::OrderedOptions.new
   config.epics.opinion = false                        # Opinion enabled?
-  config.epics.parties = false                        # Parties enabled?
+  config.epics.parties = true                         # Parties enabled?
   config.epics.advanced_navigation = false            # Navigation by tags and such
   config.epics.search = false                         # Search enabled?
-  config.epics.counters = true                        # Counter caches on models (e.g. x pro, y con args)
+  config.epics.counters = false                        # Counter caches on models (e.g. x pro, y con args)
   config.epics.forum_selector = true                  # Show forum selector in nav bar?
-  config.epics.sign_up = false                        # Can users sign up outside of invitations
+  config.epics.sign_up = true                         # Can users sign up outside of invitations
+  config.epics.activities = true                      # Can users see the activity index / timeline button in header?
+  config.epics.share_links = true                     # Can first-time users visit forum urls, and can members share them?
+  config.epics.open_auth = true                       # Facebook, twitter, google, openID login & account linking shown in profile
+  config.epics.link_to_motion = true                  # Button in questions.show to find & link motions
+  config.epics.page_create = true                     # Create a page button in header menu
+  config.epics.notifications = true                   # Show notifications button in header menu
+  config.epics.motions_in_question_partial = true     # Show motions in question partial
+
+
+  config.react.variant = :development
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -47,13 +57,15 @@ Argu::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
+  config.active_record.raise_in_transactional_callbacks = true
+
   # Do not compress assets
   config.assets.compress = false
 
   # Expands the lines which load the assets
   config.assets.debug = true
 
-  config.session_store :cookie_store, key: '_Argu_session', domain: :all, :tld_length => 2
+  config.session_store :cookie_store, key: '_Argu_session', domain: :all #, :tld_length => 2
 
   config.i18n.available_locales = :nl
 

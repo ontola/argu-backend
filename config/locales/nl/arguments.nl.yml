@@ -10,7 +10,6 @@ nl:
     vote: "stem"
     new_btn: "Argument toevoegen"
     neu: "neutraal"
-    type: "type"
     references: "referenties"
     header:
       pro: "argumenten voor"
@@ -32,7 +31,7 @@ nl:
       title_wiped: 'Gewiste reacties'
     form:
       title: "Plaats hier de kern van jouw argument"
-      content: "Plaats hier de toelichting op jouw argument. Waarom ondersteunt of weerlegt dit het voorstel?"
+      content: "Plaats hier de toelichting op jouw argument. Waarom ondersteunt of weerlegt dit het idee?"
       type: "type"
       submit: "argument plaatsen"
       side:
@@ -51,11 +50,11 @@ nl:
 
             <code>[](A. Achternaam, jaartal, titel, pagina)</code>"
         side: "<h2>Wat is een argument?</h2>
-              <p>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='sta-t'>voorstel</b>.</p>
+              <p>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='sta-t'>idee</b>.</p>
               <h2>Tips</h2>
               <ul class='bullets'>
                 <li>Begin met het belangrijkste. De eerste regels worden het meest gelezen.</li>
-                <li>Het argument moet niet al eerder geplaatst zijn bij dit voorstel.</li>
+                <li>Het argument moet niet al eerder geplaatst zijn bij dit idee.</li>
                 <li>Gebruik betrouwbare bronnen om je punt overtuigender te maken.</li>
               <ul>"
     comments:

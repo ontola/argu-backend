@@ -6,13 +6,16 @@
   top: 0;
   left: 0;
   right: 0;
-  z-index: 2;
+  z-index: 20;
   pointer-events: none;
-  @include animation(from-top .5s ease-out);
+  overflow-y: auto;
+  @include animation(from-top-fade .3s ease-out);
   .box {
     pointer-events: auto;
+    max-height: 85vh;
+    overflow-y: auto;
   }
-  @include bp-medium {
+  @include bp-medium{
     position: absolute;
   }
 }
@@ -28,20 +31,25 @@
   bottom: 0;
   left: 0;
   right: 0;
-  z-index: 1;
+  z-index: 11;
   height: 100%;
   overflow: hidden;
-  background-color: $darken4;
-  @include animation(fade-in .5s ease-in);
+  background-color: $darken_overlay;
+  @include animation(fade-in .3s linear);
+}
+
+.modal-body{
+  overflow: hidden;
 }
 
 // apply these classes when clicking on overlay of modals.
 .modal-hide {
   .modal {
-    @include animation(to-bottom .5s ease-in both);
+    //@include animation(to-bottom .5s ease-in both);
+    @include animation(to-bottom-fade .3s ease-in both);
   }
   .overlay {
-    @include animation(fade-out .5s ease-in both);
+    @include animation(fade-out .3s linear both);
   }
 }
 

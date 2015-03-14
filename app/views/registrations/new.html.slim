@@ -1,26 +1,10 @@
-= semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f|
-  .overlay
-  .modal
-    header
-      h1 = t("sign_up")
-    .box.box-small
-      section
-        = devise_error_messages!
-        .form-small
-
-          = f.label :username, t("users_username")
-          = f.text_field :username, autofocus: :autofocus
-
-          = f.label :email, t("users_email")
-          = f.text_field :email
-
-          = f.label :password, t("users_password")
-          = f.password_field :password
-
-          = f.label :password_confirmation, t("users_password_confirmation")
-          = f.password_field :password_confirmation
-
-          = render "devise/shared/links"
-
-          = f.actions do
-            = f.action :submit, :as => :button, label: t("sign_up")
+=set_title t('sign_up')
+.overlay
+.modal
+  header
+    h1= t('sign_up')
+  .box.box-small
+    section
+      .form-small
+        =render partial: 'form'
+        =render 'devise/shared/links' unless defined?(r)

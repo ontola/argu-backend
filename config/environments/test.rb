@@ -1,5 +1,5 @@
-Argu::Application.configure do
-  config.host = ENV['HOSTNAME'] || "logos.argu.nl"
+Rails.application.configure do
+  config.host = ENV['HOSTNAME'] || 'www.example.com'
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
@@ -16,7 +16,7 @@ Argu::Application.configure do
   config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance
-  config.serve_static_assets = false
+  config.serve_static_files = false
   config.static_cache_control = "public, max-age=3600"
 
   # Log error messages when you accidentally call methods on nil
@@ -37,7 +37,7 @@ Argu::Application.configure do
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection    = false
 
-  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'logos.argu.nl')
+  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] || 'www.example.com')
   #config.session_store :active_record_store, key: '_Argu_session', domain: 'logos.argu.nl'
 
   # Tell Action Mailer not to deliver emails to the real world.
@@ -45,10 +45,12 @@ Argu::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
+  config.active_record.raise_in_transactional_callbacks = true
+
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  config.active_support.test_order = :sorted
+  config.active_support.test_order = :random
 
   config.i18n.available_locales = [:nl, :en]
 end

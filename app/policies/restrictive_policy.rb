@@ -1,11 +1,17 @@
 class RestrictivePolicy
-  attr_reader :user, :record
+  include AccessTokenHelper
+  attr_reader :context, :user, :record, :session
 
-  def initialize(user, record)
-    raise Pundit::NotAuthorizedError, "must be logged in" unless user
-    @user = user
+  def initialize(context, record)
+    @context = context
     @record = record
+
+    raise Argu::NotLoggedInError.new(nil, record), 'must be logged in' unless has_access_to_platform?
   end
+
+  delegate :user, to: :context
+  delegate :actor, to: :context
+  delegate :session, to: :context
 
   def permitted_attributes
     attributes = []
@@ -34,6 +40,10 @@ class RestrictivePolicy
     update?
   end
 
+  def follow?
+    is_member? || staff?
+  end
+
   def index?
     staff?
   end
@@ -46,11 +56,22 @@ class RestrictivePolicy
     create?
   end
 
+  # Used when an item displays nested content, therefore this should use the heaviest restrictions
   def show?
     staff?
   end
 
   def statistics?
+    staff?
+  end
+
+  # Used when items won't include nested content, this is a less restrictive version of show?
+  def list?
+    staff?
+  end
+
+  # Move items between forums or converting items
+  def move?
     staff?
   end
 
@@ -72,25 +93,40 @@ class RestrictivePolicy
   end
 
   def is_creator?
-    creator = record.creator
-    profile = user.profile
     record.creator == user.profile
   end
 
+  def is_member?
+    user && user.profile.member_of?(record.forum || record.forum_id)
+  end
+
+  def has_access_to_platform?
+    user || has_access_token_access_to(record)
+  end
+
   def scope
-    Pundit.policy_scope!(user, record.class)
+    Pundit.policy_scope!(context, record.class)
   end
 
   class Scope
-    attr_reader :user, :scope
+    include AccessTokenHelper
+    attr_reader :context, :user, :scope, :session
 
-    def initialize(user, scope)
-      @user = user
+    def initialize(context, scope)
+      @context = context
+      @profile = user.profile if user
       @scope = scope
     end
 
+    delegate :user, to: :context
+    delegate :session, to: :context
+
     def resolve
-      scope if @user.profile.has_role? :staff
+      scope if staff?
+    end
+
+    def staff?
+      user && profile.has_role?(:staff)
     end
   end
 

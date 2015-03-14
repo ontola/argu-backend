@@ -12,33 +12,42 @@ $darken0: rgba(0,0,0,.02);
 $darken1: rgba(0,0,0,.05);
 $darken2: rgba(0,0,0,.15);
 $darken3: rgba(0,0,0,.35);
+$darken_overlay: rgba(26, 26, 26, 0.76);
 $darken4: rgba(0,0,0,.5);
 $darken5: rgba(0,0,0,.8);
 
 $lighten1: rgba(255,255,255,.05);
 $lighten2: rgba(255,255,255,.15);
 $lighten3: rgba(255,255,255,.35);
-$lighten4: rgba(255,255,255,.5);
+$lighten4: rgba(255,255,255,.7);
 $lighten5: rgba(255,255,255,.8);
+$lighten6: rgba(255,255,255,.9);
 
 $blu: rgb(71,86,104);
-$gre: rgb(84,107,75);
-$red: rgb(114,61,61);
-$red-alert: rgb(158,46,46);
+$gre: rgb(84,127,75);
+$red: rgb(134,61,61);
+$red-alert: #D03535;
 $yel: rgb(147,112,71);
 $bro: rgb(91,62,53);
+$bro: #47684A;
+$bro: #525252;
 
 $blul: rgb(226,237,222);
 $grel: rgb(231,244,228);
 $redl: rgb(244,228,228);
 
+$blus: #3D6CA5;
+
 $blud: rgba(50, 60, 73, 1);
 $gred: rgba(61, 78, 54, 1);
+$gredd: rgba(51, 68, 44, 1);
 $redd: rgba(76, 41, 41, 1);
 $yeld: rgba(114, 86, 55, 1);
 $brod: rgba(58, 40, 34, 1);
 
 $overlay: rgba(241,241,241,0.9);
+
+$transparant: rgba(0,0,0,0);
 
 $font-special: Open sans, Segoe UI, sans-serif;
 $font-sans: Open sans, Helvetica, sans-serif;

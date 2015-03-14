@@ -2,22 +2,21 @@
 
 nl:
   motions:
-    type: "voorstel"
-    title: "voorstel"
-    header: "voorstellen"
-    header: "voorstellen"
-    plural: "voorstellen"
+    type: "Idee"
+    title: "Idee"
+    header: "Ideeën"
+    plural: "Ideeën"
     pros: "voor"
     cons: "tegen"
     edit: "stelling bewerken"
     no_pros: "nog niets voor"
     no_cons: "nog niets tegen"
-    new_btn: "Voorstel toevoegen"
     content: "inhoud"
     votes:
-      pro: "ik ben voor"
-      neu: "weet nog niet"
-      con: "ik ben tegen"
+      pro: "Ik ben voor"
+      neu: "Geen van beiden"
+      con: "Ik ben tegen"
+      show: "Laat stemresultaten zien"
     preview:
       pro:
         zero: "geen voorargumenten"
@@ -30,18 +29,21 @@ nl:
     revisions:
       title_wiped: 'Gewiste argumenten'
     form:
-      title: "Plaats hier jouw voorstel in enkele woorden"
-      content: "Leg hier uit wat je voorstel precies inhoudt. Leg de huidige situatie uit, en vertel wat er moet veranderen. Probeer hier niet te overtuigen; dat doe je later pas met argumenten."
+      title: "Plaats hier jouw idee in enkele woorden"
+      content: "Leg hier uit wat je idee precies inhoudt. Leg de huidige situatie uit, en vertel wat er moet veranderen. Probeer hier niet te overtuigen; dat doe je later pas met argumenten."
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
       helper:
         title: "Vat de stelling zo bondig mogelijk samen."
-        content: "Beschrijf jouw voorstel in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
+        content: "Beschrijf jouw idee in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
         themes: "Thema's of onderwerpen die aan deze stelling gerelateerd zijn. Plaats komma's tussen de thema's."
-        side: "<h2>Wat is een voorstel?</h2>
-               <p>Een <b class='sta-t'>voorstel</b> is een idee om een of meerdere problemen op te lossen.</p>
-               <p>Een goed voorstel is <b>concreet en implementeerbaar</b>: het beschrijft wat er moet gebeuren en hoe dit moet gebeuren.</p>
-               <p>In een voorstel staan <b>geen argumenten</b>. Die plaats je later onder het voorstel.</p>"
+        side: "<h2>Wat is een idee?</h2>
+               <p>Een <b class='sta-t'>idee</b> is een voorstel om een of meerdere problemen op te lossen.</p>
+               <h2>Tips:</h2>
+               <ul class='bullets'>
+                <li><p>Een goed idee is <b>concreet en implementeerbaar</b>: het beschrijft wat er moet gebeuren en hoe dit moet gebeuren.</p></li>
+                <li><p>Geef achtergrondinformatie. Wat is de huidige situatie? Wat is er al gebeurt? Hoe gaat jouw idee bestaande problemen oplossen?</p></li>
+               "
     mod:
       edit_moderators:
         title: 'Moderators van %{title}'
@@ -52,7 +54,12 @@ nl:
         is_mod: 'is al een mod'
       show_moderation_panel: 'moderator'
     titles:
-      tags: "Zoek vraagstukken en voorstellen met het thema "
+      tags: "Zoek vraagstukken en ideeën met het thema "
+    call_to_action:
+      title: "Heb jij een goed idee?"
+      body: "Weet jij hoe een probleem kan worden opgelost? Heb jij een voorstel?"
+      action: "Deel jouw idee!"
+
     #motion types
     type_social: "Maatschappelijk"
     type_political: "Politiek"
@@ -62,3 +69,9 @@ nl:
     type_technological: "Technologisch"
     type_discussion: "In discussie"
     type_other: "Overig"
+    move:
+      body: "Alle bijbehorende argumenten enz. zullen meeverplaatst worden"
+    convert:
+      header: "Converteer object"
+      body: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
+      body_2: "GEBRUIK DIT NIET ZOMAAR, DATA GAAT WAARSCHIJNLIJK VERLOREN"

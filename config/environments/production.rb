@@ -1,5 +1,5 @@
 Argu::Application.configure do
-  config.host = ENV['HOSTNAME'] || 'argu.co'
+  config.host = ENV['HOSTNAME'] || 'https://argu.co'
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
@@ -10,6 +10,17 @@ Argu::Application.configure do
   config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
   config.epics.forum_selector = true                  # Show forum selector in nav bar?
   config.epics.sign_up = false                        # Can users sign up outside of invitations
+  config.epics.activities = false                     # Can users see the activity index / timeline button in header?
+  config.epics.share_links = false                    # Can first-time users visit forum urls, and can members share them?
+  config.epics.open_auth = false                      # Facebook, twitter, google, openID login & account linking shown in profile
+  config.epics.link_to_motion = false                 # Button in questions.show to find & link motions
+  config.epics.page_create = false                     # Create a page button in header menu
+  config.epics.notifications = false                   # Show notifications button in header menu
+  config.epics.motions_in_question_partial = false     # Show motions in question partial
+
+  config.logstasher.enabled = true
+
+  config.react.variant = :production
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -17,14 +28,15 @@ Argu::Application.configure do
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
-  config.assets.compress = true
+  config.assets.js_compressor = :uglifier
+  config.assets.css_compressor = :sass
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
@@ -65,7 +77,7 @@ Argu::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] || 'argu.co' }
+  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] || 'https://argu.co' }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -87,9 +99,7 @@ Argu::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  # Log the query plan for queries taking more than this (works
-  # with SQLite, MySQL, and PostgreSQL)
-  # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  config.active_record.raise_in_transactional_callbacks = true
 
   config.i18n.available_locales = [:nl, :en]
 end

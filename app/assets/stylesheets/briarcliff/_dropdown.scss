@@ -1,6 +1,13 @@
 @import "variables";
 @import "mixins";
 
+.dropdown {
+  position: relative;
+  &:focus {
+    outline: none;
+  }
+}
+
 .dropdown-trigger {
   position: relative;
   cursor: pointer;
@@ -8,19 +15,23 @@
 
 .dropdown-content {
   background-color: white;
-  display: none;
+  // This isn't display: none; to make javascript return bounding box dimensions
+  visibility: hidden;
   left: 0;
   margin: 0;
   position: absolute;
   text-align: left;
-  top: 200%;
-  width: 14em;
+  top: 100%;
+  width: 15em;
   z-index: 10;
-  @include box-shadow;
+  @include box-shadow-intense;
   @include border-radius;
   border-top-left-radius: 0;
   overflow: hidden;
-  @include transition(.3s);
+  text-transform: none;
+  border-top: none;
+  max-height: 30em;
+  overflow-y: auto;
   li {
     min-width: 100%;
   }
@@ -35,6 +46,7 @@
     &:hover {
       background-color: $darken1;
       color: $g4;
+      text-decoration: none;
     }
 
     &:active {
@@ -50,11 +62,28 @@
     color: white;
     background-color: $g3;
   }
+  .link{
+    position: relative;
+    img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 1.6em;
+      margin: 0.3em 0.4em;
+      border-radius: 999px;
+      & + span {
+        position: relative;
+        left: 1.4em;
+        margin-right: 1.4em;
+      }
+    }
+  }
 }
 
 .dropdown-active {
-  background-color: $g1 !important;
-  top: 200%;
+  .dropdown-trigger{
+    background-color: $lighten3 !important;
+  }
 }
 
 .dropdown-right {
@@ -67,20 +96,53 @@
 span.dropdown-header {
   padding: .4em;
   padding-left: 1em;
-  background-color: $blu;
+  background-color: $g2;
   color: white;
   width: 100%;
+  text-transform: uppercase;
+  font-size: .8em;
+  display: inline-block;
 }
 
-.dropdown-trigger:hover .dropdown-content, .dropdown-active .dropdown-content {
+//.dropdown:hover .dropdown-content,
+.dropdown-active .dropdown-content {
   //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
-  display: block;
-  text-transform: initial;
-  top: 100%;
-
-  //@include animation(fade-in .2s);
+  visibility: visible;
+  -webkit-overflow-scrolling: touch;
+  //text-transform: initial;
+  @include animation(fade-in .2s);
   span {
     display: inline-block;
-    text-transform: uppercase;
   }
+}
+
+.btns-list .dropdown-content {
+  font-size: 120%;
+}
+
+.dropdown-divider {
+  display: block;
+  width: 100%;
+  border-top: solid 1px $g2;
+}
+
+.dropdown-header {
+  background-color: $g0;
+  width: 100%;
+  li{
+    display: inline-block !important;
+    min-width: 0;
+    font-size: .8em;
+  }
+}
+
+.dropdown-title {
+  float: left;
+  font-weight: bold;
+  padding: .6em;
+  color: $g4;
+}
+
+.btns-list .dropdown-active {
+  background-color: $darken2;
 }

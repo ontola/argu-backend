@@ -1,11 +1,29 @@
 class PagesController < ApplicationController
+
   def show
-    @profile = Page.friendly.find(params[:id]).profile
-    authorize @profile, :show?
+    @page = Page.friendly.find(params[:id])
+    @profile = @page.profile
+    authorize @page, :show?
 
     @collection =  Vote.ordered @profile.votes
+  end
 
-    render 'profiles/show'
+  def new
+    @page = Page.new
+    authorize @page, :new?
+  end
+
+  def create
+    @page = Page.new permit_params
+    authorize @page, :create?
+    @page.build_profile permit_params
+    @page.owner = current_user.profile
+
+    if @page.save!
+      redirect_to @page
+    else
+      render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
+    end
   end
 
   def settings
@@ -25,9 +43,27 @@ class PagesController < ApplicationController
   end
 
   def delete
+    @page = Page.friendly.find params[:id]
+    authorize @page, :delete?
+
+    respond_to do |format|
+      format.html { render }
+      format.js { render layout: false}
+    end
   end
 
   def destroy
+    @page = Page.friendly.find params[:id]
+    authorize @page, :destroy?
+
+    if @page.destroy
+      flash[:error] = 'Pagina verwijderd'
+      redirect_to root_path
+    else
+      flash[:error] = 'Error tijdens verwijderen'
+      render :delete, locals: {resource: @page}
+    end
+
   end
 
 private

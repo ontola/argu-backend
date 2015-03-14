@@ -1,0 +1,52 @@
+@import "variables";
+@import "mixins";
+
+.progress-bar {
+  display: block;
+  //margin-bottom: 1em;
+  width: 100%;
+  overflow: hidden;
+  height: 2.5em;
+  @include box-shadow;
+  @include border-radius;
+  @include transition(1s ease-in-out);
+  li {
+    display: inline-block;
+    margin: 0 0;
+    width: 33.3%;
+  }
+  span {
+    width: 100%;
+    display: inline-block;
+    line-height: 1.6em;
+    text-transform: uppercase;
+    top: 0;
+    position: relative;
+    font-size: .9em;
+    color: white;
+    border-left: solid .1em white;
+    border-right: solid .1em white;
+  }
+  .btn-pro {
+    background-color: $gre;
+    border-left: none;
+  }
+  .btn-neu {
+    background-color: $g3;
+  }
+  .btn-con {
+    background-color: $red;
+    margin-right: 0;
+    border-right: none;
+  }
+  //Use these classes to show and hide the progress bar
+  &[data-collapsed] {
+    height: 0;
+    opacity: 0;
+  }
+
+  &.collapse-open {
+    height: 2.5em;
+    opacity: 1;
+  }
+}

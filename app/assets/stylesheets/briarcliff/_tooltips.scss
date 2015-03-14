@@ -1,0 +1,45 @@
+@import "variables";
+@import "mixins";
+
+// Just add the class "tooltip" to an element and define its content like this: data-title="Tooltip content goes here"
+
+.tooltip {
+  position: relative;
+  text-align: left;
+  overflow: visible;
+}
+
+.tooltip:after {
+  @include transition (opacity .2s ease-in-out);
+  content: attr(data-title);
+  padding: .3em .6em;
+  background: $g3;
+  line-height: 1.5em;
+  color: white;
+  text-transform: none;
+  position: absolute;
+  right: -3em;
+  left: -3em;
+  top: 100%;
+  min-width: 15em;
+  pointer-events: none;
+  z-index: 10;
+  font-weight: normal;
+  @include border-radius;
+  @include box-shadow-intense;
+  opacity:0;
+}
+
+.tooltip--left:after{
+  right: 0em;
+  left: auto;
+}
+
+.tooltip--right:after{
+  right: auto;
+  left: 0em;
+}
+
+.tooltip:hover:after {
+  opacity: 1;
+}

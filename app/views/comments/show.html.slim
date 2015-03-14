@@ -1,10 +1,17 @@
-header[data-intro= t("intro.argument.comments")]
-  h1= t("arguments.comments.title")
-.comments
-  -if @comments.present?
-    - @comments.each do |c|
-      = render partial: 'comments/comment', locals: { resource: resource, c: c, depth: 1 }
-    = paginate @comments
--if policy(resource).show?
-  .box
-    =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true }
+/ Because Javascript
+.comments-container
+  header[data-intro= t("intro.argument.comments")]
+    h1= t("arguments.comments.title")
+  .comments
+    -if @comments.present?
+      header[data-intro= t("intro.comments.show")]
+        h1= t("arguments.comments.title")
+      span.hidden[itemprop="commentCount"]= @argument.comments_count
+      - @comments.each do |c|
+        = render partial: 'comments/comment', locals: { resource: resource, c: c }
+      = paginate @comments
+  -if policy(resource).show?
+    header
+      h2 Reageer op dit argument
+    .box[data-intro= t("intro.comments.form")]
+      =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true }

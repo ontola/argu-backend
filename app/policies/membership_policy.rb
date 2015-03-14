@@ -1,5 +1,16 @@
 class MembershipPolicy < RestrictivePolicy
   class Scope < Scope
+    attr_reader :context, :user, :scope, :session
+
+    def initialize(context, scope)
+      @context = context
+      @profile = user.profile if user
+      @scope = scope
+    end
+
+    delegate :user, to: :context
+    delegate :session, to: :context
+
     def resolve
       scope
     end
@@ -29,7 +40,7 @@ class MembershipPolicy < RestrictivePolicy
   end
 
   def destroy?
-    (ForumPolicy.new(user, record.forum).update? || staff?) && record.forum.memberships.where(role: Membership.roles[:manager]).where.not(id: record.id).present?
+    actor && (record.profile == actor || (ForumPolicy.new(context, record.forum).update? || staff?) && record.forum.memberships.where(role: Membership.roles[:manager]).where.not(id: record.id).present?)
   end
 
 end

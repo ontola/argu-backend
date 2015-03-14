@@ -1,1 +1,1 @@
-$('.container').append("<%= escape_javascript render(template: 'devise/sessions/new.html', layout: false, locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}) %>");
+$('.container').append("<%= escape_javascript render(template: 'devise/sessions/new.html', layout: false, locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping, r: (defined?(r) && r), no_close: false}) %>");

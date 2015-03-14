@@ -7,7 +7,7 @@ h1, h2, h3 {
   color: $g4;
   font-weight: bold;
   font-weight: 700;
-  word-wrap: break-word;
+  word-break: break-word;
   span {
     font-family: $font-special;
   }
@@ -19,27 +19,27 @@ h1 {
     font-size: 2em;
   }
   @include bp-medium {
-    font-size: 1.8em;
+    font-size: 1.5em;
   }
 }
 
 h2 {
-  font-size: 1.7em;
+  font-size: 1.5em;
   @include bp-large {
-    font-size: 1.5em;
+    font-size: 1.4em;
   }
   @include bp-medium {
-    font-size: 1.5em;
+    font-size: 1.3em;
   }
 }
 
 h3 {
-  font-size: 1.5em;
+  font-size: 1.4em;
   @include bp-large {
     font-size: 1.3em;
   }
   @include bp-medium {
-    font-size: 1.2em;
+    font-size: 1.1em;
   }
 }
 
@@ -48,13 +48,19 @@ br {
   display: block;
 }
 
-p, div, small, ol, ul, li, small, span {
+p, div, small, ol, ul, li, small, span, blockquote {
   font-family: $font-sans;
 }
 
 a {
   text-decoration: none;
-  color: $blu;
+  color: $blus;
+}
+
+p a {
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 b {
@@ -66,7 +72,7 @@ i {
 }
 
 p {
-  line-height: 1.4em;
+  line-height: 1.5em;
   color: $g4;
 }
 
@@ -83,9 +89,9 @@ ol.numbered{
 
 ul.bullets{
   list-style-type: disc;
+  padding-left: 1.5em;
   font-style: $font-sans;
   color: $g4;
-  padding-left: 1.5em;
   li {
     margin-bottom: 1em;
     line-height: 1.4em;
@@ -110,14 +116,20 @@ header h1, header h2 {
   color: $g4;
   margin-top: 1em;
   margin-bottom: 0.8em;
-  text-transform: uppercase;
-  font-size: 1.3em;
-  letter-spacing: .1em;
+  @include uppercase;
   @include text-shadow;
+}
+
+header h1 {
+  font-size: 1.8em;
+  @include bp-medium {
+    font-size: 1.3em;
+  }
 }
 
 header h2 {
   margin-bottom: .66em;
+  font-size: 1.3em;
 }
 
 h3.title-alt {
@@ -127,4 +139,57 @@ h3.title-alt {
   padding: 1em;
   font-size: 2em;
   margin: 0;
+}
+
+code {
+  font-family: monospace;
+}
+
+
+code {
+  font-family: monospace;
+  color: $g4;
+  background-color: $g0;
+  padding: .5em;
+  display: block;
+  font-weight: bold;
+}
+
+
+blockquote {
+  font-style: italic;
+  font-size: 1.5em;
+  margin-bottom: 1em;
+  color: $g4;
+  text-align: center;
+  line-height: 1.3em;
+  quotes: "“" "”" "‘" "’";
+  &:after {
+    content: close-quote;
+    font-size: 1.5em;
+    color: $g2;
+    position: absolute;
+  }
+  &:before{
+    content: open-quote;
+    font-size: 1.5em;
+    color: $g2;
+    position: relative;
+  }
+}
+
+.wrap-normal {
+  white-space: normal !important;
+}
+
+.smaller {
+  font-size: .9em;
+}
+
+.smaller-8 {
+  font-size: .8em;
+}
+
+.smaller-7 {
+  font-size: .7em;
 }

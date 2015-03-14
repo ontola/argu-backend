@@ -1,4 +1,23 @@
 nl:
   pages:
-    resource_name: "pagina"
-    settings: "instellingen"
+    resource_name: "Pagina"
+    settings:
+      title: "Instellingen"
+    display: "Pagina bekijken"
+    create: "Start een pagina"
+    legal: "Door deze pagina aan te maken verklaar je toestemming te hebben om de organisatie waarvoor je een pagina maakt officieel op Argu te vertegenwoordigen."
+    helper:
+      side: "<h2>Wat is een pagina?</h2>
+             <p>Een pagina is een <b>profiel</b> van een organisatie, zoals een bedrijf, NGO, politieke partij of actiegroep.
+             <h2>Wat kan ik met een pagina?</h2>
+             <p>Net als met een gewoon profiel kan je <b>reacties, voorstellen en vraagstukken plaatsen, stemmen en lid worden van forums</b>. Je kan op die manier de <b>standpunten delen</b> van de organisatie die jij vertegenwoordigd.</p>
+             <h2>Wanneer mag ik een pagina aanmaken?</h2>
+             <p>Alleen als jij <b>toestemming</b> hebt om namens de pagina te handelen op Argu.</p>
+             "
+  activerecord:
+    attributes:
+      page:
+        name: 'Naam'
+        web_url: 'Argu url'
+        visibility: 'Zichtbaarheid'
+        f_delete: 'Verwijderen'

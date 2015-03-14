@@ -1,11 +1,15 @@
 class QuestionPolicy < RestrictivePolicy
-  class Scope < Scope
-    attr_reader :user, :scope
+  class Scope < RestrictivePolicy::Scope
+    attr_reader :context, :user, :scope, :session
 
-    def initialize(user, scope)
-      @user = user
+    def initialize(context, scope)
+      @context = context
+      @profile = user.profile if user
       @scope = scope
     end
+
+    delegate :user, to: :context
+    delegate :session, to: :context
 
     def resolve
       scope
@@ -19,12 +23,13 @@ class QuestionPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:id, :title, :content, :tag_list, :forum_id, :cover_photo] if create?
+    attributes << [:id, :title, :content, :tag_list, :forum_id, :cover_photo, :remove_cover_photo, :cover_photo_attribution, :expires_at] if create?
+    attributes << [:include_motions, :f_convert] if staff?
     attributes
   end
 
   def new?
-    create?
+    record.forum.open? || create?
   end
 
   def create?
@@ -44,12 +49,16 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def show?
-    is_member? || super
+    Pundit.policy(context, record.forum).show? || super
+  end
+
+  def set_expire_as?
+    staff? || super
   end
 
   private
 
   def is_member?
-    user.profile.member_of? (record.forum || record.forum_id)
+    user && user.profile.member_of?(record.forum || record.forum_id)
   end
 end

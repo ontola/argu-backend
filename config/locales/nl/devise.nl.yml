@@ -31,10 +31,20 @@ nl:
       updated_not_active: 'Jouw wachtwoord is gewijzigd.'
       send_paranoid_instructions: "Als jouw email adres bestaat in onze database, zal je binnen enkele minuten een link ontvangen om jouw wachtwoord te resetten."
       no_token: "Je kan geen toegang krijgen tot deze pagina zonder doorverwezen te worden van een wachtwoord reset mail. Controleer het ingevoerde webadres."
+      edit:
+        header: 'Wachtwoord wijzigen'
+        submit: 'Opslaan'
+      new:
+        header: 'Wachtwoord vergeten?'
+        helper: 'Vul je e-mailadres of gebruikersnaam in en wij zullen jou een mail sturen met een link waarmee je een nieuw wachtwoord kan instellen.'
+        submit: 'Verzend reset instructies'
     confirmations:
       send_instructions: 'Je zal binnen enkele minuten een mail ontvangen met  instructies om jouw account te bevestigen.'
       send_paranoid_instructions: 'Als jouw email adres bestaat in onze database, zal je binnen enkele minuten een link ontvangen om jouw account te bevestigen.'
       confirmed: 'Jouw account is bevestigd. Je bent nu ingelogd.'
+      edit:
+        header: 'Bevestigingslink opnieuw versturen'
+        submit: 'Verzend bevestigingslink opnieuw'
     registrations:
       signed_up: 'Welkom op argu! Je bent zojuist geregistreerd.'
       signed_up_but_unconfirmed: 'Een email met een bevestigings link is zojuist gestuurd naar het door jou opgegeven email adres. Open die link om jouw account te bevestigen.'
@@ -53,11 +63,18 @@ nl:
     mailer:
       confirmation_instructions:
         subject: 'Bevestigings instructies'
+        hello: 'Beste wereldverbeteraar,'
+        confirm: 'Je kunt jouw account bevestigen door op onderstaande link te klikken.'
+        confirm_link: 'Bevestig jouw account'
       reset_password_instructions:
         subject: 'Wachtwoord reset instructies'
+        hello: 'Beste wereldverbeteraar,'
+        someone_requested: 'Iemand heeft gevraagd om een wachtwoord-reset mail te sturen naar dit adres. Klik op onderstaande link als je jouw Argu wachtwoord zou willen wijzigen.'
+        confirm_link: 'Wijzig mijn wachtwoord'
+        ignore: 'Als jij niet hebt aangevraagd om je wachtwoord te wijzigen, kan je deze e-mail negeren.'
       unlock_instructions:
         subject: 'Ontgrendel instructies'
     activerecord:
       attributes:
         user:
-          login: "gebruikersnaam of email"
+          login: "email of gebruikersnaam"

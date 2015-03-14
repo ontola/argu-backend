@@ -5,12 +5,12 @@ gem 'sass-rails',   '~> 5.0.0'
 gem 'rails', '~>4.2.0'
 
 gem 'simple_text', '~> 0.0.21'
+gem 'indefinite_article'
+gem 'logstasher'
+gem 'bugsnag'
 
 ##################DB########################
 gem 'pg', '0.17.1'
-#gem 'pg', '0.18.0.pre20141017160319', platform: :mswin
-gem 'foreigner', '~> 1.7.0'
-gem 'immigrant', '~> 0.1.8'
 
 gem 'jbuilder', '~> 2.2.5'
 gem 'bcrypt-ruby', '>= 3.1.5'
@@ -21,6 +21,10 @@ gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.1.2'
 gem 'cocoon', '~> 1.2.6'
+gem 'redis', '~> 3.2.0'
+gem 'has_secure_token'
+gem 'rest-client'
+gem 'multimap'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
@@ -28,10 +32,18 @@ gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 2.0.0'
 gem 'friendly_id', '~> 5.0.4'
 gem 'whodunnit', '0.0.5'
+gem 'simple_settings', '1.0.2'
+gem 'public_activity'
+gem 'acts_as_follower'
+gem 'rollout'
 #Search
 
 #Pagination
 gem 'kaminari', '~>0.16.1'
+
+
+##################Front-end########################
+gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
 
 ##################Asset-y########################
 gem 'haml' # TODO: convert haml to slim, then remove this gem
@@ -44,13 +56,18 @@ gem 'bootstrap-sass', '~>2.0.1'                                           # This
 gem 'carrierwave', '~> 0.10.0'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
 gem 'mini_magick', '~> 3.8.1'                                             # Ruby connector for ImageMagick
-gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
+#gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
+gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'
 gem 'sinatra', '>= 1.3.0'
+gem 'render_anywhere', :require => false
+gem 'jquery-pjax-rails'
+gem 'rack-pjax'
+gem 'uglifier', '>= 2.5.3'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'
-gem 'devise_invitable', '~> 1.3.4'
+gem 'devise_invitable', '~> 1.4.0'
 #gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
 gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-oauth2', '~> 1.2.0'
@@ -67,12 +84,11 @@ group :development, :test do
   gem 'minitest-rails', '~> 2.1.1'
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'byebug'
-  #gem 'meta_request'
-  #gem 'better_errors'
+  gem 'meta_request'
+  gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
   gem 'spring', '~> 1.2.0'
   gem 'coffee-rails', '~> 4.1.0'
-  gem 'uglifier', '>= 2.5.3'
   gem 'quiet_assets'
   gem 'web-console', '~> 2.0.0'
   ####Capistrano#####

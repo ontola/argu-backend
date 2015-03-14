@@ -1,0 +1,73 @@
+doctype html
+/[if lt IE 7]
+  | <html class="lt-ie9 lt-ie8 lt-ie7">
+/[if IE 7]
+  | <html class="lt-ie9 lt-ie8">
+/[if IE 8]
+  | <html class="lt-ie9">
+/[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
+head
+  title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
+  meta[charset="UTF-8"]
+  meta[name="viewport" content="width=device-width, initial-scale=1"]
+  meta[http-equiv="X-UA-Compatible" content="IE=edge"]
+  =csrf_meta_tags
+  =render 'shim'
+
+  / Google fonts
+  link[href='//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700' rel='stylesheet' type='text/css']
+  / FontAwesome for icons
+  link[href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"]
+
+  / unless current_user.blank?
+  = stylesheet_link_tag 'application', :media => 'all'
+
+  meta[name="url" content="https://argu.co"]
+  meta[name="language" content="#{I18n.locale}"]
+  meta[name="description" content="#{t('site.description')}"]
+  link[rel="author" href="humans.txt"]
+  meta[property="og:site_name" content="Argu"]
+  meta[property="twitter:site" content="@argu_nl"]
+  meta[property="og:image" content="#{asset_url('favicon-608x608.png')}"]
+  meta[property="twitter:domain" content="https://argu.co"]
+  = yield :connected_web
+
+  / Favicons
+  link[rel="apple-touch-icon" sizes="57x57" href=asset_path("favicons/apple-touch-icon-57x57.png")]
+  link[rel="apple-touch-icon" sizes="114x114" href=asset_path("favicons/apple-touch-icon-114x114.png")]
+  link[rel="apple-touch-icon" sizes="72x72" href=asset_path("favicons/apple-touch-icon-72x72.png")]
+  link[rel="apple-touch-icon" sizes="144x144" href=asset_path("favicons/apple-touch-icon-144x144.png")]
+  link[rel="apple-touch-icon" sizes="60x60" href=asset_path("favicons/apple-touch-icon-60x60.png")]
+  link[rel="apple-touch-icon" sizes="120x120" href=asset_path("favicons/apple-touch-icon-120x120.png")]
+  link[rel="apple-touch-icon" sizes="76x76" href=asset_path("favicons/apple-touch-icon-76x76.png")]
+  link[rel="apple-touch-icon" sizes="152x152" href=asset_path("favicons/apple-touch-icon-152x152.png")]
+  link[rel="apple-touch-icon" sizes="180x180" href=asset_path("favicons/apple-touch-icon-180x180.png")]
+  link[rel="shortcut icon" href=asset_path("favicons/favicon.ico")]
+  link[rel="icon" type="image/png" href=asset_path("favicons/favicon-192x192.png") sizes="192x192"]
+  link[rel="icon" type="image/png" href=asset_path("favicons/favicon-160x160.png") sizes="160x160"]
+  link[rel="icon" type="image/png" href=asset_path("favicons/favicon-96x96.png") sizes="96x96"]
+  link[rel="icon" type="image/png" href=asset_path("favicons/favicon-16x16.png") sizes="16x16"]
+  link[rel="icon" type="image/png" href=asset_path("favicons/favicon-32x32.png") sizes="32x32"]
+  meta[name="msapplication-TileColor" content="#475668"]
+  meta[name="msapplication-TileImage" content=asset_path("favicons/mstile-144x144.png")]
+  meta[name="msapplication-config" content=asset_path("favicons/browserconfig.xml")]
+
+  link[rel="copyright" content="#{t('site.copyright')}"]
+body
+  #fb-root
+  =render 'guest/navbar'
+  .wrapper
+    /[if lt IE 10]
+      p.browsehappy= raw t('outdated_browser')
+    -flash.each do |key, value|
+      .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
+    /= render 'responsibility_notice'
+    #pjax-container.container
+      =yield
+    .push-footer
+  =render 'footer'
+  =javascript_include_tag 'application'
+  - if Rails.env.production? || Rails.env.test?
+    =render partial: 'analytics'
+  script[id="motion-template" type="text/x-handlebars-template"]
+    =render partial: 'motions/motion_template'

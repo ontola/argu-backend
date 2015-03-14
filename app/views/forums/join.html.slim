@@ -1,0 +1,13 @@
+.modal-container
+  div[class=['overlay', !!defined?(no_close) ? 'no-close' : nil ].compact.join(' ')]
+  .modal.col-1
+    header
+      h1= t('forums.join.header')
+    .box.box-small
+      section
+        .form
+          p= t('forums.join.body', forum: forum.display_name)
+          .center
+            =link_to forum_memberships_path(forum.web_url, r: r||=nil), data: {method: :post, :'skip-pjax' => true}, class: 'btn btn-focus' do
+              span.fa.fa-group
+              span.icon-left= t('join')

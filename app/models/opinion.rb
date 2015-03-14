@@ -1,5 +1,3 @@
-include HasRestfulPermissions
-
 class Opinion < ActiveRecord::Base
   include ProCon
 

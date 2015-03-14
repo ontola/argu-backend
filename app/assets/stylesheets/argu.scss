@@ -8,7 +8,7 @@ $maxCommentDepth: 10;
 }
 
 .side-con input[type="submit"] {
-  background-color: $red;
+  @include button($red);
 }
 
 .side-pro .form-input-title {
@@ -16,7 +16,7 @@ $maxCommentDepth: 10;
 }
 
 .side-pro input[type="submit"] {
-  background-color: $gre;
+  @include button($gre);
 }
 
 .pro-bg {
@@ -64,6 +64,13 @@ $maxCommentDepth: 10;
 	height: 3em;
 }
 
+.browsehappy {
+  margin-top: 4em;
+  margin-bottom: -4em;
+  text-align: center;
+  font-weight: 900;
+}
+
 .options-bar {
 	position: absolute;
 	background-color: white;
@@ -72,6 +79,9 @@ $maxCommentDepth: 10;
 
 .question {
 	color: $bro;
+  .box-image{
+    background-color: $bro;
+  }
 }
 
 .motion {
@@ -87,4 +97,8 @@ $maxCommentDepth: 10;
   padding: 0.2em;
   color: white;
   font-style: italic;
+}
+
+.argument--imporant {
+  background-color: $red;
 }

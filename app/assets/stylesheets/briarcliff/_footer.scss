@@ -9,39 +9,79 @@ html, body {
   min-height: 100%;
   height: auto !important;
   height: 100%;
-  margin: 0 auto -4em; // Depends on size of footer
+  margin: 0 auto -18em; //footer_height + footer_top_margin ;
 }
 
-.push, footer {
-  height: 4em;
+.push-footer{
+  height: 18em; //footer_height + footer_top_margin ;
 }
 
 footer {
   display: inline-block;
+  position: relative;
   width: 100%;
   text-align: center;
-  background-color: white;
+  background-color: $g4;
   padding: 1em 0;
   overflow: hidden;
   margin-bottom: -5em;
-  ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-    li {
-      display: inline;
-      padding: 0em 1em;
-      a {
-        text-decoration: none;
-        font-size: 90%;
-      }
+  min-height: 15em;//Change the wrapper bottom margin as wel;
+  margin-top: 3em;
+  padding-bottom: 2em;
+  @include bp-large {
+    height: auto;
+  }
+  h3 {
+    color: white;
+  }
+  a {
+    color: $g2;
+    &:hover{
+      text-decoration: underline;
+      color: $g1;
     }
+    &:hover span {
+      color: $g1;
+    }
+  }
+  span, p {
+    color: $g2;
   }
 }
 
-.footer-top {
+.footer-list {
+  text-align: left;
+  display: inline-block;
+  vertical-align: top;
+  margin: 0 3em;
+  margin-bottom: 1em;
+  @include bp-large{
+    width: 11em;
+    margin: 0 1em;
+  }
+  li {
+    margin-bottom: .8em;
+  }
+}
+
+.footer-heading {
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: .8em;
+  margin-top: .7em;
+  font-size: 1.2em;
+}
+
+.footer-bottom {
   display: block;
-  position: relative;
+  position: absolute;
   width: 100%;
-  top: -.4em;
+  bottom: 1em;
+}
+
+.footer-social-buttons{
+  font-size: 1.5em;
+  a {
+    margin-right: .7em;
+  }
 }

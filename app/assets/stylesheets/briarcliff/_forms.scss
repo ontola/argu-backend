@@ -3,18 +3,19 @@
 
 input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
   background-color: $darken1;
-  border: none;
   padding: .5em;
   font-size: 1em;
   font-family: $font-sans;
   display: inline-block;
   width: 70%;
-  margin-bottom: 1.5em;
   color: $g4;
   line-height: 1.4em;
+  border: solid 1px $g1;
+  -webkit-appearance: none;
+  @include border-radius(0);
   &:focus {
     background-color: $darken0;
-    border: none;
+    border: solid 1px $g2;
     outline: none;
   }
   &.h1 {
@@ -27,14 +28,16 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   + input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
     margin-top: 0em !important;
   }
+  &.input--full {
+    width: 100%;
+  }
   @include bp-medium {
     width: 100%;
-    margin-bottom: 0.4em;
   }
 }
 
 input[type="checkbox"] {
-  margin: 1.2em;
+  margin: 1em 1em 1em 0em;
 }
 
 textarea {
@@ -56,6 +59,32 @@ label {
   }
 }
 
+legend {
+  width: 100%;
+  margin-bottom: 1em;
+  padding: 0.3em 0em;
+  color: $g2;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  text-align: left;
+  border-bottom: solid $g1 1px;
+
+  .danger-zone & {
+    color: $red;
+    border-bottom-color: $red;
+  }
+}
+
+fieldset {
+  //Fieldset within fieldset since formtastic makes the form's top level a fieldset too
+  fieldset ol {
+    margin-left: 0.5em;
+  }
+  li {
+    margin-bottom: 1.5em;
+  }
+}
+
 .form-item {
   padding-bottom: 1em;
   padding-top: 0.6em;
@@ -68,14 +97,6 @@ label {
 
 .form-input-content {
   width: 100%;
-  margin-bottom: 1em;
-  background-color: $darken1;
-  border: none;
-  padding: .5em;
-  font-size: 1em;
-  font-family: $font-sans;
-  resize: vertical;
-  display: inline-block;
 }
 
 input[type="text"].form-input-title {
@@ -83,8 +104,10 @@ input[type="text"].form-input-title {
   font-size: 1.8em;
   font-weight: 800;
   padding: .2em;
-  margin-bottom: 0.5em;
   width: 100%;
+  @include bp-medium{
+    font-size: 1.3em;
+  }
 }
 
 .form-padded {
@@ -105,15 +128,22 @@ input[type="text"].form-input-title {
     width: 50%;
     float: left;
     text-align: center;
+    clear: none;
+    margin: 0;
     label {
       width: 100%;
       cursor: pointer;
     }
   }
+  &.choices-3 li.choice {
+    width: 33.33%;
+  }
   input {
     // Hide radio button when JS provides visual feedback on the toggled button.
     width: 0;
     height: 0;
+    -webkit-appearance: none;
+    visibility: hidden;
   }
   label.checked {
     text-decoration: underline;
@@ -132,6 +162,27 @@ input[type="text"].form-input-title {
     background-color: $gre;
     color: white;
   }
+  label[for="group_response_side_con"]{
+    color: $red;
+  }
+  label[for="group_response_side_con"].checked{
+    background-color: $red;
+    color: white;
+  }
+  label[for="group_response_side_neutral"]{
+    color: $g3;
+  }
+  label[for="group_response_side_neutral"].checked{
+    background-color: $g3;
+    color: white;
+  }
+  label[for="group_response_side_pro"]{
+    color: $gre;
+  }
+  label[for="group_response_side_pro"].checked{
+    background-color: $gre;
+    color: white;
+  }
 }
 
 .form-small {
@@ -146,8 +197,14 @@ input[type="text"].form-input-title {
   margin: auto;
 }
 
-.form-small input, .form-small button {
+.form-small input, .form-small button, .form-small .inline-errors, .form-filled p.inline-errors, .form-small p.inline-hints, .form-filled p.inline-hints {
   width: 100% !important;
+  margin-left: 0;
+}
+
+.form-small input[type="checkbox"] {
+  width: auto !important;
+  margin: 0 1em 0em 0em;
 }
 
 .form-small label {
@@ -156,39 +213,77 @@ input[type="text"].form-input-title {
 }
 
 .formtastic button {
-  color: white;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: .8em;
-  padding: .5em .8em .4em .8em;
-  background-color: $blu;
-  border: none;
-  -webkit-appearance: none;
-  border-radius: 0;
-  cursor: hand;
-  width: auto;
-  display: inline-block;
-  margin-bottom: 1em;
-  height: 3em;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  margin: 0;
-  cursor: pointer;
-  &:hover {
-    background-color: $blud;
-  }
-  &:active {
-    background-color: $g5;
-  }
+  @include button;
+}
+
+.form-small button {
+  position: relative;
 }
 
 .formtastic .actions {
-  margin-top: 2em;
+  text-align: center;
 }
+
+.formtastic li {
+  clear: both;
+  position: relative;
+}
+
+.form-small .actions {
+  margin-top: 0;
+}
+
 
 input[type="file"], select {
   padding: 0.3em 0em;
-  margin-bottom: 1.2em;
   font-size: 1em;
+}
+
+.preview_image img {
+  max-width: 100%;
+}
+
+.form-small p.inline-hints, .form-small p.inline-errors{
+  margin-left: 0;
+}
+
+.inline-errors, .inline-hints {
+  padding: 0.2em .5em;
+  font-size: .8em;
+  margin-bottom: 0 !important;
+}
+
+.inline-hints {
+  color: $g2;
+}
+
+input:focus + p.inline-hints, textarea:focus + p.inline-hints {
+  opacity: 1;
+  @include box-shadow-intense
+}
+
+//Test
+p.inline-hints {
+  opacity: 0;
+  position: absolute;
+  background-color: $blu;
+  color: white;
+  bottom: 100%;
+  pointer-events: none;
+  @include transition(.2s ease-in-out);
+}
+//Endtest
+
+.inline-errors {
+  color: white;
+  background-color: $red;
+}
+
+.formtastic .inline-errors, .formtastic .inline-hints {
+  margin-left: 30%;
+  width: 70%;
+  @include bp-medium{
+    margin-left: 0 !important;
+    width: 100%;
+  }
 }

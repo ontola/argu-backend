@@ -2,23 +2,24 @@ module ProCon
   extend ActiveSupport::Concern
 
   included do
-    include ArguBase
-    include Trashable
-    include Parentable
+    include ArguBase, Trashable, Parentable, HasLinks, PublicActivity::Common
 
-    belongs_to :motion, :dependent => :destroy
+    belongs_to :motion, touch: true
     has_many :votes, as: :voteable, :dependent => :destroy
+    has_many :activities, as: :trackable, dependent: :destroy
     belongs_to :creator, class_name: 'Profile'
+    belongs_to :forum
 
     before_save :trim_data
     before_save :cap_title
+    after_save :creator_follow
 
     validates :content, presence: true, length: { minimum: 5, maximum: 3000 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
-    validates :creator_id, :motion_id, presence: true
+    validates :creator_id, :motion_id, :forum_id, presence: true
 
     acts_as_commentable
-    parentable :motion
+    parentable :motion, :forum
 
     def creator
       super || Profile.first_or_create(username: 'Onbekend')
@@ -26,9 +27,22 @@ module ProCon
 
   end
 
+  def creator_follow
+    self.creator.follow self
+  end
+
   def cap_title
     self.title[0] = self.title[0].upcase
     self.title
+  end
+
+  def collect_recipients(type)
+    #profiles.merge forum.followers_by_type('Profile').joins('LEFT OUTER JOIN users ON users.profile_id = profiles.id').where(users: {memberships_email: User.memberships_emails[:direct_memberships_email]})
+    profiles = Set.new
+    if type == :directly
+      profiles.merge creator if commentable.creator.owner.direct_created_email?
+      profiles.merge commentable.parent.creator if comment.parent && comment.parent.creator.owner.direct_created_email?
+    end
   end
 
   def display_name
@@ -47,17 +61,6 @@ module ProCon
   def trim_data
     self.title = title.strip
     self.content = content.strip
-  end
-
-  #TODO escape content=(text)
-  def supped_content
-    refs = 0
-    content.gsub(/(\[[\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*\])(\([\w\s]*\))/) {|url,text| '<a class="inlineref" href="%s#ref%d">%d</a>' % [Rails.application.routes.url_helpers.argument_path(self), refs += 1, refs] }
-  end
-
-  def references
-    refs = 0
-    content.scan(/\[([\w\\\/\:\?\&\%\_\=\.\+\-\,\#]*)\]\(([\w\s]*)\)/).each { |r| r << 'ref' + (refs += 1).to_s }
   end
 
   def root_comments

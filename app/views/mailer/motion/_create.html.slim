@@ -1,0 +1,13 @@
+-if activity.recipient.class == Forum
+  - forum = activity.recipient
+-elsif activity.recipient.class == Question
+  - question = activity.recipient
+  .box.box-grid.question
+    -if question.cover_photo.present?
+      = link_to question_path(question, host: 'https://argu.co') do
+        .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
+    section.section-info.que-bg
+      span= t('questions.type')
+    section
+      = link_to question_path(question, host: 'https://argu.co') do
+        h2.que-t = question.title

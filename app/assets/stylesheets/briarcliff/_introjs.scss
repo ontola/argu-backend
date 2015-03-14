@@ -63,10 +63,9 @@
   height: 23px;
   display: block;
   padding: 0;
-  font-size: 18px;
+  font-size: 12px;
   line-height: 25px;
   overflow: hidden;
-  text-align: 10px;
   right: 0;
   text-align: center;
   margin: 0;
@@ -95,6 +94,9 @@
   padding: 20px;
   width: 300px;
   z-index: 1000000;
+  overflow: hidden;
+  @include box-shadow;
+  @include border-radius;
 }
 
 .introjs-tooltiptext {
@@ -107,4 +109,11 @@
 
 .introjs-tooltipReferenceLayer{
   z-index: 1000000;
+}
+
+.intro-filler {
+  width: 100%;
+  width: calc(100% - 2em);
+  margin: 0 1em;
+  height: 0;
 }

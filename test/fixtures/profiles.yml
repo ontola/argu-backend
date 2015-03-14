@@ -8,19 +8,29 @@
 profile_fletcher91:
   name: 'Thom van Kalkeren'
   about: "I'm the coder!"
+  are_votes_public: true
 profile_utrecht_manager:
   name: "Manager of Utrecht"
   about: "It's all in the name"
+  are_votes_public: true
 profile_one:
   name: 'User'
   about: 'Im a user'
-#
+  are_votes_public: true
+# Can't have con votes since those are used to test whether votes are shown correctly
 profile_two:
   name: 'User2'
   about: 'Im also a user'
+  are_votes_public: true
+profile_three:
+  name: 'User3'
+  about: 'Im a user too'
+  are_votes_public: true
 profile_utrecht:
   name: 'Gemeente Utrecht'
   about: ''
+  are_votes_public: true
 profile_argu:
   name: 'Argu org'
   about: "We're the creators of this platform"
+  are_votes_public: true

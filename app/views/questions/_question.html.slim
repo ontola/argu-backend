@@ -1,16 +1,23 @@
-/.box
-  section
-    = link_to question_path(question) do
-      h3.que-t = question.title
-    p= question.supped_content.html_safe
-    /p.info= t("motions.preview.pro", count: question.votes_pro_count) + ', ' + t("motions.preview.con", count: question.votes_con_count)
-    p.info
-      /= question.motions_count.to_s + " " + t("motions.plural")
-      = "1 voorstel"
-.box.box-grid.question[class="#{'trashed' if question.is_trashed?}" data-tags="#{question.tags.join(',')}" data-date=question.created_at]
-  -if question.cover_photo.present?
+.box.box-grid.question[class="#{'trashed' if question.is_trashed?}" data-tags="#{question.tags.join(',')}" data-created-at=question.created_at  data-updated-at=question.updated_at]
+  - if question.cover_photo.present?
     = contextual_link_to question_path(question) do
       .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
+  section.section-info.que-bg
+    span.fa.fa-question
+    span.icon-left= t('questions.type')
+    =render partial: "questions/expires_at", locals: {deadline: question.expires_at}
   section
-    = contextual_link_to question_path(question) do
-      h2.que-t = question.title
+    =contextual_link_to question_path(question) do
+      h2.que-t= question.title
+    - if question.motions.present?
+      ul.box-list.box-list--icons
+        - question.motions.trashed(false).order(updated_at: :desc).select(:id, :title, :updated_at)[0,3].each do |motion|
+          li= link_to motion_path(motion) do
+            h3.sta-t
+              span[class='fa fa-#{motion_icon}']
+              span.icon-left= motion.title
+        - if question.motions.count > 3
+          li= contextual_link_to question_path(question)
+            h3.sta-t
+              span.fa.fa-chevron-right
+              span.icon-left= t('questions.view_all_motions', amount: question.motions.count)

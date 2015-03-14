@@ -1,0 +1,17 @@
+=set_title @profile.display_name
+.col-1
+  =render partial: 'manage_bar', locals: {resource: @page}  if policy(@page).update?
+  /=image_tag @profile.cover_photo.url
+  .profile-big[data-intro= t('intro.profile.show', name: @profile.display_name)]
+    .profile-picture.profile-picture-show
+      =pica_pica @profile.profile_photo, container_class: 'profile'
+    .box
+      section
+        h1= @profile.display_name
+        p.quote= @profile.about
+      ul.btns-list.btns-sticky.btns-sticky-bottom
+.box-list[data-intro= t('intro.profile.votes')]
+  - if @profile.votes.count > 0
+    =render_columns(@collection, collection_model: Vote)
+  - else
+    h2.center= t('profiles.didnt_vote_name', name: @profile.display_name).capitalize

@@ -1,0 +1,64 @@
+@import "variables";
+@import "mixins";
+
+.tabs {
+  text-align: center;
+  position: relative;
+  margin-bottom: 1em;
+  li {
+    position: relative;
+    display: inline-block;
+  }
+
+  a {
+    color: $g3;
+    font-size: .8em;
+    text-transform: uppercase;
+    padding: .7em;
+    display: inline-block;
+    @include transition(.2s);
+
+    &:after{
+      @include transition(.2s);
+      content: "";
+      background-color: white;
+      width: 100%;
+      height: 0px;
+      position: absolute;
+      display: block;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      opacity: 0;
+    }
+  }
+  .tabs-current {
+    pointer-events: none;
+  }
+
+  a:hover, .tabs-current a{
+    color: $g4;
+    &:after{
+      content: "";
+      height: 3px;
+      opacity: 1;
+    }
+  }
+
+  a:active {
+    color: $g4 !important;
+    &:after {
+      color: $g4 !important;
+    }
+  }
+}
+
+.cover .tabs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  li a {
+    background-color: $lighten5;
+  }
+}

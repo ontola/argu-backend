@@ -6,9 +6,13 @@
   background-color: white;
   margin: 0 auto;
   margin-bottom: 1em;
-  overflow: hidden;
+  //overflow: hidden; Bad hack breaking dropdowns
+  display: block;
   @include border-radius;
   @include box-shadow;
+  .box {
+    margin-bottom: 0;
+  }
 }
 
 .box h3 a, .box a h1, .box a h2,.box a h3 {
@@ -22,6 +26,7 @@
     position: absolute;
     top: 100%;
     left: 0;
+    height: .0em;
     height: .0em;
     opacity: 0;
     background-color: $darken2;
@@ -49,6 +54,10 @@
   opacity: .8;
   &:hover {
     opacity: 1;
+    text-decoration: none !important;
+    *{
+      text-decoration: none !important;
+    }
   }
   &:active {
     position: relative;
@@ -63,9 +72,8 @@
 
 .box h1, .box h2, .box h3 {
   font-weight: 800;
-  letter-spacing: .04em;
-  margin-bottom: .3em;
-  line-height: 1.25em;
+  margin-bottom: .5em;
+  line-height: 1.15em;
 }
 
 .box p {
@@ -73,15 +81,21 @@
   white-space: pre-wrap;
 }
 
+.box code {
+  margin-bottom: .9em;
+}
+
 .box ol, .box ul {
   color: $g4;
 }
 
 .box .read-more {
-  position: relative;
+  position: absolute;
   text-transform: uppercase;
   font-size: 0.8em;
-  top: -0.7em;
+  bottom: 0;
+  padding: 0.7em;
+  right: 0;
   color: $g2;
   &:hover{
     color: $g4 !important;
@@ -104,37 +118,6 @@
 .box-divider-space {
   margin-top: -.4em;
   padding-bottom: .4em;
-}
-
-.box-grid.box-big{
-  width: 100%;
-  width: calc(100% - 2em);
-  .box-image {
-    height: 14em;
-  }
-  h1 {
-    font-size: 2.2em;
-    @include bp-medium {
-      font-size: 1.5em;
-    }
-  }
-}
-
-.box-grid {
-  display: inline-block;
-  float: left;
-  margin: 1em 1em;
-  width: 45%;
-  width: calc(50% - 2em);
-  @include bp-medium{
-    width: 100%;
-    width: calc(100% - 2em);
-  }
-}
-
-.box-grid-sizer {
-  width: 50%;
-  display: inline-block;
 }
 
 .box-hidden {
@@ -182,7 +165,7 @@
     margin-bottom: .8em;
   }
   .icon-left {
-    margin-left: .7em;
+    margin-left: .4em;
   }
   &.box-link-fill{
     h3 {
@@ -198,8 +181,13 @@
   }
 }
 
-.box-list .box h3 {
-  font-size: 1.3em;
+.boxes-list .box {
+  h3 {
+    font-size: 1em;
+  }
+  section {
+    padding-top: .8em;
+  }
 }
 
 .box-note {
@@ -222,35 +210,47 @@
 
 .box-with-btns {
   h1, h2, h3 {
+    padding-right: .7em;
   }
 }
 
-section {
-  position: relative;
-  padding: 1.1em 1.4em 0.1em 1.4em;
+.box-list {
+  list-style-type: disc;
+  padding-left: 1.5em;
+  font-size: .8em;
+  margin-bottom: 1em;
 }
 
-section.section-info {
-  span {font-size: .8em;};
-  padding-top: 0.1em;
-  line-height: 1.1em;
-  background-color: $g3;
-  color: white;
-  text-transform: uppercase;}
-
-section.unpadded {
-  padding: 0;
+.box-list--icons {
+  list-style-type: none;
+  padding-left: 0em;
+  span.fa{
+    position: absolute;
+    font-size: 0.8em;
+    line-height: 1.4em;
+  }
+  span.icon-left {
+    margin-left: 1.3em;
+    display: block;
+  }
 }
 
-section.smallpadded {
-  padding: 1.1em 1em 0em 1em;
+.box-list--arguments {
+  list-style-type: none;
+  width: 50%;
+  width: calc(50% + 0.5em);
+  margin-left: -0.5em;
+  padding: 0.5em;
+  display: inline-block;
+  vertical-align: top;
+  @include bp-medium{
+    width: 100%;
+  }
 }
 
-section + section {
-  border-top: solid 1px $g1;
+.box--extra-margin{
+  margin: 2em 0;
 }
-
-.section-small {
-  position: relative;
-  padding: .3em 1.4em 0.1em 1.4em;
+.box .box--extra-margin {
+  margin: 0;
 }

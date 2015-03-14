@@ -1,0 +1,12 @@
+.col-1
+  header
+    h2= t('devise.confirmations.edit.header')
+  .box
+    section
+      = semantic_form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f|
+        = devise_error_messages!
+        = f.inputs
+          = f.input :email, label: t('users_email')
+        = f.actions
+          = f.submit t('devise.confirmations.edit.submit'), :as => :button
+        = render "devise/shared/links"

@@ -1,24 +1,23 @@
+- top_comment = model.top_comment(show_trashed?)
 .box.box-with-btns.argument[id="#{model.id.present? ? 'argument_' + model.id.to_s : ''}" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed}"]
   section
-    = contextual_link_to argument_path(model) do
+    =contextual_link_to argument_path(model)
       h3[class="#{model.pro ? 'pro-t' : 'con-t'}"]= model.title
-    p[class='collapsible']
-      ==model.supped_content[0..250] + (model.supped_content[251] ? "..." : "")
-    -if model.supped_content[251]
-      = contextual_link_to argument_path(model), class: "read-more" do
-        span.icon-right = t("read-more")
+    =render partial: 'arguments/shr', locals: {model: model}
+    p[class='wrap-normal']
+      ==model.supped_content[0..250] + (model.supped_content[251] ? '...' : '')
+    - if model.supped_content[251]
+      =contextual_link_to argument_path(model), class: 'read-more'
+        span.icon-right= t('read-more')
         span.fa.fa-arrow-right
-    ul.btns-sticky.btns-sticky-top[id="votebtn#{model.id}"]
-      li=link_to argument_vote_path(model), :remote => true, method: :post, class: 'btn-subtle' do
-        span.icon-right=(model.votes_pro_count >= 1 ? '+' : '') + model.votes_pro_count.to_s
-        span.fa.fa-arrow-up
-      li=link_to argument_vote_path(model), :remote => true, method: :delete, class: "btn-subtle" do
-        span.icon-right= model.votes_con_count.to_s
-        span.fa.fa-arrow-down
-  -if (top_comment = model.top_comment(show_trashed?)).present?
-    = link_to argument_path(model) + "#commentstitle" do
+  - if !top_comment.present? && !model.supped_content[251]
+    =contextual_link_to argument_path(model), class: ' btn-subtle btn-sticky btns-sticky-bottom comments-counter'
+      span.icon-right reageer
+      span.fa.fa-comments
+  - if top_comment.present?
+    =link_to argument_path(model) + '#commentstitle'
       section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]
-        p= top_comment.is_trashed? ? '[DELETED]' : top_comment.body[0..150] + (top_comment.body[151] ? "..." : "")
+        p.wrap-normal= top_comment.is_trashed? ? '[DELETED]' : top_comment.body[0..150] + (top_comment.body[151] ? '...' : '')
         .comments-counter
           -if Rails.configuration.epics.counters
             span.icon-right= model.comments_count.to_s

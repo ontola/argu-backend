@@ -4,12 +4,25 @@ Argu::Application.configure do
 
   config.epics = ActiveSupport::OrderedOptions.new
   config.epics.opinion = true                         # Opinion enabled?
-  config.epics.parties = false                        # Parties enabled?
+  config.epics.parties = true                         # Parties enabled?
   config.epics.advanced_navigation = false            # Navigation by tags and such
   config.epics.search = false                         # Search enabled?
   config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
   config.epics.forum_selector = true                  # Show forum selector in nav bar?
   config.epics.sign_up = false                        # Can users sign up outside of invitations
+  config.epics.activities = true                      # Can users see the activity index / timeline button in header?
+  config.epics.share_links = true                     # Can first-time users visit forum urls, and can members share them?
+  config.epics.open_auth = true                       # Facebook, twitter, google, openID login & account linking shown in profile
+  config.epics.link_to_motion = true                  # Button in questions.show to find & link motions
+  config.epics.page_create = true                     # Create a page button in header menu
+  config.epics.notifications = true                   # Show notifications button in header menu
+  config.epics.motions_in_question_partial = false     # Show motions in question partial
+
+
+  config.logstasher.enabled = true
+  config.logstasher.log_controller_parameters = true
+
+  config.react.variant = :production
 
   # Code is not reloaded between requests
   config.cache_classes = true
@@ -21,10 +34,11 @@ Argu::Application.configure do
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
-  config.assets.compress = true
+  config.assets.js_compressor = :uglifier
+  config.assets.css_compressor = :sass
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
   config.assets.compile = false
@@ -87,9 +101,7 @@ Argu::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
-  # Log the query plan for queries taking more than this (works
-  # with SQLite, MySQL, and PostgreSQL)
-  # config.active_record.auto_explain_threshold_in_seconds = 0.5
+  config.active_record.raise_in_transactional_callbacks = true
 
   config.i18n.available_locales = [:nl, :en]
 end

@@ -3,19 +3,33 @@
 nl:
   forums:
     resource_name: "forum"
+    type: "Forum"
+    resource_name:
+      management: "forum beheer"
     settings:
-      title: "instellingen"
-      general: "algemeen"
-      managers: "beheerders"
+      title: "Instellingen"
+      general: "Algemene instellingen"
+      profile: "Profiel instellingen"
+      terminology: "Terminologie"
+      managers: "Beheerders"
+      advanced: "Geavanceerd"
+      bio: "Doel van forum"
+      bio_long: "Meer informatie"
+      hints:
+        bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de titel van het forum. Maximaal 140 karakters."
     statistics:
-      title: "statistiek"
-      memberships: "leden"
-      questions: "vraagstukken"
-      motions: "voorstellen"
-      tags: "meest gebruikte tags"
-      no-tags: "er zijn nog geen tags gebruikt"
-    suggestions: "suggesties"
-    mine: "mijn forums"
+      title: "Statistiek"
+      memberships: "Leden"
+      questions: "Vraagstukken"
+      motions: "Ideeën"
+      tags: "Meest gebruikte tags"
+      no-tags: "Er zijn nog geen tags gebruikt."
+    suggestions: "Suggesties"
+    mine: "Mijn forums"
+    navheader: "Ga naar forum:"
+    member: "Lid"
+    leave: "Dit forum verlaten"
+    leave_confirmation: "Weet je zeker dat je dit forum wilt verlaten? Je gemaakte content op het forum zal blijven bestaan."
     scope_names:
       scope_group: "Groepen"
       scope_org: "Bedrijven"
@@ -24,7 +38,7 @@ nl:
       f_public: "Publiek"
       f_public_desc: "Organisatie en voorstellen zijn door iedereen te zien."
       f_hidden: "Verborgen"
-      f_hidden_desc: "Profiel van de organisatie is publiek, de voorstellen zijn verborgen."
+      f_hidden_desc: "Profiel van de organisatie is publiek, de ideeën zijn verborgen."
       f_private: "Prive"
       f_private_desc: "Zowel het profiel als de voorstellen zijn slechts voor de leden zichtbaar."
     application_form:
@@ -36,16 +50,30 @@ nl:
       f_invite_desc: "Leden kunnen anderen uitnodigen om lid te worden."
       f_management_invite: "Door de beheerder(s)"
       f_management_invite_desc: "Alleen de beheerder(s) kunnen nieuwe leden toevoegen."
-  activerecord:
+    join:
+      header: "Word lid"
+      body: "Word lid van het forum ''%{forum}'' en doe mee aan de discussie!"
+    invite_others: "Betrek anderen"
+    sign_up:
+      header: "Word lid van Argu en discussieer mee"
+    new_question_or_motion: "Nieuw vraagstuk of idee"
+    about:
+      header: "Waarvoor is dit forum?"
+      body: "Een Argu forum is een discussie omgeving waar oplossingen voor vraagstukken worden gedeeld en besproken. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"
+    follow: "Volgen"
+    unfollow: "Ontvolgen"
+  activerecord: #These currently aren't used for forms.
     attributes:
       forum:
         name: "Naam"
         web_url: "argu web url"
         description: "Omschrijving"
-        slogan: "Slogan"
+        featured_tags: "Uitgelichte thema's"
         website: "Web adres"
         profile_photo: "Profielfoto"
-        public_form: "Privacy"
-        application_form: "Verzoeken"
         key_tags: "Sleuteltags"
         scope: "Vorm"
+        visibility: "Zichtbaarheid"
+  votes:
+    alerts:
+      not_modified: ""

@@ -1,36 +1,40 @@
+=set_title @question.new_record? ? t('new_type', type: t('questions.type')) : t('edit_type', type: t('questions.type'))
 .col-3
   .col-3-2
     = to_parent
     .box
-      = form_for([@forum, @question], multipart: true) do |f|
-        section.smallpadded
-          - if @question.errors.any?
-            #error_explanation
-              h2
-                = pluralize(@question.errors.count, "error")
-                | prohibited this motion from being saved:
-              ul
-                - @question.errors.full_messages.each do |msg|
-                  li= msg
-          = f.text_field :title, placeholder: t("questions.form.title").capitalize, class: "h1 sta-t form-input-title"
-          /p.helpertext= t("motions.form.helper.title")
-          = f.text_area :content, placeholder: t("questions.form.content"), class: "form-input-content", rows: "8"
-          /p.helpertext= t("motions.form.helper.content")
-          = f.text_field :tag_list, placeholder: t("questions.form.themes"), class: "tag-list"
-          /p.helpertext= t("motions.form.helper.themes")
-          = f.file_field :cover_photo
+      section.section-info.que-bg
+        span[class="fa fa-#{question_icon}"]
+        span.icon-left= questions_type
+      = semantic_form_for((@question.new_record? ? [@forum, @question] : @question), multipart: true) do |f|
+        section.smallpadded.form-filled
+          = f.inputs
+            = f.input :title, input_html: {class: 'h1 que-t form-input-title'}, label: false, placeholder: placeholder_for(@question, :title, question_type)
+            = f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, placeholder: placeholder_for(@question, :content, question_type)
+            = f.input :tag_list, input_html: {class: 'tag-list'}, label: false
+          = f.inputs
+            = f.input :cover_photo, label: t('image')
+            -if !@question.new_record?
+              = f.input :remove_cover_photo, as: :reverse_boolean, label: t('formtastic.labels.remove_image')
 
-          - if policy(@question).trash?
-            = f.label :is_trashed
-            = f.check_box :is_trashed
-
-          /TODO invert arguments only visible when in edit, not in new.
-            <%= f.label :invert_arguments, t("motions.form.invert"), class: "vertical" %>
-            <%= f.check_box :invert_arguments %>
+            /TODO Add Checkbox for using expires_at.
+            /TODO Hide expires_at input unless checkbox is checked.
+            /TODO Use current datetime as default input.
+            -if $rollout.active?(:expires_at, current_user) && policy(@question).set_expire_as?
+              = f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
+          -if !@question.new_record? && policy(@question).trash?
+            = f.inputs name: t('forms.danger_zone'), class: 'danger-zone'
+              - if policy(@question).trash?
+                = f.input :is_trashed, as: :reverse_boolean
+              -if policy(@question).move?
+                = f.input :f_move, as: :link, url: question_move_url(@question), input_html: {data: {remote: true}, class: 'btn--warning'}
+                = f.input :f_convert, as: :link, url: question_convert_url(@question), input_html: {data: {remote: true}, class: 'btn--warning'}
         = render partial: 'profiles/profile_current'
-        .actions= f.submit t(:save), class: "btn btn-sticky btn-sticky-bottom"
-  /TODO: make translations
-  .col-3-1
-    .box
-      section
-        =raw t("questions.form.helper.side")
+        /= f.actions
+          = f.submit
+        .actions[style="margin-top: 0;"]= f.submit t(:save), class: 'btn btn-sticky btn-sticky-bottom'
+  - unless alternative_questions?
+    .col-3-1
+      .box
+        section=raw t('questions.form.helper.side')
+      =render partial: 'links_helper'

@@ -1,0 +1,8 @@
+@import "variables";
+@import "mixins";
+
+.notifications {
+  .unread {
+    background-color: $g0;
+  }
+}

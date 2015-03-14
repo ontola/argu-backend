@@ -1,20 +1,4 @@
 class Portal::PagesController < ApplicationController
-  def new
-    @page = Page.new
-    authorize @page, :new?
-  end
-
-  def create
-    @page = Page.new permit_params
-    @page.build_profile permit_params
-    authorize @page, :create?
-
-    if @page.save!
-      redirect_to portal_path
-    else
-      render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
-    end
-  end
 
   def destroy
     @page = Page.friendly.find params[:id]

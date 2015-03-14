@@ -1,0 +1,330 @@
+@import "variables";
+@import "mixins";
+
+$primary: $blu;
+$secondary: $g4;
+$grey_light: $g0;
+
+.blocks{
+  margin: auto;
+  max-width: 1200px;
+  position: relative;
+  clear: both;
+  padding: 0;
+}
+
+.block{
+  width: 50%;
+  background-color: #ffffff;
+  padding: 2em;
+  text-align: center;
+  float: left;
+  overflow: hidden;
+  height: 24em;
+  position: relative;
+  @include bp-medium{
+    width: 100%;
+    height: auto;
+    padding: 4em 2em;
+  }
+  * {
+    color: $primary;
+  }
+  p {
+    line-height: 1.8em;
+    max-width: 40em;
+    margin: auto;
+    margin-bottom: 1em;
+    a {
+      font-weight: bold;
+    }
+  }
+  h2 {
+    margin-bottom: 0.8em;
+    text-transform: uppercase;
+    font-size: 1.3em;
+    letter-spacing: .1em;
+    line-height: 1.5em;
+    &:after {
+      content: "";
+      width: 6em;
+      background-color: $primary;
+      height: 1px;
+      display: block;
+      position: relative;
+      top: 0.4em;
+      margin: auto;
+      opacity: .3;
+    }
+  }
+  h3 {
+    font-size: 1.2em;
+  }
+}
+
+.block-alt {
+  width: 50%;
+  background-color: $g1;
+  padding: 2em;
+  float: left;
+  overflow: hidden;
+  height: 24em;
+  position: relative;
+  @include bp-medium {
+    width: 100%;
+    height: auto;
+    padding: 4em 2em;
+  }
+  .col-2, .col-3 {
+    margin-left: -1em;
+    margin-right: -1em;
+    font-size: .8em;
+  }
+}
+
+.block--img {
+  padding: 0;
+  .img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    min-height: 18em;
+  }
+  @include bp-medium{
+    max-height: 20em;
+  }
+  &:before {
+    content: "";
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: $primary;
+    opacity: .2;
+    @include transition(.5s)
+  }
+  &:hover:before{
+    opacity: 0;
+  }
+}
+
+.block--img--full {
+  height: 34em;
+  display: block;
+  position: relative;
+  clear: both;
+}
+
+.block--right {
+  float: right;
+}
+
+.block--fill {
+  background-color: $primary;
+  * {
+    color: white;
+  }
+  h2:after {
+    background-color: white;
+  }
+  .block-link {
+    border-color: white !important;
+    &:hover, &.expanded  {
+      background-color: white !important;
+      color: $primary !important;
+      * {
+        color: $primary !important;
+      }
+    }
+  }
+}
+
+.block--hidden {
+  background-color: $grey_light;
+  * {
+    color: $secondary;
+  }
+}
+
+.block--full {
+  width: 100%;
+  height: auto;
+  padding-bottom: 4em;
+  h2 {
+    font-size: 2.3em;
+    margin-top: 1em;
+    @include bp-medium{
+      font-size: 1.3em;
+      margin-top: 0;
+    }
+  }
+}
+
+.block--left-aligned {
+  text-align: left;
+  h2 {
+    font-size: 1.5em;
+  }
+  h2:after{
+    display: none;
+  }
+}
+
+.block-link{
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-size: 1em;
+  margin-top: 1em;
+  display: inline-block;
+  border: solid 1px $primary;
+  padding: .4em .8em;
+  @include transition(.3s);
+  &:hover, &.expanded {
+    background-color: $primary;
+    text-decoration: none;
+    color: white;
+    * {
+      color: white;
+      text-decoration: none;
+    }
+  }
+  &.expanded {
+    opacity: .5;
+  }
+}
+
+.block-text{
+  position: relative;
+  top: 50%;
+  @include transform(translateY(-50%));
+  //transform: translateY(-50%);
+  @include bp-medium{
+    @include transform(none);
+  }
+}
+
+.block-features {
+  li {
+    display: inline-block;
+    width: 33.3%;
+    vertical-align: top;
+    padding: 1.6em 1.2em;
+    @include bp-large {
+      width: 50%;
+    }
+    @include bp-small {
+      width: 100%;
+    }
+  }
+  h2 {
+    font-size: 1.1em;
+    margin: 0.6em 0;
+  }
+  .fa {
+    display: block;
+    font-size: 4em;
+    width: 100%;
+  }
+}
+
+.block-references {
+  li {
+    display: inline-block;
+    width: 50%;
+    vertical-align: top;
+    padding: 1.6em 1.2em;
+    @include bp-medium {
+      width: 100%;
+    }
+  }
+  h2 {
+    font-size: 1.1em;
+  }
+  blockquote {
+    margin: 0 0 .2em 0;
+    font-size: 1.2em;
+    line-height: 1.5em;
+    margin-bottom: 0.5em;
+  }
+}
+
+.block-avatar{
+  display: block;
+  margin: auto;
+  margin-bottom: .5em;
+  width: 100px;
+  height: 100px;
+  border-radius: 9999px;
+  background-position: center;
+  background-size: cover;
+  @include filter(grayscale(1));
+  @include transition(.5s);
+  &:hover{
+    @include filter(grayscale(0));
+  }
+}
+
+.block-subtle {
+  color: lighten($primary, 5);
+}
+
+.block--fill .block-subtle {
+  color: #DBDBDB;
+}
+
+p.block-slogan {
+  line-height: 1.8em;
+  font-size: 1.1em;
+  max-width: 49em;
+}
+
+.block--big-text {
+  p {
+    max-width: 40em;
+    margin: auto;
+    margin-bottom: 1em;
+    text-align: left;
+  }
+}
+
+.block {
+  .expander .expanded-label {
+    display: none;
+  }
+  .expander.expanded .expanded-label {
+    display: inline-block;
+  }
+  .expander.expanded .collapsed-label {
+    display: none;
+  }
+
+  .expander--hidden.collapsed {
+    display: none;
+  }
+}
+
+.blocks-container {
+  @include bp-small {
+    font-size: .9em;
+  }
+}
+
+.block-social-buttons li{
+  display: inline;
+  font-size: 1.3em;
+  opacity: .5;
+  margin: .4em;
+  @include transition(.5s);
+  &:hover{
+    opacity: 1;
+  }
+}
+
+.block-image-wide {
+  width: 100%;
+}

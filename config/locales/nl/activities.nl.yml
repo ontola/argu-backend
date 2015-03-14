@@ -1,0 +1,31 @@
+
+nl:
+  activities:
+    votes:
+      voted:
+        pro: "is voor een %{thing}"
+        pro_your: "is voor een %{thing}"
+        neutral: "heeft nog geen mening over een %{thing}"
+        neutral_your: "heeft nog geen mening over een %{thing}"
+        con_your: "is tegen een %{thing}"
+        con_your: "is tegen een %{thing}"
+    questions:
+      create: "heeft een %{type} geplaatst voor het forum %{thing}"
+      create_your: "heeft een %{type} geplaatst voor het forum %{thing}"
+    motions:
+      create: "heeft een %{type} geplaatst voor een %{thing}"
+      create_your: "heeft een %{type} geplaatst voor jouw %{thing}"
+    arguments:
+      create: "heeft een %{type} geplaatst voor een %{thing}"
+      create_your: "heeft een %{type} geplaatst voor jouw %{thing}"
+    comments:
+      create: "heeft gereageerd op een %{thing}"
+      create_your: "heeft gereageerd op jouw %{thing}"
+    ui:
+      load_more: "Laad meer"
+      no_more_artivities: "Geen oudere activiteiten"
+      loading: "Bezig.."
+  forums:
+    discover: "Ontdek forums"
+    no_bio: "Geen omschrijving"
+    more_info: "Lees verder."

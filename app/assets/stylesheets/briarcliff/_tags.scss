@@ -26,6 +26,8 @@ a.tag:hover {
   background-color: $g4;
   color: white;
   cursor: pointer;
+  text-decoration: none;
+
 }
 
 a.tag:active, a.tag.is-checked {
@@ -37,6 +39,14 @@ a.tag:active, a.tag.is-checked {
   color: $g4 !important;
 }
 
+.tag-all {
+  color: $g3;
+  font-weight: bold;
+  &.is-checked, &:hover {
+    background-color: $g3 !important;
+    color: white !important;
+  }
+}
 
 .tag-motions {
   color: $blu;
@@ -72,5 +82,16 @@ a.tag:active, a.tag.is-checked {
   margin-top: -.25em;
   .tag {
     @include box-shadow;
+  }
+}
+
+.tags-type {
+  @include border-radius;
+  @include box-shadow;
+  overflow: hidden;
+  .tag {
+    margin: .0em 0;
+    border-radius: 0;
+    box-shadow: none;
   }
 }

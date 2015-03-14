@@ -1,12 +1,6 @@
 $(function() {
-    //Toggle dropdown content when clicked on trigger
-    $('.dropdown-trigger').on("tap", function(){
-        event.stopPropagation(); //
-        $(this).toggleClass("dropdown-active");
-    });
-
-    //Hide dropdown content when clicked anywhere
-    $(document).on("tap", function(){
-        $('.dropdown-trigger').removeClass("dropdown-active");
+    $(document).on("tap click", '.dropdown div:first', function (e) {
+        // Prevents dropdown-active from opening the neighboring link in Chrome for android.. but also prevents clicking on dropdown content!
+        e.preventDefault();
     });
 });

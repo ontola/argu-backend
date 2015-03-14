@@ -1,0 +1,11 @@
+=set_title t('forums.discover')
+.col-1
+  header
+    h1= t('forums.discover')
+  .selector.grid
+    .box-grid-sizer
+    =render collection: @forums, partial: 'forums/forum'
+    .box.box-grid
+      section
+        h3 Een eigen forum?
+        p Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Bekijk de <b>#{link_to 'product pagina', product_path}</b> of neem <b><a href="mailto:info@argu.co">contact</a></b> op voor meer informatie.

@@ -1,6 +1,6 @@
 li[id=('list_item_'+f.object.id.to_s)]
-  =image_tag f.object.profile.profile_photo, class: 'profile-photo'
-  span=f.object.profile.display_name
+  =image_tag f.object.profile_photo, class: 'profile-photo'
+  span=f.object.display_name
   =f.input :role, as: :inline_select, collection: Membership.roles.keys
-  =link_to 'x', forum_membership_path(@forum, f.object), remote: true, method: :delete, data: {confirm: "_sure?_"}
+  =link_to 'x', forum_membership_path(@forum, f.object), remote: true, method: :delete, data: {confirm: '_sure?_'}
   =f.hidden_field :id

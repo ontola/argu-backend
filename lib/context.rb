@@ -32,6 +32,10 @@ class Context
     @parent_context.present?
   end
 
+  def single_model
+    @model.try(:length) ? @model.first : @model
+  end
+
   def model=(value)
     @model = value
   end
@@ -90,7 +94,7 @@ class Context
 
   # Generates a URL for the model
   def url
-    url_for(controller: @model.class_name.to_sym, action: :show, id: (@model.try(:web_url) || @model.id), only_path: true) if @model
+    url_for(controller: single_model.class_name.to_sym, action: :show, id: (single_model.try(:web_url) || single_model.id), only_path: true) if single_model
   end
 
   # Generates a HTTP query compatible string to parse back the breadcrumb stack
@@ -115,7 +119,7 @@ class Context
 
   # Recurses down the line of @parent_contexts
   def recurse_to_s
-    model_string = model.present? ? "#{model.class.name}+#{model.id.to_s}" : ''
+    model_string = single_model.present? ? "#{single_model.class.name}+#{single_model.id.to_s}" : ''
     if @parent_context
       parent_string = @parent_context.recurse_to_s
       parent_string = "*#{parent_string}" if parent_string.present?

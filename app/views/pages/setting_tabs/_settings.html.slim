@@ -7,5 +7,10 @@
       = p_f.input :profile_photo, label: t("profiles.edit.picture")
     -if policy(@page).web_url?
       = f.input :web_url
+    - if policy(@page).is_owner?
+      = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+        = f.input :visibility, as: :select, collection: Forum.visibilities.keys, include_blank: false
+        = f.input :f_delete, as: :link, url: delete_page_url(@page), input_html: {data: {remote: true}, class: 'btn--warning'}
+
   = f.actions do
     = f.action :submit, :as => :button

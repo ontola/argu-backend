@@ -1,0 +1,14 @@
+#Dutch argument translations
+
+nl:
+  parties:
+    type: "partij"
+    header:
+      pro: "partijen voor"
+      con: "neutrale partijen"
+      con: "partijen tegen"
+    index:
+      title: "argumenten"
+      opinion: "opinie"
+      parties: "partijen"
+      law: "wet"

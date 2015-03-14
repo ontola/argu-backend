@@ -11,8 +11,10 @@
   img {
     position: absolute;
     left: 0;
-    min-height: 2.5em;
-    width: 2.5em;
+    min-height: 2em;
+    width: 2em;
+    border-radius: 999px;
+    margin: 0.2em;
   }
 
   .info {
@@ -30,8 +32,18 @@
     top: 1.7em;
     left: 0.4em;
     &:hover{
-
+      text-decoration: underline;
     }
+  }
+}
+
+.profile-big .box {
+  min-height: 8em;
+}
+
+.profile-big section {
+  @include bp-medium(){
+    margin-left: auto;
   }
 }
 
@@ -50,23 +62,50 @@
 }
 
 .profile-picture-show {
-  margin: 0em 0em 0em 0em;
+  margin: 0em 1em 0em 0em;
   float: left;
   width: 8em;
   height: 8em;
   overflow: hidden;
+  z-index: 1;
   @include box-shadow;
+  @include border-radius;
   @include bp-medium(){
     margin: 0em auto 2em auto;
     display: block;
     float: none;
-    width: 5em;
-    height: 5em;
   }
 }
 
+.profile-switcher {
+
+  li {
+    height: 2em;
+    overflow: hidden;
+  }
+
+  a{
+    height: 2em;
+    padding: 0;
+  }
+
+  img {
+    height: 100%;
+    max-width: 2em;
+  }
+
+  span {
+    vertical-align: top;
+    padding: 0.5em;
+  }
+}
+
+.profile-switcher-current {
+  background-color: $darken1;
+}
+
 .info-block {
-  margin-left: 2.7em;
+  margin-left: 2.3em;
   padding: .3em;
   position: relative;
 }
@@ -74,4 +113,54 @@
 .info-block--no-padding {
   margin-left: 1.8em;
   margin-right: -1em;
+}
+
+.profile-box {
+  .header {
+    display: inline-block;
+    h3 {
+      margin: 0.5em 0em 0.1em 0.4em;
+    }
+    .info-block {
+      margin-left: .4em;
+      font-size: 0.8em;
+      color: $g2;
+      font-style: italic;
+      li {
+        line-height: 1em;
+        float: left;
+        margin-right: 1.1em;
+        margin-bottom: 0.5em;
+      }
+    }
+  }
+
+
+  a, .additional-info, img {
+    float: left;
+    clear: right;
+  }
+
+  img {
+    width: 5em;
+    height: 5em;
+  }
+}
+
+.response {
+  .profile-small {
+    background-color: transparent;
+    margin-bottom: .9em;
+    height: auto;
+    img {
+      margin-top: 0;
+      margin-left: 0;
+    }
+  }
+  .info-block {
+    padding-top: 0;
+    h3 {
+      margin-bottom: 0;
+    }
+  }
 }

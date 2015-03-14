@@ -1,0 +1,7 @@
+#Dutch general translations
+
+nl:
+  status:
+    s_404:
+      header: "Pagina niet gevonden"
+      body: "De link bestaat niet. Dit kan zijn doordat het object wat je zoekt is verwijderd of nooit bestaan heeft."

@@ -1,14 +1,12 @@
 .tabs
-  ul.btns-list.btns-vertical
-    li= contextual_link_to profile_url(current_profile.username) do
+  ul
+    / These use current_user so that this menu is still functional when :a_a is a Page
+    li= contextual_link_to profile_url(current_user.username) do
       span.fa.fa-user
-      span.icon-left= t("profiles.display")
-    li= link_to edit_profile_path(current_profile.username) do
+      span.icon-left= t('profiles.display')
+    li= link_to edit_profile_path(current_user.username) do
       span.fa.fa-pencil
-      span.icon-left= t("profiles.edit.title")
+      span.icon-left= t('profiles.edit.title')
     li= link_to settings_url do
       span.fa.fa-gear
       span.icon-left= t(:users_show_title)
-    li= link_to new_user_invitation_path
-      span.fa.fa-bullhorn
-      span.icon-left= t('devise.invitations.link')

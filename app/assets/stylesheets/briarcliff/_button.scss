@@ -2,42 +2,25 @@
 @import "mixins";
 
 .btn {
-  color: white;
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: .8em;
-  padding: .5em .8em .4em .8em;
-  background-color: $blu;
-  border: none;
-  -webkit-appearance: none;
-  border-radius: 0;
-  width: auto;
-  display: inline-block;
-  line-height: 2em;
-  height: 3em;
-  position: relative;
-  right: 0;
-  bottom: 0;
+  @include button();
   margin-bottom: 1em;
-  cursor: pointer;
-  &:hover {
-    background-color: $blud;
-  }
-  &:active {
-    background-color: $g5;
-  }
 }
 
 .actions .btn, .form-actions .btn {
   position: absolute;
   margin: 0;
+  height: 3em;
 }
 
 .btn-auth {
   margin-right: 1em;
   position: relative;
   display: inline-block;
-  &:hover:after{
+  img {
+    display: block;
+    height: 100%;
+  }
+  &:after{
     content: "+";
     text-align: center;
     color: white;
@@ -51,7 +34,39 @@
     bottom: 0;
     left: 0;
     right: 0;
+    opacity: 0;
+    @include transition(.2s)
   }
+  &:hover:after{
+    opacity: .6;
+  }
+  &:active:after{
+    opacity: 1;
+  }
+}
+
+.btn--warning {
+  @include button($red-alert);
+}
+
+.btn--con {
+  @include button($red);
+}
+
+.btn--sta {
+  @include button($blu);
+}
+
+.btn--que {
+  @include button($bro);
+}
+
+.btn--twitter {
+  @include button(#55ACEE);
+}
+
+.btn--facebook {
+  @include button(#3B5998);
 }
 
 .btn-box {
@@ -59,18 +74,10 @@
 }
 
 .btn-focus {
-
-}
-
-.btn-big {
-  background-color: white;
-  color: #828282;
-  font-family: raleway;
-  font-weight: 700;
-  font-size: 1.4em;
-  text-transform: none;
-  text-align: left;
-  width: 100%;
+  font-weight: bold !important;
+  .fa {
+    font-weight: normal !important;
+  }
 }
 
 .btn-sticky {
@@ -82,6 +89,7 @@
 .btn-sticky-bottom {
   top: auto;
   bottom: 0;
+  margin-bottom: 0;
 }
 
 .btn-sticky-left {
@@ -94,25 +102,22 @@
   bottom: 50%;
 }
 
-.btn-subtle, .btns-subtle a {
-  text-transform: uppercase;
-  text-decoration: none;
-  font-size: .8em;
-  border: none;
-  -webkit-appearance: none;
-  border-radius: 0;
-  margin: 0;
-  cursor: hand;
-  display: inline-block;
+.btn-subtle{
+  @include button();
+  margin-bottom: 1em;
   color: $g2;
+  border: none;
   background: none;
-  padding: 0.5em .6em .4em .6em;
+  border-radius: 0;
   &:hover {
-    color: $g3;
+    color: $g4;
     background-color: $darken1;
+    text-decoration: none;
+    border: none;
   }
   &:active {
-    color: $g3;
+    border: none;
+    color: $g4;
     background-color: $darken2;
     margin-top: 0; //Negates the  "push"-effect of normal buttons
   }
@@ -129,6 +134,7 @@
   &:hover {
     background-color: $g3;
     color: white;
+    text-decoration: none;
   }
 }
 
@@ -195,7 +201,7 @@
 .btns-list > li {
   text-transform: uppercase;
   text-decoration: none;
-  font-size: .8em;
+  span {font-size: .8em;}
   border: none;
   -webkit-appearance: none;
   border-radius: 0;
@@ -204,13 +210,24 @@
   display: block;
   color: $g3;
   @include transition(.2s);
-  a {
-    padding: 1em;
+  > a, .dropdown-trigger {
+    padding: .7em;
     display: inline-block;
+    color: $g3;
+    //height: 2.45em;
+    &:hover {
+      text-decoration: none;
+
+    }
+    @include bp-medium{
+      padding: .5em;
+    }
   }
   &:hover {
     background-color: $darken1;
     color: $g4;
+    text-decoration: none;
+
   }
   &:active {
     background-color: $darken2;
@@ -243,9 +260,9 @@
     @include box-shadow;
 
   }
-  &.voted a {
+  &[data-voted] a {
     opacity: .4;
-    &.voted-on{
+    &[data-voted-on]{
       opacity: 1;
     }
   }
@@ -263,7 +280,8 @@
     color: white;
     @include transition(.2s);
     &:hover {
-      opacity: 1;
+      opacity: .8;
+      text-decoration: none;
     }
     &:active{
       top: 2px;
@@ -317,14 +335,10 @@
 
 .btns-signup {
   text-align: center;
-  margin: 2em auto 2.6em;
-  li {
-    margin-bottom: 1em;
-  }
+  margin: 2em auto 1.6em;
   .btn {
     font-size: 1em;
-    width: 15em;
-    padding: 0.8em 1em;
+    width: 16em;
     text-transform: none;
     text-align: left;
   }
@@ -350,10 +364,18 @@
 
 .btns-sticky-bottom {
   bottom: 0;
+  top: auto;
+  margin-bottom: 0;
 }
 
 .btns-vertical > li {
   display: inline-block;
+}
+
+.btns--vote a{
+  padding: .5em;
+  margin: 0;
+  color: $g2;
 }
 
 //h1 + .btns-vertical {
@@ -378,27 +400,6 @@ h1 + .btn {
   text-align: center;
 }
 
-.tabs {
-  text-align: center;
-  margin-bottom: 0em;
-  .tabs-current {
-    background-color: white !important;
-    pointer-events: none;
-  }
-  li:hover{
-    background-color: white !important;
-  }
-  li:active {
-    background-color: $g0 !important;
-  }
-}
-
-.cover .tabs {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  li a {
-    background-color: $lighten5;
-  }
+.expander-content {
+  display: none;
 }

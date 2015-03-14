@@ -1,26 +1,25 @@
 -@argument ||= resource
-= semantic_form_for(@argument) do |f|
-  .box.form-toggle
+= semantic_form_for((@argument.new_record? ? [@forum, @argument] : [@argument])) do |f|
+  .box.form-toggle[data-intro= t('intro.argument.toggle')]
     = f.input :pro, as: :toggle_radio, :collection => radio_values_for_pro_con(@argument)
   .box.argument[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
-    section.smallpadded
+    section.smallpadded.form-filled
       -if @argument.errors.any?
         #error_explanation
-          h2= pluralize(@argument.errors.count, "error") + t("error_prohibited")
+          h2= pluralize(@argument.errors.count, 'error') + t('error_prohibited')
           ul
             -@argument.errors.full_messages.each do |msg|
               li= msg
-      = f.text_field "title", class: "form-input-title", placeholder: t("arguments.form.title")
-
-      = f.text_area "content", class: "form-input-content", placeholder: t("arguments.form.content"), rows: "10"
-      /p.helpertext= raw t("arguments.form.helper.content")
-      - if policy(@argument).trash?
-        = f.label :is_trashed
-        = f.check_box :is_trashed
-      .row
-        .span8
-          fieldset.control-group
-          = f.hidden_field(:motion_id)
+      = f.inputs
+        = f.input :title, input_html: {class: 'form-input-title'}, label: false
+        = f.input :content, input_html: {class: 'form-input-content', rows: '10'}, label: false
+        /p.helpertext= raw t("arguments.form.helper.content")
+        - if policy(@argument).trash? && !@argument.new_record?
+          = f.input :is_trashed, as: :reverse_boolean
+        .row
+          .span8
+            fieldset.control-group
+            = f.hidden_field(:motion_id)
     = render partial: 'profiles/profile_current'
     fieldset.form-actions
-      = f.submit t("arguments.form.submit"), class: "btn btn-sticky btn-sticky-bottom"
+      = f.submit t('arguments.form.submit'), class: 'btn btn-sticky btn-sticky-bottom'

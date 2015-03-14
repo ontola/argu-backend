@@ -12,7 +12,12 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require react
+//= require react_ujs
 //= require application/jquery.jeditable.mini.js
-//= require parallax
-//= require application/scroll_smooth.js
-//= require_tree ./application/briarcliff
+//= require fastclick
+//= require onclickoutside
+//= require components
+//= require ./application/briarcliff/modal
+//= require ./application/ie
+//= require ./application/alert

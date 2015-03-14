@@ -10,9 +10,38 @@ utrecht:
   slug: 'utrecht'
   web_url: 'utrecht'
   page: utrecht
+  bio: 'Mooie stad'
+  bio_long: 'Utrecht is een stad en gemeente in Nederland en de hoofdstad van de provincie Utrecht. Met 330.772 inwoners (1 mei 2014; bron: CBS) is Utrecht de vierde stad van Nederland naar inwonertal. Het stadsgewest Utrecht, de agglomeratie die samenvalt met het BRU, omvat ruim 640.000 inwoners. De gemeente Utrecht valt samen met de stad en is ingedeeld in 10 wijken.'
+  motions_count: 3
+  questions_count: 3
 #
 amsterdam:
   name: 'Gemeente Amsterdam'
   slug: 'amsterdam'
   web_url: 'amsterdam'
   page: argu
+  visibility: <%= Forum.visibilities[:closed] %>
+  motions_count: 1
+  questions_count: 0
+#
+hidden:
+  id: 140372415
+  name: 'Secret shit'
+  slug: 'secret'
+  web_url: 'secret'
+  page: argu
+  visible_with_a_link: true
+  visibility: <%= Forum.visibilities[:hidden] %>
+  motions_count: 1
+  questions_count: 0
+#
+super_hidden:
+  id: 32812423
+  name: 'Super secret shit'
+  slug: 'super_secret'
+  web_url: 'super_secret'
+  page: argu
+  visible_with_a_link: false
+  visibility: <%= Forum.visibilities[:hidden] %>
+  motions_count: 0
+  questions_count: 0

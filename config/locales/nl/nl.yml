@@ -6,72 +6,97 @@ nl:
   name_phonetic: "\\\'är-(ˌ)gyü\\"
   owner: "Thom van Kalkeren & Joep Meindertsma"
   system_not_allowed: "je hebt geen toestemming voor deze actie."
-  sign_in: "inloggen"
+  sign_in: "Inloggen"
   sign_in_facebook: "Log in met facebook"
   sign_in_twitter: "Log in met twitter"
   sign_in_existing: "Log in met een bestaand argu account:"
   forgot_password: "Wachtwoord vergeten?"
 
   sign_up: "account aanmaken"
-  sign_up_argu: "Argu account aanmaken"
-  sign_out: "uitloggen"
-  learn_more: "meer info"
+  argu_sign_up: "Argu account aanmaken"
+  sign_up_argu: "Maak Argu account"
+  sign_out: "Uitloggen"
+  learn_more: "Meer info"
   not_found_type: "%{type} niet gevonden"
-  edit: "bewerken"
+  edit: "Bewerken"
   edit_type: "%{type} bewerken"
-  read-more: "lees meer"
-  update: "bijwerken"
+  read-more: "Lees meer"
+  collapse: "Inklappen"
+  update: "Bijwerken"
   update_type: "%{type} bijwerken"
-  save: "opslaan"
-  new: "nieuw"
-  new_type: "nieuw %{type}"
-  back: "terug"
-  cancel: "annuleren"
-  show: "tonen"
-  add: "toevoegen"
-  next: "volgende"
-  previous: "vorige"
-  older: "ouder"
-  newer: "niewer"
-  destroy: "vernietigen"
-  trash: "Wissen"
-  empty_type: "er zijn geen %{type}"
-  history: "geschiendenis"
-  pro: "voor"
-  con: "tegen"
-  search: "zoeken"
-  edited: "bewerkt"
-  deleted: "verwijderd"
-  reply: "reageer"
-  report: "rapporteer"
-  clearance: "bevoegdheid"
-  forum: "forum"
+  save: "Opslaan"
+  new: "Nieuw"
+  new_type: "Nieuw %{type}"
+  newe_type: "Nieuwe %{type}"
+  add_type: "%{type} toevoegen"
+  back: "Terug"
+  cancel: "Annuleren"
+  show: "Tonen"
+  add: "Toevoegen"
+  next: "Volgende"
+  previous: "Vorige"
+  older: "Ouder"
+  newer: "Nieuwer"
+  destroy: "Vernietigen"
+  trash: "Verbergen"
+  empty_type: "Er zijn geen %{type}"
+  history: "Geschiendenis"
+  image: "Afbeelding"
+  pro: "Voor"
+  con: "Tegen"
+  search: "Zoeken"
+  edited: "Bewerkt"
+  deleted: "Verwijderd"
+  trashed: "Verborgen"
+  reply: "Reageer"
+  report: "Rapporteer"
+  clearance: "Bevoegdheid"
+  forum: "Forum"
   trash_confirmation: "Dit object zal niet zichtbaar zijn in de publieke discussie, deze actie is ongedaan te maken."
   destroy_confirmation: "Dit object en alle bijbehorende data zal permanent verwijderd worden, deze actie is niet ongedaan te maken."
-  not_allowed: "actie niet toegestaan."
+  not_allowed: "Actie niet toegestaan."
+  error: "Fout"
   error_prohibited: " bij het opslaan:"
-  outdated_browser: "Je gebruikt een <strong>achterhaalde en mogelijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
+  outdated_browser: "Je gebruikt een <strong>achterhaalde en waarschijnlijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
+  share_link:
+    header: "Link delen"
+    body: "Deel onderstaande link om direct mensen uit te nodigen naar dit forum."
   status:
     400: "Fout in de aanvraag"
   header:
-    motions: "voorstellen"
-    questions: "vraagstukken"
-#Controllers
-#Footer
+    motions: "Voorstellen"
+    activities: "Activiteit"
+    questions: "Vraagstukken"
+  site:
+    description: "Argu is een online discussieplatform waar argumenten centraal staan."
+    copyright: "Copyright © 2014-2015 Argu v.o.f."#Footer
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
 #Home
-  home_title: "Home"
+  home_title: "Argu"
   #Not logged in
   home_new_header: "Welkom bij "
   home_new_text: "Nederlands awesome slogan."
 #About
-  info: "info"
-  about_title: "Over"
+  info: "Info"
+  about:
+    title: "Over"
+    vision: "Onze visie"
+    how_argu_works: "Hoe werkt Argu?"
+    team: "Ons team"
+    product: "Een eigen forum"
+    organisations: "Argu voor organisaties"
+    governments: "Argu voor overheden"
+  how_argu_works:
+    title: "Hoe Argu werkt"
+  product:
+    title: "Ons product"
+  team:
+    title: "Ons team"
 #Users
   users_username: "gebruikersnaam"
-  users_username_or_email: "gebruikersnaam of email"
+  users_username_or_email: "email of gebruikersnaam"
   users_name: "volledige naam"
   users_name_placeholder: "Vul hier jouw volledige naam in."
   users_email: "e-mail"
@@ -82,6 +107,8 @@ nl:
   users_password_confirmation: "wachtwoord bevestigen"
   users_password_old: "oud wachtwoord"
   users_password_edit: "wachtwoord wijzigen"
+  users_password_confirmation_page_header: "Wachtwoord reset mail is verzonden"
+  users_password_confirmation_page_body: "Ga naar jouw e-mail inbox om de wachtwoord reset link te openen. Mocht je de mail niet vinden, kijk dan ook in je spam map."
   users_oauth_coupled: "gekoppelde accounts"
   users_oauth_new: "account toevoegen"
   users_oauth_login: "inloggen met"
@@ -95,7 +122,7 @@ nl:
   users_new_confirmation: "bevestigen"
   users_new_create: "account aanmaken"
   #show
-  users_show_title: "instellingen"
+  users_show_title: "Instellingen"
   #cancel
   users_cancel_title: "Argu account verwijderen"
   users_cancel_info: "Als je jouw account verwijdert, verlies je permanent toegang tot alles wat je geplaatst, gevolgd en gestemd hebt. Weet je zeker dat je jouw account wilt verwijderen?"
@@ -103,13 +130,6 @@ nl:
 
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
-
-#sort
-  sort:
-    newest: "nieuwste"
-    name: "naam"
-    score: "beste score"
-    random: "willekeurig"
 
 #datetime
   datetime_ago: "geleden"
@@ -130,5 +150,31 @@ nl:
       truncate: "..."
   type_save_success: "%{type} successvol opgeslagen"
   type_create_success: "%{type} successvol aangemaakt"
+  links_helper: "<h2>Links toevoegen</h2>
+                   <p>Je kan in jouw tekst links toevoegen met blokhaken en normale haakjes. Dat doe je als volgt:</p>
+                   <p><code>Dit is [www.argu.co](mijn website).</code></p>
+                   <p>Verschijnt als:</p>
+                   <p><code>Dit is <a href='http://www.argu.co'>mijn website</a>.</code></p>
+                   "
+  move:
+    current_forum: "Huidig forum:"
+    button_label: "Verplaats"
+  convert:
+    current_class: "Huidig type:"
+  join: "Word lid"
+  view_on_argu: "bekijk & reageer op Argu"
+  embed: "embed"
+  forms:
+    danger_zone: "Gevarenzone"
   users:
-    logged_in_banner_text: "Ingelogd als %{name}"
+    logged_in_banner_text: "%{name}"
+    registrations:
+      hints:
+        password: "Minimaal 8 karakters"
+        username: "Gebruik alleen letters, cijfers en _."
+      placeholders:
+        email: "voorbeeld@example.com"
+        password: "wachtwoord"
+        username: "gebruikersnaam"
+        password_confirmation: "Zelfde als hierboven"
+  document_missing: "Dit document lijkt niet te bestaan."

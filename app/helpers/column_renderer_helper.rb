@@ -13,6 +13,8 @@ module ColumnRendererHelper
       when Vote then 'votes/show'
       when Opinion then 'opinions/show'
       when Question then 'questions/show'
+      when Comment then 'comments/show'
+      when GroupResponse then 'group_responses/show'
       else 'column_renderer/show'
     end
 
@@ -36,15 +38,17 @@ module ColumnRendererHelper
 
   # This generates the translations for the header text, e.g. "arguments.header.pro"
   def header_text(options, key)
-    if !(defined?(options[:header_text]) && options[:header_text] == false)
+    if !defined?(options[:header_text]) || options[:header_text].blank? || options[:header_text] == false
       I18n.t("#{options[:collection_model].to_s.pluralize.downcase}.header.#{key}")
+    elsif defined?(options[:header_text]) && options[:header_text].present?
+      options[:header_text][key]
     end
   end
 
   def show_new_buttons(options, key)
     if options[:buttons_form_on_empty] && options[:collection].blank?
       render partial: "#{options[:collection_model].name.tableize}/form", locals: options.merge({pro: key, resource: options[:collection_model].new(pro: key, motion: @motion)})
-    elsif options[:buttons_url].present?
+    elsif options[:show_new_buttons] != false && options[:buttons_url].present?
       render partial: 'column_renderer/button', locals: options.merge({pro: key})
     end
   end

@@ -1,8 +1,8 @@
-=form_tag(polymorphic_path([resource, :comments]), :method => "post", id: "cf" + parent_id.to_s, class: "comment_form", style: visible ? "" : "display: none;") do
+=form_tag(polymorphic_path([resource, :comments]), :method => "post", id: "cf" + parent_id.to_s, class: "comment_form", style: visible ? "" : "display: none;", data: remote_if_user) do
   section.smallpadded
-    =text_area_tag :comment,"", :rows => 2, :cols => 50, placeholder: t("comments.placeholder"), class: "form-input-content"
+    =text_area_tag :comment,"", :rows => 2, :cols => 50, placeholder: t("comments.placeholder"), class: "form-input-content margin-bottom"
     -unless parent_id.blank?
       input[type="hidden" class= "btn" name="parent_id" value ="#{parent_id}"]
-  =render current_profile, locals= {resource: resource}
+  =render current_profile, locals= {resource: resource} if current_profile.present?
   .actions
     =submit_tag t("opinions.show.reply"), class: "btn btn-sticky btn-sticky-bottom"
