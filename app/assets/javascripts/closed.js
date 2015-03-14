@@ -23,7 +23,3 @@
 //= require ./application/briarcliff/modal
 //= require ./application/ie
 //= require ./application/alert
-
-//  Fixes read more buttons that won't open
-//= require reflux.min
-//= require_tree ./stores
