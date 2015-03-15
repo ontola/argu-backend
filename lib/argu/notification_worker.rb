@@ -13,8 +13,8 @@ class Argu::NotificationWorker
 
       build_notifications recipients, @activity
 
-      #mailer = Argu::ActivityMailer.new(@activity)
-      #mailer.send!
+      mailer = Argu::ActivityMailer.new(@activity, recipients)
+      mailer.send!
     end
   end
 
