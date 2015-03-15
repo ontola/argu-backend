@@ -1,4 +1,4 @@
-- top_comment = model.top_comment(show_trashed?)
+- top_comment = model.top_comment
 .box.box-with-btns.argument[id="#{model.id.present? ? 'argument_' + model.id.to_s : ''}" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed}"]
   section
     =contextual_link_to argument_path(model)
