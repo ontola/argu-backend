@@ -124,8 +124,11 @@
 }
 
 .cover-image-empty {
-  height: 64px;
+  height: 62px;
   background-color: $g2;
+  @include bp-medium{
+    height: 51px;
+  }
 }
 
 .cover-header-bottom {
