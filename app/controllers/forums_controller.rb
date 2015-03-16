@@ -13,10 +13,10 @@ class ForumsController < ApplicationController
     current_context @forum
 
     questions = policy_scope(@forum.questions.trashed(show_trashed?))
-    motions_without_questions = policy_scope(@forum.motions.trashed(show_trashed?)).reject { |m| m.question_answers.present? }
+    question_answers = QuestionAnswer.arel_table
+    motions_without_questions = policy_scope(@forum.motions.trashed(show_trashed?)).joins(:question_answers)
+                                    .where.not(question_answers[:question_id].in(questions .pluck(:id)))
 
-    #t_motions = Arel::Table.new(:motions)
-    #motions_without_questions = policy_scope(@forum.motions.trashed(show_trashed?)).join(t_motions).on(:  question_answers[:question_id].eq(:motions[:id]))
 
     @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(@forum).show?
 

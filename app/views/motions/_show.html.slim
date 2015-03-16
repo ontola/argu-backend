@@ -16,13 +16,13 @@
       span.info= "#{t('motions.preview.pro', count: model.argument_pro_count)}, #{t('motions.preview.con', count: model.argument_con_count)}"
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
-        - model.arguments.trashed(show_trashed?).where(pro: true).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0,3].each do |argument|
+        - model.arguments.where(pro: true).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0,3].each do |argument|
           li= link_to argument_path(argument)
               h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
                 span.fa.fa-plus
                 span.icon-left= argument.title
       ul.box-list.box-list--arguments.box-list--icons
-        - model.arguments.trashed(show_trashed?).where(pro: false).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0, 3].each do |argument|
+        - model.arguments.where(pro: false).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0, 3].each do |argument|
           li= link_to argument_path(argument)
               h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
                 span.fa.fa-minus

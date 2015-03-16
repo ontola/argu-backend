@@ -56,8 +56,7 @@ module HeaderHelper
               title: t('profiles.switch'),
               items: managed_pages_items
           }
-        ],
-        current_actor: JSON.parse(render(template: 'users/current_actor.json', with_format: :json))['current_actor']
+        ]
     }
   end
 

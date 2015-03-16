@@ -45,7 +45,8 @@ module ActivityStringHelper
   end
 
   def as_for_comments_create(act, owner_string, your, embedded_link= false)
-    thing = embedded_link ? link_to(type_for(act.trackable.commentable), act.trackable.commentable, title: act.trackable.commentable.display_name) : type_for(act.trackable.commentable)
+    commentable = act.trackable.commentable
+    thing = embedded_link ? link_to(type_for(commentable), commentable, title: commentable.display_name) : type_for(commentable)
     activity_string = t("activities.comments.create#{your}", thing: thing)
     "#{owner_string} #{activity_string}"
   end

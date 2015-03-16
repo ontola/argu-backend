@@ -105,6 +105,12 @@ group :production, :staging do
   gem 'rack-test', '~> 0.6.2'
 end
 
+group :staging, :development do
+  gem 'rack-mini-profiler'
+  gem 'stackprof'
+  gem 'flamegraph'
+end
+
   gem 'briarcliff', '~> 0.0.9'
   #gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
   #gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin

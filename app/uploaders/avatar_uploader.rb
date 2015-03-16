@@ -45,10 +45,12 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :icon do
+    process convert: 'jpg'
     process :resize_to_fill => [64, 64, gravity= 'center']
   end
 
   version :avatar do
+    process convert: 'jpg'
     process :resize_to_fill => [256, 256, gravity= 'center']
   end
 
