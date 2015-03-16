@@ -13,7 +13,11 @@
     section.section-info.section-info--right.section-info--accepted
       span.fa.fa-check
       span.icon-left= t('accepted')
-  -else
+  -elsif
     section.section-info.section-info--right.section-info--rejected
       span.fa.fa-times
       span.icon-left= t('rejected')
+  -else
+    section.section-info.section-info--right.section-info--contemplating
+      span.fa.fa-ellipsis
+      span.icon-left= t('contemplating')
