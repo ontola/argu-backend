@@ -48,10 +48,12 @@ class ForumsController < ApplicationController
     authorize @forum, :update?
 
     @forum.reload if process_cover_photo @forum, permit_params
-    if @forum.update permit_params
-      redirect_to settings_forum_path(@forum, tab: params[:tab])
-    else
-      render 'settings'
+    respond_to do |format|
+      if @forum.update permit_params
+        format.html { redirect_to settings_forum_path(@forum, tab: params[:tab]) }
+      else
+        format.html { render 'settings' }
+      end
     end
   end
 
