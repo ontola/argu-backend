@@ -241,7 +241,7 @@
   width: 50%;
   width: calc(50% + 0.5em);
   margin-left: -0.5em;
-  padding: 0.5em;
+  padding: 0 0.5em;
   display: inline-block;
   vertical-align: top;
   @include bp-medium{
