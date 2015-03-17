@@ -24,14 +24,16 @@ class Argu::ActivityMailer
   def send!
     begin
       if @recipients.length > 0
-        RestClient.post "https://api:key-#{Rails.application.secrets.mailgun_api_token}"\
-    "@api.mailgun.net/v2/sandbox45cac23aba3c496ab26b566ddae1bd5b.mailgun.org/messages",
-                        from: Rails.application.secrets.mailgun_sender,
-                        to: @recipients.keys.join(','),
-                        'recipient-variables' => @recipients.to_json,
-                        subject: subject,
-                        text: 'text',
-                        html: render_mail.to_str # This MUST say .to_str otherwise it will crash on SafeBuffer
+        unless Rails.env.development?
+          RestClient.post "https://api:key-#{Rails.application.secrets.mailgun_api_token}"\
+      "@api.mailgun.net/v2/sandbox45cac23aba3c496ab26b566ddae1bd5b.mailgun.org/messages",
+                          from: Rails.application.secrets.mailgun_sender,
+                          to: @recipients.keys.join(','),
+                          'recipient-variables' => @recipients.to_json,
+                          subject: subject,
+                          text: 'text',
+                          html: render_mail.to_str # This MUST say .to_str otherwise it will crash on SafeBuffer
+        end
       else
         logger.info 'No recepients'
       end
