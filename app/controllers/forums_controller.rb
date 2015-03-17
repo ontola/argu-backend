@@ -13,10 +13,13 @@ class ForumsController < ApplicationController
     current_context @forum
 
     questions = policy_scope(@forum.questions.trashed(show_trashed?))
-    question_answers = QuestionAnswer.arel_table
-    motions_without_questions = policy_scope(@forum.motions.trashed(show_trashed?)).joins(:question_answers)
-                                    .where.not(question_answers[:question_id].in(questions .pluck(:id)))
 
+    question_answers = QuestionAnswer.arel_table
+    motions = Motion.arel_table
+    sql = motions.where(motions[:forum_id].eq(@forum.id)).join(question_answers, Arel::Nodes::OuterJoin)
+              .on(question_answers[:motion_id].eq(motions[:id])).where(question_answers[:motion_id].eq(nil))
+              .project(motions[Arel.star])
+    motions_without_questions = Motion.find_by_sql(sql)
 
     @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(@forum).show?
 

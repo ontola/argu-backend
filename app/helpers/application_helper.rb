@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include ActivityStringHelper, AlternativeNamesHelper
 
   def active_for_user?(feature, user)
     begin
