@@ -3,12 +3,12 @@
   -if model.cover_photo.present?
     = contextual_link_to motion_path(model)
       .box-image[style="background-image: url('#{model.cover_photo.url(:box)}'); "]
-  section.section-info.sta-bg
+  section.section-info.motion-bg
     span[class="fa fa-#{motion_icon(model.forum)}"]
     span.icon-left= motion_type(model.forum)
   section[itemscope itemtype="http://www.schema.org/Answer"]
     = contextual_link_to motion_path(model)
-      h3.sta-t[itemprop="headline"]= model.title
+      h3.motion-t[itemprop="headline"]= model.title
     p[itemprop="text" class='wrap-normal']
       /= model.supped_content[0..150] + (model.supped_content[151] ? '...' : '')
       ==model.truncate_preview(150, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read-more'), motion_path(model))})

@@ -16,12 +16,12 @@
   div[data-intro= t('intro.question.back')]= to_parent
   =render partial: 'contextualize/context_horizontal', locals: {item: @question, type: 'que'}
   .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t('intro.question.body') itemscope itemtype="http://schema.org/Question"]
-    section.section-info.que-bg
+    section.section-info.question-bg
       span[class="fa fa-#{question_icon}"]
       span.icon-left= question_type
       =render partial: 'questions/expires_at', locals: {deadline: @question.expires_at}
     section
-      h1.que-t[itemprop="headline"]= @question.title
+      h1.question-t[itemprop="headline"]= @question.title
       p[itemprop="text"]= @question.supped_content.html_safe
       span.hidden[itemprop="answerCount"]= @question.motions_count
     /- if @question.tags.present?
