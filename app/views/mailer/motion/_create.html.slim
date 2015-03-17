@@ -4,10 +4,10 @@
   - question = activity.recipient
   .box.box-grid.question
     -if question.cover_photo.present?
-      = link_to question_path(question, host: 'https://argu.co') do
+      =link_to url_for([question, host: 'https://argu.co'])
         .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
     section.section-info.question-bg
       span= t('questions.type')
     section
-      = link_to question_path(question, host: 'https://argu.co') do
-        h2.question-t = question.title
+      =link_to question_path(question, host: 'https://argu.co') do
+        h2.question-t= question.title

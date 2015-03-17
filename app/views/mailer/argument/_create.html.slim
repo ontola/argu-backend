@@ -1,0 +1,9 @@
+.box.box-grid.question
+  -if question.cover_photo.present?
+    =link_to url_for([activity.recipient, host: 'https://argu.co'])
+      .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
+  section.section-info.que-bg
+    span= t("#{activity.recipient.class_name}.type")
+  section
+    =link_to url_for([question, host: 'https://argu.co'])
+      h2.que-t= question.title

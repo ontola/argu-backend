@@ -36,7 +36,7 @@ class Argu::ActivityMailer
         logger.info 'No recepients'
       end
     rescue => e
-      logger.error e.response
+      logger.error e
       raise e
     end
   end

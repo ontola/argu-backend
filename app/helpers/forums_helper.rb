@@ -7,8 +7,8 @@ module ForumsHelper
 
   def forum_title_dropdown_items(resource)
     link_items = []
-    current_profile.present? && current_profile.memberships.each do |membership|
-      link_items << link_item(membership.forum.display_name, url_for(membership.forum), image: membership.forum.profile_photo.url(:icon))
+    current_profile.present? && current_profile.memberships.joins(:forum).each do |membership|
+      link_items << link_item(membership.forum.display_name, forum_path(membership.forum.web_url), image: membership.forum.profile_photo.url(:icon))
     end
 
     divided = false

@@ -68,6 +68,7 @@ Argu::Application.routes.draw do
     get :selector, on: :collection
     post :memberships, on: :collection
     resources :memberships, only: [:create, :destroy]
+    resources :managers, only: [:new, :create, :destroy]
     resources :questions, only: [:index, :new, :create]
     resources :motions, only: [:new, :create]
     resources :arguments, only: [:new, :create]

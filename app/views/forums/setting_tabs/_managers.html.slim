@@ -1,9 +1,13 @@
-=semantic_form_for resource do |f|
-  =hidden_field_tag 'tab', 'managers'
-  ul.role-list
-    = link_to_add_association 'add manager', f, :memberships, class: 'btn', locals: {resource: resource}
-    = f.semantic_fields_for :memberships, where: {}, include_id: false do |manager|
-      = render 'membership', :f => manager
-  =f.actions do
-    = f.semantic_errors
-    =f.action :submit, as: :button, label: 'save', class: 'btn'
+
+h1 Managers
+
+table.styled
+  -@forum.managers.preload(:profile).each do |manager|
+    tr
+      =image_tag manager.profile.profile_photo, class: 'profile-photo'
+      span
+        =manager.profile.display_name
+        p.tooltip.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
+          =link_to t('forums.managers.revoke'), forum_manager_path(@forum, manager.profile_id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
+
+  =link_to 'add manager', new_forum_manager_path(@forum), class: 'btn'
