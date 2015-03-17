@@ -12,11 +12,13 @@ nl:
       profile: "Profiel instellingen"
       terminology: "Terminologie"
       managers: "Beheerders"
+      manager: "beheerder"
       advanced: "Geavanceerd"
       bio: "Doel van forum"
       bio_long: "Meer informatie"
       hints:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de titel van het forum. Maximaal 140 karakters."
+        remove_admin: "Dit trekt slechts administratieve rechten in"
     statistics:
       title: "Statistiek"
       memberships: "Leden"
@@ -62,6 +64,8 @@ nl:
       body: "Een Argu forum is een discussie omgeving waar oplossingen voor vraagstukken worden gedeeld en besproken. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"
     follow: "Volgen"
     unfollow: "Ontvolgen"
+    managers:
+      revoke: "Intrekken"
   activerecord: #These currently aren't used for forms.
     attributes:
       forum:

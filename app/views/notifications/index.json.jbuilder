@@ -7,5 +7,10 @@ json.notifications do
     json.url url_for(notification.activity.trackable)
     json.read notification.read_at.present?
     json.read_at notification.read_at
+    json.creator do
+      json.avatar do
+        json.url notification.activity.owner.profile_photo.url(:avatar)
+      end
+    end
   end
 end

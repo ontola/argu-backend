@@ -63,8 +63,8 @@ $(function (){
         timeoutValue = 30000,
         notificationTimeout;
 
-    function refreshComments() {
-        if (lastNotification && !refreshing && Date.now() - lastNotificationCheck >= 15000) {
+    function refreshNotifications() {
+        if (!refreshing && (!window.lastNotification || Date.now() - lastNotificationCheck >= 15000)) {
             window.clearTimeout(notificationTimeout);
             refreshing = true;
             lastNotificationCheck = Date.now();
@@ -74,7 +74,7 @@ $(function (){
                 dataType: 'json',
                 async: true,
                 headers: {
-                    lastNotification: lastNotification
+                    lastNotification: window.lastNotification
                 },
                 success: function (data, status, xhr) {
                     if (xhr.status == 200) {
@@ -96,7 +96,7 @@ $(function (){
 
     function resetTimeout() {
         window.clearTimeout(notificationTimeout);
-        notificationTimeout = window.setTimeout(refreshComments, timeoutValue);
+        notificationTimeout = window.setTimeout(refreshNotifications, timeoutValue);
     }
     resetTimeout();
 
@@ -122,14 +122,14 @@ $(function (){
                 resetTimeout();
             } else {
                 timeoutValue = 30000;
-                refreshComments();
+                refreshNotifications();
             }
         }
 
         document.addEventListener(visibilityChange, handleVisibilityChange, false);
         $(document).on('pjax:complete', function (e,xhr) {
             if (Date.parse(xhr.getResponseHeader('lastNotification')) > Date.parse(window.lastNotification)) {
-                refreshComments();
+                refreshNotifications();
             } else {
                 resetTimeout();
             }

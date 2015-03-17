@@ -8,6 +8,7 @@ class Forum < ActiveRecord::Base
   has_many :arguments, inverse_of: :forum
   has_many :memberships
   accepts_nested_attributes_for :memberships
+  has_many :managers, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
   has_many :votes, inverse_of: :forum
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
   has_many :activities, as: :trackable, dependent: :destroy

@@ -83,6 +83,20 @@ var Notifications = React.createClass({
     mixins: [ScrollLockMixin],
 
     getInitialState: function () {
+        if (typeof($) !== "undefined") {
+            $.ajax({
+                type: 'GET',
+                url: ['/notifications', this.props.id].join('/'),
+                dataType: 'json',
+                async: true,
+                success: function (data) {
+                    NotificationActions.notificationUpdate(data.notifications);
+                },
+                error: function () {
+                    console.log('failed');
+                }
+            });
+        }
         return this.props;
     },
 

@@ -29,7 +29,8 @@ class ForumPolicy < RestrictivePolicy
                    :cover_photo_original_h, :cover_photo_box_w, :cover_photo_crop_x, :cover_photo_crop_y,
                    :cover_photo_crop_w, :cover_photo_crop_h, :cover_photo_aspect,
                    :uses_alternative_names, :questions_title, :questions_title_singular, :motions_title,
-                   :motions_title_singular, :arguments_title, :arguments_title_singular] if update?
+                   :motions_title_singular, :arguments_title, :arguments_title_singular,
+                   :profile_id] if update?
     attributes << [:visibility, :visible_with_a_link, :page_id] if change_owner?
     attributes
   end
@@ -114,6 +115,14 @@ class ForumPolicy < RestrictivePolicy
   def is_manager?
     _mems = user.profile if user
     user && (user.profile.page_memberships.where(page: record.page, role: PageMembership.roles[:manager]).present? || user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || staff?
+  end
+
+  def add_manager?(user)
+    is_owner?
+  end
+
+  def remove_manager?(user)
+    is_owner?
   end
 
   # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta
