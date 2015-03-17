@@ -90,24 +90,29 @@
   vertical-align: bottom;
   .dropdown {
     display: inline-block;
+    background-color: $blu;
   }
   .dropdown-trigger {
-    padding: 1em;
+    padding: 20px;
     position: relative;
     display: inline-block;
-    background-color: white;
-    color: #303030;
+    color: white;
+    @include transition(.2s both);
     @include bp-medium {
       font-size: 1em;
     }
     &:hover{
-      background-color: $lighten6;
+      background-color: $lighten2;
+    }
+    &:active, .dropdown-active{
+      background-color: $lighten2;
     }
     margin-bottom: 0;
-    font-size: 1.3em;
+    font-size: 23px;
     min-height: 64px;
     @include bp-medium {
       min-height: 50px;
+      padding: 18px;
     }
   }
   .dropdown-content{
@@ -119,12 +124,11 @@
 }
 
 .cover-image-empty {
-  height: 64px;
+  height: 62px;
   background-color: $g2;
-}
-
-.cover-switcher .dropdown-active .dropdown-trigger {
-  background-color: $lighten5 !important;
+  @include bp-medium{
+    height: 51px;
+  }
 }
 
 .cover-header-bottom {

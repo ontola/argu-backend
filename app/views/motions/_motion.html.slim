@@ -3,9 +3,9 @@
   -if motion.cover_photo.present?
     = contextual_link_to motion_path(motion) do
       .box-image[style="background-image: url('#{motion.cover_photo.url(:box)}'); "]
-  section.section-info.sta-bg
+  section.section-info.motion-bg
     span[class="fa fa-#{motion_icon}"]
     span.icon-left= motion_type
   section
     = contextual_link_to motion_path(motion) do
-      h2.sta-t[itemprop="headline"]= motion.title
+      h2.motion-t[itemprop="headline"]= motion.title

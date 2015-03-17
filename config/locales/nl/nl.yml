@@ -78,6 +78,7 @@ nl:
   closed: "Gesloten"
   accepted: "Aangenomen"
   rejected: "Afgewezen"
+  contemplating: "In overweging"
 #Home
   home_title: "Argu"
   #Not logged in

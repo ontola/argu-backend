@@ -1,9 +1,9 @@
 .box[class="#{'trashed' if motion.is_trashed?}"]
-  section.section-info.sta-bg
+  section.section-info.motion-bg
     span[class="fa fa-#{motion_icon}"]
     span.icon-left= motion_type
   section
-    h1.sta-t= motion.title
+    h1.motion-t= motion.title
     p= motion.supped_content.html_safe
   /TODO: Fix tags link
   /- if motion.tags.present?

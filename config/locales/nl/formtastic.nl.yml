@@ -55,6 +55,7 @@ nl:
         bio: "Doel van forum"
         bio_long: "Meer informatie"
         scope: "Vorm"
+        naam: "Naam van forum"
       group:
         name: "Naam"
     hints:
