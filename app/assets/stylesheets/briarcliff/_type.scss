@@ -24,17 +24,17 @@ h1 {
 }
 
 h2 {
-  font-size: 1.5em;
+  font-size: 1.4em;
   @include bp-large {
-    font-size: 1.4em;
+    font-size: 1.3em;
   }
   @include bp-medium {
-    font-size: 1.3em;
+    font-size: 1.2em;
   }
 }
 
 h3 {
-  font-size: 1.4em;
+  font-size: 1.3em;
   @include bp-large {
     font-size: 1.3em;
   }

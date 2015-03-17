@@ -13,9 +13,6 @@ section {
   background-color: $g3;
   color: white;
   text-transform: uppercase;
-  + section {
-    border-top: none;
-  }
   .fa-group {
     font-size: 0.7em;
   }
@@ -27,10 +24,6 @@ section.unpadded {
 
 section.smallpadded {
   padding: 1.1em 1em 0em 1em;
-}
-
-section + section {
-  border-top: solid 1px $g1;
 }
 
 .section-small {
