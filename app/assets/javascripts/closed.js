@@ -17,6 +17,7 @@
 //= require reflux.min
 //= require application/jquery.jeditable.mini.js
 //= require fastclick
+//= require isotope.pkgd.min
 //= require onclickoutside
 //= require_tree ./stores
 //= require components
