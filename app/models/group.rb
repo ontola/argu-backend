@@ -11,9 +11,9 @@ class Group < ActiveRecord::Base
     self.name
   end
 
-  def self.ordered (coll=[])
+  def self.ordered (coll=[], keys= [])
     grouped = coll.group_by { |g| g.group }
-    grouped.keys.map { |g| {g => GroupResponse.ordered(grouped[g]) } }.reduce(&:merge) || []
+    (keys + grouped.keys).map { |g| {g => GroupResponse.ordered(grouped[g] || {}) } }.reduce(&:merge)
   end
 
 end

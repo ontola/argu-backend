@@ -5,9 +5,10 @@ ul
     li
       h3= group.display_name
       table.styled
-        -group.members.each do |member|
+        -group.group_memberships.each do |member|
           tr
-            td= member.display_name
+            td= member.member.display_name
+            td= link_to t('destroy'), group_membership_path(member), data: {method: :delete, 'skip-pjax' => true, confirm: t('destroy_confirmation')}
       =link_to 'add member', add_forum_group_path(@forum, group)
 br
 =link_to 'add group', new_forum_group_path(@forum), class: 'btn'
