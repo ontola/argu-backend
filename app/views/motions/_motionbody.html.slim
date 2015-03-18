@@ -25,3 +25,6 @@
     - if active_for_user? :notifications, current_user
       li
         ul= react_component 'HyperDropdown', motion_items(motion), {prerender: true}
+    - if active_for_user? :share, current_user
+      li
+        ul= react_component 'HyperDropdown', share_items(motion), {prerender: true}

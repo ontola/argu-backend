@@ -162,7 +162,7 @@ var LinkItem = React.createClass({
 
         return (<li className={this.props.type}>
             {divider}
-            <a href={_url(this.props.url, this.props)} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} className={className}>
+            <a href={this.props.url} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} className={className}>
                 {_image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>

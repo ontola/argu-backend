@@ -74,6 +74,17 @@
   .btns-list {
     display: block;
     clear: both;
+    @include bp-medium{
+      > li{
+        font-size: 1.3em;
+      }
+      span{
+        display: none;
+        &.fa{
+          display: inline-block;
+        }
+      }
+    }
   }
 }
 

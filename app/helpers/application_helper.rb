@@ -55,6 +55,22 @@ module ApplicationHelper
     end
   end
 
+  def share_items(resource)
+    link_items = []
+    url = CGI.escape(url_for([resource, only_path: false]))
+    #image = resource.display_name
+    facebook_url = "https://www.facebook.com/dialog/feed?app_id=#{Rails.application.secrets.facebook_app_id}&display=#{resource.display_name}&link=#{url}&redirect_uri=#{url}"
+    twitter_url = "https://twitter.com/intent/tweet?url=#{url}&text=#{resource.display_name}%20%23Argu"
+    linkedin_url = "http://www.linkedin.com/shareArticle?url=#{url}"
+
+
+    link_items << link_item('Facebook', facebook_url, fa: 'facebook')
+    link_items << link_item('Twitter', twitter_url, fa: 'twitter')
+    link_items << link_item('LinkedIn', linkedin_url, fa: 'linkedin')
+
+    dropdown_options(t('share'), [{items: link_items}], fa: 'fa-share')
+  end
+
   def process_cover_photo(object, _params)
     if params[object.class.name.downcase][:cover_photo].present?
       object.assign_attributes(_params.except(:cover_photo))
