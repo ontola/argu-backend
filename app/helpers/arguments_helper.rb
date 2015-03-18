@@ -28,16 +28,19 @@ private
   end
 
 def argument_items(argument)
-  if active_for_user?(:notifications, current_user)
-    divided = true
-    link_items = []
-    if current_profile.following?(argument)
-      link_items << link_item(t('forums.unfollow'), follows_path(argument_id: argument.id), fa: 'times', divider: 'top', data: {method: 'delete', 'skip-pjax' => 'true'})
-    else
-      link_items << link_item(t('forums.follow'), follows_path(argument_id: argument.id), fa: 'check', divider: 'top', data: {method: 'create', 'skip-pjax' => 'true'})
-    end
-    dropdown_options('argument', [{items: link_items}], fa: 'fa-gear')
+  divided = true
+  link_items = []
+  if policy(argument).update?
+    link_items << link_item(t('edit'), edit_argument_path(argument), fa: 'pencil')
   end
+  if active_for_user?(:notifications, current_user)
+    if current_profile.following?(argument)
+      link_items << link_item(t('forums.unfollow'), follows_path(argument_id: argument.id), fa: 'bell-slash', data: {method: 'delete', 'skip-pjax' => 'true'})
+    else
+      link_items << link_item(t('forums.follow'), follows_path(argument_id: argument.id), fa: 'bell', data: {method: 'create', 'skip-pjax' => 'true'})
+    end
+  end
+  dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-gear')
 end
 
 end

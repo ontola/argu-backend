@@ -2,3 +2,5 @@ nl:
   comments:
     type: "reactie"
     placeholder: "Blijf inhoudelijk en vriendelijk :)"
+    empty:
+      name: "Plaats jouw reactie"
