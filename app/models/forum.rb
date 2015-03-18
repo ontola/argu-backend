@@ -14,6 +14,9 @@ class Forum < ActiveRecord::Base
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :groups
 
+  # Used in the forum selector
+  attr_accessor :is_checked
+
   friendly_id :web_url, use: [:slugged, :finders]
   acts_as_ordered_taggable_on :tags
   mount_uploader :profile_photo, AvatarUploader
@@ -61,6 +64,10 @@ class Forum < ActiveRecord::Base
 
   def page=(value)
     super Page.friendly.find(value)
+  end
+
+  def profile_is_member?(profile)
+    self.memberships.where(profile: profile).present?
   end
 
   def self.first_public

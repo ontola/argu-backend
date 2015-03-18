@@ -70,11 +70,14 @@ class ForumsController < ApplicationController
     @forums = Forum.top_public_forums
     authorize Forum, :selector?
 
+    @forums = @forums.map! { |f| f.is_checked = f.profile_is_member?(current_user.profile); f }
+
     render layout: 'closed'
   end
 
   # POST /forums/memberships
   def memberships
+    authorize Forum, :selector?
     @forums = Forum.public_forums.where('id in (?)', params[:profile][:membership_ids].reject(&:blank?).map(&:to_i))
     @forums.each { |f| authorize f, :join? }
 
@@ -91,7 +94,7 @@ class ForumsController < ApplicationController
       redirect_to root_path
     else
       flash[:error] = t('forums.selector.at_least_error')
-      render 'forums/selector'
+      redirect_to selector_forums_path
     end
   end
 
