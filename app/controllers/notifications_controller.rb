@@ -8,6 +8,9 @@ class NotificationsController < ApplicationController
         new_available = policy_scope(Notification).order(created_at: :desc).where('created_at > ?', since).count > 0
       end
       @notifications = get_notifications(since) if new_available
+    else
+      # This must be performed to prevent pundit errors
+      policy_scope(Notification)
     end
     if @notifications.present?
       @unread = get_unread
