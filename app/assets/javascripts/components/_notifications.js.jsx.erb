@@ -90,7 +90,9 @@ var Notifications = React.createClass({
                 dataType: 'json',
                 async: true,
                 success: function (data) {
-                    NotificationActions.notificationUpdate(data.notifications);
+                    if (data) {
+                        NotificationActions.notificationUpdate(data.notifications);
+                    }
                 },
                 error: function () {
                     console.log('failed');
