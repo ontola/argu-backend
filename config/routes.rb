@@ -79,6 +79,8 @@ Argu::Application.routes.draw do
     end
   end
 
+  resources :group_memberships, only: :destroy
+
   resources :pages, only: [:new, :create, :show, :update, :delete, :destroy] do
     get :index, on: :collection
     get :delete, on: :member

@@ -29,6 +29,6 @@ div[itemscope itemtype="http://www.schema.org/Answer"]
   .col-3
     .intro-filler[data-intro= t('intro.motion.groups') data-position= "top"]
   -@group_responses.each do |k,v|
-    =render_columns(v, header: k.name, collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: profile_in_group?(current_profile, k), buttons_param: :side, header_text: header_values(k))
+    =render_columns(v, header: k, collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: profile_in_group?(current_profile, k), buttons_param: :side, header_text: header_values(k))
 
 // Render four random motions / questions from the same forum
