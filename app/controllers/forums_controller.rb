@@ -16,7 +16,7 @@ class ForumsController < ApplicationController
 
     question_answers = QuestionAnswer.arel_table
     motions = Motion.arel_table
-    sql = motions.where(motions[:forum_id].eq(@forum.id)).join(question_answers, Arel::Nodes::OuterJoin)
+    sql = motions.where(motions[:forum_id].eq(@forum.id).and(motions[:is_trashed].eq(show_trashed?))).join(question_answers, Arel::Nodes::OuterJoin)
               .on(question_answers[:motion_id].eq(motions[:id])).where(question_answers[:motion_id].eq(nil))
               .project(motions[Arel.star])
     motions_without_questions = Motion.find_by_sql(sql)
