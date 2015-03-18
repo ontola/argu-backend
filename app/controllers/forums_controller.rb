@@ -80,11 +80,18 @@ class ForumsController < ApplicationController
 
     @memberships = @forums.map { |f| Membership.find_or_initialize_by forum: f, profile: current_user.profile  }
 
+    success = false
     Membership.transaction do
       if @memberships.length >= 2 && @memberships.all?(&:save!)
         current_user.update_attribute :finished_intro, true
-        redirect_to root_path
+        success = true
       end
+    end
+    if success
+      redirect_to root_path
+    else
+      flash[:error] = t('forums.selector.at_least_error')
+      render 'forums/selector'
     end
   end
 
