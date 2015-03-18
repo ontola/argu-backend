@@ -7,5 +7,5 @@
     =render collection: @forums, partial: 'forums/forum'
     .box.box-grid
       section
-        h3 Een eigen forum?
-        p Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Bekijk de <b>#{link_to 'product pagina', product_path}</b> of neem <b><a href="mailto:info@argu.co">contact</a></b> op voor meer informatie.
+        h3= t('forums.get_one.title')
+        p== t('forums.get_one.body', governments: (link_to t('about.governments'), governments_path), product: (link_to t('about.product').downcase, product_path))
