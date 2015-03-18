@@ -12,7 +12,7 @@ html
   body
     h1= t('mailer.direct_mail.header')
 
-    =activity_string_for(activity, true)
+    ==activity_string_for(activity, true)
 
     =link_to t('mailer.view_type', type: t("#{activity.trackable.class_name}.type")),
              polymorphic_url(activity.trackable, host: 'https://argu.co')

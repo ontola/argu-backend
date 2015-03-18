@@ -4,7 +4,11 @@ module ActivityStringHelper
     owner_string = embedded_link ? link_to(activity.owner.display_name, dual_profile_path(activity.owner)) : activity.owner.display_name
 
     parent = (activity.trackable.try(:parent) && activity.trackable.parent) || activity.recipient
-    your = parent.creator == current_user.profile ? '_your' : ''
+    if defined?(current_user)
+      your = parent.creator == current_user.profile ? '_your' : ''
+    else
+      your = ''
+    end
     case activity.trackable
       when Question
         as_for_questions_create activity, owner_string, your, embedded_link

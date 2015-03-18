@@ -13,17 +13,5 @@
     = f.input :profile_photo
     = f.input :profile_photo, as: :preview_image, html_options: {style: 'max-height: 256px'}
     = f.input :remove_profile_photo, as: :reverse_boolean
-    -if policy(resource).web_url?
-      = f.input :web_url
-  - if policy(resource).is_owner?
-    = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-      = f.input :visibility, as: :select, collection: Forum.visibilities.keys, include_blank: false
-      = f.input :visible_with_a_link, as: :reverse_boolean
-      - if resource.full_access_token.present?
-        = text_field_tag 'link', "#{forum_url(resource)}?at=#{resource.access_token}", onClick: 'this.setSelectionRange(0, this.value.length)'
-        p= "Follows: #{resource.full_access_token.usages}"
-        p= "Sign-ups: #{resource.full_access_token.sign_ups}"
-      -if policy(resource).change_owner?
-        = f.input :page
   = f.actions do
     = f.action :submit, :as => :button
