@@ -7,7 +7,7 @@ class Argu::ActivityMailer
 
   def initialize(a, recipients)
     @activity = a
-    @recipients = recipients.select { |u| u.direct_follows_email? }.map(&:user_to_recipient_option).reduce({}, :merge)
+    @recipients = recipients.select { |u| u.class == User && u.direct_follows_email? }.map(&:user_to_recipient_option).reduce({}, :merge)
   end
 
   def recipients_for_activity(a)

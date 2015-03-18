@@ -11,10 +11,10 @@ class Argu::NotificationWorker
     if @activity.present?
       recipients = recipients_for_activity(@activity)
 
-      build_notifications recipients, @activity
-
       mailer = Argu::ActivityMailer.new(@activity, recipients)
       mailer.send!
+
+      build_notifications recipients, @activity
     end
   end
 
