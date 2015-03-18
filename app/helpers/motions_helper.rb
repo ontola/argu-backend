@@ -49,9 +49,9 @@ module MotionsHelper
     end
     if active_for_user?(:notifications, current_user)
       if current_profile.following?(motion)
-        link_items << link_item(t('forums.unfollow'), follows_path(motion_id: motion.id), fa: 'bell-slash', divider: 'top', data: {method: 'delete', 'skip-pjax' => 'true'})
+        link_items << link_item(t('forums.unfollow'), follows_path(motion_id: motion.id), fa: 'bell-slash', data: {method: 'delete', 'skip-pjax' => 'true'})
       else
-        link_items << link_item(t('forums.follow'), follows_path(motion_id: motion.id), fa: 'bell', divider: 'top', data: {method: 'create', 'skip-pjax' => 'true'})
+        link_items << link_item(t('forums.follow'), follows_path(motion_id: motion.id), fa: 'bell', data: {method: 'create', 'skip-pjax' => 'true'})
       end
     end
     dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-gear')
