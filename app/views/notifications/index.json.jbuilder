@@ -3,13 +3,13 @@ json.notifications do
   json.lastNotification @notifications.first && @notifications.first.created_at
   json.notifications @notifications do |notification|
     json.id notification.id
-    json.title activity_string_for(notification.activity)
-    json.url url_for(notification.activity.trackable)
+    json.title notification.title
+    json.url url_for(notification.url_object)
     json.read notification.read_at.present?
     json.read_at notification.read_at
     json.creator do
       json.avatar do
-        json.url notification.activity.owner.profile_photo.url(:avatar)
+        json.url notification.image
       end
     end
   end
