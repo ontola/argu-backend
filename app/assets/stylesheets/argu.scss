@@ -105,3 +105,11 @@ $maxCommentDepth: 10;
 .argument--imporant {
   background-color: $red;
 }
+
+.how-argu-works-images{
+  text-align: center;
+  li {
+    margin: 1em;
+    display: inline-block;
+  }
+}
