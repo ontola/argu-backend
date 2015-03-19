@@ -23,7 +23,7 @@ class ForumsController < ApplicationController
 
     @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(@forum).show?
 
-    render stream: false
+    render
   end
 
   def settings
