@@ -70,10 +70,10 @@ var NotificationTrigger = React.createClass({
 
     render: function () {
         var triggerClass = "dropdown-trigger " + this.props.trigger.triggerClass;
-        var label = this.state.unread > 0 ? <span className='icon-left'>{this.state.unread}</span> : null;
+        var label = this.state.unread > 0 ? <span className='notification-counter'>{this.state.unread}</span> : null;
 
         return (<div className={triggerClass} onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
-            {_image({fa: this.state.unread > 0 ? 'fa-dot-circle-o' : 'fa-circle-o'})}
+            {_image({fa: this.state.unread > 0 ? 'fa-bell' : 'fa-bell'})}
             {label}
         </div>);
     }
