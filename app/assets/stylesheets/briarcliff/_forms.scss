@@ -187,14 +187,25 @@ input[type="text"].form-input-title {
 
 .form-small {
   max-width: 16em;
-  padding-bottom: 1em;
-  padding-top: 1em;
   margin: auto;
-}
-
-.form-small .btn {
-  display: block;
-  margin: auto;
+  .btn {
+    display: block;
+    margin: auto;
+  }
+  input[type="checkbox"] {
+    width: auto !important;
+    margin: 0 1em 0em 0em;
+  }
+  label {
+    padding: 0;
+    width: 100%;
+  }
+  button {
+    position: relative;
+  }
+  .actions {
+    margin-top: 0;
+  }
 }
 
 .form-small input, .form-small button, .form-small .inline-errors, .form-filled p.inline-errors, .form-small p.inline-hints, .form-filled p.inline-hints {
@@ -202,24 +213,9 @@ input[type="text"].form-input-title {
   margin-left: 0;
 }
 
-.form-small input[type="checkbox"] {
-  width: auto !important;
-  margin: 0 1em 0em 0em;
-}
-
-.form-small label {
-  padding: 0;
-  width: 100%;
-}
-
 .formtastic button {
   @include button;
 }
-
-.form-small button {
-  position: relative;
-}
-
 .formtastic .actions {
   text-align: center;
 }
@@ -228,12 +224,6 @@ input[type="text"].form-input-title {
   clear: both;
   position: relative;
 }
-
-.form-small .actions {
-  margin-top: 0;
-}
-
-
 input[type="file"], select {
   padding: 0.3em 0em;
   font-size: 1em;
@@ -241,10 +231,6 @@ input[type="file"], select {
 
 .preview_image img {
   max-width: 100%;
-}
-
-.form-small p.inline-hints, .form-small p.inline-errors{
-  margin-left: 0;
 }
 
 .inline-errors, .inline-hints {
@@ -262,17 +248,15 @@ input:focus + p.inline-hints, textarea:focus + p.inline-hints {
   @include box-shadow-intense
 }
 
-//Test
 p.inline-hints {
   opacity: 0;
   position: absolute;
   background-color: $blu;
   color: white;
-  bottom: 100%;
+  bottom: auto;
   pointer-events: none;
   @include transition(.2s ease-in-out);
 }
-//Endtest
 
 .inline-errors {
   color: white;
