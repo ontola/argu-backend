@@ -60,6 +60,7 @@ gem 'mini_magick', '~> 3.8.1'                                             # Ruby
 #gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'
+gem 'sidekiq-logging-json'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
 gem 'jquery-pjax-rails'
