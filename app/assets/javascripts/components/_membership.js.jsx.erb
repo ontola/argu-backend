@@ -31,7 +31,7 @@ window.NewMembership = React.createClass({
             load: function(query, callback) {
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/profiles.json',
+                    url: '/p.json',
                     type: 'GET',
                     dataType: 'json',
                     data: {

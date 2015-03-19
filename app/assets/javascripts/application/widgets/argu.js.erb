@@ -23,7 +23,7 @@
                     motion.innerHTML = e.target.responseText;
                 }
             };
-            req.open("get", "//<%= Rails.application.config.host %>/motions/" + motion.id + '.widget', true);
+            req.open("get", "//<%= Rails.application.config.host %>/m/" + motion.id + '.widget', true);
             req.send();
         }
     };
@@ -42,7 +42,7 @@
                     argument.innerHTML = e.target.responseText;
                 }
             };
-            req.open("get", "//<%= Rails.application.config.host %>/arguments/" + argument.id + '.widget', true);
+            req.open("get", "//<%= Rails.application.config.host %>/a/" + argument.id + '.widget', true);
             req.send();
         }
     };

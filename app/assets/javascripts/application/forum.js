@@ -20,7 +20,7 @@ $(document).on('cocoon:after-insert', function (e, insertedItem) {
         load: function(query, callback) {
             if (!query.length) return callback();
             $.ajax({
-                url: '/users.json',
+                url: '/u.json',
                 type: 'GET',
                 dataType: 'json',
                 data: {
