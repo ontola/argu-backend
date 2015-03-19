@@ -1,4 +1,6 @@
 class Argu::NotificationWorker
+  require 'sidekiq/logging/json'
+  Sidekiq.logger.formatter = Sidekiq::Logging::Json::Logger.new
   include Sidekiq::Worker
   include MailerHelper
 
