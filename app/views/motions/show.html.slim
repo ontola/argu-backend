@@ -23,12 +23,15 @@ div[itemscope itemtype="http://www.schema.org/Answer"]
 .col-2
   .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top"]
 =render_columns(@arguments, buttons_url: new_forum_argument_path(@motion.forum, motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false, buttons_options: {data: remote_unless_user})
--if Rails.configuration.epics.opinions
+- if Rails.configuration.epics.opinions
   =render_columns(@opinions, header: t('arguments.index.opinion'))
--if Rails.configuration.epics.parties
+- if Rails.configuration.epics.parties
   .col-3
     .intro-filler[data-intro= t('intro.motion.groups') data-position= "top"]
   -@group_responses && @group_responses.each do |k,v|
-    =render_columns(v, header: k, collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: profile_in_group?(current_profile, k), buttons_param: :side, header_text: header_values(k))
+    - if v.values.map { |c| c[:collection].length }.reduce(&:+) > 0
+      =render_columns(v, header: k, collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: profile_in_group?(current_profile, k), buttons_param: :side, header_text: header_values(k)
+    - else
+      / @TODO: JOEP
 
 // Render four random motions / questions from the same forum
