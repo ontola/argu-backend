@@ -13,7 +13,7 @@ module AlternativeNamesHelper
   end
 
   def motions_type(forum= nil)
-    ((forum || @forum).motions_title if alternative_motions?(forum)) || t('motions.type')
+    ((forum || @forum).motions_title if alternative_motions?(forum)) || t('motions.plural')
   end
 
   def alternative_motions?(forum= nil)

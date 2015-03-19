@@ -7,7 +7,7 @@
     p[class='wrap-normal']
       ==model.truncate_preview(250, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read-more'), argument_path(model)) })
   - if !top_comment.present?
-    =contextual_link_to argument_path(model), class: ' btn-subtle btn-sticky btns-sticky-bottom comments-counter'
+    =contextual_link_to argument_path(model), class: ' btn-subtle btn-sticky btns-sticky-bottom read-more'
       span.icon-right reageer
       span.fa.fa-comments
   - if top_comment.present?
