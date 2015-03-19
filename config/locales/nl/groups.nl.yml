@@ -3,3 +3,4 @@
 nl:
   groups:
     type: 'Groep'
+    empty: 'Op Argu kunnen %{type} reageren ideeën. Op dit idee is nog niet gereageerd door %{type}. Laat het ze weten als je een reactie zou willen zien!'
