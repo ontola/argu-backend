@@ -51,7 +51,6 @@
   width: auto;
   display: inline-block;
   cursor: pointer;
-  @include border-radius;
   border-bottom: solid 3px darken($color, 5%);
   &:hover {
     background-color: darken($color, 5%);
