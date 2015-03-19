@@ -11,7 +11,7 @@ class MembershipsController < ApplicationController
 
       if @membership.save
         redirect_to params[:r].presence || @membership.forum,
-                    status: request.fullpath.match(/vote|comments/) ? 307 : 302
+                    status: request.fullpath.match(/\/v\/|\/c\//) ? 307 : 302
       else
         render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
       end

@@ -65,7 +65,7 @@ class ProfilesController < ApplicationController
         r = @user.r
         @user.update r: ''
         format.html { redirect_to r,
-                      status: r.match(/vote|comments/) ? 307 : 302 }
+                      status: r.match(/\/v\/|\/c\//) ? 307 : 302 }
       elsif updated
         format.html { redirect_to profile_update_path, notice: 'Profile was successfully updated.' }
         format.json { head :no_content }
