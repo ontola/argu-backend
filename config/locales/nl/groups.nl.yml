@@ -2,4 +2,9 @@
 
 nl:
   groups:
-    type: 'Groep'
+    type: "Groep"
+    empty: "Op Argu kunnen %{type} reageren ideeën. Op dit idee is nog niet gereageerd door %{type}. Laat het ze weten als je een reactie zou willen zien!"
+    new: "Groep toevoegen"
+    destroy: "Groep vernietigen"
+    member:
+      new: "Groepslid toevoegen"

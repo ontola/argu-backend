@@ -40,7 +40,8 @@
     color: $g4;
     &:after{
       content: "";
-      height: 3px;
+      height: 100%;
+      z-index: -1;
       opacity: 1;
     }
   }

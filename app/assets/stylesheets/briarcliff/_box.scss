@@ -89,19 +89,6 @@
   color: $g4;
 }
 
-.box .read-more {
-  position: absolute;
-  text-transform: uppercase;
-  font-size: 0.8em;
-  bottom: 0;
-  padding: 0.7em;
-  right: 0;
-  color: $g2;
-  &:hover{
-    color: $g4 !important;
-  }
-}
-
 .box:hover .read-more {
   color: $g3;
 }

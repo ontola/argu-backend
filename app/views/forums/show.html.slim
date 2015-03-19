@@ -47,7 +47,7 @@ div[itemscope itemtype="Thing"]
                 span.fa.fa-user-plus
                 span.icon-left= t('forums.invite_others')
             - if policy(@forum).is_manager?
-              li
+              li[class='float-right']
                 ul=render partial: 'application/menus/settings', locals: {resource: @forum}
   - if policy(@forum).show?
     =render partial: 'filter_and_sort'

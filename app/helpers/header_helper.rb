@@ -68,7 +68,7 @@ module HeaderHelper
                          type: 'notifications',
                          triggerClass: 'navbar-item'
                      },
-                     fa: 'fa-circle',
+                     fa: 'fa-bell',
                      triggerClass: 'navbar-item',
                      contentClassName: 'notifications')
   end

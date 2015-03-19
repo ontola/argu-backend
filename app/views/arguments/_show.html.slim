@@ -7,14 +7,14 @@
     p[class='wrap-normal']
       ==model.truncate_preview(250, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read-more'), argument_path(model)) })
   - if !top_comment.present?
-    =contextual_link_to argument_path(model), class: ' btn-subtle btn-sticky btns-sticky-bottom comments-counter'
+    =contextual_link_to argument_path(model), class: ' btn-subtle btn-sticky btns-sticky-bottom read-more'
       span.icon-right reageer
       span.fa.fa-comments
   - if top_comment.present?
     =link_to argument_path(model) + '#commentstitle'
       section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]
         p.wrap-normal= top_comment.is_trashed? ? '[DELETED]' : top_comment.body[0..150] + (top_comment.body[151] ? '...' : '')
-        .comments-counter
+        .read-more
           -if Rails.configuration.epics.counters
             span.icon-right= model.comments_count.to_s
           span.fa.fa-comments

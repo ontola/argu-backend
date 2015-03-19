@@ -66,6 +66,7 @@ nl:
     unfollow: "Ontvolgen"
     managers:
       revoke: "Intrekken"
+      add: "Beheerder toevoegen"
     get_one:
       title: "Een forum voor jouw organisatie?"
       body: "Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Lees meer over <b>%{governments}</b> of over <b>%{product}</b>. Neem <b><a href='mailto:info@argu.co'>contact</a></b> op voor meer informatie."
