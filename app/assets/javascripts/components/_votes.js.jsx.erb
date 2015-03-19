@@ -15,7 +15,7 @@ window.BigVote = React.createClass({
         var _this = this;
         $.ajax({
             type: 'GET',
-            url: [this.state.object_id, 'vote'].join('/'),
+            url: [this.state.object_id, 'v'].join('/'),
             dataType: 'json',
             async: true,
             success: function (data) {
@@ -58,7 +58,7 @@ window.BigVote = React.createClass({
         var _this = this;
         $.ajax({
             type: 'POST',
-            url: [this.state.object_id, 'vote', side].join('/'),
+            url: [this.state.object_id, 'v', side].join('/'),
             dataType: 'json',
             async: true,
             beforeSend: function (xhr, settings) {

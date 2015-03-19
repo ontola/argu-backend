@@ -70,7 +70,7 @@ $(function (){
             lastNotificationCheck = Date.now();
             $.ajax({
                 type: 'GET',
-                url: '/notifications',
+                url: '/n',
                 dataType: 'json',
                 async: true,
                 headers: {

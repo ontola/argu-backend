@@ -86,7 +86,7 @@ var Notifications = React.createClass({
         if (typeof($) !== "undefined") {
             $.ajax({
                 type: 'GET',
-                url: ['/notifications', this.props.id].join('/'),
+                url: ['/n', this.props.id].join('/'),
                 dataType: 'json',
                 async: true,
                 success: function (data) {
@@ -164,7 +164,7 @@ var NotificationItem = React.createClass({
         e.preventDefault();
         $.ajax({
             type: 'PUT',
-            url: ['/notifications', this.props.id].join('/'),
+            url: ['/n', this.props.id].join('/'),
             dataType: 'json',
             async: true,
             success: function (data) {
