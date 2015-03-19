@@ -35,7 +35,10 @@ body {
 }
 
 .filter-and-sort {
-  text-align: center;
+  text-align: left;
+  max-width: 1200px;
+  padding: 0em 1em;
+  margin: 0 auto;
   * {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
   }

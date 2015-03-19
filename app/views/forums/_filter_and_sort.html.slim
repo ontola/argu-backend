@@ -1,8 +1,8 @@
 /.center
     ul.btns-list
       li= react_component 'Expander', {label: t('filtersort.filter_&_sort'), expanderTarget: 'filter-and-sort', showCaret: true}, {prerender: true}
-#filter-and-sort.filter-and-sort.expander-content
-  #type
+#filter-and-sort.filter-and-sort
+  /#type
     ul.tags.tags-type
       li
         a.tag.tag-all.is-checked[data-filter="" data-forum-path="#{forum_path(@forum)}"]= t('filtersort.all')
@@ -10,7 +10,7 @@
         a.tag.tag-motions[data-filter="motion"]= t('filtersort.motions')
       li
         a.tag.tag-questions[data-filter="question"]= t('filtersort.questions')
-  - if @forum.featured_tags.present?
+  /- if @forum.featured_tags.present?
     #tags
       ul.tags[itemprop="keywords"]
         a[class="tag" data-filter="filterByTag" data-filter-value="" data-forum-path="#{forum_path(@forum)}"]
