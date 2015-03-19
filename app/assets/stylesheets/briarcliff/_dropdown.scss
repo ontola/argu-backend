@@ -29,7 +29,6 @@
   width: 15em;
   z-index: 10;
   @include box-shadow-intense;
-  @include border-radius;
   border-top-left-radius: 0;
   overflow: hidden;
   text-transform: none;
@@ -91,8 +90,6 @@
 }
 
 .dropdown-right {
-  @include border-radius;
-  border-top-right-radius: 0;
   right: 0;
   left: auto;
 }

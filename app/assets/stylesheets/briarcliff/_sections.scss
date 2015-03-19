@@ -33,9 +33,6 @@ section.smallpadded {
 
 .box .section-fill {
   background-color: $g3;
-  @include border-radius;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
   h2 {
     color: White !important;
     &:hover {
