@@ -1,3 +1,32 @@
+####
+# Routes
+# a: arguments
+# b:
+# c: comments
+# d:
+# e: [might be used for 'edits']
+# f: [RESERVED for forums]
+# g: groups
+# h: [might be used for 'history']
+# i:
+# j:
+# k:
+# l:
+# m: motions
+# n: notifications
+# o: opinions
+# p: profiles
+# q: questions
+# r:
+# s: search
+# t: tags
+# u: [might be used for 'updates']
+# v: votes
+# w:
+# x:
+# y:
+# z:
+
 Argu::Application.routes.draw do
   concern :moveable do
     get 'move', action: 'move'
@@ -8,10 +37,11 @@ Argu::Application.routes.draw do
     put 'convert', action: 'convert!'
   end
   concern :votable do
-    get 'vote' => 'votes#show', shallow: true, as: :show_vote
-    post 'vote/:for' => 'votes#create', shallow: true, as: :vote
+    get 'v' => 'votes#show', shallow: true, as: :show_vote
+    post 'v/:for' => 'votes#create', shallow: true, as: :vote
   end
 
+  resources :notifications, only: [:index, :update], path: 'n'
   put 'actors', to: 'actors#update'
 
   require 'sidekiq/web'
@@ -33,52 +63,34 @@ Argu::Application.routes.draw do
   resources :authentications, only: [:create, :destroy]
   match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
 
-  resources :users do
+  resources :users, path: 'u' do
     get :autocomplete_user_name, :on => :collection
     collection do
-      post '/search/:username' => 'users#search' #, as: 'search'
-      post '/search' => 'users#search', as: 'search'
+      post '/s/:username' => 'users#search' #, as: 'search'
+      post '/s' => 'users#search', as: 'search'
     end
   end
 
-  post 'vote/:for' => 'votes#create', as: :vote
+  post 'v/:for' => 'votes#create', as: :vote
 
-  resources :questions, except: [:index, :new, :create], concerns: [:moveable, :convertible]
+  resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible]
 
-  resources :motions, except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
+  resources :motions, path: 'm', except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
     resources :groups, only: [] do
       resources :group_responses, path: 'responses', as: 'responses', only: [:new, :create]
     end
   end
 
-  resources :arguments, except: [:index, :new, :create], concerns: [:votable] do
-    resources :comments
+  resources :arguments, path: 'a', except: [:index, :new, :create], concerns: [:votable] do
+    resources :comments, path: 'c'
     patch 'comments' => 'comments#create'
   end
 
-  resources :opinions do
-    resources :comments
+  resources :opinions, path: 'o' do
+    resources :comments, path: 'c'
   end
 
   resources :group_responses, only: [:edit, :update, :destroy], as: :responses
-
-  resources :forums, except: [:edit] do
-    get :settings, on: :member
-    get :statistics, on: :member
-    get :selector, on: :collection
-    post :memberships, on: :collection
-    resources :memberships, only: [:create, :destroy]
-    resources :managers, only: [:new, :create, :destroy]
-    resources :questions, only: [:index, :new, :create]
-    resources :motions, only: [:new, :create]
-    resources :arguments, only: [:new, :create]
-    resources :tags, only: [:show]
-    resources :groups, only: [:new, :create] do
-      get 'add', on: :member
-      post on: :member, action: :add!, as: ''
-    end
-  end
-
   resources :group_memberships, only: :destroy
 
   resources :pages, only: [:new, :create, :show, :update, :delete, :destroy] do
@@ -97,7 +109,7 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :profiles do
+  resources :profiles, path: 'p' do
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post ':id' => 'profiles#update', on: :collection
   end
@@ -107,8 +119,6 @@ Argu::Application.routes.draw do
   resources :follows, only: :create do
     delete :destroy, on: :collection
   end
-
-  resources :notifications, only: [:index, :update]
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
@@ -131,6 +141,26 @@ Argu::Application.routes.draw do
   get '/cookies', to: 'documents#show', name: 'cookies'
 
   get '/activities', to: 'activities#index'
+
+
+  resources :forums, except: [:edit], path: '' do
+    get :settings, on: :member
+    get :statistics, on: :member
+    get :selector, on: :collection
+    post :memberships, on: :collection
+    resources :memberships, only: [:create, :destroy]
+    resources :managers, only: [:new, :create, :destroy]
+    resources :questions, path: 'q', only: [:index, :new, :create]
+    resources :motions, path: 'm', only: [:new, :create]
+    resources :arguments, path: 'a', only: [:new, :create]
+    resources :tags, path: 't', only: [:show]
+    resources :groups, path: 'g', only: [:new, :create] do
+      get 'add', on: :member
+      post on: :member, action: :add!, as: ''
+    end
+  end
+  get 'forums/:id', to: 'forums#show'
+
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'
 end
