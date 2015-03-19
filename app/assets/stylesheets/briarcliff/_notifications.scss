@@ -10,6 +10,9 @@
   display: block;
   border-bottom: solid 1px $g1;
   cursor: pointer;
+  > a {
+    padding: .6em 1.1em .6em .7em;
+  }
   &:hover .notification-settings{
     opacity: 1;
   }
