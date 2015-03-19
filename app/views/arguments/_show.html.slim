@@ -15,6 +15,5 @@
       section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]
         p.wrap-normal= top_comment.is_trashed? ? '[DELETED]' : top_comment.body[0..150] + (top_comment.body[151] ? '...' : '')
         .read-more
-          -if Rails.configuration.epics.counters
-            span.icon-right= model.comments_count.to_s
+          span.icon-right= model.comments_count.to_s
           span.fa.fa-comments
