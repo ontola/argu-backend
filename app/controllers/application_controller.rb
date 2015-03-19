@@ -118,7 +118,11 @@ class ApplicationController < ActionController::Base
   end
 
   def show_trashed?
-    params[:trashed] == 'true' if policy(current_scope.model).update?
+    if policy(current_scope.model).update?
+      params[:trashed] == 'true'
+    else
+      false
+    end
   end
 
   protected
