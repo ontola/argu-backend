@@ -12,11 +12,18 @@
   overflow-y: auto;
   .box {
     pointer-events: auto;
+    text-align: left;
+  }
+  .box-small {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0em 1em 1em;
   }
   @include animation(from-top-fade .3s ease-out);
   @include bp-medium{
     //position: absolute;
   }
+  text-align: center;
 }
 
 .modal h1 {

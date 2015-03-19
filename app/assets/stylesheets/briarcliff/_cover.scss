@@ -108,7 +108,8 @@
     position: relative;
     display: inline-block;
     color: white;
-    @include transition(.2s both);
+    @include transition(.2s);
+    background-color: $blu;
     @include bp-medium {
       font-size: 1em;
     }
@@ -116,7 +117,7 @@
       background-color: $lighten2;
     }
     &:active, .dropdown-active{
-      background-color: $lighten2;
+      background-color: $lighten3 !important;
     }
     margin-bottom: 0;
     font-size: 23px;
