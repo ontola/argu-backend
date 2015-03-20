@@ -30,11 +30,11 @@
     =render @question.creator, locals= {resource: @question}
     ul.btns-list.btns-sticky.btns-sticky-bottom.btns-vertical
       -if policy(@question).destroy?
-        li= link_to url_for([@question, destroy: true]), method: :delete, data: {confirm: t('destroy_confirmation')}
+        li= link_to url_for([@question, destroy: true]), data: { confirm: t('destroy_confirmation'), method: :delete }
           span.fa.fa-close
           span.icon-left= t('destroy')
       -if policy(@question).trash?
-        li= link_to url_for(@question), method: :delete, data: { confirm: t('trash_confirmation') }
+        li= link_to url_for(@question), data: { confirm: t('trash_confirmation'), method: :delete }
           span.fa.fa-trash
           span.icon-left= t('trash')
       - if current_user.present? && policy(@question).update? || active_for_user?(:notifications, current_user)
