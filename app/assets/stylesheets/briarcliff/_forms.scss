@@ -214,7 +214,7 @@ input[type="text"].form-input-title {
 
 .form-small input, .form-small button, .form-small .inline-errors, .form-filled p.inline-errors, .form-small p.inline-hints, .form-filled p.inline-hints {
   width: 100% !important;
-  margin-left: 0;
+  margin-left: 0 !important;
 }
 
 .formtastic button {
