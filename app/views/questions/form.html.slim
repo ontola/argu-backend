@@ -30,9 +30,9 @@
                 = f.input :f_move, as: :link, url: question_move_url(@question), input_html: {data: {remote: true}, class: 'btn--warning'}
                 = f.input :f_convert, as: :link, url: question_convert_url(@question), input_html: {data: {remote: true}, class: 'btn--warning'}
         = render partial: 'profiles/profile_current'
-        /= f.actions
-          = f.submit
-        .actions[style="margin-top: 0;"]= f.submit t(:save), class: 'btn btn-sticky btn-sticky-bottom'
+        =f.actions
+          .sticky-submit
+            =f.action :submit, as: :button
   - unless alternative_questions?
     .col-3-1
       .box

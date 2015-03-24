@@ -15,5 +15,5 @@
             fieldset.control-group
             = f.hidden_field(:motion_id)
     = f.actions
-      = f.action :submit, input_html: {autocomplete: 'on', class: 'btn btn-sticky btn-sticky-bottom'}, as: :button
+      .sticky-submit= f.action :submit, as: :button
     = render partial: 'profiles/profile_current'

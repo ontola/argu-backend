@@ -90,7 +90,7 @@ nl:
       user:
         email: "email@voorbeeld.nl"
     actions:
-      create: "Create my %{model}"
+      create: "Opslaan"
       update: "Opslaan"
       reset: "Reset"
       cancel: "Teruggaan"

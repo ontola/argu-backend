@@ -298,3 +298,13 @@ p.inline-hints {
     @include spinner;
   }
 }
+.sticky-submit {
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  right: 0;
+  li {
+    margin: 0;
+  }
+}
