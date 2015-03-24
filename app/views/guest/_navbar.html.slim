@@ -12,4 +12,4 @@ nav#navbar.navbar role="navigation"
       li[tabIndex="0"]
         =link_to sign_in_modal_path, class: 'navbar-item center', remote: true do
           span.fa.fa-sign-in
-          span.icon-left= t('sign_up_sign_in')
+          span.icon-left.dont-hide= t('sign_in')
