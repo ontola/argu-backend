@@ -1,4 +1,4 @@
-class UserPolicy < ApplicationPolicy
+class UserPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :user, :scope, :session
 
