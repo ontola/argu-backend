@@ -24,7 +24,7 @@ nl:
       username: "Gebruikersnaam"
       password: "Wachtwoord"
       featured_tags: "Uitgelichte thema's"
-      web_url: "Web URL"
+      shortname: "Argu url"
       visibility: "Zichtbaarheid"
       about: "Over"
       expires_at: "Verloopt op"
@@ -50,7 +50,7 @@ nl:
         are_votes_public: "Stemmen weergeven in profiel"
       page:
         name: "Naam van pagina"
-        web_url: "Gebruikersaam URL"
+        shortname: "Argu URL"
       forum:
         bio: "Doel van forum"
         bio_long: "Meer informatie"
@@ -62,7 +62,7 @@ nl:
       tag_list: "Kies thema's die te maken hebben met jouw ondwerp."
       username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."
       cover_photo_attribution: "Als jij niet de auteursrechten de afbeelding zit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"
-      web_url: "Hiermee bepaal je via welke URL de pagina toegankelijk is. Het wijzigen van de URL kan er voor zorgen dat bestaande gedeelde links niet meer werken."
+      shortname: "Hiermee bepaal je via welke URL de pagina toegankelijk is. Het wijzigen van de URL kan er voor zorgen dat bestaande gedeelde links niet meer werken."
       question:
         title: "Een vraagstuk begint meestal met 'Hoe...' of 'Wat...'."
         content: "Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."
@@ -88,7 +88,7 @@ nl:
         title: "Plaats hier de kern van jouw argument"
         content: "Plaats hier de details en achtergrondinformatie van jouw argument."
       user:
-        email: "email@voorbeeld.nl"
+        email: "email@example.com"
     actions:
       create: "Opslaan"
       update: "Opslaan"

@@ -20,7 +20,8 @@ class PagePolicy < RestrictivePolicy
   def permitted_attributes
     attributes = super
     attributes << [:bio, :tag_list, {profile_attributes: [:id, :name, :profile_photo]}] if create?
-    attributes << :web_url if new_record? || staff?
+    attributes << [:visibility, {shortname_attributes: [:shortname]}] if new_record?
+    attributes << :visibility if is_owner?
     attributes << :page_id if change_owner?
     attributes
   end
@@ -74,11 +75,6 @@ class PagePolicy < RestrictivePolicy
   end
 
   def is_owner?
-    user && user.profile.id == record.owner_id || staff?
+    user && user.profile.id == record.try(:owner_id) || staff?
   end
-
-  def new_record?
-    record == Page || record.new_record?
-  end
-
 end

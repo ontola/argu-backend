@@ -1,14 +1,14 @@
 class GroupsController < ApplicationController
 
   def new
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.new
 
   end
 
   def create
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.new
     @group.attributes= permit_params
@@ -23,14 +23,14 @@ class GroupsController < ApplicationController
   end
 
   def add
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.find params[:id]
     @membership = @group.group_memberships.new
   end
 
   def add!
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.find params[:id]
     profile = Profile.find params[:profile_id]
@@ -46,7 +46,7 @@ class GroupsController < ApplicationController
   end
 
   def remove!
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.find params[:id]
     profile = Profile.find params[:profile_id]

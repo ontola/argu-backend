@@ -16,7 +16,7 @@ class Notification < ActiveRecord::Base
     if self.activity.present?
       self.activity.trackable
     else
-      ''
+      self.url
     end
   end
 

@@ -1,12 +1,12 @@
 class Users::InvitationsController < Devise::InvitationsController
 
   def new
-    @forum = Forum.friendly.find params[:forum]
+    @forum = Forum.find_via_shortname params[:forum]
     super
   end
 
   def create
-    @forum = Forum.friendly.find params[:forum]
+    @forum = Forum.find_via_shortname params[:forum]
     if @forum.present?
       authorize @forum, :invite?
       block = Proc.new do |resource|
@@ -35,7 +35,7 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def after_accept_path_for(resource)
-    edit_profile_path(resource.username)
+    edit_profile_path(resource)
   end
 
   def after_invite_path_for(resource)

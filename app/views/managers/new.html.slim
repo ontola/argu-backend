@@ -1,6 +1,6 @@
 =set_title t('forums.settings.title')
 .col-1
-  =render partial: 'manage_bar', locals: {resource: @forum}  if policy(@forum).update?
+  =render partial: 'forums/manage_bar', locals: {resource: @forum}  if policy(@forum).update?
   .box
     section
       =semantic_form_for(@membership, url: url_for([@forum, :managers]), method: :post) do |f|

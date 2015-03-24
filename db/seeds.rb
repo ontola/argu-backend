@@ -5,9 +5,9 @@ ua = User.where(email: 'thomvankalkeren@gmail.com').first_or_create
 ub = User.where(email: 'postmaster@argu.nl').first_or_create
 uc = User.where(email: 'joepmeindertsma@gmail.com').first_or_create
 
-ua.attributes = {username: 'fletcher91', password: 'foobar', password_confirmation:'foobar'}
-ub.attributes = {username: 'admin', password:'opendebate', password_confirmation:'opendebate'}
-uc.attributes = {username: 'user', password: 'useruser', password_confirmation:'useruser'}
+ua.attributes = {shortname_attributes: {shortname: 'fletcher91'}, password: 'foobar', password_confirmation:'foobar'}
+ub.attributes = {shortname_attributes: {shortname: 'admin'}, password:'opendebate', password_confirmation:'opendebate'}
+uc.attributes = {shortname_attributes: {shortname: 'user'}, password: 'useruser', password_confirmation:'useruser'}
 
 ua.build_profile name: 'Thom van Kalkeren'
 ub.build_profile name: 'Administrator'

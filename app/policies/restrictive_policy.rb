@@ -15,7 +15,7 @@ class RestrictivePolicy
 
   def permitted_attributes
     attributes = []
-    attributes << :web_url if web_url?
+    attributes << :shortname if shortname?
     attributes << :is_trashed if trash?
     attributes
   end
@@ -56,6 +56,10 @@ class RestrictivePolicy
     create?
   end
 
+  def new_record?
+    record.is_a? Class || record.new_record?
+  end
+
   # Used when an item displays nested content, therefore this should use the heaviest restrictions
   def show?
     staff?
@@ -87,9 +91,9 @@ class RestrictivePolicy
     staff?
   end
 
-  # Can the current user change the forum web_url? (currently a subdomain)
-  def web_url?
-    staff?
+  # Can the current user change the item shortname?
+  def shortname?
+    new_record?
   end
 
   def is_creator?

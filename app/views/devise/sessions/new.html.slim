@@ -12,7 +12,7 @@
               h3= preview.display_name
           p
             b Je hebt een account nodig om dit te bekijken.
-      -elsif defined?(r)
+      -elsif defined?(r) && r.present?
         section
           .form-small
             h2= t('sign_up')
@@ -54,7 +54,7 @@
             h2= t('sign_in')
             =f.inputs
               /.info.info-signup= t('sign_in_existing')
-              = f.input :login, placeholder: t('users_username_or_email'), autofocus: :autofocus, label: false
+              = f.input :email, placeholder: t('users_email'), autofocus: :autofocus, label: false
               = f.input :password, placeholder: t('users_password'), label: false
               = f.input :r, as: :hidden
               - if devise_mapping.rememberable?

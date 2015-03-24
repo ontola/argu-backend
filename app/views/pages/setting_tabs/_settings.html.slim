@@ -4,11 +4,11 @@
   = f.inputs do
     = f.semantic_fields_for :profile do |p_f|
       = p_f.input :name
-      = p_f.input :profile_photo, label: t("profiles.edit.picture")
-    -if policy(@page).web_url?
-      = f.input :web_url
-    - if policy(@page).is_owner?
+      = p_f.input :profile_photo, label: t('profiles.edit.picture')
+    - if policy(@page).is_owner? || policy(@page).shortname?
       = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+        -if policy(@page).shortname?
+          = f.inputs :shortname, for: :shortname
         = f.input :visibility, as: :select, collection: Forum.visibilities.keys, include_blank: false
         = f.input :f_delete, as: :link, url: delete_page_url(@page), input_html: {data: {remote: true}, class: 'btn--warning'}
 

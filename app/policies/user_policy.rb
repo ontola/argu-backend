@@ -1,4 +1,4 @@
-class UserPolicy < ApplicationPolicy
+class UserPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :user, :scope, :session
 
@@ -14,6 +14,13 @@ class UserPolicy < ApplicationPolicy
     def resolve
       scope
     end
+  end
+
+  def permitted_attributes
+    attributes = super
+    attributes << [:email, :password, :password_confirmation, {profile_attributes: [:name, :profile_photo]}] if create?
+    attributes << [{shortname_attributes: [:shortname]}] if new_record?
+    attributes
   end
 
   def index?

@@ -9,26 +9,9 @@ class ProfilesController < ApplicationController
     end
   end
 
-  #GET /profiles/1
-  def show
-    user = User.find_by! username: params[:id]
-    @profile = user.profile
-    raise ActiveRecord::RecordNotFound if @profile.blank?
-    authorize @profile, :show?
-
-    # TODO: Refactor into arel or something..
-    if @profile.are_votes_public?
-      @collection =  Vote.ordered Vote.find_by_sql('SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" WHERE ("votes"."voter_type" = \'Profile\' AND "votes"."voter_id" = '+@profile.id.to_s+') AND ("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') AND ("forums"."visibility" = '+Forum.visibilities[:open].to_s+' OR "forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) ORDER BY created_at DESC')
-    end
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
-  end
-
   #GET /1/edit
   def edit
-    @user = User.find_by!(username: params[:id])
+    @user = User.find_via_shortname(params[:id])
     @profile = @user.profile
     authorize @profile, :edit?
 
@@ -45,7 +28,7 @@ class ProfilesController < ApplicationController
 
   #PUT /1
   def update
-    @user = User.find_by!(username: params[:id])
+    @user = User.find_via_shortname(params[:id])
     @profile = @user.profile
     authorize @profile, :update?
 
@@ -82,6 +65,6 @@ private
   end
 
   def profile_update_path
-    @user.finished_intro? ? profile_path(@user.username) : selector_forums_path
+    @user.finished_intro? ? profile_path(@user.url) : selector_forums_path
   end
 end

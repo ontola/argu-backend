@@ -1,13 +1,13 @@
 class ManagersController < ApplicationController
 
   def new
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :edit?
     @membership = @forum.managers.new
   end
 
   def create
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :update?
     @membership = @forum.memberships.find_or_initialize_by(profile_id: params[:profile_id])
 
@@ -25,7 +25,7 @@ class ManagersController < ApplicationController
   end
 
   def destroy
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :update?
     @manager = @forum.memberships.find_by(profile_id: params[:id])
 

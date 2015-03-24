@@ -11,15 +11,15 @@ class StaticPagesController < ApplicationController
         redirect_to preferred_forum
       end
     else
-      redirect_to preferred_forum
-      #@document = JSON.parse Setting.get('about') || '{}'
-      #render 'document', layout: 'layouts/closed'
+      #redirect_to preferred_forum
+      @document = JSON.parse Setting.get('about') || '{}'
+      render 'document', layout: 'layouts/closed'
 	  end
   end
 
   def sign_in_modal
     authorize :static_pages
-    @resource ||= User.new
+    @resource ||= User.new(r: request.referer, shortname: Shortname.new)
     respond_to do |format|
       format.js { render 'devise/sessions/new', layout: false, locals: {resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
       format.html { render 'devise/sessions/new', layout: 'closed', locals: {resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }

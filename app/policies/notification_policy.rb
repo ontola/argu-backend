@@ -12,7 +12,11 @@ class NotificationPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      scope.where(profile_id: user.profile.id)
+      if user
+        scope.where(profile_id: user.profile.id)
+      else
+        scope.where(false)
+      end
     end
   end
 

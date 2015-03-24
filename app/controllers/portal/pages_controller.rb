@@ -1,7 +1,7 @@
 class Portal::PagesController < ApplicationController
 
   def destroy
-    @page = Page.friendly.find params[:id]
+    @page = Page.find_via_shortname params[:id]
     authorize @page, :destroy?
 
     if @page.destroy!
@@ -17,6 +17,6 @@ class Portal::PagesController < ApplicationController
 
   private
   def permit_params
-    params.require(:page).permit :name, :web_url, profile_attributes: [:name, :about]
+    params.require(:page).permit :name, :shortname, profile_attributes: [:name, :about]
   end
 end

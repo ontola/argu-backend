@@ -1,6 +1,5 @@
 module AlternativeNamesHelper
 
-
   #########################
   #        Motions        #
   #########################
@@ -9,11 +8,11 @@ module AlternativeNamesHelper
   end
 
   def motion_type(forum= nil)
-    ((forum || @forum).motions_title_singular if alternative_motions?(forum)) || t('motions.type')
+    ((forum || @forum).motions_title_singular if alternative_motions?(forum)) || I18n.t('motions.type')
   end
 
   def motions_type(forum= nil)
-    ((forum || @forum).motions_title if alternative_motions?(forum)) || t('motions.plural')
+    ((forum || @forum).motions_title if alternative_motions?(forum)) || I18n.t('motions.plural')
   end
 
   def alternative_motions?(forum= nil)
@@ -36,11 +35,11 @@ module AlternativeNamesHelper
   end
 
   def question_type(forum= nil)
-    ((forum || @forum).questions_title_singular if alternative_questions?(forum)) || t('questions.type')
+    ((forum || @forum).questions_title_singular if alternative_questions?(forum)) || I18n.t('questions.type')
   end
 
   def questions_type(forum= nil)
-    ((forum || @forum).questions_title if alternative_questions?(forum)) || t('questions.type')
+    ((forum || @forum).questions_title if alternative_questions?(forum)) || I18n.t('questions.type')
   end
 
   def alternative_questions?(forum= nil)
@@ -63,11 +62,11 @@ module AlternativeNamesHelper
   end
 
   def argument_type(forum= nil)
-    ((forum || @forum).arguments_title_singular if alternative_arguments?(forum)) || t('arguments.type')
+    ((forum || @forum).arguments_title_singular if alternative_arguments?(forum)) || I18n.t('arguments.type')
   end
 
   def arguments_type(forum= nil)
-    ((forum || @forum).arguments_title if alternative_arguments?(forum)) || t('arguments.type')
+    ((forum || @forum).arguments_title if alternative_arguments?(forum)) || I18n.t('arguments.type')
   end
 
   def alternative_arguments?(forum= nil)

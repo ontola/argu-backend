@@ -84,9 +84,9 @@ module ApplicationHelper
 
   def dual_profile_path(profile)
     if profile.owner.class == User
-      profile_path(profile.username)
+      user_path(profile.owner)
     else
-      page_path(profile.web_url)
+      page_path(profile.owner)
     end
   end
 

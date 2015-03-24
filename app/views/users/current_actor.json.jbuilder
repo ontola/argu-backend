@@ -1,11 +1,11 @@
 json.current_actor do
-  json.username @profile.username
+  json.shortname @profile.url
   json.display_name @profile.display_name
   json.name @profile.name
   json.url dual_profile_path(@profile)
   json.current_forum do
     json.display_name @profile.preferred_forum.display_name
-    json.web_url @profile.preferred_forum.web_url
+    json.shortname @profile.preferred_forum.url
     json.cover_photo @profile.preferred_forum.cover_photo
   end
   json.profile_photo do

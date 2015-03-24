@@ -16,7 +16,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     @question = Question.new params[:question]
     @question.forum= @forum
     if current_profile.blank?
@@ -50,7 +50,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :add_question?
 
     @question = @forum.questions.new

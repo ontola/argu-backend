@@ -10,8 +10,8 @@ class ProfileTest < ActiveSupport::TestCase
     assert profile.valid?, profile.errors.to_a.join(',').to_s
   end
 
-  test "web_url valid" do
-    assert_equal profile.web_url, 'user'
+  test "shortname valid" do
+    assert_equal profile.url, 'user'
   end
 
   test "display_name valid" do

@@ -1,7 +1,7 @@
 section.profile-small[itemscope itemprop="creator" itemtype="http://schema.org/Person"]
-  =link_to profile_path(resource.creator.web_url) do
+  =link_to dual_profile_path(resource.creator) do
     img[src=profile.profile_photo.url(:icon) alt="profile picture" itemprop="image"]
   .info-block
-    =link_to profile_path(resource.creator.web_url) do
+    =link_to dual_profile_path(resource.creator) do
       time.info[datetime=resource.created_at ]=l(resource.created_at, format: :long)
       .profile-name[itemprop="name"]=profile.display_name

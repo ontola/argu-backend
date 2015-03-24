@@ -1,10 +1,10 @@
 require 'test_helper'
 
-class ProfilesControllerTest < ActionController::TestCase
+class UsersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   test 'should get show when not logged in' do
-    get :show, id: profiles(:profile_two).username
+    get :show, id: users(:user2)
 
     assert_response :success
     assert_not_nil assigns(:profile)
@@ -16,7 +16,7 @@ class ProfilesControllerTest < ActionController::TestCase
   test 'should get show' do
     sign_in users(:user)
 
-    get :show, id: profiles(:profile_two).username
+    get :show, id: users(:user2)
 
     assert_response :success
     assert_not_nil assigns(:profile)
@@ -29,7 +29,7 @@ class ProfilesControllerTest < ActionController::TestCase
   test 'should not show all votes' do
     sign_in users(:user2)
 
-    get :show, id: profiles(:profile_two).username
+    get :show, id: users(:user2)
     assert_response 200
     assert assigns(:collection)
 

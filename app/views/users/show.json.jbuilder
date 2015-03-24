@@ -1,7 +1,7 @@
 json.user do
-  json.username @profile.username
+  json.shortname @profile.url
   json.name @profile.name
-  json.url @profile.owner.class == User ? profile_path(@profile.username) : page_path(@profile.owner.web_url)
+  json.url @profile.owner.class == User ? profile_path(@profile.url) : page_path(@profile.owner.url)
   json.profile_photo do
     json.url @profile.profile_photo.url
     json.icon do
@@ -12,8 +12,8 @@ json.user do
     end
   end
   json.memberships @profile.memberships do |membership|
-    json.url forum_path membership.forum.web_url
-    json.forum membership.forum.web_url
+    json.url forum_path membership.forum.url
+    json.forum membership.forum.url
     json.title membership.forum.display_name
   end
 end

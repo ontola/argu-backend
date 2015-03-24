@@ -104,7 +104,7 @@ nl:
     title: "Ons team"
 #Users
   users_username: "gebruikersnaam"
-  users_username_or_email: "email of gebruikersnaam"
+  users_email: "email"
   users_name: "volledige naam"
   users_name_placeholder: "Vul hier jouw volledige naam in."
   users_email: "e-mail"
@@ -169,6 +169,7 @@ nl:
     button_label: "Verplaats"
   convert:
     current_class: "Huidig type:"
+    button_label: "Converteer"
   join: "Word lid"
   view_on_argu: "bekijk & reageer op Argu"
   embed: "embed"

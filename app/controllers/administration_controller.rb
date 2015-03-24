@@ -1,17 +1,6 @@
 class AdministrationController < ApplicationController
   respond_to :js, :html
 
-  def panel
-    authorize :administration, :show?
-
-  end
-
-  def list
-    check_role
-    authorize :administration, :show?
-    @admins = User.with_role(@role)
-  end
-
   # POST /admin/:id
   def add
     @user = User.find(params[:id])

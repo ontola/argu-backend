@@ -1,4 +1,4 @@
-=semantic_form_for @profile, url: profile_path(@user.username), method: @user.r.present? ? :post : :put  do |f|
+=semantic_form_for @profile, url: profile_path(@user), method: @user.r.present? ? :post : :put  do |f|
   p= t('profiles.heads_up')
   =f.inputs
     =f.input :name

@@ -8,7 +8,7 @@ class ForumsController < ApplicationController
   end
 
   def show
-    @forum = Forum.friendly.find params[:id]
+    @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :list?
     current_context @forum
 
@@ -27,13 +27,13 @@ class ForumsController < ApplicationController
   end
 
   def settings
-    @forum = Forum.friendly.find params[:id]
+    @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
     current_context @forum
   end
 
   def statistics
-    @forum = Forum.friendly.find params[:id]
+    @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :statistics?
     current_context @forum
 
@@ -47,7 +47,7 @@ class ForumsController < ApplicationController
   end
 
   def update
-    @forum = Forum.friendly.find params[:id]
+    @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
 
     @forum.reload if process_cover_photo @forum, permit_params
