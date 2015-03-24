@@ -22,7 +22,7 @@ div[itemscope itemtype="Thing"]
         .cover-header-top
           -if @forum.profile_photo.url.present?
             .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
-          .cover-switcher[data-intro=t('intro.forums.switcher')]=react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
+          .cover-switcher[data-intro=t('intro.forums.switcher')]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
         .cover-header-bottom
           - if @forum.bio.present?
             p.cover-oneliner
@@ -36,14 +36,14 @@ div[itemscope itemtype="Thing"]
               li=link_to forum_memberships_path(@forum.web_url), data: {method: :post, 'skip-pjax' => true}, class: 'btn-focus'
                 span.fa.fa-user
                 span.icon-left= t('join')
-            li[data-intro=t('intro.motion.create', name: @forum.name) data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: 'motion-t btn-focus'
+            li[data-intro=t('intro.motion.create', name: @forum.name) data-step=12 data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: 'motion-t btn-focus'
               span.fa[class="fa-#{motion_icon}"]
               span.icon-left= t('new') + ' ' + motion_type
-            li[data-intro=t('intro.question.create', name: @forum.name) class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: remote_unless_user, class: 'question-t btn-focus'
+            li[data-intro=t('intro.question.create', name: @forum.name) data-step=13 class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: remote_unless_user, class: 'question-t btn-focus'
               span.fa[class="fa-#{question_icon}"]
               span.icon-left= t('new') + ' ' +  t('questions.type')
             - if policy(@forum).invite?
-              li= link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite')}
+              li= link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite'), step:14}
                 span.fa.fa-user-plus
                 span.icon-left= t('forums.invite_others')
             - if policy(@forum).is_manager?
@@ -53,7 +53,7 @@ div[itemscope itemtype="Thing"]
     =render partial: 'filter_and_sort'
     .grid
       .box.box-grid-sizer
-      .intro-filler[data-intro=t('intro.forums.grid') data-position="top"]
+      .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
       -@items.each do |item|
         =render item
       .box.box-grid.motion[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :motion]), data: {remote: true}
