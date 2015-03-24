@@ -214,7 +214,7 @@ input[type="text"].form-input-title {
 
 .form-small input, .form-small button, .form-small .inline-errors, .form-filled p.inline-errors, .form-small p.inline-hints, .form-filled p.inline-hints {
   width: 100% !important;
-  margin-left: 0;
+  margin-left: 0 !important;
 }
 
 .formtastic button {
@@ -245,7 +245,7 @@ input[type="file"], select {
 
 input:focus + p.inline-hints, textarea:focus + p.inline-hints {
   opacity: 1;
-  max-height: 4em;
+  max-height: none;
   padding: .3em;
 }
 
@@ -259,6 +259,9 @@ p.inline-hints {
   color: white;
   pointer-events: none;
   padding: 0;
+  position: absolute;
+  top: 100%;
+  z-index: 10;
   @include transition(.2s);
   @include box-shadow-intense;
 }

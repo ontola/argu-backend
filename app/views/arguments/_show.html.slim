@@ -5,7 +5,7 @@
       h3[class="#{model.pro ? 'pro-t' : 'con-t'}"]= model.title
     =render partial: 'arguments/shr', locals: {model: model}
     p[class='wrap-normal']
-      ==model.truncate_preview(250, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read-more'), argument_path(model)) })
+      ==model.truncate_preview(220, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read-more'), argument_path(model)) })
   - if !top_comment.present?
     =contextual_link_to argument_path(model), class: ' btn-subtle btn-sticky btns-sticky-bottom read-more'
       span.icon-right reageer
@@ -15,6 +15,5 @@
       section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]
         p.wrap-normal= top_comment.is_trashed? ? '[DELETED]' : top_comment.body[0..150] + (top_comment.body[151] ? '...' : '')
         .read-more
-          -if Rails.configuration.epics.counters
-            span.icon-right= model.comments_count.to_s
+          span.icon-right= model.comments_count.to_s
           span.fa.fa-comments

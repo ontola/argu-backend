@@ -4,7 +4,7 @@
     -unless parent_id.blank?
       input[type="hidden" class= "btn" name="parent_id" value ="#{parent_id}"]
   -if current_profile.present?
-    =render current_profile, locals= {resource: resource}
+    =react_component 'CurrentProfile', {display_name: current_profile.display_name, profile_photo: {url: current_profile.profile_photo.url(:icon), title: 'profile picture'}}, {prerender: true}
   -else
     =render partial: 'profiles/empty_profile'
   .actions

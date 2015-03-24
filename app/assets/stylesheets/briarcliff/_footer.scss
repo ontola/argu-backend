@@ -36,8 +36,8 @@ footer {
   }
   a {
     color: $g2;
+    @include transition(.2s);
     &:hover{
-      text-decoration: underline;
       color: $g1;
     }
     &:hover span {

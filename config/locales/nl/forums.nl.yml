@@ -61,7 +61,7 @@ nl:
     new_question_or_motion: "Nieuw vraagstuk of idee"
     about:
       header: "Waarvoor is dit forum?"
-      body: "Een Argu forum is een discussie omgeving waar oplossingen voor vraagstukken worden gedeeld en besproken. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"
+      body: "Een Argu forum is een discussie omgeving waar ideeën worden gedeeld en besproken, zodat er betere beslissingen worden genomen. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"
     follow: "Volgen"
     unfollow: "Ontvolgen"
     managers:
@@ -71,7 +71,7 @@ nl:
       title: "Een forum voor jouw organisatie?"
       body: "Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Lees meer over <b>%{governments}</b> of over <b>%{product}</b>. Neem <b><a href='mailto:info@argu.co'>contact</a></b> op voor meer informatie."
     selector:
-      at_least_error: "Je ten minste 2 fora kiezen"
+      at_least_error: "Kies ten minste 2 forums"
   activerecord: #These currently aren't used for forms.
     attributes:
       forum:
