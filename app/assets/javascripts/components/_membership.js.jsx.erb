@@ -13,8 +13,8 @@ window.NewMembership = React.createClass({
         var input = $(this.getDOMNode()).find('.add-page');
         input.selectize({
             valueField: 'id',
-            labelField: 'web_url',
-            searchField: 'web_url',
+            labelField: 'shortname',
+            searchField: 'shortname',
             persist: false,
             create: false,
             onItemAdd: function (value, item) {
@@ -31,7 +31,7 @@ window.NewMembership = React.createClass({
             load: function(query, callback) {
                 if (!query.length) return callback();
                 $.ajax({
-                    url: '/p.json',
+                    url: '/profiles.json',
                     type: 'GET',
                     dataType: 'json',
                     data: {

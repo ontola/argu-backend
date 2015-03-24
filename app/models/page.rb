@@ -1,6 +1,5 @@
 class Page < ActiveRecord::Base
-  include ArguBase
-  extend FriendlyId
+  include ArguBase, Shortnameable
 
   belongs_to :profile, dependent: :destroy
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
@@ -9,13 +8,11 @@ class Page < ActiveRecord::Base
   has_many :memberships, class_name: 'PageMembership', dependent: :destroy
   has_many :managers, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
 
-  after_initialize :build_profile
-
-  friendly_id :web_url, use: [:slugged, :finders]
+  #after_initialize :build_default_associations, if: :new_record?
 
   attr_accessor :repeat_name
 
-  validates :web_url, presence: true, length: {minimum: 3}
+  validates :shortname, presence: true, length: {minimum: 3}
   validates :profile, :owner_id, presence: true
 
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
@@ -28,22 +25,18 @@ class Page < ActiveRecord::Base
 
   def display_name
     if self.profile.present?
-      self.profile.name || self.web_url
+      self.profile.name || self.url
     else
-     self.web_url
+     self.url
     end
+  end
+
+  def finished_intro?
+    true
   end
 
   def email
     'anonymous'
-  end
-
-  def username
-    web_url
-  end
-
-  def should_generate_new_friendly_id?
-    web_url_changed?
   end
 
 end

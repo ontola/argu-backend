@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include ArguBase
+  include ArguBase, Shortnameable
 
   has_many :authentications, dependent: :destroy
   belongs_to :profile, dependent: :destroy, autosave: true
@@ -13,32 +13,25 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          #, :omniauthable
 
+  after_initialize :build_shortname_if, if: :new_record?
   before_validation :check_for_profile
   after_destroy :cleanup
   after_create :update_acesss_token_counts
   before_save { |user| user.email = email.downcase unless email.blank? }
 
-  # Virtual attribute for authenticating by either username or email
-  # This is in addition to a real persisted field like 'username'
-  attr_accessor :login, :current_password
+  attr_accessor :current_password
 
   enum follows_email: { never_follows_email: 0, weekly_follows_email: 1, daily_follows_email: 2, direct_follows_email: 3 }
   enum memberships_email: { never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3 }
   enum created_email: { never_created_email: 0, weekly_created_email: 1, daily_created_email: 2, direct_created_email: 3 }
 
-  USERNAME_FORMAT_REGEX = /\A\d*[a-zA-Z][_a-zA-Z0-9]*\z/i
-
-  validates :username, presence: true,
-           length: { in: 4..20 },
-           format: { with: USERNAME_FORMAT_REGEX },
-           uniqueness: { case_sensetive: false }
   validates :email, allow_blank: false,
         format: { with: RFC822::EMAIL }
   validates :profile, presence: true
 
 #######Attributes########
   def display_name
-    self.profile.name.presence || self.username
+    self.profile.name.presence || self.url
   end
 
   def profile
@@ -48,10 +41,6 @@ class User < ActiveRecord::Base
   def managed_pages
     t = Page.arel_table
     Page.where(t[:id].in(self.profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id)).or(t[:owner_id].eq(self.profile.id)))
-  end
-
-  def web_url
-    username
   end
 
 #########Auth##############
@@ -64,9 +53,8 @@ class User < ActiveRecord::Base
   end
 
   #######Methods########
-
-  def self.is_valid_username?(name)
-    USERNAME_FORMAT_REGEX.match(name.to_s)
+  def build_shortname_if
+    self.shortname ||= Shortname.new
   end
 
   def update_acesss_token_counts
@@ -93,12 +81,4 @@ private
     self.profile.update name: '', about: '', picture: '', profile_photo: '', cover_photo: ''
   end
 
-  def self.find_first_by_auth_conditions(warden_conditions)
-      conditions = warden_conditions.dup
-      if login = conditions.delete(:login)
-        where(conditions).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
-      else
-        where(conditions).first
-      end
-    end
 end

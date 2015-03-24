@@ -76,7 +76,7 @@ nl:
     attributes:
       forum:
         name: "Naam"
-        web_url: "argu web url"
+        shortname: "argu shortname"
         description: "Omschrijving"
         featured_tags: "Uitgelichte thema's"
         website: "Web adres"

@@ -1,4 +1,4 @@
 - unless resource.tags.nil?
   ul.tags[title="thema's" itemprop="keywords"]
     - resource.tags.each do |tag|
-      li= link_to tag.name, forum_tag_url(resource.forum.web_url, tag.name), class: "tag", rel: 'tag', title: t("motions.titles.tags")+tag.name
+      li= link_to tag.name, forum_tag_url(resource.forum.url, tag.name), class: 'tag', rel: 'tag', title: t('motions.titles.tags')+tag.name

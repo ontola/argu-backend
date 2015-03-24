@@ -1,13 +1,13 @@
 .col-1
   header
-    h1= t("devise.invitations.new.header")
+    h1= t('devise.invitations.new.header')
   .box
     section
       =semantic_form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f|
         p Vraag je meest betrokken vrienden om mee te doen met het oplossen van maatschappelijke problemen op Argu.
         =f.inputs
           =f.input :email
-          input[type='hidden' name='forum' value=@forum.web_url]
+          input[type='hidden' name='forum' value=@forum.url]
 
         = f.actions do
-          = f.action :submit, :as => :button, label: t("devise.invitations.new.submit_button")
+          = f.action :submit, :as => :button, label: t('devise.invitations.new.submit_button')

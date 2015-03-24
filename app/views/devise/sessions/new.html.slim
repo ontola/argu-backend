@@ -51,7 +51,7 @@
           .form-small
             =f.inputs
               .info.info-signup= t('sign_in_existing')
-              = f.input :login, placeholder: t('users_username_or_email'), autofocus: :autofocus, label: false
+              = f.input :email, placeholder: t('users_email'), autofocus: :autofocus, label: false
               = f.input :password, placeholder: t('users_password'), label: false
               = f.input :r, as: :hidden
               - if devise_mapping.rememberable?

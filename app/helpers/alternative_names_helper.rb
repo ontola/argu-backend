@@ -1,6 +1,5 @@
 module AlternativeNamesHelper
 
-
   #########################
   #        Motions        #
   #########################

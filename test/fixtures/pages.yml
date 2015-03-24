@@ -6,13 +6,9 @@
 # below each fixture, per the syntax in the comments below
 #
 argu:
-  slug: 'argu'
-  web_url: 'argu'
   profile: :profile_argu
   owner: profile_fletcher91 (Profile)
 #
 utrecht:
-  slug: 'utrecht'
-  web_url: 'utrecht'
   profile: :profile_utrecht
   owner: profile_fletcher91 (Profile)

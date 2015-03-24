@@ -1,10 +1,10 @@
 class MembershipsController < ApplicationController
 
   def create
-    forum = Forum.friendly.find params[:forum_id]
+    forum = Forum.find_via_shortname params[:forum_id]
     authorize forum, :show?
     if current_profile.blank?
-      render_register_modal(forum_path(forum.web_url))
+      render_register_modal(forum_path(forum.url))
     else
       @membership = Membership.new profile: current_profile, forum: forum, role: (permit_params[:role] || Membership.roles[:member])
       authorize @membership, :create?
@@ -30,7 +30,7 @@ class MembershipsController < ApplicationController
   end
 
   def destroy
-    @forum = Forum.friendly.find(params[:forum_id])
+    @forum = Forum.find_via_shortname(params[:forum_id])
     authorize @forum, :list?
     @membership = @forum.memberships.find_by profile_id: params[:id]
     authorize @membership, :destroy?

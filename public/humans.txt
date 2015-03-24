@@ -12,7 +12,7 @@
 	Standards: HTML5, CSS3
 	Tech: The beautiful Ruby on Rails, Slim, SASS, PostgreSQL, Redis, Capistrano
 	IDE: RubyMine 7, Sublime Text, SSH, Illustrator, phpPgAdmin
-	Gem highlights: Devise, slim, acts-as-taggable-on, carrierwave, unicorn, friendly_id, better_errors, meta_request, pundit
+	Gem highlights: Devise, slim, acts-as-taggable-on, carrierwave, unicorn, better_errors, meta_request, pundit
 	Our Open Source contributions:
 	    SimpleText, gem for managing basic markdown documents like our policy pages, https://github.com/fletcher91/simple_text
 	    SimpleSettings, a basic key-value store for Rails, https://github.com/fletcher91/simple_settings

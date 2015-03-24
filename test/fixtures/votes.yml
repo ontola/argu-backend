@@ -44,3 +44,25 @@ six:
   voter_type: 'Profile'
   for: <%= Vote.fors[:con] %>
   forum: :utrecht
+
+
+page_one:
+  voteable: one (Motion)
+  voter: utrecht
+  voter_type: 'Page'
+  for: <%= Vote.fors[:neutral] %>
+  forum: :utrecht
+#
+page_two:
+  voteable: three (Motion)
+  voter: utrecht
+  voter_type: 'Page'
+  for: <%= Vote.fors[:pro] %>
+  forum: :amsterdam
+#
+page_three:
+  voteable: one (Argument)
+  voter: utrecht
+  voter_type: 'Page'
+  for: <%= Vote.fors[:neutral] %>
+  forum: :utrecht

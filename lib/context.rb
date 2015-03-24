@@ -94,7 +94,7 @@ class Context
 
   # Generates a URL for the model
   def url
-    url_for(controller: single_model.class_name.to_sym, action: :show, id: (single_model.try(:web_url) || single_model.id), only_path: true) if single_model
+    url_for([single_model, only_path: true]) if single_model
   end
 
   # Generates a HTTP query compatible string to parse back the breadcrumb stack

@@ -17,7 +17,7 @@ class Portal::ForumsController < ApplicationController
 
   private
   def permit_params
-    params.require(:forum).permit :name, :web_url,
+    params.require(:forum).permit :name, :shortname,
                                   :profile_photo, :cover_photo, :page_id
   end
 end

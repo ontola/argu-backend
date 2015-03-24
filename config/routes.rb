@@ -15,12 +15,12 @@
 # m: motions
 # n: notifications
 # o: opinions
-# p: profiles
+# p: pages
 # q: questions
 # r:
 # s: search
 # t: tags
-# u: [might be used for 'updates']
+# u: users
 # v: votes
 # w:
 # x:
@@ -36,6 +36,10 @@ Argu::Application.routes.draw do
     get 'convert', action: 'convert'
     put 'convert', action: 'convert!'
   end
+  concern :transferable do
+    get 'transfer', action: 'transfer'
+    put 'transfer', action: 'transfer!'
+  end
   concern :votable do
     get 'v' => 'votes#show', shallow: true, as: :show_vote
     post 'v/:for' => 'votes#create', shallow: true, as: :vote
@@ -50,26 +54,17 @@ Argu::Application.routes.draw do
   get '/developers', to: 'static_pages#developers'
   devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions', :invitations => 'users/invitations' }
 
-  resource :admin do
-    get 'list' => 'administration#list'
+  resource :admin, only: [] do
     post ':id' => 'administration#add'
     delete ':id' => 'administration#remove', as: 'remove'
     post 'freeze/:id' => 'administration#freeze', as: 'freeze'
     delete 'freeze/:id' => 'administration#unfreeze'
-    #post 'search_username' => 'administration#search_username', constraints: lambda { |r| r.env["warden"].authenticate? }
-    root to: 'administration#panel'
   end
 
   resources :authentications, only: [:create, :destroy]
   match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
 
-  resources :users, path: 'u' do
-    get :autocomplete_user_name, :on => :collection
-    collection do
-      post '/s/:username' => 'users#search' #, as: 'search'
-      post '/s' => 'users#search', as: 'search'
-    end
-  end
+  resources :users, path: 'u', only: [:show, :edit, :update]
 
   post 'v/:for' => 'votes#create', as: :vote
 
@@ -93,7 +88,7 @@ Argu::Application.routes.draw do
   resources :group_responses, only: [:edit, :update, :destroy], as: :responses
   resources :group_memberships, only: :destroy
 
-  resources :pages, only: [:new, :create, :show, :update, :delete, :destroy] do
+  resources :pages, path: 'p', only: [:new, :create, :show, :update, :delete, :destroy] do
     get :index, on: :collection
     get :delete, on: :member
     get :settings, on: :member
@@ -109,7 +104,7 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :profiles, path: 'p' do
+  resources :profiles, except: [:show] do
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post ':id' => 'profiles#update', on: :collection
   end
@@ -143,7 +138,7 @@ Argu::Application.routes.draw do
   get '/activities', to: 'activities#index'
 
 
-  resources :forums, except: [:edit], path: '' do
+  resources :forums, except: [:edit, :index], path: '' do
     get :settings, on: :member
     get :statistics, on: :member
     get :selector, on: :collection
@@ -159,7 +154,7 @@ Argu::Application.routes.draw do
       post on: :member, action: :add!, as: ''
     end
   end
-  get 'forums/:id', to: 'forums#show'
+  get 'forums/:url', to: 'forums#show'
 
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'

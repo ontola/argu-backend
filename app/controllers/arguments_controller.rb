@@ -22,7 +22,7 @@ class ArgumentsController < ApplicationController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     @argument = @forum.arguments.new motion_id: params[:motion_id]
     authorize @forum, :show?
     if current_profile.blank?
@@ -63,7 +63,7 @@ class ArgumentsController < ApplicationController
   # POST /arguments
   # POST /arguments.json
   def create
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     @motion = Motion.find params[:argument][:motion_id]
     @argument = @forum.arguments.new motion: @motion
     @argument.attributes= argument_params

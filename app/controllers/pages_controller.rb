@@ -1,49 +1,61 @@
 class PagesController < ApplicationController
 
   def show
-    @page = Page.friendly.find(params[:id])
+    @page = Page.find_via_shortname(params[:id])
     @profile = @page.profile
     authorize @page, :show?
 
-    @collection =  Vote.ordered @profile.votes
+    if @profile.are_votes_public?
+      votes = Vote.find_by_sql('SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" WHERE ("votes"."voter_type" = \'Profile\' AND "votes"."voter_id" = '+@profile.id.to_s+') AND ("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') AND ("forums"."visibility" = '+Forum.visibilities[:open].to_s+' OR "forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) ORDER BY created_at DESC')
+      @pubic_vote_count = votes.count
+      @collection =  Vote.ordered votes
+    end
   end
 
   def new
     @page = Page.new
+    @page.build_shortname
+    @page.build_profile
     authorize @page, :new?
   end
 
   def create
-    @page = Page.new permit_params
-    authorize @page, :create?
-    @page.build_profile permit_params
+    @page = Page.new
+    @page.build_shortname
+    @page.build_profile
     @page.owner = current_user.profile
+    @page.attributes= permit_params
+    authorize @page, :create?
 
-    if @page.save!
+    if @page.save
+      Rails.logger.info "=============================================================="
       redirect_to @page
     else
-      render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
+      Rails.logger.info "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
+      respond_to do |format|
+        format.html { render 'new', notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}] }
+      end
     end
   end
 
   def settings
-    @page = Page.friendly.find params[:id]
+    @page = Page.find_via_shortname params[:id]
     authorize @page, :update?
   end
 
   def update
-    @page = Page.friendly.find params[:id]
+    @page = Page.find_via_shortname params[:id]
     authorize @page, :update?
 
     if @page.update permit_params
       redirect_to settings_page_path(@page, tab: params[:tab])
     else
-      render 'settings'
+      render 'settings', tab: params[:tab]
     end
   end
 
   def delete
-    @page = Page.friendly.find params[:id]
+    @page = Page.find_via_shortname params[:id]
     authorize @page, :delete?
 
     respond_to do |format|
@@ -53,7 +65,7 @@ class PagesController < ApplicationController
   end
 
   def destroy
-    @page = Page.friendly.find params[:id]
+    @page = Page.find_via_shortname params[:id]
     authorize @page, :destroy?
 
     if @page.destroy

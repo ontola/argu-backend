@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319142023) do
+ActiveRecord::Schema.define(version: 20150324115708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,7 +148,6 @@ ActiveRecord::Schema.define(version: 20150319142023) do
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.string   "slug"
-    t.string   "web_url",                  default: "",    null: false
     t.text     "bio",                      default: "",    null: false
     t.text     "featured_tags",            default: "",    null: false
     t.integer  "visibility",               default: 1
@@ -166,7 +165,6 @@ ActiveRecord::Schema.define(version: 20150319142023) do
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
-  add_index "forums", ["web_url"], name: "index_forums_on_web_url", unique: true, using: :btree
 
   create_table "group_memberships", force: :cascade do |t|
     t.integer  "group_id"
@@ -246,6 +244,7 @@ ActiveRecord::Schema.define(version: 20150319142023) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "title"
+    t.string   "url"
   end
 
   create_table "opinions", force: :cascade do |t|
@@ -275,10 +274,9 @@ ActiveRecord::Schema.define(version: 20150319142023) do
   end
 
   create_table "pages", force: :cascade do |t|
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "slug"
-    t.string   "web_url",    default: "", null: false
     t.integer  "profile_id"
     t.integer  "visibility", default: 1
     t.integer  "owner_id"
@@ -286,7 +284,6 @@ ActiveRecord::Schema.define(version: 20150319142023) do
 
   add_index "pages", ["profile_id"], name: "index_pages_on_profile_id", unique: true, using: :btree
   add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true, using: :btree
-  add_index "pages", ["web_url"], name: "index_pages_on_web_url", unique: true, using: :btree
 
   create_table "profiles", force: :cascade do |t|
     t.string   "name",             limit: 255, default: ""
@@ -367,6 +364,16 @@ ActiveRecord::Schema.define(version: 20150319142023) do
 
   add_index "settings", ["key"], name: "index_settings_on_key", unique: true, using: :btree
 
+  create_table "shortnames", force: :cascade do |t|
+    t.string   "shortname",  null: false
+    t.integer  "owner_id",   null: false
+    t.string   "owner_type", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shortnames", ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, using: :btree
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -401,7 +408,6 @@ ActiveRecord::Schema.define(version: 20150319142023) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
-    t.string   "username",               limit: 255
     t.string   "unconfirmed_email",      limit: 255
     t.integer  "profile_id"
     t.string   "invitation_token"
@@ -434,7 +440,6 @@ ActiveRecord::Schema.define(version: 20150319142023) do
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["profile_id"], name: "index_users_on_profile_id", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "votes", force: :cascade do |t|
     t.integer  "voteable_id"
