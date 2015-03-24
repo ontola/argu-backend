@@ -245,7 +245,7 @@ input[type="file"], select {
 
 input:focus + p.inline-hints, textarea:focus + p.inline-hints {
   opacity: 1;
-  max-height: 4em;
+  max-height: none;
   padding: .3em;
 }
 
@@ -259,6 +259,9 @@ p.inline-hints {
   color: white;
   pointer-events: none;
   padding: 0;
+  position: absolute;
+  top: 100%;
+  z-index: 10;
   @include transition(.2s);
   @include box-shadow-intense;
 }
