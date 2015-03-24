@@ -2,8 +2,8 @@ $(document).on('cocoon:after-insert', function (e, insertedItem) {
     var addBlock = $(insertedItem);
     addBlock.find('.add-user').selectize({
         valueField: 'id',
-        labelField: 'username',
-        searchField: 'username',
+        labelField: 'shortname',
+        searchField: 'shortname',
         persist: false,
         create: false,
         onItemAdd: function (value, item) {
@@ -14,13 +14,13 @@ $(document).on('cocoon:after-insert', function (e, insertedItem) {
         },
         render: {
             option: function(item, escape) {
-                return '<div class="search-result" data-id="' + escape(item.id) + '" data-src="' + escape(item.profile.profile_photo) + '"><span><img class="profile-xs" src="' + escape(item.profile.profile_photo) + '"></span><span class="label">' + escape(item.username) + '</span></div>';
+                return '<div class="search-result" data-id="' + escape(item.id) + '" data-src="' + escape(item.profile.profile_photo) + '"><span><img class="profile-xs" src="' + escape(item.profile.profile_photo) + '"></span><span class="label">' + escape(item.shortname) + '</span></div>';
             }
         },
         load: function(query, callback) {
             if (!query.length) return callback();
             $.ajax({
-                url: '/users.json',
+                url: '/u.json',
                 type: 'GET',
                 dataType: 'json',
                 data: {

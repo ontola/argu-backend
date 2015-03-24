@@ -8,7 +8,7 @@
         .form
           p= t('motions.move.body')
           = semantic_form_for resource, method: :put do |f|
-            p= t('move.current_forum') + resource.forum.web_url
+            p= t('move.current_forum') + resource.forum.url
             = f.inputs do
               = f.input :forum, include_blank: false
             = f.actions do

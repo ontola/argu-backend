@@ -85,6 +85,7 @@
 
 .introjs-overlay {
   background: $darken5;
+  cursor: pointer;
 }
 
 .introjs-tooltip {
@@ -95,8 +96,6 @@
   width: 300px;
   z-index: 1000000;
   overflow: hidden;
-  @include box-shadow;
-  @include border-radius;
 }
 
 .introjs-tooltiptext {

@@ -1,23 +1,15 @@
 class UsersController < ApplicationController
-  autocomplete :user, :name, :extra_data => [:profile_photo]
-
-  def index
-    authorize User, :index?
-    scope = policy_scope(User).includes(:profile)
-    scope = scope.includes(:memberships).where('memberships IS NULL OR memberships.forum_id != 1').references(:memberships) if params[:forum_id].present?
-
-    if params[:q].present?
-      @users = scope.where('lower(username) LIKE lower(?)', "%#{params[:q]}%").page params[:page]
-    end
-  end
 
   def show
-    # Currently only displays the current user, might be extended to include more.
-    # To keep it REST, we're just using the proper route for now
-    @profile = current_profile
+    @user = User.preload(:profile).find_via_shortname params[:id]
+    @profile = @user.profile
     authorize @profile, :show?
 
-    render
+    if @profile.are_votes_public?
+      @collection =  Vote.ordered Vote.find_by_sql('SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" WHERE ("votes"."voter_type" = \'Profile\' AND "votes"."voter_id" = '+@profile.id.to_s+') AND ("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') AND ("forums"."visibility" = '+Forum.visibilities[:open].to_s+' OR "forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) ORDER BY created_at DESC')
+    end
+
+    render 'profiles/show'
   end
 
   def current_actor
@@ -62,24 +54,9 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /users/search/:username
-  # POST /users/search
-  def search
-    #@users = User.where(User.arel_table[:username].matches("%#{params[:username]}%")) if params[:username].present?
-    authorize User, :index?
-    @users = User.search do
-      fulltext params['username']
-      paginate page: params[:page]
-    end.results unless params['username'].blank?
-    respond_to do |format|
-        format.js { render partial: params[:c].present? ? params[:c] + '/search' : 'search' }
-        format.json { render json: @users }
-    end
-  end
-
   private
   def permit_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation)
+    params.require(:user).permit(*policy(@user || User).permitted_attributes)
   end
 
   def passwordless_permit_params

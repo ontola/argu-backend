@@ -3,18 +3,9 @@
 
 .document {
   OL {
-    counter-reset: item;
     padding-left: 1em;
     list-style-type: none;
     position: relative;
-    LI:before {
-      content: counters(item, ".") " ";
-      counter-increment: item;
-      position: absolute;
-      right: 100%;
-      right: calc(100% - 2.5em);
-      font-weight: bold;
-    }
   }
 
   ol, ul {

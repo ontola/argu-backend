@@ -9,18 +9,15 @@
   =render @argument.creator, locals= {resource: @argument}
   ul.btns-list.btns-vertical.btn-sticky.btn-sticky-bottom
     - if policy(@argument).destroy?
-      li= link_to(argument_path(@argument), method: :delete, destroy: true) do
+      li= link_to argument_path(@argument, destroy: true), data: {confirm: t('destroy_confirmation'), method: :delete} do
         span.fa.fa-close
-        span.icon-left= t("destroy")
+        span.icon-left= t('destroy')
     - if policy(@argument).trash?
-      li= link_to(argument_path(@argument), method: :delete) do
+      li= link_to argument_path(@argument), data: {confirm: t('trash_confirmation'), method: :delete} do
         span.fa.fa-trash
-        span.icon-left= t("trash")
-    - if policy(@argument).update?
-      li= link_to(edit_argument_path(@argument)) do
-        span.fa.fa-pencil
-        span.icon-left= t("edit")
-    - if active_for_user? :notifications, current_user
+        span.icon-left= t('trash')
+    - if current_user.present? && policy(@argument).update? || active_for_user?(:notifications, current_user)
       li
-        ul
-          =react_component 'HyperDropdown', argument_items(@argument), {prerender: true}
+        ul= react_component 'HyperDropdown', argument_items(@argument), {prerender: true}
+    li
+      ul= react_component 'HyperDropdown', share_items(@argument), {prerender: true}

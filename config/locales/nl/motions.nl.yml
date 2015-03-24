@@ -38,11 +38,12 @@ nl:
         content: "Beschrijf jouw idee in meer detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
         themes: "Thema's of onderwerpen die aan deze stelling gerelateerd zijn. Plaats komma's tussen de thema's."
         side: "<h2>Wat is een idee?</h2>
-               <p>Een <b class='sta-t'>idee</b> is een voorstel om een of meerdere problemen op te lossen.</p>
+               <p>Een <b class='motion-t'>idee</b> is een voorstel om een of meerdere problemen op te lossen.</p>
                <h2>Tips:</h2>
                <ul class='bullets'>
                 <li><p>Een goed idee is <b>concreet en implementeerbaar</b>: het beschrijft wat er moet gebeuren en hoe dit moet gebeuren.</p></li>
-                <li><p>Geef achtergrondinformatie. Wat is de huidige situatie? Wat is er al gebeurt? Hoe gaat jouw idee bestaande problemen oplossen?</p></li>
+                <li><p>Geef achtergrondinformatie. Wat is de huidige situatie? Wat is er al gebeurd? Hoe gaat jouw idee bestaande problemen oplossen?</p></li>
+                <li><p>Argu is een platform</p></li>
                "
     mod:
       edit_moderators:
@@ -75,3 +76,11 @@ nl:
       header: "Converteer object"
       body: "Hiermee is een object van type te veranderen. Associaties worden soms meegenomen. Ook kan het zijn dat conversie niet kan voordat bepaalde associaties leeg zijn."
       body_2: "GEBRUIK DIT NIET ZOMAAR, DATA GAAT WAARSCHIJNLIJK VERLOREN"
+    expired_at:
+      tooltip: "Dit idee sloot op %{date}."
+    expires_at:
+      tooltip: "Dit idee wordt gesloten op %{date}."
+    accepted:
+      tooltip: "Dit voorstel is aangenomen op %{date}."
+    rejected:
+      tooltip: "Dit voorstel is afgewezen op %{date}."

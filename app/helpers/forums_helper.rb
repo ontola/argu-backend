@@ -7,8 +7,8 @@ module ForumsHelper
 
   def forum_title_dropdown_items(resource)
     link_items = []
-    current_profile.present? && current_profile.memberships.each do |membership|
-      link_items << link_item(membership.forum.display_name, url_for(membership.forum), image: membership.forum.profile_photo.url(:icon))
+    current_profile.present? && current_profile.memberships.joins(:forum).each do |membership|
+      link_items << link_item(membership.forum.display_name, forum_path(membership.forum), image: membership.forum.profile_photo.url(:icon))
     end
 
     divided = false
@@ -16,12 +16,12 @@ module ForumsHelper
       if active_for_user?(:notifications, current_user)
         divided = true
         if current_profile.following?(@forum)
-          link_items << link_item(t('forums.unfollow'), follows_path(forum_id: @forum.web_url), fa: 'times', divider: 'top', data: {method: 'delete', 'skip-pjax' => 'true'})
+          link_items << link_item(t('forums.unfollow'), follows_path(forum_id: @forum.url), fa: 'times', divider: 'top', data: {method: 'delete', 'skip-pjax' => 'true'})
         else
-          link_items << link_item(t('forums.follow'), follows_path(forum_id: @forum.web_url), fa: 'check', divider: 'top', data: {method: 'create', 'skip-pjax' => 'true'})
+          link_items << link_item(t('forums.follow'), follows_path(forum_id: @forum.url), fa: 'check', divider: 'top', data: {method: 'create', 'skip-pjax' => 'true'})
         end
       end
-      link_items << link_item(t('forums.leave'), forum_membership_path(@forum.web_url, current_profile), fa: 'sign-out', divider: (divided ? 'top' : nil),
+      link_items << link_item(t('forums.leave'), forum_membership_path(@forum.url, current_profile), fa: 'sign-out', divider: (divided ? 'top' : nil),
                               data: {method: :delete, 'skip-pjax' => 'true', confirm: t('forums.leave_confirmation')})
     end
     link_items << link_item(t('forums.discover'), forums_url, fa: 'compass')

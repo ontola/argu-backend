@@ -13,9 +13,6 @@ section {
   background-color: $g3;
   color: white;
   text-transform: uppercase;
-  + section {
-    border-top: none;
-  }
   .fa-group {
     font-size: 0.7em;
   }
@@ -29,10 +26,6 @@ section.smallpadded {
   padding: 1.1em 1em 0em 1em;
 }
 
-section + section {
-  border-top: solid 1px $g1;
-}
-
 .section-small {
   position: relative;
   padding: .3em 1.4em 0.1em 1.4em;
@@ -40,9 +33,6 @@ section + section {
 
 .box .section-fill {
   background-color: $g3;
-  @include border-radius;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
   h2 {
     color: White !important;
     &:hover {
@@ -55,9 +45,28 @@ section + section {
   background-color: $g00;
 }
 
-.section-countdown {
-  background-color: $red;
+.section-info--right {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.section-info--countdown {
+  background-color: $red-alert;
+}
+
+.section-info--closed {
+  background-color: $g3;
+}
+
+.section-info--accepted {
+  background-color: $gre;
+}
+
+.section-info--rejected {
+  background-color: $red;
+}
+
+.section-info--contemplating {
+  background-color: $g3;
 }

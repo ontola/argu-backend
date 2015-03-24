@@ -8,7 +8,6 @@
 .cover {
   position: relative;
   margin-bottom: 1em;
-  overflow: hidden;
 }
 
 .header-attribution {
@@ -44,6 +43,9 @@
 }
 
 .cover .cover-image {
+  @include bp-large{
+    height: 12em;
+  }
   @include bp-medium {
     height: 10em;
   }
@@ -72,6 +74,17 @@
   .btns-list {
     display: block;
     clear: both;
+    @include bp-medium{
+      > li{
+        font-size: 1.3em;
+      }
+      span{
+        display: none;
+        &.fa{
+          display: inline-block;
+        }
+      }
+    }
   }
 }
 
@@ -88,24 +101,30 @@
   vertical-align: bottom;
   .dropdown {
     display: inline-block;
+    background-color: $blu;
   }
   .dropdown-trigger {
-    padding: 1em;
+    padding: 20px;
     position: relative;
     display: inline-block;
-    background-color: $lighten4;
-    color: #303030;
+    color: white;
+    @include transition(.2s);
+    background-color: $blu;
     @include bp-medium {
       font-size: 1em;
     }
     &:hover{
-      background-color: $lighten5;
+      background-color: $lighten2;
+    }
+    &:active, .dropdown-active{
+      background-color: $lighten3 !important;
     }
     margin-bottom: 0;
-    font-size: 1.3em;
+    font-size: 23px;
     min-height: 64px;
     @include bp-medium {
       min-height: 50px;
+      padding: 18px;
     }
   }
   .dropdown-content{
@@ -117,12 +136,11 @@
 }
 
 .cover-image-empty {
-  height: 64px;
+  height: 62px;
   background-color: $g2;
-}
-
-.cover-switcher .dropdown-active .dropdown-trigger {
-  background-color: $lighten6 !important;
+  @include bp-medium{
+    height: 51px;
+  }
 }
 
 .cover-header-bottom {

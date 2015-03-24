@@ -33,22 +33,22 @@ div[itemscope itemtype="Thing"]
           ul.btns-list.btns-vertical
             /TODO: Make this check the current profile, not the user
             - if !policy(@forum).is_member?
-              li=link_to forum_memberships_path(@forum.web_url), data: {method: :post, 'skip-pjax' => true}, class: 'btn-focus'
+              li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, class: 'btn-focus'
                 span.fa.fa-user
                 span.icon-left= t('join')
-            li[data-intro=t('intro.motion.create', name: @forum.name) data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]= link_to url_for([:new, @forum, :motion]), data: remote_unless_user, class: 'sta-t btn-focus'
-              span.fa.fa-plus
-              span.icon-left= motion_type
-            li[data-intro=t('intro.question.create', name: @forum.name) class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]= link_to url_for([:new, @forum, :question]), data: remote_unless_user, class: 'que-t btn-focus'
-              span.fa.fa-plus
-              span.icon-left= t('questions.type')
+            li[data-intro=t('intro.motion.create', name: @forum.name) data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]= link_to new_forum_motion_path(@forum), data: remote_unless_user, class: 'motion-t btn-focus'
+              span.fa[class="fa-#{motion_icon}"]
+              span.icon-left= t('new') + ' ' + motion_type
+            li[data-intro=t('intro.question.create', name: @forum.name) class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]= link_to new_forum_question_path(@forum), data: remote_unless_user, class: 'question-t btn-focus'
+              span.fa[class="fa-#{question_icon}"]
+              span.icon-left= t('new') + ' ' +  question_type
             - if policy(@forum).invite?
-              li= link_to new_user_invitation_path(forum: @forum.web_url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite')}
-                span.fa.fa-group
+              li= link_to new_user_invitation_path(forum: @forum.url), remote: true, class: 'pro-t btn-focus tooltip', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite')}
+                span.fa.fa-user-plus
                 span.icon-left= t('forums.invite_others')
             - if policy(@forum).is_manager?
-              li
-                ul=render partial: 'application/menus/settings', locals: {resource: @forum}
+              li[class='float-right']
+                ul= render partial: 'application/menus/settings', locals: {resource: @forum}
   - if policy(@forum).show?
     =render partial: 'filter_and_sort'
     .grid
@@ -57,21 +57,21 @@ div[itemscope itemtype="Thing"]
       -@items.each do |item|
         =render item
       .box.box-grid.motion[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :motion]), data: {remote: true}
-        section.section-fill.sta-bg
+        section.section-fill.motion-bg
           h2= t('motions.call_to_action.title')
         section
           p= t('motions.call_to_action.body')
           p
-            b.sta-t
+            b.motion-t
               span.fa.fa-plus
               span.icon-left= t('motions.call_to_action.action')
       .box.box-grid.question[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :question]), data: {remote: true}
-        section.section-fill.que-bg
+        section.section-fill.question-bg
           h2= t('questions.call_to_action.title')
         section
           p= t('questions.call_to_action.body')
           p
-            b.que-t
+            b.question-t
               span.fa.fa-plus
               span.icon-left= t('questions.call_to_action.action')
     .col-1

@@ -7,7 +7,7 @@
 <div>
 	<ul class="revunderbar">
 		<% u = User.find_by_id(@argument.version.whodunnit) %>
-		<li><%= t("arguments.revisions.edited_by") + ":" %><%= link_to(u.username, profile_url(u)) %></li>
+		<li><%= t("arguments.revisions.edited_by") + ":" %><%= link_to(u.url, dual_profile_path(u)) %></li>
 		<li id="revheader"><h2><%= @version.created_at.to_s %></h2></li>
 		<li><h3><%= t("arguments.revisions.options") + ":" %></h3></li>
 		<li><% if(@argument.live?)%><%= t("arguments.revisions.current") %><% else %> <%= link_to(t("arguments.revisions.revert"), update_revision_argument_url(@argument, @version), method: :put) %><% end %></li>

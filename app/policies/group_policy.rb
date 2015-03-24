@@ -39,6 +39,10 @@ class GroupPolicy < RestrictivePolicy
     update?
   end
 
+  def remove_member?(member)
+    is_manager? || super
+  end
+
 private
 
   def is_manager?

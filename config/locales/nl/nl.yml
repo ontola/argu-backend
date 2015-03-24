@@ -6,15 +6,15 @@ nl:
   name_phonetic: "\\\'är-(ˌ)gyü\\"
   owner: "Thom van Kalkeren & Joep Meindertsma"
   system_not_allowed: "je hebt geen toestemming voor deze actie."
-  sign_in: "Inloggen"
-  sign_up_sign_in: "Registreren / Inloggen"
+  sign_in: "Log in"
+  sign_up_sign_in: "Registreren of Inloggen"
   sign_in_facebook: "Log in met facebook"
   sign_in_twitter: "Log in met twitter"
   sign_in_existing: "Log in met een bestaand argu account:"
   forgot_password: "Wachtwoord vergeten?"
 
-  sign_up: "account aanmaken"
-  sign_up_description: "Maak gratis een account aan waarmee je kan reageren en stemmen."
+  sign_up: "Account aanmaken"
+  sign_up_description: "Maak gratis een account aan:"
   argu_sign_up: "Argu account aanmaken"
   sign_up_argu: "Maak Argu account"
   sign_out: "Uitloggen"
@@ -54,6 +54,8 @@ nl:
   report: "Rapporteer"
   clearance: "Bevoegdheid"
   forum: "Forum"
+  share: "Delen"
+  menu: "Menu"
   trash_confirmation: "Dit object zal niet zichtbaar zijn in de publieke discussie, deze actie is ongedaan te maken."
   destroy_confirmation: "Dit object en alle bijbehorende data zal permanent verwijderd worden, deze actie is niet ongedaan te maken."
   not_allowed: "Actie niet toegestaan."
@@ -75,6 +77,10 @@ nl:
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
+  closed: "Gesloten"
+  accepted: "Aangenomen"
+  rejected: "Afgewezen"
+  contemplating: "In overweging"
 #Home
   home_title: "Argu"
   #Not logged in
@@ -87,7 +93,7 @@ nl:
     vision: "Onze visie"
     how_argu_works: "Hoe werkt Argu?"
     team: "Ons team"
-    product: "Een eigen forum"
+    product: "Ons product"
     organisations: "Argu voor organisaties"
     governments: "Argu voor overheden"
   how_argu_works:
@@ -98,7 +104,7 @@ nl:
     title: "Ons team"
 #Users
   users_username: "gebruikersnaam"
-  users_username_or_email: "email of gebruikersnaam"
+  users_email: "email"
   users_name: "volledige naam"
   users_name_placeholder: "Vul hier jouw volledige naam in."
   users_email: "e-mail"
@@ -138,11 +144,11 @@ nl:
   datetime:
     distance_in_words:
       x_days:
-        one: '1 dag geleden'
-        other: '%{count} dagen geleden'
+        one: '1 dag'
+        other: '%{count} dagen'
       about_x_hours:
-        one: '%{count} uur geleden'
-        other: '%{count} uur geleden'
+        one: '%{count} uur'
+        other: '%{count} uur'
   views:
     pagination:
       first: "&laquo; eerste"
@@ -163,6 +169,7 @@ nl:
     button_label: "Verplaats"
   convert:
     current_class: "Huidig type:"
+    button_label: "Converteer"
   join: "Word lid"
   view_on_argu: "bekijk & reageer op Argu"
   embed: "embed"

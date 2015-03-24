@@ -20,7 +20,7 @@
 }
 
 @mixin border-radius($opts:3px){
-  //border-radius: $opts;
+  border-radius: $opts;
 }
 
 @mixin text_settings($align: justify, $color: $g4, $family: $font-sans, $size: 1em, $margin: 0, $padding: 0, $line-height: 1.3em) {
@@ -51,7 +51,6 @@
   width: auto;
   display: inline-block;
   cursor: pointer;
-  @include border-radius;
   border-bottom: solid 3px darken($color, 5%);
   &:hover {
     background-color: darken($color, 5%);
@@ -70,7 +69,7 @@
 }
 
 @mixin box-shadow($opts: 0em 0.2em 0.25em 0em rgba(0, 0, 0, 0.05)) {
-  //box-shadow: $opts;
+  box-shadow: $opts;
 }
 
 @mixin box-shadow-intense {
@@ -117,6 +116,18 @@
 
 @mixin bp-small {
   @media only screen and (max-width: 33em) {
+    @content;
+  }
+}
+
+@mixin bp-smaller {
+  @media only screen and (max-width: 27em) {
+    @content;
+  }
+}
+
+@mixin bp-smallest {
+  @media only screen and (max-width: 20em) {
     @content;
   }
 }

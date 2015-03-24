@@ -30,12 +30,12 @@ gem 'multimap'
 gem 'acts-as-taggable-on', '~> 3.4.2'
 gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 2.0.0'
-gem 'friendly_id', '~> 5.0.4'
 gem 'whodunnit', '0.0.5'
 gem 'simple_settings', '1.0.2'
 gem 'public_activity'
 gem 'acts_as_follower'
 gem 'rollout'
+gem 'html_truncator', '~>0.2'
 #Search
 
 #Pagination
@@ -59,6 +59,7 @@ gem 'mini_magick', '~> 3.8.1'                                             # Ruby
 #gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'
+gem 'sidekiq-logging-json'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
 gem 'jquery-pjax-rails'
@@ -102,6 +103,12 @@ group :production, :staging do
   gem 'therubyracer', '~> 0.12.1'
   gem 'unicorn', '~> 4.8.3'
   gem 'rack-test', '~> 0.6.2'
+end
+
+group :staging, :development do
+  gem 'rack-mini-profiler'
+  gem 'stackprof'
+  gem 'flamegraph'
 end
 
   gem 'briarcliff', '~> 0.0.9'

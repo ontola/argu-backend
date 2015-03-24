@@ -8,29 +8,32 @@ class ForumsController < ApplicationController
   end
 
   def show
-    @forum = Forum.friendly.find params[:id]
+    @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :list?
     current_context @forum
 
     questions = policy_scope(@forum.questions.trashed(show_trashed?))
-    motions_without_questions = policy_scope(@forum.motions.trashed(show_trashed?)).reject { |m| m.question_answers.present? }
 
-    #t_motions = Arel::Table.new(:motions)
-    #motions_without_questions = policy_scope(@forum.motions.trashed(show_trashed?)).join(t_motions).on(:  question_answers[:question_id].eq(:motions[:id]))
+    question_answers = QuestionAnswer.arel_table
+    motions = Motion.arel_table
+    sql = motions.where(motions[:forum_id].eq(@forum.id).and(motions[:is_trashed].eq(show_trashed?))).join(question_answers, Arel::Nodes::OuterJoin)
+              .on(question_answers[:motion_id].eq(motions[:id])).where(question_answers[:motion_id].eq(nil))
+              .project(motions[Arel.star])
+    motions_without_questions = Motion.find_by_sql(sql)
 
     @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(@forum).show?
 
-    render stream: false
+    render
   end
 
   def settings
-    @forum = Forum.friendly.find params[:id]
+    @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
     current_context @forum
   end
 
   def statistics
-    @forum = Forum.friendly.find params[:id]
+    @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :statistics?
     current_context @forum
 
@@ -44,14 +47,16 @@ class ForumsController < ApplicationController
   end
 
   def update
-    @forum = Forum.friendly.find params[:id]
+    @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
 
     @forum.reload if process_cover_photo @forum, permit_params
-    if @forum.update permit_params
-      redirect_to settings_forum_path(@forum, tab: params[:tab])
-    else
-      render 'settings'
+    respond_to do |format|
+      if @forum.update permit_params
+        format.html { redirect_to settings_forum_path(@forum, tab: params[:tab]) }
+      else
+        format.html { render 'settings' }
+      end
     end
   end
 
@@ -65,21 +70,31 @@ class ForumsController < ApplicationController
     @forums = Forum.top_public_forums
     authorize Forum, :selector?
 
+    @forums = @forums.map! { |f| f.is_checked = f.profile_is_member?(current_user.profile); f }
+
     render layout: 'closed'
   end
 
   # POST /forums/memberships
   def memberships
+    authorize Forum, :selector?
     @forums = Forum.public_forums.where('id in (?)', params[:profile][:membership_ids].reject(&:blank?).map(&:to_i))
     @forums.each { |f| authorize f, :join? }
 
     @memberships = @forums.map { |f| Membership.find_or_initialize_by forum: f, profile: current_user.profile  }
 
+    success = false
     Membership.transaction do
       if @memberships.length >= 2 && @memberships.all?(&:save!)
         current_user.update_attribute :finished_intro, true
-        redirect_to root_path
+        success = true
       end
+    end
+    if success
+      redirect_to root_path
+    else
+      flash[:error] = t('forums.selector.at_least_error')
+      redirect_to selector_forums_path
     end
   end
 

@@ -17,8 +17,6 @@ ul.tags {
   display: inline-block;
   background-color: white;
   margin: .3em;
-  @include box-shadow;
-  @include border-radius;
   @include transition(.15s);
 }
 
@@ -80,14 +78,9 @@ a.tag:active, a.tag.is-checked {
 .tags-floating {
   margin-left: -.25em;
   margin-top: -.25em;
-  .tag {
-    @include box-shadow;
-  }
 }
 
 .tags-type {
-  @include border-radius;
-  @include box-shadow;
   overflow: hidden;
   .tag {
     margin: .0em 0;

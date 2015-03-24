@@ -3,13 +3,13 @@
   .col-3-2
     = to_parent
     .box
-      section.section-info.que-bg
+      section.section-info.question-bg
         span[class="fa fa-#{question_icon}"]
         span.icon-left= questions_type
       = semantic_form_for((@question.new_record? ? [@forum, @question] : @question), multipart: true) do |f|
         section.smallpadded.form-filled
           = f.inputs
-            = f.input :title, input_html: {class: 'h1 que-t form-input-title'}, label: false, placeholder: placeholder_for(@question, :title, question_type)
+            = f.input :title, input_html: {class: 'h1 question-t form-input-title'}, label: false, placeholder: placeholder_for(@question, :title, question_type)
             = f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, placeholder: placeholder_for(@question, :content, question_type)
             = f.input :tag_list, input_html: {class: 'tag-list'}, label: false
           = f.inputs

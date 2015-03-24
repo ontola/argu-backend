@@ -5,19 +5,9 @@ class Argu::ActivityMailer
   include Sidekiq::Worker
   include RenderAnywhere
 
-  def initialize(a)
+  def initialize(a, recipients)
     @activity = a
-  end
-
-  # Current implementation only mails directly until we enable weekly email
-  def collect_recipients
-    if @recipients.present?
-      @recipients
-    else
-      recipients = Set.new
-      recipients.merge recipients_for_activity(@activity)
-      @recipients = recipients.select { |u| u.direct_follows_email? }.map(&:user_to_recipient_option).reduce({}, :merge)
-    end
+    @recipients = recipients.select { |u| u.class == User && u.direct_follows_email? }.map(&:user_to_recipient_option).reduce({}, :merge)
   end
 
   def recipients_for_activity(a)
@@ -33,21 +23,22 @@ class Argu::ActivityMailer
   # Sends the actual messages
   def send!
     begin
-      if collect_recipients.length > 0
-        RestClient.post "https://api:key-#{Rails.application.secrets.mailgun_api_token}"\
-    "@api.mailgun.net/v2/sandbox45cac23aba3c496ab26b566ddae1bd5b.mailgun.org/messages",
-                        from: Rails.application.secrets.mailgun_sender,
-                        to: collect_recipients.keys.join(','),
-                        'recipient-variables' => collect_recipients.to_json,
-                        subject: subject,
-                        text: 'text',
-                        html: render_mail.to_str # This MUST say .to_str otherwise it will crash on SafeBuffer
-        logger.info "Sent a mail to: #{collect_recipients.to_s}"
+      if @recipients.length > 0
+        unless Rails.env.development?
+          RestClient.post "https://api:key-#{Rails.application.secrets.mailgun_api_token}"\
+      "@api.mailgun.net/v2/sandbox45cac23aba3c496ab26b566ddae1bd5b.mailgun.org/messages",
+                          from: Rails.application.secrets.mailgun_sender,
+                          to: @recipients.keys.join(','),
+                          'recipient-variables' => @recipients.to_json,
+                          subject: subject,
+                          text: 'text',
+                          html: render_mail.to_str # This MUST say .to_str otherwise it will crash on SafeBuffer
+        end
       else
         logger.info 'No recepients'
       end
     rescue => e
-      logger.error e.response
+      logger.error e
       raise e
     end
   end

@@ -1,7 +1,7 @@
 class TagsController < ApplicationController
 
   def show
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :show?
     @tag = Tag.find(name: params[:id])
 

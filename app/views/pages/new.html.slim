@@ -10,7 +10,8 @@
               =p.input :name, label: t('formtastic.labels.page.name')
               =p.input :about
               =p.input :profile_photo
-            =f.input :web_url
+            -if policy(@page).shortname?
+              =f.inputs :shortname, for: :shortname
           p= t('pages.legal')
           =f.actions do
             =f.action :submit, :as => :button

@@ -1,6 +1,5 @@
 class Forum < ActiveRecord::Base
-  include ArguBase, Attribution, Parentable
-  extend FriendlyId
+  include ArguBase, Attribution, Parentable, Shortnameable
 
   belongs_to :page
   has_many :questions, inverse_of: :forum
@@ -8,12 +7,15 @@ class Forum < ActiveRecord::Base
   has_many :arguments, inverse_of: :forum
   has_many :memberships
   accepts_nested_attributes_for :memberships
+  has_many :managers, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
   has_many :votes, inverse_of: :forum
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :groups
 
-  friendly_id :web_url, use: [:slugged, :finders]
+  # Used in the forum selector
+  attr_accessor :is_checked
+
   acts_as_ordered_taggable_on :tags
   mount_uploader :profile_photo, AvatarUploader
   process_in_background :profile_photo
@@ -24,8 +26,7 @@ class Forum < ActiveRecord::Base
   validates_integrity_of :profile_photo
   validates_processing_of :profile_photo
   validates_download_of :profile_photo
-  validates :web_url, :name, presence: true, length: {minimum: 4}
-  validates_format_of :web_url, with: /\A[a-zA-Z]\w{3,}/, message: '_moet met een letter beginnen_'
+  validates :shortname, :name, presence: true, length: {minimum: 4}
   validates :page_id, presence: true
   validates :bio, length: {maximum: 90}
 
@@ -59,12 +60,16 @@ class Forum < ActiveRecord::Base
   end
 
   def page=(value)
-    super Page.friendly.find(value)
+    super Page.find_via_shortname(value)
+  end
+
+  def profile_is_member?(profile)
+    self.memberships.where(profile: profile).present?
   end
 
   def self.first_public
     if (setting = Setting.get(:default_forum))
-      forum = Forum.find_by(web_url: setting)
+      forum = Forum.find_via_shortname(setting)
     end
     forum || Forum.public_forums.first
   end
@@ -75,9 +80,5 @@ class Forum < ActiveRecord::Base
 
   def featured_tags=(value)
     super(value.downcase.strip)
-  end
-
-  def should_generate_new_friendly_id?
-    web_url_changed?
   end
 end

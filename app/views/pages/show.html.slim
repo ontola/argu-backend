@@ -10,8 +10,9 @@
         h1= @profile.display_name
         p.quote= @profile.about
       ul.btns-list.btns-sticky.btns-sticky-bottom
-.box-list[data-intro= t('intro.profile.votes')]
-  - if @profile.votes.count > 0
-    =render_columns(@collection, collection_model: Vote)
-  - else
-    h2.center= t('profiles.didnt_vote_name', name: @profile.display_name).capitalize
+- if @profile.are_votes_public?
+  .box-list[data-intro= t('intro.profile.votes')]
+    - if @pubic_vote_count > 0
+      =render_columns(@collection, collection_model: Vote)
+    - else
+      h2.center= t('profiles.didnt_vote_name', name: @profile.display_name).capitalize

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150311124537) do
+ActiveRecord::Schema.define(version: 20150324115708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -148,7 +148,6 @@ ActiveRecord::Schema.define(version: 20150311124537) do
     t.datetime "created_at",                               null: false
     t.datetime "updated_at",                               null: false
     t.string   "slug"
-    t.string   "web_url",                  default: "",    null: false
     t.text     "bio",                      default: "",    null: false
     t.text     "featured_tags",            default: "",    null: false
     t.integer  "visibility",               default: 1
@@ -166,7 +165,6 @@ ActiveRecord::Schema.define(version: 20150311124537) do
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
-  add_index "forums", ["web_url"], name: "index_forums_on_web_url", unique: true, using: :btree
 
   create_table "group_memberships", force: :cascade do |t|
     t.integer  "group_id"
@@ -245,6 +243,8 @@ ActiveRecord::Schema.define(version: 20150311124537) do
     t.datetime "read_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
+    t.string   "url"
   end
 
   create_table "opinions", force: :cascade do |t|
@@ -274,10 +274,9 @@ ActiveRecord::Schema.define(version: 20150311124537) do
   end
 
   create_table "pages", force: :cascade do |t|
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "slug"
-    t.string   "web_url",    default: "", null: false
     t.integer  "profile_id"
     t.integer  "visibility", default: 1
     t.integer  "owner_id"
@@ -285,7 +284,6 @@ ActiveRecord::Schema.define(version: 20150311124537) do
 
   add_index "pages", ["profile_id"], name: "index_pages_on_profile_id", unique: true, using: :btree
   add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true, using: :btree
-  add_index "pages", ["web_url"], name: "index_pages_on_web_url", unique: true, using: :btree
 
   create_table "profiles", force: :cascade do |t|
     t.string   "name",             limit: 255, default: ""
@@ -366,6 +364,16 @@ ActiveRecord::Schema.define(version: 20150311124537) do
 
   add_index "settings", ["key"], name: "index_settings_on_key", unique: true, using: :btree
 
+  create_table "shortnames", force: :cascade do |t|
+    t.string   "shortname",  null: false
+    t.integer  "owner_id",   null: false
+    t.string   "owner_type", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shortnames", ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, using: :btree
+
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
@@ -400,7 +408,6 @@ ActiveRecord::Schema.define(version: 20150311124537) do
     t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
-    t.string   "username",               limit: 255
     t.string   "unconfirmed_email",      limit: 255
     t.integer  "profile_id"
     t.string   "invitation_token"
@@ -412,23 +419,27 @@ ActiveRecord::Schema.define(version: 20150311124537) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                  default: 0
     t.boolean  "finished_intro",                     default: false
-    t.text     "r"
-    t.text     "access_tokens"
     t.integer  "follows_email",                      default: 1,     null: false
     t.boolean  "follows_mobile",                     default: true,  null: false
     t.integer  "memberships_email",                  default: 1,     null: false
     t.boolean  "memberships_mobile",                 default: true,  null: false
     t.integer  "created_email",                      default: 1,     null: false
     t.boolean  "created_mobile",                     default: true,  null: false
+    t.text     "r"
+    t.text     "access_tokens"
+    t.text     "omni_info"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
   add_index "users", ["profile_id"], name: "index_users_on_profile_id", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["username"], name: "index_users_on_username", unique: true, using: :btree
 
   create_table "votes", force: :cascade do |t|
     t.integer  "voteable_id"
@@ -446,5 +457,5 @@ ActiveRecord::Schema.define(version: 20150311124537) do
   add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
-  add_foreign_key "access_tokens", "profiles"
+  add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
 end

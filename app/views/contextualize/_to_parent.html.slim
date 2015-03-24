@@ -4,15 +4,15 @@
      .box.box-link
         - classname = current_context.parent.single_model.class_name
         - if classname == 'forums'
-          section.section-info.que-bg
+          section.section-info.question-bg
             span.fa.fa-group
             span.icon-left= t('forums.type')
         - elsif classname == 'questions'
-          section.section-info.que-bg
+          section.section-info.question-bg
             span[class="fa fa-#{question_icon}"]
             span.icon-left= question_type
         - elsif classname == 'motions'
-          section.section-info.sta-bg
+          section.section-info.motion-bg
             span[class="fa fa-#{motion_icon}"]
             span.icon-left= motion_type
         - else
@@ -20,4 +20,5 @@
             span.fa.fa-arrow-up
         section
           h3[class=current_context.parent.single_model.class.to_s.downcase]
-            span[itemprop="name"]= current_context.parent.single_model.display_name
+            span.fa.fa-arrow-up
+            span.icon-left[itemprop="name"]= current_context.parent.single_model.display_name

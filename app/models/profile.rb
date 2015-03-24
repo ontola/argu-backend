@@ -21,7 +21,7 @@ class Profile < ActiveRecord::Base
   pica_pica :profile_photo
   acts_as_follower
 
-  #validates :name, presence: true, length: {minimum: 3}
+  validates :name, presence: true, length: {minimum: 3}, if: :finished_intro?
   #validates :about, presence: true
 
   ######Attributes#######
@@ -41,16 +41,16 @@ class Profile < ActiveRecord::Base
     memberships.pluck(:forum_id).join(',').presence
   end
 
-  def username
-    owner.try :username
-  end
-
   def owner
     User.find_by(profile: self) || Page.find_by(profile: self)
   end
 
-  def web_url
-    username.presence || owner.try(:web_url).presence || id
+  def url
+    owner.url.presence || id
+  end
+
+  def finished_intro?
+    self.owner && self.owner.finished_intro?
   end
 
   #######Methods########
@@ -91,10 +91,6 @@ class Profile < ActiveRecord::Base
     remove_role :frozen
   end
 
-  #######Utility#########
-  def self.find_by_username(user)
-    return (User.find_by_username(user)).try(:profile)
-  end
 private
 
   def role_added(role)

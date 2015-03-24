@@ -85,7 +85,7 @@ $(function () {
             filter = _this.attr('data-filter'),
             value  = this.dataset.filterValue;
         filterForTag(value);
-        history.pushState({filter: filter, filterValue: value}, value + '<%= I18n.t('header_title') %>', _this.attr('data-forum-path')+'/tags/' + value);
+        history.pushState({filter: filter, filterValue: value}, value + '<%= I18n.t('header_title') %>', _this.attr('data-forum-path')+'/t/' + value);
     }).on('click', '#type a', function (e) {
         e.preventDefault();   // this prevents selecting the words in chrome on android
         var  _this = $(this),

@@ -23,7 +23,7 @@ nl:
         content: "Beschrijf hier het vraagstuk in detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
         themes: "Thema's of onderwerpen die aan dit vraagstuk gerelateerd zijn. Plaats komma's tussen de thema's."
         side: "<h2>Wat is een vraagstuk?</h2>
-               <p>Een <b class='que-t'>vraagstuk</b> is een <b>open vraag</b> waarin een probleem wordt gepresenteerd. Leg uit waarom het probleem relevant is, hoe het probleem in elkaar zit en met welke beperkingen er naar oplossingen wordt gezocht.</p>
+               <p>Een <b class='question-t'>vraagstuk</b> is een <b>open vraag</b> waarin een probleem wordt gepresenteerd. Leg uit waarom het probleem relevant is, hoe het probleem in elkaar zit en met welke beperkingen er naar oplossingen wordt gezocht.</p>
                <p>Meestal begint een vraagstuk met \"<b>Hoe</b>...\" of \"<b>Wat</b>...\".
                <p>In een vraagstuk staan geen voorstellen voor oplossingen.</p>"
     expired_at:

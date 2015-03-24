@@ -7,8 +7,6 @@
   width: 100%;
   overflow: hidden;
   height: 2.5em;
-  @include box-shadow;
-  @include border-radius;
   @include transition(1s ease-in-out);
   li {
     display: inline-block;

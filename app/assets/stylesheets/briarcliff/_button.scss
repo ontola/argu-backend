@@ -69,6 +69,10 @@
   @include button(#3B5998);
 }
 
+.btn--argu {
+  @include button($blu);
+}
+
 .btn-box {
   color: white;
 }
@@ -257,8 +261,6 @@
     width: 33.3%;
     width: calc(33.3% - 1em);
     margin: 0 .5em;
-    @include box-shadow;
-
   }
   &[data-voted] a {
     opacity: .4;
@@ -271,7 +273,6 @@
     display: inline-block;
     padding: 0.7em 1.1em;
     padding-bottom: 0.6em;
-    @include border-radius;
     line-height: 1.6em;
     text-transform: uppercase;
     top: 0;
@@ -335,12 +336,12 @@
 
 .btns-signup {
   text-align: center;
-  margin: 2em auto 1.6em;
   .btn {
     font-size: 1em;
-    width: 16em;
+    width: 100%;
     text-transform: none;
     text-align: left;
+    padding: 0.8em 1em;
   }
   .fa {
     width: 1em;

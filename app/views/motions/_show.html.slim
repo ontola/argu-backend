@@ -3,28 +3,30 @@
   -if model.cover_photo.present?
     = contextual_link_to motion_path(model)
       .box-image[style="background-image: url('#{model.cover_photo.url(:box)}'); "]
-  section.section-info.sta-bg
+  section.section-info.motion-bg
     span[class="fa fa-#{motion_icon(model.forum)}"]
     span.icon-left= motion_type(model.forum)
   section[itemscope itemtype="http://www.schema.org/Answer"]
     = contextual_link_to motion_path(model)
-      h3.sta-t[itemprop="headline"]= model.title
-    p[itemprop="text" class='wrap-normal']= model.supped_content[0..150] + (model.supped_content[151] ? '...' : '')
+      h3.motion-t[itemprop="headline"]= model.title
+    p[itemprop="text" class='wrap-normal']
+      /= model.supped_content[0..150] + (model.supped_content[151] ? '...' : '')
+      ==model.truncate_preview(150, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read-more'), motion_path(model))})
     -if Rails.configuration.epics.counters
       span.info= "#{t('motions.preview.pro', count: model.argument_pro_count)}, #{t('motions.preview.con', count: model.argument_con_count)}"
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
-        - model.arguments.trashed(show_trashed?).where(pro: true).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0,3].each do |argument|
+        - model.arguments.where(pro: true).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0,5].each do |argument|
           li= link_to argument_path(argument)
               h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
                 span.fa.fa-plus
                 span.icon-left= argument.title
       ul.box-list.box-list--arguments.box-list--icons
-        - model.arguments.trashed(show_trashed?).where(pro: false).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0, 3].each do |argument|
+        - model.arguments.where(pro: false).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0, 5].each do |argument|
           li= link_to argument_path(argument)
               h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
                 span.fa.fa-minus
                 span.icon-left= argument.title
-    = contextual_link_to motion_path(model), class: 'read-more'
+    = contextual_link_to motion_path(model), class: 'btn-subtle btn-sticky btns-sticky-bottom read-more'
       span.icon-right= t('read-more')
       span.fa.fa-arrow-right

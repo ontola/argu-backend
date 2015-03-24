@@ -27,15 +27,15 @@ $maxCommentDepth: 10;
 	background-color: $red !important;
 }
 
-.sta-bg {
+.motion-bg {
 	background-color: $blu !important;
 }
 
-.neu-bg{
+.neutral-bg{
 	background-color: $g3 !important;
 }
 
-.que-bg{
+.question-bg{
 	background-color: $bro !important;
 }
 
@@ -47,16 +47,30 @@ $maxCommentDepth: 10;
 	color: $red !important;
 }
 
-.sta-t{
+.motion-t{
 	color: $blu !important;
 }
 
-.neu-t{
+.neutral-t{
 	color: $g3 !important;
 }
 
-.que-t{
+.question-t{
 	color: $bro !important;
+}
+
+.question {
+  color: $bro;
+  .box-image{
+    background-color: $bro;
+  }
+}
+
+.motion {
+  color: $blu;
+  .box-image{
+    background-color: $blu;
+  }
 }
 
 .argu-logo {
@@ -77,17 +91,6 @@ $maxCommentDepth: 10;
 	z-index: 10;
 }
 
-.question {
-	color: $bro;
-  .box-image{
-    background-color: $bro;
-  }
-}
-
-.motion {
-	color: $blu;
-}
-
 .responsibility {
   background-color: rgba(92, 92, 92, 0.53);
   margin-top: -2em;
@@ -101,4 +104,12 @@ $maxCommentDepth: 10;
 
 .argument--imporant {
   background-color: $red;
+}
+
+.how-argu-works-images{
+  text-align: center;
+  li {
+    margin: 1em;
+    display: inline-block;
+  }
 }

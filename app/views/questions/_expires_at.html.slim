@@ -1,9 +1,10 @@
 -if deadline.present? && $rollout.active?(:expires_at, current_user)
   -if (deadline > DateTime.now)
-    - distance = distance_of_time_in_words(DateTime.now, deadline)
-    section.section-info.section-countdown
+    - distance = distance_of_time_in_words(deadline, DateTime.now)
+    section.section-info.section-info--right.section-info--countdown
       span.fa.fa-exclamation
       span.icon-left.tooltip.tooltip--left[data-title= t('questions.expires_at.tooltip', date: deadline.to_formatted_s(:short))]= "Nog #{distance}"
   -else
-    section.section-info.section-countdown
-      span.tooltip.tooltip--left[data-title= t('questions.expired_at.tooltip', date: deadline.to_formatted_s(:short))]= 'Gesloten'
+    section.section-info.section-info--right.section-info--closed
+      span.fa.fa-lock
+      span.icon-left.tooltip.tooltip--left[data-title= t('questions.expired_at.tooltip', date: deadline.to_formatted_s(:short))]= t('closed')

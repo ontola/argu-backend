@@ -55,18 +55,22 @@ class CoverUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :box do
+    process convert: 'jpg'
     process :resize_to_fill => [568, 400, gravity="center"]
   end
 
   version :cover do
+    process convert: 'jpg'
     process :resize_to_fill => [1500, 600, gravity="center"]
   end
 
   version :avatar do
+    process convert: 'jpg'
     process :resize_to_fill => [256, 256, gravity="center"]
   end
 
   version :icon do
+    process convert: 'jpg'
     process :resize_to_fill => [64, 64, gravity="center"]
   end
 

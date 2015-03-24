@@ -1,14 +1,14 @@
 class GroupsController < ApplicationController
 
   def new
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.new
 
   end
 
   def create
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.new
     @group.attributes= permit_params
@@ -23,14 +23,14 @@ class GroupsController < ApplicationController
   end
 
   def add
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.find params[:id]
     @membership = @group.group_memberships.new
   end
 
   def add!
-    @forum = Forum.friendly.find params[:forum_id]
+    @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.find params[:id]
     profile = Profile.find params[:profile_id]
@@ -41,6 +41,22 @@ class GroupsController < ApplicationController
         format.html { redirect_to url_for([:settings, @forum, tab: :groups]) }
       else
         format.html { render 'add' }
+      end
+    end
+  end
+
+  def remove!
+    @forum = Forum.find_via_shortname params[:forum_id]
+    authorize @forum, :create_group?
+    @group = @forum.groups.find params[:id]
+    profile = Profile.find params[:profile_id]
+
+    @membership = @group.group_memberships.new member: profile, profile: current_user.profile
+    respond_to do |format|
+      if @membership.save
+        format.html { redirect_to url_for([:settings, @forum, tab: :groups]) }
+      else
+        format.html { redirect_to  }
       end
     end
   end

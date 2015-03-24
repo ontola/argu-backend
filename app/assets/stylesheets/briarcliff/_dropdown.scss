@@ -21,11 +21,14 @@
   margin: 0;
   position: absolute;
   text-align: left;
+  font-size: 16px;
+  @include bp-small{
+    font-size: 14px;
+  }
   top: 100%;
   width: 15em;
   z-index: 10;
   @include box-shadow-intense;
-  @include border-radius;
   border-top-left-radius: 0;
   overflow: hidden;
   text-transform: none;
@@ -87,8 +90,6 @@
 }
 
 .dropdown-right {
-  @include border-radius;
-  border-top-right-radius: 0;
   right: 0;
   left: auto;
 }
@@ -112,7 +113,7 @@ span.dropdown-header {
   //text-transform: initial;
   @include animation(fade-in .2s);
   span {
-    display: inline-block;
+    display: inline-block !important; //Makes sure the text in dropdowns is not hidden on smaller screens.
   }
 }
 

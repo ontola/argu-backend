@@ -2,7 +2,8 @@
   div[class=['overlay', ('no-close' unless defined?(no_close) && no_close == false)].compact.join(' ')]
   .modal
     header
-      h1= t('sign_up_sign_in')
+      h1
+        /= t('sign_up_sign_in')
     .box.box-small
       -if defined?(preview) && preview.present?
         section
@@ -14,23 +15,12 @@
       -elsif defined?(r)
         section
           .form-small
-            p= t('sign_up_description')
+            h2= t('sign_up')
+            /.info.info-signup= t('sign_up_description')
             = render partial: 'registrations/form', locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping, r: r}
-      - elsif Rails.configuration.epics.sign_up
+      -elsif Rails.configuration.epics.sign_up
         section
-          ul.btns-signup
-            li
-              a.btn.btn--facebook href="/auth/facebook"
-                span.fa.fa-facebook
-                span.icon-left= t('sign_in_facebook')
-            li
-              a.btn.btn--twitter href="/auth/twitter"
-                span.fa.fa-twitter
-                span.icon-left= t('sign_in_twitter')
-            li
-              a.btn.btn-subtle href="/users/sign_up"
-                span.fa.fa-plus
-                span.icon-left= t('sign_up_argu')
+          =render partial: 'registrations/oauth'
       -else
         section.unpadded[style="margin-top: 1em;"]
           .form-small
@@ -61,9 +51,10 @@
                   li= msg
           = devise_error_messages!
           .form-small
+            h2= t('sign_in')
             =f.inputs
-              .info.info-signup= t('sign_in_existing')
-              = f.input :login, placeholder: t('users_username_or_email'), autofocus: :autofocus, label: false
+              /.info.info-signup= t('sign_in_existing')
+              = f.input :email, placeholder: t('users_email'), autofocus: :autofocus, label: false
               = f.input :password, placeholder: t('users_password'), label: false
               = f.input :r, as: :hidden
               - if devise_mapping.rememberable?

@@ -36,8 +36,8 @@ footer {
   }
   a {
     color: $g2;
+    @include transition(.2s);
     &:hover{
-      text-decoration: underline;
       color: $g1;
     }
     &:hover span {
@@ -57,7 +57,7 @@ footer {
   margin-bottom: 1em;
   @include bp-large{
     width: 11em;
-    margin: 0 1em;
+    margin: 0 1em 1em 1em;
   }
   li {
     margin-bottom: .8em;

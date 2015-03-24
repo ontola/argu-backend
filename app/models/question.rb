@@ -22,9 +22,10 @@ class Question < ActiveRecord::Base
 
   after_save :creator_follow
 
-  def creator
-    super || Profile.first_or_create(username: 'Onbekend')
-  end
+  # Might not be a good idea
+  #def creator
+  #  super || Profile.first_or_create(shortname: 'Onbekend')
+  #end
 
   def display_name
     title

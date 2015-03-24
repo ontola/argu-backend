@@ -10,7 +10,7 @@ class MotionsController < ApplicationController
     current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
     @opinions = Opinion.ordered policy_scope(@motion.opinions.trashed(show_trashed?))
-    @group_responses = Group.ordered @motion.group_responses
+    @group_responses = Group.ordered @motion.group_responses, @forum.groups
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
 
@@ -181,6 +181,6 @@ private
     if params[:question_id].present? || defined?(params[:motion][:question_id]) && params[:motion][:question_id].present?
       @question = Question.find(params[:question_id] || params[:motion][:question_id])
     end
-    @forum = Forum.friendly.find(params[:forum_id]) if params[:forum_id].present?
+    @forum = Forum.find_via_shortname(params[:forum_id]) if params[:forum_id].present?
   end
 end

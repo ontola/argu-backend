@@ -67,7 +67,10 @@ class CommentsController < ApplicationController
 private
   def get_commentable
     resource, id = request.path.split('/')[1,2]
-    resource.singularize.classify.constantize.find(id) # TODO: [SEC] this might pose a security threat
+    resource = case resource
+      when 'a' then Argument
+    end
+    resource.find(id)
   end
 
 end

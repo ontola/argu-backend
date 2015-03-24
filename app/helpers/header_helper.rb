@@ -25,7 +25,7 @@ module HeaderHelper
 
   # Label for the home button
   def home_text
-    current_scope.model.try(:display_name) || t("home_title")
+    current_scope.model.try(:display_name) || t('home_title')
   end
 
   def suggested_forums
@@ -56,20 +56,19 @@ module HeaderHelper
               title: t('profiles.switch'),
               items: managed_pages_items
           }
-        ],
-        current_actor: JSON.parse(render(template: 'users/current_actor.json', with_format: :json))['current_actor']
+        ]
     }
   end
 
   def notification_dropdown_items(items=[])
     dropdown_options('', [
-                        {type: 'notifications', unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count, lastNotification: (items.first && items.first[:created_at]), notifications: items}
+                        {type: 'notifications', unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count, lastNotification: nil, notifications: []}
                        ],
                      trigger: {
                          type: 'notifications',
                          triggerClass: 'navbar-item'
                      },
-                     fa: 'fa-circle',
+                     fa: 'fa-bell',
                      triggerClass: 'navbar-item',
                      contentClassName: 'notifications')
   end

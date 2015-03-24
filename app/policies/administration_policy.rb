@@ -1,4 +1,4 @@
-class AdministrationPolicy < Struct.new(:user, :administration)
+class AdministrationPolicy < Struct.new(:context, :administration)
   class Scope
     attr_reader :context, :user, :scope, :session
 
@@ -8,19 +8,20 @@ class AdministrationPolicy < Struct.new(:user, :administration)
       @scope = scope
     end
 
-    delegate :user, to: :context
-    delegate :session, to: :context
-
     def resolve
       scope
     end
   end
 
+  delegate :user, to: :context
+  delegate :actor, to: :context
+  delegate :session, to: :context
+
   def show?
-    user.has_role? :staff
+    user.profile.has_role? :staff
   end
 
   def list?
-    user.has_role? :staff
+    user.profile.has_role? :staff
   end
 end

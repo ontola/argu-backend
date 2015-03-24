@@ -1,4 +1,6 @@
 class Argu::NotificationWorker
+  require 'sidekiq/logging/json'
+  Sidekiq.logger.formatter = Sidekiq::Logging::Json::Logger.new
   include Sidekiq::Worker
   include MailerHelper
 
@@ -11,10 +13,10 @@ class Argu::NotificationWorker
     if @activity.present?
       recipients = recipients_for_activity(@activity)
 
-      build_notifications recipients, @activity
+      mailer = Argu::ActivityMailer.new(@activity, recipients)
+      mailer.send!
 
-      #mailer = Argu::ActivityMailer.new(@activity)
-      #mailer.send!
+      build_notifications recipients, @activity
     end
   end
 

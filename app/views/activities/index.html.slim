@@ -4,19 +4,19 @@
       .box
         section
           .profile
-            =link_to profile_path(current_user.username), class: 'image' do
-              =image_tag current_profile.profile_photo, options = { alt: "Profile picture", size: "45x45", class: "profilepicture" }
+            =link_to dual_profile_path(current_user), class: 'image' do
+              =image_tag current_profile.profile_photo, options = { alt: 'Profile picture', size: '45x45', class: 'profilepicture' }
             .info-block
               p= current_user.display_name
-              = link_to edit_profile_path(current_profile.web_url) do
-                small= t("profiles.edit.title")
+              =link_to edit_profile_path(current_profile)
+                small= t('profiles.edit.title')
           .group
             ul
               -current_profile.forums.select(:id, :slug, :name, :profile_photo).each do |o|
                 li
                   =link_to forum_path(o)
-                    = image_tag o.profile_photo.url(:icon), size: '16x16'
-                    = o.name
+                    =image_tag o.profile_photo.url(:icon), size: '16x16'
+                    =o.name
           .group
             =link_to t('forums.discover'), forums_url
   .activity-feed

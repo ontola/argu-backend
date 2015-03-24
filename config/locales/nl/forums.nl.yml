@@ -12,11 +12,13 @@ nl:
       profile: "Profiel instellingen"
       terminology: "Terminologie"
       managers: "Beheerders"
+      manager: "beheerder"
       advanced: "Geavanceerd"
       bio: "Doel van forum"
       bio_long: "Meer informatie"
       hints:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de titel van het forum. Maximaal 140 karakters."
+        remove_admin: "Dit trekt slechts administratieve rechten in"
     statistics:
       title: "Statistiek"
       memberships: "Leden"
@@ -59,14 +61,22 @@ nl:
     new_question_or_motion: "Nieuw vraagstuk of idee"
     about:
       header: "Waarvoor is dit forum?"
-      body: "Een Argu forum is een discussie omgeving waar oplossingen voor vraagstukken worden gedeeld en besproken. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"
+      body: "Een Argu forum is een discussie omgeving waar ideeën worden gedeeld en besproken, zodat er betere beslissingen worden genomen. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"
     follow: "Volgen"
     unfollow: "Ontvolgen"
+    managers:
+      revoke: "Intrekken"
+      add: "Beheerder toevoegen"
+    get_one:
+      title: "Een forum voor jouw organisatie?"
+      body: "Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Lees meer over <b>%{governments}</b> of over <b>%{product}</b>. Neem <b><a href='mailto:info@argu.co'>contact</a></b> op voor meer informatie."
+    selector:
+      at_least_error: "Kies ten minste 2 forums"
   activerecord: #These currently aren't used for forms.
     attributes:
       forum:
         name: "Naam"
-        web_url: "argu web url"
+        shortname: "argu shortname"
         description: "Omschrijving"
         featured_tags: "Uitgelichte thema's"
         website: "Web adres"

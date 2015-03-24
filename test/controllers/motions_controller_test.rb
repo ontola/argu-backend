@@ -123,7 +123,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_equal 2, assigns(:result)[:new].taggings.count
 
     assert_equal 0, assigns(:result)[:old].votes.count
-    assert_equal 1, assigns(:result)[:new].votes.count
+    assert_equal 2, assigns(:result)[:new].votes.count
 
     assert_equal 0, assigns(:result)[:old].activities.count
     assert_equal 1, assigns(:result)[:new].activities.count

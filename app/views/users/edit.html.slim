@@ -4,13 +4,13 @@
   .box
     =semantic_form_for @user, url: settings_path, method: :put do |f|
       section
-        = f.semantic_errors :email, :base
-        = f.inputs name: t('users.registrations.categories.general') do
-          = f.input :username, label: t("users_username")
-          = f.input :email, label: t("users_email") ,value: @user.email, placeholder: @user.email.blank? ? t("users_email_placeholder") : @user.email
+        =f.semantic_errors :email, :base
+        =f.inputs name: t('users.registrations.categories.general') do
+          =f.inputs :shortname, for: :shortname
+          =f.input :email, label: t("users_email"), value: @user.email, placeholder: @user.email.blank? ? t("users_email_placeholder") : @user.email
 
         - if $rollout.active?(:notifications, current_user)
-          = f.inputs name: t('users.registrations.categories.notifications') do
+          =f.inputs name: t('users.registrations.categories.notifications') do
             .notification-settings-header
               label
               .notification-settings-half-block
@@ -20,40 +20,40 @@
               label= t('formtastic.labels.notifications.follows')
               .notification-settings-half-block
                 span.center
-                  = f.input :follows_email, as: :inline_select, collection: options_for_follows_email, include_blank: false, label: false
+                  =f.input :follows_email, as: :inline_select, collection: options_for_follows_email, include_blank: false, label: false
                 span.center
-                  = f.check_box :follows_mobile
+                  =f.check_box :follows_mobile
             li
               label= t('formtastic.labels.notifications.memberships')
               .notification-settings-half-block
                 span.center
-                  = f.input :memberships_email, as: :inline_select, collection: options_for_memberships_email, include_blank: false, label: false
+                  =f.input :memberships_email, as: :inline_select, collection: options_for_memberships_email, include_blank: false, label: false
                 span.center
-                  = f.check_box :memberships_mobile
+                  =f.check_box :memberships_mobile
             li
               label= t('formtastic.labels.notifications.created')
               .notification-settings-half-block
                 span.center
-                  = f.input :created_email, as: :inline_select, collection: options_for_created_email, include_blank: false, label: false
+                  =f.input :created_email, as: :inline_select, collection: options_for_created_email, include_blank: false, label: false
                 span.center
-                  = f.check_box :created_mobile
+                  =f.check_box :created_mobile
 
-        = f.inputs name: t('users.registrations.categories.authentication') do
-          = f.input :password, label: t("users_password_edit")
-          = f.input :password_confirmation, label: t("users_password_confirmation")
+        =f.inputs name: t('users.registrations.categories.authentication') do
+          =f.input :password, label: t("users_password_edit")
+          =f.input :password_confirmation, label: t("users_password_confirmation")
           - if @authentications.present?
             label= t("users_oauth_coupled")
-            = render 'authentications/login_providers_connected'
+            =render 'authentications/login_providers_connected'
 
           /TODO Hide authentications that are already present.
           label= t("users_oauth_new")
           .form-item
-            = render 'authentications/login_providers'
+            =render 'authentications/login_providers'
 
-        = f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-          label = t("users_cancel_title")
+        =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+          label= t("users_cancel_title")
           .form-item
-            = link_to t("users_cancel_title"), cancel_user_registration_path(current_user)
+            =link_to t("users_cancel_title"), cancel_user_registration_path(current_user)
 
-        = f.actions do
-          = f.action :submit, :as => :button, label: t("save")
+        =f.actions do
+          =f.action :submit, :as => :button, label: t("save")

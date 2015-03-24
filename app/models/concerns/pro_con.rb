@@ -21,9 +21,10 @@ module ProCon
     acts_as_commentable
     parentable :motion, :forum
 
-    def creator
-      super || Profile.first_or_create(username: 'Onbekend')
-    end
+    #todo: Doesn't seem like a good idea
+    #def creator
+    #  super || Profile.first_or_create(username: 'Onbekend')
+    #end
 
   end
 

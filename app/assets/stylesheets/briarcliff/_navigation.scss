@@ -9,7 +9,6 @@
   z-index: 10;
   height: 3em;
   background-color: $blu;
-  @include box-shadow;
 }
 
 .navbar-item {
@@ -26,6 +25,9 @@
     vertical-align: top;
     @include bp-medium-large() {
       display: none;
+      &.dont-hide{
+        display: inline-block;
+      }
       &.fa {
         display: inline-block;
       }

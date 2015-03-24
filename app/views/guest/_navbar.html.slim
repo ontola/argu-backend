@@ -1,6 +1,6 @@
 nav#navbar.navbar role="navigation"
   .nav-container
-    .navbar-logo data-intro=t('intro.header.logo')
+    .navbar-logo data-intro=t('intro.header.logo') data-step=15
       =link_to root_path
         =image_tag('logo-white.svg')
     ul.navbar-links
@@ -12,4 +12,4 @@ nav#navbar.navbar role="navigation"
       li[tabIndex="0"]
         =link_to sign_in_modal_path, class: 'navbar-item center', remote: true do
           span.fa.fa-sign-in
-          span.icon-left= t('sign_in')
+          span.icon-left.dont-hide= t('sign_in')

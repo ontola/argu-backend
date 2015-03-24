@@ -94,7 +94,7 @@ class ApplicationController < ActionController::Base
     else
       r = nil
     end
-    @resource ||= User.new r: r.to_s
+    @resource ||= User.new(r: r.to_s, shortname: Shortname.new)
     respond_to do |format|
       format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
       format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
@@ -118,15 +118,19 @@ class ApplicationController < ActionController::Base
   end
 
   def show_trashed?
-    params[:trashed] == 'true' if policy(current_scope.model).update?
+    if policy(current_scope.model).update?
+      params[:trashed] == 'true'
+    else
+      false
+    end
   end
 
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << [:username, :email, :r, :access_tokens]
+    devise_parameter_sanitizer.for(:sign_up) << [:email, :r, :access_tokens, shortname_attributes: [:shortname]]
     devise_parameter_sanitizer.for(:sign_in) << [:r]
-    devise_parameter_sanitizer.for(:accept_invitation).concat [:username]
+    devise_parameter_sanitizer.for(:accept_invitation).concat [shortname_attributes: [:shortname]]
   end
 
   def check_finished_intro
@@ -134,13 +138,13 @@ class ApplicationController < ActionController::Base
       if current_user.profile.name.present?
         redirect_to selector_forums_url
       else
-        redirect_to edit_profile_url(current_user.username)
+        redirect_to edit_profile_url(current_user.url)
       end
     end
   end
 
   def intro_urls
-    [selector_forums_url, profile_url(current_user.username), edit_profile_url(current_user.username), memberships_forums_url, ]
+    [selector_forums_url, profile_url(current_user), edit_profile_url(current_user), memberships_forums_url, ]
   end
 
   def set_layout
