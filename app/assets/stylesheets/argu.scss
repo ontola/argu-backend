@@ -5,6 +5,9 @@ $maxCommentDepth: 10;
 
 .side-con .form-input-title {
   color: $red;
+  @include placeholder{
+    color: $red;
+  }
 }
 
 .side-con input[type="submit"] {
@@ -13,6 +16,9 @@ $maxCommentDepth: 10;
 
 .side-pro .form-input-title {
   color: $gre;
+  @include placeholder{
+    color: $gre;
+  }
 }
 
 .side-pro input[type="submit"] {
