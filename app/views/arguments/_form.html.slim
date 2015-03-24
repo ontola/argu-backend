@@ -1,5 +1,5 @@
 -@argument ||= resource
-= semantic_form_for((@argument.new_record? ? [@forum, @argument] : [@argument])) do |f|
+= semantic_form_for((@argument.new_record? ? [@forum, @argument] : [@argument]), html: {autocomplete: 'off'}) do |f|
   .box.form-toggle[data-intro= t('intro.argument.toggle')]
     = f.input :pro, as: :toggle_radio, :collection => radio_values_for_pro_con(@argument)
   .box.argument[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
@@ -15,5 +15,5 @@
             fieldset.control-group
             = f.hidden_field(:motion_id)
     = f.actions
-      = f.action :submit, input_html: {class: 'btn btn-sticky btn-sticky-bottom'}, as: :button
+      = f.action :submit, input_html: {autocomplete: 'on', class: 'btn btn-sticky btn-sticky-bottom'}, as: :button
     = render partial: 'profiles/profile_current'
