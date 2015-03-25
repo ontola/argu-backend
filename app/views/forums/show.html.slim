@@ -23,13 +23,14 @@ div[itemscope itemtype="Thing"]
           -if @forum.profile_photo.url.present?
             .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
           .cover-switcher[data-intro=t('intro.forums.switcher')]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
-        .cover-header-bottom
+        .cover-header-middle
           - if @forum.bio.present?
             p.cover-oneliner
               =@forum.bio
               - if @forum.bio_long.present?
                 a[href="#forum-info"]
                   span.icon-left= t('forums.more_info')
+        .cover-header-bottom
           ul.btns-list.btns-vertical
             /TODO: Make this check the current profile, not the user
             - if !policy(@forum).is_member?

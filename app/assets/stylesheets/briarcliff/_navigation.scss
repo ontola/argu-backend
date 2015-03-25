@@ -137,3 +137,25 @@ input[type="submit"].nav-search-button {
   display: inline-block;
   float: right;
 }
+
+.navbar-below {
+  position: fixed;
+  top: 3em;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 10;
+  @include box-shadow();
+  > div {
+    padding: 0 1em;
+    margin: auto;
+    max-width: 1200px;
+  }
+  @include bp-medium {
+    position: relative;
+    top: auto;
+    left: auto;
+    padding: 0;
+    width: auto;
+  }
+}
