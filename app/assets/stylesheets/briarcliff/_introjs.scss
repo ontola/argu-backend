@@ -96,6 +96,7 @@
   width: 300px;
   z-index: 1000000;
   overflow: hidden;
+  @include box-shadow-intense;
 }
 
 .introjs-tooltiptext {

@@ -90,6 +90,9 @@ fieldset {
   //Fieldset within fieldset since formtastic makes the form's top level a fieldset too
   fieldset {
     margin-bottom: -1.5em;
+    &.control-group{
+      margin-bottom: 0;
+    }
   }
   fieldset ol {
     margin-left: 0;
@@ -238,7 +241,9 @@ input[type="text"].form-input-title {
 .formtastic li {
   clear: both;
   position: relative;
+  line-height: 0; //Fixes a weird margin before inline hints.
 }
+
 input[type="file"], select {
   padding: 0.3em 0em;
   font-size: 1em;

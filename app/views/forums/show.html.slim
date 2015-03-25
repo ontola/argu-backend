@@ -22,7 +22,7 @@ div[itemscope itemtype="Thing"]
         .cover-header-top
           -if @forum.profile_photo.url.present?
             .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
-          .cover-switcher[data-intro=t('intro.forums.switcher')]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
+          .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
         .cover-header-middle
           - if @forum.bio.present?
             p.cover-oneliner
