@@ -1,6 +1,6 @@
-.box.box-grid.question[class="#{'trashed' if question.is_trashed?}" data-tags="#{question.tags.join(',')}" data-created-at=question.created_at  data-updated-at=question.updated_at]
+.box.box-grid.question[itemscope itemtype="Question" class="#{'trashed' if question.is_trashed?}" data-tags="#{question.tags.join(',')}" data-created-at=question.created_at  data-updated-at=question.updated_at]
   - if question.cover_photo.present?
-    = contextual_link_to question_path(question) do
+    =contextual_link_to question_path(question) do
       .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
   section.section-info.question-bg
     span.fa.fa-question
@@ -8,7 +8,7 @@
     =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
   section
     =contextual_link_to question_path(question) do
-      h2.question-t= question.title
+      h2.question-t[itemprop="headline"]= question.title
     - if question.motions.present?
       ul.box-list.box-list--icons
         - question.motions.trashed(false).order(updated_at: :desc).select(:id, :title, :updated_at)[0,3].each do |motion|
