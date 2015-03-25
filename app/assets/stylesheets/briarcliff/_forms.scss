@@ -88,8 +88,11 @@ legend {
 
 fieldset {
   //Fieldset within fieldset since formtastic makes the form's top level a fieldset too
+  fieldset {
+    margin-bottom: -1.5em;
+  }
   fieldset ol {
-    margin-left: 0.5em;
+    margin-left: 0;
   }
   li {
     margin-bottom: 1.5em;
