@@ -6,7 +6,11 @@ $(function() {
         'prevLabel': '<%= I18n.t('intro.previous') %>',
         'doneLabel': 'x',
         'disableInteraction': false,
-        'showStepNumbers': false
+        'disableInteraction': false,
+        'showBullets': true,
+        'showProgress': false,
+        'showStepNumbers': false,
+        'scrollToElement': true
         });
     //start introJs on click
     $(document).on("click", '.intro-trigger', function() {
