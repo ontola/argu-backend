@@ -54,6 +54,10 @@
   background-color: $darken_overlay;
   cursor: pointer;
   @include animation(fade-in .3s linear);
+  @include transition(.2s);
+  &:hover{
+    background-color: lighten($darken_overlay, 5%);
+  }
 }
 
 .modal-body{
