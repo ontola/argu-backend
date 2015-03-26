@@ -1,14 +1,14 @@
 class Page < ActiveRecord::Base
   include ArguBase, Shortnameable
 
-  belongs_to :profile, dependent: :destroy
+  has_one :profile, dependent: :destroy, as: :profileable
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
   accepts_nested_attributes_for :profile
   has_many :forums
   has_many :memberships, class_name: 'PageMembership', dependent: :destroy
   has_many :managers, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
 
-  #after_initialize :build_default_associations, if: :new_record?
+  after_initialize :build_default_associations, if: :new_record?
 
   attr_accessor :repeat_name
 

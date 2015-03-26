@@ -6,9 +6,7 @@
 # below each fixture, per the syntax in the comments below
 #
 argu:
-  profile: :profile_argu
   owner: profile_fletcher91 (Profile)
 #
 utrecht:
-  profile: :profile_utrecht
   owner: profile_fletcher91 (Profile)

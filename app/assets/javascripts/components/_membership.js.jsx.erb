@@ -9,6 +9,7 @@ window.NewMembership = React.createClass({
     },
 
     componentDidMount: function () {
+        var _this = this;
         var addBlock = $(this.getDOMNode());
         var input = $(this.getDOMNode()).find('.select-input');
         input.selectize({
@@ -38,7 +39,8 @@ window.NewMembership = React.createClass({
                     type: 'GET',
                     dataType: 'json',
                     data: {
-                        q: query
+                        q: query,
+                        things: _this.props.things
                     },
                     error: function () {
                         callback();
