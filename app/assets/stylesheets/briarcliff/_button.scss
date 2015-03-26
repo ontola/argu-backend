@@ -421,3 +421,21 @@ h1 + .btn {
     color: $g3;
   }
 }
+
+.is-loading{
+  pointer-events: none !important;
+  opacity: .85;
+  color: rgba(255,255,255,0.3);
+  &:after{
+    color: white;
+    content: "test";
+    @include spinner;
+  }
+}
+
+.pagination {
+  span {
+    @extend .btn-subtle;
+    padding: .7em;
+  }
+}

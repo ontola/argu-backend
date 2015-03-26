@@ -138,6 +138,7 @@ nl:
 
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
+  twice_warning: "Je hebt dit al eerder gedaan."
 
 #datetime
   datetime_ago: "geleden"

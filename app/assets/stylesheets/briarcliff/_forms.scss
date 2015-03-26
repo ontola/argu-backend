@@ -296,16 +296,6 @@ p.inline-hints {
   }
 }
 
-.is-loading{
-  pointer-events: none !important;
-  opacity: .6;
-  color: rgba(255,255,255,0.3);
-  &:after{
-    color: white;
-    content: "test";
-    @include spinner;
-  }
-}
 .sticky-submit {
   text-align: right;
   position: absolute;

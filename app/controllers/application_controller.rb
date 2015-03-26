@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   after_action :set_notification_header
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
-    flash[:warning] = t(:vote_same_twice_warning)
+    flash[:warning] = t(:twice_warning)
     redirect_to :back
   }
 
