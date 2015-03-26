@@ -13,6 +13,17 @@
   .box {
     pointer-events: auto;
     text-align: left;
+    &:after{
+      content: 'x';
+      font-weight: bold;
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      color: white;
+      background-color: rgba(255, 255, 255, 0.24);
+      padding: 0.5em 0.7em;
+      pointer-events: none;
+    }
   }
   .box-small {
     display: inline-block;
@@ -41,6 +52,7 @@
   height: 100%;
   overflow: hidden;
   background-color: $darken_overlay;
+  cursor: pointer;
   @include animation(fade-in .3s linear);
 }
 

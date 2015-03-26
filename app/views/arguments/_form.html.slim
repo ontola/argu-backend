@@ -5,8 +5,8 @@
   .box.argument[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
     section.smallpadded.form-filled
       = f.inputs
-        = f.input :title, input_html: {class: 'form-input-title'}, label: false
-        = f.input :content, input_html: {class: 'form-input-content', rows: '10'}, label: false
+        = f.input :title, input_html: {class: 'form-input-title', required: 'true'}, label: false
+        = f.input :content, input_html: {class: 'form-input-content', rows: '6', required: 'true'}, label: false
         /p.helpertext= raw t("arguments.form.helper.content")
         - if policy(@argument).trash? && !@argument.new_record?
           = f.input :is_trashed, as: :reverse_boolean
