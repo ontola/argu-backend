@@ -11,9 +11,20 @@ nl:
       general: "Algemene instellingen"
       profile: "Profiel instellingen"
       terminology: "Terminologie"
-      managers: "Beheerders"
-      manager: "beheerder"
       advanced: "Geavanceerd"
+      manager: "beheerder"
+      managers:
+        title: "Beheerders"
+        administrator: "Administrator"
+        about_managers: "Forum beheerders zijn gebruikers met extra rechten, maar niet zoveel als een administrator. Beheerders kunnen objecten in het forum aanpassen en verwijderen.
+          Ook kunnen ze de niet-geavanceerde instellingen van het forum wijzigen, de forumstatistieken inzien, en groepen beheren."
+        owner: "Eigenaar"
+        about_owner: "Pagina's zijn eigenaar van een forum, de representateren een organisatie die uit meerdere mensen kan bestaan. Neem contact op met Argu met verzoeken om het eigenaarschap te wijzigen."
+        about_owner_name: "Deze Pagina is de eigenaar van het forum '%{name}':"
+        about_page_owner: "De administrator van een forum kan beheerders aanwijzen en alle instellingen veranderen. "
+        about_page_owner_name: "Deze gebruiker is de eigenaar van de pagina '%{name}':"
+      groups:
+        title: "Groepen"
       bio: "Doel van forum"
       bio_long: "Meer informatie"
       hints:

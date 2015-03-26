@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150324115708) do
+ActiveRecord::Schema.define(version: 20150326112243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -277,12 +277,10 @@ ActiveRecord::Schema.define(version: 20150324115708) do
     t.datetime "created_at",             null: false
     t.datetime "updated_at",             null: false
     t.string   "slug"
-    t.integer  "profile_id"
     t.integer  "visibility", default: 1
     t.integer  "owner_id"
   end
 
-  add_index "pages", ["profile_id"], name: "index_pages_on_profile_id", unique: true, using: :btree
   add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true, using: :btree
 
   create_table "profiles", force: :cascade do |t|
@@ -296,8 +294,11 @@ ActiveRecord::Schema.define(version: 20150324115708) do
     t.string   "slug"
     t.boolean  "is_public",                    default: true
     t.boolean  "are_votes_public",             default: true
+    t.string   "profileable_type"
+    t.string   "profileable_id"
   end
 
+  add_index "profiles", ["profileable_type", "profileable_id"], name: "index_profiles_on_profileable_type_and_profileable_id", unique: true, using: :btree
   add_index "profiles", ["slug"], name: "index_profiles_on_slug", unique: true, using: :btree
 
   create_table "profiles_roles", force: :cascade do |t|
@@ -409,7 +410,6 @@ ActiveRecord::Schema.define(version: 20150324115708) do
     t.datetime "created_at",                                         null: false
     t.datetime "updated_at",                                         null: false
     t.string   "unconfirmed_email",      limit: 255
-    t.integer  "profile_id"
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
     t.datetime "invitation_sent_at"
@@ -431,6 +431,7 @@ ActiveRecord::Schema.define(version: 20150324115708) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.text     "active_sessions",                    default: [],                 array: true
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -438,7 +439,6 @@ ActiveRecord::Schema.define(version: 20150324115708) do
   add_index "users", ["invitation_token"], name: "index_users_on_invitation_token", unique: true, using: :btree
   add_index "users", ["invitations_count"], name: "index_users_on_invitations_count", using: :btree
   add_index "users", ["invited_by_id"], name: "index_users_on_invited_by_id", using: :btree
-  add_index "users", ["profile_id"], name: "index_users_on_profile_id", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "votes", force: :cascade do |t|

@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "briarcliff/forms";
 
 /**
  * selectize.css (v0.10.1)
@@ -138,6 +139,7 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   background-color: $darken1;
+  @extend textarea;
 }
 .selectize-control.multi .selectize-input.has-items {
   padding: .3em;

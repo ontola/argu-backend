@@ -2,7 +2,7 @@
 = semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name, r: (defined?(r) ? r : ''))) do |f|
   = devise_error_messages!
   =f.inputs do
-    =f.inputs :shortname, for: :shortname, autofocus: :autofocus
+    =f.inputs :shortname, for: :shortname, autofocus: :autofocus, hint: t('formtastic.hints.shortname_alt')
     =f.input :email, label: t('users_email'), placeholder: t('users.registrations.placeholders.email')
     =f.input :password, label: t('users_password'), placeholder: t('users.registrations.placeholders.password'), hint: t('users.registrations.hints.password')
     =f.input :password_confirmation, label: t('users_password_confirmation'), placeholder: t('users.registrations.placeholders.password_confirmation')

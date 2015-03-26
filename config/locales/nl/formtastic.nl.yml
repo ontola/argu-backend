@@ -17,7 +17,7 @@ nl:
       cover_photo: "Cover afbeelding"
       remove_cover_photo: "Cover afbeelding verwijderen"
       remove_image: "Afbeelding verwijderen"
-      cover_photo_attribution: "Auteursrechten afbeelding"
+      cover_photo_attribution: "Auteursrechten"
       profile_photo: "Profielfoto"
       remove_profile_photo: "Profielfoto verwijderen"
       tag_list: "Thema's"
@@ -58,11 +58,14 @@ nl:
         naam: "Naam van forum"
       group:
         name: "Naam"
+      user:
+        shortname: "Gebruikersnaam"
     hints:
       tag_list: "Kies thema's die te maken hebben met jouw ondwerp."
       username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."
-      cover_photo_attribution: "Als jij niet de auteursrechten de afbeelding zit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"
+      cover_photo_attribution: "Als jij niet de auteursrechten van de afbeelding zit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"
       shortname: "Hiermee bepaal je via welke URL de pagina toegankelijk is. Het wijzigen van de URL kan er voor zorgen dat bestaande gedeelde links niet meer werken."
+      shortname_alt: "Minimaal 3 karakters. Alleen letters, cijfers en '_'."
       question:
         title: "Een vraagstuk begint meestal met 'Hoe...' of 'Wat...'."
         content: "Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."
@@ -90,7 +93,7 @@ nl:
       user:
         email: "email@example.com"
     actions:
-      create: "Create my %{model}"
+      create: "Opslaan"
       update: "Opslaan"
       reset: "Reset"
       cancel: "Teruggaan"

@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   include ArguBase, Shortnameable
 
   has_many :authentications, dependent: :destroy
-  belongs_to :profile, dependent: :destroy, autosave: true
+  has_one :profile, as: :profileable, dependent: :destroy, autosave: true
 
   accepts_nested_attributes_for :profile
 

@@ -16,10 +16,7 @@ module Shortnameable
 
   module ClassMethods
     def find_via_shortname(url)
-      model = self.arel_table
-      shortname = Shortname.arel_table
-      sql = model.join(shortname).on(shortname[:owner_id].eq(model[:id]).and(shortname[:owner_type].eq(self.name))).where(shortname[:shortname].eq(url)).project(model[Arel.star]).to_sql
-      self.find_by_sql(sql).first or raise(ActiveRecord::RecordNotFound)
+      self.joins(:shortname).where('lower(shortname) = lower(?)', url).first or raise(ActiveRecord::RecordNotFound)
     end
   end
 end

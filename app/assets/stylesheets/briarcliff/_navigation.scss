@@ -115,8 +115,8 @@ input[type="submit"].nav-search-button {
 }
 
 .profile-picture--navbar{
-  height: 2.3em;
-  width: 2.3em;
+  height: 2.2em;
+  width: 2.2em;
   margin: 7px;
   margin-left: 0;
   margin-right: 7px;
@@ -136,4 +136,26 @@ input[type="submit"].nav-search-button {
   padding: 1em 0em;
   display: inline-block;
   float: right;
+}
+
+.navbar-below {
+  position: fixed;
+  top: 3em;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  z-index: 10;
+  @include box-shadow();
+  > div {
+    padding: 0 1em;
+    margin: auto;
+    max-width: 1200px;
+  }
+  @include bp-medium {
+    position: relative;
+    top: auto;
+    left: auto;
+    padding: 0;
+    width: auto;
+  }
 }

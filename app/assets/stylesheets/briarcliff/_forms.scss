@@ -14,13 +14,20 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   -webkit-appearance: none;
   @include border-radius(0);
   @include transition(.2s);
+  @include placeholder{
+    color: $g4;
+    opacity: .5;
+  }
   &:hover {
-    background-color: $darken0;
+    border: solid 1px $g2;
   }
   &:focus {
     background-color: $darken0;
     border: solid 1px $g2;
     outline: none;
+    @include placeholder{
+      opacity: .8;
+    }
   }
   &.h1 {
     font-family: $font-special;
@@ -81,8 +88,14 @@ legend {
 
 fieldset {
   //Fieldset within fieldset since formtastic makes the form's top level a fieldset too
+  fieldset {
+    margin-bottom: -1.5em;
+    &.control-group{
+      margin-bottom: 0;
+    }
+  }
   fieldset ol {
-    margin-left: 0.5em;
+    margin-left: 0;
   }
   li {
     margin-bottom: 1.5em;
@@ -219,6 +232,7 @@ input[type="text"].form-input-title {
 
 .formtastic button {
   @include button;
+  position: relative;
 }
 .formtastic .actions {
   text-align: center;
@@ -227,7 +241,9 @@ input[type="text"].form-input-title {
 .formtastic li {
   clear: both;
   position: relative;
+  line-height: 0; //Fixes a weird margin before inline hints.
 }
+
 input[type="file"], select {
   padding: 0.3em 0em;
   font-size: 1em;
@@ -277,5 +293,26 @@ p.inline-hints {
   @include bp-medium{
     margin-left: 0 !important;
     width: 100%;
+  }
+}
+
+.is-loading{
+  pointer-events: none !important;
+  opacity: .6;
+  color: rgba(255,255,255,0.3);
+  &:after{
+    color: white;
+    content: "test";
+    @include spinner;
+  }
+}
+.sticky-submit {
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  right: 0;
+  li {
+    margin: 0;
   }
 }

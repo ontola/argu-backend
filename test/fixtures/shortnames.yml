@@ -1,16 +1,16 @@
 #
 # Forums
 #
-utrecht:
+sn_utrecht:
   shortname: 'utrecht'
   owner: utrecht (Forum)
-amsterdam:
+sn_amsterdam:
   shortname: 'amsterdam'
   owner: amsterdam (Forum)
-hidden:
+sn_hidden:
   shortname: 'secret'
   owner: hidden (Forum)
-super_hidden:
+sn_super_hidden:
   shortname: 'super_secret'
   owner_id: 32812423
   owner_type: 'Forum'
@@ -18,28 +18,28 @@ super_hidden:
 #
 # Users
 #
-user_thom:
+sn_user_thom:
   shortname: 'fletcher91'
   owner: user_thom (User)
-user_utrecht_manager:
+sn_user_utrecht_manager:
   shortname: 'utrecht_manager'
   owner: user_utrecht_manager (User)
-user:
+sn_user:
   shortname: 'user'
   owner: user (User)
-user2:
+sn_user2:
   shortname: 'user2'
   owner: user2 (User)
-user3:
+sn_user3:
   shortname: 'user3'
   owner: user3 (User)
 
 #
 # Pages
 #
-argu:
+sn_argu:
   shortname: 'argu'
   owner: argu (Page)
-utrecht_page:
+sn_utrecht_page:
   shortname: 'gemeente_utrecht'
   owner: utrecht (Page)

@@ -6,31 +6,40 @@
 # below each fixture, per the syntax in the comments below
 #
 profile_fletcher91:
+  profileable: user_thom (User)
   name: 'Thom van Kalkeren'
   about: "I'm the coder!"
   are_votes_public: true
 profile_utrecht_manager:
+  profileable: user_utrecht_manager (User)
   name: "Manager of Utrecht"
   about: "It's all in the name"
   are_votes_public: true
 profile_one:
+  profileable: user (User)
   name: 'User'
   about: 'Im a user'
   are_votes_public: true
 # Can't have con votes since those are used to test whether votes are shown correctly
 profile_two:
+  profileable: user2 (User)
   name: 'User2'
   about: 'Im also a user'
   are_votes_public: true
 profile_three:
+  profileable: user3 (User)
   name: 'User3'
   about: 'Im a user too'
   are_votes_public: true
 profile_utrecht:
+  profileable_id: <%= ActiveRecord::FixtureSet.identify(:utrecht) %>
+  profileable_type: 'Page'
   name: 'Gemeente Utrecht'
   about: ''
   are_votes_public: true
 profile_argu:
+  profileable_id: <%= ActiveRecord::FixtureSet.identify(:argu) %>
+  profileable_type: 'Page'
   name: 'Argu org'
   about: "We're the creators of this platform"
   are_votes_public: true

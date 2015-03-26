@@ -3,7 +3,8 @@ class Profile < ActiveRecord::Base
 
   # Currently hardcoded to User (whilst it can also be a Profile)
   # to make the mailer implementation more efficient
-  has_one :profileable, class_name: 'User'
+  #has_one :profileable, class_name: 'User'
+  belongs_to :profileable, polymorphic: true, inverse_of: :profile
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy
@@ -42,7 +43,7 @@ class Profile < ActiveRecord::Base
   end
 
   def owner
-    User.find_by(profile: self) || Page.find_by(profile: self)
+    self.profileable
   end
 
   def url

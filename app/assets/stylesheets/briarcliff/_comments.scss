@@ -32,23 +32,6 @@
   margin: 0 auto;
 }
 
-.read-more{
-  right: 0;
-  bottom: 0;
-  padding: 0.5em 0.5em;
-  font-size: .8em;
-  position: absolute;
-  text-transform: uppercase;
-  @include transition(.2s);
-  span {
-    @include transition(.2s);
-    color: $g2;
-  }
-  &:hover span{
-    color: $g3;
-  }
-}
-
 .top-comment:hover .comments-counter{
   color: $g4;
 }
