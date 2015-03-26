@@ -11,29 +11,24 @@
 user_thom:
   email: 'thom@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
-  profile: :profile_fletcher91
   finished_intro: true
 # Manager of the page and forum of utrecht
 user_utrecht_manager:
   email: 'user@utrecht.nl'
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
-  profile: :profile_utrecht_manager
   finished_intro: true
 # A general user, member of utrecht
 user:
   email: 'user@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
-  profile: :profile_one
   finished_intro: true
 # A general user, member of utrecht and amsterdam
 user2:
   email: 'user2@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
-  profile: :profile_two
   finished_intro: true
 # A general user, member of amsterdam
 user3:
   email: 'user3@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
-  profile: :profile_three
   finished_intro: true
