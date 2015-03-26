@@ -45,7 +45,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def managers?
-    staff?
+    is_owner? || staff?
   end
 
   def groups?
@@ -117,6 +117,8 @@ class ForumPolicy < RestrictivePolicy
     user && (user.profile.page_memberships.where(page: record.page, role: PageMembership.roles[:manager]).present? || user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || staff?
   end
 
+  # Whether the user can add (a specified) manager(s)
+  # Only the owner can do this.
   def add_manager?(user)
     is_owner?
   end
@@ -130,8 +132,10 @@ class ForumPolicy < RestrictivePolicy
     @record.open?
   end
 
+  # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.
   def is_owner?
-    user && record.memberships.where(role: Membership.roles[:owner], profile: user.profile).present? || staff?
+        #record.page.memberships.where(role: Membership.roles[:manager], profile: user.profile).present?
+    user && record.page.owner == user.profile
   end
 
 end

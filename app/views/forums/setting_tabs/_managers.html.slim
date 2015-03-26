@@ -1,5 +1,19 @@
 
-h1 Managers
+h1= t('forums.settings.managers.owner')
+p= t('forums.settings.managers.about_owner')
+p= t('forums.settings.managers.about_owner_name', name: @forum.url)
+div
+  =image_tag @forum.page.profile.profile_photo, class: 'profile-photo'
+  span=@forum.page.profile.display_name
+  h2[style='clear: left;']= t('forums.settings.managers.administrator')
+  p= t('forums.settings.managers.about_page_owner')
+  p= t('forums.settings.managers.about_page_owner_name', name: @forum.page.url)
+  div
+    =image_tag @forum.page.owner.profile_photo, class: 'profile-photo'
+    span=@forum.page.owner.display_name
+
+h1[style='clear: left;']= t('forums.settings.managers.title')
+p= t('forums.settings.managers.about_managers')
 
 table.styled
   -@forum.managers.preload(:profile).each do |manager|

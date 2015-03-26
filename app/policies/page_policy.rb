@@ -64,8 +64,11 @@ class PagePolicy < RestrictivePolicy
     false
   end
 
+  # This feature has been disabled for the public since it isn't finished yet.
+  # TODO: Don't forget to remove the note that only argu can currently change
+  # page ownership in forums/settings?tab=managers
   def managers?
-    is_owner?
+    staff?
   end
 
   #######Attributes########
