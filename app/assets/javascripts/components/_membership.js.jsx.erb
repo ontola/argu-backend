@@ -10,21 +10,24 @@ window.NewMembership = React.createClass({
 
     componentDidMount: function () {
         var addBlock = $(this.getDOMNode());
-        var input = $(this.getDOMNode()).find('.add-page');
+        var input = $(this.getDOMNode()).find('.select-input');
         input.selectize({
             valueField: 'id',
             labelField: 'shortname',
-            searchField: 'shortname',
+            searchField: ['shortname', 'name'],
             persist: false,
             create: false,
             onItemAdd: function (value, item) {
+                console.log('onItemAdd');
                 addBlock.find('.profile-photo').attr('src', addBlock.find('[data-id="' + value + '"]').attr('data-src'));
             },
             onDelete: function () {
+                console.log('onItemDelete');
                 addBlock.find('.profile-photo').attr('src', '/profile_photos/original/missing.png');
             },
             render: {
                 option: function(item, escape) {
+                    console.log(item);
                     return '<div class="search-result" data-id="' + escape(item.id) + '" data-src="' + escape(item.profile_photo.icon.url) + '"><span><img class="profile-xs" src="' + escape(item.profile_photo.icon.url) + '"></span><span class="label">' + escape(item.name) + '</span></div>';
                 }
             },
@@ -41,6 +44,7 @@ window.NewMembership = React.createClass({
                         callback();
                     },
                     success: function (res) {
+                        console.log(res.profiles.length);
                         callback(res.profiles);
                     }
                 });
@@ -52,7 +56,7 @@ window.NewMembership = React.createClass({
 
         return (<li className="template">
             <img src="/profile_photos/original/missing.png"  className="profile-photo" />
-            <select name="profile_id" className="add-page"></select>
+            <select name="profile_id" className="select-input"></select>
         </li>);
     }
 });
