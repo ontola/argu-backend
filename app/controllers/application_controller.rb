@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery with: :exception
-  skip_before_filter  :verify_authenticity_token
+  #skip_before_filter  :verify_authenticity_token
   prepend_before_action :check_for_access_token
   before_action :check_finished_intro
   before_action :configure_permitted_parameters, if: :devise_controller?
