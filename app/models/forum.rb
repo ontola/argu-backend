@@ -1,5 +1,5 @@
 class Forum < ActiveRecord::Base
-  include ArguBase, Attribution, Parentable, Shortnameable
+  include ArguBase, Attribution, Shortnameable
 
   belongs_to :page
   has_many :questions, inverse_of: :forum
@@ -20,7 +20,6 @@ class Forum < ActiveRecord::Base
   mount_uploader :profile_photo, AvatarUploader
   process_in_background :profile_photo
   mount_uploader :cover_photo, CoverUploader
-  parentable :self
   acts_as_followable
 
   validates_integrity_of :profile_photo

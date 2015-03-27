@@ -30,7 +30,7 @@ profile_three:
   profileable: user3 (User)
   name: 'User3'
   about: 'Im a user too'
-  are_votes_public: true
+  are_votes_public: false
 profile_utrecht:
   profileable_id: <%= ActiveRecord::FixtureSet.identify(:utrecht) %>
   profileable_type: 'Page'

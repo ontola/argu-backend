@@ -3,8 +3,6 @@ class Comment < ActiveRecord::Base
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   parentable :commentable
-
-  acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   mailable CommentMailer, :directly, :daily, :weekly
 
   after_save :creator_follow
@@ -79,10 +77,10 @@ class Comment < ActiveRecord::Base
   end
 
   def decrease_counter_cache
-    self.commentable.decrement("comments_count").save
+    self.commentable.decrement('comments_count').save
   end
   def increase_counter_cache
-    self.commentable.increment("comments_count").save
+    self.commentable.increment('comments_count').save
   end
 
   def forum

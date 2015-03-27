@@ -4,8 +4,9 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
   test 'should redirect to root when accessing a forum without an access token' do
     get forum_path(forums(:hidden))
-    assert_not assigns(:items), 'render not interuppted with an NotLoggedInException'
-    assert_redirected_to root_path
+    assert_not assigns(:items), 'render not interrupted with an NotLoggedInException'
+    assert assigns(:_not_logged_in_caught), 'secret forums seem to be public'
+    assert_response 200
   end
 
   test 'should not view forum when access tokens are disabled' do
