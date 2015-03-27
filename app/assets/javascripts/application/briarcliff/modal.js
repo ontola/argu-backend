@@ -1,7 +1,8 @@
 $(function () {
     "use strict";
 
-    $(document).on('click', '.modal-container .overlay:not(.no-close)', function () {
+    //Close modal when clicking on overlay
+    $(document).on('click', '.modal-container:not(.no-close) .overlay', function () {
         var container = $(this).parent('.modal-container');
 
         container.addClass('modal-hide');
@@ -10,6 +11,7 @@ $(function () {
         }, 500);
     });
 
+    //Close modal when pressing escape button
     document.addEventListener('keyup', function(e) {
         if (e.keyCode == 27) {
             $('.modal-container').addClass('modal-hide');

@@ -13,17 +13,6 @@
   .box {
     pointer-events: auto;
     text-align: left;
-    &:after{
-      content: 'x';
-      font-weight: bold;
-      position: absolute;
-      bottom: 100%;
-      right: 0;
-      color: white;
-      background-color: rgba(255, 255, 255, 0.24);
-      padding: 0.5em 0.7em;
-      pointer-events: none;
-    }
   }
   .box-small {
     display: inline-block;
@@ -52,11 +41,27 @@
   height: 100%;
   overflow: hidden;
   background-color: $darken_overlay;
-  cursor: pointer;
   @include animation(fade-in .3s linear);
   @include transition(.2s);
-  &:hover{
-    background-color: lighten($darken_overlay, 5%);
+}
+
+.modal-container:not(.no-close){
+  .overlay{
+    cursor: pointer;
+    &:hover{
+      background-color: lighten($darken_overlay, 5%);
+    }
+    &:after{
+      content: 'x';
+      font-weight: bold;
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: white;
+      background-color: rgba(255, 255, 255, 0.24);
+      padding: 0.5em 0.7em;
+      pointer-events: none;
+    }
   }
 }
 
@@ -67,7 +72,6 @@
 // apply these classes when clicking on overlay of modals.
 .modal-hide {
   .modal {
-    //@include animation(to-bottom .5s ease-in both);
     @include animation(to-bottom-fade .3s ease-in both);
   }
   .overlay {
