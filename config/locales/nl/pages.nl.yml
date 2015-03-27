@@ -3,6 +3,13 @@ nl:
     resource_name: "Pagina"
     settings:
       title: "Instellingen"
+      managers:
+        owner: "Eigenaar"
+        about_owner: "Gebruikers zijn eigenaar van een Pagina. Gebruikers kunnen meerdere Pagina's bezitten, maar een Pagina kan maar één eigenaar hebben."
+        title: "Beheerders"
+        about_managers: "Pagina beheerders zijn gebruikers met extra rechten, maar niet zoveel als een administrator. Beheerders kunnen vraagstukken, ideeën, argumenten en reacties namens de Pagina plaatsen. Ook kunnen ze uit naam stemmen en eerder geplaatste items verwijderen."
+        transferred: "Pagina overgedragen"
+        users_only: "Alleen gebruikers kunnen pagina's bezitten"
     display: "Pagina bekijken"
     create: "Start een pagina"
     legal: "Door deze pagina aan te maken verklaar je toestemming te hebben om de organisatie waarvoor je een pagina maakt officieel op Argu te vertegenwoordigen."

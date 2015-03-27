@@ -91,7 +91,10 @@ Argu::Application.routes.draw do
   resources :pages, path: 'p', only: [:new, :create, :show, :update, :delete, :destroy] do
     get :index, on: :collection
     get :delete, on: :member
+    get :transfer, on: :member
+    put :transfer, on: :member, action: :transfer!
     get :settings, on: :member
+    resources :managers, only: [:new, :create, :destroy], controller: 'pages/managers'
   end
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do

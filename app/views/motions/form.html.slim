@@ -25,7 +25,10 @@
                   =f.input :f_convert, as: :link, url: motion_convert_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
                   =f.input :invert_arguments, as: :reverse_boolean
                   /TODO invert arguments only visible when in edit, not in new.
-        =render partial: 'profiles/profile_current'
+        - if @motion.new_record?
+          =render partial: 'profiles/profile_current'
+        - else
+          =render partial: @motion.creator, locals: {resource: @motion}
 
         =f.hidden_field :question_id, value: @question_id || params[:question_id]
         =f.actions

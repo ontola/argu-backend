@@ -33,11 +33,19 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def update?
-    is_member? && is_creator? || super
+    is_member? && is_creator? || forum_policy.is_manager? || forum_policy.is_owner? || super
   end
 
   def edit?
     update?
+  end
+
+  def trash?
+    forum_policy.is_manager? || forum_policy.is_owner? || super
+  end
+
+  def destroy?
+    forum_policy.is_manager? || forum_policy.is_owner? || super
   end
 
   def index?
@@ -45,7 +53,7 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def show?
-    Pundit.policy(context, record.forum).show? || super
+    forum_policy.show? || super
   end
 
   def vote?
@@ -53,6 +61,10 @@ class MotionPolicy < RestrictivePolicy
   end
 
   private
+
+  def forum_policy
+    Pundit.policy(context, record.forum)
+  end
 
   def is_member?
     user && user.profile.member_of?(record.forum || record.forum_id)
