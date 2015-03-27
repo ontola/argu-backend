@@ -52,7 +52,7 @@
   text-transform: uppercase;
   text-decoration: none;
   font-size: .8em;
-  padding: 1em 2.5em .8em;
+  padding: .7em 2.5em .7em;
   background-color: $color;
   border: none;
   -webkit-appearance: none;
@@ -61,14 +61,18 @@
   display: inline-block;
   cursor: pointer;
   border-bottom: solid 3px darken($color, 5%);
+  @include transition(.15s);
+  border-top: solid 3px $color;
   &:hover {
     background-color: darken($color, 5%);
+    border-top-color: darken($color, 5%);
     border-bottom-color: darken($color, 15%);
   }
   &:active {
+    padding: .9em 2.5em .5em;
     background-color: darken($color, 10%);
-    border-bottom: none;
-    border-top: solid 3px darken($color, 15%);
+    border-bottom-color: darken($color, 10%);
+    border-top-color: darken($color, 15%);
   }
   &:disabled{
     opacity: .6;

@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   after_action :set_notification_header
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
-    flash[:warning] = t(:vote_same_twice_warning)
+    flash[:warning] = t(:twice_warning)
     redirect_to :back
   }
 
@@ -28,6 +28,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Argu::NotLoggedInError do |exception|
+    @_not_logged_in_caught = true
     respond_to do |format|
       format.js { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {

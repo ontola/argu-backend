@@ -2,7 +2,6 @@ module ArguBase
   extend ActiveSupport::Concern
 
   included do
-
   end
 
   def identifier

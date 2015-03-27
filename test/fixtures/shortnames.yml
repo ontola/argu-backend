@@ -21,6 +21,9 @@ sn_super_hidden:
 sn_user_thom:
   shortname: 'fletcher91'
   owner: user_thom (User)
+sn_user_utrecht_owner:
+  shortname: 'utrecht_owner'
+  owner: user_utrecht_owner (User)
 sn_user_utrecht_manager:
   shortname: 'utrecht_manager'
   owner: user_utrecht_manager (User)

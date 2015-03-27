@@ -10,6 +10,11 @@ profile_fletcher91:
   name: 'Thom van Kalkeren'
   about: "I'm the coder!"
   are_votes_public: true
+profile_utrecht_owner:
+  profileable: user_utrecht_owner (User)
+  name: "Administrator of Utrecht"
+  about: "It's all in the name"
+  are_votes_public: true
 profile_utrecht_manager:
   profileable: user_utrecht_manager (User)
   name: "Manager of Utrecht"
@@ -30,7 +35,7 @@ profile_three:
   profileable: user3 (User)
   name: 'User3'
   about: 'Im a user too'
-  are_votes_public: true
+  are_votes_public: false
 profile_utrecht:
   profileable_id: <%= ActiveRecord::FixtureSet.identify(:utrecht) %>
   profileable_type: 'Page'

@@ -17,6 +17,17 @@ class ProfilePolicy < RestrictivePolicy
     end
   end
 
+  def initialize(context, record)
+    @context = context
+    @record = record
+
+    # Note: Needs to be overridden since RestrictivePolicy checks for
+    #       record-level access
+    unless has_access_to_platform?
+      raise Argu::NotLoggedInError.new(nil, record), 'must be logged in'
+    end
+  end
+
   def show?
     if record.owner.class == Page
       record.is_public?

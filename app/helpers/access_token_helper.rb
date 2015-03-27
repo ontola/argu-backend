@@ -19,8 +19,15 @@ module AccessTokenHelper
     get_access_tokens(user).present?
   end
 
+  # Checks whether the user has an applicable `access_token` in their session
+  # `AccessToken`s trickle down access to their scope
   def has_access_token_access_to(record=nil)
-    record && AccessToken.where(item: record.try(:get_parent).try(:model), access_token: get_access_tokens.map(&:access_token)).present?
+    if record
+      access_tokens = get_access_tokens
+      access_tokens.any? do |a_t|
+        record == a_t.item || (record.try(:is_fertile?) && record.is_child_of?(a_t.item))
+      end
+    end
   end
 
   # Gets an access token based on whether the user has one in params or in its user model

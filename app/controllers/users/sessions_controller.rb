@@ -8,7 +8,7 @@ class Users::SessionsController < Devise::SessionsController
       yield resource if block_given?
       r = params[:user][:r]
       resource.update r: ''
-      redirect_to r, status: r.match(/\/v\/|\/c\//) ? 307 : 302
+      redirect_to r, status: r.match(/\/v(\?|\/)|\/c(\?|\/)/) ? 307 : 302
     else
       super
     end

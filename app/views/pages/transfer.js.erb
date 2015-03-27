@@ -1,0 +1,10 @@
+var node = $('.container').append("<%= escape_javascript render(template: 'pages/transfer.html', layout: false, locals: {resource: @page}) %>")[0].querySelectorAll('[data-react-class]')[0];
+var className = node.getAttribute(window.ReactRailsUJS.CLASS_NAME_ATTR);
+
+// Assume className is simple and can be found at top-level (window).
+// Fallback to eval to handle cases like 'My.React.ComponentName'.
+var constructor = window[className] || eval.call(window, className);
+var propsJson = node.getAttribute(window.ReactRailsUJS.PROPS_ATTR);
+var props = propsJson && JSON.parse(propsJson);
+
+React.render(React.createElement(constructor, props), node);

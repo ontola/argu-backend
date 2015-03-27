@@ -3,8 +3,16 @@ require 'test_helper'
 class PagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test 'should get show when not logged in' do
+  test 'should not get show without platform access' do
     get :show, id: pages(:utrecht)
+
+    assert_response :success
+    assert assigns(:_not_logged_in_caught)
+    assert_nil assigns(:collection)
+  end
+
+  test 'should get show with platform access' do
+    get :show, id: pages(:utrecht), at: access_tokens(:token_hidden).access_token
 
     assert_response :success
     assert_not_nil assigns(:profile)

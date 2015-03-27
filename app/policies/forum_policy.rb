@@ -61,7 +61,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def create_group?
-    is_manager? || staff?
+    is_owner? || staff?
   end
 
   def edit?
@@ -77,7 +77,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def invite?
-    user && (is_open? || is_manager? || is_owner?)
+    user && (is_open? || is_manager?) || staff?
   end
 
   def join?
@@ -88,12 +88,22 @@ class ForumPolicy < RestrictivePolicy
     @record.closed? || show?
   end
 
-  def add_question?
-    is_member? || staff?
+  # Whether the user can add (a specified) manager(s)
+  # Only the owner can do this.
+  def add_manager?(user)
+    is_owner?
+  end
+
+  def remove_manager?(user)
+    is_owner?
   end
 
   def add_motion?
     add_question?
+  end
+
+  def add_question?
+    is_member? || staff?
   end
 
   def selector?
@@ -112,19 +122,10 @@ class ForumPolicy < RestrictivePolicy
   end
 
   # Is the user a manager of the page or of the forum?
+  # Trickles up
   def is_manager?
     _mems = user.profile if user
-    user && (user.profile.page_memberships.where(page: record.page, role: PageMembership.roles[:manager]).present? || user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || staff?
-  end
-
-  # Whether the user can add (a specified) manager(s)
-  # Only the owner can do this.
-  def add_manager?(user)
-    is_owner?
-  end
-
-  def remove_manager?(user)
-    is_owner?
+    user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present? || is_owner?
   end
 
   # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta

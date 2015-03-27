@@ -6,7 +6,9 @@ class RestrictivePolicy
     @context = context
     @record = record
 
-    raise Argu::NotLoggedInError.new(nil, record), 'must be logged in' unless has_access_to_platform?
+    unless has_access_to_record?
+      raise Argu::NotLoggedInError.new(nil, record), 'must be logged in'
+    end
   end
 
   delegate :user, to: :context
@@ -57,7 +59,7 @@ class RestrictivePolicy
   end
 
   def new_record?
-    record.is_a? Class || record.new_record?
+    record.is_a?(Class) || record.new_record?
   end
 
   # Used when an item displays nested content, therefore this should use the heaviest restrictions
@@ -104,8 +106,16 @@ class RestrictivePolicy
     user && user.profile.member_of?(record.forum || record.forum_id)
   end
 
+  # Whether the user has access to Argu in general
   def has_access_to_platform?
-    true || user || has_access_token_access_to(record)
+    user || has_valid_token?
+  end
+
+  # Whether the User is logged in, or has an AccessToken for `record`
+  # Note: Not to be confused with policy(record).show? which validates
+  #       access for a specific item
+  def has_access_to_record?
+    user || has_access_token_access_to(record)
   end
 
   def scope
