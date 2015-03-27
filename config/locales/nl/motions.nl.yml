@@ -83,3 +83,6 @@ nl:
       tooltip: "Dit voorstel is aangenomen op %{date}."
     rejected:
       tooltip: "Dit voorstel is afgewezen op %{date}."
+  pundit:
+    motion_policy:
+      vote?: "Je mag nog niet op items stemmen. Zorg ervoor dat je lid van het forum bent."

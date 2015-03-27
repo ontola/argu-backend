@@ -227,7 +227,8 @@
 
     }
     @include bp-medium{
-      padding: .5em;
+      //Makes the share icon and menu buttons too small
+      //padding: .5em;
     }
   }
   &:hover {
@@ -377,7 +378,7 @@
 }
 
 .btns--vote a{
-  padding: .5em;
+  padding: .5em !important;
   margin: 0;
   color: $g2;
 }

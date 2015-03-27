@@ -98,3 +98,6 @@ nl:
   votes:
     alerts:
       not_modified: ""
+  pundit:
+    membership_policy:
+      destroy?: "Lidmaatschap mag niet opgezegd worden."
