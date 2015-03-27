@@ -3,7 +3,7 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
   .modal
     header
       h1
-        /= t('sign_up_sign_in')
+        = t('sign_up_sign_in')
     .box.box-small
       -if defined?(preview) && preview.present?
         section

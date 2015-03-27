@@ -23,6 +23,7 @@ nl:
       tag_list: "Thema's"
       username: "Gebruikersnaam"
       password: "Wachtwoord"
+      password_confirmation: "Wachtwoord bevestigen"
       featured_tags: "Uitgelichte thema's"
       shortname: "Argu url"
       visibility: "Zichtbaarheid"
@@ -65,7 +66,7 @@ nl:
       username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."
       cover_photo_attribution: "Als jij niet de auteursrechten van de afbeelding zit, kan je hier alsnog de auteur en de licensie benoemen. Bijvoorbeeld: CC-BY @argu_joep"
       shortname: "Hiermee bepaal je via welke URL de pagina toegankelijk is. Het wijzigen van de URL kan er voor zorgen dat bestaande gedeelde links niet meer werken."
-      shortname_alt: "Minimaal 3 karakters. Alleen letters, cijfers en '_'."
+      password: "Minimaal 8 karakters."
       question:
         title: "Een vraagstuk begint meestal met 'Hoe...' of 'Wat...'."
         content: "Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."
@@ -77,10 +78,13 @@ nl:
         content: "Leg uit waarom dit een belangrijk argument is. Geef bronnen om jouw argument te onderbouwen."
       forum:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
+      user:
+        shortname: "Minimaal 3 karakters. Alleen letters, cijfers en '_'."
     placeholders:
       email: "email@voorbeeld.nl"
       login: "email of gebruikersnaam"
       tag_list: "thema1, thema2 ..."
+      password_confirmation: "Zelfde als hierboven"
       question:
         title: "Plaats hier de kern van jouw %{type}"
         content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."

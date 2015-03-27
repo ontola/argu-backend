@@ -90,6 +90,15 @@ module ApplicationHelper
     end
   end
 
+  def dual_profile_edit_path(profile)
+    if profile.owner.class == User
+      edit_profile_path(profile.owner)
+    else
+      #edit_page_path?
+      page_path(profile.owner)
+    end
+  end
+
   def can_show_display_name?(preview)
     if preview.respond_to?(:get_parent)
       preview.get_parent.model.open?
