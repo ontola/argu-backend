@@ -7,7 +7,7 @@
         p Vraag je meest betrokken vrienden om mee te doen met het oplossen van maatschappelijke problemen op Argu.
         =f.inputs
           =f.input :email
-          input[type='hidden' name='forum' value=@forum.url]
+          input[type='hidden' name='forum' value=@forum.try(:url)]
 
         = f.actions do
           = f.action :submit, :as => :button, label: t('devise.invitations.new.submit_button')
