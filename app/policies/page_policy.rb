@@ -17,6 +17,17 @@ class PagePolicy < RestrictivePolicy
 
   end
 
+  def initialize(context, record)
+    @context = context
+    @record = record
+
+    # Note: Needs to be overridden since RestrictivePolicy checks for
+    #       record-level access
+    unless has_access_to_platform?
+      raise Argu::NotLoggedInError.new(nil, record), 'must be logged in'
+    end
+  end
+
   def permitted_attributes
     attributes = super
     attributes << [:bio, :tag_list, {profile_attributes: [:id, :name, :profile_photo]}] if create?

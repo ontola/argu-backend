@@ -5,7 +5,7 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
     @context = context
     @record = record
 
-    #raise Argu::NotLoggedInError.new(nil, record), "must be logged in" unless has_access_to_platform?
+    #raise Argu::NotLoggedInError.new(nil, record), "must be logged in" unless has_access_to_record?
   end
 
   delegate :user, to: :context

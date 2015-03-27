@@ -27,8 +27,12 @@ class Context
     merge_query_parameter(url, (parent.to_query if parent.present?))
   end
 
-  # Whether the parent's contexts' model is present
   def has_parent?
+    self.parent.present?
+  end
+
+  # Whether the parent's contexts' model is present
+  def parent_initialized?
     @parent_context.present?
   end
 
@@ -92,9 +96,12 @@ class Context
     end
   end
 
-  # Generates a URL for the model
-  def url
-    url_for([single_model, only_path: true]) if single_model
+  def root_parent
+    if self.parent.present?
+      self.parent.root_parent
+    else
+      self
+    end
   end
 
   # Generates a HTTP query compatible string to parse back the breadcrumb stack
@@ -109,6 +116,11 @@ class Context
     value[:url] = url
     value[:parent_context] = @parent_context.to_hash if @parent_context.present?
     value
+  end
+
+  # Generates a URL for the model
+  def url
+    url_for([single_model, only_path: true]) if single_model
   end
 
   protected

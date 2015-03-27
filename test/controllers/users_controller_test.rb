@@ -3,8 +3,16 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test 'should get show when not logged in' do
+  test 'should not get show without platform access' do
     get :show, id: users(:user2)
+
+    assert_response :success
+    assert assigns(:_not_logged_in_caught)
+    assert_nil assigns(:collection)
+  end
+
+  test 'should get show with platform access' do
+    get :show, id: users(:user2), at: access_tokens(:token_hidden).access_token
 
     assert_response :success
     assert_not_nil assigns(:profile)
@@ -35,6 +43,14 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_not assigns(:collection)[:con][:collection].any?, 'all votes are shown'
     assert_equal profiles(:profile_two).votes_questions_motions.length, assigns(:collection).values.map {|i| i[:collection].length }.inject(&:+), 'Not all/too many votes are shown'
+  end
+
+  test 'should not show votes when not public' do
+    sign_in users(:user2)
+
+    get :show, id: users(:user3)
+    assert_response 200
+    assert_not assigns(:collection)
   end
 
 

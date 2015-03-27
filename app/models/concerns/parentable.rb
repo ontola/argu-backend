@@ -2,6 +2,9 @@ module Parentable
   extend ActiveSupport::Concern
 
   included do
+    def is_fertile?
+      true
+    end
   end
 
   # Gives the context of an object based on the parameters (if needed/any)
@@ -19,6 +22,26 @@ module Parentable
     parent || Context.new
   end
 
+  # Check if this model is a child of `record`
+  def is_child_of?(record)
+    parent = self.get_parent
+    if parent
+      if parent.model == record
+        true
+      elsif parent.has_parent?
+        if parent.model.try(:is_fertile?)
+            parent.model.is_child_of?(record)
+        end
+      else
+        # This is false since it can't be parent of itself
+        false
+      end
+    else
+      false
+    end
+  end
+
+  # :nodoc:
   def reflect_parent(relation_name, options)
     parent = Context.new
     if relation_name == :self

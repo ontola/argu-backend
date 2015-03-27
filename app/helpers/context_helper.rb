@@ -2,7 +2,7 @@ module ContextHelper
 
   # Renders a parent breadcrumb block
   def to_parent
-    render partial: 'contextualize/to_parent' if current_context.has_parent?
+    render partial: 'contextualize/to_parent' if current_context.parent_initialized?
   end
 
   # Generates a link with the current context kept

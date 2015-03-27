@@ -28,10 +28,8 @@ class PagesController < ApplicationController
     authorize @page, :create?
 
     if @page.save
-      Rails.logger.info "=============================================================="
       redirect_to @page
     else
-      Rails.logger.info "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++"
       respond_to do |format|
         format.html { render 'new', notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}] }
       end
