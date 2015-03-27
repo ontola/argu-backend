@@ -15,5 +15,9 @@ nl:
         admin: 'Maak admin'
         unadmin: 'Degradeer admin'
     edit:
-      title: "profiel bewerken"
+      title: "Profiel bewerken"
     didnt_vote_name: "%{name} heeft nog niet gestemd"
+    should_start_with_capital: "moet met een hoofdletter beginnen"
+  pundit:
+    profile_policy:
+      update?: "Je mag dit profiel niet bewerken."

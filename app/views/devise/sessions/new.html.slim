@@ -3,7 +3,7 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
   .modal
     header
       h1
-        /= t('sign_up_sign_in')
+        = t('sign_up_sign_in')
     .box.box-small
       -if defined?(preview) && preview.present?
         section
@@ -12,7 +12,7 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
               h3= preview.display_name
           p
             b Je hebt een account nodig om dit te bekijken.
-      -elsif defined?(r) && r.present?
+      -elsif has_valid_token?(resource) || defined?(r) && r.present?
         section
           .form-small
             h2= t('sign_up')

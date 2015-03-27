@@ -7,27 +7,8 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def create
     @forum = Forum.find_via_shortname params[:forum]
-    if @forum.present?
-      authorize @forum, :invite?
-      block = Proc.new do |resource|
-        if (profile = resource.build_profile).save
-          resource.profile_id = profile.id
-          resource.profile.memberships.create(forum: @forum, role: Membership.roles[:member])
-        end
-      end
-    end
-
-    self.resource = invite_resource &block
-
-    if resource.errors.empty?
-      yield resource if block_given?
-      if is_flashing_format? && self.resource.invitation_sent_at
-        set_flash_message :notice, :send_instructions, :email => self.resource.email
-      end
-      respond_with resource, :location => after_invite_path_for(resource)
-    else
-      respond_with_navigational(resource) { render :new }
-    end
+    authorize @forum, :invite?
+    super
   end
 
   def update
@@ -39,6 +20,10 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def after_invite_path_for(resource)
-    redirect_to @forum
+    forum_path(@forum) || root_path
+  end
+
+  def invite_params
+    super.merge(access_tokens: [@forum.try(:access_token)])
   end
 end
