@@ -73,7 +73,34 @@ class PagesController < ApplicationController
       flash[:error] = 'Error tijdens verwijderen'
       render :delete, locals: {resource: @page}
     end
+  end
 
+  def transfer
+    @page = Page.find_via_shortname params[:id]
+    authorize @page, :transfer?
+
+    respond_to do |format|
+      format.html { render }
+      format.js { render layout: false}
+    end
+  end
+
+  def transfer!
+    @page = Page.find_via_shortname params[:id]
+    authorize @page, :transfer?
+    @new_profile = Profile.find_by(id: params[:profile_id])
+
+    respond_to do |format|
+      if @new_profile.profileable_type != 'User'
+        flash[:error] = t('pages.settings.managers.users_only')
+        format.html { render 'transfer', locals: {no_close: true} }
+      elsif @page.transfer_to!(params[:page][:repeat_name], @new_profile)
+        flash[:success] = t('pages.settings.managers.transferred')
+        format.html { redirect_to settings_page_path(@page) }
+      else
+        format.html { render 'transfer', locals: {no_close: true} }
+      end
+    end
   end
 
 private

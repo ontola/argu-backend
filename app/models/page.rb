@@ -39,4 +39,11 @@ class Page < ActiveRecord::Base
     'anonymous'
   end
 
+  def transfer_to!(repeat_url, new_profile)
+    if self.url.present? && self.url == repeat_url && new_profile.present? && !new_profile.new_record?
+      self.owner = new_profile
+      save!
+    end
+  end
+
 end

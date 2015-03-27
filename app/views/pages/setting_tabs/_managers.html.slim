@@ -1,20 +1,23 @@
-.col-1
-  .box
-    section
-      =semantic_form_for @page do |f|
-        =hidden_field_tag 'tab', 'managers'
-        ul.role-list
-          .owner
-            =f.label :owner
-            =image_tag @page.owner.profile_photo, class: 'profile-photo'
-            = @page.owner.display_name
-          /= f.semantic_fields_for :memberships, where: {}, include_id: false do |manager|
-            - Rails.logger.info f
-            = render 'pages/membership', :f => manager
-          .links
-            = link_to_add_association 'add manager', f, :memberships
+h1= t('pages.settings.managers.owner')
+p= t('pages.settings.managers.about_owner')
+div
+div
+  =image_tag @page.owner.profile_photo, class: 'profile-photo'
+  span=@page.owner.display_name
 
-        .right
-          =f.actions do
-            = f.semantic_errors
-            =f.action :submit, as: :button, label: 'save', class: 'btn'
+- if policy(@page).transfer?
+  h2[style="clear: left;"] Overdracht
+  =link_to 'transfer', transfer_page_url(@page), data: {remote: true}, class: 'btn--warning'
+
+h1[style='clear: left;']= t('pages.settings.managers.title')
+p= t('pages.settings.managers.about_managers')
+table.styled
+  -@page.managers.preload(:profile).each do |manager|
+    tr
+      =image_tag manager.profile.profile_photo, class: 'profile-photo'
+      span
+        =manager.profile.display_name
+        p.tooltip.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
+          =link_to t('forums.managers.revoke'), page_manager_path(@page, manager.profile_id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
+
+  =link_to  t('forums.managers.add'), new_page_manager_path(@page), class: 'btn'

@@ -6,7 +6,7 @@
 # below each fixture, per the syntax in the comments below
 #
 argu:
-  owner: profile_fletcher91 (Profile)
+  owner: :profile_fletcher91
 #
 utrecht:
-  owner: profile_fletcher91 (Profile)
+  owner: :profile_utrecht_owner

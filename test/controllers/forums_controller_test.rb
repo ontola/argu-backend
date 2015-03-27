@@ -61,11 +61,11 @@ class ForumsControllerTest < ActionController::TestCase
 
 
   ####################################
-  # For managers
+  # For owners
   ####################################
 
   test "should show settings" do
-    sign_in users(:user_utrecht_manager)
+    sign_in users(:user_utrecht_owner)
 
     get :settings, id: forums(:utrecht)
     assert_response :success
@@ -73,7 +73,7 @@ class ForumsControllerTest < ActionController::TestCase
   end
 
   test "should show statistics" do
-    sign_in users(:user_utrecht_manager)
+    sign_in users(:user_utrecht_owner)
 
     get :statistics, id: forums(:utrecht)
     assert_response :success

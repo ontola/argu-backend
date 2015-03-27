@@ -17,6 +17,9 @@
             .span8
               fieldset.control-group
               =f.hidden_field(:motion_id)
-      =render partial: 'profiles/profile_current'
+      - if @group_response.new_record?
+        =render partial: 'profiles/profile_current'
+      - else
+        =render partial: @group_response.creator, locals: {resource: @group_response}
       fieldset.form-actions
         =f.submit t('groupresponses.form.submit', name: @group_response.group.name.singularize), class: 'btn btn-sticky btn-sticky-bottom'

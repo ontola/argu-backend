@@ -33,11 +33,10 @@ class PagePolicy < RestrictivePolicy
     attributes << [:bio, :tag_list, {profile_attributes: [:id, :name, :profile_photo]}] if create?
     attributes << [:visibility, {shortname_attributes: [:shortname]}] if new_record?
     attributes << :visibility if is_owner?
-    attributes << :page_id if change_owner?
+    attributes << [:page_id, :repeat_name] if change_owner?
     attributes
   end
 
-  ######CRUD######
   def show?
     record.open? || is_manager? || super
   end
@@ -71,15 +70,28 @@ class PagePolicy < RestrictivePolicy
     record.closed? || show?
   end
 
+  # Whether the user can add (a specified) manager(s)
+  # Only the owner can do this.
+  def add_manager?(user)
+    is_owner?
+  end
+
+  def remove_manager?(user)
+    is_owner?
+  end
+
   def statistics?
     false
   end
 
-  # This feature has been disabled for the public since it isn't finished yet.
-  # TODO: Don't forget to remove the note that only argu can currently change
-  # page ownership in forums/settings?tab=managers
-  def managers?
+  # TODO: Don't forget to remove the note that only argu can currently
+  # transfer page ownership in forums/settings?tab=managers
+  def transfer?
     staff?
+  end
+
+  def managers?
+    is_owner? || staff?
   end
 
   #######Attributes########

@@ -1,35 +1,38 @@
 =set_title @question.new_record? ? t('new_type', type: t('questions.type')) : t('edit_type', type: t('questions.type'))
 .col-3
   .col-3-2
-    = to_parent
+    =to_parent
     .box
       section.section-info.question-bg
         span[class="fa fa-#{question_icon}"]
         span.icon-left= questions_type
-      = semantic_form_for((@question.new_record? ? [@forum, @question] : @question), html: {autocomplete: 'off'}, multipart: true) do |f|
+      =semantic_form_for((@question.new_record? ? [@forum, @question] : @question), html: {autocomplete: 'off'}, multipart: true) do |f|
         section.smallpadded.form-filled
-          = f.inputs
-            = f.input :title, input_html: {class: 'h1 question-t form-input-title'}, label: false, placeholder: placeholder_for(@question, :title, question_type)
-            = f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, placeholder: placeholder_for(@question, :content, question_type)
-            = f.input :tag_list, input_html: {class: 'tag-list'}, label: false
-          = f.inputs
-            = f.input :cover_photo, label: t('image')
+          =f.inputs
+            =f.input :title, input_html: {class: 'h1 question-t form-input-title'}, label: false, placeholder: placeholder_for(@question, :title, question_type)
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, placeholder: placeholder_for(@question, :content, question_type)
+            =f.input :tag_list, input_html: {class: 'tag-list'}, label: false
+          =f.inputs
+            =f.input :cover_photo, label: t('image')
             -if !@question.new_record?
-              = f.input :remove_cover_photo, as: :reverse_boolean, label: t('formtastic.labels.remove_image')
+              =f.input :remove_cover_photo, as: :reverse_boolean, label: t('formtastic.labels.remove_image')
 
             /TODO Add Checkbox for using expires_at.
             /TODO Hide expires_at input unless checkbox is checked.
             /TODO Use current datetime as default input.
-            -if $rollout.active?(:expires_at, current_user) && policy(@question).set_expire_as?
-              = f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
-          -if !@question.new_record? && policy(@question).trash?
-            = f.inputs name: t('forms.danger_zone'), class: 'danger-zone'
+            - if $rollout.active?(:expires_at, current_user) && policy(@question).set_expire_as?
+              =f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
+          - if !@question.new_record? && policy(@question).trash?
+            =f.inputs name: t('forms.danger_zone'), class: 'danger-zone'
               - if policy(@question).trash?
-                = f.input :is_trashed, as: :reverse_boolean
-              -if policy(@question).move?
-                = f.input :f_move, as: :link, url: question_move_url(@question), input_html: {data: {remote: true}, class: 'btn--warning'}
-                = f.input :f_convert, as: :link, url: question_convert_url(@question), input_html: {data: {remote: true}, class: 'btn--warning'}
-        = render partial: 'profiles/profile_current'
+                =f.input :is_trashed, as: :reverse_boolean
+              - if policy(@question).move?
+                =f.input :f_move, as: :link, url: question_move_url(@question), input_html: {data: {remote: true}, class: 'btn--warning'}
+                =f.input :f_convert, as: :link, url: question_convert_url(@question), input_html: {data: {remote: true}, class: 'btn--warning'}
+        - if @question.new_record?
+          =render partial: 'profiles/profile_current'
+        - else
+          =render partial: @question.creator, locals: {resource: @question}
         =f.actions
           .sticky-submit
             =f.action :submit, as: :button

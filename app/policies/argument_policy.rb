@@ -31,11 +31,19 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def update?
-    is_member? && is_creator? || super
+    is_member? && is_creator? || forum_policy.is_manager? || forum_policy.is_owner? || super
   end
 
   def edit?
     update?
+  end
+
+  def trash?
+    forum_policy.is_manager? || forum_policy.is_owner? || super
+  end
+
+  def destroy?
+    forum_policy.is_manager? || forum_policy.is_owner? || super
   end
 
   def show?
@@ -43,6 +51,10 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   private
+
+  def forum_policy
+    Pundit.policy(context, record.forum)
+  end
 
   def is_member?
     user && user.profile.member_of?(record.motion.forum)

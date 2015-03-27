@@ -32,7 +32,7 @@ module ForumsHelper
     link_items = []
     link_items << link_item(t('forums.settings.title'), url_for([:settings, resource]), fa: 'gear')
     link_items << link_item(t('forums.statistics.title'), url_for([:statistics, resource]), fa: 'pie-chart') if policy(resource).statistics?
-    link_items << link_item(t('forums.settings.managers'), url_for([:settings, resource, tab: :managers]), fa: 'group') if policy(resource).managers?
+    link_items << link_item(t('forums.settings.managers.title'), url_for([:settings, resource, tab: :managers]), fa: 'group') if policy(resource).managers?
 
     dropdown_options(t("#{resource.class_name}.resource_name.management"),
                      [{items: link_items}], fa: 'fa-gear', fa_after: 'fa-angle-down')

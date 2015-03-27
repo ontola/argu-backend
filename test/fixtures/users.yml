@@ -12,6 +12,11 @@ user_thom:
   email: 'thom@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
   finished_intro: true
+# Owner of the page and administrator of forum utrecht
+user_utrecht_owner:
+  email: 'owner@utrecht.nl'
+  encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
+  finished_intro: true
 # Manager of the page and forum of utrecht
 user_utrecht_manager:
   email: 'user@utrecht.nl'
