@@ -7,6 +7,7 @@ nl:
       not_found: "niet gevonden"
       already_confirmed: "was al bevestigd, probeer in te loggen."
       not_locked: "was niet vergrendeld"
+      should_start_with_capital: "moet met een hoofdletter beginnen"
       not_saved:
         one: "1 fout zorgde ervoor dat %{resource} niet kon worden opgeslagen:"
         other: "%{count} fouten zorgde ervoor dat %{resource} niet kon worden opgeslagen:"
