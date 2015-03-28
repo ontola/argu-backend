@@ -6,7 +6,7 @@
       section
         =f.semantic_errors :email, :base
         =f.inputs name: t('users.registrations.categories.general') do
-          =f.inputs :shortname, for: :shortname
+          =f.inputs :shortname, for: :shortname, disabled: true
           =f.input :email, label: t("users_email"), value: @user.email, placeholder: @user.email.blank? ? t("users_email_placeholder") : @user.email
 
         - if $rollout.active?(:notifications, current_user)

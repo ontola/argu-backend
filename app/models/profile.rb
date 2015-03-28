@@ -5,6 +5,7 @@ class Profile < ActiveRecord::Base
   # to make the mailer implementation more efficient
   #has_one :profileable, class_name: 'User'
   belongs_to :profileable, polymorphic: true, inverse_of: :profile
+  accepts_nested_attributes_for :profileable
   rolify after_remove: :role_removed, before_add: :role_added
   has_many :votes, as: :voter
   has_many :memberships, dependent: :destroy
@@ -22,16 +23,16 @@ class Profile < ActiveRecord::Base
   pica_pica :profile_photo
   acts_as_follower
 
-  validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :finished_intro?
+  validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}
 
   ######Attributes#######
   def display_name
-    self.name.presence || self.owner.try(:display_name)
+    self.name.presence || self.profileable.try(:display_name)
   end
 
   def email
-    owner.try :email
+    profileable.try :email
   end
 
   def frozen?
@@ -42,16 +43,17 @@ class Profile < ActiveRecord::Base
     memberships.pluck(:forum_id).join(',').presence
   end
 
-  def owner
-    self.profileable
-  end
+  #def owner
+  #  self.profileable
+  #end
 
   def url
-    owner.url.presence || id
+    profileable.url.presence || id
   end
 
+  # TODO Crashes if false
   def finished_intro?
-    self.owner && self.owner.finished_intro?
+    self.profileable && self.profileable.finished_intro?
   end
 
   #######Methods########
@@ -82,6 +84,10 @@ class Profile < ActiveRecord::Base
     end
 
     (Forum.find(last_forum) if last_forum.present?) || self.memberships.first.try(:forum) || Forum.first_public
+  end
+
+  def requires_name?
+    self.profileable.class == Page
   end
 
   def member_of?(_forum)

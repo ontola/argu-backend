@@ -135,7 +135,7 @@ class ApplicationController < ActionController::Base
 
   def check_finished_intro
     if current_user && !current_user.finished_intro? && !request.original_url.in?(intro_urls)
-      if current_user.profile.name.present?
+      if current_user.first_name.present?
         redirect_to selector_forums_url
       else
         redirect_to edit_profile_url(current_user.url)
@@ -144,7 +144,7 @@ class ApplicationController < ActionController::Base
   end
 
   def intro_urls
-    [selector_forums_url, profile_url(current_user), edit_profile_url(current_user), memberships_forums_url, ]
+    [selector_forums_url, profile_url(current_user), edit_profile_url(current_user), memberships_forums_url]
   end
 
   def set_layout

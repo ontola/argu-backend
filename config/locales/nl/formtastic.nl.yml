@@ -61,6 +61,9 @@ nl:
         name: "Naam"
       user:
         shortname: "Gebruikersnaam"
+        first_name: "Voornaam*"
+        middle_name: "Middelste naam(en)"
+        last_name: "Achternaam*"
     hints:
       tag_list: "Kies thema's die te maken hebben met jouw ondwerp."
       username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."

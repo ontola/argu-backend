@@ -34,14 +34,17 @@ class ProfilesController < ApplicationController
 
     updated = nil
     Profile.transaction do
-      updated = @profile.update_attributes(permit_params)
+      updated = @profile.update permit_params
+      if @profile.profileable.class == User
+        @profile.profileable.update_attributes user_profileable_params
+      end
 
       if (!@user.finished_intro?) && has_valid_token?(@user)
-        @user.update finished_intro: true
         get_access_tokens(@user).each do |at|
-          @profile.memberships.create(forum: at.item) if at.item.class == Forum
+          @profile.memberships.find_or_create_by(forum: at.item) if at.item.class == Forum
         end
       end
+      @user.update_column :finished_intro, true
     end
     respond_to do |format|
       if updated && @user.r.present?
@@ -62,6 +65,10 @@ class ProfilesController < ApplicationController
 private
   def permit_params
     params.require(:profile).permit :name, :about, :profile_photo, :are_votes_public
+  end
+
+  def user_profileable_params
+    params.require(:profile).require(:profileable_attributes).permit :first_name, :middle_name, :last_name
   end
 
   def profile_update_path

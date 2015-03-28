@@ -2,9 +2,9 @@ class User < ActiveRecord::Base
   include ArguBase, Shortnameable
 
   has_many :authentications, dependent: :destroy
-  has_one :profile, as: :profileable, dependent: :destroy, autosave: true
+  has_one :profile, as: :profileable, dependent: :destroy
 
-  accepts_nested_attributes_for :profile
+  #accepts_nested_attributes_for :profile
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -13,7 +13,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          #, :omniauthable
 
-  #after_initialize :build_shortname_if, if: :new_record?
+  after_initialize :build_shortname_if, if: :new_record?
   before_validation :check_for_profile
   after_destroy :cleanup
   after_create :update_acesss_token_counts
@@ -28,10 +28,11 @@ class User < ActiveRecord::Base
   validates :email, allow_blank: false,
         format: { with: RFC822::EMAIL }
   validates :profile, presence: true
+  validates :first_name, :last_name, presence: true, if: :requires_name?
 
 #######Attributes########
   def display_name
-    self.profile.name.presence || self.url
+    [self.first_name, self.middle_name, self.last_name].compact.join(' ') || self.url
   end
 
   def profile
@@ -55,6 +56,10 @@ class User < ActiveRecord::Base
   #######Methods########
   def build_shortname_if
     self.shortname ||= Shortname.new
+  end
+
+  def requires_name?
+    finished_intro?
   end
 
   def update_acesss_token_counts

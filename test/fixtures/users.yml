@@ -12,28 +12,40 @@ user_thom:
   email: 'thom@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
   finished_intro: true
+  first_name: 'Thom'
+  last_name: 'van Kalkeren'
 # Owner of the page and administrator of forum utrecht
 user_utrecht_owner:
   email: 'owner@utrecht.nl'
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
   finished_intro: true
+  first_name: 'User'
+  last_name: 'Lastname'
 # Manager of the page and forum of utrecht
 user_utrecht_manager:
   email: 'user@utrecht.nl'
   encrypted_password: <%= Devise.bcrypt User, 'thomthom' %>
   finished_intro: true
+  first_name: 'User'
+  last_name: 'Utrecht'
 # A general user, member of utrecht
 user:
   email: 'user@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   finished_intro: true
+  first_name: 'User1'
+  last_name: 'Lastname1'
 # A general user, member of utrecht and amsterdam
 user2:
   email: 'user2@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   finished_intro: true
+  first_name: 'User2'
+  last_name: 'Lastname2'
 # A general user, member of amsterdam
 user3:
   email: 'user3@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   finished_intro: true
+  first_name: 'User3'
+  last_name: 'Lastname3'

@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class ProfileTest < ActiveSupport::TestCase
 
@@ -10,15 +10,15 @@ class ProfileTest < ActiveSupport::TestCase
     assert profile.valid?, profile.errors.to_a.join(',').to_s
   end
 
-  test "shortname valid" do
-    assert_equal profile.url, 'user'
+  test 'shortname valid' do
+    assert_equal 'user', profile.url
   end
 
-  test "display_name valid" do
-    assert_equal profile.display_name, 'User'
+  test 'display_name valid' do
+    assert_equal 'User1 Lastname1', profile.display_name
   end
 
-  test "member_of? function" do
+  test 'member_of? function' do
     assert profile.member_of?(forums(:utrecht)), 'false negative when forum is passed'
     assert_not profile.member_of?(forums(:amsterdam)), 'false positive when forum is passed'
 
