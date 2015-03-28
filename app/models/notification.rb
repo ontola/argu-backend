@@ -3,6 +3,8 @@ class Notification < ActiveRecord::Base
   belongs_to :profile
   belongs_to :activity
 
+  validates :title, length: {maximum: 75}
+  validates :url, length: {maximum: 255}
 
   def title
     if self.activity.present?

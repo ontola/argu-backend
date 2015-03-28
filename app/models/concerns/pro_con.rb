@@ -14,7 +14,7 @@ module ProCon
     before_save :cap_title
     after_save :creator_follow
 
-    validates :content, presence: true, length: { minimum: 5, maximum: 3000 }
+    validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
     validates :creator_id, :motion_id, :forum_id, presence: true
 

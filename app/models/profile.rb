@@ -22,8 +22,8 @@ class Profile < ActiveRecord::Base
   pica_pica :profile_photo
   acts_as_follower
 
-  validates :name, presence: true, length: {minimum: 3}, if: :finished_intro?
-  #validates :about, presence: true
+  validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :finished_intro?
+  validates :about, length: {maximum: 3000}
 
   ######Attributes#######
   def display_name

@@ -12,7 +12,7 @@ class Page < ActiveRecord::Base
 
   attr_accessor :repeat_name
 
-  validates :shortname, presence: true, length: {minimum: 3}
+  validates :shortname, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :owner_id, presence: true
 
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,

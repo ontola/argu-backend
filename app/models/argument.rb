@@ -1,4 +1,3 @@
-
 class Argument < ActiveRecord::Base
   include ProCon
 

@@ -25,9 +25,11 @@ class Forum < ActiveRecord::Base
   validates_integrity_of :profile_photo
   validates_processing_of :profile_photo
   validates_download_of :profile_photo
-  validates :shortname, :name, presence: true, length: {minimum: 4}
+  validates :shortname, presence: true, length: {minimum: 4, maximum: 75}
+  validates :name, presence: true, length: {minimum: 4, maximum: 75}
   validates :page_id, presence: true
   validates :bio, length: {maximum: 90}
+  validates :bio_long, length: {maximum: 5000}
 
   after_validation :check_access_token, if: :visible_with_a_link_changed?
 
