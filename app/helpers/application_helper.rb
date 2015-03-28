@@ -83,19 +83,19 @@ module ApplicationHelper
   end
 
   def dual_profile_path(profile)
-    if profile.owner.class == User
-      user_path(profile.owner)
+    if profile.profileable.class == User
+      user_path(profile.profileable)
     else
-      page_path(profile.owner)
+      page_path(profile.profileable)
     end
   end
 
   def dual_profile_edit_path(profile)
-    if profile.owner.class == User
-      edit_profile_path(profile.owner)
+    if profile.profileable.class == User
+      edit_profile_path(profile.profileable)
     else
       #edit_page_path?
-      page_path(profile.owner)
+      page_path(profile.profileable)
     end
   end
 

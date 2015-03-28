@@ -138,7 +138,7 @@ nl:
 
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
-  twice_warning: "Je hebt dit al eerder gedaan."
+  twice_warning: "Een waarde in het object is al bezet, probeer het bestaande object te bewerken."
 
 #datetime
   datetime_ago: "geleden"

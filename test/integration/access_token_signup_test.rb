@@ -79,7 +79,10 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
 
     put profile_path('newuser'), {profile: {
-                                   name: 'new user',
+                                   profileable_attributes: {
+                                       first_name: 'new',
+                                       last_name: 'user'
+                                   },
                                    about: 'Something ab'
                                }}
     assert_redirected_to forums(:hidden).url
@@ -115,17 +118,22 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
 
     put profile_path('newuser'), {profile: {
-                                   name: 'new user',
+                                   profileable_attributes: {
+                                     first_name: 'new',
+                                     last_name: 'user'
+                                   },
                                    about: 'Something ab'
                                }}
     assert_redirected_to motion_vote_path(motions(:hidden_one), 'neutral')
     assert_response 307
     assert assigns(:user)
     assert assigns(:profile)
+    assert_equal 'new user', assigns(:profile).display_name
     assert_equal 1, assigns(:profile).memberships.count
 
     assert_difference 'Vote.count', 1 do
       post response.location
+      assert_response 302
     end
 
     follow_redirect!

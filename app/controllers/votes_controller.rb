@@ -27,7 +27,7 @@ class VotesController < ApplicationController
     end
   end
 
-  # POST /model/:model_id/vote/:for
+  # POST /model/:model_id/v/:for
   def create
     if params[:argument_id].present?
       @model = Argument.find params[:argument_id]

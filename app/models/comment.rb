@@ -10,7 +10,7 @@ class Comment < ActiveRecord::Base
   after_destroy :decrease_counter_cache
 
   validates_presence_of :profile
-  validates :body, presence: true, length: {minimum: 4}
+  validates :body, presence: true, length: {minimum: 4, maximum: 5000}
 
   attr_accessor :is_processed
 

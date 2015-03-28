@@ -6,6 +6,8 @@ class Group < ActiveRecord::Base
   has_many :members, through: :group_memberships, class_name: 'Profile'
   has_many :group_responses
 
+  validates :name, length: {maximum: 75}
+
 
   def display_name
     self.name

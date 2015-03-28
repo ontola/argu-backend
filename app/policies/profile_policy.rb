@@ -29,15 +29,15 @@ class ProfilePolicy < RestrictivePolicy
   end
 
   def show?
-    if record.owner.class == Page
+    if record.profileable.class == Page
       record.is_public?
     else
-      record.owner.finished_intro? || super
+      record.profileable.finished_intro? || super
     end
   end
 
   def update?
-    record.owner == user || super
+    record.profileable == user || super
   end
 
   def edit?
