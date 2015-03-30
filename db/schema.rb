@@ -295,7 +295,7 @@ ActiveRecord::Schema.define(version: 20150328104909) do
     t.boolean  "is_public",                    default: true
     t.boolean  "are_votes_public",             default: true
     t.string   "profileable_type"
-    t.string   "profileable_id"
+    t.integer  "profileable_id"
   end
 
   add_index "profiles", ["profileable_type", "profileable_id"], name: "index_profiles_on_profileable_type_and_profileable_id", unique: true, using: :btree
@@ -419,19 +419,17 @@ ActiveRecord::Schema.define(version: 20150328104909) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                  default: 0
     t.boolean  "finished_intro",                     default: false
+    t.text     "r"
+    t.text     "access_tokens"
     t.integer  "follows_email",                      default: 1,     null: false
     t.boolean  "follows_mobile",                     default: true,  null: false
     t.integer  "memberships_email",                  default: 1,     null: false
     t.boolean  "memberships_mobile",                 default: true,  null: false
     t.integer  "created_email",                      default: 1,     null: false
     t.boolean  "created_mobile",                     default: true,  null: false
-    t.text     "r"
-    t.text     "access_tokens"
-    t.text     "omni_info"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.text     "active_sessions",                    default: [],                 array: true
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
@@ -462,5 +460,5 @@ ActiveRecord::Schema.define(version: 20150328104909) do
   add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
-  add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
+  add_foreign_key "access_tokens", "profiles"
 end
