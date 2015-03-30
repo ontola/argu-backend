@@ -1,3 +1,4 @@
+# @private
 class ProconCreateProcon < ActiveRecord::Migration
 	def change
 		create_table :procon do |t|

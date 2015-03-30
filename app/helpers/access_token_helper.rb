@@ -1,10 +1,13 @@
+# See {AccessToken}
 module AccessTokenHelper
+  # Calls {AccessTokenHelper#get_access_token} and grants access when a token is found.
   def check_for_access_token
     if get_access_token
       grant_viewing_rights_for @access_token
     end
   end
 
+  # @private
   def grant_viewing_rights_for(item)
     current_access_tokens = session[:a_tokens] || []
     unless current_access_tokens.include? item.access_token
@@ -13,7 +16,7 @@ module AccessTokenHelper
     end
   end
 
-  # Only works after check_for_access_token or grant_viewing_rights_for has been called,
+  # Only works after {AccessTokenHelper#check_for_access_token} or grant_viewing_rights_for has been called,
   # since it doesn't read params
   def has_valid_token?(user=nil)
     get_access_tokens(user).present?
@@ -30,7 +33,7 @@ module AccessTokenHelper
     end
   end
 
-  # Gets an access token based on whether the user has one in params or in its user model
+  # Gets an access token based on whether the user has one in params or in its user model.
   # It will use the first one.
   def get_access_token(user=nil)
     # Eval is used here, but as long as get_safe_raw_access_tokens is used
@@ -51,6 +54,7 @@ module AccessTokenHelper
     get_access_tokens(user).map(&:access_token)
   end
 
+  # @private
   def increment_token_usages(item)
     item.increment! :usages
   end

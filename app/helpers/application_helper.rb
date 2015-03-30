@@ -1,6 +1,7 @@
 module ApplicationHelper
   include ActivityStringHelper, AlternativeNamesHelper
 
+  # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)
     begin
       $rollout.active?(feature, user)
@@ -24,6 +25,7 @@ module ApplicationHelper
     end
   end
 
+  # Merges a URI with a params Hash
   def merge_query_parameter(uri, params)
     uri =  URI.parse(uri)
     if params.class != Hash
@@ -35,10 +37,12 @@ module ApplicationHelper
     uri.to_s
   end
 
+  # Used in forms for the 'r' system
   def remote_if_user
     current_profile.present? ? { remote: true } : {}
   end
 
+  # Used in forms for the 'r' system
   def remote_unless_user
     current_profile.present? ? {} : { remote: true, 'skip-pjax' => true }
   end
@@ -55,6 +59,7 @@ module ApplicationHelper
     end
   end
 
+  # Generates social media links for any resource for HyperDropdown
   def share_items(resource)
     link_items = []
     url = CGI.escape(url_for([resource, only_path: false]))
@@ -82,6 +87,8 @@ module ApplicationHelper
     false
   end
 
+  # Generates a link to the Profile's profileable
+  # Either a Page or a User
   def dual_profile_path(profile)
     if profile.profileable.class == User
       user_path(profile.profileable)
@@ -90,6 +97,8 @@ module ApplicationHelper
     end
   end
 
+  # Generates a link to the Profile's profileable edit action
+  # Either a Page or a User
   def dual_profile_edit_path(profile)
     if profile.profileable.class == User
       edit_profile_path(profile.profileable)
@@ -99,6 +108,7 @@ module ApplicationHelper
     end
   end
 
+  # :nodoc:
   def can_show_display_name?(preview)
     if preview.respond_to?(:get_parent)
       preview.get_parent.model.open?

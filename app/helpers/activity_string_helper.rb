@@ -1,6 +1,10 @@
 module ActivityStringHelper
   include AlternativeNamesHelper
 
+  # Generates an activity string for an activity in the sense of: 'Foo responded to your Bar'
+  # Params:
+  # +activity+:: The Activity to generate the HRS for
+  # +embedded_link+:: Set to true to embed an anchor link (defaults to false)
   def activity_string_for(activity, embedded_link= false)
     owner_string = embedded_link ? link_to(activity.owner.display_name, dual_profile_path(activity.owner)) : activity.owner.display_name
 
@@ -24,12 +28,14 @@ module ActivityStringHelper
     end
   end
 
+  # :nodoc:
   def as_for_questions_create(act, owner_string, your, embedded_link= false)
     thing = embedded_link ? link_to(act.recipient.display_name, act.recipient, title: act.recipient.display_name) : act.recipient.display_name
     activity_string = I18n.t("activities.questions.create#{your}", type: question_type(act.recipient), thing: thing)
     "#{owner_string} #{activity_string}"
   end
 
+  # :nodoc:
   def as_for_motions_create(act, owner_string, your, embedded_link= false)
     if act.trackable.questions.present?
       item = act.trackable.questions.first
@@ -43,12 +49,14 @@ module ActivityStringHelper
     "#{owner_string} #{activity_string}"
   end
 
+  # :nodoc:
   def as_for_arguments_create(act, owner_string, your, embedded_link= false)
     thing = embedded_link ? link_to(type_for(act.recipient), act.trackable.motion, title: act.trackable.motion.display_name) : type_for(act.recipient)
     activity_string = I18n.t("activities.arguments.create#{your}", type: argument_type(act.trackable.forum),thing: thing)
     "#{owner_string} #{activity_string}"
   end
 
+  # :nodoc:
   def as_for_comments_create(act, owner_string, your, embedded_link= false)
     commentable = act.trackable.commentable
     thing = embedded_link ? link_to(type_for(commentable), commentable, title: commentable.display_name) : type_for(commentable)
@@ -56,6 +64,7 @@ module ActivityStringHelper
     "#{owner_string} #{activity_string}"
   end
 
+  # :nodoc:
   def as_for_votes_create(act, owner_string, your, embedded_link= false)
     thing = embedded_link ? link_to(type_for(act.trackable.voteable), act.trackable.voteable, title: act.trackable.voteable.display_name) : type_for(act.trackable.voteable)
     activity_string = I18n.t("activities.votes.voted.#{act.parameters[:for]}#{your}", thing: thing)

@@ -1,9 +1,6 @@
 ##
-# Stack with the current breadcrumb context
-# - Context
-# |- model:#ActiveRecord::Collection The current model
-# |- url:#String A URL to the current model
-# |- parent:#Context Parent #Context object of the current model
+# Base class for contextualisation data, currently only does parenting.
+#
 # todo: lazy load items when parsed from a string (every item currently creates a db request)
 class Context
   extend ArguExtensions::Context # WHY DOES THE SEND :EXTEND NOT WORK
@@ -11,6 +8,8 @@ class Context
   include ApplicationHelper # For merge_query_parameters
   @parent_context
 
+  # @!attribute model
+  # @return [ActiveRecord::Collection] The current model
   attr_accessor :model
 
   def initialize(model = nil, context=nil)
@@ -36,15 +35,18 @@ class Context
     @parent_context.present?
   end
 
+  # Returns the model or the first if {Context#model} is a collection
   def single_model
     @model.try(:length) ? @model.first : @model
   end
 
+  # Setter (using an instance value)
   def model=(value)
     @model = value
   end
 
-  # @return #Context of the parent of this #Context
+  # @!attribute parent
+  # @return [String] Parent {Context} object of the current {Context}
   def parent
     @parent_context || model && model.try(:get_parent)
   end
@@ -60,7 +62,7 @@ class Context
     end
   end
 
-  # Parses a #Context object chain from a #Context-string
+  # Parses a {Context} object chain from a {Context}-string
   def self.parse_from_context_string(value, current=nil)
     if current.present?
       Context.new(current, Context.parse_from_context_string(value))
@@ -96,6 +98,7 @@ class Context
     end
   end
 
+  # Recurse up the tree to the topmost parent {Context}
   def root_parent
     if self.parent.present?
       self.parent.root_parent
@@ -118,7 +121,8 @@ class Context
     value
   end
 
-  # Generates a URL for the model
+  # @!attribute url
+  # @return [String] A URL to the current model
   def url
     url_for([single_model, only_path: true]) if single_model
   end

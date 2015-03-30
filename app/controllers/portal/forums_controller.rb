@@ -11,13 +11,14 @@ class Portal::ForumsController < ApplicationController
     if @forum.save
       redirect_to portal_path
     else
-      render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
+      render 'new', notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
     end
   end
 
   private
   def permit_params
     params.require(:forum).permit :name, :shortname,
-                                  :profile_photo, :cover_photo, :page_id
+                                  :profile_photo, :cover_photo, :page_id,
+                                  shortname_attributes: [:shortname]
   end
 end
