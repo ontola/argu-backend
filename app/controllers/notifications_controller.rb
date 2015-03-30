@@ -20,6 +20,19 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def create
+    authorize Notification, :create?
+    @notification = Notification.new permit_params
+
+    respond_to do |format|
+      if @notification.save
+        format.json { head 201 }
+      else
+        format.json { render json: @notification.errors }
+      end
+    end
+  end
+
   def update
     notification = Notification.includes(activity: :trackable).find(params[:id])
     authorize notification, :update?
@@ -34,6 +47,9 @@ class NotificationsController < ApplicationController
   end
 
 private
+  def permit_params
+    params.require(:notification).permit(*policy(@notification || Notification).permitted_attributes)
+  end
 
   def get_notifications(since=nil)
     policy_scope(Notification).includes(activity: :trackable).order(created_at: :desc).where(since ? ['created_at > ?', since] : nil).page params[:page]
