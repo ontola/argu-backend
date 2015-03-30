@@ -20,7 +20,7 @@ module HeaderHelper
     current_user.profile.memberships.each do |m|
       items << link_item(m.forum.display_name, forum_path(m.forum), image: m.forum.profile_photo.url(:icon))
     end
-    items << link_item(t('forums.discover'), forums_path, fa: 'compass', divider: 'top')
+    items << link_item(t('forums.discover'), discover_forums_path, fa: 'compass', divider: 'top')
   end
 
   # Label for the home button
