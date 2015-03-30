@@ -25,8 +25,18 @@ class NotificationPolicy < RestrictivePolicy
     raise Argu::NotLoggedInError.new(nil, record), 'must be logged in' unless user
   end
 
+  def permitted_attributes
+    attributes = super
+    attributes << [:profile_id, :title, :url] if staff?
+    attributes
+  end
+
   def index?
     user.present?
+  end
+
+  def create?
+    staff?
   end
 
   def update?
