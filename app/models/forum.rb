@@ -13,6 +13,7 @@ class Forum < ActiveRecord::Base
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :groups
 
+  # @private
   # Used in the forum selector
   attr_accessor :is_checked
 
@@ -33,6 +34,8 @@ class Forum < ActiveRecord::Base
 
   after_validation :check_access_token, if: :visible_with_a_link_changed?
 
+  # @!attribute visibility
+  # @return [Enum] The visibility of the {Forum}
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
 
   scope :public_forums, -> { where(visibility: Forum.visibilities[:open]) }
@@ -68,6 +71,7 @@ class Forum < ActiveRecord::Base
     self.memberships.where(profile: profile).present?
   end
 
+  # @return [Forum] based on the `:default_forum` {Setting}, if not present, the first Forum where {Forum#visibility} is `public`
   def self.first_public
     if (setting = Setting.get(:default_forum))
       forum = Forum.find_via_shortname(setting)

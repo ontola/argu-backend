@@ -1,11 +1,11 @@
 ##
 # Renders a collection of models in one or more columns
-# @param #HashWithIndifferentAccess As: {column_key: {collection: items, *options}}
-# @param :header, title of the main header
-# @param :buttons_url, string for the button beneath a column
-# @param :buttons_param, if present, adds the column name as a parameter to buttons_url
-# @param :collection_model, model of the collection, used for translations @todo: fix this hack so this param is obsolete
 module ColumnRendererHelper
+  # @param [HashWithIndifferentAccess] options As: {column_key: {collection: items, *options}}
+  # @option options [String] :header title of the main header
+  # @option options [String] :buttons_url string for the button beneath a column
+  # @option options [Symbol] :buttons_param if present, adds the column name as a parameter to buttons_url
+  # @option options [ActiveRecord::Base] :collection_model model of the collection, used for translations @todo: fix this hack so this param is obsolete
   def render_columns(columns, options = {})
     partial = case columns
       when Motion then 'motions/show'

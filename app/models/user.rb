@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
          #, :omniauthable
 
-  after_initialize :build_shortname_if, if: :new_record?
   before_validation :check_for_profile
   after_destroy :cleanup
   after_create :update_acesss_token_counts
@@ -54,10 +53,6 @@ class User < ActiveRecord::Base
   end
 
   #######Methods########
-  def build_shortname_if
-    self.shortname ||= Shortname.new
-  end
-
   def requires_name?
     finished_intro?
   end
