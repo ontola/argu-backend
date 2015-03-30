@@ -56,7 +56,7 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
             =f.inputs
               /.info.info-signup= t('sign_in_existing')
               = f.input :email, placeholder: t('users_email'), autofocus: :autofocus, label: false, input_html: {required: true}
-              = f.input :password, placeholder: t('users_password'), label: false, input_html: {required: true}
+              = f.input :password, placeholder: t('users_password'), hint: false, label: false, input_html: {required: true}
               = f.input :r, as: :hidden
               - if devise_mapping.rememberable?
                 .remember= f.input :remember_me, as: :boolean

@@ -46,7 +46,6 @@ gem 'kaminari', '~>0.16.1'
 gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
 
 ##################Asset-y########################
-gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
 gem 'jquery-rails'

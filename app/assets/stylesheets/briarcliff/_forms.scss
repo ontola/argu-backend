@@ -18,8 +18,10 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
     color: $g4;
     opacity: .5;
   }
-  &:hover {
-    border: solid 1px $g2;
+  &:not([disabled]){
+    &:hover {
+      border: solid 1px $g2;
+    }
   }
   &:focus {
     background-color: $darken0;
@@ -45,6 +47,10 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   @include bp-medium {
     width: 100%;
   }
+}
+
+*:disabled input{
+  opacity: .6;
 }
 
 input[type="checkbox"] {

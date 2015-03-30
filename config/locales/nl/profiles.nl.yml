@@ -16,6 +16,7 @@ nl:
         unadmin: 'Degradeer admin'
     edit:
       title: "Profiel bewerken"
+      shortname_not_allowed: "Je kunt jouw gebruikersnaam helaas niet wijzigen. Je kan wel de naam die andere gebruikers zien wijzigen bij 'profiel bewerken'."
     didnt_vote_name: "%{name} heeft nog niet gestemd"
     should_start_with_capital: "moet met een hoofdletter beginnen"
   pundit:
