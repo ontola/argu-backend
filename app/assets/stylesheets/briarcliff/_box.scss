@@ -239,3 +239,8 @@
 .box .box--extra-margin {
   margin: 0;
 }
+
+.box-detailed {
+  width: 90% !important;
+  width: calc(100% - 2em) !important;
+}

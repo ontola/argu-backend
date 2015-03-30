@@ -80,11 +80,11 @@ legend {
   width: 100%;
   margin-bottom: 1em;
   padding: 0.3em 0em;
-  color: $g2;
-  text-transform: uppercase;
-  letter-spacing: .1em;
   text-align: left;
   border-bottom: solid $g1 1px;
+  color: $g3;
+  font-weight: bold;
+  font-size: 1.2em;
 
   .danger-zone & {
     color: $red;
