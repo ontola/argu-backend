@@ -24,7 +24,7 @@ module ForumsHelper
       link_items << link_item(t('forums.leave'), forum_membership_path(@forum.url, current_profile), fa: 'sign-out', divider: (divided ? 'top' : nil),
                               data: {method: :delete, 'skip-pjax' => 'true', confirm: t('forums.leave_confirmation')})
     end
-    link_items << link_item(t('forums.discover'), forums_url, fa: 'compass')
+    link_items << link_item(t('forums.discover'), discover_forums_url, fa: 'compass')
     dropdown_options(resource.name, [{items: link_items}], triggerTag: 'h1', fa_after: 'fa-angle-down')
   end
 

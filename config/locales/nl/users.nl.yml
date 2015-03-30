@@ -22,3 +22,5 @@ nl:
       direct_created_email: 'Onmiddelijk'
       daily_created_email: 'Dagelijks'
       weekly_created_email: 'Wekelijks'
+    cap_reached: "We zitten vol"
+    cap_reached_body: "Bedankt voor je interesse in Argu, door overweldigende aanmeldingen hebben we maximum capaciteit bereikt. Aanmeldingen gaan weer open als we onze capaciteit hebben verhoogd."

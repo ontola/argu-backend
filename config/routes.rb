@@ -142,7 +142,8 @@ Argu::Application.routes.draw do
   get '/activities', to: 'activities#index'
 
 
-  resources :forums, except: [:edit, :index], path: '' do
+  resources :forums, only: [:show, :update], path: '' do
+    get :discover, on: :collection, action: :index
     get :settings, on: :member
     get :statistics, on: :member
     get :selector, on: :collection

@@ -1,7 +1,7 @@
 class RegistrationsController < Devise::RegistrationsController
 
   def new
-    if !Rails.configuration.epics.sign_up
+    if !within_user_cap?
       redirect_to :root
     else
       super
@@ -9,7 +9,7 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    redirect_to :root unless has_valid_token? || Rails.configuration.epics.sign_up
+    redirect_to :root unless has_valid_token? || within_user_cap?
     super
     session[:omniauth] = nil unless @user.new_record?
   end
@@ -19,7 +19,7 @@ class RegistrationsController < Devise::RegistrationsController
       @user = User.find(current_user.id)
       render 'edit'
       else
-        flash[:error] = "You need to be signed in for this action"
+        flash[:error] = 'You need to be signed in for this action'
         redirect_to root_path
       end
   end
