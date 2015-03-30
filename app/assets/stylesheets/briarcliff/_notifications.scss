@@ -3,6 +3,14 @@
 
 .notifications {
   width: 25em;
+  @include bp-small{
+    position: fixed;
+    top: 3em;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+  }
 }
 
 .notifications li {
