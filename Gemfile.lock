@@ -160,8 +160,6 @@ GEM
       actionpack (>= 3.2.13)
     globalid (0.3.0)
       activesupport (>= 4.1.0)
-    haml (4.0.6)
-      tilt
     has_secure_token (0.0.2)
       activemodel
     hashie (3.3.2)
@@ -443,7 +441,6 @@ DEPENDENCIES
   devise_invitable (~> 1.4.0)
   flamegraph
   formtastic (~> 3.1.2)
-  haml
   has_secure_token
   html_truncator (~> 0.2)
   indefinite_article
