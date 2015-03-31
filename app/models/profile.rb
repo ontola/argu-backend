@@ -48,7 +48,7 @@ class Profile < ActiveRecord::Base
   #end
 
   def url
-    profileable.url.presence || id
+    profileable.presence && profileable.url.presence
   end
 
   # TODO Crashes if false
