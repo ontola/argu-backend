@@ -29,6 +29,20 @@ class User < ActiveRecord::Base
   validates :profile, presence: true
   validates :first_name, :last_name, presence: true, if: :requires_name?
 
+  # @private
+  # Note: Fix for devise_invitable w/ shortnameable
+  # Override deletes the shortname if
+  # shortname is blank, user is a new record and the attributes include access_token
+  #
+  # The combination of the three is assumed to correctly identify an {User} record
+  # created by devise_invitable
+  def assign_attributes(new_attributes)
+    if self.new_record? && new_attributes.include?(:access_tokens)
+      self.shortname = nil if self.shortname.try(:shortname).blank?
+    end
+    super(new_attributes)
+  end
+  
 #######Attributes########
   def display_name
     [self.first_name, self.middle_name, self.last_name].compact.join(' ') || self.url
