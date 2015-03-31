@@ -27,6 +27,7 @@ body
   #fb-root
   =render 'navbar'
   .wrapper
+    .nprogress-overlay
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')
     -flash.each do |key, value|

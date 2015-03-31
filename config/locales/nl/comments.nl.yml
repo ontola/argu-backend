@@ -1,6 +1,6 @@
 nl:
   comments:
     type: "reactie"
-    placeholder: "Blijf inhoudelijk en vriendelijk :)"
+    placeholder: "Plaats hier jouw reactie. Blijf inhoudelijk en vriendelijk :)"
     empty:
       name: "Plaats jouw reactie"
