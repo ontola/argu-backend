@@ -41,10 +41,21 @@ class UsersController < ApplicationController
 
   # PUT /settings
   def update
-    @user = User.find current_user.id
+    @user = User.find current_user.try :id
     authorize @user
+
+    email_changed = @user.email != permit_params[:email]
+    successfully_updated = if email_changed or !permit_params[:password].blank? or @user.invitation_token.present?
+      if @user.update_with_password(permit_params)
+        sign_in(@user, :bypass => true)
+        UserMailer.password_changed_mail(@user)
+      end
+    else
+      @user.update_without_password(passwordless_permit_params)
+    end
+
     respond_to do |format|
-      if permit_params[:password_confirmation].present? ? @user.update_attributes(permit_params) : @user.update_without_password(passwordless_permit_params)
+      if successfully_updated
         format.html { redirect_to settings_path, notice: 'Wijzigingen opgeslagen.' }
         format.json { head :no_content }
       else

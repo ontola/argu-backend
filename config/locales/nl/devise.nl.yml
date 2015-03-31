@@ -7,6 +7,7 @@ nl:
       not_found: "niet gevonden"
       already_confirmed: "was al bevestigd, probeer in te loggen."
       not_locked: "was niet vergrendeld"
+      should_match: "moet overeenkomen"
       not_saved:
         one: "1 fout zorgde ervoor dat %{resource} niet kon worden opgeslagen:"
         other: "%{count} fouten zorgde ervoor dat %{resource} niet kon worden opgeslagen:"
@@ -53,6 +54,9 @@ nl:
       updated: 'Jouw account is gewijzigd.'
       update_needs_confirmation: "Wil je jouw email adres nog bevestigen? We hebben een bevestigings mail gestuurd."
       destroyed: 'Jouw account is verwijderd. Hopelijk tot snel!'
+      password_confirmation:
+        header: 'Je wachtwoord is gewijzigd.'
+        body: 'We laten je weten dat je wachtwoord voor je Argu account "%{shortname}" gewijzigd is.<br/> Mail naar info@argu.co als je dit niet gedaan hebt.'
     unlocks:
       send_instructions: 'Je zal binnen enkele minuten een email ontvangen met instructies om jouw account te ontgrendelen.'
       unlocked: 'Jouw account is ontgrendeld. Log in om door te gaan.'

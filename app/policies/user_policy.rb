@@ -20,6 +20,8 @@ class UserPolicy < RestrictivePolicy
     attributes = super
     attributes << [:email, :password, :password_confirmation, {profile_attributes: [:name, :profile_photo]}] if create?
     attributes << [{shortname_attributes: [:shortname]}] if new_record?
+    attributes << [:current_password, :password, :password_confirmation, :follows_email, :follows_mobile,
+                   :memberships_email, :memberships_mobile, :created_email, :created_mobile] if update?
     attributes
   end
 
@@ -28,6 +30,14 @@ class UserPolicy < RestrictivePolicy
   end
 
   def edit?
+    record.id == user.id
+  end
+
+  def update?
+    record.id == user.id
+  end
+
+  def destroy?
     record.id == user.id
   end
 end

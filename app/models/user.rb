@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   after_create :update_acesss_token_counts
   before_save { |user| user.email = email.downcase unless email.blank? }
 
-  attr_accessor :current_password
+  attr_accessor :current_password, :repeat_name
 
   enum follows_email: { never_follows_email: 0, weekly_follows_email: 1, daily_follows_email: 2, direct_follows_email: 3 }
   enum memberships_email: { never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3 }
@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
     end
     super(new_attributes)
   end
-  
+
 #######Attributes########
   def display_name
     [self.first_name, self.middle_name, self.last_name].compact.join(' ') || self.url
@@ -92,7 +92,7 @@ private
     self.profile.activities.destroy_all
     self.profile.memberships.destroy_all
     self.profile.page_memberships.destroy_all
-    self.profile.update name: '', about: '', picture: '', profile_photo: '', cover_photo: ''
+    self.profile.notifications.destroy_all
   end
 
 end
