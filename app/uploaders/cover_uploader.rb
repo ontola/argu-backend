@@ -5,7 +5,8 @@ class CoverUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
-  include CarrierWave::MiniMagick
+  # include CarrierWave::MiniMagick
+  include CarrierWave::Vips
 
   unless Rails.env.development? || Rails.env.test?
     CarrierWave.configure do |config|
@@ -55,23 +56,23 @@ class CoverUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
   version :box do
-    process convert: 'jpg'
-    process :resize_to_fill => [568, 400, gravity="center"]
+    process convert: 'jpeg'
+    process :resize_to_fill => [568, 400]
   end
 
   version :cover do
-    process convert: 'jpg'
-    process :resize_to_fill => [1500, 600, gravity="center"]
+    process convert: 'jpeg'
+    process :resize_to_fill => [1500, 600]
   end
 
   version :avatar do
-    process convert: 'jpg'
-    process :resize_to_fill => [256, 256, gravity="center"]
+    process convert: 'jpeg'
+    process :resize_to_fill => [256, 256]
   end
 
   version :icon do
-    process convert: 'jpg'
-    process :resize_to_fill => [64, 64, gravity="center"]
+    process convert: 'jpeg'
+    process :resize_to_fill => [64, 64]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

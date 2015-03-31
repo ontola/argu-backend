@@ -54,7 +54,7 @@ gem 'rails3-jquery-autocomplete', '~> 1.0.14'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
 gem 'carrierwave', '~> 0.10.0'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
-gem 'mini_magick', '~> 3.8.1'                                             # Ruby connector for ImageMagick
+gem 'carrierwave-vips'
 #gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'
