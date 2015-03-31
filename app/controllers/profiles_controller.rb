@@ -1,8 +1,10 @@
 class ProfilesController < ApplicationController
 
   def index
-    authorize Profile, :index?
-    scope = policy_scope(Profile)
+    @forum = Forum.find_via_shortname params[:forum]
+    authorize @forum, :list_members?
+
+    scope = policy_scope(@forum.members)
 
     if params[:q].present?
       @profiles = scope.where('lower(name) LIKE lower(?)', "%#{params[:q]}%").page params[:profile]

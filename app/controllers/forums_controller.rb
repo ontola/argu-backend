@@ -41,7 +41,7 @@ class ForumsController < ApplicationController
     tag_ids = Tagging.where(forum_id: @forum.id).select(:tag_id).distinct.map(&:tag_id)
     tag_ids.each do |tag_id|
       taggings = Tagging.where(forum_id: @forum.id, tag_id: tag_id)
-      @tags << {name: Tag.find_by(id: taggings.first.tag_id).name, count: taggings.length}
+      @tags << {name: Tag.find_by(id: taggings.first.tag_id).try(:name) || '[not found]', count: taggings.length}
     end
     @tags = @tags.sort  { |x,y| y[:count] <=> x[:count] }
   end
@@ -58,12 +58,6 @@ class ForumsController < ApplicationController
         format.html { render 'settings' }
       end
     end
-  end
-
-  def delete
-  end
-
-  def destroy
   end
 
   def selector

@@ -92,8 +92,10 @@ module ApplicationHelper
   def dual_profile_path(profile)
     if profile.profileable.class == User
       user_path(profile.profileable)
-    else
+    elsif profile.profileable.class == Page
       page_path(profile.profileable)
+    else
+      'deleted'
     end
   end
 
@@ -102,9 +104,11 @@ module ApplicationHelper
   def dual_profile_edit_path(profile)
     if profile.profileable.class == User
       edit_profile_path(profile.profileable)
-    else
+    elsif profile.profileable.class == Page
       #edit_page_path?
       page_path(profile.profileable)
+    else
+      'deleted'
     end
   end
 
