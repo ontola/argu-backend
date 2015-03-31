@@ -12,7 +12,7 @@ module ProCon
 
     before_save :trim_data
     before_save :cap_title
-    after_save :creator_follow
+    after_create :creator_follow
 
     validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }

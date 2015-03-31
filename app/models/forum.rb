@@ -5,6 +5,7 @@ class Forum < ActiveRecord::Base
   has_many :questions, inverse_of: :forum
   has_many :motions, inverse_of: :forum
   has_many :arguments, inverse_of: :forum
+  has_many :members, through: :memberships, source: :profile
   has_many :memberships
   accepts_nested_attributes_for :memberships
   has_many :managers, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'

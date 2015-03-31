@@ -41,10 +41,14 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def statistics?
-    is_manager? || super
+    super
   end
 
   def managers?
+    is_owner? || staff?
+  end
+
+  def list_members?
     is_owner? || staff?
   end
 
