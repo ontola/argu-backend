@@ -3,7 +3,7 @@ module HeaderHelper
 
   def forum_selector_items
     {
-        title: t('forums.mine'),
+        title: t('forums.plural'),
         fa: 'fa-group',
         fa_after: 'fa-angle-down',
         sections: [
@@ -17,9 +17,13 @@ module HeaderHelper
 
   def forum_selector_memberships
     items = []
-    current_user.profile.memberships.each do |m|
-      items << link_item(m.forum.display_name, forum_path(m.forum), image: m.forum.profile_photo.url(:icon))
+
+    current_profile.present? && current_profile.memberships.joins(:forum).each do |membership|
+      items << link_item(membership.forum.display_name, forum_path(membership.forum), image: membership.forum.profile_photo.url(:icon))
     end
+
+    # TODO: Show most popular 3 forums if user has fewer than 2 memberships.
+
     items << link_item(t('forums.discover'), discover_forums_path, fa: 'compass', divider: 'top')
   end
 
