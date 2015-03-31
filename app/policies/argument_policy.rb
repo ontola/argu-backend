@@ -43,7 +43,7 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def destroy?
-    forum_policy.is_manager? || forum_policy.is_owner? || super
+    forum_policy.is_owner? || super
   end
 
   def show?
