@@ -16,6 +16,7 @@ nl:
   sign_up: "Account aanmaken"
   sign_up_description: "Maak gratis een account aan:"
   argu_sign_up: "Argu account aanmaken"
+  cant_change_username: "Je kunt jouw gebruikersnaam later niet meer wijzigen."
   sign_up_argu: "Maak Argu account"
   sign_out: "Uitloggen"
   learn_more: "Meer info"
