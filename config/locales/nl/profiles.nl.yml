@@ -20,7 +20,7 @@ nl:
       general: "Algemeen"
       privacy: "Privacy"
       privacy_notice: "Op Argu kan je stemmen op ideeën. Als je wilt laten zien waar je voor staat, kan je er voor kiezen om wat je stemt te delen op Argu. Dit kan je later nog wijzigen."
-    didnt_vote_name: "%{name} heeft nog niet gestemd"
+    didnt_vote_name: "%{name} heeft nog niet gestemd."
     should_start_with_capital: "moet met een hoofdletter beginnen"
   pundit:
     profile_policy:

@@ -453,6 +453,6 @@ a.is-loading{
 .pagination {
   span {
     @extend .btn-subtle;
-    padding: .7em;
+    padding: .7em !important;
   }
 }

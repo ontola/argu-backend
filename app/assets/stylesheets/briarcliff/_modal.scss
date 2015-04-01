@@ -4,13 +4,15 @@
 .modal {
   position: fixed;
   top: 0;
+  padding-top: 3em;
   left: 0;
   right: 0;
+  bottom: 0;
   z-index: 20;
   pointer-events: none;
-  max-height: 100%;
-  max-height: 100vh;
   overflow-y: auto;
+  text-align: center;
+
   .box {
     pointer-events: auto;
     text-align: left;
@@ -23,8 +25,11 @@
   @include animation(from-top-fade .3s ease-out);
   @include bp-medium{
     //position: absolute;
+    padding-top: 0;
   }
-  text-align: center;
+  &.col-1{
+    margin-bottom: 0;
+  }
 }
 
 .modal h1 {
@@ -67,6 +72,11 @@
 }
 
 .modal-body{
+  overflow: hidden;
+}
+
+// Makes modals scrollable on smaller mobile devies. Apply this to body tag when the modal is opened. Remove it when the modal closes.
+.modal-opened{
   overflow: hidden;
 }
 
