@@ -9,7 +9,6 @@ nl:
     type_discussion: "in discussie"
     vote: "stem"
     new_btn: "Argument toevoegen"
-    neu: "neutraal"
     references: "referenties"
     header:
       pro: "argumenten voor"
@@ -70,3 +69,14 @@ nl:
       restored: "Het argument is teruggeplaatst."
       created: "Het argument is geplaatst."
       updated: "Het argument is gewijzigd."
+  activerecord:
+    errors:
+      models:
+        arguments:
+          attributes:
+            title:
+              blank: "Je moet een titel voor jouw argument opgeven."
+    attributes:
+      argument:
+        title: "Titel"
+        body: "Inhoud"

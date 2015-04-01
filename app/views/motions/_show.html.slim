@@ -11,8 +11,6 @@
       h3.motion-t[itemprop="headline"]= model.title
     p[itemprop="text" class='wrap-normal']
       ==model.truncate_preview(150, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read-more'), motion_path(model))})
-    -if Rails.configuration.epics.counters
-      span.info= "#{t('motions.preview.pro', count: model.argument_pro_count)}, #{t('motions.preview.con', count: model.argument_con_count)}"
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
         - model.arguments.where(pro: true).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0,5].each do |argument|

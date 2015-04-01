@@ -7,7 +7,6 @@ nl:
     new_question: "Nieuw vraagstuk"
     new_btn: "Vraagstuk toevoegen"
     header: "vraagstukken"
-    link_to_motion: "Koppel bestaand idee aan dit vraagstuk"
     view_all_motions: "Bekijk alle %{amount} ideeën..."
     call_to_action:
       title: "Oplossing nodig?"
