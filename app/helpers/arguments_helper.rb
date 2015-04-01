@@ -12,6 +12,7 @@ private
     values
   end
 
+  # Not used anymore?
   def print_references(argument)
     if argument.references.present?
       concat content_tag :p, t("arguments.references") + ":", class: 'references-title'

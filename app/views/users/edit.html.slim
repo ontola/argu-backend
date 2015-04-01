@@ -10,7 +10,7 @@
           =f.inputs :shortname, for: :shortname, disabled: true
           =f.input :email, label: t('users_email'), value: @user.email, placeholder: @user.email.blank? ? t('users_email_placeholder') : @user.email
 
-        - if $rollout.active?(:notifications, current_user)
+        - if active_for_user?(:notifications, current_user)
           =f.inputs name: t('users.registrations.categories.notifications') do
             .notification-settings-header
               label
