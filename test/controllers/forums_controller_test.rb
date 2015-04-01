@@ -72,14 +72,14 @@ class ForumsControllerTest < ActionController::TestCase
     assert assigns(:forum)
   end
 
-  test "should show statistics" do
+  test "should not show statistics yet" do
     sign_in users(:user_utrecht_owner)
 
     get :statistics, id: forums(:utrecht)
-    assert_response :success
+    assert_redirected_to root_url
     assert assigns(:forum)
-    assert assigns(:tags), "Doesn't assign tags"
-    assert_equal 2, assigns(:tags).length
+    assert_nil assigns(:tags), "Doesn't assign tags"
+    #assert_equal 2, assigns(:tags).length
   end
 
 
