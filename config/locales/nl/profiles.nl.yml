@@ -19,6 +19,7 @@ nl:
       shortname_not_allowed: "Je kunt jouw gebruikersnaam helaas niet wijzigen. Je kan wel de naam die andere gebruikers zien wijzigen bij 'profiel bewerken'."
       general: "Algemeen"
       privacy: "Privacy"
+      privacy_notice: "Op Argu kan je stemmen op ideeën. Als je wilt laten zien waar je voor staat, kan je er voor kiezen om wat je stemt te delen op Argu. Dit kan je later nog wijzigen."
     didnt_vote_name: "%{name} heeft nog niet gestemd"
     should_start_with_capital: "moet met een hoofdletter beginnen"
   pundit:

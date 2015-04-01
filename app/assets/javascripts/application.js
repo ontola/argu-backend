@@ -27,6 +27,7 @@
 //= require fastclick
 //= require isotope.pkgd.min
 //= require intro
+//= require nprogress
 // Briarcliff dependencies :: END
 //= require requirejs
 //= require autocomplete-rails

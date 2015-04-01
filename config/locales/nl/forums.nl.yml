@@ -4,6 +4,7 @@ nl:
   forums:
     resource_name: "forum"
     type: "Forum"
+    plural: "Forums"
     resource_name:
       management: "forum beheer"
     settings:

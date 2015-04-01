@@ -426,15 +426,28 @@ h1 + .btn {
   }
 }
 
-.is-loading{
+/*
+button.is-loading{
   pointer-events: none !important;
   opacity: .85;
   color: rgba(255,255,255,0.3);
   &:after{
     color: white;
+    border-color: white;
     content: "test";
     @include spinner;
   }
+}
+
+a.is-loading{
+  pointer-events: none !important;
+  opacity: .7;
+}
+*/
+
+.is-loading{
+  pointer-events: none !important;
+  opacity: .8;
 }
 
 .pagination {
