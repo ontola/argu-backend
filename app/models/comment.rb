@@ -79,12 +79,18 @@ class Comment < ActiveRecord::Base
   def decrease_counter_cache
     self.commentable.decrement('comments_count').save
   end
+
   def increase_counter_cache
     self.commentable.increment('comments_count').save
   end
 
   def forum
     commentable.forum
+  end
+
+  # Comments can't be deleted since all comments below would be hidden as well
+  def wipe
+    self.update_columns profile_id: nil, body: nil
   end
 
 end

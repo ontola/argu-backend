@@ -1,11 +1,11 @@
 .comment[id=c.identifier class="#{'trashed' if c.is_trashed?}" itemscope itemtype="Comment"]
   .box
     section
-      p[id=c.id]= c.is_trashed? ? I18n.t('trashed') : c.body
+      p[id=c.id]= c.is_trashed? ? I18n.t('trashed') : c.body || I18n.t('deleted')
     =render c.profile, locals= {resource: c} if c.profile.present?
     ul.btns-sticky.btns-sticky-bottom.btns-vertical.btns-list
       - if policy(c).destroy?
-        li= link_to polymorphic_url([resource, c], destroy: true), method: :delete, data: {confirm: t('destroy_confirmation')} do
+        li= link_to polymorphic_url([resource, c], wipe: true), method: :delete, data: {confirm: t('destroy_confirmation')} do
           span.fa.fa-close
           span.icon-left = t('destroy')
       - if policy(c).trash?
