@@ -39,11 +39,11 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def trash?
-    user.profile.id == record.creator_id || forum_policy.is_manager? || forum_policy.is_owner? || super
+    user && user.profile.id == record.creator_id || forum_policy.is_manager? || forum_policy.is_owner? || super
   end
 
   def destroy?
-    (user.profile.id == record.creator_id && 1.hour.ago <= record.created_at) || forum_policy.is_owner? || super
+    user && (user.profile.id == record.creator_id && 1.hour.ago <= record.created_at) || forum_policy.is_owner? || super
   end
 
   def show?

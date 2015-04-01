@@ -29,7 +29,7 @@ class CommentPolicy < RestrictivePolicy
   end
 
   def destroy?
-    record.profile_id == actor.id || is_owner? || super
+    user && record.profile_id == actor.id || is_owner? || super
   end
 
   def edit?

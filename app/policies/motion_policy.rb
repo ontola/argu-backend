@@ -29,7 +29,7 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def destroy?
-    (record.creator_id == user.profile.id && record.arguments.length < 2 or 15.minutes.ago < record.created_at) || forum_policy.is_owner? || super
+    user && (record.creator_id == user.profile.id && record.arguments.length < 2 or 15.minutes.ago < record.created_at) || forum_policy.is_owner? || super
   end
 
   def edit?
@@ -49,7 +49,7 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def trash?
-    record.creator_id == user.profile.id || forum_policy.is_manager? || forum_policy.is_owner? || super
+    user && record.creator_id == user.profile.id || forum_policy.is_manager? || forum_policy.is_owner? || super
   end
 
   def update?
