@@ -1,1 +1,2 @@
 $('.container').append("<%= escape_javascript render(template: 'devise/invitations/_modal.html', layout: false, locals: {resource: resource}) %>");
+$('body').addClass('modal-opened');

@@ -1,5 +1,4 @@
-- tag ||= nil
-.box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-tags="#{motion.tags.join(',')}" data-created-at=motion.created_at  data-updated-at=motion.updated_at data-score=motion.raw_score itemscope itemtype="http://schema.org/Answer"]
+.box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-created-at=motion.created_at  data-updated-at=motion.updated_at data-score=motion.raw_score itemscope itemtype="http://schema.org/Answer"]
   -if motion.cover_photo.present?
     = contextual_link_to motion_path(motion) do
       .box-image[style="background-image: url('#{motion.cover_photo.url(:box)}'); "]

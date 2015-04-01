@@ -8,6 +8,7 @@ $(function () {
         container.addClass('modal-hide');
         window.setTimeout(function () {
             container.remove();
+            $('body').removeClass('modal-opened');
         }, 500);
     });
 
@@ -17,8 +18,13 @@ $(function () {
             $('.modal-container').addClass('modal-hide');
             window.setTimeout(function () {
                 $('.modal-container').remove();
+                $('body').removeClass('modal-opened');
             }, 500);
         }
+    });
+
+    $(document).on('pjax:complete', function (e,xhr) {
+        $('body').removeClass('modal-opened');
     });
 
     // TODO: add '.modal-open' to body upon opening a modal to disable background scrolling

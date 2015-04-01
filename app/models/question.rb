@@ -27,12 +27,12 @@ class Question < ActiveRecord::Base
   #  super || Profile.first_or_create(shortname: 'Onbekend')
   #end
 
-  def display_name
-    title
-  end
-
   def creator_follow
     self.creator.follow self
+  end
+
+  def display_name
+    title
   end
 
   def move_to(forum, include_motions = false)
@@ -67,6 +67,10 @@ class Question < ActiveRecord::Base
 
   def tag_list
     super.join(',')
+  end
+
+  def top_motions
+    motions.order(updated_at: :desc).limit(3)
   end
 
   scope :index, ->(trashed, page) { trashed(trashed).page(page) }
