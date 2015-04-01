@@ -118,6 +118,8 @@ class ApplicationController < ActionController::Base
   def set_notification_header
     if current_user.present?
       response.headers[:lastNotification] = policy_scope(Notification).order(created_at: :desc).limit(1).pluck(:created_at)[0]
+    else
+      response.headers[:lastNotification] = '-1'
     end
   end
 

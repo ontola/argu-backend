@@ -64,7 +64,7 @@ $(function (){
         notificationTimeout;
 
     function refreshNotifications() {
-        if (!refreshing && (!window.lastNotification || Date.now() - lastNotificationCheck >= 15000)) {
+        if (window.lastNotification != '-1' && !refreshing && (!window.lastNotification || Date.now() - lastNotificationCheck >= 15000)) {
             window.clearTimeout(notificationTimeout);
             refreshing = true;
             lastNotificationCheck = Date.now();
@@ -89,7 +89,7 @@ $(function (){
                     resetTimeout();
                 }
             });
-        } else if (!refreshing) {
+        } else if (window.lastNotification != '-1' && !refreshing) {
             resetTimeout();
         }
     }
@@ -117,21 +117,30 @@ $(function (){
         }
 
         function handleVisibilityChange() {
-            if (document[hidden]) {
-                timeoutValue = 120000;
-                resetTimeout();
-            } else {
-                timeoutValue = 30000;
-                refreshNotifications();
+            if (window.lastNotification != '-1') {
+                if (document[hidden]) {
+                    timeoutValue = 120000;
+                    resetTimeout();
+                } else {
+                    timeoutValue = 30000;
+                    refreshNotifications();
+                }
             }
         }
 
         document.addEventListener(visibilityChange, handleVisibilityChange, false);
-        $(document).on('pjax:complete', function (e,xhr) {
-            if (Date.parse(xhr.getResponseHeader('lastNotification')) > Date.parse(window.lastNotification)) {
-                refreshNotifications();
+        $(document).ajaxComplete(function (e,xhr) {
+            xhr.getResponseHeader('lastNotification');
+            if (xhr.getResponseHeader('lastNotification') == '-1') {
+                window.lastNotification = '-1';
+                window.clearTimeout(notificationTimeout);
             } else {
-                resetTimeout();
+                window.lastNotification = window.lastNotification == '-1' ? null : window.lastNotification;
+                if (Date.parse(xhr.getResponseHeader('lastNotification')) > Date.parse(window.lastNotification)) {
+                    refreshNotifications();
+                } else {
+                    resetTimeout();
+                }
             }
         });
     });
