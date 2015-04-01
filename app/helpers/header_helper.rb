@@ -1,26 +1,24 @@
 module HeaderHelper
   include DropdownHelper
 
-  def forum_selector_items
+  def forum_selector_items(guest= false)
     {
         title: t('forums.plural'),
         fa: 'fa-group',
         fa_after: 'fa-angle-down',
         sections: [
             {
-                items: forum_selector_memberships
+                items: forum_selector_memberships(guest)
             }
         ],
         triggerClass: 'navbar-item'
     }
   end
 
-  def forum_selector_memberships
+  def forum_selector_memberships(guest= false)
     items = []
 
-    current_profile.present? && current_profile.memberships.joins(:forum).each do |membership|
-      items << link_item(membership.forum.display_name, forum_path(membership.forum), image: membership.forum.profile_photo.url(:icon))
-    end
+    items.concat guest ? public_forum_items : profile_membership_items
 
     # TODO: Show most popular 3 forums if user has fewer than 2 memberships.
 
@@ -76,6 +74,22 @@ module HeaderHelper
                      fa: 'fa-bell',
                      triggerClass: 'navbar-item',
                      contentClassName: 'notifications')
+  end
+
+  def public_forum_items
+    items = []
+    Forum.top_public_forums.each do |forum|
+      items << link_item(forum.display_name, forum_path(forum), image: forum.profile_photo.url(:icon))
+    end
+    items
+  end
+
+  def profile_membership_items
+    items = []
+    current_profile.present? && current_profile.memberships.joins(:forum).each do |membership|
+      items << link_item(membership.forum.display_name, forum_path(membership.forum), image: membership.forum.profile_photo.url(:icon))
+    end
+    items
   end
 
   def info_dropdown_items

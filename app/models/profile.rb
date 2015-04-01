@@ -45,9 +45,10 @@ class Profile < ActiveRecord::Base
     memberships.pluck(:forum_id).join(',').presence
   end
 
-  #def owner
-  #  self.profileable
-  #end
+  def owner
+    self.profileable
+  end
+  deprecate :owner
 
   def url
     profileable.presence && profileable.url.presence

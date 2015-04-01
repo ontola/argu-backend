@@ -9,7 +9,7 @@ nav#navbar.navbar role="navigation"
           span.fa.fa-home
           / TODO: home text shows last visited (or current) forum. Same n guest navbar.
           /span= preferred_forum
-      =react_component 'HyperDropdown', forum_selector_items, {prerender: true}
+      =react_component 'HyperDropdown', forum_selector_items(true), {prerender: true}
     ul.navbar-links.navbar-links-right
       =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
       li[tabIndex="0"]

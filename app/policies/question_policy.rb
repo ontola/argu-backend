@@ -37,7 +37,7 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def destroy?
-    is_owner? || super
+    (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at or record.motions.count == 0) || is_owner? || super
   end
 
   def index?
@@ -57,7 +57,7 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def trash?
-    is_manager? || super
+    record.creator_id == user.profile.id || is_manager? || super
   end
 
   def update?
