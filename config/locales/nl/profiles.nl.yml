@@ -22,7 +22,7 @@ nl:
       privacy_notice: "Op Argu kan je stemmen op ideeën. Als je wilt laten zien waar je voor staat, kan je er voor kiezen om wat je stemt te delen op Argu. Dit kan je later nog wijzigen."
       shortname: "Gebruikersnaam"
     didnt_vote_name: "%{name} heeft nog niet gestemd."
-    should_start_with_capital: "moet met een hoofdletter beginnen"
+    should_start_with_capital: "mag alleen letters cijfers en '_' bevatten, met een letter beginnen."
   pundit:
     profile_policy:
       update?: "Je mag dit profiel niet bewerken."
