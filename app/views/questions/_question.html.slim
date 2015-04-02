@@ -2,29 +2,30 @@
   - if question.cover_photo.present?
     =contextual_link_to question_path(question) do
       .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
-  section.section-info.question-bg
-    span.fa.fa-question
-    span.icon-left= t('questions.type')
-    =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
-    .details
-      .details-part.details-part--type.question-bg
-        span[class="fa fa-#{question_icon}"]
-        span.icon-left= question_type
-      /.details-part
-          span.fa.fa-tag
-          span.icon-left veiligheid
-      /.details-part
-          span.fa.fa-eye
-          span.icon-left 79
-      /.details-part
-          span.fa.fa-comment
-          span.icon-left 7
-      .details-part.tooltip[data-title=t('tooltips.question.motions_count')]
-        span.fa.fa-lightbulb-o
-        span.icon-left= question.motions.count
-      /.details-part
-        span.fa.fa-clock-o
-        span.icon-left= time_ago_in_words(question.created_at)
+  =contextual_link_to question_path(question) do
+    section.section-info.question-bg
+      span.fa.fa-question
+      span.icon-left= t('questions.type')
+      =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
+      .details
+        .details-part.details-part--type.question-bg
+          span[class="fa fa-#{question_icon}"]
+          span.icon-left= question_type
+        /.details-part
+            span.fa.fa-tag
+            span.icon-left veiligheid
+        /.details-part
+            span.fa.fa-eye
+            span.icon-left 79
+        /.details-part
+            span.fa.fa-comment
+            span.icon-left 7
+        .details-part.tooltip[data-title=t('tooltips.question.motions_count')]
+          span.fa.fa-lightbulb-o
+          span.icon-left= question.motions.count
+        /.details-part
+          span.fa.fa-clock-o
+          span.icon-left= time_ago_in_words(question.created_at)
   section
     =contextual_link_to question_path(question) do
       h2.question-t[itemprop="headline"]= question.title

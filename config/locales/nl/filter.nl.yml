@@ -5,6 +5,7 @@ nl:
     created_at: "nieuwste"
     name: "naam"
     score: "hoogste score"
+    vote_count: "meest gestemd"
     random: "willekeurig"
     questions: "vraagstukken"
     motions: "voorstellen"
