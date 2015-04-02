@@ -64,6 +64,42 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def setup
+    @user = current_user
+    authorize @user, :setup?
+    @profile = @user.profile
+    authorize @profile, :update?
+
+    updated = nil
+    Profile.transaction do
+      updated = @profile.update permit_params
+      if @profile.profileable.class == User
+        @profile.profileable.update_attributes user_profileable_params
+      end
+
+      if (!@user.finished_intro?) && has_valid_token?(@user)
+        get_access_tokens(@user).each do |at|
+          @profile.memberships.find_or_create_by(forum: at.item) if at.item.class == Forum
+        end
+      end
+      @user.update_column :finished_intro, true
+    end
+    respond_to do |format|
+      if updated && @user.r.present?
+        r = @user.r
+        @user.update r: ''
+        format.html { redirect_to r,
+                                  status: r.match(/\/v(\?|\/)|\/c(\?|\/)/) ? 307 : 302 }
+      elsif updated
+        format.html { redirect_to dual_profile_path(@profile), notice: 'Profile was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: 'edit' }
+        format.json { render json: @profile.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 private
   def permit_params
     params.require(:profile).permit :name, :about, :profile_photo, :are_votes_public

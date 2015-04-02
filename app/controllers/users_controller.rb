@@ -68,8 +68,8 @@ class UsersController < ApplicationController
   # When shortname isn't set yet
   def setup
     @user = current_user
-    @profile = current_user.profile
     authorize @user, :setup?
+    @profile = current_user.profile
 
     render 'profiles/edit'
   end
