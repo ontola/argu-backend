@@ -37,6 +37,10 @@ class UserPolicy < RestrictivePolicy
     record.id == user.id
   end
 
+  def setup?
+    record.id == user.id
+  end
+
   def destroy?
     record.id == user.id
   end

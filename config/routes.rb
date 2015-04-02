@@ -64,7 +64,10 @@ Argu::Application.routes.draw do
   resources :authentications, only: [:create, :destroy]
   match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
 
-  resources :users, path: 'u', only: [:show, :edit, :update]
+  resources :users, path: 'u', only: [:show, :edit, :update] do
+    get :setup, to: 'users#setup', on: :collection
+    put :setup, to: 'users#setup!', on: :collection
+  end
 
   post 'v/:for' => 'votes#create', as: :vote
 
