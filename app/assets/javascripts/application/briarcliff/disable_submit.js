@@ -1,7 +1,7 @@
 $(document).on('ready pjax:success', function(){
 
     $('button:submit').click(function(){
-        $('button:submit').addClass("is-loading")
+        $('button:submit').addClass("is-loading");
         setTimeout(function(){
             $('button:submit').removeClass("is-loading");
         },2500);

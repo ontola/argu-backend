@@ -5,7 +5,7 @@
       h3[class="#{model.pro ? 'pro-t' : 'con-t'}"]= model.title
     =render partial: 'arguments/shr', locals: {model: model}
     p[class='wrap-normal']
-      ==model.truncate_preview(240, {length_in_chars: true, ellipsis: (' ... ' + contextual_link_to(t('read-more'), argument_path(model))) })
+      ==model.truncate_preview(240, {length_in_chars: true, ellipsis: (' ... ' + contextual_link_to(t('read_more'), argument_path(model))) })
   - if !top_comment.present?
     =contextual_link_to argument_path(model), class: ' btn-subtle btn-sticky btns-sticky-bottom read-more'
       span.icon-right reageer

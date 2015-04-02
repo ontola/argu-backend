@@ -1,12 +1,12 @@
 header
-  h1= t("search.title", q: @tag.name)
+  h1= t('search.title', q: @tag.name)
 .col-1
   .box.box-small
     section.section-small
-      label= t("tag")
+      label= t('tags.type')
       .tag= @tag.name
     section.section-small
-      label= t("forum")
+      label= t('forum')
       .tag.tag-forum= @forum.display_name
 = render partial: 'motions/tag_motion', locals: { motion: @tag.motion } if @tag.motion
 =render_columns({'' => @collection}, header_text: false, collection_model: Motion)

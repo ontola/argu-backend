@@ -5,18 +5,18 @@
     section
       table.styled
         tr
-          td= t("forums.statistics.memberships")
+          td= t('forums.statistics.memberships')
           td= @forum.memberships_count
         tr
-          td= t("forums.statistics.questions")
+          td= t('forums.statistics.questions')
           td= @forum.questions_count
         tr
-          td= t("forums.statistics.motions")
+          td= t('forums.statistics.motions')
           td= @forum.motions_count
-      h2= t("forums.statistics.tags")
+      h2= t('forums.statistics.tags')
       - if @tags.present?
         ul
         - @tags.each do |tag|
           li= link_to "#{tag[:count]} - #{tag[:name]}", forum_tag_url(@forum.url, id: tag[:name])
       - else
-        p= t("forums.statistics.no-tags")
+        p= t('forums.statistics.no_tags')

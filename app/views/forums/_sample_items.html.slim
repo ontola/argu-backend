@@ -1,4 +1,4 @@
-.box.box-grid.motion[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :motion]), data: {remote: true}
+.box.box-grid.motion[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for(new_forum_motion_path(@forum)), data: {remote: true}
   section.section-fill.motion-bg
     h2= t('motions.call_to_action.title')
   section
@@ -7,7 +7,7 @@
       b.motion-t
         span.fa.fa-plus
         span.icon-left= t('motions.call_to_action.action')
-.box.box-grid.question[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for([:new, @forum, :question]), data: {remote: true}
+.box.box-grid.question[data-created-at="0" data-updated-at="0" data-score="-999" data-tags="#{@forum.featured_tags.join(',')}"]= link_to url_for(new_forum_question_path(@forum)), data: {remote: true}
   section.section-fill.question-bg
     h2= t('questions.call_to_action.title')
   section
