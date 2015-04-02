@@ -5,6 +5,31 @@
   section.section-info.motion-bg
     span[class="fa fa-#{motion_icon}"]
     span.icon-left= motion_type
+    .details
+      .details-part.details-part--type.motion-bg
+        span[class="fa fa-#{motion_icon}"]
+        span.icon-left= motion_type
+      /.details-part
+        span.fa.fa-tag
+        span.icon-left veiligheid
+      /.details-part
+        span.fa.fa-eye
+        span.icon-left 79
+      /.details-part
+        span.fa.fa-comment
+        span.icon-left 7
+      .details-part.tooltip[data-title=t('tooltips.motion.vote_count')]
+        span.fa.fa-check-square-o
+        span.icon-left= motion.votes_pro_count + motion.votes_con_count + motion.votes_neutral_count
+      .details-part.tooltip[data-title=t('tooltips.motion.arguments_pro_count')]
+        span.fa.fa-plus
+        span.icon-left= motion.argument_pro_count
+      .details-part.tooltip[data-title=t('tooltips.motion.arguments_con_count')]
+        span.fa.fa-minus
+        span.icon-left= motion.argument_con_count
+      /.details-part
+        span.fa.fa-clock-o
+        span.icon-left= time_ago_in_words(motion.updated_at)
   section
     = contextual_link_to motion_path(motion) do
       h2.motion-t[itemprop="headline"]= motion.title
