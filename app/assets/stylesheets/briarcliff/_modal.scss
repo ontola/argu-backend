@@ -77,7 +77,10 @@
 
 // Makes modals scrollable on smaller mobile devies. Apply this to body tag when the modal is opened. Remove it when the modal closes.
 .modal-opened{
+  height: 100%;
   overflow: hidden;
+  width: 100%;
+  position: fixed;
 }
 
 // apply these classes when clicking on overlay of modals.
