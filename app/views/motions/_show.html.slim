@@ -1,4 +1,3 @@
-- tag ||= nil
 .box.box--extra-margin[class="#{'trashed' if model.is_trashed?}"]
   -if model.cover_photo.present?
     = contextual_link_to motion_path(model)
@@ -13,13 +12,13 @@
       ==model.truncate_preview(150, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read-more'), motion_path(model))})
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
-        - model.arguments.where(pro: true).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0,5].each do |argument|
+        - model.top_arguments_pro.each do |argument|
           li= link_to argument_path(argument)
               h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
                 span.fa.fa-plus
                 span.icon-left= argument.title
       ul.box-list.box-list--arguments.box-list--icons
-        - model.arguments.where(pro: false).order(votes_pro_count: :desc).select(:id, :title, :updated_at, :pro)[0, 5].each do |argument|
+        - model.top_arguments_con.each do |argument|
           li= link_to argument_path(argument)
               h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
                 span.fa.fa-minus

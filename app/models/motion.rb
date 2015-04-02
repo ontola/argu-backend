@@ -114,6 +114,14 @@ class Motion < ActiveRecord::Base
     super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
   end
 
+  def top_arguments_con
+    self.arguments.where(pro: false).trashed(false).order(votes_pro_count: :desc).limit(5)
+  end
+
+  def top_arguments_pro
+    self.arguments.where(pro: true).trashed(false).order(votes_pro_count: :desc).limit(5)
+  end
+
   def total_vote_count
     votes_pro_count.abs + votes_con_count.abs + votes_neutral_count.abs
   end

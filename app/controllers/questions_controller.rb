@@ -5,8 +5,7 @@ class QuestionsController < ApplicationController
     authorize @question
     @forum = @question.forum
     current_context @question
-    #@voted = Vote.where(voteable: @question, voter: current_user).last.try(:for) unless current_user.blank?
-    @motions = policy_scope(@question.motions.trashed(show_trashed?))
+    @motions = policy_scope(@question.motions.trashed(show_trashed?)).order(updated_at: :desc)
 
     respond_to do |format|
       format.html # show.html.erb

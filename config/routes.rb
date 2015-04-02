@@ -162,7 +162,7 @@ Argu::Application.routes.draw do
       post on: :member, action: :add!, as: ''
     end
   end
-  get 'forums/:url', to: 'forums#show'
+  get 'forums/:id', to: 'forums#show'
 
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'
