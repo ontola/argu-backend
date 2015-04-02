@@ -2,7 +2,7 @@
 = semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name, r: (defined?(r) ? r : ''))) do |f|
   =f.inputs do
     p.smaller-8= t('cant_change_username')
-    =f.inputs :shortname, for: :shortname, autofocus: :autofocus
+    =f.inputs :shortname, for: :shortname
     =f.input :email
     =f.input :password
     =f.input :password_confirmation
