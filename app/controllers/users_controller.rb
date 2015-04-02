@@ -69,7 +69,9 @@ class UsersController < ApplicationController
   def setup
     @user = current_user
     authorize @user, :setup?
-    @user.shortname ||= Shortname.new
+    if @user.shortname.blank?
+      @user.build_shortname
+    end
 
     render 'setup_shortname'
   end

@@ -23,7 +23,7 @@ nl:
   not_found_type: "%{type} niet gevonden"
   edit: "Bewerken"
   edit_type: "%{type} bewerken"
-  read-more: "Lees meer"
+  read_more: "Lees meer"
   collapse: "Inklappen"
   update: "Bijwerken"
   update_type: "%{type} bijwerken"

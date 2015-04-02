@@ -6,7 +6,7 @@
       =semantic_form_for(@page, url: url_for([@page, :managers]), method: :post) do |f|
         - @membership.errors.full_messages.each do |message|
           =message
-        =f.inputs name: t('newe_type', type: t('forum.settings.manager')) do
+        =f.inputs name: t('newe_type', type: t('forums.settings.manager')) do
           =react_component 'NewMembership', things: 'users'
         =f.actions do
           =f.action :submit, as: :button, label: :save

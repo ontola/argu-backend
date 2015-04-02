@@ -38,7 +38,7 @@ nl:
       questions: "Vraagstukken"
       motions: "Ideeën"
       tags: "Meest gebruikte tags"
-      no-tags: "Er zijn nog geen tags gebruikt."
+      no_tags: "Er zijn nog geen tags gebruikt."
     suggestions: "Suggesties"
     mine: "Mijn forums"
     navheader: "Ga naar forum:"

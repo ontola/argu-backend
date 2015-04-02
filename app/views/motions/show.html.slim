@@ -1,4 +1,4 @@
-=set_title (@motion.title.nil? ? t(:motion_title) : @motion.title)
+=set_title @motion.title
 -content_for :connected_web
   meta[name="description" content="#{@motion.content}"]
   meta[property="og:title" content="#{@motion.display_name}"]

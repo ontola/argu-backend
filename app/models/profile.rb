@@ -30,7 +30,7 @@ class Profile < ActiveRecord::Base
 
   ######Attributes#######
   def display_name
-    self.name.presence || self.profileable.try(:display_name)
+    self.profileable.try(:display_name) || self.name.presence
   end
 
   def email

@@ -2,13 +2,13 @@
   .overlay
   .modal.col-1
     -if active_for_user?(:share_links, current_user) && @forum.present? && @forum.visible_with_a_link
-      = render partial: "share_link"
+      =render partial: 'share_link'
     header
-      h1= t("devise.invitations.new.header")
+      h1= t('devise.invitations.new.header')
     .box
       section
         =semantic_form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f|
-          = devise_error_messages!
+          =devise_error_messages!
 
           p Vraag je meest betrokken vrienden om mee te doen met het oplossen van maatschappelijke problemen op Argu.
 
@@ -17,9 +17,9 @@
               i= t('devise.invitations.new.forum_notice', forum: @forum.display_name)
 
           p
-            b = "Je hebt nog #{current_user.invitation_limit} uitnodigingen tegoed. Gebruik ze verstandig."
-          = f.inputs
-            = f.input :email
+            b= "Je hebt nog #{current_user.invitation_limit} uitnodigingen tegoed. Gebruik ze verstandig."
+          =f.inputs
+            =f.input :email
             input[type='hidden' name='forum' value=params[:forum]]
-          = f.actions do
-            = f.action :submit, :as => :button, label: t("devise.invitations.new.submit_button")
+          =f.actions do
+            =f.action :submit, :as => :button, label: t('devise.invitations.new.submit_button')

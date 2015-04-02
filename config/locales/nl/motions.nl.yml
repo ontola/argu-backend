@@ -2,7 +2,7 @@
 
 nl:
   motions:
-    type: "Idee"
+    type: "idee"
     title: "Idee"
     header: "Ideeën"
     plural: "Ideeën"
