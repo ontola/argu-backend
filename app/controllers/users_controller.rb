@@ -65,6 +65,15 @@ class UsersController < ApplicationController
     end
   end
 
+  # When shortname isn't set yet
+  def setup
+    @user = current_user
+    @profile = current_user.profile
+    authorize @user, :setup?
+
+    render 'profiles/edit'
+  end
+
   private
   def permit_params
     params.require(:user).permit(*policy(@user || User).permitted_attributes)

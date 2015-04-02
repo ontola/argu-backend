@@ -150,11 +150,15 @@ class ApplicationController < ActionController::Base
   # @private
   # Before_action which redirects the {User} if he didn't finish the intro.
   def check_finished_intro
-    if current_user && !current_user.finished_intro? && !request.original_url.in?(intro_urls)
+    if current_user && !current_user.finished_intro? && (current_user.url.blank? || !request.original_url.in?(intro_urls))
       if current_user.first_name.present?
         redirect_to selector_forums_url
       else
-        redirect_to edit_profile_url(current_user.url)
+        if current_user.url.blank? && !request.original_url == edit_user_registration_path
+          redirect_to setup_users_path
+        elsif !request.original_url == edit_user_registration_path
+          redirect_to edit_profile_url(current_user.url)
+        end
       end
     end
   end
