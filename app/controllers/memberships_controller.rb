@@ -9,9 +9,10 @@ class MembershipsController < ApplicationController
       @membership = Membership.new profile: current_profile, forum: forum, role: (permit_params[:role] || Membership.roles[:member])
       authorize @membership, :create?
 
+      should_307 = request.fullpath.match(/\/v(\?|\/)|\/c(\?|\/)/) || (params[:r].presence && params[:r].match(/\/v(\?|\/)|\/c(\?|\/)/))
       if @membership.save
         redirect_to params[:r].presence || @membership.forum,
-                    status: request.fullpath.match(/\/v(\?|\/)|\/c(\?|\/)/) ? 307 : 302
+                    status: should_307 ? 307 : 302
       else
         render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
       end
