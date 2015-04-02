@@ -121,7 +121,8 @@
     }
     margin-bottom: 0;
     font-size: 23px;
-    min-height: 63px;
+    min-height: 64px;
+    vertical-align: bottom;
     @include bp-medium {
       min-height: 50px;
       padding: 16px;
