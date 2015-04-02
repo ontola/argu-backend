@@ -24,28 +24,36 @@ class CommentPolicy < RestrictivePolicy
     end
   end
 
-  def new?
-    record.forum.open? || create?
-  end
-
   def create?
     record.commentable.forum.open? || is_member? || super
   end
 
-  def update?
-    is_member? && is_creator? || super
+  def destroy?
+    user && record.profile_id == actor.id || is_owner? || super
   end
 
   def edit?
     update?
   end
 
-  def show?
-    Pundit.policy(context, record.forum).show? || super
+  def new?
+    record.forum.open? || create?
   end
 
   def report?
     true
+  end
+
+  def show?
+    Pundit.policy(context, record.forum).show? || super
+  end
+
+  def trash?
+    is_manager? || is_owner? || super
+  end
+
+  def update?
+    is_member? && is_creator? || super
   end
 
   def has_access_to_platform?
@@ -54,7 +62,15 @@ class CommentPolicy < RestrictivePolicy
 
 private
 
+  def is_manager?
+    Pundit.policy(context, record.forum).is_manager?
+  end
+
   def is_member?
     user && user.profile.member_of?(record.commentable.forum)
+  end
+
+  def is_owner?
+    Pundit.policy(context, record.forum).is_owner?
   end
 end

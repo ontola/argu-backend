@@ -6,10 +6,11 @@
       section
         =f.semantic_errors :email, :base
         =f.inputs name: t('users.registrations.categories.general') do
+          p= t('profiles.edit.shortname_not_allowed')
           =f.inputs :shortname, for: :shortname, disabled: true
-          =f.input :email, label: t("users_email"), value: @user.email, placeholder: @user.email.blank? ? t("users_email_placeholder") : @user.email
+          =f.input :email, label: t('users_email'), value: @user.email, placeholder: @user.email.blank? ? t('users_email_placeholder') : @user.email
 
-        - if $rollout.active?(:notifications, current_user)
+        - if active_for_user?(:notifications, current_user)
           =f.inputs name: t('users.registrations.categories.notifications') do
             .notification-settings-header
               label
@@ -39,22 +40,23 @@
                   =f.check_box :created_mobile
 
         =f.inputs name: t('users.registrations.categories.authentication') do
-          =f.input :password, label: t("users_password_edit")
-          =f.input :password_confirmation, label: t("users_password_confirmation")
+          =f.input :password, label: t('users_password_edit')
+          =f.input :password_confirmation, label: t('users_password_confirmation')
+          =f.input :current_password
           - if Rails.application.config.epics.open_auth
             - if @authentications.present?
-              label= t("users_oauth_coupled")
+              label= t('users_oauth_coupled')
               =render 'authentications/login_providers_connected'
 
             /TODO Hide authentications that are already present.
-            label= t("users_oauth_new")
+            label= t('users_oauth_new')
             .form-item
               =render 'authentications/login_providers'
 
         =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-          label= t("users_cancel_title")
+          label= t('users_cancel_title')
           .form-item
-            =link_to t("users_cancel_title"), cancel_user_registration_path(current_user)
+            =link_to t('users_cancel_title'), cancel_user_registration_path(current_user)
 
         =f.actions do
-          =f.action :submit, :as => :button, label: t("save")
+          =f.action :submit, :as => :button, label: t('save')

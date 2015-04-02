@@ -6,6 +6,10 @@
         - if section['type'] == 'image-wide'
           .blocks
             img.block-image-wide[src="#{asset_path section['image']}"]
+        - if section['type'] == 'video'
+          .blocks
+            .block-video
+              iframe[frameborder="0" height="100%" width="100%" src="#{section['video-url']}"]
         - if section['type'] == 'single'
           .blocks
             .block.block--full[class=((section['fill'] ? 'block--fill' : '') + " " + (section['big-text'] ? 'block--big-text' : ''))]

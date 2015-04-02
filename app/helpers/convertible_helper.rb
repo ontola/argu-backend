@@ -1,3 +1,4 @@
+# Contains argu-specific implementation details of {Convertible}
 module ConvertibleHelper
 
   def convertible_param_to_model(convertible)
@@ -8,6 +9,7 @@ module ConvertibleHelper
     convertible_classes.map(&:class_name)
   end
 
+  # @private The model classes which are currently convertible with each other
   def convertible_classes
     [Question, Motion]
   end

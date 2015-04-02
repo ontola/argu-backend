@@ -3,20 +3,7 @@ Argu::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
-  config.epics.opinion = false                        # Opinion enabled?
-  config.epics.parties = false                        # Parties enabled?
-  config.epics.advanced_navigation = false            # Navigation by tags and such
-  config.epics.search = false                         # Search enabled?
-  config.epics.counters = false                       # Counter caches on models (e.g. x pro, y con args)
-  config.epics.forum_selector = true                  # Show forum selector in nav bar?
-  config.epics.sign_up = false                        # Can users sign up outside of invitations
-  config.epics.activities = false                     # Can users see the activity index / timeline button in header?
-  config.epics.share_links = false                    # Can first-time users visit forum urls, and can members share them?
   config.epics.open_auth = false                      # Facebook, twitter, google, openID login & account linking shown in profile
-  config.epics.link_to_motion = false                 # Button in questions.show to find & link motions
-  config.epics.page_create = false                     # Create a page button in header menu
-  config.epics.notifications = false                   # Show notifications button in header menu
-  config.epics.motions_in_question_partial = false     # Show motions in question partial
 
   config.logstasher.enabled = true
 

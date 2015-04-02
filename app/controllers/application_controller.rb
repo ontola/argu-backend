@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper
+  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
@@ -47,11 +47,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Combines {ApplicationController#create_activity} with {ApplicationController#destroy_recent_similar_activities}
   def create_activity_with_cleanup(model, params)
     destroy_recent_similar_activities model, params
     create_activity model, params
   end
 
+  # Creates an {Activity} for a model asynchronously
+  # @param [ActiveRecord::Base] a model to create the {Activity} for
+  # @param [Hash] options for {PublicActivity::Common#create_activity}
   def create_activity(model, params)
     a = model.create_activity params
     Argu::NotificationWorker.perform_async(a.id)
@@ -61,12 +65,12 @@ class ApplicationController < ActionController::Base
     current_context.context_scope(current_profile) || current_context
   end
 
-  # Returns the current context, if a param is given, it will serve as the start of the current context
+  # @return the current context, if a param is given, it will serve as the start of the current context
   def current_context(model=nil)
     @current_context ||= Context.parse_from_uri(request.url, model)
   end
 
-  # @return #Profile
+  # @return the {Profile} the {User} is using to do actions
   def current_profile
     if current_user.present?
       @current_profile ||= get_current_actor
@@ -75,6 +79,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses {Forum.first_public}
   def preferred_forum
     if current_profile.present?
       policy(current_profile.preferred_forum).show? ? current_profile.preferred_forum : current_profile.memberships.first.try(:forum) || Forum.first_public
@@ -83,6 +88,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # @private
   def pundit_user
     UserContext.new(current_user, current_profile, session)
   end
@@ -101,22 +107,28 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # @private
   def set_locale
     unless current_user.nil?
       I18n.locale = current_user.settings.locale || I18n.default_locale
     end
   end
 
+  # @private
   def set_notification_header
     if current_user.present?
       response.headers[:lastNotification] = policy_scope(Notification).order(created_at: :desc).limit(1).pluck(:created_at)[0]
+    else
+      response.headers[:lastNotification] = '-1'
     end
   end
 
+  # Deletes all other activities created within 6 hours of the new activity.
   def destroy_recent_similar_activities(model, params)
     Activity.delete Activity.where('created_at >= :date', :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
   end
 
+  # May the user update the model and has it enabled the `trashed` `param`
   def show_trashed?
     if policy(current_scope.model).update?
       params[:trashed] == 'true'
@@ -127,12 +139,16 @@ class ApplicationController < ActionController::Base
 
   protected
 
+  # @private
+  # For Devise
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) << [:email, :r, :access_tokens, shortname_attributes: [:shortname]]
     devise_parameter_sanitizer.for(:sign_in) << [:r]
     devise_parameter_sanitizer.for(:accept_invitation).concat [shortname_attributes: [:shortname]]
   end
 
+  # @private
+  # Before_action which redirects the {User} if he didn't finish the intro.
   def check_finished_intro
     if current_user && !current_user.finished_intro? && !request.original_url.in?(intro_urls)
       if current_user.first_name.present?
@@ -143,10 +159,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # @private
   def intro_urls
     [selector_forums_url, profile_url(current_user), edit_profile_url(current_user), memberships_forums_url]
   end
 
+  # @private
+  # Determines what layout the {User} should see.
   def set_layout
     if request.headers['X-PJAX']
       self.class.layout false
@@ -159,6 +178,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # @private
+  # For Devise
   def after_sending_reset_password_instructions_path_for(resource_name)
     password_reset_confirm_path
   end

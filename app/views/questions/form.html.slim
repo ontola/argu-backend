@@ -20,7 +20,7 @@
             /TODO Add Checkbox for using expires_at.
             /TODO Hide expires_at input unless checkbox is checked.
             /TODO Use current datetime as default input.
-            - if $rollout.active?(:expires_at, current_user) && policy(@question).set_expire_as?
+            - if active_for_user?(:expires_at, current_user) && policy(@question).set_expire_as?
               =f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
           - if !@question.new_record? && policy(@question).trash?
             =f.inputs name: t('forms.danger_zone'), class: 'danger-zone'

@@ -28,6 +28,10 @@ class ProfilePolicy < RestrictivePolicy
     end
   end
 
+  def index
+    is_owner? || staff?
+  end
+
   def show?
     if record.profileable.class == Page
       record.is_public?

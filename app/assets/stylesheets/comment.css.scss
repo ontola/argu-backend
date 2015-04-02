@@ -1,0 +1,6 @@
+@import "variables";
+@import "mixins";
+
+.comment_form textarea {
+  min-height: 5em;
+}

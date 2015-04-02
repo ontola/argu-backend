@@ -1,3 +1,4 @@
+#@private
 module Admin
   ROLES = %w(coder admin mod user)
   module AdministrationHelper

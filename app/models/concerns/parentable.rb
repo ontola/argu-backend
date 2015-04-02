@@ -1,7 +1,12 @@
+# Concern that gives models the `Parentable` functionality in cooperation with {Context}
+#
+# A model using Parentable needs to call {Parentable::ClassMethods#parentable} to define which associations
+# qualify to be parent.
 module Parentable
   extend ActiveSupport::Concern
 
   included do
+    # Simple method to verify that a model uses {Parentable}
     def is_fertile?
       true
     end
@@ -41,7 +46,7 @@ module Parentable
     end
   end
 
-  # :nodoc:
+  # @private
   def reflect_parent(relation_name, options)
     parent = Context.new
     if relation_name == :self
@@ -61,6 +66,8 @@ module Parentable
   end
 
   module ClassMethods
+    # Add to a model which includes {Parentable} to set the possible parents for the model
+    # @param relation [Symbol splat] List of symbolized model names.
     def parentable(*relation)
       cattr_accessor :parent_is do
         relation

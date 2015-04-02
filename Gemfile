@@ -46,7 +46,6 @@ gem 'kaminari', '~>0.16.1'
 gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
 
 ##################Asset-y########################
-gem 'haml' # TODO: convert haml to slim, then remove this gem
 gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
 gem 'jquery-rails'
@@ -55,7 +54,7 @@ gem 'rails3-jquery-autocomplete', '~> 1.0.14'
 gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
 gem 'carrierwave', '~> 0.10.0'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
-gem 'mini_magick', '~> 3.8.1'                                             # Ruby connector for ImageMagick
+gem 'carrierwave-vips'
 #gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'

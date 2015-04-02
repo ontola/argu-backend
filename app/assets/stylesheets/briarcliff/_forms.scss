@@ -18,8 +18,10 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
     color: $g4;
     opacity: .5;
   }
-  &:hover {
-    border: solid 1px $g2;
+  &:not([disabled]){
+    &:hover {
+      border: solid 1px $g2;
+    }
   }
   &:focus {
     background-color: $darken0;
@@ -45,6 +47,10 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   @include bp-medium {
     width: 100%;
   }
+}
+
+*:disabled input{
+  opacity: .6;
 }
 
 input[type="checkbox"] {
@@ -74,11 +80,11 @@ legend {
   width: 100%;
   margin-bottom: 1em;
   padding: 0.3em 0em;
-  color: $g2;
-  text-transform: uppercase;
-  letter-spacing: .1em;
   text-align: left;
   border-bottom: solid $g1 1px;
+  color: $g3;
+  font-weight: bold;
+  font-size: 1.2em;
 
   .danger-zone & {
     color: $red;

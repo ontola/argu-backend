@@ -1,7 +1,7 @@
 ul.btns-devise
   - if controller_name != 'sessions'
     li= link_to t("sign_in"), new_session_path(resource_name)
-  - if Rails.configuration.epics.sign_up
+  - if within_user_cap?
     - if devise_mapping.registerable? && controller_name != 'registrations'
       li= link_to t("sign_up"), new_registration_path(resource_name)
 

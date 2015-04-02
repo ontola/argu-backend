@@ -99,6 +99,7 @@ Argu::Application.routes.draw do
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
+    resources :notifications, only: :create
     namespace :portal do
       get :settings, to: 'portal#settings'
       post 'settings', to: 'portal#setting!', as: :update_setting
@@ -141,7 +142,8 @@ Argu::Application.routes.draw do
   get '/activities', to: 'activities#index'
 
 
-  resources :forums, except: [:edit, :index], path: '' do
+  resources :forums, only: [:show, :update], path: '' do
+    get :discover, on: :collection, action: :index
     get :settings, on: :member
     get :statistics, on: :member
     get :selector, on: :collection

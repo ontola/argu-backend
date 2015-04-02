@@ -1,4 +1,3 @@
-- tag ||= nil
 .box[class="#{'trashed' if model.is_trashed?}" itemscope itemtype="Question"]
   section
     h3[itemprop="headline"]= contextual_link_to model.title, question_path(model), class: "question-t"

@@ -51,9 +51,9 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find_by_id params[:id]
     resource = @comment.commentable
-    if params[:destroy] == 'true'
+    if params[:wipe] == 'true'
       authorize @comment
-      @comment.destroy
+      @comment.wipe
     else
       authorize @comment, :trash?
       @comment.trash

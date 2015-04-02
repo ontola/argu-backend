@@ -35,7 +35,7 @@ class Motion < ActiveRecord::Base
   end
 
   def con_count
-    self.arguments.count(:conditions => ["pro = false"])
+    self.arguments.count(:conditions => ['pro = false'])
   end
 
   def creator
@@ -164,7 +164,7 @@ class Motion < ActiveRecord::Base
 
   scope :today, lambda { 
     {
-      :conditions => ["created_at >= ?", (Time.now - 1.days)]
+      :conditions => ['created_at >= ?', (Time.now - 1.days)]
     }
   }
 

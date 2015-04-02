@@ -24,36 +24,36 @@ class MotionPolicy < RestrictivePolicy
     attributes
   end
 
-  def new?
-    record.forum.open? || create?
-  end
-
   def create?
     is_member? || super
   end
 
-  def update?
-    is_member? && is_creator? || forum_policy.is_manager? || forum_policy.is_owner? || super
+  def destroy?
+    user && (record.creator_id == user.profile.id && record.arguments.length < 2 or 15.minutes.ago < record.created_at) || forum_policy.is_owner? || super
   end
 
   def edit?
     update?
   end
 
-  def trash?
-    forum_policy.is_manager? || forum_policy.is_owner? || super
-  end
-
-  def destroy?
-    forum_policy.is_manager? || forum_policy.is_owner? || super
-  end
-
   def index?
     is_member? || super
   end
 
+  def new?
+    record.forum.open? || create?
+  end
+
   def show?
     forum_policy.show? || super
+  end
+
+  def trash?
+    user && record.creator_id == user.profile.id || forum_policy.is_manager? || forum_policy.is_owner? || super
+  end
+
+  def update?
+    is_member? && is_creator? || forum_policy.is_manager? || forum_policy.is_owner? || super
   end
 
   def vote?

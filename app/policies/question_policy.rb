@@ -28,37 +28,53 @@ class QuestionPolicy < RestrictivePolicy
     attributes
   end
 
-  def new?
-    record.forum.open? || create?
-  end
-
   def create?
     is_member? || super
-  end
-
-  def update?
-    is_member? && is_creator? || super
   end
 
   def edit?
      update?
   end
 
+  def destroy?
+    user && (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at or record.motions.count == 0) || is_owner? || super
+  end
+
   def index?
     is_member? || super
   end
 
-  def show?
-    Pundit.policy(context, record.forum).show? || super
+  def new?
+    record.forum.open? || create?
   end
 
   def set_expire_as?
     staff?
   end
 
+  def show?
+    Pundit.policy(context, record.forum).show? || super
+  end
+
+  def trash?
+    user && record.creator_id == user.profile.id || is_manager? || super
+  end
+
+  def update?
+    is_member? && is_creator? || super
+  end
+
   private
+
+  def is_manager?
+    Pundit.policy(context, record.forum).is_manager?
+  end
 
   def is_member?
     user && user.profile.member_of?(record.forum || record.forum_id)
+  end
+
+  def is_owner?
+    Pundit.policy(context, record.forum).is_owner?
   end
 end

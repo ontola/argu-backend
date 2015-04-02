@@ -7,15 +7,17 @@ class Profile < ActiveRecord::Base
   belongs_to :profileable, polymorphic: true, inverse_of: :profile
   accepts_nested_attributes_for :profileable
   rolify after_remove: :role_removed, before_add: :role_added
-  has_many :votes, as: :voter
-  has_many :memberships, dependent: :destroy
-  has_many :page_memberships, dependent: :destroy
-  has_many :forums, through: :memberships
-  has_many :pages, inverse_of: :owner
+
   has_many :activities, as: :owner, dependent: :destroy
-  has_many :notifications, dependent: :destroy
-  has_many :group_memberships, foreign_key: :member_id, inverse_of: :member
+  has_many :comments, dependent: :destroy
+  has_many :forums, through: :memberships
+  has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships
+  has_many :memberships, dependent: :destroy
+  has_many :notifications, dependent: :destroy
+  has_many :page_memberships, dependent: :destroy
+  has_many :pages, inverse_of: :owner
+  has_many :votes, as: :voter, dependent: :destroy
 
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, CoverUploader
@@ -43,12 +45,13 @@ class Profile < ActiveRecord::Base
     memberships.pluck(:forum_id).join(',').presence
   end
 
-  #def owner
-  #  self.profileable
-  #end
+  def owner
+    self.profileable
+  end
+  deprecate :owner
 
   def url
-    profileable.url.presence || id
+    profileable.presence && profileable.url.presence
   end
 
   # TODO Crashes if false

@@ -18,6 +18,35 @@ section {
   }
 }
 
+.details {
+  padding: 0;
+  line-height: 1.1em;
+  background-color: rgba(244,244,244,1);
+  color: $g2a;
+  text-transform: uppercase;
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100%;
+
+  .details-part{
+    display: inline-block;
+    padding: 0 .5em;
+    height: 100%;
+
+  }
+
+  .details-part--type{
+    color: white;
+    margin-right: .3em;
+    padding-left: 1.2em;
+  }
+}
+
 section.unpadded {
   padding: 0;
 }

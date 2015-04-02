@@ -1,4 +1,4 @@
-.box.box-grid.question[itemscope itemtype="Question" class="#{'trashed' if question.is_trashed?}" data-tags="#{question.tags.join(',')}" data-created-at=question.created_at  data-updated-at=question.updated_at]
+.box.box-grid.question[itemscope itemtype="Question" class="#{'trashed' if question.is_trashed?}" data-created-at=question.created_at  data-updated-at=question.updated_at]
   - if question.cover_photo.present?
     =contextual_link_to question_path(question) do
       .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
@@ -6,12 +6,31 @@
     span.fa.fa-question
     span.icon-left= t('questions.type')
     =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
+    .details
+      .details-part.details-part--type.question-bg
+        span[class="fa fa-#{question_icon}"]
+        span.icon-left= question_type
+      /.details-part
+          span.fa.fa-tag
+          span.icon-left veiligheid
+      /.details-part
+          span.fa.fa-eye
+          span.icon-left 79
+      /.details-part
+          span.fa.fa-comment
+          span.icon-left 7
+      .details-part.tooltip[data-title=t('tooltips.question.motions_count')]
+        span.fa.fa-lightbulb-o
+        span.icon-left= question.motions.count
+      /.details-part
+        span.fa.fa-clock-o
+        span.icon-left= time_ago_in_words(question.created_at)
   section
     =contextual_link_to question_path(question) do
       h2.question-t[itemprop="headline"]= question.title
     - if question.motions.present?
       ul.box-list.box-list--icons
-        - question.motions.trashed(false).order(updated_at: :desc).select(:id, :title, :updated_at)[0,3].each do |motion|
+        - question.top_motions.each do |motion|
           li= link_to motion_path(motion) do
             h3.motion-t
               span[class='fa fa-#{motion_icon}']

@@ -40,6 +40,7 @@ window.NewMembership = React.createClass({
                     dataType: 'json',
                     data: {
                         q: query,
+                        forum: _this.props.forum,
                         things: _this.props.things
                     },
                     error: function () {

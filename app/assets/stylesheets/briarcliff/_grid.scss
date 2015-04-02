@@ -35,4 +35,8 @@
 .box-grid-sizer {
   width: 50%;
   display: inline-block;
+  &.box-grid-sizer-full {
+    width: 100%;
+    display: inline-block;
+  }
 }

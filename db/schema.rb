@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150328104909) do
+ActiveRecord::Schema.define(version: 20150401082554) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 20150328104909) do
     t.string   "title",            limit: 255, default: ""
     t.text     "body",                         default: ""
     t.string   "subject",          limit: 255, default: ""
-    t.integer  "profile_id",                   default: 0,     null: false
+    t.integer  "profile_id",                   default: 0
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
@@ -295,7 +295,7 @@ ActiveRecord::Schema.define(version: 20150328104909) do
     t.boolean  "is_public",                    default: true
     t.boolean  "are_votes_public",             default: true
     t.string   "profileable_type"
-    t.string   "profileable_id"
+    t.integer  "profileable_id"
   end
 
   add_index "profiles", ["profileable_type", "profileable_id"], name: "index_profiles_on_profileable_type_and_profileable_id", unique: true, using: :btree

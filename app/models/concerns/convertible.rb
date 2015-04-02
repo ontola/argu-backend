@@ -1,3 +1,6 @@
+# Concern which gives Models the `convert` ability.
+#
+# Converts as many parameters and assocations as possible.
 module Convertible
   extend ActiveSupport::Concern
 
@@ -5,6 +8,7 @@ module Convertible
   end
 
   # Converts an item to another item, the convertible method was used, those relations will be assigned the newly created model
+  #
   # TODO: check if the receiving model has the same associated_model names before sending them over (else, delete)
   def convert_to(klass)
     if self.class != klass
@@ -31,7 +35,7 @@ module Convertible
 
   module ClassMethods
     # Takes the association names which can be converted along with the object itself.
-    # Note: destruction of non-convertible associations should be taken care of by dependent: :destroy
+    # @note destruction of non-convertible associations should be taken care of by dependent: :destroy
     def convertible(*relation)
       cattr_accessor :convertible_associations do
         relation
