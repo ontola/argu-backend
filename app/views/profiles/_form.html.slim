@@ -1,4 +1,8 @@
-=semantic_form_for @profile, url: profile_path(@user), method: @user.r.present? ? :post : :put  do |f|
+=semantic_form_for @profile, url: @user.url.present? ? profile_path(@user) : settings_path, method: @user.r.present? ? :post : :put  do |f|
+  - if @user.url.blank?
+    =f.inputs name: t('profiles.edit.shortname') do
+      =f.inputs :shortname, for: :shortname
+      p= t('users.shortname.not_changeable')
   =f.inputs name: t('profiles.edit.general') do
     p= t('profiles.heads_up')
     - if @profile.profileable.class == User

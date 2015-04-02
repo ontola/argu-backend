@@ -55,7 +55,7 @@ class Motion < ActiveRecord::Base
   end
 
   def invert_arguments=(invert)
-    if invert != "0"
+    if invert != '0'
       self.arguments.each do |a|
         a.update_attributes pro: !a.pro
       end
@@ -86,16 +86,16 @@ class Motion < ActiveRecord::Base
     return true
   end
 
-  def next(show_trashed = false)
+  def next(show_trashed= false)
     self.forum.motions.trashed(show_trashed).where('updated_at < :date', date: self.updated_at).order('updated_at').last
   end
 
-  def previous(show_trashed = false)
+  def previous(show_trashed= false)
     self.forum.motions.trashed(show_trashed).where('updated_at > :date', date: self.updated_at).order('updated_at').first
   end
 
   def pro_count
-    self.arguments.count(:conditions => ["pro = true"])
+    self.arguments.count(:conditions => ['pro = true'])
   end
 
   def raw_score
@@ -112,6 +112,14 @@ class Motion < ActiveRecord::Base
 
   def tag_list=(value)
     super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
+  end
+
+  def top_arguments_con
+    self.arguments.where(pro: false).trashed(false).order(votes_pro_count: :desc).limit(5)
+  end
+
+  def top_arguments_pro
+    self.arguments.where(pro: true).trashed(false).order(votes_pro_count: :desc).limit(5)
   end
 
   def total_vote_count
@@ -159,14 +167,4 @@ class Motion < ActiveRecord::Base
     end
   end
 
-
-# Scopes
-
-  scope :today, lambda { 
-    {
-      :conditions => ['created_at >= ?', (Time.now - 1.days)]
-    }
-  }
-
-  scope :index, ->(trashed, page) { trashed(trashed).order('argument_pro_count + argument_con_count DESC').page(page) }
 end

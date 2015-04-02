@@ -65,6 +65,29 @@ class UsersController < ApplicationController
     end
   end
 
+  # When shortname isn't set yet
+  def setup
+    @user = current_user
+    authorize @user, :setup?
+    @user.shortname ||= Shortname.new
+
+    render 'setup_shortname'
+  end
+
+  def setup!
+    @user = current_user
+    authorize @user, :setup?
+    if current_user.url.blank?
+      current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
+
+      if current_user.save
+        redirect_to edit_profile_url(current_user.url)
+      else
+        render 'setup_shortname'
+      end
+    end
+  end
+
   private
   def permit_params
     params.require(:user).permit(*policy(@user || User).permitted_attributes)
