@@ -73,7 +73,7 @@ module ApplicationHelper
     link_items << link_item('Twitter', twitter_url, fa: 'twitter')
     link_items << link_item('LinkedIn', linkedin_url, fa: 'linkedin')
 
-    dropdown_options(t('share'), [{items: link_items}], fa: 'fa-share')
+    dropdown_options(t('share'), [{items: link_items}], fa: 'fa-share-alt')
   end
 
   def process_cover_photo(object, _params)

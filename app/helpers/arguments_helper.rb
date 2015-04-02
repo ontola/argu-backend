@@ -34,6 +34,12 @@ def argument_items(argument)
   if policy(argument).update?
     link_items << link_item(t('edit'), edit_argument_path(argument), fa: 'pencil')
   end
+  if policy(argument).trash?
+    link_items << link_item(t('trash'), argument_path(argument), data: {confirm: t('trash_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'trash')
+  end
+  if policy(argument).destroy?
+    link_items << link_item(t('destroy'), argument_path(argument, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'close')
+  end
   if active_for_user?(:notifications, current_user)
     if current_profile.following?(argument)
       link_items << link_item(t('forums.unfollow'), follows_path(argument_id: argument.id), fa: 'bell-slash', data: {method: 'delete', 'skip-pjax' => 'true'})

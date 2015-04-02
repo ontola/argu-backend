@@ -8,14 +8,6 @@
     = content_tag :p, raw(@argument.supped_content), itemprop: 'text'
   =render @argument.creator, locals= {resource: @argument} if @argument.creator.present?
   ul.btns-list.btns-vertical.btn-sticky.btn-sticky-bottom
-    - if policy(@argument).destroy?
-      li= link_to argument_path(@argument, destroy: true), data: {confirm: t('destroy_confirmation'), method: :delete} do
-        span.fa.fa-close
-        span.icon-left= t('destroy')
-    - if policy(@argument).trash?
-      li= link_to argument_path(@argument), data: {confirm: t('trash_confirmation'), method: :delete} do
-        span.fa.fa-trash
-        span.icon-left= t('trash')
     - if current_user.present? && policy(@argument).update? || active_for_user?(:notifications, current_user)
       li
         ul= react_component 'HyperDropdown', argument_items(@argument), {prerender: true}

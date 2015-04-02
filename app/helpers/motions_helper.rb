@@ -47,6 +47,12 @@ module MotionsHelper
     if policy(motion).update?
       link_items << link_item(t('update'), edit_motion_path(motion), fa: 'pencil')
     end
+    if policy(motion).trash?
+      link_items << link_item(t('trash'), motion_path(motion), data: {confirm: t('trash_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'trash')
+    end
+    if policy(motion).destroy?
+      link_items << link_item(t('destroy'), motion_path(motion, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'close')
+    end
     if active_for_user?(:notifications, current_user)
       if current_profile.following?(motion)
         link_items << link_item(t('forums.unfollow'), follows_path(motion_id: motion.id), fa: 'bell-slash', data: {method: 'delete', 'skip-pjax' => 'true'})
