@@ -1,35 +1,35 @@
-.box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-created-at=motion.created_at  data-updated-at=motion.updated_at data-score=motion.raw_score itemscope itemtype="http://schema.org/Answer"]
+.box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-created-at=motion.created_at  data-updated-at=motion.updated_at data-vote-count=motion.total_vote_count itemscope itemtype="http://schema.org/Answer"]
   -if motion.cover_photo.present?
     = contextual_link_to motion_path(motion) do
       .box-image[style="background-image: url('#{motion.cover_photo.url(:box)}'); "]
-  section.section-info.motion-bg
-    span[class="fa fa-#{motion_icon}"]
-    span.icon-left= motion_type
-    .details
-      .details-part.details-part--type.motion-bg
-        span[class="fa fa-#{motion_icon}"]
-        span.icon-left= motion_type
-      /.details-part
-        span.fa.fa-tag
-        span.icon-left veiligheid
-      /.details-part
-        span.fa.fa-eye
-        span.icon-left 79
-      /.details-part
-        span.fa.fa-comment
-        span.icon-left 7
-      .details-part.tooltip[data-title=t('tooltips.motion.vote_count')]
-        span.fa.fa-check-square-o
-        span.icon-left= motion.votes_pro_count + motion.votes_con_count + motion.votes_neutral_count
-      .details-part.tooltip[data-title=t('tooltips.motion.arguments_pro_count')]
-        span.fa.fa-plus
-        span.icon-left= motion.argument_pro_count
-      .details-part.tooltip[data-title=t('tooltips.motion.arguments_con_count')]
-        span.fa.fa-minus
-        span.icon-left= motion.argument_con_count
-      /.details-part
-        span.fa.fa-clock-o
-        span.icon-left= time_ago_in_words(motion.updated_at)
-  section
-    = contextual_link_to motion_path(motion) do
+  = contextual_link_to motion_path(motion) do
+    section.section-info.motion-bg
+      span[class="fa fa-#{motion_icon}"]
+      span.icon-left= motion_type
+      .details
+        .details-part.details-part--type.motion-bg
+          span[class="fa fa-#{motion_icon}"]
+          span.icon-left= motion_type
+        /.details-part
+          span.fa.fa-tag
+          span.icon-left veiligheid
+        /.details-part
+          span.fa.fa-eye
+          span.icon-left 79
+        /.details-part
+          span.fa.fa-comment
+          span.icon-left 7
+        .details-part.tooltip[data-title=t('tooltips.motion.vote_count')]
+          span.fa.fa-check-square-o
+          span.icon-left= motion.total_vote_count
+        .details-part.tooltip[data-title=t('tooltips.motion.arguments_pro_count')]
+          span.fa.fa-plus
+          span.icon-left= motion.argument_pro_count
+        .details-part.tooltip[data-title=t('tooltips.motion.arguments_con_count')]
+          span.fa.fa-minus
+          span.icon-left= motion.argument_con_count
+        /.details-part
+          span.fa.fa-clock-o
+          span.icon-left= time_ago_in_words(motion.updated_at)
+    section
       h2.motion-t[itemprop="headline"]= motion.title

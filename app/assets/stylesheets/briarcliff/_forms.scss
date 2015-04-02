@@ -122,14 +122,13 @@ fieldset {
   width: 100%;
 }
 
-input[type="text"].form-input-title {
-  font-family: $font-special;
-  font-size: 1.8em;
-  font-weight: 800;
-  padding: .2em;
-  width: 100%;
+.form-input-title {
+  font-size: 1.8em !important;;
+  font-weight: 800 !important;;
+  padding: .2em !important;
+  width: 100% !important;;
   @include bp-medium{
-    font-size: 1.3em;
+    font-size: 1.3em !important;;
   }
 }
 

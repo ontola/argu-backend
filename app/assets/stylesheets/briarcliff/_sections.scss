@@ -7,12 +7,17 @@ section {
 }
 
 .section-info {
-  span {font-size: .8em;};
+
   padding-top: 0.1em;
   line-height: 1.1em;
   background-color: $g3;
   color: white;
   text-transform: uppercase;
+
+  span {
+    font-size: .8em;
+  }
+
   .fa-group {
     font-size: 0.7em;
   }
@@ -37,13 +42,15 @@ section {
     display: inline-block;
     padding: 0 .5em;
     height: 100%;
-
+    line-height: 1.3em;
   }
 
   .details-part--type{
     color: white;
     margin-right: .3em;
     padding-left: 1.2em;
+    padding-right: 1.2em;
+    margin-right: .6em;
   }
 }
 
@@ -62,8 +69,10 @@ section.smallpadded {
 
 .box .section-fill {
   background-color: $g3;
+
   h2 {
     color: White !important;
+
     &:hover {
       color: white !important;
     }

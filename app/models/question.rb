@@ -14,7 +14,7 @@ class Question < ActiveRecord::Base
   mount_uploader :cover_photo, CoverUploader
 
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
-  validates :title, presence: true, length: { minimum: 5, maximum: 255 }
+  validates :title, presence: true, length: { minimum: 5, maximum: 110 }
   validates :forum_id, :creator_id, presence: true
   #TODO validate expires_at
 
