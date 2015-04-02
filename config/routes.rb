@@ -66,6 +66,7 @@ Argu::Application.routes.draw do
 
   resources :users, path: 'u', only: [:show, :edit, :update] do
     get :setup, to: 'users#setup', on: :collection
+    put :setup, to: 'users#setup!', on: :collection
   end
 
   post 'v/:for' => 'votes#create', as: :vote
@@ -113,7 +114,6 @@ Argu::Application.routes.draw do
   resources :profiles, except: [:show] do
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post ':id' => 'profiles#update', on: :collection
-    put :setup, to: 'profiles#setup!'
   end
 
   resources :comments, only: :show

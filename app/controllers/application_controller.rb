@@ -150,13 +150,13 @@ class ApplicationController < ActionController::Base
   # @private
   # Before_action which redirects the {User} if he didn't finish the intro.
   def check_finished_intro
-    if current_user && !current_user.finished_intro? && (current_user.url.blank? || !request.original_url.in?(intro_urls))
-      if current_user.first_name.present?
-        redirect_to selector_forums_url
-      else
-        if current_user.url.blank? && !request.original_url == edit_user_registration_path
-          redirect_to setup_users_path
-        elsif !request.original_url == edit_user_registration_path
+    if current_user
+      if current_user.url.blank?
+        redirect_to setup_users_path if request.original_url != setup_users_url
+      elsif !current_user.finished_intro? && !request.original_url.in?(intro_urls)
+        if current_user.first_name.present?
+          redirect_to selector_forums_url
+        else
           redirect_to edit_profile_url(current_user.url)
         end
       end
@@ -173,8 +173,10 @@ class ApplicationController < ActionController::Base
   def set_layout
     if request.headers['X-PJAX']
       self.class.layout false
-    elsif current_user.present? && current_user.finished_intro?
+    elsif current_user.present? && current_user.finished_intro? && current_user.url.present?
       self.class.layout 'application'
+    elsif current_user.present? && current_user.url.blank?
+      self.class.layout 'closed'
     elsif has_valid_token?
       self.class.layout 'guest'
     else

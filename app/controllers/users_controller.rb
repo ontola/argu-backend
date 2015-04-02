@@ -69,9 +69,23 @@ class UsersController < ApplicationController
   def setup
     @user = current_user
     authorize @user, :setup?
-    @profile = current_user.profile
+    @user.shortname ||= Shortname.new
 
-    render 'profiles/edit'
+    render 'setup_shortname'
+  end
+
+  def setup!
+    @user = current_user
+    authorize @user, :setup?
+    if current_user.url.blank?
+      current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
+
+      if current_user.save
+        redirect_to edit_profile_url(current_user.url)
+      else
+        render 'setup_shortname'
+      end
+    end
   end
 
   private
