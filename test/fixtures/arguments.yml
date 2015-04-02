@@ -29,3 +29,11 @@ trashed:
   pro: true
   forum: :utrecht
   creator: :profile_one
+trashed_con:
+  title: "Argument con trashed"
+  content: "Contents of argument trashed"
+  motion: :one
+  is_trashed: true
+  pro: false
+  forum: :utrecht
+  creator: :profile_one
