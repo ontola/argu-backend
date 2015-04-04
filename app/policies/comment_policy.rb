@@ -16,14 +16,6 @@ class CommentPolicy < RestrictivePolicy
     end
   end
 
-  def initialize(context, record)
-    @context = context
-    @record = record
-    unless has_access_to_platform?
-      raise Argu::NotLoggedInError.new(nil, record), 'must be logged in'
-    end
-  end
-
   def create?
     record.commentable.forum.open? || is_member? || super
   end
