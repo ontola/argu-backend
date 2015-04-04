@@ -1,4 +1,6 @@
 user: deploy
+production:
+  :concurrency: 4
 :queues:
   - default
   - [carrierwave, 2]
