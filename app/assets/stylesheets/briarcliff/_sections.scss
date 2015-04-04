@@ -43,6 +43,10 @@ section {
     padding: 0 .5em;
     height: 100%;
     line-height: 1.3em;
+    &:hover{
+      background-color: $g0;
+      color: $g3;
+    }
   }
 
   .details-part--type{
