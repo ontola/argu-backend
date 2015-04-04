@@ -4,7 +4,7 @@
     span.icon-left= motion_type
   section
     h1.motion-t= motion.title
-    p= motion.supped_content.html_safe
+    p= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(filter_html: true, escape_html: true), {tables: true, fenced_code_blocks: false, no_styles: true, escape_html: true}).render(motion.content).html_safe
   /TODO: Fix tags link
   /- if motion.tags.present?
     ul[class="tags" data-intro= t("intro.tags")]= render partial: 'tags/tags', locals: {resource: motion}
