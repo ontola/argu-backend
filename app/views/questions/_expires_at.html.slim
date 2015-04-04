@@ -7,7 +7,8 @@
   -else
     section.section-info.section-info--right.section-info--closed
       span.fa.fa-lock
-      span.icon-left.tooltip.tooltip--left[data-title= t('questions.expired_at.tooltip', date: deadline.to_formatted_s(:short))]= t('closed')/-if defined?(decision)
+      span.icon-left.tooltip.tooltip--left[data-title= t('questions.expired_at.tooltip', date: deadline.to_formatted_s(:short))]= t('closed')
+      /-if defined?(decision)
 /
   -if decision == 'accepted'
     section.section-info.section-info--right.section-info--accepted

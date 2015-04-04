@@ -14,15 +14,15 @@
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_pro.each do |argument|
           li= link_to argument_path(argument)
-              h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
-                span.fa.fa-plus
-                span.icon-left= argument.title
+            h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
+              span.fa.fa-plus
+              span.icon-left= argument.title
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_con.each do |argument|
           li= link_to argument_path(argument)
-              h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
-                span.fa.fa-minus
-                span.icon-left= argument.title
+            h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
+              span.fa.fa-minus
+              span.icon-left= argument.title
     =contextual_link_to motion_path(model), class: 'btn-subtle btn-sticky btns-sticky-bottom read-more'
       span.icon-right= t('read_more')
       span.fa.fa-arrow-right
