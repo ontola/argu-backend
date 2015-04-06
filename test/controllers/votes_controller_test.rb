@@ -1,9 +1,9 @@
-require "test_helper"
+require 'test_helper'
 
 class VotesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test "should post create" do
+  test 'should post create' do
     sign_in users(:user)
 
     assert_difference('Vote.count') do
@@ -15,7 +15,7 @@ class VotesControllerTest < ActionController::TestCase
     assert assigns(:vote)
   end
 
-  test "should not create new vote when existing one is present" do
+  test 'should not create new vote when existing one is present' do
     sign_in users(:user2)
 
     assert_no_difference('Vote.count') do

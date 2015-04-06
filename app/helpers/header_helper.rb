@@ -63,7 +63,7 @@ module HeaderHelper
     }
   end
 
-  def notification_dropdown_items(items=[])
+  def notification_dropdown_items
     dropdown_options('', [
                         {type: 'notifications', unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count, lastNotification: nil, notifications: []}
                        ],
@@ -86,10 +86,9 @@ module HeaderHelper
 
   def profile_membership_items
     ids = current_profile.memberships.pluck(:forum_id)
-    items = Shortname.shortnames_for_klass('Forum', ids).zip(Forum.where(id: ids).select(:name, :profile_photo)).map do |forum|
+    Shortname.shortnames_for_klass('Forum', ids).zip(Forum.where(id: ids).select(:id, :name, :profile_photo)).map do |forum|
       link_item(forum[1].display_name, forum_path(forum[0]), image: forum[1].profile_photo.url(:icon))
     end
-    items
   end
 
   def info_dropdown_items

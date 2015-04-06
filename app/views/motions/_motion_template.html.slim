@@ -1,4 +1,3 @@
-- tag ||= nil
 /.box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-tags="#{motion.tags.join(',')}" data-date=motion.created_at data-score=motion.raw_score]
   -if motion.cover_photo.present?
     = contextual_link_to motion_path(motion) do

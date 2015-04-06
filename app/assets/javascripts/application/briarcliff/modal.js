@@ -23,10 +23,7 @@ $(function () {
         }
     });
 
-    $(document).on('pjax:complete', function (e,xhr) {
+    $(document).on('pjax:complete', function () {
         $('body').removeClass('modal-opened');
     });
-
-    // TODO: add '.modal-open' to body upon opening a modal to disable background scrolling
-
 });

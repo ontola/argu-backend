@@ -1,4 +1,4 @@
-.comment[id=model.identifier class="#{'trashed' if model.is_trashed?}" itemscope itemtype="Comment"]
+.comment[id=model.identifier class="#{'trashed' if model.is_trashed?}" itemscope="itemscope" itemtype="Comment"]
   .box
     section
       = contextual_link_to argument_path(model.commentable) do

@@ -1,1 +1,0 @@
-=(@user.frozen? ? link_to(t("profiles.show.btn.unfreeze"), admin_freeze_url(@user), remote: true, method: :delete) : link_to(t("profiles.show.btn.freeze"), admin_freeze_url(@user), remote: true, method: :post)) if can? :freeze, @user

@@ -1,9 +1,9 @@
-require "test_helper"
+require 'test_helper'
 
 class ForumsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test "should get show" do
+  test 'should get show' do
     sign_in users(:user)
 
     get :show, id: forums(:utrecht)
@@ -11,51 +11,51 @@ class ForumsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:items)
 
-    assert_not assigns(:items).any?(&:is_trashed?), "Trashed motions are visible"
+    assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
   end
 
-  test "should not show settings" do
+  test 'should not show settings' do
     sign_in users(:user)
 
     get :settings, id: forums(:utrecht)
-    assert_redirected_to root_path, "Settings are publicly visible"
+    assert_redirected_to root_path, 'Settings are publicly visible'
   end
 
-  test "should not show statistics" do
+  test 'should not show statistics' do
     sign_in users(:user)
 
     get :statistics, id: forums(:utrecht)
-    assert_redirected_to root_path, "Statistics are publicly visible"
+    assert_redirected_to root_path, 'Statistics are publicly visible'
   end
 
-  test "should not leak closed children to non-members" do
+  test 'should not leak closed children to non-members' do
     sign_in users(:user)
 
     get :show, id: forums(:amsterdam)
     assert_response :success
 
-    assert_nil assigns(:items), "Closed forums are leaking content"
+    assert_nil assigns(:items), 'Closed forums are leaking content'
   end
 
-  test "should not show hidden to non-members" do
+  test 'should not show hidden to non-members' do
     sign_in users(:user)
 
     get :show, id: forums(:hidden)
-    assert_redirected_to root_path, "Hidden forums are visible"
+    assert_redirected_to root_path, 'Hidden forums are visible'
   end
 
-  test "should not put update on others question" do
+  test 'should not put update on others question' do
     sign_in users(:user)
 
     put :update, id: forums(:utrecht), question: {title: 'New title', content: 'new contents'}
-    assert_redirected_to root_path, "Others can update questions"
+    assert_redirected_to root_path, 'Others can update questions'
   end
 
-  test "should get selector" do
+  test 'should get selector' do
     sign_in users(:user)
 
     get :selector
-    assert_response :success, "Selector broke"
+    assert_response :success, 'Selector broke'
     assert_not_nil assigns(:forums)
   end
 
@@ -64,7 +64,7 @@ class ForumsControllerTest < ActionController::TestCase
   # For owners
   ####################################
 
-  test "should show settings" do
+  test 'should show settings' do
     sign_in users(:user_utrecht_owner)
 
     get :settings, id: forums(:utrecht)
@@ -72,7 +72,7 @@ class ForumsControllerTest < ActionController::TestCase
     assert assigns(:forum)
   end
 
-  test "should not show statistics yet" do
+  test 'should not show statistics yet' do
     sign_in users(:user_utrecht_owner)
 
     get :statistics, id: forums(:utrecht)

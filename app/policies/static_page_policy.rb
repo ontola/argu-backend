@@ -1,5 +1,5 @@
 class StaticPagePolicy < Struct.new(:user, :static_pages)
-  attr_reader :context, :user, :record, :session
+  attr_reader :context, :record
 
   def initialize(context, record)
     @context = context

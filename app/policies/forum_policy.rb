@@ -1,6 +1,6 @@
 class ForumPolicy < RestrictivePolicy
   class Scope < Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :scope
 
     def initialize(context, scope)
       @context = context
@@ -111,7 +111,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def selector?
-    true || user.present?
+    true
   end
 
   #######Attributes########

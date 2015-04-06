@@ -68,7 +68,7 @@ class Context
 
     (components << current).compact!
     context = Context.new(components.shift)
-    components.each { |c| context.push(components.shift) }
+    components.each { context.push(components.shift) }
     context
   end
 

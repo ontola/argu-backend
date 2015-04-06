@@ -13,7 +13,7 @@ class Vote < ActiveRecord::Base
   validates :voteable_id, :voteable_type, :voter_id, :forum_id, :voter_type, :for, presence: true
 
   ##########methods###########
-  def for? item
+  def for?(item)
     self.for.to_s === item.to_s
   end
 

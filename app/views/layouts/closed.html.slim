@@ -14,7 +14,7 @@ head
   =render 'layouts/meta'
 
   / unless current_user.blank?
-  = stylesheet_link_tag "application", :media => "all"
+  =stylesheet_link_tag 'application', :media => 'all'
 
 body
   -flash.each do |key, value|
@@ -27,4 +27,4 @@ body
       =yield
   =javascript_include_tag 'closed'
   - if Rails.env.production? || Rails.env.test?
-    = render partial: 'analytics'
+    =render partial: 'analytics'

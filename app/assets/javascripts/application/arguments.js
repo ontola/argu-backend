@@ -11,7 +11,7 @@
     });
 
      //TODO: refactor into non-page load dependent code
-     $('.collapsible').each(function(i, e) {
+     $('.collapsible').each(function () {
          var span   = $(this).find('span').toggle(),
              before = $('<span>...<a href="#">meer</a></span>'),
              after  = $('<span><a href="#">minder</a></span>').hide(),

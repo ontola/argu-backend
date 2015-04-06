@@ -1,8 +1,8 @@
-.box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-created-at=motion.created_at  data-updated-at=motion.updated_at data-vote-count=motion.total_vote_count itemscope itemtype="http://schema.org/Answer"]
+.box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-created-at=motion.created_at  data-updated-at=motion.updated_at data-vote-count=motion.total_vote_count itemscope="itemscope" itemtype="http://schema.org/Answer"]
   -if motion.cover_photo.present?
-    = contextual_link_to motion_path(motion) do
+    =contextual_link_to motion_path(motion) do
       .box-image[style="background-image: url('#{motion.cover_photo.url(:box)}'); "]
-  = contextual_link_to motion_path(motion) do
+  =contextual_link_to motion_path(motion) do
     section.section-info.motion-bg
       span[class="fa fa-#{motion_icon}"]
       span.icon-left= motion_type

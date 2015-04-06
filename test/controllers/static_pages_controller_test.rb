@@ -1,9 +1,9 @@
-require "test_helper"
+require 'test_helper'
 
 class StaticPagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test "should get team" do
+  test 'should get team' do
     sign_in users(:user)
 
     get :team
@@ -13,7 +13,7 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_equal 'block--full', assigns(:document)['sections'].first['type']
   end
 
-  test "should get product" do
+  test 'should get product' do
     sign_in users(:user)
 
     get :product

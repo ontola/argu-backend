@@ -29,7 +29,7 @@ window.BigVote = React.createClass({
         });
     },
 
-    onActorChange: function (data) {
+    onActorChange: function () {
         this.refresh();
     },
 
@@ -61,16 +61,16 @@ window.BigVote = React.createClass({
             url: [this.state.object_id, 'v', side].join('/'),
             dataType: 'json',
             async: true,
-            beforeSend: function (xhr, settings) {
+            beforeSend: function (xhr) {
                 xhr.setRequestHeader('accepts', 'application/json, application/javascript, */*');
             },
-            success: function (data, status, xhr) {
+            success: function (data) {
                 if (data.vote) {
                     _this.setState(data.vote);
                     //Actions.actorUpdate(data);
                 }
             },
-            error: function (request, status, error) {
+            error: function (request, status) {
                 if(status == "parsererror" && request.statusText == "OK") {
                     $.globalEval(request.responseText)
                 } else {

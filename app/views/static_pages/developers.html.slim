@@ -1,5 +1,5 @@
 .col-1.col-1-big.developers#developers
-  - banner = ['prometheus', 'sanzio'].sample
+  - banner = %w(prometheus sanzio).sample
   header.big[id="#{banner}" style=('background-image: url(' + root_url + asset_path("developers/#{banner}.jpg") + ');')]
     h1.jumbo debate the web
   nav.fixedsticky

@@ -54,7 +54,7 @@ class Question < ActiveRecord::Base
       forum.increment :questions_count
       forum.save
     end
-    return true
+    true
   end
 
   def next(show_trashed = false)

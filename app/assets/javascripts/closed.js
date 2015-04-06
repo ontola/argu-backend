@@ -15,7 +15,7 @@
 //= require react
 //= require react_ujs
 //= require reflux.min
-//= require application/jquery.jeditable.mini.js
+//= require jquery.jeditable.mini.js
 //= require fastclick
 //= require nprogress
 //= require isotope.pkgd.min

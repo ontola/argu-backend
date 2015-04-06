@@ -1,10 +1,10 @@
 class RegistrationsController < Devise::RegistrationsController
 
   def new
-    if !within_user_cap?
-      redirect_to :root
-    else
+    if within_user_cap?
       super
+    else
+      redirect_to :root
     end
   end
 

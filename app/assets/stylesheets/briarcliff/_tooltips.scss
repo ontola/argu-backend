@@ -33,13 +33,13 @@
 }
 
 .tooltip--left:after{
-  right: 0em;
+  right: 0;
   left: auto;
 }
 
 .tooltip--right:after{
   right: auto;
-  left: 0em;
+  left: 0;
 }
 
 .tooltip:hover:after {

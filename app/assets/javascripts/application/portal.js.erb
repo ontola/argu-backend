@@ -8,7 +8,7 @@ $(function() {
                 onsubmit: function (settings) {
                     settings.target = '<%= portal_settings_path %>/';
                 },
-                submitdata : function(value, settings) {
+                submitdata : function () {
                     return {key: this.getAttribute('id')};
                 },
                 indicator : 'Saving...',

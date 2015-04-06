@@ -10,7 +10,7 @@
   meta[property="twitter:description" content="#{@forum.bio}"]
   /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
   meta[property="twitter:image" content="#{@forum.cover_photo.url}" ]
-div[itemscope itemtype="Thing"]
+div[itemscope="itemscope" itemtype="Thing"]
   .cover
     -if @forum.cover_photo.url.present?
       .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]

@@ -1,6 +1,6 @@
 class ActorPolicy < ApplicationPolicy
   class Scope < Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :scope
 
     def initialize(context, scope)
       @context = context

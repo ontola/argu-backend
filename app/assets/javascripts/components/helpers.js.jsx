@@ -17,7 +17,7 @@ Object.resolve = function(path, obj) {
 var _url = function (url, obj) {
     "use strict";
     if (typeof(url) === "string" && typeof(obj) === "object") {
-        var res = decodeURIComponent(url).replace(/{{([^{}]+)}}/, function (match, p1, p2, p3, offset, string) {
+        var res = decodeURIComponent(url).replace(/{{([^{}]+)}}/, function (match, p1) {
             return Object.resolve(p1, obj);
         });
         return res || decodeURIComponent(url);

@@ -54,8 +54,8 @@ class ApplicationController < ActionController::Base
   end
 
   # Creates an {Activity} for a model asynchronously
-  # @param [ActiveRecord::Base] a model to create the {Activity} for
-  # @param [Hash] options for {PublicActivity::Common#create_activity}
+  # @param [ActiveRecord::Base] model a model to create the {Activity} for
+  # @param [Hash] params options for {PublicActivity::Common#create_activity}
   def create_activity(model, params)
     a = model.create_activity params
     Argu::NotificationWorker.perform_async(a.id)

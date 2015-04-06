@@ -1,7 +1,7 @@
-.context.context--vertical[itemscope itemtype="http://schema.org/BreadcrumbList"]
-  div[itemprop="itemListElement" itemscope itemtype="http://schema.org/ListItem"]
+.context.context--vertical[itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList"]
+  div[itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem"]
     =link_to current_context.parent.contextized_url, itemprop: 'item'
-     .box.box-link
+      .box.box-link
         - classname = current_context.parent.single_model.class_name
         - if classname == 'forums'
           section.section-info.question-bg

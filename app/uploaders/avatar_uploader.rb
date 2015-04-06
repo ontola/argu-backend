@@ -40,7 +40,7 @@ class AvatarUploader < CarrierWave::Uploader::Base
 
   def default_url
     if model.respond_to?(:email) and model.email.present?
-      Gravatar.gravatar_url(model.email, size: "128x128", default: 'identicon')
+      Gravatar.gravatar_url(model.email, size: '128x128', default: 'identicon')
     end
   end
 

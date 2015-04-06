@@ -47,8 +47,8 @@ class Argument < ActiveRecord::Base
   counter_culture :motion,
                   column_name: Proc.new { |a| a.is_trashed ? nil : "argument_#{a.pro? ? 'pro' : 'con'}_count" },
                   column_names: {
-                      ["pro = ?", true] => 'argument_pro_count',
-                      ["pro = ?", false] => 'argument_con_count'
+                      ['pro = ?', true] => 'argument_pro_count',
+                      ['pro = ?', false] => 'argument_con_count'
                   }
 
 end

@@ -67,6 +67,7 @@ class CommentsController < ApplicationController
 private
   def get_commentable
     resource, id = request.path.split('/')[1,2]
+    # noinspection RubyCaseWithoutElseBlockInspection
     resource = case resource
       when 'a' then Argument
     end

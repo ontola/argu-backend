@@ -44,8 +44,7 @@ $(function () {
         }
     };
 
-    var filters   = $('#type, #tags'),
-        _document = $(document);
+    var _document = $(document);
 
     function activateFilter(type, filter, value) {
         $container.isotope({ filter: filterFns['combined'] });

@@ -51,9 +51,9 @@ module ApplicationHelper
     @resource
   end
 
-  def set_title(title= "")
+  def set_title(title= '')
     if request.env['HTTP_X_PJAX']
-      return raw "<title>#{[title, (' | ' if title), t('name')].compact.join.capitalize}</title>"
+      raw "<title>#{[title, (' | ' if title), t('name')].compact.join.capitalize}</title>"
     else
       provide :title, title
     end

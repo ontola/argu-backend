@@ -4,13 +4,13 @@
     /TODO: Add link to motion
   section
     h1[class=(@argument.pro ? 'pro-t' : 'con-t')]= @argument.title
-    = content_tag :p, raw(@argument.supped_content)
-    = print_references @argument
+    =content_tag :p, raw(@argument.supped_content)
+    =print_references @argument
   =render partial: @argument.creator, formats: [:html], locals: {resource: @argument}
   ul.btns-list.btns-vertical.btn-sticky.btn-sticky-bottom
     li= link_to(argument_path(@argument)) do
       span.fa.fa-external-link
-      span.icon-left= t("view_on_argu")
+      span.icon-left= t('view_on_argu')
     /li= link_to(argument_path(@argument)) do
       span.fa.fa-code
       span.icon-left= t("embed")

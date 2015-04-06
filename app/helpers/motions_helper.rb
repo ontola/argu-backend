@@ -2,11 +2,11 @@ include ActsAsTaggableOn::TagsHelper
 module MotionsHelper
   def back_to_motion(resource)
     concat content_tag 'h1', t("#{resource.class_name}.new.header", side: pro_translation(resource))
-    link_to resource.motion.title, motion_path(resource.motion), class: "btn btn-white"
+    link_to resource.motion.title, motion_path(resource.motion), class: 'btn btn-white'
   end
 
   def pro_side(resource)
-    %w(pro true).index(params[:pro] || resource.pro.to_s) ? "pro" : "con"
+    %w(pro true).index(params[:pro] || resource.pro.to_s) ? 'pro' : 'con'
   end
 
   def pro_translation(resource)
@@ -42,7 +42,6 @@ module MotionsHelper
   end
 
   def motion_items(motion)
-    divided = true
     link_items = []
     mo_po = policy(motion)
     if mo_po.update?

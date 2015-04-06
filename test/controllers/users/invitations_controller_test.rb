@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class Users::InvitationsControllerTest < ActionController::TestCase
   include Devise::TestHelpers

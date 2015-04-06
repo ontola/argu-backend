@@ -15,8 +15,10 @@ module DropdownHelper
         url: url
     }
 
-    image = opts.delete(:image) if opts[:image].present?
-    item[:image]= {url: image} if image.present?
+    if opts[:image].present?
+      image = opts.delete(:image)
+      item[:image]= {url: image} if image.present?
+    end
     item[:fa]= "fa-#{opts.delete :fa}" if opts[:fa].present?
     item.merge(opts)
   end

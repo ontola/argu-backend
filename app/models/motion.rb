@@ -83,7 +83,7 @@ class Motion < ActiveRecord::Base
       old_forum.save
       forum.save
     end
-    return true
+    true
   end
 
   def next(show_trashed= false)

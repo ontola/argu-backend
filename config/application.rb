@@ -20,7 +20,7 @@ module Argu
     config.app_generators.template_engine :slim
 
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     config.active_record.raise_in_transactional_callbacks = true
 

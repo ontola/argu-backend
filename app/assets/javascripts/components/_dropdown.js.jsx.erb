@@ -44,7 +44,7 @@ window.HyperDropdown = React.createClass({
         window.removeEventListener('resize', this.handleResize);
     },
 
-    handleClick: function (e) {
+    handleClick: function () {
         if (this.state.openState) {
             this.close();
         } else {
@@ -52,7 +52,7 @@ window.HyperDropdown = React.createClass({
         }
     },
 
-    handleClickOutside: function (e) {
+    handleClickOutside: function () {
         if (this.state.openState) {
             this.close();
         }
@@ -140,7 +140,7 @@ var LinkItem = React.createClass({
         return {};
     },
 
-    handleMouseDown: function (e) {
+    handleMouseDown: function () {
         // Fixes an issue where firefox bubbles events instead of capturing them
         // See: https://github.com/facebook/react/issues/2011
         this.getDOMNode().getElementsByTagName('a')[0].click();
@@ -204,8 +204,6 @@ var ActorItem = React.createClass({
         }
         var method, remote, skipPjax;
         if (this.props.data) {
-            method = this.props.data.method;
-            remote = this.props.data.remote;
             skipPjax = this.props.data['skip-pjax'];
         }
 

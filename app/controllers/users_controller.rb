@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     @user = current_user
     authorize @user
 
-    unless @user.nil?
+    if @user.present?
       @authentications = @user.authentications
       respond_to do |format|
         format.html

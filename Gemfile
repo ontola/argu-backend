@@ -78,8 +78,8 @@ gem 'pundit', '~> 0.3.0'
 gem 'rolify', '~> 3.4.1'
 
 group :development, :test do
-  gem 'thin'
-  #gem 'puma', platform: :ruby
+  #gem 'thin'
+  gem 'puma', platform: :ruby
   gem 'nokogiri', '1.6.5'
   gem 'minitest-rails', '~> 2.1.1'
   gem 'minitest-reporters', '~> 1.0.8'

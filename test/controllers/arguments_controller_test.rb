@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class ArgumentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
@@ -12,7 +12,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert assigns(:argument)
     assert assigns(:comments)
 
-    assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, "Trashed comments are visible"
+    assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, 'Trashed comments are visible'
   end
 
   test 'should get new pro' do

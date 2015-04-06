@@ -14,6 +14,7 @@ module ActivityStringHelper
     else
       your = ''
     end
+    # noinspection RubyCaseWithoutElseBlockInspection
     case activity.trackable
       when Question
         as_for_questions_create activity, owner_string, your, embedded_link

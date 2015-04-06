@@ -1,6 +1,6 @@
 class RestrictivePolicy
   include AccessTokenHelper, UsersHelper
-  attr_reader :context, :user, :record, :session
+  attr_reader :context, :record
 
   def initialize(context, record)
     @context = context
