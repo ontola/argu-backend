@@ -13,16 +13,16 @@
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_pro_light.each do |argument|
-          li= link_to argument_path(argument)
-            h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
+          li= link_to argument_path(argument[0])
+            h3[class="#{argument[2] ? 'pro' : 'con'}-t"]
               span.fa.fa-plus
-              span.icon-left= argument.title
+              span.icon-left= argument[1]
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_con_light.each do |argument|
-          li= link_to argument_path(argument.id)
-            h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
+          li= link_to argument_path(argument[0])
+            h3[class="#{argument[2] ? 'pro' : 'con'}-t"]
               span.fa.fa-minus
-              span.icon-left= argument.title
+              span.icon-left= argument[1]
     =contextual_link_to motion_path(model), class: 'btn-subtle btn-sticky btns-sticky-bottom read-more'
       span.icon-right= t('read_more')
       span.fa.fa-arrow-right
