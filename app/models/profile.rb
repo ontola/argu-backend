@@ -22,7 +22,7 @@ class Profile < ActiveRecord::Base
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, CoverUploader
 
-  pica_pica :profile_photo
+  #pica_pica :profile_photo
   acts_as_follower
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
@@ -37,7 +37,7 @@ class Profile < ActiveRecord::Base
     profileable.try :email
   end
 
-  def frozen?
+  def profile_frozen?
     has_role? 'frozen'
   end
 
@@ -104,13 +104,13 @@ class Profile < ActiveRecord::Base
 private
 
   def role_added(role)
-    if self.frozen?
+    if self.profile_frozen?
       # Send mail or notification to user that he has been unfrozen
     end
   end
 
   def role_removed(role)
-    if self.frozen?
+    if self.profile_frozen?
       # Send mail or notification to user that he has been frozen
     end
   end

@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :set_layout
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
-  after_action :set_notification_header
+  #after_action :set_notification_header
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
     flash[:warning] = t(:twice_warning)
@@ -62,7 +62,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_scope
-    current_context.context_scope(current_profile) || current_context
+    @current_scope ||= (current_context.context_scope(current_profile) || current_context)
   end
 
   # @return the current context, if a param is given, it will serve as the start of the current context

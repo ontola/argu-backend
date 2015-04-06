@@ -122,6 +122,16 @@ class Motion < ActiveRecord::Base
     self.arguments.where(pro: true).trashed(false).order(votes_pro_count: :desc).limit(5)
   end
 
+  # Same as {Argument#top_arguments_con} but plucks only :id, :title, and :pro
+  def top_arguments_con_light
+    self.arguments.where(pro: false).trashed(false).order(votes_pro_count: :desc).limit(5).pluck(:id, :title, :pro)
+  end
+
+  # Same as {Argument#top_arguments_pro} but plucks only :id, :title, and :pro
+  def top_arguments_pro_light
+    self.arguments.where(pro: true).trashed(false).order(votes_pro_count: :desc).limit(5).pluck(:id, :title, :pro)
+  end
+
   def total_vote_count
     votes_pro_count.abs + votes_con_count.abs + votes_neutral_count.abs
   end

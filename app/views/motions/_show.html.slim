@@ -3,8 +3,8 @@
     =contextual_link_to motion_path(model)
       .box-image[style="background-image: url('#{model.cover_photo.url(:box)}'); "]
   section.section-info.motion-bg
-    span[class="fa fa-#{motion_icon(model.forum)}"]
-    span.icon-left= motion_type(model.forum)
+    span[class="fa fa-#{motion_icon(current_scope.model || model.forum)}"]
+    span.icon-left= motion_type(current_scope.model || model.forum)
   section[itemscope itemtype="http://www.schema.org/Answer"]
     =contextual_link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title
@@ -12,14 +12,14 @@
       ==model.truncate_preview(150, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read_more'), motion_path(model))})
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
-        - model.top_arguments_pro.each do |argument|
+        - model.top_arguments_pro_light.each do |argument|
           li= link_to argument_path(argument)
             h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
               span.fa.fa-plus
               span.icon-left= argument.title
       ul.box-list.box-list--arguments.box-list--icons
-        - model.top_arguments_con.each do |argument|
-          li= link_to argument_path(argument)
+        - model.top_arguments_con_light.each do |argument|
+          li= link_to argument_path(argument.id)
             h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
               span.fa.fa-minus
               span.icon-left= argument.title
