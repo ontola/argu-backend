@@ -10,4 +10,13 @@ class Shortname < ActiveRecord::Base
 
   SHORTNAME_FORMAT_REGEX = /\A[a-z]+[_a-z0-9]*\z/i
 
+
+  def self.shortname_for(klass_name, id)
+    Shortname.where(owner_type: klass_name, owner_id: id).pluck(:shortname).first
+  end
+
+  def self.shortnames_for_klass(klass_name, ids)
+    Shortname.where(owner_type: klass_name, owner_id: ids).pluck(:shortname)
+  end
+
 end

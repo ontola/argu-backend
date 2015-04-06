@@ -64,15 +64,12 @@ class Context
 
   # Parses a {Context} object chain from a {Context}-string
   def self.parse_from_context_string(value, current=nil)
-    if current.present?
-      Context.new(current, Context.parse_from_context_string(value))
-    elsif value
-      split = value.split('*', 2)
-      parent_context = Context.parse_from_context_string(split[1]) if split[1].present?
-      Context.new(split[0], parent_context)
-    else
-      Context.new
-    end
+    components = value.split('*').map { |c| c.split(/ |\+/) }.map! { |c| c[0].capitalize.constantize.find c[1] }
+
+    (components << current).compact!
+    context = Context.new(components.shift)
+    components.each { |c| context.push(components.shift) }
+    context
   end
 
   # Takes the topmost item off the stack and returns the item
@@ -129,8 +126,12 @@ class Context
 
   protected
   def parse_from_string(value)
-    split = value.split(/ |\+/)
-    split[0].capitalize.constantize.find split[1]
+    begin
+      split = value.split(/ |\+/)
+      split[0].capitalize.constantize.find split[1]
+    rescue NameError # Someone messed with the URL
+      nil
+    end
   end
 
   # Recurses down the line of @parent_contexts

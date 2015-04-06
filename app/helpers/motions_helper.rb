@@ -44,13 +44,14 @@ module MotionsHelper
   def motion_items(motion)
     divided = true
     link_items = []
-    if policy(motion).update?
+    mo_po = policy(motion)
+    if mo_po.update?
       link_items << link_item(t('update'), edit_motion_path(motion), fa: 'pencil')
     end
-    if policy(motion).trash?
+    if mo_po.trash?
       link_items << link_item(t('trash'), motion_path(motion), data: {confirm: t('trash_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'trash')
     end
-    if policy(motion).destroy?
+    if mo_po.destroy?
       link_items << link_item(t('destroy'), motion_path(motion, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'close')
     end
     if active_for_user?(:notifications, current_user)

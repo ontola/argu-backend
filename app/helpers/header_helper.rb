@@ -85,9 +85,9 @@ module HeaderHelper
   end
 
   def profile_membership_items
-    items = []
-    current_profile.present? && current_profile.memberships.joins(:forum).each do |membership|
-      items << link_item(membership.forum.display_name, forum_path(membership.forum), image: membership.forum.profile_photo.url(:icon))
+    ids = current_profile.memberships.pluck(:forum_id)
+    items = Shortname.shortnames_for_klass('Forum', ids).zip(Forum.where(id: ids).select(:name, :profile_photo)).map do |forum|
+      link_item(forum[1].display_name, forum_path(forum[0]), image: forum[1].profile_photo.url(:icon))
     end
     items
   end

@@ -128,9 +128,9 @@ class ApplicationController < ActionController::Base
     Activity.delete Activity.where('created_at >= :date', :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
   end
 
-  # May the user update the model and has it enabled the `trashed` `param`
+  # Has the {User} enabled the `trashed` `param` and is he authorized?
   def show_trashed?
-    if policy(current_scope.model).update?
+    if params[:trashed].present? && policy(current_scope.model).update?
       params[:trashed] == 'true'
     else
       false

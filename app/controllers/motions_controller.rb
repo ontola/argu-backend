@@ -9,7 +9,7 @@ class MotionsController < ApplicationController
     authorize @motion
     current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
-    @opinions = Opinion.ordered policy_scope(@motion.opinions.trashed(show_trashed?))
+    #@opinions = Opinion.ordered policy_scope(@motion.opinions.trashed(show_trashed?))
     @group_responses = Group.ordered @motion.group_responses, @forum.groups
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
