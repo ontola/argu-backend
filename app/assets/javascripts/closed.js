@@ -25,5 +25,4 @@
 //= require initialize.js.jsx
 //= require ./application/briarcliff/modal
 //= require ./application/briarcliff/nprogress-briarcliff
-//= require ./application/ie
 //= require ./application/alert
