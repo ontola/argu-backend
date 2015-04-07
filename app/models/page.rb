@@ -8,8 +8,6 @@ class Page < ActiveRecord::Base
   has_many :memberships, class_name: 'PageMembership', dependent: :destroy
   has_many :managers, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
 
-  after_initialize :build_default_associations, if: :new_record?
-
   attr_accessor :repeat_name
 
   validates :shortname, presence: true, length: {minimum: 3, maximum: 50}
