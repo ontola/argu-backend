@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
   validates :email, allow_blank: false,
         format: { with: RFC822::EMAIL }
   validates :profile, presence: true
-  validates :first_name, :last_name, presence: true, if: :requires_name?
+  validates :first_name, :last_name, presence: true, length: {minimum: 1, maximum: 255}, if: :requires_name?
 
   # @private
   # Note: Fix for devise_invitable w/ shortnameable

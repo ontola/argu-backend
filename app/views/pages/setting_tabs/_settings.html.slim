@@ -2,9 +2,6 @@
   - @page.errors.full_messages.each do |message|
     =message
   =f.inputs do
-    =f.semantic_fields_for :profile do |p_f|
-      =p_f.input :name
-      =p_f.input :profile_photo
     - if policy(@page).is_owner? || policy(@page).shortname?
       =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
         - if policy(@page).shortname?

@@ -1,0 +1,16 @@
+.col-1
+  =render partial: 'pages/manage_bar', locals: {resource: @resource}  if policy(@resource).update?
+  .box
+    section
+      =semantic_form_for @profile, url: profile_path(@resource) do |f|
+        - @profile.errors.full_messages.each do |message|
+          =message
+        =f.inputs do
+          =f.input :name
+          =f.input :about
+          =f.input :profile_photo
+          =f.input :profile_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }
+          =f.input :cover_photo
+          =f.input :cover_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }
+        =f.actions do
+          =f.action :submit, :as => :button

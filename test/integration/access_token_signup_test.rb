@@ -86,7 +86,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                    about: 'Something ab'
                                }}
     assert_redirected_to forums(:hidden).url
-    assert assigns(:user)
+    assert assigns(:resource)
     assert assigns(:profile)
     assert_equal 1, assigns(:profile).memberships.count
 
@@ -126,7 +126,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                }}
     assert_redirected_to motion_vote_path(motions(:hidden_one), 'neutral')
     assert_response 307
-    assert assigns(:user)
+    assert assigns(:resource)
     assert assigns(:profile)
     assert_equal 'new user', assigns(:profile).display_name
     assert_equal 1, assigns(:profile).memberships.count

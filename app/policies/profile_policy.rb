@@ -28,6 +28,12 @@ class ProfilePolicy < RestrictivePolicy
     end
   end
 
+  def permitted_attributes
+    attributes = super
+    attributes << [:name, :about, :profile_photo, :cover_photo, :are_votes_public] if update?
+    attributes
+  end
+
   def index
     is_owner? || staff?
   end
