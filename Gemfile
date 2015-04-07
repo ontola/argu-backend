@@ -7,7 +7,6 @@ gem 'rails', '~>4.2.0'
 gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
 gem 'logstasher'
-gem 'bugsnag'
 
 ##################DB########################
 gem 'pg', '0.17.1'
@@ -20,7 +19,6 @@ gem 'rails-i18n', '~> 4.0.3'
 gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'formtastic', '~> 3.1.2'
-gem 'cocoon', '~> 1.2.6'
 gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
 gem 'rest-client'
@@ -102,6 +100,7 @@ group :production, :staging do
   gem 'therubyracer', '~> 0.12.1'
   gem 'unicorn', '~> 4.8.3'
   gem 'rack-test', '~> 0.6.2'
+  gem 'bugsnag'
 end
 
 group :staging, :development do

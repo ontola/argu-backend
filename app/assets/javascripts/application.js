@@ -32,7 +32,7 @@
 //= require requirejs
 //= require autocomplete-rails
 //= require pica_pica/application
-//= require cocoon
 //= require_tree ./stores
 //= require components
+//= require initialize.js.jsx
 //= require_tree ./application

@@ -122,7 +122,6 @@ GEM
       carrierwave (~> 0.5)
     celluloid (0.16.0)
       timers (~> 4.0.0)
-    cocoon (1.2.6)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -434,7 +433,6 @@ DEPENDENCIES
   carrierwave-aws
   carrierwave-vips
   carrierwave_backgrounder (~> 0.4.1)
-  cocoon (~> 1.2.6)
   coffee-rails (~> 4.1.0)
   counter_culture (~> 0.1.27)
   devise (~> 3.4.1)

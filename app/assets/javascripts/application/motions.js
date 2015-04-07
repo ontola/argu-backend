@@ -1,6 +1,14 @@
- $(document).ready(function() {
-     $(document).on('pjax:success', function() {
+
+ Argu.m = {
+     init: function () {
          "use strict";
+         $(document).on('pjax:success', Argu.m.setupSelectize);
+         this.setupSelectize();
+     },
+
+     setupSelectize: function () {
+         "use strict";
+
          $('.tag-list').selectize({
              delimiter: ',',
              valueField: 'name',
@@ -36,5 +44,5 @@
                  });
              }
          });
-     });
- });
+     }
+ };
