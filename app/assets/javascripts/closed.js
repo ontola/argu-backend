@@ -23,6 +23,4 @@
 //= require_tree ./stores
 //= require components
 //= require initialize.js.jsx
-//= require ./application/briarcliff/modal
-//= require ./application/briarcliff/nprogress-briarcliff
 //= require ./application/alert

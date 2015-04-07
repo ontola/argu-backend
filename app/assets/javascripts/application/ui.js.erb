@@ -9,12 +9,42 @@ Argu.ui = {
         $(document)
             .on('keyup', '.confirm .confirm-text', this.confirmInputHandler)
             .on('click', '.comment .btn-reply', this.openCommentForm)
-            .on('pjax:success', this.handleDOMChangedFinished);
+            .on('pjax:success', this.handleDOMChangedFinished)
+            .on('pjax:end', this.checkTabs)
+            .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix);
+
         this.handleDOMChangedFinished();
         this.initPlaceholderFallback();
-
         (this.window = $(window)).resize(this.handleResizeBackground);
         this.handleResizeBackground();
+        this.checkTabs();
+
+        Argu.ui.modal.init();
+        Argu.ui.progressbar.init();
+        FastClick.attach(document.body);
+    },
+
+    bindRemoteLinks: function () {
+        $('.remote-link')
+                .bind("ajax:beforeSend", function () {
+                    $(this).addClass("is-loading");
+                })
+                .bind('ajax:complete', function () {
+                    $(this).removeClass("is-loading");
+                })
+                .bind("ajax:error", function () {
+                    $(this).removeClass("is-loading");
+                });
+    },
+
+    checkTabs: function () {
+        var str=location.href.toLowerCase();
+        $(".tabs li a").each(function() {
+            if (str.indexOf(this.href.toLowerCase()) > -1) {
+                $("li.tabs-current").removeClass("tabs-current");
+                $(this).parent().addClass("tabs-current");
+            }
+        });
     },
 
     confirmInputHandler: function () {
@@ -24,9 +54,34 @@ Argu.ui = {
         _this.closest('.confirm').find('.confirm-action').attr('disabled', _this.val() != _this.attr('confirm-text'));
     },
 
+    disableSubmitButton: function () {
+        var _this = $(this);
+        _this.addClass("is-loading");
+        setTimeout(function () {
+            _this.removeClass("is-loading");
+        }, 2500);
+    },
+
+    handleClickSmoothly: function () {
+        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+            if (target.length) {
+                history.pushState(null, null, '#' + this.hash.slice(1));
+                $('html,body').animate({
+                    scrollTop: target.offset().top - 200
+                }, 600);
+                event.preventDefault();
+            }
+        }
+    },
+
     handleDOMChangedFinished: function () {
-        this.handleEditableSettings();
+        Argu.ui.handleEditableSettings();
         Argu.ui.bg = $(".background");
+        $('button:submit').click(Argu.ui.disableSubmitButton);
+        $('a[href*=#]:not([href=#])').click(Argu.ui.handleClickSmoothly);
+        Argu.ui.bindRemoteLinks();
     },
 
     handleEditableSettings: function () {
@@ -92,9 +147,57 @@ Argu.ui = {
         }
     },
 
+    mobileTapTooCloseFix: function (e) {
+        // Prevents dropdown-active from opening the neighboring link in Chrome for android.. but also prevents clicking on dropdown content!
+        e.preventDefault();
+    },
+
     openCommentForm: function (e) {
         "use strict";
         e.preventDefault();
         $('.comment_form#cf' + $(this).attr('id')).slideToggle();
+    }
+};
+
+Argu.ui.modal = {
+    init: function () {
+        // Close modal when clicking on overlay, unless there is a "no-close" class.
+        $(document).on('click', '.modal-container:not(.no-close) .overlay', this.closeModal);
+
+        // Close modal when pressing escape button, unless there is a "no-close" class.
+        document.addEventListener('keyup', function(e) {
+            if (e.keyCode == 27 && !$(".no-close")[0]) {
+                $('.modal-container').addClass('modal-hide');
+                window.setTimeout(function () {
+                    $('.modal-container').remove();
+                    $('body').removeClass('modal-opened');
+                }, 500);
+            }
+        });
+
+        $(document).on('pjax:complete', function () {
+            $('body').removeClass('modal-opened');
+        });
+    },
+
+    closeModal: function () {
+        var container = $(this).parent('.modal-container');
+
+        container.addClass('modal-hide');
+        window.setTimeout(function () {
+            container.remove();
+            $('body').removeClass('modal-opened');
+        }, 500);
+    }
+};
+
+Argu.ui.progressbar = {
+    init: function () {
+        $(document).on('pjax:start',   NProgress.start)
+                   .on('pjax:success',  NProgress.done)
+                   .on('pjax:end', NProgress.remove)
+                   .on('ajax:beforeSend',   NProgress.start)
+                   .on('ajax:complete',  NProgress.done)
+                   .on('ajax:after', NProgress.remove);
     }
 };

@@ -1,26 +1,53 @@
-$(function () {
-    function checkForGrid () {
-        var grid = $('.grid');
+function checkForGrid () {
+    var grid = $('.grid');
 
-        if (grid.length > 0) {
-            $container = grid.isotope({
-                itemSelector: '.box-grid',
-                columnWidth: '.box-grid-sizer',
-                getSortData: {
-                    updated_at: '[data-updated-at]',
-                    created_at: '[data-created-at]',
-                    name: 'h2',
-                    vote_count: '[data-vote-count] parseInt'
-                },
-                sortAscending: {
-                    created_at: false,
-                    updated_at: false,
-                    name: true,
-                    vote_count: false
-                }
-            });
-        }
+    if (grid.length > 0) {
+        $container = grid.isotope({
+            itemSelector: '.box-grid',
+            columnWidth: '.box-grid-sizer',
+            getSortData: {
+                updated_at: '[data-updated-at]',
+                created_at: '[data-created-at]',
+                name: 'h2',
+                vote_count: '[data-vote-count] parseInt'
+            },
+            sortAscending: {
+                created_at: false,
+                updated_at: false,
+                name: true,
+                vote_count: false
+            }
+        });
     }
+}
+var _document = $(document);
+
+function activateFilter(type, filter, value) {
+    $container.isotope({ filter: filterFns['combined'] });
+    if ((filterFns[filter] || filter || '') == '') setHighlight('tags', '');
+}
+
+function filterForType(filter, value) {
+    lastType = value;
+    if (filter == "") lastFilter = "";
+    activateFilter(filter, filter, value);
+    setHighlight('type', value);
+    if(lastFilter != "") activateFilter('tags', 'tags', lastFilter);
+}
+
+function filterForTag(tag) {
+    lastFilter = tag;
+    activateFilter('tags', 'tags', tag);
+    setHighlight('tags', lastFilter);
+    if(lastType != "") activateFilter('type', lastType, lastType);
+}
+
+function setHighlight(type, value) {
+    _document.find('#' + type + ' .is-checked').removeClass('is-checked');
+    _document.find('#' + type + ' [data-filter-value="'+value+'"]').addClass('is-checked');
+}
+
+$(function () {
     checkForGrid();
 
     // filter functions
@@ -43,33 +70,6 @@ $(function () {
             return correctTag && correctType;
         }
     };
-
-    var _document = $(document);
-
-    function activateFilter(type, filter, value) {
-        $container.isotope({ filter: filterFns['combined'] });
-        if ((filterFns[filter] || filter || '') == '') setHighlight('tags', '');
-    }
-
-    function filterForType(filter, value) {
-        lastType = value;
-        if (filter == "") lastFilter = "";
-        activateFilter(filter, filter, value);
-        setHighlight('type', value);
-        if(lastFilter != "") activateFilter('tags', 'tags', lastFilter);
-    }
-
-    function filterForTag(tag) {
-        lastFilter = tag;
-        activateFilter('tags', 'tags', tag);
-        setHighlight('tags', lastFilter);
-        if(lastType != "") activateFilter('type', lastType, lastType);
-    }
-
-    function setHighlight(type, value) {
-        _document.find('#' + type + ' .is-checked').removeClass('is-checked');
-        _document.find('#' + type + ' [data-filter-value="'+value+'"]').addClass('is-checked');
-    }
 
     $(document).on('pjax:complete pjax:end', function () {
         checkForGrid();
