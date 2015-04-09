@@ -3,7 +3,7 @@
   meta[name="description" content="#{@argument.content}"]
   meta[property="og:title" content="#{@argument.display_name}"]
   meta[property="og:url" content="#{motion_url(@argument)}"]
-  meta[property="og:description" content="#{@argument.content}"]
+  meta[property="og:description" content="#{markdown_to_plaintext(@argument.content)}"]
   meta[property="twitter:card" content="summary"]
   meta[property="twitter:title" content="#{@argument.display_name}"]
   meta[property="twitter:description" content="#{@argument.content}"]

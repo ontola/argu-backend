@@ -5,7 +5,8 @@
   section
     h1[class=(@argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= @argument.title
     =render partial: 'arguments/shr', locals: {model: @argument}
-    =content_tag :p, raw(@argument.supped_content), itemprop: 'text'
+    .markdown[itemprop="text"]
+      = markdown_to_html(@argument.content)
   =render @argument.creator, locals= {resource: @argument} if @argument.creator.present?
   ul.btns-list.btns-vertical.btn-sticky.btn-sticky-bottom
     - if current_user.present? && policy(@argument).update? || active_for_user?(:notifications, current_user)

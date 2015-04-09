@@ -3,7 +3,7 @@
   meta[name="description" content="#{@motion.content}"]
   meta[property="og:title" content="#{@motion.display_name}"]
   meta[property="og:url" content="#{motion_url(@motion)}"]
-  meta[property="og:description" content="#{@motion.content}"]
+  meta[property="og:description" content="#{markdown_to_plaintext(@motion.content)}"]
   meta[property="og:image" content="#{@motion.cover_photo.url}"]
   meta[property="twitter:card" content="summary"]
   meta[property="twitter:title" content="#{@motion.display_name}"]
@@ -17,7 +17,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     div[data-intro= t('intro.motion.back')]= to_parent
     =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}
     .col--motion
-      div[data-intro= t('intro.motion.body') itemprop="text"]= render partial: 'motionbody', locals: { motion: @motion }
+      div[data-intro= t('intro.motion.body') itemprop="text"]= render partial: 'body', locals: { motion: @motion }
       =react_component 'BigVote', motion_vote_props(@motion, @vote), {prerender: true}
       =render partial: 'updates/update', locals: {item: @motion}
 .col-2

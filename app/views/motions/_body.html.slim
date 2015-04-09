@@ -2,9 +2,10 @@
   section.section-info.motion-bg
     span[class="fa fa-#{motion_icon}"]
     span.icon-left= motion_type
-  section.markdown
-    h1.motion-t= motion.title
-    p= Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(filter_html: true, escape_html: true), {tables: true, fenced_code_blocks: false, no_styles: true, escape_html: true}).render(motion.content).html_safe
+  section
+    h1.motion-t[itemprop="headline"]= motion.title
+    .markdown[itemprop="text"]
+      = markdown_to_html(motion.content)
   /TODO: Fix tags link
   /- if motion.tags.present?
     ul[class="tags" data-intro= t("intro.tags")]= render partial: 'tags/tags', locals: {resource: motion}
