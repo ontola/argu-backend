@@ -3,6 +3,7 @@
 nl:
   motions:
     type: "idee"
+    type_new: "nieuw idee"
     title: "Idee"
     header: "Ideeën"
     plural: "Ideeën"
