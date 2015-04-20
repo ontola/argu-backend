@@ -181,10 +181,10 @@ Argu.ui.modal = {
     },
 
     closeModal: function () {
-        var container = $(this).parent('.modal-container');
+        let container = $(this).parent('.modal-container');
 
         container.addClass('modal-hide');
-        window.setTimeout(function () {
+        window.setTimeout(() => {
             container.remove();
             $('body').removeClass('modal-opened');
         }, 500);

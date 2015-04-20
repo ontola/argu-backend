@@ -12,15 +12,14 @@ window.BigVote = React.createClass({
     },
 
     refresh: function () {
-        var _this = this;
         $.ajax({
             type: 'GET',
             url: [this.state.object_id, 'v'].join('/'),
             dataType: 'json',
             async: true,
-            success: function (data) {
+            success: (data) => {
                 if (data.vote) {
-                    _this.setState(data.vote);
+                    this.setState(data.vote);
                 }
             },
             error: function () {
@@ -55,7 +54,6 @@ window.BigVote = React.createClass({
     },
 
     vote: function (side) {
-        var _this = this;
         $.ajax({
             type: 'POST',
             url: [this.state.object_id, 'v', side].join('/'),
@@ -64,13 +62,13 @@ window.BigVote = React.createClass({
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('accepts', 'application/json, application/javascript, */*');
             },
-            success: function (data) {
+            success: (data) => {
                 if (data.vote) {
-                    _this.setState(data.vote);
+                    this.setState(data.vote);
                     //Actions.actorUpdate(data);
                 }
             },
-            error: function (request, status) {
+            error: (request, status) => {
                 if(status == "parsererror" && request.statusText == "OK") {
                     $.globalEval(request.responseText)
                 } else {

@@ -15,9 +15,9 @@ window.HyperDropdown = React.createClass({
     },
 
     calculateRenderLeft: function () {
-        this.state.referenceDropdownElement.style.left = '0';
-        this.state.referenceDropdownElement.style.right = 'auto';
-        var elemRect = this.state.referenceDropdownElement.getBoundingClientRect();
+        this.referenceDropdownElement().style.left = '0';
+        this.referenceDropdownElement().style.right = 'auto';
+        var elemRect = this.referenceDropdownElement().getBoundingClientRect();
         this.setState({renderLeft: (elemRect.width + elemRect.left) > window.innerWidth});
     },
 
@@ -34,8 +34,8 @@ window.HyperDropdown = React.createClass({
         this.unsubscribe = actorStore.listen(this.onActorChange);
         this.setState({referenceDropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0],
             dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[1]});
-        this.calculateRenderLeft();
         window.addEventListener('resize', this.handleResize);
+        this.calculateRenderLeft();
     },
 
     componentWillUnmount: function () {
@@ -71,6 +71,16 @@ window.HyperDropdown = React.createClass({
         this.setState({current_actor: data});
     },
 
+    referenceDropdownElement: function () {
+        let refDropdown;
+        if (typeof(this.state.referenceDropdownElement) !== "undefined") {
+            refDropdown = this.state.referenceDropdownElement;
+        } else {
+            refDropdown = this.getDOMNode().getElementsByClassName('dropdown-content')[0];
+        }
+        return refDropdown;
+    },
+
     render: function () {
         var collapseStyle = {
             visibility: this.state.openState ? 'visible' : 'hidden',
@@ -82,7 +92,7 @@ window.HyperDropdown = React.createClass({
             _this = this;
         if (this.props.sections) {
             sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle}>
-                {this.props.sections.map(function(section, i) {
+                {this.props.sections.map(function (section, i) {
                     if (typeof(section.type) == "string") {
                         return (<Notifications key={i} done={_this.close} {...section} />);
                     } else {

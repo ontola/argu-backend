@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 source 'http://utility.argu.co:3000/'
 
-gem 'sass-rails',   '~> 5.0.0'
+gem 'sass-rails', '~> 5.0.3'
 gem 'rails', '~>4.2.0'
 
 gem 'simple_text', '~> 0.0.21'
@@ -49,7 +49,6 @@ gem 'slim', '~> 2.1.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete', '~> 1.0.14'
-gem 'bootstrap-sass', '~>2.0.1'                                           # This even needed?
 gem 'carrierwave', '~> 0.10.0'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
 gem 'carrierwave-vips'
@@ -62,6 +61,8 @@ gem 'render_anywhere', :require => false
 gem 'jquery-pjax-rails'
 gem 'rack-pjax'
 gem 'uglifier', '>= 2.5.3'
+gem 'sprockets', '~>3.0.1'
+gem 'sprockets-es6'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'
