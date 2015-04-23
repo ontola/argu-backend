@@ -61,7 +61,7 @@ gem 'render_anywhere', :require => false
 gem 'jquery-pjax-rails'
 gem 'rack-pjax'
 gem 'uglifier', '>= 2.5.3'
-gem 'sprockets', '~>3.0.1'
+gem 'sprockets', '~>3.0.2'
 gem 'sprockets-es6'
 
 ##################User management########################
