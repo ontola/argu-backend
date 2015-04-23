@@ -41,7 +41,8 @@ gem 'kaminari', '~>0.16.1'
 
 
 ##################Front-end########################
-gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
+#gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
+gem 'react-rails', '~> 1.0'
 
 ##################Asset-y########################
 gem 'slim', '~> 2.1.0'
