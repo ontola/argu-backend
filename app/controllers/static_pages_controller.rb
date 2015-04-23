@@ -1,5 +1,4 @@
 class StaticPagesController < ApplicationController
-  before_action :get_document, only: [:team, :about, :product, :governments]
 
   def home
     authorize :static_pages
@@ -28,12 +27,12 @@ class StaticPagesController < ApplicationController
 
   def about
     authorize :static_pages
-    render 'document'
+    redirect_to info_path('about'), status: 302
   end
 
   def product
     authorize :static_pages
-    render 'document'
+    redirect_to info_path('product'), status: 302
   end
 
   def developers
@@ -46,22 +45,17 @@ class StaticPagesController < ApplicationController
 
   def team
     authorize :static_pages
-    render 'document'
+    redirect_to info_path('team'), status: 302
   end
 
   def governments
     authorize :static_pages
-    render 'document'
+    redirect_to info_path('governments'), status: 302
   end
 
   private
   def default_forum_path
     current_profile.present? ? preferred_forum : Forum.first_public
-  end
-
-  def get_document
-    @document = JSON.parse Setting.get(params[:action]) || '{}'
-    # parsing is neccessary, since the _simple_settings gem converts the JSON to a string
   end
 
 end

@@ -12,3 +12,7 @@ team:
 error_quotes:
   key: 'quotes'
   value: 'Eerste quote;tweede quote;derde quote;BLAAT FUCKER;NOG IETS'
+#
+non_info_json:
+  key: 'non_info_json'
+  value: '{"json": "but not info"}'
