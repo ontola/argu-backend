@@ -3,6 +3,7 @@
 nl:
   arguments:
     type: "argument"
+    type_new: "nieuw argument"
     type_scientific: "wetenschappelijk"
     type_axiomatic: "axiomatisch"
     type_other: "anders"

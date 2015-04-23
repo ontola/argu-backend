@@ -2,10 +2,11 @@
 
 nl:
   mailer:
-    subject: "Er is een %{type} toegevoegd aan %{item}"
+    subject: "%{type} toegevoegd aan '%{item}'"
     view_type: "Bekijk %{type}"
     view_type_on_argu: "Bekijk %{type} op Argu"
     sent_at_date: 'Verzonden op %{date}'
+    settings: 'Notificatie instellingen wijzigen.'
     direct_mail:
       header: "Hoi %recipient.name%"
       first_paragraph: "Iemand heeft een bericht voor je achtergelaten"

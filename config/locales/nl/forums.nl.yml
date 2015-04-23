@@ -3,8 +3,9 @@
 nl:
   forums:
     resource_name: "forum"
-    type: "Forum"
-    plural: "Forums"
+    type: "forum"
+    type_new: "nieuw forum"
+    plural: "forums"
     resource_name:
       management: "forum beheer"
     settings:

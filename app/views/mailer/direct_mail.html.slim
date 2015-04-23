@@ -13,9 +13,14 @@ html
     h1= t('mailer.direct_mail.header')
 
     ==activity_string_for(activity, true)
+    / TODO: Use and improve the mailer partials
+    /= render partial: "mailer/#{activity.key.gsub('.', '/')}", locals: { activity: activity }
     br
-    =link_to t('mailer.view_type', type: t("#{activity.trackable.class_name}.type")),
+    h2=link_to t('mailer.view_type', type: t("#{activity.trackable.class_name}.type")),
              polymorphic_url(activity.trackable, host: 'https://argu.co')
 
     p
       small= t('mailer.sent_at_date', date: Time.now.utc.strftime('%Y-%m-%d %H:%M:%S'))
+    / TODO: Link to notification settings.
+    /p
+      small= t('mailer.settings')

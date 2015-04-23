@@ -4,7 +4,7 @@
   meta[property="og:title" content="#{@motion.display_name}"]
   meta[property="og:url" content="#{motion_url(@motion)}"]
   meta[property="og:description" content="#{markdown_to_plaintext(@motion.content)}"]
-  meta[property="og:image" content="#{@motion.cover_photo.url}"]
+  meta[property="og:image" content="#{@motion.cover_photo.url || image_url('logo-social.png')}"]
   meta[property="twitter:card" content="summary"]
   meta[property="twitter:title" content="#{@motion.display_name}"]
   meta[property="twitter:description" content="#{@motion.content}"]

@@ -3,8 +3,7 @@
 nl:
   questions:
     type: "vraagstuk"
-    new_question_path: "Nieuw vraagstuk"
-    new_question: "Nieuw vraagstuk"
+    type_new: "Nieuw vraagstuk"
     new_btn: "Vraagstuk toevoegen"
     header: "vraagstukken"
     view_all_motions: "Bekijk alle %{amount} ideeën..."

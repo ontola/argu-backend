@@ -155,6 +155,7 @@ Argu::Application.routes.draw do
 
   get '/activities', to: 'activities#index'
 
+  resources :info, path: 'i', only: [:show]
 
   resources :forums, only: [:show, :update], path: '' do
     get :discover, on: :collection, action: :discover
