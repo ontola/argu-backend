@@ -22,3 +22,5 @@ secrets.yml
 public/uploads/tmp/*
 public/profiles/*
 public/forums/*
+public/motions/*
+public/organisations/*

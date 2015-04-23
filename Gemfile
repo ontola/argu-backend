@@ -92,7 +92,7 @@ group :development, :test do
   gem 'web-console', '~> 2.0.0'
   ####Capistrano#####
   gem 'capistrano', '~> 3.3.3'
-  gem 'capistrano-rails', '~> 1.1.2'
+  gem 'capistrano-rails', '~> 1.1.3'
   gem 'capistrano-bundler', '~> 1.1.3'
   gem 'capistrano-rvm', '~> 0.1.2'
   gem 'license_finder'
