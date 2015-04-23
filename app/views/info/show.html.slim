@@ -18,7 +18,8 @@
                   h2= section['header']
               - if section['body'].present?
                 - section['body'].each do |body|
-                  p[class=(section['slogan'] ? 'block-slogan' : '')]== body
+                  .markdown[itemprop="text"]
+                    = markdown_to_html(body)
               - if section['people'].present?
                 ul.block-references
                   - section['people'].each do |person|
@@ -67,7 +68,8 @@
               .block.block--hidden.block--full.block--big-text
                 h2= section['expand']['header']
                 - section['expand']['body'].each do |body|
-                  p== body
+                  .markdown[itemprop="text"]
+                    = markdown_to_html(body)
               - if section['expand']['image'].present?
                 .block--img.block--img--full
                   .img[style="background-image: url(#{asset_path section['expand']['image']})"]
