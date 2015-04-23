@@ -143,9 +143,8 @@ var Notifications = React.createClass({
     },
 
     render: function () {
-        var _this = this;
-        var notifications = this.state.notifications.map(function(item) {
-            return <NotificationItem key={item.id} read={item.read} done={_this.props.done} {...item} />
+        var notifications = this.state.notifications.map((item) => {
+            return <NotificationItem key={item.id} read={item.read} done={this.props.done} {...item} />
         });
 
         return (<ul className="notifications">
