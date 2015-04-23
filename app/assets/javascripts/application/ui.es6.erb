@@ -17,7 +17,6 @@ Argu.ui = {
         this.initPlaceholderFallback();
         (this.window = $(window)).resize(this.handleResizeBackground);
         this.handleResizeBackground();
-        this.checkTabs();
 
         Argu.ui.modal.init();
         Argu.ui.progressbar.init();
@@ -35,16 +34,6 @@ Argu.ui = {
                 .bind("ajax:error", function () {
                     $(this).removeClass("is-loading");
                 });
-    },
-
-    checkTabs: function () {
-        var str=location.href.toLowerCase();
-        $(".tabs li a").each(function() {
-            if (str.indexOf(this.href.toLowerCase()) > -1) {
-                $("li.tabs-current").removeClass("tabs-current");
-                $(this).parent().addClass("tabs-current");
-            }
-        });
     },
 
     confirmInputHandler: function () {

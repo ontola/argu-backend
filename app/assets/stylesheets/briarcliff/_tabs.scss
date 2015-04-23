@@ -9,6 +9,13 @@
   li {
     position: relative;
     display: inline-block;
+
+    &.active {
+      background-color: $darken4;
+      a {
+        color: $g00;
+      }
+    }
   }
 
   a {
@@ -35,10 +42,6 @@
     }
   }
 
-  .tabs-current {
-    pointer-events: none;
-  }
-
   a:hover {
     color: $g4;
 
@@ -61,5 +64,19 @@
     &:after {
       color: $g4 !important;
     }
+  }
+}
+
+.tabs.tabs--vertical li {
+  display: block;
+}
+
+.cover .tabs {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  li a {
+    background-color: $lighten5;
   }
 }

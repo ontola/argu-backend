@@ -3,7 +3,7 @@ class Pages::ManagersController < ApplicationController
   def new
     @page = Page.find_via_shortname params[:page_id]
     authorize @page, :edit?
-    @membership = @page.managers.new
+    @membership = @page.managerships.new
   end
 
   def create

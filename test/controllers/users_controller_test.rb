@@ -53,5 +53,4 @@ class UsersControllerTest < ActionController::TestCase
     assert_not assigns(:collection)
   end
 
-
 end

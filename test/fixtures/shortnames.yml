@@ -42,7 +42,10 @@ sn_user3:
 #
 sn_argu:
   shortname: 'argu'
-  owner: argu (Page)
+  owner: page_argu (Page)
 sn_utrecht_page:
   shortname: 'gemeente_utrecht'
   owner: utrecht (Page)
+sn_not_accepted:
+  shortname: 'not_accepted'
+  owner: not_accepted (Page)

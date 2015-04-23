@@ -10,9 +10,17 @@ nl:
         about_managers: "Pagina beheerders zijn gebruikers met extra rechten, maar niet zoveel als een administrator. Beheerders kunnen vraagstukken, ideeën, argumenten en reacties namens de Pagina plaatsen. Ook kunnen ze uit naam stemmen en eerder geplaatste items verwijderen."
         transferred: "Pagina overgedragen"
         users_only: "Alleen gebruikers kunnen pagina's bezitten"
+    management:
+      title: "Paginabeheer"
+      managed_current_out_of_max: "%{current} van maximaal %{max} pagina('s) beheerd."
+      members: "%{members} leden"
+      owner: "Eigenaar"
     display: "Pagina bekijken"
     create: "Start een pagina"
-    legal: "Door deze pagina aan te maken verklaar je toestemming te hebben om de organisatie waarvoor je een pagina maakt officieel op Argu te vertegenwoordigen."
+    legal: "Door deze pagina aan te maken verklaar je toestemming te hebben om de organisatie waarvoor je een pagina maakt officieel op Argu te vertegenwoordigen, en dat je akkoord gaat met de Algemene Voorwaarden."
+    limit_reached_amount: "Je kunt maximaal %{amount} pagina('s) aanmaken."
+    page_management: "paginabeheer"
+    page_management_html: "Ga naar %{href} om je pagina's te beheren."
     helper:
       side: "<h2>Wat is een pagina?</h2>
              <p>Een pagina is een <b>profiel</b> van een organisatie, zoals een bedrijf, NGO, politieke partij of actiegroep.

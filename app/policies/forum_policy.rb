@@ -14,9 +14,9 @@ class ForumPolicy < RestrictivePolicy
     def resolve
       t = Forum.arel_table
 
-      scope.where(t[:visibility].eq(Forum.visibilities[:open]))
-      scope.where(t[:id].in(user.profile.memberships_ids)) if user.present?
-      scope
+      cond = t[:visibility].eq(Forum.visibilities[:open])
+      cond = cond.or(t[:id].in(user.profile.memberships_ids)) if user.present?
+      scope.where(cond)
     end
 
   end
@@ -36,30 +36,6 @@ class ForumPolicy < RestrictivePolicy
   end
 
   ######CRUD######
-  def show?
-    is_open? || has_access_token? || is_member? || is_manager? || super
-  end
-
-  def statistics?
-    super
-  end
-
-  def managers?
-    is_owner? || staff?
-  end
-
-  def list_members?
-    is_owner? || staff?
-  end
-
-  def groups?
-    is_manager? || staff?
-  end
-
-  def new?
-    create?
-  end
-
   def create?
     super
   end
@@ -76,8 +52,13 @@ class ForumPolicy < RestrictivePolicy
     is_open? || is_member? || is_manager? || staff?
   end
 
-  def update?
-    is_manager? || super
+  def groups?
+    is_manager? || staff?
+  end
+
+  # Forum#index is for management, not to be confused with forum#discover
+  def index?
+    user && user.profile.pages.length > 0 || staff?
   end
 
   def invite?
@@ -90,6 +71,30 @@ class ForumPolicy < RestrictivePolicy
 
   def list?
     @record.closed? || show?
+  end
+
+  def list_members?
+    is_owner? || staff?
+  end
+
+  def managers?
+    is_owner? || staff?
+  end
+
+  def new?
+    create?
+  end
+
+  def show?
+    is_open? || has_access_token? || is_member? || is_manager? || super
+  end
+
+  def statistics?
+    super
+  end
+
+  def update?
+    is_manager? || super
   end
 
   # Whether the user can add (a specified) manager(s)

@@ -13,12 +13,12 @@ h1[style='clear: left;']= t('pages.settings.managers.title')
 p= t('pages.settings.managers.about_managers')
 table.styled
   tbody
-    -@page.managers.preload(:profile).each do |manager|
+    -@page.managers.each do |manager|
       tr
-        =image_tag manager.profile.profile_photo, class: 'profile-photo'
+        =image_tag manager.profile_photo, class: 'profile-photo'
         span
-          =manager.profile.display_name
+          =manager.display_name
           p.tooltip.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
-            =link_to t('forums.managers.revoke'), page_manager_path(@page, manager.profile_id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
+            =link_to t('forums.managers.revoke'), page_manager_path(@page, manager.id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
 
-  =link_to  t('forums.managers.add'), new_page_manager_path(@page), class: 'btn'
+  =link_to t('forums.managers.add'), new_page_manager_path(@page), class: 'btn'

@@ -4,5 +4,5 @@ mem_utrecht:
   role: 2
 mem_argu:
   profile: :profile_fletcher91
-  page: :argu
+  page: :page_argu
   role: 2

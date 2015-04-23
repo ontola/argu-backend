@@ -1,0 +1,11 @@
+=set_title t('forums.discover')
+.col-1
+  header
+    h1= t('forums.discover')
+  .selector.grid
+    .box-grid-sizer
+    =render collection: @forums, partial: 'forums/forum'
+    .box.box-grid
+      section
+        h3= t('forums.get_one.title')
+        p== t('forums.get_one.body', governments: (link_to t('about.governments'), governments_path), product: (link_to t('about.product').downcase, product_path))

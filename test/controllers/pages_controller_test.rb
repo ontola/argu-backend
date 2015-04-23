@@ -45,5 +45,23 @@ class PagesControllerTest < ActionController::TestCase
     assert_equal pages(:utrecht).profile.votes_questions_motions.length, assigns(:collection).values.map {|i| i[:collection].length }.inject(&:+), 'Not all/too many votes are shown'
   end
 
+  test 'should be able to create only one page' do
+    sign_in users(:user_utrecht_owner)
+
+    post :create, page: {
+                  profile_attributes: {
+                    name: 'Utrecht Two',
+                    about: 'Utrecht Two bio',
+                    shortname_attributes: {
+                        shortname: 'UtrechtNumberTwo'
+                    }
+                  },
+                  last_accepted: '1'
+                }
+
+    assert_redirected_to root_path
+    assert assigns(:page)
+    assert assigns(:page).new_record?, "Page is saved when it shouldn't be"
+  end
 
 end

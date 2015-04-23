@@ -3,7 +3,11 @@ class ManagersController < ApplicationController
   def new
     @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :edit?
-    @membership = @forum.managers.new
+    @membership = @forum.managerships.new
+    render 'forums/settings', locals: {
+               tab: 'managers/new',
+               active: 'managers'
+              }
   end
 
   def create

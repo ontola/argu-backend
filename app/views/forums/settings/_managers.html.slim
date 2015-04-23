@@ -18,12 +18,12 @@ br
 h1= t('forums.settings.managers.title')
 p= t('forums.settings.managers.about_managers')
 table.styled
-  -@forum.managers.preload(:profile).each do |manager|
+  -@forum.managers.each do |manager|
     tr
-      =image_tag manager.profile.profile_photo, class: 'profile-photo'
+      =image_tag manager.profile_photo, class: 'profile-photo'
       span
-        =manager.profile.display_name
+        =manager.display_name
         p.tooltip.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
-          =link_to t('forums.managers.revoke'), forum_manager_path(@forum, manager.profile_id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
+          =link_to t('forums.managers.revoke'), forum_manager_path(@forum, manager.id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
 
   =link_to  t('forums.managers.add'), new_forum_manager_path(@forum), class: 'btn'

@@ -1,6 +1,32 @@
 =set_title t('forums.settings.title')
-.col-1
-  =render partial: 'manage_bar', locals: {resource: @forum}  if policy(@forum).update?
-  .box
-    section
-      =render partial: "forums/setting_tabs/#{params[:tab] || 'settings'}", locals: {resource: @forum}
+.col-2
+  =render partial: 'forums/manage_bar', locals: {resource: @forum, active: :settings}  if policy(@forum).update?
+  .col-3-1
+    .box
+      section
+        ul.tabs.tabs--vertical
+          li[class=('active' if local_assigns[:active] == 'settings')]
+            =link_to url_for([:settings, @forum]), data: {intro: t("intro.#{@forum.class_name}.settings.settings")}
+              span.fa.fa-gear
+              span.icon-left= t("#{@forum.class_name}.settings.menu.general")
+          - if policy(@forum).managers?
+            li[class=('active' if local_assigns[:active] == 'advanced')]
+              =link_to url_for([:settings, @forum, tab: :advanced]), data: {intro: t("intro.#{@forum.class_name}.settings.settings")}
+                span.fa.fa-gear
+                span.icon-left= t('forums.settings.advanced')
+          - if policy(@forum).managers?
+            li[class=('active' if local_assigns[:active] == 'managers')]
+              =link_to url_for([:settings, @forum, tab: :managers]), data: {intro: t("intro.#{@forum.class_name}.settings.managers")}
+                span.fa.fa-group
+                span.icon-left= t('forums.settings.managers.title')
+          - if @forum.class == Forum && policy(@forum).groups?
+            li[class=('active' if local_assigns[:active] == 'groups')]
+              =link_to url_for([:settings, @forum, tab: :groups]), data: {intro: t("intro.#{@forum.class_name}.settings.groups")}
+                span.fa.fa-group
+                span.icon-left= t('forums.settings.groups.title')
+  .col-3-2
+    .box
+      section
+        / Protects against Directory Traversal Attacks
+        -if !tab.gsub(/\\/, '').index('../')
+          =render partial: "forums/settings/#{tab}", locals: {resource: @forum}

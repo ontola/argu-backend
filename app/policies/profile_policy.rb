@@ -47,7 +47,7 @@ class ProfilePolicy < RestrictivePolicy
   end
 
   def update?
-    record.profileable == user || super
+    Pundit.policy(context, record.profileable).update? || super
   end
 
   def edit?

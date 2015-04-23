@@ -12,6 +12,8 @@ nl:
       title: "Instellingen"
       general: "Algemene instellingen"
       profile: "Profiel instellingen"
+      menu:
+        general: "Algemeen"
       terminology: "Terminologie"
       advanced: "Geavanceerd"
       manager: "beheerder"
@@ -40,6 +42,8 @@ nl:
       motions: "Ideeën"
       tags: "Meest gebruikte tags"
       no_tags: "Er zijn nog geen tags gebruikt."
+    management:
+      title: "Forumbeheer"
     suggestions: "Suggesties"
     mine: "Mijn forums"
     navheader: "Ga naar forum:"
