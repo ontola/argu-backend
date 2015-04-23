@@ -16,7 +16,7 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def after_accept_path_for(resource)
-    edit_profile_path(resource)
+    edit_user_url(resource)
   end
 
   def after_invite_path_for(resource)

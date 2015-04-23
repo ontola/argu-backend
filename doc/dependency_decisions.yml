@@ -1,0 +1,116 @@
+---
+- - :whitelist
+  - MIT
+  - :who: 
+    :why: 
+    :when: 2015-04-22 13:22:42.311770000 Z
+- - :whitelist
+  - Apache 2.0
+  - :who: 
+    :why: 
+    :when: 2015-04-22 13:22:52.731478000 Z
+- - :whitelist
+  - Apache (2.0)
+  - :who: 
+    :why: 
+    :when: 2015-04-22 13:23:21.760305000 Z
+- - :approve
+  - pg
+  - :who: 
+    :why: BSD Licensed
+    :when: 2015-04-22 13:25:26.518256000 Z
+- - :whitelist
+  - BSD
+  - :who: 
+    :why: 
+    :when: 2015-04-22 13:25:50.490716000 Z
+- - :whitelist
+  - new
+  - &1
+    :who: 
+    :why: 
+    :when: 2015-04-22 13:26:49.699760000 Z
+- - :whitelist
+  - BSD
+  - *1
+- - :whitelist
+  - new BSD
+  - :who: 
+    :why: 
+    :when: 2015-04-22 13:27:10.482985000 Z
+- - :whitelist
+  - LGPL-2.1+
+  - :who: 
+    :why: Source distribution only needed when distributing an executable
+    :when: 2015-04-22 13:31:26.274721000 Z
+- - :whitelist
+  - LGPL
+  - :who: 
+    :why: Source distribution only needed when distributing an executable
+    :when: 2015-04-22 13:31:30.583186000 Z
+- - :whitelist
+  - Apache License (2.0)
+  - :who: 
+    :why: 
+    :when: 2015-04-22 13:32:01.632481000 Z
+- - :approve
+  - domain_name
+  - :who: 
+    :why: 
+    :when: 2015-04-22 13:32:48.691490000 Z
+- - :whitelist
+  - 2-clause BSDL
+  - :who: 
+    :why:
+    :when: 2015-04-22 13:33:52.056465000 Z
+- - :whitelist
+  - LGPLv2.1+
+  - :who: 
+    :why: Source distribution only needed when distributing an executable
+    :when: 2015-04-22 13:34:07.700763000 Z
+- - :approve
+  - unicorn
+  - :who: 
+    :why: Permits Ruby license by inheritance.
+    :when: 2015-04-22 13:39:22.654053000 Z
+- - :whitelist
+  - ruby
+  - :who: 
+    :why: Also permits 2-clause BSDL
+    :when: 2015-04-22 13:39:49.922911000 Z
+- - :approve
+  - react-rails
+  - :who: 
+    :why: Apache license
+    :when: 2015-04-22 13:43:38.313097000 Z
+- - :whitelist
+  - ISC
+  - :who: 
+    :why: 
+    :when: 2015-04-22 13:45:25.239272000 Z
+- - :approve
+  - carrierwave-vips
+  - :who: 
+    :why: No license, vips is MIT licensed so assumed to be compatible
+    :when: 2015-04-22 13:47:33.618457000 Z
+- - :approve
+  - indefinite_article
+  - :who: 
+    :why: 'MIT license: https://github.com/rossmeissl/indefinite_article/blob/master/LICENSE'
+    :when: 2015-04-22 13:48:54.812716000 Z
+- - :whitelist
+  - Simplified BSD
+  - :who: 
+    :why: 
+    :when: 2015-04-22 13:50:11.888214000 Z
+- - :whitelist
+  - GPL-2
+  - :who: 
+    :why: 'According to gnu, via the web is private use (at least upto 2.0): https://www.gnu.org/licenses/old-licenses/gpl-2.0-faq.html#UnreleasedMods'
+    :when: 2015-04-22 13:58:05.958399000 Z
+- - :approve
+  - sshkit
+  - :who: 
+    :why: We use this gem privately for deployment, not distributing it means no OS
+      requirement
+    :when: 2015-04-22 14:03:07.312379000 Z

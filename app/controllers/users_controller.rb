@@ -83,7 +83,7 @@ class UsersController < ApplicationController
       current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
 
       if current_user.save
-        redirect_to edit_profile_url(current_user.url)
+        redirect_to edit_user_url(current_user.url)
       else
         render 'setup_shortname'
       end

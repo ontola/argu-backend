@@ -14,9 +14,11 @@ class Profile < ActiveRecord::Base
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships
   has_many :memberships, dependent: :destroy
+  has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
   has_many :notifications, dependent: :destroy
   has_many :page_memberships, dependent: :destroy
-  has_many :pages, inverse_of: :owner
+  has_many :page_managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
+  has_many :pages, inverse_of: :owner, foreign_key: :owner_id
   has_many :votes, as: :voter, dependent: :destroy
 
   mount_uploader :profile_photo, AvatarUploader

@@ -313,3 +313,11 @@
   opacity: 0.5;
   background-color: #fafafa;
 }
+
+.template {
+  display: flex;
+}
+
+.select-input {
+  flex-grow: 1;
+}

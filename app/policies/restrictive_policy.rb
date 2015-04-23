@@ -137,6 +137,7 @@ class RestrictivePolicy
     end
 
     delegate :user, to: :context
+    delegate :actor, to: :context
     delegate :session, to: :context
 
     def resolve
@@ -144,7 +145,7 @@ class RestrictivePolicy
     end
 
     def staff?
-      user && profile.has_role?(:staff)
+      user && user.profile.has_role?(:staff)
     end
   end
 

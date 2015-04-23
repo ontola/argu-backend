@@ -2,7 +2,7 @@ ul.tabs
   li= link_to url_for(resource), data: {intro: t("intro.#{resource.class_name}.settings.home")}
     span.fa.fa-home
     span.icon-left= resource.display_name
-  li= link_to edit_profile_path(resource) do
+  li= link_to url_for([:edit, resource]) do
     span.fa.fa-pencil
     span.icon-left= t('profiles.edit.title')
   li= link_to url_for([:settings, resource]), data: {intro: t("intro.#{resource.class_name}.settings.settings")}

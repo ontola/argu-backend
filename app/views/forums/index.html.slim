@@ -1,11 +1,26 @@
-=set_title t('forums.discover')
-.col-1
+.col-3
   header
-    h1= t('forums.discover')
-  .selector.grid
-    .box-grid-sizer
-    =render collection: @forums, partial: 'forums/forum'
-    .box.box-grid
-      section
-        h3= t('forums.get_one.title')
-        p== t('forums.get_one.body', governments: (link_to t('about.governments'), governments_path), product: (link_to t('about.product').downcase, product_path))
+    h1= t('forums.management.title')
+    .col-3-2
+      - @forums.each do |forum|
+        - fo_po = policy(forum)
+        .box
+          section
+            =image_tag forum.profile_photo.url(:icon), class: 'profilepicture'
+            h2= forum.display_name
+            p= forum.bio
+            p=t('pages.management.members', members: forum.memberships.count)
+            section
+              h3= t('forums.settings.managers.title')
+              ul
+                li
+                  =image_tag forum.page.profile.profile_photo.url(:icon), size: '16x16'
+                  span= "#{forum.page.display_name} (#{t('pages.management.owner')})"
+                - forum.managers.each do |manager|
+                  li
+                    =image_tag manager.profile_photo.url(:icon), size: '16x16'
+                    span= manager.display_name
+          ul.btn-sticky-bottom.btn-sticky.btns-vertical
+            li= link_to t('show'), forum_path(forum), class: 'btn'
+            li= link_to t('forums.settings.title'), settings_forum_path(forum), class: 'btn' if fo_po.edit?
+            li= link_to t('forums.settings.advanced'), settings_forum_path(forum, tab: :advanced), class: 'btn' if fo_po.is_owner?

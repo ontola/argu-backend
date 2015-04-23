@@ -44,7 +44,7 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
             .form-small
               h2= t('sign_up')
               /.info.info-signup= t('sign_up_description')
-              = render partial: 'registrations/form', locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping, r: (defined?(r) && r)}
+              =render partial: 'registrations/form', locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping, r: (defined?(r) && r)}
         - elsif Rails.application.config.epics.open_auth
           section
             =render partial: 'registrations/oauth'
@@ -71,24 +71,24 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
                     button type="submit" name="submit" id="ss-submit" style="margin-bottom: 2em;" Stuur mij updates
     .box.box-small
       section
-        = semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f|
+        =semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f|
           - if resource.errors.any?
             #error_explanation
               ul
                 - resource.errors.full_messages.each do |msg|
                   li= msg
-          = devise_error_messages!
+          =devise_error_messages!
           .form-small
             h2= t('sign_in')
             =f.inputs
               /.info.info-signup= t('sign_in_existing')
-              = f.input :email, placeholder: t('users_email'), autofocus: :autofocus, label: false, input_html: {required: true}
-              = f.input :password, placeholder: t('users_password'), hint: false, label: false, input_html: {required: true}
-              = f.input :r, as: :hidden
+              =f.input :email, placeholder: t('users_email'), autofocus: :autofocus, label: false, input_html: {required: true}
+              =f.input :password, placeholder: t('users_password'), hint: false, label: false, input_html: {required: true}
+              =f.input :r, as: :hidden
               - if devise_mapping.rememberable?
                 .remember= f.input :remember_me, as: :boolean
-            = f.actions do
-              = f.action :submit, :as => :button, label: t('sign_in')
+            =f.actions do
+              =f.action :submit, :as => :button, label: t('sign_in')
             /= render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}
             ul.btns-devise
               li= link_to t('forgot_password'), new_password_path(resource_name)

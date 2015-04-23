@@ -15,7 +15,7 @@ utrecht:
 #
 amsterdam:
   name: 'Gemeente Amsterdam'
-  page: argu
+  page: :page_argu
   visibility: <%= Forum.visibilities[:closed] %>
   motions_count: 1
   questions_count: 0
@@ -23,7 +23,7 @@ amsterdam:
 hidden:
   id: 140372415
   name: 'Secret shit'
-  page: argu
+  page: :page_argu
   visible_with_a_link: true
   visibility: <%= Forum.visibilities[:hidden] %>
   motions_count: 1
@@ -32,7 +32,7 @@ hidden:
 super_hidden:
   id: 32812423
   name: 'Super secret shit'
-  page: argu
+  page: :page_argu
   visible_with_a_link: false
   visibility: <%= Forum.visibilities[:hidden] %>
   motions_count: 0

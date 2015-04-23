@@ -1,6 +1,15 @@
 class ForumsController < ApplicationController
 
   def index
+    authorize Forum, :index?
+    @user = User.find_via_shortname params[:id]
+    authorize @user,:update?
+    forums = Forum.arel_table
+    @forums = Forum.where(forums[:page_id].in(@user.profile.pages.pluck(:id)).or(forums[:id].in(@user.profile.managerships.pluck(:forum_id))))
+    @_policy_scoped = true
+  end
+
+  def discover
     @forums = policy_scope(Forum).top_public_forums
     authorize Forum, :selector?
 
@@ -30,6 +39,10 @@ class ForumsController < ApplicationController
     @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
     current_context @forum
+    render locals: {
+               tab: params[:tab] || 'settings',
+               active: params[:tab] || 'settings'
+           }
   end
 
   def statistics

@@ -1,20 +1,34 @@
 .col-3
   header
     h1= t('pages.create')
-  .col-3-2
-    .box
-      section
-        =semantic_form_for @page do |f|
-          =f.inputs do
-            =f.semantic_fields_for :profile do |p|
-              =p.input :name, label: t('formtastic.labels.page.name')
-              =p.input :about
-              =p.input :profile_photo
-            -if policy(@page).shortname?
-              =f.inputs :shortname, for: :shortname
-          p= t('pages.legal')
-          =f.actions do
-            =f.action :submit, :as => :button
-  .col-3-1
-    .box
-      section= raw t('pages.helper.side')
+  - if page.present?
+    .col-3-2
+      .box
+        section
+          =semantic_form_for page do |f|
+            =f.inputs do
+              =f.inputs :name, for: :profile, label: t('formtastic.labels.page.name')
+              =f.semantic_fields_for :profile do |p|
+                =p.input :about, as: :text
+                =p.input :profile_photo, as: :file
+              -if policy(page).shortname?
+                =f.inputs :shortname, for: :shortname
+            p= t('pages.legal')
+            =f.input :last_accepted, as: :boolean
+            =f.actions do
+              =f.action :submit, :as => :button
+    .col-3-1
+      .box
+        section= raw t('pages.helper.side')
+  - elsif errors[:max_allowed_pages].present?
+    .col-3-2
+      .box
+        section
+          p= t('pages.limit_reached_amount', amount: errors[:max_allowed_pages][:max])
+          - if errors[:max_allowed_pages][:pages_url]
+            p= t('pages.page_management_html', href: link_to(t('pages.page_management'), errors[:max_allowed_pages][:pages_url]))
+    .col-3-1
+      .box
+        section= raw t('pages.helper.side')
+  - else
+    =fdsafs

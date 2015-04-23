@@ -157,7 +157,7 @@ class ApplicationController < ActionController::Base
         if current_user.first_name.present?
           redirect_to selector_forums_url
         else
-          redirect_to edit_profile_url(current_user.url)
+          redirect_to edit_user_url(current_user.url)
         end
       end
     end
@@ -165,7 +165,7 @@ class ApplicationController < ActionController::Base
 
   # @private
   def intro_urls
-    [selector_forums_url, profile_url(current_user), edit_profile_url(current_user), memberships_forums_url]
+    [selector_forums_url, profile_url(current_user), edit_user_url(current_user), memberships_forums_url]
   end
 
   # @private

@@ -103,7 +103,7 @@ module ApplicationHelper
   # Either a Page or a User
   def dual_profile_edit_path(profile)
     if profile.profileable.class == User
-      edit_profile_path(profile.profileable)
+      edit_user_path(profile.profileable)
     elsif profile.profileable.class == Page
       #edit_page_path?
       page_path(profile.profileable)

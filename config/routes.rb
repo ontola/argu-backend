@@ -14,11 +14,11 @@
 # l:
 # m: motions
 # n: notifications
-# o: opinions
+# o: [RESERVED for opinions]
 # p: pages
 # q: questions
 # r:
-# s: search
+# s: [RESERVED for search]
 # t: tags
 # u: users
 # v: votes
@@ -52,7 +52,15 @@ Argu::Application.routes.draw do
 
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
-  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions', :invitations => 'users/invitations' }
+  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions', :invitations => 'users/invitations' }, skip: :registrations
+
+  as :user do
+    get 'users/cancel', to: 'registrations#cancel', as: :cancel_user_registration
+    get 'users/sign_up', to: 'registrations#new', as: :new_user_registration
+    post 'users', to: 'registrations#create', as: :user_registration
+    delete 'users', to: 'registrations#destroy', as: nil
+  end
+
 
   resource :admin, only: [] do
     post ':id' => 'administration#add'
@@ -64,9 +72,12 @@ Argu::Application.routes.draw do
   resources :authentications, only: [:create, :destroy]
   match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
 
-  resources :users, path: 'u', only: [:show, :edit, :update] do
+  resources :users, path: 'u', only: [:show, :update] do
+    get :edit, to: 'profiles#edit', on: :member
     get :setup, to: 'users#setup', on: :collection
     put :setup, to: 'users#setup!', on: :collection
+    get :pages, to: 'pages#index', on: :member
+    get :forums, to: 'forums#index', on: :member
   end
 
   post 'v/:for' => 'votes#create', as: :vote
@@ -92,11 +103,11 @@ Argu::Application.routes.draw do
   resources :group_memberships, only: :destroy
 
   resources :pages, path: 'p', only: [:new, :create, :show, :update, :delete, :destroy] do
-    get :index, on: :collection
     get :delete, on: :member
     get :transfer, on: :member
     put :transfer, on: :member, action: :transfer!
     get :settings, on: :member
+    get :edit, to: 'profiles#edit', on: :member
     resources :managers, only: [:new, :create, :destroy], controller: 'pages/managers'
   end
 
@@ -111,7 +122,7 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :profiles, except: [:show] do
+  resources :profiles, only: [:index, :update] do
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post ':id' => 'profiles#update', on: :collection
   end
@@ -146,7 +157,7 @@ Argu::Application.routes.draw do
 
 
   resources :forums, only: [:show, :update], path: '' do
-    get :discover, on: :collection, action: :index
+    get :discover, on: :collection, action: :discover
     get :settings, on: :member
     get :statistics, on: :member
     get :selector, on: :collection

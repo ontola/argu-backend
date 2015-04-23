@@ -74,7 +74,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                  },
                                  at: access_tokens(:token_hidden).access_token}
     end
-    assert_redirected_to edit_profile_url('newuser')
+    assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
 
@@ -113,7 +113,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                  },
                                     at: access_tokens(:token_hidden).access_token}
     end
-    assert_redirected_to edit_profile_url('newuser')
+    assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
 

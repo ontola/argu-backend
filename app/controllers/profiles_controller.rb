@@ -1,13 +1,24 @@
 class ProfilesController < ApplicationController
 
   def index
-    @forum = Forum.find_via_shortname params[:forum]
-    authorize @forum, :list_members?
+    @resource = Shortname.find_resource 'nederland'  # params[:thing]
+    #authorize @resource, :list_members?
 
-    scope = policy_scope(@forum.members)
+    scope = policy_scope(@resource.members)
 
-    if params[:q].present?
-      @profiles = scope.where('lower(name) LIKE lower(?)', "%#{params[:q]}%").page params[:profile]
+    if current_user.present?
+      if params[:q].present?
+        # This is a working mess.
+        @profiles = Profile.where(is_public: true).where('lower(name) LIKE lower(?)', "%#{params[:q]}%").page params[:profile] # Pages
+        @profiles += Profile.where(is_public: true).where(profileable_type: 'User',
+                                                         profileable_id: User.where(finished_intro: true).joins(:shortname)
+                                                                             .where('lower(shortname) LIKE lower(?) OR '\
+                                                                                    'lower(first_name) LIKE lower(?) OR '\
+                                                                                    'lower(last_name) LIKE lower(?)',
+                                                                                    "%#{params[:q]}%",
+                                                                                    "%#{params[:q]}%",
+                                                                                    "%#{params[:q]}%").pluck(:owner_id))
+      end
     end
   end
 

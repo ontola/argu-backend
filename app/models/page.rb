@@ -2,16 +2,18 @@ class Page < ActiveRecord::Base
   include ArguBase, Shortnameable
 
   has_one :profile, dependent: :destroy, as: :profileable
+  accepts_nested_attributes_for :profile
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
-  #accepts_nested_attributes_for :profile
   has_many :forums
   has_many :memberships, class_name: 'PageMembership', dependent: :destroy
-  has_many :managers, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
+  has_many :members, through: :memberships, source: :profile
+  has_many :managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
+  has_many :managers, through: :managerships, source: :profile
 
   attr_accessor :repeat_name
 
   validates :shortname, presence: true, length: {minimum: 3, maximum: 50}
-  validates :profile, :owner_id, presence: true
+  validates :profile, :owner_id, :last_accepted, presence: true
 
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
 

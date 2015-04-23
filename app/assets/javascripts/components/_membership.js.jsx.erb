@@ -14,7 +14,6 @@ window.NewMembership = React.createClass({
         var input = $(this.getDOMNode()).find('.select-input');
         input.selectize({
             valueField: 'id',
-            labelField: 'shortname',
             searchField: ['shortname', 'name'],
             persist: false,
             create: false,
@@ -26,8 +25,10 @@ window.NewMembership = React.createClass({
             },
             render: {
                 option: function(item, escape) {
-                    console.log(item);
                     return '<div class="search-result" data-id="' + escape(item.id) + '" data-src="' + escape(item.profile_photo.icon.url) + '"><span><img class="profile-xs" src="' + escape(item.profile_photo.icon.url) + '"></span><span class="label">' + escape(item.name) + '</span></div>';
+                },
+                item: function(data, escape) {
+                    return '<div data-value="' + escape(data.id) + '" class="item">' + escape(data.name) + ' (' + escape(data.shortname) + ')</div>';
                 }
             },
             load: function(query, callback) {
@@ -38,7 +39,7 @@ window.NewMembership = React.createClass({
                     dataType: 'json',
                     data: {
                         q: query,
-                        forum: _this.props.forum,
+                        thing: _this.props.thing,
                         things: _this.props.things
                     },
                     error: function () {
