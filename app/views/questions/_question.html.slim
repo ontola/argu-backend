@@ -1,4 +1,4 @@
-.box.box-grid.question[itemscope="itemscope" itemtype="Question" class="#{'trashed' if question.is_trashed?}" data-created-at=question.created_at  data-updated-at=question.updated_at data-vote-count=0]
+.box.box-grid.question[itemscope="itemscope" itemtype="http://schema.org/Question" class="#{'trashed' if question.is_trashed?}" data-created-at=question.created_at  data-updated-at=question.updated_at data-vote-count=0]
   - if question.cover_photo.present?
     =contextual_link_to question_path(question) do
       .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]

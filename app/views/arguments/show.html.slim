@@ -8,7 +8,7 @@
   meta[property="twitter:title" content="#{@argument.display_name}"]
   meta[property="twitter:description" content="#{@argument.content}"]
   /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
-.col-1[itemscope]
+.col-1[itemscope itemtype="http://schema.org/CreativeWork/Argument"]
   div[data-intro= t('intro.argument.back')]
     =to_parent
   =render partial: 'contextualize/context_horizontal', locals: {item: @argument, type: 'argument'}
