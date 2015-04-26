@@ -230,7 +230,6 @@ ActiveRecord::Schema.define(version: 20150420102243) do
     t.integer  "creator_id"
     t.string   "cover_photo",                         default: ""
     t.string   "cover_photo_attribution",             default: ""
-    t.integer  "completed_state",                     default: 0
   end
 
   add_index "motions", ["forum_id"], name: "index_motions_on_forum_id", using: :btree

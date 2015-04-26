@@ -2,9 +2,23 @@
   -if model.cover_photo.present?
     =contextual_link_to motion_path(model)
       .box-image[style="background-image: url('#{model.cover_photo.url(:box)}'); "]
-  section.section-info.motion-bg
-    span[class="fa fa-#{motion_icon(current_scope.model || model.forum)}"]
-    span.icon-left= motion_type(current_scope.model || model.forum)
+  =contextual_link_to motion_path(model) do
+    section.section-info.motion-bg
+      span[class="fa #{motion_icon(current_scope.model || model.forum)}"]
+      span.icon-left= motion_type(current_scope.model || model.forum)
+      .details
+        .details-part.details-part--type.motion-bg
+          span[class="fa fa-#{motion_icon}"]
+          span.icon-left= motion_type(current_scope.model || model.forum)
+        .details-part.tooltip[data-title=t('tooltips.motion.vote_count')]
+          span.fa.fa-check-square-o
+          span.icon-left= model.total_vote_count
+        .details-part.tooltip[data-title=t('tooltips.motion.arguments_pro_count')]
+          span.fa.fa-plus
+          span.icon-left= model.argument_pro_count
+        .details-part.tooltip[data-title=t('tooltips.motion.arguments_con_count')]
+          span.fa.fa-minus
+          span.icon-left= model.argument_con_count
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =contextual_link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title
