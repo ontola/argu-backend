@@ -18,4 +18,8 @@ class Group < ActiveRecord::Base
     (keys + grouped.keys).map { |g| {g => GroupResponse.ordered(grouped[g] || {}) } }.reduce(&:merge)
   end
 
+  def include?(profile)
+    self.members.include?(profile)
+  end
+
 end

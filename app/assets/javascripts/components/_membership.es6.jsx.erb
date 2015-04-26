@@ -42,11 +42,11 @@ window.NewMembership = React.createClass({
                         thing: _this.props.thing,
                         things: _this.props.things
                     },
-                    error: function () {
+                    error: function (e) {
+                        Argu.Alert(`Server error occured, please try again later`, 'alert', true);
                         callback();
                     },
                     success: function (res) {
-                        console.log(res.profiles.length);
                         callback(res.profiles);
                     }
                 });
