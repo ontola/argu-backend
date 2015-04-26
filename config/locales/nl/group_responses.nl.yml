@@ -1,7 +1,7 @@
 #Dutch argument translations
 
 nl:
-  groupresponses:
+  group_responses:
     type: "Item"
     new_btn: "%{type} toevoegen"
     header:
@@ -10,3 +10,7 @@ nl:
       con: "%{type} tegen"
     form:
       submit: "%{name} plaatsen"
+      side:
+        pro: "voor"
+        neutral: "geen van beide"
+        con: "tegen"

@@ -11,7 +11,8 @@ Argu.ui = {
             .on('click', '.comment .btn-reply', this.openCommentForm)
             .on('pjax:success', this.handleDOMChangedFinished)
             .on('pjax:end', this.checkTabs)
-            .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix);
+            .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
+            .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick);
 
         this.handleDOMChangedFinished();
         this.initPlaceholderFallback();
@@ -99,6 +100,14 @@ Argu.ui = {
                 }
             });
         }
+    },
+
+    handleFormToggleClick: function () {
+        var tmp=$(this).attr('name'),
+                _this = $(this);
+        $('input[name="'+tmp+'"]').parent("label").removeClass("checked");
+        _this.parent("label").toggleClass("checked", this.selected);
+        $(':not(.formtastic).argument').removeClass('side-pro side-con').addClass('side-' + _this.attr('value'));
     },
 
     handleResizeBackground: function () {
