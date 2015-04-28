@@ -4,7 +4,7 @@ module GroupResponsesHelper
     values = []
     model.class.sides.each do |side|
       is_checked = side == model.side
-      values << [t("#{model.class_name}.form.side.#{side}"), side, {checked: is_checked, class: "#{'checked' if is_checked}"}]
+      values << [t("#{model.class_name}.form.side.#{side[0]}"), side[0], {checked: is_checked, class: "#{'checked' if is_checked}"}]
     end
     values
   end

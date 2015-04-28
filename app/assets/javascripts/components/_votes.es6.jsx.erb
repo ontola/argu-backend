@@ -23,7 +23,7 @@ window.BigVote = React.createClass({
                 }
             },
             error: function () {
-                console.log('failed');
+                Argu.Alert('<%= I18n.t('votes.alerts.failed') %>', 'alert', true);
             }
         });
     },

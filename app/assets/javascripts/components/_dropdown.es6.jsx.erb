@@ -200,6 +200,9 @@ var ActorItem = React.createClass({
             async: true,
             success: function (data) {
                 Actions.actorUpdate(data);
+                if (window.confirm('<%= I18n.t('profiles.switch_warning') %>')) {
+                    location.reload();
+                }
             },
             error: function () {
                 console.log('failed');
