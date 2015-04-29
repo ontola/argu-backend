@@ -141,6 +141,11 @@ GEM
       unf (>= 0.0.5, < 1.0.0)
     erubis (2.7.0)
     execjs (2.5.2)
+    factory_girl (4.5.0)
+      activesupport (>= 3.0.0)
+    factory_girl_rails (4.5.0)
+      factory_girl (~> 4.5.0)
+      railties (>= 3.0.0)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
     fast_stack (0.1.0)
@@ -449,6 +454,8 @@ DEPENDENCIES
   counter_culture (~> 0.1.27)
   devise (~> 3.4.1)
   devise_invitable (~> 1.4.0)
+  factory_girl
+  factory_girl_rails
   flamegraph
   formtastic (~> 3.1.2)
   has_secure_token
