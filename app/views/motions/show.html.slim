@@ -25,7 +25,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
 =render_columns(@arguments, buttons_url: new_forum_argument_path(@motion.forum, motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false, buttons_options: {data: remote_unless_user})
 - if Rails.configuration.epics.opinions
   =render_columns(@opinions, header: t('arguments.index.opinion'))
-- if active_for_user?(:groups, current_user) || (@group_responses.keys | current_profile.groups).present?
+- if active_for_user?(:groups, current_user) || @group_responses && (@group_responses.keys | current_profile.groups).present?
   .col-3
     .intro-filler[data-intro= t('intro.motion.groups') data-position= "top"]
   -@group_responses && @group_responses.each do |k,v|
