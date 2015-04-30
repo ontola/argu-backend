@@ -19,6 +19,10 @@ class Shortname < ActiveRecord::Base
     Shortname.where(owner_type: klass_name, owner_id: ids).pluck(:shortname)
   end
 
+  def self.shortname_owners_for_klass(klass_name, ids)
+    Shortname.where(owner_type: klass_name, owner_id: ids).includes(:owner)
+  end
+
   def self.find_resource(shortname)
     Shortname.find_by(shortname: shortname).owner
   end
