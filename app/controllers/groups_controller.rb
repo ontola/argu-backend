@@ -4,7 +4,10 @@ class GroupsController < ApplicationController
     @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :create_group?
     @group = @forum.groups.new
-
+    render 'forums/settings', locals: {
+                                tab: 'groups/new',
+                                active: 'groups'
+                            }
   end
 
   def create
@@ -15,9 +18,39 @@ class GroupsController < ApplicationController
 
     respond_to do |format|
       if @group.save
-        format.html { redirect_to url_for([:settings, @forum, tab: :groups]) }
+        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
       else
-        format.html { render 'form' }
+        format.html do
+          render 'forums/settings', locals: {
+                                      tab: 'groups/new',
+                                      active: 'groups'
+                                  }
+        end
+      end
+    end
+  end
+
+  def edit
+    @forum = Forum.find_via_shortname params[:forum_id]
+    @group = @forum.groups.find(params[:id])
+    authorize @group, :edit?
+
+    render 'forums/settings', locals: {
+                                tab: 'groups/edit',
+                                active: 'groups'
+                            }
+  end
+
+  def update
+    @forum = Forum.find_via_shortname params[:forum_id]
+    @group = @forum.groups.find(params[:id])
+    authorize @group, :update?
+
+    respond_to do |format|
+      if @group.update permit_params
+        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
+      else
+        format.html { render 'edit' }
       end
     end
   end
@@ -27,6 +60,11 @@ class GroupsController < ApplicationController
     authorize @forum, :create_group?
     @group = @forum.groups.find params[:id]
     @membership = @group.group_memberships.new
+
+    render 'forums/settings', locals: {
+                                tab: 'groups/add',
+                                active: 'groups'
+                            }
   end
 
   def add!
@@ -38,9 +76,14 @@ class GroupsController < ApplicationController
     @membership = @group.group_memberships.new member: profile, profile: current_user.profile
     respond_to do |format|
       if @membership.save
-        format.html { redirect_to url_for([:settings, @forum, tab: :groups]) }
+        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
       else
-        format.html { render 'add' }
+        format.html do
+          render 'forums/settings', locals: {
+                                      tab: 'groups/add',
+                                      active: 'groups'
+                                  }
+        end
       end
     end
   end
@@ -54,9 +97,10 @@ class GroupsController < ApplicationController
     @membership = @group.group_memberships.new member: profile, profile: current_user.profile
     respond_to do |format|
       if @membership.save
-        format.html { redirect_to url_for([:settings, @forum, tab: :groups]) }
+        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
       else
-        format.html { redirect_to  }
+        flash[:error] = t('error')
+        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
       end
     end
   end

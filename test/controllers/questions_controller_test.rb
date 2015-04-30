@@ -7,7 +7,7 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     get :show, id: questions(:one).id
-    assert_response :success
+    assert_response 200
     assert_not_nil assigns(:question)
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:motions)
@@ -82,7 +82,7 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in users(:user_thom)
 
     get :convert, question_id: questions(:one)
-    assert_response :success
+    assert_response 200
   end
 
   # Currently only staffers can convert items
@@ -114,7 +114,7 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in users(:user_thom)
 
     get :move, question_id: questions(:one)
-    assert_response :success
+    assert_response 200
   end
 
   # Currently only staffers can convert items

@@ -8,7 +8,7 @@ class MotionsControllerTest < ActionController::TestCase
 
     get :show, id: motions(:one)
 
-    assert_response :success
+    assert_response 200
     assert_not_nil assigns(:motion)
     assert_not_nil assigns(:vote)
     #assert_not_nil assigns(:opinions)
@@ -21,7 +21,7 @@ class MotionsControllerTest < ActionController::TestCase
 
     get :new, forum_id: forums(:utrecht)
 
-    assert_response :success
+    assert_response 200
     assert_not_nil assigns(:motion)
   end
 
@@ -102,7 +102,7 @@ class MotionsControllerTest < ActionController::TestCase
     sign_in users(:user_thom)
 
     get :convert, motion_id: motions(:one)
-    assert_response :success
+    assert_response 200
   end
 
   # Currently only staffers can convert items
@@ -135,7 +135,7 @@ class MotionsControllerTest < ActionController::TestCase
     sign_in users(:user_thom)
 
     get :move, motion_id: motions(:one)
-    assert_response :success
+    assert_response 200
   end
 
   # Currently only staffers can convert items

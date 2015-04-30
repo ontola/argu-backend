@@ -172,7 +172,7 @@ Argu::Application.routes.draw do
     resources :motions, path: 'm', only: [:new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
-    resources :groups, path: 'g', only: [:new, :create] do
+    resources :groups, path: 'g', only: [:new, :create, :edit, :update] do
       get 'add', on: :member
       post on: :member, action: :add!, as: ''
     end

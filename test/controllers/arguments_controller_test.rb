@@ -8,7 +8,7 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     get :show, id: arguments(:one)
 
-    assert_response :success
+    assert_response 200
     assert assigns(:argument)
     assert assigns(:comments)
 

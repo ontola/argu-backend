@@ -16,7 +16,7 @@ class StaticPagesControllerTest < ActionController::TestCase
 
     get :how_argu_works
 
-    assert_response :success
+    assert_response 200
   end
 
 end

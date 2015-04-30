@@ -8,7 +8,7 @@ class InfoControllerTest < ActionController::TestCase
 
     get :show, {'id' => 'team'}
 
-    assert_response :success
+    assert_response 200
     assert assigns(:document)
     assert_equal 'block--full', assigns(:document)['sections'].first['type']
   end

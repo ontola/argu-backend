@@ -11,6 +11,7 @@ ul
               td= member.member.display_name
               td= link_to t('destroy'), group_membership_path(member), data: {method: :delete, 'skip-pjax' => true, confirm: t('destroy_confirmation')}
       =link_to t('groups.member.new'), add_forum_group_path(@forum, group)
+      =link_to t('edit_type', type: t('groups.type')), edit_forum_group_path(@forum, group)
 br
 - if policy(@forum).create_group?
   =link_to t('groups.new'), new_forum_group_path(@forum), class: 'btn'
