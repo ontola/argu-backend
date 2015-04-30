@@ -82,12 +82,15 @@ Argu::Application.routes.draw do
 
   post 'v/:for' => 'votes#create', as: :vote
 
-  resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible]
+  resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible] do
+    resources :tags, path: 't', only: [:index]
+  end
 
   resources :motions, path: 'm', except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
     resources :groups, only: [] do
       resources :group_responses, path: 'responses', as: 'responses', only: [:new, :create]
     end
+    resources :tags, path: 't', only: [:index]
   end
 
   resources :arguments, path: 'a', except: [:index, :new, :create], concerns: [:votable] do
@@ -168,7 +171,7 @@ Argu::Application.routes.draw do
     resources :questions, path: 'q', only: [:index, :new, :create]
     resources :motions, path: 'm', only: [:new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
-    resources :tags, path: 't', only: [:show]
+    resources :tags, path: 't', only: [:show, :index]
     resources :groups, path: 'g', only: [:new, :create] do
       get 'add', on: :member
       post on: :member, action: :add!, as: ''
