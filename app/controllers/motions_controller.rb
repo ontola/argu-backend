@@ -136,7 +136,7 @@ class MotionsController < ApplicationController
   end
 
   def convert!
-    @motion = Motion.find_by_id params[:motion_id]
+    @motion = Motion.find_by_id(params[:motion_id]).lock!
     authorize @motion, :move?
     authorize @motion.forum, :update?
 
@@ -160,7 +160,7 @@ class MotionsController < ApplicationController
   end
 
   def move!
-    @motion = Motion.find_by_id params[:motion_id]
+    @motion = Motion.find_by_id(params[:motion_id]).lock!
     authorize @motion, :move?
     @forum = Forum.find_by_id permit_params[:forum_id]
     authorize @forum, :update?

@@ -29,4 +29,4 @@
       section
         / Protects against Directory Traversal Attacks
         -if !tab.gsub(/\\/, '').index('../')
-          =render partial: "forums/settings/#{tab}", locals: {resource: @forum}
+          =render partial: "forums/settings/#{tab}", locals: {resource: @forum, tab: tab, active: active}

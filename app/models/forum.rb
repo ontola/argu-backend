@@ -17,7 +17,7 @@ class Forum < ActiveRecord::Base
 
   # @private
   # Used in the forum selector
-  attr_accessor :is_checked
+  attr_accessor :is_checked, :tab, :active
 
   acts_as_ordered_taggable_on :tags
   mount_uploader :profile_photo, AvatarUploader

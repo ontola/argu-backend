@@ -20,7 +20,7 @@ class RestrictivePolicy
   delegate :session, to: :context
 
   def permitted_attributes
-    attributes = []
+    attributes = [:lock_version]
     attributes << :shortname if shortname?
     attributes << :is_trashed if trash?
     attributes

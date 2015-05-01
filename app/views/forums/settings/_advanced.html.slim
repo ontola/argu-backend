@@ -1,4 +1,7 @@
 =semantic_form_for resource, multipart: true do |f|
+  =f.input :lock_version, as: :hidden
+  =f.input :tab, value: local_assigns[:tab], as: :hidden
+  =f.input :active, value: local_assigns[:active], as: :hidden
   - resource.errors.full_messages.each do |message|
     =message
   - if policy(resource).is_owner? || policy(resource).staff?

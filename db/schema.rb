@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430142223) do
+ActiveRecord::Schema.define(version: 20150501103537) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,6 +162,7 @@ ActiveRecord::Schema.define(version: 20150430142223) do
     t.string   "motions_title_singular"
     t.string   "arguments_title"
     t.string   "arguments_title_singular"
+    t.integer  "lock_version",             default: 0
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
