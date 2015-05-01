@@ -24,4 +24,13 @@ class GroupResponse < ActiveRecord::Base
     coll.each { |gr| dest[gr.side][:collection] << gr }
     dest
   end
+
+  def self.ordered_with_meta (coll=[], profile)
+    collection = {}
+    collection[:collection] = ordered(coll)
+    if model = coll[0]
+      collection[:responses_left] = model.group.max_responses_per_member - model.motion.responses_from(profile)
+    end
+    collection
+  end
 end

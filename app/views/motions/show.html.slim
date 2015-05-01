@@ -29,8 +29,8 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .col-3
     .intro-filler[data-intro= t('intro.motion.groups') data-position= "top"]
   -@group_responses && @group_responses.each do |k,v|
-    - if v.values.map { |c| c[:collection].length }.reduce(&:+) > 0 || k.include?(current_profile)
-      =render_columns(v, header: k, collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: profile_in_group?(current_profile, k), buttons_param: :side, header_text: header_values(k))
+    - if v[:collection].values.map { |c| c[:collection].length }.reduce(&:+) > 0 || k.include?(current_profile)
+      =render_columns(v[:collection], header: k, collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: v[:responses_left] > 0, buttons_param: :side, header_text: header_values(k))
     - else
       .col-1
         header

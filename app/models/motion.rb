@@ -104,6 +104,10 @@ class Motion < ActiveRecord::Base
     self.votes_pro_count - self.votes_con_count
   end
 
+  def responses_from(profile)
+    self.group_responses.where(profile_id: profile.id).count
+  end
+
   def score
     number_to_human(raw_score, :format => '%n%u', :units => { :thousand => 'K' })
   end

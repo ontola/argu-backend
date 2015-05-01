@@ -13,4 +13,13 @@ module GroupResponsesHelper
     {'pro' => t('groupresponses.header.pro', type: group.name), 'neutral' => t('groupresponses.header.neutral', type: group.name), 'con' => t('groupresponses.header.con', type: group.name)}
   end
 
+  def group_responses_left(motion)
+    max = motion.group.max_responses_per_member
+    if max != -1
+     max - motion.responses_from(current_profile)
+    else
+      Float::INFINITY
+    end
+  end
+
 end

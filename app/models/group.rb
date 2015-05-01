@@ -15,7 +15,12 @@ class Group < ActiveRecord::Base
 
   def self.ordered (coll=[], keys= [])
     grouped = coll.group_by { |g| g.group }
-    (keys + grouped.keys).map { |g| {g => GroupResponse.ordered(grouped[g] || {}) } }.reduce(&:merge)
+    (keys + grouped.keys).map { |g| {g => GroupResponse.ordered_with_meta(grouped[g] || {}) } }.reduce(&:merge)
+  end
+
+  def self.ordered_with_meta (coll=[], keys= [], profile)
+    grouped = coll.group_by { |g| g.group }
+    (keys + grouped.keys).map { |g| {g => GroupResponse.ordered_with_meta(grouped[g] || {}, profile) } }.reduce(&:merge)
   end
 
   def include?(profile)
