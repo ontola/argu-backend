@@ -189,3 +189,4 @@ nl:
         username: "gebruikersnaam"
         password_confirmation: "Zelfde als hierboven"
   document_missing: "Dit document lijkt niet te bestaan."
+  offline: "Internetverbinding verbroken"
