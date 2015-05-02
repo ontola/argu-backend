@@ -4,4 +4,6 @@
   small  <!-- for styling -->
   .box
     section
-      =render partial: "pages/settings/#{params[:tab] || 'settings'}"
+      / Protects against Directory Traversal Attacks
+      -if !tab.gsub(/\\/, '').index('../')
+        =render partial: "pages/settings/#{params[:tab] || 'settings'}"
