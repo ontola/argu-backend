@@ -25,12 +25,10 @@ class GroupResponse < ActiveRecord::Base
     dest
   end
 
-  def self.ordered_with_meta (coll=[], profile)
+  def self.ordered_with_meta (coll=[], profile, obj, group)
     collection = {}
     collection[:collection] = ordered(coll)
-    if model = coll[0]
-      collection[:responses_left] = model.group.max_responses_per_member - model.motion.responses_from(profile)
-    end
+    collection[:responses_left] = group.max_responses_per_member == -1 ? Float::INFINITY : group.max_responses_per_member - obj.responses_from(profile)
     collection
   end
 end
