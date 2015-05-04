@@ -63,6 +63,7 @@ nl:
   error: "Fout"
   error_prohibited: " bij het opslaan:"
   outdated_browser: "Je gebruikt een <strong>achterhaalde en waarschijnlijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
+  view_settings: "Weergave"
   share_link:
     header: "Link delen"
     body: "Deel onderstaande link om direct mensen uit te nodigen naar dit forum."

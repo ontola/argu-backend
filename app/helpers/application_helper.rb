@@ -76,6 +76,20 @@ module ApplicationHelper
     dropdown_options(t('share'), [{items: link_items}], fa: 'fa-share-alt')
   end
 
+  def sort_items
+    link_items = []
+
+    link_items = [
+        link_item(t('filtersort.updated_at'), nil, fa: 'fire', data: {'sort-value' => 'updated_at'}),
+        link_item(t('filtersort.created_at'), nil, fa: 'clock-o', data: {'sort-value' => 'created_at'}),
+        link_item(t('filtersort.name'), nil, fa: 'sort-alpha-asc', data: {'sort-value' => 'name'}),
+        link_item(t('filtersort.vote_count'), nil, fa: 'check-square-o', data: {'sort-value' => 'vote_count'}),
+        link_item(t('filtersort.random'), nil, fa: 'gift', data: {'sort-value' => 'random'}, className: 'sort-random')
+    ]
+
+    dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
+  end
+
   def process_cover_photo(object, _params)
     if params[object.class.name.downcase][:cover_photo].present?
       object.assign_attributes(_params.except(:cover_photo))

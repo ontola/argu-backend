@@ -19,29 +19,6 @@
           li
             a[class="tag" rel="tag" href="#{forum_tag_path(@forum, tag)}" data-filter='filterByTag' data-filter-value=tag data-forum-path="#{forum_path(@forum)}" data-skip-pjax]= tag
   #sorts
-    ul.btns-list.btns-vertical
+    .btns-list.btns-subtle
       li
-        //TODO: Make date the default one to be checked.s
-        a[data-sort-value="updated_at" class="is-checked"]
-          span.fa.fa-fire
-          span.icon-left= t('filtersort.updated_at')
-      li
-        a[data-sort-value="created_at"]
-          span.fa.fa-clock-o
-          span.icon-left= t('filtersort.created_at')
-      /li
-        a[data-sort-value="name"]
-          span.fa.fa-sort-alpha-asc
-          span.icon-left= t("filtersort.name")
-      /li
-        a[data-sort-value="score"]
-          span.fa.fa-thumbs-up
-          span.icon-left= t('filtersort.score')
-      li
-        a[data-sort-value="vote_count"]
-          span.fa.fa-check-square-o
-          span.icon-left= t('filtersort.vote_count')
-      li
-        a[data-sort-value="random" id="sort-random"]
-          span.fa.fa-gift
-          span.icon-left= t('filtersort.random')
+        ul= react_component 'HyperDropdown', sort_items(), {prerender: true}
