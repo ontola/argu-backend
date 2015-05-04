@@ -7,7 +7,7 @@
 
 .cover {
   position: relative;
-  margin-bottom: 1em;
+  //margin-bottom: 1em;
 }
 
 .header-attribution {
@@ -54,23 +54,13 @@
   }
 }
 
-.cover-header {
+.cover-bar {
   margin: auto;
   width: 100%;
   display: inline-block;
   background-color: white;
-  .profile-picture {
-    height: 64px;
-    width: 64px;
-    background-size: cover;
-    bottom: 100%;
-    display: inline-block;
-    vertical-align: bottom;
-    @include bp-medium {
-      height: 50px;
-      width: 50px;
-    }
-  }
+  margin-bottom: 1em;
+
   .btns-list {
     display: block;
     clear: both;
@@ -96,38 +86,71 @@
   float: left;
 }
 
+.cover-overlay {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.25);
+  .profile-picture {
+    width: 5em;
+    height: 5em;
+    display: inline-block;
+  }
+}
+
+.cover-switcher-wrapper {
+  position: absolute;
+  bottom: 1em;
+  width: 100%;
+
+  .profile-picture {
+    height: 7em;
+    width: 7em;
+    background-size: cover;
+    display: inline-block;
+    border-radius: 99999px;
+    @include bp-large {
+      height: 5em;
+      width: 5em;
+    }
+    @include bp-medium {
+      height: 3em;
+      width: 3em;
+    }
+  }
+}
+
 .cover-switcher {
-  display: inline-block;
-  vertical-align: bottom;
+
   .dropdown {
     display: inline-block;
-    background-color: $blu;
   }
+
   .dropdown-trigger {
-    padding: 20px;
+    padding: .4em;
     position: relative;
     display: inline-block;
     color: white;
+    margin-bottom: 0;
+    vertical-align: bottom;
     @include transition(.2s);
-    background-color: $blu;
+
     @include bp-medium {
       font-size: 1em;
     }
+
     &:hover{
       background-color: $lighten2;
     }
+
     &:active, .dropdown-active{
       background-color: $lighten3 !important;
     }
-    margin-bottom: 0;
-    font-size: 23px;
-    min-height: 64px;
-    vertical-align: bottom;
-    @include bp-medium {
-      min-height: 50px;
-      padding: 16px;
-    }
   }
+
   .dropdown-content{
     width: 20em;
     @include bp-medium{

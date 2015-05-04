@@ -11,8 +11,8 @@ class StaticPagesController < ApplicationController
       end
     else
       #redirect_to preferred_forum
-      @document = JSON.parse Setting.get('about') || '{}'
-      render 'document', layout: 'layouts/closed'
+      #@document = JSON.parse Setting.get('about') || '{}'
+      #render 'document', layout: 'layouts/closed'
 	  end
   end
 

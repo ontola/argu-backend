@@ -8,7 +8,7 @@
       span.icon-left= motion_type(current_scope.model || model.forum)
       .details
         .details-part.details-part--type.motion-bg
-          span[class="fa fa-#{motion_icon}"]
+          span[class="fa fa-#{motion_icon(current_scope.model || model.forum)}"]
           span.icon-left= motion_type(current_scope.model || model.forum)
         .details-part.tooltip[data-title=t('tooltips.motion.vote_count')]
           span.fa.fa-check-square-o
