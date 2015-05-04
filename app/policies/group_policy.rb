@@ -18,7 +18,7 @@ class GroupPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:name] if create?
+    attributes << [:name, :name_singular, :icon, :max_responses_per_member] if create?
     attributes << [:id] if staff?
     attributes
   end

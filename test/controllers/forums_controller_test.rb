@@ -7,7 +7,7 @@ class ForumsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     get :show, id: forums(:utrecht)
-    assert_response :success
+    assert_response 200
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:items)
 
@@ -32,7 +32,7 @@ class ForumsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     get :show, id: forums(:amsterdam)
-    assert_response :success
+    assert_response 200
 
     assert_nil assigns(:items), 'Closed forums are leaking content'
   end
@@ -55,7 +55,7 @@ class ForumsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     get :selector
-    assert_response :success, 'Selector broke'
+    assert_response 200, 'Selector broke'
     assert_not_nil assigns(:forums)
   end
 
@@ -68,6 +68,15 @@ class ForumsControllerTest < ActionController::TestCase
     sign_in users(:user_utrecht_owner)
 
     get :settings, id: forums(:utrecht)
+    assert_response 200
+    assert assigns(:forum)
+  end
+
+  test 'should show settings/groups' do
+    sign_in users(:user_utrecht_owner)
+
+    get :settings, id: forums(:utrecht), tab: :groups
+
     assert_response :success
     assert assigns(:forum)
   end

@@ -12,6 +12,7 @@ require 'minitest/pride'
 
 
 class ActiveSupport::TestCase
+  include FactoryGirl::Syntax::Methods
   ActiveRecord::Migration.check_pending!
 
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.

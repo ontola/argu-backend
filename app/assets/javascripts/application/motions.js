@@ -29,7 +29,7 @@
              load: function(query, callback) {
                  if (!query.length) return callback();
                  $.ajax({
-                     url: '/motions/tags.json',
+                     url: 't.json',
                      type: 'GET',
                      dataType: 'json',
                      data: {

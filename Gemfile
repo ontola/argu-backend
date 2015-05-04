@@ -91,6 +91,8 @@ group :development, :test do
   gem 'coffee-rails', '~> 4.1.0'
   gem 'quiet_assets'
   gem 'web-console', '~> 2.0.0'
+  gem 'factory_girl'
+  gem 'factory_girl_rails'
   ####Capistrano#####
   gem 'capistrano', '~> 3.3.3'
   gem 'capistrano-rails', '~> 1.1.3'

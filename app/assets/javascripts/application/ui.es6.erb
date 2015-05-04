@@ -14,6 +14,9 @@ Argu.ui = {
             .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
             .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick);
 
+        window.addEventListener('online', this.handleOnline);
+        window.addEventListener('offline', this.handleOffline);
+
         this.handleDOMChangedFinished();
         this.initPlaceholderFallback();
         (this.window = $(window)).resize(this.handleResizeBackground);
@@ -108,6 +111,14 @@ Argu.ui = {
         $('input[name="'+tmp+'"]').parent("label").removeClass("checked");
         _this.parent("label").toggleClass("checked", this.selected);
         $(':not(.formtastic).argument').removeClass('side-pro side-con').addClass('side-' + _this.attr('value'));
+    },
+
+    handleOffline: function () {
+        document.getElementById('onlineStatus').className = '';
+    },
+
+    handleOnline: function () {
+        document.getElementById('onlineStatus').className = 'hidden';
     },
 
     handleResizeBackground: function () {

@@ -10,7 +10,7 @@ class VotesControllerTest < ActionController::TestCase
       post :create, motion_id: motions(:one), for: :pro, format: :json
     end
 
-    assert_response :success
+    assert_response 200
     assert assigns(:model)
     assert assigns(:vote)
   end

@@ -36,22 +36,22 @@ class Question < ActiveRecord::Base
   end
 
   def move_to(forum, include_motions = false)
-    ActiveRecord::Base.transaction do
-      old_forum = self.forum
-      self.forum = forum
+    Question.transaction do
+      old_forum = self.forum.lock!
+      self.forum = forum.lock!
       self.save
-      self.votes.update_all forum_id: forum.id
-      self.activities.update_all forum_id: forum.id
+      self.votes.lock(true).update_all forum_id: forum.id
+      self.activities.lock(true).update_all forum_id: forum.id
       if include_motions
-        self.motions.each do |m|
+        self.motions.lock(true).each do |m|
           m.move_to forum, false
         end
       else
-        self.question_answers.delete_all
+        self.question_answers.lock(true).delete_all
       end
-      old_forum.decrement :questions_count
+      old_forum.reload.decrement :questions_count
       old_forum.save
-      forum.increment :questions_count
+      forum.reload.increment :questions_count
       forum.save
     end
     true

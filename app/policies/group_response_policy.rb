@@ -28,7 +28,7 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def create?
-    profile_in_group?
+    profile_in_group? && !limit_reached?
   end
 
   def update?
@@ -47,6 +47,11 @@ private
 
   def is_manager?
     Pundit.policy(context, record.forum).is_manager?
+  end
+
+  # @note: This is prone to race conditions, but since a group_responses isn't a vote, it can be considered trivial.
+  def limit_reached?
+    record.motion.responses_from(actor) >= record.group.max_responses_per_member || record.group.max_responses_per_member == -1
   end
 
   def profile_in_group?

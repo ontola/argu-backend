@@ -5,5 +5,5 @@ class Tag < ActsAsTaggableOn::Tag
     has_one :motion
   end
 
-  validates :name, presence: true, length: {minimum: 3, maximum: 10}
+  validates :name, presence: true, length: {minimum: 2, maximum: 30}
 end

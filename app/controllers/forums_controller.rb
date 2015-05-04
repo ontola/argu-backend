@@ -105,6 +105,23 @@ class ForumsController < ApplicationController
     end
   end
 
+protected
+
+  def correct_stale_record_version
+    @forum.reload.attributes = permit_params.reject do |attrb, value|
+      attrb.to_sym == :lock_version
+    end
+  end
+
+  def stale_record_recovery_action
+    flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
+
+    render 'settings', locals: {
+               tab: params[:tab] || 'settings',
+               active: params[:tab] || 'settings'
+           }
+  end
+
 private
   def permit_params
     params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)

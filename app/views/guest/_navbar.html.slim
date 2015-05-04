@@ -16,3 +16,4 @@ nav#navbar.navbar role="navigation"
         =link_to sign_in_modal_path, class: 'navbar-item center', remote: true do
           span.fa.fa-sign-in
           span.icon-left.dont-hide= t('sign_in')
+  =render partial: 'online_status'

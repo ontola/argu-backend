@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper
+  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
@@ -46,6 +46,8 @@ class ApplicationController < ActionController::Base
       format.json { render json: { title: t('status.s_404.header'), message: t('status.s_404.body'), quote: @quote}, status: 404 }
     end
   end
+
+  rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
 
   # Combines {ApplicationController#create_activity} with {ApplicationController#destroy_recent_similar_activities}
   def create_activity_with_cleanup(model, params)
@@ -104,6 +106,18 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
       format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
+    end
+  end
+
+  def rescue_stale(e)
+    raise e
+    respond_to do |format|
+      format.html {
+        correct_stale_record_version
+        stale_record_recovery_action
+      }
+      format.xml  { head :conflict }
+      format.json { head :conflict }
     end
   end
 
@@ -182,6 +196,11 @@ class ApplicationController < ActionController::Base
     else
       self.class.layout 'guest'
     end
+  end
+
+  def stale_record_recovery_action
+    flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
+    render :edit, :status => :conflict
   end
 
   # @private

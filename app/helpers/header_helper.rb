@@ -89,8 +89,8 @@ module HeaderHelper
 
   def profile_membership_items
     ids = current_profile.memberships.pluck(:forum_id)
-    Shortname.shortnames_for_klass('Forum', ids).zip(Forum.where(id: ids).select(:id, :name, :profile_photo)).map do |forum|
-      link_item(forum[1].display_name, forum_path(forum[0]), image: forum[1].profile_photo.url(:icon))
+    Shortname.shortname_owners_for_klass('Forum', ids).map do |shortname|
+      link_item(shortname.owner.display_name, forum_path(shortname.shortname), image: shortname.owner.profile_photo.url(:icon))
     end
   end
 

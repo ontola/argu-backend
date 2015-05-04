@@ -6,7 +6,7 @@ class PagesControllerTest < ActionController::TestCase
   test 'should not get show without platform access' do
     get :show, id: pages(:utrecht)
 
-    assert_response :success
+    assert_response 200
     assert assigns(:_not_logged_in_caught)
     assert_nil assigns(:collection)
   end
@@ -14,7 +14,7 @@ class PagesControllerTest < ActionController::TestCase
   test 'should get show with platform access' do
     get :show, id: pages(:utrecht), at: access_tokens(:token_hidden).access_token
 
-    assert_response :success
+    assert_response 200
     assert_not_nil assigns(:profile)
     assert_not_nil assigns(:collection)
 
@@ -26,7 +26,7 @@ class PagesControllerTest < ActionController::TestCase
 
     get :show, id: pages(:utrecht)
 
-    assert_response :success
+    assert_response 200
     assert_not_nil assigns(:profile)
     assert_not_nil assigns(:collection)
 
