@@ -4,14 +4,14 @@ class User < ActiveRecord::Base
   has_many :authentications, dependent: :destroy
   has_one :profile, as: :profileable, dependent: :destroy
 
-  #accepts_nested_attributes_for :profile
+  accepts_nested_attributes_for :profile
 
   # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
+  # :token_authenticatable,
   # :lockable, :timeoutable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
-         #, :omniauthable
+         #, :confirmable#, :omniauthable
 
   before_validation :check_for_profile
   after_destroy :cleanup

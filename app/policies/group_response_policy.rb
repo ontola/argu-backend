@@ -51,7 +51,11 @@ private
 
   # @note: This is prone to race conditions, but since a group_responses isn't a vote, it can be considered trivial.
   def limit_reached?
-    record.motion.responses_from(actor) >= record.group.max_responses_per_member || record.group.max_responses_per_member == -1
+    if record.group.max_responses_per_member == -1
+      false
+    else
+      record.motion.responses_from(actor) >= record.group.max_responses_per_member
+    end
   end
 
   def profile_in_group?

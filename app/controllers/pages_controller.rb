@@ -80,6 +80,10 @@ class PagesController < ApplicationController
   def settings
     @page = Page.find_via_shortname params[:id]
     authorize @page, :update?
+    render locals: {
+               tab: params[:tab] || 'settings',
+               active: params[:tab] || 'settings'
+           }
   end
 
   def update
@@ -89,7 +93,10 @@ class PagesController < ApplicationController
     if @page.update permit_params
       redirect_to settings_page_path(@page, tab: params[:tab])
     else
-      render 'settings', tab: params[:tab]
+      render 'settings', locals: {
+                           tab: params[:tab] || 'settings',
+                           active: params[:tab] || 'settings'
+                       }
     end
   end
 
