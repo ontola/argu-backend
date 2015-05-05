@@ -39,5 +39,15 @@
   - unless alternative_questions?
     .col-3-1
       .box
-        section=raw t('questions.form.helper.side')
+        section
+          h2= "Wat is een vraagstuk?"
+          p= raw "Een <b class='question-t'>vraagstuk</b> is een <b>open vraag</b> waarin een probleem wordt gepresenteerd. Een vraagstuk nodigt mensen uit om oplossingen te bedenken en vervolgens te plaatsen als ideeën."
+          h2= "Tips:"
+          ul.bullets
+            li
+              p= raw "Geef <b>achtergrondinformatie</b>. Leg uit hoe het probleem in elkaar steekt en waarom het probleem relevant is."
+            li
+              p= raw "Een vraagstuk begint meestal met \"<b>Hoe</b>...\" of \"<b>Wat</b>...\" en eindigt altijd met een vraagteken."
+            li
+              p= raw "Kan je jouw vraagstuk beantwoorden met \"ja\" of \"nee\"? Waarschijnlijk wil je dan een <b>#{link_to 'idee plaatsen', new_forum_motion_path(@forum), class: 'motion-t' }</b>."
       =render partial: 'links_helper'
