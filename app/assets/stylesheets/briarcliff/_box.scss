@@ -131,6 +131,10 @@
   &:active{
     opacity: .6;
   }
+  
+  .display-hide-images & {
+    display: none;
+  }
 }
 
 .box.box-link {

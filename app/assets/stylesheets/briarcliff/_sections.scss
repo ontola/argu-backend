@@ -21,6 +21,10 @@ section {
   .fa-group {
     font-size: 0.7em;
   }
+
+  .display-hide-details &{
+    display: none;
+  }
 }
 
 .details {

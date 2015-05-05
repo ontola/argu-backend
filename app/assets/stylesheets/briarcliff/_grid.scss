@@ -4,6 +4,10 @@
 .grid {
   @include container-width;
   margin: auto;
+
+  &.display-single-column {
+    max-width: 40em;
+  }
 }
 
 .box-grid.box-big{
@@ -30,6 +34,11 @@
     width: 100%;
     width: calc(100% - 2em);
   }
+
+  .display-single-column & {
+    width: 100%;
+  }
+
 }
 
 .box-grid-sizer {
@@ -39,4 +48,9 @@
     width: 100%;
     display: inline-block;
   }
+
+  .display-single-column & {
+    width: 100%;
+  }
+
 }
