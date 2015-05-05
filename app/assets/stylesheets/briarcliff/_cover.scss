@@ -10,6 +10,30 @@
   //margin-bottom: 1em;
 }
 
+.cover-buttons {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  .btns-list{
+    width: 100%;
+    @include bp-medium {
+      span {
+        display: none;
+        &.fa {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}
+
+.cover-buttons-container {
+  max-width: 1200px;
+  display: block;
+  padding: 0 1em;
+  margin: auto;
+}
+
 .header-attribution {
   color: whitesmoke;
   background-color: $darken3;
@@ -50,7 +74,7 @@
     height: 10em;
   }
   @include bp-small {
-    height: 7em;
+    height: 10em;
   }
 }
 
@@ -58,31 +82,15 @@
   margin: auto;
   width: 100%;
   display: inline-block;
-  background-color: white;
   margin-bottom: 1em;
-
-  .btns-list {
-    display: block;
-    clear: both;
-    @include bp-medium{
-      > li{
-        font-size: 1.3em;
-      }
-      span{
-        display: none;
-        &.fa{
-          display: inline-block;
-        }
-      }
-    }
-  }
+  background-color: white;
 }
 
 .cover-oneliner {
   max-width: 51em;
   margin-left: 0.8em;
   margin-top: 1em;
-  margin-bottom: 0;
+  margin-bottom: 1em;
   float: left;
 }
 
@@ -103,7 +111,7 @@
 
 .cover-switcher-wrapper {
   position: absolute;
-  bottom: 1em;
+  bottom: 3em;
   width: 100%;
 
   .profile-picture {
@@ -138,10 +146,6 @@
     vertical-align: bottom;
     @include transition(.2s);
 
-    @include bp-medium {
-      font-size: 1em;
-    }
-
     &:hover{
       background-color: $lighten2;
     }
@@ -168,7 +172,7 @@
 }
 
 .cover-header-middle {
-  background-color: white;
+ // background-color: white;
 }
 
 .cover-header-bottom {
