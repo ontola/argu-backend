@@ -6,7 +6,7 @@
   margin: auto;
 
   &.display-single-column {
-    max-width: 40em;
+    max-width: 55em;
   }
 }
 
@@ -37,6 +37,7 @@
 
   .display-single-column & {
     width: 100%;
+    width: calc(100% - 2em);
   }
 
 }
