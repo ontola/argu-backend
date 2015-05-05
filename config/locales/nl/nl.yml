@@ -183,5 +183,7 @@ nl:
         password: "wachtwoord"
         username: "gebruikersnaam"
         password_confirmation: "Zelfde als hierboven"
+      categories:
+        privacy: "Privacy"
   document_missing: "Dit document lijkt niet te bestaan."
   offline: "Internetverbinding verbroken"

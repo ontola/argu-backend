@@ -15,8 +15,8 @@ json.opinions @motion.opinions do |o|
   json.id o.id
   json.title o.title
 end
-json.group_responses @group_responses do |group|
-  json.collection group[:collection] do |g_r|
+json.group_responses @group_responses do |group, responses|
+  json.collection responses[:collection].flat_map{ |k,v| v[:collection] } do |g_r|
     json.id g_r.id
     json.creator_url dual_profile_path(g_r.profile)
     json.text g_r.text
@@ -24,5 +24,5 @@ json.group_responses @group_responses do |group|
     json.created_at g_r.created_at
     json.updated_at g_r.updated_at
   end
-  json.responses_left group[:responses_left]
+  json.responses_left responses[:responses_left].to_s
  end

@@ -92,12 +92,10 @@ class UsersController < ApplicationController
 
   private
   def permit_params
-    params.require(:user).permit(*policy(@user || User).permitted_attributes)
+    params.require(:user).permit(*policy(@user || User).permitted_attributes(true))
   end
 
   def passwordless_permit_params
-    params.require(:user).permit(:follows_email, :follows_mobile,
-                                 :memberships_email, :memberships_mobile,
-                                 :created_email, :created_mobile)
+    params.require(:user).permit(*policy(@user || User).permitted_attributes)
   end
 end

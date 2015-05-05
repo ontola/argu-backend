@@ -5,5 +5,5 @@
   .box
     section
       / Protects against Directory Traversal Attacks
-      -if !tab.gsub(/\\/, '').index('../')
+      -if local_assigns[:tab] && !tab.gsub(/\\/, '').index('../')
         =render partial: "pages/settings/#{params[:tab] || 'settings'}"

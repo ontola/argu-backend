@@ -6,27 +6,27 @@
       section
         ul.tabs.tabs--vertical
           li[class=('active' if local_assigns[:active] == 'settings')]
-            =link_to url_for([:settings, @forum]), data: {intro: t('intro.forum.settings.settings')}
+            =link_to url_for([:settings, @forum]), data: {intro: t('intro.forums.settings.settings')}
               span.fa.fa-gear
-              span.icon-left= t('forum.settings.menu.general')
+              span.icon-left= t('forums.settings.menu.general')
           - if policy(@forum).managers?
             li[class=('active' if local_assigns[:active] == 'advanced')]
-              =link_to url_for([:settings, @forum, tab: :advanced]), data: {intro: t('intro.forum.settings.settings')}
+              =link_to url_for([:settings, @forum, tab: :advanced]), data: {intro: t('intro.forums.settings.settings')}
                 span.fa.fa-gear
                 span.icon-left= t('forums.settings.advanced')
           - if policy(@forum).managers?
             li[class=('active' if local_assigns[:active] == 'managers')]
-              =link_to url_for([:settings, @forum, tab: :managers]), data: {intro: t('intro.forum.settings.managers')}
+              =link_to url_for([:settings, @forum, tab: :managers]), data: {intro: t('intro.forums.settings.managers')}
                 span.fa.fa-group
                 span.icon-left= t('forums.settings.managers.title')
           - if @forum.class == Forum && policy(@forum).groups?
             li[class=('active' if local_assigns[:active] == 'groups')]
-              =link_to url_for([:settings, @forum, tab: :groups]), data: {intro: t('intro.forum.settings.groups')}
+              =link_to url_for([:settings, @forum, tab: :groups]), data: {intro: t('intro.forums.settings.groups')}
                 span.fa.fa-group
                 span.icon-left= t('forums.settings.groups.title')
   .col-3-2
     .box
       section
         / Protects against Directory Traversal Attacks
-        -if !tab.gsub(/\\/, '').index('../')
+        -if local_assigns[:tab] && !tab.gsub(/\\/, '').index('../')
           =render partial: "forums/settings/#{tab}", locals: {resource: @forum, tab: tab, active: active}
