@@ -1,27 +1,29 @@
-.col-3
+.col-1
   header
     h1= t('pages.management.title')
     p= t('pages.management.managed_current_out_of_max', current: current, max: max)
-    .col-3-2
-      - @pages.each do |page|
-        - pa_po = policy(page)
-        .box
-          section
-            =image_tag page.profile.profile_photo.url(:icon), class: 'profilepicture'
-            h2= page.display_name
-            p= page.profile.about
-            p=t('pages.management.members', members: page.memberships.count)
-            section
-              h3= t('forums.settings.managers.title')
-              ul
-                li
-                  =image_tag page.owner.profile_photo.url(:icon), size: '16x16'
-                  span= "#{page.owner.display_name} (#{t('pages.management.owner')})"
-                - page.managers.each do |manager|
-                  li
-                    =image_tag manager.profile_photo.url(:icon), size: '16x16'
-                    span= manager.display_name
-          ul.btn-sticky-bottom.btn-sticky.btns-vertical
-            li= link_to t('show'), page_path(page), class: 'btn'
-            li= link_to t('edit'), edit_page_path(page), class: 'btn' if pa_po.edit?
-            li= link_to t('pages.settings.title'), settings_page_path(page), class: 'btn' if pa_po.is_owner?
+  - @pages.each do |page|
+    - pa_po = policy(page)
+    .box
+      section
+        =image_tag page.profile.profile_photo.url(:icon), class: 'profilepicture'
+        h2
+          = link_to page.display_name, page_path(page)
+        p= page.profile.about
+        p=t('pages.management.members', members: page.memberships.count)
+        h3= t('forums.settings.managers.title')
+        ul.margin-bottom
+          li
+            =image_tag page.owner.profile_photo.url(:icon), size: '16x16'
+            span= "#{page.owner.display_name} (#{t('pages.management.owner')})"
+          - page.managers.each do |manager|
+            li
+              =image_tag manager.profile_photo.url(:icon), size: '16x16'
+                span= manager.display_name
+      ul.btns-list.btn-sticky
+        /li= link_to t('show'), page_path(page), class: 'btn'
+        li= link_to edit_page_path(page) do
+          span.fa.fa-gear
+          span.icon-left= t('edit')
+        /li= link_to t('edit'), edit_page_path(page), class: 'btn' if pa_po.edit?
+        /li= link_to t('pages.settings.title'), settings_page_path(page), class: 'btn' if pa_po.is_owner?

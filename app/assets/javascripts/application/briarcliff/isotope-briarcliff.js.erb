@@ -73,7 +73,7 @@ $(function () {
 
     $(document).on('pjax:complete pjax:end', function () {
         checkForGrid();
-    }).on('click', '#sort-random', function () {
+    }).on('click', '.sort-random', function () {
         $container.isotope('updateSortData').isotope({
             sortBy: 'random'
         });

@@ -173,6 +173,17 @@
   }
 }
 
+.btn-fill {
+  color: white !important;
+  .dropdown-trigger {
+    color: white !important;
+  }
+}
+
+.btns-fill li a {
+  color: white !important;
+}
+
 .btns-links {
   margin-bottom: .6em;
 }
@@ -221,6 +232,7 @@
     padding: .7em;
     display: inline-block;
     color: $g3;
+    vertical-align: bottom;
     //height: 2.45em;
     &:hover {
       text-decoration: none;
