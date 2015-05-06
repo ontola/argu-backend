@@ -1,5 +1,42 @@
 /*global React, $*/
 
+
+window.CombiBigVote = React.createClass({
+    getInitialState: function () {
+        return {
+            actor: this.props.actor
+        };
+    },
+
+    onActorChange: function (actor) {
+        this.setState({actor: actor})
+    },
+
+    componentDidMount: function () {
+        this.unsubscribe = actorStore.listen(this.onActorChange);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+    },
+
+    render: function () {
+        let voteComponent;
+        if (this.state.actor.actor_type == "User") {
+            voteComponent = <BigVote {...this.props}/>;
+        } else if (this.state.actor.actor_type == "Page") {
+            //TODO: Implement page voting component
+            window.alert('To implement!');
+        }
+
+        return (
+            <div>
+                {voteComponent}
+            </div>
+        );
+    }
+});
+
 window.BigVote = React.createClass({
     getInitialState: function () {
         return {
@@ -127,5 +164,6 @@ window.BigVote = React.createClass({
 });
 
 if (typeof module !== 'undefined' && module.exports) {
+    module.exports = CombiBigVote;
     module.exports = BigVote;
 }

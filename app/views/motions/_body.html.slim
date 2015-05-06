@@ -5,7 +5,7 @@
   section
     h1.motion-t[itemprop="headline"]= motion.title
     .markdown[itemprop="text"]
-      = markdown_to_html(motion.content)
+      =markdown_to_html(motion.content)
   /TODO: Fix tags link
   /- if motion.tags.present?
     ul[class="tags" data-intro= t("intro.tags")]= render partial: 'tags/tags', locals: {resource: motion}
