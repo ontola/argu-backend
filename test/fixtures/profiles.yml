@@ -17,6 +17,10 @@ profile_utrecht_manager:
   profileable: user_utrecht_manager (User)
   about: "It's all in the name"
   are_votes_public: true
+profile_utrecht_manager_only:
+  profileable: user_utrecht_manager_only (User)
+  about: "It's all in the name!"
+  are_votes_public: true
 profile_one:
   profileable: user (User)
   about: 'Im a user'

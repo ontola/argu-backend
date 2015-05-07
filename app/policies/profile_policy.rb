@@ -30,7 +30,7 @@ class ProfilePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:name, :about, :profile_photo, :cover_photo, :are_votes_public] if update?
+    attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public] if update?
     attributes
   end
 

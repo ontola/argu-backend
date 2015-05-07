@@ -61,14 +61,6 @@ Argu::Application.routes.draw do
     delete 'users', to: 'registrations#destroy', as: nil
   end
 
-
-  resource :admin, only: [] do
-    post ':id' => 'administration#add'
-    delete ':id' => 'administration#remove', as: 'remove'
-    post 'freeze/:id' => 'administration#freeze', as: 'freeze'
-    delete 'freeze/:id' => 'administration#unfreeze'
-  end
-
   resources :authentications, only: [:create, :destroy]
   match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
 

@@ -27,6 +27,9 @@ sn_user_utrecht_owner:
 sn_user_utrecht_manager:
   shortname: 'utrecht_manager'
   owner: user_utrecht_manager (User)
+sn_user_utrecht_manager_only:
+  shortname: 'utrecht_manager_only'
+  owner: user_utrecht_manager_only (User)
 sn_user:
   shortname: 'user'
   owner: user (User)

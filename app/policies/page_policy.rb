@@ -41,7 +41,15 @@ class PagePolicy < RestrictivePolicy
     attributes << [:visibility, shortname_attributes: [:shortname]] if new_record?
     attributes << :visibility if is_owner?
     attributes << [:page_id, :repeat_name] if change_owner?
+    attributes << [profile_attributes: ProfilePolicy.new(context, record.profile).permitted_attributes]
     attributes.flatten
+  end
+
+  def permitted_tabs
+    tabs = []
+    tabs << :general if is_manager? || staff?
+    tabs << :advanced << :managers if is_owner? || staff?
+    tabs
   end
 
   def show?
@@ -107,6 +115,14 @@ class PagePolicy < RestrictivePolicy
 
   def max_pages_reached?
     user && user.profile.pages.length >= max_allowed_pages
+  end
+
+  # Make sure that a tab param is actually accounted for
+  # @return [String] The tab if it is considered valid
+  def verify_tab(tab)
+    tab ||= 'general'
+    self.assert! self.permitted_tabs.include?(tab.to_sym)
+    tab
   end
 
   #######Attributes########

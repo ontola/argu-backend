@@ -14,8 +14,13 @@ nl:
       profile: "Profiel instellingen"
       menu:
         general: "Algemeen"
+        advanced: 'Geavanceerd'
+        groups: 'Groepen'
+        privacy: 'Privacy'
+        managers: 'Managers'
       terminology: "Terminologie"
       advanced: "Geavanceerd"
+      privacy: "Privacy"
       manager: "beheerder"
       managers:
         title: "Beheerders"

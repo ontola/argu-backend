@@ -26,6 +26,12 @@ class RestrictivePolicy
     attributes
   end
 
+
+  def self.assert!(assertion)
+    raise Pundit::NotAuthorizedError unless assertion
+  end
+  delegate :assert!, to: :class
+
   def staff?
     user && user.profile.has_role?(:staff)
   end

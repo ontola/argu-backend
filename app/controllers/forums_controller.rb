@@ -39,9 +39,10 @@ class ForumsController < ApplicationController
     @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
     current_context @forum
+    tab = policy(@forum).verify_tab(params[:tab])
     render locals: {
-               tab: params[:tab] || 'settings',
-               active: params[:tab] || 'settings'
+               tab: tab,
+               active: tab
            }
   end
 
@@ -68,7 +69,11 @@ class ForumsController < ApplicationController
       if @forum.update permit_params
         format.html { redirect_to settings_forum_path(@forum, tab: params[:tab]) }
       else
-        format.html { render 'settings' }
+        format.html { render 'settings', locals: {
+                                           tab: params[:tab] || 'general',
+                                           active: params[:tab] || 'general'
+                                       }
+        }
       end
     end
   end

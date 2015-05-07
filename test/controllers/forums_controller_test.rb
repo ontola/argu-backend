@@ -64,12 +64,18 @@ class ForumsControllerTest < ActionController::TestCase
   # For owners
   ####################################
 
-  test 'should show settings' do
+  test 'should show settings and all tabs' do
     sign_in users(:user_utrecht_owner)
 
     get :settings, id: forums(:utrecht)
     assert_response 200
     assert assigns(:forum)
+
+    [:general, :advanced, :groups, :privacy, :managers].each do |tab|
+      get :settings, id: forums(:utrecht), tab: tab
+      assert_response 200
+      assert assigns(:forum)
+    end
   end
 
   test 'should show settings/groups' do
@@ -92,5 +98,23 @@ class ForumsControllerTest < ActionController::TestCase
   end
 
 
+  ####################################
+  # For managers
+  ####################################
 
+  test 'should show settings and some tabs' do
+    sign_in users(:user_utrecht_manager_only)
+
+    [:general, :advanced, :groups].each do |tab|
+      get :settings, id: forums(:utrecht), tab: tab
+      assert_response 200
+      assert assigns(:forum)
+    end
+
+    [:privacy, :managers].each do |tab|
+      get :settings, id: forums(:utrecht), tab: tab
+      assert_redirected_to root_path
+      assert assigns(:forum)
+    end
+  end
 end
