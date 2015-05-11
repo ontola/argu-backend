@@ -3,6 +3,6 @@ var _parent = $('<%= @comment.parent.present? ? "##{@comment.parent.identifier}"
 _parent.find('.comment_form').hide().find('textarea').val('');
 _parent.append('<%= escape_javascript render partial: 'comments/comment', locals: { resource: @comment.commentable, c: @comment } %>');
 <% else %>
-_parent.find('textarea').last().val('');
-_parent.find('.comment-post').append('<%= escape_javascript render partial: 'comments/comment', locals: { resource: @comment.commentable, c: @comment } %>');
+_parent.find('textarea').first().val('');
+_parent.find('.comments').prepend('<%= escape_javascript render partial: 'comments/comment', locals: { resource: @comment.commentable, c: @comment } %>');
 <% end %>
