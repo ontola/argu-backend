@@ -13,6 +13,10 @@
 /log/*.log
 /tmp/*
 /.idea
+client-bundle.js
+client-bundle.js.map
+node_modules
+.env
 
 # Ignore secrets
 secrets.yml
