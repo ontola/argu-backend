@@ -4,7 +4,7 @@
   =f.input :active, value: local_assigns[:active], as: :hidden
   - resource.errors.full_messages.each do |message|
     =message
-  = f.inputs name: t('forums.settings.profile') do
+  =f.inputs name: t('forums.settings.profile') do
     =f.input :name
     =f.input :bio, input_html: { rows: 2}
     =f.input :bio_long

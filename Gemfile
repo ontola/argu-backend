@@ -87,7 +87,7 @@ group :development, :test do
   gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
-  gem 'spring', '~> 1.2.0'
+  gem 'spring', '~> 1.3.5'
   gem 'coffee-rails', '~> 4.1.0'
   gem 'quiet_assets'
   gem 'web-console', '~> 2.0.0'

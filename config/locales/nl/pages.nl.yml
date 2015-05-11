@@ -3,6 +3,10 @@ nl:
     resource_name: "Pagina"
     settings:
       title: "Instellingen"
+      menu:
+        general: 'Algemeen'
+        advanced: 'Geavanceerd'
+        managers: 'Managers'
       managers:
         owner: "Eigenaar"
         about_owner: "Gebruikers zijn eigenaar van een Pagina. Gebruikers kunnen meerdere Pagina's bezitten, maar een Pagina kan maar één eigenaar hebben."

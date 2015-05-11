@@ -54,7 +54,8 @@ class PagesController < ApplicationController
     Page.transaction do
       @page = Page.new
       @page.build_shortname
-      @page.build_profile permit_params[:profile_attributes]
+      @page.build_profile
+      @page.profile.update permit_params[:profile_attributes]
       @page.owner = current_user.profile
       @page.attributes = permit_params
 
@@ -80,9 +81,10 @@ class PagesController < ApplicationController
   def settings
     @page = Page.find_via_shortname params[:id]
     authorize @page, :update?
+    tab = policy(@page).verify_tab(params[:tab])
     render locals: {
-               tab: params[:tab] || 'settings',
-               active: params[:tab] || 'settings'
+               tab: params[:tab] || 'general',
+               active: params[:tab] || 'general'
            }
   end
 

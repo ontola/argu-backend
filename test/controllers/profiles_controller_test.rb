@@ -23,24 +23,4 @@ class ProfilesControllerTest < ActionController::TestCase
     assert_equal users(:user_thom).profile, assigns(:profile)
   end
 
-  test 'should get edit profile when page owner' do
-    sign_in users(:user_thom)
-
-    get :edit, id: pages(:page_argu).url
-
-    assert_response 200
-    assert_equal pages(:page_argu), assigns(:resource)
-    assert_equal pages(:page_argu).profile, assigns(:profile)
-  end
-
-  test 'should not get edit profile when not page owner' do
-    sign_in users(:user)
-
-    get :edit, id: pages(:page_argu).url
-
-    assert_response 302
-    assert_equal pages(:page_argu), assigns(:resource)
-    assert_equal pages(:page_argu).profile, assigns(:profile)
-  end
-
 end

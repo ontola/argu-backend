@@ -3,7 +3,7 @@ ul.tabs
     span.fa.fa-home
     span.icon-left= resource.display_name
   li[class=('tabs-current' if local_assigns[:active] == :settings)]
-    =link_to url_for([:settings, resource]), data: {intro: t("intro.#{resource.class_name}.settings.settings")}
+    =link_to url_for([:settings, resource]), data: {intro: t("intro.#{resource.class_name}.settings.general")}
       span.fa.fa-gear
       span.icon-left= t("#{resource.class_name}.settings.title")
   - if policy(resource).statistics?

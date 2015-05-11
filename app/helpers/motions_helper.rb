@@ -23,6 +23,12 @@ module MotionsHelper
     return supplemented_values[2] - (overflow*(model.votes_con_percentage/100.to_f)) if side == :con
   end
 
+  def motion_combi_vote_props(actor, motion, vote)
+    {
+        actor: actor
+    }.merge(motion_vote_props(motion, vote))
+  end
+
   def motion_vote_props(motion, vote)
     {
         object_type: 'motion',

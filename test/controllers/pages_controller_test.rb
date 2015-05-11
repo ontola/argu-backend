@@ -64,4 +64,53 @@ class PagesControllerTest < ActionController::TestCase
     assert assigns(:page).new_record?, "Page is saved when it shouldn't be"
   end
 
+  test 'should get settings when page owner' do
+    sign_in users(:user_thom)
+
+    get :settings, id: pages(:page_argu).url
+
+    assert_response 200
+    assert_equal pages(:page_argu), assigns(:page)
+  end
+
+  test 'should update settings when page owner' do
+    sign_in users(:user_thom)
+
+    put :update, id: pages(:page_argu).url, page: {
+                                              profile_attributes: {
+                                                id: pages(:page_argu).profile.id,
+                                                about: 'new_about'
+                                              }
+                                            }
+
+    assert_redirected_to settings_page_path(pages(:page_argu))
+    assert_equal pages(:page_argu), assigns(:page)
+    assert_equal 'new_about', assigns(:page).profile.reload.about
+  end
+
+  test 'should not get settings when not page owner' do
+    sign_in users(:user)
+
+    get :settings, id: pages(:page_argu).url
+
+    assert_response 302
+    assert_equal pages(:page_argu), assigns(:page)
+  end
+
+  test 'should not update settings when not page owner' do
+    sign_in users(:user)
+
+    put :update, id: pages(:page_argu).url, page: {
+                   profile_attributes: {
+                       id: pages(:page_argu).profile.id,
+                       about: 'new_about'
+                   }
+               }
+
+    assert_redirected_to root_path
+    assert_equal pages(:page_argu), assigns(:page)
+    assert_equal pages(:page_argu).profile.about, assigns(:page).profile.reload.about
+  end
+
+
 end

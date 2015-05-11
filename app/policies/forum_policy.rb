@@ -35,7 +35,14 @@ class ForumPolicy < RestrictivePolicy
     attributes
   end
 
-  ######CRUD######
+  def permitted_tabs
+    tabs = []
+    tabs << :general << :advanced << :groups if is_manager? || staff?
+    tabs << :privacy << :managers if is_owner? || staff?
+    tabs
+  end
+
+  ######Actions######
   def create?
     super
   end
@@ -93,6 +100,10 @@ class ForumPolicy < RestrictivePolicy
     super
   end
 
+  def terminology?
+    is_manager? || is_owner? || staff?
+  end
+
   def update?
     is_manager? || super
   end
@@ -119,6 +130,14 @@ class ForumPolicy < RestrictivePolicy
     true
   end
 
+  # Make sure that a tab param is actually accounted for
+  # @return [String] The tab if it is considered valid
+  def verify_tab(tab)
+    tab ||= 'general'
+    self.assert! self.permitted_tabs.include?(tab.to_sym)
+    tab
+  end
+
   #######Attributes########
   def has_access_token?
     (session[:a_tokens] || []).find_index(record.access_token).present? && record.visible_with_a_link?
@@ -131,7 +150,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   # Is the user a manager of the page or of the forum?
-  # Trickles up
+  # @note Trickles up
   def is_manager?
     _mems = user.profile if user
     user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present? || is_owner?

@@ -7,8 +7,7 @@
     .box
       section
         =image_tag page.profile.profile_photo.url(:icon), class: 'profilepicture'
-        h2
-          = link_to page.display_name, page_path(page)
+        h2= link_to page.display_name, page_path(page)
         p= page.profile.about
         p=t('pages.management.members', members: page.memberships.count)
         h3= t('forums.settings.managers.title')
@@ -21,9 +20,6 @@
               =image_tag manager.profile_photo.url(:icon), size: '16x16'
                 span= manager.display_name
       ul.btns-list.btn-sticky
-        /li= link_to t('show'), page_path(page), class: 'btn'
-        li= link_to edit_page_path(page) do
+        li= link_to settings_page_path(page) do
           span.fa.fa-gear
-          span.icon-left= t('edit')
-        /li= link_to t('edit'), edit_page_path(page), class: 'btn' if pa_po.edit?
-        /li= link_to t('pages.settings.title'), settings_page_path(page), class: 'btn' if pa_po.is_owner?
+          span.icon-left= t('pages.settings.title')

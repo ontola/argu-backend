@@ -4,26 +4,7 @@
   .col-3-1
     .box
       section
-        ul.tabs.tabs--vertical
-          li[class=('active' if local_assigns[:active] == 'settings')]
-            =link_to url_for([:settings, @forum]), data: {intro: t('intro.forums.settings.settings')}
-              span.fa.fa-gear
-              span.icon-left= t('forums.settings.menu.general')
-          - if policy(@forum).managers?
-            li[class=('active' if local_assigns[:active] == 'advanced')]
-              =link_to url_for([:settings, @forum, tab: :advanced]), data: {intro: t('intro.forums.settings.settings')}
-                span.fa.fa-gear
-                span.icon-left= t('forums.settings.advanced')
-          - if policy(@forum).managers?
-            li[class=('active' if local_assigns[:active] == 'managers')]
-              =link_to url_for([:settings, @forum, tab: :managers]), data: {intro: t('intro.forums.settings.managers')}
-                span.fa.fa-group
-                span.icon-left= t('forums.settings.managers.title')
-          - if @forum.class == Forum && policy(@forum).groups?
-            li[class=('active' if local_assigns[:active] == 'groups')]
-              =link_to url_for([:settings, @forum, tab: :groups]), data: {intro: t('intro.forums.settings.groups')}
-                span.fa.fa-group
-                span.icon-left= t('forums.settings.groups.title')
+        =render_settings_items_for(@forum, active)
   .col-3-2
     .box
       section
