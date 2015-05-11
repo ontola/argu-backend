@@ -4,12 +4,19 @@
 window.CombiBigVote = React.createClass({
     getInitialState: function () {
         return {
-            actor: this.props.actor
+            actor: this.props.actor,
+            groups: this.props.groups,
+            object_type: this.props.object_type,
+            object_id: this.props.object_id,
+            current_vote: this.props.current_vote,
+            distribution: this.props.distribution,
+            percent: this.props.percent
         };
     },
 
     onActorChange: function (actor) {
-        this.setState({actor: actor})
+        this.refreshGroups();
+        this.setState({actor: actor});
     },
 
     componentDidMount: function () {
@@ -20,13 +27,27 @@ window.CombiBigVote = React.createClass({
         this.unsubscribe();
     },
 
+    refreshGroups: function () {
+        $.ajax({
+            type: 'GET',
+            url: this.state.object_id,
+            dataType: 'json',
+            async: true,
+            success: (data) => {
+                this.setState({groups: data.groups});
+            },
+            error: function () {
+                Argu.Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
+            }
+        });
+    },
+
     render: function () {
         let voteComponent;
         if (this.state.actor.actor_type == "User") {
-            voteComponent = <BigVote {...this.props}/>;
+            voteComponent = <BigVote {...this.state}/>;
         } else if (this.state.actor.actor_type == "Page") {
-            //TODO: Implement page voting component
-            window.alert('To implement!');
+            voteComponent = <BigGroupResponse groups={this.state.groups} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
         }
 
         return (
@@ -63,18 +84,6 @@ window.BigVote = React.createClass({
                 Argu.Alert('<%= I18n.t('votes.alerts.failed') %>', 'alert', true);
             }
         });
-    },
-
-    onActorChange: function () {
-        this.refresh();
-    },
-
-    componentDidMount: function () {
-        this.unsubscribe = actorStore.listen(this.onActorChange);
-    },
-
-    componentWillUnmount: function () {
-        this.unsubscribe();
     },
 
     proHandler: function (e) {
