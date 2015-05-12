@@ -28,7 +28,15 @@ class GroupResponse < ActiveRecord::Base
   def self.ordered_with_meta (coll=[], profile, obj, group)
     collection = {}
     collection[:collection] = ordered(coll)
-    collection[:responses_left] = group.max_responses_per_member == -1 ? Float::INFINITY : group.max_responses_per_member - obj.responses_from(profile)
+    collection[:responses_left] = if group.include?(profile)
+                                    if group.max_responses_per_member == -1
+                                      Float::INFINITY
+                                    else
+                                      group.max_responses_per_member - obj.responses_from(profile)
+                                    end
+                                  else
+                                    0
+                                  end
     collection
   end
 end

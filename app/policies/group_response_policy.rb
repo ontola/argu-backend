@@ -19,6 +19,7 @@ class GroupResponsePolicy < RestrictivePolicy
   def permitted_attributes
     attributes = super
     attributes << [:text, :side] if create?
+    attributes << [:text, :side] if update?
     attributes << [:id] if staff?
     attributes
   end
@@ -59,7 +60,7 @@ private
   end
 
   def profile_in_group?
-    actor && (record.forum.groups & actor.groups).present?
+    actor && actor.groups.include?(record.group).present?
   end
 
   def creator?

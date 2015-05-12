@@ -30,32 +30,66 @@ window.BigGroupResponse = React.createClass({
     render: function () {
         console.log(this.props);
         console.log(this.state);
-        return (<div className="center motion-shr">
+        return (<div className="motion-shr">
             {this.props.groups.map((group) => {
                 let respond, buttons;
                 if (group.responses_left > 0) {
-                    respond = (<p>Stem namens {this.props.actor.name} als {group.name_singular}</p>);
+                    respond = (<p className="group-response-pre center">Stem namens {this.props.actor.name} als {group.name_singular}:</p>);
                     buttons = (
-                        <ul className="btns-opinion">
+                        <ul className="btns-opinion center">
                             <li><a href={`${this.props.object_id}/groups/${group.id}/responses/new?side=pro`} rel="nofollow" className="btn-pro">
                                 <span className="fa fa-thumbs-up" />
-                                <span className="icon-left">_Pro_</span>
+                                <span className="icon-left">Voor</span>
                             </a></li>
                             <li><a href={`${this.props.object_id}/groups/${group.id}/responses/new?side=neutral`} rel="nofollow" className="btn-neu">
                                 <span className="fa fa-pause" />
-                                <span className="icon-left">_Neutral_</span>
+                                <span className="icon-left">Geen van beiden</span>
                             </a></li>
                             <li><a href={`${this.props.object_id}/groups/${group.id}/responses/new?side=con`} rel="nofollow" className="btn-con">
                                 <span className="fa fa-thumbs-down" />
-                                <span className="icon-left">_Con_</span>
+                                <span className="icon-left">Tegen</span>
                             </a></li>
                         </ul>
+                    );
+                }
+
+                let responses;
+                if (group.actor_group_responses.length > 0) {
+                    responses = group.actor_group_responses.map((response) => {
+                        return (
+                            <div key={`group_responses_${response.id}`}>
+                                <div className="box response" id="group_responses_9">
+                                    <section>
+                                        <h3>
+                                            {this.props.actor.name} - {response.side}
+                                        </h3>
+                                        <p>{response.text}</p>
+                                        <ul className="btns-list btns-vertical btn-sticky-bottom btn-sticky">
+                                            <li>
+                                                <a data-method="delete" data-remote="true" data-confirm="Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken." data-skip-pjax="true" href={`/group_responses/${response.id}`}>
+                                                    <span className="fa fa-close"></span>
+                                                    <span className="icon-left">Vernietigen</span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href={`/group_responses/${response.id}/edit`}>
+                                                    <span className="fa fa-pencil"></span>
+                                                    <span className="icon-left">Bewerken</span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </section>
+                                </div>
+                            </div>
+                        );
+                        }
                     );
                 }
 
                 return (<div key={group.id}>
                     {respond}
                     {buttons}
+                    {responses}
                 </div>);
             })}
         </div>);

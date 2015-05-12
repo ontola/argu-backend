@@ -30,7 +30,8 @@ module MotionsHelper
           name: group.name,
           name_singular: group.name_singular,
           icon: group.icon,
-          responses_left: group.responses_left(motion, actor)
+          responses_left: group.responses_left(motion, actor),
+          actor_group_responses: group.responses_for(motion, actor)
       }
     end
     {

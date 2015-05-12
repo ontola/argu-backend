@@ -22,11 +22,8 @@
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =contextual_link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title
-    /p[itemprop="text" class='wrap-normal']
-      ==model.truncate_preview(150, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read_more'), motion_path(model))})
-    p.wrap-normal[itemprop="text"]
-      /= markdown_to_plaintext(model.content)
-      == HTML_Truncator.truncate(markdown_to_plaintext(model.content), 170, {length_in_chars: true, ellipsis: (' ... ' + contextual_link_to(t('read_more'), motion_path(model)))})
+    p.wrap-normal[itemprop="text"]== HTML_Truncator.truncate(markdown_to_plaintext(model.content), 170,
+                                      {length_in_chars: true, ellipsis: (' ... ' + contextual_link_to(t('read_more'), motion_path(model)))})
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_pro_light.each do |argument|
