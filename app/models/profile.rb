@@ -30,6 +30,19 @@ class Profile < ActiveRecord::Base
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}
 
+  def as_json(options)
+    # Hide profileable for the more friendly actor
+    super(options.merge(except: [:profileable, :profileable_type, :profileable_id], methods: [:actor_type, :actor_id]))
+  end
+
+  def actor_type
+    profileable_type
+  end
+
+  def actor_id
+    profileable_id
+  end
+
   ######Attributes#######
   def display_name
     self.profileable.try(:display_name) || self.name.presence

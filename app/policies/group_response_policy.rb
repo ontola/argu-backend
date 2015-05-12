@@ -32,7 +32,7 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def update?
-    profile_in_group?
+    profile_in_group? && record.profile == actor
   end
 
   def edit?

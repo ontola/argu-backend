@@ -24,8 +24,18 @@ module MotionsHelper
   end
 
   def motion_combi_vote_props(actor, motion, vote)
+    groups = motion.forum.groups.collect do |group|
+      {
+          id: group.id,
+          name: group.name,
+          name_singular: group.name_singular,
+          icon: group.icon,
+          responses_left: group.responses_left(motion, actor)
+      }
+    end
     {
-        actor: actor
+        actor: actor,
+        groups: groups
     }.merge(motion_vote_props(motion, vote))
   end
 
