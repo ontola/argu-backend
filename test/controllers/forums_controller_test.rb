@@ -78,6 +78,23 @@ class ForumsControllerTest < ActionController::TestCase
     end
   end
 
+  test 'should update settings' do
+    sign_in users(:user_utrecht_owner)
+
+    put :update, id: forums(:utrecht), forum: {
+                     name: 'new name',
+                     bio: 'new bio',
+                     cover_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg'),
+                     profile_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg')
+                 }
+
+    assert_redirected_to settings_forum_path(forums(:utrecht))
+    assert assigns(:forum)
+    assert_equal 'new name', assigns(:forum).reload.name
+    assert_equal 'new bio', assigns(:forum).reload.bio
+    assert_equal 2, assigns(:forum).lock_version, "Lock version didn't increase"
+  end
+
   test 'should show settings/groups' do
     sign_in users(:user_utrecht_owner)
 
