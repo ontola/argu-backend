@@ -109,8 +109,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def rescue_stale(e)
-    raise e
+  def rescue_stale
     respond_to do |format|
       format.html {
         correct_stale_record_version
