@@ -67,8 +67,12 @@
   }
 }
 
-.tabs.tabs--vertical li {
-  display: block;
+.tabs--vertical {
+  text-align: left;
+
+  li {
+    display: block;
+  }
 }
 
 .cover .tabs {
