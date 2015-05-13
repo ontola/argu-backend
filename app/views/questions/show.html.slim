@@ -37,4 +37,4 @@
         ul= react_component 'HyperDropdown', share_items(@question), {prerender: true}
 .col-1
   .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
-==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]), buttons_text: t('add_type', type: motion_type), header: nil)
+==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]), buttons_text: t('add_type', type: motion_type))
