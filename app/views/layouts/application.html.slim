@@ -13,7 +13,6 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   =render 'shim'
   =render 'layouts/meta'
 
-  / unless current_user.blank?
   =stylesheet_link_tag 'application', :media => 'all'
   - if request.original_url.include? developers_path
     =stylesheet_link_tag 'developers/developers', :media => 'all'

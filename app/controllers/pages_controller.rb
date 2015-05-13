@@ -70,7 +70,7 @@ class PagesController < ApplicationController
     end
 
     if saved
-      redirect_to @page
+      redirect_to page_url(@page), status: 303
     else
       respond_to do |format|
         format.html { render 'new', notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}] }

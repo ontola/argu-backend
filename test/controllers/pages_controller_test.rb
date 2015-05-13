@@ -52,9 +52,9 @@ class PagesControllerTest < ActionController::TestCase
                   profile_attributes: {
                     name: 'Utrecht Two',
                     about: 'Utrecht Two bio',
-                    shortname_attributes: {
-                        shortname: 'UtrechtNumberTwo'
-                    }
+                  },
+                  shortname_attributes: {
+                      shortname: 'UtrechtNumberTwo'
                   },
                   last_accepted: '1'
                 }
@@ -112,5 +112,27 @@ class PagesControllerTest < ActionController::TestCase
     assert_equal pages(:page_argu).profile.about, assigns(:page).profile.reload.about
   end
 
+  ####################################
+  # For staff
+  ####################################
+
+  test 'should be able to create a page' do
+    sign_in users(:user_thom)
+
+    post :create, page: {
+                    profile_attributes: {
+                        name: 'Utrecht Two',
+                        about: 'Utrecht Two bio',
+                    },
+                    shortname_attributes: {
+                        shortname: 'UtrechtNumberTwo'
+                    },
+                    last_accepted: '1'
+                }
+
+    assert_response 303
+    assert assigns(:page)
+    assert assigns(:page).persisted?
+  end
 
 end

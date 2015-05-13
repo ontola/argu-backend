@@ -16,3 +16,7 @@ error_quotes:
 non_info_json:
   key: 'non_info_json'
   value: '{"json": "but not info"}'
+#
+user_cap:
+  key: 'user_cap'
+  value: '1000'

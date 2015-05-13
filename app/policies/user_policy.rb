@@ -40,7 +40,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def update?
-    record.id == user.id || super
+    (user && record.id == user.id) || super
   end
 
   def setup?

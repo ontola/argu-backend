@@ -30,7 +30,11 @@ class ProfilePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public] if update?
+    if record.profileable.present?
+      attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public] if update?
+    else
+      attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public] if new?
+    end
     attributes
   end
 
@@ -38,11 +42,15 @@ class ProfilePolicy < RestrictivePolicy
     is_owner? || staff?
   end
 
+  def new?
+    Pundit.policy(context, record.profileable_type.constantize).create?
+  end
+
   def show?
     if record.profileable.class == Page
       record.is_public?
     else
-      record.profileable.finished_intro? || super
+      record.is_public? && record.profileable.finished_intro? || super
     end
   end
 

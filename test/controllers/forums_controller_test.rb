@@ -41,7 +41,8 @@ class ForumsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     get :show, id: forums(:hidden)
-    assert_redirected_to root_path, 'Hidden forums are visible'
+    assert_response 404
+    #assert_redirected_to root_path, 'Hidden forums are visible'
   end
 
   test 'should not put update on others question' do

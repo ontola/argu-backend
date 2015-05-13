@@ -77,7 +77,15 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def list?
-    @record.closed? || show?
+    if @record.hidden?
+      if show?
+        true
+      else
+        raise ActiveRecord::RecordNotFound
+      end
+    else
+      @record.closed? || show?
+    end
   end
 
   def list_members?

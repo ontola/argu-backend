@@ -67,9 +67,12 @@ module HeaderHelper
   end
 
   def notification_dropdown_items
-    dropdown_options('', [
-                        {type: 'notifications', unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count, lastNotification: nil, notifications: []}
-                       ],
+    dropdown_options('', [{
+                            type: 'notifications',
+                            unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count,
+                            lastNotification: nil,
+                            notifications: []
+                        }],
                      trigger: {
                          type: 'notifications',
                          triggerClass: 'navbar-item'
