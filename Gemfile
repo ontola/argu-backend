@@ -103,7 +103,7 @@ end
 
 group :production, :staging do
   gem 'therubyracer', '~> 0.12.1'
-  gem 'unicorn', '~> 4.8.3'
+  gem 'unicorn', '4.8.3'
   gem 'rack-test', '~> 0.6.2'
   gem 'bugsnag'
 end
