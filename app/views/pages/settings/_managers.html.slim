@@ -1,0 +1,24 @@
+h1= t('pages.settings.managers.owner')
+p= t('pages.settings.managers.about_owner')
+div
+div
+  =image_tag @page.owner.profile_photo, class: 'profile-photo'
+  span=@page.owner.display_name
+
+- if policy(@page).transfer?
+  h2[style="clear: left;"] Overdracht
+  =link_to 'transfer', transfer_page_url(@page), data: {remote: true}, class: 'btn--warning'
+
+h1[style='clear: left;']= t('pages.settings.managers.title')
+p= t('pages.settings.managers.about_managers')
+table.styled
+  tbody
+    -@page.managers.each do |manager|
+      tr
+        =image_tag manager.profile_photo, class: 'profile-photo'
+        span
+          =manager.display_name
+          p.tooltip.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
+            =link_to t('forums.managers.revoke'), page_manager_path(@page, manager.id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
+
+  =link_to t('forums.managers.add'), new_page_manager_path(@page), class: 'btn'

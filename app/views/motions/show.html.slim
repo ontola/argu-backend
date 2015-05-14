@@ -3,34 +3,34 @@
   meta[name="description" content="#{@motion.content}"]
   meta[property="og:title" content="#{@motion.display_name}"]
   meta[property="og:url" content="#{motion_url(@motion)}"]
-  meta[property="og:description" content="#{@motion.content}"]
-  meta[property="og:image" content="#{@motion.cover_photo.url}"]
+  meta[property="og:description" content="#{markdown_to_plaintext(@motion.content)}"]
+  meta[property="og:image" content="#{@motion.cover_photo.url || image_url('logo-social.png')}"]
   meta[property="twitter:card" content="summary"]
   meta[property="twitter:title" content="#{@motion.display_name}"]
   meta[property="twitter:description" content="#{@motion.content}"]
   /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
   meta[property="twitter:image" content="#{@motion.cover_photo.url}" ]
-div[itemscope itemtype="http://www.schema.org/Answer"]
+div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .cover-behind
     .cover-image[style="background-image: url('#{@motion.cover_photo.url(:cover)}'); "]
   .col-1
     div[data-intro= t('intro.motion.back')]= to_parent
     =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}
     .col--motion
-      div[data-intro= t('intro.motion.body') itemprop="text"]= render partial: 'motionbody', locals: { motion: @motion }
-      =react_component 'BigVote', motion_vote_props(@motion, @vote), {prerender: true}
-      =render partial: 'updates/update', locals: {item: @motion}
+      div[data-intro= t('intro.motion.body') itemprop="text"]= render partial: 'body', locals: { motion: @motion }
+      =react_component 'CombiBigVote', motion_combi_vote_props(current_profile, @motion, @vote), {prerender: true}
+      /=render partial: 'updates/update', locals: {item: @motion}
 .col-2
   .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top"]
 =render_columns(@arguments, buttons_url: new_forum_argument_path(@motion.forum, motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false, buttons_options: {data: remote_unless_user})
 - if Rails.configuration.epics.opinions
   =render_columns(@opinions, header: t('arguments.index.opinion'))
-- if active_for_user?(:groups, current_user)
+- if active_for_user?(:groups, current_user) || @group_responses && (@group_responses.keys | current_profile.groups).present?
   .col-3
     .intro-filler[data-intro= t('intro.motion.groups') data-position= "top"]
   -@group_responses && @group_responses.each do |k,v|
-    - if v.values.map { |c| c[:collection].length }.reduce(&:+) > 0
-      =render_columns(v, header: k, collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: profile_in_group?(current_profile, k), buttons_param: :side, header_text: header_values(k))
+    - if v[:collection].values.map { |c| c[:collection].length }.reduce(&:+) > 0 || k.include?(current_profile)
+      =render_columns(v[:collection], collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: v[:responses_left] > 0, buttons_param: :side, header_text: header_values(k))
     - else
       .col-1
         header

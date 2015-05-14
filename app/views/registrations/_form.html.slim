@@ -1,5 +1,5 @@
 =set_title t('argu_sign_up')
-= semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name, r: (defined?(r) ? r : ''))) do |f|
+=semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name, r: local_assigns.has_key?(:r) ? r : '')) do |f|
   =f.inputs do
     p.smaller-8= t('cant_change_username')
     =f.inputs :shortname, for: :shortname
@@ -7,6 +7,6 @@
     =f.input :password
     =f.input :password_confirmation
     =f.input :r, as: :hidden
-  = f.actions do
-    = f.action :submit, :as => :button, label: t('sign_up')
+  =f.actions do
+    =f.action :submit, :as => :button, label: t('sign_up')
   =render partial: 'legal'

@@ -1,0 +1,21 @@
+=semantic_form_for resource, multipart: true do |f|
+  =f.input :lock_version, as: :hidden
+  =f.input :tab, value: local_assigns[:tab], as: :hidden
+  =f.input :active, value: local_assigns[:active], as: :hidden
+  - resource.errors.full_messages.each do |message|
+    =message
+  - if policy(resource).is_owner? || policy(resource).staff?
+    =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+      =f.input :visibility, as: :select, collection: Forum.visibilities.keys, include_blank: false
+      =f.input :visible_with_a_link, as: :reverse_boolean
+      - if resource.full_access_token.present?
+        =text_field_tag 'link', "#{forum_url(resource)}?at=#{resource.access_token}", onClick: 'this.setSelectionRange(0, this.value.length)'
+        p= "Follows: #{resource.full_access_token.usages}"
+        p= "Sign-ups: #{resource.full_access_token.sign_ups}"
+      -if policy(resource).shortname?
+        =f.input :shortname
+      -if policy(resource).change_owner?
+        =f.input :page
+  =hidden_field_tag :tab, :advanced
+  =f.actions do
+    =f.action :submit, :as => :button

@@ -5,6 +5,8 @@ class GroupResponsesController < ApplicationController
     motion = Motion.find params[:motion_id]
     @group_response = motion.group_responses.new group: group, forum: group.forum, created_by: current_profile, side: params[:side]
     authorize @group_response, :new?
+    current_context @group_response
+    @forum = @group_response.forum
 
     render 'form'
   end
@@ -28,6 +30,8 @@ class GroupResponsesController < ApplicationController
   def edit
     @group_response = GroupResponse.find params[:id]
     authorize @group_response, :edit?
+    current_context @group_response
+    @forum = @group_response.forum
 
     render 'form'
   end

@@ -12,10 +12,10 @@ private
     values
   end
 
-  # Not used anymore?
+  # Note: only used in widget view and opinions view
   def print_references(argument)
     if argument.references.present?
-      concat content_tag :p, t("arguments.references") + ":", class: 'references-title'
+      concat content_tag :p, t('arguments.references') + ':', class: 'references-title'
       content_tag :ol, class: 'references-list' do
         argument.references.each do |ref|
           if ref[0].blank?
@@ -29,15 +29,15 @@ private
   end
 
 def argument_items(argument)
-  divided = true
   link_items = []
-  if policy(argument).update?
+  arg_po = policy(argument)
+  if arg_po.update?
     link_items << link_item(t('edit'), edit_argument_path(argument), fa: 'pencil')
   end
-  if policy(argument).trash?
+  if arg_po.trash?
     link_items << link_item(t('trash'), argument_path(argument), data: {confirm: t('trash_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'trash')
   end
-  if policy(argument).destroy?
+  if arg_po.destroy?
     link_items << link_item(t('destroy'), argument_path(argument, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'close')
   end
   if active_for_user?(:notifications, current_user)

@@ -1,8 +1,9 @@
-.comment[id=c.identifier class="#{'trashed' if c.is_trashed?}" itemscope itemtype="Comment"]
+.comment[id=c.identifier class="#{'trashed' if c.is_trashed?}" itemscope="itemscope" itemtype="http://schema.org/Comment"]
   .box
     section
-      p[id=c.id]= c.is_trashed? ? I18n.t('trashed') : c.body || I18n.t('deleted')
-    =render c.profile, locals= {resource: c} if c.profile.present?
+      .markdown[id=c.id itemprop="text"]= c.is_trashed? ? I18n.t('trashed') : markdown_to_html(c.body) || I18n.t('deleted')
+        =markdown_to_html(motion.content)
+    =render partial: c.profile, locals: {resource: c} if c.profile.present?
     ul.btns-sticky.btns-sticky-bottom.btns-vertical.btns-list
       - if current_user.present? && policy(c).update? || active_for_user?(:notifications, current_user)
         li

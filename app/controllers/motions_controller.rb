@@ -9,8 +9,8 @@ class MotionsController < ApplicationController
     authorize @motion
     current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
-    @opinions = Opinion.ordered policy_scope(@motion.opinions.trashed(show_trashed?))
-    @group_responses = Group.ordered @motion.group_responses, @forum.groups
+    #@opinions = Opinion.ordered policy_scope(@motion.opinions.trashed(show_trashed?))
+    @group_responses = Group.ordered_with_meta @motion.group_responses, @forum.groups, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
 
@@ -33,13 +33,13 @@ class MotionsController < ApplicationController
       authorize @motion
       current_context @motion
       respond_to do |format|
-        if !current_profile.member_of? @motion.forum
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath} }
-          format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath, no_close: true } }
-        else
+        if current_profile.member_of? @motion.forum
           format.js { render js: "window.location = #{request.url.to_json}" }
           format.html { render 'form' }
           format.json { render json: @motion }
+        else
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath} }
+          format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath, no_close: true } }
         end
       end
     end
@@ -136,7 +136,7 @@ class MotionsController < ApplicationController
   end
 
   def convert!
-    @motion = Motion.find_by_id params[:motion_id]
+    @motion = Motion.find_by_id(params[:motion_id]).lock!
     authorize @motion, :move?
     authorize @motion.forum, :update?
 
@@ -160,7 +160,7 @@ class MotionsController < ApplicationController
   end
 
   def move!
-    @motion = Motion.find_by_id params[:motion_id]
+    @motion = Motion.find_by_id(params[:motion_id]).lock!
     authorize @motion, :move?
     @forum = Forum.find_by_id permit_params[:forum_id]
     authorize @forum, :update?

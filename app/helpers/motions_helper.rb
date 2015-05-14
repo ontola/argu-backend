@@ -2,11 +2,11 @@ include ActsAsTaggableOn::TagsHelper
 module MotionsHelper
   def back_to_motion(resource)
     concat content_tag 'h1', t("#{resource.class_name}.new.header", side: pro_translation(resource))
-    link_to resource.motion.title, motion_path(resource.motion), class: "btn btn-white"
+    link_to resource.motion.title, motion_path(resource.motion), class: 'btn btn-white'
   end
 
   def pro_side(resource)
-    %w(pro true).index(params[:pro] || resource.pro.to_s) ? "pro" : "con"
+    %w(pro true).index(params[:pro] || resource.pro.to_s) ? 'pro' : 'con'
   end
 
   def pro_translation(resource)
@@ -21,6 +21,23 @@ module MotionsHelper
     return supplemented_values[0] - (overflow*(model.votes_pro_percentage/100.to_f)) if side == :pro
     return supplemented_values[1] - (overflow*(model.votes_neutral_percentage/100.to_f)) if side == :neutral
     return supplemented_values[2] - (overflow*(model.votes_con_percentage/100.to_f)) if side == :con
+  end
+
+  def motion_combi_vote_props(actor, motion, vote)
+    groups = motion.forum.groups.collect do |group|
+      {
+          id: group.id,
+          name: group.name,
+          name_singular: group.name_singular,
+          icon: group.icon,
+          responses_left: group.responses_left(motion, actor),
+          actor_group_responses: group.responses_for(motion, actor)
+      }
+    end
+    {
+        actor: actor,
+        groups: groups
+    }.merge(motion_vote_props(motion, vote))
   end
 
   def motion_vote_props(motion, vote)
@@ -42,15 +59,15 @@ module MotionsHelper
   end
 
   def motion_items(motion)
-    divided = true
     link_items = []
-    if policy(motion).update?
+    mo_po = policy(motion)
+    if mo_po.update?
       link_items << link_item(t('update'), edit_motion_path(motion), fa: 'pencil')
     end
-    if policy(motion).trash?
+    if mo_po.trash?
       link_items << link_item(t('trash'), motion_path(motion), data: {confirm: t('trash_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'trash')
     end
-    if policy(motion).destroy?
+    if mo_po.destroy?
       link_items << link_item(t('destroy'), motion_path(motion, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'close')
     end
     if active_for_user?(:notifications, current_user)

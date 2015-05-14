@@ -1,21 +1,21 @@
-require "test_helper"
+require 'test_helper'
 
 class QuestionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test "should get show" do
+  test 'should get show' do
     sign_in users(:user)
 
     get :show, id: questions(:one).id
-    assert_response :success
+    assert_response 200
     assert_not_nil assigns(:question)
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:motions)
 
-    assert_not assigns(:motions).any?(&:is_trashed?), "Trashed motions are visible"
+    assert_not assigns(:motions).any?(&:is_trashed?), 'Trashed motions are visible'
   end
 
-  test "should post create" do
+  test 'should post create' do
     sign_in users(:user)
 
     assert_difference('Question.count') do
@@ -26,7 +26,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_redirected_to question_url(assigns(:question))
   end
 
-  test "should put update on own question" do
+  test 'should put update on own question' do
     sign_in users(:user)
 
     put :update, id: questions(:one), question: {title: 'New title', content: 'new contents'}
@@ -37,7 +37,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_redirected_to question_url(assigns(:question))
   end
 
-  test "should not put update on others question" do
+  test 'should not put update on others question' do
     sign_in users(:user2)
 
     put :update, id: questions(:one), question: {title: 'New title', content: 'new contents'}
@@ -82,7 +82,7 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in users(:user_thom)
 
     get :convert, question_id: questions(:one)
-    assert_response :success
+    assert_response 200
   end
 
   # Currently only staffers can convert items
@@ -114,7 +114,7 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in users(:user_thom)
 
     get :move, question_id: questions(:one)
-    assert_response :success
+    assert_response 200
   end
 
   # Currently only staffers can convert items

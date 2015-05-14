@@ -1,8 +1,8 @@
 footer
   ul.footer-list
     li
-      h3.footer-heading forums
-    /li=link_to "Een eigen forum?", "/product"
+      h3.footer-heading Forums
+    /li= link_to "Een eigen forum?", "/product"
     li
       a[href="/"] Bekijk alle forums
     li
@@ -11,22 +11,22 @@ footer
       a[href="/feedback"] Argu Feedback
   ul.footer-list
     li
-      h3.footer-heading= t("about.title")
+      h3.footer-heading= t('about.title')
       /= render partial: "vcard"
-    li=link_to t("about.vision"), about_path
-    li=link_to t("about.team"), team_path
-    /li=link_to t("about.product"), product_path
-    li=link_to t("about.governments"), governments_path
-    li=link_to t("about.how_argu_works"), how_argu_works_path
+    li= link_to t('about.vision'), about_path
+    li= link_to t('about.team'), team_path
+    /li= link_to t('about.product'), product_path
+    li= link_to t('about.governments'), governments_path
+    li= link_to t('about.how_argu_works'), how_argu_works_path
   ul.footer-list
     li
-      h3.footer-heading voorwaarden
-    li=link_to "Gebruiksvoorwaarden", policy_path
-    li=link_to "Privacy", privacy_path
-    /li=link_to "Cookiebeleid", cookies_path
+      h3.footer-heading Voorwaarden
+    li= link_to 'Gebruiksvoorwaarden', policy_path
+    li= link_to 'Privacy', privacy_path
+    /li= link_to 'Cookiebeleid', cookies_path
   ul.footer-list
     li
-      h3.footer-heading volg ons
+      h3.footer-heading Volg ons
       .footer-social-buttons
         a[href="https://www.facebook.com/argu.co"]
           span.fa.fa-facebook-square
@@ -34,15 +34,5 @@ footer
           span.fa.fa-linkedin
         a[href="https://twitter.com/argu_co"]
           span.fa.fa-twitter
-    /li
-      div[class="fb-like" data-href="https://www.facebook.com/argu.co" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"]
-    /li
-      a[href="https://twitter.com/argu_nl" class="twitter-follow-button" data-show-count="false" data-show-screen-name="false"] Follow @argu_nl
-      javascript:
-        !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-    /li
-      script[src="//platform.linkedin.com/in.js" type="text/javascript"]
-        lang: en_US
-      script[type="IN/FollowCompany" data-id="5170898" data-counter="right"]
   .footer-bottom
     span= t('site.copyright')

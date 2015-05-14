@@ -1,7 +1,7 @@
 #@private
 class AdministrationPolicy < Struct.new(:context, :administration)
   class Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :scope
 
     def initialize(context, scope)
       @context = context

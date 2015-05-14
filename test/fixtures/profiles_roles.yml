@@ -13,6 +13,10 @@ user_utrecht_manager:
   profile: :profile_utrecht_manager
   role: :user
 #
+user_utrecht_manager_only:
+  profile: :profile_utrecht_manager_only
+  role: :user
+#
 user_one:
   profile: :profile_one
   role: :user

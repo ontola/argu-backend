@@ -1,6 +1,6 @@
 class NotificationPolicy < RestrictivePolicy
   class Scope < Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :scope
 
     def initialize(context, scope)
       @context = context
@@ -41,11 +41,6 @@ class NotificationPolicy < RestrictivePolicy
 
   def update?
     user && user.profile == record.profile
-  end
-
-  def permitted_attributes
-    attributes = super
-    attributes
   end
 
 end

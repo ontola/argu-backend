@@ -14,11 +14,11 @@
 # l:
 # m: motions
 # n: notifications
-# o: opinions
+# o: [RESERVED for opinions]
 # p: pages
 # q: questions
 # r:
-# s: search
+# s: [RESERVED for search]
 # t: tags
 # u: users
 # v: votes
@@ -52,31 +52,37 @@ Argu::Application.routes.draw do
 
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
-  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions', :invitations => 'users/invitations' }
+  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions', :invitations => 'users/invitations' }, skip: :registrations
 
-  resource :admin, only: [] do
-    post ':id' => 'administration#add'
-    delete ':id' => 'administration#remove', as: 'remove'
-    post 'freeze/:id' => 'administration#freeze', as: 'freeze'
-    delete 'freeze/:id' => 'administration#unfreeze'
+  as :user do
+    get 'users/cancel', to: 'registrations#cancel', as: :cancel_user_registration
+    get 'users/sign_up', to: 'registrations#new', as: :new_user_registration
+    post 'users', to: 'registrations#create', as: :user_registration
+    delete 'users', to: 'registrations#destroy', as: nil
   end
 
   resources :authentications, only: [:create, :destroy]
   match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
 
-  resources :users, path: 'u', only: [:show, :edit, :update] do
+  resources :users, path: 'u', only: [:show, :update] do
+    get :edit, to: 'profiles#edit', on: :member
     get :setup, to: 'users#setup', on: :collection
     put :setup, to: 'users#setup!', on: :collection
+    get :pages, to: 'pages#index', on: :member
+    get :forums, to: 'forums#index', on: :member
   end
 
   post 'v/:for' => 'votes#create', as: :vote
 
-  resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible]
+  resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible] do
+    resources :tags, path: 't', only: [:index]
+  end
 
   resources :motions, path: 'm', except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
     resources :groups, only: [] do
       resources :group_responses, path: 'responses', as: 'responses', only: [:new, :create]
     end
+    resources :tags, path: 't', only: [:index]
   end
 
   resources :arguments, path: 'a', except: [:index, :new, :create], concerns: [:votable] do
@@ -92,11 +98,11 @@ Argu::Application.routes.draw do
   resources :group_memberships, only: :destroy
 
   resources :pages, path: 'p', only: [:new, :create, :show, :update, :delete, :destroy] do
-    get :index, on: :collection
     get :delete, on: :member
     get :transfer, on: :member
     put :transfer, on: :member, action: :transfer!
     get :settings, on: :member
+    get :edit, to: 'profiles#edit', on: :member
     resources :managers, only: [:new, :create, :destroy], controller: 'pages/managers'
   end
 
@@ -111,7 +117,7 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :profiles, except: [:show] do
+  resources :profiles, only: [:index, :update] do
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post ':id' => 'profiles#update', on: :collection
   end
@@ -144,9 +150,10 @@ Argu::Application.routes.draw do
 
   get '/activities', to: 'activities#index'
 
+  resources :info, path: 'i', only: [:show]
 
   resources :forums, only: [:show, :update], path: '' do
-    get :discover, on: :collection, action: :index
+    get :discover, on: :collection, action: :discover
     get :settings, on: :member
     get :statistics, on: :member
     get :selector, on: :collection
@@ -156,8 +163,8 @@ Argu::Application.routes.draw do
     resources :questions, path: 'q', only: [:index, :new, :create]
     resources :motions, path: 'm', only: [:new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
-    resources :tags, path: 't', only: [:show]
-    resources :groups, path: 'g', only: [:new, :create] do
+    resources :tags, path: 't', only: [:show, :index]
+    resources :groups, path: 'g', only: [:new, :create, :edit, :update] do
       get 'add', on: :member
       post on: :member, action: :add!, as: ''
     end

@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
+require 'sprockets/es6'
 require 'devise'
 
 if defined?(Bundler)
@@ -20,7 +21,7 @@ module Argu
     config.app_generators.template_engine :slim
 
     # Configure the default encoding used in templates for Ruby 1.9.
-    config.encoding = "utf-8"
+    config.encoding = 'utf-8'
 
     config.active_record.raise_in_transactional_callbacks = true
 

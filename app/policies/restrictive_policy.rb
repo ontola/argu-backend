@@ -1,6 +1,6 @@
 class RestrictivePolicy
   include AccessTokenHelper, UsersHelper
-  attr_reader :context, :user, :record, :session
+  attr_reader :context, :record
 
   def initialize(context, record)
     @context = context
@@ -20,11 +20,17 @@ class RestrictivePolicy
   delegate :session, to: :context
 
   def permitted_attributes
-    attributes = []
+    attributes = [:lock_version]
     attributes << :shortname if shortname?
     attributes << :is_trashed if trash?
     attributes
   end
+
+
+  def self.assert!(assertion)
+    raise Pundit::NotAuthorizedError unless assertion
+  end
+  delegate :assert!, to: :class
 
   def staff?
     user && user.profile.has_role?(:staff)
@@ -137,6 +143,7 @@ class RestrictivePolicy
     end
 
     delegate :user, to: :context
+    delegate :actor, to: :context
     delegate :session, to: :context
 
     def resolve
@@ -144,7 +151,7 @@ class RestrictivePolicy
     end
 
     def staff?
-      user && profile.has_role?(:staff)
+      user && user.profile.has_role?(:staff)
     end
   end
 

@@ -1,6 +1,15 @@
 class ForumsController < ApplicationController
 
   def index
+    authorize Forum, :index?
+    @user = User.find_via_shortname params[:id]
+    authorize @user,:update?
+    forums = Forum.arel_table
+    @forums = Forum.where(forums[:page_id].in(@user.profile.pages.pluck(:id)).or(forums[:id].in(@user.profile.managerships.pluck(:forum_id))))
+    @_policy_scoped = true
+  end
+
+  def discover
     @forums = policy_scope(Forum).top_public_forums
     authorize Forum, :selector?
 
@@ -30,6 +39,11 @@ class ForumsController < ApplicationController
     @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
     current_context @forum
+    tab = policy(@forum).verify_tab(params[:tab])
+    render locals: {
+               tab: tab,
+               active: tab
+           }
   end
 
   def statistics
@@ -55,7 +69,11 @@ class ForumsController < ApplicationController
       if @forum.update permit_params
         format.html { redirect_to settings_forum_path(@forum, tab: params[:tab]) }
       else
-        format.html { render 'settings' }
+        format.html { render 'settings', locals: {
+                                           tab: params[:tab] || 'general',
+                                           active: params[:tab] || 'general'
+                                       }
+        }
       end
     end
   end
@@ -90,6 +108,23 @@ class ForumsController < ApplicationController
       flash[:error] = t('forums.selector.at_least_error')
       redirect_to selector_forums_path
     end
+  end
+
+protected
+
+  def correct_stale_record_version
+    @forum.reload.attributes = permit_params.reject do |attrb, value|
+      attrb.to_sym == :lock_version
+    end
+  end
+
+  def stale_record_recovery_action
+    flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
+
+    render 'settings', locals: {
+               tab: params[:tab] || 'settings',
+               active: params[:tab] || 'settings'
+           }
   end
 
 private

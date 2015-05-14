@@ -55,6 +55,7 @@ module ProCon
     self.pro ? :pro : :con
   end
 
+  # noinspection RubySuperCallWithoutSuperclassInspection
   def pro=(value)
     super value.to_s == 'pro' || value
   end

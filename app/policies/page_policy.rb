@@ -1,6 +1,6 @@
 class PagePolicy < RestrictivePolicy
   class Scope < Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :scope
 
     def initialize(context, scope)
       @context = context
@@ -12,7 +12,14 @@ class PagePolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      scope
+      page = Page.arel_table
+      page_memberships = PageMembership.arel_table
+      cond = page[:owner_id].eq(user.profile.id)
+      cond = page.join(page_memberships).on(page[:id].eq(page_memberships[:page])).where(page_memberships[:role].eq(PageMembership.roles[:manager]))
+      #scope.where(cond)
+      scope.joins(:managerships).where(
+          page_memberships[:profile_id].eq(user.profile.id).and(page_memberships[:role].eq(PageMembership.roles[:manager]))
+      ).distinct
     end
 
   end
@@ -30,11 +37,19 @@ class PagePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:bio, :tag_list, {profile_attributes: [:id, :name, :profile_photo]}] if create?
-    attributes << [:visibility, {shortname_attributes: [:shortname]}] if new_record?
+    attributes << [:bio, :tag_list, :last_accepted, profile_attributes: [:id, :name, :profile_photo]] if create?
+    attributes << [:visibility, shortname_attributes: [:shortname]] if new_record?
     attributes << :visibility if is_owner?
     attributes << [:page_id, :repeat_name] if change_owner?
-    attributes
+    attributes << [profile_attributes: ProfilePolicy.new(context, record.profile).permitted_attributes]
+    attributes.flatten
+  end
+
+  def permitted_tabs
+    tabs = []
+    tabs << :general if is_manager? || staff?
+    tabs << :advanced << :managers if is_owner? || staff?
+    tabs
   end
 
   def show?
@@ -42,12 +57,12 @@ class PagePolicy < RestrictivePolicy
   end
 
   def new?
-    create?
+    user.present? || super
   end
 
   def create?
     # This basically means everyone, change when users can report spammers/offenders and such
-    user.present? || super
+    !max_pages_reached? || super
   end
 
   def delete?
@@ -68,6 +83,10 @@ class PagePolicy < RestrictivePolicy
 
   def list?
     record.closed? || show?
+  end
+
+  def list_members?
+    is_owner? || staff?
   end
 
   # Whether the user can add (a specified) manager(s)
@@ -94,6 +113,18 @@ class PagePolicy < RestrictivePolicy
     is_owner? || staff?
   end
 
+  def max_pages_reached?
+    user && user.profile.pages.length >= max_allowed_pages
+  end
+
+  # Make sure that a tab param is actually accounted for
+  # @return [String] The tab if it is considered valid
+  def verify_tab(tab)
+    tab ||= 'general'
+    self.assert! self.permitted_tabs.include?(tab.to_sym)
+    tab
+  end
+
   #######Attributes########
   # Is the user a manager of the page or of the forum?
   def is_manager?
@@ -102,5 +133,15 @@ class PagePolicy < RestrictivePolicy
 
   def is_owner?
     user && user.profile.id == record.try(:owner_id) || staff?
+  end
+
+  def max_allowed_pages
+    if staff?
+      Float::INFINITY
+    elsif user
+      1
+    else
+      0
+    end
   end
 end

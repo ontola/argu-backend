@@ -1,1 +1,0 @@
-=(@user.has_role?(:administration) ? link_to(t("profiles.show.btn.unadmin"), admin_url(@user), remote: true, method: :delete) : link_to(t("profiles.show.btn.admin"), admin_url(@user), remote: true, method: :post)) if can? :add_admin, @user

@@ -6,8 +6,8 @@ class Opinion < ActiveRecord::Base
   counter_culture :motion,
                   column_name: Proc.new { |a| "opinion_#{a.pro? ? 'pro' : 'con'}_count" },
                   column_names: {
-                      ["pro = ?", true] => 'opinion_pro_count',
-                      ["pro = ?", false] => 'opinion_con_count'
+                      ['pro = ?', true] => 'opinion_pro_count',
+                      ['pro = ?', false] => 'opinion_con_count'
                   }
 
 end

@@ -1,10 +1,10 @@
-require "test_helper"
+require 'test_helper'
 
 class Portal::PortalControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   #####Staff#####
-  test "staff should get show" do
+  test 'staff should get show' do
     sign_in users(:user_thom)
 
     get :home
@@ -14,7 +14,7 @@ class Portal::PortalControllerTest < ActionController::TestCase
   end
 
   #####Users#####
-  test "user should not get show" do
+  test 'user should not get show' do
     sign_in users(:user)
 
     get :home

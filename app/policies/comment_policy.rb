@@ -1,6 +1,6 @@
 class CommentPolicy < RestrictivePolicy
   class Scope < Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :scope
 
     def initialize(context, scope)
       @context = context
@@ -13,14 +13,6 @@ class CommentPolicy < RestrictivePolicy
 
     def resolve
       scope
-    end
-  end
-
-  def initialize(context, record)
-    @context = context
-    @record = record
-    unless has_access_to_platform?
-      raise Argu::NotLoggedInError.new(nil, record), 'must be logged in'
     end
   end
 
@@ -49,7 +41,7 @@ class CommentPolicy < RestrictivePolicy
   end
 
   def trash?
-    is_manager? || is_owner? || super
+    is_creator? || is_manager? || is_owner? || super
   end
 
   def update?

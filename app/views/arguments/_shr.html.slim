@@ -1,4 +1,4 @@
 ul.btns-sticky.btns-sticky-top.btns--vote[id="votebtn#{model.id}"]
-  li=link_to polymorphic_url([model, :vote], for: :pro), :remote => true, method: :post, class: 'btn-subtle tooltip tooltip--left', data: {title: t("tooltips.argument.vote_up")}  do
+  li=link_to polymorphic_url([model, :vote], for: :pro), :remote => true, rel: :nofollow, class: 'btn-subtle tooltip tooltip--left', data: {method: :post, title: t('tooltips.argument.vote_up')}  do
     span.icon-right= model.votes_pro_count.to_s
     span.fa.fa-arrow-up

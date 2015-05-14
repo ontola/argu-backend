@@ -22,6 +22,6 @@ module Gravatar
     grav_url << "&rating=#{gravatar_options[:rating]}" if gravatar_options[:rating]
     grav_url << "&size=#{gravatar_options[:size]}" if gravatar_options[:size]
     grav_url << "&default=#{gravatar_options[:default]}" if gravatar_options[:default]
-    return grav_url
+    grav_url
   end
 end

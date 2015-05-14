@@ -131,6 +131,10 @@
   &:active{
     opacity: .6;
   }
+  
+  .display-hide-images & {
+    display: none;
+  }
 }
 
 .box.box-link {
@@ -176,8 +180,8 @@
 
 .box-note {
   position: absolute;
-  top: 0em;
-  right: 0em;
+  top: 0;
+  right: 0;
   z-index: 3;
   background-color: $red-alert;
   padding: .4em;
@@ -207,7 +211,7 @@
 
 .box-list--icons {
   list-style-type: none;
-  padding-left: 0em;
+  padding-left: 0;
   span.fa{
     position: absolute;
     font-size: 0.8em;

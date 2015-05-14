@@ -51,9 +51,9 @@ module ApplicationHelper
     @resource
   end
 
-  def set_title(title= "")
+  def set_title(title= '')
     if request.env['HTTP_X_PJAX']
-      return raw "<title>#{[title, (' | ' if title), t('name')].compact.join.capitalize}</title>"
+      raw "<title>#{[title, (' | ' if title), t('name')].compact.join.capitalize}</title>"
     else
       provide :title, title
     end
@@ -74,6 +74,20 @@ module ApplicationHelper
     link_items << link_item('LinkedIn', linkedin_url, fa: 'linkedin')
 
     dropdown_options(t('share'), [{items: link_items}], fa: 'fa-share-alt')
+  end
+
+  def sort_items
+    link_items = []
+
+    link_items = [
+        link_item(t('filtersort.updated_at'), nil, fa: 'fire', data: {'sort-value' => 'updated_at'}),
+        link_item(t('filtersort.created_at'), nil, fa: 'clock-o', data: {'sort-value' => 'created_at'}),
+        link_item(t('filtersort.name'), nil, fa: 'sort-alpha-asc', data: {'sort-value' => 'name'}),
+        link_item(t('filtersort.vote_count'), nil, fa: 'check-square-o', data: {'sort-value' => 'vote_count'}),
+        link_item(t('filtersort.random'), nil, fa: 'gift', data: {'sort-value' => 'random'}, className: 'sort-random')
+    ]
+
+    dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
   end
 
   def process_cover_photo(object, _params)
@@ -103,7 +117,7 @@ module ApplicationHelper
   # Either a Page or a User
   def dual_profile_edit_path(profile)
     if profile.profileable.class == User
-      edit_profile_path(profile.profileable)
+      edit_user_path(profile.profileable)
     elsif profile.profileable.class == Page
       #edit_page_path?
       page_path(profile.profileable)
@@ -119,6 +133,24 @@ module ApplicationHelper
     elsif preview.class == Profile
       true
     end
+  end
+
+
+  # TODO: Something something instance variable with Redcarpet
+  def markdown_to_html(markdown)
+    Redcarpet::Markdown.new(
+        Redcarpet::Render::HTML.new(filter_html: false, escape_html: true),
+        {tables: false, fenced_code_blocks: false, no_styles: true, escape_html: true, autolink: true, lax_spacing: true}
+    ).render(markdown).html_safe
+  end
+
+  def markdown_to_plaintext(markdown)
+    require 'redcarpet/render_strip'
+
+    Redcarpet::Markdown.new(
+        Redcarpet::Render::StripDown.new,
+        {tables: false, fenced_code_blocks: false, no_styles: true, escape_html: true, autolink: false, lax_spacing: true}
+    ).render(markdown)
   end
 
 end

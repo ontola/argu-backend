@@ -1,0 +1,27 @@
+.col-1
+  header
+    h1= t('pages.management.title')
+    p= t('pages.management.managed_current_out_of_max', current: current, max: max)
+    - if current < max
+      =link_to t('pages.create'), new_page_path, fa: 'building'
+  - @pages.each do |page|
+    - pa_po = policy(page)
+    .box
+      section
+        =image_tag page.profile.profile_photo.url(:icon), class: 'profilepicture'
+        h2= link_to page.display_name, page_path(page)
+        p= page.profile.about
+        p=t('pages.management.members', members: page.memberships.count)
+        h3= t('forums.settings.managers.title')
+        ul.margin-bottom
+          li
+            =image_tag page.owner.profile_photo.url(:icon), size: '16x16'
+            span= "#{page.owner.display_name} (#{t('pages.management.owner')})"
+          - page.managers.each do |manager|
+            li
+              =image_tag manager.profile_photo.url(:icon), size: '16x16'
+                span= manager.display_name
+      ul.btns-list.btn-sticky
+        li= link_to settings_page_path(page) do
+          span.fa.fa-gear
+          span.icon-left= t('pages.settings.title')

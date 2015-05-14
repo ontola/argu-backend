@@ -1,6 +1,6 @@
 class GroupPolicy < RestrictivePolicy
   class Scope < Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :scope
 
     def initialize(context, scope)
       @context = context
@@ -18,7 +18,7 @@ class GroupPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:name] if create?
+    attributes << [:name, :name_singular, :icon, :max_responses_per_member] if create?
     attributes << [:id] if staff?
     attributes
   end

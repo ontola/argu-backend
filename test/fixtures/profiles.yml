@@ -17,6 +17,10 @@ profile_utrecht_manager:
   profileable: user_utrecht_manager (User)
   about: "It's all in the name"
   are_votes_public: true
+profile_utrecht_manager_only:
+  profileable: user_utrecht_manager_only (User)
+  about: "It's all in the name!"
+  are_votes_public: true
 profile_one:
   profileable: user (User)
   about: 'Im a user'
@@ -37,8 +41,12 @@ profile_utrecht:
   about: ''
   are_votes_public: true
 profile_argu:
-  profileable_id: <%= ActiveRecord::FixtureSet.identify(:argu) %>
-  profileable_type: 'Page'
+  profileable: page_argu (Page)
   name: 'Argu org'
   about: "We're the creators of this platform"
+  are_votes_public: true
+profile_not_accepted:
+  profileable: not_accepted (Page)
+  name: 'Someone'
+  about: "Apparently we don't agree."
   are_votes_public: true

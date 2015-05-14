@@ -1,6 +1,6 @@
 class ProfilePolicy < RestrictivePolicy
   class Scope < Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :scope
 
     def initialize(context, scope)
       @context = context
@@ -28,20 +28,34 @@ class ProfilePolicy < RestrictivePolicy
     end
   end
 
+  def permitted_attributes
+    attributes = super
+    if record.profileable.present?
+      attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public] if update?
+    else
+      attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public] if new?
+    end
+    attributes
+  end
+
   def index
     is_owner? || staff?
+  end
+
+  def new?
+    Pundit.policy(context, record.profileable_type.constantize).create?
   end
 
   def show?
     if record.profileable.class == Page
       record.is_public?
     else
-      record.profileable.finished_intro? || super
+      record.is_public? && record.profileable.finished_intro? || super
     end
   end
 
   def update?
-    record.profileable == user || super
+    Pundit.policy(context, record.profileable).update? || super
   end
 
   def edit?

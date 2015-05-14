@@ -31,7 +31,7 @@ module ColumnRendererHelper
   def header(options)
     if !(defined?(options[:header]) && options[:header] == false)
         content_tag :header do
-          content_tag :h1, options[:header]
+          content_tag :h2, options[:header]
         end
     end
   end
@@ -39,7 +39,7 @@ module ColumnRendererHelper
   # This generates the translations for the header text, e.g. "arguments.header.pro"
   def header_text(options, key)
     if !defined?(options[:header_text]) || options[:header_text].blank? || options[:header_text] == false
-      I18n.t("#{options[:collection_model].to_s.pluralize.downcase}.header.#{key}")
+      I18n.t("#{options[:collection_model].class_name}.header.#{key}")
     elsif defined?(options[:header_text]) && options[:header_text].present?
       options[:header_text][key]
     end

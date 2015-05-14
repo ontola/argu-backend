@@ -1,0 +1,212 @@
+<% environment.context_class.instance_eval { include Rails.application.routes.url_helpers } %>
+
+Argu.ui = {
+    bg: null,
+    window: null,
+
+    init: function () {
+        "use strict";
+        $(document)
+            .on('keyup', '.confirm .confirm-text', this.confirmInputHandler)
+            .on('click', '.comment .btn-reply', this.openCommentForm)
+            .on('pjax:success', this.handleDOMChangedFinished)
+            .on('pjax:end', this.checkTabs)
+            .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
+            .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick);
+
+        window.addEventListener('online', this.handleOnline);
+        window.addEventListener('offline', this.handleOffline);
+
+        this.handleDOMChangedFinished();
+        this.initPlaceholderFallback();
+        (this.window = $(window)).resize(this.handleResizeBackground);
+        this.handleResizeBackground();
+
+        Argu.ui.modal.init();
+        Argu.ui.progressbar.init();
+        FastClick.attach(document.body);
+    },
+
+    bindRemoteLinks: function () {
+        $('.remote-link')
+                .bind("ajax:beforeSend", function () {
+                    $(this).addClass("is-loading");
+                })
+                .bind('ajax:complete', function () {
+                    $(this).removeClass("is-loading");
+                })
+                .bind("ajax:error", function () {
+                    $(this).removeClass("is-loading");
+                });
+    },
+
+    confirmInputHandler: function () {
+        "use strict";
+        var _this = $(this);
+        console.log(_this.attr('confirm-text'), _this.val());
+        _this.closest('.confirm').find('.confirm-action').attr('disabled', _this.val() != _this.attr('confirm-text'));
+    },
+
+    disableSubmitButton: function () {
+        var _this = $(this);
+        _this.addClass("is-loading");
+        setTimeout(function () {
+            _this.removeClass("is-loading");
+        }, 2500);
+    },
+
+    handleClickSmoothly: function () {
+        if (location.pathname.replace(/^\//,'') == this.pathname.replace(/^\//,'') && location.hostname == this.hostname) {
+            var target = $(this.hash);
+            target = target.length ? target : $('[name=' + this.hash.slice(1) +']');
+            if (target.length) {
+                history.pushState(null, null, '#' + this.hash.slice(1));
+                $('html,body').animate({
+                    scrollTop: target.offset().top - 200
+                }, 600);
+                event.preventDefault();
+            }
+        }
+    },
+
+    handleDOMChangedFinished: function () {
+        Argu.ui.handleEditableSettings();
+        Argu.ui.bg = $(".background");
+        $('button:submit').click(Argu.ui.disableSubmitButton);
+        $('a[href*=#]:not([href=#])').click(Argu.ui.handleClickSmoothly);
+        Argu.ui.bindRemoteLinks();
+    },
+
+    handleEditableSettings: function () {
+        "use strict";
+        var settings;
+        if ((settings = $('.portal-settings'))) {
+            var editableOptions = {
+                onsubmit: function (settings) {
+                    settings.target = '<%= portal_settings_path %>/';
+                },
+                submitdata : function () {
+                    return {key: this.getAttribute('id')};
+                },
+                indicator : 'Saving...',
+                tooltip   : 'Click to edit...'
+            };
+
+            settings.find('.setting .value').editable('', editableOptions);
+
+            settings.find('.add-setting').click(function () {
+                var key = window.prompt('Enter the key', '');
+                if (key !== null && key.length > 0) {
+                    var newSetting = $('<tr class="setting"><td class="key">'+key+'</td><td class="value" id="'+key+'" title="Click to edit..."></td></tr>');
+                    $('.settings-table tbody').append(newSetting);
+                    newSetting.find('.value').editable('', editableOptions);
+                }
+            });
+        }
+    },
+
+    handleFormToggleClick: function () {
+        var tmp=$(this).attr('name'),
+                _this = $(this);
+        $('input[name="'+tmp+'"]').parent("label").removeClass("checked");
+        _this.parent("label").toggleClass("checked", this.selected);
+        $(':not(.formtastic).argument').removeClass('side-pro side-con').addClass('side-' + _this.attr('value'));
+    },
+
+    handleOffline: function () {
+        document.getElementById('onlineStatus').className = '';
+    },
+
+    handleOnline: function () {
+        document.getElementById('onlineStatus').className = 'hidden';
+    },
+
+    handleResizeBackground: function () {
+        "use strict";
+        Argu.ui.bg.height(Argu.ui.window.height() + 0);
+    },
+
+    initPlaceholderFallback: function () {
+        "use strict";
+        if ( !("placeholder" in document.createElement("input")) ) {
+            $("input[placeholder], textarea[placeholder]").each(function() {
+                var val = $(this).attr("placeholder");
+                if ( this.value == "" ) {
+                    this.value = val;
+                }
+                $(this).focus(function() {
+                    if ( this.value == val ) {
+                        this.value = "";
+                    }
+                }).blur(function() {
+                    if ( $.trim(this.value) == "" ) {
+                        this.value = val;
+                    }
+                })
+            });
+
+            // Clear default placeholder values on form submit
+            $('form').submit(function() {
+                $(this).find("input[placeholder], textarea[placeholder]").each(function() {
+                    if ( this.value == $(this).attr("placeholder") ) {
+                        this.value = "";
+                    }
+                });
+            });
+        }
+    },
+
+    mobileTapTooCloseFix: function (e) {
+        // Prevents dropdown-active from opening the neighboring link in Chrome for android.. but also prevents clicking on dropdown content!
+        e.preventDefault();
+    },
+
+    openCommentForm: function (e) {
+        "use strict";
+        e.preventDefault();
+        $('.comment_form#cf' + $(this).attr('id')).slideToggle();
+    }
+};
+
+Argu.ui.modal = {
+    init: function () {
+        // Close modal when clicking on overlay, unless there is a "no-close" class.
+        $(document).on('click', '.modal-container:not(.no-close) .overlay', this.closeModal);
+
+        // Close modal when pressing escape button, unless there is a "no-close" class.
+        document.addEventListener('keyup', function(e) {
+            if (e.keyCode == 27 && !$(".no-close")[0]) {
+                $('.modal-container').addClass('modal-hide');
+                window.setTimeout(function () {
+                    $('.modal-container').remove();
+                    $('body').removeClass('modal-opened');
+                }, 500);
+            }
+        });
+
+        $(document).on('pjax:complete', function () {
+            $('body').removeClass('modal-opened');
+        });
+    },
+
+    closeModal: function () {
+        let container = $(this).parent('.modal-container');
+
+        container.addClass('modal-hide');
+        window.setTimeout(() => {
+            container.remove();
+            $('body').removeClass('modal-opened');
+        }, 500);
+    }
+};
+
+Argu.ui.progressbar = {
+    init: function () {
+        $(document).on('pjax:start',   NProgress.start)
+                   .on('pjax:success',  NProgress.done)
+                   .on('pjax:end', NProgress.remove)
+                   .on('ajax:beforeSend',   NProgress.start)
+                   .on('ajax:complete',  NProgress.done)
+                   .on('ajax:after', NProgress.remove);
+    }
+};

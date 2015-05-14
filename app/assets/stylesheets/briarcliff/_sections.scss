@@ -21,6 +21,10 @@ section {
   .fa-group {
     font-size: 0.7em;
   }
+
+  .display-hide-details &{
+    display: none;
+  }
 }
 
 .details {
@@ -43,6 +47,10 @@ section {
     padding: 0 .5em;
     height: 100%;
     line-height: 1.3em;
+    &:hover{
+      background-color: $g0;
+      color: $g3;
+    }
   }
 
   .details-part--type{
@@ -51,6 +59,9 @@ section {
     padding-left: 1.2em;
     padding-right: 1.2em;
     margin-right: .6em;
+    &:hover{
+      color: white;
+    }
   }
 }
 
@@ -59,7 +70,7 @@ section.unpadded {
 }
 
 section.smallpadded {
-  padding: 1.1em 1em 0em 1em;
+  padding: 1.1em 1em 0 1em;
 }
 
 .section-small {

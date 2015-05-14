@@ -1,21 +1,27 @@
 class NotificationsController < ApplicationController
 
   def index
+    # This must be performed to prevent pundit errors
+    policy_scope(Notification)
     if current_user.present?
-      since = DateTime.parse(request.headers[:lastNotification]).to_s(:db) if request.headers[:lastNotification]
-      new_available = true
-      if since.present?
-        new_available = policy_scope(Notification).order(created_at: :desc).where('created_at > ?', since).count > 0
+      begin
+        since = DateTime.parse(request.headers[:lastNotification]).to_s(:db) if request.headers[:lastNotification]
+        new_available = true
+        if since.present?
+          new_available = policy_scope(Notification).order(created_at: :desc).where('created_at > ?', since).count > 0
+        end
+        @notifications = get_notifications(since) if new_available
+        if @notifications.present?
+          @unread = get_unread
+          render
+        else
+          head 204
+        end
+      rescue ArgumentError
+        head 400
       end
-      @notifications = get_notifications(since) if new_available
     else
-      # This must be performed to prevent pundit errors
       policy_scope(Notification)
-    end
-    if @notifications.present?
-      @unread = get_unread
-      render
-    else
       head 204
     end
   end

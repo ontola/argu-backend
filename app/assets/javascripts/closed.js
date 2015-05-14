@@ -15,14 +15,12 @@
 //= require react
 //= require react_ujs
 //= require reflux.min
-//= require application/jquery.jeditable.mini.js
+//= require jquery.jeditable.mini.js
 //= require fastclick
 //= require nprogress
 //= require isotope.pkgd.min
 //= require onclickoutside
 //= require_tree ./stores
 //= require components
-//= require ./application/briarcliff/modal
-//= require ./application/briarcliff/nprogress-briarcliff
-//= require ./application/ie
+//= require initialize.js.jsx
 //= require ./application/alert

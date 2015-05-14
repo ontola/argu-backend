@@ -2,7 +2,6 @@ module QuestionsHelper
   include DropdownHelper
 
   def question_items(question)
-    divided = true
     link_items = []
     if policy(question).update?
       link_items << link_item(t('edit'), edit_question_path(question), fa: 'pencil')

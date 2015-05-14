@@ -55,6 +55,10 @@
     &:active {
       background-color: $darken2;
     }
+
+    &.is-checked {
+      background-color: $darken1;
+    }
   }
 
   h3 {

@@ -68,22 +68,24 @@ class Motion < ActiveRecord::Base
 
   def move_to(forum, unlink_questions = true)
     Motion.transaction do
-      old_forum = self.forum
-      self.forum = forum
+      old_forum = self.forum.lock!
+      self.forum = forum.lock!
       self.save
-      self.arguments.update_all forum_id: forum.id
-      self.opinions.update_all forum_id: forum.id
-      self.votes.update_all forum_id: forum.id
-      self.question_answers.delete_all if unlink_questions
-      self.activities.update_all forum_id: forum.id
-      self.taggings.update_all forum_id: forum.id
-      self.group_responses.delete_all
+      self.arguments.lock(true).update_all forum_id: forum.id
+      self.opinions.lock(true).update_all forum_id: forum.id
+      self.votes.lock(true).update_all forum_id: forum.id
+      self.question_answers.lock(true).delete_all if unlink_questions
+      self.activities.lock(true).update_all forum_id: forum.id
+      self.taggings.lock(true).update_all forum_id: forum.id
+      self.group_responses.lock(true).delete_all
+
       old_forum.decrement :motions_count
-      forum.increment :motions_count
       old_forum.save
+
+      forum.increment :motions_count
       forum.save
+      true
     end
-    return true
   end
 
   def next(show_trashed= false)
@@ -100,6 +102,10 @@ class Motion < ActiveRecord::Base
 
   def raw_score
     self.votes_pro_count - self.votes_con_count
+  end
+
+  def responses_from(profile)
+    self.group_responses.where(profile_id: profile.id).count
   end
 
   def score
@@ -122,6 +128,16 @@ class Motion < ActiveRecord::Base
     self.arguments.where(pro: true).trashed(false).order(votes_pro_count: :desc).limit(5)
   end
 
+  # Same as {Argument#top_arguments_con} but plucks only :id, :title, :pro, and :votes_pro_count
+  def top_arguments_con_light
+    self.arguments.where(pro: false).trashed(false).order(votes_pro_count: :desc).uniq.limit(5).pluck(:id, :title, :pro, :votes_pro_count)
+  end
+
+  # Same as {Argument#top_arguments_pro} but plucks only :id, :title, :pro, and :votes_pro_count
+  def top_arguments_pro_light
+    self.arguments.where(pro: true).trashed(false).order(votes_pro_count: :desc).uniq.limit(5).pluck(:id, :title, :pro, :votes_pro_count)
+  end
+
   def total_vote_count
     votes_pro_count.abs + votes_con_count.abs + votes_neutral_count.abs
   end
@@ -132,38 +148,26 @@ class Motion < ActiveRecord::Base
   end
 
   def votes_pro_percentage
-    if votes_pro_count == 0
-      if total_vote_count == 0
-        33
-      else
-        0
-      end
-    else
-      (votes_pro_count.to_f / total_vote_count * 100).round.abs
-    end
+    vote_percentage votes_pro_count
   end
 
   def votes_neutral_percentage
-    if votes_neutral_count == 0
-      if total_vote_count == 0
-        33
-      else
-        0
-      end
-    else
-      (votes_neutral_count.to_f / total_vote_count * 100).round.abs
-    end
+    vote_percentage votes_neutral_count
   end
 
   def votes_con_percentage
-    if votes_con_count == 0
+    vote_percentage votes_con_count
+  end
+
+  def vote_percentage(vote_count)
+    if vote_count == 0
       if total_vote_count == 0
         33
       else
         0
       end
     else
-      (votes_con_count.to_f / total_vote_count * 100).round.abs
+      (vote_count.to_f / total_vote_count * 100).round.abs
     end
   end
 

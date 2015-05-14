@@ -5,8 +5,14 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-argu:
+page_argu:
   owner: :profile_fletcher91
+  last_accepted: '2015-04-21T13:34:39+02:00'
 #
 utrecht:
   owner: :profile_utrecht_owner
+  last_accepted: '2015-04-21T13:34:39+02:00'
+#
+not_accepted:
+  owner: :profile_utrecht_owner
+  # :not_accepted

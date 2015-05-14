@@ -27,6 +27,9 @@ sn_user_utrecht_owner:
 sn_user_utrecht_manager:
   shortname: 'utrecht_manager'
   owner: user_utrecht_manager (User)
+sn_user_utrecht_manager_only:
+  shortname: 'utrecht_manager_only'
+  owner: user_utrecht_manager_only (User)
 sn_user:
   shortname: 'user'
   owner: user (User)
@@ -42,7 +45,10 @@ sn_user3:
 #
 sn_argu:
   shortname: 'argu'
-  owner: argu (Page)
+  owner: page_argu (Page)
 sn_utrecht_page:
   shortname: 'gemeente_utrecht'
   owner: utrecht (Page)
+sn_not_accepted:
+  shortname: 'not_accepted'
+  owner: not_accepted (Page)

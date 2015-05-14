@@ -14,7 +14,7 @@ ub.build_profile name: 'Administrator'
 uc.build_profile name: 'User'
 
 ua.profile.update_attributes(picture: 'http://www.wthex.com/images/coolcookie.gif', about: "I'm the coder!")
-uc.profile.update_attributes(picture: 'https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg', about: "argu designer")
+uc.profile.update_attributes(picture: 'https://lh5.googleusercontent.com/-fgiBDzie7Jk/UEoCv42lzzI/AAAAAAAABZk/nfYf52duV4o/s518/profielfoto.jpg', about: 'argu designer')
 
 ua.profile.add_role :staff
 ub.profile.add_role :staff

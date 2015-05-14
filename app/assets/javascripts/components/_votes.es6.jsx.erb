@@ -1,0 +1,178 @@
+/*global React, $*/
+
+
+window.CombiBigVote = React.createClass({
+    getInitialState: function () {
+        return {
+            actor: this.props.actor,
+            groups: this.props.groups,
+            object_type: this.props.object_type,
+            object_id: this.props.object_id,
+            current_vote: this.props.current_vote,
+            distribution: this.props.distribution,
+            percent: this.props.percent
+        };
+    },
+
+    onActorChange: function (actor) {
+        this.refreshGroups();
+        this.setState({actor: actor});
+    },
+
+    componentDidMount: function () {
+        this.unsubscribe = actorStore.listen(this.onActorChange);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+    },
+
+    refreshGroups: function () {
+        $.ajax({
+            type: 'GET',
+            url: this.state.object_id,
+            dataType: 'json',
+            async: true,
+            success: (data) => {
+                this.setState({groups: data.groups});
+            },
+            error: function () {
+                Argu.Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
+            }
+        });
+    },
+
+    render: function () {
+        let voteComponent;
+        if (this.state.actor.actor_type == "User") {
+            voteComponent = <BigVote {...this.state}/>;
+        } else if (this.state.actor.actor_type == "Page") {
+            voteComponent = <BigGroupResponse groups={this.state.groups} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
+        }
+
+        return (
+            <div>
+                {voteComponent}
+            </div>
+        );
+    }
+});
+
+window.BigVote = React.createClass({
+    getInitialState: function () {
+        return {
+            object_type: this.props.object_type,
+            object_id: this.props.object_id,
+            current_vote: this.props.current_vote,
+            distribution: this.props.distribution,
+            percent: this.props.percent
+        };
+    },
+
+    refresh: function () {
+        $.ajax({
+            type: 'GET',
+            url: [this.state.object_id, 'v'].join('/'),
+            dataType: 'json',
+            async: true,
+            success: (data) => {
+                if (data.vote) {
+                    this.setState(data.vote);
+                }
+            },
+            error: function () {
+                Argu.Alert('<%= I18n.t('votes.alerts.failed') %>', 'alert', true);
+            }
+        });
+    },
+
+    proHandler: function (e) {
+        e.preventDefault();
+        this.vote('pro')
+    },
+    neutralHandler: function (e) {
+        e.preventDefault();
+        this.vote('neutral')
+    },
+    conHandler: function (e) {
+        e.preventDefault();
+        this.vote('con')
+    },
+
+    vote: function (side) {
+        $.ajax({
+            type: 'POST',
+            url: [this.state.object_id, 'v', side].join('/'),
+            dataType: 'json',
+            async: true,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('accepts', 'application/json, application/javascript, */*');
+            },
+            success: (data) => {
+                if (data.vote) {
+                    this.setState(data.vote);
+                    //Actions.actorUpdate(data);
+                }
+            },
+            error: (request, status) => {
+                if(status == "parsererror" && request.statusText == "OK") {
+                    $.globalEval(request.responseText)
+                } else {
+                    console.log('failed');
+                }
+            }
+        });
+    },
+
+    voteWidth: function (side) {
+        var supplemented_values = { pro:     this.state.percent.pro     < 5 ? 5 : this.state.percent.pro,
+                                    neutral: this.state.percent.neutral < 5 ? 5 : this.state.percent.neutral,
+                                    con:     this.state.percent.con     < 5 ? 5 : this.state.percent.con
+        };
+        var overflow = -100;
+        for(var o in supplemented_values) {
+            overflow += supplemented_values[o];
+        }
+        var width = supplemented_values[side] - (overflow*(this.state.percent[side]/100));
+
+        return {
+            width: width + '%'
+        };
+    },
+
+    render: function () {
+        var results;
+
+        if (this.state.distribution) {
+            results = (
+                <ul className="progress-bar progress-bar-stacked" data-collapsed={(this.state.current_vote.length == 0 || this.state.current_vote == 'abstain') || null}>
+                    <li style={this.voteWidth('pro')}><span className="btn-pro">{this.state.distribution.pro}</span></li>
+                    <li style={this.voteWidth('neutral')}><span className="btn-neu">{this.state.distribution.neutral}</span></li>
+                    <li style={this.voteWidth('con')}><span className="btn-con">{this.state.distribution.con}</span></li>
+                </ul>);
+        }
+
+        return (<div className="center motion-shr">
+            <ul className="btns-opinion" data-voted={(this.state.current_vote.length > 0 && this.state.current_vote != 'abstain') || null}>
+                <li><a href="#" onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
+                    <span className="fa fa-thumbs-up" />
+                    <span className="icon-left"><%= I18n.t('motions.votes.pro') %></span>
+                </a></li>
+                <li><a href="#" onClick={this.neutralHandler} rel="nofollow" className="btn-neu" data-voted-on={this.state.current_vote == 'neutral' || null}>
+                    <span className="fa fa-pause" />
+                    <span className="icon-left"><%= I18n.t('motions.votes.neu') %></span>
+                </a></li>
+                <li><a href="#" onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote == 'con' || null}>
+                    <span className="fa fa-thumbs-down" />
+                    <span className="icon-left"><%= I18n.t('motions.votes.con') %></span>
+                </a></li>
+            </ul>
+            {results}
+        </div>);
+    }
+});
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = CombiBigVote;
+    module.exports = BigVote;
+}

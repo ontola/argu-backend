@@ -90,7 +90,7 @@ class ArgumentsController < ApplicationController
 
     respond_to do |format|
       if @argument.update_attributes(argument_params)
-        format.html { redirect_to @argument, notice: t("arguments.notices.updated") }
+        format.html { redirect_to @argument, notice: t('arguments.notices.updated') }
         format.json { head :no_content }
       else
         format.html { render :form }

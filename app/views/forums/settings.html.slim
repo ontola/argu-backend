@@ -1,6 +1,13 @@
 =set_title t('forums.settings.title')
-.col-1
-  =render partial: 'manage_bar', locals: {resource: @forum}  if policy(@forum).update?
-  .box
-    section
-      =render partial: "forums/setting_tabs/#{params[:tab] || 'settings'}", locals: {resource: @forum}
+.col-3
+  =render partial: 'forums/manage_bar', locals: {resource: @forum, active: :settings}  if policy(@forum).update?
+  .col-3-1
+    .box
+      section
+        =render_settings_items_for(@forum, active)
+  .col-3-2
+    .box
+      section
+        / Protects against Directory Traversal Attacks
+        -if local_assigns[:tab] && !tab.gsub(/\\/, '').index('../')
+          =render partial: "forums/settings/#{tab}", locals: {resource: @forum, tab: tab, active: active}

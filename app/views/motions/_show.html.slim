@@ -2,27 +2,41 @@
   -if model.cover_photo.present?
     =contextual_link_to motion_path(model)
       .box-image[style="background-image: url('#{model.cover_photo.url(:box)}'); "]
-  section.section-info.motion-bg
-    span[class="fa fa-#{motion_icon(model.forum)}"]
-    span.icon-left= motion_type(model.forum)
-  section[itemscope itemtype="http://www.schema.org/Answer"]
+  =contextual_link_to motion_path(model) do
+    section.section-info.motion-bg
+      span[class="fa #{motion_icon(current_scope.model || model.forum)}"]
+      span.icon-left= motion_type(current_scope.model || model.forum)
+      .details
+        .details-part.details-part--type.motion-bg
+          span[class="fa fa-#{motion_icon(current_scope.model || model.forum)}"]
+          span.icon-left= motion_type(current_scope.model || model.forum)
+        .details-part.tooltip[data-title=t('tooltips.motion.vote_count')]
+          span.fa.fa-check-square-o
+          span.icon-left= model.total_vote_count
+        .details-part.tooltip[data-title=t('tooltips.motion.arguments_pro_count')]
+          span.fa.fa-plus
+          span.icon-left= model.argument_pro_count
+        .details-part.tooltip[data-title=t('tooltips.motion.arguments_con_count')]
+          span.fa.fa-minus
+          span.icon-left= model.argument_con_count
+  section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =contextual_link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title
-    p[itemprop="text" class='wrap-normal']
-      ==model.truncate_preview(150, {length_in_chars: true, ellipsis: contextual_link_to('... ' + t('read_more'), motion_path(model))})
+    p.wrap-normal[itemprop="text"]== HTML_Truncator.truncate(markdown_to_plaintext(model.content), 170,
+                                      {length_in_chars: true, ellipsis: (' ... ' + contextual_link_to(t('read_more'), motion_path(model)))})
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
-        - model.top_arguments_pro.each do |argument|
-          li= link_to argument_path(argument)
-              h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
-                span.fa.fa-plus
-                span.icon-left= argument.title
+        - model.top_arguments_pro_light.each do |argument|
+          li= link_to argument_path(argument[0])
+            h3[class="#{argument[2] ? 'pro' : 'con'}-t"]
+              span.fa.fa-plus
+              span.icon-left= argument[1]
       ul.box-list.box-list--arguments.box-list--icons
-        - model.top_arguments_con.each do |argument|
-          li= link_to argument_path(argument)
-              h3[class="#{argument.pro ? 'pro' : 'con'}-t"]
-                span.fa.fa-minus
-                span.icon-left= argument.title
+        - model.top_arguments_con_light.each do |argument|
+          li= link_to argument_path(argument[0])
+            h3[class="#{argument[2] ? 'pro' : 'con'}-t"]
+              span.fa.fa-minus
+              span.icon-left= argument[1]
     =contextual_link_to motion_path(model), class: 'btn-subtle btn-sticky btns-sticky-bottom read-more'
       span.icon-right= t('read_more')
       span.fa.fa-arrow-right

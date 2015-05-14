@@ -1,19 +1,21 @@
 - top_comment = model.top_comment
-.box.box-with-btns.argument[id="#{model.id.present? ? 'argument_' + model.id.to_s : ''}" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed}"]
+.box.box-with-btns.argument[id="#{model.id.present? ? 'argument_' + model.id.to_s : ''}" itemscope itemtype="http://schema.org/CreativeWork/Argument" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed}"]
   section
     =contextual_link_to argument_path(model)
-      h3[class="#{model.pro ? 'pro-t' : 'con-t'}"]= model.title
+      h3[class="#{model.pro ? 'pro-t' : 'con-t'}" itemprop="headline"]= model.title
     =render partial: 'arguments/shr', locals: {model: model}
-    p[class='wrap-normal']
-      ==model.truncate_preview(240, {length_in_chars: true, ellipsis: (' ... ' + contextual_link_to(t('read_more'), argument_path(model))) })
-  - if !top_comment.present?
-    =contextual_link_to argument_path(model), class: ' btn-subtle btn-sticky btns-sticky-bottom read-more'
-      span.icon-right reageer
-      span.fa.fa-comments
+    p[class='wrap-normal' itemprop="text"]
+      /==model.truncate_preview(240, {length_in_chars: true, ellipsis: (' ... ' + contextual_link_to(t('read_more'), argument_path(model))) })
+      == HTML_Truncator.truncate(markdown_to_plaintext(model.content), 220, {length_in_chars: true, ellipsis: (' ... ' + contextual_link_to(t('read_more'), argument_path(model))) })
   - if top_comment.present?
     =link_to argument_path(model) + '#commentstitle'
       section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]
-        p.wrap-normal= top_comment.is_trashed? ? '[DELETED]' : top_comment.body[0..150] + (top_comment.body[151] ? '...' : '')
+        p.wrap-normal
+          == top_comment.is_trashed? ? '[DELETED]' : HTML_Truncator.truncate(markdown_to_plaintext(top_comment.body), 150, {length_in_chars: true, ellipsis: (' ... ')})
         .read-more
           span.icon-right= model.comments_count.to_s
           span.fa.fa-comments
+  - else
+    =contextual_link_to argument_path(model), class: ' btn-subtle btn-sticky btns-sticky-bottom read-more'
+      span.icon-right reageer
+      span.fa.fa-comments

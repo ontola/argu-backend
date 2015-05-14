@@ -39,7 +39,7 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
     padding: .2em;
   }
   + input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
-    margin-top: 0em !important;
+    margin-top: 0 !important;
   }
   &.input--full {
     width: 100%;
@@ -54,7 +54,7 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
 }
 
 input[type="checkbox"] {
-  margin: 1em 1em 1em 0em;
+  margin: 1em 1em 1em 0;
 }
 
 textarea {
@@ -62,7 +62,7 @@ textarea {
 }
 
 label {
-  padding: 0.6em 0em;
+  padding: 0.6em 0;
   display: inline-block;
   text-transform: uppercase;
   color: $g3;
@@ -79,7 +79,7 @@ label {
 legend {
   width: 100%;
   margin-bottom: 1em;
-  padding: 0.3em 0em;
+  padding: 0.3em 0;
   text-align: left;
   border-bottom: solid $g1 1px;
   color: $g3;
@@ -216,7 +216,7 @@ fieldset {
   }
   input[type="checkbox"] {
     width: auto !important;
-    margin: 0 1em 0em 0em;
+    margin: 0 1em 0 0;
   }
   label {
     padding: 0;
@@ -250,7 +250,7 @@ fieldset {
 }
 
 input[type="file"], select {
-  padding: 0.3em 0em;
+  padding: 0.3em 0;
   font-size: 1em;
 }
 

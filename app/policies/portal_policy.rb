@@ -1,5 +1,5 @@
 class PortalPolicy < Struct.new(:user, :portal)
-  attr_reader :context, :user, :record, :session
+  attr_reader :context, :record
 
   def initialize(context, record)
     #raise Pundit::NotAuthorizedError, "must be logged in" unless user

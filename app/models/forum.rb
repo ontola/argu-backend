@@ -5,10 +5,11 @@ class Forum < ActiveRecord::Base
   has_many :questions, inverse_of: :forum
   has_many :motions, inverse_of: :forum
   has_many :arguments, inverse_of: :forum
-  has_many :members, through: :memberships, source: :profile
   has_many :memberships
+  has_many :members, through: :memberships, source: :profile
   accepts_nested_attributes_for :memberships
-  has_many :managers, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
+  has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
+  has_many :managers, through: :managerships, source: :profile
   has_many :votes, inverse_of: :forum
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
   has_many :activities, as: :trackable, dependent: :destroy
@@ -16,7 +17,7 @@ class Forum < ActiveRecord::Base
 
   # @private
   # Used in the forum selector
-  attr_accessor :is_checked
+  attr_accessor :is_checked, :tab, :active
 
   acts_as_ordered_taggable_on :tags
   mount_uploader :profile_photo, AvatarUploader

@@ -1,6 +1,6 @@
 class ActorPolicy < ApplicationPolicy
   class Scope < Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :scope
 
     def initialize(context, scope)
       @context = context
@@ -30,7 +30,7 @@ class ActorPolicy < ApplicationPolicy
     if owner.class == User
       owner == user
     else
-      owner.owner == user.profile || owner.managers.where(profile: user.profile).present?
+      owner.owner == user.profile || owner.managerships.where(profile: user.profile).present?
     end
   end
 

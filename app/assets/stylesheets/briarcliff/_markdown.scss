@@ -1,0 +1,57 @@
+@import "variables";
+@import "mixins";
+
+.markdown{
+  h1{
+    font-size: 1.8em;
+
+    @include bp-medium{
+      font-size: 1.4em;
+    }
+
+    @include bp-small{
+      font-size: 1.2em;
+    }
+  }
+
+  p {
+    white-space: normal;
+  }
+
+  hr{
+    border: none;
+    border-top: solid 1px $g2;
+    margin-bottom: 1em;
+  }
+
+  a{
+    text-decoration: underline;
+    
+    &:hover{
+      color: $blu;
+    }
+
+    &:visited{
+      color: $blu;
+    }
+  }
+  
+  ul, ol{
+    list-style: initial;
+    padding-left: 1.5em;
+    margin-bottom: 1em;
+    line-height: 1.5em;
+
+    ul, ol{
+      margin-bottom: 0;
+    }
+  }
+
+  ol {
+    list-style-type: decimal;
+  }
+
+  em{
+    font-weight: bold;
+  }
+}

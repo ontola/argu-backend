@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper
+  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :set_layout
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
-  after_action :set_notification_header
+  #after_action :set_notification_header
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
     flash[:warning] = t(:twice_warning)
@@ -47,6 +47,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
+
   # Combines {ApplicationController#create_activity} with {ApplicationController#destroy_recent_similar_activities}
   def create_activity_with_cleanup(model, params)
     destroy_recent_similar_activities model, params
@@ -54,15 +56,15 @@ class ApplicationController < ActionController::Base
   end
 
   # Creates an {Activity} for a model asynchronously
-  # @param [ActiveRecord::Base] a model to create the {Activity} for
-  # @param [Hash] options for {PublicActivity::Common#create_activity}
+  # @param [ActiveRecord::Base] model a model to create the {Activity} for
+  # @param [Hash] params options for {PublicActivity::Common#create_activity}
   def create_activity(model, params)
     a = model.create_activity params
     Argu::NotificationWorker.perform_async(a.id)
   end
 
   def current_scope
-    current_context.context_scope(current_profile) || current_context
+    @current_scope ||= (current_context.context_scope(current_profile) || current_context)
   end
 
   # @return the current context, if a param is given, it will serve as the start of the current context
@@ -96,7 +98,7 @@ class ApplicationController < ActionController::Base
   def render_register_modal(base_url=nil, *r_options)
     if !r_options || r_options.first != false   # Only skip if r_options is false
       r = URI.parse(base_url || request.fullpath)
-      r.query= r_options.reject { |a| a.to_a.last.blank? }.map { |a| a.to_a.join('=') }.join('&')
+      r.query = r_options.map(&:to_a).reject { |a| a.last.blank? }.map { |a| [a[0], URI.encode(a[1])].join('=') }.join('&')
     else
       r = nil
     end
@@ -104,6 +106,17 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
       format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
+    end
+  end
+
+  def rescue_stale
+    respond_to do |format|
+      format.html {
+        correct_stale_record_version
+        stale_record_recovery_action
+      }
+      format.xml  { head :conflict }
+      format.json { head :conflict }
     end
   end
 
@@ -117,7 +130,7 @@ class ApplicationController < ActionController::Base
   # @private
   def set_notification_header
     if current_user.present?
-      response.headers[:lastNotification] = policy_scope(Notification).order(created_at: :desc).limit(1).pluck(:created_at)[0]
+      response.headers[:lastNotification] = policy_scope(Notification).order(created_at: :desc).limit(1).pluck(:created_at)[0] || '-1'
     else
       response.headers[:lastNotification] = '-1'
     end
@@ -128,9 +141,9 @@ class ApplicationController < ActionController::Base
     Activity.delete Activity.where('created_at >= :date', :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
   end
 
-  # May the user update the model and has it enabled the `trashed` `param`
+  # Has the {User} enabled the `trashed` `param` and is he authorized?
   def show_trashed?
-    if policy(current_scope.model).update?
+    if params[:trashed].present? && policy(current_scope.model).update?
       params[:trashed] == 'true'
     else
       false
@@ -157,7 +170,7 @@ class ApplicationController < ActionController::Base
         if current_user.first_name.present?
           redirect_to selector_forums_url
         else
-          redirect_to edit_profile_url(current_user.url)
+          redirect_to edit_user_url(current_user.url)
         end
       end
     end
@@ -165,7 +178,7 @@ class ApplicationController < ActionController::Base
 
   # @private
   def intro_urls
-    [selector_forums_url, profile_url(current_user), edit_profile_url(current_user), memberships_forums_url]
+    [selector_forums_url, profile_url(current_user), edit_user_url(current_user), memberships_forums_url]
   end
 
   # @private
@@ -182,6 +195,11 @@ class ApplicationController < ActionController::Base
     else
       self.class.layout 'guest'
     end
+  end
+
+  def stale_record_recovery_action
+    flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
+    render :edit, :status => :conflict
   end
 
   # @private

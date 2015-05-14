@@ -6,7 +6,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'should not get show without platform access' do
     get :show, id: users(:user2)
 
-    assert_response :success
+    assert_response 200
     assert assigns(:_not_logged_in_caught)
     assert_nil assigns(:collection)
   end
@@ -14,7 +14,7 @@ class UsersControllerTest < ActionController::TestCase
   test 'should get show with platform access' do
     get :show, id: users(:user2), at: access_tokens(:token_hidden).access_token
 
-    assert_response :success
+    assert_response 200
     assert_not_nil assigns(:profile)
     assert_not_nil assigns(:collection)
 
@@ -26,7 +26,7 @@ class UsersControllerTest < ActionController::TestCase
 
     get :show, id: users(:user2)
 
-    assert_response :success
+    assert_response 200
     assert_not_nil assigns(:profile)
     assert_not_nil assigns(:collection)
 
@@ -53,5 +53,15 @@ class UsersControllerTest < ActionController::TestCase
     assert_not assigns(:collection)
   end
 
+  test 'should not show votes of trashed objects' do
+    user = create(:user_with_votes)
+    sign_in user
+
+    get :show, id: user
+
+    assert_response 200
+    assert assigns(:collection)[:pro][:collection].length > 0
+    assert_not assigns(:collection)[:pro][:collection].any? { |v| v.voteable.is_trashed? }
+  end
 
 end

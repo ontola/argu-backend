@@ -14,19 +14,34 @@ class Profile < ActiveRecord::Base
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships
   has_many :memberships, dependent: :destroy
+  has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
   has_many :notifications, dependent: :destroy
   has_many :page_memberships, dependent: :destroy
-  has_many :pages, inverse_of: :owner
+  has_many :page_managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
+  has_many :pages, inverse_of: :owner, foreign_key: :owner_id
   has_many :votes, as: :voter, dependent: :destroy
 
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, CoverUploader
 
-  pica_pica :profile_photo
+  #pica_pica :profile_photo
   acts_as_follower
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}
+
+  def as_json(options)
+    # Hide profileable for the more friendly actor
+    super(options.merge(except: [:profileable, :profileable_type, :profileable_id], methods: [:actor_type, :actor_id]))
+  end
+
+  def actor_type
+    profileable_type
+  end
+
+  def actor_id
+    profileable_id
+  end
 
   ######Attributes#######
   def display_name
@@ -37,7 +52,7 @@ class Profile < ActiveRecord::Base
     profileable.try :email
   end
 
-  def frozen?
+  def profile_frozen?
     has_role? 'frozen'
   end
 
@@ -104,13 +119,13 @@ class Profile < ActiveRecord::Base
 private
 
   def role_added(role)
-    if self.frozen?
+    if self.profile_frozen?
       # Send mail or notification to user that he has been unfrozen
     end
   end
 
   def role_removed(role)
-    if self.frozen?
+    if self.profile_frozen?
       # Send mail or notification to user that he has been frozen
     end
   end

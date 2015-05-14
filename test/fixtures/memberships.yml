@@ -12,7 +12,11 @@ user2_utrecht:
   profile: :profile_two
   forum: :utrecht
 user_utrecht_manager_utrecht:
-  profile: :user_utrecht_manager
+  profile: profile_utrecht_manager
+  forum: :utrecht
+  role: <%= Membership.roles[:manager] %>
+user_utrecht_manager_only_utrecht:
+  profile: profile_utrecht_manager_only
   forum: :utrecht
   role: <%= Membership.roles[:manager] %>
 user2_amsterdam:

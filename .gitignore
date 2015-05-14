@@ -12,9 +12,11 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp/*
-/solr/data/*
-/solr/pids/*
 /.idea
+client-bundle.js
+client-bundle.js.map
+node_modules
+.env
 
 # Ignore secrets
 secrets.yml
@@ -24,3 +26,5 @@ secrets.yml
 public/uploads/tmp/*
 public/profiles/*
 public/forums/*
+public/motions/*
+public/organisations/*

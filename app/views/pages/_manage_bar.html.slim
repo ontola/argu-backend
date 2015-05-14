@@ -1,11 +1,7 @@
 ul.tabs
-  li= link_to url_for(resource), data: {intro: t("intro.#{resource.class_name}.settings.home")}
+  li= link_to url_for(resource), data: {intro: t('intro.pages.settings.home')}
     span.fa.fa-home
     span.icon-left= resource.display_name
-  li= link_to url_for([:settings, resource]), data: {intro: t("intro.#{resource.class_name}.settings.settings")}
+  li= link_to url_for([:settings, resource]), data: {intro: t('intro.pages.settings.general')}
     span.fa.fa-gear
-    span.icon-left= t("#{resource.class_name}.settings.title")
-  - if policy(resource).managers?
-    li= link_to url_for([:settings, resource, tab: :managers]), data: {intro: t("intro.#{resource.class_name}.settings.managers")}
-      span.fa.fa-group
-      span.icon-left= t('forums.settings.managers.title')
+    span.icon-left= t('pages.settings.title')

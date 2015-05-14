@@ -16,11 +16,11 @@ class VotesController < ApplicationController
       @vote = Vote.find_by(voteable: @model, voter: current_profile, forum: @model.forum)
 
       respond_to do |format|
-        if !current_profile.member_of? @model.forum
-          format.html { render template: 'forums/join', locals: { forum: @model.forum, r: request.fullpath } }
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @model.forum, r: request.fullpath } }
+        if current_profile.member_of? @model.forum
           format.json { render 'create', location: @vote }
         else
+          format.html { render template: 'forums/join', locals: { forum: @model.forum, r: request.fullpath } }
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: @model.forum, r: request.fullpath } }
           format.json { render 'create', location: @vote }
         end
       end
@@ -68,6 +68,7 @@ class VotesController < ApplicationController
 
 
 private
+  # noinspection RubyUnusedLocalVariable
   def save_vote_to_stats(vote)
     #TODO: @implement this
   end

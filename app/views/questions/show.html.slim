@@ -3,7 +3,7 @@
   meta[name="description" content="#{@question.content}"]
   meta[property="og:title" content="#{@question.display_name}"]
   meta[property="og:url" content="#{motion_url(@question)}"]
-  meta[property="og:description" content="#{@question.content}"]
+  meta[property="og:description" content="#{markdown_to_plaintext(@question.content)}"]
   meta[property="og:image" content="#{@question.cover_photo.url}"]
   meta[property="twitter:card" content="summary"]
   meta[property="twitter:title" content="#{@question.display_name}"]
@@ -15,7 +15,7 @@
 .col-1
   div[data-intro= t('intro.question.back')]= to_parent
   =render partial: 'contextualize/context_horizontal', locals: {item: @question, type: 'que'}
-  .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t('intro.question.body') itemscope itemtype="http://schema.org/Question"]
+  .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
     section.section-info.question-bg
       span[class="fa fa-#{question_icon}"]
       span.icon-left= question_type
@@ -23,7 +23,8 @@
       =render partial: 'decisions/decision_and_deadline', locals: {deadline: @question.expires_at}
     section
       h1.question-t[itemprop="headline"]= @question.title
-      p[itemprop="text"]= @question.supped_content.html_safe
+      .markdown[itemprop="text"]
+        = markdown_to_html(@question.content)
       span.hidden[itemprop="answerCount"]= @question.motions_count
     /- if @question.tags.present?
       =render partial: 'tags/tags', locals: {resource: @question}
@@ -36,4 +37,4 @@
         ul= react_component 'HyperDropdown', share_items(@question), {prerender: true}
 .col-1
   .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
-==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]), buttons_text: t('add_type', type: motion_type), header: motions_type)
+==render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]), buttons_text: t('add_type', type: motion_type))

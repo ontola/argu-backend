@@ -10,10 +10,11 @@ module ActivityStringHelper
 
     parent = (activity.trackable.try(:parent) && activity.trackable.parent) || activity.recipient
     if defined?(current_user)
-      your = parent.creator == current_user.profile ? '_your' : ''
+      your = parent.try(:creator) == current_user.profile ? '_your' : ''
     else
       your = ''
     end
+    # noinspection RubyCaseWithoutElseBlockInspection
     case activity.trackable
       when Question
         as_for_questions_create activity, owner_string, your, embedded_link

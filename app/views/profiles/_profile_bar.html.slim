@@ -4,7 +4,7 @@
     li= contextual_link_to user_url(current_user) do
       span.fa.fa-user
       span.icon-left= t('profiles.display')
-    li= link_to edit_profile_path(current_user) do
+    li= link_to url_for([:edit, current_user]) do
       span.fa.fa-pencil
       span.icon-left= t('profiles.edit.title')
     li= link_to settings_url do

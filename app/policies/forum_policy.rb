@@ -1,6 +1,6 @@
 class ForumPolicy < RestrictivePolicy
   class Scope < Scope
-    attr_reader :context, :user, :scope, :session
+    attr_reader :context, :scope
 
     def initialize(context, scope)
       @context = context
@@ -14,9 +14,9 @@ class ForumPolicy < RestrictivePolicy
     def resolve
       t = Forum.arel_table
 
-      scope.where(t[:visibility].eq(Forum.visibilities[:open]))
-      scope.where(t[:id].in(user.profile.memberships_ids)) if user.present?
-      scope
+      cond = t[:visibility].eq(Forum.visibilities[:open])
+      cond = cond.or(t[:id].in(user.profile.memberships_ids)) if user.present?
+      scope.where(cond)
     end
 
   end
@@ -35,31 +35,14 @@ class ForumPolicy < RestrictivePolicy
     attributes
   end
 
-  ######CRUD######
-  def show?
-    is_open? || has_access_token? || is_member? || is_manager? || super
+  def permitted_tabs
+    tabs = []
+    tabs << :general << :advanced << :groups if is_manager? || staff?
+    tabs << :privacy << :managers if is_owner? || staff?
+    tabs
   end
 
-  def statistics?
-    super
-  end
-
-  def managers?
-    is_owner? || staff?
-  end
-
-  def list_members?
-    is_owner? || staff?
-  end
-
-  def groups?
-    is_manager? || staff?
-  end
-
-  def new?
-    create?
-  end
-
+  ######Actions######
   def create?
     super
   end
@@ -76,8 +59,13 @@ class ForumPolicy < RestrictivePolicy
     is_open? || is_member? || is_manager? || staff?
   end
 
-  def update?
-    is_manager? || super
+  def groups?
+    is_manager? || staff?
+  end
+
+  # Forum#index is for management, not to be confused with forum#discover
+  def index?
+    user && user.profile.pages.length > 0 || staff?
   end
 
   def invite?
@@ -89,7 +77,43 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def list?
-    @record.closed? || show?
+    if @record.hidden?
+      if show?
+        true
+      else
+        raise ActiveRecord::RecordNotFound
+      end
+    else
+      @record.closed? || show?
+    end
+  end
+
+  def list_members?
+    is_owner? || staff?
+  end
+
+  def managers?
+    is_owner? || staff?
+  end
+
+  def new?
+    create?
+  end
+
+  def show?
+    is_open? || has_access_token? || is_member? || is_manager? || super
+  end
+
+  def statistics?
+    super
+  end
+
+  def terminology?
+    is_manager? || is_owner? || staff?
+  end
+
+  def update?
+    is_manager? || super
   end
 
   # Whether the user can add (a specified) manager(s)
@@ -111,7 +135,15 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def selector?
-    true || user.present?
+    true
+  end
+
+  # Make sure that a tab param is actually accounted for
+  # @return [String] The tab if it is considered valid
+  def verify_tab(tab)
+    tab ||= 'general'
+    self.assert! self.permitted_tabs.include?(tab.to_sym)
+    tab
   end
 
   #######Attributes########
@@ -126,7 +158,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   # Is the user a manager of the page or of the forum?
-  # Trickles up
+  # @note Trickles up
   def is_manager?
     _mems = user.profile if user
     user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present? || is_owner?

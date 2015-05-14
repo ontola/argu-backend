@@ -5,13 +5,12 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
   test 'should redirect to root when accessing a forum without an access token' do
     get forum_path(forums(:hidden))
     assert_not assigns(:items), 'render not interrupted with an NotLoggedInException'
-    assert assigns(:_not_logged_in_caught), 'secret forums seem to be public'
-    assert_response 200
+    assert_response 404, 'Existence of hidden forums is leaked'
   end
 
   test 'should not view forum when access tokens are disabled' do
     get forum_path(forums(:super_hidden), at: access_tokens(:token_super_hidden).access_token)
-    assert_redirected_to root_url
+    assert_response 404
   end
 
   test 'should view forum with an access token' do
@@ -74,7 +73,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                  },
                                  at: access_tokens(:token_hidden).access_token}
     end
-    assert_redirected_to edit_profile_url('newuser')
+    assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
 
@@ -86,7 +85,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                    about: 'Something ab'
                                }}
     assert_redirected_to forums(:hidden).url
-    assert assigns(:user)
+    assert assigns(:resource)
     assert assigns(:profile)
     assert_equal 1, assigns(:profile).memberships.count
 
@@ -113,7 +112,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                  },
                                     at: access_tokens(:token_hidden).access_token}
     end
-    assert_redirected_to edit_profile_url('newuser')
+    assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
 
@@ -126,7 +125,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                }}
     assert_redirected_to motion_vote_path(motions(:hidden_one), 'neutral')
     assert_response 307
-    assert assigns(:user)
+    assert assigns(:resource)
     assert assigns(:profile)
     assert_equal 'new user', assigns(:profile).display_name
     assert_equal 1, assigns(:profile).memberships.count

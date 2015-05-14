@@ -2,7 +2,7 @@ class Vote < ActiveRecord::Base
   include ArguBase, PublicActivity::Model
 
   belongs_to :voteable, polymorphic: true
-  belongs_to :voter, class_name: 'Profile'
+  belongs_to :voter, polymorphic: true #class_name: 'Profile'
   has_many :activities, as: :trackable, dependent: :destroy
   belongs_to :forum
 
@@ -13,7 +13,7 @@ class Vote < ActiveRecord::Base
   validates :voteable_id, :voteable_type, :voter_id, :forum_id, :voter_type, :for, presence: true
 
   ##########methods###########
-  def for? item
+  def for?(item)
     self.for.to_s === item.to_s
   end
 
