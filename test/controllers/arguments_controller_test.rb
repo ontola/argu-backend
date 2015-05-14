@@ -3,6 +3,22 @@ require 'test_helper'
 class ArgumentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  ####################################
+  # Not logged in
+  ####################################
+  test 'should get show when not logged in' do
+    get :show, id: arguments(:one)
+
+    assert_response 200
+    assert assigns(:argument)
+    assert assigns(:comments)
+
+    assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, 'Trashed comments are visible'
+  end
+
+  ####################################
+  # As user
+  ####################################
   test 'should get show' do
     sign_in users(:user)
 

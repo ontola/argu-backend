@@ -3,6 +3,22 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  ####################################
+  # Not logged in
+  ####################################
+  test 'should get show when not logged in' do
+    get :show, id: motions(:one)
+
+    assert_response 200
+    assert_not_nil assigns(:motion)
+    assert_not_nil assigns(:vote)
+
+    assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) }, 'Trashed arguments are visible'
+  end
+
+  ####################################
+  # As user
+  ####################################
   test 'should get show' do
     sign_in users(:user)
 
