@@ -41,7 +41,7 @@ class CommentPolicy < RestrictivePolicy
   end
 
   def trash?
-    is_manager? || is_owner? || super
+    is_creator? || is_manager? || is_owner? || super
   end
 
   def update?

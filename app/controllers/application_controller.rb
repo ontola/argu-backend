@@ -98,7 +98,7 @@ class ApplicationController < ActionController::Base
   def render_register_modal(base_url=nil, *r_options)
     if !r_options || r_options.first != false   # Only skip if r_options is false
       r = URI.parse(base_url || request.fullpath)
-      r.query= r_options.reject { |a| a.to_a.last.blank? }.map { |a| a.to_a.join('=') }.join('&')
+      r.query = r_options.map(&:to_a).reject { |a| a.last.blank? }.map { |a| [a[0], URI.encode(a[1])].join('=') }.join('&')
     else
       r = nil
     end
