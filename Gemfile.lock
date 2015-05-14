@@ -508,6 +508,6 @@ DEPENDENCIES
   therubyracer (~> 0.12.1)
   tzinfo-data
   uglifier (>= 2.5.3)
-  unicorn (~> 4.8.3)
+  unicorn (= 4.8.3)
   web-console (~> 2.0.0)
   whodunnit (= 0.0.5)

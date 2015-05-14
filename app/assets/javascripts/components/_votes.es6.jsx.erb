@@ -44,7 +44,7 @@ window.CombiBigVote = React.createClass({
 
     render: function () {
         let voteComponent;
-        if (this.state.actor.actor_type == "User") {
+        if (!this.state.actor || this.state.actor.actor_type == "User") {
             voteComponent = <BigVote {...this.state}/>;
         } else if (this.state.actor.actor_type == "Page") {
             voteComponent = <BigGroupResponse groups={this.state.groups} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;

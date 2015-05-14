@@ -28,8 +28,6 @@ window.BigGroupResponse = React.createClass({
     },
 
     render: function () {
-        console.log(this.props);
-        console.log(this.state);
         return (<div className="motion-shr">
             {this.props.groups.map((group) => {
                 let respond, buttons;
