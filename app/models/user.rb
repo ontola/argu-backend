@@ -45,7 +45,7 @@ class User < ActiveRecord::Base
 
 #######Attributes########
   def display_name
-    [self.first_name, self.middle_name, self.last_name].compact.join(' ') || self.url
+    [self.first_name, self.middle_name, self.last_name].compact.join(' ').presence || self.url
   end
 
   def profile
