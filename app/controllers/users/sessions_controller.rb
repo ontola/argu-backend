@@ -6,9 +6,9 @@ class Users::SessionsController < Devise::SessionsController
       set_flash_message(:notice, :signed_in) if is_flashing_format?
       sign_in(resource_name, resource)
       yield resource if block_given?
-      r = r_with_authenticity_token(params[:user][:r])
+      r = r_with_authenticity_token(params[:user][:r] || '')
       resource.update r: ''
-      redirect_to r, status: r.match(/\/v(\?|\/)|\/c(\?|\/)/) ? 307 : 302
+      redirect_to r, status: is_post?(r) ? 307 : 302
     else
       super
     end
@@ -27,9 +27,14 @@ class Users::SessionsController < Devise::SessionsController
 
   def r_with_authenticity_token(r)
     uri = URI.parse(r)
-    query = URI.decode_www_form(uri.query) << ['authenticity_token', form_authenticity_token]
+    query = URI.decode_www_form(uri.query || '')
+    query << ['authenticity_token', form_authenticity_token] if is_post?(r)
     uri.query = URI.encode_www_form(query)
     uri.to_s
+  end
+
+  def is_post?(r)
+    r.match(/\/v(\?|\/)|\/c(\?|\/)/)
   end
 
 end
