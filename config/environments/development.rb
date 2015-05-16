@@ -2,9 +2,6 @@ Rails.application.configure do
   config.host = ENV['HOSTNAME'] || 'local.host:3000'
   # Settings specified here will take precedence over those in config/application.rb#
 
-  config.epics = ActiveSupport::OrderedOptions.new
-  config.epics.open_auth = false                      # Facebook, twitter, google, openID login & account linking shown in profile
-
   config.react.variant = :development
 
   # In the development environment your application's code is reloaded on

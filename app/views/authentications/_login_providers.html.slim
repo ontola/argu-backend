@@ -1,8 +1,4 @@
-a href="/auth/twitter" class="btn-auth"
-  = image_tag 'favicon_twitter.svg', :size => '64x64', alt: 'Twitter'
-a href="/auth/facebook" class="btn-auth"
-  = image_tag 'favicon_facebook.svg', :size => '64x64', alt: 'Facebook'
-a href="/auth/google" class="btn-auth"
-  = image_tag 'favicon_google.svg', :size => '64x64', alt: 'Google'
-a href="/auth/openid" class="btn-auth"
-  = image_tag 'favicon_openid.svg', :size => '64x64', alt: 'OpenID'
+a[href="/auth/facebook" class="btn-auth"]= image_tag 'favicon_facebook.svg', :size => '64x64', alt: 'Facebook'
+/a[href="/auth/twitter" class="btn-auth"]= image_tag 'favicon_twitter.svg', :size => '64x64', alt: 'Twitter'
+/a[href="/auth/google" class="btn-auth"]= image_tag 'favicon_google.svg', :size => '64x64', alt: 'Google'
+/a[href="/auth/openid" class="btn-auth"]= image_tag 'favicon_openid.svg', :size => '64x64', alt: 'OpenID'

@@ -52,7 +52,13 @@ Argu::Application.routes.draw do
 
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
-  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions', :invitations => 'users/invitations' }, skip: :registrations
+
+  devise_for :users, controllers: {
+                       registrations: 'registrations',
+                       sessions: 'users/sessions',
+                       invitations: 'users/invitations',
+                       omniauth_callbacks: 'omniauth_callbacks'
+                   }, skip: :registrations
 
   as :user do
     get 'users/cancel', to: 'registrations#cancel', as: :cancel_user_registration
@@ -61,8 +67,8 @@ Argu::Application.routes.draw do
     delete 'users', to: 'registrations#destroy', as: nil
   end
 
-  resources :authentications, only: [:create, :destroy]
-  match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
+  #resources :authentications, only: [:create, :destroy]
+  #match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
 
   resources :users, path: 'u', only: [:show, :update] do
     get :edit, to: 'profiles#edit', on: :member
@@ -135,10 +141,16 @@ Argu::Application.routes.draw do
   get '/c_a', to: 'users#current_actor'
 
   get '/sign_in_modal', to: 'static_pages#sign_in_modal'
+
+  # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/about', to: 'static_pages#about'
+  # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/product', to: 'static_pages#product'
+  # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/how_argu_works', to: 'static_pages#how_argu_works'
+  # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/team', to: 'static_pages#team'
+  # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/governments', to: 'static_pages#governments'
 
   get '/portal', to: 'portal/portal#home'
