@@ -52,7 +52,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
           p.cover-oneliner
             =@forum.bio
             - if @forum.bio_long.present?
-              a[href="#forum-info"]
+              a[href="#forum-info" class="smoothscroll"]
                 span.icon-left= t('forums.more_info')
   - if policy(@forum).show?
     =render partial: 'filter_and_sort'
