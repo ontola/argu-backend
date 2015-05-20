@@ -2,6 +2,8 @@
 
 nl:
   users:
+    type: "Gebruiker"
+    settings: "Gebruikersinstellingen"
     registrations:
       categories:
         general: "Algemeen"

@@ -4,12 +4,12 @@ nl:
   forums:
     resource_name: "Forum"
     type: "Forum"
-    type_new: "Fieuw forum"
+    type_new: "Nieuw forum"
     plural: "Forums"
     resource_name:
       management: "Forum beheer"
     settings:
-      title: "Instellingen"
+      title: "Forum instellingen"
       general: "Algemene instellingen"
       profile: "Profiel instellingen"
       menu:

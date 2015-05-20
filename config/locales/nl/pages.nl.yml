@@ -1,8 +1,9 @@
 nl:
   pages:
     resource_name: "Pagina"
+    type: "Pagina"
     settings:
-      title: "Instellingen"
+      title: "Pagina-instellingen"
       menu:
         general: 'Algemeen'
         advanced: 'Geavanceerd'
