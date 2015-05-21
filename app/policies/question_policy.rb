@@ -61,7 +61,7 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def update?
-    is_member? && is_creator? || super
+    is_member? && is_creator? || is_manager? || super
   end
 
   private
