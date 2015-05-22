@@ -153,8 +153,11 @@ var LinkItem = React.createClass({
     handleMouseDown: function () {
         // Fixes an issue where firefox bubbles events instead of capturing them
         // See: https://github.com/facebook/react/issues/2011
-        this.getDOMNode().getElementsByTagName('a')[0].click();
-        this.props.done();
+        let dataMethod = this.getAttribute('data-method');
+        if (dataMethod !== "post" && dataMethod !== "put" && dataMethod !== "patch" && dataMethod !== "delete") {
+            this.getDOMNode().getElementsByTagName('a')[0].click();
+            this.props.done();
+        }
     },
 
     render: function () {

@@ -24,3 +24,5 @@ nl:
       weekly_created_email: 'Wekelijks'
     cap_reached: "We zitten vol"
     cap_reached_body: "Bedankt voor je interesse in Argu, door overweldigende aanmeldingen hebben we maximum capaciteit bereikt. Aanmeldingen gaan weer open als we onze capaciteit hebben verhoogd."
+    authentications:
+      cant_decouple_note_provider: "Je kunt je %{provider} account alleen ontkoppelen door een wachtwoord in te stellen of je account te verwijderen."

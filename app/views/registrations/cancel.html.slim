@@ -8,6 +8,7 @@
         p Voer je gebruikersnaam en wachtwoord opnieuw in om het verwijderen van je account te bevestigen:
         =f.inputs do
           =f.input :repeat_name, input_html: {class: 'confirm-text', :'confirm-text' => @user.url}
-          =f.input :current_password
+          - if resource.password_required?
+            =f.input :current_password
         =f.actions do
           =f.action :submit, :as => :button, label: 'Ik begrijp de consequenties, verwijder mijn account', button_html: {class: 'confirm-action', disabled: true}

@@ -9,6 +9,8 @@
           p= t('profiles.edit.shortname_not_allowed')
           =f.inputs :shortname, for: :shortname, disabled: true
           =f.input :email, label: t('users_email'), value: @user.email, placeholder: @user.email.blank? ? t('users_email_placeholder') : @user.email
+          =f.input :time_zone
+
 
         - if active_for_user?(:notifications, current_user)
           =f.inputs name: t('users.registrations.categories.notifications') do
@@ -44,17 +46,25 @@
           =f.semantic_fields_for :profile do |profile|
             =profile.input :are_votes_public, as: :reverse_boolean
         =f.inputs name: t('users.registrations.categories.authentication') do
-          =f.input :password, label: t('users_password_edit'), required: @user.new_record?
-          =f.input :password_confirmation, label: t('users_password_confirmation')
-          =f.input :current_password
-          - if @authentications.present?
+          -if @user.password_required?
+            =f.input :password, label: t('users_password_edit'), required: @user.new_record?
+            =f.input :password_confirmation, label: t('users_password_confirmation')
+            =f.input :current_password
+          -else
+            p Je hebt nog geen wachtwoord omdat je je via social media hebt aangemeld, klik hier om een Argu wachtwoord aan te maken.
+            p= link_to t('devise.passwords.new.submit'), password_path(@user), class: 'btn', data: {method: :post, :'skip-pjax' => true}, rel: :nofollow
+          - if @user.identities.present?
             label= t('users_oauth_coupled')
-            =render 'authentications/login_providers_connected'
+            =render partial: 'authentications/login_providers_connected', locals: { identities: @user.identities, show_decouple: (@user.password_required? || @user.identities.length > 1) }
 
           /TODO Hide authentications that are already present.
-          label= t('users_oauth_new')
-          .form-item
-            =render 'authentications/login_providers'
+          - if login_providers_left(@user).present?
+            label= t('users_oauth_new')
+            .form-item
+              =render partial: 'authentications/login_providers', locals: {providers: login_providers_left(@user)}
+          - elsif !@user.password_required? && @user.identities.length == 1
+
+            p= t('users.authentications.cant_decouple_note_provider', provider: @user.identities.first.provider)
 
         =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
           label= t('users_cancel_title')

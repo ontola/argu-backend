@@ -3,10 +3,9 @@
     h2= t('devise.passwords.new.header')
   .box
     section
-      = semantic_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
+      =semantic_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f|
         p= t('devise.passwords.new.helper')
-        = f.inputs
-          = f.input :email
-        /= render "devise/shared/links"
-        = f.actions do
-          = f.action :submit, :as => :button, label: t('devise.passwords.new.submit')
+        =f.inputs
+          =f.input :email
+        =f.actions do
+          =f.action :submit, :as => :button, label: t('devise.passwords.new.submit')

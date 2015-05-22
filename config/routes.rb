@@ -57,6 +57,7 @@ Argu::Application.routes.draw do
                        registrations: 'registrations',
                        sessions: 'users/sessions',
                        invitations: 'users/invitations',
+                       passwords: 'users/passwords',
                        omniauth_callbacks: 'omniauth_callbacks'
                    }, skip: :registrations
 
@@ -67,13 +68,16 @@ Argu::Application.routes.draw do
     delete 'users', to: 'registrations#destroy', as: nil
   end
 
-  #resources :authentications, only: [:create, :destroy]
-  #match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
-
   resources :users, path: 'u', only: [:show, :update] do
+    resources :identities, only: :destroy, to: 'users/identities'
     get :edit, to: 'profiles#edit', on: :member
+
+    get :connect, to: 'users#connect', on: :member
+    post :connect, to: 'users#connect!', on: :member
+
     get :setup, to: 'users#setup', on: :collection
     put :setup, to: 'users#setup!', on: :collection
+
     get :pages, to: 'pages#index', on: :member
     get :forums, to: 'forums#index', on: :member
   end

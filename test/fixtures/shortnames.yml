@@ -39,6 +39,9 @@ sn_user2:
 sn_user3:
   shortname: 'user3'
   owner: user3 (User)
+sn_facebook_only:
+  shortname: 'facebook_only'
+  owner: user_facebook_only (User)
 
 #
 # Pages

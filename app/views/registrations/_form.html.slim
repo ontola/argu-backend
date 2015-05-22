@@ -4,8 +4,9 @@
     p.smaller-8= t('cant_change_username')
     =f.inputs :shortname, for: :shortname
     =f.input :email
-    =f.input :password
-    =f.input :password_confirmation
+    - if resource.password_required?
+      =f.input :password
+      =f.input :password_confirmation
     =f.input :r, as: :hidden
   =f.actions do
     =f.action :submit, :as => :button, label: t('sign_up')

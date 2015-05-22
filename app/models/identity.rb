@@ -6,7 +6,7 @@ class Identity < ActiveRecord::Base
   validates_uniqueness_of :uid, scope: :provider
 
   def self.find_for_oauth(auth)
-    find_or_create_by(uid: auth.uid, provider: auth.provider)
+    find_or_initialize_by(uid: auth.uid, provider: auth.provider)
   end
 
   def access_token=(value)
@@ -35,5 +35,29 @@ class Identity < ActiveRecord::Base
 
   def clear_token_connection
     # TODO: let the auth provider know it can destroy the connection
+  end
+
+  def client
+    @_wrapper ||= Publishable::Wrappers.const_get(self.provider.classify).new(self.access_token, self.access_secret)
+  end
+
+  def publish(publishable)
+    Publishable::Publishers.const_get(self.provider.classify).publish(self, publishable)
+  end
+
+  def email
+    client && client.email
+  end
+
+  def name
+    client && client.name
+  end
+
+  def username
+    client && client.username
+  end
+
+  def image_url
+    client && client.image_url
   end
 end
