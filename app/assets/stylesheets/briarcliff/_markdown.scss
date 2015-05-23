@@ -2,6 +2,13 @@
 @import "mixins";
 
 .markdown{
+
+  .blocks & {
+    text-align: left;
+    max-width: 40em;
+    margin: auto;
+  }
+
   h1{
     font-size: 1.8em;
 
@@ -52,6 +59,10 @@
   }
 
   em{
+    font-style: italic;
+  }
+
+  strong {
     font-weight: bold;
   }
 }

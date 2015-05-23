@@ -15,7 +15,7 @@
             .block.block--full[class=((section['fill'] ? 'block--fill' : '') + " " + (section['big-text'] ? 'block--big-text' : ''))]
               - if section['header'].present?
                 header
-                  h2= section['header']
+                  h1= section['header']
               - if section['body'].present?
                 - section['body'].each do |body|
                   .markdown[itemprop="text"]
@@ -37,7 +37,8 @@
                     - unless feature['hidden']
                       li
                         span.fa[class=('fa-' + feature['icon'])]
-                        h2= feature['header']
+                        header
+                          h3= feature['header']
                         p.block-subtle== feature['body']
               - if section['link'].present?
                 a.block-link[href=section['link']['url']]= section['link']['body']
@@ -53,7 +54,8 @@
                 - if section['avatar']
                   .block-avatar[style="background-image: url(#{asset_path section['avatar']})"]
                 - if section['header']
-                  h2= section['header']
+                  header
+                    h2= section['header']
                 - section['body'].each do |body|
                   p.block-subtle == body
                 - if section['social']
@@ -66,7 +68,8 @@
           - if section['expand'].present?
             .blocks.expander-content[id=section['expand']['id'] opened="closed"]
               .block.block--hidden.block--full.block--big-text
-                h2= section['expand']['header']
+                header
+                  h2= section['expand']['header']
                 - section['expand']['body'].each do |body|
                   .markdown[itemprop="text"]
                     = markdown_to_html(body)
