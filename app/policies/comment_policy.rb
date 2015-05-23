@@ -16,6 +16,15 @@ class CommentPolicy < RestrictivePolicy
     end
   end
 
+  module Roles
+    def forum_policy
+      Pundit.policy(context, record.try(:forum) || record.commentable.forum || context.context_model)
+    end
+
+    delegate :is_member?, :is_owner?, :is_manager?, to: :forum_policy
+  end
+  include Roles
+
   def create?
     record.commentable.forum.open? || is_member? || super
   end
@@ -52,17 +61,4 @@ class CommentPolicy < RestrictivePolicy
     user || has_access_token_access_to(record.commentable.forum)
   end
 
-private
-
-  def is_manager?
-    Pundit.policy(context, record.forum).is_manager?
-  end
-
-  def is_member?
-    user && user.profile.member_of?(record.commentable.forum)
-  end
-
-  def is_owner?
-    Pundit.policy(context, record.forum).is_owner?
-  end
 end

@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
 
   # @private
   def pundit_user
-    UserContext.new(current_user, current_profile, session)
+    UserContext.new(current_user, current_profile, session, @forum)
   end
 
   def render_register_modal(base_url=nil, *r_options)

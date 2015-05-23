@@ -24,6 +24,18 @@ class PagePolicy < RestrictivePolicy
 
   end
 
+  module Roles
+    # Is the user a manager of the page or of the forum?
+    def is_manager?
+      user && user.profile.page_memberships.where(page: record, role: PageMembership.roles[:manager]).present? || is_owner? || staff?
+    end
+
+    def is_owner?
+      user && user.profile.id == record.try(:owner_id) || staff?
+    end
+  end
+  include Roles
+
   def initialize(context, record)
     @context = context
     @record = record
@@ -126,14 +138,6 @@ class PagePolicy < RestrictivePolicy
   end
 
   #######Attributes########
-  # Is the user a manager of the page or of the forum?
-  def is_manager?
-    user && user.profile.page_memberships.where(page: record, role: PageMembership.roles[:manager]).present? || is_owner? || staff?
-  end
-
-  def is_owner?
-    user && user.profile.id == record.try(:owner_id) || staff?
-  end
 
   def max_allowed_pages
     if staff?

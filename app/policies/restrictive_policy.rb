@@ -1,6 +1,38 @@
 class RestrictivePolicy
   include AccessTokenHelper, UsersHelper
+  prepend ExceptionToTheRule
+
   attr_reader :context, :record
+
+  class Scope
+    include AccessTokenHelper
+    attr_reader :context, :user, :scope, :session
+
+    def initialize(context, scope)
+      @context = context
+      @profile = user.profile if user
+      @scope = scope
+    end
+
+    delegate :user, to: :context
+    delegate :actor, to: :context
+    delegate :session, to: :context
+
+    def resolve
+      scope if staff?
+    end
+
+    def staff?
+      user && user.profile.has_role?(:staff)
+    end
+  end
+
+  module Roles
+    def forum_policy
+      Pundit.policy(context, record.try(:forum) || context.context_model)
+    end
+  end
+  include Roles
 
   def initialize(context, record)
     @context = context
@@ -33,7 +65,7 @@ class RestrictivePolicy
   delegate :assert!, to: :class
 
   def staff?
-    user && user.profile.has_role?(:staff)
+    10 if user && user.profile.has_role?(:staff)
   end
 
   def change_owner?
@@ -109,7 +141,7 @@ class RestrictivePolicy
   end
 
   def is_creator?
-    record.creator == user.profile
+    4 if record.creator == user.try(:profile)
   end
 
   def is_member?
@@ -130,29 +162,6 @@ class RestrictivePolicy
 
   def scope
     Pundit.policy_scope!(context, record.class)
-  end
-
-  class Scope
-    include AccessTokenHelper
-    attr_reader :context, :user, :scope, :session
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-    delegate :actor, to: :context
-    delegate :session, to: :context
-
-    def resolve
-      scope if staff?
-    end
-
-    def staff?
-      user && user.profile.has_role?(:staff)
-    end
   end
 
 end

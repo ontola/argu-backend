@@ -16,6 +16,19 @@ class GroupMembershipPolicy < RestrictivePolicy
     end
   end
 
+  module Roles
+    def forum_policy
+      Pundit.policy(context, record.try(:forum) || record.commentable.forum || context.context_model)
+    end
+
+    def profile_in_group?
+      actor && (record.forum.groups & actor.groups).present?
+    end
+
+    delegate :is_manager?, to: :forum_policy
+  end
+  include Roles
+
   def permitted_attributes
     attributes = super
     attributes
@@ -23,16 +36,6 @@ class GroupMembershipPolicy < RestrictivePolicy
 
   def destroy?
     Pundit.policy(context, record.group).remove_member?(record) || super
-  end
-
-private
-
-  def is_manager?
-    Pundit.policy(context, record.forum).is_manager?
-  end
-
-  def profile_in_group?
-    actor && (record.forum.groups & actor.groups).present?
   end
 
 end

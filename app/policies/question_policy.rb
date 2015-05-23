@@ -21,6 +21,11 @@ class QuestionPolicy < RestrictivePolicy
 
   end
 
+  module Roles
+    delegate :is_owner?, :is_manager?, :is_member?, :is_open?, to: :forum_policy
+  end
+  include Roles
+
   def permitted_attributes
     attributes = super
     attributes << [:id, :title, :content, :tag_list, :forum_id, :cover_photo, :remove_cover_photo, :cover_photo_attribution, :expires_at] if create?
@@ -29,11 +34,11 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def create?
-    is_member? || super
+    rule is_member?, super
   end
 
   def edit?
-     update?
+     rule update?
   end
 
   def destroy?
@@ -41,19 +46,19 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def index?
-    is_member? || super
+    rule is_member?, super
   end
 
   def new?
-    record.forum.open? || create?
+    rule is_open?, is_member?, create?
   end
 
   def set_expire_as?
-    staff?
+    rule staff?
   end
 
   def show?
-    Pundit.policy(context, record.forum).show? || super
+    rule forum_policy.show?, super
   end
 
   def trash?
@@ -61,20 +66,7 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def update?
-    is_member? && is_creator? || is_manager? || super
+    rule (is_member? && is_creator?), is_manager?, super
   end
 
-  private
-
-  def is_manager?
-    Pundit.policy(context, record.forum).is_manager?
-  end
-
-  def is_member?
-    user && user.profile.member_of?(record.forum || record.forum_id)
-  end
-
-  def is_owner?
-    Pundit.policy(context, record.forum).is_owner?
-  end
 end

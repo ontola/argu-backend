@@ -9,7 +9,6 @@ class MotionsController < ApplicationController
     authorize @motion
     current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
-    #@opinions = Opinion.ordered policy_scope(@motion.opinions.trashed(show_trashed?))
     @group_responses = Group.ordered_with_meta @motion.group_responses, @forum.groups, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
@@ -26,11 +25,15 @@ class MotionsController < ApplicationController
   def new
     get_context
     @motion = @forum.motions.new params[:motion]
+    if params[:question_id]
+      question = Question.find(params[:question_id])
+      @motion.questions << question if @motion.forum_id == question.forum_id
+    end
     if current_profile.blank?
       authorize @motion, :show?
       render_register_modal(nil)
     else
-      authorize @motion
+      authorize @motion, @motion.questions.presence ? :create? : :create_without_question?
       current_context @motion
       respond_to do |format|
         if current_profile.member_of? @motion.forum
@@ -66,7 +69,8 @@ class MotionsController < ApplicationController
     @question_id = params[:question_id] || params[:motion][:question_id]
     @motion.creator = current_profile
     @motion.questions << @question if @question.present?
-    authorize @motion
+
+    authorize @motion, @motion.questions.presence ? :create? : :create_without_question?
 
     respond_to do |format|
       if @motion.save
@@ -85,8 +89,8 @@ class MotionsController < ApplicationController
   def update
     @motion = Motion.find_by_id params[:id]
     @creator = @motion.creator
-    authorize @motion
     @forum = @motion.forum
+    authorize @motion
 
     @motion.reload if process_cover_photo @motion, permit_params
     respond_to do |format|

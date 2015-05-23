@@ -16,6 +16,14 @@ class MotionsControllerTest < ActionController::TestCase
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) }, 'Trashed arguments are visible'
   end
 
+  test 'should not get edit when not logged in' do
+    get :edit, id: motions(:one)
+
+    assert_redirected_to root_path
+    assert assigns(:motion)
+    assert assigns(:forum)
+  end
+
   ####################################
   # As user
   ####################################
@@ -27,7 +35,6 @@ class MotionsControllerTest < ActionController::TestCase
     assert_response 200
     assert_not_nil assigns(:motion)
     assert_not_nil assigns(:vote)
-    #assert_not_nil assigns(:opinions)
 
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) }, 'Trashed arguments are visible'
   end
@@ -112,7 +119,6 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # For managers
   ####################################
-
   # Currently only staffers can convert items
   test 'should get convert' do
     sign_in users(:user_thom)

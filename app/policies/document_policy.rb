@@ -1,4 +1,4 @@
-class DocumentPolicy < ApplicationPolicy
+class DocumentPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :scope
 

@@ -16,6 +16,11 @@ class GroupPolicy < RestrictivePolicy
     end
   end
 
+  module Roles
+    delegate :is_manager?, to: :forum_policy
+  end
+  include Roles
+
   def permitted_attributes
     attributes = super
     attributes << [:name, :name_singular, :icon, :max_responses_per_member] if create?
@@ -42,11 +47,4 @@ class GroupPolicy < RestrictivePolicy
   def remove_member?(member)
     is_manager? || super
   end
-
-private
-
-  def is_manager?
-    Pundit.policy(context, record.forum).is_manager?
-  end
-
 end
