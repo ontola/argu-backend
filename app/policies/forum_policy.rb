@@ -180,7 +180,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def add_motion?
-    rule add_question?
+    rule is_member?, staff?
   end
 
   def add_question?

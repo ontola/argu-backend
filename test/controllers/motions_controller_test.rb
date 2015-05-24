@@ -69,6 +69,37 @@ class MotionsControllerTest < ActionController::TestCase
     assert_redirected_to motion_path(assigns(:motion))
   end
 
+  test 'should not post create without create_without_question' do
+    sign_in users(:user)
+
+    assert_difference 'Motion.count', 0 do
+      post :create, forum_id: :no_create_without_question,
+           motion: {
+               title: 'Motion',
+               content: 'Contents'
+           }
+    end
+    assert_not_nil assigns(:motion)
+    assert_not assigns(:motion).persisted?
+    assert_redirected_to root_path
+  end
+
+  test 'should post create without create_without_question with question' do
+    sign_in users(:user)
+
+    assert_difference 'Motion.count', 1 do
+      post :create, forum_id: :no_create_without_question,
+           motion: {
+               title: 'Motion',
+               content: 'Contents',
+               question_id: questions(:question_one_no_create_without_question).id
+           }
+    end
+    assert_not_nil assigns(:motion)
+    assert assigns(:motion).persisted?
+    assert_redirected_to motion_path(assigns(:motion))
+  end
+
   test 'should put update on own motion' do
     sign_in users(:user)
 

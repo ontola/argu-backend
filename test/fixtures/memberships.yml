@@ -25,3 +25,6 @@ user2_amsterdam:
 user3_amsterdam:
   profile: :profile_three
   forum: :amsterdam
+user_no_create_without_question:
+  profile: :profile_one
+  forum: :no_create_without_question
