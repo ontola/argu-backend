@@ -27,24 +27,28 @@ $grey_light: $g0;
     height: auto;
     padding: 4em 2em;
   }
+
   * {
     color: $primary;
   }
+
   p {
     line-height: 1.8em;
     max-width: 40em;
     margin: auto;
     margin-bottom: 1em;
+
     a {
       font-weight: bold;
     }
+
   }
-  h2 {
+
+  header {
     margin-bottom: 0.8em;
     text-transform: uppercase;
-    font-size: 1.3em;
     letter-spacing: .1em;
-    line-height: 1.5em;
+
     &:after {
       content: "";
       width: 6em;
@@ -52,13 +56,22 @@ $grey_light: $g0;
       height: 1px;
       display: block;
       position: relative;
-      top: 0.4em;
       margin: auto;
       opacity: .3;
     }
-  }
-  h3 {
-    font-size: 1.2em;
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: .5em;
+
+      @include bp-medium {
+        font-size: 1.7em;
+      }
+    }
+
+    h2 {
+      font-size: 1.5em;
+    }
   }
 }
 
@@ -129,7 +142,7 @@ $grey_light: $g0;
   * {
     color: white;
   }
-  h2:after {
+  header:after {
     background-color: white;
   }
   .block-link {
@@ -155,14 +168,6 @@ $grey_light: $g0;
   width: 100%;
   height: auto;
   padding-bottom: 4em;
-  h2 {
-    font-size: 2.3em;
-    margin-top: 1em;
-    @include bp-medium{
-      font-size: 1.3em;
-      margin-top: 0;
-    }
-  }
 }
 
 .block--left-aligned {
@@ -221,14 +226,11 @@ $grey_light: $g0;
       width: 100%;
     }
   }
-  h2 {
-    font-size: 1.1em;
-    margin: 0.6em 0;
-  }
   .fa {
     display: block;
     font-size: 4em;
     width: 100%;
+    margin-bottom: .2em;
   }
 }
 

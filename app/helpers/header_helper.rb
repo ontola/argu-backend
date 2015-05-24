@@ -105,10 +105,11 @@ module HeaderHelper
           {
               items: [
                   link_item(t('about.vision'), info_path(:about)),
-                  link_item(t('about.team'), info_path(:team_path  )),
-                  link_item(t('about.governments'), info_path(:governments_path)),
+                  link_item(t('about.team'), info_path(:team)),
+                  link_item(t('about.governments'), info_path(:governments)),
                   link_item(t('about.how_argu_works'), info_path(:how_argu_works_path)),
-                  link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true})
+                  link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true}),
+                  link_item(t('help'), 'https://argu.freshdesk.com/support/home')
               ]
           }
         ],

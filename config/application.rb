@@ -17,6 +17,7 @@ module Argu
   class Application < Rails::Application
 
     config.autoload_paths += Dir["#{config.root}/lib/"]  # include all subdirectories
+    config.paths['app/views'].unshift("#{Rails.root}/lib/app/views")
 
     config.app_generators.template_engine :slim
 
