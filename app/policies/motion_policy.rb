@@ -1,4 +1,6 @@
 class MotionPolicy < RestrictivePolicy
+  include ForumPolicy::ForumRoles
+
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -15,11 +17,6 @@ class MotionPolicy < RestrictivePolicy
       scope
     end
   end
-
-  module Roles
-    delegate :is_member?, :is_open?, :is_manager?, :is_owner?, to: :forum_policy
-  end
-  include Roles
 
   def permitted_attributes
     attributes = super

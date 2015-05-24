@@ -61,7 +61,7 @@ class ForumPolicy < RestrictivePolicy
     # @note Trickles up
     def is_manager?
       _mems = user.profile if user
-      (manager if user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || is_owner?
+      [(manager if user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?), is_owner?]
     end
 
     # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.
@@ -71,6 +71,11 @@ class ForumPolicy < RestrictivePolicy
     end
   end
   include Roles
+
+  module ForumRoles
+    delegate :is_member?, :is_open?, :is_manager?, :is_owner?, to: :forum_policy
+    delegate :open, :access_token, :member, :manager, :owner, to: :forum_policy
+  end
 
   def permitted_attributes
     attributes = super

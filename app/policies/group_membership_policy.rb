@@ -1,4 +1,6 @@
 class GroupMembershipPolicy < RestrictivePolicy
+  include ForumPolicy::ForumRoles
+
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -17,10 +19,6 @@ class GroupMembershipPolicy < RestrictivePolicy
   end
 
   module Roles
-    def forum_policy
-      Pundit.policy(context, record.try(:forum) || record.commentable.forum || context.context_model)
-    end
-
     def profile_in_group?
       actor && (record.forum.groups & actor.groups).present?
     end
@@ -35,7 +33,11 @@ class GroupMembershipPolicy < RestrictivePolicy
   end
 
   def destroy?
-    Pundit.policy(context, record.group).remove_member?(record) || super
+    rule Pundit.policy(context, record.group).remove_member?(record), super
   end
 
+  private
+  def forum_policy
+    Pundit.policy(context, record.try(:forum) || record.commentable.forum || context.context_model)
+  end
 end

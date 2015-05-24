@@ -25,13 +25,19 @@ class PagePolicy < RestrictivePolicy
   end
 
   module Roles
+    delegate :open, :manager, :owner, to: :forum_policy
+
+    def is_open?
+      open if @record.open?
+    end
+
     # Is the user a manager of the page or of the forum?
     def is_manager?
-      user && user.profile.page_memberships.where(page: record, role: PageMembership.roles[:manager]).present? || is_owner? || staff?
+      (manager if user && user.profile.page_memberships.where(page: record, role: PageMembership.roles[:manager]).present?) || is_owner? || staff?
     end
 
     def is_owner?
-      user && user.profile.id == record.try(:owner_id) || staff?
+      (owner if user && user.profile.id == record.try(:owner_id)) || staff?
     end
   end
   include Roles
@@ -65,16 +71,15 @@ class PagePolicy < RestrictivePolicy
   end
 
   def show?
-    record.open? || is_manager? || super
+    rule is_open?, is_manager?, super
   end
 
   def new?
-    user.present? || super
+    create? # user.present? || super
   end
 
   def create?
-    # This basically means everyone, change when users can report spammers/offenders and such
-    !max_pages_reached? || super
+    rule pages_left?, super
   end
 
   def delete?
@@ -90,25 +95,29 @@ class PagePolicy < RestrictivePolicy
   end
 
   def update?
-    is_manager? || super
+    rule is_manager?, super
   end
 
   def list?
-    record.closed? || show?
+    rule record.closed?, show?
   end
 
   def list_members?
-    is_owner? || staff?
+    rule is_owner?, staff?
   end
 
   # Whether the user can add (a specified) manager(s)
   # Only the owner can do this.
   def add_manager?(user)
-    is_owner?
+    rule is_owner?
+  end
+
+  def pages_left?
+    member if user && user.profile.pages.length < max_allowed_pages
   end
 
   def remove_manager?(user)
-    is_owner?
+    rule is_owner?
   end
 
   def statistics?
@@ -118,15 +127,15 @@ class PagePolicy < RestrictivePolicy
   # TODO: Don't forget to remove the note that only argu can currently
   # transfer page ownership in forums/settings?tab=managers
   def transfer?
-    staff?
+    rule staff?
   end
 
   def managers?
-    is_owner? || staff?
+    rule is_owner?, staff?
   end
 
   def max_pages_reached?
-    user && user.profile.pages.length >= max_allowed_pages
+    member if user && user.profile.pages.length >= max_allowed_pages
   end
 
   # Make sure that a tab param is actually accounted for
@@ -147,5 +156,10 @@ class PagePolicy < RestrictivePolicy
     else
       0
     end
+  end
+
+  private
+  def forum_policy
+    ForumPolicy.new(context, Forum)
   end
 end

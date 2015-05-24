@@ -1,4 +1,6 @@
 class QuestionPolicy < RestrictivePolicy
+  include ForumPolicy::ForumRoles
+
   class Scope < RestrictivePolicy::Scope
     attr_reader :context, :scope
 
@@ -20,11 +22,6 @@ class QuestionPolicy < RestrictivePolicy
     end
 
   end
-
-  module Roles
-    delegate :is_owner?, :is_manager?, :is_member?, :is_open?, to: :forum_policy
-  end
-  include Roles
 
   def permitted_attributes
     attributes = super

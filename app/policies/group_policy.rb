@@ -33,11 +33,11 @@ class GroupPolicy < RestrictivePolicy
   end
 
   def create?
-    is_manager? || super
+    rule is_manager?, super
   end
 
   def update?
-    is_manager? || super
+    rule is_manager?, super
   end
 
   def edit?
@@ -45,6 +45,6 @@ class GroupPolicy < RestrictivePolicy
   end
 
   def remove_member?(member)
-    is_manager? || super
+    rule is_manager?, super
   end
 end

@@ -18,6 +18,7 @@ class GroupResponsePolicy < RestrictivePolicy
 
   module Roles
     delegate :is_manager?, to: :forum_policy
+    delegate :open, :access_token, :member, :manager, :owner, to: :forum_policy
 
     # @note: This is prone to race conditions, but since a group_responses isn't a vote, it can be considered trivial.
     def limit_reached?
@@ -29,7 +30,7 @@ class GroupResponsePolicy < RestrictivePolicy
     end
 
     def profile_in_group?
-      actor && actor.groups.include?(record.group).present?
+      member if actor && actor.groups.include?(record.group).present?
     end
 
     def is_creator?
@@ -51,11 +52,11 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def create?
-    profile_in_group? && !limit_reached?
+    rule (!limit_reached? && profile_in_group?), super
   end
 
   def update?
-    profile_in_group? && record.profile == actor
+    rule (record.profile == actor && profile_in_group?), super
   end
 
   def edit?
@@ -63,6 +64,6 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def destroy?
-    profile_in_group? && is_creator? || super
+    rule (profile_in_group? && is_creator?), super
   end
 end
