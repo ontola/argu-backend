@@ -94,6 +94,10 @@ class PagePolicy < RestrictivePolicy
     update?
   end
 
+  def index?
+    user && user.profile.page_managerships.length > 0 || staff?
+  end
+
   def update?
     rule is_manager?, super
   end
