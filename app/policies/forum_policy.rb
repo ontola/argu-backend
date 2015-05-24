@@ -22,33 +22,52 @@ class ForumPolicy < RestrictivePolicy
   end
 
   module Roles
+    def open
+      1
+    end
+
+    def access_token
+      2
+    end
+
+    def member
+      3
+    end
+
+    def manager
+      5
+    end
+
+    def owner
+      6
+    end
+
     # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta
     def is_open?
-      1 if @record.open?
+      open if @record.open?
     end
 
     def has_access_token?
-      2 if (session[:a_tokens] || []).find_index(record.access_token).present? && record.visible_with_a_link?
+      access_token if (session[:a_tokens] || []).find_index(record.access_token).present? && record.visible_with_a_link?
     end
 
     # Is the current user a member of the group?
     # @note This tells nothing about whether the user can make edits on the object
     def is_member?
-      r = actor && actor.memberships.where(forum: record).present?
-      3 if r
+      member if actor && actor.memberships.where(forum: record).present?
     end
 
     # Is the user a manager of the page or of the forum?
     # @note Trickles up
     def is_manager?
       _mems = user.profile if user
-      (5 if user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || is_owner?
+      (manager if user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?) || is_owner?
     end
 
     # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.
     def is_owner?
       #record.page.memberships.where(role: Membership.roles[:manager], profile: user.profile).present?
-      6 if user && record.page.owner == user.profile
+      owner if user && record.page.owner == user.profile
     end
   end
   include Roles
@@ -101,7 +120,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def invite?
-    user && (is_open? || is_manager?) || staff?
+    rule (user && (is_open? || is_manager?)), staff?
   end
 
   def join?

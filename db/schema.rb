@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150523104256) do
+ActiveRecord::Schema.define(version: 20150524094656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -371,10 +371,11 @@ ActiveRecord::Schema.define(version: 20150523104256) do
     t.string   "action"
     t.string   "role"
     t.boolean  "permit"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.string   "context_type"
     t.integer  "context_id"
+    t.integer  "trickles",     default: 0, null: false
   end
 
   create_table "sessions", force: :cascade do |t|

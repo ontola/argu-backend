@@ -28,6 +28,31 @@ class RestrictivePolicy
   end
 
   module Roles
+    def member
+      3
+    end
+
+    def creator
+      4
+    end
+
+    def staff
+      10
+    end
+
+
+    def is_creator?
+      creator if record.creator == user.try(:profile)
+    end
+
+    def is_member?
+      member if user && user.profile.member_of?(record.forum || record.forum_id)
+    end
+
+    def staff?
+      staff if user && user.profile.has_role?(:staff)
+    end
+
     def forum_policy
       Pundit.policy(context, record.try(:forum) || context.context_model)
     end
@@ -63,10 +88,6 @@ class RestrictivePolicy
     raise Pundit::NotAuthorizedError unless assertion
   end
   delegate :assert!, to: :class
-
-  def staff?
-    10 if user && user.profile.has_role?(:staff)
-  end
 
   def change_owner?
     staff?
@@ -138,14 +159,6 @@ class RestrictivePolicy
   # Can the current user change the item shortname?
   def shortname?
     new_record?
-  end
-
-  def is_creator?
-    4 if record.creator == user.try(:profile)
-  end
-
-  def is_member?
-    user && user.profile.member_of?(record.forum || record.forum_id)
   end
 
   # Whether the user has access to Argu in general
