@@ -6,7 +6,7 @@ module UsersHelper
   end
 
   def login_providers_left(user)
-    User.omniauth_providers.delete_if { |p| user.identities.pluck(:provider).include?(p.to_s) }
+    User.omniauth_providers.dup.delete_if { |p| user.identities.pluck(:provider).include?(p.to_s) }
   end
 
   def options_for_follows_email

@@ -44,7 +44,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to root_path
     follow_redirect!
-    
+
     assert_redirected_to forum_path('utrecht')
     follow_redirect!
     assert_response 200

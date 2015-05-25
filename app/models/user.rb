@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable
   devise :invitable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
-         :confirmable, :omniauthable, omniauth_providers: [:facebook]
+         :confirmable, :omniauthable, omniauth_providers: [:facebook].freeze
 
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
