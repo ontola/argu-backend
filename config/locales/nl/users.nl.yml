@@ -28,3 +28,7 @@ nl:
     cap_reached_body: "Bedankt voor je interesse in Argu, door overweldigende aanmeldingen hebben we maximum capaciteit bereikt. Aanmeldingen gaan weer open als we onze capaciteit hebben verhoogd."
     authentications:
       cant_decouple_note_provider: "Je kunt je %{provider} account alleen ontkoppelen door een wachtwoord in te stellen of je account te verwijderen."
+      email_mismatch: "Email komt niet overeen met de huidige gebruiker, log eerst uit alvorens met een ander account in te loggen."
+    connect:
+      title: "Koppel accounts"
+      text: "Er bestaat al een gebruiker met hetzelfde email adres. Om je accounts te koppelen moet je het wachtwoord van de bestaande Argu gebruiker invoeren."

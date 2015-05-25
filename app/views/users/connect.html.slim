@@ -1,5 +1,6 @@
 .col-1
-  h1 _connect accounts_
+  h1= t('users.connect.title')
+  p= t('users.connect.text')
   .col-3-1
     .box
       img[src=identity.image_url]
@@ -14,3 +15,4 @@
     =f.inputs
       =f.input :password, placeholder: t('users_password'), hint: false, label: true, input_html: {required: true, errors: ['test']}
       =f.submit '_sign in and connect_'
+  =link_to t('forgot_password'), new_user_password_path

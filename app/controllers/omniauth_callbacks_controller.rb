@@ -9,19 +9,19 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
         if @user.present?
           if current_user.blank?
             sign_in_and_redirect @user, event: :authentication
-          elsif @user.email.present? && @user.email == current_user.email
-            unless @user == current_user
-              # Show message that the connection is connected to another account
-              fsfdsa1
-            end
+          elsif current_user.email != email
+            flash[:error] = t("users.authentications.email_mismatch") if is_navigational_format?
+            redirect_to root_path
+          elsif @user == current_user
+            flash[:error] = t("devise.failure.already_authenticated") if is_navigational_format?
+            redirect_to root_path
           end
         else
           if (user_with_email = User.where(email: email).first).present?
             # Email already taken, but connection not present yet
             # so render connect accounts form
             # No identity created for this oauth connection
-            if current_user.blank?
-              #redirect_to connect_user_path(user_with_email, auth: env["omniauth.auth"].to_json)
+            if current_user.blank? || current_user == user_with_email
               identity = Identity.find_or_initialize_by uid: env["omniauth.auth"]["uid"], provider: :#{provider} # TODO Store in Redis when not found to prevent stale records
               set_#{provider}_fields identity, env["omniauth.auth"]
               if identity.save
@@ -31,9 +31,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
                 raise NotImplementedError
               end
             else
-              # Old user, new connection
-              # Check if user with email from connection can be found
-              fsfdsa3
+              flash[:error] = t("users.authentications.email_mismatch") if is_navigational_format?
+              redirect_to root_path
             end
           elsif current_user.blank? && email.present?
             # We have a new user! so show the 'need some details' form
