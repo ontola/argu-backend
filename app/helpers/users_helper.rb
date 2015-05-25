@@ -1,4 +1,5 @@
 module UsersHelper
+
   def identity_token(identity)
     encrypt_payload({
                         identity: identity.id

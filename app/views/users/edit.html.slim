@@ -9,8 +9,10 @@
           p= t('profiles.edit.shortname_not_allowed')
           =f.inputs :shortname, for: :shortname, disabled: true
           =f.input :email, label: t('users_email'), value: @user.email, placeholder: @user.email.blank? ? t('users_email_placeholder') : @user.email
+          li
+            label
+            span= @user.confirmed_at.present? ? t('users.registrations.confirmed') : t('users.registrations.unconfirmed')
           =f.input :time_zone
-
 
         - if active_for_user?(:notifications, current_user)
           =f.inputs name: t('users.registrations.categories.notifications') do

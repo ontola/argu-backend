@@ -9,6 +9,8 @@ nl:
         general: "Algemeen"
         authentication: "Authenticatie"
         notifications: "Meldingen"
+      confirmed: "Email bevestigd"
+      unconfirmed: "Email nog niet bevestigd"
     follows_email:
       never_follows_email: 'Nooit'
       direct_follows_email: 'Onmiddelijk'
