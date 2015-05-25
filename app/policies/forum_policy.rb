@@ -121,7 +121,7 @@ class ForumPolicy < RestrictivePolicy
 
   # Forum#index is for management, not to be confused with forum#discover
   def index?
-    user && user.profile.pages.length > 0 || user.profile.managerships.length || staff?
+    user && user.profile.pages.length > 0 || user.profile.managerships.presence || staff?
   end
 
   def invite?
