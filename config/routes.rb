@@ -52,9 +52,11 @@ Argu::Application.routes.draw do
 
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
+
   devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions', :invitations => 'users/invitations' }, skip: :registrations
 
   as :user do
+    get 'users/verify', to: 'users/sessions#verify'
     get 'users/cancel', to: 'registrations#cancel', as: :cancel_user_registration
     get 'users/sign_up', to: 'registrations#new', as: :new_user_registration
     post 'users', to: 'registrations#create', as: :user_registration

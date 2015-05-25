@@ -14,6 +14,16 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
+  def verify
+    if params[:host_url] == 'argu.freshdesk.com'
+      if current_user.present?
+        redirect_to freshdesk_redirect_url
+      else
+        redirect_to user_session_path(host_url: params[:host_url])
+      end
+    end
+  end
+
   # DELETE /resource/sign_out
   def destroy
     super do
@@ -35,6 +45,21 @@ class Users::SessionsController < Devise::SessionsController
 
   def is_post?(r)
     r.match(/\/v(\?|\/)|\/c(\?|\/)/)
+  end
+
+  def freshdesk_redirect_url
+    utctime = time_in_utc
+    "#{Rails.application.secrets.freshdesk_url}login/sso?name=#{current_user.url}&email=#{current_user.email}&timestamp=#{utctime}&hash=#{generate_hash_from_params_hash(utctime)}"
+  end
+
+  private
+  def generate_hash_from_params_hash(utctime)
+    digest = OpenSSL::Digest::Digest.new('MD5')
+    OpenSSL::HMAC.hexdigest(digest, Rails.application.secrets.freshdesk_secret, current_user.url + current_user.email + utctime)
+  end
+
+  def time_in_utc
+    Time.now.getutc.to_i.to_s
   end
 
 end

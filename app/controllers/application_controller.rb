@@ -49,6 +49,14 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
 
+  def after_sign_in_path_for(resource)
+    if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
+      freshdesk_redirect_url
+    else
+      super
+    end
+  end
+
   # Combines {ApplicationController#create_activity} with {ApplicationController#destroy_recent_similar_activities}
   def create_activity_with_cleanup(model, params)
     destroy_recent_similar_activities model, params
