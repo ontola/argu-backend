@@ -408,6 +408,19 @@ ActiveRecord::Schema.define(version: 20150525101504) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "rules", force: :cascade do |t|
+    t.string   "model_type"
+    t.integer  "model_id"
+    t.string   "action"
+    t.string   "role"
+    t.boolean  "permit"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "context_type"
+    t.integer  "context_id"
+    t.integer  "trickles",     default: 0, null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255, null: false
     t.text     "data"

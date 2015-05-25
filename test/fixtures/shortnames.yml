@@ -14,7 +14,9 @@ sn_super_hidden:
   shortname: 'super_secret'
   owner_id: 32812423
   owner_type: 'Forum'
-
+sn_no_create_without_question:
+  shortname: 'no_create_without_question'
+  owner: no_create_without_question (Forum)
 #
 # Users
 #

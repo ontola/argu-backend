@@ -7,7 +7,7 @@
         time.info[datetime=model.created_at]= l model.created_at, format: :long
     - if model.text.present?
       p= model.text
-    ul.btns-list.btns-vertical.btn-sticky-bottom.btn-sticky
+    ul.btns-list.btns-horizontal.btn-sticky-bottom.btn-sticky
       -if policy(model).destroy?
         li= link_to response_path(model), data: {method: :delete, remote: true, confirm: t('destroy_confirmation'), 'skip-pjax' => true}
           span.fa.fa-close

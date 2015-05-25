@@ -50,6 +50,14 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
 
+  def after_sign_in_path_for(resource)
+    if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
+      freshdesk_redirect_url
+    else
+      super
+    end
+  end
+
   # Combines {ApplicationController#create_activity} with {ApplicationController#destroy_recent_similar_activities}
   def create_activity_with_cleanup(model, params)
     destroy_recent_similar_activities model, params
@@ -70,7 +78,9 @@ class ApplicationController < ActionController::Base
 
   # @return the current context, if a param is given, it will serve as the start of the current context
   def current_context(model=nil)
-    @current_context ||= Context.parse_from_uri(request.url, model)
+    @current_context ||= Context.parse_from_uri(request.url, model) do |components|
+      components.reject! { |c| !policy(c).show? }
+    end
   end
 
   # @return the {Profile} the {User} is using to do actions
@@ -93,7 +103,7 @@ class ApplicationController < ActionController::Base
 
   # @private
   def pundit_user
-    UserContext.new(current_user, current_profile, session)
+    UserContext.new(current_user, current_profile, session, @forum)
   end
 
   def render_register_modal(base_url=nil, *r_options)

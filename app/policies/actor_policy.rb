@@ -1,4 +1,4 @@
-class ActorPolicy < ApplicationPolicy
+class ActorPolicy < RestrictivePolicy
   class Scope < Scope
     attr_reader :context, :scope
 

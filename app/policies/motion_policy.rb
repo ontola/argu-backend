@@ -1,4 +1,6 @@
 class MotionPolicy < RestrictivePolicy
+  include ForumPolicy::ForumRoles
+
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -25,7 +27,11 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def create?
-    is_member? || super
+    rule is_member?, is_manager?, is_owner?, super
+  end
+
+  def create_without_question?
+    rule is_member?, is_manager?, is_owner?, staff?
   end
 
   def destroy?
@@ -33,40 +39,31 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def edit?
-    update?
+    rule update?
   end
 
   def index?
-    is_member? || super
+    rule is_member?, super
   end
 
   def new?
-    record.forum.open? || create?
+    rule is_open?, is_member?, staff?
   end
 
   def show?
-    forum_policy.show? || super
+    rule forum_policy.show?, super
   end
 
   def trash?
-    user && record.creator_id == user.profile.id || forum_policy.is_manager? || forum_policy.is_owner? || super
+    user && record.creator_id == user.profile.id || is_manager? || is_owner? || super
   end
 
   def update?
-    is_member? && is_creator? || forum_policy.is_manager? || forum_policy.is_owner? || super
+    rule (is_member? && is_creator?), is_manager?, is_owner?, super
   end
 
   def vote?
-    is_member? || super
+    rule is_member?, super
   end
 
-  private
-
-  def forum_policy
-    Pundit.policy(context, record.forum)
-  end
-
-  def is_member?
-    user && user.profile.member_of?(record.forum || record.forum_id)
-  end
 end

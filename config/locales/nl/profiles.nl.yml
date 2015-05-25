@@ -2,8 +2,7 @@
 
 nl:
   profiles:
-    type: "profiel"
-    display: "Profiel bekijken"
+    type: "Profiel"
     switch: "Argu gebruiken als:"
     heads_up: "Jouw profiel is zichtbaar voor andere bezoekers van Argu."
     show:

@@ -16,6 +16,14 @@ class MotionsControllerTest < ActionController::TestCase
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) }, 'Trashed arguments are visible'
   end
 
+  test 'should not get edit when not logged in' do
+    get :edit, id: motions(:one)
+
+    assert_redirected_to root_path
+    assert assigns(:motion)
+    assert assigns(:forum)
+  end
+
   ####################################
   # As user
   ####################################
@@ -27,7 +35,6 @@ class MotionsControllerTest < ActionController::TestCase
     assert_response 200
     assert_not_nil assigns(:motion)
     assert_not_nil assigns(:vote)
-    #assert_not_nil assigns(:opinions)
 
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) }, 'Trashed arguments are visible'
   end
@@ -59,6 +66,37 @@ class MotionsControllerTest < ActionController::TestCase
     end
     assert_not_nil assigns(:motion)
     assert_not_nil assigns(:forum)
+    assert_redirected_to motion_path(assigns(:motion))
+  end
+
+  test 'should not post create without create_without_question' do
+    sign_in users(:user)
+
+    assert_difference 'Motion.count', 0 do
+      post :create, forum_id: :no_create_without_question,
+           motion: {
+               title: 'Motion',
+               content: 'Contents'
+           }
+    end
+    assert_not_nil assigns(:motion)
+    assert_not assigns(:motion).persisted?
+    assert_redirected_to root_path
+  end
+
+  test 'should post create without create_without_question with question' do
+    sign_in users(:user)
+
+    assert_difference 'Motion.count', 1 do
+      post :create, forum_id: :no_create_without_question,
+           motion: {
+               title: 'Motion',
+               content: 'Contents',
+               question_id: questions(:question_one_no_create_without_question).id
+           }
+    end
+    assert_not_nil assigns(:motion)
+    assert assigns(:motion).persisted?
     assert_redirected_to motion_path(assigns(:motion))
   end
 
@@ -112,7 +150,6 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # For managers
   ####################################
-
   # Currently only staffers can convert items
   test 'should get convert' do
     sign_in users(:user_thom)

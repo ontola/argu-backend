@@ -5,7 +5,7 @@
   .box.argument[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
     section.smallpadded.form-filled
       =f.inputs
-        =f.input :title, input_html: {class: 'form-input-title'}, label: false
+        =f.input :title, as: :text, input_html: {size: '2', maxlength: '75', class: 'form-input-title'}, label: false
         =f.input :content, input_html: {class: 'form-input-content', rows: '6'}, label: false
         /p.helpertext= raw t("arguments.form.helper.content")
         - if policy(@argument).trash? && !@argument.new_record?

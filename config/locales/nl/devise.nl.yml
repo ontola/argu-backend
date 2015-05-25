@@ -8,6 +8,7 @@ nl:
       already_confirmed: "was al bevestigd, probeer in te loggen."
       not_locked: "was niet vergrendeld"
       should_match: "moet overeenkomen"
+      extension_white_list_error: "Dit type bestand kan je hier niet uploaden."
       not_saved:
         one: "1 fout zorgde ervoor dat %{resource} niet kon worden opgeslagen:"
         other: "%{count} fouten zorgde ervoor dat %{resource} niet kon worden opgeslagen:"

@@ -5,3 +5,7 @@ nl:
     placeholder: "Plaats hier jouw reactie. Blijf inhoudelijk en vriendelijk :)"
     empty:
       name: "Plaats jouw reactie"
+  pundit:
+    comments:
+      policy:
+        create?: "Je mag hier met dit account geen reactie plaatsen."

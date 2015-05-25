@@ -66,6 +66,7 @@ Argu::Application.routes.draw do
                    }, skip: :registrations
 
   as :user do
+    get 'users/verify', to: 'users/sessions#verify'
     get 'users/cancel', to: 'registrations#cancel', as: :cancel_user_registration
     get 'users/sign_up', to: 'registrations#new', as: :new_user_registration
     post 'users', to: 'registrations#create', as: :user_registration

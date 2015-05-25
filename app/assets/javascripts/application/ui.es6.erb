@@ -62,7 +62,7 @@ Argu.ui = {
             if (target.length) {
                 history.pushState(null, null, '#' + this.hash.slice(1));
                 $('html,body').animate({
-                    scrollTop: target.offset().top - 200
+                    scrollTop: target.offset().top - 100
                 }, 600);
                 event.preventDefault();
             }
@@ -73,7 +73,7 @@ Argu.ui = {
         Argu.ui.handleEditableSettings();
         Argu.ui.bg = $(".background");
         $('button:submit').click(Argu.ui.disableSubmitButton);
-        $('a[href*=#]:not([href=#])').click(Argu.ui.handleClickSmoothly);
+        $('a[href*=#]:not([href=#])[class~=smoothscroll]').click(Argu.ui.handleClickSmoothly);
         Argu.ui.bindRemoteLinks();
     },
 
