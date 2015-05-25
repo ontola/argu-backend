@@ -80,19 +80,19 @@ class UsersController < ApplicationController
   def connect!
     user = User.find_via_shortname! params[:id]
     payload = decrypt_token params[:token]
-    identity = Identity.find payload['identity']
+    @identity = Identity.find payload['identity']
 
     skip_authorization
-    if identity.email == user.email && user.valid_password?(params[:user][:password])
+    if @identity.email == user.email && user.valid_password?(params[:user][:password])
       # Connect user to identity
-      identity.user = user
-      if identity.save
+      @identity.user = user
+      if @identity.save
         flash[:success] = 'Account connected'
         sign_in_and_redirect user
       else
         render 'users/connect',
                locals: {
-                 identity: identity,
+                 identity: @identity,
                  user: user,
                  token: params[:token]
                }
@@ -101,7 +101,7 @@ class UsersController < ApplicationController
       user.errors.add(:password, t('errors.messages.invalid'))
       render 'users/connect',
              locals: {
-               identity: identity,
+               identity: @identity,
                user: user,
                token: params[:token]
              }
