@@ -16,6 +16,29 @@ class GroupResponsePolicy < RestrictivePolicy
     end
   end
 
+  module Roles
+    delegate :is_manager?, to: :forum_policy
+    delegate :open, :access_token, :member, :manager, :owner, to: :forum_policy
+
+    # @note: This is prone to race conditions, but since a group_responses isn't a vote, it can be considered trivial.
+    def limit_reached?
+      if record.group.max_responses_per_member == -1
+        false
+      else
+        record.motion.responses_from(actor) >= record.group.max_responses_per_member
+      end
+    end
+
+    def profile_in_group?
+      member if actor && actor.groups.include?(record.group).present?
+    end
+
+    def is_creator?
+      record.creator == actor
+    end
+  end
+  include Roles
+
   def permitted_attributes
     attributes = super
     attributes << [:text, :side] if create?
@@ -29,11 +52,11 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def create?
-    profile_in_group? && !limit_reached?
+    rule (!limit_reached? && profile_in_group?), super
   end
 
   def update?
-    profile_in_group? && record.profile == actor
+    rule (record.profile == actor && profile_in_group?), super
   end
 
   def edit?
@@ -41,30 +64,6 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def destroy?
-    profile_in_group? && creator? || super
+    rule (profile_in_group? && is_creator?), super
   end
-
-private
-
-  def is_manager?
-    Pundit.policy(context, record.forum).is_manager?
-  end
-
-  # @note: This is prone to race conditions, but since a group_responses isn't a vote, it can be considered trivial.
-  def limit_reached?
-    if record.group.max_responses_per_member == -1
-      false
-    else
-      record.motion.responses_from(actor) >= record.group.max_responses_per_member
-    end
-  end
-
-  def profile_in_group?
-    actor && actor.groups.include?(record.group).present?
-  end
-
-  def creator?
-    record.creator == actor
-  end
-
 end

@@ -23,9 +23,9 @@ class Question < ActiveRecord::Base
   after_save :creator_follow
 
   # Might not be a good idea
-  #def creator
-  #  super || Profile.first_or_create(shortname: 'Onbekend')
-  #end
+  def creator
+    super || Profile.first_or_initialize(shortname: 'Onbekend')
+  end
 
   def creator_follow
     self.creator.follow self

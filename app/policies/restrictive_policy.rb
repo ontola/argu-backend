@@ -1,6 +1,63 @@
 class RestrictivePolicy
   include AccessTokenHelper, UsersHelper
+  prepend ExceptionToTheRule
+
   attr_reader :context, :record
+
+  class Scope
+    include AccessTokenHelper
+    attr_reader :context, :user, :scope, :session
+
+    def initialize(context, scope)
+      @context = context
+      @profile = user.profile if user
+      @scope = scope
+    end
+
+    delegate :user, to: :context
+    delegate :actor, to: :context
+    delegate :session, to: :context
+
+    def resolve
+      scope if staff?
+    end
+
+    def staff?
+      user && user.profile.has_role?(:staff)
+    end
+  end
+
+  module Roles
+    def member
+      3
+    end
+
+    def creator
+      4
+    end
+
+    def staff
+      10
+    end
+
+
+    def is_creator?
+      creator if record.creator == user.try(:profile)
+    end
+
+    def is_member?
+      member if user && user.profile.member_of?(record.forum || record.forum_id)
+    end
+
+    def staff?
+      staff if user && user.profile.has_role?(:staff)
+    end
+
+    def forum_policy
+      Pundit.policy(context, record.try(:forum) || context.context_model)
+    end
+  end
+  include Roles
 
   def initialize(context, record)
     @context = context
@@ -31,10 +88,6 @@ class RestrictivePolicy
     raise Pundit::NotAuthorizedError unless assertion
   end
   delegate :assert!, to: :class
-
-  def staff?
-    user && user.profile.has_role?(:staff)
-  end
 
   def change_owner?
     staff?
@@ -108,14 +161,6 @@ class RestrictivePolicy
     new_record?
   end
 
-  def is_creator?
-    record.creator == user.profile
-  end
-
-  def is_member?
-    user && user.profile.member_of?(record.forum || record.forum_id)
-  end
-
   # Whether the user has access to Argu in general
   def has_access_to_platform?
     user || has_valid_token?
@@ -130,29 +175,6 @@ class RestrictivePolicy
 
   def scope
     Pundit.policy_scope!(context, record.class)
-  end
-
-  class Scope
-    include AccessTokenHelper
-    attr_reader :context, :user, :scope, :session
-
-    def initialize(context, scope)
-      @context = context
-      @profile = user.profile if user
-      @scope = scope
-    end
-
-    delegate :user, to: :context
-    delegate :actor, to: :context
-    delegate :session, to: :context
-
-    def resolve
-      scope if staff?
-    end
-
-    def staff?
-      user && user.profile.has_role?(:staff)
-    end
   end
 
 end

@@ -30,12 +30,16 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
             li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn-fill pro-bg'
               span.fa.fa-user
               span.icon-left= t('join')
-          li[data-intro=t('intro.motion.create', name: @forum.name) data-step=12 data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]= link_to new_forum_motion_path(@forum), data: remote_unless_user, class: 'motion-bg btn-fill '
-            span.fa[class="fa-#{motion_icon}"]
-            span.icon-left= t('new') + ' ' + motion_type
-          li[data-intro=t('intro.question.create', name: @forum.name) data-step=13 class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]= link_to new_forum_question_path(@forum), data: remote_unless_user, class: 'question-bg btn-fill '
-            span.fa[class="fa-#{question_icon}"]
-            span.icon-left= t('new') + ' ' + question_type
+          -if policy(Motion).create_without_question?
+            li[data-intro=t('intro.motion.create', name: @forum.name) data-step=12 data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]
+              =link_to new_forum_motion_path(@forum), data: remote_unless_user, class: 'motion-bg btn-fill '
+                span.fa[class="fa-#{motion_icon}"]
+                span.icon-left= t('new') + ' ' + motion_type
+          -if policy(Question).new?
+            li[data-intro=t('intro.question.create', name: @forum.name) data-step=13 class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]
+              =link_to new_forum_question_path(@forum), data: remote_unless_user, class: 'question-bg btn-fill '
+                span.fa[class="fa-#{question_icon}"]
+                span.icon-left= t('new') + ' ' + question_type
           - if policy(@forum).invite?
             li= link_to new_user_invitation_path(forum: @forum.url), remote: true, class: 'pro-bg btn-fill remote-link', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite'), step: 14}
               span.fa.fa-user-plus

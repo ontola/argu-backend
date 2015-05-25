@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
 
   def index
+    authorize Page, :index?
     @user = User.find_via_shortname params[:id]
     authorize @user,:update?
     @pages = Page.where(id: @user.profile.pages.pluck(:id).concat(@user.profile.page_managerships.pluck(:page_id))).distinct

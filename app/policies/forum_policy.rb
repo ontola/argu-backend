@@ -21,6 +21,62 @@ class ForumPolicy < RestrictivePolicy
 
   end
 
+  module Roles
+    def open
+      1
+    end
+
+    def access_token
+      2
+    end
+
+    def member
+      3
+    end
+
+    def manager
+      5
+    end
+
+    def owner
+      6
+    end
+
+    # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta
+    def is_open?
+      open if @record.open?
+    end
+
+    def has_access_token?
+      access_token if (session[:a_tokens] || []).find_index(record.access_token).present? && record.visible_with_a_link?
+    end
+
+    # Is the current user a member of the group?
+    # @note This tells nothing about whether the user can make edits on the object
+    def is_member?
+      member if actor && actor.memberships.where(forum: record).present?
+    end
+
+    # Is the user a manager of the page or of the forum?
+    # @note Trickles up
+    def is_manager?
+      _mems = user.profile if user
+      [(manager if user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?), is_owner?].compact.presence
+    end
+
+    # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.
+    def is_owner?
+      #record.page.memberships.where(role: Membership.roles[:manager], profile: user.profile).present?
+      owner if user && record.page.owner == user.profile
+    end
+  end
+  include Roles
+
+  module ForumRoles
+    delegate :is_member?, :is_open?, :is_manager?, :is_owner?, to: :forum_policy
+    delegate :open, :access_token, :member, :manager, :owner, to: :forum_policy
+  end
+
   def permitted_attributes
     attributes = super
     attributes << [:name, :bio, :bio_long, :tags, :featured_tags, :profile_photo, :remove_profile_photo,
@@ -48,7 +104,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def create_group?
-    is_owner? || staff?
+    rule is_owner?, staff?
   end
 
   def edit?
@@ -56,52 +112,49 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def follow?
-    is_open? || is_member? || is_manager? || staff?
+    rule is_open?, is_member?, is_manager?, staff?
   end
 
   def groups?
-    is_manager? || staff?
+    rule is_manager?, staff?
   end
 
   # Forum#index is for management, not to be confused with forum#discover
   def index?
-    user && user.profile.pages.length > 0 || staff?
+    user && user.profile.pages.length > 0 || user.profile.managerships.length || staff?
   end
 
   def invite?
-    user && (is_open? || is_manager?) || staff?
+    rule (user && (is_open? || is_manager?)), staff?
   end
 
   def join?
-    is_open? || has_access_token? || staff?
+    rule is_open?, has_access_token?, staff?
   end
 
   def list?
-    if @record.hidden?
-      if show?
-        true
-      else
-        raise ActiveRecord::RecordNotFound
-      end
+    level = if @record.hidden?
+      show?.presence || raise(ActiveRecord::RecordNotFound)
     else
-      @record.closed? || show?
+      [(1 if @record.closed?), show?, is_open?]
     end
+    rule level
   end
 
   def list_members?
-    is_owner? || staff?
+    rule is_owner?, staff?
   end
 
   def managers?
-    is_owner? || staff?
+    rule is_owner?, staff?
   end
 
   def new?
-    create?
+    rule create?
   end
 
   def show?
-    is_open? || has_access_token? || is_member? || is_manager? || super
+    rule is_open?, has_access_token?, is_member?, is_manager?, super
   end
 
   def statistics?
@@ -109,29 +162,29 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def terminology?
-    is_manager? || is_owner? || staff?
+    rule is_manager?, is_owner?, staff?
   end
 
   def update?
-    is_manager? || super
+    rule is_manager?, super
   end
 
   # Whether the user can add (a specified) manager(s)
   # Only the owner can do this.
   def add_manager?(user)
-    is_owner?
+    rule is_owner?
   end
 
   def remove_manager?(user)
-    is_owner?
+    rule is_owner?
   end
 
   def add_motion?
-    add_question?
+    rule is_member?, staff?
   end
 
   def add_question?
-    is_member? || staff?
+    rule is_member?, staff?
   end
 
   def selector?
@@ -145,34 +198,4 @@ class ForumPolicy < RestrictivePolicy
     self.assert! self.permitted_tabs.include?(tab.to_sym)
     tab
   end
-
-  #######Attributes########
-  def has_access_token?
-    (session[:a_tokens] || []).find_index(record.access_token).present? && record.visible_with_a_link?
-  end
-
-  # Is the current user a member of the group?
-  # @note This tells nothing about whether the user can make edits on the object
-  def is_member?
-    actor && actor.memberships.where(forum: record).present?
-  end
-
-  # Is the user a manager of the page or of the forum?
-  # @note Trickles up
-  def is_manager?
-    _mems = user.profile if user
-    user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present? || is_owner?
-  end
-
-  # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta
-  def is_open?
-    @record.open?
-  end
-
-  # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.
-  def is_owner?
-        #record.page.memberships.where(role: Membership.roles[:manager], profile: user.profile).present?
-    user && record.page.owner == user.profile
-  end
-
 end

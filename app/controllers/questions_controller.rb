@@ -53,7 +53,7 @@ class QuestionsController < ApplicationController
     authorize @forum, :add_question?
 
     @question = @forum.questions.new
-    @question.attributes= permit_params
+    @question.attributes = permit_params
     @question.creator = current_profile
     authorize @question
 

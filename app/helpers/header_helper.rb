@@ -52,8 +52,8 @@ module HeaderHelper
                   link_item(t('show_type', type: t("#{current_profile.profileable.class_name}.type")), dual_profile_path(current_profile), fa: 'user'),
                   link_item(t('profiles.edit.title'), dual_profile_edit_path(current_profile), fa: 'pencil'),
                   link_item(t('users.settings'), settings_url, fa: 'gear'),
-                  current_user.profile.pages.length > 0 ? link_item(t('pages.page_management').capitalize, pages_user_url(current_user), fa: 'building') : link_item(t('pages.create'), new_page_path, fa: 'building'),
-                  (link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group') if current_user.profile.forums.length > 0 ),
+                  policy(Page).index? ? link_item(t('pages.page_management').capitalize, pages_user_url(current_user), fa: 'building') : link_item(t('pages.create'), new_page_path, fa: 'building'),
+                  (link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group') if policy(Forum).index? ),
                   link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'}),
                   nil #NotABug Make sure compact! actually returns the array and not nil
               ].compact!

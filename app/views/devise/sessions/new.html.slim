@@ -71,7 +71,7 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
                     button type="submit" name="submit" id="ss-submit" style="margin-bottom: 2em;" Stuur mij updates
     .box.box-small
       section
-        =semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name) ) do |f|
+        =semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name, host_url: params[:host_url].presence) ) do |f|
           - if resource.errors.any?
             #error_explanation
               ul

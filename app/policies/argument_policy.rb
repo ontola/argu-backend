@@ -1,4 +1,6 @@
 class ArgumentPolicy < RestrictivePolicy
+  include ForumPolicy::ForumRoles
+
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -23,15 +25,15 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def new?
-    record.forum.open? || create?
+    rule is_open?, create?
   end
 
   def create?
-    is_member? || super
+    rule is_member?, super
   end
 
   def update?
-    is_member? && is_creator? || forum_policy.is_manager? || forum_policy.is_owner? || super
+    rule (is_member? && is_creator?), is_manager?, is_owner?, super
   end
 
   def edit?
@@ -39,11 +41,11 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def trash?
-    user && user.profile.id == record.creator_id || forum_policy.is_manager? || forum_policy.is_owner? || super
+    rule is_creator?, is_manager?, is_owner?, super
   end
 
   def destroy?
-    user && (user.profile.id == record.creator_id && 1.hour.ago <= record.created_at) || forum_policy.is_owner? || super
+    rule (1.hour.ago <= record.created_at && is_creator?), is_owner?, super
   end
 
   def show?
@@ -54,9 +56,5 @@ class ArgumentPolicy < RestrictivePolicy
 
   def forum_policy
     Pundit.policy(context, record.forum)
-  end
-
-  def is_member?
-    user && user.profile.member_of?(record.motion.forum)
   end
 end

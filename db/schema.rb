@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150505104124) do
+ActiveRecord::Schema.define(version: 20150524094656) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -205,6 +205,18 @@ ActiveRecord::Schema.define(version: 20150505104124) do
 
   add_index "groups", ["forum_id", "name"], name: "index_groups_on_forum_id_and_name", unique: true, using: :btree
 
+  create_table "identities", force: :cascade do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "access_token"
+    t.string   "access_secret"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
+
   create_table "memberships", force: :cascade do |t|
     t.integer "profile_id",             null: false
     t.integer "forum_id",               null: false
@@ -353,6 +365,19 @@ ActiveRecord::Schema.define(version: 20150505104124) do
   add_index "roles", ["name", "resource_type", "resource_id"], name: "index_roles_on_name_and_resource_type_and_resource_id", using: :btree
   add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
+  create_table "rules", force: :cascade do |t|
+    t.string   "model_type"
+    t.integer  "model_id"
+    t.string   "action"
+    t.string   "role"
+    t.boolean  "permit"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "context_type"
+    t.integer  "context_id"
+    t.integer  "trickles",     default: 0, null: false
+  end
+
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255, null: false
     t.text     "data"
@@ -424,17 +449,19 @@ ActiveRecord::Schema.define(version: 20150505104124) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                  default: 0
     t.boolean  "finished_intro",                     default: false
-    t.text     "r"
-    t.text     "access_tokens"
     t.integer  "follows_email",                      default: 1,     null: false
     t.boolean  "follows_mobile",                     default: true,  null: false
     t.integer  "memberships_email",                  default: 1,     null: false
     t.boolean  "memberships_mobile",                 default: true,  null: false
     t.integer  "created_email",                      default: 1,     null: false
     t.boolean  "created_mobile",                     default: true,  null: false
+    t.text     "r"
+    t.text     "access_tokens"
+    t.text     "omni_info"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.text     "active_sessions",                    default: [],                 array: true
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
@@ -442,6 +469,9 @@ ActiveRecord::Schema.define(version: 20150505104124) do
     t.string   "postal_code"
     t.datetime "last_accepted"
     t.boolean  "has_analytics",                      default: true
+    t.integer  "gender"
+    t.integer  "hometown"
+    t.string   "time_zone",                          default: "UTC"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -467,5 +497,6 @@ ActiveRecord::Schema.define(version: 20150505104124) do
   add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
-  add_foreign_key "access_tokens", "profiles"
+  add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
+  add_foreign_key "identities", "users"
 end
