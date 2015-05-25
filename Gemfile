@@ -36,6 +36,7 @@ gem 'acts_as_follower'
 gem 'rollout'
 gem 'html_truncator', '~>0.2'
 gem 'jwt'
+gem 'doorkeeper', '~> 2.2.1'
 #Search
 
 #Pagination

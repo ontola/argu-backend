@@ -45,6 +45,10 @@ Argu::Application.routes.draw do
     post 'v/:for' => 'votes#create', shallow: true, as: :vote
   end
 
+  use_doorkeeper do
+    controllers :applications => 'oauth/applications'
+  end
+
   resources :notifications, only: [:index, :update], path: 'n'
   put 'actors', to: 'actors#update'
 

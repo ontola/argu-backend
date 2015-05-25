@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   include ArguBase, Shortnameable
 
   has_many :identities, dependent: :destroy
+  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
   has_one :profile, as: :profileable, dependent: :destroy
 
   accepts_nested_attributes_for :profile
