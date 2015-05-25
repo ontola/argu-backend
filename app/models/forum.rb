@@ -44,11 +44,15 @@ class Forum < ActiveRecord::Base
   scope :top_public_forums, -> { where(visibility: Forum.visibilities[:open]).order('motions_count DESC').first(50) }
 
   def access_token
+    access_token! if self.visible_with_a_link
+  end
+
+  def access_token!
     AccessToken.where(item: self).first.try(:access_token)
   end
 
   def check_access_token
-    if visible_with_a_link && access_token.blank?
+    if visible_with_a_link && access_token!.blank?
       AccessToken.create(item: self, profile: self.page.profile)
     end
   end

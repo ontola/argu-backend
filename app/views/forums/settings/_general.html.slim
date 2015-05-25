@@ -17,7 +17,7 @@
     =f.input :profile_photo, as: :preview_image, html_options: {style: 'max-height: 256px'}
     =f.input :remove_profile_photo, as: :reverse_boolean
     - if resource.full_access_token.present?
-      =text_field_tag 'link', "#{forum_url(resource)}?at=#{resource.access_token}", onClick: 'this.setSelectionRange(0, this.value.length)'
+      =text_field_tag 'link', forum_url(resource, at: resource.access_token), onClick: 'this.setSelectionRange(0, this.value.length)'
       p= "Follows: #{resource.full_access_token.usages}"
       p= "Sign-ups: #{resource.full_access_token.sign_ups}"
   =f.actions do
