@@ -9,7 +9,8 @@ module Omniauth
                  first_name: info['first_name'],
                  middle_name: raw['middle_name'],
                  last_name: info['last_name'],
-                 gender: raw['gender']
+                 gender: raw['gender'],
+                 finished_intro: true
         user.identities << identity
         user.shortname = nil
         identity.save!

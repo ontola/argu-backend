@@ -42,26 +42,10 @@ class OmniauthTest < ActionDispatch::IntegrationTest
            }
          }
 
-    assert_redirected_to edit_user_url('test_user')
-    assert assigns(:user)
-    assert_equal 'test_user', assigns(:user).url
-
+    assert_redirected_to root_path
     follow_redirect!
-    assert_response 200
-
-    put profile_path('test_user'),
-        profile: {
-          are_votes_public: '1',
-          profileable_attributes: {
-              first_name: 'First',
-              middle_name: 'Middle',
-              last_name: 'Last'
-          }
-        }
-    assert_redirected_to user_path('test_user')
-    assert assigns(:resource)
-    assert assigns(:profile)
-
+    
+    assert_redirected_to forum_path('utrecht')
     follow_redirect!
     assert_response 200
   end

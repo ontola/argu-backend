@@ -126,7 +126,8 @@ class UsersController < ApplicationController
       current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
 
       if current_user.save
-        redirect_to edit_user_url(current_user.url)
+        flash[:success] = t('devise.registrations.signed_up') if current_user.finished_intro?
+        redirect_to root_path
       else
         render 'setup_shortname'
       end
