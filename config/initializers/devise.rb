@@ -83,7 +83,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  config.pepper = "07c40570686a46d6169593fd3bf41a5f762240b8e848c5083590b8c6544a600f752b4f13952521622fa6b33f04c78ca8fce21ba6691f60119cfe6c55073fb837"
+  config.pepper = Rails.application.secrets.pepper
 
   # ==> Configuration for :invitable
   # The period the generated invitation token is valid, after
@@ -269,6 +269,4 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = "/my_engine/users/auth"
-
-  config.secret_key = 'f2f8c8e5bfe480337b0cfa806ca46526501e24ebf930060e928d58a0cc6c42f33676cd849bc8c9cca5cf53c5cf9e522145b892eae199f4f131b9cf05176f94f7'
 end
