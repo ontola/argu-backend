@@ -45,7 +45,8 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def destroy?
-    rule (1.hour.ago <= record.created_at && is_creator?), is_owner?, super
+    creator = 1.hour.ago <= record.created_at ? is_creator? : nil
+    rule creator, is_owner?, super
   end
 
   def show?
