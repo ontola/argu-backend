@@ -1,6 +1,6 @@
 =form_tag(polymorphic_path([resource, :comments]), :method => 'post', id: "cf#{parent_id.to_s}", class: 'comment_form', style: visible ? '' : 'display: none;', data: remote_if_user) do
   section.smallpadded
-    =text_area_tag :comment, '', :rows => 2, :cols => 50, placeholder: t('comments.placeholder'), class: 'form-input-content margin-bottom'
+    =text_area_tag :comment, @comment.try(:body), :rows => 2, :cols => 50, placeholder: t('comments.placeholder'), class: 'form-input-content margin-bottom'
     -unless parent_id.blank?
       input[type="hidden" class= "btn" name="parent_id" value ="#{parent_id}"]
   - if @comment.blank? || @comment.new_record?

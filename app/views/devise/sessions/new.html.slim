@@ -10,7 +10,7 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
           section
             .form-small
               h2= t('sign_up')
-              =render partial: 'registrations/oauth'
+              =render partial: 'registrations/oauth', locals: {r: local_assigns[:r]}
               =render partial: 'registrations/form', locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping, r: (defined?(r) && r)}
         - else
           section

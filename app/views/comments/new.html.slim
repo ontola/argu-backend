@@ -1,0 +1,6 @@
+.col-1
+  header
+    h1= t('arguments.comments.confirm')
+  =render partial: 'arguments/show', locals: {model: resource}
+  .box
+    =render partial: 'comments/form', locals: {resource: resource, parent_id: @parent_id, visible: true}

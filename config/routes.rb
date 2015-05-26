@@ -43,6 +43,7 @@ Argu::Application.routes.draw do
   concern :votable do
     get 'v' => 'votes#show', shallow: true, as: :show_vote
     post 'v/:for' => 'votes#create', shallow: true, as: :vote
+    get 'v/:for' => 'votes#new', shallow: true
   end
 
   use_doorkeeper do
@@ -101,7 +102,7 @@ Argu::Application.routes.draw do
   end
 
   resources :arguments, path: 'a', except: [:index, :new, :create], concerns: [:votable] do
-    resources :comments, path: 'c'
+    resources :comments, path: 'c', only: [:new, :index, :show, :create, :destroy]
     patch 'comments' => 'comments#create'
   end
 

@@ -1,6 +1,6 @@
 ul.btns-signup
   - User.omniauth_providers.each do |provider|
-    li=link_to user_omniauth_authorize_path(provider: provider), class: "btn btn--#{provider}"
+    li=link_to user_omniauth_authorize_path(provider: provider, r: local_assigns[:r]), class: "btn btn--#{provider}", data: {'skip-pjax' => 'true'}
       span[class="fa fa-#{provider}"]
       span.icon-left= t("sign_in_#{provider}")
   li

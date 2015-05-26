@@ -1,7 +1,7 @@
 module Omniauth
   class OmniauthFacebook
 
-    def self.create_user_without_shortname(auth, identity)
+    def self.create_user_without_shortname(auth, identity, r = nil)
       info = auth['info']
       raw = auth['extra']['raw_info']
       user = nil
@@ -14,6 +14,7 @@ module Omniauth
                  last_name: info['last_name'],
                  gender: raw['gender'],
                  finished_intro: true,
+                 r: r,
                  profile_attributes: {
                      remote_profile_photo_url: image_url
                  }
