@@ -1,18 +1,13 @@
-.col-1
+header
   h1= t('users.connect.title')
-  p= t('users.connect.text')
-  .col-3-1
-    .box
-      img[src=identity.image_url]
-      h2= identity.name
-  .col-3-1
-    span --->
-  .col-3-1
-    .box
-      img[src=user.profile.profile_photo.url(:icon)]
-      h2= user.display_name
-  =semantic_form_for(user, url: connect_user_path(token: token), method: :post ) do |f|
-    =f.inputs
-      =f.input :password, placeholder: t('users_password'), hint: false, label: true, input_html: {required: true, errors: ['test']}
-      =f.submit '_sign in and connect_'
-  =link_to t('forgot_password'), new_user_password_path
+.col-1
+  .box
+    section
+      p== t('users.connect.text', from_type: 'facebook', from_name: identity.name, to_name: user.display_name)
+      =semantic_form_for(user, url: connect_user_path(token: token), method: :post ) do |f|
+        =f.inputs
+          =f.input :password, placeholder: t('users_password_argu'), hint: false, label: t('users_password_argu'), input_html: {required: true, errors: ['test']}
+        ul.btns-devise
+          li=link_to t('forgot_password'), new_user_password_path
+        =f.actions
+          =f.action :submit, as: :button
