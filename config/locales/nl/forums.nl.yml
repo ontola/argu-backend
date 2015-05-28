@@ -2,14 +2,14 @@
 
 nl:
   forums:
-    resource_name: "forum"
-    type: "forum"
-    type_new: "nieuw forum"
-    plural: "forums"
+    resource_name: "Forum"
+    type: "Forum"
+    type_new: "Nieuw forum"
+    plural: "Forums"
     resource_name:
-      management: "forum beheer"
+      management: "Forum beheer"
     settings:
-      title: "Instellingen"
+      title: "Forum instellingen"
       general: "Algemene instellingen"
       profile: "Profiel instellingen"
       menu:
@@ -21,7 +21,7 @@ nl:
       terminology: "Terminologie"
       advanced: "Geavanceerd"
       privacy: "Privacy"
-      manager: "beheerder"
+      manager: "Beheerder"
       managers:
         title: "Beheerders"
         administrator: "Administrator"

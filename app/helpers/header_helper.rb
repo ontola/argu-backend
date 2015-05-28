@@ -49,11 +49,11 @@ module HeaderHelper
         sections: [
           {
               items: [
-                  link_item(t('profiles.display'), dual_profile_path(current_profile), fa: 'user'),
+                  link_item(t('show_type', type: t("#{current_profile.profileable.class_name}.type")), dual_profile_path(current_profile), fa: 'user'),
                   link_item(t('profiles.edit.title'), dual_profile_edit_path(current_profile), fa: 'pencil'),
-                  current_user.profile.pages.length > 0 ? link_item(t('pages.page_management').capitalize, pages_user_url(current_user), fa: 'building') : link_item(t('pages.create'), new_page_path, fa: 'building'),
-                  (link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group') if current_user.profile.forums.length > 0 ),
-                  link_item(t('users_show_title'), settings_url, fa: 'gear'),
+                  link_item(t('users.settings'), settings_url, fa: 'gear'),
+                  policy(Page).index? ? link_item(t('pages.page_management').capitalize, pages_user_url(current_user), fa: 'building') : link_item(t('pages.create'), new_page_path, fa: 'building'),
+                  (link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group') if policy(Forum).index? ),
                   link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'}),
                   nil #NotABug Make sure compact! actually returns the array and not nil
               ].compact!
@@ -104,11 +104,12 @@ module HeaderHelper
         sections: [
           {
               items: [
-                  link_item(t('about.vision'), about_path),
-                  link_item(t('about.team'), team_path  ),
-                  link_item(t('about.governments'), governments_path),
-                  link_item(t('about.how_argu_works'), how_argu_works_path),
-                  link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true})
+                  link_item(t('about.vision'), info_path(:about)),
+                  link_item(t('about.team'), info_path(:team)),
+                  link_item(t('about.governments'), info_path(:governments)),
+                  link_item(t('about.how_argu_works'), info_path(:how_argu_works_path)),
+                  link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true}),
+                  link_item(t('help_support'), 'https://argu.freshdesk.com/support/home')
               ]
           }
         ],

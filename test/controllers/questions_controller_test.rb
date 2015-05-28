@@ -3,6 +3,22 @@ require 'test_helper'
 class QuestionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  ####################################
+  # Not logged in
+  ####################################
+  test 'should get show when not logged in' do
+    get :show, id: questions(:one).id
+    assert_response 200
+    assert_not_nil assigns(:question)
+    assert_not_nil assigns(:forum)
+    assert_not_nil assigns(:motions)
+
+    assert_not assigns(:motions).any?(&:is_trashed?), 'Trashed motions are visible'
+  end
+
+  ####################################
+  # As user
+  ####################################
   test 'should get show' do
     sign_in users(:user)
 

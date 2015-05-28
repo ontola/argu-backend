@@ -29,7 +29,7 @@
     /- if @question.tags.present?
       =render partial: 'tags/tags', locals: {resource: @question}
     =render @question.creator, locals= {resource: @question}
-    ul.btns-list.btns-sticky.btns-sticky-bottom.btns-vertical
+    ul.btns-list.btns-sticky.btns-sticky-bottom.btns-horizontal
       - if current_user.present? && policy(@question).update? || active_for_user?(:notifications, current_user)
         li
           ul= react_component 'HyperDropdown', question_items(@question), {prerender: true}

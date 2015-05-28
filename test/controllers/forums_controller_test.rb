@@ -3,6 +3,21 @@ require 'test_helper'
 class ForumsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  ####################################
+  # Not logged in
+  ####################################
+  test 'should get show when not logged in' do
+    get :show, id: forums(:utrecht)
+    assert_response 200
+    assert_not_nil assigns(:forum)
+    assert_not_nil assigns(:items)
+
+    assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
+  end
+
+  ####################################
+  # As user
+  ####################################
   test 'should get show' do
     sign_in users(:user)
 
@@ -62,7 +77,7 @@ class ForumsControllerTest < ActionController::TestCase
 
 
   ####################################
-  # For owners
+  # As owner
   ####################################
 
   test 'should show settings and all tabs' do
@@ -117,7 +132,7 @@ class ForumsControllerTest < ActionController::TestCase
 
 
   ####################################
-  # For managers
+  # As manager
   ####################################
 
   test 'should show settings and some tabs' do

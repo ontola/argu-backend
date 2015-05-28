@@ -3,6 +3,9 @@ require 'test_helper'
 class CommentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  ####################################
+  # As user
+  ####################################
   test 'should post create comment' do
     sign_in users(:user)
 

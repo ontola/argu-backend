@@ -15,4 +15,8 @@ module ContextHelper
     link_to name, options, html_options, &block
   end
 
+  def forum_from_scope_or_model(current_scope, model)
+    current_scope.model.try(:forum) || current_scope.model || model.forum
+  end
+
 end

@@ -23,6 +23,8 @@ nl:
   not_found_type: "%{type} niet gevonden"
   edit: "Bewerken"
   edit_type: "%{type} bewerken"
+  show_type: "%{type} weergeven"
+  settings_type: "%{type}instellingen"
   read_more: "Lees meer"
   collapse: "Inklappen"
   update: "Bijwerken"
@@ -90,6 +92,8 @@ nl:
   home_new_text: "Nederlands awesome slogan."
 #About
   info: "Info"
+  help: "Help"
+  help_support: "Help & support"
   about:
     title: "Over"
     vision: "Onze visie"

@@ -8,6 +8,7 @@ h1, h2, h3 {
   font-weight: bold;
   font-weight: 700;
   word-break: break-word;
+  line-height: 1.5em;
   span {
     font-family: $font-special;
   }
@@ -116,7 +117,6 @@ header {
 
 header h1, header h2 {
   color: $g4;
-  margin-top: 1em;
   margin-bottom: 0.8em;
   @include uppercase;
 }

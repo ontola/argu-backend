@@ -16,6 +16,7 @@
 client-bundle.js
 client-bundle.js.map
 node_modules
+/vendor/assets/bower_components
 .env
 
 # Ignore secrets

@@ -3,6 +3,7 @@
 #
 # todo: lazy load items when parsed from a string (every item currently creates a db request)
 class Context
+  using StringExtensions
   extend ArguExtensions::Context # WHY DOES THE SEND :EXTEND NOT WORK
   include Rails.application.routes.url_helpers
   include ApplicationHelper # For merge_query_parameters
@@ -51,10 +52,10 @@ class Context
     @parent_context || model && model.try(:get_parent)
   end
 
-  def self.parse_from_uri(value, model=nil)
+  def self.parse_from_uri(value, model=nil, &block)
     context_string = Hash[URI.decode_www_form(URI.parse(value.to_s).query || '')]['context']
     if context_string
-      Context.parse_from_context_string context_string, model
+      Context.parse_from_context_string context_string, model, &block
     elsif model.present? && model.try(:get_parent)
       Context.new model, model.get_parent
     else
@@ -63,8 +64,10 @@ class Context
   end
 
   # Parses a {Context} object chain from a {Context}-string
-  def self.parse_from_context_string(value, current=nil)
-    components = value.split('*').map { |c| c.split(/ |\+/) }.map! { |c| c[0].capitalize.constantize.find c[1] }
+  def self.parse_from_context_string(value, current=nil, &block)
+    components = value.split('*').map { |c| c.split(/ |\+/) }.map! { |c| c[0].capitalize.constantize_with_care([Forum, Question, Motion, Argument, Comment]).find c[1] }
+
+    yield components if block_given?
 
     (components << current).compact!
     context = Context.new(components.shift)

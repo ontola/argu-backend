@@ -10,7 +10,7 @@
   /- if motion.tags.present?
     ul[class="tags" data-intro= t("intro.tags")]= render partial: 'tags/tags', locals: {resource: motion}
   =render partial: motion.creator, locals: {resource: motion}
-  ul.btns-list.btns-vertical.btn-sticky-bottom.btn-sticky
+  ul.btns-list.btns-horizontal.btn-sticky-bottom.btn-sticky
     - if current_user.present? && policy(motion).update? || active_for_user?(:notifications, current_user)
       li
         ul= react_component 'HyperDropdown', motion_items(motion), {prerender: true}

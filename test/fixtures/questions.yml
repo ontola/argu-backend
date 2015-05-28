@@ -20,3 +20,9 @@ two:
   content: 'Inhoud van vraagstuk2'
   forum: :utrecht
   creator: :profile_two
+#
+question_one_no_create_without_question:
+  title: 'Question'
+  content: 'Question contents'
+  forum: :no_create_without_question
+  creator: :profile_one

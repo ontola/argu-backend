@@ -6,10 +6,10 @@
       section.section-info.motion-bg
         span[class="fa fa-#{motion_icon}"]
         span.icon-left= motion_type
-      = semantic_form_for((@motion.new_record? ? [@forum, @motion] : @motion), html: {autocomplete: 'off'}) do |f|
+      =semantic_form_for((@motion.new_record? ? [@forum, @motion] : @motion), html: {autocomplete: 'off'}) do |f|
         section.smallpadded.form-filled
           =f.inputs
-            =f.input :title, input_html: {class: 'h1 motion-t form-input-title'}, label: false, placeholder: placeholder_for(@motion, :title, motion_type)
+            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'motion-t form-input-title'}, label: false, placeholder: placeholder_for(@motion, :title, motion_type)
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, placeholder: placeholder_for(@motion, :content, motion_type)
             =f.input :tag_list, input_html: {class: 'tag-list'}, label: false
             =f.input :cover_photo

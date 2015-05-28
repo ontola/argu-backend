@@ -62,16 +62,11 @@ module ApplicationHelper
   # Generates social media links for any resource for HyperDropdown
   def share_items(resource)
     link_items = []
-    url = CGI.escape(url_for([resource, only_path: false]))
-    #image = resource.display_name
-    facebook_url = "https://www.facebook.com/dialog/feed?app_id=#{Rails.application.secrets.facebook_app_id}&display=popup&link=#{url}&redirect_uri=#{url}"
-    twitter_url = "https://twitter.com/intent/tweet?url=#{url}&text=#{resource.display_name}%20%23Argu"
-    linkedin_url = "http://www.linkedin.com/shareArticle?url=#{url}"
+    url = url_for([resource, only_path: false])
 
-
-    link_items << link_item('Facebook', facebook_url, fa: 'facebook')
-    link_items << link_item('Twitter', twitter_url, fa: 'twitter')
-    link_items << link_item('LinkedIn', linkedin_url, fa: 'linkedin')
+    link_items << link_item('Facebook', ShareHelper.facebook_share_url(url), fa: 'facebook')
+    link_items << link_item('Twitter', ShareHelper.twitter_share_url(url, title: resource.display_name), fa: 'twitter')
+    link_items << link_item('LinkedIn', ShareHelper.linkedin_share_url(url, title: resource.display_name), fa: 'linkedin')
 
     dropdown_options(t('share'), [{items: link_items}], fa: 'fa-share-alt')
   end
