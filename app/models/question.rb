@@ -70,7 +70,7 @@ class Question < ActiveRecord::Base
   end
 
   def top_motions
-    motions.order(updated_at: :desc).limit(3)
+    motions.trashed(false).order(updated_at: :desc).limit(3)
   end
 
   scope :index, ->(trashed, page) { trashed(trashed).page(page) }
