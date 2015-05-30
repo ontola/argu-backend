@@ -30,7 +30,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
             li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn-fill pro-bg'
               span.fa.fa-user
               span.icon-left= t('join')
-          -if policy(Motion).create_without_question?
+          -if policy(Motion).new_without_question?
             li[data-intro=t('intro.motion.create', name: @forum.name) data-step=12 data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]
               =link_to new_forum_motion_path(@forum), data: remote_unless_user, class: 'motion-bg btn-fill '
                 span.fa[class="fa-#{motion_icon}"]
