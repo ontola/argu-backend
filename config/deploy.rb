@@ -57,7 +57,7 @@ namespace :deploy do
   task :install_bower do
     on roles(:web) do
       within release_path do
-        execute :rake, 'bower:install CI=true'
+        execute :bower, 'install'
       end
     end
   end

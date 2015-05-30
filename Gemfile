@@ -48,7 +48,6 @@ gem 'kaminari', '~>0.16.1'
 gem 'react-rails', '~> 1.0'
 
 ##################Asset-y########################
-gem 'bower-rails', '~> 0.9.2'
 gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
 gem 'jquery-rails'
