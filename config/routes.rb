@@ -75,7 +75,7 @@ Argu::Application.routes.draw do
   end
 
   resources :users, path: 'u', only: [:show, :update] do
-    resources :identities, only: :destroy, to: 'users/identities'
+    resources :identities, only: :destroy, controller: 'users/identities'
     get :edit, to: 'profiles#edit', on: :member
 
     get :connect, to: 'users#connect', on: :member
