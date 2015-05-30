@@ -28,6 +28,17 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def read
+    authorize Notification, :read?
+
+    if policy_scope(Notification).where(read_at: nil).update_all read_at: Time.now
+      @notifications = get_notifications
+      render 'notifications/index'
+    else
+      head 400
+    end
+  end
+
   def update
     notification = Notification.includes(activity: :trackable).find(params[:id])
     authorize notification, :update?

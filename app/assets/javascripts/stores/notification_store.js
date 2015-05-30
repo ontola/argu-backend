@@ -1,11 +1,23 @@
-window.NotificationActions = Reflux.createActions([
-    "notificationUpdate"
-]);
+window.NotificationActions = Reflux.createActions({
+    "notificationUpdate": {},
+    "markAllAsRead": {asyncResult: true}
+});
 
 window.notificationStore = Reflux.createStore({
     init: function() {
         // Register statusUpdate action
         this.listenTo(NotificationActions.notificationUpdate, this.output);
+        this.listenTo(NotificationActions.markAllAsRead, this.onMarkAllAsRead);
+    },
+
+    onMarkAllAsRead: function () {
+        "use strict";
+        $.ajax({
+            url: "/n/read.json",
+            method: "PATCH"
+        }).done(function (data) {
+            NotificationActions.notificationUpdate(data.notifications);
+        }).fail(NotificationActions.markAllAsRead.failed);
     },
 
     // Callback

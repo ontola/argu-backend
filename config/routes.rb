@@ -50,7 +50,9 @@ Argu::Application.routes.draw do
     controllers :applications => 'oauth/applications'
   end
 
-  resources :notifications, only: [:index, :update], path: 'n'
+  resources :notifications, only: [:index, :update], path: 'n' do
+    patch :read, on: :collection
+  end
   put 'actors', to: 'actors#update'
 
   require 'sidekiq/web'

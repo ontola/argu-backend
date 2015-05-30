@@ -102,6 +102,10 @@ var Notifications = React.createClass({
         return this.props;
     },
 
+    markAsRead: function () {
+        NotificationActions.markAllAsRead();
+    },
+
     onNotificationChange: function (notifications) {
         if (typeof(notifications.unread) != "undefined") {
             if (notifications.notifications.length > 0) {
@@ -153,6 +157,7 @@ var Notifications = React.createClass({
         });
 
         return (<ul className="notifications">
+            <p><a href="#" onClick={this.markAsRead}>Mark as read</a></p>
             {notifications}
             <li>
                 <a href='#' onMouseDownCapture={this.loadMore} data-skip-pjax="true">
