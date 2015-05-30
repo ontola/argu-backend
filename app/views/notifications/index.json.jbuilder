@@ -4,6 +4,7 @@ json.notifications do
   json.notifications @notifications do |notification|
     json.id notification.id
     json.title notification.title
+    json.created_at notification.created_at
     json.url url_for(notification.url_object)
     json.read notification.read_at.present?
     json.read_at notification.read_at

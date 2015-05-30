@@ -131,6 +131,11 @@ var Notifications = React.createClass({
         }
     },
 
+    loadMore: function () {
+        let lastNotification = this.state.notifications[this.state.notifications.length-1];
+        window.alert(`Todo: Fetch items from ${lastNotification.created_at}`);
+    },
+
     componentDidMount: function () {
         NotificationActions.notificationUpdate(this.props);
         this.unsubscribe = notificationStore.listen(this.onNotificationChange);
@@ -149,6 +154,11 @@ var Notifications = React.createClass({
 
         return (<ul className="notifications">
             {notifications}
+            <li>
+                <a href='#' onMouseDownCapture={this.loadMore} data-skip-pjax="true">
+                    <span className='notification-description'>Load more</span>
+                </a>
+            </li>
         </ul>);
     }
 });
@@ -199,4 +209,3 @@ var NotificationItem = React.createClass({
         </li>);
     }
 });
-

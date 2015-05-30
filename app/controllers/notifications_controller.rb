@@ -4,21 +4,10 @@ class NotificationsController < ApplicationController
     # This must be performed to prevent pundit errors
     policy_scope(Notification)
     if current_user.present?
-      begin
-        since = DateTime.parse(request.headers[:lastNotification]).to_s(:db) if request.headers[:lastNotification]
-        new_available = true
-        if since.present?
-          new_available = policy_scope(Notification).order(created_at: :desc).where('created_at > ?', since).count > 0
-        end
-        @notifications = get_notifications(since) if new_available
-        if @notifications.present?
-          @unread = get_unread
-          render
-        else
-          head 204
-        end
-      rescue ArgumentError
-        head 400
+      if params[:from_time].present?
+        fetch_more
+      else
+        refresh
       end
     else
       policy_scope(Notification)
@@ -52,9 +41,19 @@ class NotificationsController < ApplicationController
     end
   end
 
-private
-  def permit_params
-    params.require(:notification).permit(*policy(@notification || Notification).permitted_attributes)
+  private
+  def fetch_more
+    begin
+      begin
+        from_time = DateTime.parse(params[:from_time]).to_s
+      rescue ArgumentError
+        from_time = nil
+      end
+
+      @notifications = policy_scope(Notification).since(from_time).page params[:page]
+    rescue ArgumentError
+      head 400
+    end
   end
 
   def get_notifications(since=nil)
@@ -63,5 +62,28 @@ private
 
   def get_unread
     policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count
+  end
+
+  def refresh
+    begin
+      since = DateTime.parse(request.headers[:lastNotification]).to_s(:db) if request.headers[:lastNotification]
+      new_available = true
+      if since.present?
+        new_available = policy_scope(Notification).order(created_at: :desc).where('created_at > ?', since).count > 0
+      end
+      @notifications = get_notifications(since) if new_available
+      if @notifications.present?
+        @unread = get_unread
+        render
+      else
+        head 204
+      end
+    rescue ArgumentError
+      head 400
+    end
+  end
+
+  def permit_params
+    params.require(:notification).permit(*policy(@notification || Notification).permitted_attributes)
   end
 end
