@@ -20,7 +20,8 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   =yield :connected_web
 
   link[rel="copyright" content="#{t('site.copyright')}"]
-  =render partial:'external/inspectlet'
+  - if active_for_user?('inspectlet', current_user)
+    =render partial:'external/inspectlet'
 body
   - if current_user && current_user.profile.has_role?(:staff)
     =render partial: 'staff_sign'
