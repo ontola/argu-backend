@@ -65,7 +65,6 @@
             .form-item
               =render partial: 'authentications/login_providers', locals: {providers: login_providers_left(@user)}
           - elsif !@user.password_required? && @user.identities.length == 1
-
             p= t('users.authentications.cant_decouple_note_provider', provider: @user.identities.first.provider)
 
         =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
