@@ -80,7 +80,7 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
           =devise_error_messages!
           .form-small
             h2= t('sign_in')
-            =f.inputs
+            .inspectlet-sensitive=f.inputs
               /.info.info-signup= t('sign_in_existing')
               =f.input :email, placeholder: t('users_email'), autofocus: :autofocus, label: false, input_html: {required: true}
               =f.input :password, placeholder: t('users_password'), hint: false, label: false, input_html: {required: true}

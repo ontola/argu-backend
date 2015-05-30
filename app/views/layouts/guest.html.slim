@@ -6,7 +6,7 @@ doctype html
 /[if IE 8]
   | <html class="lt-ie9">
 /[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
-head
+head[itemscope itemtype="http://schema.org/WebSite"]
   meta[charset="UTF-8"]
   title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
   =csrf_meta_tags

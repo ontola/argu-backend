@@ -20,6 +20,7 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   =yield :connected_web
 
   link[rel="copyright" content="#{t('site.copyright')}"]
+  =render partial:'external/inspectlet'
 body
   - if current_user && current_user.profile.has_role?(:staff)
     =render partial: 'staff_sign'
@@ -39,4 +40,3 @@ body
   - if Rails.env.production? || Rails.env.test?
     =render partial: 'analytics'
   audio[id="notificationSound" src="/notification.wav" preload="auto"]
-
