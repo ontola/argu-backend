@@ -85,6 +85,7 @@ nl:
     about:
       header: "Waarvoor is dit forum?"
       body: "Een Argu forum is een discussie omgeving waar ideeën worden gedeeld en besproken, zodat er betere beslissingen worden genomen. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"
+    is_closed: "Dit forum is gesloten. Alleen leden mogen de inhoud van dit forum bekijken. Vraag aan leden of de beheerder van het forum hoe je toegang kan krijgen."
     follow: "Volgen"
     unfollow: "Ontvolgen"
     managers:

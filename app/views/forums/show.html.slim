@@ -26,7 +26,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
       .cover-buttons-container
         ul.btns-list.btns-horizontal
           /TODO: Make this check the current profile, not the user
-          - if !policy(@forum).is_member?
+          - if !policy(@forum).is_member? && policy(@forum).is_open?
             li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn-fill pro-bg'
               span.fa.fa-user
               span.icon-left= t('join')
@@ -76,3 +76,14 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
         section
           p
             b== t('forums.about.body')
+  - else
+    .col-1
+      .box
+        section
+          p= t('forums.is_closed')
+      =link_to discover_forums_path do
+        .box.box-link
+          section
+            h3
+              span.fa.fa-compass
+              span.icon-left= t('forums.show_open')
