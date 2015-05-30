@@ -55,14 +55,14 @@ namespace :deploy do
 
   desc 'Install bower'
   task :install_bower do
-    on roles(:web) do
+    on roles(:web, :app) do
       within release_path do
         execute :bower, 'install'
       end
     end
   end
 
-  before 'deploy:compile_assets', 'deploy:install_bower'
+  before 'deploy:compile_assets', :install_bower
   after :updated, :compile_assets
   after :publishing, :update_build_number
   after :publishing, :link_staging_assets
