@@ -4,7 +4,7 @@ ul.btns-signup
       span[class="fa fa-#{provider}"]
       span.icon-left= t("sign_in_#{provider}")
   li
-    a.btn.btn--argu href="/users/sign_up"
+    =link_to new_user_registration_url(r: local_assigns[:r]), class: 'btn btn--argu'
       span.fa.fa-plus
       span.icon-left= t('sign_up_argu')
 
