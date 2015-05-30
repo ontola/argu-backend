@@ -3,7 +3,7 @@
   =render partial: 'profiles/profile_bar'
   .box
     =semantic_form_for @user, url: settings_path, method: :put do |f|
-      section
+      section.inspectlet-sensitive
         =f.semantic_errors :email, :base
         =f.inputs name: t('users.registrations.categories.general') do
           p= t('profiles.edit.shortname_not_allowed')

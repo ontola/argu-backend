@@ -1,4 +1,4 @@
-=semantic_form_for @profile, url: @resource.url.present? ? profile_path(@resource) : settings_path, method: @resource.r.present? ? :post : :put  do |f|
+.inspectlet-sensitive=semantic_form_for @profile, url: @resource.url.present? ? profile_path(@resource) : settings_path, method: @resource.r.present? ? :post : :put  do |f|
   - if @resource.url.blank?
     =f.inputs name: t('profiles.edit.shortname') do
       =f.inputs :shortname, for: :shortname
