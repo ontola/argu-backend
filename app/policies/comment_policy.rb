@@ -39,7 +39,7 @@ class CommentPolicy < RestrictivePolicy
   end
 
   def show?
-    rule Pundit.policy(context, record.forum).show?, super
+    rule forum_policy.show?, super
   end
 
   def trash?

@@ -2,11 +2,8 @@ class VotesController < ApplicationController
 
   # GET /model/:model_id/vote
   def show
-    if params[:argument_id].present?
-      @model = Argument.find params[:argument_id]
-    elsif params[:motion_id].present?
-      @model = Motion.find params[:motion_id]
-    end
+    @model = voteable_class.find params[voteable_param]
+
     if current_profile.blank?
       authorize @model, :show?
       render_register_modal(nil)
@@ -27,13 +24,16 @@ class VotesController < ApplicationController
     end
   end
 
+  def new
+    @model = voteable_class.find params[voteable_param]
+    authorize @model, :show?
+    redirect_to url_for(@model)
+  end
+
   # POST /model/:model_id/v/:for
   def create
-    if params[:argument_id].present?
-      @model = Argument.find params[:argument_id]
-    elsif params[:motion_id].present?
-      @model = Motion.find params[:motion_id]
-    end
+    @model = voteable_class.find params[voteable_param]
+
     if current_profile.blank?
       authorize @model, :show?
       render_register_modal(nil)
@@ -71,6 +71,19 @@ private
   # noinspection RubyUnusedLocalVariable
   def save_vote_to_stats(vote)
     #TODO: @implement this
+  end
+
+  def voteable_param
+    request.path_parameters.keys.find { |k| /_id/ =~ k }
+  end
+
+  def voteable_type
+    voteable_param[0..-4]
+  end
+
+  # Note: Safe to constantize since `path_parameters` uses the routes for naming.
+  def voteable_class
+    voteable_type.capitalize.constantize
   end
 
 end

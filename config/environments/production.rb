@@ -2,9 +2,6 @@ Argu::Application.configure do
   config.host = ENV['HOSTNAME'] || 'https://argu.co'
   # Settings specified here will take precedence over those in config/application.rb
 
-  config.epics = ActiveSupport::OrderedOptions.new
-  config.epics.open_auth = false                      # Facebook, twitter, google, openID login & account linking shown in profile
-
   config.logstasher.enabled = true
 
   config.react.variant = :production

@@ -30,7 +30,8 @@ class RegistrationsController < Devise::RegistrationsController
     @user.errors.add(:current_password, t('errors.messages.should_match')) unless @user.valid_password?(params[:user][:current_password])
     @user.errors.add(:repeat_name, t('errors.messages.should_match')) unless params[:user][:repeat_name] == @user.url
     respond_to do |format|
-      if @user.valid_password?(params[:user][:current_password]) && @user.destroy
+      valid_password = @user.password_required? ? @user.valid_password?(params[:user][:current_password]) : true
+      if valid_password && @user.destroy
         Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
         format.html { redirect_to root_path, notice: 'Account verwijderd.' }
         format.json { head :no_content }

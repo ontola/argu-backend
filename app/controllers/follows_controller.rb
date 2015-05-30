@@ -36,6 +36,6 @@ private
   def set_thing
     klass = [Forum, Question, Motion, Argument, Comment].detect { |c| params["#{c.name.underscore}_id"] }
     method = klass.respond_to?(:friendly) ? klass.friendly : klass
-    @thing = method.find(params["#{klass.name.underscore}_id"])
+    @thing = method.find_via_shortname(params["#{klass.name.underscore}_id"]) || method.find(params["#{klass.name.underscore}_id"])
   end
 end

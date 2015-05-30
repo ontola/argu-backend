@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Devise::PasswordsControllerTest < ActionController::TestCase
+class Users::PasswordsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   test 'should get new' do

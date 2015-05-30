@@ -1,4 +1,25 @@
 class CommentsController < ApplicationController
+  skip_after_action :verify_policy_scoped, :only => :index
+
+  # Note: Used to redirect to confirm in the 'r' system
+  def index
+    if params[:comment].present?
+      redirect_to({controller: 'comments', action: :new, commentable_param => params[commentable_param], comment: params[:comment]})
+    else
+      raise ActiveRecord::RecordNotFound
+    end
+  end
+
+  def new
+    @commentable = commentable_class.find params[commentable_param]
+    @comment = Comment.build_from(@commentable, current_profile.id, params[:comment])
+    authorize @comment, :create?
+
+    render locals: {
+               resource: @commentable,
+               comment: @comment
+           }
+  end
 
   def show
     @comment = Comment.find params[:id]
@@ -72,6 +93,19 @@ private
       when 'a' then Argument
     end
     resource.find(id)
+  end
+
+  def commentable_param
+    request.path_parameters.keys.find { |k| /_id/ =~ k }
+  end
+
+  def commentable_type
+    commentable_param[0..-4]
+  end
+
+  # Note: Safe to constantize since `path_parameters` uses the routes for naming.
+  def commentable_class
+    commentable_type.capitalize.constantize
   end
 
 end

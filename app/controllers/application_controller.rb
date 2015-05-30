@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :set_layout
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
+  around_action :set_time_zone
   #after_action :set_notification_header
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
@@ -144,6 +145,11 @@ class ApplicationController < ActionController::Base
     else
       response.headers[:lastNotification] = '-1'
     end
+  end
+
+  def set_time_zone(&block)
+    time_zone = current_user.try(:time_zone) || 'UTC'
+    Time.use_zone(time_zone, &block)
   end
 
   # Deletes all other activities created within 6 hours of the new activity.

@@ -67,3 +67,4 @@ nl:
       body:
         profile: "Jouw profiel is zichtbaar voor alle bezoekers van Argu. Je hoeft niets in te vullen, maar met een volledige naam en een foto kom je betrouwbaarder over."
         selector: "Binnen argu zijn discussies opgedeelt in forums. Elk forum richt zich op een gebied of onderwerp.<br/><br/><b>Kies hieronder (ten minste twee) forums welke je interessant lijken:</b>"
+        shortname: "Je hoeft alleen nog maar een gebruikersnaam te kiezen om te beginnen met Argu."

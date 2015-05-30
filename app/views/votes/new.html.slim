@@ -1,0 +1,7 @@
+.col-1
+  header
+    h1= t('votes.confirm.headline')
+  =render partial: 'motions/show', locals: {model: resource}
+  =react_component 'CombiBigVote', motion_combi_vote_props(current_profile, resource, vote), {prerender: true}
+  /.box
+    =render partial: 'comments/form', locals: {resource: resource, parent_id: @parent_id, visible: true}

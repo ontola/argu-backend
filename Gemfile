@@ -23,6 +23,7 @@ gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
 gem 'rest-client'
 gem 'multimap'
+gem 'geokit-rails'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
@@ -34,6 +35,8 @@ gem 'public_activity'
 gem 'acts_as_follower'
 gem 'rollout'
 gem 'html_truncator', '~>0.2'
+gem 'jwt'
+gem 'doorkeeper', '~> 2.2.1'
 #Search
 
 #Pagination
@@ -45,6 +48,7 @@ gem 'kaminari', '~>0.16.1'
 gem 'react-rails', '~> 1.0'
 
 ##################Asset-y########################
+gem 'bower-rails', '~> 0.9.2'
 gem 'slim', '~> 2.1.0'
 #gem 'slim-rails'
 gem 'jquery-rails'
@@ -64,18 +68,18 @@ gem 'jquery-pjax-rails'
 gem 'rack-pjax'
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.0.2'
-gem 'sprockets-es6'
+gem 'sprockets-es6', require: 'sprockets/rails'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'
 gem 'devise_invitable', '~> 1.4.0'
-#gem 'omniauth', :git => 'git://github.com/intridea/omniauth.git'
 gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-oauth2', '~> 1.2.0'
-gem 'omniauth-facebook', '~> 2.0.0'
-gem 'omniauth-twitter', '~> 1.1.0'
+gem 'omniauth-facebook', '~> 2.0.1'
+gem 'koala', '~> 1.11.1'
+gem 'omniauth-twitter', '~> 1.2.0'
 #gem 'omniauth-openid'
-gem 'pundit', '~> 0.3.0'
+gem 'pundit', '~> 1.0.0'
 gem 'rolify', '~> 3.4.1'
 
 group :development, :test do
@@ -84,7 +88,10 @@ group :development, :test do
   gem 'nokogiri', '1.6.5'
   gem 'minitest-rails', '~> 2.1.1'
   gem 'minitest-reporters', '~> 1.0.8'
+  gem 'mocha'
+  gem 'pry'
   gem 'byebug'
+  gem 'pry-byebug'
   gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
