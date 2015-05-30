@@ -53,6 +53,16 @@ namespace :deploy do
     end
   end
 
+  desc 'Install bower'
+  task :install_bower do
+    on roles(:web) do
+      within release_path do
+        execute :rake, 'bower:install CI=true'
+      end
+    end
+  end
+
+  before 'deploy:compile_assets', 'deploy:install_bower'
   after :updated, :compile_assets
   after :publishing, :update_build_number
   after :publishing, :link_staging_assets
