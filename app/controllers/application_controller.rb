@@ -92,12 +92,21 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def forum_by_geocode
+    if session[:geo_location].present?
+      forum = Forum.find_via_shortname(session[:geo_location].city.downcase) if session[:geo_location].city.present?
+      forum ||= Forum.find_via_shortname(session[:geo_location].country.downcase) if session[:geo_location].country.present?
+      forum = Forum.find_via_shortname('eu') if forum.blank? && EU_COUNTRIES.include?(session[:geo_location].country_code)
+      forum
+    end
+  end
+
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses {Forum.first_public}
   def preferred_forum
     if current_profile.present?
       policy(current_profile.preferred_forum).show? ? current_profile.preferred_forum : current_profile.memberships.first.try(:forum) || Forum.first_public
     else
-      Forum.first_public
+      forum_by_geocode || Forum.first_public
     end
   end
 

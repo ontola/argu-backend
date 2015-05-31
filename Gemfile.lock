@@ -489,7 +489,7 @@ DEPENDENCIES
   factory_girl_rails
   flamegraph
   formtastic (~> 3.1.2)
-  geokit-rails
+  geokit-rails (= 2.1.0)
   has_secure_token
   html_truncator (~> 0.2)
   indefinite_article

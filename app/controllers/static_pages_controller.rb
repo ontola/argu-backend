@@ -1,4 +1,5 @@
 class StaticPagesController < ApplicationController
+  geocode_ip_address
 
   def home
     authorize :static_page
