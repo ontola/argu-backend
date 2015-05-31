@@ -10,9 +10,10 @@ Argu::Application.configure do
 
   config.react.variant = :production
 
+  config.middleware.use Rack::Attack
+
   # Code is not reloaded between requests
   config.cache_classes = true
-
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on

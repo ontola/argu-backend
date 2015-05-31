@@ -37,6 +37,7 @@ gem 'rollout'
 gem 'html_truncator', '~>0.2'
 gem 'jwt'
 gem 'doorkeeper', '~> 2.2.1'
+gem 'rack-attack'
 #Search
 
 #Pagination
