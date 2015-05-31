@@ -60,7 +60,7 @@ class NotificationsController < ApplicationController
       rescue ArgumentError
         from_time = nil
       end
-
+      @from_time = from_time
       @notifications = policy_scope(Notification).since(from_time).page params[:page]
     rescue ArgumentError
       head 400
@@ -77,7 +77,7 @@ class NotificationsController < ApplicationController
 
   def refresh
     begin
-      since = DateTime.parse(request.headers[:lastNotification]).to_s(:db) if request.headers[:lastNotification]
+      since = DateTime.parse(last_notification).to_s(:db) if last_notification
       new_available = true
       if since.present?
         new_available = policy_scope(Notification).order(created_at: :desc).where('created_at > ?', since).count > 0
@@ -92,6 +92,10 @@ class NotificationsController < ApplicationController
     rescue ArgumentError
       head 400
     end
+  end
+
+  def last_notification
+    params[:lastNotification] || request.headers[:lastNotification]
   end
 
   def permit_params

@@ -1,6 +1,7 @@
 json.notifications do
   json.unread @unread
   json.lastNotification @notifications.first && @notifications.first.created_at
+  json.from_time @from_time
   json.notifications @notifications do |notification|
     json.id notification.id
     json.title notification.title

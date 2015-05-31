@@ -71,7 +71,8 @@ module HeaderHelper
                             type: 'notifications',
                             unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count,
                             lastNotification: nil,
-                            notifications: []
+                            notifications: [],
+                            loadMore: true
                         }],
                      trigger: {
                          type: 'notifications',
