@@ -80,7 +80,7 @@ module HeaderHelper
                      },
                      fa: 'fa-bell',
                      triggerClass: 'navbar-item',
-                     contentClassName: 'notifications')
+                     contentClassName: 'notifications notification-container')
   end
 
   def public_forum_items
