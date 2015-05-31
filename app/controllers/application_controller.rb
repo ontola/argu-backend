@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :check_finished_intro
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_layout
+  before_action :set_locale
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
   around_action :set_time_zone
@@ -142,9 +143,7 @@ class ApplicationController < ActionController::Base
 
   # @private
   def set_locale
-    unless current_user.nil?
-      I18n.locale = current_user.settings.locale || I18n.default_locale
-    end
+    I18n.locale = current_user.try(:language) || http_accept_language.compatible_language_from(I18n.available_locales)
   end
 
   # @private

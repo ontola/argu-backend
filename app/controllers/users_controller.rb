@@ -55,7 +55,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if successfully_updated
-        format.html { redirect_to settings_path, notice: 'Wijzigingen opgeslagen.' }
+        format.html { redirect_to settings_path }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }

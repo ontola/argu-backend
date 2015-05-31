@@ -23,7 +23,6 @@ gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
 gem 'rest-client'
 gem 'multimap'
-gem 'geokit-rails', '2.1.0'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
@@ -38,6 +37,9 @@ gem 'html_truncator', '~>0.2'
 gem 'jwt'
 gem 'doorkeeper', '~> 2.2.1'
 gem 'rack-attack'
+gem 'country_select'
+gem 'http_accept_language'
+gem 'geokit-rails', '2.1.0'
 #Search
 
 #Pagination

@@ -86,5 +86,5 @@ Argu::Application.configure do
 
   config.active_record.raise_in_transactional_callbacks = true
 
-  config.i18n.available_locales = [:nl, :en]
+  config.i18n.available_locales = [:nl]
 end
