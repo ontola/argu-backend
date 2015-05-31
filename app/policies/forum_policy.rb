@@ -99,6 +99,10 @@ class ForumPolicy < RestrictivePolicy
   end
 
   ######Actions######
+  def add_group_member?
+    rule is_manager?, is_owner?, staff?
+  end
+
   def create?
     super
   end
