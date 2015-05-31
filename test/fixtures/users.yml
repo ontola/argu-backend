@@ -71,3 +71,11 @@ user_facebook_only:
   first_name: 'First'
   last_name: 'Lastname_facebook'
   confirmed_at: <%= Time.now %>
+#
+user_page_manager:
+  email: 'page_manager@page.nl'
+  encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
+  finished_intro: true
+  first_name: 'manager'
+  last_name: 'Page'
+  confirmed_at: <%= Time.now %>

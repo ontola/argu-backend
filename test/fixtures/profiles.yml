@@ -25,6 +25,10 @@ profile_one:
   profileable: user (User)
   about: 'Im a user'
   are_votes_public: true
+profile_user_page_manager:
+  profileable: user_page_manager (User)
+  about: 'Im a user'
+  are_votes_public: true
 # Can't have con votes since those are used to test whether votes are shown correctly
 profile_two:
   profileable: user2 (User)
@@ -54,4 +58,9 @@ profile_not_accepted:
   profileable: not_accepted (Page)
   name: 'Someone'
   about: "Apparently we don't agree."
+  are_votes_public: true
+profile_page:
+  profileable: page (Page)
+  name: 'A page'
+  about: "Like an org."
   are_votes_public: true
