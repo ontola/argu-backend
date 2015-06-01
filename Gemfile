@@ -125,9 +125,5 @@ group :staging, :development do
 end
 
   gem 'briarcliff', '~> 0.0.9'
-  #gem 'briarcliff', path: '/Users/thom1/Developer/briarcliff', platform: :ruby
-  #gem 'briarcliff', path: 'C:\sites\briarcliff', platform: :mswin
 
   gem 'pica_pica', '~> 0.0.1'
-  #gem 'pica_pica', path: '/Users/thom1/Developer/ruby/pica_pica', platform: :ruby
-  #gem 'pica_pica', git: 'git@bitbucket.org:fletcher91/pica_pica.git', platform: :mswin
