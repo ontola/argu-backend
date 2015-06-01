@@ -121,7 +121,7 @@ span.dropdown-header {
   }
 }
 
-.btns-list .dropdown-content {
+.btns-list--subtle .dropdown-content {
   font-size: 120%;
 }
 
@@ -148,6 +148,6 @@ span.dropdown-header {
   color: $g4;
 }
 
-.btns-list .dropdown-active {
+.btns-list--subtle .dropdown-active {
   background-color: $darken2;
 }

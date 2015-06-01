@@ -3,7 +3,6 @@
 
 .btn {
   @include button();
-  margin-bottom: 1em;
 }
 
 .actions .btn, .form-actions .btn {
@@ -51,15 +50,19 @@
   @include button($red-alert);
 }
 
+.btn--pro {
+  @include button($gre);
+}
+
 .btn--con {
   @include button($red);
 }
 
-.btn--sta {
+.btn--motion {
   @include button($blu);
 }
 
-.btn--que {
+.btn--question {
   @include button($bro);
 }
 
@@ -73,6 +76,18 @@
 
 .btn--argu {
   @include button($blu);
+}
+
+.btn--transparant {
+  @include button(rgba(0,0,0,0));
+}
+
+.btn--dropdown-trigger {
+  padding: 0;
+
+  .dropdown-trigger {
+    padding: .7em 2.5em .7em;
+  }
 }
 
 .btn-box {
@@ -110,11 +125,10 @@
 
 .btn-subtle{
   @include button();
-  margin-bottom: 1em;
   color: $g2;
   border: none;
   background: none;
-  border-radius: 0;
+  @include border-radius(0);
   &:hover {
     color: $g4;
     background-color: $darken1;
@@ -175,13 +189,6 @@
   }
 }
 
-.btn-fill {
-  color: white !important;
-  .dropdown-trigger {
-    color: white !important;
-  }
-}
-
 .btns-fill li a {
   color: white !important;
 }
@@ -207,18 +214,22 @@
 }
 
 .btns-list {
+  > li > a, {
+    @include button();
+  }
+
+}
+
+.btns-list--subtle {
   display: inline-block;
 }
 
-.btns-list .is-checked {
+.btns-list--subtle .is-checked {
   text-decoration: underline !important;
 }
 
-.bnts-list li {
-  height: 100%;
-}
+.btns-list--subtle > li {
 
-.btns-list > li {
   text-transform: uppercase;
   text-decoration: none;
   span {font-size: .8em;}
@@ -229,6 +240,7 @@
   cursor: pointer;
   display: block;
   color: $g3;
+  height: 100%;
   @include transition(.2s);
   > a, .dropdown-trigger {
     padding: .7em;
@@ -259,7 +271,7 @@
   }
 }
 
-.box .btns-list .icon-left,.box  .btns-list .icon-left {
+.box .btns-list--subtle .icon-left,.box  .btns-list--subtle .icon-left {
   @include bp-small {
     display: none;
   }
@@ -287,16 +299,7 @@
     }
   }
   a {
-    width: 100%;
-    display: inline-block;
-    padding: 0.7em 1.1em;
-    padding-bottom: 0.6em;
-    line-height: 1.6em;
-    text-transform: uppercase;
-    top: 0;
-    position: relative;
-    font-size: .9em;
-    color: white;
+    width: 100% !important;
     @include transition(.2s);
     &:hover {
       opacity: .8;
@@ -327,12 +330,18 @@
   }
   .btn-pro {
     background-color: $gre;
+    @include button($color: $gre);
+
   }
   .btn-neu {
     background-color: $g3;
+    @include button($color: $g3);
+
   }
   .btn-con {
     background-color: $red;
+    @include button($color: $red);
+
     margin-right: 0;
   }
 }

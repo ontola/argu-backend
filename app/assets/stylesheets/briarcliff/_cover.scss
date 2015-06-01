@@ -14,8 +14,14 @@
   position: absolute;
   bottom: 0;
   width: 100%;
-  .btns-list{
+  .btns-horizontal{
     width: 100%;
+    @include bp-large {
+      li a {
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+    }
     @include bp-medium {
       span {
         display: none;
@@ -32,6 +38,9 @@
   display: block;
   padding: 0 1em;
   margin: auto;
+  @include bp-small {
+    padding: 0;
+  }
 }
 
 .header-attribution {
@@ -56,6 +65,7 @@
   position: absolute;
   top: 0;
   width: 100%;
+  opacity: .5;
 }
 
 .cover-image{
@@ -157,11 +167,7 @@
 }
 
 .cover-image-empty {
-  height: 10em;
   background-color: $g2;
-  @include bp-medium{
-    height: 51px;
-  }
 }
 
 .cover-header-middle {

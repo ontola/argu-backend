@@ -8,7 +8,7 @@ header
         ol
           li
             input.input--full[type="text" onClick="this.setSelectionRange(0, this.value.length)" value="#{local_assigns[:url]}" readonly]
-    ul.btns-list.btns-subtle.btns-horizontal.margin-bottom
+    ul.btns-list--subtle.btns-subtle.btns-horizontal.margin-bottom
       - ShareHelper::SHARE_PLATFORMS.each do |p|
         li
           =link_to ShareHelper.public_send("#{p}_share_url", local_assigns[:url], title: resource.display_name) do

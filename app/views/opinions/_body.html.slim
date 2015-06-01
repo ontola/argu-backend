@@ -7,7 +7,7 @@
   /TODO
   .infobar
     =render partial: @argument.creator, locals: {resource: @argument}
-    ul.btns-list.btns-horizontal.btn-sticky.btn-sticky-bottom
+    ul.btns-list--subtle.btns-horizontal.btn-sticky.btn-sticky-bottom
       li= link_to(t('destroy'), argument_path(@opinion), method: :delete, destroy: true) if policy(@opinion).destroy?
         li= link_to(t('trash'), argument_path(@opinion), method: :delete) if policy(@opinion).trash?
         li= link_to(t('edit'), edit_argument_path(@opinion)) if policy(@opinion).update?

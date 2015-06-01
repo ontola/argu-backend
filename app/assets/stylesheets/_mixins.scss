@@ -58,21 +58,23 @@
   -webkit-appearance: none;
   border-radius: 0;
   width: auto;
+  outline: none;
   display: inline-block;
   cursor: pointer;
   border-bottom: solid 3px darken($color, 5%);
   @include transition(.15s);
   border-top: solid 3px $color;
+  vertical-align: bottom;
   &:hover {
     background-color: darken($color, 5%);
     border-top-color: darken($color, 5%);
     border-bottom-color: darken($color, 15%);
   }
   &:active {
-    padding: .9em 2.5em .5em;
-    background-color: darken($color, 10%);
-    border-bottom-color: darken($color, 10%);
-    border-top-color: darken($color, 15%);
+    //padding: .9em 2.5em .5em; Although this looks cool, it can cause parts of the page to move when clicking.
+    background-color: darken($color, 15%);
+    border-bottom-color: darken($color, 15%);
+    border-top-color: darken($color, 20%);
   }
   &:disabled{
     opacity: .6;

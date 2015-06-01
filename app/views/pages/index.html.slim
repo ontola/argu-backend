@@ -21,7 +21,7 @@
             li
               =image_tag manager.profile_photo.url(:icon), size: '16x16'
                 span= manager.display_name
-      ul.btns-list.btn-sticky
+      ul.btns-list--subtle.btn-sticky
         li= link_to settings_page_path(page) do
           span.fa.fa-gear
           span.icon-left= t('pages.settings.title')

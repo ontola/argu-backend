@@ -9,7 +9,7 @@
       section
         h1= @profile.display_name
         p.quote= @profile.about
-      ul.btns-list.btns-sticky.btns-sticky-bottom
+      ul.btns-list--subtle.btns-sticky.btns-sticky-bottom
 - if @profile.are_votes_public?
   .box-list[data-intro= t('intro.profile.votes')]
     - if @pubic_vote_count > 0

@@ -62,7 +62,7 @@ window.BigGroupResponse = React.createClass({
                                             {this.props.actor.name} - {response.side}
                                         </h3>
                                         <p>{response.text}</p>
-                                        <ul className="btns-list btns-horizontal btn-sticky-bottom btn-sticky">
+                                        <ul className="btns-list--subtle btns-horizontal btn-sticky-bottom btn-sticky">
                                             <li>
                                                 <a data-method="delete" data-remote="true" data-confirm="Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken." data-skip-pjax="true" href={`/group_responses/${response.id}`}>
                                                     <span className="fa fa-close"></span>
