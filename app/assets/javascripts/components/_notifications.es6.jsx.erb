@@ -131,7 +131,12 @@ var Notifications = React.createClass({
             </li>;
 
         return (<ul className="notifications">
-            <p><a href="#" onClick={this.markAsRead}>Mark as read</a></p>
+            <p className="notifications-mark-all-as-read">
+                <a href="#" onClick={this.markAsRead}>
+                    <span className="fa fa-check"></span>
+                    <span className="icon-left">Markeer als gelezen</span>
+                </a>
+            </p>
             {notifications}
             {loadMore}
         </ul>);
