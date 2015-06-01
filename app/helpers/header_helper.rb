@@ -109,6 +109,7 @@ module HeaderHelper
                   link_item(t('about.governments'), info_path(:governments)),
                   link_item(t('about.how_argu_works'), info_path(:how_argu_works)),
                   link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true}),
+                  link_item(t('press_media'), 'https://argu.pr.co'),
                   link_item(t('help_support'), 'https://argu.freshdesk.com/support/home')
               ]
           }
