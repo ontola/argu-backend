@@ -15,7 +15,6 @@ end
 
 module Argu
   class Application < Rails::Application
-
     config.autoload_paths += Dir["#{config.root}/lib/"]  # include all subdirectories
     config.paths['app/views'].unshift("#{Rails.root}/lib/app/views")
 
@@ -49,14 +48,16 @@ module Argu
 
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    config.time_zone = 'UTC'
+    I18n.available_locales = [:nl, :en]
+    config.i18n.available_locales = [:nl, :en]
     config.i18n.load_path += Dir["#{Rails.root.to_s}/config/locales/**/*.{rb,yml}"]
     config.i18n.enforce_available_locales = true
-    I18n.enforce_available_locales = false
-    config.i18n.default_locale = :nl #zodat nederlands de standaard weergegeven taal is.
-    I18n.locale = :nl
+    I18n.enforce_available_locales = true
   end
 end

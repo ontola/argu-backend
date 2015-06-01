@@ -4,21 +4,10 @@ class NotificationsController < ApplicationController
     # This must be performed to prevent pundit errors
     policy_scope(Notification)
     if current_user.present?
-      begin
-        since = DateTime.parse(request.headers[:lastNotification]).to_s(:db) if request.headers[:lastNotification]
-        new_available = true
-        if since.present?
-          new_available = policy_scope(Notification).order(created_at: :desc).where('created_at > ?', since).count > 0
-        end
-        @notifications = get_notifications(since) if new_available
-        if @notifications.present?
-          @unread = get_unread
-          render
-        else
-          head 204
-        end
-      rescue ArgumentError
-        head 400
+      if params[:from_time].present?
+        fetch_more
+      else
+        refresh
       end
     else
       policy_scope(Notification)
@@ -39,6 +28,17 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def read
+    authorize Notification, :read?
+
+    if policy_scope(Notification).where(read_at: nil).update_all read_at: Time.now
+      @notifications = get_notifications
+      render 'notifications/index'
+    else
+      head 400
+    end
+  end
+
   def update
     notification = Notification.includes(activity: :trackable).find(params[:id])
     authorize notification, :update?
@@ -52,9 +52,19 @@ class NotificationsController < ApplicationController
     end
   end
 
-private
-  def permit_params
-    params.require(:notification).permit(*policy(@notification || Notification).permitted_attributes)
+  private
+  def fetch_more
+    begin
+      begin
+        from_time = DateTime.parse(params[:from_time]).to_s
+      rescue ArgumentError
+        from_time = nil
+      end
+      @from_time = from_time
+      @notifications = policy_scope(Notification).since(from_time).page params[:page]
+    rescue ArgumentError
+      head 400
+    end
   end
 
   def get_notifications(since=nil)
@@ -63,5 +73,32 @@ private
 
   def get_unread
     policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count
+  end
+
+  def refresh
+    begin
+      since = DateTime.parse(last_notification).to_s(:db) if last_notification
+      new_available = true
+      if since.present?
+        new_available = policy_scope(Notification).order(created_at: :desc).where('created_at > ?', since).count > 0
+      end
+      @notifications = get_notifications(since) if new_available
+      if @notifications.present?
+        @unread = get_unread
+        render
+      else
+        head 204
+      end
+    rescue ArgumentError
+      head 400
+    end
+  end
+
+  def last_notification
+    params[:lastNotification] || request.headers[:lastNotification]
+  end
+
+  def permit_params
+    params.require(:notification).permit(*policy(@notification || Notification).permitted_attributes)
   end
 end

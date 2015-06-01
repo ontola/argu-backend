@@ -12,7 +12,8 @@ Argu.ui = {
             .on('pjax:success', this.handleDOMChangedFinished)
             .on('pjax:end', this.checkTabs)
             .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
-            .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick);
+            .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
+            .ajaxComplete(this.handleAjaxCalls);
 
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);
@@ -53,6 +54,18 @@ Argu.ui = {
         setTimeout(function () {
             _this.removeClass("is-loading");
         }, 2500);
+    },
+
+    handleAjaxCalls: function (e, xhr, options) {
+        if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201) {
+            if (xhr.status === 429) {
+                new Argu.Alert('Je maakt te veel verzoeken, probeer het over halve minuut nog eens.', 'alert', true);
+            } else if (xhr.status === 401) {
+                new Argu.Alert('Je hebt geen toestemming voor deze actie.', 'alert', true);
+            } else {
+                new Argu.Alert('');
+            }
+        }
     },
 
     handleClickSmoothly: function () {
@@ -156,8 +169,8 @@ Argu.ui = {
         }
     },
 
+    // Prevents dropdown-active from opening the neighboring link in Chrome for android.. but also prevents clicking on dropdown content!
     mobileTapTooCloseFix: function (e) {
-        // Prevents dropdown-active from opening the neighboring link in Chrome for android.. but also prevents clicking on dropdown content!
         e.preventDefault();
     },
 

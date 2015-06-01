@@ -71,7 +71,8 @@ module HeaderHelper
                             type: 'notifications',
                             unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count,
                             lastNotification: nil,
-                            notifications: []
+                            notifications: [],
+                            loadMore: true
                         }],
                      trigger: {
                          type: 'notifications',
@@ -79,7 +80,7 @@ module HeaderHelper
                      },
                      fa: 'fa-bell',
                      triggerClass: 'navbar-item',
-                     contentClassName: 'notifications')
+                     contentClassName: 'notifications notification-container')
   end
 
   def public_forum_items

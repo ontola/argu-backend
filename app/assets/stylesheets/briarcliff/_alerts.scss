@@ -1,13 +1,22 @@
 @import "variables";
 @import "mixins";
 
-.alert {
+.alert-container {
   position: fixed;
-  left: calc(50% - 15em);
-  right: calc(50% - 15em);
-  width: 30em;
+  pointer-events: none;
+  width: 100%;
+  bottom: 3em;
+  z-index: 100;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.alert {
   bottom: 3em;
   padding: 1em;
+  margin-left: auto;
+  margin-right: auto;
   background-color: rgba(255, 255, 255, 1);
   color: rgb(92, 92, 92);
   display: block;

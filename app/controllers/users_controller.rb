@@ -24,7 +24,6 @@ class UsersController < ApplicationController
     authorize @user
 
     if @user.present?
-      @authentications = @user.authentications
       respond_to do |format|
         format.html
         format.json { render json: @user }
@@ -56,12 +55,56 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if successfully_updated
-        format.html { redirect_to settings_path, notice: 'Wijzigingen opgeslagen.' }
+        format.html { redirect_to settings_path }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def connect
+    payload = decrypt_token params[:token]
+    identity = Identity.find payload['identity']
+    user = User.find_via_shortname! params[:id]
+
+    skip_authorization
+    render locals: {
+               identity: identity,
+               user: user,
+               token: params[:token]
+           }
+  end
+
+  def connect!
+    user = User.find_via_shortname! params[:id]
+    payload = decrypt_token params[:token]
+    @identity = Identity.find payload['identity']
+
+    skip_authorization
+    if @identity.email == user.email && user.valid_password?(params[:user][:password])
+      # Connect user to identity
+      @identity.user = user
+      if @identity.save
+        flash[:success] = 'Account connected'
+        sign_in_and_redirect user
+      else
+        render 'users/connect',
+               locals: {
+                 identity: @identity,
+                 user: user,
+                 token: params[:token]
+               }
+      end
+    else
+      user.errors.add(:password, t('errors.messages.invalid'))
+      render 'users/connect',
+             locals: {
+               identity: @identity,
+               user: user,
+               token: params[:token]
+             }
     end
   end
 
@@ -73,7 +116,7 @@ class UsersController < ApplicationController
       @user.build_shortname
     end
 
-    render 'setup_shortname'
+    render 'setup_shortname', layout: 'closed'
   end
 
   def setup!
@@ -83,7 +126,8 @@ class UsersController < ApplicationController
       current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
 
       if current_user.save
-        redirect_to edit_user_url(current_user.url)
+        flash[:success] = t('devise.registrations.signed_up') if current_user.finished_intro?
+        redirect_to root_path
       else
         render 'setup_shortname'
       end

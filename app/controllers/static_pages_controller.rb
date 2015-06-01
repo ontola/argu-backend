@@ -1,7 +1,8 @@
 class StaticPagesController < ApplicationController
+  geocode_ip_address
 
   def home
-    authorize :static_pages
+    authorize :static_page
   	if signed_in? || within_user_cap?
       if current_user && policy(current_user).staff?
         @activities = policy_scope(Activity).order(created_at: :desc).limit(10)
@@ -17,7 +18,7 @@ class StaticPagesController < ApplicationController
   end
 
   def sign_in_modal
-    authorize :static_pages
+    authorize :static_page
     @resource ||= User.new(r: request.referer, shortname: Shortname.new)
     respond_to do |format|
       format.js { render 'devise/sessions/new', layout: false, locals: {resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
@@ -26,7 +27,7 @@ class StaticPagesController < ApplicationController
   end
 
   def about
-    authorize :static_pages
+    authorize :static_page
     redirect_to info_path('about'), status: 302
   end
 
@@ -36,20 +37,20 @@ class StaticPagesController < ApplicationController
   end
 
   def developers
-    authorize :static_pages
+    authorize :static_page
   end
 
   def how_argu_works
-    authorize :static_pages
+    authorize :static_page
   end
 
   def team
-    authorize :static_pages
+    authorize :static_page
     redirect_to info_path('team'), status: 302
   end
 
   def governments
-    authorize :static_pages
+    authorize :static_page
     redirect_to info_path('governments'), status: 302
   end
 

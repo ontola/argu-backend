@@ -44,30 +44,18 @@ Argu.n = {
     },
 
     refreshNotifications: function () {
+        "use strict";
         if (window.lastNotification != '-1' && !Argu.n.refreshing && (!window.lastNotification || Date.now() - Argu.n.lastNotificationCheck >= 15000)) {
             window.clearTimeout(Argu.n.notificationTimeout);
             Argu.n.refreshing = true;
             Argu.n.lastNotificationCheck = Date.now();
-            $.ajax({
-                type: 'GET',
-                url: '/n',
-                dataType: 'json',
-                async: true,
-                headers: {
-                    lastNotification: window.lastNotification
-                },
-                success: function (data, status, xhr) {
-                    if (xhr.status == 200) {
-                        NotificationActions.notificationUpdate(data.notifications);
-                    }
-                },
-                error: function () {
-                    console.log('failed');
-                },
-                complete: function () {
-                    Argu.n.refreshing = false;
-                    Argu.n.resetTimeout();
-                }
+            NotificationActions.checkForNew().then(function () {
+                Argu.n.refreshing = false;
+                Argu.n.resetTimeout();
+            }, function () {
+                console.log('failed');
+                Argu.n.refreshing = false;
+                Argu.n.resetTimeout();
             });
         } else if (window.lastNotification != '-1' && !Argu.n.refreshing) {
             Argu.n.resetTimeout();

@@ -99,6 +99,10 @@ class ForumPolicy < RestrictivePolicy
   end
 
   ######Actions######
+  def add_group_member?
+    rule is_manager?, is_owner?, staff?
+  end
+
   def create?
     super
   end
@@ -121,7 +125,7 @@ class ForumPolicy < RestrictivePolicy
 
   # Forum#index is for management, not to be confused with forum#discover
   def index?
-    user && user.profile.pages.length > 0 || user.profile.managerships.length || staff?
+    user && user.profile.pages.length > 0 || user.profile.managerships.presence || staff?
   end
 
   def invite?

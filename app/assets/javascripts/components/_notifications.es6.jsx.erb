@@ -83,52 +83,29 @@ var Notifications = React.createClass({
     mixins: [ScrollLockMixin],
 
     getInitialState: function () {
-        if (typeof($) !== "undefined") {
-            $.ajax({
-                type: 'GET',
-                url: ['/n', this.props.id].join('/'),
-                dataType: 'json',
-                async: true,
-                success: function (data) {
-                    if (data) {
-                        NotificationActions.notificationUpdate(data.notifications);
-                    }
-                },
-                error: function () {
-                    console.log('failed');
-                }
-            });
-        }
         return this.props;
+    },
+
+    markAsRead: function () {
+        NotificationActions.markAllAsRead();
     },
 
     onNotificationChange: function (notifications) {
         if (typeof(notifications.unread) != "undefined") {
-            if (notifications.notifications.length > 0) {
-                var newNotifications = [];
-
-                for (var i = 0; i < notifications.notifications.length; i++) {
-                    var _new = notifications.notifications[i];
-                    for (var c_i = 0; c_i < this.state.notifications.length; c_i++) {
-                        if (this.state.notifications[c_i] === notifications.notifications[i] ||
-                                notifications.notifications[i] && this.state.notifications[c_i].id === notifications.notifications[i].id) {
-                            _new = undefined;
-                            this.state.notifications[c_i].read = notifications.notifications[i].read;
-                            break;
-                        }
-                    }
-                    if (_new !== undefined) {
-                        newNotifications.push(_new);
-                    }
-                }
-                Array.prototype.unshift.apply(this.state.notifications, newNotifications);
-            }
             this.setState({
                 unread: notifications.unread || this.state.unread,
                 lastNotification: notifications.lastNotification || this.state.lastNotification,
-                notifications: this.state.notifications
+                notifications: notifications.notifications
             });
         }
+    },
+
+    loadMore: function () {
+        NotificationActions.fetchNextPage().then((data) => {
+            if (typeof data !== "undefined") {
+              this.setState({loadMore: data.moreAvailable});
+            }
+        });
     },
 
     componentDidMount: function () {
@@ -147,8 +124,16 @@ var Notifications = React.createClass({
             return <NotificationItem key={item.id} read={item.read} done={this.props.done} {...item} />
         });
 
+        var loadMore = <li>
+                <a href='#' onMouseDownCapture={this.loadMore} data-skip-pjax="true">
+                    <span className='notification-description'>{this.state.loadMore ? 'Meer' : 'Geen oudere'}</span>
+                </a>
+            </li>;
+
         return (<ul className="notifications">
+            <p><a href="#" onClick={this.markAsRead}>Mark as read</a></p>
             {notifications}
+            {loadMore}
         </ul>);
     }
 });
@@ -199,4 +184,3 @@ var NotificationItem = React.createClass({
         </li>);
     }
 });
-

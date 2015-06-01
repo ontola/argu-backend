@@ -12,7 +12,7 @@ module QuestionsHelper
     if policy(question).destroy?
       link_items << link_item(t('destroy'), question_path(question, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'close')
     end
-    if active_for_user?(:notifications, current_user)
+    if current_profile && active_for_user?(:notifications, current_user)
       if current_profile.following?(question)
         link_items << link_item(t('forums.unfollow'), follows_path(question_id: question.id), fa: 'bell-slash', data: {method: 'delete', 'skip-pjax' => 'true'})
       else

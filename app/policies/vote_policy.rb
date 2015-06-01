@@ -1,4 +1,6 @@
 class VotePolicy < RestrictivePolicy
+  include ForumPolicy::ForumRoles
+
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -22,6 +24,14 @@ class VotePolicy < RestrictivePolicy
       end
     end
 
+  end
+
+  def create?
+    rule is_open?, is_member?, super
+  end
+
+  def new?
+    rule is_open?, create?
   end
 
 end

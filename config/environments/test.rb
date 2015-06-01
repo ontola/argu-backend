@@ -1,5 +1,6 @@
 Rails.application.configure do
   config.host = ENV['HOSTNAME'] || 'www.example.com'
+  Rails.application.routes.default_url_options[:host] = 'argu.co'
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
@@ -51,4 +52,6 @@ Rails.application.configure do
   config.active_support.test_order = :random
 
   config.i18n.available_locales = [:nl, :en]
+
+  OmniAuth.config.test_mode = true
 end

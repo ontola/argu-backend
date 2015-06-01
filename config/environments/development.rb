@@ -2,10 +2,9 @@ Rails.application.configure do
   config.host = ENV['HOSTNAME'] || 'local.host:3000'
   # Settings specified here will take precedence over those in config/application.rb#
 
-  config.epics = ActiveSupport::OrderedOptions.new
-  config.epics.open_auth = false                      # Facebook, twitter, google, openID login & account linking shown in profile
-
   config.react.variant = :development
+
+  config.middleware.use Rack::Attack
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -52,8 +51,6 @@ Rails.application.configure do
   config.assets.debug = true
 
   config.session_store :cookie_store, key: '_Argu_session', domain: :all #, :tld_length => 2
-
-  config.i18n.available_locales = :nl
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)

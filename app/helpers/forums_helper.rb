@@ -17,7 +17,7 @@ module ForumsHelper
         if current_profile.following?(@forum)
           items << link_item(t('forums.unfollow'), follows_path(forum_id: @forum.url), fa: 'times', divider: 'top', data: {method: 'delete', 'skip-pjax' => 'true'})
         else
-          items << link_item(t('forums.follow'), follows_path(forum_id: @forum.url), fa: 'check', divider: 'top', data: {method: 'create', 'skip-pjax' => 'true'})
+          items << link_item(t('forums.follow'), follows_path(forum_id: @forum.url), fa: 'check', divider: 'top', rel: :nofollow, data: {method: 'post', 'skip-pjax' => 'true'})
         end
       end
       items << link_item(t('forums.leave'), forum_membership_path(@forum.url, current_profile), fa: 'sign-out', divider: (divided ? 'top' : nil),

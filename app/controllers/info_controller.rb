@@ -14,6 +14,6 @@ class InfoController < ApplicationController
       raise ActiveRecord::RecordNotFound
     end
     # TODO Create InfoPolicy and validate documents accordingly. Don't use settings.
-    authorize :static_pages, :about?
+    authorize :static_page, :about?
   end
 end

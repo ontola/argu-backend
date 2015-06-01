@@ -1,0 +1,11 @@
+nav#navbar.navbar role="navigation"
+  .nav-container
+    .navbar-logo data-intro=t('intro.header.logo') data-step=15
+      =link_to root_path
+        =image_tag('logo-white.svg')
+    ul.navbar-links
+      li
+        a.navbar-item[href="/"]
+          span.fa.fa-home
+    ul.navbar-links.navbar-links-right
+  =render partial: 'online_status'

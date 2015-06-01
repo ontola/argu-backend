@@ -42,7 +42,7 @@ class RestrictivePolicy
 
 
     def is_creator?
-      creator if record.creator == user.try(:profile)
+      creator if record.creator == actor
     end
 
     def is_member?

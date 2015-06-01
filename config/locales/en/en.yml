@@ -1,0 +1,160 @@
+#English general translations
+
+en:
+#Application
+  name: "Argu"
+  name_phonetic: "\\\'är-(ˌ)gyü\\"
+  owner: "Thom van Kalkeren & Joep Meindertsma"
+  system_not_allowed: "je hebt geen toestemming voor deze actie."
+  sign_in: "Log in"
+  sign_up_sign_in: "Registreren of Inloggen"
+  sign_in_facebook: "Log in met facebook"
+  sign_in_twitter: "Log in met twitter"
+  sign_in_existing: "Log in met een bestaand argu account:"
+  forgot_password: "Wachtwoord vergeten?"
+
+  sign_up: "Account aanmaken"
+  sign_up_description: "Maak gratis een account aan:"
+  argu_sign_up: "Argu account aanmaken"
+  cant_change_username: "Je kunt jouw gebruikersnaam later niet meer wijzigen."
+  sign_up_argu: "Maak Argu account"
+  sign_out: "Uitloggen"
+  learn_more: "Meer info"
+  not_found_type: "%{type} niet gevonden"
+  edit: "Bewerken"
+  edit_type: "%{type} bewerken"
+  show_type: "%{type} weergeven"
+  settings_type: "%{type}instellingen"
+  read_more: "Lees meer"
+  collapse: "Inklappen"
+  update: "Bijwerken"
+  update_type: "%{type} bijwerken"
+  save: "Opslaan"
+  new: "Nieuw"
+  new_type: "Nieuw %{type}"
+  newe_type: "Nieuwe %{type}"
+  add_type: "%{type} toevoegen"
+  back: "Terug"
+  cancel: "Annuleren"
+  show: "Tonen"
+  add: "Toevoegen"
+  next: "Volgende"
+  previous: "Vorige"
+  older: "Ouder"
+  newer: "Nieuwer"
+  destroy: "Vernietigen"
+  trash: "Verbergen"
+  empty_type: "Er zijn geen %{type}"
+  history: "Geschiendenis"
+  image: "Afbeelding"
+  pro: "Voor"
+  con: "Tegen"
+  search: "Zoeken"
+  edited: "Bewerkt"
+  deleted: "Verwijderd"
+  trashed: "Verborgen"
+  reply: "Reageer"
+  report: "Rapporteer"
+  clearance: "Bevoegdheid"
+  forum: "Forum"
+  share: "Delen"
+  menu: "Menu"
+  trash_confirmation: "Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken."
+  destroy_confirmation: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
+  not_allowed: "Actie niet toegestaan."
+  error: "Fout"
+  error_prohibited: " bij het opslaan:"
+  outdated_browser: "Je gebruikt een <strong>achterhaalde en waarschijnlijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
+  view_settings: "Weergave"
+  share_link:
+    header: "Link delen"
+    body: "Deel onderstaande link om direct mensen uit te nodigen naar dit forum."
+  status:
+    400: "Fout in de aanvraag"
+  header:
+    motions: "Voorstellen"
+    activities: "Activiteit"
+    questions: "Vraagstukken"
+  site:
+    description: "Argu is een online discussieplatform waar argumenten centraal staan."
+    copyright: "Copyright © 2014-2015 Argu v.o.f."#Footer
+  footer_item_about: "over"
+  footer_item_home: :header_menuitem_home
+  footer_item_copyright: "Copyright 2014 - "
+  closed: "Gesloten"
+  accepted: "Aangenomen"
+  rejected: "Afgewezen"
+  contemplating: "In overweging"
+#Home
+  home_title: "Argu"
+  #Not logged in
+  home_new_header: "Welkom bij "
+  home_new_text: "Nederlands awesome slogan."
+#About
+  info: "Info"
+  help: "Help"
+  help_support: "Help & support"
+  about:
+    title: "Over"
+    vision: "Onze visie"
+    how_argu_works: "Hoe werkt Argu?"
+    team: "Ons team"
+    product: "Ons product"
+    organisations: "Argu voor organisaties"
+    governments: "Argu voor overheden"
+  how_argu_works:
+    title: "Hoe Argu werkt"
+  product:
+    title: "Ons product"
+  team:
+    title: "Ons team"
+
+#vote
+  vote_same_twice_warning: "Je hebt al op dit item gestemd."
+  twice_warning: "Een waarde in het object is al bezet, probeer het bestaande object te bewerken."
+
+#datetime
+  datetime_ago: "geleden"
+  datetime:
+    distance_in_words:
+      x_days:
+        one: '1 dag'
+        other: '%{count} dagen'
+      about_x_hours:
+        one: '%{count} uur'
+        other: '%{count} uur'
+  views:
+    pagination:
+      first: "&laquo; eerste"
+      last: "laatste &raquo;"
+      previous: "&lsaquo; vorige"
+      next: "volgende &rsaquo;"
+      truncate: "..."
+  type_save_success: "%{type} successvol opgeslagen"
+  type_create_success: "%{type} successvol aangemaakt"
+  move:
+    current_forum: "Huidig forum:"
+    button_label: "Verplaats"
+  convert:
+    current_class: "Huidig type:"
+    button_label: "Converteer"
+  join: "Word lid"
+  view_on_argu: "bekijk & reageer op Argu"
+  embed: "embed"
+  forms:
+    danger_zone: "Gevarenzone"
+  users:
+    logged_in_banner_text: "%{name}"
+    registrations:
+      hints:
+        password: "Minimaal 8 karakters"
+        username: "Gebruik alleen letters, cijfers en _."
+      placeholders:
+        email: "voorbeeld@example.com"
+        password: "wachtwoord"
+        username: "gebruikersnaam"
+        password_confirmation: "Zelfde als hierboven"
+      categories:
+        privacy: "Privacy"
+  document_missing: "Dit document lijkt niet te bestaan."
+  offline: "Internetverbinding verbroken"

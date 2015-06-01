@@ -19,8 +19,9 @@ head[itemscope itemtype="http://schema.org/WebSite"]
     =render partial:'external/inspectlet'
 body
   -flash.each do |key, value|
-    .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
-  =render 'guest/navbar'
+    .alert-container
+      .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
+  =render 'closed/navbar'
   .wrapper
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')

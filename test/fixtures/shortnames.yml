@@ -41,7 +41,12 @@ sn_user2:
 sn_user3:
   shortname: 'user3'
   owner: user3 (User)
-
+sn_facebook_only:
+  shortname: 'facebook_only'
+  owner: user_facebook_only (User)
+sn_user_page_manager:
+  shortname: 'user_page_manager'
+  owner: user_page_manager (User)
 #
 # Pages
 #
@@ -54,3 +59,6 @@ sn_utrecht_page:
 sn_not_accepted:
   shortname: 'not_accepted'
   owner: not_accepted (Page)
+sn_page:
+  shortname: 'page'
+  owner: page (Page)

@@ -119,6 +119,7 @@ nl:
   users_votes: "Stemmen"
   users_clearance: "bevoegdheid"
   users_password: "wachtwoord"
+  users_password_argu: "Argu wachtwoord"
   users_password_confirmation: "wachtwoord bevestigen"
   users_password_old: "oud wachtwoord"
   users_password_edit: "wachtwoord wijzigen"

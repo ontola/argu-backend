@@ -1,9 +1,7 @@
-- @authentications.each do |authentication|
+- identities.each do |identity|
   .form-item
-    = image_tag "favicon_#{authentication.provider}.svg", :size => '20x20'
-    /= authentication.provider.titleize
-    = authentication.uid
-    - unless current_user.is_omni_only && (current_user.authentications.size == 1)
-      = link_to t('users_oauth_remove'), authentication, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => 'remove'
-    - else
-      = link_to t('users_oauth_remove'), cancel_user_registration_path(current_user), :confirm => ('Removing will result in account deletion. Create a shortname to use argu without ' + authentication.provider.titleize)
+    =image_tag "favicon_#{identity.provider}.svg", size: '64x64'
+    -if show_decouple
+      =link_to t('users_oauth_remove'), user_identity_path(user_id: identity.user, id: identity.id),
+             data: { confirm: 'Are you sure you want to remove this authentication option?', method: :delete,  'skip-pjax' => true},
+             class: 'remove', rel: :nofollow

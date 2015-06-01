@@ -83,3 +83,10 @@ nl:
       attributes:
         user:
           login: "email of gebruikersnaam"
+    authentications:
+      destroyed: "Account ontkoppeld"
+      destroyed_failed: "Account kon not ontkoppeld worden"
+  intro:
+    initial:
+      headers:
+        shortname: "Welkom!"

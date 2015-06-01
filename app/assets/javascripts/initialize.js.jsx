@@ -67,7 +67,11 @@ $(function (){
         });
     }
 
+    if (typeof($.pjax.defaults) ===  "undefined") {
+        $.pjax.defaults = {};
+    }
     $.pjax.defaults.timeout = 10000;
+
     $(document)
         .pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container')
         .on('pjax:start pjax:beforeReplace', shallowUnmountComponents)
