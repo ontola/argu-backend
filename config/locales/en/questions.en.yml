@@ -1,0 +1,26 @@
+#English questions translations
+
+en:
+  questions:
+    type: "question"
+    type_new: "New question"
+    new_btn: "Add question"
+    header: "questions"
+    view_all_motions: "View all %{amount} ideas..."
+    call_to_action:
+      title: "Require a solution?"
+      body: "Are you looking for good ideas for a burning question?"
+      action: "Share your question!"
+    form:
+      title: "Describe your question in a few words."
+      content: "Why is this question important? Give background information on the problem and indicate requirements for a solution."
+      themes: "theme1, theme2"
+      invert: "invert all arguments"
+      helper:
+        title: "Describe the core of the question here"
+        content: "Describe the question in detail, give a background story and explain the current situation. Do not place arguments here."
+        themes: "Themes or subjects related to this question. Place comma's between the themes."
+    expired_at:
+      tooltip: "This question expired at %{date}."
+    expires_at:
+      tooltip: "This question will expire on %{date}."

@@ -1,0 +1,58 @@
+#English argument translations
+
+en:
+  opinions:
+    type: "opinion"
+    type: "type"
+    references: "references"
+    pro: "pro"
+    con: "con"
+    header:
+      pro: "opinion pro"
+      neutral: "undecided"
+      con: "opinion con"
+    index:
+      title: "arguments"
+      opinion: "opinion"
+      parties: "parties"
+      law: "law"
+    show:
+      title: "opinion"
+      reply: "reply"
+      created_by: "%{user} - %{date}"
+    new:
+      header: "opinion %{side} the motion: "
+      header_short: "%{side}: "
+      create: "+ opinion %{side}"
+    revisions:
+      title_wiped: 'Deleted replies'
+    form:
+      title: "opinion"
+      content: "explanation"
+      type: "type"
+      submit: "submit opinion"
+      helper:
+        title: "Keep the title as short as possible. Summarize the core of your argument in a few words."
+        content: "--todo--.
+
+        
+            References can be added by using [] and () as follows:
+
+            <code>[www.website.com](example description)</code>
+
+
+            In case of written work:
+
+            <code>[](A. Surname, year, title, page)</code>"
+    comments:
+      title: "replies"
+      favorite: "favorite"
+      reply: "reply"
+      delete: "delete"
+      more: "show more"
+      placed_by: "%{user} - %{date}"
+      none: "no replies"
+    notices:
+      restored: "The opinion piece has been restored."
+      created: "The opinion piece has been placed."
+      updated: "The opinion piece has been updated."

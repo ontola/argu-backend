@@ -1,0 +1,16 @@
+#English argument translations
+
+en:
+  group_responses:
+    type: "Item"
+    new_btn: "Add %{type}"
+    header:
+      pro: "In favour of %{type}"
+      neutral: "Neutral"
+      con: "Against %{type}"
+    form:
+      submit: "Place %{name}"
+      side:
+        pro: "In favour of"
+        neutral: "Neutral"
+        con: "Against"

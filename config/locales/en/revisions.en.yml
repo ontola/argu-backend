@@ -1,0 +1,19 @@
+#English general revisions translations
+
+en:
+  revisions:
+    title: "revisions"
+    goto: "show"
+    revert: "revert"
+    table_id: "id"
+    table_title: "title"
+    table_content: "content"
+    table_edited: "user"
+    table_created: "edited on"
+    table_page: "page"
+    table_make: "revert"
+    newest: "newest"
+    oldest: "oldest"
+    current: "current"
+    edited_by: "edited by"
+    options: "options"

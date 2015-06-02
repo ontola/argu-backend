@@ -1,0 +1,11 @@
+#English static pages translations
+
+en:
+  static_pages:
+    title: "Home"
+    header: "\"The only fence against the world is a thorough knowledge of it.\""
+    title_top: "Top stories"
+    title_follow: "Discussions you follow"
+    title_new: "Brand new"
+    new_header: "Welcome to "
+    new_text: "English awesome slogan."

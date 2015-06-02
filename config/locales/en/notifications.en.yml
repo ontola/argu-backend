@@ -1,0 +1,6 @@
+en:
+  notifications:
+    type: "Notifications"
+    all: "All notifications"
+    settings: "Settings"
+    mark_as_read: "Mark as read"

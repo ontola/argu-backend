@@ -1,0 +1,11 @@
+#English motions translations
+
+en:
+  search:
+    type: "search"
+    title: "search results for %{q}"
+    placeholder: "Search for theme, content..."
+    results_found:
+      zero: "No results found."
+      one: "One result found."
+      other: "%{count} results found."

@@ -1,0 +1,29 @@
+#English argument translations
+
+en:
+  portal:
+    title: "Portal"
+    new_forum: "Create new forum"
+    none: "None yet"
+    new_page: "New Page"
+    name: "Name"
+    created_at: "Created"
+    updated_at: "Updated"
+    forums: "Forums"
+    forum_create: "New forum"
+    show: "Show"
+    edit: "Edit"
+    destroy: "Destroy"
+    settings: "Settings"
+    pages: "Pages"
+    members: "Members"
+    questions: "Questions"
+    motions: "Motions"
+    value: "Value"
+    key: "Key"
+  intro:
+    initial:
+      start_argu: "Start with argu"
+  motions:
+    move:
+      header: "Move motion"

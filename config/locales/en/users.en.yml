@@ -1,0 +1,26 @@
+#English motions translations
+
+en:
+  users:
+    registrations:
+      categories:
+        general: "General"
+        authentication: "Authentication"
+        notifications: "Notifications"
+    follows_email:
+      never_follows_email: 'Never'
+      direct_follows_email: 'Immediately'
+      daily_follows_email: 'Daily'
+      weekly_follows_email: 'Weekly'
+    memberships_email:
+      never_memberships_email: 'Never'
+      direct_memberships_email: 'Immediately'
+      daily_memberships_email: 'Daily'
+      weekly_memberships_email: 'Weekly'
+    created_email:
+      never_created_email: 'Never'
+      direct_created_email: 'Immediately'
+      daily_created_email: 'Daily'
+      weekly_created_email: 'Weekly'
+    cap_reached: "We're full"
+    cap_reached_body: "Thank you for your interest in Argu. Because of the overwhelming amount of signups we've reached our maximum capacity. Signups will resume when we've increased our capacity."

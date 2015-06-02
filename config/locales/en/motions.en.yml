@@ -1,0 +1,82 @@
+#English motions translations
+
+en:
+  motions:
+    type: "motion"
+    type_new: "nieuw motion"
+    title: "Motion"
+    header: "Motions"
+    plural: "Motions"
+    pros: "pro"
+    cons: "con"
+    edit: "Edit motion"
+    no_pros: "no pros yet"
+    no_cons: "no cons yet"
+    content: "content"
+    votes:
+      pro: "I am pro"
+      neu: "Neutral"
+      con: "I am con"
+      show: "Show vote results"
+    preview:
+      pro:
+        zero: "no pro arguments"
+        one: "1 pro argument"
+        other: "%{count} pro arguments"
+      con:
+        zero: "no con arguments"
+        one: "1  con argument"
+        other: "%{count} con arguments"
+    revisions:
+      title_wiped: 'Deleted arguments'
+    form:
+      title: "Summarize your motion here"
+      content: "Present your motion here. Explain the current situation and what needs to change. Do not try to convince; this is done later with arguments."
+      themes: "theme1, theme2"
+      invert: "invert all arguments"
+      helper:
+        title: "Summarize the motion as concisely as possible."
+        content: "Describe your idea in more detail, provide background information and explain the current situation. Don't place arguments here."
+        themes: "Themes or subjects that are related to this motion. Place comma's between themes."
+    mod:
+      edit_moderators:
+        title: 'Moderators of %{title}'
+        remove: 'remove'
+        title_invite: 'Invite moderators'
+        invite: 'Invite'
+        invited: 'Invited'
+        is_mod: 'is already a mod'
+      show_moderation_panel: 'moderator'
+    titles:
+      tags: "Find questions and motions with the theme "
+    call_to_action:
+      title: "Do you have a good idea?"
+      body: "Do you know how a problem can be solved? Do you have a proposition?"
+      action: "Share your idea!"
+
+    #motion types
+    type_social: "Societal"
+    type_political: "Political"
+    type_jurisdictional: "Jurisdictional"
+    type_ecological: "Ecological"
+    type_economical: "Economical"
+    type_technological: "Technological"
+    type_discussion: "In discussion"
+    type_other: "Other"
+    move:
+      body: "All containing arguments will be moved along"
+    convert:
+      header: "Convert object"
+      body: "This allows you to convert an object type into another. Associations can be changed. It's possible that a conversion is impossible because some associations are empty."
+      body_2: "USE WITH CAUTION, DATA MIGHT BE LOST"
+    expired_at:
+      tooltip: "This motion closed on %{date}."
+    expires_at:
+      tooltip: "This motion closes on %{date}."
+    accepted:
+      tooltip: "This motion has been accepted on %{date}."
+    rejected:
+      tooltip: "This motion has been rejected on %{date}."
+  pundit:
+    motion_policy:
+      vote?: "You can't vote on items yet. Make sure to become a member of the forum."

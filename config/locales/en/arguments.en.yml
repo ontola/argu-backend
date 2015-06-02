@@ -1,0 +1,83 @@
+#English argument translations
+
+en:
+  arguments:
+    type: "argument"
+    type_new: "new argument"
+    type_scientific: "scientific"
+    type_axiomatic: "axiomatic"
+    type_other: "other"
+    type_discussion: "in discussion"
+    vote: "vote"
+    new_btn: "Add argument"
+    references: "references"
+    header:
+      pro: "supporting arguments"
+      con: "opposing arguments"
+    index:
+      title: "arguments"
+      opinion: "opinion"
+      parties: "parties"
+      law: "law"
+    show:
+      title: "arguments"
+      reply: "reply"
+      created_by: "%{user} - %{date}"
+    new:
+      header: "argument %{side} the proposition: "
+      header_short: "%{side}: "
+      create: "+ argument %{side}"
+    revisions:
+      title_wiped: 'Removed replies'
+    form:
+      title: "Present the most important part of your argument here"
+      content: "Present arguments for your proposition. Why does this support or undermine the idea?"
+      type: "type"
+      submit: "place argument"
+      side:
+        pro: "supporting argument"
+        con: "opposing argument"
+      helper:
+        content: "Add reasoning for your argument here. Present why it applies to the proposition.
+
+        
+            References can be added by using [] and () in the following manner:
+
+            <code>[www.website.com](example description)</code>
+
+
+            In case of written work:
+
+            <code>[](A. Surname, year of publication, title, page)</code>"
+        side: "<h2>What is an argument?</h2>
+              <p>An argument is a <b>single reason</b> <b class='pro-t'>supporting</b> or <b class='con-t'>opposing</b> an <b class='motion-t'>idea</b>.</p>
+              <h2>Tips</h2>
+              <ul class='bullets'>
+                <li>Start with the most important part. The first lines are read the most.</li>
+                <li>The argument should not already have been placed.</li>
+                <li>Use reliable sources to make your point more credible.</li>
+                <li>Be friendly and content oriented.</li>
+              <ul>"
+    comments:
+      title: "replies"
+      favorite: "favorite"
+      reply: "reply"
+      delete: "delete"
+      more: "show more"
+      placed_by: "%{user} - %{date}"
+      none: "no replies"
+    notices:
+      restored: "The argument has been restored."
+      created: "The argument has been placed."
+      updated: "The argument has been updated."
+  activerecord:
+    errors:
+      models:
+        arguments:
+          attributes:
+            title:
+              blank: "You need to add a title for your argument."
+    attributes:
+      argument:
+        title: "Title"
+        body: "Content"
