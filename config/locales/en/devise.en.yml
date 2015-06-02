@@ -8,6 +8,7 @@ en:
       already_confirmed: "was already confirmed, try to log in."
       not_locked: "was not locked"
       should_match: "should match"
+      extension_white_list_error: "This file type can't be uploaded."
       not_saved:
         one: "1 error caused %{resource} to be unable to save:"
         other: "%{count} errors caused %{resource} to be unable to save:"
@@ -37,11 +38,11 @@ en:
         submit: 'Save'
       new:
         header: 'Forgotten password?'
-        helper: 'Enter your email address or username and we'll send you a mail with a link where you can enter a new password.'
+        helper: "Enter your email address or username and we'll send you a mail with a link where you can enter a new password."
         submit: 'Send reset instructions'
     confirmations:
-      send_instructions: 'You'll receive a mail containing instructions to confirm your account within a few minutes.'
-      send_paranoid_instructions: 'If your email address is already present in our database, you'll receive a link to confirm your account.'
+      send_instructions: "You'll receive a mail containing instructions to confirm your account within a few minutes."
+      send_paranoid_instructions: "If your email address is already present in our database, you'll receive a link to confirm your account."
       confirmed: 'Your account has been confirmed. You are now logged in.'
       edit:
         header: 'Send confirmation link again'
@@ -49,18 +50,18 @@ en:
     registrations:
       signed_up: 'Welcome to argu! You have just signed up.'
       signed_up_but_unconfirmed: 'A confirmation email has been sent to your entered email address. Open the link to confirm your account.'
-      signed_up_but_inactive: 'You have reigstered, but you can't log in as your account has been deactivated.'
-      signed_up_but_locked: 'You have successfully reigstered, but you can't log in as your account has been locked.'
+      signed_up_but_inactive: "You have reigstered, but you can't log in as your account has been deactivated."
+      signed_up_but_locked: "You have successfully reigstered, but you can't log in as your account has been locked."
       updated: 'Your account has been updated.'
       update_needs_confirmation: "Would you like to confirm your email address? We have sent a confirmation email."
       destroyed: 'Your account has been removed. We hope to see you again soon!'
       password_confirmation:
         header: 'Your password has been updated.'
-        body: 'We're letting you know that the password for your Argu account "%{shortname}" has been updated.<br/> If this is unauthorized, please send an email to info@argu.co.'
+        body: "We're letting you know that the password for your Argu account \"%{shortname}\" has been updated.<br/> If this is unauthorized, please send an email to info@argu.co."
     unlocks:
       send_instructions: 'You will receive an email with instructions to unlock your account within a few minutes.'
       unlocked: 'Your accout has been unlocked. Log in to continue.'
-      send_paranoid_instructions: 'If your account exists, you'll receive a mail with instructions to unlock your account within a few minutes.'
+      send_paranoid_instructions: "If your account exists, you'll receive a mail with instructions to unlock your account within a few minutes."
     omniauth_callbacks:
       success: 'Succesfully connected to a %{kind} account.'
       failure: 'Sorry, it was unsuccessful to couple your %{kind} account because of %{reason}.'
