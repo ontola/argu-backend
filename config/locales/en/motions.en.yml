@@ -2,21 +2,21 @@
 
 en:
   motions:
-    type: "motion"
-    type_new: "nieuw motion"
-    title: "Motion"
-    header: "Motions"
-    plural: "Motions"
+    type: "Idea"
+    type_new: "New idea"
+    title: "Idea"
+    header: "Ideas"
+    plural: "Ideas"
     pros: "pro"
     cons: "con"
-    edit: "Edit motion"
+    edit: "Edit idea"
     no_pros: "no pros yet"
     no_cons: "no cons yet"
     content: "content"
     votes:
-      pro: "I am pro"
+      pro: "Agree"
       neu: "Neutral"
-      con: "I am con"
+      con: "Disagree"
       show: "Show vote results"
     preview:
       pro:

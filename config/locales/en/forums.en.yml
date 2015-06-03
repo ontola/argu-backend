@@ -2,10 +2,10 @@
 
 en:
   forums:
-    resource_name: "forum"
-    type: "forum"
-    type_new: "new forum"
-    plural: "forums"
+    resource_name: "Forum"
+    type: "Forum"
+    type_new: "New forum"
+    plural: "Forums"
     resource_name:
       management: "forum management"
     settings:
@@ -44,7 +44,7 @@ en:
       title: "Statistics"
       memberships: "Members"
       questions: "Questions"
-      motions: "Motions"
+      motions: "Ideas"
       tags: "Most used tags"
       no_tags: "As of yet, no tags have been used."
     management:
@@ -81,7 +81,7 @@ en:
     invite_others: "Involve others"
     sign_up:
       header: "Become a member of Argu and participate in the discussion"
-    new_question_or_motion: "New question or motion"
+    new_question_or_motion: "New question or Idea"
     about:
       header: "What's this forum for?"
       body: "An Argu forum is a discussion environment where ideas are shared and discussed so that beter decisions can be tken. Read more about <a href='/about'>our vision</a> and about <a href='/how_argu_works'>how Argu works.</a>"

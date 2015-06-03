@@ -71,7 +71,7 @@ en:
   status:
     400: "Error in request"
   header:
-    motions: "Motions"
+    motions: "Ideas"
     activities: "Activities"
     questions: "Questions"
   site:
