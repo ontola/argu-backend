@@ -39,15 +39,5 @@
     .col-3-1
       .box
         section
-          /=raw t('motions.form.helper.side')
-          h2= "Wat is een idee?"
-          p= raw "Een <b class='motion-t'>idee</b> is een voorstel om een of meerdere problemen op te lossen."
-          h2= "Tips:"
-          ul.bullets
-            li
-              p= raw "Een goed idee is <b>concreet en implementeerbaar</b>: het beschrijft wat er moet gebeuren en hoe dit moet gebeuren."
-            li
-              p= raw "Geef <b>achtergrondinformatie</b>. Wat is de huidige situatie? Wat is er al gebeurd? Hoe gaat jouw idee bestaande problemen oplossen?"
-            li
-              p= raw "Wil je een probleem aankaarten, maar heb je nog geen oplossing? Waarschijnlijk wil je dan een <b>#{link_to 'vraagstuk plaatsen', new_forum_question_path(@forum), class: 'question-t' }</b>."
+          =t('motions_helper_html', link: (link_to t('questions.type'), new_forum_question_path(@forum), class: 'question-t'))
       =render partial: 'links_helper'

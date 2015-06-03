@@ -59,6 +59,11 @@ nl:
   forum: "Forum"
   share: "Delen"
   menu: "Menu"
+  legal:
+    header: "Voorwaarden"
+    policy: "Gebruiksvoorwaarden"
+    privacy: "Privacy"
+    cookies: "Cookies"
   trash_confirmation: "Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken."
   destroy_confirmation: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
   not_allowed: "Actie niet toegestaan."
@@ -81,6 +86,7 @@ nl:
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
+  footer_item_follow_uw: "Volg ons"
   closed: "Gesloten"
   accepted: "Aangenomen"
   rejected: "Afgewezen"
@@ -181,6 +187,7 @@ nl:
   users:
     logged_in_banner_text: "%{name}"
     registrations:
+      no_password: "Je hebt nog geen wachtwoord omdat je je via social media hebt aangemeld. Wil je een wachtwoord aanmaken?"
       hints:
         password: "Minimaal 8 karakters"
         username: "Gebruik alleen letters, cijfers en _."
@@ -193,3 +200,44 @@ nl:
         privacy: "Privacy"
   document_missing: "Dit document lijkt niet te bestaan."
   offline: "Internetverbinding verbroken"
+  columns: "Kolommen"
+  info_bar: "Info balk"
+  images: "Afbeeldingen"
+  links_helper_html: "<h2>
+                  Links toevoegen
+                </h2>
+                <p>
+                  Je kan in jouw tekst links toevoegen met blokhaken en normale haakjes. Dat doe je als volgt:
+                </p>
+                <code>Dit is [Argu](www.argu.co).</code>
+                <p>
+                  Verschijnt als:
+                </p>
+                  <code>Dit is <a href='http://www.argu.co'>Argu</a>.</code>"
+  motions_helper_html: "<h2>
+                  Wat is een idee?
+                </h2>
+                <p>
+                  Een <b class='motion-t'>idee</b> is een voorstel om één of meerdere problemen op te lossen.
+                </p>
+                <h2>
+                  Tips:
+                </h2>
+                <ul class='bullets'>
+                  <li>
+                    <p>
+                      Een goed idee is <b>concreet en implementeerbaar</b>: het beschrijft wat er moet gebeuren en hoe dit moet gebeuren.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Geef <b>achtergrondinformatie</b>. Wat is de huidige situatie? Wat is er al gebeurd? Hoe gaat jouw idee bestaande problemen oplossen?
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Wil je een probleem aankaarten, maar heb je nog geen oplossing? Waarschijnlijk wil je dan een <b>%{link}</b> plaatsen.</b>
+                    </p>
+                  </li>
+                </ul>
+                "

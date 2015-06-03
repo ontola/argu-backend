@@ -84,7 +84,7 @@ en:
     new_question_or_motion: "New question or Idea"
     about:
       header: "What's this forum for?"
-      body: "An Argu forum is a discussion environment where ideas are shared and discussed so that beter decisions can be tken. Read more about <a href='/about'>our vision</a> and about <a href='/how_argu_works'>how Argu works.</a>"
+      body: "An Argu forum is a discussion environment where ideas are shared and discussed so that better decisions can be made. Read more about <a href='/about'>our vision</a> and about <a href='/how_argu_works'>how Argu works.</a>"
     is_closed: "This forum is closed. Only members are allowed to view its contents. Ask a member or the managers about how you can get access."
     follow: "Follow"
     unfollow: "Unfollow"

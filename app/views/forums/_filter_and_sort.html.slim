@@ -27,12 +27,12 @@
       li
         a.display-toggle-details[onClick="$( '.grid' ).toggleClass( 'display-hide-details'); $( '.grid' ).isotope()"]
           span.fa.fa-info
-          span.icon-left Info balk
+          span.icon-left= t('info_bar')
       li
         a.display-toggle-details[onClick="$( '.grid' ).toggleClass( 'display-hide-images'); $( '.grid' ).isotope()"]
           span.fa.fa-image
-          span.icon-left Afbeeldingen
+          span.icon-left= t('images')
       li
         a.display-toggle-details[onClick="$( '.grid' ).toggleClass( 'display-single-column'); $( '.grid' ).isotope()"]
           span.fa.fa-columns
-          span.icon-left Kolommen
+          span.icon-left= t('columns')

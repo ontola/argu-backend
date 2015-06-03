@@ -22,7 +22,7 @@ en:
       shortname: "Username"
     didnt_vote_name: "%{name} hasn't voted yet."
     should_start_with_capital: "can only contain letters, numbers and '_'. It also needs to start with a letter."
-    switch_warning: "Sommige features might not be visible until the page has been refreshed. Refresh now?"
+    switch_warning: "Some features might not be visible until the page has been refreshed. Refresh now?"
   pundit:
     profile_policy:
       update?: "You can't update this profile."

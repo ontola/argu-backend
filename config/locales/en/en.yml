@@ -58,6 +58,11 @@ en:
   forum: "Forum"
   share: "Share"
   menu: "Menu"
+  legal:
+    header: "Legal"
+    policy: "Terms of use"
+    privacy: "Privacy"
+    cookies: "Cookies"
   trash_confirmation: "This item will no longer be visible in public discussion. This can be undone."
   destroy_confirmation: "This object and all related data will be permanently removed. This cannot be undone."
   not_allowed: "Action not allowed."
@@ -80,6 +85,7 @@ en:
   footer_item_about: "about"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
+  footer_item_follow_uw: "Follow us"
   closed: "Closed"
   accepted: "Accepted"
   rejected: "Rejected"
@@ -97,7 +103,7 @@ en:
   about:
     title: "About"
     vision: "Our vision"
-    how_argu_works: "How does Arguw ork?"
+    how_argu_works: "How does Argu work?"
     team: "Our team"
     product: "Our product"
     organisations: "Argu for organisations"
@@ -180,6 +186,7 @@ en:
   users:
     logged_in_banner_text: "%{name}"
     registrations:
+      no_password: "You don't have a password yet, because you signed up using a linked account. Do you want to set a password?"
       hints:
         password: "At least 8 characters"
         username: "Only use letters, numbers and _."
@@ -192,3 +199,44 @@ en:
         privacy: "Privacy"
   document_missing: "This document does not exist."
   offline: "Internet connection is offline."
+  columns: "Columns"
+  info_bar: "Info bar"
+  images: "Images"
+  links_helper_html: "<h2>
+                  Add links
+                </h2>
+                <p>
+                  You can add links in your text by using square brackets and normal brackets.
+                </p>
+                <code>This is [Argu](www.argu.co).</code>
+                <p>
+                  Will appear as:
+                </p>
+                  <code>This is <a href='http://www.argu.co'>Argu</a>.</code>"
+  motions_helper_html: "<h2>
+                  What is an idea?
+                </h2>
+                <p>
+                  An <b class='motion-t'>idea</b> is a proposal that solves one or more problems.
+                </p>
+                <h2>
+                  Tips:
+                </h2>
+                <ul class='bullets'>
+                  <li>
+                    <p>
+                      A good idea is <b>concrete and implementable</b>: it describes what should happen and how it can happen.
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Give <b>background information</b>. Describe the current situation. How will your idea solve the problem? What needs to be done?
+                    </p>
+                  </li>
+                  <li>
+                    <p>
+                      Do you want to describe a problem, but haven't found a decent solution just yet? Try submitting a <b>%{link}.</b>
+                    </p>
+                  </li>
+                </ul>
+                "
