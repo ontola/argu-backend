@@ -17,7 +17,7 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   module Roles
-    delegate :is_manager?, to: :forum_policy
+    delegate :is_manager?, :owner?, to: :forum_policy
     delegate :open, :access_token, :member, :manager, :owner, to: :forum_policy
 
     # @note: This is prone to race conditions, but since a group_responses isn't a vote, it can be considered trivial.
@@ -34,7 +34,7 @@ class GroupResponsePolicy < RestrictivePolicy
     end
 
     def is_creator?
-      record.creator == actor
+      creator if record.profile == actor && profile_in_group?
     end
   end
   include Roles
@@ -56,7 +56,7 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def update?
-    rule (record.profile == actor && profile_in_group?), super
+    rule is_creator?, super
   end
 
   def edit?
@@ -64,6 +64,6 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def destroy?
-    rule (profile_in_group? && is_creator?), super
+    rule is_creator?, owner?, super
   end
 end
