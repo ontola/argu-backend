@@ -146,6 +146,7 @@ class PagesController < ApplicationController
         flash[:error] = t('pages.settings.managers.users_only')
         format.html { render 'transfer', locals: {no_close: true} }
       elsif @page.transfer_to!(params[:page][:repeat_name], @new_profile)
+        reset_current_actor
         flash[:success] = t('pages.settings.managers.transferred')
         format.html { redirect_to settings_page_path(@page) }
       else

@@ -11,4 +11,8 @@ module ActorsHelper
       current_user.profile
     end
   end
+
+  def reset_current_actor
+    cookies.delete :a_a
+  end
 end
