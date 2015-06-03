@@ -171,6 +171,7 @@ GEM
     geokit-rails (2.1.0)
       geokit (~> 1.5)
       rails (>= 3.0)
+    gli (2.13.1)
     globalid (0.3.5)
       activesupport (>= 4.1.0)
     has_secure_token (1.0.0)
@@ -216,6 +217,13 @@ GEM
       httparty
       thor
       xml-simple
+    localeapp (0.9.3)
+      gli
+      i18n
+      json
+      rack
+      rest-client
+      ya2yaml
     logstash-event (1.2.02)
     logstasher (0.6.5)
       logstash-event (~> 1.2.0)
@@ -468,6 +476,7 @@ GEM
       rails (>= 4.0.0)
     win32console (1.3.2-x86-mingw32)
     xml-simple (1.1.5)
+    ya2yaml (0.31)
 
 PLATFORMS
   ruby
@@ -515,6 +524,7 @@ DEPENDENCIES
   kaminari (~> 0.16.1)
   koala (~> 1.11.1)
   license_finder
+  localeapp
   logstasher
   meta_request
   minitest-rails (~> 2.1.1)
