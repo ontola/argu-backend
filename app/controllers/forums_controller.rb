@@ -122,8 +122,8 @@ protected
     flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
 
     render 'settings', locals: {
-               tab: params[:tab] || 'settings',
-               active: params[:tab] || 'settings'
+               tab: params[:tab] || 'general',
+               active: params[:tab] || 'general'
            }
   end
 
