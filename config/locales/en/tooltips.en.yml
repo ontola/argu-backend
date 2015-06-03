@@ -1,0 +1,16 @@
+en:
+  tooltips:
+    motion:
+      create: "Share your motion by placing a proposition."
+      vote_count: "Vote count."
+      arguments_pro_count: "Amount of arguments pro."
+      arguments_con_count: "Amount of arguments con."
+      date: "Placed on."
+    question:
+      create: "Ask a question to all members and gather new motions."
+      motions_count: "Number of placed motions."
+    forum:
+      invite: "Invite others to discuss in this forum."
+    argument:
+      vote_up: "Important argument; it should be placed higher."
+      vote_down: "Unimportant argument; it should be placed lower."

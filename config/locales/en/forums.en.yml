@@ -1,0 +1,115 @@
+#English argument translations
+
+en:
+  forums:
+    resource_name: "forum"
+    type: "forum"
+    type_new: "new forum"
+    plural: "forums"
+    resource_name:
+      management: "forum management"
+    settings:
+      title: "Settings"
+      general: "General settings"
+      profile: "Profile settings"
+      menu:
+        general: "General"
+        advanced: 'Advanced'
+        groups: 'Groups'
+        privacy: 'Privacy'
+        managers: 'Managers'
+      terminology: "Terminologogy"
+      advanced: "Advanced"
+      privacy: "Privacy"
+      manager: "Manager"
+      managers:
+        title: "Managers"
+        administrator: "Administrator"
+        about_managers: "Forum managers are users with extra rights, but not as much as an administrator. Managers can change and remove objects in the forum.
+          They can also change non-advanced settings in the forum, access forum statistics and manage groups."
+        owner: "Owner"
+        about_owner: "Only pages can be owners of a forum. Contact Argu with requests to change ownership."
+        about_owner_name: "This Page is owner of the forum '%{name}':"
+        about_page_owner: "The administrator of a forum can appoint managers and change all settings."
+        about_page_owner_name: "This user is owner of the page '%{name}':"
+      groups:
+        title: "Groups"
+        description: "Groups are shown under a motion, just like arguments. A group consists of different organisations that get their own place to share their opinion about ideas. An example of a common group on Argu is 'political parties'."
+      bio: "Goal of forum"
+      bio_long: "More information"
+      hints:
+        bio: "Summarize the goal of the forum in one sentence. This text will appear under the forum. At most 140 characters."
+        remove_admin: "This only removes administrator rights."
+    statistics:
+      title: "Statistics"
+      memberships: "Members"
+      questions: "Questions"
+      motions: "Motions"
+      tags: "Most used tags"
+      no_tags: "As of yet, no tags have been used."
+    management:
+      title: "Forum management"
+    suggestions: "Suggestions"
+    mine: "My forums"
+    navheader: "Go to forum:"
+    member: "Member"
+    leave: "Leave this forum"
+    leave_confirmation: "Are you sure you wish to leave this forum? Your produced content will not be removed."
+    scope_names:
+      scope_group: "Groups"
+      scope_org: "Organisations"
+      scope_local: "Argu Local"
+    public_form:
+      f_public: "Public"
+      f_public_desc: "Organisation and motions are seen by everyone."
+      f_hidden: "Hidden"
+      f_hidden_desc: "Profile of the organisation is public, the motions are hidden."
+      f_private: "Private"
+      f_private_desc: "Both the profile and the motions are only visible for members."
+    application_form:
+      f_open: "Open"
+      f_open_desc: "Everyone can sign up for the organisation."
+      f_request: "On request"
+      f_request_desc: "Everyone can request to join the organisation."
+      f_invite: "Invitation only"
+      f_invite_desc: "Members can invite others to become members."
+      f_management_invite: "By manager(s)"
+      f_management_invite_desc: "Only manager(s) can add new members."
+    join:
+      header: "Become a member"
+      body: "Become a member of the forum ''%{forum}'' and participate in the discussion!"
+    invite_others: "Involve others"
+    sign_up:
+      header: "Become a member of Argu and participate in the discussion"
+    new_question_or_motion: "New question or motion"
+    about:
+      header: "What's this forum for?"
+      body: "An Argu forum is a discussion environment where ideas are shared and discussed so that beter decisions can be tken. Read more about <a href='/about'>our vision</a> and about <a href='/how_argu_works'>how Argu works.</a>"
+    follow: "Follow"
+    unfollow: "Unfollow"
+    managers:
+      revoke: "Revoke"
+      add: "Add manager"
+    get_one:
+      title: "A forum for your organisation?"
+      body: "We deliver discussion environments for municipalities, companies, education facilities and other organisations. Read more about <b>%{governments}</b> or about <b>%{product}</b>. <b><a href='mailto:info@argu.co'>Contact us</a></b> for more information."
+    selector:
+      at_least_error: "Choose at least 2 forums"
+  activerecord: #These currently aren't used for forms.
+    attributes:
+      forum:
+        name: "Name"
+        shortname: "argu shortname"
+        description: "Description"
+        featured_tags: "Featured themes"
+        website: "Website"
+        profile_photo: "Profile photo"
+        key_tags: "Key tags"
+        scope: "Scope"
+        visibility: "Visibility"
+  votes:
+    alerts:
+      not_modified: ""
+  pundit:
+    membership_policy:
+      destroy?: "Membership can not be canceled."

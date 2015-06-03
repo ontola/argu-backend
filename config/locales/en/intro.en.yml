@@ -1,0 +1,69 @@
+# English intro tour translations
+
+en:
+  intro:
+    next: 'next'
+    previous: 'previous'
+    forums:
+      grid: 'All <b class="motion-t">motions</b> and <b class="question-t">questions</b> are listed below. Click an item to enter the discussion and share your opinion!'
+      filter: 'This allows you to search items with a certain theme, or sort on, for example, score.'
+      invite: 'Invite others to participate in the discussion.'
+      switcher: 'On Argu, discussions are sorted into <b>forums</b>. There are forums for various municipalities, companies, organisations, education facilities and diverse projects.'
+      settings:
+        home: 'Click here to return to the forum.'
+        general: 'Change settings like the name and picture of the forum here.'
+        # TODO
+        advanced: ''
+        # TODO
+        privacy: ''
+        statistics: 'Browse diverse statistics about the usage of the forum.'
+        groups: 'Groups can be used to give certain users extra rights. This way, you can create political parties in your own forum, for example.'
+        managers: 'Decide who can remove and change items.'
+    pages:
+      settings:
+        home: 'Click here to return to the page.'
+        general: 'Change settings like the name and picture of the forum here.'
+        # TODO
+        advanced: ''
+        statistics: 'Browse diverse statistics about the usage of the page.'
+        managers: 'Decide who can represent this page in votes as well as placing or modifying items.'
+    tags: 'Click a theme to search for relevant discussions.'
+    header:
+      logo: 'Argu is an online discussion platform where everyone can participate in discussing societal problems in a content oriented fashion. Read more about <a href="/about">our vision</a> and <a href="/how_argu_works">how Argu works</a>.'
+      forums: 'On Argu, discussions are sorted into <b>forums</b>. There are forums for various municipalities, companies, organisations, education facilities and diverse projects.'
+      profile: 'Here you can find and edit your <b>profile</b>. You can also find the settings of your account here.'
+      about: 'You can find more information about what Argu is and who we are here.'
+    question:
+      create: 'Do you know what problem needs to be solved? Place a <b class="question-t">question</b> and let others share their ideas.'
+      back: 'Click here to return to the <b>forum</b>.'
+      body: 'A <b class="question-t">question</b> presents a problem and asks how this should be solved.'
+      motions: 'Below are the <b class="motion-t">motions</b> of other users. Do you know how this question can be solved? Share your motion!'
+    motion:
+      create: 'Do you have a good motion? Share your <b class="motion-t">motion</b> on Argu and convince others.'
+      back: 'Click here to eturn to the relevant forum or question.'
+      body: 'A <b class="motion-t">motion</b> is a concrete proposition for a solution of a problem.'
+      vote: 'With this, you can <b>vote</b> on the idea. You can change your vote later.'
+      arguments: 'On Argu, we structure discussions by <b class="pro-t">pro</b>- and <b class="con-t">con</b>arguments. Click on an argument to view or place a reply.'
+      help: 'Would you like to see this tutorial again? Click here.'
+      groups: 'Special users (like political parties) can indicate what their opinion is about the motion.'
+    argument:
+      back: 'Click here to return to the <b class="motion-t">motion</b>.'
+      body: 'An argument is a single reason <b class="pro-t">pro</b> or <b class="con-t">con</b> an idea.'
+      comments: 'Everyone can reply to arguments or reply to other replies. This allows for very specific discussions.'
+      form: 'Read our tips if you would like to be convincing.'
+      toggle: "Choose if you'd like to place a pro or con argument here."
+    comments:
+      show: 'Below are replies to this item.'
+      form: "If you'd like to reply, you can do so here."
+    start: 'How does this page work?'
+    start_short: 'Help'
+    profile:
+      show: 'In a profile, a user can display information about themselves.'
+      votes: "By default, motions you vote on are shown in your profile. This way, you can show what your opinion is. If you'd like to disable this, you can change it in \"settings\"."
+    initial:
+      headers:
+        profile: "Fill in profile"
+        selector: "Contribute to the discussion"
+      body:
+        profile: "Your profile is visible for all visitors of Argu. You don't need to enter anything, but a complete name and a picture will make you appear more reliable to other users."
+        selector: "Within Argu, discussions are divided within forums. Each forum has a specific area or subject as focus point. <br/><br/><b>Choose (at least two) forums that seem interesting to you:</b>"

@@ -1,0 +1,14 @@
+en:
+  filtersort:
+    filter: "Filter"
+    sort: "Sort"
+    filter_&_sort: "Filter & sort"
+    updated_at: "Active"
+    created_at: "Newest"
+    name: "Name"
+    score: "Highest score"
+    vote_count: "Most voted"
+    random: "Random"
+    questions: "Questions"
+    motions: "Motions"
+    all: "All"

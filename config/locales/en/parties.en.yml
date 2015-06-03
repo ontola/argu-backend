@@ -1,0 +1,14 @@
+#English argument translations
+
+en:
+  parties:
+    type: "parties"
+    header:
+      pro: "parties pro"
+      con: "neutral parties"
+      con: "parties con"
+    index:
+      title: "arguments"
+      opinion: "opinion"
+      parties: "parties"
+      law: "law"

@@ -1,0 +1,108 @@
+en:
+  formtastic:
+    :yes: "Yes"
+    :no: "No"
+    :create: "Create %{model}"
+    :update: "Update %{model}"
+    :submit: "Submit"
+    :cancel: "Cancel"
+    :reset: "Reset %{model}"
+    :required: "Required"
+    titles:
+      post_details: "Post details"
+      question: "Question"
+    labels:
+      about: "About"
+      arguments_title: "Arguments"
+      arguments_title_singular: "Argument"
+      are_votes_public: "Show what I vote"
+      content: "Content"
+      cover_photo_attribution: "Copyright"
+      cover_photo: "Cover photo"
+      expires_at: "Expires at"
+      f_move: "Move"
+      f_convert: "Convert"
+      featured_tags: "Featured themes"
+      is_trashed: "Is hidden"
+      invert_arguments: "Invert argumens"
+      last_accepted: "I agree"
+      motions_title: "Motions"
+      motions_title_singular: "Motion"
+      password_confirmation: "Confirm password"
+      password: "Password"
+      profile_photo: "Profile photo"
+      questions_title: "Questions"
+      questions_title_singular: "Question"
+      remember_me: "Remember data"
+      remove_cover_photo: "Remove cover photo"
+      remove_image: "Remove image"
+      remove_profile_photo: "Remove profile photo"
+      shortname: "Argu url"
+      tag_list: "Themes"
+      title: "Title"
+      username: "Username"
+      uses_alternative_names: "Use different wording"
+      visibility: "Visibility"
+      notifications:
+        follows: "Items I follow"
+        memberships: "My forums"
+        created: "My items"
+      profile:
+        name: "Full name"
+        are_votes_public: "Show votes in profile"
+      page:
+        name: "Page name"
+        shortname: "Argu URL"
+      forum:
+        bio: "Forum goal"
+        bio_long: "More information"
+        scope: "Form"
+        naam: "Forum name"
+      group:
+        name: "Name"
+      user:
+        shortname: "Username"
+        first_name: "First name*"
+        middle_name: "Middele name(s)"
+        last_name: "Last name*"
+        has_analytics: "Google Analytics"
+    hints:
+      tag_list: "Choose themes related to your subject."
+      username: "At least 4 characters. Numbers, letters and '_'. only."
+      cover_photo_attribution: "If you do not posess the copyright to a photo, you can name the author and the license here. For example: CC-BY @argu_joep"
+      shortname: "You can enter a shortname for the URL here. Changing the URL can cause previously shared links to stop functioning."
+      password: "At least 8 characters."
+      question:
+        title: "A question usually begins with 'How...' or 'What...'."
+        content: "Give background information about the problem and indicate what the solution should accomplish."
+      motion:
+        title: "What is your suggestion? Make the title as short as possible."
+        content: "What needs to change? How should it change?"
+      argument:
+        title: "Try to summarize your argument."
+        content: "Explain why this is an important argument. Use sources to underpin your argument."
+      forum:
+        bio: "Summarize in one sentence what function the forum has. This text will appear under the name of the forum. There's a maximum of 80 characters."
+      user:
+        shortname: "At least 3 characters. Numbers, letters and '_'. only. Any name is permanent."
+    placeholders:
+      email: "email@example.com"
+      login: "email or username"
+      tag_list: "theme1, theme2 ..."
+      password_confirmation: "Same as above"
+      question:
+        title: "Place the core of your %{type} here"
+        content: "Place the details and background information on your %{type} here."
+      motion:
+        title: "Place the core of your %{type} here"
+        content: "Place the details and background information on your %{type} here."
+      argument:
+        title: "Place the core of your argument here"
+        content: "Place the details and background information on your argument here."
+      user:
+        email: "email@example.com"
+    actions:
+      create: "Save"
+      update: "Save"
+      reset: "Reset"
+      cancel: "Return"

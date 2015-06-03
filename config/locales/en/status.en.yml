@@ -1,0 +1,7 @@
+#English general translations
+
+en:
+  status:
+    s_404:
+      header: "Item not found"
+      body: "The link does not exist. This could be because the object you're looking for is deleted or never existed."

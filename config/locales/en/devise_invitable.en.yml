@@ -1,21 +1,24 @@
 en:
   devise:
     invitations:
-      send_instructions: 'An invitation email has been sent to %{email}.'
-      invitation_token_invalid: 'The invitation token provided is not valid!'
-      updated: 'Your password was set successfully. You are now signed in.'
-      no_invitations_remaining: "No invitations remaining"
-      invitation_removed: 'Your invitation was removed.'
+      link: 'Involve others'
+      send_instructions: 'An invitation has been sent to %{email}.'
+      invitation_token_invalid: 'Oops! The invitation token is invalid.'
+      updated: 'You have successfully updated your password. You are now logged in.'
+      no_invitations_remaining: "You have no invitations remaining."
+      invitation_removed: 'Your invitation has been removed.'
       new:
-        header: "Invite others"
-        submit_button: "Send an invitation"
+        header: "Send invitations"
+        submit_button: "Send invitation"
+        forum_notice: "You're inviting people for the forum %{forum}"
       edit:
-        header: "Set your password"
-        submit_button: "Set my password"
+        header: "Create your account"
+        submit_button: "Save password"
     mailer:
       invitation_instructions:
-        subject: 'Invitation instructions'
-        hello: 'Hello %{email}'
-        someone_invited_you: 'Someone has invited you to %{url}, you can accept it through the link below.'
+        subject: 'Invitation for argue'
+        hello: 'Dear gooder,'
+        someone_invited_you: 'Congratulations! Someone has invited you to the closed beta test of Argue. You can accept this invitation by clicking the link below.'
+        someone_invited_you_forum: 'Congratulations! Someone has invited you to the %{forum} on Argu. You can accept this invitation by clicking the link below.'
         accept: 'Accept invitation'
-        ignore: "If you don't want to accept the invitation, please ignore this email.<br />Your account won't be created until you access the link above and set your password."
+        ignore: "If you're not interested, you can ignore this invitation. Your account isn't created until you open the link and enter a password."
