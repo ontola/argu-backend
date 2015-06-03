@@ -17,7 +17,7 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   module Roles
-    delegate :is_manager?, :owner?, to: :forum_policy
+    delegate :is_manager?, :is_owner?, to: :forum_policy
     delegate :open, :access_token, :member, :manager, :owner, to: :forum_policy
 
     # @note: This is prone to race conditions, but since a group_responses isn't a vote, it can be considered trivial.
@@ -64,6 +64,6 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def destroy?
-    rule is_creator?, owner?, super
+    rule is_creator?, is_owner?, super
   end
 end
