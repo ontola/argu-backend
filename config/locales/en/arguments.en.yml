@@ -12,8 +12,8 @@ en:
     new_btn: "Add argument"
     references: "references"
     header:
-      pro: "supporting arguments"
-      con: "opposing arguments"
+      pro: "pro arguments"
+      con: "con arguments"
     index:
       title: "arguments"
       opinion: "opinion"
@@ -24,9 +24,9 @@ en:
       reply: "reply"
       created_by: "%{user} - %{date}"
     new:
-      header: "argument %{side} the proposition: "
+      header: "%{side} argument for the proposition: "
       header_short: "%{side}: "
-      create: "+ argument %{side}"
+      create: "+ %{side} argument"
     revisions:
       title_wiped: 'Removed replies'
     form:
@@ -35,8 +35,8 @@ en:
       type: "type"
       submit: "place argument"
       side:
-        pro: "supporting argument"
-        con: "opposing argument"
+        pro: "pro argument"
+        con: "con argument"
       helper:
         content: "Add reasoning for your argument here. Present why it applies to the proposition.
 
@@ -59,13 +59,13 @@ en:
                 <li>Be friendly and content oriented.</li>
               <ul>"
     comments:
-      title: "replies"
-      favorite: "favorite"
-      reply: "reply"
-      delete: "delete"
-      more: "show more"
+      title: "Comments"
+      favorite: "Favorite"
+      reply: "Reply"
+      delete: "Delete"
+      more: "Show more"
       placed_by: "%{user} - %{date}"
-      none: "no replies"
+      none: "No replies"
     notices:
       restored: "The argument has been restored."
       created: "The argument has been placed."

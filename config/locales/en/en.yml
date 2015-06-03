@@ -23,6 +23,8 @@ en:
   not_found_type: "%{type} not found"
   edit: "Edit"
   edit_type: "Edit %{type}"
+  show_type: "Show %{type}"
+  settings_type: "%{type}settings"
   read_more: "Read more"
   collapse: "Collapse"
   update: "Update"
@@ -90,6 +92,9 @@ en:
   home_new_text: "Nederlands awesome slogan."
 #About
   info: "Info"
+  help: "Help"
+  help_support: "Help & support"
+  press_media: "Press & media"
   about:
     title: "About"
     vision: "Our vision"
@@ -114,6 +119,7 @@ en:
   users_votes: "Vote"
   users_clearance: "clearance"
   users_password: "password"
+  users_password_argu: "Argu password
   users_password_confirmation: "confirm password"
   users_password_old: "old password"
   users_password_edit: "edit password"

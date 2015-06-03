@@ -67,3 +67,4 @@ en:
       body:
         profile: "Your profile is visible for all visitors of Argu. You don't need to enter anything, but a complete name and a picture will make you appear more reliable to other users."
         selector: "Within Argu, discussions are divided within forums. Each forum has a specific area or subject as focus point. <br/><br/><b>Choose (at least two) forums that seem interesting to you:</b>"
+        shortname: "Set a username to complete your registration."

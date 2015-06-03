@@ -6,7 +6,7 @@ nl:
     switch: "Argu gebruiken als:"
     heads_up: "Jouw profiel is zichtbaar voor andere bezoekers van Argu."
     show:
-      title: "profiel"
+      title: "Profiel"
       btn:
         edit: 'Bewerken'
         freeze: 'Bevriezen'

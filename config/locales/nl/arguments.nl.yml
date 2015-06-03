@@ -2,29 +2,29 @@
 
 nl:
   arguments:
-    type: "argument"
-    type_new: "nieuw argument"
-    type_scientific: "wetenschappelijk"
-    type_axiomatic: "axiomatisch"
-    type_other: "anders"
-    type_discussion: "in discussie"
-    vote: "stem"
+    type: "Argument"
+    type_new: "Nieuw argument"
+    type_scientific: "Wetenschappelijk"
+    type_axiomatic: "Axiomatisch"
+    type_other: "Anders"
+    type_discussion: "In discussie"
+    vote: "Stem"
     new_btn: "Argument toevoegen"
-    references: "referenties"
+    references: "Referenties"
     header:
-      pro: "argumenten voor"
-      con: "argumenten tegen"
+      pro: "Argumenten voor"
+      con: "Argumenten tegen"
     index:
-      title: "argumenten"
-      opinion: "opinie"
-      parties: "partijen"
-      law: "wet"
+      title: "Argumenten"
+      opinion: "Opinie"
+      parties: "Partijen"
+      law: "Wet"
     show:
-      title: "argumenten"
-      reply: "reageer"
+      title: "Argumenten"
+      reply: "Reageer"
       created_by: "%{user} - %{date}"
     new:
-      header: "argument %{side} de stelling: "
+      header: "Argument %{side} de stelling: "
       header_short: "%{side}: "
       create: "+ argument %{side}"
     revisions:
@@ -59,13 +59,13 @@ nl:
                 <li>Wees vriendelijk en inhoudelijk.</li>
               <ul>"
     comments:
-      title: "reacties"
-      favorite: "favoriet"
-      reply: "reageer"
-      delete: "verwijder"
-      more: "toon meer"
+      title: "Reacties"
+      favorite: "Favoriet"
+      reply: "Reageer"
+      delete: "Verwijder"
+      more: "Toon meer"
       placed_by: "%{user} - %{date}"
-      none: "geen reacties"
+      none: "Geen reacties"
       comments:
         confirm: "Bevestig reactie"
     notices:

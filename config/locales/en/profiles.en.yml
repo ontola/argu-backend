@@ -2,12 +2,11 @@
 
 en:
   profiles:
-    type: "profile"
-    display: "View profile"
+    type: "Profile"
     switch: "Use Argu as:"
     heads_up: "Your profile is visible to other Argu users."
     show:
-      title: "profile"
+      title: "Profile"
       btn:
         edit: 'Edit'
         freeze: 'Freeze'
@@ -23,7 +22,7 @@ en:
       shortname: "Username"
     didnt_vote_name: "%{name} hasn't voted yet."
     should_start_with_capital: "can only contain letters, numbers and '_'. It also needs to start with a letter."
-    switch_warning: "Sommige possibilities might not be visible until the page has been refreshed. Refresh now?"
+    switch_warning: "Sommige features might not be visible until the page has been refreshed. Refresh now?"
   pundit:
     profile_policy:
       update?: "You can't update this profile."

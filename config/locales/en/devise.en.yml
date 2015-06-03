@@ -83,3 +83,10 @@ en:
       attributes:
         user:
           login: "email or username"
+    authentications:
+      destroyed: "Account unlinked"
+      destroyed_failed: "Account could not be unlinked."
+  intro:
+    initial:
+      headers:
+        shortname: "Welcome!"
