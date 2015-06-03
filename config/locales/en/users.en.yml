@@ -28,7 +28,7 @@ en:
       weekly_created_email: 'Weekly'
     cap_reached: "We're full"
     cap_reached_body: "Thank you for your interest in Argu. Because of the overwhelming amount of signups we've reached our maximum capacity. Signups will resume when we've increased our capacity."
-      authentications:
+    authentications:
       cant_decouple_note_provider: "You can only unlink your %{provider} account by setting a password or deleting your account."
       email_mismatch: "E-mail is different from the one you are currently using. Please log out before signing in with a different one."
     connect:
