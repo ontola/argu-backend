@@ -3,12 +3,15 @@
     h1= t('intro.initial.headers.shortname')
   .box
     section
-      p= raw t('intro.initial.body.shortname')
+      p= t('intro.initial.body.shortname')
   .box
     section
       =semantic_form_for @user, url: setup_users_path, method: :put do |f|
-        =f.inputs name: t('profiles.edit.shortname') do
-          =f.inputs :shortname, for: :shortname
-          p.error= t('users.shortname.not_changeable')
+        =f.inputs do
+          - if @user.email
+            =f.inputs :shortname, for: :shortname do |s|
+              =s.input :shortname, input_html: {value: @user.email[/[^@]+/].gsub('.', '_')}
+          - else
+            =f.inputs :shortname, for: :shortname
         =f.actions do
           =f.action :submit, :as => :button, label: t('next')

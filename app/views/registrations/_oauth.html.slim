@@ -3,6 +3,7 @@ ul.btns-signup
     li=link_to user_omniauth_authorize_path(provider: provider, r: local_assigns[:r]), class: "btn btn--#{provider}", data: {'skip-pjax' => 'true'}
       span[class="fa fa-#{provider}"]
       span.icon-left= t("sign_in_#{provider}")
+  p.smaller-8= t('sign_up_facebook_notice')
   li
     =link_to new_user_registration_url(r: local_assigns[:r]), class: 'btn btn--argu'
       span.fa.fa-plus

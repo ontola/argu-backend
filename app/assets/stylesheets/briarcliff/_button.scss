@@ -182,7 +182,8 @@
     text-transform: uppercase;
     font-size: .7em;
     display: inline-block;
-    line-height: 1em;
+    line-height: 1.2em;
+    margin-bottom: 0.5em;
     &:hover{
       text-decoration: underline;
     }
@@ -362,7 +363,6 @@
 }
 
 .btns-signup {
-  text-align: center;
   li {
     margin-bottom: 1em;
   }
