@@ -84,7 +84,7 @@ nl:
       forum:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
       user:
-        shortname: "Minimaal 3 karakters. Alleen letters, cijfers en '_'. Je kunt dit later niet meer wijzigen."
+        shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
     placeholders:
       email: "email@voorbeeld.nl"
       login: "email of gebruikersnaam"

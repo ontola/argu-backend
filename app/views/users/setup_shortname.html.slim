@@ -8,10 +8,10 @@
     section
       =semantic_form_for @user, url: setup_users_path, method: :put do |f|
         =f.inputs do
-          - if @user.email
-            =f.inputs :shortname, for: :shortname do |s|
-              =s.input :shortname, input_html: {value: @user.email[/[^@]+/].gsub('.', '_')}
-          - else
-            =f.inputs :shortname, for: :shortname
+          =f.inputs :shortname, for: :shortname do |s|
+            - if @user.email
+              =s.input :shortname, input_html: {pattern: "[a-z]+[_a-z0-9]", value: @user.email[/[^@]+/].gsub('.', '_')}
+            - else
+              =s.input :shortname, input_html: {pattern: "[a-z]+[_a-z0-9]"}
         =f.actions do
           =f.action :submit, :as => :button, label: t('next')

@@ -84,7 +84,7 @@ en:
       forum:
         bio: "Summarize in one sentence what function the forum has. This text will appear under the name of the forum. There's a maximum of 80 characters."
       user:
-        shortname: "At least 3 characters. Numbers, letters and '_'. only. Any name is permanent."
+        shortname: "No spaces. Only letters, numbers and _. Start with a letter."
     placeholders:
       email: "email@example.com"
       login: "email or username"
