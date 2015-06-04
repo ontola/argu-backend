@@ -24,3 +24,17 @@ en:
       tooltip: "This question expired at %{date}."
     expires_at:
       tooltip: "This question will expire on %{date}."
+    helper_html: "<h2>What is a question?</h2>
+      <p>On Argu, a <b class='question-t'>question</b> is an <b>open question</b> in which a problem is presented. A question encourages people to come up with solutions and post them as ideas.</p>
+      <h2>Tips:</h2>
+      <ul class='bullets'>
+        <li>
+          <p>Give <b>background information</b>. Explain what the problem is and why it's relevant.</p>
+        </li>
+        <li>
+          <p>A question always begins with '<b>How</b>...' or '<b>What</b>...' and ends with a question mark.</p>
+        </li>
+        <li>
+          <p>Do you already know how to solve the problem? You probably want to share an <b>%{idea}</b>.</p>
+        </li>
+      </ul>"

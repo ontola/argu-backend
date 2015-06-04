@@ -39,5 +39,5 @@
     .col-3-1
       .box
         section
-          =t('motions_helper_html', link: (link_to t('questions.type'), new_forum_question_path(@forum), class: 'question-t'))
+          =t('motions.helper_html', question: (link_to t('questions.type').downcase, new_forum_question_path(@forum), class: 'question-t'))
       =render partial: 'links_helper'

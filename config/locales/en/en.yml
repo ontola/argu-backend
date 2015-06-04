@@ -202,41 +202,8 @@ en:
   columns: "Columns"
   info_bar: "Info bar"
   images: "Images"
-  links_helper_html: "<h2>
-                  Add links
-                </h2>
-                <p>
-                  You can add links in your text by using square brackets and normal brackets.
-                </p>
+  links_helper_html: "<h2>Add links</h2>
+                <p>You can add links in your text by using square brackets and normal brackets.</p>
                 <code>This is [Argu](www.argu.co).</code>
-                <p>
-                  Will appear as:
-                </p>
-                  <code>This is <a href='http://www.argu.co'>Argu</a>.</code>"
-  motions_helper_html: "<h2>
-                  What is an idea?
-                </h2>
-                <p>
-                  An <b class='motion-t'>idea</b> is a proposal that solves one or more problems.
-                </p>
-                <h2>
-                  Tips:
-                </h2>
-                <ul class='bullets'>
-                  <li>
-                    <p>
-                      A good idea is <b>concrete and implementable</b>: it describes what should happen and how it can happen.
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      Give <b>background information</b>. Describe the current situation. How will your idea solve the problem? What needs to be done?
-                    </p>
-                  </li>
-                  <li>
-                    <p>
-                      Do you want to describe a problem, but haven't found a decent solution just yet? Try submitting a <b>%{link}.</b>
-                    </p>
-                  </li>
-                </ul>
-                "
+                <p>Will appear as:</p>
+                <code>This is <a href='http://www.argu.co'>Argu</a>.</code>"

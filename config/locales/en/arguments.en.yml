@@ -37,27 +37,15 @@ en:
       side:
         pro: "pro argument"
         con: "con argument"
-      helper:
-        content: "Add reasoning for your argument here. Present why it applies to the proposition.
-
-        
-            References can be added by using [] and () in the following manner:
-
-            <code>[www.website.com](example description)</code>
-
-
-            In case of written work:
-
-            <code>[](A. Surname, year of publication, title, page)</code>"
-        side: "<h2>What is an argument?</h2>
-              <p>An argument is a <b>single reason</b> <b class='pro-t'>supporting</b> or <b class='con-t'>opposing</b> an <b class='motion-t'>idea</b>.</p>
-              <h2>Tips</h2>
-              <ul class='bullets'>
-                <li>Start with the most important part. The first lines are read the most.</li>
-                <li>The argument should not already have been placed.</li>
-                <li>Use reliable sources to make your point more credible.</li>
-                <li>Be friendly and content oriented.</li>
-              <ul>"
+    helper_html: "<h2>What is an argument?</h2>
+            <p>An argument is a <b>single reason</b> <b class='pro-t'>supporting</b> or <b class='con-t'>opposing</b> an <b class='motion-t'>idea</b>.</p>
+            <h2>Tips</h2>
+            <ul class='bullets'>
+              <li>Start with the most important part. The first lines are read the most.</li>
+              <li>The argument should not already have been placed.</li>
+              <li>Use reliable sources to make your point more credible.</li>
+              <li>Be friendly and content oriented.</li>
+            <ul>"
     comments:
       title: "Comments"
       favorite: "Favorite"

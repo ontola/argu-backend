@@ -77,6 +77,20 @@ en:
       tooltip: "This motion has been accepted on %{date}."
     rejected:
       tooltip: "This motion has been rejected on %{date}."
+    helper_html: "<h2>What is an idea?</h2>
+      <p>An <b class='motion-t'>idea</b> is a proposal that solves one or more problems.</p>
+      <h2>Tips:</h2>
+      <ul class='bullets'>
+        <li>
+          <p>A good idea is <b>concrete and implementable</b>: it describes what should happen and how it can happen.</p>
+        </li>
+        <li>
+          <p>Give <b>background information</b>. Describe the current situation. How will your idea solve the problem? What needs to be done?</p>
+        </li>
+        <li>
+          <p>Do you want to describe a problem, but haven't found a decent solution just yet? Try submitting a <b>%{question}.</b></p>
+        </li>
+      </ul>"
   pundit:
     motion_policy:
       vote?: "You can't vote on items yet. Make sure to become a member of the forum."

@@ -37,27 +37,15 @@ nl:
       side:
         pro: "argument voor"
         con: "argument tegen"
-      helper:
-        content: "Bespreek je argument hier in meer detail. Noem waarom het van toepassing is op de stelling.
-
-        
-            Referenties zijn toe te voegen door [] en () als volgt te gebruiken:
-
-            <code>[www.website.nl](voorbeeld omschrijving)</code>
-
-
-            In het geval van geschreven werk:
-
-            <code>[](A. Achternaam, jaartal, titel, pagina)</code>"
-        side: "<h2>Wat is een argument?</h2>
-              <p>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='motion-t'>idee</b>.</p>
-              <h2>Tips</h2>
-              <ul class='bullets'>
-                <li>Begin met het belangrijkste. De eerste regels worden het meest gelezen.</li>
-                <li>Het argument moet niet al eerder geplaatst zijn bij dit idee.</li>
-                <li>Gebruik betrouwbare bronnen om je punt overtuigender te maken.</li>
-                <li>Wees vriendelijk en inhoudelijk.</li>
-              <ul>"
+    helper_html: "<h2>Wat is een argument?</h2>
+            <p>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='motion-t'>idee</b>.</p>
+            <h2>Tips</h2>
+            <ul class='bullets'>
+              <li>Begin met het belangrijkste. De eerste regels worden het meest gelezen.</li>
+              <li>Het argument moet niet al eerder geplaatst zijn bij dit idee.</li>
+              <li>Gebruik betrouwbare bronnen om je punt overtuigender te maken.</li>
+              <li>Wees vriendelijk en inhoudelijk.</li>
+            <ul>"
     comments:
       title: "Reacties"
       favorite: "Favoriet"
