@@ -5,12 +5,12 @@ en:
     type: "Item"
     new_btn: "Add %{type}"
     header:
-      pro: "In favour of %{type}"
+      pro: "Agree"
       neutral: "Neutral"
-      con: "Against %{type}"
+      con: "Disagree"
     form:
-      submit: "Place %{name}"
+      submit: "Submit %{name}"
       side:
-        pro: "In favour of"
+        pro: "Agree"
         neutral: "Neutral"
-        con: "Against"
+        con: "Disagree"

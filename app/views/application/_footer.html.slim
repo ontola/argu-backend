@@ -1,10 +1,10 @@
 footer
   ul.footer-list
     li
-      h3.footer-heading Forums
+      h3.footer-heading= t('forums.plural')
     /li= link_to "Een eigen forum?", "/product"
     li
-      a[href="/"] Bekijk alle forums
+      a[href="/"]= t('forums.show_open')
     li
       a[href="/nederland"] Nederland
     li
@@ -22,13 +22,13 @@ footer
     li= link_to t('help_support'), 'https://argu.freshdesk.com/support/home'
   ul.footer-list
     li
-      h3.footer-heading Voorwaarden
-    li= link_to 'Gebruiksvoorwaarden', policy_path
-    li= link_to 'Privacy', privacy_path
-    /li= link_to 'Cookiebeleid', cookies_path
+      h3.footer-heading= t('legal.header')
+    li= link_to t('legal.policy'), policy_path
+    li= link_to t('legal.privacy'), privacy_path
+    /li= link_to t('legal.cookies'), cookies_path
   ul.footer-list
     li
-      h3.footer-heading Volg ons
+      h3.footer-heading= t('footer_item_follow_uw')
       .footer-social-buttons
         a[href="https://www.facebook.com/argu.co"]
           span.fa.fa-facebook-square

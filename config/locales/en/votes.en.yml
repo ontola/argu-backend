@@ -1,18 +1,20 @@
 #English votes translations
 
-                en:
-                  votes:
-                    score: "score"
-                    header:
-                      pro: "Is pro"
-                      neutral: "Neutral"
-                      con: "Is con"
-                    tooltips:
-                      argument: "Important argument"
-                    alerts:
-                      success: "Thanks for your vote!"
-                      failed: "Something went wrong, please try again."
-                    type:
-                      pro: "Pro"
-                      neutral: "Neutral"
-                      con: "Con"
+en:
+  votes:
+    score: "score"
+    header:
+      pro: "Is pro"
+      neutral: "Neutral"
+      con: "Is con"
+    tooltips:
+      argument: "Important argument"
+    alerts:
+      success: "Thanks for your vote!"
+      failed: "Something went wrong, please try again."
+    type:
+      pro: "Pro"
+      neutral: "Neutral"
+      con: "Con"
+    confirm:
+      headline: "Confirm vote"

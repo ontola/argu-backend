@@ -12,7 +12,6 @@ en:
   sign_in_twitter: "Log in with twitter"
   sign_in_existing: "Log in with an existing argu account:"
   forgot_password: "Forgot password?"
-
   sign_up: "Sign up"
   sign_up_description: "Sign up with a free account:"
   argu_sign_up: "Create argu account"
@@ -23,6 +22,8 @@ en:
   not_found_type: "%{type} not found"
   edit: "Edit"
   edit_type: "Edit %{type}"
+  show_type: "Show %{type}"
+  settings_type: "%{type}settings"
   read_more: "Read more"
   collapse: "Collapse"
   update: "Update"
@@ -57,6 +58,11 @@ en:
   forum: "Forum"
   share: "Share"
   menu: "Menu"
+  legal:
+    header: "Legal"
+    policy: "Terms of use"
+    privacy: "Privacy"
+    cookies: "Cookies"
   trash_confirmation: "This item will no longer be visible in public discussion. This can be undone."
   destroy_confirmation: "This object and all related data will be permanently removed. This cannot be undone."
   not_allowed: "Action not allowed."
@@ -70,7 +76,7 @@ en:
   status:
     400: "Error in request"
   header:
-    motions: "Motions"
+    motions: "Ideas"
     activities: "Activities"
     questions: "Questions"
   site:
@@ -79,6 +85,7 @@ en:
   footer_item_about: "about"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
+  footer_item_follow_uw: "Follow us"
   closed: "Closed"
   accepted: "Accepted"
   rejected: "Rejected"
@@ -90,10 +97,13 @@ en:
   home_new_text: "Nederlands awesome slogan."
 #About
   info: "Info"
+  help: "Help"
+  help_support: "Help & support"
+  press_media: "Press & media"
   about:
     title: "About"
     vision: "Our vision"
-    how_argu_works: "How does Arguw ork?"
+    how_argu_works: "How does Argu work?"
     team: "Our team"
     product: "Our product"
     organisations: "Argu for organisations"
@@ -114,6 +124,7 @@ en:
   users_votes: "Vote"
   users_clearance: "clearance"
   users_password: "password"
+  users_password_argu: "Argu password"
   users_password_confirmation: "confirm password"
   users_password_old: "old password"
   users_password_edit: "edit password"
@@ -175,6 +186,7 @@ en:
   users:
     logged_in_banner_text: "%{name}"
     registrations:
+      no_password: "You don't have a password yet, because you signed up using a linked account. Do you want to set a password?"
       hints:
         password: "At least 8 characters"
         username: "Only use letters, numbers and _."
@@ -187,3 +199,11 @@ en:
         privacy: "Privacy"
   document_missing: "This document does not exist."
   offline: "Internet connection is offline."
+  columns: "Columns"
+  info_bar: "Info bar"
+  images: "Images"
+  links_helper_html: "<h2>Add links</h2>
+                <p>You can add links in your text by using square brackets and normal brackets.</p>
+                <code>This is [Argu](www.argu.co).</code>
+                <p>Will appear as:</p>
+                <code>This is <a href='http://www.argu.co'>Argu</a>.</code>"

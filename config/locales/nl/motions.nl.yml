@@ -77,6 +77,20 @@ nl:
       tooltip: "Dit voorstel is aangenomen op %{date}."
     rejected:
       tooltip: "Dit voorstel is afgewezen op %{date}."
+    helper_html: "<h2>Wat is een idee?</h2>
+      <p>Een <b class='motion-t'>idee</b> is een voorstel om één of meerdere problemen op te lossen.</p>
+      <h2>Tips:</h2>
+      <ul class='bullets'>
+        <li>
+          <p>Een goed idee is <b>concreet en implementeerbaar</b>: het beschrijft wat er moet gebeuren en hoe dit moet gebeuren.</p>
+        </li>
+        <li>
+          <p>Geef <b>achtergrondinformatie</b>. Wat is de huidige situatie? Wat is er al gebeurd? Hoe gaat jouw idee bestaande problemen oplossen?</p>
+        </li>
+        <li>
+          <p>Wil je een probleem aankaarten, maar heb je nog geen oplossing? Waarschijnlijk wil je dan een <b>%{question}</b> plaatsen.</b></p>
+        </li>
+      </ul>"
   pundit:
     motion_policy:
       vote?: "Je mag nog niet op items stemmen. Zorg ervoor dat je lid van het forum bent."

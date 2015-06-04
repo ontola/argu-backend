@@ -1,6 +1,7 @@
 en:
   pages:
     resource_name: "Pages"
+    type: "Page"
     settings:
       title: "Settings"
       menu:

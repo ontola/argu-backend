@@ -24,3 +24,17 @@ nl:
       tooltip: "Dit vraagstuk sloot op %{date}."
     expires_at:
       tooltip: "Dit vraagstuk wordt gesloten op %{date}."
+    helper_html: "<h2>Wat is een vraagstuk?</h2>
+      <p>Een <b class='question-t'>vraagstuk</b> is een <b>open vraag</b> waarin een probleem wordt gepresenteerd. Een vraagstuk nodigt mensen uit om oplossingen te bedenken en vervolgens te plaatsen als ideeën.</p>
+      <h2>Tips:</h2>
+      <ul class='bullets'>
+        <li>
+          <p>Geef <b>achtergrondinformatie</b>. Leg uit hoe het probleem in elkaar steekt en waarom het probleem relevant is.</p>
+        </li>
+        <li>
+          <p>Een vraagstuk begint meestal met '<b>Hoe</b>...' of '<b>Wat</b>...' en eindigt altijd met een vraagteken.</p>
+        </li>
+        <li>
+          <p>Heb je al een oplossing voor het probleem en wil je die delen? Waarschijnlijk wil je dan een <b>%{idea}</b> plaatsen.</b></p>
+        </li>
+      </ul>"

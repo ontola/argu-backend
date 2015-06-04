@@ -63,7 +63,7 @@ module MotionsHelper
     link_items = []
     mo_po = policy(motion)
     if mo_po.update?
-      link_items << link_item(t('update'), edit_motion_path(motion), fa: 'pencil')
+      link_items << link_item(t('edit'), edit_motion_path(motion), fa: 'pencil')
     end
     if mo_po.trash?
       link_items << link_item(t('trash'), motion_path(motion), data: {confirm: t('trash_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'trash')
