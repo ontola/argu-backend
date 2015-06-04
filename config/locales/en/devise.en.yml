@@ -72,7 +72,7 @@ en:
         confirm: 'You can confirm your account by pressing the link below.'
         confirm_link: 'Confirm your account'
       reset_password_instructions:
-        subject: 'password reset instructions'
+        subject: 'Password reset instructions'
         hello: 'Dear gooder,'
         someone_requested: 'Someone requested to send a password reset mail to this address. Click the link below if you would like to change your Argu password.'
         confirm_link: 'Change my password'
