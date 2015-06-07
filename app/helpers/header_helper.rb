@@ -39,7 +39,7 @@ module HeaderHelper
     {
         trigger: {
             type: 'current_user',
-            title: current_profile.display_name,
+            title: truncate(current_profile.display_name, length: 20),
             profile_photo: {
                 url: current_profile.profile_photo.url(:icon),
                 className: 'profile-picture--navbar'

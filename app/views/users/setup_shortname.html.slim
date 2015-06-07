@@ -5,7 +5,7 @@
     section
       p= t('intro.initial.body.shortname')
   .box
-    section
+    section.form-validate
       =semantic_form_for @user, url: setup_users_path, method: :put do |f|
         =f.inputs do
           =f.inputs :shortname, for: :shortname do |s|

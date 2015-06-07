@@ -50,16 +50,18 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   }
 
   // Validation styling
+  .form-validate & {
+    &:focus:valid{
+      color: $gre;
+      border-color: $gre;
+    }
 
-  &:focus:valid {
-    color: $gre;
-    border-color: $gre;
+    &:focus:invalid{
+      color: $red;
+      border-color: $red;
+    }
   }
 
-  &:focus:invalid {
-    color: $red;
-    border-color: $red;
-  }
 }
 
 *:disabled input{

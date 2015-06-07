@@ -46,30 +46,11 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
               h2= t('sign_up')
               /.info.info-signup= t('sign_up_description')
               =render partial: 'registrations/form', locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping, r: (defined?(r) && r)}
-        - elsif Rails.application.config.epics.open_auth
-          section
-            =render partial: 'registrations/oauth'
         - else
           section
             .form-small
               p
-                b Argu is momenteel alleen op uitnodiging toegankelijk.
-              p Laat jouw e-mailadres achter als je op de hoogte wilt worden gehouden.
-
-              form class="formtastic" action="https://docs.google.com/forms/d/10JzNzARmKqRF1bQpLyw141UQyhM1Ul8xKYdQCVDjFQk/formResponse" method="POST" id="ss-form" target="_self" onsubmit="" _lpchecked="1"
-                ol role="list" class="ss-question-list" style="padding-left: 0"
-                  div class="ss-form-question errorbox-good" role="listitem"
-                  div dir="ltr" class="ss-item ss-item-required ss-text"
-                    .ss-form-entry
-                      li
-                        input type="email" name="entry.1283330446" value="" class="ss-q-short required" id="entry_1283330446" dir="auto" aria-label="E-mailadres  " aria-required="true" required="" title="" placeholder="Jouw e-mailadres"
-                  div class="error-message" id="739960280_errorMessage"
-
-                  input type="hidden" name="draftResponse" value="[,,&quot;-773395212550021648&quot;]"
-                  input type="hidden" name="pageHistory" value="0"
-                  input type="hidden" name="fbzx" value="-773395212550021648"
-                  .actions style="margin-top: 1.5em;"
-                    button type="submit" name="submit" id="ss-submit" style="margin-bottom: 2em;" Stuur mij updates
+                b Argu is vol!
     .box.box-small
       section
         =semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name, host_url: params[:host_url].presence) ) do |f|
