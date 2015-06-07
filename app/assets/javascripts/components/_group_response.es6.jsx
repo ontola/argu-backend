@@ -57,9 +57,14 @@ window.BigGroupResponse = React.createClass({
                         return (
                             <div key={`group_responses_${response.id}`}>
                                 <div className="box response" id="group_responses_9">
+                                    <section className="section-info {response.side}-bg">
+                                        <span>
+                                            {response.side}
+                                        </span>
+                                    </section>
                                     <section>
                                         <h3>
-                                            {this.props.actor.name} - {response.side}
+                                            {this.props.actor.name}
                                         </h3>
                                         <p>{response.text}</p>
                                         <ul className="btns-list--subtle btns-horizontal btn-sticky-bottom btn-sticky">
