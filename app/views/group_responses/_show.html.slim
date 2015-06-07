@@ -1,4 +1,6 @@
 .box.response[id=model.identifier]
+  section.section-info[class="#{model.side}-bg"]
+    span= t(model.side)
   section
     .profile-small
       img[src=model.creator.profile_photo.url(:icon)]
