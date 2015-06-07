@@ -48,6 +48,18 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   @include bp-medium {
     width: 100%;
   }
+
+  // Validation styling
+
+  &:focus:valid {
+    color: $gre;
+    border-color: $gre;
+  }
+
+  &:focus:invalid {
+    color: $red;
+    border-color: $red;
+  }
 }
 
 *:disabled input{

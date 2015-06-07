@@ -5,8 +5,8 @@
   .inspectlet-sensitive=f.inputs do
     =f.input :email
     - if resource.password_required?
-      =f.input :password
-      =f.input :password_confirmation
+      =f.input :password, input_html: {minlength: 8}
+      =f.input :password_confirmation, input_html: {minlength: 8 }
     =f.input :r, as: :hidden
   =f.actions do
     =f.action :submit, :as => :button, label: t('sign_up')

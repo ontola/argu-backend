@@ -85,11 +85,11 @@ en:
         bio: "Summarize in one sentence what function the forum has. This text will appear under the name of the forum. There's a maximum of 80 characters."
       user:
         shortname: "No spaces. Only letters, numbers and _. Start with a letter."
+      password_confirmation: "Same as above"
     placeholders:
       email: "email@example.com"
       login: "email or username"
       tag_list: "theme1, theme2 ..."
-      password_confirmation: "Same as above"
       question:
         title: "Place the core of your %{type} here"
         content: "Place the details and background information on your %{type} here."
