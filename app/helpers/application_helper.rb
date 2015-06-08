@@ -52,14 +52,18 @@ module ApplicationHelper
     uri.to_s
   end
 
+  def remote_if_non_mobile
+    browser.mobile? ? {'skip-pjax' => true} : {remote: true, 'skip-pjax' => true}
+  end
+
   # Used in forms for the 'r' system
   def remote_if_user
-    current_profile.present? ? { remote: true } : {}
+    current_profile.present? ? {remote: true} : {}
   end
 
   # Used in forms for the 'r' system
   def remote_unless_user
-    current_profile.present? ? {} : { remote: true, 'skip-pjax' => true }
+    current_profile.present? ? {} : {remote: true, 'skip-pjax' => true}
   end
 
   def resource

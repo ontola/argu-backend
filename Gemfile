@@ -40,6 +40,7 @@ gem 'rack-attack'
 gem 'country_select'
 gem 'http_accept_language'
 gem 'geokit-rails', '2.1.0'
+gem 'browser'
 
 #Search
 
