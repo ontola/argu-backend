@@ -33,6 +33,7 @@
     "intro.js": "latest",
     "fastclick": "latest",
     "isotope": "2.1.1",
-    "nprogress": "latest"
+    "nprogress": "latest", 
+    "js-polyfills":"latest"
   }
 }
