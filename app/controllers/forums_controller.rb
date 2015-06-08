@@ -6,7 +6,7 @@ class ForumsController < ApplicationController
     authorize @user, :update?
     forums = Forum.arel_table
     @forums = Forum.where(forums[:page_id].in(@user.profile.pages.pluck(:id)).or(forums[:id].in(@user.profile.managerships.pluck(:forum_id))))
-    @_policy_scoped = true
+    @_pundit_policy_scoped = true
   end
 
   def discover
