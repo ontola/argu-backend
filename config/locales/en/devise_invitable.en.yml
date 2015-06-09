@@ -7,6 +7,7 @@ en:
       updated: 'You have successfully updated your password. You are now logged in.'
       no_invitations_remaining: "You have no invitations remaining."
       invitation_removed: 'Your invitation has been removed.'
+      limit: 'You currently have %{limit} invitations left.'
       new:
         header: "Send invitations"
         submit_button: "Send invitation"

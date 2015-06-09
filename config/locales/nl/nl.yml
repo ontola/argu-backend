@@ -218,3 +218,6 @@ nl:
                   Verschijnt als:
                 </p>
                   <code>Dit is <a href='http://www.argu.co'>Argu</a>.</code>"
+  welcome_video_open: 'Nieuw op Argu? Bekijk de video!'
+  welcome_video_close: 'Sluit deze banner'
+  welcome_video_dismiss: 'Verberg deze boodschap.'

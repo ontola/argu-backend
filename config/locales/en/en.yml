@@ -211,3 +211,6 @@ en:
                 <code>This is [Argu](www.argu.co).</code>
                 <p>Will appear as:</p>
                 <code>This is <a href='http://www.argu.co'>Argu</a>.</code>"
+  welcome_video_open: 'First time on Argu? Watch the video!'
+  welcome_video_close: 'Close this banner'
+  welcome_video_dismiss: "Hide this message."
