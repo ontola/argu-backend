@@ -13,6 +13,9 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   =render 'shim'
   =render 'layouts/meta'
 
+  /[if lt IE 10]
+    =javascript_include_tag 'polyfill'
+
   =stylesheet_link_tag 'application', :media => 'all'
   - if request.original_url.include? developers_path
     =stylesheet_link_tag 'developers/developers', :media => 'all'
@@ -22,8 +25,6 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   link[rel="copyright" content="#{t('site.copyright')}"]
   - if active_for_user?('inspectlet', current_user)
     =render partial:'external/inspectlet'
-  /[if lt IE 10]
-    script[src="//cdnjs.cloudflare.com/ajax/libs/classlist/2014.01.31/classList.min.js"]
 body
   - if current_user && current_user.profile.has_role?(:staff)
     =render partial: 'staff_sign'

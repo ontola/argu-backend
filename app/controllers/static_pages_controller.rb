@@ -22,7 +22,8 @@ class StaticPagesController < ApplicationController
     @resource ||= User.new(r: request.referer, shortname: Shortname.new)
     respond_to do |format|
       format.js { render 'devise/sessions/new', layout: false, locals: {resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
-      format.html { render 'devise/sessions/new', layout: 'closed', locals: {resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
+      format.html { render 'devise/sessions/new
+', layout: 'closed', locals: {resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
     end
   end
 

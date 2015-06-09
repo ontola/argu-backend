@@ -23,6 +23,9 @@ module HeaderHelper
     # TODO: Show most popular 3 forums if user has fewer than 2 memberships.
 
     items << link_item(t('forums.discover'), discover_forums_path, fa: 'compass', divider: 'top')
+    items.concat (public_forum_items - profile_membership_items) if items.length < public_forum_items.length + 1
+
+    items
   end
 
   # Label for the home button

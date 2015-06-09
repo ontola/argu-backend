@@ -13,6 +13,9 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   =render 'shim'
   =render 'layouts/meta'
 
+  /[if lt IE 10]
+    =javascript_include_tag 'polyfill'
+
   / unless current_user.blank?
   =stylesheet_link_tag 'application', :media => 'all'
   - if active_for_user?('inspectlet', current_user)
