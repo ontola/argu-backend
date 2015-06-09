@@ -90,7 +90,7 @@ class RestrictivePolicy
   delegate :assert!, to: :class
 
   def change_owner?
-    staff?
+    rule is_owner?, staff?
   end
 
   def create?
