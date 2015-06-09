@@ -39,6 +39,10 @@ class PagePolicy < RestrictivePolicy
     def is_owner?
       (owner if user && user.profile.id == record.try(:owner_id)) || staff?
     end
+
+    def has_pages?
+      (owner if user && user.profile.pages.present?) || staff?
+    end
   end
   include Roles
 
@@ -87,7 +91,7 @@ class PagePolicy < RestrictivePolicy
   end
 
   def destroy?
-    is_manager? || super
+    rule is_manager?, super
   end
 
   def edit?
@@ -95,7 +99,7 @@ class PagePolicy < RestrictivePolicy
   end
 
   def index?
-    user && user.profile.page_managerships.length > 0 || staff?
+    rule has_pages?, staff?
   end
 
   def update?
@@ -131,7 +135,7 @@ class PagePolicy < RestrictivePolicy
   # TODO: Don't forget to remove the note that only argu can currently
   # transfer page ownership in forums/settings?tab=managers
   def transfer?
-    rule staff?
+    rule is_owner?, staff?
   end
 
   def managers?
