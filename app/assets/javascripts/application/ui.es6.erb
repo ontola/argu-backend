@@ -15,6 +15,7 @@ Argu.ui = {
             .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
             .ajaxComplete(this.handleAjaxCalls)
             .on('click', '.welcome-video-hide', this.welcomeVideoHide)
+            .on('click', '.welcome-video-overlay', this.welcomeVideoToggle)
             .on('click', '.welcome-video-toggle', this.welcomeVideoToggle);
 
         window.addEventListener('online', this.handleOnline);
@@ -183,12 +184,20 @@ Argu.ui = {
     },
 
     welcomeVideoHide: function () {
-        // TODO: set a cookie!
-        $('.welcome-video').remove();
+        $('.welcome-video').addClass('welcome-video-disappear');
+        $('.welcome-video').removeClass('welcome-video-opened');
+        $('body').removeClass('welcome-video-opened');
+
+        setTimeout(function() {
+            $('.welcome-video').remove();
+        }, 1000);
+
+        // TODO: Set a cookie!
     },
 
     welcomeVideoToggle: function () {
         $('.welcome-video').toggleClass('welcome-video-opened');
+        $('body').toggleClass('welcome-video-opened');
     }
 
 };
