@@ -30,8 +30,10 @@ en:
     revisions:
       title_wiped: 'Deleted arguments'
     form:
-      title: "Summarize your motion here"
-      content: "Present your motion here. Explain the current situation and what needs to change. Do not try to convince; this is done later with arguments."
+      title_heading: "Add a title to your idea"
+      title_body: "Describe your idea as short as possible. Be clear and avoid words that few people understand."
+      content_heading: "Describe your idea"
+      content_body: "Explain what your idea exactly contains. Explain what needs to happen and how this should happen. Make sure that your idea can be implemented. Don't add arguments; do that after submitting your idea."
       themes: "theme1, theme2"
       invert: "invert all arguments"
       helper:

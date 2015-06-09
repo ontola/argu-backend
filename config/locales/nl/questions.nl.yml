@@ -12,8 +12,10 @@ nl:
       body: "Ben jij op zoek naar goede ideeën? Heb jij een vraagstuk waar je voorstellen voor zou willen?"
       action: "Deel jouw vraagstuk!"
     form:
-      title: "Plaats hier jouw vraag in enkele woorden."
-      content: "Waarom zit je met deze vraag? Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."
+      title_heading: "Geef jouw vraagstuk een titel"
+      title_body: "Stel een open vraag waar mensen ideeën onder zouden kunnen plaatsen. Wees duidelijk en gebruik woorden die de meeste mensen kennen."
+      content_heading: "Licht je vraagstuk toe"
+      content_body: "Leg de huidige situatie uit. Geef achtergrondinformatie van het probleem en leg uit waarom er nog geen oplossing is. Geef aan waar de ideeën aan zouden moeten voldoen."
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
       helper:

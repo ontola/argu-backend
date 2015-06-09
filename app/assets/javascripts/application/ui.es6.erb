@@ -14,7 +14,8 @@ Argu.ui = {
             .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
             .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
             .ajaxComplete(this.handleAjaxCalls)
-            .on('click', '.welcome-video-toggle', this.toggleWelcomeVideo);
+            .on('click', '.welcome-video-hide', this.welcomeVideoHide)
+            .on('click', '.welcome-video-toggle', this.welcomeVideoToggle);
 
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);
@@ -181,7 +182,12 @@ Argu.ui = {
         $('.comment_form#cf' + $(this).attr('id')).slideToggle();
     },
 
-    toggleWelcomeVideo: function () {
+    welcomeVideoHide: function () {
+        // TODO: set a cookie!
+        $('.welcome-video').remove();
+    },
+
+    welcomeVideoToggle: function () {
         $('.welcome-video').toggleClass('welcome-video-opened');
     }
 

@@ -12,8 +12,10 @@ en:
       body: "Are you looking for good ideas to a burning question?"
       action: "Share your question!"
     form:
-      title: "Describe your question in a few words."
-      content: "Why is this question important? Give background information on the problem and indicate requirements for a solution."
+      title_heading: "What's your question?"
+      title_body: "Ask an open question that invites people to submit their own ideas and solutions."
+      content_heading: "Explain your question"
+      content_body: "Explain the current situation. Give background information about the problem and explain why it hasn't been solved yet. Explain what constitutes a good solution."
       themes: "theme1, theme2"
       invert: "invert all arguments"
       helper:
