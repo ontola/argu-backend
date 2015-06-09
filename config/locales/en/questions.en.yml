@@ -9,7 +9,7 @@ en:
     view_all_motions: "View all %{amount} ideas..."
     call_to_action:
       title: "Require a solution?"
-      body: "Are you looking for good ideas for a burning question?"
+      body: "Are you looking for good ideas to a burning question?"
       action: "Share your question!"
     form:
       title: "Describe your question in a few words."

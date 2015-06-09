@@ -88,7 +88,7 @@ en:
           <p>Give <b>background information</b>. Describe the current situation. How will your idea solve the problem? What needs to be done?</p>
         </li>
         <li>
-          <p>Do you want to describe a problem, but haven't found a decent solution just yet? Try submitting a <b>%{question}.</b></p>
+          <p>Do you want to describe a problem which requires a solution? Try submitting a <b>%{question}.</b></p>
         </li>
       </ul>"
   pundit:
