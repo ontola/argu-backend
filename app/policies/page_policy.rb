@@ -135,7 +135,7 @@ class PagePolicy < RestrictivePolicy
   # TODO: Don't forget to remove the note that only argu can currently
   # transfer page ownership in forums/settings?tab=managers
   def transfer?
-    rule staff?
+    rule is_owner?, staff?
   end
 
   def managers?
