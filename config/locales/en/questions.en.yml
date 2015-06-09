@@ -13,9 +13,16 @@ en:
       action: "Share your question!"
     form:
       title_heading: "What's your question?"
-      title_body: "Ask an open question that invites people to submit their own ideas and solutions."
+      title_body_html: "<ul class='bullets'>
+                         <li>Post a <b class='question-t'>question</b> to present a problem and find a solution.</li>
+                         <li>Ask an <b>open question</b> that invites people to submit their own ideas and solutions.</li>
+                       </ul>"
       content_heading: "Explain your question"
-      content_body: "Explain the current situation. Give background information about the problem and explain why it hasn't been solved yet. Explain what constitutes a good solution."
+      content_body_html: " Explain what constitutes a good solution."
+      content_body_html: "<ul class='bullets'>
+                            <li>Explain the <b>current situation</b>. Give background information about the problem and why it hasn't been solved yet.</li>
+                            <li>Explain what constitutes a good solution.</li>
+                          </ul>"
       themes: "theme1, theme2"
       invert: "invert all arguments"
       helper:
@@ -26,17 +33,3 @@ en:
       tooltip: "This question expired at %{date}."
     expires_at:
       tooltip: "This question will expire on %{date}."
-    helper_html: "<h2>What is a question?</h2>
-      <p>On Argu, a <b class='question-t'>question</b> is an <b>open question</b> in which a problem is presented. A question encourages people to come up with solutions and post them as ideas.</p>
-      <h2>Tips:</h2>
-      <ul class='bullets'>
-        <li>
-          <p>Give <b>background information</b>. Explain what the problem is and why it's relevant.</p>
-        </li>
-        <li>
-          <p>A question always begins with '<b>How</b>...' or '<b>What</b>...' and ends with a question mark.</p>
-        </li>
-        <li>
-          <p>Do you already know how to solve the problem? You probably want to share an <b>%{idea}</b>.</p>
-        </li>
-      </ul>"

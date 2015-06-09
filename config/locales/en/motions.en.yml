@@ -31,9 +31,16 @@ en:
       title_wiped: 'Deleted arguments'
     form:
       title_heading: "Add a title to your idea"
-      title_body: "Describe your idea as short as possible. Be clear and avoid words that few people understand."
-      content_heading: "Describe your idea"
-      content_body: "Explain what your idea exactly contains. Explain what needs to happen and how this should happen. Make sure that your idea can be implemented. Don't add arguments; do that after submitting your idea."
+      title_body_html: "<ul class='bullets'>
+                    <li>Describe your idea <b>as short as possible</b>.</li>
+                    <li>Be <b>clear</b> and avoid words that few people understand.</li>
+                  </ul>"
+      content_heading: "Describe your idea in detail"
+      content_body_html: "<ul class='bullets'>
+                            <li>Explain what your idea exactly entails. Explain what needs to happen and how this should happen.</li>
+                            <li>Give <b>background information</b>. Explain the current situation.</li>
+                            <li><b>Don't add arguments</b> just yet; do that after you've submitted your idea. That way, we keep </li>
+                          </ul>"
       themes: "theme1, theme2"
       invert: "invert all arguments"
       helper:

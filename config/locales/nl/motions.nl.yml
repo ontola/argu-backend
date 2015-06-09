@@ -31,9 +31,16 @@ nl:
       title_wiped: 'Gewiste argumenten'
     form:
       title_heading: "Geef jouw idee een titel"
-      title_body: "Beschrijf jouw idee zo kort en bondig als je maar kan. Wees duidelijk en gebruik woorden die de meeste mensen kennen."
+      title_body_html: "<ul class='bullets'>
+                    <li>Beschrijf jouw idee zo <b>kort en bondig</b> als je maar kan.</li>
+                    <li>Wees <b>duidelijk</b> en gebruik woorden die de meeste mensen kennen.</li>
+                  </ul>"
       content_heading: "Licht je idee toe"
-      content_body: "Leg uit wat er precies moet gebeuren. Zorg dat jouw idee concreet is en implementeerbaar. Plaats hier geen argumenten; dat doe je pas nadat je idee is geplaatst"
+      content_body_html: "<ul class='bullets'>
+                            <li>Zorg dat jouw idee <b>concreet</b> is en implementeerbaar. Leg uit wat er precies moet gebeuren.</li>
+                            <li>Geef <b>achtergrondinformatie</b>. Wat is de huidige situatie?</li>
+                            <li>Plaats hier <b>geen argumenten</b>; dat doe je pas nadat je idee is geplaatst.</li>
+                          </ul>"
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
       helper:
@@ -79,20 +86,6 @@ nl:
       tooltip: "Dit voorstel is aangenomen op %{date}."
     rejected:
       tooltip: "Dit voorstel is afgewezen op %{date}."
-    helper_html: "<h2>Wat is een idee?</h2>
-      <p>Een <b class='motion-t'>idee</b> is een voorstel om één of meerdere problemen op te lossen.</p>
-      <h2>Tips:</h2>
-      <ul class='bullets'>
-        <li>
-          <p>Een goed idee is <b>concreet en implementeerbaar</b>: het beschrijft wat er moet gebeuren en hoe dit moet gebeuren.</p>
-        </li>
-        <li>
-          <p>Geef <b>achtergrondinformatie</b>. Wat is de huidige situatie? Wat is er al gebeurd? Hoe gaat jouw idee bestaande problemen oplossen?</p>
-        </li>
-        <li>
-          <p>Wil je een probleem aankaarten, maar heb je nog geen oplossing? Waarschijnlijk wil je dan een <b>%{question}</b> plaatsen.</b></p>
-        </li>
-      </ul>"
   pundit:
     motion_policy:
       vote?: "Je mag nog niet op items stemmen. Zorg ervoor dat je lid van het forum bent."
