@@ -87,7 +87,7 @@ class PagePolicy < RestrictivePolicy
   end
 
   def destroy?
-    is_manager? || super
+    rule is_manager?, super
   end
 
   def edit?
@@ -95,7 +95,7 @@ class PagePolicy < RestrictivePolicy
   end
 
   def index?
-    user && user.profile.page_managerships.length > 0 || staff?
+    rule is_manager?, staff?
   end
 
   def update?
