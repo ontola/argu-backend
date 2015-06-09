@@ -4,7 +4,8 @@
 .welcome-video {
   background-color: black;
   position: fixed;
-  z-index: 1;
+  z-index: 4;
+  top: $header_height;
   left: 0;
   right: 0;
   width: 100%;
