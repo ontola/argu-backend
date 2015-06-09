@@ -39,6 +39,10 @@ class PagePolicy < RestrictivePolicy
     def is_owner?
       (owner if user && user.profile.id == record.try(:owner_id)) || staff?
     end
+
+    def has_pages?
+      (owner if user && user.profile.pages.present?) || staff?
+    end
   end
   include Roles
 
@@ -95,7 +99,7 @@ class PagePolicy < RestrictivePolicy
   end
 
   def index?
-    rule is_manager?, staff?
+    rule has_pages?, staff?
   end
 
   def update?
