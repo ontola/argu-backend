@@ -3,9 +3,8 @@ module HeaderHelper
 
   def forum_selector_items(guest= false)
     {
-        title: t('forums.plural'),
+        title: t('forums.plural') + ' ▼',
         fa: 'fa-group',
-        fa_after: 'fa-angle-down',
         sections: [
             {
                 items: forum_selector_memberships(guest)
@@ -18,12 +17,11 @@ module HeaderHelper
   def forum_selector_memberships(guest= false)
     items = []
 
-    items.concat guest ? public_forum_items : profile_membership_items
-
-    # TODO: Show most popular 3 forums if user has fewer than 2 memberships.
+    _public_forum_items = public_forum_items(5)
+    items.concat guest ? _public_forum_items : profile_membership_items
 
     items << link_item(t('forums.discover'), discover_forums_path, fa: 'compass', divider: 'top')
-    items.concat (public_forum_items - profile_membership_items) if items.length < public_forum_items.length + 1
+    items.concat (_public_forum_items - profile_membership_items) if items.length < _public_forum_items.length + 1
 
     items
   end
@@ -86,9 +84,9 @@ module HeaderHelper
                      contentClassName: 'notifications notification-container')
   end
 
-  def public_forum_items
+  def public_forum_items(limit= 10)
     items = []
-    Forum.top_public_forums.each do |forum|
+    Forum.top_public_forums(limit).each do |forum|
       items << link_item(forum.display_name, forum_path(forum), image: forum.profile_photo.url(:icon))
     end
     items
@@ -103,7 +101,7 @@ module HeaderHelper
 
   def info_dropdown_items
     {
-        title: t('about.title'),
+        title: t('about.info'),
         fa: 'fa-info',
         sections: [
           {

@@ -13,7 +13,8 @@ Argu.ui = {
             .on('pjax:end', this.checkTabs)
             .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
             .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
-            .ajaxComplete(this.handleAjaxCalls);
+            .ajaxComplete(this.handleAjaxCalls)
+            .on('click', '.welcome-video-toggle', this.toggleWelcomeVideo);
 
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);
@@ -178,7 +179,12 @@ Argu.ui = {
         "use strict";
         e.preventDefault();
         $('.comment_form#cf' + $(this).attr('id')).slideToggle();
+    },
+
+    toggleWelcomeVideo: function () {
+        $('.welcome-video').toggleClass('welcome-video-opened');
     }
+
 };
 
 Argu.ui.modal = {

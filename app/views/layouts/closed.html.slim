@@ -25,6 +25,8 @@ body
     .alert-container
       .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
   =render 'closed/navbar'
+  - active_for_user?('welcome_video', current_user)
+    =render partial: 'welcome_video'
   .wrapper
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')

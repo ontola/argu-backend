@@ -101,7 +101,7 @@ module ApplicationHelper
         link_item(t('filtersort.random'), nil, fa: 'gift', data: {'sort-value' => 'random'}, className: 'sort-random')
     ]
 
-    dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
+    dropdown_options(t('filtersort.sort') + ' ▼', [{items: link_items}], fa: 'fa-sort')
   end
 
   def process_cover_photo(object, _params)
