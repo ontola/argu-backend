@@ -82,6 +82,14 @@
   @include button(rgba(0,0,0,0));
 }
 
+.btn--g4 {
+  @include button($g4);
+}
+
+.btn--narrow {
+  padding: .7em;
+}
+
 .btn--dropdown-trigger {
   padding: 0;
 
