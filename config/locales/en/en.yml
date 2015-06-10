@@ -206,8 +206,19 @@ en:
   columns: "Columns"
   info_bar: "Info bar"
   images: "Images"
-  links_helper_html: "<h2>Add links</h2>
+  markdown_helper_html: "<h2>Add links</h2>
                 <p>You can add links in your text by using square brackets and normal brackets.</p>
                 <code>This is [Argu](www.argu.co).</code>
                 <p>Will appear as:</p>
-                <code>This is <a href='http://www.argu.co'>Argu</a>.</code>"
+                <code>This is <a href='http://www.argu.co'>Argu</a>.</code>
+                <h2>Formatting</h2>
+                <p>You can format your text using the following characters:</p>
+                <code>*Cursive*</code>
+                <code>**Bold**</code>
+                <code>~~Strike text~~</code>
+                <code>##Heading</code>
+                <code>1. Numbered <br> 2. List</code>
+                <code>* Bullet <br> * List</code>"
+  welcome_video_open: 'First time on Argu? Watch the video!'
+  welcome_video_close: 'Close this banner'
+  welcome_video_dismiss: "Hide this message."

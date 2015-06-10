@@ -1,7 +1,7 @@
 en:
   tooltips:
     motion:
-      create: "Share your motion by placing a proposition."
+      create: "Share your idea by creating a proposition."
       vote_count: "Vote count."
       arguments_pro_count: "Amount of arguments pro."
       arguments_con_count: "Amount of arguments con."

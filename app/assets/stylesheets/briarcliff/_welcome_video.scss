@@ -12,7 +12,8 @@
   height: auto;
   //margin-top: 3em; //only if position: relative
   margin-bottom: -5em;
-  @include transition(box-shadow, .8s, ease-in-out);
+  @include transition(.8s, ease-in-out);
+  opacity: 1;
 }
 
 .welcome-video-bar {
@@ -40,6 +41,14 @@
 
   .welcome-video-opened & {
     max-height: 700px;
+  }
+}
+
+.welcome-video-disappear {
+  opacity: 0;
+
+  .welcome-video-container {
+    max-height: 0;
   }
 }
 
@@ -72,6 +81,26 @@
   display: none;
 }
 
-.welcome-video-opened {
+.welcome-video.welcome-video-opened {
   box-shadow: 0em 0em 11em 3em rgba(0, 0, 0, 0.54);
+}
+
+body.welcome-video-opened {
+  overflow: hidden;
+}
+
+.welcome-video-overlay {
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  @include transition(.8s ease-in-out);
+  .welcome-video-opened &{
+    background-color: $darken_overlay;
+    cursor: pointer;
+    pointer-events: auto;
+  }
 }

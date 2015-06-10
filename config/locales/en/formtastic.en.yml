@@ -92,13 +92,13 @@ en:
       tag_list: "theme1, theme2 ..."
       question:
         title: "Place the core of your %{type} here"
-        content: "Place the details and background information on your %{type} here."
+        content: "Place details and background information on your %{type} here."
       motion:
         title: "Place the core of your %{type} here"
-        content: "Place the details and background information on your %{type} here."
+        content: "Place details and background information on your %{type} here."
       argument:
         title: "Place the core of your argument here"
-        content: "Place the details and background information on your argument here."
+        content: "Place details and background information on your argument here."
       user:
         email: "email@example.com"
     actions:

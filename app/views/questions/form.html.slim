@@ -9,9 +9,13 @@
       =semantic_form_for((@question.new_record? ? [@forum, @question] : @question), html: {autocomplete: 'off'}, multipart: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
+            h3= t('questions.form.title_heading')
+            p= t('questions.form.title_body_html')
             =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'question-t form-input-title'}, label: false, placeholder: placeholder_for(@question, :title, question_type)
-            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, placeholder: placeholder_for(@question, :content, question_type)
-            =f.input :tag_list, input_html: {class: 'tag-list'}, label: false
+            h3= t('questions.form.content_heading')
+            p= t('questions.form.content_body_html')
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(@question, :content, question_type)
+            =f.input :tag_list, input_html: {class: 'tag-list'}
           =f.inputs
             =f.input :cover_photo, label: t('image')
             -if !@question.new_record?
@@ -38,7 +42,4 @@
             =f.action :submit, as: :button
   - unless alternative_questions?
     .col-3-1
-      .box
-        section
-          = t('questions.helper_html', idea: (link_to t('motions.type').downcase, new_forum_motion_path(@forum), class: 'motion-t'))
-      =render partial: 'links_helper'
+      =render partial: 'markdown_helper'

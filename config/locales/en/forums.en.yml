@@ -93,7 +93,7 @@ en:
       add: "Add manager"
     get_one:
       title: "A forum for your organisation?"
-      body: "We deliver discussion environments for municipalities, companies, education facilities and other organisations. Read more about <b>%{governments}</b> or about <b>%{product}</b>. <b><a href='mailto:info@argu.co'>Contact us</a></b> for more information."
+      body: "We deliver discussion environments for municipalities, companies, education facilities and other organisations. Read more about <b>%{governments}</b>. <b><a href='mailto:info@argu.co'>Contact us</a></b> for more information."
     selector:
       at_least_error: "Choose at least 2 forums"
   activerecord: #These currently aren't used for forms.

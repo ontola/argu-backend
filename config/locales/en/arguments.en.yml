@@ -30,10 +30,20 @@ en:
     revisions:
       title_wiped: 'Removed replies'
     form:
-      title: "Present the most important part of your argument here"
-      content: "Present arguments for your proposition. Why does this support or undermine the idea?"
+      title_heading: "Core of your argument"
+      title_body_html: "<ul class='bullets'>
+                     <li>An argument is a <b>single reason</b> <b class='pro-t'>in favour</b> or <b class='con-t'>against</b> an <b class='motion-t'>idea</b>.</li>
+                     <li>Use a <b>short and concise</b> title.</li>
+                   </ul>"
+      content_heading: "Argument details"
+      content_body_html: "<ul class='bullets'>
+                      <li>Give <b>background information</b> to support your argument.</li>
+                      <li>Use <b>references</b> and add links.</li>
+                      <li>The <b>first sentences</b> will be read most often, so make sure they are convincing!</li>
+                      <li>Make sure you provide just <b>a single reason</b>! That way, we keep discussions uncluttered.</li>
+                    </ul>"
       type: "type"
-      submit: "place argument"
+      submit: "Submit argument"
       side:
         pro: "pro argument"
         con: "con argument"
