@@ -4,6 +4,7 @@ nl:
   profiles:
     type: "Profiel"
     switch: "Argu gebruiken als:"
+    about_me: "Over mij"
     heads_up: "Jouw profiel is zichtbaar voor andere bezoekers van Argu."
     show:
       title: "Profiel"

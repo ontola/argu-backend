@@ -4,6 +4,7 @@ en:
   profiles:
     type: "Profile"
     switch: "Use Argu as:"
+    about_me: "About me"
     heads_up: "Your profile is visible to other Argu users."
     show:
       title: "Profile"
