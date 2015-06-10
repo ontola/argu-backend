@@ -33,15 +33,15 @@ Argu.ui = {
 
     bindRemoteLinks: function () {
         $('.remote-link')
-                .bind("ajax:beforeSend", function () {
-                    $(this).addClass("is-loading");
-                })
-                .bind('ajax:complete', function () {
-                    $(this).removeClass("is-loading");
-                })
-                .bind("ajax:error", function () {
-                    $(this).removeClass("is-loading");
-                });
+            .bind("ajax:beforeSend", function () {
+                $(this).addClass("is-loading");
+            })
+            .bind('ajax:complete', function () {
+                $(this).removeClass("is-loading");
+            })
+            .bind("ajax:error", function () {
+                $(this).removeClass("is-loading");
+            });
     },
 
     confirmInputHandler: function () {
@@ -205,7 +205,11 @@ Argu.ui = {
 Argu.ui.modal = {
     init: function () {
         // Close modal when clicking on overlay, unless there is a "no-close" class.
-        $(document).on('click', '.modal-container:not(.no-close) .overlay', this.closeModal);
+        $(document)
+            .on('click', '.modal-container:not(.no-close) .overlay', this.closeModal)
+            .on('pjax:complete', function () {
+                $('body').removeClass('modal-opened');
+            });
 
         // Close modal when pressing escape button, unless there is a "no-close" class.
         document.addEventListener('keyup', function(e) {
@@ -216,10 +220,6 @@ Argu.ui.modal = {
                     $('body').removeClass('modal-opened');
                 }, 500);
             }
-        });
-
-        $(document).on('pjax:complete', function () {
-            $('body').removeClass('modal-opened');
         });
     },
 
@@ -236,11 +236,9 @@ Argu.ui.modal = {
 
 Argu.ui.progressbar = {
     init: function () {
-        $(document).on('pjax:start',   NProgress.start)
-                   .on('pjax:success',  NProgress.done)
-                   .on('pjax:end', NProgress.remove)
-                   .on('ajax:beforeSend',   NProgress.start)
-                   .on('ajax:complete',  NProgress.done)
-                   .on('ajax:after', NProgress.remove);
+        $(document)
+            .on('pjax:start ajax:beforeSend',   NProgress.start)
+            .on('pjax:success pjax:end ajax:complete',  NProgress.done)
+            .on('pjax:end ajax:after', NProgress.remove);
     }
 };

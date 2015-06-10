@@ -1,5 +1,14 @@
 class Users::SessionsController < Devise::SessionsController
 
+  def new
+    self.resource = resource_class.new({r: request.referer}.merge(sign_in_params))
+    clean_up_passwords(resource)
+    respond_to do |format|
+      format.html { render 'devise/sessions/new', layout: 'guest', locals: {resource: resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
+      format.js { render 'devise/sessions/new', layout: false, locals: {resource: resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
+    end
+  end
+
   def create
     if params[:user][:r].present?
       self.resource = warden.authenticate!(auth_options)

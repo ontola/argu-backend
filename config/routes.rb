@@ -152,8 +152,6 @@ Argu::Application.routes.draw do
   put '/settings', to: 'users#update'
   get '/c_a', to: 'users#current_actor'
 
-  get '/sign_in_modal', to: 'static_pages#sign_in_modal'
-
   # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/about', to: 'static_pages#about'
   # @deprecated Please use info_controller. Kept for cached searches etc.
