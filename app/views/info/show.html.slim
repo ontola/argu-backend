@@ -11,7 +11,7 @@
             .block-video
               iframe[frameborder="0" height="100%" width="100%" src="#{section['video-url']}"]
         - elsif section['type'] == 'single'
-          .blocks
+          .blocks[class=section['class']]
             .block.block--full[class=((section['fill'] ? 'block--fill' : '') + " " + (section['big-text'] ? 'block--big-text' : ''))]
               - if section['header'].present?
                 header
