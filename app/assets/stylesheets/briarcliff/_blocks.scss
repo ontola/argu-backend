@@ -5,6 +5,14 @@ $primary: $blu;
 $secondary: $g4;
 $grey_light: $g0;
 
+.always-expanded .expander {
+  display: none;
+}
+
+.always-expanded .expander-content{
+  display: block !important;
+}
+
 .blocks{
   margin: auto;
   max-width: 1200px;
@@ -321,6 +329,7 @@ p.block-slogan {
     font-size: .8em;
   }
   @include bp-medium {
+    font-size: .9em;
     font-size: .9em;
   }
 }
