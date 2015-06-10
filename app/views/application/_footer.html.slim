@@ -3,16 +3,12 @@ footer
     li
       h3.footer-heading= t('forums.plural')
     /li= link_to "Een eigen forum?", "/product"
-    li
-      a[href="/"]= t('forums.show_open')
-    li
-      a[href="/nederland"] Nederland
-    li
-      a[href="/feedback"] Argu Feedback
+    li= link_to t('forums.show_open'), discover_forums_path
+    li= link_to 'Nederland', forum_path('nederland')
+    li= link_to 'Argu Feedback', forum_path('feedback')
   ul.footer-list
     li
       h3.footer-heading= t('about.title')
-      /= render partial: "vcard"
     li= link_to t('about.vision'), about_path
     li= link_to t('about.team'), team_path
     /li= link_to t('about.product'), product_path
