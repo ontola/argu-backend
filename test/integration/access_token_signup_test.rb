@@ -51,7 +51,6 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                  },
                                     at: access_tokens(:token_hidden).access_token}
     end
-
   end
 
   # Note: The :at params are duplicated everywhere because integration tests apparently don't support session variables
