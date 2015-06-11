@@ -1,6 +1,6 @@
 GEM
-  remote: https://rubygems.org/
   remote: http://utility.argu.co:3000/
+  remote: https://rubygems.org/
   specs:
     actionmailer (4.2.1)
       actionpack (= 4.2.1)
@@ -498,8 +498,8 @@ DEPENDENCIES
   sass-rails (~> 5.0.3)
   sidekiq (~> 3.3.0)
   sidekiq-logging-json
-  simple_settings (= 1.0.2)
-  simple_text (~> 0.0.21)
+  simple_settings (= 1.0.2)!
+  simple_text (~> 0.0.21)!
   sinatra (>= 1.3.0)
   slim (~> 2.1.0)
   spring (~> 1.3.6)
@@ -512,3 +512,6 @@ DEPENDENCIES
   unicorn (= 4.8.3)
   web-console (~> 2.0.0)
   whodunnit (= 0.0.5)
+
+BUNDLED WITH
+   1.10.3

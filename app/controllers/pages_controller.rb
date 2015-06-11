@@ -74,7 +74,9 @@ class PagesController < ApplicationController
       redirect_to page_url(@page), status: 303
     else
       respond_to do |format|
-        format.html { render 'new', notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}] }
+        format.html { render 'new',locals: {
+                                      page: @page
+                                  } , notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}] }
       end
     end
   end
