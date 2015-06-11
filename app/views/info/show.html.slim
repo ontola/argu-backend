@@ -4,14 +4,14 @@
     - @document['sections'].each do |section|
       - unless section['hidden']
         - if section['type'] == 'image-wide'
-          .blocks
+          .blocks[class=section['class']]
             img.block-image-wide[src="#{asset_path section['image']}"]
         - elsif section['type'] == 'video'
-          .blocks
+          .blocks[class=section['class']]
             .block-video
               iframe[frameborder="0" height="100%" width="100%" src="#{section['video-url']}"]
         - elsif section['type'] == 'single'
-          .blocks
+          .blocks[class=section['class']]
             .block.block--full[class=((section['fill'] ? 'block--fill' : '') + " " + (section['big-text'] ? 'block--big-text' : ''))]
               - if section['header'].present?
                 header
@@ -46,7 +46,7 @@
               .block--img.block--img--full
                 .img[style="background-image: url(#{asset_path section['image']})"]
         - elsif section['type'] == 'double'
-          .blocks
+          .blocks[class=section['class']]
             .block.block--img[class=(section['right'] ? 'block--right' : '')]
               .img[style="background-image: url(#{asset_path section['image']})"]
             .block[class=(section['fill'] ? 'block--fill' : '')]

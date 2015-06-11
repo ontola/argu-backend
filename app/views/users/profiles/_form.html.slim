@@ -9,7 +9,7 @@
       =f.inputs :first_name, :middle_name, :last_name, for: :profileable
     - elsif @profile.profileable.class == Page
       =f.input :name
-    =f.input :about, input_html: { :rows => 5 }
+    =f.input :about, input_html: { :rows => 5 }, label: t('profiles.about_me')
     =f.input :profile_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }
     =f.input :profile_photo
   =f.inputs name: t('profiles.edit.privacy') do

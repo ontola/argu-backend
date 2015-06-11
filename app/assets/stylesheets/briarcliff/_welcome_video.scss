@@ -17,27 +17,26 @@
 }
 
 .welcome-video-bar {
-  margin-bottom: -5em;
-  z-index: 1;
+  z-index: -1;
   width: 100%;
   position: absolute;
   text-align: center;
+  top: 100%;
+  top: calc(100% - 2px);
 }
 
 .welcome-video-bar-container {
   display: inline-block;
   margin: auto;
-  background-color: white;
 }
 
 .welcome-video-container{
-  @include transition(max-height, .8s, ease-in-out);
-
-  max-height: 0em;
   overflow: hidden;
-  @include container-width;
+  max-height: 0;
   margin: auto;
-  //padding: 1em;
+  height: auto;
+  @include container-width;
+  @include transition(max-height .8s ease-in-out);
 
   .welcome-video-opened & {
     max-height: 700px;
@@ -55,12 +54,13 @@
 .welcome-video-video {
   position: relative;
   padding-bottom: 56.25%; /* 16:9 */
-  padding-top: 25px;
-  height: 0;
+  //padding-bottom: 56vh; /* 16:9 */
   iframe{
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
     height: 100%;
   }
@@ -86,18 +86,23 @@
 }
 
 body.welcome-video-opened {
-  overflow: hidden;
+  overflow: hidden; // Prevents scrolling on desktop
+  position: fixed; // Prevents scrolling on iOS... But also moves the page to the top, which is suboptimal.
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .welcome-video-overlay {
   position: fixed;
-  z-index: 1;
+  z-index: 3;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   pointer-events: none;
-  @include transition(.8s ease-in-out);
+  @include transition(.4s ease-in-out);
   .welcome-video-opened &{
     background-color: $darken_overlay;
     cursor: pointer;

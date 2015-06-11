@@ -2,14 +2,14 @@
   div[class=['overlay', ('no-close' if defined?(no_close) && no_close == true)]].compact.join(' ')
   .modal.col-1
     header
-      h1 Weet je het daadwerkelijk zeker?
+      h1= t('pages.settings.managers.transfer.confirm.header')
     .box
       section
         .form
-          p Het overdragen van de Pagina zal eigenaarschap van <b>alle content</b> van de pagina en bijbehorende <b>forums</b> overdragen!
+          p= t('pages.settings.managers.transfer.confirm.body_html')
 
         =semantic_form_for @page, url: transfer_page_path(@page), method: :put, html: {class: 'confirm'} do |f|
-          p Voer de argu url van de pagina in om te bevestigen
+          p= t('pages.settings.managers.transfer.confirm.repeat')
           =f.inputs do
             =f.input :repeat_name, input_html: {class: 'confirm-text', :'confirm-text' => @page.url}
             =react_component 'NewMembership', {things: 'users'}, {prerender: true}

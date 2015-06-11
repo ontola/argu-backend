@@ -15,6 +15,11 @@ en:
         about_managers: "Page managers are users with extra rights, but noas many as an administrator. Managers can place questions, motions, arguments and replies in name of the Page. They can also vote on their own name and delete previously placed items."
         transferred: "Page transferred"
         users_only: "Only users can own pages"
+        transfer:
+          confirm:
+            header: "Are you absolutely sure?"
+            body_html: "Transferring this page means that the ownership of all its contents (including forums!) will be transferred to a different user."
+            repeat: "Enter the Argu URL of this page to confirm the tranfer. This is the username of your page, which is visible in the address bar."
     management:
       title: "Page management"
       managed_current_out_of_max: "%{current} of max %{max} page(s) managed."
