@@ -12,6 +12,10 @@
         <% end %>
         ga('require', 'linkid', 'linkid.js');
         ga('send', 'pageview');
+        $(document).on('pjax:end', function() {
+            ga('set', 'location', window.location.href);
+            ga('send', 'pageview');
+        });
 
     </script>
 <% end %>
