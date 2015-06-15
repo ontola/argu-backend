@@ -204,14 +204,14 @@ Argu.ui = {
 
 Argu.ui.modal = {
     init: function () {
-        // Close modal when clicking on overlay, unless there is a "no-close" class.
         $(document)
             .on('click', '.modal-container:not(.no-close) .overlay', this.closeModal)
             .on('pjax:complete', function () {
                 $('body').removeClass('modal-opened');
             });
 
-        // Close modal when pressing escape button, unless there is a "no-close" class.
+        // Close modal when pressing escape button
+        // @TODO: Just listen to escape, not all the time all the buttons
         document.addEventListener('keyup', function(e) {
             if (e.keyCode == 27 && !$(".no-close")[0]) {
                 $('.modal-container').addClass('modal-hide');
