@@ -134,7 +134,7 @@ var Notifications = React.createClass({
             <p className="notifications-mark-all-as-read">
                 <a href="#" onClick={this.markAsRead}>
                     <span className="fa fa-check"></span>
-                    <span className="icon-left">Markeer als gelezen</span>
+                    <span className="icon-left">Markeer alle als gelezen</span>
                 </a>
             </p>
             {notifications}
@@ -148,8 +148,8 @@ var NotificationItem = React.createClass({
         return {};
     },
 
-    handleMouseDown: function (e) {
-        e.preventDefault();
+    handleClick: function (e) {
+        e.stopPropagation();
         $.ajax({
             type: 'PUT',
             url: ['/n', this.props.id].join('/'),
@@ -162,9 +162,6 @@ var NotificationItem = React.createClass({
                 console.log('failed');
             }
         });
-        // Fixes an issue where firefox bubbles events instead of capturing them
-        // See: https://github.com/facebook/react/issues/2011
-        this.getDOMNode().getElementsByTagName('a')[0].click();
         this.props.done();
     },
 
@@ -178,7 +175,7 @@ var NotificationItem = React.createClass({
         }
 
         return (<li className={className}>
-            <a href={this.props.url} data-remote={remote} data-method={method} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax}>
+            <a href={this.props.url} data-remote={remote} data-method={method}  onClick={this.handleClick} data-skip-pjax={skipPjax}>
                 <img src={this.props.creator.avatar.url} className="notification-avatar" />
                 <span className='notification-description'>{this.props.title}</span>
                 <div className='notification-bottom'>
