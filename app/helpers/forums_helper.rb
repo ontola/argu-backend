@@ -37,7 +37,7 @@ module ForumsHelper
     items << link_item(t('forums.settings.managers.title'), url_for([:settings, resource, tab: :managers]), fa: 'group') if policy(resource).managers?
 
     dropdown_options(t("#{resource.class_name}.resource_name.management"),
-                     [{items: items}], fa: 'fa-gear', fa_after: 'fa-angle-down')
+                     [{items: items}], fa: 'fa-gear')
   end
 
   def public_form_member_label(value)

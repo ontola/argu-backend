@@ -49,15 +49,25 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
               ul.btn--transparant.btn--dropdown-trigger= render partial: 'application/menus/settings', locals: {resource: @forum}
   .cover-bar
     .cover-container
-      .cover-header-top
-      .cover-header-middle
-      .cover-header-bottom
-        - if @forum.bio.present?
-          p.cover-oneliner
-            =@forum.bio
-            - if @forum.bio_long.present?
-              a[href="#forum-info" class="smoothscroll"]
-                span.icon-left= t('forums.more_info')
+      - if @forum.bio.present?
+        p.cover-oneliner
+          =@forum.bio
+          - if @forum.bio_long.present?
+            a[href="#forum-info" class="smoothscroll"]
+              span.icon-left= t('forums.more_info')
+  / The skeleton for the tabs layout!
+  /.tabs-container
+    ul.tabs
+      li.tab--current
+        a
+          span items
+      li
+        a
+          span activities
+      li
+        a
+          span menu
+
   - if policy(@forum).show?
     =render partial: 'filter_and_sort'
     .grid
