@@ -11,3 +11,12 @@
       li[class=('tab--current' if local_assigns[:active] == :settings)]= link_to settings_url do
         span.fa.fa-gear
         span.icon-left= t('users.settings')
+
+      -if policy(Page).index?
+        li[class=('tab--current' if local_assigns[:active] == :page_management)]=link_to pages_user_url(current_user) do
+          span.fa.fa-building
+          span.icon-left= t('pages.page_management')
+      -if policy(Forum).index?
+        li[class=('tab--current' if local_assigns[:active] == :forum_management)]=link_to forums_user_url(current_user) do
+          span.fa.fa-group
+          span.icon-left= t('forums.management.title')

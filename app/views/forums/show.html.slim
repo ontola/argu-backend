@@ -45,7 +45,10 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
               span.fa.fa-user-plus
               span.icon-left= t('forums.invite_others')
           - if policy(@forum).is_manager?
-            li[class='float-right']
+            li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
+              span.fa.fa-gear
+              span.icon-left= t('forums.settings.title')
+            /li[class='float-right']
               ul.btn--transparant.btn--dropdown-trigger= render partial: 'application/menus/settings', locals: {resource: @forum}
   .cover-bar
     .cover-container

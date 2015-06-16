@@ -9,7 +9,7 @@ en:
     resource_name:
       management: "forum management"
     settings:
-      title: "Settings"
+      title: "Forum settings"
       general: "General settings"
       profile: "Profile settings"
       menu:
