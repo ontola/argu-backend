@@ -1,6 +1,6 @@
 =set_title @profile.display_name
+=render partial: 'manage_bar', locals: {resource: @page, active: :show} if policy(@page).update?
 .col-1
-  =render partial: 'manage_bar', locals: {resource: @page}  if policy(@page).update?
   /=image_tag @profile.cover_photo.url
   .profile-big[data-intro= t('intro.profile.show', name: @profile.display_name)]
     .profile-picture.profile-picture-show

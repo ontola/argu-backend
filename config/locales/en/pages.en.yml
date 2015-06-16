@@ -2,6 +2,7 @@ en:
   pages:
     resource_name: "Pages"
     type: "Page"
+    show: "Show page"
     settings:
       title: "Settings"
       menu:

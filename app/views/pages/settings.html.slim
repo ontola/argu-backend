@@ -1,6 +1,5 @@
 =set_title t('pages.settings.title')
-.tabs-to-top
-  =render partial: 'pages/manage_bar', locals: {resource: @page, active: :settings}
+=render partial: 'pages/manage_bar', locals: {resource: @page, active: :settings}
 .col-3
   .col-3-1
     =render_settings_items_for(@page, active)

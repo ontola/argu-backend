@@ -2,6 +2,7 @@ nl:
   pages:
     resource_name: "Pagina"
     type: "Pagina"
+    show: "Pagina weergeven"
     settings:
       title: "Pagina-instellingen"
       menu:
