@@ -1,12 +1,13 @@
-.tabs
-  ul
-    / These use current_user so that this menu is still functional when :a_a is a Page
-    li= contextual_link_to user_url(current_user) do
-      span.fa.fa-user
-      span.icon-left= t('show_type', type: t('profiles.type'))
-    li= link_to url_for([:edit, current_user]) do
-      span.fa.fa-pencil
-      span.icon-left= t('profiles.edit.title')
-    li= link_to settings_url do
-      span.fa.fa-gear
-      span.icon-left= t('users.settings')
+.tabs-to-top
+  .tabs-container
+    ul.tabs
+      / These use current_user so that this menu is still functional when :a_a is a Page
+      li[class=('tab--current' if local_assigns[:active] == :show)]= contextual_link_to user_url(current_user) do
+        span.fa.fa-user
+        span.icon-left= t('show_type', type: t('profiles.type'))
+      li[class=('tab--current' if local_assigns[:active] == :profile)]= link_to url_for([:edit, current_user]) do
+        span.fa.fa-pencil
+        span.icon-left= t('profiles.edit.title')
+      li[class=('tab--current' if local_assigns[:active] == :settings)]= link_to settings_url do
+        span.fa.fa-gear
+        span.icon-left= t('users.settings')
