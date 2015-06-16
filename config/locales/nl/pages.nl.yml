@@ -4,7 +4,7 @@ nl:
     type: "Pagina"
     show: "Pagina weergeven"
     settings:
-      title: "Pagina-instellingen"
+      title: "Pagina instellingen"
       menu:
         general: 'Algemeen'
         advanced: 'Geavanceerd'
