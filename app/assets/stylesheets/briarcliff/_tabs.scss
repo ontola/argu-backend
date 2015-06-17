@@ -82,7 +82,7 @@
     max-width: calc(100% + 3em);
     margin-right: -4em;
 
-    @include bp-medium {
+    @include bp-medium-large {
       width: 100%;
     }
   }
