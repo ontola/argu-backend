@@ -21,6 +21,7 @@
   width: 100%;
   position: absolute;
   text-align: center;
+  pointer-events: none;
   top: 100%;
   top: calc(100% - 2px);
 }
@@ -28,6 +29,7 @@
 .welcome-video-bar-container {
   display: inline-block;
   margin: auto;
+  pointer-events: auto;
 }
 
 .welcome-video-container{

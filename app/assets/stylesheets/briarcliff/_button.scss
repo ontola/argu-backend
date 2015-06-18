@@ -80,6 +80,16 @@
 
 .btn--transparant {
   @include button(rgba(0,0,0,0));
+  padding-left: 1em;
+  padding-right: 1em;
+
+  &:hover{
+    background-color: $darken1;
+  }
+
+  &:active{
+    background-color: $darken2;
+  }
 }
 
 .btn--g4 {
