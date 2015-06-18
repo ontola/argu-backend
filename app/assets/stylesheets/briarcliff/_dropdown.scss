@@ -54,6 +54,7 @@
 
     &:active {
       background-color: $darken2;
+      transition: none;
     }
 
     &.is-checked {

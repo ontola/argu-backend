@@ -43,6 +43,7 @@
   }
   &:active:after{
     opacity: 1;
+    transition: none;
   }
 }
 
@@ -80,6 +81,16 @@
 
 .btn--transparant {
   @include button(rgba(0,0,0,0));
+  padding-left: 1em;
+  padding-right: 1em;
+
+  &:hover{
+    background-color: $lighten2;
+  }
+
+  &:active{
+    background-color: $lighten3;
+  }
 }
 
 .btn--g4 {
@@ -132,22 +143,44 @@
 }
 
 .btn-subtle{
-  @include button();
-  color: $g2;
+  @include button(rgba(255,255,255,1));
   border: none;
-  background: none;
-  @include border-radius(0);
-  &:hover {
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+
+  &:hover{
     color: $g4;
-    background-color: $darken1;
-    text-decoration: none;
-    border: none;
   }
-  &:active {
-    border: none;
+}
+
+.btn--border {
+  @include button(rgba(255,255,255,1));
+  border: solid 1px $g1;
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
+
+  &:hover{
+    border: solid 1px $g2;
     color: $g4;
-    background-color: $darken2;
-    margin-top: 0; //Negates the  "push"-effect of normal buttons
+  }
+}
+
+.btn--smaller {
+  padding: 0.3em 0.6em !important;
+}
+
+.btn--light {
+  @include button($g1);
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
+
+  &:hover{
+    color: $g4;
   }
 }
 
@@ -274,6 +307,7 @@
   }
   &:active {
     background-color: $darken2;
+    transition: none;
   }
   &#active{
     background-color: $darken1;
@@ -309,14 +343,9 @@
   }
   a {
     width: 100% !important;
-    @include transition(.2s);
     &:hover {
-      opacity: .8;
+      opacity: .7;
       text-decoration: none;
-    }
-    &:active{
-      top: 2px;
-      box-shadow: none;
     }
     .fa {
       font-size: 1.2em;

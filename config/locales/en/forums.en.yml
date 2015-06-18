@@ -76,6 +76,7 @@ en:
       f_management_invite: "By manager(s)"
       f_management_invite_desc: "Only manager(s) can add new members."
     join:
+      title: "Add to my forums"
       header: "Become a member"
       body: "Become a member of the forum ''%{forum}'' and participate in the discussion!"
     invite_others: "Involve others"

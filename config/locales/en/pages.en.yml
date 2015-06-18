@@ -4,7 +4,7 @@ en:
     type: "Page"
     show: "Show page"
     settings:
-      title: "Settings"
+      title: "Page settings"
       menu:
         general: 'General'
         advanced: 'Advanced'

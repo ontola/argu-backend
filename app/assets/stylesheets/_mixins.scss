@@ -64,7 +64,7 @@
   border-bottom: solid 3px darken($color, 5%);
   @include transition(.15s);
   border-top: solid 3px $color;
-  vertical-align: bottom;
+  //vertical-align: bottom;
   &:hover {
     background-color: darken($color, 5%);
     border-top-color: darken($color, 5%);
@@ -75,6 +75,7 @@
     background-color: darken($color, 15%);
     border-bottom-color: darken($color, 15%);
     border-top-color: darken($color, 20%);
+    transition: none;
   }
   &:disabled{
     opacity: .6;

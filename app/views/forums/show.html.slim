@@ -22,14 +22,17 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
         -if @forum.profile_photo.url.present?
           .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
         .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
+    .cover-buttons.cover-buttons--top
+      .cover-buttons-container
+        ul.btns-horizontal
+          - if !policy(@forum).is_member? && policy(@forum).is_open?
+            li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn--transparant'
+              span.fa.fa-plus
+              span.icon-left= t('forums.join.title')
     .cover-buttons
       .cover-buttons-container
         ul.btns-horizontal
           /TODO: Make this check the current profile, not the user
-          - if !policy(@forum).is_member? && policy(@forum).is_open?
-            li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true, remote: remote_if_non_mobile}, rel: :nofollow, class: 'btn--pro'
-              span.fa.fa-user
-              span.icon-left= t('join')
           -if policy(Motion).new_without_question?
             li[data-intro=t('intro.motion.create', name: @forum.name) data-step=12 data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]
               =link_to new_forum_motion_path(@forum), data: remote_unless_user, class: 'btn--motion'

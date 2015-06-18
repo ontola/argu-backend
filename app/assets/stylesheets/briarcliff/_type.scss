@@ -103,6 +103,12 @@ ul.bullets{
   }
 }
 
+ul.boxed-list li{
+  border: solid 1px rgb(210, 210, 210);
+  padding: 0.6em;
+  margin-bottom: 1em;
+}
+
 .info {
   text-transform: uppercase;
   font-size: .7em;
