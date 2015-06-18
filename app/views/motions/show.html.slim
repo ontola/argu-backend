@@ -1,7 +1,7 @@
 =set_title @motion.title
 -content_for :connected_web
   meta[name="description" content="#{@motion.content}"]
-  meta[property="og:title" content="#{@motion.display_name}"]
+  meta[property="og:title" content="#{@motion.display_name} #{I18n.t('seo.title-addon')}"]
   meta[property="og:url" content="#{motion_url(@motion)}"]
   meta[property="og:description" content="#{markdown_to_plaintext(@motion.content)}"]
   meta[property="og:image" content="#{@motion.cover_photo.url || image_url('logo-social.png')}"]

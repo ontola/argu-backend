@@ -43,6 +43,7 @@
   .welcome-video-opened & {
     max-height: 700px;
     max-height: 83vh;
+    max-height: calc(100vh - 6em);
   }
 }
 

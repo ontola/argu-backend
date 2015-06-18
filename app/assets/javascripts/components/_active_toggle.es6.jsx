@@ -10,7 +10,7 @@ var ActiveToggle = React.createClass({
     handleClick: function (picture) {
         "use strict";
         var self = this,
-            newState = !this.state.toggleState;
+            newState = this.state.toggleState;
         this.setState({loading: true});
         $.ajax({
             method: this.props[`${newState}_props`].method || 'PATCH',
