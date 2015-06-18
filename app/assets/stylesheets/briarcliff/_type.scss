@@ -1,6 +1,14 @@
 @import "variables";
 @import "mixins";
 
+::selection {
+  background: lighten($blu, 50);
+}
+
+::-moz-selection {
+  background: lighten($blu, 50);
+}
+
 h1, h2, h3 {
   font-family: $font-special;
   margin-bottom: 0.4em;
