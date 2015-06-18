@@ -173,7 +173,7 @@
 }
 
 .btn--light {
-  @include button($g1);
+  @include button($g0);
   color: $g3;
   padding-left: 1em;
   padding-right: 1em;
@@ -262,6 +262,10 @@
 
 }
 
+.btns-list--grey-background {
+  background-color: $g00;
+}
+
 .btns-list--subtle {
   display: inline-block;
 }
@@ -284,31 +288,28 @@
   color: $g3;
   height: 100%;
   @include transition(.2s);
-  > a, .dropdown-trigger {
+  > a, .dropdown-trigger, > div > div {
     padding: .7em;
     display: inline-block;
     color: $g3;
     vertical-align: bottom;
-    //height: 2.45em;
     &:hover {
       text-decoration: none;
 
     }
-    @include bp-medium{
-      //Makes the share icon and menu buttons too small
-      //padding: .5em;
-    }
   }
+
   &:hover {
     background-color: $darken1;
     color: $g4;
     text-decoration: none;
-
   }
+
   &:active {
     background-color: $darken2;
     transition: none;
   }
+
   &#active{
     background-color: $darken1;
   }

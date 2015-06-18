@@ -14,3 +14,4 @@ en:
     argument:
       vote_up: "Important argument; it should be placed higher."
       vote_down: "Unimportant argument; it should be placed lower."
+    follow: "Get notifications when new items are posted."
