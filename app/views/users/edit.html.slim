@@ -17,6 +17,7 @@
           =f.input :time_zone
           =f.input :language, as: :select, collection: I18n.available_locales, include_blank: false
           =f.input :country, as: :country, priority_countries: ['NL', 'BE']
+          =f.input :birthday, as: :date_picker
         - if active_for_user?(:notifications, current_user)
           =f.inputs name: t('users.registrations.categories.notifications') do
             .notification-settings-header

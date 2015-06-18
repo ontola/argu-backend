@@ -23,7 +23,7 @@ class Argu::NotificationWorker
   def build_notifications(recipients, activity)
     if recipients.present?
       inserts = []
-      time = Time.now.to_s(:db)
+      time = Time.now.iso8601(6)
       recipients.each do |r|
         inserts.push "(#{r.profile.id}, #{activity.id}, '#{time}', '#{time}')"
       end

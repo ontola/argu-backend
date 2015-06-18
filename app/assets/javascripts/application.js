@@ -33,6 +33,7 @@
 //= require requirejs
 //= require autocomplete-rails
 //= require pica_pica/application
+//= require_tree ./lib
 //= require_tree ./stores
 //= require_tree ./services
 //= require_tree ./components

@@ -11,7 +11,7 @@ window.notificationStore = Reflux.createStore({
             unread: 0,
             lastNotification: new Date(null),
             oldestNotification: new Date(null),
-            notifications: []
+            notifications: new OrderedMap()
         }
     },
 
@@ -67,14 +67,10 @@ window.notificationStore = Reflux.createStore({
                 if (this.state.notifications.lastNotification && Date.parse(notifications.lastNotification) > this.state.notifications.lastNotification && notifications.notifications[0].read == false) {
                     document.getElementById('notificationSound').play();
                 }
-                if (notifications.from_time == null) {
-                    this.state.notifications.notifications.push(...notifications.notifications);
-                } else {
-                    this.state.notifications.notifications.push(...notifications.notifications.reverse());
-                }
+                this.state.notifications.notifications.merge('created_at', notifications.notifications);
                 this.setLastNotification(notifications.lastNotification);
                 this.state.notifications.unread = notifications.unread;
-                this.state.notifications.oldestNotification = new Date(this.state.notifications.notifications[this.state.notifications.notifications.length - 1].created_at);
+                this.state.notifications.oldestNotification = new Date(this.state.notifications.notifications.get(this.state.notifications.notifications.length - 1).created_at);
                 // Pass on to listeners
                 this.trigger(this.state.notifications);
             }

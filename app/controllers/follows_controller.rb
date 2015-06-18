@@ -7,11 +7,11 @@ class FollowsController < ApplicationController
     if current_profile.follow @thing
       respond_to do |format|
         format.html { redirect_to :back, notification: '_notifications enabled_' }
-        format.json { head 200 }
+        format.js { head 201 }
       end
     else
       respond_to do |format|
-        format.json { head 400 }
+        format.js { head 304 }
       end
     end
   end
@@ -23,7 +23,7 @@ class FollowsController < ApplicationController
     if resp == nil || resp
       respond_to do |format|
         format.html { redirect_to :back, notification: '_notifications disabled_' }
-        format.json { head 200 }
+        format.json { head 204 }
       end
     else
       respond_to do |format|

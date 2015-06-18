@@ -1,5 +1,4 @@
 
-
 var _image = function (props) {
     if (props.image) {
         return <img src={props.image.url} alt={props.image.title} className={props.image.className} />;

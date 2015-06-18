@@ -21,7 +21,7 @@ class UserPolicy < RestrictivePolicy
     attributes << [:email, :password, :password_confirmation, {profile_attributes: [:name, :profile_photo]}] if create?
     attributes << [{shortname_attributes: [:shortname]}] if new_record?
     attributes << [:follows_email, :follows_mobile, :memberships_email, :memberships_mobile, :created_email,
-                   :created_mobile, :has_analytics, :time_zone, :language, :country] if update?
+                   :created_mobile, :has_analytics, :time_zone, :language, :country, :birthday] if update?
     attributes << [:current_password, :password, :password_confirmation, :email] if password
     attributes << [profile_attributes: ProfilePolicy.new(context,record.profile).permitted_attributes]
     attributes

@@ -20,6 +20,7 @@
 //= require nprogress
 //= require isotope.pkgd.min
 //= require onclickoutside
+//= require_tree ./lib
 //= require_tree ./stores
 //= require components
 //= require initialize.js.jsx
