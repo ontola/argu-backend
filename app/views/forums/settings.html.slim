@@ -1,10 +1,9 @@
 =set_title t('forums.settings.title')
+.tabs-to-top
+  =render partial: 'forums/manage_bar', locals: {resource: @forum, active: :settings} if policy(@forum).update?
 .col-3
-  =render partial: 'forums/manage_bar', locals: {resource: @forum, active: :settings}  if policy(@forum).update?
   .col-3-1
-    .box
-      section
-        =render_settings_items_for(@forum, active)
+    =render_settings_items_for(@forum, active)
   .col-3-2
     .box
       section

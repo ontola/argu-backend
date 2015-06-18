@@ -90,9 +90,9 @@
 
 .cover-bar {
   margin: auto;
+  margin-bottom: 1em;
   width: 100%;
   display: inline-block;
-  margin-bottom: 1em;
   background-color: white;
 }
 
@@ -101,7 +101,6 @@
   margin-left: 0.8em;
   margin-top: 1em;
   margin-bottom: 1em;
-  float: left;
 }
 
 .cover-overlay {
@@ -168,28 +167,4 @@
 
 .cover-image-empty {
   background-color: $g2;
-}
-
-.cover-header-middle {
- // background-color: white;
-}
-
-.cover-header-bottom {
-  background-color: white;
-}
-
-.cover-header-top {
-  position: absolute;
-  bottom: 100%;
-}
-
-.cover .tabs {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  li a {
-    background-color: $lighten5;
-  }
 }

@@ -1,13 +1,15 @@
 =set_title t('profiles.edit.title')
+=render partial: 'profiles/profile_bar', locals: {active: :profile}
 .col-1
   -if current_user.finished_intro?
-    =render partial: 'profiles/profile_bar'
   -else
     header
       h1= t('intro.initial.headers.profile')
     .box
       section
         p= raw t('intro.initial.body.profile')
+  header
+    h1= t('profiles.edit.title')
   .box
     section
       =render 'users/profiles/form'

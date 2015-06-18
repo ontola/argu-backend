@@ -1,6 +1,8 @@
 =set_title t('users.settings')
+=render partial: 'profiles/profile_bar', locals: {active: :settings}
 .col-1
-  =render partial: 'profiles/profile_bar'
+  header
+    h1= t('users.settings')
   .box
     =semantic_form_for @user, url: settings_path, method: :put do |f|
       section.inspectlet-sensitive

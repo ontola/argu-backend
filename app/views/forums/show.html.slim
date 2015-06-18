@@ -45,19 +45,32 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
               span.fa.fa-user-plus
               span.icon-left= t('forums.invite_others')
           - if policy(@forum).is_manager?
-            li[class='float-right']
+            li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
+              span.fa.fa-gear
+              span.icon-left= t('forums.settings.title')
+            /li[class='float-right']
               ul.btn--transparant.btn--dropdown-trigger= render partial: 'application/menus/settings', locals: {resource: @forum}
   .cover-bar
     .cover-container
-      .cover-header-top
-      .cover-header-middle
-      .cover-header-bottom
-        - if @forum.bio.present?
-          p.cover-oneliner
-            =@forum.bio
-            - if @forum.bio_long.present?
-              a[href="#forum-info" class="smoothscroll"]
-                span.icon-left= t('forums.more_info')
+      - if @forum.bio.present?
+        p.cover-oneliner
+          =@forum.bio
+          - if @forum.bio_long.present?
+            a[href="#forum-info" class="smoothscroll"]
+              span.icon-left= t('forums.more_info')
+  / The skeleton for the tabs layout!
+  /.tabs-container
+    ul.tabs
+      li.tab--current
+        a
+          span items
+      li
+        a
+          span activities
+      li
+        a
+          span menu
+
   - if policy(@forum).show?
     =render partial: 'filter_and_sort'
     .grid

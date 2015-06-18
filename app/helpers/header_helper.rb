@@ -3,7 +3,7 @@ module HeaderHelper
 
   def forum_selector_items(guest= false)
     {
-        title: t('forums.plural') + ' ▼',
+        title: t('forums.plural'),
         fa: 'fa-group',
         sections: [
             {

@@ -2,76 +2,105 @@
 @import "mixins";
 
 .tabs {
-  text-align: center;
   position: relative;
+  margin: auto;
   margin-bottom: 1em;
+  @include container-width;
+  width: 100%;
+  padding-left: 1em;
+  padding-right: 1em;
+  z-index: 1;
 
   li {
-    position: relative;
     display: inline-block;
-
-    &.active {
-      background-color: $darken4;
-      a {
-        color: $g00;
-      }
-    }
   }
 
   a {
     color: $g3;
+    width: 100%;
     font-size: .8em;
     text-transform: uppercase;
-    padding: .7em;
+    padding: 1em;
     display: inline-block;
+    position: relative;
+    cursor: pointer;
+    vertical-align: bottom;
     @include transition(.2s);
-
-    &:after{
-      @include transition(.2s);
-      content: "";
-      background-color: white;
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      display: block;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      opacity: 0;
-      z-index: -1;
-    }
   }
 
   a:hover {
     color: $g4;
 
-    &:after{
-      opacity: .5;
-    }
-  }
-
-  .tabs-current a{
-    color: $g4;
-
-    &:after{
-      opacity: 1;
+    &:after {
+      background-color: $g0;
+      max-height: 100%;
+      top: 0;
     }
   }
 
   a:active {
     color: $g4 !important;
+  }
 
-    &:after {
-      color: $g4 !important;
-    }
+  a:after {
+    position: absolute;
+    content: "";
+    z-index: -1;
+    max-height: 0;
+    top: 100%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    @include transition(.5s);
   }
 }
 
+.tabs-container {
+  margin: auto;
+  width: 100%;
+  background-color: white;
+}
+
 .tabs--vertical {
-  text-align: left;
+  z-index: 0;
+  padding: 0;
+  background-color: transparent;
 
   li {
     display: block;
+  }
+
+  a:after {
+    max-width: 0;
+    max-height: 100%;
+    top: 0;
+  }
+
+  .tab--current a:after, a:hover:after {
+    background-color: $g0;
+    width: calc(100% + 3em);
+    max-width: calc(100% + 3em);
+    margin-right: -4em;
+
+    @include bp-medium {
+      width: 100%;
+    }
+  }
+
+  .tab--current a:after {
+    background-color: white;
+  }
+}
+
+.tab--current a{
+  color: $g4;
+  pointer-events: none;
+
+  &:after {
+    background-color: $g1;
+    max-width: 100%;
+    max-height: 100%;
+    top: 0;
   }
 }
 
@@ -83,4 +112,9 @@
   li a {
     background-color: $lighten5;
   }
+}
+
+.tabs-to-top {
+  margin-top: -2em;
+  margin-bottom: 2em;
 }

@@ -1,8 +1,10 @@
-ul.tabs
-  li= link_to url_for(resource), data: {intro: t('intro.pages.settings.home')}
-    span.fa.fa-home
-    span.icon-left= resource.display_name
-  li[class=('tabs-current' if local_assigns[:active] == :settings)]
-    = link_to url_for([:settings, resource]), data: {intro: t('intro.pages.settings.general')}
-      span.fa.fa-gear
-      span.icon-left= t('pages.settings.title')
+.tabs-to-top
+  .tabs-container
+    ul.tabs
+      li[class=('tab--current' if local_assigns[:active] == :show)]= link_to url_for(resource), data: {intro: t('intro.pages.settings.home')}
+        span.fa.fa-home
+        span.icon-left= t('pages.show')
+      li[class=('tab--current' if local_assigns[:active] == :settings)]
+        = link_to url_for([:settings, resource]), data: {intro: t('intro.pages.settings.general')}
+          span.fa.fa-gear
+          span.icon-left= t('pages.settings.title')
