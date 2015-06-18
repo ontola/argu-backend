@@ -15,8 +15,8 @@
       li.tooltip[data-title=I18n.t('tooltips.follow')]
         =react_component 'ActiveToggle', {url: follows_path(motion_id: motion.id),
                                           initialState: current_profile.following?(motion),
-                                          false_props: {method: 'POST', icon: 'bell', label: t('follow')},
-                                          true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')}},
+                                          true_props: {method: 'POST', icon: 'bell', label: t('follow')},
+                                          false_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')}},
                          {prerender: true}
     - if current_user.present? && policy(motion).update? || active_for_user?(:notifications, current_user)
       li
