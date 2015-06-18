@@ -28,6 +28,10 @@ Argu.ui = {
         Argu.ui.modal.init();
         Argu.ui.progressbar.init();
         FastClick.attach(document.body);
+
+        //CBC-fixes
+        //Disable IE-touch selection on non-content items
+        $(document).on('selectstart', '#navbar,.filter-and-sort,.tabs,.dropdown', function(e) { e.preventDefault(); });
     },
 
     bindRemoteLinks: function () {
