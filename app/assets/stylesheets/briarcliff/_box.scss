@@ -38,6 +38,7 @@
     height: .15em;
   }
   &:active:after {
+    transition: none;
     background-color: $darken4;
   }
 }
@@ -57,6 +58,7 @@
     }
   }
   &:active {
+    transition: none;
     position: relative;
     top: 1px;
     box-shadow: none;
@@ -130,6 +132,7 @@
   }
   &:active{
     opacity: .6;
+    transition: none;
   }
   
   .display-hide-images & {
@@ -147,6 +150,7 @@
     position: relative;
     top: 1px;
     box-shadow: none;
+    transition: none;
   }
   h3 {
     font-size: 1.2em;
@@ -165,6 +169,7 @@
     }
     &:active {
       opacity: .8;
+      transition: none;
     }
   }
 }

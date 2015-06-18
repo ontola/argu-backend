@@ -28,7 +28,7 @@
     @include transition(.2s);
   }
 
-  a:hover {
+  a:hover, a:active {
     color: $g4;
 
     &:after {
@@ -38,8 +38,9 @@
     }
   }
 
-  a:active {
-    color: $g4 !important;
+  a:active:after {
+    background-color: $g1;
+    transition: none;
   }
 
   a:after {
@@ -87,7 +88,8 @@
     }
   }
 
-  .tab--current a:after {
+  .tab--current a:after, a:active:after {
+    transition: none;
     background-color: white;
   }
 }

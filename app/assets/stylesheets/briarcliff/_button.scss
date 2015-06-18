@@ -43,6 +43,7 @@
   }
   &:active:after{
     opacity: 1;
+    transition: none;
   }
 }
 
@@ -84,11 +85,11 @@
   padding-right: 1em;
 
   &:hover{
-    background-color: $darken1;
+    background-color: $lighten2;
   }
 
   &:active{
-    background-color: $darken2;
+    background-color: $lighten3;
   }
 }
 
@@ -284,6 +285,7 @@
   }
   &:active {
     background-color: $darken2;
+    transition: none;
   }
   &#active{
     background-color: $darken1;
@@ -319,14 +321,9 @@
   }
   a {
     width: 100% !important;
-    @include transition(.2s);
     &:hover {
-      opacity: .8;
+      opacity: .7;
       text-decoration: none;
-    }
-    &:active{
-      top: 2px;
-      box-shadow: none;
     }
     .fa {
       font-size: 1.2em;

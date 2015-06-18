@@ -166,6 +166,7 @@
 
     &:active, .dropdown-active{
       background-color: $lighten3 !important;
+      transition: none;
     }
   }
 }

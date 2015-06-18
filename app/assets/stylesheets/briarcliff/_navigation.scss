@@ -33,19 +33,22 @@
       }
     }
   }
+
   > .fa {
     line-height: 3.2em;
     float: none;
     padding: 0;
   }
+
   &:hover {
     background-color: $lighten2;
     text-decoration: none;
   }
 }
 
-a.navbar-item:active{
-  background-color: $lighten2;
+.navbar-item:active{
+  background-color: $lighten3;
+  transition: none;
 }
 
 .navbar-links {

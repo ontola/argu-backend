@@ -75,6 +75,7 @@
     background-color: darken($color, 15%);
     border-bottom-color: darken($color, 15%);
     border-top-color: darken($color, 20%);
+    transition: none;
   }
   &:disabled{
     opacity: .6;
