@@ -143,22 +143,44 @@
 }
 
 .btn-subtle{
-  @include button();
-  color: $g2;
+  @include button(rgba(255,255,255,1));
   border: none;
-  background: none;
-  @include border-radius(0);
-  &:hover {
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+
+  &:hover{
     color: $g4;
-    background-color: $darken1;
-    text-decoration: none;
-    border: none;
   }
-  &:active {
-    border: none;
+}
+
+.btn--border {
+  @include button(rgba(255,255,255,1));
+  border: solid 1px $g1;
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
+
+  &:hover{
+    border: solid 1px $g2;
     color: $g4;
-    background-color: $darken2;
-    margin-top: 0; //Negates the  "push"-effect of normal buttons
+  }
+}
+
+.btn--smaller {
+  padding: 0.3em 0.6em !important;
+}
+
+.btn--light {
+  @include button($g1);
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
+
+  &:hover{
+    color: $g4;
   }
 }
 
