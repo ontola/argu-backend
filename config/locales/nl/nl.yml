@@ -227,4 +227,6 @@ nl:
   follow: 'Volgen'
   unfollow: 'Ontvolgen'
   seo:
-    title_addon: 'Bekijk argumenten, discussieer mee en stem!'
+    short_addon: 'Bekijk argumenten, discussieer mee en stem!'
+    an_idea_addon: 'Alle voordelen en nadelen van een idee in één overzicht. Denk mee met jouw gemeente of organisatie en geef jouw mening!'
+    idea_addon: 'Alle voordelen en nadelen van %{title} in één overzicht. Denk mee met jouw overheid of organisatie en geef jouw mening!'

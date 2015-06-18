@@ -224,3 +224,6 @@ en:
   welcome_video_dismiss: "Hide this message."
   follow: 'Follow'
   unfollow: 'Unfollow'
+  seo:
+    short_addon: 'View arguments, join the debate and vote!'
+    long_addon: 'View arguments, join the debate and vote!'
