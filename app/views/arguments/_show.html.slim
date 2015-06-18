@@ -5,8 +5,7 @@
       h3[class="#{model.pro ? 'pro-t' : 'con-t'}" itemprop="headline"]= model.title
     =render partial: 'arguments/shr', locals: {model: model}
     p[class='wrap-normal' itemprop="text"]
-      /==model.truncate_preview(240, {length_in_chars: true, ellipsis: (' ... ' + contextual_link_to(t('read_more'), argument_path(model))) })
-      ==HTML_Truncator.truncate(markdown_to_plaintext(model.content), 220, {length_in_chars: true, ellipsis: (' ... ' + contextual_link_to(t('read_more'), argument_path(model))) })
+      ==safe_truncated_text(model.content, contextual_link_to(t('read_more'), argument_path(model)))
   - if top_comment.present?
     =link_to argument_path(model) + '#commentstitle'
       section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]
