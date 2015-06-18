@@ -7,29 +7,37 @@
 
 .cover {
   position: relative;
-  //margin-bottom: 1em;
 }
 
 .cover-buttons {
   position: absolute;
   bottom: 0;
   width: 100%;
+
+  li a {
+    vertical-align: bottom; // Fixes a weird 1px off bug in chrome
+  }
+
   .btns-horizontal{
     width: 100%;
+
     @include bp-large {
       li a {
         padding-left: 1em;
         padding-right: 1em;
       }
     }
+
     @include bp-medium {
       span {
         display: none;
+
         &.fa {
           display: inline-block;
         }
       }
     }
+
   }
 }
 
