@@ -11,7 +11,7 @@
     ul[class="tags" data-intro= t("intro.tags")]= render partial: 'tags/tags', locals: {resource: motion}
   =render partial: motion.creator, locals: {resource: motion}
   ul.btns-list--subtle.btns-horizontal.btn-sticky-bottom.btn-sticky.btns-list--grey-background
-    - if active_for_user?(:notifications, current_user)
+    - if active_for_user?(:notifications, current_user) && current_profile.present?
       li.tooltip[data-title=I18n.t('tooltips.follow')]
         =react_component 'ActiveToggle', {url: follows_path(motion_id: motion.id),
                                           initialState: current_profile.following?(motion),

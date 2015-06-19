@@ -65,6 +65,11 @@ class Forum < ActiveRecord::Base
     page.owner
   end
 
+  # http://schema.org/description
+  def description
+    self.bio
+  end
+
   def full_access_token
     AccessToken.where(item: self).first
   end

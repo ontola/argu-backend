@@ -8,8 +8,8 @@ module Publishable
         @_client ||= Koala::Facebook::API.new(@_access_token, Rails.application.secrets.facebook_secret)
       end
 
-      def create(text, headline, url = nil, uid = 'me')
-        @_client.put_wall_post(text, {name: headline, link: url}, uid)
+      def create(text, name, url = nil, uid = 'me')
+        @_client.put_wall_post(text, {name: name, link: url}, uid)
       end
 
       def email

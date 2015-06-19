@@ -225,5 +225,30 @@ en:
   follow: 'Follow'
   unfollow: 'Unfollow'
   seo:
-    short_addon: 'View arguments, join the debate and vote!'
-    long_addon: 'View arguments, join the debate and vote!'
+      argument:
+        name: ''
+        description: ''
+      forum:
+        name: ''
+        description: ''
+      hash:
+        name: ''
+        description: ''
+      motion:
+        name: ''
+        description: ''
+      page:
+        name: ''
+        description: ''
+      profile:
+        name: ''
+        description: ''
+      question:
+        name: ''
+        description: ''
+      string:
+        name: ''
+        description: ''
+      user:
+        name: ''
+        description: ''

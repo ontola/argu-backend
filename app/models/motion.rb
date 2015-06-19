@@ -46,6 +46,11 @@ class Motion < ActiveRecord::Base
     self.creator.follow self
   end
 
+  # http://schema.org/description
+  def description
+    self.content
+  end
+
   def display_name
     title
   end

@@ -43,7 +43,11 @@ class Profile < ActiveRecord::Base
     profileable_id
   end
 
-  ######Attributes#######
+  # http://schema.org/description
+  def description
+    self.about
+  end
+
   def display_name
     self.profileable.try(:display_name) || self.name.presence
   end

@@ -1,13 +1,8 @@
-=set_title @argument.title.nil? ? t('arguments.show.title') : @argument.title
--content_for :connected_web
-  meta[name="description" content="#{@argument.content}"]
-  meta[property="og:title" content="#{@argument.display_name}"]
-  meta[property="og:url" content="#{motion_url(@argument)}"]
-  meta[property="og:description" content="#{markdown_to_plaintext(@argument.content)}"]
-  meta[property="twitter:card" content="summary"]
-  meta[property="twitter:title" content="#{@argument.display_name}"]
-  meta[property="twitter:description" content="#{@argument.content}"]
-  /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
+=set_title @argument
+=connected_web url: argument_url(@argument),
+               name: seolized_title(@argument),
+               description: seolized_description(@argument),
+               image: image_url('logo-social.png')
 .col-1[itemscope itemtype="http://schema.org/CreativeWork/Argument"]
   div[data-intro= t('intro.argument.back')]
     =to_parent

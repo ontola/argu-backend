@@ -75,8 +75,10 @@ $(function (){
     $(document)
         .pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container')
         .on('pjax:beforeReplace', shallowUnmountComponents) // pjax:start seems to have come unnecessary
-        .on('pjax:end', shallowMountComponents);
-    
+        .on('pjax:beforeReplace', processContentForMetaTags)
+        .on('pjax:end', shallowMountComponents)
+        .on('pjax:end', removeMetaContent);
+
     if (!("ontouchstart" in document.documentElement)) {
         document.documentElement.className += " no-touch";
     }

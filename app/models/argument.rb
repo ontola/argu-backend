@@ -3,6 +3,11 @@ class Argument < ActiveRecord::Base
 
   scope :argument_comments, -> { includes(:comment_threads).order(votes_pro_count: :desc).references(:comment_threads) }
 
+  # http://schema.org/description
+  def description
+    self.content
+  end
+
   def top_comment(show_trashed = nil)
     comment_threads.where(parent_id: nil, is_trashed: false).order('created_at ASC').first
   end

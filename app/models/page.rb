@@ -12,6 +12,8 @@ class Page < ActiveRecord::Base
 
   attr_accessor :repeat_name, :tab, :active
 
+  delegate :description, to: :profile
+
   validates :shortname, presence: true, length: {minimum: 3, maximum: 50}
   validates :profile, :owner_id, :last_accepted, presence: true
 
