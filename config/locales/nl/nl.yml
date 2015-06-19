@@ -224,3 +224,9 @@ nl:
   welcome_video_open: 'Nieuw op Argu? Bekijk de video!'
   welcome_video_close: 'Sluit deze banner'
   welcome_video_dismiss: 'Verberg deze boodschap.'
+  follow: 'Volgen'
+  unfollow: 'Ontvolgen'
+  seo:
+    short_addon: 'Bekijk argumenten, discussieer mee en stem!'
+    an_idea_addon: 'Alle voordelen en nadelen van een idee in één overzicht. Denk mee met jouw gemeente of organisatie en geef jouw mening!'
+    idea_addon: 'Alle voordelen en nadelen van %{title} in één overzicht. Denk mee met jouw overheid of organisatie en geef jouw mening!'

@@ -1,13 +1,16 @@
-=set_title @motion.title
+- title_with_seo_addon = "#{@motion.title} | #{I18n.t('seo.short_addon')}"
+- description_with_seo_addon = "#{markdown_to_plaintext(@motion.content)}  | #{I18n.t('seo.idea_addon', title: @motion.title.downcase)}"
+=set_title ()
 -content_for :connected_web
-  meta[name="description" content="#{@motion.content}"]
-  meta[property="og:title" content="#{@motion.display_name}"]
+  meta[name="description" content=description_with_seo_addon]
+  meta[property="og:title" content=title_with_seo_addon]
   meta[property="og:url" content="#{motion_url(@motion)}"]
-  meta[property="og:description" content="#{markdown_to_plaintext(@motion.content)}"]
+  meta[property="og:description" content=description_with_seo_addon]
   meta[property="og:image" content="#{@motion.cover_photo.url || image_url('logo-social.png')}"]
   meta[property="twitter:card" content="summary"]
-  meta[property="twitter:title" content="#{@motion.display_name}"]
-  meta[property="twitter:description" content="#{@motion.content}"]
+  meta[property="twitter:site" content="@argu_co"]
+  meta[property="twitter:title" content=title_with_seo_addon]
+  meta[property="twitter:description" content=description_with_seo_addon]
   /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
   meta[property="twitter:image" content="#{@motion.cover_photo.url}" ]
 div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]

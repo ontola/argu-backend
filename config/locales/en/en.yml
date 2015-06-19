@@ -222,3 +222,8 @@ en:
   welcome_video_open: 'First time on Argu? Watch the video!'
   welcome_video_close: 'Close this banner'
   welcome_video_dismiss: "Hide this message."
+  follow: 'Follow'
+  unfollow: 'Unfollow'
+  seo:
+    short_addon: 'View arguments, join the debate and vote!'
+    long_addon: 'View arguments, join the debate and vote!'

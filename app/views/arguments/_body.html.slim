@@ -8,14 +8,14 @@
     .markdown[itemprop="text"]
       = markdown_to_html(@argument.content)
   =render @argument.creator, locals= {resource: @argument} if @argument.creator.present?
-  ul.btns-list--subtle.btns-horizontal.btn-sticky.btn-sticky-bottom
+  ul.btns-list--subtle.btns-horizontal.btn-sticky.btn-sticky-bottom.btns-list--grey
     - if active_for_user?(:notifications, current_user)
-      =react_component 'ActiveToggle', {url: follows_path(argument_id: @argument.id),
+      li.tooltip[data-title=I18n.t('tooltips.follow')]
+        =react_component 'ActiveToggle', {url: follows_path(argument_id: @argument.id),
                                         initialState: current_profile.following?(@argument),
-                                        label: false,
                                         tagName: 'a',
-                                        true_props: {method: 'POST', icon: 'bell'},
-                                        false_props: {method: 'DELETE', icon: 'bell-slash'}},
+                                        true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
+                                        false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                        {prerender: true}
     - if current_user.present? && policy(@argument).update? || active_for_user?(:notifications, current_user)
       li
