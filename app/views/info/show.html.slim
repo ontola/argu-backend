@@ -1,17 +1,20 @@
 - if @document.present? && @document.has_key?('sections')
-  =set_title @document['title']
+  =set_title @document['title'] || @document['header'] || @document['sections'].first['header']
+  - if @document['header'].present?
+    header
+      h1= @document['header']
   .blocks-container
     - @document['sections'].each do |section|
       - unless section['hidden']
         - if section['type'] == 'image-wide'
-          .blocks[class=section['class']]
+          .blocks[class=section['class'] id=section['id']]
             img.block-image-wide[src="#{asset_path section['image']}"]
         - elsif section['type'] == 'video'
-          .blocks[class=section['class']]
+          .blocks[class=section['class'] id=section['id']]
             .block-video
               iframe[frameborder="0" height="100%" width="100%" src="#{section['video-url']}"]
         - elsif section['type'] == 'single'
-          .blocks[class=section['class']]
+          .blocks[class=section['class'] id=section['id']]
             .block.block--full[class=((section['fill'] ? 'block--fill' : '') + " " + (section['big-text'] ? 'block--big-text' : ''))]
               - if section['header'].present?
                 header
@@ -46,7 +49,7 @@
               .block--img.block--img--full
                 .img[style="background-image: url(#{asset_path section['image']})"]
         - elsif section['type'] == 'double'
-          .blocks[class=section['class']]
+          .blocks[class=section['class'] id=section['id']]
             .block.block--img[class=(section['right'] ? 'block--right' : '')]
               .img[style="background-image: url(#{asset_path section['image']})"]
             .block[class=(section['fill'] ? 'block--fill' : '')]
