@@ -1,5 +1,5 @@
 - if @document.present? && @document.has_key?('sections')
-  =set_title @document['title']
+  =set_title @document
   .blocks-container
     - @document['sections'].each do |section|
       - unless section['hidden']

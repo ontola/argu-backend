@@ -1,18 +1,9 @@
-- title_with_seo_addon = "#{@motion.title} | #{I18n.t('seo.short_addon')}"
-- description_with_seo_addon = "#{markdown_to_plaintext(@motion.content)}  | #{I18n.t('seo.idea_addon', title: @motion.title.downcase)}"
-=set_title ()
--content_for :connected_web
-  meta[name="description" content=description_with_seo_addon]
-  meta[property="og:title" content=title_with_seo_addon]
-  meta[property="og:url" content="#{motion_url(@motion)}"]
-  meta[property="og:description" content=description_with_seo_addon]
-  meta[property="og:image" content="#{@motion.cover_photo.url || image_url('logo-social.png')}"]
-  meta[property="twitter:card" content="summary"]
-  meta[property="twitter:site" content="@argu_co"]
-  meta[property="twitter:title" content=title_with_seo_addon]
-  meta[property="twitter:description" content=description_with_seo_addon]
-  /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
-  meta[property="twitter:image" content="#{@motion.cover_photo.url}" ]
+=set_title @motion
+=connected_web url: motion_url(@motion),
+               name: seolized_title(@motion),
+               description: seolized_description(@motion),
+               image: @motion.cover_photo.url || image_url('logo-social.png')
+
 div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .cover-behind
     .cover-image[style="background-image: url('#{@motion.cover_photo.url(:cover)}'); "]
@@ -41,4 +32,4 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
           section
             p= t('groups.empty', type: k.name.downcase)
 
-// Render four random motions / questions from the same forum
+// @TODO: Render four random motions / questions from the same forum

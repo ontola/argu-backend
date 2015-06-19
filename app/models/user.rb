@@ -24,6 +24,8 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :repeat_name
 
+  delegate :description, to: :profile
+
   enum follows_email: { never_follows_email: 0, weekly_follows_email: 1, daily_follows_email: 2, direct_follows_email: 3 }
   enum memberships_email: { never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3 }
   enum created_email: { never_created_email: 0, weekly_created_email: 1, daily_created_email: 2, direct_created_email: 3 }

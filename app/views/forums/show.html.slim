@@ -1,15 +1,8 @@
-=set_title @forum.display_name
--content_for :connected_web
-  meta[name="description" content="#{@forum.bio}"]
-  meta[property="og:title" content="#{@forum.display_name}"]
-  meta[property="og:url" content="#{forum_url(@forum)}"]
-  meta[property="og:description" content="#{@forum.bio}"]
-  meta[property="og:image" content="#{@forum.cover_photo.url}"]
-  meta[property="twitter:card" content="summary"]
-  meta[property="twitter:title" content="#{@forum.display_name}"]
-  meta[property="twitter:description" content="#{@forum.bio}"]
-  /meta[property="twitter:creator" content="#{@forum.page.twitter_url}"]
-  meta[property="twitter:image" content="#{@forum.cover_photo.url}" ]
+=set_title @forum
+=connected_web url: forum_url(@forum),
+               name: seolized_title(@forum),
+               description: seolized_description(@forum),
+               image: @forum.cover_photo.url
 div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
   .cover
     -if @forum.cover_photo.url.present?

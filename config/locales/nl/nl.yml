@@ -227,6 +227,31 @@ nl:
   follow: 'Volgen'
   unfollow: 'Ontvolgen'
   seo:
-    short_addon: 'Bekijk argumenten, discussieer mee en stem!'
-    an_idea_addon: 'Alle voordelen en nadelen van een idee in één overzicht. Denk mee met jouw gemeente of organisatie en geef jouw mening!'
-    idea_addon: 'Alle voordelen en nadelen van %{title} in één overzicht. Denk mee met jouw overheid of organisatie en geef jouw mening!'
+    argument:
+      name: ''
+      description: ''
+    forum:
+      name: ''
+      description: ''
+    hash:
+      name: ''
+      description: ''
+    motion:
+      name: 'Bekijk argumenten, discussieer mee en stem!'
+      description: 'Alle voordelen en nadelen van %{title} in één overzicht. Denk mee met jouw overheid of organisatie en geef jouw mening!'
+      #an_idea_addon: 'Alle voordelen en nadelen van een idee in één overzicht. Denk mee met jouw gemeente of organisatie en geef jouw mening!'
+    page:
+      name: ''
+      description: ''
+    profile:
+      name: ''
+      description: ''
+    question:
+      name: ''
+      description: ''
+    string:
+      name: ''
+      description: ''
+    user:
+      name: ''
+      description: ''

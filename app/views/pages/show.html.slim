@@ -1,4 +1,8 @@
-=set_title @profile.display_name
+=set_title @page || @profile
+=connected_web url: dual_profile_path(@profile),
+               name: seolized_title(@page || @profile),
+               description: seolized_description(@page || @profile),
+               image: @profile.profile_photo
 =render partial: 'manage_bar', locals: {resource: @page, active: :show} if policy(@page).update?
 .col-1
   /=image_tag @profile.cover_photo.url

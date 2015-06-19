@@ -70,11 +70,12 @@ module ApplicationHelper
     @resource
   end
 
-  def set_title(title= '')
+  def set_title(model= '')
+    title_string = seolized_title(model)
     if request.env['HTTP_X_PJAX']
-      raw "<title>#{[title, (' | ' if title), t('name')].compact.join.capitalize}</title>"
+      raw "<title>#{title_string}</title>"
     else
-      provide :title, title
+      provide :title, title_string
     end
   end
 
