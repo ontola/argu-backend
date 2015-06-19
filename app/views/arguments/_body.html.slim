@@ -13,6 +13,7 @@
       =react_component 'ActiveToggle', {url: follows_path(argument_id: @argument.id),
                                         initialState: current_profile.following?(@argument),
                                         label: false,
+                                        tagName: 'a',
                                         true_props: {method: 'POST', icon: 'bell'},
                                         false_props: {method: 'DELETE', icon: 'bell-slash'}},
                        {prerender: true}
