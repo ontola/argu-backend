@@ -1,7 +1,7 @@
-nav#navbar.navbar role="navigation"
+nav#navbar.navbar[role="navigation"]
   .nav-container
-    .navbar-logo data-intro=t('intro.header.logo') data-step=15
-      =link_to root_path
+    .navbar-logo[data-intro=t('intro.header.logo') data-step=15]
+      =link_to(root_path) do
         =image_tag('logo-white.svg')
     ul.navbar-links
       li

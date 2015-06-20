@@ -1,4 +1,5 @@
-include Rails.application.routes.url_helpers
+#include Rails.application.routes.url_helpers
+
 module Publishable
   module Publishers
     class Twitter < Publisher
