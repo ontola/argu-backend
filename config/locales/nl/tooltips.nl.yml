@@ -14,3 +14,4 @@ nl:
     argument:
       vote_up: "Belangrijk argument; het moet hoger staan."
       vote_down: "Onbelangrijk argument; het moet lager staan."
+    follow: "Ontvang meldingen als hier nieuwe items worden geplaatst."

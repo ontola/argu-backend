@@ -6,8 +6,10 @@ class ApplicationController < ActionController::Base
   before_action :check_finished_intro
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_layout
+  before_action :set_locale
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
+  around_action :set_time_zone
   #after_action :set_notification_header
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
@@ -91,12 +93,21 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def forum_by_geocode
+    if session[:geo_location].present?
+      forum = Forum.find_via_shortname(session[:geo_location].city.downcase) if session[:geo_location].city.present?
+      forum ||= Forum.find_via_shortname(session[:geo_location].country.downcase) if session[:geo_location].country.present?
+      forum = Forum.find_via_shortname('eu') if forum.blank? && EU_COUNTRIES.include?(session[:geo_location].country_code)
+      forum
+    end
+  end
+
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses {Forum.first_public}
   def preferred_forum
     if current_profile.present?
       policy(current_profile.preferred_forum).show? ? current_profile.preferred_forum : current_profile.memberships.first.try(:forum) || Forum.first_public
     else
-      Forum.first_public
+      forum_by_geocode || Forum.first_public
     end
   end
 
@@ -132,9 +143,7 @@ class ApplicationController < ActionController::Base
 
   # @private
   def set_locale
-    unless current_user.nil?
-      I18n.locale = current_user.settings.locale || I18n.default_locale
-    end
+    I18n.locale = current_user.try(:language) || http_accept_language.compatible_language_from(I18n.available_locales)
   end
 
   # @private
@@ -144,6 +153,11 @@ class ApplicationController < ActionController::Base
     else
       response.headers[:lastNotification] = '-1'
     end
+  end
+
+  def set_time_zone(&block)
+    time_zone = current_user.try(:time_zone) || 'UTC'
+    Time.use_zone(time_zone, &block)
   end
 
   # Deletes all other activities created within 6 hours of the new activity.

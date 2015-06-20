@@ -7,24 +7,43 @@
 
 .cover {
   position: relative;
-  //margin-bottom: 1em;
 }
 
 .cover-buttons {
   position: absolute;
   bottom: 0;
   width: 100%;
-  .btns-list{
+
+  li a {
+    vertical-align: bottom; // Fixes a weird 1px off bug in chrome
+  }
+
+  .btns-horizontal{
     width: 100%;
+
+    @include bp-large {
+      li a {
+        padding-left: 1em;
+        padding-right: 1em;
+      }
+    }
+
     @include bp-medium {
       span {
         display: none;
+
         &.fa {
           display: inline-block;
         }
       }
     }
+
   }
+}
+
+.cover-buttons--top {
+  top: 0;
+  bottom: auto;
 }
 
 .cover-buttons-container {
@@ -32,6 +51,9 @@
   display: block;
   padding: 0 1em;
   margin: auto;
+  @include bp-small {
+    padding: 0;
+  }
 }
 
 .header-attribution {
@@ -56,6 +78,7 @@
   position: absolute;
   top: 0;
   width: 100%;
+  opacity: .5;
 }
 
 .cover-image{
@@ -80,9 +103,9 @@
 
 .cover-bar {
   margin: auto;
+  margin-bottom: 1em;
   width: 100%;
   display: inline-block;
-  margin-bottom: 1em;
   background-color: white;
 }
 
@@ -91,7 +114,6 @@
   margin-left: 0.8em;
   margin-top: 1em;
   margin-bottom: 1em;
-  float: left;
 }
 
 .cover-overlay {
@@ -152,45 +174,11 @@
 
     &:active, .dropdown-active{
       background-color: $lighten3 !important;
-    }
-  }
-
-  .dropdown-content{
-    width: 20em;
-    @include bp-medium{
-      width: 16em;
+      transition: none;
     }
   }
 }
 
 .cover-image-empty {
-  height: 10em;
   background-color: $g2;
-  @include bp-medium{
-    height: 51px;
-  }
-}
-
-.cover-header-middle {
- // background-color: white;
-}
-
-.cover-header-bottom {
-  background-color: white;
-}
-
-.cover-header-top {
-  position: absolute;
-  bottom: 100%;
-}
-
-.cover .tabs {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-
-  li a {
-    background-color: $lighten5;
-  }
 }

@@ -90,8 +90,11 @@ class Comment < ActiveRecord::Base
 
   # Comments can't be deleted since all comments below would be hidden as well
   def wipe
-    if self.update_columns profile_id: nil, body: ''
-      decrease_counter_cache
+    Comment.transaction do
+      if self.update_columns profile_id: nil, body: ''
+        decrease_counter_cache
+        self.activities.destroy_all
+      end
     end
   end
 

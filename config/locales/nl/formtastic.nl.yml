@@ -18,7 +18,7 @@ nl:
       are_votes_public: "Laat zien wat ik stem"
       content: "Inhoud"
       cover_photo_attribution: "Auteursrechten"
-      cover_photo: "Cover afbeelding"
+      cover_photo: "Omslagfoto"
       expires_at: "Verloopt op"
       f_move: "Verplaatsen"
       f_convert: "Omzetten"
@@ -34,10 +34,11 @@ nl:
       questions_title: "Vraagstukken"
       questions_title_singular: "Vraagstuk"
       remember_me: "Gegevens onthouden"
-      remove_cover_photo: "Cover afbeelding verwijderen"
+      remove_cover_photo: "Omslagfoto verwijderen"
       remove_image: "Afbeelding verwijderen"
       remove_profile_photo: "Profielfoto verwijderen"
-      shortname: "Argu url"
+      repeat_name: "Herhaal Argu URL"
+      shortname: "Argu URL"
       tag_list: "Thema's"
       title: "Titel"
       username: "Gebruikersnaam"
@@ -84,12 +85,12 @@ nl:
       forum:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
       user:
-        shortname: "Minimaal 3 karakters. Alleen letters, cijfers en '_'. Je kunt dit later niet meer wijzigen."
+        shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
+      password_confirmation: "Zelfde als hierboven"
     placeholders:
       email: "email@voorbeeld.nl"
       login: "email of gebruikersnaam"
       tag_list: "thema1, thema2 ..."
-      password_confirmation: "Zelfde als hierboven"
       question:
         title: "Plaats hier de kern van jouw %{type}"
         content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."

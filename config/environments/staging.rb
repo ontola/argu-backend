@@ -10,9 +10,10 @@ Argu::Application.configure do
 
   config.react.variant = :production
 
+  config.middleware.use Rack::Attack
+
   # Code is not reloaded between requests
   config.cache_classes = true
-
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on
@@ -60,7 +61,7 @@ Argu::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, pica_pica.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( closed.js )
+  config.assets.precompile += %w( application.js closed.js polyfill.js )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -88,6 +89,4 @@ Argu::Application.configure do
   config.active_support.deprecation = :notify
 
   config.active_record.raise_in_transactional_callbacks = true
-
-  config.i18n.available_locales = [:nl, :en]
 end

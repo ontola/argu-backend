@@ -35,6 +35,11 @@ class Question < ActiveRecord::Base
     title
   end
 
+  # http://schema.org/description
+  def description
+    self.content
+  end
+
   def move_to(forum, include_motions = false)
     Question.transaction do
       old_forum = self.forum.lock!

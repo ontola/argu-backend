@@ -10,29 +10,32 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require jquery2
+//= require jquery/dist/jquery.js
 //= require jquery_ujs
-//= require react
+//= require react/react-with-addons.js
+//= require react-router/build/umd/ReactRouter.js
 //= require react_ujs
-//= require onclickoutside
-//= require reflux.min
+//= require react-onclickoutside/index
+//= require reflux/dist/reflux.js
 //= require jquery.jeditable.mini.js
 //= require jquery-ui/autocomplete
 //= require jquery-ui/sortable
-//= require jquery.pjax
-//= require microplugin
-//= require sifter
-//= require selectize
+//= require jquery-pjax/jquery.pjax
+//= require microplugin/src/microplugin
+//= require sifter/sifter.js
+//= require selectize/dist/js/selectize.js
 // Briarcliff dependencies :: GO
-//= require fastclick
-//= require isotope.pkgd.min
-//= require intro
-//= require nprogress
+//= require fastclick/lib/fastclick
+//= require isotope/dist/isotope.pkgd.js
+//= require intro.js/intro.js
+//= require nprogress/nprogress.js
 // Briarcliff dependencies :: END
 //= require requirejs
 //= require autocomplete-rails
 //= require pica_pica/application
+//= require_tree ./lib
 //= require_tree ./stores
-//= require components
+//= require_tree ./services
+//= require_tree ./components
 //= require initialize.js.jsx
 //= require_tree ./application

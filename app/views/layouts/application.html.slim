@@ -13,6 +13,9 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   =render 'shim'
   =render 'layouts/meta'
 
+  /[if lt IE 10]
+    =javascript_include_tag 'polyfill'
+
   =stylesheet_link_tag 'application', :media => 'all'
   - if request.original_url.include? developers_path
     =stylesheet_link_tag 'developers/developers', :media => 'all'
@@ -20,17 +23,22 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   =yield :connected_web
 
   link[rel="copyright" content="#{t('site.copyright')}"]
+  - if active_for_user?('inspectlet', current_user)
+    =render partial:'external/inspectlet'
 body
   - if current_user && current_user.profile.has_role?(:staff)
     =render partial: 'staff_sign'
   #fb-root
   =render 'navbar'
+  - if active_for_user?('welcome_video', current_user)
+    =render partial: 'welcome_video'
   .wrapper
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')
+
     -flash.each do |key, value|
-      .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
-    /=render 'responsibility_notice'
+      .alert-container
+        .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
     #pjax-container.container
       =yield
     .push-footer
@@ -39,4 +47,3 @@ body
   - if Rails.env.production? || Rails.env.test?
     =render partial: 'analytics'
   audio[id="notificationSound" src="/notification.wav" preload="auto"]
-

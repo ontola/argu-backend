@@ -9,6 +9,8 @@ nl:
         general: "Algemeen"
         authentication: "Authenticatie"
         notifications: "Meldingen"
+      confirmed: "E-mail bevestigd"
+      unconfirmed: "E-mail nog niet bevestigd"
     follows_email:
       never_follows_email: 'Nooit'
       direct_follows_email: 'Onmiddelijk'
@@ -26,3 +28,9 @@ nl:
       weekly_created_email: 'Wekelijks'
     cap_reached: "We zitten vol"
     cap_reached_body: "Bedankt voor je interesse in Argu, door overweldigende aanmeldingen hebben we maximum capaciteit bereikt. Aanmeldingen gaan weer open als we onze capaciteit hebben verhoogd."
+    authentications:
+      cant_decouple_note_provider: "Je kunt je %{provider} account alleen ontkoppelen door een wachtwoord in te stellen of je account te verwijderen."
+      email_mismatch: "E0mail komt niet overeen met de huidige gebruiker, log eerst uit alvorens met een ander account in te loggen."
+    connect:
+      title: "Koppel accounts"
+      text: "Er bestaat al een gebruiker op Argu genaamd <b>%{to_name}</b> met hetzelfde email adres als jouw %{from_type} account. Om het %{from_type} account van <b>%{from_name}</b> te koppelen aan dit Argu account, moet je het wachtwoord van het Argu account invoeren."

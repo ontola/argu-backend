@@ -1,33 +1,30 @@
 footer
   ul.footer-list
     li
-      h3.footer-heading Forums
+      h3.footer-heading= t('forums.plural')
     /li= link_to "Een eigen forum?", "/product"
-    li
-      a[href="/"] Bekijk alle forums
-    li
-      a[href="/nederland"] Nederland
-    li
-      a[href="/feedback"] Argu Feedback
+    li= link_to t('forums.show_open'), discover_forums_path
+    li= link_to 'Nederland', forum_path('nederland')
+    li= link_to 'Argu Feedback', forum_path('feedback')
   ul.footer-list
     li
       h3.footer-heading= t('about.title')
-      /= render partial: "vcard"
     li= link_to t('about.vision'), about_path
     li= link_to t('about.team'), team_path
     /li= link_to t('about.product'), product_path
     li= link_to t('about.governments'), governments_path
     li= link_to t('about.how_argu_works'), how_argu_works_path
+    li= link_to t('press_media'), 'https://argu.pr.co'
     li= link_to t('help_support'), 'https://argu.freshdesk.com/support/home'
   ul.footer-list
     li
-      h3.footer-heading Voorwaarden
-    li= link_to 'Gebruiksvoorwaarden', policy_path
-    li= link_to 'Privacy', privacy_path
-    /li= link_to 'Cookiebeleid', cookies_path
+      h3.footer-heading= t('legal.header')
+    li= link_to t('legal.policy'), policy_path
+    li= link_to t('legal.privacy'), privacy_path
+    /li= link_to t('legal.cookies'), cookies_path
   ul.footer-list
     li
-      h3.footer-heading Volg ons
+      h3.footer-heading= t('footer_item_follow_uw')
       .footer-social-buttons
         a[href="https://www.facebook.com/argu.co"]
           span.fa.fa-facebook-square

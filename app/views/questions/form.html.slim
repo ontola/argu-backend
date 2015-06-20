@@ -9,9 +9,13 @@
       =semantic_form_for((@question.new_record? ? [@forum, @question] : @question), html: {autocomplete: 'off'}, multipart: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
+            h3= t('questions.form.title_heading')
+            p= t('questions.form.title_body_html')
             =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'question-t form-input-title'}, label: false, placeholder: placeholder_for(@question, :title, question_type)
-            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, placeholder: placeholder_for(@question, :content, question_type)
-            =f.input :tag_list, input_html: {class: 'tag-list'}, label: false
+            h3= t('questions.form.content_heading')
+            p= t('questions.form.content_body_html')
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(@question, :content, question_type)
+            =f.input :tag_list, input_html: {class: 'tag-list'}
           =f.inputs
             =f.input :cover_photo, label: t('image')
             -if !@question.new_record?
@@ -38,16 +42,4 @@
             =f.action :submit, as: :button
   - unless alternative_questions?
     .col-3-1
-      .box
-        section
-          h2= "Wat is een vraagstuk?"
-          p= raw "Een <b class='question-t'>vraagstuk</b> is een <b>open vraag</b> waarin een probleem wordt gepresenteerd. Een vraagstuk nodigt mensen uit om oplossingen te bedenken en vervolgens te plaatsen als ideeën."
-          h2= "Tips:"
-          ul.bullets
-            li
-              p= raw "Geef <b>achtergrondinformatie</b>. Leg uit hoe het probleem in elkaar steekt en waarom het probleem relevant is."
-            li
-              p= raw "Een vraagstuk begint meestal met \"<b>Hoe</b>...\" of \"<b>Wat</b>...\" en eindigt altijd met een vraagteken."
-            li
-              p= raw "Kan je jouw vraagstuk beantwoorden met \"ja\" of \"nee\"? Waarschijnlijk wil je dan een <b>#{link_to 'idee plaatsen', new_forum_motion_path(@forum), class: 'motion-t' }</b>."
-      =render partial: 'links_helper'
+      =render partial: 'markdown_helper'

@@ -43,9 +43,16 @@ Argu::Application.routes.draw do
   concern :votable do
     get 'v' => 'votes#show', shallow: true, as: :show_vote
     post 'v/:for' => 'votes#create', shallow: true, as: :vote
+    get 'v/:for' => 'votes#new', shallow: true
   end
 
-  resources :notifications, only: [:index, :update], path: 'n'
+  use_doorkeeper do
+    controllers :applications => 'oauth/applications'
+  end
+
+  resources :notifications, only: [:index, :update], path: 'n' do
+    patch :read, on: :collection
+  end
   put 'actors', to: 'actors#update'
 
   require 'sidekiq/web'
@@ -53,7 +60,13 @@ Argu::Application.routes.draw do
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
 
-  devise_for :users, :controllers => { :registrations => 'registrations', :sessions => 'users/sessions', :invitations => 'users/invitations' }, skip: :registrations
+  devise_for :users, controllers: {
+                       registrations: 'registrations',
+                       sessions: 'users/sessions',
+                       invitations: 'users/invitations',
+                       passwords: 'users/passwords',
+                       omniauth_callbacks: 'omniauth_callbacks'
+                   }, skip: :registrations
 
   as :user do
     get 'users/verify', to: 'users/sessions#verify'
@@ -63,13 +76,16 @@ Argu::Application.routes.draw do
     delete 'users', to: 'registrations#destroy', as: nil
   end
 
-  resources :authentications, only: [:create, :destroy]
-  match 'auth/:provider/callback' => 'authentications#create', via: [:get, :post]
-
   resources :users, path: 'u', only: [:show, :update] do
+    resources :identities, only: :destroy, controller: 'users/identities'
     get :edit, to: 'profiles#edit', on: :member
+
+    get :connect, to: 'users#connect', on: :member
+    post :connect, to: 'users#connect!', on: :member
+
     get :setup, to: 'users#setup', on: :collection
     put :setup, to: 'users#setup!', on: :collection
+
     get :pages, to: 'pages#index', on: :member
     get :forums, to: 'forums#index', on: :member
   end
@@ -88,7 +104,7 @@ Argu::Application.routes.draw do
   end
 
   resources :arguments, path: 'a', except: [:index, :new, :create], concerns: [:votable] do
-    resources :comments, path: 'c'
+    resources :comments, path: 'c', only: [:new, :index, :show, :create, :destroy]
     patch 'comments' => 'comments#create'
   end
 
@@ -136,11 +152,15 @@ Argu::Application.routes.draw do
   put '/settings', to: 'users#update'
   get '/c_a', to: 'users#current_actor'
 
-  get '/sign_in_modal', to: 'static_pages#sign_in_modal'
+  # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/about', to: 'static_pages#about'
+  # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/product', to: 'static_pages#product'
+  # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/how_argu_works', to: 'static_pages#how_argu_works'
+  # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/team', to: 'static_pages#team'
+  # @deprecated Please use info_controller. Kept for cached searches etc.
   get '/governments', to: 'static_pages#governments'
 
   get '/portal', to: 'portal/portal#home'

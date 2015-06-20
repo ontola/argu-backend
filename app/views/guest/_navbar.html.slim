@@ -13,7 +13,7 @@ nav#navbar.navbar role="navigation"
     ul.navbar-links.navbar-links-right
       =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
       li[tabIndex="0"]
-        =link_to sign_in_modal_path, class: 'navbar-item center', remote: true do
+        =link_to new_user_session_path, class: 'navbar-item center', data: remote_if_non_mobile do
           span.fa.fa-sign-in
           span.icon-left.dont-hide= t('sign_in')
   =render partial: 'online_status'

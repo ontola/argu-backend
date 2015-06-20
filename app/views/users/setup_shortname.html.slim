@@ -1,6 +1,17 @@
-=semantic_form_for @user, url: setup_users_path, method: :put  do |f|
-  =f.inputs name: t('profiles.edit.shortname') do
-    =f.inputs :shortname, for: :shortname
-    p= t('users.shortname.not_changeable')
-  =f.actions do
-    =f.action :submit, :as => :button, label: t('next')
+.col-1
+  header
+    h1= t('intro.initial.headers.shortname')
+  .box
+    section
+      p= t('intro.initial.body.shortname')
+  .box
+    section.form-validate
+      =semantic_form_for @user, url: setup_users_path, method: :put do |f|
+        =f.inputs do
+          =f.inputs :shortname, for: :shortname do |s|
+            - if @user.email
+              =s.input :shortname, input_html: {pattern: "[A-Za-z]+[_A-Za-z0-9]", value: @user.email[/[^@]+/].gsub('.', '_')}
+            - else
+              =s.input :shortname, input_html: {pattern: "[A-Za-z]+[_A-Za-z0-9]"}
+        =f.actions do
+          =f.action :submit, :as => :button, label: t('next')

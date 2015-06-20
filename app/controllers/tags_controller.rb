@@ -1,12 +1,10 @@
 class TagsController < ApplicationController
 
   def index
-    if params[:motion_id].present?
-      @forum = Motion.find(params[:motion_id]).forum
-    elsif params[:question_id].present?
-      @forum = Motion.find(params[:question_id]).forum
-    else
+    if params[:forum_id].present?
       @forum = Forum.find_via_shortname params[:forum_id]
+    else
+      @forum = taggable_class.find(params[taggable_type]).try(:forum)
     end
     authorize @forum, :show?
 
@@ -30,6 +28,20 @@ class TagsController < ApplicationController
       format.html
       format.json
     end
+  end
+
+  private
+  def taggable_param
+    request.path_parameters.keys.find { |k| /_id/ =~ k }
+  end
+
+  def taggable_type
+    taggable_param[0..-4]
+  end
+
+  # Note: Safe to constantize since `path_parameters` uses the routes for naming.
+  def taggable_class
+    taggable_type.capitalize.constantize
   end
 
 end

@@ -2,7 +2,6 @@
 
 Argu.alert = {
     init: function () {
-
         $(document)
             .on('pjax:end', Argu.alert.fadeAll)
             .ajaxComplete(Argu.alert.handleJSONBody);
@@ -45,7 +44,7 @@ Argu.Alert = function (message, messageType, instantShow, beforeSelector) {
     beforeSelector = typeof beforeSelector !== 'undefined' ? beforeSelector : '#navbar';
 
     var render = function () {
-        (_alert = $("<pre class='alert alert-" + messageType + "'>" + message + "</pre>")).insertBefore($(beforeSelector));
+        (_alert = $("<div class='alert-container'><pre class='alert alert-" + messageType + "'>" + message + "</pre></div>")).insertBefore($(beforeSelector));
         return _alert;
     };
 

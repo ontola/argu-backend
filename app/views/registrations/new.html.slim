@@ -1,10 +1,8 @@
 =set_title t('sign_up')
-.overlay
-.modal
-  header
-    h1= t('sign_up')
-  .box.box-small
-    section
-      .form-small
-        =render partial: 'form'
-        =render 'devise/shared/links' unless defined?(r)
+header
+  h1= t('sign_up')
+.box.box-small
+  section
+    .form-small
+      =render partial: 'form', locals: {r: local_assigns[:r] || params[:r]}
+      =render 'devise/shared/links' unless defined?(r)

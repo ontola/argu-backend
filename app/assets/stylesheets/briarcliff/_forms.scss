@@ -12,6 +12,7 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   line-height: 1.4em;
   border: solid 1px $g1;
   -webkit-appearance: none;
+  word-break: normal; //Fixes a bug in chrome where the content in an input glitches between two lines.
   @include border-radius(0);
   @include transition(.2s);
   @include placeholder{
@@ -47,6 +48,20 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   @include bp-medium {
     width: 100%;
   }
+
+  // Validation styling
+  .form-validate & {
+    &:focus:valid{
+      color: $gre;
+      border-color: $gre;
+    }
+
+    &:focus:invalid{
+      color: $red;
+      border-color: $red;
+    }
+  }
+
 }
 
 *:disabled input{

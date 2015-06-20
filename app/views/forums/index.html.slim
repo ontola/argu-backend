@@ -1,3 +1,4 @@
+=render partial: 'profiles/profile_bar', locals: {resource: @profile, active: :forum_management}
 .col-1
   header
     h1= t('forums.management.title')
@@ -19,7 +20,7 @@
             li
               =image_tag manager.profile_photo.url(:icon), size: '16x16'
               span= manager.display_name
-      ul.btns-list.btn-sticky
+      ul.btns-list--subtle.btn-sticky
         /li= link_to t('show'), forum_path(forum)
         li= link_to settings_forum_path(forum) do
           span.fa.fa-gear

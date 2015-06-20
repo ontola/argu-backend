@@ -1,0 +1,36 @@
+#English motions translations
+
+en:
+  users:
+    type: "User"
+    settings: "User settings"
+    registrations:
+      categories:
+        general: "General"
+        authentication: "Authentication"
+        notifications: "Meldingen"
+      confirmed: "E-mail confirmed"
+      unconfirmed: "E-mail not yet confirmed"
+    follows_email:
+      never_follows_email: 'Never'
+      direct_follows_email: 'Immediately'
+      daily_follows_email: 'Daily'
+      weekly_follows_email: 'Weekly'
+    memberships_email:
+      never_memberships_email: 'Never'
+      direct_memberships_email: 'Immediately'
+      daily_memberships_email: 'Daily'
+      weekly_memberships_email: 'Weekly'
+    created_email:
+      never_created_email: 'Never'
+      direct_created_email: 'Immediately'
+      daily_created_email: 'Daily'
+      weekly_created_email: 'Weekly'
+    cap_reached: "We're full"
+    cap_reached_body: "Thank you for your interest in Argu. Because of the overwhelming amount of signups we've reached our maximum capacity. Signups will resume when we've increased our capacity."
+    authentications:
+      cant_decouple_note_provider: "You can only unlink your %{provider} account by setting a password or deleting your account."
+      email_mismatch: "E-mail is different from the one you are currently using. Please log out before signing in with a different one."
+    connect:
+      title: "Link accounts"
+      text: "A user with the name <b>%{to_name}</b> is currently using the same e-mail as your %{from_type} account. In order to link the %{from_type} account from <b>%{from_name}</b> to this Argu account, please enter your Argu account password below."

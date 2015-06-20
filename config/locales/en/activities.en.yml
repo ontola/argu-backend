@@ -1,0 +1,32 @@
+
+en:
+  activities:
+    votes:
+      voted:
+        pro: "is in favour of a %{thing}"
+        pro_your: "is in favour of your %{thing}"
+        neutral: "is neutral about a %{thing}"
+        neutral_your: "is neutral about your %{thing}"
+        con: "opposes a %{thing}"
+        con_your: "opposes your %{thing}"
+    questions:
+      create: "Posted a %{type} for a forum %{thing}"
+      create_your: "Posted a %{type} for your forum %{thing}"
+    motions:
+      create: "Posted a %{type} for a forum %{thing}"
+      create_your: "Posted a %{type} for your forum %{thing}"
+    arguments:
+      create: "Posted a %{type} for a %{thing}"
+      create_your: "Posted a %{type} for your %{thing}"
+    comments:
+      create: "Replied to a %{thing}"
+      create_your: "Replied to your %{thing}"
+    ui:
+      load_more: "Load more"
+      no_more_artivities: "No more activities"
+      loading: "Loading.."
+  forums:
+    discover: "Discover forums"
+    show_open: "Show open forums"
+    no_bio: "No description"
+    more_info: "Read more."

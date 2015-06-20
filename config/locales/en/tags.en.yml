@@ -1,0 +1,8 @@
+#English motions translations
+
+en:
+  tags:
+    type: "tags"
+    with_tag: " with the tag "
+    trending: "trending"
+    my: "my tags"

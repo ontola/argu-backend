@@ -1,0 +1,115 @@
+@import "variables";
+@import "mixins";
+
+.welcome-video {
+  background-color: black;
+  position: fixed;
+  z-index: 4;
+  top: $header_height;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: auto;
+  //margin-top: 3em; //only if position: relative
+  margin-bottom: -5em;
+  @include transition(.8s, ease-in-out);
+  opacity: 1;
+}
+
+.welcome-video-bar {
+  z-index: -1;
+  width: 100%;
+  position: absolute;
+  text-align: center;
+  pointer-events: none;
+  top: 100%;
+  top: calc(100% - 2px);
+}
+
+.welcome-video-bar-container {
+  display: inline-block;
+  margin: auto;
+  pointer-events: auto;
+}
+
+.welcome-video-container{
+  overflow: hidden;
+  max-height: 0;
+  margin: auto;
+  height: auto;
+  @include container-width;
+  @include transition(max-height .8s ease-in-out);
+
+  .welcome-video-opened & {
+    max-height: 700px;
+    max-height: 83vh;
+    max-height: calc(100vh - 6em);
+  }
+}
+
+.welcome-video-disappear {
+  opacity: 0;
+
+  .welcome-video-container {
+    max-height: 0;
+  }
+}
+
+.welcome-video-video {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 */
+  //padding-bottom: 56vh; /* 16:9 */
+  iframe{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.welcome-video-toggle {
+  z-index: 2;
+}
+
+.welcome-video-toggle-hidden {
+  display: none;
+  .welcome-video-opened & {
+    display: inline-block;
+  }
+}
+
+.welcome-video-opened .welcome-video-toggle-shown {
+  display: none;
+}
+
+.welcome-video.welcome-video-opened {
+  box-shadow: 0em 0em 11em 3em rgba(0, 0, 0, 0.54);
+}
+
+body.welcome-video-opened {
+  overflow: hidden; // Prevents scrolling on desktop
+  position: fixed; // Prevents scrolling on iOS... But also moves the page to the top, which is suboptimal.
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.welcome-video-overlay {
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: none;
+  @include transition(.4s ease-in-out);
+  .welcome-video-opened &{
+    background-color: $darken_overlay;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+}

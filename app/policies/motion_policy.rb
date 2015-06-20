@@ -50,6 +50,10 @@ class MotionPolicy < RestrictivePolicy
     rule is_open?, is_member?, staff?
   end
 
+  def new_without_question?
+    rule is_open?, is_member?, staff?
+  end
+
   def show?
     rule forum_policy.show?, super
   end

@@ -1,6 +1,10 @@
-=set_title @profile.display_name
+=set_title @user || @page || @profile
+=connected_web url: dual_profile_path(@profile),
+               name: seolized_title(@user || @page || @profile),
+               description: seolized_description(@user || @page || @profile),
+               image: @profile.profile_photo
+=render partial: 'profiles/profile_bar', locals: {resource: @profile, active: :show} if policy(@profile).update?
 .col-1
-  =render partial: 'profiles/profile_bar', locals: {resource: @profile} if policy(@profile).update?
   /=image_tag @profile.cover_photo.url
   .profile.profile-big[data-intro= t('intro.profile.show', name: @profile.display_name)]
     .profile-picture.profile-picture-show

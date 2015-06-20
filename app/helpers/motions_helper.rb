@@ -45,6 +45,7 @@ module MotionsHelper
         object_type: 'motion',
         object_id: motion.id,
         current_vote: vote.for,
+        vote_url: motion_show_vote_path(motion),
         distribution: {
           pro: motion.votes_pro_count,
           neutral: motion.votes_neutral_count,
@@ -62,20 +63,13 @@ module MotionsHelper
     link_items = []
     mo_po = policy(motion)
     if mo_po.update?
-      link_items << link_item(t('update'), edit_motion_path(motion), fa: 'pencil')
+      link_items << link_item(t('edit'), edit_motion_path(motion), fa: 'pencil')
     end
     if mo_po.trash?
       link_items << link_item(t('trash'), motion_path(motion), data: {confirm: t('trash_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'trash')
     end
     if mo_po.destroy?
       link_items << link_item(t('destroy'), motion_path(motion, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'close')
-    end
-    if active_for_user?(:notifications, current_user)
-      if current_profile.following?(motion)
-        link_items << link_item(t('forums.unfollow'), follows_path(motion_id: motion.id), fa: 'bell-slash', data: {method: 'delete', 'skip-pjax' => 'true'})
-      else
-        link_items << link_item(t('forums.follow'), follows_path(motion_id: motion.id), fa: 'bell', data: {method: 'create', 'skip-pjax' => 'true'})
-      end
     end
     dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-gear')
   end

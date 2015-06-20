@@ -8,10 +8,14 @@
         ga('create', 'UA-57491906-1', 'auto');
         ga('require', 'displayfeatures');
         <% if current_user.present? %>
-        ga('set', '&uid', '<%= ::BCrypt::Engine.hash_secret("#{current_user.id}#{current_user.created_at}", ::BCrypt::Password.new(current_user.encrypted_password).salt).from(30) %>');
+        ga('set', '&uid', '<%= analytics_token %>');
         <% end %>
         ga('require', 'linkid', 'linkid.js');
         ga('send', 'pageview');
+        $(document).on('pjax:end', function() {
+            ga('set', 'location', window.location.href);
+            ga('send', 'pageview');
+        });
 
     </script>
 <% end %>

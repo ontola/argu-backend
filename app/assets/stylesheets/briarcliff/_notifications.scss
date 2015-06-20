@@ -1,7 +1,7 @@
 @import "variables";
 @import "mixins";
 
-.notifications {
+.notification-container {
   width: 25em;
   @include bp-small{
     position: fixed;
@@ -11,6 +11,10 @@
     bottom: 0;
     width: 100%;
   }
+}
+
+.notifications {
+  width: 25em;
 }
 
 .notifications li {
@@ -53,10 +57,19 @@
   color: $g2;
 }
 
+.notifications-mark-all-as-read {
+  background-color: $g0;
+  a {
+    padding: .3em;
+    padding-left: 1em;
+  }
+}
+
 .notification-time {
   color: $g2;
 }
 
+// The small gear icon that sits in the top right corner of a notification
 .notification-settings {
   opacity: 0;
   position: absolute;

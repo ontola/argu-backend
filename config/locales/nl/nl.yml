@@ -9,6 +9,7 @@ nl:
   sign_in: "Log in"
   sign_up_sign_in: "Registreren of Inloggen"
   sign_in_facebook: "Log in met facebook"
+  sign_up_facebook_notice: "We plaatsen niets op je wall."
   sign_in_twitter: "Log in met twitter"
   sign_in_existing: "Log in met een bestaand argu account:"
   forgot_password: "Wachtwoord vergeten?"
@@ -19,6 +20,8 @@ nl:
   cant_change_username: "Je kunt jouw gebruikersnaam later niet meer wijzigen."
   sign_up_argu: "Maak Argu account"
   sign_out: "Uitloggen"
+  no_confirmation_instructions: "Geen bevestigingsmail ontvangen?"
+  no_unlock_instructions: "Geen ontgrendelingsmail ontvangen?"
   learn_more: "Meer info"
   not_found_type: "%{type} niet gevonden"
   edit: "Bewerken"
@@ -59,6 +62,11 @@ nl:
   forum: "Forum"
   share: "Delen"
   menu: "Menu"
+  legal:
+    header: "Voorwaarden"
+    policy: "Gebruiksvoorwaarden"
+    privacy: "Privacy"
+    cookies: "Cookies"
   trash_confirmation: "Dit object zal niet zichtbaar zijn in de publieke discussie. Deze actie is ongedaan te maken."
   destroy_confirmation: "Dit object en alle bijbehorende data zal permanent verwijderd worden. Deze actie is niet ongedaan te maken."
   not_allowed: "Actie niet toegestaan."
@@ -81,6 +89,7 @@ nl:
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
+  footer_item_follow_uw: "Volg ons"
   closed: "Gesloten"
   accepted: "Aangenomen"
   rejected: "Afgewezen"
@@ -94,9 +103,11 @@ nl:
   info: "Info"
   help: "Help"
   help_support: "Help & support"
+  press_media: "Pers & media"
   about:
     title: "Over"
     vision: "Onze visie"
+    info: "Info"
     how_argu_works: "Hoe werkt Argu?"
     team: "Ons team"
     product: "Ons product"
@@ -118,6 +129,7 @@ nl:
   users_votes: "Stemmen"
   users_clearance: "bevoegdheid"
   users_password: "wachtwoord"
+  users_password_argu: "Argu wachtwoord"
   users_password_confirmation: "wachtwoord bevestigen"
   users_password_old: "oud wachtwoord"
   users_password_edit: "wachtwoord wijzigen"
@@ -179,6 +191,7 @@ nl:
   users:
     logged_in_banner_text: "%{name}"
     registrations:
+      no_password: "Je hebt nog geen wachtwoord omdat je je via social media hebt aangemeld. Wil je een wachtwoord aanmaken?"
       hints:
         password: "Minimaal 8 karakters"
         username: "Gebruik alleen letters, cijfers en _."
@@ -191,3 +204,54 @@ nl:
         privacy: "Privacy"
   document_missing: "Dit document lijkt niet te bestaan."
   offline: "Internetverbinding verbroken"
+  columns: "Kolommen"
+  info_bar: "Info balk"
+  images: "Afbeeldingen"
+  markdown_helper_html: "<h2>Links toevoegen</h2>
+                <p>Je kan in jouw tekst links toevoegen met blokhaken en normale haakjes. Dat doe je als volgt:</p>
+                <code>Dit is [Argu](www.argu.co).</code>
+                <p>Verschijnt als:</p>
+                <code>Dit is <a href='http://www.argu.co'>Argu</a>.</code>
+                <h2>Opmaak</h2>
+                <p>Je kunt je tekst eenvoudig opmaken door leestekens te gebruiken:</p>
+                <code>*Schuingedrukt*</code>
+                <code>**Dikgedrukt**</code>
+                <code>~~Doorstrepen~~</code>
+                <code>##Tussenkop</code>
+                <code>1. Genummerde <br> 2. Lijst</code>
+                <code>* Ongenummerde <br> * Lijst</code>
+                "
+  welcome_video_open: 'Nieuw op Argu? Bekijk de video!'
+  welcome_video_close: 'Sluit deze banner'
+  welcome_video_dismiss: 'Verberg deze boodschap.'
+  follow: 'Volgen'
+  unfollow: 'Ontvolgen'
+  seo:
+    argument:
+      name: ''
+      description: ''
+    forum:
+      name: ''
+      description: ''
+    hash:
+      name: ''
+      description: ''
+    motion:
+      name: 'Bekijk argumenten, discussieer mee en stem!'
+      description: 'Alle voordelen en nadelen van %{title} in één overzicht. Denk mee met jouw overheid of organisatie en geef jouw mening!'
+      #an_idea_addon: 'Alle voordelen en nadelen van een idee in één overzicht. Denk mee met jouw gemeente of organisatie en geef jouw mening!'
+    page:
+      name: ''
+      description: ''
+    profile:
+      name: ''
+      description: ''
+    question:
+      name: ''
+      description: ''
+    string:
+      name: ''
+      description: ''
+    user:
+      name: ''
+      description: ''

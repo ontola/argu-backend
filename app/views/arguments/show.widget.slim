@@ -7,7 +7,7 @@
     =content_tag :p, raw(@argument.supped_content)
     =print_references @argument
   =render partial: @argument.creator, formats: [:html], locals: {resource: @argument}
-  ul.btns-list.btns-horizontal.btn-sticky.btn-sticky-bottom
+  ul.btns-list--subtle.btns-horizontal.btn-sticky.btn-sticky-bottom
     li= link_to(argument_path(@argument)) do
       span.fa.fa-external-link
       span.icon-left= t('view_on_argu')

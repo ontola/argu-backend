@@ -17,7 +17,7 @@ nl:
         advanced: 'Geavanceerd'
         groups: 'Groepen'
         privacy: 'Privacy'
-        managers: 'Managers'
+        managers: 'Beheerders'
       terminology: "Terminologie"
       advanced: "Geavanceerd"
       privacy: "Privacy"
@@ -76,6 +76,7 @@ nl:
       f_management_invite: "Door de beheerder(s)"
       f_management_invite_desc: "Alleen de beheerder(s) kunnen nieuwe leden toevoegen."
     join:
+      title: "Voeg toe aan mijn forums"
       header: "Word lid"
       body: "Word lid van het forum ''%{forum}'' en doe mee aan de discussie!"
     invite_others: "Betrek anderen"
@@ -85,6 +86,7 @@ nl:
     about:
       header: "Waarvoor is dit forum?"
       body: "Een Argu forum is een discussie omgeving waar ideeën worden gedeeld en besproken, zodat er betere beslissingen worden genomen. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"
+    is_closed: "Dit forum is gesloten. Alleen leden mogen de inhoud van dit forum bekijken. Vraag aan leden of de beheerder van het forum hoe je toegang kan krijgen."
     follow: "Volgen"
     unfollow: "Ontvolgen"
     managers:
@@ -92,7 +94,7 @@ nl:
       add: "Beheerder toevoegen"
     get_one:
       title: "Een forum voor jouw organisatie?"
-      body: "Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Lees meer over <b>%{governments}</b> of over <b>%{product}</b>. Neem <b><a href='mailto:info@argu.co'>contact</a></b> op voor meer informatie."
+      body: "Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Lees meer over <b>%{governments}</b>. Neem <b><a href='mailto:info@argu.co'>contact</a></b> op voor meer informatie."
     selector:
       at_least_error: "Kies ten minste 2 forums"
   activerecord: #These currently aren't used for forms.

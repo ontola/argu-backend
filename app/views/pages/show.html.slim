@@ -1,6 +1,10 @@
-=set_title @profile.display_name
+=set_title @page || @profile
+=connected_web url: dual_profile_path(@profile),
+               name: seolized_title(@page || @profile),
+               description: seolized_description(@page || @profile),
+               image: @profile.profile_photo
+=render partial: 'manage_bar', locals: {resource: @page, active: :show} if policy(@page).update?
 .col-1
-  =render partial: 'manage_bar', locals: {resource: @page}  if policy(@page).update?
   /=image_tag @profile.cover_photo.url
   .profile-big[data-intro= t('intro.profile.show', name: @profile.display_name)]
     .profile-picture.profile-picture-show
@@ -9,7 +13,7 @@
       section
         h1= @profile.display_name
         p.quote= @profile.about
-      ul.btns-list.btns-sticky.btns-sticky-bottom
+      ul.btns-list--subtle.btns-sticky.btns-sticky-bottom
 - if @profile.are_votes_public?
   .box-list[data-intro= t('intro.profile.votes')]
     - if @pubic_vote_count > 0

@@ -2,16 +2,14 @@ Argu::Application.configure do
   config.host = ENV['HOSTNAME'] || 'https://argu.co'
   # Settings specified here will take precedence over those in config/application.rb
 
-  config.epics = ActiveSupport::OrderedOptions.new
-  config.epics.open_auth = false                      # Facebook, twitter, google, openID login & account linking shown in profile
-
   config.logstasher.enabled = true
 
   config.react.variant = :production
 
+  config.middleware.use Rack::Attack
+
   # Code is not reloaded between requests
   config.cache_classes = true
-
   config.eager_load = true
 
   # Full error reports are disabled and caching is turned on
@@ -19,7 +17,7 @@ Argu::Application.configure do
   config.action_controller.perform_caching = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_files = false
+  config.serve_static_files = true
 
   # Compress JavaScripts and CSS
   config.assets.js_compressor = :uglifier
@@ -32,7 +30,7 @@ Argu::Application.configure do
   config.assets.digest = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  config.force_ssl = false
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
@@ -59,7 +57,7 @@ Argu::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, pica_pica.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( closed.js )
+  config.assets.precompile += %w( application.js closed.js polyfill.js )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
@@ -88,5 +86,5 @@ Argu::Application.configure do
 
   config.active_record.raise_in_transactional_callbacks = true
 
-  config.i18n.available_locales = [:nl, :en]
+  config.i18n.available_locales = [:nl]
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150524094656) do
+ActiveRecord::Schema.define(version: 20150608130804) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,9 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.datetime "updated_at",               null: false
     t.integer  "sign_ups",     default: 0
   end
+
+  add_index "access_tokens", ["access_token"], name: "index_access_tokens_on_access_token", using: :btree
+  add_index "access_tokens", ["item_id", "item_type"], name: "index_access_tokens_on_item_id_and_item_type", using: :btree
 
   create_table "activities", force: :cascade do |t|
     t.integer  "trackable_id"
@@ -108,6 +111,8 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.datetime "updated_at"
   end
 
+  add_index "documents", ["name"], name: "index_documents_on_name", using: :btree
+
   create_table "edits", force: :cascade do |t|
     t.integer  "by_id"
     t.string   "by_type"
@@ -166,6 +171,7 @@ ActiveRecord::Schema.define(version: 20150524094656) do
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
+  add_index "forums", ["visibility"], name: "index_forums_on_visibility", using: :btree
 
   create_table "group_memberships", force: :cascade do |t|
     t.integer  "group_id"
@@ -204,6 +210,7 @@ ActiveRecord::Schema.define(version: 20150524094656) do
   end
 
   add_index "groups", ["forum_id", "name"], name: "index_groups_on_forum_id_and_name", unique: true, using: :btree
+  add_index "groups", ["forum_id"], name: "index_groups_on_forum_id", using: :btree
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
@@ -215,6 +222,8 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.datetime "updated_at",    null: false
   end
 
+  add_index "identities", ["uid", "provider"], name: "index_identities_on_uid_and_provider", using: :btree
+  add_index "identities", ["uid"], name: "index_identities_on_uid", using: :btree
   add_index "identities", ["user_id"], name: "index_identities_on_user_id", using: :btree
 
   create_table "memberships", force: :cascade do |t|
@@ -223,6 +232,8 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.integer "role",       default: 0, null: false
   end
 
+  add_index "memberships", ["forum_id", "role"], name: "index_memberships_on_forum_id_and_role", using: :btree
+  add_index "memberships", ["forum_id"], name: "index_memberships_on_forum_id", using: :btree
   add_index "memberships", ["profile_id", "forum_id"], name: "index_memberships_on_profile_id_and_forum_id", unique: true, using: :btree
 
   create_table "motions", force: :cascade do |t|
@@ -263,6 +274,53 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.string   "url"
   end
 
+  add_index "notifications", ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
+  add_index "notifications", ["profile_id", "created_at"], name: "index_notifications_on_profile_id_and_created_at", using: :btree
+  add_index "notifications", ["profile_id"], name: "index_notifications_on_profile_id", using: :btree
+
+  create_table "oauth_access_grants", force: :cascade do |t|
+    t.integer  "resource_owner_id", null: false
+    t.integer  "application_id",    null: false
+    t.string   "token",             null: false
+    t.integer  "expires_in",        null: false
+    t.text     "redirect_uri",      null: false
+    t.datetime "created_at",        null: false
+    t.datetime "revoked_at"
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_grants", ["token"], name: "index_oauth_access_grants_on_token", unique: true, using: :btree
+
+  create_table "oauth_access_tokens", force: :cascade do |t|
+    t.integer  "resource_owner_id"
+    t.integer  "application_id"
+    t.string   "token",             null: false
+    t.string   "refresh_token"
+    t.integer  "expires_in"
+    t.datetime "revoked_at"
+    t.datetime "created_at",        null: false
+    t.string   "scopes"
+  end
+
+  add_index "oauth_access_tokens", ["refresh_token"], name: "index_oauth_access_tokens_on_refresh_token", unique: true, using: :btree
+  add_index "oauth_access_tokens", ["resource_owner_id"], name: "index_oauth_access_tokens_on_resource_owner_id", using: :btree
+  add_index "oauth_access_tokens", ["token"], name: "index_oauth_access_tokens_on_token", unique: true, using: :btree
+
+  create_table "oauth_applications", force: :cascade do |t|
+    t.string   "name",                      null: false
+    t.string   "uid",                       null: false
+    t.string   "secret",                    null: false
+    t.text     "redirect_uri",              null: false
+    t.string   "scopes",       default: "", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "owner_id"
+    t.string   "owner_type"
+  end
+
+  add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree
+  add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
+
   create_table "opinions", force: :cascade do |t|
     t.string   "title",               limit: 255
     t.text     "content"
@@ -289,6 +347,9 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.integer "role",       default: 0, null: false
   end
 
+  add_index "page_memberships", ["page_id"], name: "index_page_memberships_on_page_id", using: :btree
+  add_index "page_memberships", ["profile_id"], name: "index_page_memberships_on_profile_id", using: :btree
+
   create_table "pages", force: :cascade do |t|
     t.datetime "created_at",                null: false
     t.datetime "updated_at",                null: false
@@ -298,6 +359,7 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.datetime "last_accepted"
   end
 
+  add_index "pages", ["owner_id"], name: "index_pages_on_owner_id", using: :btree
   add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true, using: :btree
 
   create_table "profiles", force: :cascade do |t|
@@ -354,6 +416,9 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.datetime "expires_at"
   end
 
+  add_index "questions", ["forum_id", "is_trashed"], name: "index_questions_on_forum_id_and_is_trashed", using: :btree
+  add_index "questions", ["forum_id"], name: "index_questions_on_forum_id", using: :btree
+
   create_table "roles", force: :cascade do |t|
     t.string   "name",          limit: 255
     t.integer  "resource_id"
@@ -377,6 +442,9 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.integer  "context_id"
     t.integer  "trickles",     default: 0, null: false
   end
+
+  add_index "rules", ["context_id", "context_type"], name: "index_rules_on_context_id_and_context_type", using: :btree
+  add_index "rules", ["model_id", "model_type"], name: "index_rules_on_model_id_and_model_type", using: :btree
 
   create_table "sessions", force: :cascade do |t|
     t.string   "session_id", limit: 255, null: false
@@ -449,19 +517,17 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                  default: 0
     t.boolean  "finished_intro",                     default: false
+    t.text     "r"
+    t.text     "access_tokens"
     t.integer  "follows_email",                      default: 1,     null: false
     t.boolean  "follows_mobile",                     default: true,  null: false
     t.integer  "memberships_email",                  default: 1,     null: false
     t.boolean  "memberships_mobile",                 default: true,  null: false
     t.integer  "created_email",                      default: 1,     null: false
     t.boolean  "created_mobile",                     default: true,  null: false
-    t.text     "r"
-    t.text     "access_tokens"
-    t.text     "omni_info"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.text     "active_sessions",                    default: [],                 array: true
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
@@ -469,9 +535,12 @@ ActiveRecord::Schema.define(version: 20150524094656) do
     t.string   "postal_code"
     t.datetime "last_accepted"
     t.boolean  "has_analytics",                      default: true
+    t.text     "omni_info"
     t.integer  "gender"
     t.integer  "hometown"
     t.string   "time_zone",                          default: "UTC"
+    t.string   "language",                           default: "nl"
+    t.string   "country",                            default: "NL"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
@@ -497,6 +566,6 @@ ActiveRecord::Schema.define(version: 20150524094656) do
   add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
-  add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
+  add_foreign_key "access_tokens", "profiles"
   add_foreign_key "identities", "users"
 end

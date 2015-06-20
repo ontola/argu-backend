@@ -3,7 +3,6 @@
 
 .btn {
   @include button();
-  margin-bottom: 1em;
 }
 
 .actions .btn, .form-actions .btn {
@@ -17,8 +16,9 @@
   position: relative;
   display: inline-block;
   width: 4em;
+  height: 4em;
   img {
-    display: block;
+    display: inline-block;
     height: 100%;
   }
   &:after{
@@ -43,6 +43,7 @@
   }
   &:active:after{
     opacity: 1;
+    transition: none;
   }
 }
 
@@ -50,15 +51,19 @@
   @include button($red-alert);
 }
 
+.btn--pro {
+  @include button($gre);
+}
+
 .btn--con {
   @include button($red);
 }
 
-.btn--sta {
+.btn--motion {
   @include button($blu);
 }
 
-.btn--que {
+.btn--question {
   @include button($bro);
 }
 
@@ -72,6 +77,36 @@
 
 .btn--argu {
   @include button($blu);
+}
+
+.btn--transparant {
+  @include button(rgba(0,0,0,0));
+  padding-left: 1em;
+  padding-right: 1em;
+
+  &:hover{
+    background-color: $lighten2;
+  }
+
+  &:active{
+    background-color: $lighten3;
+  }
+}
+
+.btn--g4 {
+  @include button($g4);
+}
+
+.btn--narrow {
+  padding: .7em;
+}
+
+.btn--dropdown-trigger {
+  padding: 0;
+
+  .dropdown-trigger {
+    padding: .7em 2.5em .7em;
+  }
 }
 
 .btn-box {
@@ -108,23 +143,44 @@
 }
 
 .btn-subtle{
-  @include button();
-  margin-bottom: 1em;
-  color: $g2;
+  @include button(rgba(255,255,255,1));
   border: none;
-  background: none;
-  border-radius: 0;
-  &:hover {
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+
+  &:hover{
     color: $g4;
-    background-color: $darken1;
-    text-decoration: none;
-    border: none;
   }
-  &:active {
-    border: none;
+}
+
+.btn--border {
+  @include button(rgba(255,255,255,1));
+  border: solid 1px $g1;
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
+
+  &:hover{
+    border: solid 1px $g2;
     color: $g4;
-    background-color: $darken2;
-    margin-top: 0; //Negates the  "push"-effect of normal buttons
+  }
+}
+
+.btn--smaller {
+  padding: 0.3em 0.6em !important;
+}
+
+.btn--light {
+  @include button($g0);
+  color: $g3;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-right: 1em;
+
+  &:hover{
+    color: $g4;
   }
 }
 
@@ -167,17 +223,11 @@
     text-transform: uppercase;
     font-size: .7em;
     display: inline-block;
-    line-height: 1em;
+    line-height: 1.2em;
+    margin-bottom: 0.5em;
     &:hover{
       text-decoration: underline;
     }
-  }
-}
-
-.btn-fill {
-  color: white !important;
-  .dropdown-trigger {
-    color: white !important;
   }
 }
 
@@ -206,18 +256,26 @@
 }
 
 .btns-list {
+  > li > a, {
+    @include button();
+  }
+
+}
+
+.btns-list--grey-background {
+  background-color: $g00;
+}
+
+.btns-list--subtle {
   display: inline-block;
 }
 
-.btns-list .is-checked {
+.btns-list--subtle .is-checked {
   text-decoration: underline !important;
 }
 
-.bnts-list li {
-  height: 100%;
-}
+.btns-list--subtle > li {
 
-.btns-list > li {
   text-transform: uppercase;
   text-decoration: none;
   span {font-size: .8em;}
@@ -228,37 +286,36 @@
   cursor: pointer;
   display: block;
   color: $g3;
+  height: 100%;
   @include transition(.2s);
-  > a, .dropdown-trigger {
+  > a, .dropdown-trigger, > div > div {
     padding: .7em;
     display: inline-block;
     color: $g3;
     vertical-align: bottom;
-    //height: 2.45em;
     &:hover {
       text-decoration: none;
 
     }
-    @include bp-medium{
-      //Makes the share icon and menu buttons too small
-      //padding: .5em;
-    }
   }
+
   &:hover {
     background-color: $darken1;
     color: $g4;
     text-decoration: none;
-
   }
+
   &:active {
     background-color: $darken2;
+    transition: none;
   }
+
   &#active{
     background-color: $darken1;
   }
 }
 
-.box .btns-list .icon-left,.box  .btns-list .icon-left {
+.box .btns-list--subtle .icon-left,.box  .btns-list--subtle .icon-left {
   @include bp-small {
     display: none;
   }
@@ -286,24 +343,10 @@
     }
   }
   a {
-    width: 100%;
-    display: inline-block;
-    padding: 0.7em 1.1em;
-    padding-bottom: 0.6em;
-    line-height: 1.6em;
-    text-transform: uppercase;
-    top: 0;
-    position: relative;
-    font-size: .9em;
-    color: white;
-    @include transition(.2s);
+    width: 100% !important;
     &:hover {
-      opacity: .8;
+      opacity: .7;
       text-decoration: none;
-    }
-    &:active{
-      top: 2px;
-      box-shadow: none;
     }
     .fa {
       font-size: 1.2em;
@@ -326,12 +369,18 @@
   }
   .btn-pro {
     background-color: $gre;
+    @include button($color: $gre);
+
   }
   .btn-neu {
     background-color: $g3;
+    @include button($color: $g3);
+
   }
   .btn-con {
     background-color: $red;
+    @include button($color: $red);
+
     margin-right: 0;
   }
 }
@@ -352,7 +401,9 @@
 }
 
 .btns-signup {
-  text-align: center;
+  li {
+    margin-bottom: 1em;
+  }
   .btn {
     font-size: 1em;
     width: 100%;

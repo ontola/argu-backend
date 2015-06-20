@@ -1,6 +1,14 @@
 @import "variables";
 @import "mixins";
 
+::selection {
+  background: lighten($blu, 50);
+}
+
+::-moz-selection {
+  background: lighten($blu, 50);
+}
+
 h1, h2, h3 {
   font-family: $font-special;
   margin-bottom: 0.4em;
@@ -95,10 +103,18 @@ ul.bullets{
   padding-left: 1.5em;
   font-style: $font-sans;
   color: $g4;
+  margin-bottom: .5em;
   li {
     margin-bottom: 1em;
     line-height: 1.4em;
+    margin-bottom: .7em;
   }
+}
+
+ul.boxed-list li{
+  border: solid 1px rgb(210, 210, 210);
+  padding: 0.6em;
+  margin-bottom: 1em;
 }
 
 .info {

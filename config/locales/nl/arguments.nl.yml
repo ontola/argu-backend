@@ -2,34 +2,46 @@
 
 nl:
   arguments:
-    type: "argument"
-    type_new: "nieuw argument"
-    type_scientific: "wetenschappelijk"
-    type_axiomatic: "axiomatisch"
-    type_other: "anders"
-    type_discussion: "in discussie"
-    vote: "stem"
+    type: "Argument"
+    type_new: "Nieuw argument"
+    type_scientific: "Wetenschappelijk"
+    type_axiomatic: "Axiomatisch"
+    type_other: "Anders"
+    type_discussion: "In discussie"
+    vote: "Stem"
     new_btn: "Argument toevoegen"
-    references: "referenties"
+    references: "Referenties"
     header:
-      pro: "argumenten voor"
-      con: "argumenten tegen"
+      pro: "Argumenten voor"
+      con: "Argumenten tegen"
     index:
-      title: "argumenten"
-      opinion: "opinie"
-      parties: "partijen"
-      law: "wet"
+      title: "Argumenten"
+      opinion: "Opinie"
+      parties: "Partijen"
+      law: "Wet"
     show:
-      title: "argumenten"
-      reply: "reageer"
+      title: "Argumenten"
+      reply: "Reageer"
       created_by: "%{user} - %{date}"
     new:
-      header: "argument %{side} de stelling: "
+      header: "Argument %{side} de stelling: "
       header_short: "%{side}: "
       create: "+ argument %{side}"
     revisions:
       title_wiped: 'Gewiste reacties'
     form:
+      title_heading: "Kern van jouw argument"
+      title_body_html: "<ul class='bullets'>
+                     <li>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='motion-t'>idee</b>.</li>
+                     <li>Maak de titel zo <b>kort en duidelijk</b> mogelijk.</li>
+                   </ul>"
+      content_heading: "Licht je argument toe"
+      content_body_html: "<ul class='bullets'>
+                      <li>Geef <b>achtergrondinformatie</b> om jouw argument krachtiger te maken.</li>
+                      <li>Gebruik <b>bronnen</b> en voeg links toe.</li>
+                      <li>De <b>eerste zinnen</b> worden het meest gelezen, dus zorg dat die overtuigen!</li>
+                      <li>Plaats maar <b>één enkele reden</b>! Zo houden we de discussie overzichtelijk.</li>
+                    </ul>"
       title: "Plaats hier de kern van jouw argument"
       content: "Plaats hier de toelichting op jouw argument. Waarom ondersteunt of weerlegt dit het idee?"
       type: "type"
@@ -37,35 +49,25 @@ nl:
       side:
         pro: "argument voor"
         con: "argument tegen"
-      helper:
-        content: "Bespreek je argument hier in meer detail. Noem waarom het van toepassing is op de stelling.
-
-        
-            Referenties zijn toe te voegen door [] en () als volgt te gebruiken:
-
-            <code>[www.website.nl](voorbeeld omschrijving)</code>
-
-
-            In het geval van geschreven werk:
-
-            <code>[](A. Achternaam, jaartal, titel, pagina)</code>"
-        side: "<h2>Wat is een argument?</h2>
-              <p>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='motion-t'>idee</b>.</p>
-              <h2>Tips</h2>
-              <ul class='bullets'>
-                <li>Begin met het belangrijkste. De eerste regels worden het meest gelezen.</li>
-                <li>Het argument moet niet al eerder geplaatst zijn bij dit idee.</li>
-                <li>Gebruik betrouwbare bronnen om je punt overtuigender te maken.</li>
-                <li>Wees vriendelijk en inhoudelijk.</li>
-              <ul>"
+    helper_html: "<h2>Wat is een argument?</h2>
+            <p>Een argument is een <b>enkele reden</b> <b class='pro-t'>voor</b> of <b class='con-t'>tegen</b> een <b class='motion-t'>idee</b>.</p>
+            <h2>Tips</h2>
+            <ul class='bullets'>
+              <li>Begin met het belangrijkste. De eerste regels worden het meest gelezen.</li>
+              <li>Het argument moet niet al eerder geplaatst zijn bij dit idee.</li>
+              <li>Gebruik betrouwbare bronnen om je punt overtuigender te maken.</li>
+              <li>Wees vriendelijk en inhoudelijk.</li>
+            <ul>"
     comments:
-      title: "reacties"
-      favorite: "favoriet"
-      reply: "reageer"
-      delete: "verwijder"
-      more: "toon meer"
+      title: "Reacties"
+      favorite: "Favoriet"
+      reply: "Reageer"
+      delete: "Verwijder"
+      more: "Toon meer"
       placed_by: "%{user} - %{date}"
-      none: "geen reacties"
+      none: "Geen reacties"
+      comments:
+        confirm: "Bevestig reactie"
     notices:
       restored: "Het argument is teruggeplaatst."
       created: "Het argument is geplaatst."

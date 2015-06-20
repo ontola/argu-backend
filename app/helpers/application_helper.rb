@@ -1,5 +1,6 @@
 module ApplicationHelper
-  include ActivityStringHelper, AlternativeNamesHelper
+  include ActivityStringHelper, AlternativeNamesHelper, UsersHelper
+  EU_COUNTRIES = %w(BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT AT PL PT RO SI SK FI SE UK ME IS AL RS TR)
 
   # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)
@@ -11,6 +12,11 @@ module ApplicationHelper
           :severity => 'error',
       })
     end
+  end
+
+  def analytics_token
+    salt = current_user.salt
+    ::BCrypt::Engine.hash_secret("#{current_user.id}#{current_user.created_at}", salt).from(30)
   end
 
   def awesome_time_ago_in_words (date)
@@ -25,6 +31,15 @@ module ApplicationHelper
     end
   end
 
+  def encrypt_payload(payload)
+    JWT.encode payload, Rails.application.secrets.jwt_encryption_token, 'HS256'
+  end
+
+  def decrypt_token(token)
+    JWT.decode(token, Rails.application.secrets.jwt_encryption_token, 'HS256')[0]
+  end
+
+
   # Merges a URI with a params Hash
   def merge_query_parameter(uri, params)
     uri =  URI.parse(uri)
@@ -37,25 +52,30 @@ module ApplicationHelper
     uri.to_s
   end
 
+  def remote_if_non_mobile
+    browser.mobile? ? {'skip-pjax' => true} : {remote: true, 'skip-pjax' => true}
+  end
+
   # Used in forms for the 'r' system
   def remote_if_user
-    current_profile.present? ? { remote: true } : {}
+    current_profile.present? ? {remote: true} : {}
   end
 
   # Used in forms for the 'r' system
   def remote_unless_user
-    current_profile.present? ? {} : { remote: true, 'skip-pjax' => true }
+    current_profile.present? ? {} : {remote: true, 'skip-pjax' => true}
   end
 
   def resource
     @resource
   end
 
-  def set_title(title= '')
+  def set_title(model= '')
+    title_string = seolized_title(model)
     if request.env['HTTP_X_PJAX']
-      raw "<title>#{[title, (' | ' if title), t('name')].compact.join.capitalize}</title>"
+      raw "<title>#{title_string}</title>"
     else
-      provide :title, title
+      provide :title, title_string
     end
   end
 
@@ -64,7 +84,8 @@ module ApplicationHelper
     link_items = []
     url = url_for([resource, only_path: false])
 
-    link_items << link_item('Facebook', ShareHelper.facebook_share_url(url), fa: 'facebook')
+    #link_items << fb_share_item('Facebook', ShareHelper.facebook_share_url(url), fa: 'facebook', class: 'fb-share-dialog', data: {share_url: url})
+    link_items << item('fb_share', 'Facebook', ShareHelper.facebook_share_url(url), data: {share_url: url, title: resource.display_name})
     link_items << link_item('Twitter', ShareHelper.twitter_share_url(url, title: resource.display_name), fa: 'twitter')
     link_items << link_item('LinkedIn', ShareHelper.linkedin_share_url(url, title: resource.display_name), fa: 'linkedin')
 
@@ -82,7 +103,7 @@ module ApplicationHelper
         link_item(t('filtersort.random'), nil, fa: 'gift', data: {'sort-value' => 'random'}, className: 'sort-random')
     ]
 
-    dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
+    dropdown_options(t('filtersort.sort') + ' ▼', [{items: link_items}], fa: 'fa-sort')
   end
 
   def process_cover_photo(object, _params)
@@ -146,6 +167,13 @@ module ApplicationHelper
         Redcarpet::Render::StripDown.new,
         {tables: false, fenced_code_blocks: false, no_styles: true, escape_html: true, autolink: false, lax_spacing: true}
     ).render(markdown)
+  end
+
+
+  def safe_truncated_text(contents, url, cutting_point = 220)
+    _html = escape_once HTML_Truncator.truncate(markdown_to_plaintext(contents), cutting_point, {length_in_chars: true, ellipsis: ('... ') })
+    _html << url if _html.length > cutting_point
+    _html
   end
 
 end

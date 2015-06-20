@@ -1,0 +1,12 @@
+#English motions translations
+
+en:
+  mailer:
+    subject: "%{type} added to '%{item}'"
+    view_type: "View %{type}"
+    view_type_on_argu: "View %{type} on Argu"
+    sent_at_date: 'Sent at %{date}'
+    settings: 'Change notification settings.'
+    direct_mail:
+      header: "Hello %recipient.name%"
+      first_paragraph: "Someone left you a message"

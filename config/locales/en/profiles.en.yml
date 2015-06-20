@@ -1,0 +1,32 @@
+#English argument translations
+
+en:
+  profiles:
+    type: "Profile"
+    switch: "Use Argu as:"
+    about_me: "About me"
+    heads_up: "Your profile is visible to other Argu users."
+    show:
+      title: "Profile"
+      btn:
+        edit: 'Edit'
+        freeze: 'Freeze'
+        unfreeze: 'Unfreeze'
+        admin: 'Promote to admin'
+        unadmin: 'Demote admin'
+    edit:
+      title: "Edit profile"
+      shortname_not_allowed: "You can't change your username. However, you can change the name that other users see at 'edit profile'."
+      general: "General"
+      privacy: "Privacy"
+      privacy_notice: "On Argu you can vote for ideas. If you want to show what you voted for, you can choose to share this information on Argu. This setting can always be changed."
+      shortname: "Username"
+    didnt_vote_name: "%{name} hasn't voted yet."
+    should_start_with_capital: "can only contain letters, numbers and '_'. It also needs to start with a letter."
+    switch_warning: "Some features might not be visible until the page has been refreshed. Refresh now?"
+  pundit:
+    profile_policy:
+      update?: "You can't update this profile."
+  users:
+    shortname:
+      not_changeable: "Think carefully about a username. You can't change it later."

@@ -1,4 +1,4 @@
-=semantic_form_for @profile, url: @resource.url.present? ? profile_path(@resource) : settings_path, method: @resource.r.present? ? :post : :put  do |f|
+.inspectlet-sensitive=semantic_form_for @profile, url: @resource.url.present? ? profile_path(@resource) : settings_path, method: @resource.r.present? ? :post : :put  do |f|
   - if @resource.url.blank?
     =f.inputs name: t('profiles.edit.shortname') do
       =f.inputs :shortname, for: :shortname
@@ -9,7 +9,7 @@
       =f.inputs :first_name, :middle_name, :last_name, for: :profileable
     - elsif @profile.profileable.class == Page
       =f.input :name
-    =f.input :about, input_html: { :rows => 5 }
+    =f.input :about, input_html: { :rows => 5 }, label: t('profiles.about_me')
     =f.input :profile_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }
     =f.input :profile_photo
   =f.inputs name: t('profiles.edit.privacy') do

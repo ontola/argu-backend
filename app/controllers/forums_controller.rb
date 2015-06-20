@@ -6,7 +6,7 @@ class ForumsController < ApplicationController
     authorize @user, :update?
     forums = Forum.arel_table
     @forums = Forum.where(forums[:page_id].in(@user.profile.pages.pluck(:id)).or(forums[:id].in(@user.profile.managerships.pluck(:forum_id))))
-    @_policy_scoped = true
+    @_pundit_policy_scoped = true
   end
 
   def discover
@@ -90,7 +90,7 @@ class ForumsController < ApplicationController
   # POST /forums/memberships
   def memberships
     authorize Forum, :selector?
-    @forums = Forum.public_forums.where('id in (?)', params[:profile][:membership_ids].reject(&:blank?).map(&:to_i))
+    @forums = Forum.public_forums.where('id in (?)', (params[:profile][:membership_ids] || []).reject(&:blank?).map(&:to_i))
     @forums.each { |f| authorize f, :join? }
 
     @memberships = @forums.map { |f| Membership.find_or_initialize_by forum: f, profile: current_user.profile  }
@@ -122,8 +122,8 @@ protected
     flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
 
     render 'settings', locals: {
-               tab: params[:tab] || 'settings',
-               active: params[:tab] || 'settings'
+               tab: params[:tab] || 'general',
+               active: params[:tab] || 'general'
            }
   end
 

@@ -2,12 +2,13 @@ nl:
   pages:
     resource_name: "Pagina"
     type: "Pagina"
+    show: "Pagina weergeven"
     settings:
-      title: "Pagina-instellingen"
+      title: "Pagina instellingen"
       menu:
         general: 'Algemeen'
         advanced: 'Geavanceerd'
-        managers: 'Managers'
+        managers: 'Beheerders'
       managers:
         owner: "Eigenaar"
         about_owner: "Gebruikers zijn eigenaar van een Pagina. Gebruikers kunnen meerdere Pagina's bezitten, maar een Pagina kan maar één eigenaar hebben."
@@ -15,6 +16,11 @@ nl:
         about_managers: "Pagina beheerders zijn gebruikers met extra rechten, maar niet zoveel als een administrator. Beheerders kunnen vraagstukken, ideeën, argumenten en reacties namens de Pagina plaatsen. Ook kunnen ze uit naam stemmen en eerder geplaatste items verwijderen."
         transferred: "Pagina overgedragen"
         users_only: "Alleen gebruikers kunnen pagina's bezitten"
+        transfer:
+          confirm:
+            header: "Weet je het daadwerkelijk zeker?"
+            body_html: "Het overdragen van de pagina zal eigenaarschap van <b>alle content</b> van de pagina en bijbehorende <b>forums</b> overdragen!"
+            repeat: "Voer de Argu URL van de pagina in om te bevestigen. Dit is de gebruikersnaam van jouw pagina en staat in de adresbalk."
     management:
       title: "Paginabeheer"
       managed_current_out_of_max: "%{current} van maximaal %{max} pagina('s) beheerd."

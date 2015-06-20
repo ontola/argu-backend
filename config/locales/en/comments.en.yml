@@ -1,0 +1,11 @@
+en:
+  comments:
+    type: "comment"
+    type_new: "new comment"
+    placeholder: "Place your comments here. Please keep your comments substantial and friendly :)"
+    empty:
+      name: "Place your comment"
+  pundit:
+    comments:
+      policy:
+        create?: "You are not allowed to submit a comment with this account."

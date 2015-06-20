@@ -5,7 +5,6 @@ module HeaderHelper
     {
         title: t('forums.plural'),
         fa: 'fa-group',
-        fa_after: 'fa-angle-down',
         sections: [
             {
                 items: forum_selector_memberships(guest)
@@ -18,11 +17,13 @@ module HeaderHelper
   def forum_selector_memberships(guest= false)
     items = []
 
-    items.concat guest ? public_forum_items : profile_membership_items
-
-    # TODO: Show most popular 3 forums if user has fewer than 2 memberships.
+    _public_forum_items = public_forum_items(5)
+    items.concat guest ? _public_forum_items : profile_membership_items
 
     items << link_item(t('forums.discover'), discover_forums_path, fa: 'compass', divider: 'top')
+    items.concat (_public_forum_items - profile_membership_items) if items.length < _public_forum_items.length + 1
+
+    items
   end
 
   # Label for the home button
@@ -39,7 +40,7 @@ module HeaderHelper
     {
         trigger: {
             type: 'current_user',
-            title: current_profile.display_name,
+            title: truncate(current_profile.display_name, length: 20),
             profile_photo: {
                 url: current_profile.profile_photo.url(:icon),
                 className: 'profile-picture--navbar'
@@ -71,7 +72,8 @@ module HeaderHelper
                             type: 'notifications',
                             unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count,
                             lastNotification: nil,
-                            notifications: []
+                            notifications: [],
+                            loadMore: true
                         }],
                      trigger: {
                          type: 'notifications',
@@ -79,12 +81,12 @@ module HeaderHelper
                      },
                      fa: 'fa-bell',
                      triggerClass: 'navbar-item',
-                     contentClassName: 'notifications')
+                     contentClassName: 'notifications notification-container')
   end
 
-  def public_forum_items
+  def public_forum_items(limit= 10)
     items = []
-    Forum.top_public_forums.each do |forum|
+    Forum.top_public_forums(limit).each do |forum|
       items << link_item(forum.display_name, forum_path(forum), image: forum.profile_photo.url(:icon))
     end
     items
@@ -99,7 +101,7 @@ module HeaderHelper
 
   def info_dropdown_items
     {
-        title: t('about.title'),
+        title: t('about.info'),
         fa: 'fa-info',
         sections: [
           {
@@ -107,8 +109,9 @@ module HeaderHelper
                   link_item(t('about.vision'), info_path(:about)),
                   link_item(t('about.team'), info_path(:team)),
                   link_item(t('about.governments'), info_path(:governments)),
-                  link_item(t('about.how_argu_works'), info_path(:how_argu_works_path)),
+                  link_item(t('about.how_argu_works'), how_argu_works_path),
                   link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true}),
+                  link_item(t('press_media'), 'https://argu.pr.co'),
                   link_item(t('help_support'), 'https://argu.freshdesk.com/support/home')
               ]
           }

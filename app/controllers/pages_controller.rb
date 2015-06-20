@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     @user = User.find_via_shortname params[:id]
     authorize @user,:update?
     @pages = Page.where(id: @user.profile.pages.pluck(:id).concat(@user.profile.page_managerships.pluck(:page_id))).distinct
-    @_policy_scoped = true
+    @_pundit_policy_scoped = true
 
     render locals: {
                current: current_user.profile.pages.length,
@@ -86,21 +86,22 @@ class PagesController < ApplicationController
     authorize @page, :update?
     tab = policy(@page).verify_tab(params[:tab])
     render locals: {
-               tab: params[:tab] || 'general',
-               active: params[:tab] || 'general'
+               tab: tab,
+               active: tab
            }
   end
 
   def update
     @page = Page.find_via_shortname params[:id]
     authorize @page, :update?
+    tab = policy(@page).verify_tab(params[:tab])
 
     if @page.update permit_params
       redirect_to settings_page_path(@page, tab: params[:tab])
     else
       render 'settings', locals: {
-                           tab: params[:tab] || 'settings',
-                           active: params[:tab] || 'settings'
+                           tab: tab,
+                           active: tab
                        }
     end
   end
@@ -148,6 +149,7 @@ class PagesController < ApplicationController
         flash[:error] = t('pages.settings.managers.users_only')
         format.html { render 'transfer', locals: {no_close: true} }
       elsif @page.transfer_to!(params[:page][:repeat_name], @new_profile)
+        reset_current_actor
         flash[:success] = t('pages.settings.managers.transferred')
         format.html { redirect_to settings_page_path(@page) }
       else

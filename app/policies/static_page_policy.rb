@@ -23,10 +23,6 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
     true
   end
 
-  def sign_in_modal?
-    true
-  end
-
   def how_argu_works?
     true
   end

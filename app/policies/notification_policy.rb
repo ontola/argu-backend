@@ -35,6 +35,10 @@ class NotificationPolicy < RestrictivePolicy
     user.present?
   end
 
+  def read?
+    user.present?
+  end
+
   def create?
     staff?
   end

@@ -1,0 +1,39 @@
+{
+  "name": "argu",
+  "version": "0.3.0",
+  "authors": [
+    "Fletcher91 <thomvankalkeren@gmail.com>",
+    "Joep Meindertsma"
+  ],
+  "moduleType": [
+    "amd",
+    "es6",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "vendor/assets/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "=1.11.3",
+    "react": "latest",
+    "reflux": "latest",
+    "react-onclickoutside": "latest",
+    "react-router": "latest",
+    "jquery-pjax": "latest",
+    "microplugin": "latest",
+    "sifter": "latest",
+    "selectize": "latest",
+    "intro.js": "latest",
+    "fastclick": "latest",
+    "isotope": "2.1.1",
+    "nprogress": "latest", 
+    "js-polyfills":"latest"
+  }
+}

@@ -7,6 +7,7 @@ nl:
       updated: 'Je hebt je wachtwoord ingesteld. Je bent nu ingelogd.'
       no_invitations_remaining: "Je hebt geen uitnodigingen meer."
       invitation_removed: 'Jouw uitnodiging is verwijderd.'
+      limit: 'Je hebt nog %{limit} uitnodigingen over.'
       new:
         header: "Uitnodigingen versturen"
         submit_button: "Verstuur uitnodiging"

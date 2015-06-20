@@ -1,0 +1,105 @@
+#English motions translations
+
+en:
+  motions:
+    type: "Idea"
+    type_new: "New idea"
+    title: "Idea"
+    header: "Ideas"
+    plural: "Ideas"
+    pros: "pro"
+    cons: "con"
+    edit: "Edit idea"
+    no_pros: "no pros yet"
+    no_cons: "no cons yet"
+    content: "content"
+    votes:
+      pro: "Agree"
+      neu: "Neutral"
+      con: "Disagree"
+      show: "Show vote results"
+    preview:
+      pro:
+        zero: "no pro arguments"
+        one: "1 pro argument"
+        other: "%{count} pro arguments"
+      con:
+        zero: "no con arguments"
+        one: "1  con argument"
+        other: "%{count} con arguments"
+    revisions:
+      title_wiped: 'Deleted arguments'
+    form:
+      title_heading: "Add a title to your idea"
+      title_body_html: "<ul class='bullets'>
+                    <li>Describe your idea <b>as short as possible</b>.</li>
+                    <li>Be <b>clear</b> and avoid words that few people understand.</li>
+                  </ul>"
+      content_heading: "Describe your idea in detail"
+      content_body_html: "<ul class='bullets'>
+                            <li>Explain what your idea exactly entails. Explain what needs to happen and how this should happen.</li>
+                            <li>Give <b>background information</b>. Explain the current situation.</li>
+                            <li><b>Don't add arguments</b> just yet; do that after you've submitted your idea. That way, we keep </li>
+                          </ul>"
+      themes: "theme1, theme2"
+      invert: "invert all arguments"
+      helper:
+        title: "Summarize the motion as concisely as possible."
+        content: "Describe your idea in more detail, provide background information and explain the current situation. Don't place arguments here."
+        themes: "Themes or subjects that are related to this motion. Place comma's between themes."
+    mod:
+      edit_moderators:
+        title: 'Moderators of %{title}'
+        remove: 'remove'
+        title_invite: 'Invite moderators'
+        invite: 'Invite'
+        invited: 'Invited'
+        is_mod: 'is already a mod'
+      show_moderation_panel: 'moderator'
+    titles:
+      tags: "Find questions and motions with the theme "
+    call_to_action:
+      title: "Do you have a good idea?"
+      body: "Do you know how a problem can be solved? Do you have a proposition?"
+      action: "Share your idea!"
+
+    #motion types
+    type_social: "Societal"
+    type_political: "Political"
+    type_jurisdictional: "Jurisdictional"
+    type_ecological: "Ecological"
+    type_economical: "Economical"
+    type_technological: "Technological"
+    type_discussion: "In discussion"
+    type_other: "Other"
+    move:
+      body: "All containing arguments will be moved along"
+    convert:
+      header: "Convert object"
+      body: "This allows you to convert an object type into another. Associations can be changed. It's possible that a conversion is impossible because some associations are empty."
+      body_2: "USE WITH CAUTION, DATA MIGHT BE LOST"
+    expired_at:
+      tooltip: "This motion closed on %{date}."
+    expires_at:
+      tooltip: "This motion closes on %{date}."
+    accepted:
+      tooltip: "This motion has been accepted on %{date}."
+    rejected:
+      tooltip: "This motion has been rejected on %{date}."
+    helper_html: "<h2>What is an idea?</h2>
+      <p>An <b class='motion-t'>idea</b> is a proposal that solves one or more problems.</p>
+      <h2>Tips:</h2>
+      <ul class='bullets'>
+        <li>
+          <p>A good idea is <b>concrete and implementable</b>: it describes what should happen and how it can happen.</p>
+        </li>
+        <li>
+          <p>Give <b>background information</b>. Describe the current situation. How will your idea solve the problem? What needs to be done?</p>
+        </li>
+        <li>
+          <p>Do you want to describe a problem which requires a solution? Try submitting a <b>%{question}.</b></p>
+        </li>
+      </ul>"
+  pundit:
+    motion_policy:
+      vote?: "You can't vote on items yet. Make sure to become a member of the forum."

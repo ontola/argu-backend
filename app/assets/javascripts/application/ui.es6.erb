@@ -12,7 +12,10 @@ Argu.ui = {
             .on('pjax:success', this.handleDOMChangedFinished)
             .on('pjax:end', this.checkTabs)
             .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
-            .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick);
+            .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
+            .ajaxComplete(this.handleAjaxCalls)
+            .on('click', '.welcome-video-hide', this.welcomeVideoHide)
+            .on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle);
 
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);
@@ -25,19 +28,23 @@ Argu.ui = {
         Argu.ui.modal.init();
         Argu.ui.progressbar.init();
         FastClick.attach(document.body);
+
+        //CBC-fixes
+        //Disable IE-touch selection on non-content items
+        $(document).on('selectstart', '#navbar,.filter-and-sort,.tabs,.dropdown', function(e) { e.preventDefault(); });
     },
 
     bindRemoteLinks: function () {
         $('.remote-link')
-                .bind("ajax:beforeSend", function () {
-                    $(this).addClass("is-loading");
-                })
-                .bind('ajax:complete', function () {
-                    $(this).removeClass("is-loading");
-                })
-                .bind("ajax:error", function () {
-                    $(this).removeClass("is-loading");
-                });
+            .bind("ajax:beforeSend", function () {
+                $(this).addClass("is-loading");
+            })
+            .bind('ajax:complete', function () {
+                $(this).removeClass("is-loading");
+            })
+            .bind("ajax:error", function () {
+                $(this).removeClass("is-loading");
+            });
     },
 
     confirmInputHandler: function () {
@@ -53,6 +60,18 @@ Argu.ui = {
         setTimeout(function () {
             _this.removeClass("is-loading");
         }, 2500);
+    },
+
+    handleAjaxCalls: function (e, xhr, options) {
+        if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201) {
+            if (xhr.status === 429) {
+                new Argu.Alert('Je maakt te veel verzoeken, probeer het over halve minuut nog eens.', 'alert', true);
+            } else if (xhr.status === 401) {
+                new Argu.Alert('Je hebt geen toestemming voor deze actie.', 'alert', true);
+            } else {
+                new Argu.Alert('');
+            }
+        }
     },
 
     handleClickSmoothly: function () {
@@ -156,8 +175,8 @@ Argu.ui = {
         }
     },
 
+    // Prevents dropdown-active from opening the neighboring link in Chrome for android.. but also prevents clicking on dropdown content!
     mobileTapTooCloseFix: function (e) {
-        // Prevents dropdown-active from opening the neighboring link in Chrome for android.. but also prevents clicking on dropdown content!
         e.preventDefault();
     },
 
@@ -165,15 +184,38 @@ Argu.ui = {
         "use strict";
         e.preventDefault();
         $('.comment_form#cf' + $(this).attr('id')).slideToggle();
+    },
+
+    welcomeVideoHide: function () {
+        let videoElement = $('.welcome-video');
+        videoElement
+            .addClass('welcome-video-disappear')
+            .removeClass('welcome-video-opened');
+        $('body').removeClass('welcome-video-opened');
+
+        setTimeout(() => {
+            videoElement.remove();
+        }, 1000);
+
+        // TODO: Set a cookie!
+    },
+
+    welcomeVideoToggle: function () {
+        $('body, .welcome-video').toggleClass('welcome-video-opened');
     }
+
 };
 
 Argu.ui.modal = {
     init: function () {
-        // Close modal when clicking on overlay, unless there is a "no-close" class.
-        $(document).on('click', '.modal-container:not(.no-close) .overlay', this.closeModal);
+        $(document)
+            .on('click', '.modal-container:not(.no-close) .overlay', this.closeModal)
+            .on('pjax:complete', function () {
+                $('body').removeClass('modal-opened');
+            });
 
-        // Close modal when pressing escape button, unless there is a "no-close" class.
+        // Close modal when pressing escape button
+        // @TODO: Just listen to escape, not all the time all the buttons
         document.addEventListener('keyup', function(e) {
             if (e.keyCode == 27 && !$(".no-close")[0]) {
                 $('.modal-container').addClass('modal-hide');
@@ -182,10 +224,6 @@ Argu.ui.modal = {
                     $('body').removeClass('modal-opened');
                 }, 500);
             }
-        });
-
-        $(document).on('pjax:complete', function () {
-            $('body').removeClass('modal-opened');
         });
     },
 
@@ -202,11 +240,9 @@ Argu.ui.modal = {
 
 Argu.ui.progressbar = {
     init: function () {
-        $(document).on('pjax:start',   NProgress.start)
-                   .on('pjax:success',  NProgress.done)
-                   .on('pjax:end', NProgress.remove)
-                   .on('ajax:beforeSend',   NProgress.start)
-                   .on('ajax:complete',  NProgress.done)
-                   .on('ajax:after', NProgress.remove);
+        $(document)
+            .on('pjax:start ajax:beforeSend',   NProgress.start)
+            .on('pjax:success pjax:end ajax:complete',  NProgress.done)
+            .on('pjax:end ajax:after', NProgress.remove);
     }
 };

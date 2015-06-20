@@ -14,6 +14,7 @@ user_thom:
   finished_intro: true
   first_name: 'Thom'
   last_name: 'van Kalkeren'
+  confirmed_at: <%= Time.now %>
 # Owner of the page and administrator of forum utrecht
 user_utrecht_owner:
   email: 'owner@utrecht.nl'
@@ -21,6 +22,7 @@ user_utrecht_owner:
   finished_intro: true
   first_name: 'User'
   last_name: 'Lastname'
+  confirmed_at: <%= Time.now %>
 # Manager of the page and forum of utrecht
 user_utrecht_manager:
   email: 'user@utrecht.nl'
@@ -28,6 +30,7 @@ user_utrecht_manager:
   finished_intro: true
   first_name: 'User'
   last_name: 'Utrecht'
+  confirmed_at: <%= Time.now %>
 # Manager of the forum of utrecht, not of the page
 user_utrecht_manager_only:
   email: 'utrecht_manager@utrecht.nl'
@@ -35,6 +38,7 @@ user_utrecht_manager_only:
   finished_intro: true
   first_name: 'manager'
   last_name: 'Utrecht'
+  confirmed_at: <%= Time.now %>
 # A general user, member of utrecht
 user:
   email: 'user@argu.co'
@@ -42,6 +46,7 @@ user:
   finished_intro: true
   first_name: 'User1'
   last_name: 'Lastname1'
+  confirmed_at: <%= Time.now %>
 # A general user, member of utrecht and amsterdam
 user2:
   email: 'user2@argu.co'
@@ -49,10 +54,28 @@ user2:
   finished_intro: true
   first_name: 'User2'
   last_name: 'Lastname2'
+  confirmed_at: <%= Time.now %>
 # A general user, member of amsterdam
+# Is assigned fb_login later
 user3:
   email: 'user3@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
   finished_intro: true
   first_name: 'User3'
   last_name: 'Lastname3'
+  confirmed_at: <%= Time.now %>
+user_facebook_only:
+  email: 'user_fb_only@argu.co'
+  encrypted_password: ''
+  finished_intro: true
+  first_name: 'First'
+  last_name: 'Lastname_facebook'
+  confirmed_at: <%= Time.now %>
+#
+user_page_manager:
+  email: 'page_manager@page.nl'
+  encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
+  finished_intro: true
+  first_name: 'manager'
+  last_name: 'Page'
+  confirmed_at: <%= Time.now %>

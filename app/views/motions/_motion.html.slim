@@ -21,7 +21,7 @@
           span.icon-left 7
         .details-part.tooltip[data-title=t('tooltips.motion.vote_count')]
           span.fa.fa-check-square-o
-          span.icon-left= motion.total_vote_count
+          span.icon-left= motion.total_vote_count.to_s
         .details-part.tooltip[data-title=t('tooltips.motion.arguments_pro_count')]
           span.fa.fa-plus
           span.icon-left= motion.argument_pro_count

@@ -12,8 +12,17 @@ nl:
       body: "Ben jij op zoek naar goede ideeën? Heb jij een vraagstuk waar je voorstellen voor zou willen?"
       action: "Deel jouw vraagstuk!"
     form:
-      title: "Plaats hier jouw vraag in enkele woorden."
-      content: "Waarom zit je met deze vraag? Geef achtergrondinformatie over het probleem en geef aan waar de oplossing aan zou moeten voldoen."
+      title_heading: "Geef jouw vraagstuk een titel"
+      title_body_html: "<ul class='bullets'>
+                     <li>Plaats een <b class='question-t'>vraagstuk</b> om een probleem voor te leggen en een oplossing te vinden.</li>
+                     <li>Stel een <b>open vraag</b> die mensen uitnodigd om eigen ideeën in te dienen.</li>
+                   </ul>"
+      content_heading: "Licht je vraagstuk toe"
+      content_body: "Leg de huidige situatie uit. Geef achtergrondinformatie van het probleem en leg uit waarom er nog geen oplossing is. Geef aan waar de ideeën aan zouden moeten voldoen."
+      content_body_html: "<ul class='bullets'>
+                            <li>Leg de <b>huidige situatie</b> uit. Geef achtergrondinformatie van het probleem en leg uit waarom er nog geen oplossing is.</li>
+                            <li>Geef aan waar de ideeën aan zouden moeten voldoen.</li>
+                          </ul>"
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
       helper:

@@ -26,3 +26,9 @@ question_one_no_create_without_question:
   content: 'Question contents'
   forum: :no_create_without_question
   creator: :profile_one
+#
+page_one:
+  title: 'Vraagstuk'
+  content: 'Inhoud van het vraagstuk'
+  forum: :utrecht
+  creator: :profile_page

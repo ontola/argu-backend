@@ -57,7 +57,7 @@ class GroupsController < ApplicationController
 
   def add
     @forum = Forum.find_via_shortname params[:forum_id]
-    authorize @forum, :create_group?
+    authorize @forum, :add_group_member?
     @group = @forum.groups.find params[:id]
     @membership = @group.group_memberships.new
 
@@ -69,7 +69,7 @@ class GroupsController < ApplicationController
 
   def add!
     @forum = Forum.find_via_shortname params[:forum_id]
-    authorize @forum, :create_group?
+    authorize @forum, :add_group_member?
     @group = @forum.groups.find params[:id]
     profile = Profile.find params[:profile_id]
 

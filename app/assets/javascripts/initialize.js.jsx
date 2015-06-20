@@ -67,11 +67,17 @@ $(function (){
         });
     }
 
+    if (typeof($.pjax.defaults) ===  "undefined") {
+        $.pjax.defaults = {};
+    }
     $.pjax.defaults.timeout = 10000;
+
     $(document)
         .pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container')
-        .on('pjax:start pjax:beforeReplace', shallowUnmountComponents)
-        .on('pjax:end', shallowMountComponents);
+        .on('pjax:beforeReplace', shallowUnmountComponents) // pjax:start seems to have come unnecessary
+        .on('pjax:beforeReplace', processContentForMetaTags)
+        .on('pjax:end', shallowMountComponents)
+        .on('pjax:end', removeMetaContent);
 
     if (!("ontouchstart" in document.documentElement)) {
         document.documentElement.className += " no-touch";

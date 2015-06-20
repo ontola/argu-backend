@@ -90,6 +90,21 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   ####################################
+  # For Page owners
+  ####################################
+  test 'should put update on page owner own question' do
+    sign_in users(:user_page_manager)
+    @controller.instance_variable_set :@current_profile, profiles(:profile_page)
+
+    put :update, id: questions(:page_one), question: {title: 'New title', content: 'new contents'}
+
+    assert_redirected_to question_url(assigns(:question))
+    assert_not_nil assigns(:question)
+    assert_equal 'New title', assigns(:question).title
+    assert_equal 'new contents', assigns(:question).content
+  end
+
+  ####################################
   # For managers
   ####################################
 

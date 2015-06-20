@@ -1,6 +1,6 @@
 =set_title t('forums.statistics.title')
+=render partial: 'manage_bar', locals: {resource: @forum, active: :statistics} if policy(@forum).update?
 .col-1
-  =render partial: 'manage_bar', locals: {resource: @forum, active: :statistics} if policy(@forum).update?
   .box
     section
       table.styled

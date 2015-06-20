@@ -13,8 +13,8 @@ var Expander = React.createClass({
         this.setState({openState: !this.state.openState});
     },
 
-    handleClick: function () {
-        event.preventDefault();
+    handleClick: function (e) {
+        e.preventDefault();
         this.toggleOpenState();
     },
 
