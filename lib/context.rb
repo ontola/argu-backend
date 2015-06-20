@@ -126,7 +126,7 @@ class Context
   def url
     Rails.application.routes.url_helpers.url_for(controller: single_model.class.name.downcase.pluralize,
                                                  action: 'show',
-                                                 id: single_model.id,
+                                                 id: single_model.to_param,
                                                  only_path: true) if single_model
   end
 
