@@ -1,10 +1,9 @@
-source 'https://rubygems.org'
-source 'http://utility.argu.co:3000/'
+source 'https://rubygems.org/'
 
 gem 'sass-rails', '~> 5.0.3'
 gem 'rails', '~>4.2.0'
 
-gem 'simple_text', '~> 0.0.21', source: 'https://rubygems.org'
+gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
 gem 'logstasher'
 
@@ -29,7 +28,7 @@ gem 'acts-as-taggable-on', '~> 3.4.2'
 gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 2.0.0'
 gem 'whodunnit', '0.0.5'
-gem 'simple_settings', '1.0.2', source: 'https://rubygems.org'
+gem 'simple_settings', '1.0.2'
 gem 'public_activity'
 gem 'acts_as_follower'
 gem 'rollout'
@@ -126,6 +125,6 @@ group :staging, :development do
   gem 'flamegraph'
 end
 
-  gem 'briarcliff', '~> 0.0.9'
+#  gem 'briarcliff', '~> 0.0.9'
 
-  gem 'pica_pica', '~> 0.0.1'
+#  gem 'pica_pica', '~> 0.0.1'
