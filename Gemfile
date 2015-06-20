@@ -83,6 +83,7 @@ gem 'koala', '~> 1.11.1'
 gem 'omniauth-twitter', '~> 1.2.0'
 #gem 'omniauth-openid'
 gem 'pundit', '~> 1.0.0'
+gem 'bugsnag'
 gem 'rolify', '~> 3.4.1'
 
 group :development, :test do
@@ -116,7 +117,6 @@ group :production, :staging do
   gem 'therubyracer', '~> 0.12.1'
   gem 'unicorn', '4.8.3'
   gem 'rack-test', '~> 0.6.2'
-  gem 'bugsnag'
 end
 
 group :staging, :development do

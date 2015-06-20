@@ -4,7 +4,7 @@ header
   .box
     section
       p== t('users.connect.text', from_type: 'facebook', from_name: identity.name, to_name: user.display_name)
-      =semantic_form_for(user, url: connect_user_path(token: token), method: :post ) do |f|
+      =semantic_form_for(user, url: connect_user_path(user, token: token), method: :post) do |f|
         =f.inputs
           =f.input :password, placeholder: t('users_password_argu'), hint: false, label: t('users_password_argu'), input_html: {required: true, errors: ['test']}
         ul.btns-devise

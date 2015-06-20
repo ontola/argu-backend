@@ -5,7 +5,7 @@
 class Context
   using StringExtensions
   extend ArguExtensions::Context # WHY DOES THE SEND :EXTEND NOT WORK
-  include Rails.application.routes.url_helpers
+  #include Rails.application.routes.url_helpers
   include ApplicationHelper # For merge_query_parameters
   @parent_context
 

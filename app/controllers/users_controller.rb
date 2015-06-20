@@ -78,7 +78,7 @@ class UsersController < ApplicationController
   end
 
   def connect!
-    user = User.find_via_shortname! params[:id]
+    user = User.find_via_shortname! params[:id].presence || params[:user][:id]
     payload = decrypt_token params[:token]
     @identity = Identity.find payload['identity']
 
