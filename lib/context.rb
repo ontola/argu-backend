@@ -124,7 +124,10 @@ class Context
   # @!attribute url
   # @return [String] A URL to the current model
   def url
-    url_for([single_model, only_path: true]) if single_model
+    Rails.application.routes.url_helpers.url_for(controller: single_model.class.name.downcase.pluralize,
+                                                 action: 'show',
+                                                 id: single_model.id,
+                                                 only_path: true) if single_model
   end
 
   protected

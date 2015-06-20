@@ -1,6 +1,7 @@
 source 'https://rubygems.org/'
 
 gem 'sass-rails', '~> 5.0.3'
+gem 'sass', '= 3.2.19'
 gem 'rails', '~>4.2.0'
 
 gem 'simple_text', '~> 0.0.21'
