@@ -193,6 +193,8 @@ Argu::Application.routes.draw do
   end
   get 'forums/:id', to: 'forums#show'
 
+  get '/d/modern', to: 'static_pages#modern'
+
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'
 end

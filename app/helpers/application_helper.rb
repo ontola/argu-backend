@@ -52,8 +52,8 @@ module ApplicationHelper
     uri.to_s
   end
 
-  def remote_if_non_mobile
-    browser.mobile? ? {'skip-pjax' => true} : {remote: true, 'skip-pjax' => true}
+  def remote_if_non_modern
+    browser.modern? ? {'skip-pjax' => true} : {remote: true, 'skip-pjax' => true}
   end
 
   # Used in forms for the 'r' system
