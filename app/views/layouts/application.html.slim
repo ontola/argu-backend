@@ -29,7 +29,7 @@ body
   =render 'navbar'
   - if active_for_user?('welcome_video', current_user)
     =render partial: 'welcome_video'
-  .wrapper
+  .wrapper 
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')
 
