@@ -3,7 +3,9 @@ function processContentForMetaTags(event, contents, options) {
     var toDelete = [];
     contents.each((i, elem) => {
         if (elem.id === 'meta_content') {
-            replaceMetaTags(elem);
+            for (let j = 0; j < elem.children.length; j++) {
+                replaceHeadElement(elem.children[j]);
+            }
         }
     });
     toDelete.forEach(function (i) {
@@ -19,17 +21,16 @@ function removeMetaContent() {
     }
 }
 
-function replaceMetaTags(elem) {
+function replaceHeadElement(elem) {
     "use strict";
-    var headerItems = document.head.getElementsByTagName('meta');
-    for (let i = 0; i < elem.children.length; i++) {
-        let prop = elem.children[i].attributes.property.value,
-            content = elem.children[i].attributes.content.value;
-        for (let j = 0; j < headerItems.length; j++) {
-            if (typeof(headerItems[j].attributes.property) !== "undefined" &&
-                    headerItems[j].attributes.property.value === prop) {
-                headerItems[j].attributes.content.value = content;
-            }
+    let documentHeaderElement = document.getElementById(elem.id);
+
+    if (documentHeaderElement == null || (documentHeaderElement) === "undefined") {
+        document.head.appendChild(elem);
+    } else {
+        for(let i = 0; i < elem.attributes.length; i++) {
+            documentHeaderElement.attributes[elem.attributes[i].name].value = elem.attributes[i].value;
         }
     }
+
 }
