@@ -10,7 +10,8 @@ var ActiveToggle = React.createClass({
         "use strict";
         return {
             toggleState: this.props.initialState,
-            loading: false
+            loading: false,
+            tagName: this.props.tagName || 'div'
         };
     },
 
@@ -45,10 +46,10 @@ var ActiveToggle = React.createClass({
         }
 
         return (
-            <this.props.tagName onClick={this.handleClick} className={this.state.loading ? 'is-loading' : ''}>
+            <this.state.tagName onClick={this.handleClick} className={this.state.loading ? 'is-loading' : ''}>
                 <span className={`fa fa-${currentProps.icon}`}></span>
                 {label}
-            </this.props.tagName>
+            </this.state.tagName>
         )
     }
 });
