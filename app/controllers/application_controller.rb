@@ -95,9 +95,9 @@ class ApplicationController < ActionController::Base
 
   def forum_by_geocode
     if session[:geo_location].present?
-      forum = Forum.find_via_shortname(session[:geo_location].city.downcase) if session[:geo_location].city.present?
-      forum ||= Forum.find_via_shortname(session[:geo_location].country.downcase) if session[:geo_location].country.present?
-      forum = Forum.find_via_shortname('eu') if forum.blank? && EU_COUNTRIES.include?(session[:geo_location].country_code)
+      forum = Forum.find_via_shortname_nil(session[:geo_location].city.downcase) if session[:geo_location].city.present?
+      forum ||= Forum.find_via_shortname_nil(session[:geo_location].country.downcase) if session[:geo_location].country.present?
+      forum = Forum.find_via_shortname_nil('eu') if forum.blank? && EU_COUNTRIES.include?(session[:geo_location].country_code)
       forum
     end
   end
