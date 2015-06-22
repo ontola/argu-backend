@@ -114,6 +114,12 @@ class User < ActiveRecord::Base
     Hash[self.profile.email, self.profile.attributes.slice('id', 'name')]
   end
 
+protected
+
+  def confirmation_required?
+    false
+  end
+
 private
   def check_for_profile
     self.profile || self.create_profile
