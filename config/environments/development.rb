@@ -5,6 +5,7 @@ Rails.application.configure do
   config.react.variant = :development
 
   config.middleware.use Rack::Attack
+  BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
