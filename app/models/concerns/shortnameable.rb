@@ -25,14 +25,18 @@ module Shortnameable
 
   module ClassMethods
     def find_via_shortname(url)
-      self.joins(:shortname).where('lower(shortname) = lower(?)', url).first or raise(ActiveRecord::RecordNotFound)
+      find_via_shortname_nil(url) or raise(ActiveRecord::RecordNotFound)
+    end
+
+    def find_via_shortname_nil(url)
+      self.joins(:shortname).where('lower(shortname) = lower(?)', url).first
     end
 
     def find_via_shortname!(url)
       if url.to_i.to_s == url.to_s
         self.find url.to_i
       else
-        self.joins(:shortname).where('lower(shortname) = lower(?)', url).first or raise(ActiveRecord::RecordNotFound)
+        find_via_shortname_nil(url) or raise(ActiveRecord::RecordNotFound)
       end
     end
 

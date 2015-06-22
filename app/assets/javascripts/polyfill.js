@@ -11,5 +11,6 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require js-polyfills/es5
+//= require js-polyfills/es6
 //= require js-polyfills/web
 
