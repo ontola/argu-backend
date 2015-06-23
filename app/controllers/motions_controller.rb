@@ -33,7 +33,7 @@ class MotionsController < ApplicationController
       authorize @motion, :show?
       render_register_modal(nil)
     else
-      authorize @motion, @motion.questions.presence ? :create? : :create_without_question?
+      authorize @motion, @motion.questions.presence ? :new? : :new_without_question?
       current_context @motion
       respond_to do |format|
         if current_profile.member_of? @motion.forum

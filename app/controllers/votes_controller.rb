@@ -33,6 +33,7 @@ class VotesController < ApplicationController
   # POST /model/:model_id/v/:for
   def create
     @model = voteable_class.find params[voteable_param]
+    get_context
 
     if current_profile.blank?
       authorize @model, :show?
@@ -68,6 +69,10 @@ class VotesController < ApplicationController
 
 
 private
+  def get_context
+    @forum = @model.forum
+  end
+
   # noinspection RubyUnusedLocalVariable
   def save_vote_to_stats(vote)
     #TODO: @implement this
