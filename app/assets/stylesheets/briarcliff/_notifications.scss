@@ -40,6 +40,7 @@
   width: 15%;
   float: left;
   padding-right: .4em;
+  @include border-radius(999px);
 }
 
 .notification-description {
@@ -88,7 +89,9 @@
 .notification-bottom{
   left: 17%;
   position: absolute;
-  bottom: 0.7em;
+  bottom: 0.9em;
+  font-size: .8em;
+  color: $g2;
 }
 
 .notification-counter {
