@@ -6,6 +6,8 @@ nl:
     type: "Forum"
     type_new: "Nieuw forum"
     plural: "Forums"
+    my: "Mijn forums"
+    current: "Dit forum"
     resource_name:
       management: "Forum beheer"
     settings:
