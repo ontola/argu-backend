@@ -50,12 +50,6 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def show?
-    Pundit.policy(context, record.forum).show? || super
-  end
-
-  private
-
-  def forum_policy
-    Pundit.policy(context, record.forum)
+    rule forum_policy.show?, super
   end
 end

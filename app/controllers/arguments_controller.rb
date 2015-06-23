@@ -4,9 +4,9 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1.json
   def show
     @argument = Argument.includes(:comment_threads).find params[:id]
-    authorize @argument, :show?
     @forum = @argument.forum
     current_context @argument
+    authorize @argument, :show?
     @parent_id = params[:parent_id].to_s
     
     @comments = @argument.filtered_threads(show_trashed?)

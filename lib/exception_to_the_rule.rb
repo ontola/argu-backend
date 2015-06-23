@@ -11,10 +11,14 @@ module ExceptionToTheRule
   end
 
   def find_rules_for_level(action, level)
-    rules = Rule.where(model_type: @record.is_a?(Class) ? @record.to_s : @record.class.to_s,
-                       model_id: @record.try(:id),
-                       action: action.to_s,
-                       context: context.context_model)
+    _rules = Rule.arel_table
+    rule_query = (_rules[:model_type].eq(@record.is_a?(Class) ? @record.to_s : @record.class.to_s)
+                 .and(_rules[:model_id].eq(@record.try(:id))
+                 .and(_rules[:action].eq(action.to_s)))
+                 ).or(_rules[:action].eq(action.to_s)
+                 .and(_rules[:context_type].eq(context.context_model.class.to_s))
+                 .and(_rules[:context_id].eq(context.context_model.try(:id).to_s)))
+    rules = Rule.where(rule_query)
     filter_trickle(rules, level)
   end
 
