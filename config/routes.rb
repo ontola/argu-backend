@@ -65,7 +65,8 @@ Argu::Application.routes.draw do
                        sessions: 'users/sessions',
                        invitations: 'users/invitations',
                        passwords: 'users/passwords',
-                       omniauth_callbacks: 'omniauth_callbacks'
+                       omniauth_callbacks: 'omniauth_callbacks',
+                       confirmations: 'users/confirmations'
                    }, skip: :registrations
 
   as :user do

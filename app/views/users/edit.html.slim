@@ -13,7 +13,12 @@
           =f.input :email, label: t('users_email'), value: @user.email, placeholder: @user.email.blank? ? t('users_email_placeholder') : @user.email
           li
             label
-            span= @user.confirmed_at.present? ? t('users.registrations.confirmed') : t('users.registrations.unconfirmed')
+            - if @user.confirmed_at.present?
+              span= t('users.registrations.confirmed')
+            - else
+              span
+                =t('users.registrations.unconfirmed')
+                =link_to " (#{t('devise.confirmations.send')})", user_confirmation_path(user: {email: @user.email}), rel: :nofollow, data: {method: :post}
           =f.input :time_zone
           =f.input :language, as: :select, collection: I18n.available_locales, include_blank: false
           =f.input :country, as: :country, priority_countries: ['NL', 'BE']
