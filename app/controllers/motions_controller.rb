@@ -52,6 +52,7 @@ class MotionsController < ApplicationController
   def edit
     @motion = Motion.find_by_id(params[:id])
     @forum = @motion.forum
+    current_context @motion
     authorize @motion
     respond_to do |format|
       format.html { render 'form' }
