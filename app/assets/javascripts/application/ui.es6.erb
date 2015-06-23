@@ -1,5 +1,3 @@
-<% environment.context_class.instance_eval { include Rails.application.routes.url_helpers } %>
-
 Argu.ui = {
     bg: null,
     window: null,
@@ -102,7 +100,7 @@ Argu.ui = {
         if ((settings = $('.portal-settings'))) {
             var editableOptions = {
                 onsubmit: function (settings) {
-                    settings.target = '<%= portal_settings_path %>/';
+                    settings.target = '/portal/settings/';
                 },
                 submitdata : function () {
                     return {key: this.getAttribute('id')};

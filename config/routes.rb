@@ -65,7 +65,8 @@ Argu::Application.routes.draw do
                        sessions: 'users/sessions',
                        invitations: 'users/invitations',
                        passwords: 'users/passwords',
-                       omniauth_callbacks: 'omniauth_callbacks'
+                       omniauth_callbacks: 'omniauth_callbacks',
+                       confirmations: 'users/confirmations'
                    }, skip: :registrations
 
   as :user do
@@ -192,6 +193,8 @@ Argu::Application.routes.draw do
     end
   end
   get 'forums/:id', to: 'forums#show'
+
+  get '/d/modern', to: 'static_pages#modern'
 
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'

@@ -41,6 +41,7 @@ nl:
         helper: 'Vul je e-mailadres of gebruikersnaam in en wij zullen jou een mail sturen met een link waarmee je een nieuw wachtwoord kan instellen.'
         submit: 'Verzend reset instructies'
     confirmations:
+      send: 'Verstuur bevestigingsmail'
       send_instructions: 'Je zal binnen enkele minuten een mail ontvangen met  instructies om jouw account te bevestigen.'
       send_paranoid_instructions: 'Als jouw email adres bestaat in onze database, zal je binnen enkele minuten een link ontvangen om jouw account te bevestigen.'
       confirmed: 'Jouw account is bevestigd. Je bent nu ingelogd.'

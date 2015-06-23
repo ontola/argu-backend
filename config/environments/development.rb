@@ -1,10 +1,11 @@
 Rails.application.configure do
-  config.host = ENV['HOSTNAME'] || 'local.host:3000'
+  config.host = ENV['HOSTNAME'].presence || 'local.host:3000'
   # Settings specified here will take precedence over those in config/application.rb#
 
   config.react.variant = :development
 
   config.middleware.use Rack::Attack
+  BetterErrors::Middleware.allow_ip! ENV['TRUSTED_IP'] if ENV['TRUSTED_IP']
 
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
@@ -24,7 +25,7 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] || 'argu.co' }
+  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'].presence || 'argu.co' }
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {

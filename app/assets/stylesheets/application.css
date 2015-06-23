@@ -14,7 +14,6 @@
  * require selectize.default
  * require formtastic
  *= require simple_text/application
- *= require pica_pica/pica_pica
  *= require introjs
  *= require nprogress
  *= require_self

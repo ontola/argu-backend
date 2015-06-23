@@ -10,11 +10,8 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   meta[charset="UTF-8"]
   title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
   =csrf_meta_tags
-  =render 'shim'
   =render 'layouts/meta'
-
-  /[if lt IE 10]
-    =javascript_include_tag 'polyfill'
+  =render partial: 'polyfill'
 
   =stylesheet_link_tag 'application', :media => 'all'
   - if request.original_url.include? developers_path

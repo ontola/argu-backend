@@ -35,6 +35,11 @@ class StaticPagesController < ApplicationController
     authorize :static_page
   end
 
+  def modern
+    authorize :static_page, :about?
+    render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, safari: #{browser.safari?}, mobile: #{browser.mobile?}, tablet: #{browser.tablet?}, ua: #{browser.ua}"
+  end
+
   def team
     authorize :static_page
     redirect_to info_path('team'), status: 302

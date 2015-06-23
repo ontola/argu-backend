@@ -41,6 +41,7 @@ en:
         helper: "Enter your email address or username and we'll send you a mail with a link where you can enter a new password."
         submit: 'Send reset instructions'
     confirmations:
+      send: 'Send confirmation mail'
       send_instructions: "You'll receive a mail containing instructions to confirm your account within a few minutes."
       send_paranoid_instructions: "If your email address is already present in our database, you'll receive a link to confirm your account."
       confirmed: 'Your account has been confirmed. You are now logged in.'
