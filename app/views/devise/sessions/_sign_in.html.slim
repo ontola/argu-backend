@@ -11,8 +11,8 @@
         h2= t('sign_in')
         .inspectlet-sensitive=f.inputs
           /.info.info-signup= t('sign_in_existing')
-          =f.input :email, placeholder: t('users_email'), autofocus: :autofocus, label: false, input_html: {required: true}
-          =f.input :password, placeholder: t('users_password'), hint: false, label: false, input_html: {required: true}
+          =f.input :email, placeholder: false, input_html: {autofocus: :autofocus, required: true}
+          =f.input :password, placeholder: false, hint: false, input_html: {required: true}
           =f.input :r, as: :hidden
           - if devise_mapping.rememberable?
             .remember= f.input :remember_me, as: :boolean
@@ -21,3 +21,4 @@
         /= render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}
         ul.btns-devise
           li= link_to t('forgot_password'), new_password_path(resource_name)
+          li= link_to t('no_confirmation_instructions'), new_confirmation_path(resource_name)

@@ -6,6 +6,8 @@ en:
     type: "Forum"
     type_new: "New forum"
     plural: "Forums"
+    my: "My forums"
+    current: "This forum"
     resource_name:
       management: "forum management"
     settings:

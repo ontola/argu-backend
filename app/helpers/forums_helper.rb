@@ -5,12 +5,70 @@ module ForumsHelper
     t("forums.application_form.#{value}")
   end
 
-  def forum_title_dropdown_items(resource)
+
+  def forum_selector_items(guest= false)
+    sections = []
+
+    sections << forum_membership_section if current_user.present?
+    sections << forum_discover_section
+
+    {
+        title: t('forums.plural'),
+        fa: 'fa-group',
+        sections: sections,
+        triggerClass: 'navbar-item'
+    }
+  end
+
+  def forum_membership_section
+    {
+        title: t('forums.my'),
+        items: profile_membership_items
+    }
+  end
+
+  def forum_discover_section
+    {
+        title: t('forums.discover'),
+        items: forum_discover_items
+    }
+  end
+
+  def forum_discover_items
     items = []
 
-    items.concat current_profile.present? ? profile_membership_items : public_forum_items
+    _public_forum_items = public_forum_items(5)
 
-    divided = false
+    items.concat (_public_forum_items - profile_membership_items) if items.length < _public_forum_items.length + 1
+    items << link_item(t('forums.show_open'), discover_forums_path, fa: 'compass', divider: 'top')
+  end
+
+  def forum_title_dropdown_items(resource)
+
+    sections = []
+
+    sections << forum_membership_section if current_user.present?
+    sections << forum_discover_section
+    sections << forum_current_section if current_user.present? && policy(@forum).is_member?
+
+    {
+        title: resource.name,
+        fa_after: 'fa-angle-down',
+        sections: sections,
+        triggerTag: 'h1',
+    }
+  end
+
+  def forum_current_section
+    {
+        title: t('forums.current'),
+        items: forum_membership_controls_items
+    }
+  end
+
+  def forum_membership_controls_items
+    items = []
+
     if policy(@forum).is_member?
       if active_for_user?(:notifications, current_user)
         divided = true
@@ -21,13 +79,8 @@ module ForumsHelper
         end
       end
       items << link_item(t('forums.leave'), forum_membership_path(@forum.url, current_profile), fa: 'sign-out', divider: (divided ? 'top' : nil),
-                              data: {method: :delete, 'skip-pjax' => 'true', confirm: t('forums.leave_confirmation')})
+                         data: {method: :delete, 'skip-pjax' => 'true', confirm: t('forums.leave_confirmation')})
     end
-
-    # TODO: Show most popular 3 forums if user has fewer than 2 memberships.
-
-    items << link_item(t('forums.discover'), discover_forums_url, fa: 'compass', divider: 'top')
-    dropdown_options(resource.name, [{items: items}], triggerTag: 'h1', fa_after: 'fa-angle-down')
   end
 
   def manage_button_dropdown_items(resource)

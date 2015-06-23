@@ -1,5 +1,6 @@
 =set_title t('profiles.edit.title')
-=render partial: 'profiles/profile_bar', locals: {active: :profile}
+-if current_user.finished_intro?
+  =render partial: 'profiles/profile_bar', locals: {active: :profile}
 .col-1
   -if current_user.finished_intro?
   -else
