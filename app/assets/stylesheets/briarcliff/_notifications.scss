@@ -10,11 +10,17 @@
     left: 0;
     bottom: 0;
     width: 100%;
+    .notifications {
+      width: 100%;
+    }
   }
 }
 
 .notifications {
   width: 25em;
+  @include bp-small{
+    width: 100%;
+  }
 }
 
 .notifications li {
@@ -37,9 +43,8 @@
 
 .notification-avatar {
   display: block;
-  width: 15%;
+  width: 13%;
   float: left;
-  padding-right: .4em;
   @include border-radius(999px);
 }
 
