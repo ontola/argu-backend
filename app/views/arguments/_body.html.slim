@@ -16,8 +16,9 @@
                                         true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
                                         false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                        {prerender: true}
-    - if current_user.present? && policy(@argument).update? || active_for_user?(:notifications, current_user)
+    - if current_user.present? && policy(@argument).update?
       li
         ul= react_component 'HyperDropdown', argument_items(@argument), {prerender: true}
     li
       ul= react_component 'HyperDropdown', share_items(@argument), {prerender: true}
+`

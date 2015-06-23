@@ -17,7 +17,7 @@
     section
       h1.question-t[itemprop="headline"]= @question.title
       .markdown[itemprop="text"]
-        = markdown_to_html(@question.content)
+        =markdown_to_html(@question.content)
       span.hidden[itemprop="answerCount"]= @question.motions_count
     /- if @question.tags.present?
       =render partial: 'tags/tags', locals: {resource: @question}
@@ -30,7 +30,7 @@
                                             true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
                                             false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                            {prerender: true}
-      - if current_user.present? && policy(@question).update? || active_for_user?(:notifications, current_user)
+      - if current_user.present? && policy(@question).update?
         li
           ul= react_component 'HyperDropdown', question_items(@question), {prerender: true}
       li
