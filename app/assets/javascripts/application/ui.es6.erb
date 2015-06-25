@@ -65,7 +65,7 @@ Argu.ui = {
             if (xhr.status === 429) {
                 new Argu.Alert('Je maakt te veel verzoeken, probeer het over halve minuut nog eens.', 'alert', true);
             } else if (xhr.status === 401) {
-                new Argu.Alert('Je hebt geen toestemming voor deze actie.', 'alert', true);
+                new Argu.Alert('Je moet ingelogd zijn voor deze actie.', 'alert', true);
             } else {
                 new Argu.Alert('');
             }
