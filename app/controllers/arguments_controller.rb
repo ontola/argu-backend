@@ -122,4 +122,8 @@ private
     params.require(:argument).permit(*policy(@argument || Argument).permitted_attributes)
   end
 
+  def self.forum_for(url_options)
+    Argument.find_by(url_options[:argument_id] || url_options[:id]).try(:forum)
+  end
+
 end

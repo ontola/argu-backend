@@ -103,9 +103,10 @@ class ApplicationController < ActionController::Base
   end
 
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses {Forum.first_public}
-  def preferred_forum
-    if current_profile.present?
-      policy(current_profile.preferred_forum).show? ? current_profile.preferred_forum : current_profile.memberships.first.try(:forum) || Forum.first_public
+  def preferred_forum(profile = nil)
+    profile ||= current_profile
+    if profile.present?
+      policy(profile.preferred_forum).show? ? profile.preferred_forum : profile.memberships.first.try(:forum) || Forum.first_public
     else
       forum_by_geocode || Forum.first_public
     end

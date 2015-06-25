@@ -52,6 +52,11 @@ module ApplicationHelper
     uri.to_s
   end
 
+  def r_to_url_options(r)
+    url_options = Rails.application.routes.recognize_path(URI.decode(r))
+    return url_options, "#{url_options[:controller]}_controller".camelize.safe_constantize
+  end
+
   def remote_if_non_modern
     browser.modern? ? {'skip-pjax' => true} : {remote: true, 'skip-pjax' => true}
   end

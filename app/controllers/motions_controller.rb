@@ -182,6 +182,10 @@ private
     params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
   end
 
+  def self.forum_for(url_options)
+    Motion.find_by(url_options[:motion_id] || url_options[:id]).try(:forum)
+  end
+
   def get_context
     if params[:question_id].present? || defined?(params[:motion][:question_id]) && params[:motion][:question_id].present?
       @question = Question.find(params[:question_id] || params[:motion][:question_id])

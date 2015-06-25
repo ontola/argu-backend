@@ -7,7 +7,7 @@
     - if resource.password_required?
       =f.input :password, input_html: {minlength: 8}
       =f.input :password_confirmation, input_html: {minlength: 8 }
-    =f.input :r, as: :hidden
+    =f.input :r, as: :hidden, input_html: {value: resource.r || local_assigns[:r] || params[:r]}
   =f.actions do
     =f.action :submit, :as => :button, label: t('sign_up')
   =render partial: 'legal'
