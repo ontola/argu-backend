@@ -137,6 +137,7 @@ Argu::Application.routes.draw do
   end
 
   resources :profiles, only: [:index, :update] do
+    post :index, action: :index, on: :collection
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post ':id' => 'profiles#update', on: :collection
   end

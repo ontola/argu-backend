@@ -10,21 +10,14 @@ window.BigGroupResponse = React.createClass({
     },
 
     refresh: function () {
-        $.ajax({
-            type: 'GET',
-            url: this.state.object_id,
-            dataType: 'json',
-            async: true,
-            success: (data) => {
-                console.log('success', data);
-                if (data.motion) {
-                    this.setState(data.motion);
-                }
-            },
-            error: function () {
+        fetch(`${this.state.object_id}.json`, _safeCredentials())
+            .then((response) => {
+                response.status == 200 && response.json().then((data)  => {
+                    data.motion && this.setState(data.motion);
+                });
+            }).catch(() => {
                 Argu.Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
-            }
-        });
+            });
     },
 
     render: function () {

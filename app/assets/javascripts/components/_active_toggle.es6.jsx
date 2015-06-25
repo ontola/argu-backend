@@ -17,25 +17,20 @@ var ActiveToggle = React.createClass({
 
     handleClick: function (picture) {
         "use strict";
-        var self = this,
-            newState = this.state.toggleState;
+        var newState = this.state.toggleState;
         this.setState({loading: true});
-        $.ajax({
-            method: this.props[`${newState}_props`].method || 'PATCH',
-            url: decodeURI(this.props.url).replace(/{{value}}/, newState.toString()),
-            async: true,
-            dataType: 'json',
-            complete: function (xhr, status) {
-                let statusCode = xhr.statusCode().status;
-                if (statusCode == 201 || statusCode == 304) {
-                    self.setState({toggleState: true});
-                } else if (statusCode == 204) {
-                    self.setState({toggleState: false});
-                } else {
-                    console.log('An error occurred');
-                }
-                self.setState({loading: false});
+
+        fetch(decodeURI(this.props.url).replace(/{{value}}/, newState.toString()), _safeCredentials({
+            method: this.props[`${newState}_props`].method || 'PATCH'
+        })).then((response) => {
+            if (response.status == 201 || response.status == 304) {
+                this.setState({toggleState: true});
+            } else if (response.status == 204) {
+                this.setState({toggleState: false});
+            } else {
+                console.log('An error occurred');
             }
+            this.setState({loading: false});
         });
     },
 

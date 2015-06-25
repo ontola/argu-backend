@@ -28,18 +28,14 @@ window.CombiBigVote = React.createClass({
     },
 
     refreshGroups: function () {
-        $.ajax({
-            type: 'GET',
-            url: this.state.object_id,
-            dataType: 'json',
-            async: true,
-            success: (data) => {
-                this.setState({groups: data.groups});
-            },
-            error: function () {
+        fetch(`${this.state.object_id}.json`, _safeCredentials())
+            .then((response) => {
+                response.status == 200 && response.json().then((data) => {
+                    this.setState({groups: data.groups});
+                });
+            }).catch(() => {
                 Argu.Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
-            }
-        });
+            });
     },
 
     render: function () {
@@ -47,7 +43,7 @@ window.CombiBigVote = React.createClass({
         if (!this.state.actor || this.state.actor.actor_type == "User") {
             voteComponent = <BigVote {...this.state} {...this.props}/>;
         } else if (this.state.actor.actor_type == "Page") {
-            voteComponent = <BigGroupResponse groups={this.state.groups} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
+            voteComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
         }
 
         return (
@@ -70,20 +66,14 @@ window.BigVote = React.createClass({
     },
 
     refresh: function () {
-        $.ajax({
-            type: 'GET',
-            url: this.props.vote_url,
-            dataType: 'json',
-            async: true,
-            success: (data) => {
-                if (data.vote) {
-                    this.setState(data.vote);
-                }
-            },
-            error: function () {
+        fetch(this.state.vote_url, _safeCredentials())
+            .then((response) => {
+                response.status == 200 && response.json().then((data) => {
+                    data.vote && this.setState(data.vote);
+                });
+            }).catch(() => {
                 Argu.Alert('<%= I18n.t('votes.alerts.failed') %>', 'alert', true);
-            }
-        });
+            });
     },
 
     proHandler: function (e) {
@@ -100,26 +90,18 @@ window.BigVote = React.createClass({
     },
 
     vote: function (side) {
-        $.ajax({
-            type: 'POST',
-            url: [this.props.vote_url, side].join('/'),
-            dataType: 'json',
-            async: true,
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('accepts', 'application/json, application/javascript, */*');
-            },
-            success: (data) => {
-                if (data.vote) {
-                    this.setState(data.vote);
-                    //Actions.actorUpdate(data);
-                }
-            },
-            error: (request, status) => {
-                if(status == "parsererror" && request.statusText == "OK") {
-                    $.globalEval(request.responseText)
-                } else {
-                    console.log('failed');
-                }
+        fetch(`${this.props.vote_url}/${side}.json`, _safeCredentials({
+            method: 'POST'
+        })).then((response) => {
+            response.status == 200 && response.json().then((data) => {
+                this.setState(data.vote);
+                //Actions.actorUpdate(data);
+            });
+        }).catch(() => {
+            if(status == "parsererror" && request.statusText == "OK") {
+                $.globalEval(request.responseText)
+            } else {
+                console.log('failed');
             }
         });
     },

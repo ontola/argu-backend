@@ -33,23 +33,26 @@ window.NewMembership = React.createClass({
             },
             load: function(query, callback) {
                 if (!query.length) return callback();
-                $.ajax({
-                    url: '/profiles.json',
-                    type: 'GET',
-                    dataType: 'json',
-                    data: {
+                fetch('/profiles.json', _safeCredentials({
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
                         q: query,
                         thing: _this.props.thing,
                         things: _this.props.things
-                    },
-                    error: function (e) {
-                        Argu.Alert(`Server error occured, please try again later`, 'alert', true);
-                        callback();
-                    },
-                    success: function (res) {
-                        callback(res.profiles);
-                    }
+                    })
+                })).then((response) => {
+                    response.status == 200 && response.json().then((data) => {
+                        callback(data.profiles);
+                    });
+                }).catch((e) => {
+                    Argu.Alert(`Server error occured, please try again later`, 'alert', true);
+                    callback();
                 });
+
             }
         });
     },

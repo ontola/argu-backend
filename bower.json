@@ -34,6 +34,7 @@
     "fastclick": "latest",
     "isotope": "2.1.1",
     "nprogress": "latest", 
-    "js-polyfills":"latest"
+    "js-polyfills":"latest",
+    "fetch":"latest"
   }
 }

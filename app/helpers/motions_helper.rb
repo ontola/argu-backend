@@ -45,7 +45,7 @@ module MotionsHelper
         object_type: 'motion',
         object_id: motion.id,
         current_vote: vote.for,
-        vote_url: motion_show_vote_path(motion),
+        vote_url: motion_show_vote_path(motion, format: :json),
         distribution: {
           pro: motion.votes_pro_count,
           neutral: motion.votes_neutral_count,
