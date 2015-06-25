@@ -11,7 +11,7 @@ window.BigGroupResponse = React.createClass({
 
     refresh: function () {
         fetch(`${this.state.object_id}.json`, _safeCredentials())
-            .then(status)
+            .then(statusSuccess)
             .then(json)
             .then((data)  => {
                 data.motion && this.setState(data.motion);

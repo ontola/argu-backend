@@ -82,16 +82,29 @@ var _safeCredentials = function (options) {
     });
 };
 
-var status = function (response) {
+var statusSuccess = function (response) {
     if (response.status >= 200 && response.status < 300) {
         return Promise.resolve(response);
     } else {
-        return Promise.reject(new Error(response.statusText));
+        return Promise.reject(response);
+    }
+};
+
+var tryLogin = function (response) {
+    "use strict";
+    if (response.status == 401) {
+        return Promise.resolve(window.alert('You should login.'));
+    } else {
+        return Promise.reject(new Error('unknown status code'));
     }
 };
 
 var json = function (response) {
-    return response.json();
+    if (response.status !== 204) {
+        return response.json();
+    } else {
+        return Promise.resolve();
+    }
 };
 
 if (typeof module !== 'undefined' && module.exports) {
@@ -99,7 +112,8 @@ if (typeof module !== 'undefined' && module.exports) {
     module.exports = _url;
     module.exports = _authenticityHeader;
     module.exports = _safeCredentials;
-    module.exports = status;
+    module.exports = statusSuccess;
+    module.exports = tryLogin;
     module.exports = json;
     module.exports = ScrollLockMixin;
 }

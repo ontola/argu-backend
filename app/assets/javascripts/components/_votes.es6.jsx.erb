@@ -29,7 +29,7 @@ window.CombiBigVote = React.createClass({
 
     refreshGroups: function () {
         fetch(`${this.state.object_id}.json`, _safeCredentials())
-            .then(status)
+            .then(statusSuccess)
             .then(json)
             .then((data) => {
                 this.setState({groups: data.groups});
@@ -67,7 +67,7 @@ window.BigVote = React.createClass({
 
     refresh: function () {
         fetch(`${this.state.vote_url}.json`, _safeCredentials())
-            .then(status)
+            .then(statusSuccess)
             .then(json)
             .then((data) => {
                 data.vote && this.setState(data.vote);
@@ -92,18 +92,14 @@ window.BigVote = React.createClass({
     vote: function (side) {
         fetch(`${this.props.vote_url}/${side}.json`, _safeCredentials({
             method: 'POST'
-        })).then(status)
-           .then(json)
+        })).then(statusSuccess)
+           .then(json, tryLogin)
            .then((data) => {
                this.setState(data.vote);
                //Actions.actorUpdate(data);
-           }).catch(() => {
-             if(status == "parsererror" && request.statusText == "OK") {
-                 $.globalEval(request.responseText)
-             } else {
-                 console.log('failed');
-             }
-        });
+           }).catch((e) => {
+             console.log('failed');
+           });
     },
 
     voteWidth: function (side) {

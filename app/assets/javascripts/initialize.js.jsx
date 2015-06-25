@@ -52,7 +52,7 @@ $(function (){
 
     function refreshCurrentActor () {
         fetch('/c_a.json', _safeCredentials())
-            .then(status)
+            .then(statusSuccess)
             .then(json)
             .then(Actions.actorUpdate)
             .catch(function () {

@@ -227,7 +227,7 @@ var ActorItem = React.createClass({
         this.props.done();
         fetch(this.props.url, _safeCredentials({
             method: 'PUT'
-        })).then(status)
+        })).then(statusSuccess)
            .then(json)
            .then(function (data) {
                Actions.actorUpdate(data);

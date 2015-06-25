@@ -44,7 +44,7 @@ window.NewMembership = React.createClass({
                         thing: _this.props.thing,
                         things: _this.props.things
                     })
-                })).then(status)
+                })).then(statusSuccess)
                    .then(json)
                    .then((data) => {
                         callback(data.profiles);
