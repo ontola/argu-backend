@@ -52,11 +52,10 @@ $(function (){
 
     function refreshCurrentActor () {
         fetch('/c_a.json', _safeCredentials())
-            .then(function (response) {
-                if (response.status == 200) {
-                    Actions.actorUpdate(data);
-                }
-            }).catch(function () {
+            .then(status)
+            .then(json)
+            .then(Actions.actorUpdate)
+            .catch(function () {
                 console.log('failed');
             });
     }

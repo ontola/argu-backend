@@ -227,13 +227,13 @@ var ActorItem = React.createClass({
         this.props.done();
         fetch(this.props.url, _safeCredentials({
             method: 'PUT'
-        })).then(function (response) {
-            response.status == 200 && response.json().then(function (data) {
-                Actions.actorUpdate(data);
-                if (window.confirm('<%= I18n.t('profiles.switch_warning') %>')) {
-                    location.reload();
-                }
-            });
+        })).then(status)
+           .then(json)
+           .then(function (data) {
+               Actions.actorUpdate(data);
+               if (window.confirm('<%= I18n.t('profiles.switch_warning') %>')) {
+                   location.reload();
+               }
         }).catch(console.log);
     },
 

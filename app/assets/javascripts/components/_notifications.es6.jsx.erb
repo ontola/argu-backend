@@ -152,11 +152,11 @@ var NotificationItem = React.createClass({
         e.stopPropagation();
         fetch(`/n/${this.props.id}.json`, _safeCredentials({
             method: 'PUT'
-        })).then((response) => {
-            response.status == 200 && response.json().then((data) => {
+        })).then(status)
+           .then(json)
+           .then((data) => {
                 NotificationActions.notificationUpdate(data.notifications);
-            });
-        }).catch(console.log);
+           }).catch(console.log);
         this.props.done();
     },
 

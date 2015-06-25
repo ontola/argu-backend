@@ -82,10 +82,24 @@ var _safeCredentials = function (options) {
     });
 };
 
+var status = function (response) {
+    if (response.status >= 200 && response.status < 300) {
+        return Promise.resolve(response);
+    } else {
+        return Promise.reject(new Error(response.statusText));
+    }
+};
+
+var json = function (response) {
+    return response.json();
+};
+
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = _image;
     module.exports = _url;
     module.exports = _authenticityHeader;
     module.exports = _safeCredentials;
+    module.exports = status;
+    module.exports = json;
     module.exports = ScrollLockMixin;
 }

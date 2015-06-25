@@ -44,15 +44,14 @@ window.NewMembership = React.createClass({
                         thing: _this.props.thing,
                         things: _this.props.things
                     })
-                })).then((response) => {
-                    response.status == 200 && response.json().then((data) => {
+                })).then(status)
+                   .then(json)
+                   .then((data) => {
                         callback(data.profiles);
+                    }).catch((e) => {
+                        Argu.Alert(`Server error occured, please try again later`, 'alert', true);
+                        callback();
                     });
-                }).catch((e) => {
-                    Argu.Alert(`Server error occured, please try again later`, 'alert', true);
-                    callback();
-                });
-
             }
         });
     },

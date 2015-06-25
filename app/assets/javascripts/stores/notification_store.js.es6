@@ -47,11 +47,11 @@ window.notificationStore = Reflux.createStore({
     checkForNew: function () {
         "use strict";
         fetch(`/n.json?lastNotification=${this.state.notifications.lastNotification.toISOString()}`, _safeCredentials())
-            .then(function (response) {
-                response.status == 200 && response.json().then(function (data) {
-                    NotificationActions.notificationUpdate(data.notifications);
-                    NotificationActions.checkForNew.completed();
-                });
+            .then(status)
+            .then(json)
+            .then(function (data) {
+                NotificationActions.notificationUpdate(data.notifications);
+                NotificationActions.checkForNew.completed();
             }).catch(NotificationActions.checkForNew.failed);
     },
 
@@ -59,11 +59,11 @@ window.notificationStore = Reflux.createStore({
         "use strict";
         fetch("/n/read.json", _safeCredentials({
             method: 'PATCH'
-        })).then(function (response) {
-            response.status == 200 && response.json().then(function (data) {
-                NotificationActions.notificationUpdate(data.notifications);
-            });
-        }).catch(NotificationActions.markAllAsRead.failed);
+        })).then(status)
+           .then(json)
+           .then(function (data) {
+               NotificationActions.notificationUpdate(data.notifications);
+           }).catch(NotificationActions.markAllAsRead.failed);
     },
 
     // Callback
