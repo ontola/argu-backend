@@ -22,7 +22,6 @@ module Omniauth
         user.shortname = nil
         identity.save!
         user.save!
-        setup_memberships(user)
       end
       user
     end
