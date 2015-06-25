@@ -52,7 +52,7 @@ class ProfilesController < ApplicationController
       if @profile.profileable.class == User
         updated = updated && @profile.profileable.update_attributes(user_profileable_params)
         if (!@resource.finished_intro?) && has_valid_token?(@resource)
-          get_access_tokens(@resource).each do |at|
+          get_access_tokens(@resource).compact.each do |at|
             @profile.memberships.find_or_create_by(forum: at.item) if at.item.class == Forum
           end
         end
