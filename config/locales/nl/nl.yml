@@ -228,27 +228,26 @@ nl:
   unfollow: 'Ontvolgen'
   seo:
     argument:
-      name: ''
-      description: ''
+      name: 'Argument %{side} %{motiontitle}'
+      description: 'Discussieer mee.'
     forum:
-      name: ' h'
+      name: ''
       description: ''
     hash:
       name: ''
       description: ''
     motion:
       name: 'Bekijk argumenten, discussieer mee en stem!'
-      description: 'Alle voordelen en nadelen van %{title} in één overzicht. Denk mee met jouw overheid of organisatie en geef jouw mening!'
-      #an_idea_addon: 'Alle voordelen en nadelen van een idee in één overzicht. Denk mee met jouw gemeente of organisatie en geef jouw mening!'
+      description: 'Alle voordelen en nadelen van %{title} in één overzicht. Denk mee en geef jouw mening!'
     page:
-      name: ''
-      description: ''
+      name: 'Bekijk alle standpunten'
+      description: 'Alle standpunten van %{title} in één overzicht.'
     profile:
-      name: ''
-      description: ''
+      name: 'Bekijk alle standpunten'
+      description: 'Alle standpunten van %{title} in één overzicht.'
     question:
-      name: ''
-      description: ''
+      name: 'Bespreek en deel ideeën'
+      description: 'Deel ideeën voor %{title} en bespreek de voor- en nadelen.'
     string:
       name: ''
       description: ''

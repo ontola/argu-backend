@@ -225,30 +225,30 @@ en:
   follow: 'Follow'
   unfollow: 'Unfollow'
   seo:
-      argument:
-        name: ''
-        description: ''
-      forum:
-        name: ''
-        description: ''
-      hash:
-        name: ''
-        description: ''
-      motion:
-        name: ''
-        description: ''
-      page:
-        name: ''
-        description: ''
-      profile:
-        name: ''
-        description: ''
-      question:
-        name: ''
-        description: ''
-      string:
-        name: ''
-        description: ''
-      user:
-        name: ''
-        description: ''
+    argument:
+      name: 'Argument %{side} %{motiontitle}'
+      description: 'Join the debate.'
+    forum:
+      name: ''
+      description: ''
+    hash:
+      name: ''
+      description: ''
+    motion:
+      name: 'View arguments, join the debate and vote!'
+      description: 'All the pros and cons for %{title}. Share your opinion and join the discussion!'
+    page:
+      name: 'Views & opinions'
+      description: 'All views & opinions of %{title}.'
+    profile:
+      name: 'Views & opinions'
+      description: 'All views & opinions of %{title}.'
+    question:
+      name: 'Discuss and share ideas'
+      description: 'Discuss and share ideas about %{title}. Vote on the best arguments and join the debate!'
+    string:
+      name: ''
+      description: ''
+    user:
+      name: ''
+      description: ''
