@@ -8,10 +8,11 @@ class FollowsController < ApplicationController
       respond_to do |format|
         format.html { redirect_to :back, notification: '_notifications enabled_' }
         format.js { head 201 }
+        format.json { head 201 }
       end
     else
       respond_to do |format|
-        format.js { head 304 }
+        format.json { head 304 }
       end
     end
   end

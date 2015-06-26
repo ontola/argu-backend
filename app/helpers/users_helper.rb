@@ -1,5 +1,12 @@
 module UsersHelper
 
+  def forum_from_r_action(user)
+    if user.r.present?
+      url_options, controller = r_to_url_options(user.r)
+      controller.forum_for(url_options) if controller.present? && controller.respond_to?(:forum_for)
+    end
+  end
+
   def identity_token(identity)
     encrypt_payload({
                         identity: identity.id
@@ -26,6 +33,20 @@ module UsersHelper
   def platform_open?
     cap = Setting.get('user_cap').try(:to_i)
     cap.present? and cap > 0 || cap == -1
+  end
+
+  # Assigns certain memberships based on
+  #   either an 'r' action
+  #   or preferred_forum
+  #   if the user hasn't got any memberships yet
+  def setup_memberships(user)
+    # changed? so we can safely write back to the DB
+    if user.valid? && user.persisted? && !user.changed?
+      if user.profile.memberships.blank?
+        forum = forum_from_r_action(user) || preferred_forum(user.profile)
+        user.profile.memberships.create(forum: forum) if forum.present? && policy(forum).join?
+      end
+    end
   end
 
   # Set user_cap to -1 to disable the cap

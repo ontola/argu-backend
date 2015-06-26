@@ -12,5 +12,10 @@
 //
 //= require js-polyfills/es5
 //= require js-polyfills/es6
-//= require js-polyfills/web
+//= require js-polyfills/html
+//= require js-polyfills/dom
+//= require js-polyfills/xhr
+//= require js-polyfills/cssom
+//= require js-polyfills/timing
+//= require js-polyfills/url
 

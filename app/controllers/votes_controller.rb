@@ -33,6 +33,7 @@ class VotesController < ApplicationController
   # POST /model/:model_id/v/:for
   def create
     @model = voteable_class.find params[voteable_param]
+    get_context
 
     if current_profile.blank?
       authorize @model, :show?
@@ -66,24 +67,40 @@ class VotesController < ApplicationController
     end
   end
 
-
-private
-  # noinspection RubyUnusedLocalVariable
-  def save_vote_to_stats(vote)
-    #TODO: @implement this
+  def voteable_class
+    VotesController.voteable_klass(request.path_parameters)
   end
 
   def voteable_param
-    request.path_parameters.keys.find { |k| /_id/ =~ k }
+    VotesController.voteable_key(request.path_parameters)
   end
 
-  def voteable_type
-    voteable_param[0..-4]
+  def self.voteable_key(hash)
+    hash.keys.find { |k| /_id/ =~ k }
+  end
+
+  def self.voteable_type(opts = nil)
+    voteable_key(opts)[0..-4]
   end
 
   # Note: Safe to constantize since `path_parameters` uses the routes for naming.
-  def voteable_class
-    voteable_type.capitalize.constantize
+  def self.voteable_klass(opts = nil)
+    voteable_type(opts).capitalize.constantize
+  end
+
+  def self.forum_for(url_options)
+    voteable = voteable_klass(url_options).find_by(id: url_options[voteable_key(url_options)])
+    voteable.try :forum if voteable.present?
+  end
+
+private
+  def get_context
+    @forum = @model.forum
+  end
+
+  # noinspection RubyUnusedLocalVariable
+  def save_vote_to_stats(vote)
+    #TODO: @implement this
   end
 
 end

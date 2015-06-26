@@ -29,7 +29,12 @@ function replaceHeadElement(elem) {
         document.head.appendChild(elem);
     } else {
         for(let i = 0; i < elem.attributes.length; i++) {
-            documentHeaderElement.attributes[elem.attributes[i].name].value = elem.attributes[i].value;
+            if (typeof(documentHeaderElement.attributes[elem.attributes[i].name]) !== "undefined") {
+                documentHeaderElement.attributes[elem.attributes[i].name].value = elem.attributes[i].value;
+            } else {
+                document.head.removeChild(documentHeaderElement);
+                document.head.appendChild(elem);
+            }
         }
     }
 

@@ -150,18 +150,13 @@ var NotificationItem = React.createClass({
 
     handleClick: function (e) {
         e.stopPropagation();
-        $.ajax({
-            type: 'PUT',
-            url: ['/n', this.props.id].join('/'),
-            dataType: 'json',
-            async: true,
-            success: function (data) {
+        fetch(`/n/${this.props.id}.json`, _safeCredentials({
+            method: 'PUT'
+        })).then(statusSuccess)
+           .then(json)
+           .then((data) => {
                 NotificationActions.notificationUpdate(data.notifications);
-            },
-            error: function () {
-                console.log('failed');
-            }
-        });
+           }).catch(console.log);
         this.props.done();
     },
 

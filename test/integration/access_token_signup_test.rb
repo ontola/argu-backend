@@ -86,7 +86,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_redirected_to forums(:hidden).url
     assert assigns(:resource)
     assert assigns(:profile)
-    assert_equal 1, assigns(:profile).memberships.count
+    assert_equal 2, assigns(:profile).memberships.count
 
   end
 
