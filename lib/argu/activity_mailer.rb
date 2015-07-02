@@ -46,7 +46,7 @@ class Argu::ActivityMailer
   # Returns the subject for the mail
   def subject
     s = I18n.t('mailer.subject', type: I18n.t("#{@activity.trackable.class_name}.type_new"),
-           item: @activity.recipient.title)
+           item: @activity.recipient.display_name)
     s[0] = s[0].capitalize
     s
   end
