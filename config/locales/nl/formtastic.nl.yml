@@ -84,6 +84,7 @@ nl:
         content: "Leg uit waarom dit een belangrijk argument is. Geef bronnen om jouw argument te onderbouwen."
       forum:
         bio: "Zet in één zin neer waar het forum voor dient. Deze tekst verschijnt onder de naam van het forum. Maximaal 80 karakters."
+        bio_long: "Hier kan je verder toelichten over het forum en jouw organisatie. Je kunt hier markdown gebruiken."
       user:
         shortname: "Geen spaties. Alleen letters, cijfers en _. Begin met een letter."
       password_confirmation: "Zelfde als hierboven"

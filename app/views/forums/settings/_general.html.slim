@@ -6,9 +6,8 @@
     =message
   =f.inputs name: t('forums.settings.profile') do
     =f.input :name
-    =f.input :bio, input_html: { rows: 2}
-    =f.input :bio_long
-    =f.input :featured_tags, as: :tags
+    =f.input :bio, input_html: { rows: 2, maxlength: 80}
+    =f.input :bio_long, input_html: { rows: 4}
     =f.input :cover_photo
     =f.input :cover_photo, as: :preview_image, html_options: { style: 'max-height: 256px;' }
     =f.input :remove_cover_photo, as: :reverse_boolean
@@ -16,7 +15,8 @@
     =f.input :profile_photo
     =f.input :profile_photo, as: :preview_image, html_options: {style: 'max-height: 256px'}
     =f.input :remove_profile_photo, as: :reverse_boolean
-    - if resource.full_access_token.present?
+    =f.input :featured_tags, as: :tags
+    /- if resource.full_access_token.present?
       =text_field_tag 'link', forum_url(resource, at: resource.access_token), onClick: 'this.setSelectionRange(0, this.value.length)'
       p= "Follows: #{resource.full_access_token.usages}"
       p= "Sign-ups: #{resource.full_access_token.sign_ups}"

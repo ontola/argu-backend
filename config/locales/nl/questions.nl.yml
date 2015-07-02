@@ -2,7 +2,7 @@
 
 nl:
   questions:
-    type: "vraagstuk"
+    type: "Vraagstuk"
     type_new: "Nieuw vraagstuk"
     new_btn: "Vraagstuk toevoegen"
     header: "vraagstukken"
