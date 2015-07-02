@@ -141,7 +141,7 @@ module ApplicationHelper
       edit_user_path(profile.profileable)
     elsif profile.profileable.class == Page
       #edit_page_path?
-      page_path(profile.profileable)
+      settings_page_path(profile.profileable)
     else
       'deleted'
     end
