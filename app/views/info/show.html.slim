@@ -43,11 +43,18 @@
                         header
                           h3= feature['header']
                         p.block-subtle== feature['body']
+              - if section['partners'].present?
+                ul.block-partners
+                  - section['partners'].each do |partner|
+                    - unless partner['hidden']
+                      li
+                        a[href=partner['url'] title=partner['name']]
+                          .block-partner-image[style="background-image: url(#{asset_path partner['image']})"]
               - if section['link'].present?
                 a.block-link[href=section['link']['url']]= section['link']['body']
             - if section['image'].present?
               .block--img.block--img--full
-                .img[style="background-image: url(#{asset_path section['image']})"]
+                .img.img[style="background-image: url(#{asset_path section['image']})"]
         - elsif section['type'] == 'double'
           .blocks[class=section['class'] id=section['id']]
             .block.block--img[class=(section['right'] ? 'block--right' : '')]

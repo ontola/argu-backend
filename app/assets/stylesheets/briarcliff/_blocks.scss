@@ -260,6 +260,9 @@ $grey_light: $g0;
     font-size: 1.2em;
     line-height: 1.5em;
     margin-bottom: 0.5em;
+    &:before, &:after {
+      position: relative;
+    }
     @include bp-medium {
       font-size: 1em;
     }
@@ -276,7 +279,7 @@ $grey_light: $g0;
   background-position: center;
   background-size: cover;
   @include filter(grayscale(1));
-  @include transition(.5s);
+  @include transition(.2s);
   &:hover{
     @include filter(grayscale(0));
   }
@@ -288,6 +291,11 @@ $grey_light: $g0;
 
 .block--fill .block-subtle {
   color: #DBDBDB;
+}
+
+.block-image-wide {
+  width: 100%;
+  display: block;
 }
 
 p.block-slogan {
@@ -315,7 +323,6 @@ p.block-slogan {
   .expander.expanded .collapsed-label {
     display: none;
   }
-
   .expander--hidden.collapsed {
     display: none;
   }
@@ -334,6 +341,28 @@ p.block-slogan {
   }
 }
 
+.block-partners {
+  li {
+    display: inline-block;
+    margin: 2em;
+  }
+}
+
+.block-partner-image {
+  width: 8em;
+  height: 4em;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position-x: center;
+  background-position-y: center;
+  @include filter(grayscale(1));
+  @include transition(.2s);
+  &:hover{
+    @include filter(grayscale(0));
+  }
+}
+
 .block-social-buttons li{
   display: inline;
   font-size: 1.3em;
@@ -343,10 +372,6 @@ p.block-slogan {
   &:hover{
     opacity: 1;
   }
-}
-
-.block-image-wide {
-  width: 100%;
 }
 
 .block-video{
