@@ -6,6 +6,7 @@
     =message
   - if policy(resource).terminology?
     =f.inputs name: t('forums.settings.terminology') do
+      p= t('forums.settings.terminology_helper')
       =f.input :uses_alternative_names, as: :reverse_boolean
 
       =f.input :questions_title

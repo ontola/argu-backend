@@ -286,13 +286,15 @@
   cursor: pointer;
   display: block;
   color: $g3;
-  height: 100%;
+  // height: 100%; //causes a bug on chrome on iOS, where the filter buttons fill the entire screen.
   @include transition(.2s);
   > a, .dropdown-trigger, > div > div {
     padding: .7em;
-    display: inline-block;
+    //display: inline-block; // Seems to un-align buttons if div buttons are present (e.g. in motion show box)
+    display: block;
     color: $g3;
-    vertical-align: bottom;
+    //vertical-align: bottom;
+    height: 2.45em;
     &:hover {
       text-decoration: none;
 

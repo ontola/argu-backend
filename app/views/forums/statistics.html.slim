@@ -16,7 +16,7 @@
       h2= t('forums.statistics.tags')
       - if @tags.present?
         ul
-        - @tags.each do |tag|
-          li= link_to "#{tag[:count]} - #{tag[:name]}", forum_tag_url(@forum.url, id: tag[:name])
+          - @tags.each do |tag|
+            li= link_to "#{tag[:count]} - #{tag[:name]}", forum_tag_url(@forum.url, id: tag[:name])
       - else
         p= t('forums.statistics.no_tags')

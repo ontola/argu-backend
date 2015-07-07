@@ -59,6 +59,7 @@ window.BigVote = React.createClass({
         return {
             object_type: this.props.object_type,
             object_id: this.props.object_id,
+            total_votes: this.props.total_votes,
             current_vote: this.props.current_vote,
             distribution: this.props.distribution,
             percent: this.props.percent
@@ -121,13 +122,18 @@ window.BigVote = React.createClass({
     render: function () {
         var results;
 
-        if (this.state.distribution) {
+        if (this.state.current_vote !== "abstain") {
             results = (
                 <ul className="progress-bar progress-bar-stacked" data-collapsed={(this.state.current_vote.length == 0 || this.state.current_vote == 'abstain') || null}>
                     <li style={this.voteWidth('pro')}><span className="btn-pro">{this.state.distribution.pro}</span></li>
                     <li style={this.voteWidth('neutral')}><span className="btn-neu">{this.state.distribution.neutral}</span></li>
                     <li style={this.voteWidth('con')}><span className="btn-con">{this.state.distribution.con}</span></li>
                 </ul>);
+        } else {
+            results = (
+                <p>
+                   Stem om te zien wat <b>{this.state.total_votes}</b> anderen gestemd hebben!
+                </p>);
         }
 
         return (<div className="center motion-shr">

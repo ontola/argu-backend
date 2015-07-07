@@ -34,4 +34,4 @@
       .intro-filler[data-intro= t("intro.profile.votes") data-position="top"]
     =render_columns(@collection, collection_model: Vote)
   - elsif @profile.are_votes_public?
-    h2.center= t('profiles.didnt_vote_name', name: @profile.display_name).capitalize
+    h2.center= t('profiles.didnt_vote_name', name: @profile.display_name)

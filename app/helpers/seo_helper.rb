@@ -8,8 +8,8 @@ module SeoHelper
     end
   end
 
-  def seolized_title(model)
-    appendage = t("seo.#{model.class.name.downcase}.name")
+  def seolized_title(model, **options)
+    appendage = t("seo.#{model.class.name.downcase}.name", **options)
     name = if model.is_a?(String)
              model
            elsif model.is_a?(Hash)
