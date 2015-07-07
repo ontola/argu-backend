@@ -539,9 +539,9 @@ ActiveRecord::Schema.define(version: 20150624074140) do
     t.boolean  "has_analytics",                      default: true
     t.integer  "gender"
     t.integer  "hometown"
-    t.string   "time_zone",                          default: "UTC"
-    t.string   "language",                           default: "nl"
-    t.string   "country",                            default: "NL"
+    t.string   "time_zone",                          default: 'Amsterdam'
+    t.string   "language",                           default: 'nl'
+    t.string   "country",                            default: 'NL'
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

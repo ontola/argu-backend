@@ -61,7 +61,9 @@ module HeaderHelper
 
   def public_forum_items(limit= 10)
     items = []
-    Forum.top_public_forums(limit).each do |forum|
+    Forum.top_public_forums(limit)
+        .select { |f| ['nederland', 'utrecht', 'houten', 'feedback'].include?(f.shortname.shortname) }
+        .each do |forum|
       items << link_item(forum.display_name, forum_path(forum), image: forum.profile_photo.url(:icon))
     end
     items

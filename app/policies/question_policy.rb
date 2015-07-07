@@ -31,7 +31,7 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def create?
-    rule is_member?, super
+    rule is_member?, is_manager?, super
   end
 
   def edit?
