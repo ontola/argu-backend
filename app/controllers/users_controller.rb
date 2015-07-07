@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
+    get_user_or_redirect
     authorize @user
 
     if @user.present?
@@ -110,7 +110,7 @@ class UsersController < ApplicationController
 
   # When shortname isn't set yet
   def setup
-    @user = current_user
+    get_user_or_redirect
     authorize @user, :setup?
     if @user.shortname.blank?
       @user.build_shortname
@@ -120,7 +120,7 @@ class UsersController < ApplicationController
   end
 
   def setup!
-    @user = current_user
+    get_user_or_redirect
     authorize @user, :setup?
     if current_user.url.blank?
       current_user.build_shortname shortname: params[:user][:shortname_attributes][:shortname]
@@ -131,10 +131,21 @@ class UsersController < ApplicationController
       else
         render 'setup_shortname'
       end
+    else
+      flash[:success] = t('users.shortname.not_changeable')
+      redirect_to root_path
     end
   end
 
   private
+  def get_user_or_redirect
+    @user = current_user
+    if current_user.blank?
+      flash[:error] = t('devise.failure.unauthenticated')
+      redirect_to :back
+    end
+  end
+
   def permit_params
     params.require(:user).permit(*policy(@user || User).permitted_attributes(true))
   end

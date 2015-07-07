@@ -84,8 +84,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def sign_in_and_redirect_with_r(resource_or_scope, *args)
     sign_in resource_or_scope, *args
-    if resource_or_scope.r.present?
-      r = URI.decode(resource.r)
+    if resource_or_scope.try(:r).present?
+      r = URI.decode(resource_or_scope.r)
       redirect_to r.presence || root_path
     else
       redirect_to after_sign_in_path_for(resource_or_scope)

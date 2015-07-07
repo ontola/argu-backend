@@ -30,3 +30,4 @@ en:
   users:
     shortname:
       not_changeable: "Think carefully about a username. You can't change it later."
+      already_present: "You already have a username, contact Argu for a change request."

@@ -30,3 +30,4 @@ nl:
   users:
     shortname:
       not_changeable: "Kies een gebruikersnaam zorgvuldig, deze kan niet meer gewijzigd worden."
+      already_present: "Je hebt al een gebruikersnaam, neem contact op met Argu voor een wijzigingsverzoek."
