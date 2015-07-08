@@ -11,4 +11,16 @@ class Rack::Attack
     end
   end
 
+  blacklist('block referer spam') do |request|
+    spammers = [
+        /co\.lumb\.co/,
+        /darodar/,
+        /-seo.com/,
+        /erot.co/,
+        /howtostopreferralspam.eu/,
+        /floating-share-buttons.com/
+    ]
+    spammers.find { |spammer| request.referer =~ spammer }
+  end
+
 end
