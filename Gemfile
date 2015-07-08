@@ -95,8 +95,8 @@ group :development, :test do
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'mocha'
   gem 'pry'
-  gem 'byebug'
-  gem 'pry-byebug'
+  #gem 'byebug'
+  #gem 'pry-byebug'
   gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
