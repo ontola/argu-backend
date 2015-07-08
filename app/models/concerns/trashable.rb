@@ -10,7 +10,10 @@ module Trashable
   end
 
   def trash
-    update_column :is_trashed, true
+    self.class.transaction do
+      update_column :is_trashed, true
+      refresh_counter_cache if self.respond_to? :refresh_counter_cache
+    end
   end
 
   module ClassMethods

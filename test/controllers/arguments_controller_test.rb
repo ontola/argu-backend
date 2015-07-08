@@ -111,4 +111,5 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     assert_equal arguments(:one), assigns(:argument)
   end
+
 end
