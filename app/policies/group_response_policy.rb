@@ -52,7 +52,7 @@ class GroupResponsePolicy < RestrictivePolicy
   end
 
   def create?
-    rule (!limit_reached? && profile_in_group?), super
+    rule limit_reached? ? nil : profile_in_group?, super
   end
 
   def update?
