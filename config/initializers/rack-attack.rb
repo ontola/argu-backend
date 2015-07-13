@@ -1,3 +1,10 @@
+
+unless Rails.env.test?
+  ActiveSupport::Notifications.subscribe('rack.attack') do |name, start, finish, request_id, req|
+    Bugsnag.notify(new Argu::HackerError(name, req), request_data: req)
+  end
+end
+
 class Rack::Attack
   SPAMMERS = [
       /co\.lumb\.co/,

@@ -15,6 +15,8 @@ class SecurityTest < ActionDispatch::IntegrationTest
 
       assert_response 403
     end
+
+    Rack::Attack.cache.store.clear
   end
 
   test 'should not block non-spam referer' do
@@ -53,5 +55,7 @@ class SecurityTest < ActionDispatch::IntegrationTest
       get forum_path(forums(:utrecht)), {}, {}
       assert_response 403
     end
+
+    Rack::Attack.cache.store.clear
   end
 end
