@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class RefererSpamBlockTest < ActionDispatch::IntegrationTest
+class SecurityTest < ActionDispatch::IntegrationTest
 
   test 'should block referer spam' do
     spammers = %w(
@@ -33,4 +33,25 @@ class RefererSpamBlockTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'should block malicious requests' do
+    mal_code = [
+        '/etc/passwd',
+        '../',
+        "env X='() { (a)=>\\' bash -c \"echo date\"; cat echo"
+    ]
+
+    mal_code.each do |malicious|
+      Rack::Attack.cache.store.clear
+      get forum_path(forums(:utrecht), inject: malicious), {}, {}
+      assert_response 403
+      get forum_path(forums(:utrecht), inject: malicious), {}, {}
+      assert_response 403
+      get forum_path(forums(:utrecht)), {}, {}
+      assert_response 200
+      get forum_path(forums(:utrecht), inject: malicious), {}, {}
+      assert_response 403
+      get forum_path(forums(:utrecht)), {}, {}
+      assert_response 403
+    end
+  end
 end
