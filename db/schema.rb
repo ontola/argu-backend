@@ -505,8 +505,8 @@ ActiveRecord::Schema.define(version: 20150624074140) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",     limit: 255
     t.string   "last_sign_in_ip",        limit: 255
-    t.datetime "created_at",                                         null: false
-    t.datetime "updated_at",                                         null: false
+    t.datetime "created_at",                                               null: false
+    t.datetime "updated_at",                                               null: false
     t.string   "unconfirmed_email",      limit: 255
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
@@ -517,19 +517,19 @@ ActiveRecord::Schema.define(version: 20150624074140) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                  default: 0
     t.boolean  "finished_intro",                     default: false
-    t.integer  "follows_email",                      default: 1,     null: false
-    t.boolean  "follows_mobile",                     default: true,  null: false
-    t.integer  "memberships_email",                  default: 1,     null: false
-    t.boolean  "memberships_mobile",                 default: true,  null: false
-    t.integer  "created_email",                      default: 1,     null: false
-    t.boolean  "created_mobile",                     default: true,  null: false
+    t.integer  "follows_email",                      default: 1,           null: false
+    t.boolean  "follows_mobile",                     default: true,        null: false
+    t.integer  "memberships_email",                  default: 1,           null: false
+    t.boolean  "memberships_mobile",                 default: true,        null: false
+    t.integer  "created_email",                      default: 1,           null: false
+    t.boolean  "created_mobile",                     default: true,        null: false
     t.text     "r"
     t.text     "access_tokens"
     t.text     "omni_info"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.text     "active_sessions",                    default: [],                 array: true
+    t.text     "active_sessions",                    default: [],                       array: true
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
@@ -539,9 +539,9 @@ ActiveRecord::Schema.define(version: 20150624074140) do
     t.boolean  "has_analytics",                      default: true
     t.integer  "gender"
     t.integer  "hometown"
-    t.string   "time_zone",                          default: 'Amsterdam'
-    t.string   "language",                           default: 'nl'
-    t.string   "country",                            default: 'NL'
+    t.string   "time_zone",                          default: "Amsterdam"
+    t.string   "language",                           default: "nl"
+    t.string   "country",                            default: "NL"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

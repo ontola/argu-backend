@@ -8,7 +8,8 @@ Setting up
 2. Install the gems `bundle install`
 3. Set up the db `rake db:setup`
 4. Start the server `rails s`
-5. Start the background worker: `bundle exec sidekiq`
+5. Run Redis `redis-server`
+6. Start the background worker: `bundle exec sidekiq`
 
 New Features
 ------------

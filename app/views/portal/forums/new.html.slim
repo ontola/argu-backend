@@ -1,11 +1,14 @@
 =set_title "_Create forum for #{@forum.page.profile.name}_"
-h1= "_Create forum for #{@forum.page.profile.name}_"
-= semantic_form_for [:portal, @forum] do |f|
-  = f.inputs do
-    = f.input :name
-    = f.inputs :shortname, for: :shortname
-    = f.input :page_id, as: :hidden
+.col-1
+  .box
+    section
+      h1= "_Create forum for #{@forum.page.profile.name}_"
+      = semantic_form_for [:portal, @forum] do |f|
+        = f.inputs do
+          = f.input :name
+          = f.inputs :shortname, for: :shortname
+          = f.input :page_id, as: :hidden
 
-  = f.actions do
-    = f.action :submit, :as => :button
-    = f.action :cancel, :as => :link
+        = f.actions do
+          = f.action :submit, :as => :button
+          = f.action :cancel, :as => :link
