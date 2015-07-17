@@ -67,6 +67,24 @@ class VotesController < ApplicationController
     end
   end
 
+  def destroy
+    vote = Vote.find params[:id]
+    authorize vote, :destroy?
+
+    respond_to do |format|
+      if vote.destroy
+        vote.voteable.reload
+        format.js { render locals: {
+                               vote: vote
+                           } }
+        format.json { head 204 }
+      else
+        format.js { head :bad_request }
+        format.json { head :bad_request }
+      end
+    end
+  end
+
   def voteable_class
     VotesController.voteable_klass(request.path_parameters)
   end

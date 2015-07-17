@@ -38,10 +38,6 @@ class ForumPolicy < RestrictivePolicy
       5
     end
 
-    def owner
-      6
-    end
-
     # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta
     def is_open?
       open if @record.open?

@@ -1,7 +1,10 @@
+require 'argu/hacker_error'
 
 unless Rails.env.test?
   ActiveSupport::Notifications.subscribe('rack.attack') do |name, start, finish, request_id, req|
-    Bugsnag.notify(new Argu::HackerError(name, req), request_data: req)
+    if (%w(spam fail2ban) & req.env['rack.attack.matched'].split(' ')).present?
+      Bugsnag.notify(Argu::HackerError.new(name), request_data: req)
+    end
   end
 end
 
