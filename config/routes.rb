@@ -92,6 +92,7 @@ Argu::Application.routes.draw do
   end
 
   post 'v/:for' => 'votes#create', as: :vote
+  resources :votes, only: [:destroy], path: :v
 
   resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible] do
     resources :tags, path: 't', only: [:index]

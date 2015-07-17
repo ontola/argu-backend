@@ -4,7 +4,7 @@
     span.icon-left= @argument.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con')
   section
     h1[class=(@argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= @argument.title
-    =render partial: 'arguments/shr', locals: {model: @argument}
+    =render partial: 'arguments/shr', locals: {model: @argument, vote: @vote}
     .markdown[itemprop="text"]
       = markdown_to_html(@argument.content)
   =render @argument.creator, locals= {resource: @argument} if @argument.creator.present?

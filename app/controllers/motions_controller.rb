@@ -8,7 +8,7 @@ class MotionsController < ApplicationController
     @forum = @motion.forum
     current_context @motion
     authorize @motion
-    @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
+    @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes))
     @group_responses = Group.ordered_with_meta @motion.group_responses, @forum.groups, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
