@@ -8,8 +8,8 @@ module SeoHelper
     end
   end
 
-  def seolized_title(model)
-    appendage = t("seo.#{model.class.name.downcase}.name")
+  def seolized_title(model, **options)
+    appendage = t("seo.#{model.class.name.downcase}.name", **options)
     name = if model.is_a?(String)
              model
            elsif model.is_a?(Hash)
@@ -38,10 +38,15 @@ module SeoHelper
 
   def options_hash_to_meta_tags(options)
     META_ITEMS.map do |k, v|
-      if v.is_a?(Hash) && v[:static] == true
-        content_tag(:meta, nil, property: k, content: v[:content])
+      if v.is_a?(Hash)
+        tag_name = v.delete(:tag_name).presence || :meta
+        v = v.map { |key,val| [key, val.is_a?(Symbol) ? options[val] : v[key]] }.to_h
+        v[:property] = k if tag_name.to_sym == :meta
+        v[:rel] = k if tag_name.to_sym == :link
+        v[:id] = k
+        content_tag(tag_name, nil, v)
       else
-        content_tag(:meta, nil, property: k, content: escape_once(options[v]))
+        content_tag(:meta, nil, property: k, id: k, content: escape_once(options[v]))
       end
     end.join(' ').html_safe
   end
@@ -50,6 +55,7 @@ module SeoHelper
       # HTML
       'description' => :description,
       'url' => :url,
+      'canonical' => {tag_name: 'link', href: :url, itemprop: 'url'},
 
       # Facebook
       'og:title' => :name,
@@ -58,8 +64,8 @@ module SeoHelper
       'og:image' => :image,
 
       # Twitter
-      'twitter:card' => {static: true, content: 'summary'},
-      'twitter:site' => {static: true, content: '@argu_co'},
+      'twitter:card' => {content: 'summary'},
+      'twitter:site' => {content: '@argu_co'},
       'twitter:title' => :name,
       'twitter:description' => :description,
       'twitter:image' => :image

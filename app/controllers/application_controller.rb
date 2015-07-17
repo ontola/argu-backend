@@ -20,8 +20,8 @@ class ApplicationController < ActionController::Base
   rescue_from Pundit::NotAuthorizedError do |exception|
     Rails.logger.error exception
     respond_to do |format|
-      format.js { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
-      format.json { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.js { render status: 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.json { render status: 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {
         request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
         redirect_to :back, :alert => exception.message
@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
   rescue_from Argu::NotLoggedInError do |exception|
     @_not_logged_in_caught = true
     respond_to do |format|
-      format.js { render 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.js { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {
         r = request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
         @resource ||= User.new r: r.to_s
@@ -45,6 +45,7 @@ class ApplicationController < ActionController::Base
     @quote = Setting.get(:quotes).split(';').sample
     respond_to do |format|
       format.html { render 'status/404', status: 404 }
+      format.js { head 404 }
       format.json { render json: { title: t('status.s_404.header'), message: t('status.s_404.body'), quote: @quote}, status: 404 }
     end
   end
@@ -95,17 +96,18 @@ class ApplicationController < ActionController::Base
 
   def forum_by_geocode
     if session[:geo_location].present?
-      forum = Forum.find_via_shortname(session[:geo_location].city.downcase) if session[:geo_location].city.present?
-      forum ||= Forum.find_via_shortname(session[:geo_location].country.downcase) if session[:geo_location].country.present?
-      forum = Forum.find_via_shortname('eu') if forum.blank? && EU_COUNTRIES.include?(session[:geo_location].country_code)
+      forum = Forum.find_via_shortname_nil(session[:geo_location].city.downcase) if session[:geo_location].city.present?
+      forum ||= Forum.find_via_shortname_nil(session[:geo_location].country.downcase) if session[:geo_location].country.present?
+      forum = Forum.find_via_shortname_nil('eu') if forum.blank? && EU_COUNTRIES.include?(session[:geo_location].country_code)
       forum
     end
   end
 
   # Uses Redis to fetch the {User}s last visited {Forum}, if not present uses {Forum.first_public}
-  def preferred_forum
-    if current_profile.present?
-      policy(current_profile.preferred_forum).show? ? current_profile.preferred_forum : current_profile.memberships.first.try(:forum) || Forum.first_public
+  def preferred_forum(profile = nil)
+    profile ||= current_profile
+    if profile.present?
+      policy(profile.preferred_forum).show? ? profile.preferred_forum : profile.memberships.first.try(:forum) || Forum.first_public
     else
       forum_by_geocode || Forum.first_public
     end
@@ -156,7 +158,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_time_zone(&block)
-    time_zone = current_user.try(:time_zone) || 'UTC'
+    time_zone = current_user.try(:time_zone) || 'Amsterdam'
     Time.use_zone(time_zone, &block)
   end
 

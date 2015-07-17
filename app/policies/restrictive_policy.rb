@@ -36,6 +36,10 @@ class RestrictivePolicy
       4
     end
 
+    def owner
+      6
+    end
+
     def staff
       10
     end

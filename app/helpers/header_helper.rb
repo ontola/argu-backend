@@ -1,31 +1,6 @@
 module HeaderHelper
   include DropdownHelper
 
-  def forum_selector_items(guest= false)
-    {
-        title: t('forums.plural'),
-        fa: 'fa-group',
-        sections: [
-            {
-                items: forum_selector_memberships(guest)
-            }
-        ],
-        triggerClass: 'navbar-item'
-    }
-  end
-
-  def forum_selector_memberships(guest= false)
-    items = []
-
-    _public_forum_items = public_forum_items(5)
-    items.concat guest ? _public_forum_items : profile_membership_items
-
-    items << link_item(t('forums.discover'), discover_forums_path, fa: 'compass', divider: 'top')
-    items.concat (_public_forum_items - profile_membership_items) if items.length < _public_forum_items.length + 1
-
-    items
-  end
-
   # Label for the home button
   def home_text
     current_scope.model.try(:display_name) || t('home_title')
@@ -86,14 +61,16 @@ module HeaderHelper
 
   def public_forum_items(limit= 10)
     items = []
-    Forum.top_public_forums(limit).each do |forum|
+    Forum.top_public_forums(limit)
+        .select { |f| ['nederland', 'utrecht', 'houten', 'feedback'].include?(f.shortname.shortname) }
+        .each do |forum|
       items << link_item(forum.display_name, forum_path(forum), image: forum.profile_photo.url(:icon))
     end
     items
   end
 
   def profile_membership_items
-    ids = current_profile.memberships.pluck(:forum_id)
+    ids = current_profile.present? ? current_profile.memberships.pluck(:forum_id) : []
     Shortname.shortname_owners_for_klass('Forum', ids).map do |shortname|
       link_item(shortname.owner.display_name, forum_path(shortname.shortname), image: shortname.owner.profile_photo.url(:icon))
     end
@@ -127,9 +104,9 @@ module HeaderHelper
   def managed_pages_items
     items = []
     if current_user.managed_pages.present?
-      items << actor_item(current_user.display_name, actors_path(na: current_user.profile.id), image: current_user.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
+      items << actor_item(current_user.display_name, actors_path(na: current_user.profile.id, format: :json), image: current_user.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
       current_user.managed_pages.includes(:profile).each do |p|
-        items << actor_item(p.profile.name, actors_path(na: p.profile.id), image: p.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
+        items << actor_item(p.profile.name, actors_path(na: p.profile.id, format: :json), image: p.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
       end
     end
     items

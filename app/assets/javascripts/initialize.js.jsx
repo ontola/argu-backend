@@ -51,20 +51,13 @@ $(function (){
     }
 
     function refreshCurrentActor () {
-        $.ajax({
-            type: 'GET',
-            url: '/c_a',
-            dataType: 'json',
-            async: true,
-            success: function (data, status, xhr) {
-                if (xhr.status == 200) {
-                    Actions.actorUpdate(data);
-                }
-            },
-            error: function () {
+        fetch('/c_a.json', _safeCredentials())
+            .then(statusSuccess)
+            .then(json)
+            .then(Actions.actorUpdate)
+            .catch(function () {
                 console.log('failed');
-            }
-        });
+            });
     }
 
     if (typeof($.pjax.defaults) ===  "undefined") {

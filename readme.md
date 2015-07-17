@@ -8,7 +8,8 @@ Setting up
 2. Install the gems `bundle install`
 3. Set up the db `rake db:setup`
 4. Start the server `rails s`
-5. Start the background worker: `bundle exec sidekiq`
+5. Run Redis `redis-server`
+6. Start the background worker: `bundle exec sidekiq`
 
 New Features
 ------------
@@ -32,6 +33,7 @@ Key / Environment variable                                            |  Use
 -------------------------------------------------------------------   |  -----------------------------------------------------------------------------------------------------------------------------
 `secret_token`                                                        |  Use `rake secret` to generate
 `secret_key_base`                                                     |  Use `rake secret` to generate
+`devise_secret`                                                       |  Devise secret key base
 `argu_gmail_pass`                                                     |  Used for ActionMailer/Devise
 `aws_id`                                                              |  Used to store images
 `aws_key`                                                             |  Used to store images

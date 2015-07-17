@@ -4,13 +4,14 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1.json
   def show
     @argument = Argument.includes(:comment_threads).find params[:id]
-    authorize @argument, :show?
     @forum = @argument.forum
     current_context @argument
+    authorize @argument, :show?
     @parent_id = params[:parent_id].to_s
     
     @comments = @argument.filtered_threads(show_trashed?)
     @length = @argument.root_comments.length
+    @vote = Vote.find_or_initialize_by voteable: @argument, voter: current_profile
 
     respond_to do |format|
       format.html # show.html.erb
@@ -120,6 +121,10 @@ class ArgumentsController < ApplicationController
 private
   def argument_params
     params.require(:argument).permit(*policy(@argument || Argument).permitted_attributes)
+  end
+
+  def self.forum_for(url_options)
+    Argument.find_by(url_options[:argument_id] || url_options[:id]).try(:forum)
   end
 
 end

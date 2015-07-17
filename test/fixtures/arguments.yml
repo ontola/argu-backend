@@ -12,6 +12,7 @@ one:
   pro: true
   forum: :utrecht
   creator: :profile_one
+  comments_count: 1
 #
 two:
   title: "Argument two"

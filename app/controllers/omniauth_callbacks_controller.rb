@@ -40,6 +40,7 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
             identity = Identity.find_or_initialize_by uid: env["omniauth.auth"]["uid"], provider: :#{provider}
             set_#{provider}_fields identity, env["omniauth.auth"]
             user = connector.create_user_without_shortname(env["omniauth.auth"], identity, r_param(env))
+            setup_memberships(user)
             set_flash_message(:notice, :success, kind: "#{provider}".capitalize) if is_navigational_format?
             sign_in_and_redirect_with_r user
           elsif current_user.blank?
@@ -83,8 +84,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def sign_in_and_redirect_with_r(resource_or_scope, *args)
     sign_in resource_or_scope, *args
-    if resource_or_scope.r.present?
-      r = URI.decode(resource.r)
+    if resource_or_scope.try(:r).present?
+      r = URI.decode(resource_or_scope.r)
       redirect_to r.presence || root_path
     else
       redirect_to after_sign_in_path_for(resource_or_scope)

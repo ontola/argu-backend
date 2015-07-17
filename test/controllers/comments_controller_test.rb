@@ -43,6 +43,19 @@ class CommentsControllerTest < ActionController::TestCase
     assert_redirected_to argument_path(arguments(:one), anchor: comments(:one).id)
   end
 
+  test 'should not delete destroy own comment twice affecting counter caches' do
+    sign_in users(:user)
+
+    assert_equal 1, comments(:one).commentable.comments_count
+
+    assert_difference('comments(:one).commentable.reload.comments_count', -1) do
+      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one)
+      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one)
+    end
+
+    assert_redirected_to argument_path(arguments(:one), anchor: comments(:one).id)
+  end
+
   test "'should not delete destroy on others' comment'" do
     sign_in users(:user2)
 
@@ -53,5 +66,21 @@ class CommentsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to root_path
+  end
+
+  ####################################
+  # As owner
+  ####################################
+  test 'should not delete wipe own comment twice affecting counter caches' do
+    sign_in users(:user_thom)
+
+    assert_equal 1, comments(:one).commentable.comments_count
+
+    assert_difference('comments(:one).commentable.reload.comments_count', -1) do
+      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one), wipe: 'true'
+      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one), wipe: 'true'
+    end
+
+    assert_redirected_to argument_url(arguments(:one), anchor: comments(:one).id)
   end
 end

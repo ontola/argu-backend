@@ -46,6 +46,7 @@ module MotionsHelper
         object_id: motion.id,
         current_vote: vote.for,
         vote_url: motion_show_vote_path(motion),
+        total_votes: motion.total_vote_count,
         distribution: {
           pro: motion.votes_pro_count,
           neutral: motion.votes_neutral_count,

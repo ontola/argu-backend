@@ -72,8 +72,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
     .grid
       .box.box-grid-sizer
       .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
-      -@items.each do |item|
-        =render item
+      =render @items
       =render partial: 'sample_items'
     .col-1
       header#forum-info

@@ -6,6 +6,8 @@ en:
     type: "Forum"
     type_new: "New forum"
     plural: "Forums"
+    my: "My forums"
+    current: "This forum"
     resource_name:
       management: "forum management"
     settings:
@@ -19,6 +21,7 @@ en:
         privacy: 'Privacy'
         managers: 'Managers'
       terminology: "Terminologogy"
+      terminology_helper: "You can adjust the names for concepts as 'ideas' and 'questions'. However, this functionality is not yet fully developed and we recommend that you use the default settings."
       advanced: "Advanced"
       privacy: "Privacy"
       manager: "Manager"

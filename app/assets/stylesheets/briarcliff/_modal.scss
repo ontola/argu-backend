@@ -26,7 +26,7 @@
   @include animation(from-top-fade .3s ease-out);
   @include bp-medium{
     //position: absolute;
-    padding-top: 0;
+    padding-top: 1em;
   }
   &.col-1{
     margin-bottom: 0;

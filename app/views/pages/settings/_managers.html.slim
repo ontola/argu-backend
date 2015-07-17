@@ -1,15 +1,14 @@
-h1= t('pages.settings.managers.owner')
+h3= t('pages.settings.managers.owner')
 p= t('pages.settings.managers.about_owner')
-div
-div
+.margin-bottom
   =image_tag @page.owner.profile_photo, class: 'profile-photo'
   span=@page.owner.display_name
 
 - if policy(@page).transfer?
-  h2[style="clear: left;"] Overdracht
-  =link_to 'transfer', transfer_page_url(@page), data: {remote: true}, class: 'btn--warning'
+  h3[style="clear: left;"] Overdracht
+  =link_to 'transfer', transfer_page_url(@page), data: {remote: true}, class: 'btn--warning margin-bottom'
 
-h1[style='clear: left;']= t('pages.settings.managers.title')
+h3[style='clear: left;']= t('pages.settings.managers.title')
 p= t('pages.settings.managers.about_managers')
 table.styled
   tbody

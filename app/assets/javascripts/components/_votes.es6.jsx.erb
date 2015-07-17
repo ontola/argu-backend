@@ -28,18 +28,14 @@ window.CombiBigVote = React.createClass({
     },
 
     refreshGroups: function () {
-        $.ajax({
-            type: 'GET',
-            url: this.state.object_id,
-            dataType: 'json',
-            async: true,
-            success: (data) => {
+        fetch(`${this.state.object_id}.json`, _safeCredentials())
+            .then(statusSuccess)
+            .then(json)
+            .then((data) => {
                 this.setState({groups: data.groups});
-            },
-            error: function () {
+            }).catch(() => {
                 Argu.Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
-            }
-        });
+            });
     },
 
     render: function () {
@@ -47,7 +43,7 @@ window.CombiBigVote = React.createClass({
         if (!this.state.actor || this.state.actor.actor_type == "User") {
             voteComponent = <BigVote {...this.state} {...this.props}/>;
         } else if (this.state.actor.actor_type == "Page") {
-            voteComponent = <BigGroupResponse groups={this.state.groups} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
+            voteComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
         }
 
         return (
@@ -63,6 +59,7 @@ window.BigVote = React.createClass({
         return {
             object_type: this.props.object_type,
             object_id: this.props.object_id,
+            total_votes: this.props.total_votes,
             current_vote: this.props.current_vote,
             distribution: this.props.distribution,
             percent: this.props.percent
@@ -70,20 +67,14 @@ window.BigVote = React.createClass({
     },
 
     refresh: function () {
-        $.ajax({
-            type: 'GET',
-            url: this.props.vote_url,
-            dataType: 'json',
-            async: true,
-            success: (data) => {
-                if (data.vote) {
-                    this.setState(data.vote);
-                }
-            },
-            error: function () {
+        fetch(`${this.state.vote_url}.json`, _safeCredentials())
+            .then(statusSuccess)
+            .then(json)
+            .then((data) => {
+                data.vote && this.setState(data.vote);
+            }).catch(() => {
                 Argu.Alert('<%= I18n.t('votes.alerts.failed') %>', 'alert', true);
-            }
-        });
+            });
     },
 
     proHandler: function (e) {
@@ -100,28 +91,16 @@ window.BigVote = React.createClass({
     },
 
     vote: function (side) {
-        $.ajax({
-            type: 'POST',
-            url: [this.props.vote_url, side].join('/'),
-            dataType: 'json',
-            async: true,
-            beforeSend: function (xhr) {
-                xhr.setRequestHeader('accepts', 'application/json, application/javascript, */*');
-            },
-            success: (data) => {
-                if (data.vote) {
-                    this.setState(data.vote);
-                    //Actions.actorUpdate(data);
-                }
-            },
-            error: (request, status) => {
-                if(status == "parsererror" && request.statusText == "OK") {
-                    $.globalEval(request.responseText)
-                } else {
-                    console.log('failed');
-                }
-            }
-        });
+        fetch(`${this.props.vote_url}/${side}.json`, _safeCredentials({
+            method: 'POST'
+        })).then(statusSuccess)
+           .then(json, tryLogin)
+           .then((data) => {
+               this.setState(data.vote);
+               //Actions.actorUpdate(data);
+           }).catch((e) => {
+             console.log('failed');
+           });
     },
 
     voteWidth: function (side) {
@@ -143,13 +122,18 @@ window.BigVote = React.createClass({
     render: function () {
         var results;
 
-        if (this.state.distribution) {
+        if (this.state.current_vote !== "abstain") {
             results = (
                 <ul className="progress-bar progress-bar-stacked" data-collapsed={(this.state.current_vote.length == 0 || this.state.current_vote == 'abstain') || null}>
                     <li style={this.voteWidth('pro')}><span className="btn-pro">{this.state.distribution.pro}</span></li>
                     <li style={this.voteWidth('neutral')}><span className="btn-neu">{this.state.distribution.neutral}</span></li>
                     <li style={this.voteWidth('con')}><span className="btn-con">{this.state.distribution.con}</span></li>
                 </ul>);
+        } else {
+            results = (
+                <p>
+                   Stem om te zien wat <b>{this.state.total_votes}</b> anderen gestemd hebben!
+                </p>);
         }
 
         return (<div className="center motion-shr">

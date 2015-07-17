@@ -10,7 +10,9 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     redirect_to :root unless has_valid_token? || within_user_cap?
-    super
+    super do |resource|
+      setup_memberships(resource)
+    end
     session[:omniauth] = nil unless @user.new_record?
   end
 

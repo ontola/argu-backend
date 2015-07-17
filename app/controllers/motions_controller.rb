@@ -6,9 +6,9 @@ class MotionsController < ApplicationController
   def show
     @motion = Motion.includes(:arguments, :opinions).find(params[:id])
     @forum = @motion.forum
-    authorize @motion
     current_context @motion
-    @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?))
+    authorize @motion
+    @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes))
     @group_responses = Group.ordered_with_meta @motion.group_responses, @forum.groups, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
@@ -33,7 +33,7 @@ class MotionsController < ApplicationController
       authorize @motion, :show?
       render_register_modal(nil)
     else
-      authorize @motion, @motion.questions.presence ? :create? : :create_without_question?
+      authorize @motion, @motion.questions.presence ? :new? : :new_without_question?
       current_context @motion
       respond_to do |format|
         if current_profile.member_of? @motion.forum
@@ -52,6 +52,7 @@ class MotionsController < ApplicationController
   def edit
     @motion = Motion.find_by_id(params[:id])
     @forum = @motion.forum
+    current_context @motion
     authorize @motion
     respond_to do |format|
       format.html { render 'form' }
@@ -179,6 +180,10 @@ class MotionsController < ApplicationController
 private
   def permit_params
     params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+  end
+
+  def self.forum_for(url_options)
+    Motion.find_by(url_options[:motion_id] || url_options[:id]).try(:forum)
   end
 
   def get_context

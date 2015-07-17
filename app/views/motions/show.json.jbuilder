@@ -16,7 +16,7 @@ json.groups @group_responses do |group, responses|
   json.name_singular group.name_singular
   json.icon group.icon
   json.responses_left responses[:responses_left].to_s
-  json.collection responses[:collection].flat_map{ |k,v| v[:collection] } do |g_r|
+  json.collection responses[:collection].flat_map { |k, v| v[:collection] } do |g_r|
     json.id g_r.id
     json.creator_url dual_profile_path(g_r.profile)
     json.text g_r.text
@@ -24,4 +24,5 @@ json.groups @group_responses do |group, responses|
     json.created_at g_r.created_at
     json.updated_at g_r.updated_at
   end
+  json.actor_group_responses group.responses_for(@motion, current_profile)
  end

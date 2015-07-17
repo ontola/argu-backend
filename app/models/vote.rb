@@ -1,12 +1,13 @@
 class Vote < ActiveRecord::Base
   include ArguBase, PublicActivity::Model
 
-  belongs_to :voteable, polymorphic: true
+  belongs_to :voteable, polymorphic: true, inverse_of: :votes
   belongs_to :voter, polymorphic: true #class_name: 'Profile'
   has_many :activities, as: :trackable, dependent: :destroy
   belongs_to :forum
 
   after_validation :update_counter_cache
+  after_destroy :decrement_counter_cache
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
 
@@ -22,6 +23,13 @@ class Vote < ActiveRecord::Base
       voteable.class.decrement_counter("votes_#{self.for_was}_count", voteable.id) if self.for_was
       voteable.class.increment_counter("votes_#{self.for}_count", voteable.id)
     end
+  end
+
+  def decrement_counter_cache
+    voteable.class.decrement_counter(
+        voteable.class.respond_to?("votes_#{self.for}_count") ? "votes_#{self.for}_count" : 'votes_pro_count',
+        voteable.id
+    )
   end
 
   ##########Class methods###########

@@ -27,36 +27,45 @@ window.notificationStore = Reflux.createStore({
 
     fetchNextPage: function () {
         "use strict";
-        $.ajax({
-            url: `/n.json?from_time=${this.state.notifications.oldestNotification.toISOString()}`
-        }).done(function (data) {
-            NotificationActions.notificationUpdate(data.notifications);
-            NotificationActions.fetchNextPage.completed({
-                moreAvailable: data.notifications.notifications.length == 10
-            });
-        }).fail(NotificationActions.markAllAsRead.failed);
+        fetch(`/n.json?from_time=${this.state.notifications.oldestNotification.toISOString()}`, _safeCredentials())
+            .then(function (response) {
+                if (response.status == 200) {
+                    response.json().then(function (data) {
+                        NotificationActions.notificationUpdate(data.notifications);
+                        NotificationActions.fetchNextPage.completed({
+                            moreAvailable: data.notifications.notifications.length == 10
+                        });
+                    });
+                } else if (response.status == 201) {
+                    NotificationActions.fetchNextPage.completed({
+                        moreAvailable: false
+                    });
+                }
+            }).catch(NotificationActions.fetchNextPage.failed);
     },
 
     checkForNew: function () {
         "use strict";
-        $.ajax({
-            url: `/n.json?lastNotification=${this.state.notifications.lastNotification.toISOString()}`
-        }).done(function (data) {
-            if (typeof(data) !== "undefined") {
-                NotificationActions.notificationUpdate(data.notifications);
+        fetch(`/n.json?lastNotification=${this.state.notifications.lastNotification.toISOString()}`, _safeCredentials())
+            .then(statusSuccess)
+            .then(json)
+            .then(function (data) {
+                if (typeof(data) !== "undefined") {
+                    NotificationActions.notificationUpdate(data.notifications);
+                }
                 NotificationActions.checkForNew.completed();
-            }
-        }).fail(NotificationActions.markAllAsRead.failed);
+            }).catch(NotificationActions.checkForNew.failed);
     },
 
     onMarkAllAsRead: function () {
         "use strict";
-        $.ajax({
-            url: "/n/read.json",
-            method: "PATCH"
-        }).done(function (data) {
-            NotificationActions.notificationUpdate(data.notifications);
-        }).fail(NotificationActions.markAllAsRead.failed);
+        fetch("/n/read.json", _safeCredentials({
+            method: 'PATCH'
+        })).then(statusSuccess)
+           .then(json)
+           .then(function (data) {
+               NotificationActions.notificationUpdate(data.notifications);
+           }).catch(NotificationActions.markAllAsRead.failed);
     },
 
     // Callback

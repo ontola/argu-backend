@@ -1,5 +1,5 @@
 
-h1= t('forums.settings.managers.owner')
+h3= t('forums.settings.managers.owner')
 p= t('forums.settings.managers.about_owner')
 p= t('forums.settings.managers.about_owner_name', name: @forum.url)
 =image_tag @forum.page.profile.profile_photo, class: 'profile-photo'
@@ -7,7 +7,7 @@ span=@forum.page.profile.display_name
 .clear
 br
 
-h2= t('forums.settings.managers.administrator')
+h3= t('forums.settings.managers.administrator')
 p= t('forums.settings.managers.about_page_owner')
 p= t('forums.settings.managers.about_page_owner_name', name: @forum.page.url)
 =image_tag @forum.page.owner.profile_photo, class: 'profile-photo'
@@ -15,7 +15,7 @@ span=@forum.page.owner.display_name
 .clear
 br
 
-h1= t('forums.settings.managers.title')
+h3= t('forums.settings.managers.title')
 p= t('forums.settings.managers.about_managers')
 table.styled
   -@forum.managers.each do |manager|

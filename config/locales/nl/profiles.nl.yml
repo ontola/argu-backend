@@ -3,7 +3,7 @@
 nl:
   profiles:
     type: "Profiel"
-    switch: "Argu gebruiken als:"
+    switch: "Argu gebruiken als"
     about_me: "Over mij"
     heads_up: "Jouw profiel is zichtbaar voor andere bezoekers van Argu."
     show:
@@ -16,7 +16,7 @@ nl:
         unadmin: 'Degradeer admin'
     edit:
       title: "Profiel bewerken"
-      shortname_not_allowed: "Je kunt jouw gebruikersnaam helaas niet wijzigen. Je kan wel de naam die andere gebruikers zien wijzigen bij 'profiel bewerken'."
+      shortname_not_allowed: "Je kunt jouw gebruikersnaam niet wijzigen. Je kan wel de naam die andere gebruikers zien wijzigen bij 'profiel bewerken'."
       general: "Algemeen"
       privacy: "Privacy"
       privacy_notice: "Op Argu kan je stemmen op ideeën. Als je wilt laten zien waar je voor staat, kan je er voor kiezen om wat je stemt te delen op Argu. Dit kan je later nog wijzigen."
@@ -30,3 +30,4 @@ nl:
   users:
     shortname:
       not_changeable: "Kies een gebruikersnaam zorgvuldig, deze kan niet meer gewijzigd worden."
+      already_present: "Je hebt al een gebruikersnaam, neem contact op met Argu voor een wijzigingsverzoek."

@@ -65,7 +65,8 @@ Argu::Application.routes.draw do
                        sessions: 'users/sessions',
                        invitations: 'users/invitations',
                        passwords: 'users/passwords',
-                       omniauth_callbacks: 'omniauth_callbacks'
+                       omniauth_callbacks: 'omniauth_callbacks',
+                       confirmations: 'users/confirmations'
                    }, skip: :registrations
 
   as :user do
@@ -91,6 +92,7 @@ Argu::Application.routes.draw do
   end
 
   post 'v/:for' => 'votes#create', as: :vote
+  resources :votes, only: [:destroy], path: :v
 
   resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible] do
     resources :tags, path: 't', only: [:index]
@@ -136,6 +138,7 @@ Argu::Application.routes.draw do
   end
 
   resources :profiles, only: [:index, :update] do
+    post :index, action: :index, on: :collection
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post ':id' => 'profiles#update', on: :collection
   end
@@ -192,6 +195,8 @@ Argu::Application.routes.draw do
     end
   end
   get 'forums/:id', to: 'forums#show'
+
+  get '/d/modern', to: 'static_pages#modern'
 
   root to: 'static_pages#home'
   get '/', to: 'static_pages#home'

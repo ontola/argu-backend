@@ -15,6 +15,6 @@
   .comment.comment-form
     .box= render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false }
   - if c.has_children?
-    - c.children.each do |ch|
+    - c.children.reject { |c| c.abandoned? }.each do |ch|
       =render partial: 'comments/comment', locals: { resource: resource, c: ch }
     =link_to t('opinions.comments.more'), '/' if c.children.length > 40

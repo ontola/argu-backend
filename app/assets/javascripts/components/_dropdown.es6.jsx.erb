@@ -225,21 +225,16 @@ var ActorItem = React.createClass({
     handleMouseDown: function (e) {
         e.preventDefault();
         this.props.done();
-        $.ajax({
-            type: 'PUT',
-            url: this.props.url,
-            dataType: 'json',
-            async: true,
-            success: function (data) {
-                Actions.actorUpdate(data);
-                if (window.confirm('<%= I18n.t('profiles.switch_warning') %>')) {
-                    location.reload();
-                }
-            },
-            error: function () {
-                console.log('failed');
-            }
-        });
+        fetch(this.props.url, _safeCredentials({
+            method: 'PUT'
+        })).then(statusSuccess)
+           .then(json)
+           .then(function (data) {
+               Actions.actorUpdate(data);
+               if (window.confirm('<%= I18n.t('profiles.switch_warning') %>')) {
+                   location.reload();
+               }
+        }).catch(console.log);
     },
 
     render: function () {

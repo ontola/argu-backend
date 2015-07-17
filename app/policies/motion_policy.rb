@@ -47,11 +47,11 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def new?
-    rule is_open?, is_member?, staff?
+    rule is_open?, is_member?, is_manager?, staff?
   end
 
   def new_without_question?
-    rule is_open?, is_member?, staff?
+    rule is_open?, is_member?, is_manager?, staff?
   end
 
   def show?

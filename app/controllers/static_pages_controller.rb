@@ -8,7 +8,7 @@ class StaticPagesController < ApplicationController
         @activities = policy_scope(Activity).order(created_at: :desc).limit(10)
         render #stream: true
       else
-        redirect_to preferred_forum
+        redirect_to preferred_forum || info_url('about')
       end
     else
       #redirect_to preferred_forum
@@ -33,6 +33,11 @@ class StaticPagesController < ApplicationController
 
   def how_argu_works
     authorize :static_page
+  end
+
+  def modern
+    authorize :static_page, :about?
+    render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, safari: #{browser.safari?}, mobile: #{browser.mobile?}, tablet: #{browser.tablet?}, ua: #{browser.ua}"
   end
 
   def team

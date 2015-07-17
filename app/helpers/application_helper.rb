@@ -52,8 +52,13 @@ module ApplicationHelper
     uri.to_s
   end
 
-  def remote_if_non_mobile
-    browser.mobile? ? {'skip-pjax' => true} : {remote: true, 'skip-pjax' => true}
+  def r_to_url_options(r)
+    url_options = Rails.application.routes.recognize_path(URI.decode(r))
+    return url_options, "#{url_options[:controller]}_controller".camelize.safe_constantize
+  end
+
+  def remote_if_non_modern
+    browser.modern? ? {'skip-pjax' => true} : {remote: true, 'skip-pjax' => true}
   end
 
   # Used in forms for the 'r' system
@@ -70,8 +75,8 @@ module ApplicationHelper
     @resource
   end
 
-  def set_title(model= '')
-    title_string = seolized_title(model)
+  def set_title(model= '', **options)
+    title_string = seolized_title(model, **options)
     if request.env['HTTP_X_PJAX']
       raw "<title>#{title_string}</title>"
     else
@@ -103,7 +108,7 @@ module ApplicationHelper
         link_item(t('filtersort.random'), nil, fa: 'gift', data: {'sort-value' => 'random'}, className: 'sort-random')
     ]
 
-    dropdown_options(t('filtersort.sort') + ' ▼', [{items: link_items}], fa: 'fa-sort')
+    dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
   end
 
   def process_cover_photo(object, _params)
@@ -136,7 +141,7 @@ module ApplicationHelper
       edit_user_path(profile.profileable)
     elsif profile.profileable.class == Page
       #edit_page_path?
-      page_path(profile.profileable)
+      settings_page_path(profile.profileable)
     else
       'deleted'
     end
