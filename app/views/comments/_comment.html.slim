@@ -11,7 +11,7 @@
       - if !c.is_trashed? && policy(c).create?
         li= link_to polymorphic_url([resource], parent_id: c.id), html_options = {id: c.id, class: 'btn-reply', :'data-skip-pjax' => true} do
           span.fa.fa-reply
-          span.icon-left = t('reply')
+          span.icon-left= t('reply')
   .comment.comment-form
     .box= render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false }
   - if c.has_children?
