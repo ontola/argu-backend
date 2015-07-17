@@ -18,6 +18,10 @@ class Comment < ActiveRecord::Base
   belongs_to :profile
   has_many :activities, as: :trackable, dependent: :destroy
 
+  def abandoned?
+    self.is_trashed? && self.children.length == 0
+  end
+
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
   # example in readme
