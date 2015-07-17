@@ -7,8 +7,7 @@
     .box
       section
         =image_tag forum.profile_photo.url(:icon), class: 'profilepicture'
-        h2
-          = link_to forum.display_name, forum_path(forum)
+        h2= link_to forum.display_name, forum_path(forum)
         p= forum.bio
         p=t('pages.management.members', members: forum.memberships.count)
         h3= t('forums.settings.managers.title')

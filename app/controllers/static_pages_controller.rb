@@ -8,7 +8,7 @@ class StaticPagesController < ApplicationController
         @activities = policy_scope(Activity).order(created_at: :desc).limit(10)
         render #stream: true
       else
-        redirect_to preferred_forum
+        redirect_to preferred_forum || info_url('about')
       end
     else
       #redirect_to preferred_forum

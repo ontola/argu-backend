@@ -33,6 +33,7 @@ Key / Environment variable                                            |  Use
 -------------------------------------------------------------------   |  -----------------------------------------------------------------------------------------------------------------------------
 `secret_token`                                                        |  Use `rake secret` to generate
 `secret_key_base`                                                     |  Use `rake secret` to generate
+`devise_secret`                                                       |  Devise secret key base
 `argu_gmail_pass`                                                     |  Used for ActionMailer/Devise
 `aws_id`                                                              |  Used to store images
 `aws_key`                                                             |  Used to store images
