@@ -2,7 +2,7 @@ class Group < ActiveRecord::Base
   include ArguBase
 
   belongs_to :forum
-  has_many :group_memberships
+  has_many :group_memberships, dependent: :destroy
   has_many :members, through: :group_memberships, class_name: 'Profile'
   has_many :group_responses
 
