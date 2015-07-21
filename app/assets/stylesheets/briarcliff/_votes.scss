@@ -1,27 +1,33 @@
 @import "variables";
 @import "mixins";
 
-.btns--vote {
+.side-pro .upvote[data-voted-on="true"]{
+  //Upvoted a pro argument
+  color: white;
+  background-color: $gre;
+}
 
-  .voted--pro{
-    //Upvoted a pro argument
-    color: white;
-    background-color: $gre;
-  }
-  .voted--con{
-    //Upvoted a con argument
-    color: white;
-    background-color: $red;
-  }
-  .voted--down{
-    //Downvoted any argument
-    color: white;
-    background-color: $g3;
-  }
-  .voted--not {
-    //User voted, but on the opposing side (if user upvotes, apply this to the downvote button)
-    color: $g2;
-  }
+.side-con .upvote[data-voted-on="true"] {
+  //Upvoted a con argument
+  color: white;
+  background-color: $red;
+}
+
+.upvote[data-voted-on="true"]{
+  //Upvoted an item without a side attribute
+  color: white;
+  background-color: $g3;
+}
+
+.voted--down{
+  //Downvoted any argument
+  color: white;
+  background-color: $g3;
+}
+
+.voted--not {
+  //User voted, but on the opposing side (if user upvotes, apply this to the downvote button)
+  color: $g2;
 }
 
 // Text that appears before the main vote buttons

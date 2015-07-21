@@ -6,10 +6,12 @@ module VotesHelper
     if vote.present?
       data[:method] = :delete
       data['voted-on'] = true
+      data[:title] = t('tooltips.argument.vote_up_undo')
     end
 
-    link_to url, rel: :nofollow, class: 'btn-subtle tooltip tooltip--left', data: data do
+    link_to url, rel: :nofollow, class: 'upvote btn-subtle tooltip tooltip--left', data: data do
       yield
     end
+
   end
 end
