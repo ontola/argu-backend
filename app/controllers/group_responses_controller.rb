@@ -3,7 +3,7 @@ class GroupResponsesController < ApplicationController
   def new
     group = Group.find params[:group_id]
     motion = Motion.find params[:motion_id]
-    @group_response = motion.group_responses.new group: group, forum: group.forum, created_by: current_profile, side: params[:side]
+    @group_response = motion.group_responses.new group: group, forum: group.forum, created_by: current_user.profile, side: params[:side]
     authorize @group_response, :new?
     current_context @group_response
     @forum = @group_response.forum

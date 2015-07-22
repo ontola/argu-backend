@@ -1,4 +1,6 @@
 class GroupPolicy < RestrictivePolicy
+  include ForumPolicy::ForumRoles
+
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -16,11 +18,6 @@ class GroupPolicy < RestrictivePolicy
     end
   end
 
-  module Roles
-    delegate :is_manager?, to: :forum_policy
-  end
-  include Roles
-
   def permitted_attributes
     attributes = super
     attributes << [:name, :name_singular, :icon, :max_responses_per_member] if create?
@@ -28,20 +25,28 @@ class GroupPolicy < RestrictivePolicy
     attributes
   end
 
-  def new?
-    create?
+  def create?(forum = nil)
+    if forum.present?
+      record.present? || raise(SecurityError)
+      record = Group.new(forum: forum)
+    end
+    rule is_manager?, super()
   end
 
-  def create?
-    rule is_manager?, super
-  end
-
-  def update?
-    rule is_manager?, super
+  def destroy?
+    rule is_owner?, super
   end
 
   def edit?
     update?
+  end
+
+  def new?
+    create?
+  end
+
+  def update?
+    rule is_manager?, super
   end
 
   def remove_member?(member)

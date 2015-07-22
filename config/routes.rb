@@ -29,21 +29,25 @@
 
 Argu::Application.routes.draw do
   concern :moveable do
-    get 'move', action: 'move'
-    put 'move', action: 'move!'
+    get :move, action: :move
+    put :move, action: :move!
   end
   concern :convertible do
-    get 'convert', action: 'convert'
-    put 'convert', action: 'convert!'
+    get :convert, action: :convert
+    put :convert, action: :convert!
   end
   concern :transferable do
-    get 'transfer', action: 'transfer'
-    put 'transfer', action: 'transfer!'
+    get :transfer, action: :transfer
+    put :transfer, action: :transfer!
   end
   concern :votable do
     get 'v' => 'votes#show', shallow: true, as: :show_vote
     post 'v/:for' => 'votes#create', shallow: true, as: :vote
     get 'v/:for' => 'votes#new', shallow: true
+  end
+  concern :destroyable do
+    get :destroy, action: :destroy, path: :destroy, as: :destroy, on: :member
+    delete :destroy, action: :destroy!, on: :member
   end
 
   use_doorkeeper do
@@ -115,7 +119,7 @@ Argu::Application.routes.draw do
   end
 
   resources :group_responses, only: [:edit, :update, :destroy], as: :responses
-  resources :groups, path: 'g', only: [:create, :update] do
+  resources :groups, path: 'g', only: [:create, :update, :edit], concerns: [:destroyable] do
     resources :group_memberships, path: 'memberships', only: [:new, :create], as: :membership
   end
   resources :group_memberships, only: :destroy
