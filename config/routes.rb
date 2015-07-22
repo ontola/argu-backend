@@ -115,6 +115,9 @@ Argu::Application.routes.draw do
   end
 
   resources :group_responses, only: [:edit, :update, :destroy], as: :responses
+  resources :groups, path: 'g', only: [:create, :update] do
+    resources :group_memberships, path: 'memberships', only: [:new, :create], as: :membership
+  end
   resources :group_memberships, only: :destroy
 
   resources :pages, path: 'p', only: [:new, :create, :show, :update, :delete, :destroy] do
@@ -189,10 +192,7 @@ Argu::Application.routes.draw do
     resources :motions, path: 'm', only: [:new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
-    resources :groups, path: 'g', only: [:new, :create, :edit, :update] do
-      get 'add', on: :member
-      post on: :member, action: :add!, as: ''
-    end
+    resources :groups, path: 'g', only: [:new, :edit]
   end
   get 'forums/:id', to: 'forums#show'
 

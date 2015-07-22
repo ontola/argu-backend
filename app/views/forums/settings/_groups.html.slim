@@ -11,7 +11,7 @@ ul.boxed-list
               td= link_to group_membership_path(member), data: {method: :delete, 'skip-pjax' => true, confirm: t('destroy_confirmation')}, class: 'btn--light btn--smaller' do
                 span.fa.fa-close
                 span.icon-left=  t('destroy')
-      =link_to add_forum_group_path(@forum, group), class: 'btn--light btn--smaller' do
+      =link_to new_group_membership_path(group), class: 'btn--light btn--smaller' do
         span.fa.fa-plus
         span.icon-left= t('groups.member.new')
       =link_to edit_forum_group_path(@forum, group), class: 'btn--light btn--smaller' do

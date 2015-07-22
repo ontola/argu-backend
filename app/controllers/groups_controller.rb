@@ -1,4 +1,5 @@
 class GroupsController < ApplicationController
+  before_action :find_forum_and_group, only: [:edit, :update, :destroy]
 
   def new
     @forum = Forum.find_via_shortname params[:forum_id]
@@ -31,8 +32,6 @@ class GroupsController < ApplicationController
   end
 
   def edit
-    @forum = Forum.find_via_shortname params[:forum_id]
-    @group = @forum.groups.find(params[:id])
     authorize @group, :edit?
 
     render 'forums/settings', locals: {
@@ -42,8 +41,6 @@ class GroupsController < ApplicationController
   end
 
   def update
-    @forum = Forum.find_via_shortname params[:forum_id]
-    @group = @forum.groups.find(params[:id])
     authorize @group, :update?
 
     respond_to do |format|
@@ -55,43 +52,8 @@ class GroupsController < ApplicationController
     end
   end
 
-  def add
-    @forum = Forum.find_via_shortname params[:forum_id]
-    authorize @forum, :add_group_member?
-    @group = @forum.groups.find params[:id]
-    @membership = @group.group_memberships.new
-
-    render 'forums/settings', locals: {
-                                tab: 'groups/add',
-                                active: 'groups'
-                            }
-  end
-
-  def add!
-    @forum = Forum.find_via_shortname params[:forum_id]
-    authorize @forum, :add_group_member?
-    @group = @forum.groups.find params[:id]
-    profile = Profile.find params[:profile_id]
-
-    @membership = @group.group_memberships.new member: profile, profile: current_user.profile
-    respond_to do |format|
-      if @membership.save
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
-      else
-        format.html do
-          render 'forums/settings', locals: {
-                                      tab: 'groups/add',
-                                      active: 'groups'
-                                  }
-        end
-      end
-    end
-  end
-
-  def remove!
-    @forum = Forum.find_via_shortname params[:forum_id]
+  def destroy
     authorize @forum, :create_group?
-    @group = @forum.groups.find params[:id]
     profile = Profile.find params[:profile_id]
 
     @membership = @group.group_memberships.new member: profile, profile: current_user.profile
@@ -107,7 +69,12 @@ class GroupsController < ApplicationController
 
 
 private
-    def permit_params
-      params.require(:group).permit(*policy(@group || Group).permitted_attributes)
-    end
+  def find_forum_and_group
+    @group = Group.find params[:id]
+    @forum = @group.forum
+  end
+
+  def permit_params
+    params.require(:group).permit(*policy(@group || Group).permitted_attributes)
+  end
 end

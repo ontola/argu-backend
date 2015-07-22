@@ -45,6 +45,6 @@ class GroupPolicy < RestrictivePolicy
   end
 
   def remove_member?(member)
-    rule is_manager?, super
+    rule is_manager?
   end
 end

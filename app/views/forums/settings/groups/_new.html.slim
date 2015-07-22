@@ -1,8 +1,8 @@
-=semantic_form_for([@forum, @group]) do |f|
+=semantic_form_for(@group, url: groups_path(forum_id: @forum)) do |f|
   - @group.errors.full_messages.each do |message|
-    = message
+    =message
   =f.inputs name: t('newe_type', type: t('groups.type')) do
     =f.inputs :name, :name_singular, :icon
     =f.input :max_responses_per_member, min: -1
-  = f.actions do
-    = f.action :submit, :as => :button
+  =f.actions do
+    =f.action :submit, :as => :button
