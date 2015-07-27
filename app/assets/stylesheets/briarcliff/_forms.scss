@@ -254,7 +254,12 @@ fieldset {
 .formtastic button {
   @include button;
   position: relative;
+
+  &.btn--warning {
+    @include button($red-alert);
+  }
 }
+
 .formtastic .actions {
   text-align: center;
 }

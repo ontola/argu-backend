@@ -13,4 +13,4 @@
               = f.input :forum, as: :select, collection: Forum.all.pluck(:name, :id), selected: resource.forum.id, include_blank: false
               = f.input :include_motions, as: :boolean
             = f.actions do
-              = f.action :submit, :as => :button, label: t('move.button_label')
+              = f.action :submit, as: :button, label: t('move.button_label')

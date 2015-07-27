@@ -45,6 +45,7 @@ en:
   older: "Older"
   newer: "Newer"
   destroy: "Destroy"
+  destroy_type: "Destroy %{type}"
   trash: "Hide"
   empty_type: "There are no %{type}"
   history: "History"

@@ -5,7 +5,10 @@ class GroupResponse < ActiveRecord::Base
   belongs_to :group
   belongs_to :forum
   belongs_to :motion
+  # The profile under which name the GroupResponse is displayed
+  # Same as `creator`
   belongs_to :profile
+  # Physical creator of the GroupReponse (the one responsible).
   belongs_to :created_by, class_name: 'Profile'
 
   parentable :motion, :forum

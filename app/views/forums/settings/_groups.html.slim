@@ -17,7 +17,11 @@ ul.boxed-list
       =link_to edit_forum_group_path(@forum, group), class: 'btn--light btn--smaller' do
         span.fa.fa-pencil
         span.icon-left= t('edit_type', type: t('groups.type'))
-- if policy(@forum).create_group?
+      - if policy(group).destroy?
+        =link_to destroy_group_path(group), remote: true, class: 'btn--light btn--smaller' do
+          span.fa.fa-close
+          span.icon-left= t('destroy_type', type: t('groups.type'))
+- if policy(Group).create?(@forum)
   =link_to new_forum_group_path(@forum), class: 'btn margin-bottom' do
     span.fa.fa-plus
     span.icon-left= t('groups.new')
