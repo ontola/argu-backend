@@ -8,7 +8,7 @@ module UsersHelper
   end
 
   def identity_token(identity)
-    encrypt_payload({
+    sign_payload({
                         identity: identity.id
                     })
   end
