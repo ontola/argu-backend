@@ -9,9 +9,10 @@ class Argu::EmailNotificationWorker
     @activity = Activity.find_by_id activity_id
 
     if @activity.present?
+      redis = Redis.new
       @recipients = @activity
                         .followers
-                        .select { |u| u.class == User && u.direct_follows_email? }
+                        .select { |u| u.class == User && u.direct_follows_email? && !u.active_since?(@activity.created_at, redis) && u.last_email_sent_at(redis).to_i > 60.minutes.ago.to_i }
                         .map(&:user_to_recipient_option)
                         .reduce({}, :merge)
       send!
@@ -28,7 +29,7 @@ class Argu::EmailNotificationWorker
     begin
       if @recipients.length > 0
         unless Rails.env.development?
-          RestClient.post "https://api:key-#{Rails.application.secrets.mailgun_api_token}"\
+          response = RestClient.post "https://api:key-#{Rails.application.secrets.mailgun_api_token}"\
       "@api.mailgun.net/v2/sandbox45cac23aba3c496ab26b566ddae1bd5b.mailgun.org/messages",
                           from: Rails.application.secrets.mailgun_sender,
                           to: @recipients.keys.join(','),
@@ -36,6 +37,15 @@ class Argu::EmailNotificationWorker
                           subject: subject,
                           text: 'text',
                           html: render_mail.to_str # This MUST say .to_str otherwise it will crash on SafeBuffer
+          if response.code == 200
+            redis = Redis.new
+            current_time = DateTime.now
+            redis.pipelined do
+              @recipients.each do |r_o|
+                redis.set("user:#{r_o[r_o.keys.first]['id']}:email.sent.at", current_time)
+              end
+            end
+          end
         end
       else
         logger.info 'No recepients'

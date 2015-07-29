@@ -14,9 +14,9 @@ class Activity < PublicActivity::Activity
   end
 
   def followers
-    mailer = "#{object}_follower_collector".classify.safe_constantize
-    if mailer
-      mailer.new(self).send(action)
+    follower_collector = "#{object}_follower_collector".classify.safe_constantize
+    if follower_collector
+      follower_collector.new(self).send(action)
     else
       []
     end
