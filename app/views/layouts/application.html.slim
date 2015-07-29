@@ -18,6 +18,7 @@ head[itemscope itemtype="http://schema.org/WebSite"]
     =stylesheet_link_tag 'developers/developers', :media => 'all'
 
   =yield :connected_web
+  meta[name="user-identity-token" content="#{user_identity_token(current_user)}"]
 
   link[rel="copyright" content="#{t('site.copyright')}"]
   - if active_for_user?('inspectlet', current_user)
