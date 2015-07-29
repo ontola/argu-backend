@@ -12,11 +12,17 @@ class Argu::EmailNotificationWorker
       redis = Redis.new
       @recipients = @activity
                         .followers
-                        .select { |u| u.class == User && u.direct_follows_email? && !u.active_since?(@activity.created_at, redis) && u.last_email_sent_at(redis).to_i > 60.minutes.ago.to_i }
+                        .select { |u| may_send(u, @activity, redis) }
                         .map(&:user_to_recipient_option)
                         .reduce({}, :merge)
       send!
     end
+  end
+
+  def may_send(u, activity, redis)
+    u.class == User && u.direct_follows_email? &&
+        !u.active_since?(activity.created_at - 30.seconds, redis) &&
+        (u.last_email_sent_at(redis).to_i < [u.active_at(redis).to_i, 1.hour.ago.to_i].min)
   end
 
   # Renders the accompanying view for the activity
