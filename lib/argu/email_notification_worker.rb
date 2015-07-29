@@ -1,18 +1,21 @@
 require 'render_anywhere'
 
 # Mailer class for mailing users when an activity is created
-class Argu::ActivityMailer
+class Argu::EmailNotificationWorker
   include Sidekiq::Worker
   include RenderAnywhere
 
-  def initialize(a, recipients)
-    @activity = a
-    @recipients = recipients.select { |u| u.class == User && u.direct_follows_email? }.map(&:user_to_recipient_option).reduce({}, :merge)
-  end
+  def perform(activity_id)
+    @activity = Activity.find_by_id activity_id
 
-  def recipients_for_activity(a)
-    items = a.key.split('.')
-    "#{items.first}_mailer".classify.safe_constantize.new(a).send(items.last)
+    if @activity.present?
+      @recipients = @activity
+                        .followers
+                        .select { |u| u.class == User && u.direct_follows_email? }
+                        .map(&:user_to_recipient_option)
+                        .reduce({}, :merge)
+      send!
+    end
   end
 
   # Renders the accompanying view for the activity

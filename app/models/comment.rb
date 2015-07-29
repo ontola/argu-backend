@@ -3,7 +3,7 @@ class Comment < ActiveRecord::Base
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   parentable :commentable
-  mailable CommentMailer, :directly, :daily, :weekly
+  mailable CommentFollowerCollector, :directly, :daily, :weekly
 
   after_save :creator_follow
   after_validation :refresh_counter_cache, :touch_parent

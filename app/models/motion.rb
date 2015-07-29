@@ -21,7 +21,7 @@ class Motion < ActiveRecord::Base
 
   parentable :questions, :forum
   convertible :votes, :taggings, :activities
-  mailable MotionMailer, :directly, :daily, :weekly
+  mailable MotionFollowerCollector, :directly, :daily, :weekly
   resourcify
   mount_uploader :cover_photo, CoverUploader
 

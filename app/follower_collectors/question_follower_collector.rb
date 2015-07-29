@@ -1,4 +1,4 @@
-class QuestionMailer < MailerBase
+class QuestionFollowerCollector < FollowerCollectorBase
 
   def create
     if @thing.forum.present?

@@ -2,7 +2,6 @@ class Argu::NotificationWorker
   require 'sidekiq/logging/json'
   Sidekiq.logger.formatter = Sidekiq::Logging::Json::Logger.new
   include Sidekiq::Worker
-  include MailerHelper
 
   def perform(activity_id)
     @activity = Activity.find_by_id activity_id
@@ -11,11 +10,7 @@ class Argu::NotificationWorker
 
     # TODO: split by locale
     if @activity.present?
-      recipients = recipients_for_activity(@activity)
-
-      mailer = Argu::ActivityMailer.new(@activity, recipients)
-      mailer.send!
-
+      recipients = @activity.followers
       build_notifications recipients, @activity
     end
   end
@@ -34,16 +29,6 @@ class Argu::NotificationWorker
 
   def set_locale
     I18n.locale = I18n.default_locale
-  end
-
-  def recipients_for_activity(a)
-    items = a.key.split('.')
-    mailer = "#{items.first}_mailer".classify.safe_constantize
-    if mailer
-      mailer.new(a).send(items.last)
-    else
-      []
-    end
   end
 
 end
