@@ -14,7 +14,6 @@ require 'minitest/pride'
 
 class ActiveSupport::TestCase
 
-  include FactoryGirl::Syntax::Methods
   ActiveRecord::Migration.check_pending!
 
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
@@ -23,6 +22,7 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  include FactoryGirl::Syntax::Methods
   # Add more helper methods to be used by all tests here...
 
   # Runs assert_difference with a number of conditions and varying difference

@@ -24,14 +24,17 @@ module Shortnameable
   end
 
   module ClassMethods
+    # Finds an object via its shortname, throws an exception when not found
     def find_via_shortname(url)
       find_via_shortname_nil(url) or raise(ActiveRecord::RecordNotFound)
     end
 
+    # Finds an object via its shortname, returns nil when not found
     def find_via_shortname_nil(url)
       self.joins(:shortname).where('lower(shortname) = lower(?)', url).first
     end
 
+    # Finds an object via its shortname or id, throws an exception when not found
     def find_via_shortname!(url)
       if url.to_i.to_s == url.to_s
         self.find url.to_i

@@ -65,7 +65,7 @@ class UsersController < ApplicationController
   end
 
   def connect
-    payload = decrypt_token params[:token]
+    payload = decode_token params[:token]
     identity = Identity.find payload['identity']
     user = User.find_via_shortname! params[:id]
 
@@ -79,7 +79,7 @@ class UsersController < ApplicationController
 
   def connect!
     user = User.find_via_shortname! params[:id].presence || params[:user][:id]
-    payload = decrypt_token params[:token]
+    payload = decode_token params[:token]
     @identity = Identity.find payload['identity']
 
     skip_authorization
