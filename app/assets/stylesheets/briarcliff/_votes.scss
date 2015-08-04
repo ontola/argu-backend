@@ -2,31 +2,28 @@
 @import "mixins";
 
 .side-pro .upvote[data-voted-on="true"]{
-  //Upvoted a pro argument
   color: white;
   background-color: $gre;
 }
 
 .side-con .upvote[data-voted-on="true"] {
-  //Upvoted a con argument
   color: white;
   background-color: $red;
 }
 
 .upvote[data-voted-on="true"]{
-  //Upvoted an item without a side attribute
   color: white;
   background-color: $g3;
 }
 
 .voted--down{
-  //Downvoted any argument
+  //Downvoted any argument. Currently not used.
   color: white;
   background-color: $g3;
 }
 
 .voted--not {
-  //User voted, but on the opposing side (if user upvotes, apply this to the downvote button)
+  //User voted, but on the opposing side (if user upvotes, apply this to the downvote button). Currently not used.
   color: $g2;
 }
 
