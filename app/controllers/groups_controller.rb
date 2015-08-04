@@ -1,10 +1,11 @@
 class GroupsController < ApplicationController
-  before_action :find_forum_and_group, only: [:edit, :update, :destroy]
+  before_action :find_forum_and_group, only: [:edit, :update, :destroy, :destroy!]
 
   def new
     @forum = Forum.find_via_shortname params[:forum_id]
-    authorize @forum, :create_group?
     @group = @forum.groups.new
+    authorize @group, :create?
+
     render 'forums/settings', locals: {
                                 tab: 'groups/new',
                                 active: 'groups'
@@ -13,9 +14,9 @@ class GroupsController < ApplicationController
 
   def create
     @forum = Forum.find_via_shortname params[:forum_id]
-    authorize @forum, :create_group?
     @group = @forum.groups.new
     @group.attributes= permit_params
+    authorize @group, :create?
 
     respond_to do |format|
       if @group.save
@@ -53,13 +54,25 @@ class GroupsController < ApplicationController
   end
 
   def destroy
-    authorize @forum, :create_group?
-    profile = Profile.find params[:profile_id]
+    authorize @group, :destroy?
 
-    @membership = @group.group_memberships.new member: profile, profile: current_user.profile
+    locals = {
+        group: @group,
+        group_memberships_count: @group.group_memberships.count,
+        group_responses_count: @group.group_responses.count
+    }
     respond_to do |format|
-      if @membership.save
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
+      format.html { render locals: locals }
+      format.js { render locals: locals }
+    end
+  end
+
+  def destroy!
+    authorize @group, :destroy?
+
+    respond_to do |format|
+      if @group.destroy
+        format.html { redirect_to settings_forum_path(@forum, tab: :groups), status: 303 }
       else
         flash[:error] = t('error')
         format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
@@ -70,7 +83,7 @@ class GroupsController < ApplicationController
 
 private
   def find_forum_and_group
-    @group = Group.find params[:id]
+    @group = Group.includes(:forum).find(params[:id])
     @forum = @group.forum
   end
 

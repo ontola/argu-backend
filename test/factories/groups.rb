@@ -2,7 +2,7 @@ FactoryGirl.define do
 
   factory :group do
     transient do
-      forum_name 'nederland'
+      forum_name 'utrecht'
     end
     name 'Groups'
     name_singular 'Group'

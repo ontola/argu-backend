@@ -4,7 +4,7 @@ class Group < ActiveRecord::Base
   belongs_to :forum
   has_many :group_memberships, dependent: :destroy
   has_many :members, through: :group_memberships, class_name: 'Profile'
-  has_many :group_responses
+  has_many :group_responses, dependent: :destroy
 
   validates :name, length: {maximum: 75}
 

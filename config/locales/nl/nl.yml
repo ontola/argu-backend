@@ -46,6 +46,7 @@ nl:
   older: "Ouder"
   newer: "Nieuwer"
   destroy: "Vernietigen"
+  destroy_type: "%{type} vernietigen"
   trash: "Verbergen"
   empty_type: "Er zijn geen %{type}"
   history: "Geschiendenis"

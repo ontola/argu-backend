@@ -31,11 +31,11 @@ module ApplicationHelper
     end
   end
 
-  def encrypt_payload(payload)
+  def sign_payload(payload)
     JWT.encode payload, Rails.application.secrets.jwt_encryption_token, 'HS256'
   end
 
-  def decrypt_token(token)
+  def decode_token(token)
     JWT.decode(token, Rails.application.secrets.jwt_encryption_token, 'HS256')[0]
   end
 

@@ -1,0 +1,12 @@
+.modal-container
+  .overlay
+  .modal.col-1
+    header
+      h1= t('destroy_type', type: t('groups.type'))
+    .box
+      section
+        .form
+          =semantic_form_for group, url: group_path(group), method: :delete do |f|
+            p= t('groups.destroy.body', group_memberships_count: group_memberships_count, group_resonses_count: group_responses_count)
+            =f.actions do
+              =f.action :submit, as: :button, label: t('destroy'), button_html: {class: 'btn--warning'}

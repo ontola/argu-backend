@@ -103,10 +103,6 @@ class ForumPolicy < RestrictivePolicy
     super
   end
 
-  def create_group?
-    rule is_owner?, staff?
-  end
-
   def edit?
     update?
   end
