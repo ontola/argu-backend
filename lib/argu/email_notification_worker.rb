@@ -5,16 +5,32 @@ class Argu::EmailNotificationWorker
   include Sidekiq::Worker
   include RenderAnywhere
 
-  def perform(activity_id)
+  def perform(activity_id, delayed_recipients = [])
     @activity = Activity.find_by_id activity_id
 
     if @activity.present?
       redis = Redis.new
-      @recipients = @activity
-                        .followers
-                        .select { |u| may_send(u, @activity, redis) }
-                        .map(&:user_to_recipient_option)
-                        .reduce({}, :merge)
+      if delayed_recipients.any?
+        @recipients = User.where(id: delayed_recipients)
+                          .select { |u| may_send(u, @activity, redis) }
+                          .map(&:user_to_recipient_option)
+                          .reduce({}, :merge)
+      else
+        @recipients = @activity
+                          .followers
+                          .select { |u| may_send(u, @activity, redis) }
+                          .map(&:user_to_recipient_option)
+                          .reduce({}, :merge)
+
+        # Only select users where their online status was uncertain at the time of the incidence
+        delayed_recipients = @activity
+                               .followers
+                               .select { |u| u.active_since?(activity.created_at - 30.seconds, redis) }
+                               .map(&:id)
+        if delayed_recipients.any?
+          EmailNotificationWorker.perform_in(5.minutes, activity_id, delayed_recipients)
+        end
+      end
       send!
     end
   end
