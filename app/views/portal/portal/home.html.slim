@@ -15,6 +15,7 @@
           thead
             tr
               td= t('portal.name')
+              td= t('portal.shortname')
               td= t('portal.created_at')
               td= t('portal.updated_at')
               td= t('portal.forums')
@@ -24,6 +25,7 @@
             - @pages.each do |f|
               tr[id=f.identifier]
                 td= link_to f.profile.name, page_path(f)
+                td= f.url
                 td= l f.created_at, format: :short
                 td= l f.updated_at, format: :short
                 td= f.forums.length
@@ -38,6 +40,7 @@
           thead
             tr
               td= t('portal.name')
+              td= t('portal.shortname')
               td= t('portal.created_at')
               td= t('portal.updated_at')
               td= t('portal.members')
@@ -48,6 +51,7 @@
             - @forums.each do |f|
               tr[id=f.identifier]
                 td= link_to f.name, forum_path(f)
+                td= f.url
                 td= l f.created_at, format: :short
                 td= l f.updated_at, format: :short
                 td= f.memberships_count || '-'
