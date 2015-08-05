@@ -21,17 +21,17 @@ module SeoHelper
         name,
         (' | ' if name.present? && appendage.present?),
         appendage
-    ].compact.join.capitalize
+    ].compact.join
   end
 
   def seolized_description(model)
     appendage = t("seo.#{model.class.name.downcase}.description", title: model.display_name.downcase)
-    "#{markdown_to_plaintext(model.description)} | #{t("seo.#{model.class.name.downcase}.description", title: model.display_name.downcase)}"
+    "#{markdown_to_plaintext(model.description)} | #{t("seo.#{model.class.name.downcase}.description", title: model.display_name)}"
     [
         markdown_to_plaintext(model.description),
         (' | ' if model.description.present? && appendage.present?),
         appendage
-    ].compact.join.capitalize
+    ].compact.join
   end
 
   private
@@ -53,12 +53,14 @@ module SeoHelper
 
   META_ITEMS = {
       # HTML
-      'description' => :description,
+      'description' => {name: 'description', content: :description},
       'url' => :url,
       'canonical' => {tag_name: 'link', href: :url, itemprop: 'url'},
 
       # Facebook
       'og:title' => :name,
+      'og:type' => 'website',
+      'og:url' => :url,
       'og:description' => :description,
       'og:title' => :name,
       'og:image' => :image,

@@ -230,7 +230,7 @@ en:
       name: 'Argument %{side} %{motiontitle}'
       description: 'Join the debate.'
     forum:
-      name: ''
+      name: 'Forum for substantive discussions.'
       description: ''
     hash:
       name: ''
