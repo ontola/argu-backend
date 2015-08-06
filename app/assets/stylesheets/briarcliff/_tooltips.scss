@@ -48,7 +48,7 @@
   min-width: 24em;
 }
 
-[data-title]:hover:after {
+.no-touch [data-title]:hover:after {
   opacity: 1;
   top: 100%;
 }
