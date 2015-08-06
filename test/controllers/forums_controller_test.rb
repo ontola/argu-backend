@@ -3,11 +3,15 @@ require 'test_helper'
 class ForumsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  let(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+  let!(:cologne) { FactoryGirl.create(:closed_populated_forum, name: 'cologne') }
+  let!(:helsinki) { FactoryGirl.create(:hidden_populated_forum, name: 'helsinki') }
+
   ####################################
   # Not logged in
   ####################################
   test 'should get show when not logged in' do
-    get :show, id: forums(:utrecht)
+    get :show, id: holland
     assert_response 200
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:items)
@@ -18,10 +22,12 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   # As user
   ####################################
-  test 'should get show' do
-    sign_in users(:user)
+  let(:user) { FactoryGirl.create(:user) }
 
-    get :show, id: forums(:utrecht)
+  test 'should get show' do
+    sign_in user
+
+    get :show, id: holland
     assert_response 200
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:items)
@@ -30,81 +36,104 @@ class ForumsControllerTest < ActionController::TestCase
   end
 
   test 'should not show settings' do
-    sign_in users(:user)
+    sign_in user
 
-    get :settings, id: forums(:utrecht)
+    get :settings, id: holland
     assert_redirected_to root_path, 'Settings are publicly visible'
   end
 
   test 'should not show statistics' do
-    sign_in users(:user)
+    sign_in user
 
-    get :statistics, id: forums(:utrecht)
+    get :statistics, id: holland
     assert_redirected_to root_path, 'Statistics are publicly visible'
   end
 
   test 'should not leak closed children to non-members' do
-    sign_in users(:user)
+    sign_in user
 
-    get :show, id: forums(:amsterdam)
+    get :show, id: cologne
     assert_response 200
 
+    assert cologne.motions.count > 0
     assert_nil assigns(:items), 'Closed forums are leaking content'
   end
 
   test 'should not show hidden to non-members' do
-    sign_in users(:user)
+    sign_in user
 
-    get :show, id: forums(:hidden)
-    assert_response 404
-    #assert_redirected_to root_path, 'Hidden forums are visible'
+    get :show, id: helsinki
+    assert_response 404, 'Hidden forums are visible'
   end
 
   test 'should not put update on others question' do
-    sign_in users(:user)
+    sign_in user
 
-    put :update, id: forums(:utrecht), question: {title: 'New title', content: 'new contents'}
+    put :update, id: holland, question: {title: 'New title', content: 'new contents'}
     assert_redirected_to root_path, 'Others can update questions'
   end
 
   test 'should get selector' do
-    sign_in users(:user)
+    sign_in user
 
     get :selector
     assert_response 200, 'Selector broke'
     assert_not_nil assigns(:forums)
   end
 
+  ####################################
+  # As member
+  ####################################
+  let(:cologne_member) { create_member(cologne) }
+  let(:helsinki_member) { create_member(helsinki) }
+
+  test 'should show closed children to members' do
+    sign_in cologne_member
+
+    get :show, id: cologne
+    assert_response 200
+
+    assert cologne.motions.count > 0
+    assert assigns(:items), 'Closed forum content is not present'
+  end
+
+  test 'should show hidden to members' do
+    sign_in helsinki_member
+
+    get :show, id: helsinki
+    assert_response 200
+  end
 
   ####################################
   # As owner
   ####################################
+  let(:holland_owner) { create_owner(holland) }
 
   test 'should show settings and all tabs' do
-    sign_in users(:user_utrecht_owner)
+    sign_in holland_owner
 
-    get :settings, id: forums(:utrecht)
+    get :settings, id: holland
     assert_response 200
     assert assigns(:forum)
 
     [:general, :advanced, :groups, :privacy, :managers].each do |tab|
-      get :settings, id: forums(:utrecht), tab: tab
+      get :settings, id: holland, tab: tab
       assert_response 200
       assert assigns(:forum)
     end
   end
 
   test 'should update settings' do
-    sign_in users(:user_utrecht_owner)
+    sign_in holland_owner
 
-    put :update, id: forums(:utrecht), forum: {
+    put :update, id: holland, forum: {
                      name: 'new name',
                      bio: 'new bio',
                      cover_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg'),
                      profile_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg')
                  }
 
-    assert_redirected_to settings_forum_path(forums(:utrecht))
+    assert_redirected_to settings_forum_path(holland.url)
     assert assigns(:forum)
     assert_equal 'new name', assigns(:forum).reload.name
     assert_equal 'new bio', assigns(:forum).reload.bio
@@ -112,18 +141,18 @@ class ForumsControllerTest < ActionController::TestCase
   end
 
   test 'should show settings/groups' do
-    sign_in users(:user_utrecht_owner)
+    sign_in holland_owner
 
-    get :settings, id: forums(:utrecht), tab: :groups
+    get :settings, id: holland, tab: :groups
 
     assert_response :success
     assert assigns(:forum)
   end
 
   test 'should not show statistics yet' do
-    sign_in users(:user_utrecht_owner)
+    sign_in holland_owner
 
-    get :statistics, id: forums(:utrecht)
+    get :statistics, id: holland
     assert_redirected_to root_url
     assert assigns(:forum)
     assert_nil assigns(:tags), "Doesn't assign tags"
@@ -134,18 +163,19 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   # As manager
   ####################################
+  let(:holland_manager) { create_manager(holland) }
 
   test 'should show settings and some tabs' do
-    sign_in users(:user_utrecht_manager_only)
+    sign_in holland_manager
 
     [:general, :advanced, :groups].each do |tab|
-      get :settings, id: forums(:utrecht), tab: tab
+      get :settings, id: holland, tab: tab
       assert_response 200
       assert assigns(:forum)
     end
 
     [:privacy, :managers].each do |tab|
-      get :settings, id: forums(:utrecht), tab: tab
+      get :settings, id: holland, tab: tab
       assert_redirected_to root_path
       assert assigns(:forum)
     end
