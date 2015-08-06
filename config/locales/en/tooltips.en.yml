@@ -13,6 +13,7 @@ en:
       invite: "Invite others to discuss in this forum."
     argument:
       vote_up: "Upvote this argument if you think it should be placed higher."
-      vote_undo: "You have upvoted this argument. Click to remove your vote."
+      vote_up_undo: "You have upvoted this argument. Click to remove your vote."
       vote_down: "Unimportant argument; it should be placed lower."
+      vote_down_undo: "You have downvoted this argument. Click to remove your downvote."
     follow: "Get notifications when new items are posted."
