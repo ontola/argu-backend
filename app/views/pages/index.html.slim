@@ -4,7 +4,7 @@
     h1= t('pages.management.title')
     p= t('pages.management.managed_current_out_of_max', current: current, max: max)
     - if current < max
-      =link_to t('pages.create'), new_page_path, fa: 'building'
+      =link_to t('pages.create'), new_page_path, fa: 'building', class: "btn margin-bottom"
   - @pages.each do |page|
     - pa_po = policy(page)
     .box

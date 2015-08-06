@@ -4,6 +4,7 @@
                description: seolized_description(@question),
                image: @question.cover_photo.url || image_url('logo-social.png')
 .cover-behind
+  -tests
   .cover-image[style="background-image: url('#{@question.cover_photo.url}'); "]
 .col-1
   div[data-intro= t('intro.question.back')]= to_parent

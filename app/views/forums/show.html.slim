@@ -1,13 +1,13 @@
-=set_title @forum
+=set_title(@forum)
 =connected_web url: forum_url(@forum),
-               name: seolized_title(@forum),
+               name: (@forum.bio.present? ? seolized_title(@forum) + ' | '+ @forum.bio : seolized_title(@forum)),
                description: seolized_description(@forum),
                image: @forum.cover_photo.url
 div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
   .cover
     -if @forum.cover_photo.url.present?
       .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
-      span.header-attribution= @forum.cover_photo_attribution
+      span.header-attribution = @forum.cover_photo_attribution
     -else
       .cover-image.cover-image-empty
     .cover-overlay
@@ -78,9 +78,9 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
       .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
       =render @items
       =render partial: 'sample_items'
-    .col-1
+    .col-1.margin-top
       header#forum-info
-        h1= t('forums.about.header')
+        h2= t('forums.about.header')
       .box
         - if @forum.bio_long.present?
           section

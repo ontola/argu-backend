@@ -45,6 +45,8 @@
 .box-grid-sizer {
   width: 50%;
   display: inline-block;
+  height: 0;
+  margin: 0;
   &.box-grid-sizer-full {
     width: 100%;
     display: inline-block;

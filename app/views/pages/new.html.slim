@@ -8,11 +8,11 @@
           =semantic_form_for page do |f|
             =f.inputs do
               =f.inputs :name, for: :profile, label: t('formtastic.labels.page.name')
+              -if policy(page).shortname?
+                =f.inputs :shortname, for: :shortname
               =f.semantic_fields_for :profile do |p|
                 =p.input :about, as: :text
                 =p.input :profile_photo, as: :file
-              -if policy(page).shortname?
-                =f.inputs :shortname, for: :shortname
             p= t('pages.legal')
             =f.input :last_accepted, as: :boolean
             =f.actions do
