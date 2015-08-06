@@ -231,8 +231,8 @@ GEM
     minitest (5.7.0)
     minitest-bang (1.0.4)
       minitest (>= 4.7.5)
-    minitest-rails (2.1.1)
-      minitest (~> 5.4)
+    minitest-rails (2.2.0)
+      minitest (~> 5.7)
       railties (~> 4.1)
     minitest-reporters (1.0.16)
       ansi
@@ -511,7 +511,7 @@ DEPENDENCIES
   logstasher
   meta_request
   minitest-bang
-  minitest-rails (~> 2.1.1)
+  minitest-rails (~> 2.2.0)
   minitest-reporters (~> 1.0.8)
   mocha
   multimap
@@ -559,3 +559,6 @@ DEPENDENCIES
   unicorn (= 4.8.3)
   web-console (~> 2.0.0)
   whodunnit (= 0.0.5)
+
+BUNDLED WITH
+   1.10.5
