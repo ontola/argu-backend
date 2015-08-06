@@ -12,6 +12,7 @@
 .tooltip:after {
   @include transition (.2s ease-in-out);
   content: attr(data-title);
+  white-space: pre-line;
   padding: .3em .6em;
   background: $g3;
   line-height: 1.5em;

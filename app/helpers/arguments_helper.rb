@@ -1,4 +1,19 @@
 module ArgumentsHelper
+
+  def pro_arguments_preview_tooltip(motion)
+    arguments_preview_tooltip(motion.top_arguments_pro_light, '+')
+  end
+
+  def con_arguments_preview_tooltip(motion)
+    arguments_preview_tooltip(motion.top_arguments_con_light, '-')
+  end
+
+  def arguments_preview_tooltip(args, prefix)
+    preview = ''
+    args.map { |a| preview << "#{prefix} #{a[1]}\n" }
+    preview
+  end
+
 private
 
   # Generates radio array for a model
