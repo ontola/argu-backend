@@ -6,7 +6,7 @@
     h1[class=(@argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= @argument.title
     =render partial: 'arguments/shr', locals: {model: @argument, vote: @vote}
     .markdown[itemprop="text"]
-      = markdown_to_html(@argument.content)
+      =markdown_to_html(@argument.content)
   =render @argument.creator, locals= {resource: @argument} if @argument.creator.present?
   ul.btns-list--subtle.btns-horizontal.btn-sticky.btn-sticky-bottom.btns-list--grey
     - if active_for_user?(:notifications, current_user) && current_profile.present?
