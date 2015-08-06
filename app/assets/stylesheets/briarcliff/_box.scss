@@ -40,7 +40,7 @@
     opacity: 1;
     height: .15em;
   }
-  &:active:after {
+  &:active:before {
     transition: none;
     background-color: $darken4;
   }

@@ -10,13 +10,13 @@ cu.box.box--extra-margin[class="#{'trashed' if model.is_trashed?}"]
         .details-part.details-part--type.motion-bg
           span[class="fa fa-#{motion_icon(forum_from_scope_or_model(current_scope, model))}"]
           span.icon-left= motion_type(forum_from_scope_or_model(current_scope, model))
-        .details-part.tooltip[data-title=t('tooltips.motion.vote_count')]
+        .details-part[data-title=t('tooltips.motion.vote_count')]
           span.fa.fa-check-square-o
           span.icon-left= model.total_vote_count
-        .details-part.tooltip[data-title=t('tooltips.motion.arguments_pro_count')]
+        .details-part[data-title=t('tooltips.motion.arguments_pro_count')]
           span.fa.fa-plus
           span.icon-left= model.argument_pro_count
-        .details-part.tooltip[data-title=t('tooltips.motion.arguments_con_count')]
+        .details-part[data-title=t('tooltips.motion.arguments_con_count')]
           span.fa.fa-minus
           span.icon-left= model.argument_con_count
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
@@ -27,13 +27,13 @@ cu.box.box--extra-margin[class="#{'trashed' if model.is_trashed?}"]
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_pro_light.each do |argument|
           li= link_to argument_path(argument[0])
-            h3[class="#{argument[2] ? 'pro' : 'con'}-t tooltip" data-title= (safe_truncated_text(argument[4], '...'))]
+            h3[class="pro-t tooltip--wider" data-title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument[4], '...')) : nil)]
               span.fa.fa-plus
               span.icon-left= argument[1]
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_con_light.each do |argument|
           li= link_to argument_path(argument[0])
-            h3[class="#{argument[2] ? 'pro' : 'con'}-t tooltip" data-title= (safe_truncated_text(argument[4], '...'))]
+            h3[class="con-t tooltip--wider" data-title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument[4], '...')) : nil)]
               span.fa.fa-minus
               span.icon-left= argument[1]
     =contextual_link_to motion_path(model), class: 'btn-subtle btn-sticky btns-sticky-bottom read-more'

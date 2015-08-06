@@ -24,7 +24,8 @@ To add the feature for staff members, execute `$rollout.activate_group(:feature,
 
 List of rolloutable features:
 
-* argument_tooltips
+* argument_tooltips_list
+* argument_tooltips_content
 * notifications
 * carousel_buttons
 * expires_at
