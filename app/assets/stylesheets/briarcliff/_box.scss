@@ -16,8 +16,8 @@
   display: inline-block;
   position: relative;
   @include transition(.2s);
-  transform: translateY(-0em);
-  &:after {
+  //transform: translateY(-0em);
+  &:before {
     content: "";
     width: 100%;
     position: absolute;
@@ -27,13 +27,13 @@
     height: .0em;
     opacity: 0;
     background-color: $darken2;
-    @include transition(.3s);
+    @include transition(.2s);
   }
   &:hover {
-    transform: translateY(-.1em);
-    color: $g5 !important;
+    //transform: translateY(-.1em);
+    //color: $g5 !important;
   }
-  &:hover:after {
+  &:hover:before {
     opacity: 1;
     height: .15em;
   }

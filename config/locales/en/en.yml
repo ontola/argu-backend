@@ -216,7 +216,6 @@ en:
                 <p>You can format your text using the following characters:</p>
                 <code>*Cursive*</code>
                 <code>**Bold**</code>
-                <code>~~Strike text~~</code>
                 <code>##Heading</code>
                 <code>1. Numbered <br> 2. List</code>
                 <code>* Bullet <br> * List</code>"

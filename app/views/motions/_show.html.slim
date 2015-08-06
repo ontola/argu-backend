@@ -27,13 +27,13 @@ cu.box.box--extra-margin[class="#{'trashed' if model.is_trashed?}"]
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_pro_light.each do |argument|
           li= link_to argument_path(argument[0])
-            h3[class="#{argument[2] ? 'pro' : 'con'}-t"]
+            h3[class="#{argument[2] ? 'pro' : 'con'}-t tooltip" data-title= (safe_truncated_text(argument[4], '...'))]
               span.fa.fa-plus
               span.icon-left= argument[1]
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_con_light.each do |argument|
           li= link_to argument_path(argument[0])
-            h3[class="#{argument[2] ? 'pro' : 'con'}-t"]
+            h3[class="#{argument[2] ? 'pro' : 'con'}-t tooltip" data-title= (safe_truncated_text(argument[4], '...'))]
               span.fa.fa-minus
               span.icon-left= argument[1]
     =contextual_link_to motion_path(model), class: 'btn-subtle btn-sticky btns-sticky-bottom read-more'
