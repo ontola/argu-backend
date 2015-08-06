@@ -17,7 +17,7 @@ table.styled
         =image_tag manager.profile_photo, class: 'profile-photo'
         span
           =manager.display_name
-          p.tooltip.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
+          p.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
             =link_to t('forums.managers.revoke'), page_manager_path(@page, manager.id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
 
   =link_to t('forums.managers.add'), new_page_manager_path(@page), class: 'btn'

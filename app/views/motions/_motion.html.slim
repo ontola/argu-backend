@@ -19,15 +19,23 @@
         /.details-part
           span.fa.fa-comment
           span.icon-left 7
-        .details-part.tooltip[data-title=t('tooltips.motion.vote_count')]
+        .details-part[data-title=t('tooltips.motion.vote_count')]
           span.fa.fa-check-square-o
           span.icon-left= motion.total_vote_count.to_s
-        .details-part.tooltip[data-title=t('tooltips.motion.arguments_pro_count')]
-          span.fa.fa-plus
-          span.icon-left= motion.argument_pro_count
-        .details-part.tooltip[data-title=t('tooltips.motion.arguments_con_count')]
-          span.fa.fa-minus
-          span.icon-left= motion.argument_con_count
+        - if active_for_user?(:argument_tooltips_list, current_user)
+          .details-part.tooltip--wider[data-title=pro_arguments_preview_tooltip(motion)]
+            span.fa.fa-plus
+            span.icon-left= motion.argument_pro_count
+          .details-part.tooltip--wider[data-title=con_arguments_preview_tooltip(motion)]
+            span.fa.fa-minus
+            span.icon-left= motion.argument_con_count
+        - else
+          .details-part[data-title=t('tooltips.motion.arguments_pro_count')]
+            span.fa.fa-plus
+            span.icon-left= motion.argument_pro_count
+          .details-part[data-title=con_arguments_preview_tooltip(motion)]
+            span.fa.fa-minus
+            span.icon-left= motion.argument_con_count
         /.details-part
           span.fa.fa-clock-o
           span.icon-left= time_ago_in_words(motion.updated_at)

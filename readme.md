@@ -10,12 +10,30 @@ Setting up
 4. Start the server `rails s`
 5. Run Redis `redis-server`
 6. Start the background worker: `bundle exec sidekiq`
+7. Go to localhost:3000 or check the run log to see where Argu is running
+8. Sign in with admin@argu.co / arguargu
+9. Click 'ADMIN_ACCOUNT' on the bottom right corner of the screen.
+10. Create a page
+11. Create a forum with that page
 
 New Features
 ------------
 When adding a new feature, make use of `if active_for_user?(feature, user)` so we can roll out the feature gradually.
 
-To add the feature for staff members, execute `$rollout.activate_group(:feature, :staff)` for info.
+To add the feature for staff members, execute `$rollout.activate_group(:feature, :staff)` in the rails console.
+
+List of rolloutable features:
+
+* argument_tooltips_list
+* argument_tooltips_content
+* notifications
+* carousel_buttons
+* expires_at
+* share_links
+* inspectlet
+* welcome_video
+* groups
+
 
 Enviroment variables
 ----------------------------

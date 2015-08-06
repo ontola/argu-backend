@@ -4,11 +4,19 @@
 .side-pro .upvote[data-voted-on="true"]{
   color: white;
   background-color: $gre;
+
+  &:hover {
+    background-color: $gred;
+  }
 }
 
 .side-con .upvote[data-voted-on="true"] {
   color: white;
   background-color: $red;
+
+  &:hover {
+    background-color: $redd;
+  }
 }
 
 .upvote[data-voted-on="true"]{
