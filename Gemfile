@@ -93,6 +93,7 @@ group :development, :test do
   gem 'nokogiri', '1.6.5'
   gem 'minitest-rails', '~> 2.1.1'
   gem 'minitest-reporters', '~> 1.0.8'
+  gem 'minitest-bang'
   gem 'mocha'
   gem 'pry'
   #gem 'byebug'
@@ -112,6 +113,7 @@ group :development, :test do
   gem 'capistrano-bundler', '~> 1.1.3'
   gem 'capistrano-rvm', '~> 0.1.2'
   gem 'license_finder'
+  gem 'database_cleaner'
 end
 
 group :production, :staging do

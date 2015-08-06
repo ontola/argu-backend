@@ -75,7 +75,7 @@ class Forum < ActiveRecord::Base
   end
 
   def page=(value)
-    super Page.find_via_shortname(value)
+    super value.is_a?(Page) ? value : Page.find_via_shortname(value)
   end
 
   def profile_is_member?(profile)

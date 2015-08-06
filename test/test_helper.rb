@@ -23,6 +23,7 @@ class ActiveSupport::TestCase
   fixtures :all
 
   include FactoryGirl::Syntax::Methods
+  #FactoryGirl.lint
   # Add more helper methods to be used by all tests here...
 
   # Runs assert_difference with a number of conditions and varying difference
@@ -46,4 +47,27 @@ class ActiveSupport::TestCase
       assert_equal(before[i] + difference, eval(e, b), error)
     end
   end
+
+  def create_manager(forum, user = nil)
+    user ||= FactoryGirl.create(:user)
+    FactoryGirl.create(:managership, forum: forum, profile: user.profile)
+    user
+  end
+
+  def create_member(forum, user = nil)
+    user ||= FactoryGirl.create(:user)
+    FactoryGirl.create(:membership, forum: forum, profile: user.profile)
+    user
+  end
+
+  # Makes the given `User` a manager of the `Page` of the `Forum`
+  # Creates one if not given
+  # @note overwrites the current owner in the `Page`
+  def create_owner(forum, user = nil)
+    user ||= FactoryGirl.create(:user)
+    forum.page.owner = user.profile
+    forum.page.save
+    user
+  end
+
 end

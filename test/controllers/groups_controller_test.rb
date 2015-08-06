@@ -3,27 +3,27 @@ require 'test_helper'
 class GroupsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  let(:holland) { FactoryGirl.create(:forum, name: 'holland') }
+  let!(:group) { FactoryGirl.create(:group, forum: holland) }
+
   ####################################
   # For users
   ####################################
+  let(:user) { FactoryGirl.create(:user) }
 
   test 'should not show new' do
-    sign_in users(:user)
+    sign_in user
 
-    group = FactoryGirl.create(:group, forum_name: 'utrecht')
-
-    get :new, id: group, forum_id: forums(:utrecht)
+    get :new, id: group, forum_id: holland
 
     assert_redirected_to root_path
     assert assigns(:forum)
   end
 
   test 'should not show edit' do
-    sign_in users(:user)
+    sign_in user
 
-    group = FactoryGirl.create(:group, forum_name: 'utrecht')
-
-    get :edit, id: group, forum_id: forums(:utrecht)
+    get :edit, id: group, forum_id: holland
 
     assert_redirected_to root_path
     assert assigns(:forum)
@@ -31,9 +31,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test 'should not delete destroy' do
-    sign_in users(:user)
-
-    group = FactoryGirl.create(:group, forum_name: 'utrecht')
+    sign_in user
 
     assert_no_difference 'Group.count' do
       delete :destroy!, id: group
@@ -45,13 +43,12 @@ class GroupsControllerTest < ActionController::TestCase
   ####################################
   # For owners
   ####################################
+  let(:holland_owner) { create_owner(holland) }
 
   test 'should show new' do
-    sign_in users(:user_utrecht_owner)
+    sign_in holland_owner
 
-    group = FactoryGirl.create(:group, forum_name: 'utrecht')
-
-    get :new, id: group, forum_id: forums(:utrecht)
+    get :new, id: group, forum_id: holland
 
     assert_response 200
     assert assigns(:forum)
@@ -59,11 +56,9 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test 'should show edit' do
-    sign_in users(:user_utrecht_owner)
+    sign_in holland_owner
 
-    group = FactoryGirl.create(:group, forum_name: 'utrecht')
-
-    get :edit, id: group, forum_id: forums(:utrecht)
+    get :edit, id: group, forum_id: holland
 
     assert_response 200
     assert assigns(:forum)
@@ -71,9 +66,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test 'should delete destroy!' do
-    sign_in users(:user_utrecht_owner)
-
-    group = FactoryGirl.create(:group, forum_name: 'utrecht')
+    sign_in holland_owner
 
     assert_difference 'Group.count', -1 do
       delete :destroy!, id: group
