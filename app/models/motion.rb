@@ -4,7 +4,6 @@ class Motion < ActiveRecord::Base
   include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common, Mailable
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
-  has_many :opinions, -> { opinion_comments }, :dependent => :destroy
   has_many :votes, as: :voteable, :dependent => :destroy
   has_many :question_answers, inverse_of: :motion, dependent: :destroy
   has_many :questions, through: :question_answers
@@ -61,14 +60,12 @@ class Motion < ActiveRecord::Base
 
   def invert_arguments=(invert)
     if invert != '0'
-      self.arguments.each do |a|
-        a.update_attributes pro: !a.pro
+      Motion.transaction do
+        self.arguments.each do |a|
+          a.update_attributes pro: !a.pro
+        end
       end
     end
-  end
-
-  def is_main_motion?(tag)
-    self.tags.reject { |a,b| a.motion == b }.first == tag
   end
 
   def move_to(forum, unlink_questions = true)
@@ -77,7 +74,6 @@ class Motion < ActiveRecord::Base
       self.forum = forum.lock!
       self.save
       self.arguments.lock(true).update_all forum_id: forum.id
-      self.opinions.lock(true).update_all forum_id: forum.id
       self.votes.lock(true).update_all forum_id: forum.id
       self.question_answers.lock(true).delete_all if unlink_questions
       self.activities.lock(true).update_all forum_id: forum.id
@@ -123,14 +119,6 @@ class Motion < ActiveRecord::Base
 
   def tag_list=(value)
     super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
-  end
-
-  def top_arguments_con
-    self.arguments.where(pro: false).trashed(false).order(votes_pro_count: :desc).limit(5)
-  end
-
-  def top_arguments_pro
-    self.arguments.where(pro: true).trashed(false).order(votes_pro_count: :desc).limit(5)
   end
 
   # Same as {Argument#top_arguments_con} but plucks only :id, :title, :pro, and :votes_pro_count

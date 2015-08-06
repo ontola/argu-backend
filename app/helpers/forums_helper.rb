@@ -69,7 +69,6 @@ module ForumsHelper
   def forum_membership_controls_items
     items = []
 
-
     if policy(@forum).is_member?
       if active_for_user?(:notifications, current_user)
         divided = true

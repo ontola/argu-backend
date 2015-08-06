@@ -11,7 +11,6 @@ module ColumnRendererHelper
       when Motion then 'motions/show'
       when Argument then 'arguments/show'
       when Vote then 'votes/show'
-      when Opinion then 'opinions/show'
       when Question then 'questions/show'
       when Comment then 'comments/show'
       when GroupResponse then 'group_responses/show'

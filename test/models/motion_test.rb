@@ -10,11 +10,11 @@ class MotionTest < ActiveSupport::TestCase
     assert motion.valid?, motion.errors.to_a.join(',').to_s
   end
 
-  test 'top_arguments_con should not include trashed motions' do
-    assert_not motion.top_arguments_con.include?(arguments(:trashed_con))
+  test 'top_arguments_con_light should not include trashed motions' do
+    assert_not motion.top_arguments_con_light.map { |i| i[0] }.include?(arguments(:trashed_con).id)
   end
 
-  test 'top_arguments_pro should not include trashed motions' do
-    assert_not motion.top_arguments_con.include?(arguments(:trashed))
+  test 'top_arguments_pro_light should not include trashed motions' do
+    assert_not motion.top_arguments_con_light.map { |i| i[0] }.include?(arguments(:trashed).id)
   end
 end

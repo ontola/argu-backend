@@ -37,15 +37,6 @@ module ProCon
     self.title
   end
 
-  def collect_recipients(type)
-    #profiles.merge forum.followers_by_type('Profile').joins('LEFT OUTER JOIN users ON users.profile_id = profiles.id').where(users: {memberships_email: User.memberships_emails[:direct_memberships_email]})
-    profiles = Set.new
-    if type == :directly
-      profiles.merge creator if commentable.creator.owner.direct_created_email?
-      profiles.merge commentable.parent.creator if comment.parent && comment.parent.creator.owner.direct_created_email?
-    end
-  end
-
   def display_name
     title
   end
