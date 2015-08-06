@@ -9,7 +9,7 @@ gem 'indefinite_article'
 gem 'logstasher'
 
 ##################DB########################
-gem 'pg', '0.17.1'
+gem 'pg', '0.18.2'
 
 gem 'jbuilder', '~> 2.2.5'
 gem 'bcrypt-ruby', '>= 3.1.5'
