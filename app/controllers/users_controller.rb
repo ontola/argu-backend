@@ -29,7 +29,7 @@ class UsersController < ApplicationController
         format.json { render json: @user }
       end
     else
-      flash['User not found']
+      flash[:error]= 'User not found'
       request.env['HTTP_REFERER'] ||= root_path
       respond_to do |format|
         format.html { redirect_to :back }

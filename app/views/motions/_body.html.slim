@@ -21,5 +21,5 @@
     - if current_user.present? && policy(motion).update?
       li
         ul= react_component 'HyperDropdown', motion_items(motion), {prerender: true}
-    li
+    li.share-menu
       ul= react_component 'HyperDropdown', share_items(motion), {prerender: true}

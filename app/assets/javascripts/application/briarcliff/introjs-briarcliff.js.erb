@@ -1,6 +1,6 @@
 $(function() {
 
-    introJs = introJs().setOptions({
+    introJsOptions = {
         'skipLabel': 'x',
         'nextLabel': '<%= I18n.t('intro.next') %>',
         'prevLabel': '<%= I18n.t('intro.previous') %>',
@@ -10,10 +10,41 @@ $(function() {
         'showProgress': false,
         'showStepNumbers': false,
         'scrollToElement': true
-        });
+    }
+
+    introJs().setOptions(introJsOptions);
+
+    introJsMotionTour = introJs().setOptions({
+        steps:[
+            {
+                element: document.querySelector('.motion-body'),
+                intro: "<%= I18n.t('intro.motion.posted.body') %>"
+            },
+            {
+                element: document.querySelector('.motion-votes'),
+                intro: "<%= I18n.t('intro.motion.posted.vote') %>"
+            },
+            {
+                element: document.querySelector('.argument-columns'),
+                intro: "<%= I18n.t('intro.motion.posted.post_argument') %>"
+            },
+            {
+                element: document.querySelector('.share-menu'),
+                intro: "<%= I18n.t('intro.motion.posted.share') %>"
+            }
+        ]
+    }).start();
+
     //start introJs on click
     $(document).on("click", '.intro-trigger', function() {
         introJs.start();
     });
+
+
+    //start introJs after posting an idea
+    if (window.location.search.indexOf('start_motion_tour=true') > -1) {
+        introJsMotionTour;
+    }
+
 
 });

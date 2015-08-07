@@ -46,6 +46,11 @@ nl:
       arguments: 'Op Argu structureren we discussie aan de hand van <b class="pro-t">voor</b>- en <b class="con-t">tegen</b>argumenten. Klik op een argument om reacties te bekijken of te plaatsen.'
       help: 'Wil je deze tutorial nogmaals zien? Gewoon hier klikken.'
       groups: 'Speciale gebruikers (zoals politieke partijn) kunnen hier aangeven wat hun mening is over het idee.'
+      posted:
+        body: 'Je idee is geplaatst! Tijd voor de volgende stappen...'
+        vote: 'Op jouw idee is nog niet gestesmd. Geef als eerste aan dat jij achter jouw idee staat!'
+        post_argument: 'Plaats argumenten voor jouw idee om anderen te overtuigen.'
+        share: 'Deel je idee om meer stemmen te krijgen en voor verandering te zorgen!'
     argument:
       back: 'Klik hier om terug te gaan naar het <b class="motion-t">idee</b>.'
       body: 'Een argument is een enkele reden <b class="pro-t">voor</b> of <b class="con-t">tegen</b> een idee.'
