@@ -2,7 +2,6 @@ class Argu::NotificationWorker
   require 'sidekiq/logging/json'
   Sidekiq.logger.formatter = Sidekiq::Logging::Json::Logger.new
   include Sidekiq::Worker
-  include MailerHelper
 
   def perform(activity_id)
     @activity = Activity.find_by_id activity_id

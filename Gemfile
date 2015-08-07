@@ -91,7 +91,7 @@ group :development, :test do
   #gem 'thin'
   gem 'puma', platform: :ruby
   gem 'nokogiri', '1.6.5'
-  gem 'minitest-rails', '~> 2.1.1'
+  gem 'minitest-rails', '~> 2.2.0'
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'minitest-bang'
   gem 'mocha'

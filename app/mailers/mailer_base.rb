@@ -1,5 +1,4 @@
 class MailerBase
-  include MailerHelper
 
   def initialize(activity)
     @activity = activity

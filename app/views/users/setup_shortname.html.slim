@@ -10,8 +10,8 @@
         =f.inputs do
           =f.inputs :shortname, for: :shortname do |s|
             - if @user.email
-              =s.input :shortname, input_html: {title: t('formtastic.hints.user.shortname'), pattern: "[a-zA-Z]+[_a-zA-Z0-9]*", value: @user.email[/[^@]+/].gsub('.', '_')}
+              =s.input :shortname, input_html: {title: t('formtastic.hints.user.shortname'), pattern: '[a-zA-Z]+[_a-zA-Z0-9]*', value: @user.email[/[^@]+/].gsub('.', '_')}
             - else
-                =s.input :shortname, input_html: {title: t('formtastic.hints.user.shortname'), pattern: "[a-zA-Z]+[_a-zA-Z0-9]*"}
+              =s.input :shortname, input_html: {title: t('formtastic.hints.user.shortname'), pattern: '[a-zA-Z]+[_a-zA-Z0-9]*'}
         =f.actions do
           =f.action :submit, :as => :button, label: t('next')
