@@ -12,7 +12,6 @@
     section.section-info.question-bg
       span[class="fa fa-#{question_icon}"]
       span.icon-left= question_type
-      =render partial: 'questions/expires_at', locals: {deadline: @question.expires_at}
       =render partial: 'decisions/decision_and_deadline', locals: {deadline: @question.expires_at}
     section
       h1.question-t[itemprop="headline"]= @question.title

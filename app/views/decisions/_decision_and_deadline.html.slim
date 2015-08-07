@@ -1,8 +1,7 @@
 -if deadline.present? && active_for_user?(:expires_at, current_user)
   -if deadline > DateTime.now
     section.section-info.section-info--right.section-info--countdown
-      span.fa.fa-exclamation
-      span.icon-left.tooltip--left[data-title= t('questions.expires_at.tooltip', date: deadline.to_formatted_s(:short))]= "Nog #{distance_of_time_in_words(deadline, DateTime.now)}"
+      span.tooltip--left[data-title= t('questions.expires_at.tooltip', date: deadline.to_formatted_s(:short))]= t('time_remaining', time: distance_of_time_in_words(deadline, DateTime.now))
   -else
     section.section-info.section-info--right.section-info--closed
       span.fa.fa-lock

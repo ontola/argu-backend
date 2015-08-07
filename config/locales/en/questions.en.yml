@@ -8,7 +8,7 @@ en:
     header: "questions"
     view_all_motions: "View all %{amount} ideas..."
     call_to_action:
-      title: "Require a solution?"
+      title: "Looking for good ideas?"
       body: "Are you looking for good ideas to a burning question?"
       action: "Share your question!"
     form:

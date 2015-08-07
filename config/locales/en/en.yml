@@ -185,6 +185,7 @@ en:
     button_label: "Convert"
   join: "Join"
   view_on_argu: "View & reply on Argu"
+  time_remaining: "%{time} remaining"
   embed: "embed"
   forms:
     danger_zone: "Danger zone"

@@ -186,6 +186,7 @@ nl:
     button_label: "Converteer"
   join: "Word lid"
   view_on_argu: "bekijk & reageer op Argu"
+  time_remaining: "Nog %{time}"
   embed: "embed"
   forms:
     danger_zone: "Gevarenzone"
