@@ -46,11 +46,11 @@ en:
       arguments: 'On Argu, we structure discussions by <b class="pro-t">pro</b>- and <b class="con-t">con</b>arguments. Click on an argument to view or place a reply.'
       help: 'Would you like to see this tutorial again? Click here.'
       groups: 'Special users (like political parties) can indicate what their opinion is about the idea.'
-        posted:
-          body: 'Your idea is posted! Time for the next steps...'
-          vote: 'Your idea does not have votes yet. Be the first one to vote!'
-          post_argument: 'Submit arguments to convince others.'
-          share: 'Share your idea to get votes and make a change!'
+      posted:
+        body: 'Your idea is posted! Time for the next steps...'
+        vote: 'Your idea does not have votes yet. Be the first one to vote!'
+        post_argument: 'Submit arguments to convince others.'
+        share: 'Share your idea to get votes and make a change!'
     argument:
       back: 'Click here to return to the <b class="motion-t">motion</b>.'
       body: 'An argument is a single reason <b class="pro-t">pro</b> or <b class="con-t">con</b> an idea.'
