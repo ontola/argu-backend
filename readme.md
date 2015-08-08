@@ -1,12 +1,14 @@
 Argu
 =============
 [![Build Status](https://semaphoreapp.com/api/v1/projects/40e97aeb-334e-4b28-ac4e-844fa5db7c50/289369/badge.png)](https://semaphoreapp.com/fletcher91/argu--2)
+Argu is an online discussion platform for substantive debate.
+
 
 Setting up
 --------------
 1. Clone the repo `git clone git@bitbucket.org:arguweb/argu.git`
 2. Install the gems `bundle install`
-3. Set up the db `rake db:setup`
+3. Set up the db `rake db:setup`. Set it up in all the environments that you will use (development / testing)
 4. Start the server `rails s`
 5. Run Redis `redis-server`
 6. Start the background worker: `bundle exec sidekiq`
@@ -15,14 +17,15 @@ Setting up
 9. Click 'ADMIN_ACCOUNT' on the bottom right corner of the screen.
 10. Create a page
 11. Create a forum with that page
+12. Enable the features that require Rollout (see below)
 
-New Features
+Adding & enabling features using Rollout
 ------------
-When adding a new feature, make use of `if active_for_user?(feature, user)` so we can roll out the feature gradually.
+When adding a new feature, make use of `if active_for_user?(feature, user)` so we can roll out the feature gradually or disable it if neccessary.
 
-To add the feature for staff members, execute `$rollout.activate_group(:feature, :staff)` in the rails console.
+To enable a feature for staff members, execute `$rollout.activate_group(:feature, :staff)` in the rails console.
 
-List of rolloutable features:
+List of rolloutable features: (don't forget to add your feature name here)
 
 * argument_tooltips_list
 * argument_tooltips_content

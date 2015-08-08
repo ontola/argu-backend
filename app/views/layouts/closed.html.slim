@@ -18,9 +18,7 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   - if active_for_user?('inspectlet', current_user)
     =render partial:'external/inspectlet'
 body
-  -flash.each do |key, value|
-    .alert-container
-      .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
+  =render partial: 'alerts'
   =render 'closed/navbar'
   - active_for_user?('welcome_video', current_user)
     =render partial: 'welcome_video'

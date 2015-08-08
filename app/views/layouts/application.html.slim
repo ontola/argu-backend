@@ -32,10 +32,7 @@ body
   .wrapper
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')
-
-    -flash.each do |key, value|
-      .alert-container
-        .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
+    =render partial: 'alerts'
     #pjax-container.container
       =yield
     .push-footer

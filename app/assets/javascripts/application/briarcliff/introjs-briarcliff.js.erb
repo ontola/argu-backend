@@ -33,7 +33,7 @@ $(function() {
                 intro: "<%= I18n.t('intro.motion.posted.share') %>"
             }
         ]
-    }).start();
+    });
 
     //start introJs on click
     $(document).on("click", '.intro-trigger', function() {
@@ -43,7 +43,7 @@ $(function() {
 
     //start introJs after posting an idea
     if (window.location.search.indexOf('start_motion_tour=true') > -1) {
-        introJsMotionTour;
+        introJsMotionTour.start();
     }
 
 
