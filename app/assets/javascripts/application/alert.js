@@ -41,7 +41,7 @@ Argu.Alert = function (message, messageType, instantShow, beforeSelector) {
     message        = typeof message        !== 'undefined' ? message : '';
     messageType    = typeof messageType    !== 'undefined' ? messageType : 'success';
     instantShow    = typeof instantShow    !== 'undefined' ? instantShow : false;
-    beforeSelector = typeof beforeSelector !== 'undefined' ? beforeSelector : '#navbar';
+    beforeSelector = typeof beforeSelector !== 'undefined' ? beforeSelector : '.alert-before-selector';
 
     var render = function () {
         (_alert = $("<div class='alert-container'><pre class='alert alert-" + messageType + "'>" + message + "</pre></div>")).insertBefore($(beforeSelector));

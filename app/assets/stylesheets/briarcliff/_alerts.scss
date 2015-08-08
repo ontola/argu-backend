@@ -1,12 +1,16 @@
 @import "variables";
 @import "mixins";
 
-.alert-container {
+.alert-wrapper {
   position: fixed;
-  pointer-events: none;
   width: 100%;
   bottom: 3em;
   z-index: 100;
+}
+
+.alert-container {
+  position: relative;
+  pointer-events: none;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
