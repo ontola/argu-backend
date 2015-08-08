@@ -21,6 +21,7 @@
   padding: 1em;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 1em;
   background-color: rgba(255, 255, 255, 1);
   color: rgb(92, 92, 92);
   display: block;
@@ -29,7 +30,7 @@
   border: solid 3px;
   text-align: center;
   font-family: $font-sans;
-  @include animation(fade-in 1s both, from-bottom ease-out 1s both);
+  @include animation(from-bottom-fade .5s both, grow-from-bottom .5s both);
   pointer-events: none;
   @include bp-small{
     width: 100%;
@@ -39,7 +40,7 @@
 }
 
 .alert-hidden {
-  @include animation(fade-out 1s both);
+  @include animation(fade-out .5s both);
 }
 
 .alert-notice {
