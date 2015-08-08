@@ -4,6 +4,8 @@ nl:
   intro:
     next: 'volgende'
     previous: 'vorige'
+    done: 'klaar'
+    skip: 'overslaan'
     forums:
       grid: 'Alle <b class="motion-t">ideeën</b> en <b class="question-t">vraagstukken</b> staan hieronder. Klik op een item om in de discussie te duiken en jouw mening te geven!'
       filter: 'Hiermee kan je items zoeken met een bepaald thema, of bijvoorbeeld sorteren op score.'

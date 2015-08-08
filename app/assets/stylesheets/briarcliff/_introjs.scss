@@ -94,6 +94,7 @@
   z-index: 1000000;
   overflow: hidden;
   @include box-shadow-intense;
+  @include animation(from-bottom-fade .4s both);
 }
 
 .introjs-tooltiptext {

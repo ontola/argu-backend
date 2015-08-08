@@ -244,7 +244,7 @@
 
 @include keyframes(from-bottom-fade) {
   0% {
-    transform: translate(0,5em);
+    transform: translate(0,2em);
     opacity: 0;
   }
   100% {

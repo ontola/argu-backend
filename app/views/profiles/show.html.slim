@@ -4,11 +4,12 @@
                description: seolized_description(@user || @page || @profile),
                image: @profile.profile_photo
 =render partial: 'profiles/profile_bar', locals: {resource: @profile, active: :show} if policy(@profile).update?
+.cover-behind
+  .cover-image[style="background-image: url('#{@profile.cover_photo.url(:cover)}'); "]
 .col-1
-  /=image_tag @profile.cover_photo.url
+
+  =image_tag @profile.profile_photo.url(:avatar), container_class: 'profile', class: 'profile-picture--big'
   .profile.profile-big[data-intro= t('intro.profile.show', name: @profile.display_name)]
-    .profile-picture.profile-picture-show
-      =image_tag @profile.profile_photo.url(:avatar), container_class: 'profile'
     .box
       section
         h1
@@ -16,18 +17,12 @@
         - if @profile.roles.pluck(:name).include?('staff')
           span.role Staff
         p.quote= @profile.about
-    /TODO Tags
-      ul.tags
-        li
-          a.tag href=""
-            span energie
-        li
-          a.tag href=""
-            span duurzaamheid
-        li
-          a.tag href=""
-            span windmolens
-
+        label Forums:
+        ul.icon-list.margin-bottom
+          - @profile.forums.where(visibility: true).each do |forum|
+            li
+              = link_to forum_path(forum) do
+                span= forum.name
 .boxes-list[data-intro= t('intro.profile.votes') data-position="top"]
   - if @profile.are_votes_public? && @profile.votes.count > 0
     .col-1

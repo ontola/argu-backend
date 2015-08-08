@@ -62,18 +62,13 @@
   margin: 0 0 1em 0;
 }
 
-.profile-picture-show {
-  margin: 0 1em 0 0;
-  float: left;
-  width: 8em;
+.profile-picture--big{
+  @include border-radius(999px);
+  display: block;
+  margin: auto;
+  margin-bottom: 2em;
   height: 8em;
-  overflow: hidden;
-  z-index: 1;
-  @include bp-medium(){
-    margin: 0 auto 2em auto;
-    display: block;
-    float: none;
-  }
+  width: 8em;
 }
 
 .profile-switcher {

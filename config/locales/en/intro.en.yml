@@ -4,6 +4,8 @@ en:
   intro:
     next: 'next'
     previous: 'previous'
+    done: 'done'
+    skip: 'skip'
     forums:
       grid: 'All <b class="motion-t">motions</b> and <b class="question-t">questions</b> are listed below. Click an item to enter the discussion and share your opinion!'
       filter: 'This allows you to search items with a certain theme, or sort on, for example, score.'

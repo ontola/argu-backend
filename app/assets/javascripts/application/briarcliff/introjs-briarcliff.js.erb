@@ -1,20 +1,18 @@
 $(function() {
 
     introJsOptions = {
-        'skipLabel': 'x',
+        'skipLabel': '<%= I18n.t('intro.skip') %>',
         'nextLabel': '<%= I18n.t('intro.next') %>',
         'prevLabel': '<%= I18n.t('intro.previous') %>',
-        'doneLabel': 'x',
+        'doneLabel': '<%= I18n.t('intro.done') %>',
         'disableInteraction': false,
         'showBullets': true,
         'showProgress': false,
         'showStepNumbers': false,
         'scrollToElement': true
-    }
+    };
 
-    introJs().setOptions(introJsOptions);
-
-    introJsMotionTour = introJs().setOptions({
+    introJsMotionTour = introJs().setOptions(introJsOptions).setOptions({
         steps:[
             {
                 element: document.querySelector('.motion-body'),
