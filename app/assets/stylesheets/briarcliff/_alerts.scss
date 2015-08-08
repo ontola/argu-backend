@@ -10,13 +10,15 @@
 
 .alert-container {
   position: relative;
-  pointer-events: none;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  pointer-events: none;
+
 }
 
 .alert {
+  position: relative;
   bottom: 3em;
   padding: 1em;
   margin-left: auto;
@@ -27,11 +29,12 @@
   display: block;
   font-weight: bold;
   z-index: 100;
-  border: solid 3px;
+  //border: solid 3px;
   text-align: center;
   font-family: $font-sans;
   @include animation(from-bottom-fade .5s both, grow-from-bottom .5s both);
-  pointer-events: none;
+  @include box-shadow-intense;
+
   @include bp-small{
     width: 100%;
     left: 0;
@@ -40,7 +43,13 @@
 }
 
 .alert-hidden {
-  @include animation(fade-out .5s both);
+  @include animation(fade-out .5s both, collapse-from-top .5s both);
+
+  // When an alert is about to be removed, the user should not get the idea that he can still interact with it.
+  pointer-events: none;
+  * {
+    pointer-events: none;
+  }
 }
 
 .alert-notice {

@@ -9,12 +9,23 @@ Argu.alert = {
     },
 
     fade: function (duration, _alert) {
-        window.setTimeout(function(a) {
+
+        var fadeNow = function(a) {
             a.addClass('alert-hidden');
             window.setTimeout(function(a) {
                 a.remove();
             }, 2000, a);
-        }, duration, _alert);
+        };
+
+        var timeoutHandle = window.setTimeout(fadeNow, duration, _alert);
+
+        _alert.mouseover(function(){
+            window.clearTimeout(timeoutHandle);
+        });
+
+        _alert.mouseout(function(){
+            timeoutHandle = window.setTimeout(fadeNow, 1000, _alert)
+        });
     },
 
     fadeAll: function () {
@@ -37,7 +48,7 @@ Argu.Alert = function (message, messageType, instantShow, beforeSelector) {
     "use strict";
     var alert = this,
         _alert = undefined,
-        _duration = 4000;
+        _duration = 400000;
     message        = typeof message        !== 'undefined' ? message : '';
     messageType    = typeof messageType    !== 'undefined' ? messageType : 'success';
     instantShow    = typeof instantShow    !== 'undefined' ? instantShow : false;
