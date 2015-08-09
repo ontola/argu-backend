@@ -40,7 +40,7 @@ module ForumsHelper
     _public_forum_items = public_forum_items(5)
 
     items.concat (_public_forum_items - profile_membership_items) if items.length < _public_forum_items.length + 1
-    items << link_item(t('forums.show_open'), discover_forums_path, fa: 'compass', divider: 'top')
+    items << link_item(t('forums.show_open'), discover_forums_path, fa: 'compass')
   end
 
   def forum_title_dropdown_items(resource)
@@ -73,12 +73,12 @@ module ForumsHelper
       if active_for_user?(:notifications, current_user)
         divided = true
         if current_profile.following?(@forum)
-          items << link_item(t('forums.unfollow'), follows_path(forum_id: @forum.url), fa: 'times', divider: 'top', data: {method: 'delete', 'skip-pjax' => 'true'})
+          items << link_item(t('forums.unfollow'), follows_path(forum_id: @forum.url), fa: 'times', data: {method: 'delete', 'skip-pjax' => 'true'})
         else
-          items << link_item(t('forums.follow'), follows_path(forum_id: @forum.url), fa: 'check', divider: 'top', rel: :nofollow, data: {method: 'post', 'skip-pjax' => 'true'})
+          items << link_item(t('forums.follow'), follows_path(forum_id: @forum.url), fa: 'check', rel: :nofollow, data: {method: 'post', 'skip-pjax' => 'true'})
         end
       end
-      items << link_item(t('forums.leave'), forum_membership_path(@forum.url, current_profile), fa: 'sign-out', divider: (divided ? 'top' : nil),
+      items << link_item(t('forums.leave'), forum_membership_path(@forum.url, current_profile), fa: 'sign-out',
                          data: {method: :delete, 'skip-pjax' => 'true', confirm: t('forums.leave_confirmation')})
     end
   end

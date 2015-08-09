@@ -102,8 +102,8 @@
 span.dropdown-header {
   padding: .4em;
   padding-left: 1em;
-  background-color: $g3;
-  color: white;
+  background-color: $g1;
+  color: $g3;
   width: 100%;
   text-transform: uppercase;
   font-size: .8em;
@@ -132,15 +132,15 @@ span.dropdown-header {
   border-top: solid 1px $g2;
 }
 
-.dropdown-header {
-  background-color: $g0;
+/*.dropdown-header {
+  background-color: $g2;
   width: 100%;
   li{
     display: inline-block !important;
     min-width: 0;
     font-size: .8em;
   }
-}
+}*/
 
 .dropdown-title {
   float: left;

@@ -114,10 +114,6 @@ Argu::Application.routes.draw do
     patch 'comments' => 'comments#create'
   end
 
-  resources :opinions, path: 'o' do
-    resources :comments, path: 'c'
-  end
-
   resources :group_responses, only: [:edit, :update, :destroy], as: :responses
   resources :groups, path: 'g', only: [:create, :update, :edit], concerns: [:destroyable] do
     resources :group_memberships, path: 'memberships', only: [:new, :create], as: :membership

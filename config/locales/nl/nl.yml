@@ -186,6 +186,7 @@ nl:
     button_label: "Converteer"
   join: "Word lid"
   view_on_argu: "bekijk & reageer op Argu"
+  time_remaining: "Nog %{time}"
   embed: "embed"
   forms:
     danger_zone: "Gevarenzone"
@@ -217,7 +218,6 @@ nl:
                 <p>Je kunt je tekst eenvoudig opmaken door leestekens te gebruiken:</p>
                 <code>*Schuingedrukt*</code>
                 <code>**Dikgedrukt**</code>
-                <code>~~Doorstrepen~~</code>
                 <code>##Tussenkop</code>
                 <code>1. Genummerde <br> 2. Lijst</code>
                 <code>* Ongenummerde <br> * Lijst</code>
@@ -232,8 +232,8 @@ nl:
       name: 'Argument %{side} %{motiontitle}'
       description: 'Discussieer mee.'
     forum:
-      name: ''
-      description: ''
+      name: 'Forum voor inhoudelijke discussie'
+      description: 'Argu is een discussieplatform waar argumenten centraal staan.'
     hash:
       name: ''
       description: ''
@@ -248,7 +248,7 @@ nl:
       description: 'Alle standpunten van %{title} in één overzicht.'
     question:
       name: 'Bespreek en deel ideeën'
-      description: 'Deel ideeën voor %{title} en bespreek de voor- en nadelen.'
+      description: 'Deel ideeën voor ''%{title}'' en bespreek de voor- en nadelen.'
     string:
       name: ''
       description: ''

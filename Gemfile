@@ -9,7 +9,7 @@ gem 'indefinite_article'
 gem 'logstasher'
 
 ##################DB########################
-gem 'pg', '0.17.1'
+gem 'pg', '0.18.2'
 
 gem 'jbuilder', '~> 2.2.5'
 gem 'bcrypt-ruby', '>= 3.1.5'
@@ -91,8 +91,9 @@ group :development, :test do
   #gem 'thin'
   gem 'puma', platform: :ruby
   gem 'nokogiri', '1.6.5'
-  gem 'minitest-rails', '~> 2.1.1'
+  gem 'minitest-rails', '~> 2.2.0'
   gem 'minitest-reporters', '~> 1.0.8'
+  gem 'minitest-bang'
   gem 'mocha'
   gem 'pry'
   #gem 'byebug'
@@ -112,6 +113,7 @@ group :development, :test do
   gem 'capistrano-bundler', '~> 1.1.3'
   gem 'capistrano-rvm', '~> 0.1.2'
   gem 'license_finder'
+  gem 'database_cleaner'
 end
 
 group :production, :staging do

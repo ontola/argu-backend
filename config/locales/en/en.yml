@@ -185,6 +185,7 @@ en:
     button_label: "Convert"
   join: "Join"
   view_on_argu: "View & reply on Argu"
+  time_remaining: "%{time} remaining"
   embed: "embed"
   forms:
     danger_zone: "Danger zone"
@@ -216,7 +217,6 @@ en:
                 <p>You can format your text using the following characters:</p>
                 <code>*Cursive*</code>
                 <code>**Bold**</code>
-                <code>~~Strike text~~</code>
                 <code>##Heading</code>
                 <code>1. Numbered <br> 2. List</code>
                 <code>* Bullet <br> * List</code>"
@@ -230,7 +230,7 @@ en:
       name: 'Argument %{side} %{motiontitle}'
       description: 'Join the debate.'
     forum:
-      name: ''
+      name: 'Forum for substantive discussions.'
       description: ''
     hash:
       name: ''

@@ -13,6 +13,7 @@ nl:
       invite: "Nodig anderen uit om in dit forum mee te discussiëren."
     argument:
       vote_up: "Stem dit argument omhoog als je het belangrijk vindt."
-      vote_up_undo: "Je hebt op dit argument gestemd. Klik om dit ongedaan te maken."
+      vote_up_undo: "Je hebt dit argument omhoog gestemd. Klik om dit ongedaan te maken."
       vote_down: "Onbelangrijk argument; het moet lager staan."
+      vote_down_undo: "Je hebt dit argument naar beneden gestemd. Klik om dit ongedaan te maken."
     follow: "Ontvang meldingen als hier nieuwe items worden geplaatst."

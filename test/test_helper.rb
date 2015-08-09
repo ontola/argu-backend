@@ -3,6 +3,7 @@ require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
 require 'minitest/rails'
 require 'mocha/mini_test'
+require 'model_test_base'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -14,7 +15,6 @@ require 'minitest/pride'
 
 class ActiveSupport::TestCase
 
-  include FactoryGirl::Syntax::Methods
   ActiveRecord::Migration.check_pending!
 
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
@@ -23,6 +23,8 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  include FactoryGirl::Syntax::Methods
+  #FactoryGirl.lint
   # Add more helper methods to be used by all tests here...
 
   # Runs assert_difference with a number of conditions and varying difference
@@ -46,4 +48,27 @@ class ActiveSupport::TestCase
       assert_equal(before[i] + difference, eval(e, b), error)
     end
   end
+
+  def create_manager(forum, user = nil)
+    user ||= FactoryGirl.create(:user)
+    FactoryGirl.create(:managership, forum: forum, profile: user.profile)
+    user
+  end
+
+  def create_member(forum, user = nil)
+    user ||= FactoryGirl.create(:user)
+    FactoryGirl.create(:membership, forum: forum, profile: user.profile)
+    user
+  end
+
+  # Makes the given `User` a manager of the `Page` of the `Forum`
+  # Creates one if not given
+  # @note overwrites the current owner in the `Page`
+  def create_owner(forum, user = nil)
+    user ||= FactoryGirl.create(:user)
+    forum.page.owner = user.profile
+    forum.page.save
+    user
+  end
+
 end

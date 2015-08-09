@@ -4,7 +4,7 @@ class MotionsController < ApplicationController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    @motion = Motion.includes(:arguments, :opinions).find(params[:id])
+    @motion = Motion.includes(:arguments).find(params[:id])
     @forum = @motion.forum
     current_context @motion
     authorize @motion

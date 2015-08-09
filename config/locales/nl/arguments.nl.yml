@@ -16,7 +16,6 @@ nl:
       con: "Argumenten tegen"
     index:
       title: "Argumenten"
-      opinion: "Opinie"
       parties: "Partijen"
       law: "Wet"
     show:
@@ -37,10 +36,10 @@ nl:
                    </ul>"
       content_heading: "Licht je argument toe"
       content_body_html: "<ul class='bullets'>
-                      <li>Geef <b>achtergrondinformatie</b> om jouw argument krachtiger te maken.</li>
-                      <li>Gebruik <b>bronnen</b> en voeg links toe.</li>
                       <li>De <b>eerste zinnen</b> worden het meest gelezen, dus zorg dat die overtuigen!</li>
                       <li>Plaats maar <b>één enkele reden</b>! Zo houden we de discussie overzichtelijk.</li>
+                      <li>Geef <b>achtergrondinformatie</b> om jouw argument krachtiger te maken.</li>
+                      <li>Gebruik <b>bronnen</b> en voeg links toe.</li>
                     </ul>"
       title: "Plaats hier de kern van jouw argument"
       content: "Plaats hier de toelichting op jouw argument. Waarom ondersteunt of weerlegt dit het idee?"

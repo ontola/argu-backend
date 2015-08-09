@@ -206,9 +206,6 @@ class MotionsControllerTest < ActionController::TestCase
     assigns(:motion).arguments.pluck(:forum_id).each do |id|
       assert_equal forum_id, id
     end
-    assigns(:motion).opinions.pluck(:forum_id).each do |id|
-      assert_equal forum_id, id
-    end
     assert assigns(:motion).questions.blank?
     assigns(:motion).activities.pluck(:forum_id).each do |id|
       assert_equal forum_id, id

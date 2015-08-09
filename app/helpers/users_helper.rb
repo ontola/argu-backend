@@ -8,9 +8,9 @@ module UsersHelper
   end
 
   def identity_token(identity)
-    encrypt_payload({
-                        identity: identity.id
-                    })
+    sign_payload({
+                    identity: identity.id
+                })
   end
 
   def login_providers_left(user)

@@ -16,7 +16,6 @@ en:
       con: "con arguments"
     index:
       title: "arguments"
-      opinion: "opinion"
       parties: "parties"
       law: "law"
     show:

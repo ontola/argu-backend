@@ -34,13 +34,6 @@ class Comment < ActiveRecord::Base
     c
   end
 
-  def collect_recipients(type)
-    profiles = Set.new
-    if type == :directly
-      profiles.merge commentable.parent.creator if comment.parent && comment.parent.creator.owner.direct_created_email?
-    end
-  end
-
   def creator
     self.profile
   end

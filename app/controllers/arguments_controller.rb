@@ -11,7 +11,7 @@ class ArgumentsController < ApplicationController
     
     @comments = @argument.filtered_threads(show_trashed?)
     @length = @argument.root_comments.length
-    @vote = Vote.find_or_initialize_by voteable: @argument, voter: current_profile
+    @vote = Vote.find_by(voteable: @argument, voter: current_profile)
 
     respond_to do |format|
       format.html # show.html.erb
