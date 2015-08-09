@@ -23,7 +23,7 @@ class StaticPagesController < ApplicationController
   end
 
   def product
-    authorize :static_pages
+    authorize :static_page
     redirect_to info_path('product'), status: 302
   end
 
