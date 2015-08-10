@@ -66,6 +66,10 @@ window.BigVote = React.createClass({
         };
     },
 
+    ifNoActor: function (v) {
+        return this.props.actor === null ? v : undefined;
+    },
+
     refresh: function () {
         fetch(`${this.state.vote_url}.json`, _safeCredentials())
             .then(statusSuccess)
@@ -78,16 +82,22 @@ window.BigVote = React.createClass({
     },
 
     proHandler: function (e) {
-        e.preventDefault();
-        this.vote('pro')
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('pro')
+        }
     },
     neutralHandler: function (e) {
-        e.preventDefault();
-        this.vote('neutral')
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('neutral')
+        }
     },
     conHandler: function (e) {
-        e.preventDefault();
-        this.vote('con')
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('con')
+        }
     },
 
     vote: function (side) {
@@ -138,15 +148,15 @@ window.BigVote = React.createClass({
 
         return (<div className="center motion-shr">
             <ul className="btns-opinion" data-voted={(this.state.current_vote.length > 0 && this.state.current_vote != 'abstain') || null}>
-                <li><a href="#" onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method={this.ifNoActor('post')} data-remote={this.ifNoActor('true')} onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
                     <span className="fa fa-thumbs-up" />
                     <span className="icon-left"><%= I18n.t('motions.votes.pro') %></span>
                 </a></li>
-                <li><a href="#" onClick={this.neutralHandler} rel="nofollow" className="btn-neu" data-voted-on={this.state.current_vote == 'neutral' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/neutral`)} data-method={this.ifNoActor('post')} data-remote={this.ifNoActor('true')} onClick={this.neutralHandler} rel="nofollow" className="btn-neu" data-voted-on={this.state.current_vote == 'neutral' || null}>
                     <span className="fa fa-pause" />
                     <span className="icon-left"><%= I18n.t('motions.votes.neu') %></span>
                 </a></li>
-                <li><a href="#" onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote == 'con' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/con`)} data-method={this.ifNoActor('post')} data-remote={this.ifNoActor('true')} onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote == 'con' || null}>
                     <span className="fa fa-thumbs-down" />
                     <span className="icon-left"><%= I18n.t('motions.votes.con') %></span>
                 </a></li>
