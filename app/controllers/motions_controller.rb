@@ -76,7 +76,7 @@ class MotionsController < ApplicationController
     respond_to do |format|
       if @motion.save
         create_activity @motion, action: :create, recipient: (@question.presence || @motion.forum), owner: current_profile, forum_id: @motion.forum.id
-        format.html { redirect_to motion_path(@motion, :start_motion_tour => true), notice: t('type_save_success', type: motion_type) }
+        format.html { redirect_to motion_path(@motion), notice: t('type_save_success', type: motion_type) }
         format.json { render json: @motion, status: :created, location: @motion }
       else
         format.html { render 'form' }
