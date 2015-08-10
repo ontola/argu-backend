@@ -23,10 +23,10 @@
           span.fa.fa-check-square-o
           span.icon-left= motion.total_vote_count.to_s
         - if active_for_user?(:argument_tooltips_list, current_user)
-          .details-part.tooltip--wider[data-title=pro_arguments_preview_tooltip(motion)]
+          .details-part.tooltip--wider[data-title=(motion.argument_pro_count == 0 ? t('tooltips.motion.arguments_pro_count') : pro_arguments_preview_tooltip(motion))]
             span.fa.fa-plus
             span.icon-left= motion.argument_pro_count
-          .details-part.tooltip--wider[data-title=con_arguments_preview_tooltip(motion)]
+          .details-part.tooltip--wider[data-title=(motion.argument_con_count == 0 ? t('tooltips.motion.arguments_con_count') : con_arguments_preview_tooltip(motion))]
             span.fa.fa-minus
             span.icon-left= motion.argument_con_count
         - else
