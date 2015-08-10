@@ -6,6 +6,11 @@
   max-width: 1200px;
   padding: 0 1em;
   margin: 0 auto;
+
+  @include bp-medium{
+    text-align: left;
+  }
+
   * {
     -webkit-tap-highlight-color: rgba(0,0,0,0);
   }

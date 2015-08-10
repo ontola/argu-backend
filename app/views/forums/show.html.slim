@@ -58,19 +58,6 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
           - if @forum.bio_long.present?
             a[href="#forum-info" class="smoothscroll"]
               span.icon-left= t('forums.more_info')
-  / The skeleton for the tabs layout!
-  /.tabs-container
-    ul.tabs
-      li.tab--current
-        a
-          span items
-      li
-        a
-          span activities
-      li
-        a
-          span menu
-
   - if policy(@forum).show?
     =render partial: 'filter_and_sort'
     .grid

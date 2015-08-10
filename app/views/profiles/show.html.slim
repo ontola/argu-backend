@@ -8,8 +8,8 @@
   .cover-image[style="background-image: url('#{@profile.cover_photo.url(:cover)}'); "]
 .col-1
 
-  =image_tag @profile.profile_photo.url(:avatar), container_class: 'profile', class: 'profile-picture--big'
-  .profile.profile-big[data-intro= t('intro.profile.show', name: @profile.display_name)]
+  =image_tag @profile.profile_photo.url(:avatar), container_class: 'profile', class: 'profile-picture profile-picture--big'
+  .profile[data-intro= t('intro.profile.show', name: @profile.display_name)]
     .box
       section
         h1

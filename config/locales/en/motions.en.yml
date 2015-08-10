@@ -13,6 +13,8 @@ en:
     no_pros: "no pros yet"
     no_cons: "no cons yet"
     content: "content"
+    tooltips:
+      count: "number of ideas"
     votes:
       pro: "Agree"
       neu: "Neutral"
