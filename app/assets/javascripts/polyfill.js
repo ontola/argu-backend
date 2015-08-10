@@ -18,4 +18,5 @@
 //= require js-polyfills/cssom
 //= require js-polyfills/timing
 //= require js-polyfills/url
+//= require polyfills/window.setTimeout
 
