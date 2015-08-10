@@ -6,27 +6,28 @@
   width: 100%;
   bottom: 3em;
   z-index: 100;
+  display: flex;
+  justify-content: center;
 }
 
-.alert-container {
+html.lt-ie9 .alert-container {
   position: relative;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
   pointer-events: none;
-
 }
 
 .alert {
   position: relative;
   bottom: 3em;
   padding: 1em;
-  margin-left: auto;
-  margin-right: auto;
   margin-bottom: 1em;
   background-color: rgba(255, 255, 255, 1);
   color: rgb(92, 92, 92);
-  display: block;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
   font-weight: bold;
   z-index: 100;
   //border: solid 3px;
@@ -40,6 +41,18 @@
     left: 0;
     right: 0;
   }
+  html.lt-ie9 & {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    pointer-events: auto;
+  }
+}
+
+
+
+.alert:hover {
+  border: 1px solid;
 }
 
 .alert-hidden {

@@ -1,5 +1,3 @@
 .alert-wrapper
-  .alert-before-selector
   -flash.each do |key, value|
-    .alert-container
-      .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
+    .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize

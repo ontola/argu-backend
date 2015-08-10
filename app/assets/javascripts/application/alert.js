@@ -19,11 +19,11 @@ Argu.alert = {
 
         var timeoutHandle = window.setTimeout(fadeNow, duration, _alert);
 
-        _alert.mouseover(function(){
+        _alert[0].addEventListener('mouseover', function(){
             window.clearTimeout(timeoutHandle);
         });
 
-        _alert.mouseout(function(){
+        _alert[0].addEventListener('mouseout', function(){
             timeoutHandle = window.setTimeout(fadeNow, 1000, _alert)
         });
     },
@@ -44,18 +44,19 @@ Argu.alert = {
     }
 };
 
-Argu.Alert = function (message, messageType, instantShow, beforeSelector) {
+Argu.Alert = function (message, messageType, instantShow, prependSelector) {
     "use strict";
     var alert = this,
         _alert = undefined,
-        _duration = 400000;
+        _duration = 4000;
     message        = typeof message        !== 'undefined' ? message : '';
     messageType    = typeof messageType    !== 'undefined' ? messageType : 'success';
     instantShow    = typeof instantShow    !== 'undefined' ? instantShow : false;
-    beforeSelector = typeof beforeSelector !== 'undefined' ? beforeSelector : '.alert-before-selector';
+    prependSelector = typeof prependSelector !== 'undefined' ? prependSelector : '.alert-wrapper';
 
     var render = function () {
-        (_alert = $("<div class='alert-container'><pre class='alert alert-" + messageType + "'>" + message + "</pre></div>")).insertBefore($(beforeSelector));
+        (_alert = $("<div class='alert-container'><pre class='alert alert-" + messageType + "'>" + message + "</pre></div>"));
+        $(prependSelector).prepend(_alert);
         return _alert;
     };
 
