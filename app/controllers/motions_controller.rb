@@ -149,7 +149,7 @@ class MotionsController < ApplicationController
       @result = @motion.convert_to convertible_param_to_model(permit_params[:f_convert])
     end
     if @result
-      redirect_to @result[:new]
+      redirect_to polymorphic_url(@result[:new])
     else
       redirect_to edit_motion_url @motion
     end
@@ -176,7 +176,7 @@ class MotionsController < ApplicationController
       moved = @motion.move_to @forum
     end
     if moved
-      redirect_to @motion
+      redirect_to motion_url(@motion)
     else
       redirect_to edit_motion_url @motion
     end

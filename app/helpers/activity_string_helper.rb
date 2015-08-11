@@ -26,7 +26,7 @@ module ActivityStringHelper
         as_for_comments_create activity, owner_string, your, embedded_link
       when Vote
         as_for_votes_create activity, owner_string, your, embedded_link
-    end
+    end.html_safe
   end
 
   # :nodoc:

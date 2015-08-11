@@ -21,7 +21,7 @@ class GroupResponsesController < ApplicationController
 
     respond_to do |format|
       if @group_response.save
-        format.html { redirect_to @group_response.motion }
+        format.html { redirect_to motion_url(@group_response.motion) }
       else
         format.html { render 'form' }
       end

@@ -126,7 +126,7 @@ class QuestionsController < ApplicationController
       @result = @question.convert_to convertible_param_to_model(permit_params[:f_convert])
     end
     if @result
-      redirect_to @result[:new]
+      redirect_to polymorphic_url(@result[:new])
     else
       redirect_to edit_question_url @question
     end
@@ -153,7 +153,7 @@ class QuestionsController < ApplicationController
       moved = @question.move_to @forum, permit_params[:include_motions] == '1'
     end
     if moved
-      redirect_to @question
+      redirect_to question_url(@question)
     else
       redirect_to edit_question_url @question
     end

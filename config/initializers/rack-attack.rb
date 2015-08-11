@@ -16,7 +16,8 @@ class Rack::Attack
       /erot.co/,
       /howtostopreferralspam.eu/,
       /floating-share-buttons.com/,
-      /videos-for-your-business.com/
+      /videos-for-your-business.com/,
+      /sexyali.com/
   ].freeze
 
   HACKERS = [
