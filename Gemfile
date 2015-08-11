@@ -114,6 +114,7 @@ group :development, :test do
   gem 'capistrano-rvm', '~> 0.1.2'
   gem 'license_finder'
   gem 'database_cleaner'
+  gem 'brakeman'
 end
 
 group :production, :staging do
