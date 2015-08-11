@@ -89,6 +89,35 @@
   height: 19em;
 }
 
+.cover--small {
+
+  .cover-image {
+    height: 100%;
+    padding: 1em;
+    * {
+      z-index: 1;
+    }
+  }
+
+  .cover-overlay {
+
+  }
+
+  .profile-picture{
+    margin: auto;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    display: block;
+  }
+
+  h3{
+    text-align: center;
+    color: white;
+    font-size: 1.6em;
+    display: block !important;
+  }
+}
+
 .cover .cover-image {
   @include bp-large{
     height: 16em;
@@ -124,6 +153,7 @@
   height: 100%;
   width: 100%;
   background-color: rgba(71, 86, 104, 0.47);
+
   .profile-picture {
     width: 5em;
     height: 5em;
@@ -181,4 +211,8 @@
 
 .cover-image-empty {
   background-color: $g2;
+}
+
+.cover-in-box {
+
 }

@@ -7,6 +7,8 @@ nl:
     new_btn: "Vraagstuk toevoegen"
     header: "vraagstukken"
     view_all_motions: "Bekijk alle %{amount} ideeën..."
+    tooltips:
+      count: "aantal vraagstukken"
     call_to_action:
       title: "Oplossing nodig?"
       body: "Ben jij op zoek naar goede ideeën? Heb jij een vraagstuk waar je voorstellen voor zou willen?"

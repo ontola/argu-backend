@@ -13,6 +13,8 @@ nl:
     no_pros: "nog niets voor"
     no_cons: "nog niets tegen"
     content: "inhoud"
+    tooltips:
+      count: "aantal ideeën"
     votes:
       pro: "Ik ben voor"
       neu: "Geen van beiden"

@@ -80,8 +80,8 @@ nl:
       f_management_invite_desc: "Alleen de beheerder(s) kunnen nieuwe leden toevoegen."
     join:
       title: "Voeg toe aan mijn forums"
-      header: "Word lid"
-      body: "Word lid van het forum ''%{forum}'' en doe mee aan de discussie!"
+      header: "Forum toevoegen"
+      body: "Voeg ''%{forum}'' toe aan jouw forums en doe mee aan de discussie!"
     invite_others: "Betrek anderen"
     sign_up:
       header: "Word lid van Argu en discussieer mee"
@@ -100,6 +100,9 @@ nl:
       body: "Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Lees meer over <b>%{governments}</b>. Neem <b><a href='mailto:info@argu.co'>contact</a></b> op voor meer informatie."
     selector:
       at_least_error: "Kies ten minste 2 forums"
+    tooltips:
+      members_count: "aantal leden"
+    visit: "Bezoek forum"
   activerecord: #These currently aren't used for forms.
     attributes:
       forum:
