@@ -25,7 +25,7 @@ class Argu::EmailNotificationWorker
         # Only select users where their online status was uncertain at the time of the incidence
         delayed_recipients = @activity
                                .followers
-                               .select { |u| u.active_since?(activity.created_at - 30.seconds, redis) }
+                               .select { |u| u.active_since?(@activity.created_at - 30.seconds, redis) }
                                .map(&:id)
         if delayed_recipients.any?
           EmailNotificationWorker.perform_in(5.minutes, activity_id, delayed_recipients)
