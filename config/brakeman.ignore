@@ -1,0 +1,306 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "b7077e710a4dbebc1255ce9e6d35786931e8769ee218a6b19ff0046f7df1a66f",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/group_responses_controller.rb",
+      "line": 24,
+      "link": "http://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Motion.find(params[:motion_id]).group_responses.new(:group => Motion.find(params[:motion_id]).forum.groups.find(params[:group_id]), :forum => Motion.find(params[:motion_id]).forum.groups.find(params[:group_id]).forum, :profile => current_profile, :created_by => current_user.profile, :side => params[:side]).motion)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "GroupResponsesController",
+        "method": "create"
+      },
+      "user_input": "Motion.find(params[:motion_id]).group_responses.new(:group => Motion.find(params[:motion_id]).forum.groups.find(params[:group_id]), :forum => Motion.find(params[:motion_id]).forum.groups.find(params[:group_id]).forum, :profile => current_profile, :created_by => current_user.profile, :side => params[:side]).motion",
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "a9f84130ad03c5586d25c7eb4eade2aa773d72a12eaa26c12a43effde680fe14",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/motions_controller.rb",
+      "line": 150,
+      "link": "http://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Motion.find(params[:motion_id]).lock!.convert_to(convertible_param_to_model(permit_params[:f_convert]))[:new])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "MotionsController",
+        "method": "convert!"
+      },
+      "user_input": "Motion.find(params[:motion_id]).lock!.convert_to(convertible_param_to_model(permit_params[:f_convert]))[:new]",
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "d55171034e055cca573909da9b9f037f20630511d32728e0546e0493ff44141d",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/motions_controller.rb",
+      "line": 174,
+      "link": "http://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Motion.find(params[:motion_id]).lock!)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "MotionsController",
+        "method": "move!"
+      },
+      "user_input": "Motion.find(params[:motion_id]).lock!",
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "5d4e4a6bac4874d84a5ff9e84c8d5d1dd0d936f6943534a93a28de1d386bd555",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/questions_controller.rb",
+      "line": 128,
+      "link": "http://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Question.find(params[:question_id]).lock!.convert_to(convertible_param_to_model(permit_params[:f_convert]))[:new])",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "QuestionsController",
+        "method": "convert!"
+      },
+      "user_input": "Question.find(params[:question_id]).lock!.convert_to(convertible_param_to_model(permit_params[:f_convert]))[:new]",
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "c5b6852163ddc01563df8354669ca574fc3fa9ef76624c7ca91bfa038a8ff523",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/questions_controller.rb",
+      "line": 152,
+      "link": "http://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Question.find(params[:question_id]).lock!)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "QuestionsController",
+        "method": "move!"
+      },
+      "user_input": "Question.find(params[:question_id]).lock!",
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "0a89128cf3d35062041e0f7c98572b9bd25dd9051c7a0737d1c38cb667df8911",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/votes_controller.rb",
+      "line": 53,
+      "link": "http://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(voteable_class.find(params[voteable_param]), :notice => t(\"votes.alerts.not_modified\"))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "VotesController",
+        "method": "create"
+      },
+      "user_input": "params[voteable_param]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "3d2e85420d347dda5ec7ad62decf76ee714c9291beb11b3f9e8ebd466c2db63e",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/votes_controller.rb",
+      "line": 60,
+      "link": "http://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(voteable_class.find(params[voteable_param]), :notice => t(\"votes.alerts.success\"))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "VotesController",
+        "method": "create"
+      },
+      "user_input": "params[voteable_param]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "abf53608734d27ad8c9064c02349ada933136d1818019f30793af3f470cd8efb",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/votes_controller.rb",
+      "line": 64,
+      "link": "http://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(voteable_class.find(params[voteable_param]), :notice => t(\"votes.alerts.failed\"))",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "VotesController",
+        "method": "create"
+      },
+      "user_input": "params[voteable_param]",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "410aeee403bfa44976e452af9c8b16b9956fd2a4a040651b10b6d52eb8d2a39d",
+      "message": "Possible SQL injection",
+      "file": "lib/argu/notification_worker.rb",
+      "line": 30,
+      "link": "http://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "ActiveRecord::Base.connection.execute(\"INSERT INTO notifications (profile_id, activity_id, created_at, updated_at) VALUES #{[].join(\", \")}\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Argu::NotificationWorker",
+        "method": "build_notifications"
+      },
+      "user_input": "[].join(\", \")",
+      "confidence": "Medium",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross Site Scripting",
+      "warning_code": 5,
+      "fingerprint": "47df65eeb346c9841bd4bf87c69643f7a9149056df1f81ca641d9659aa5a39db",
+      "message": "Unescaped model attribute",
+      "file": "app/views/layouts/_activity.html.slim",
+      "line": 7,
+      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "activity_string_for((Unresolved Model).new, true)",
+      "render_path": ["ActivitiesController#index"],
+      "location": {
+        "type": "template",
+        "template": "layouts/_activity (ActivitiesController#index)"
+      },
+      "user_input": "(Unresolved Model).new",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross Site Scripting",
+      "warning_code": 5,
+      "fingerprint": "ea2518e92140c4e892b952245110cc1b9a5da4625e333ddaf9e99da48e02cdd9",
+      "message": "Unescaped model attribute",
+      "file": "app/views/questions/show.html.slim",
+      "line": 39,
+      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "render_columns({ \"\" => ({ :collection => policy_scope(policy_scope(Question.find(params[:id]).motions.trashed(show_trashed?)).order(:updated_at => :desc)) }) }, :collection_model => (Motion), :buttons_url => url_for([:new, Question.find(params[:id]).forum, :motion, { :question_id => Question.find(params[:id]).id }]), :buttons_text => t(\"add_type\", :type => motion_type))",
+      "render_path": ["QuestionsController#show"],
+      "location": {
+        "type": "template",
+        "template": "questions/show (QuestionsController#show)"
+      },
+      "user_input": "Question.find(params[:id]).motions",
+      "confidence": "Weak",
+      "note": ""
+    },
+    {
+      "warning_type": "Cross Site Scripting",
+      "warning_code": 5,
+      "fingerprint": "a577d21fbaf148c02c74c1c345d98f7450b1517655a76b20135bd93798e00269",
+      "message": "Unescaped model attribute",
+      "file": "app/views/users/connect.html.slim",
+      "line": 7,
+      "link": "http://brakemanscanner.org/docs/warning_types/cross_site_scripting",
+      "code": "t(\"users.connect.text\", :from_type => Identity.find(decode_token(params[:token])[\"identity\"]).provider, :from_name => escape_once(Identity.find(decode_token(params[:token])[\"identity\"]).name), :to_name => escape_once(User.find_via_shortname!((params[:id].presence or params[:user][:id])).display_name))",
+      "render_path": ["UsersController#connect!"],
+      "location": {
+        "type": "template",
+        "template": "users/connect (UsersController#connect!)"
+      },
+      "user_input": "Identity.find(decode_token(params[:token])[\"identity\"]).provider",
+      "confidence": "Weak",
+      "note": "Escaped all the user input explicitly"
+    },
+    {
+      "warning_type": "Cross Site Scripting",
+      "warning_code": 4,
+      "fingerprint": "2121bb251d224fe88876b66b00595d54de7b393b8ad39fd7f8131786dc0caa78",
+      "message": "Unsafe model attribute in link_to href",
+      "file": "app/views/comments/_comment.html.slim",
+      "line": 12,
+      "link": "http://brakemanscanner.org/docs/warning_types/link_to_href",
+      "code": "link_to(polymorphic_url([Comment.build_from(get_commentable, current_profile.id, params[:comment]).commentable], :parent_id => Comment.build_from(get_commentable, current_profile.id, params[:comment]).id), (html_options = { :id => Comment.build_from(get_commentable, current_profile.id, params[:comment]).id, :class => \"btn-reply\", :\"data-skip-pjax\" => true }))",
+      "render_path": ["CommentsController#create","Template:comments/create"],
+      "location": {
+        "type": "template",
+        "template": "comments/_comment (Template:comments/create)"
+      },
+      "user_input": "Comment.build_from(get_commentable, current_profile.id, params[:comment])",
+      "confidence": "Medium",
+      "note": "The model ID should be safe"
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "6583f1f2064a736ea5231380f1f45da86dbddcb8f7b9044975e8b0cca1c4cd5a",
+      "message": "Render path contains parameter value",
+      "file": "app/views/pages/settings.html.slim",
+      "line": 13,
+      "link": "http://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(partial => \"pages/settings/#{policy(Page.find_via_shortname(params[:id])).verify_tab(params[:tab])}\", { :locals => ({ :resource => Page.find_via_shortname(params[:id]), :tab => policy(Page.find_via_shortname(params[:id])).verify_tab(params[:tab]), :active => policy(Page.find_via_shortname(params[:id])).verify_tab(params[:tab]) }) })",
+      "render_path": ["PagesController#settings"],
+      "location": {
+        "type": "template",
+        "template": "pages/settings (PagesController#settings)"
+      },
+      "user_input": "params[:tab]",
+      "confidence": "Weak",
+      "note": "Tab comes from the controller which is sanitized with the policy"
+    },
+    {
+      "warning_type": "Redirect",
+      "warning_code": 18,
+      "fingerprint": "362f8833ba4d7c6d676bbfed67ad9a07c247fd08a00087046a6d47ba0bdfb2da",
+      "message": "Possible unprotected redirect",
+      "file": "app/controllers/questions_controller.rb",
+      "line": 152,
+      "link": "http://brakemanscanner.org/docs/warning_types/redirect/",
+      "code": "redirect_to(Question.find_by_id(params[:question_id]).lock!)",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "QuestionsController",
+        "method": "move!"
+      },
+      "user_input": "Question.find_by_id(params[:question_id]).lock!",
+      "confidence": "High",
+      "note": ""
+    },
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "e23d674f6d1dd3e1d159fee5e3aed15691e5f31569e488d4cd66acd84f888e51",
+      "message": "Render path contains parameter value",
+      "file": "app/views/forums/settings.html.slim",
+      "line": 14,
+      "link": "http://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(partial => \"forums/settings/#{policy(Forum.find_via_shortname(params[:id])).verify_tab(params[:tab])}\", { :locals => ({ :resource => Forum.find_via_shortname(params[:id]), :tab => policy(Forum.find_via_shortname(params[:id])).verify_tab(params[:tab]), :active => policy(Forum.find_via_shortname(params[:id])).verify_tab(params[:tab]) }) })",
+      "render_path": [
+        "ForumsController#settings"
+      ],
+      "location": {
+        "type": "template",
+        "template": "forums/settings (ForumsController#settings)"
+      },
+      "user_input": "params[:tab]",
+      "confidence": "Weak",
+      "note": ""
+    }
+  ],
+  "updated": "2015-08-11 15:14:10 +0200",
+  "brakeman_version": "3.0.5"
+}

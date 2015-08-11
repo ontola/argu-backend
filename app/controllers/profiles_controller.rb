@@ -64,7 +64,7 @@ class ProfilesController < ApplicationController
       if updated && @resource.try(:r).present?
         r = @resource.r
         @resource.update r: ''
-        format.html { redirect_to r,
+        format.html { redirect_to r_to_url_options(r)[0],
                       status: r.match(/\/v(\?|\/)|\/c(\?|\/)/) ? 307 : 302 }
       elsif updated
         format.html { redirect_to dual_profile_path(@profile), notice: 'Profile was successfully updated.' }

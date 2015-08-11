@@ -39,7 +39,7 @@ class ForumsController < ApplicationController
     @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
     current_context @forum
-    tab = policy(@forum).verify_tab(params[:tab])
+
     render locals: {
                tab: tab,
                active: tab
@@ -67,11 +67,11 @@ class ForumsController < ApplicationController
     @forum.reload if process_cover_photo @forum, permit_params
     respond_to do |format|
       if @forum.update permit_params
-        format.html { redirect_to settings_forum_path(@forum, tab: params[:tab]) }
+        format.html { redirect_to settings_forum_path(@forum, tab: tab) }
       else
         format.html { render 'settings', locals: {
-                                           tab: params[:tab] || 'general',
-                                           active: params[:tab] || 'general'
+                                           tab: tab,
+                                           active: tab
                                        }
         }
       end
@@ -120,15 +120,18 @@ protected
 
   def stale_record_recovery_action
     flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
-
     render 'settings', locals: {
-               tab: params[:tab] || 'general',
-               active: params[:tab] || 'general'
+               tab: tab,
+               active: tab
            }
   end
 
 private
   def permit_params
     params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)
+  end
+
+  def tab
+    policy(@forum || Forum).verify_tab(params[:tab])
   end
 end

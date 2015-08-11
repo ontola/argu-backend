@@ -39,7 +39,7 @@ class QuestionsController < ApplicationController
 
   # GET /questions/1/edit
   def edit
-    @question = Question.find_by_id(params[:id])
+    @question = Question.find(params[:id])
     authorize @question
     @forum = @question.forum
     current_context @question
@@ -72,7 +72,7 @@ class QuestionsController < ApplicationController
   # PUT /questions/1
   # PUT /questions/1.json
   def update
-    @question = Question.includes(:taggings).find_by_id(params[:id])
+    @question = Question.includes(:taggings).find(params[:id])
     authorize @question
     @forum = @question.forum
 
@@ -91,7 +91,7 @@ class QuestionsController < ApplicationController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
-    @question = Question.find_by_id params[:id]
+    @question = Question.find params[:id]
     if params[:destroy].to_s == 'true'
       authorize @question
       @question.destroy
@@ -108,7 +108,7 @@ class QuestionsController < ApplicationController
 
   # GET /motions/1/convert
   def convert
-    @question = Question.find_by_id params[:question_id]
+    @question = Question.find params[:question_id]
     authorize @question, :move?
 
     respond_to do |format|
@@ -118,12 +118,13 @@ class QuestionsController < ApplicationController
   end
 
   def convert!
-    @question = Question.find_by_id(params[:question_id]).lock!
+    @question = Question.find(params[:question_id])
     authorize @question, :move?
     @forum = Forum.find_by_id permit_params[:forum_id]
     authorize @question.forum, :update?
-
-    @result = @question.convert_to convertible_param_to_model(permit_params[:f_convert])
+    @question.with_lock do
+      @result = @question.convert_to convertible_param_to_model(permit_params[:f_convert])
+    end
     if @result
       redirect_to @result[:new]
     else
@@ -133,7 +134,7 @@ class QuestionsController < ApplicationController
 
   # GET /motions/1/move
   def move
-    @question = Question.find_by_id params[:question_id]
+    @question = Question.find params[:question_id]
     authorize @question, :move?
 
     respond_to do |format|
@@ -143,12 +144,15 @@ class QuestionsController < ApplicationController
   end
 
   def move!
-    @question = Question.find_by_id(params[:question_id]).lock!
+    @question = Question.find(params[:question_id])
     authorize @question, :move?
-    @forum = Forum.find_by_id permit_params[:forum_id]
+    @forum = Forum.find permit_params[:forum_id]
     authorize @forum, :update?
-
-    if @question.move_to @forum, permit_params[:include_motions] == '1'
+    moved = nil
+    @question.with_lock do
+      moved = @question.move_to @forum, permit_params[:include_motions] == '1'
+    end
+    if moved
       redirect_to @question
     else
       redirect_to edit_question_url @question

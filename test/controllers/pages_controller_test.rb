@@ -83,7 +83,7 @@ class PagesControllerTest < ActionController::TestCase
                                               }
                                             }
 
-    assert_redirected_to settings_page_path(pages(:page_argu))
+    assert_redirected_to settings_page_path(pages(:page_argu), tab: :general)
     assert_equal pages(:page_argu), assigns(:page)
     assert_equal 'new_about', assigns(:page).profile.reload.about
   end

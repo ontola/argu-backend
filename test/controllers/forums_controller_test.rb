@@ -133,7 +133,7 @@ class ForumsControllerTest < ActionController::TestCase
                      profile_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg')
                  }
 
-    assert_redirected_to settings_forum_path(holland.url)
+    assert_redirected_to settings_forum_path(holland.url, tab: :general)
     assert assigns(:forum)
     assert_equal 'new name', assigns(:forum).reload.name
     assert_equal 'new bio', assigns(:forum).reload.bio
