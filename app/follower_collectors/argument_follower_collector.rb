@@ -1,4 +1,4 @@
-class ArgumentMailer < MailerBase
+class ArgumentFollowerCollector < FollowerCollectorBase
 
   def create
     if @thing.motion.present?

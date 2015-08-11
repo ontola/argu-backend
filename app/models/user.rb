@@ -34,6 +34,15 @@ class User < ActiveRecord::Base
         format: { with: RFC822::EMAIL }
   validates :profile, presence: true
 
+  def active_at(redis = nil)
+    redis ||= Redis.new
+    redis.get("user:#{self.id}:active.at")
+  end
+
+  def active_since?(datetime, redis = nil)
+    active_at(redis).to_i >= datetime.to_i
+  end
+
   # @private
   # Note: Fix for devise_invitable w/ shortnameable
   # Override deletes the shortname if
@@ -63,6 +72,11 @@ class User < ActiveRecord::Base
 
   def is_omni_only
     authentications.any? && password.blank?
+  end
+
+  def last_email_sent_at(redis = nil)
+    redis ||= Redis.new
+    redis.get("user:#{self.id}:email.sent.at")
   end
 
   def managed_pages

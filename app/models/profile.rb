@@ -97,7 +97,7 @@ class Profile < ActiveRecord::Base
   def preferred_forum
     begin
       @redis ||= Redis.new
-      last_forum = @redis.get("profiles.#{self.id}.last_forum")
+      last_forum = @redis.get("profiles:#{self.id}:last_forum")
     rescue RuntimeError => e
       Rails.logger.error 'Redis not available'
       ::Bugsnag.notify(e, {

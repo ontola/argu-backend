@@ -10,11 +10,7 @@ class Argu::NotificationWorker
 
     # TODO: split by locale
     if @activity.present?
-      recipients = recipients_for_activity(@activity)
-
-      mailer = Argu::ActivityMailer.new(@activity, recipients)
-      mailer.send!
-
+      recipients = @activity.followers
       build_notifications recipients, @activity
     end
   end
@@ -23,26 +19,34 @@ class Argu::NotificationWorker
     if recipients.present?
       inserts = []
       time = Time.now.iso8601(6)
-      recipients.each do |r|
-        inserts.push "(#{r.profile.id}, #{activity.id}, '#{time}', '#{time}')"
+      begin
+        redis = Redis.new
+      rescue Redis::CannotConnectError => e
+        Bugsnag.notify(e)
       end
+
+      try_pipelined(redis) do
+        recipients.each do |r|
+          inserts.push "(#{r.profile.id}, #{activity.id}, '#{time}', '#{time}')"
+          redis.incr("user:#{r.id}:notification.count") if redis.present?
+        end
+      end
+
       sql = "INSERT INTO notifications (profile_id, activity_id, created_at, updated_at) VALUES #{inserts.join(', ')}"
       ActiveRecord::Base.connection.execute(sql)
     end
   end
 
-  def set_locale
-    I18n.locale = I18n.default_locale
+  def try_pipelined(redis, &block)
+    if redis.present?
+      redis.pipelined &block
+    else
+      yield
+    end
   end
 
-  def recipients_for_activity(a)
-    items = a.key.split('.')
-    mailer = "#{items.first}_mailer".classify.safe_constantize
-    if mailer
-      mailer.new(a).send(items.last)
-    else
-      []
-    end
+  def set_locale
+    I18n.locale = I18n.default_locale
   end
 
 end
