@@ -2,9 +2,15 @@ class Notification < ActiveRecord::Base
   include ActivityStringHelper
   belongs_to :profile
   belongs_to :activity
+  after_destroy :sync_notification_count
+  after_update :sync_notification_count
 
   validates :title, length: {maximum: 75}
   validates :url, length: {maximum: 255}
+
+  def sync_notification_count
+    self.profile.user.sync_notification_count
+  end
 
   def title
     if self.activity.present?

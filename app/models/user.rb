@@ -117,6 +117,15 @@ class User < ActiveRecord::Base
     end
   end
 
+  def sync_notification_count
+    begin
+      redis = Redis.new
+      redis.set("user:#{self.id}:notification.count", self.profile.notifications.count)
+    rescue Redis::CannotConnectError => e
+      Bugsnag.notify(e)
+    end
+  end
+
   def update_acesss_token_counts
     if access_tokens.present?
       access_tokens = AccessToken.where(access_token: eval(self.access_tokens)).pluck :id
