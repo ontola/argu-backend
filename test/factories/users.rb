@@ -20,6 +20,13 @@ FactoryGirl.define do
       end
     end
 
+    factory :user_with_notification do
+      after(:create) do |user, evaluator|
+        user.profile.notifications.create
+      end
+
+    end
+
 
     factory :user_with_memberships do
       after(:create) do |user, evaluator|
