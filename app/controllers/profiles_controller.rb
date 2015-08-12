@@ -67,7 +67,7 @@ class ProfilesController < ApplicationController
         format.html { redirect_to r_to_url_options(r)[0],
                       status: r.match(/\/v(\?|\/)|\/c(\?|\/)/) ? 307 : 302 }
       elsif updated
-        format.html { redirect_to dual_profile_path(@profile), notice: 'Profile was successfully updated.' }
+        format.html { redirect_to dual_profile_url(@profile), notice: 'Profile was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render profile_edit_view_path(@resource) }

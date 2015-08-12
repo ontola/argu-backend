@@ -1,6 +1,6 @@
 .activity.box
   section.profile-small
-    =link_to dual_profile_path(activity.owner) do
+    =link_to dual_profile_url(activity.owner) do
       img[src=activity.owner.profile_photo.url(:icon)]
     .info-block[style="padding: 0;"]
       p[style="margin-bottom: 0;"]

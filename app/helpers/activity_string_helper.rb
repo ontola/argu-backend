@@ -6,7 +6,7 @@ module ActivityStringHelper
   # +activity+:: The Activity to generate the HRS for
   # +embedded_link+:: Set to true to embed an anchor link (defaults to false)
   def activity_string_for(activity, embedded_link= false)
-    owner_string = embedded_link ? link_to(activity.owner.display_name, dual_profile_path(activity.owner)) : activity.owner.display_name
+    owner_string = embedded_link ? link_to(activity.owner.display_name, dual_profile_url(activity.owner)) : activity.owner.display_name
 
     parent = (activity.trackable.try(:parent) && activity.trackable.parent) || activity.recipient
     if defined?(current_user)

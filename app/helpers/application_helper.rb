@@ -131,11 +131,11 @@ module ApplicationHelper
 
   # Generates a link to the Profile's profileable
   # Either a Page or a User
-  def dual_profile_path(profile)
+  def dual_profile_url(profile)
     if profile.profileable.class == User
-      user_path(profile.profileable)
+      user_url(profile.profileable)
     elsif profile.profileable.class == Page
-      page_path(profile.profileable)
+      page_url(profile.profileable)
     else
       'deleted'
     end
@@ -143,12 +143,11 @@ module ApplicationHelper
 
   # Generates a link to the Profile's profileable edit action
   # Either a Page or a User
-  def dual_profile_edit_path(profile)
+  def dual_profile_edit_url(profile)
     if profile.profileable.class == User
-      edit_user_path(profile.profileable)
+      edit_user_url(profile.profileable)
     elsif profile.profileable.class == Page
-      #edit_page_path?
-      settings_page_path(profile.profileable)
+      settings_page_url(profile.profileable)
     else
       'deleted'
     end
