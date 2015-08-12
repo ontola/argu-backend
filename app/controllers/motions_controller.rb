@@ -70,13 +70,13 @@ class MotionsController < ApplicationController
     @question_id = params[:question_id] || params[:motion][:question_id]
     @motion.creator = current_profile
     @motion.questions << @question if @question.present?
-
     authorize @motion, @motion.questions.presence ? :create? : :create_without_question?
+    first = current_profile.motions.count == 0 || nil
 
     respond_to do |format|
       if @motion.save
         create_activity @motion, action: :create, recipient: (@question.presence || @motion.forum), owner: current_profile, forum_id: @motion.forum.id
-        format.html { redirect_to motion_path(@motion), notice: t('type_save_success', type: motion_type) }
+        format.html { redirect_to motion_path(@motion, start_motion_tour: first), notice: t('type_save_success', type: motion_type) }
         format.json { render json: @motion, status: :created, location: @motion }
       else
         format.html { render 'form' }
