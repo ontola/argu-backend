@@ -8,7 +8,7 @@ class Argu::EmailNotificationWorker
   def perform(activity_id, delayed_recipients = [])
     @activity = Activity.find_by_id activity_id
 
-    if @activity.present?
+    if @activity.present? && (!@activity.trackable.respond_to?(:is_trashed?) || !@activity.trackable.is_trashed?)
       redis = Redis.new
       if delayed_recipients.any?
         @recipients = User.where(id: delayed_recipients)

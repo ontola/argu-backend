@@ -17,6 +17,5 @@ module Trashable
   end
 
   module ClassMethods
-
   end
 end
