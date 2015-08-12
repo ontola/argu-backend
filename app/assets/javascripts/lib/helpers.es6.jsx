@@ -58,18 +58,25 @@ var _url = function (url, obj) {
     }
 };
 
-var _authenticityToken = function () {
-    "use strict";
-    return document.querySelector('meta[name="csrf-token"]').content;
-};
-
 var _authenticityHeader = function (options) {
     "use strict";
     options = options || {};
     return Object.assign(options, {
-        "X-CSRF-Token": _authenticityToken(),
+        "X-CSRF-Token": getAuthenticityToken(),
         "X-Requested-With": "XMLHttpRequest"
     });
+};
+
+var getAuthenticityToken = function () {
+    return getMetaContent('csrf-token');
+};
+
+var getMetaContent = function (name) {
+    return document.querySelector(`meta[name="${name}"]`).content;
+};
+
+var getUserIdentityToken = function () {
+    return {token: getMetaContent('user-identity-token')};
 };
 
 var _safeCredentials = function (options) {
@@ -97,6 +104,14 @@ var tryLogin = function (response) {
     } else {
         return Promise.reject(new Error('unknown status code'));
     }
+};
+
+var _userIdentityToken = function (options) {
+    "use strict";
+    options = options || {};
+    return Object.assign(options, {
+      body: JSON.stringify(Object.assign((options['body'] || {}), getUserIdentityToken()))
+    })
 };
 
 var json = function (response) {
