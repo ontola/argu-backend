@@ -3,11 +3,22 @@ require 'test_helper'
 class PagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test 'should not get show without platform access' do
-    get :show, id: pages(:utrecht)
+  ####################################
+  # Not logged in
+  ####################################
+  let!(:page) { FactoryGirl.create(:page) }
+  let(:page_non_public) { FactoryGirl.create(:page, visibility: Page.visibilities[:closed]) }
+
+  test 'should get show when public' do
+    get :show, id: page
 
     assert_response 200
-    assert assigns(:_not_logged_in_caught)
+  end
+
+  test 'should not get show when not public' do
+    get :show, id: page_non_public
+
+    assert_redirected_to root_path
     assert_nil assigns(:collection)
   end
 
@@ -21,6 +32,9 @@ class PagesControllerTest < ActionController::TestCase
     assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| v.forum.open? } }, 'Votes of closed fora are visible to non-members'
   end
 
+  ####################################
+  # As user
+  ####################################
   test 'should get show' do
     sign_in users(:user)
 
@@ -113,7 +127,7 @@ class PagesControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # For staff
+  # As staff
   ####################################
 
   test 'should be able to create a page' do
