@@ -17,23 +17,12 @@ class ProfilePolicy < RestrictivePolicy
     end
   end
 
-  def initialize(context, record)
-    @context = context
-    @record = record
-
-    # Note: Needs to be overridden since RestrictivePolicy checks for
-    #       record-level access
-    unless has_access_to_platform?
-      raise Argu::NotLoggedInError.new(nil, record), 'must be logged in'
-    end
-  end
-
   def permitted_attributes
     attributes = super
     if record.profileable.present?
-      attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public] if update?
+      attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public, :is_public] if update?
     else
-      attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public] if new?
+      attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public, :is_public] if new?
     end
     attributes
   end
@@ -50,7 +39,7 @@ class ProfilePolicy < RestrictivePolicy
     if record.profileable.class == Page
       record.is_public?
     else
-      record.is_public? && record.profileable.finished_intro? || super
+      (record.is_public? || user.present?) && record.profileable.finished_intro? || super
     end
   end
 

@@ -16,6 +16,7 @@ nl:
       arguments_title: "Argumenten"
       arguments_title_singular: "Argument"
       are_votes_public: "Laat zien wat ik stem"
+      is_public: "Profiel zichtbaar voor niet-leden"
       content: "Inhoud"
       cover_photo_attribution: "Auteursrechten"
       cover_photo: "Omslagfoto"

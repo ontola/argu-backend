@@ -16,5 +16,6 @@
   =f.inputs name: t('profiles.edit.privacy') do
     p= t('profiles.edit.privacy_notice')
     =f.input :are_votes_public, as: :reverse_boolean
+    =f.input :is_public, as: :reverse_boolean
   =f.actions do
     =f.action :submit, :as => :button, label: current_user.finished_intro? ? t('save') : t('next')

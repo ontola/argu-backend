@@ -3,11 +3,22 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test 'should not get show without platform access' do
-    get :show, id: users(:user2)
+  ####################################
+  # Not logged in
+  ####################################
+  let(:user) { FactoryGirl.create(:user) }
+  let(:user_non_public) { FactoryGirl.create(:user, profile: FactoryGirl.create(:profile, is_public: false )) }
+
+  test 'should get show when public' do
+    get :show, id: user
 
     assert_response 200
-    assert assigns(:_not_logged_in_caught)
+  end
+
+  test 'should not get show when not public' do
+    get :show, id: user_non_public
+
+    assert_redirected_to root_path
     assert_nil assigns(:collection)
   end
 
@@ -19,6 +30,17 @@ class UsersControllerTest < ActionController::TestCase
     assert_not_nil assigns(:collection)
 
     assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| v.forum.open? } }, 'Votes of closed fora are visible to non-members'
+  end
+
+  ####################################
+  # As user
+  ####################################
+  test 'should get show non public' do
+    sign_in user
+
+    get :show, id: user_non_public
+
+    assert_response 200
   end
 
   test 'should get show' do

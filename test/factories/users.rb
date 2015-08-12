@@ -14,7 +14,6 @@ FactoryGirl.define do
     first_name 'Thom'
     last_name 'van Kalkeren'
 
-
     trait :forum_manager do
       after(:create) do |user, evaluator|
         create(:profile_with_memberships)
