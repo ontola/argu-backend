@@ -176,8 +176,9 @@ module ApplicationHelper
 
 
   def safe_truncated_text(contents, url, cutting_point = 220)
-    _html = escape_once HTML_Truncator.truncate(markdown_to_plaintext(contents), cutting_point, {length_in_chars: true, ellipsis: ('... ') })
-    _html << url if _html.length > cutting_point
+    adjusted_content = markdown_to_plaintext(contents)
+    _html = escape_once HTML_Truncator.truncate(adjusted_content, cutting_point, {length_in_chars: true, ellipsis: ('... ') })
+    _html << url if adjusted_content.length > cutting_point
     _html
   end
 
