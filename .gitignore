@@ -24,9 +24,10 @@ secrets.yml
 /config/database.yml
 
 # Ignore image uploads
-/public/uploads/tmp/*.*
-/public/profiles/*.*
-/public/forums/*.*
-/public/motions/*.*
-/public/organisations/*.*
-/public/system/*.*
+/public/uploads
+/public/profiles
+/public/forums
+/public/motions
+/public/questions
+/public/organisations
+/public/system
