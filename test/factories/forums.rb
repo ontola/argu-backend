@@ -15,7 +15,7 @@ FactoryGirl.define do
 
       after(:create) do |forum, evaluator|
         create_list :motion, 10, forum: forum
-        create_list :motion, 10, forum: forum, trashed: true
+        create_list :motion, 10, forum: forum, is_trashed: true
         create :access_token, item: forum
       end
 

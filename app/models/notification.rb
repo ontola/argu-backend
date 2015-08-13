@@ -9,7 +9,7 @@ class Notification < ActiveRecord::Base
   validates :url, length: {maximum: 255}
 
   def sync_notification_count
-    self.profile.user.sync_notification_count
+    self.profile.profileable.sync_notification_count
   end
 
   def title
