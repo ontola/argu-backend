@@ -225,6 +225,7 @@ en:
   welcome_video_dismiss: "Hide this message."
   follow: 'Follow'
   unfollow: 'Unfollow'
+  recaptcha_error: 'Something went wrong with Recaptcha. Try again. If the problem persists, contact support.'
   seo:
     argument:
       name: 'Argument %{side} %{motiontitle}'

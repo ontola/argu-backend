@@ -244,6 +244,14 @@ fieldset {
   .actions {
     margin-top: 0;
   }
+
+  // Recaptcha
+  .g-recaptcha {
+    transform: scale(0.75);
+    transform-origin: 0;
+    margin-top: -0.5em;
+    margin-bottom: .9em;
+  }
 }
 
 .form-small input, .form-small button, .form-small .inline-errors, .form-filled p.inline-errors, .form-small p.inline-hints, .form-filled p.inline-hints {

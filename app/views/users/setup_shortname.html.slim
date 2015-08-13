@@ -3,7 +3,7 @@
     h1= t('intro.initial.headers.shortname')
   .box
     section
-      p= t('intro.initial.body.shortname')
+      p= t('intro.initial.body.shortname_html')
   .box
     section.form-validate
       =semantic_form_for @user, url: setup_users_path, method: :put do |f|

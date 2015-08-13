@@ -227,6 +227,7 @@ nl:
   welcome_video_dismiss: 'Verberg deze boodschap.'
   follow: 'Volgen'
   unfollow: 'Ontvolgen'
+  recaptcha_error: 'Er ging iets fout met Recaptcha. Probeer het nog een keer. Als het probleem blijft, neem dan contact op met support.'
   seo:
     argument:
       name: 'Argument %{side} %{motiontitle}'

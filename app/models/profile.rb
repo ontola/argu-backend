@@ -8,6 +8,7 @@ class Profile < ActiveRecord::Base
   accepts_nested_attributes_for :profileable
   rolify after_remove: :role_removed, before_add: :role_added
 
+  has_many :access_tokens, dependent: :destroy
   has_many :activities, as: :owner, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :forums, through: :memberships

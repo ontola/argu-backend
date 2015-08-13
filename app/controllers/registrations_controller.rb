@@ -10,10 +10,24 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     redirect_to :root unless has_valid_token? || within_user_cap?
-    super do |resource|
-      setup_memberships(resource)
+
+    if session[:omniauth] == nil #OmniAuth
+      if verify_recaptcha
+        super do |resource|
+          setup_memberships(resource)
+        end
+        session[:omniauth] = nil unless @user.new_record? #OmniAuth
+      else
+        build_resource(sign_up_params)
+        clean_up_passwords(resource)
+        flash[:alert] = t('recaptcha_error')
+        #use render :new for 2.x version of devise
+        render :new
+      end
+    else
+      super
+      session[:omniauth] = nil unless @user.new_record? #OmniAuth
     end
-    session[:omniauth] = nil unless @user.new_record?
   end
 
   def cancel
