@@ -1,4 +1,4 @@
-class CommentMailer < MailerBase
+class CommentFollowerCollector < FollowerCollectorBase
 
   def create
     if @thing.present?

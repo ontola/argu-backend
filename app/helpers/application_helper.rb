@@ -31,14 +31,21 @@ module ApplicationHelper
     end
   end
 
+  def user_identity_token(user)
+    sign_payload({
+                     user: user.id,
+                     exp: 2.days.from_now.to_i,
+                     iss: 'argu.co'
+                 })
+  end
+
   def sign_payload(payload)
     JWT.encode payload, Rails.application.secrets.jwt_encryption_token, 'HS256'
   end
 
-  def decode_token(token)
-    JWT.decode(token, Rails.application.secrets.jwt_encryption_token, 'HS256')[0]
+  def decode_token(token, verify = false)
+    JWT.decode(token, Rails.application.secrets.jwt_encryption_token, {algorithm: 'HS256'})[0]
   end
-
 
   # Merges a URI with a params Hash
   def merge_query_parameter(uri, params)
@@ -124,11 +131,11 @@ module ApplicationHelper
 
   # Generates a link to the Profile's profileable
   # Either a Page or a User
-  def dual_profile_path(profile)
+  def dual_profile_url(profile)
     if profile.profileable.class == User
-      user_path(profile.profileable)
+      user_url(profile.profileable)
     elsif profile.profileable.class == Page
-      page_path(profile.profileable)
+      page_url(profile.profileable)
     else
       'deleted'
     end
@@ -136,12 +143,11 @@ module ApplicationHelper
 
   # Generates a link to the Profile's profileable edit action
   # Either a Page or a User
-  def dual_profile_edit_path(profile)
+  def dual_profile_edit_url(profile)
     if profile.profileable.class == User
-      edit_user_path(profile.profileable)
+      edit_user_url(profile.profileable)
     elsif profile.profileable.class == Page
-      #edit_page_path?
-      settings_page_path(profile.profileable)
+      settings_page_url(profile.profileable)
     else
       'deleted'
     end

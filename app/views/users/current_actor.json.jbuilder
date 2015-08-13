@@ -3,7 +3,7 @@ json.current_actor do
   json.shortname @profile.url
   json.display_name @profile.display_name
   json.name @profile.name
-  json.url dual_profile_path(@profile)
+  json.url dual_profile_url(@profile)
   json.current_forum do
     json.display_name @profile.preferred_forum.display_name
     json.shortname @profile.preferred_forum.url

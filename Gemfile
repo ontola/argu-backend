@@ -2,7 +2,7 @@ source 'https://rubygems.org/'
 
 gem 'sass-rails', '~> 5.0.3'
 gem 'sass', '= 3.2.19'
-gem 'rails', '~>4.2.0'
+gem 'rails', '~>4.2.3'
 
 gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
@@ -114,6 +114,7 @@ group :development, :test do
   gem 'capistrano-rvm', '~> 0.1.2'
   gem 'license_finder'
   gem 'database_cleaner'
+  gem 'brakeman'
 end
 
 group :production, :staging do

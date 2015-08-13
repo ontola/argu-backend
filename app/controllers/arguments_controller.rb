@@ -74,7 +74,8 @@ class ArgumentsController < ApplicationController
     respond_to do |format|
       if @argument.save
         create_activity @argument, action: :create, recipient: @argument.motion, owner: current_profile, forum_id: @argument.forum.id
-        format.html { redirect_to (argument_params[:motion_id].blank? ? @argument : Motion.find_by_id(argument_params[:motion_id])), notice: 'Argument was successfully created.' }
+        argument = argument_params[:motion_id].blank? ? @argument : Motion.find_by_id(argument_params[:motion_id])
+        format.html { redirect_to argument, notice: 'Argument was successfully created.' }
         format.json { render json: @argument, status: :created, location: @argument }
       else
         format.html { render action: 'form', pro: argument_params[:pro], motion_id: argument_params[:motion_id] }

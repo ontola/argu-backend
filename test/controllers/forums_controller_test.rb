@@ -3,7 +3,7 @@ require 'test_helper'
 class ForumsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
   let!(:cologne) { FactoryGirl.create(:closed_populated_forum, name: 'cologne') }
   let!(:helsinki) { FactoryGirl.create(:hidden_populated_forum, name: 'helsinki') }
 
@@ -107,33 +107,35 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   # As owner
   ####################################
-  let(:holland_owner) { create_owner(holland) }
+  let(:forum_pair) { create_forum_owner_pair({type: :populated_forum}) }
 
   test 'should show settings and all tabs' do
-    sign_in holland_owner
+    forum, owner = forum_pair
+    sign_in owner
 
-    get :settings, id: holland
+    get :settings, id: forum
     assert_response 200
     assert assigns(:forum)
 
     [:general, :advanced, :groups, :privacy, :managers].each do |tab|
-      get :settings, id: holland, tab: tab
+      get :settings, id: forum, tab: tab
       assert_response 200
       assert assigns(:forum)
     end
   end
 
   test 'should update settings' do
-    sign_in holland_owner
+    forum, owner = forum_pair
+    sign_in owner
 
-    put :update, id: holland, forum: {
+    put :update, id: forum, forum: {
                      name: 'new name',
                      bio: 'new bio',
                      cover_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg'),
                      profile_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg')
                  }
 
-    assert_redirected_to settings_forum_path(holland.url)
+    assert_redirected_to settings_forum_path(forum.url, tab: :general)
     assert assigns(:forum)
     assert_equal 'new name', assigns(:forum).reload.name
     assert_equal 'new bio', assigns(:forum).reload.bio
@@ -141,18 +143,20 @@ class ForumsControllerTest < ActionController::TestCase
   end
 
   test 'should show settings/groups' do
-    sign_in holland_owner
+    forum, owner = forum_pair
+    sign_in owner
 
-    get :settings, id: holland, tab: :groups
+    get :settings, id: forum, tab: :groups
 
     assert_response :success
     assert assigns(:forum)
   end
 
   test 'should not show statistics yet' do
-    sign_in holland_owner
+    forum, owner = forum_pair
+    sign_in owner
 
-    get :statistics, id: holland
+    get :statistics, id: forum
     assert_redirected_to root_url
     assert assigns(:forum)
     assert_nil assigns(:tags), "Doesn't assign tags"

@@ -84,7 +84,7 @@ class PagesController < ApplicationController
   def settings
     @page = Page.find_via_shortname params[:id]
     authorize @page, :update?
-    tab = policy(@page).verify_tab(params[:tab])
+
     render locals: {
                tab: tab,
                active: tab
@@ -94,10 +94,9 @@ class PagesController < ApplicationController
   def update
     @page = Page.find_via_shortname params[:id]
     authorize @page, :update?
-    tab = policy(@page).verify_tab(params[:tab])
 
     if @page.update permit_params
-      redirect_to settings_page_path(@page, tab: params[:tab])
+      redirect_to settings_page_path(@page, tab: tab)
     else
       render 'settings', locals: {
                            tab: tab,
@@ -161,5 +160,9 @@ class PagesController < ApplicationController
 private
   def permit_params
     params.require(:page).permit(*policy(@page || Page).permitted_attributes)
+  end
+
+  def tab
+    @tab ||= policy(@page || Page).verify_tab(params[:tab])
   end
 end

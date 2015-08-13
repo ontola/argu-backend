@@ -6,7 +6,7 @@ module ArguExtensions
       if self.present?
         if self.model.class == Forum
           begin
-            @redis.set("profiles.#{current_profile.id}.last_forum", self.model.id) if current_profile && current_profile.memberships.pluck(:forum_id).include?(self.model.id)
+            @redis.set("profiles:#{current_profile.id}:last_forum", self.model.id) if current_profile && current_profile.memberships.pluck(:forum_id).include?(self.model.id)
           rescue RuntimeError => e
             Rails.logger.error 'Redis not available'
             ::Bugsnag.notify(e, {

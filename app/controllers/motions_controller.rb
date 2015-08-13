@@ -70,13 +70,13 @@ class MotionsController < ApplicationController
     @question_id = params[:question_id] || params[:motion][:question_id]
     @motion.creator = current_profile
     @motion.questions << @question if @question.present?
-
     authorize @motion, @motion.questions.presence ? :create? : :create_without_question?
+    first = current_profile.motions.count == 0 || nil
 
     respond_to do |format|
       if @motion.save
         create_activity @motion, action: :create, recipient: (@question.presence || @motion.forum), owner: current_profile, forum_id: @motion.forum.id
-        format.html { redirect_to motion_path(@motion), notice: t('type_save_success', type: motion_type) }
+        format.html { redirect_to motion_path(@motion, start_motion_tour: first), notice: t('type_save_success', type: motion_type) }
         format.json { render json: @motion, status: :created, location: @motion }
       else
         format.html { render 'form' }
@@ -141,13 +141,15 @@ class MotionsController < ApplicationController
   end
 
   def convert!
-    @motion = Motion.find_by_id(params[:motion_id]).lock!
+    @motion = Motion.find(params[:motion_id]).lock!
     authorize @motion, :move?
     authorize @motion.forum, :update?
 
-    @result = @motion.convert_to convertible_param_to_model(permit_params[:f_convert])
+    @motion.with_lock do
+      @result = @motion.convert_to convertible_param_to_model(permit_params[:f_convert])
+    end
     if @result
-      redirect_to @result[:new]
+      redirect_to polymorphic_url(@result[:new])
     else
       redirect_to edit_motion_url @motion
     end
@@ -165,13 +167,16 @@ class MotionsController < ApplicationController
   end
 
   def move!
-    @motion = Motion.find_by_id(params[:motion_id]).lock!
+    @motion = Motion.find(params[:motion_id])
     authorize @motion, :move?
-    @forum = Forum.find_by_id permit_params[:forum_id]
+    @forum = Forum.find permit_params[:forum_id]
     authorize @forum, :update?
-
-    if @motion.move_to @forum
-      redirect_to @motion
+    moved = false
+    @motion.with_lock do
+      moved = @motion.move_to @forum
+    end
+    if moved
+      redirect_to motion_url(@motion)
     else
       redirect_to edit_motion_url @motion
     end

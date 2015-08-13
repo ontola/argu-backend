@@ -48,6 +48,7 @@ module ProCon
 
   # noinspection RubySuperCallWithoutSuperclassInspection
   def pro=(value)
+    value = false if value.to_s == 'con'
     super value.to_s == 'pro' || value
   end
 

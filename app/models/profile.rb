@@ -20,6 +20,7 @@ class Profile < ActiveRecord::Base
   has_many :page_managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
   has_many :pages, inverse_of: :owner, foreign_key: :owner_id
   has_many :votes, as: :voter, dependent: :destroy
+  has_many :motions, inverse_of: :creator, foreign_key: 'creator_id'
 
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, CoverUploader
@@ -97,7 +98,7 @@ class Profile < ActiveRecord::Base
   def preferred_forum
     begin
       @redis ||= Redis.new
-      last_forum = @redis.get("profiles.#{self.id}.last_forum")
+      last_forum = @redis.get("profiles:#{self.id}:last_forum")
     rescue RuntimeError => e
       Rails.logger.error 'Redis not available'
       ::Bugsnag.notify(e, {

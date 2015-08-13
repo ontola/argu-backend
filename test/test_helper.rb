@@ -71,4 +71,12 @@ class ActiveSupport::TestCase
     user
   end
 
+  def create_forum_owner_pair(forum_opts = {}, manager_opts = {})
+    user = FactoryGirl.create(:user, manager_opts)
+    forum = FactoryGirl.create((forum_opts[:type] || :forum),
+                               page: FactoryGirl.create(:page,
+                                                        owner: user.profile))
+    return forum, user
+  end
+
 end

@@ -3,6 +3,11 @@ require 'test_helper'
 class GroupMembershipsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  setup do
+    @holland, @holland_owner = create_forum_owner_pair({type: :populated_forum})
+    @group = FactoryGirl.create(:group, forum: @holland)
+  end
+
   let(:holland) { FactoryGirl.create(:forum, name: 'holland') }
   let!(:group) { FactoryGirl.create(:group, forum: holland) }
 
@@ -48,12 +53,11 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   ####################################
   # For owners
   ####################################
-  let(:holland_owner) { create_owner(holland) }
 
   test 'should show new' do
-    sign_in holland_owner
+    sign_in @holland_owner
 
-    get :new, group_id: group
+    get :new, group_id: @group
 
     assert_response 200
     assert assigns(:forum)
@@ -62,27 +66,27 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   end
 
   test 'owner should post create' do
-    sign_in holland_owner
+    sign_in @holland_owner
 
     assert_difference 'GroupMembership.count', 1 do
-      post :create, group_id: group, profile_id: user.profile
+      post :create, group_id: @group, profile_id: user.profile
     end
 
-    assert_redirected_to settings_forum_path(holland.url, tab: :groups)
+    assert_redirected_to settings_forum_path(@holland.url, tab: :groups)
     assert assigns(:forum)
     assert assigns(:membership)
   end
 
   test 'owner should delete destroy' do
-    sign_in holland_owner
+    sign_in @holland_owner
 
-    group_membership = FactoryGirl.create(:group_membership, group: group)
+    group_membership = FactoryGirl.create(:group_membership, group: @group)
 
     assert_difference 'GroupMembership.count', -1 do
       delete :destroy, id: group_membership
     end
 
-    assert_redirected_to settings_forum_path(holland.url, tab: :groups)
+    assert_redirected_to settings_forum_path(@holland.url, tab: :groups)
   end
 
 
