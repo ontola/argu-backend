@@ -1,43 +1,42 @@
 nl:
   pages:
-    resource_name: "Pagina"
-    type: "Pagina"
-    show: "Pagina weergeven"
+    resource_name: "Organisatie"
+    type: "Organisatie"
+    show: "Organisatie weergeven"
     settings:
-      title: "Pagina instellingen"
+      title: "Organisatie instellingen"
       menu:
         general: 'Algemeen'
         advanced: 'Geavanceerd'
         managers: 'Beheerders'
       managers:
         owner: "Eigenaar"
-        about_owner: "Gebruikers zijn eigenaar van een Pagina. Gebruikers kunnen meerdere Pagina's bezitten, maar een Pagina kan maar één eigenaar hebben."
+        about_owner: "Gebruikers zijn eigenaar van een organisatie. Gebruikers kunnen meerdere organisaties bezitten, maar een organisatie kan maar één eigenaar hebben."
         title: "Beheerders"
-        about_managers: "Pagina beheerders zijn gebruikers met extra rechten, maar niet zoveel als een administrator. Beheerders kunnen vraagstukken, ideeën, argumenten en reacties namens de Pagina plaatsen. Ook kunnen ze uit naam stemmen en eerder geplaatste items verwijderen."
-        transferred: "Pagina overgedragen"
-        users_only: "Alleen gebruikers kunnen pagina's bezitten"
+        about_managers: "Organisatie beheerders zijn gebruikers met extra rechten, maar niet zoveel als een administrator. Beheerders kunnen vraagstukken, ideeën, argumenten en reacties namens de organisatie plaatsen. Ook kunnen ze uit naam stemmen en eerder geplaatste items verwijderen."
+        transferred: "Organisatie overgedragen"
+        users_only: "Alleen gebruikers kunnen organisaties bezitten"
         transfer:
           confirm:
             header: "Weet je het daadwerkelijk zeker?"
-            body_html: "Het overdragen van de pagina zal eigenaarschap van <b>alle content</b> van de pagina en bijbehorende <b>forums</b> overdragen!"
-            repeat: "Voer de Argu URL van de pagina in om te bevestigen. Dit is de gebruikersnaam van jouw pagina en staat in de adresbalk."
+            body_html: "Het overdragen van de organisatie zal eigenaarschap van <b>alle content</b> van de organisatie en bijbehorende <b>forums</b> overdragen!"
+            repeat: "Voer de Argu URL van de organisatie in om te bevestigen. Dit is de unieke gebruikersnaam van jouw organisatie. Deze staat in de adresbalk."
     management:
-      title: "Paginabeheer"
-      managed_current_out_of_max: "%{current} van maximaal %{max} pagina('s) beheerd."
+      title: "Organisatiebeheer"
+      managed_current_out_of_max: "%{current} van maximaal %{max} organisatie(s) beheerd."
       members: "%{members} leden"
       owner: "Eigenaar"
-    display: "Pagina bekijken"
-    create: "Start een pagina"
-    legal: "Door deze pagina aan te maken verklaar je toestemming te hebben om de organisatie waarvoor je een pagina maakt officieel op Argu te vertegenwoordigen, en dat je akkoord gaat met de Algemene Voorwaarden."
-    limit_reached_amount: "Je kunt maximaal %{amount} pagina('s) aanmaken."
-    page_management: "paginabeheer"
-    page_management_html: "Ga naar %{href} om je pagina's te beheren."
+    display: "Organisatie bekijken"
+    create: "Start een organisatie"
+    legal: "Door deze organisatie aan te maken verklaar je toestemming te hebben om de organisatie officieel op Argu te vertegenwoordigen, en dat je akkoord gaat met de Algemene Voorwaarden."
+    limit_reached_amount: "Je kunt maximaal %{amount} organisatie(s) aanmaken."
+    page_management_html: "Ga naar %{href} om je organisaties te beheren."
     helper:
-      side: "<h2>Wat is een pagina?</h2>
-             <p>Een pagina is een <b>profiel</b> van een organisatie, zoals een bedrijf, NGO, politieke partij of actiegroep.
-             <h2>Wat kan ik met een pagina?</h2>
+      side: "<h2>Wat is een organisatie?</h2>
+             <p>Een organisatie is een <b>profiel</b> van een organisatie, zoals een bedrijf, NGO, politieke partij of actiegroep. Meerdere mensen kunnen dit profiel beheren.
+             <h2>Wat kan ik met een organisatie?</h2>
              <p>Net als met een gewoon profiel kan je <b>reacties, voorstellen en vraagstukken plaatsen, stemmen en lid worden van forums</b>. Je kan op die manier de <b>standpunten delen</b> van de organisatie die jij vertegenwoordigd.</p>
-             <h2>Wanneer mag ik een pagina aanmaken?</h2>
+             <h2>Wanneer mag ik een organisatie aanmaken?</h2>
              <p>Alleen als jij <b>toestemming</b> hebt om namens de organisatie te handelen op Argu.</p>
              "
   activerecord:

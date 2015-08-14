@@ -26,7 +26,7 @@
         section
           p= t('pages.limit_reached_amount', amount: errors[:max_allowed_pages][:max])
           - if errors[:max_allowed_pages][:pages_url]
-            p= t('pages.page_management_html', href: link_to(t('pages.page_management'), errors[:max_allowed_pages][:pages_url]))
+            p= t('pages.page_management_html', href: link_to(t('pages.management.title'), errors[:max_allowed_pages][:pages_url]))
     .col-3-1
       .box
         section= raw t('pages.helper.side')
