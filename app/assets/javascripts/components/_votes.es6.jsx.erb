@@ -54,6 +54,12 @@ window.CombiBigVote = React.createClass({
     }
 });
 
+function createMembership(response) {
+    return fetch(response.membership_url, _safeCredentials({
+        method: 'POST'
+    })).then(statusSuccess);
+}
+
 window.BigVote = React.createClass({
     getInitialState: function () {
         return {
@@ -103,14 +109,25 @@ window.BigVote = React.createClass({
     vote: function (side) {
         fetch(`${this.props.vote_url}/${side}.json`, _safeCredentials({
             method: 'POST'
-        })).then(statusSuccess)
-           .then(json, tryLogin)
-           .then((data) => {
-               this.setState(data.vote);
-               //Actions.actorUpdate(data);
-           }).catch((e) => {
-             console.log('failed');
-           });
+        })).then((response) => {
+            if (response.status == 403) {
+                return response
+                        .json()
+                        .then(createMembership)
+                        .then(res => {
+                            return this.vote(side);
+                        });
+            } else {
+                console.log('!403');
+                return statusSuccess(response);
+            }
+        })
+        .then(json, tryLogin)
+        .then((data) => {
+           this.setState(data.vote);
+        }).catch((e) => {
+            console.log('failed');
+        });
     },
 
     voteWidth: function (side) {
