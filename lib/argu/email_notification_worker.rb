@@ -38,7 +38,7 @@ class Argu::EmailNotificationWorker
   def may_send(u, activity, redis)
     u.class == User && u.direct_follows_email? &&
         !u.active_since?(activity.created_at - 30.seconds, redis) &&
-        (u.last_email_sent_at(redis).to_i < [u.active_at(redis).to_i, 1.hour.ago.to_i].min)
+        (u.last_email_sent_at(redis).to_i <= [u.active_at(redis).to_i, 1.hour.ago.to_i].min)
   end
 
   # Renders the accompanying view for the activity
@@ -63,8 +63,8 @@ class Argu::EmailNotificationWorker
             redis = Redis.new
             current_time = DateTime.now
             redis.pipelined do
-              @recipients.each do |r_o|
-                redis.set("user:#{r_o[r_o.keys.first]['id']}:email.sent.at", current_time)
+              @recipients.each do |k, v|
+                redis.set("user:#{v['id']}:email.sent.at", current_time)
               end
             end
           end

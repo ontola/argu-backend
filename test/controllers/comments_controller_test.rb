@@ -6,6 +6,8 @@ class CommentsControllerTest < ActionController::TestCase
   ####################################
   # As user
   ####################################
+  let(:user) { FactoryGirl.create(:user) }
+
   test 'should post create comment' do
     sign_in users(:user)
 
@@ -82,5 +84,20 @@ class CommentsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to argument_url(arguments(:one), anchor: comments(:one).id)
+  end
+
+  ####################################
+  # As staff
+  ####################################
+  test 'should destroy comments' do
+    comment = FactoryGirl.create(:comment,
+                       commentable: FactoryGirl.create(:argument),
+                       profile: user.profile)
+    FactoryGirl.create_list(:notification, 40, activity: Activity.find_by(trackable: comment))
+    sign_in users(:user_thom)
+
+    delete :destroy, argument_id: comment.commentable.id, id: comment, wipe: 'true'
+
+    assert_redirected_to argument_url(comment.commentable, anchor: comment.id)
   end
 end

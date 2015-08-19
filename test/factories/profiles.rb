@@ -1,9 +1,7 @@
 FactoryGirl.define do
 
   factory :profile do
-    transient do
-      association :profileable, factory: :user, strategy: :build
-    end
+    association :profileable, factory: :user, strategy: :build
     are_votes_public true
     is_public true
 
