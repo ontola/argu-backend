@@ -17,7 +17,8 @@ class Rack::Attack
       /howtostopreferralspam.eu/,
       /floating-share-buttons.com/,
       /videos-for-your-business.com/,
-      /sexyali.com/
+      /sexyali.com/,
+      /chinese-amezon.com/
   ].freeze
 
   HACKERS = [
