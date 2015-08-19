@@ -9,7 +9,7 @@ class ArgumentsController < ApplicationController
     authorize @argument, :show?
     @parent_id = params[:parent_id].to_s
     
-    @comments = @argument.filtered_threads(show_trashed?)
+    @comments = @argument.filtered_threads(show_trashed?, params[:page])
     @length = @argument.root_comments.length
     @vote = Vote.find_by(voteable: @argument, voter: current_profile)
 
