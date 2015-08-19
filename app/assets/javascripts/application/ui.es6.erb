@@ -7,6 +7,7 @@ Argu.ui = {
         $(document)
             .on('keyup', '.confirm .confirm-text', this.confirmInputHandler)
             .on('click', '.comment .btn-reply', this.openCommentForm)
+            .on('click', '.comment .btn-cancel', this.cancelCommentForm)
             .on('pjax:success', this.handleDOMChangedFinished)
             .on('pjax:end', this.checkTabs)
             .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
@@ -185,7 +186,14 @@ Argu.ui = {
     openCommentForm: function (e) {
         "use strict";
         e.preventDefault();
-        $('.comment_form#cf' + $(this).attr('id')).slideToggle();
+        $('.comment_form#cf' + $(this).data('comment-id')).slideToggle();
+    },
+
+    cancelCommentForm: function (e) {
+        "use strict";
+        e.preventDefault();
+        $('#comments_' + $(this).data('comment-id')+' .box:first-child').show();
+        $('#comments_' + $(this).data('comment-id')+' .box:last-child').remove();
     },
 
     welcomeVideoHide: function () {

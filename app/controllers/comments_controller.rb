@@ -30,6 +30,28 @@ class CommentsController < ApplicationController
     end
   end
 
+  def edit
+    @commentable = commentable_class.find params[commentable_param]
+    @comment = @commentable.comment_threads.find params[:id]
+    current_context @comment
+    authorize @comment, :edit?
+
+    respond_to do |format|
+      format.html { render locals: {
+                               resource: @commentable,
+                               comment: @comment
+                           }
+      }
+      format.js { render locals: {
+                               resource: @commentable,
+                               comment: @comment,
+                               parent_id: nil,
+                               visible: true
+                           }
+      }
+    end
+  end
+
   # POST /resource/1/comments
   def create
     resource = get_commentable
@@ -37,7 +59,7 @@ class CommentsController < ApplicationController
       authorize resource, :show?
       render_register_modal(nil, [:comment, params[:comment]], [:parent_id, params[:parent_id]])
     else
-      @comment = Comment.build_from(resource, current_profile.id, params[:comment])
+      @comment = Comment.build_from(resource, current_profile.id, params[:comment][:body])
       authorize @comment
       parent = Comment.find_by_id params[:parent_id] unless params[:parent_id].blank?
       #unless params[:parent_id].blank?
@@ -66,6 +88,21 @@ class CommentsController < ApplicationController
   end
 
   def update
+    @commentable = commentable_class.find params[commentable_param]
+    @comment = @commentable.comment_threads.find params[:id]
+    authorize @comment, :edit?
+
+    respond_to do |format|
+      if @comment.update_attributes(comment_params)
+        format.html { redirect_to @comment, notice: t('comments.notices.updated') }
+        format.js { render }
+        format.json { head :no_content }
+      else
+        format.html { render :form }
+        format.js { render 'failed', status: 400 }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   # DELETE /arguments/1/comments/1
@@ -86,6 +123,10 @@ class CommentsController < ApplicationController
   end
 
 private
+  def comment_params
+    params.require(:comment).permit(*policy(@comment || Comment).permitted_attributes)
+  end
+
   def get_commentable
     resource, id = request.path.split('/')[1,2]
     # noinspection RubyCaseWithoutElseBlockInspection

@@ -11,4 +11,8 @@ module CommentsHelper
     end
     dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-gear')
   end
+
+  def comment_form_label(comment)
+    comment.persisted? ? t('edit') : t('reply')
+  end
 end

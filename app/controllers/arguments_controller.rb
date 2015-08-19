@@ -14,7 +14,9 @@ class ArgumentsController < ApplicationController
     @vote = Vote.find_by(voteable: @argument, voter: current_profile)
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render locals: {
+                               comment: Comment.new
+                           } }
       format.widget { render @argument }
       format.json { render json: @argument }
     end

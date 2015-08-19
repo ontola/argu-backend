@@ -61,6 +61,7 @@ en:
       reply: "Reply"
       delete: "Delete"
       more: "Show more"
+      edit: "Edit comment"
       placed_by: "%{user} - %{date}"
       none: "No replies"
     notices:

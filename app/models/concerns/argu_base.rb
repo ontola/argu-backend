@@ -4,6 +4,10 @@ module ArguBase
   included do
   end
 
+  def edited?
+    self.updated_at - 2.minutes > self.created_at
+  end
+
   def identifier
     "#{self.class_name}_#{self.id}"
   end

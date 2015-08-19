@@ -4,7 +4,7 @@
     header
       h2= t('arguments.comments.reply')
     .box[data-intro= t('intro.comments.form')]
-      =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true }
+      =render partial: 'comments/form', locals: { resource: resource, parent_id: @parent_id, visible: true, comment: comment }
     header
       h2#comments= t('arguments.comments.title') if @comments.present?
     .comments

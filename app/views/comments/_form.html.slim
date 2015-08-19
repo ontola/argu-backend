@@ -1,14 +1,18 @@
-=form_tag(polymorphic_path([resource, :comments]), :method => 'post', id: "cf#{parent_id.to_s}", class: 'comment_form', style: visible ? '' : 'display: none;', data: remote_if_user) do
+=semantic_form_for([resource, comment], html: {id: "cf#{parent_id.to_s}", class: 'comment_form', autocomplete: 'off', style: visible ? '' : 'display: none;', data: remote_if_user(local_assigns[:remote])}) do |f|
   section.smallpadded
-    =text_area_tag :comment, @comment.try(:body), :rows => 2, :cols => 50, placeholder: t('comments.placeholder'), class: 'form-input-content margin-bottom'
+    =f.text_area :body, :rows => 2, :cols => 50, placeholder: t('comments.placeholder'), class: 'form-input-content margin-bottom'
     -unless parent_id.blank?
       input[type="hidden" class= "btn" name="parent_id" value ="#{parent_id}"]
-  - if @comment.blank? || @comment.new_record?
+  - if comment.blank? || comment.new_record?
     =render partial: 'profiles/profile_current' if current_profile.present?
   - else
-    =render partial: @comment.creator, locals: {resource: @comment}
+    =render partial: comment.creator, locals: {resource: comment}
   -if current_profile.present?
   -else
     =render partial: 'profiles/empty_profile'
-  .actions
-    =button_tag t('arguments.show.reply'), class: 'btn btn-sticky btn-sticky-bottom remote-link'
+  ul.btns-sticky.btns-sticky-bottom.btns-horizontal.btns-list--subtle
+    - if comment.persisted? && (local_assigns[:remote].nil? || local_assigns[:remote] == true)
+      li
+        div
+          a.btn-cancel[data-comment-id="#{comment.id}"] X &nbsp;
+    =f.action :submit, as: :button, label: comment_form_label(comment)

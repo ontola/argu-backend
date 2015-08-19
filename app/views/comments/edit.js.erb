@@ -1,0 +1,2 @@
+$('#comments_<%= @comment.id %> .box:first-child').hide();
+$('#comments_<%= @comment.id %>').append('<div class="box"><%= escape_javascript render(partial: 'form', locals: local_assigns) %></div>');
