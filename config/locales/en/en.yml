@@ -111,7 +111,8 @@ en:
     how_argu_works: "How does Argu work?"
     team: "Our team"
     product: "Our product"
-    organisations: "Argu for organisations"
+    organizations: "Argu for organisations"
+    lobby_organizations: "For lobby organisations"
     governments: "Argu for governments"
   how_argu_works:
     title: "How Argu works"

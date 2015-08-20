@@ -9,10 +9,11 @@ footer
   ul.footer-list
     li
       h3.footer-heading= t('about.title')
-    li= link_to t('about.vision'), about_path
-    li= link_to t('about.team'), team_path
+    li= link_to t('about.vision'), info_path(:about)
+    li= link_to t('about.team'), info_path(:team)
     /li= link_to t('about.product'), product_path
-    li= link_to t('about.governments'), governments_path
+    li= link_to t('about.governments'), info_path(:governments)
+    li= link_to t('about.lobby_organizations'), info_path(:lobby_organizations)
     li= link_to t('about.how_argu_works'), how_argu_works_path
     li= link_to t('press_media'), 'https://argu.pr.co'
     li= link_to t('help_support'), 'https://argu.freshdesk.com/support/home'

@@ -112,7 +112,8 @@ nl:
     how_argu_works: "Hoe werkt Argu?"
     team: "Ons team"
     product: "Ons product"
-    organisations: "Argu voor organisaties"
+    organizations: "Argu voor organisaties"
+    lobby_organizations: "Voor belangenorganisaties"
     governments: "Argu voor overheden"
   how_argu_works:
     title: "Hoe Argu werkt"
