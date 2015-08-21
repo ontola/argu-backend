@@ -9,12 +9,14 @@ class ArgumentsController < ApplicationController
     authorize @argument, :show?
     @parent_id = params[:parent_id].to_s
     
-    @comments = @argument.filtered_threads(show_trashed?)
+    @comments = @argument.filtered_threads(show_trashed?, params[:page])
     @length = @argument.root_comments.length
     @vote = Vote.find_by(voteable: @argument, voter: current_profile)
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render locals: {
+                               comment: Comment.new
+                           } }
       format.widget { render @argument }
       format.json { render json: @argument }
     end

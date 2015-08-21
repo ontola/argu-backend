@@ -3,9 +3,12 @@ require 'test_helper'
 class VotesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  let(:motion) { FactoryGirl.create(:motion) }
+
   ####################################
   # As user
   ####################################
+  let(:user) { FactoryGirl.create(:user) }
 
   test 'should post create' do
     sign_in users(:user)
@@ -47,6 +50,14 @@ class VotesControllerTest < ActionController::TestCase
     assert_no_difference('Vote.count') do
       delete :destroy, id: votes(:one).id, format: :json
     end
+
+    assert_response 403
+  end
+
+  test 'should 403 when not a member' do
+    sign_in user
+
+    post :create, motion_id: motion, for: :pro, format: :json
 
     assert_response 403
   end

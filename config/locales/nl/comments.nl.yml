@@ -5,6 +5,9 @@ nl:
     placeholder: "Plaats hier jouw reactie. Blijf inhoudelijk en vriendelijk :)"
     empty:
       name: "Plaats jouw reactie"
+    edited_at: "gewijzigd op %{time}"
+    notices:
+      updated: "De reactie is gewijzigd."
   pundit:
     comments:
       policy:

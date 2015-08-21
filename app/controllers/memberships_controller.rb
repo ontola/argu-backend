@@ -10,9 +10,14 @@ class MembershipsController < ApplicationController
       authorize @membership, :create?
 
       should_307 = request.fullpath.match(/\/v(\?|\/)|\/c(\?|\/)/) || (params[:r].presence && params[:r].match(/\/v(\?|\/)|\/c(\?|\/)/))
+      created = params[:redirect] == 'false' ? 201 : nil
       if @membership.save
-        redirect_to params[:r].presence || @membership.forum,
-                    status: should_307 ? 307 : 302
+        if created
+          head 201
+        else
+          redirect_to params[:r].presence || @membership.forum,
+                      status: should_307 ? 307 : 302
+        end
       else
         render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
       end

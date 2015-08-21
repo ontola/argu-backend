@@ -69,8 +69,12 @@ module ApplicationHelper
   end
 
   # Used in forms for the 'r' system
-  def remote_if_user
-    current_profile.present? ? {remote: true} : {}
+  def remote_if_user(override = nil)
+    if override != nil
+      override ? {remote: override} : {}
+    else
+      current_profile.present? ? {remote: true} : {}
+    end
   end
 
   # Used in forms for the 'r' system

@@ -18,6 +18,12 @@ class CommentPolicy < RestrictivePolicy
     end
   end
 
+  def permitted_attributes
+    attributes = super
+    attributes << [:body] if create?
+    attributes
+  end
+
   def create?
     rule is_open?, is_member?, super
   end

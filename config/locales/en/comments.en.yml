@@ -5,6 +5,9 @@ en:
     placeholder: "Place your comments here. Please keep your comments substantial and friendly :)"
     empty:
       name: "Place your comment"
+    edited_at: "edited at %{time}"
+    notices:
+      updated: "The comment has been updated"
   pundit:
     comments:
       policy:

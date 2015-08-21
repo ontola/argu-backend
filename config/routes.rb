@@ -110,7 +110,7 @@ Argu::Application.routes.draw do
   end
 
   resources :arguments, path: 'a', except: [:index, :new, :create], concerns: [:votable] do
-    resources :comments, path: 'c', only: [:new, :index, :show, :create, :destroy]
+    resources :comments, path: 'c', only: [:new, :index, :show, :create, :update, :edit, :destroy]
     patch 'comments' => 'comments#create'
   end
 
