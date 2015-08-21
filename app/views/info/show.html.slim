@@ -10,8 +10,8 @@
           .blocks.blocks--dark-background[class=section['class'] id=section['id']]
             img.block-image-wide[src="#{asset_path section['image']}" style="opacity:#{section['opacity'].present? ? section['opacity'] : '1' };" ]
               .block-image-contents
-                - if section['hero'].present?
-                  h2.block-image-header= section['hero']
+                - if section['header'].present?
+                  h2.block-image-header= section['header']
                 - if section['c2a'].present?
                   =link_to section['c2a']['url'] do
                     .block-c2a= section['c2a']['body']
