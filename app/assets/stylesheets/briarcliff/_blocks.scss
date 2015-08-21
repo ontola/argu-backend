@@ -196,6 +196,11 @@ $grey_light: $g0;
   }
 }
 
+.block--hero {
+  max-width: 100%;
+  margin-top: -3em;
+}
+
 .block--hidden {
   background-color: $grey_light;
   * {
