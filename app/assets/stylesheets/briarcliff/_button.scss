@@ -517,8 +517,14 @@ a.is-loading{
 }
 
 .pagination {
-  span {
+  a, .current {
     @extend .btn-subtle;
     padding: .7em !important;
+  }
+
+  .current {
+    color: $blu;
+    pointer-events: none;
+    background-color: $g1;
   }
 }
