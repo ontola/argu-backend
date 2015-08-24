@@ -29,6 +29,7 @@
   font-size: 13px; // Not em, since parent items with smaller fonts could otherwise influence the tooltip font size
   @include box-shadow-intense;
   opacity:0;
+
   @include bp-medium {
     display: none;
   }

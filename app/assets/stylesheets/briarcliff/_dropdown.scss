@@ -44,7 +44,6 @@
     padding: .6em .7em;
     min-width: 100%;
     display: block;
-    @include transition(.1s);
 
     &:hover {
       background-color: $darken1;
@@ -112,7 +111,6 @@ span.dropdown-header {
   }
 
   .dropdown-content {
-    //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
     visibility: visible;
     -webkit-overflow-scrolling: touch;
     @include animation(from-bottom-fade .2s both);

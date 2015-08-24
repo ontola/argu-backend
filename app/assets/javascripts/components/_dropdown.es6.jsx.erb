@@ -8,6 +8,7 @@ window.HyperDropdown = React.createClass({
     getInitialState: function () {
         return {
             openState: false,
+            openedByHover: false,
             renderLeft: false,
             dropdownElement: {},
             current_actor: this.props.current_actor
@@ -58,6 +59,19 @@ window.HyperDropdown = React.createClass({
         }
     },
 
+    // Dropdown should be shown on hover of the trigger and the menu. The dropdown should be closed when the cursors hovers outside of the menu, unless the dropdown was opened by clicking it.
+    onMouseEnter: function () {
+        if (!('ontouchstart' in window)) {
+            this.open();
+        }
+    },
+
+    onMouseLeave: function () {
+        if (this.state.openState) {
+            this.close();
+        }
+    },
+
     handleResize: function () {
         this.calculateRenderLeft();
     },
@@ -83,7 +97,6 @@ window.HyperDropdown = React.createClass({
 
     render: function () {
         var collapseStyle = {
-            visibility: this.state.openState ? 'visible' : 'hidden',
             left: this.state.renderLeft ? 'auto' : 0,
             right: this.state.renderLeft ? 0 : undefined
         };
@@ -91,7 +104,7 @@ window.HyperDropdown = React.createClass({
         var sections,
             _this = this;
         if (this.props.sections) {
-            sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle}>
+            sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle} >
                 {this.props.sections.map(function (section, i) {
                     if (typeof(section.type) == "string") {
                         return (<Notifications key={i} done={_this.close} {...section} />);
@@ -139,7 +152,7 @@ window.HyperDropdown = React.createClass({
                        </TriggerContainer>);
         }
 
-        return (<li tabIndex="1"  className={dropdownClass}>
+        return (<li tabIndex="1"  className={dropdownClass} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} >
             {trigger}
             <ul className={'dropdown-content ' + this.props.contentClassName}></ul><%# This makes sure renderLeft is calculated correctly %>
             {sections}
@@ -281,7 +294,7 @@ var CurrentUserTrigger = React.createClass({
         var triggerClass = "dropdown-trigger " + this.props.triggerClass;
         var TriggerContainer = this.props.triggerTag || 'div';
 
-        return (<TriggerContainer className={triggerClass} onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
+        return (<TriggerContainer className={triggerClass} onClick={this.props.handleClick} onTouchEnd={this.props.handleTap} >
             {_image({image: {url: this.state.profile_photo.url, title: this.state.profile_photo.title, className: 'profile-picture--navbar'}})}
             <span className="icon-left">{this.state.display_name}</span>
         </TriggerContainer>);
