@@ -88,12 +88,6 @@
   }
 }
 
-.dropdown-active {
-  .dropdown-trigger{
-    background-color: $lighten3 !important;
-  }
-}
-
 .dropdown-right {
   right: 0;
   left: auto;
@@ -111,14 +105,21 @@ span.dropdown-header {
 }
 
 //.dropdown:hover .dropdown-content,
-.dropdown-active .dropdown-content {
-  //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
-  visibility: visible;
-  -webkit-overflow-scrolling: touch;
-  //text-transform: initial;
-  @include animation(fade-in .2s);
-  span {
-    display: inline-block !important; //Makes sure the text in dropdowns is not hidden on smaller screens.
+.dropdown-active {
+
+  .dropdown-trigger{
+    background-color: $lighten3 !important;
+  }
+
+  .dropdown-content {
+    //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
+    visibility: visible;
+    -webkit-overflow-scrolling: touch;
+    @include animation(from-bottom-fade .2s both);
+
+    span {
+      display: inline-block !important; //Makes sure the text in dropdowns is not hidden on smaller screens.
+    }
   }
 }
 
