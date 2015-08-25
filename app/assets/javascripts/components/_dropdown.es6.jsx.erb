@@ -6,9 +6,9 @@ window.HyperDropdown = React.createClass({
     ],
 
     getInitialState: function () {
+        this.listeningToClick = true;
         return {
             openState: false,
-            openedByHover: false,
             renderLeft: false,
             dropdownElement: {},
             current_actor: this.props.current_actor
@@ -25,6 +25,7 @@ window.HyperDropdown = React.createClass({
     close: function () {
         var elem = this.state.dropdownElement;
         elem.style.display = 'none';
+        // Removes slow descending visibility repaint
         this.timerItem = window.setTimeout(function () {
             elem.style.display = 'block';
         }, 50);
@@ -46,10 +47,12 @@ window.HyperDropdown = React.createClass({
     },
 
     handleClick: function () {
-        if (this.state.openState) {
-            this.close();
-        } else {
-            this.open();
+        if (this.listeningToClick) {
+            if (this.state.openState) {
+                this.close();
+            } else {
+                this.open();
+            }
         }
     },
 
@@ -59,16 +62,24 @@ window.HyperDropdown = React.createClass({
         }
     },
 
-    // Dropdown should be shown on hover of the trigger and the menu. The dropdown should be closed when the cursors hovers outside of the menu, unless the dropdown was opened by clicking it.
+    mouseEnterTimeoutCallback: function () {
+        this.listeningToClick = true;
+    },
+
     onMouseEnter: function () {
         if (!('ontouchstart' in window)) {
+            this.listeningToClick = false;
+            // Start timer to prevent a quick close after clicking on the trigger
+            this.mouseEnterTimeout = window.setTimeout(this.mouseEnterTimeoutCallback, 1000);
             this.open();
-        }
+        };
     },
 
     onMouseLeave: function () {
         if (this.state.openState) {
             this.close();
+            // Remove / reset timer
+            window.clearTimeout(this.mouseEnterTimeout);
         }
     },
 
@@ -85,6 +96,7 @@ window.HyperDropdown = React.createClass({
         this.setState({current_actor: data});
     },
 
+    // Used to calculate the width of a dropdown content menu
     referenceDropdownElement: function () {
         let refDropdown;
         if (typeof(this.state.referenceDropdownElement) !== "undefined") {
