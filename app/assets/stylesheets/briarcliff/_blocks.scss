@@ -453,3 +453,14 @@ p.block-slogan {
     height: 100%;
   }
 }
+
+.block .markdown a {
+
+  &:hover {
+    color: black;
+  }
+
+  &:visited {
+    color: $g3;
+  }
+}
