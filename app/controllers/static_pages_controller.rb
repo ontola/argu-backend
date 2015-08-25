@@ -17,16 +17,6 @@ class StaticPagesController < ApplicationController
 	  end
   end
 
-  def about
-    authorize :static_page
-    redirect_to info_path('about'), status: 302
-  end
-
-  def product
-    authorize :static_page
-    redirect_to info_path('product'), status: 302
-  end
-
   def developers
     authorize :static_page
   end
@@ -38,16 +28,6 @@ class StaticPagesController < ApplicationController
   def modern
     authorize :static_page, :about?
     render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, safari: #{browser.safari?}, mobile: #{browser.mobile?}, tablet: #{browser.tablet?}, ua: #{browser.ua}"
-  end
-
-  def team
-    authorize :static_page
-    redirect_to info_path('team'), status: 302
-  end
-
-  def governments
-    authorize :static_page
-    redirect_to info_path('governments'), status: 302
   end
 
   private
