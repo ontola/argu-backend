@@ -28,7 +28,7 @@ class Argu::EmailNotificationWorker
                                .select { |u| u.active_since?(@activity.created_at - 30.seconds, redis) }
                                .map(&:id)
         if delayed_recipients.any?
-          EmailNotificationWorker.perform_in(5.minutes, activity_id, delayed_recipients)
+          Argu::EmailNotificationWorker.perform_in(5.minutes, activity_id, delayed_recipients)
         end
       end
       send!

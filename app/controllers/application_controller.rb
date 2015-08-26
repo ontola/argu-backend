@@ -42,7 +42,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from ActiveRecord::RecordNotFound do |exception|
-    @quote = Setting.get(:quotes).split(';').sample
+    @quote = (Setting.get(:quotes) || '').split(';').sample
     respond_to do |format|
       format.html { render 'status/404', status: 404 }
       format.js { head 404 }

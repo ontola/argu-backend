@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :forum do
-    association :shortname, strategy: :build
+    association :shortname,  strategy: :build
     association :page, strategy: :create
     transient do
       #visible_with_a_link false
@@ -8,6 +8,10 @@ FactoryGirl.define do
     end
 
     sequence(:name) { |n| "fg_forum#{n}" }
+
+    before(:create) do |forum, evaluator|
+      forum.shortname.shortname = forum.name
+    end
 
     # Holland (the default)
     factory :populated_forum do

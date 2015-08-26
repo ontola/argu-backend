@@ -72,6 +72,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                  },
                                  at: access_tokens(:token_hidden).access_token}
     end
+    assert_not ActionMailer::Base.deliveries.empty?
     assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 

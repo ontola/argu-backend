@@ -101,6 +101,7 @@ class MotionsControllerTest < ActionController::TestCase
                title: 'Motion',
                content: 'Contents'
            }
+      puts ''
     end
     assert_not_nil assigns(:motion)
     assert_not assigns(:motion).persisted?

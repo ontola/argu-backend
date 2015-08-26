@@ -51,7 +51,7 @@ window.notificationStore = Reflux.createStore({
 
     checkForNew: function () {
         "use strict";
-        return fetch('//localhost:5000/n', _userIdentityToken({method: 'post', headers: {
+        return fetch('//meta.argu.co/n', _userIdentityToken({method: 'post', headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }}))
