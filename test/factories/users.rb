@@ -30,7 +30,7 @@ FactoryGirl.define do
 
     factory :user_with_memberships do
       after(:create) do |user, evaluator|
-        user.profile.memberships.create(forum: Forum.find_via_shortname('utrecht'))
+        user.profile.memberships.create(forum: FactoryGirl.create(:forum))
       end
 
       factory :user_with_votes do

@@ -12,6 +12,9 @@ class RegistrationsController < Devise::RegistrationsController
     redirect_to :root unless has_valid_token? || within_user_cap?
     super do |resource|
       setup_memberships(resource)
+      if resource.persisted? && !resource.confirmed? && !resource.confirmation_sent_at
+        resource.send_confirmation_instructions
+      end
     end
     session[:omniauth] = nil unless @user.new_record?
   end

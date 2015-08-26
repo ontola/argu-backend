@@ -18,6 +18,7 @@ client-bundle.js.map
 node_modules
 /vendor/assets/bower_components
 .env
+spec/argu.txt
 
 # Ignore secrets
 secrets.yml

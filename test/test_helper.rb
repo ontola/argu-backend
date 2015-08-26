@@ -4,6 +4,7 @@ require 'rails/test_help'
 require 'minitest/rails'
 require 'mocha/mini_test'
 require 'model_test_base'
+require 'capybara/rails'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -11,21 +12,9 @@ require 'model_test_base'
 
 # Uncomment for awesome colorful output
 require 'minitest/pride'
+DatabaseCleaner.strategy = :transaction
 
-
-class ActiveSupport::TestCase
-
-  ActiveRecord::Migration.check_pending!
-
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  fixtures :all
-
-  include FactoryGirl::Syntax::Methods
-  #FactoryGirl.lint
-  # Add more helper methods to be used by all tests here...
+module TestHelper
 
   # Runs assert_difference with a number of conditions and varying difference
   # counts.
@@ -48,6 +37,22 @@ class ActiveSupport::TestCase
       assert_equal(before[i] + difference, eval(e, b), error)
     end
   end
+end
+
+class ActiveSupport::TestCase
+  include TestHelper
+  ActiveRecord::Migration.check_pending!
+
+  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
+  #
+  # Note: You'll currently still have to declare fixtures explicitly in integration tests
+  # -- they do not yet inherit this setting
+  fixtures :all
+
+  include FactoryGirl::Syntax::Methods
+  #FactoryGirl.lint
+  # Add more helper methods to be used by all tests here...
+
 
   def create_manager(forum, user = nil)
     user ||= FactoryGirl.create(:user)
@@ -79,4 +84,16 @@ class ActiveSupport::TestCase
     return forum, user
   end
 
+end
+
+class ActionDispatch::IntegrationTest
+  # Make the Capybara DSL available in all integration tests
+  include Capybara::DSL
+
+  def setup_allowed_pages
+    Capybara::Webkit.configure do |config|
+      config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'
+      config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
+    end
+  end
 end
