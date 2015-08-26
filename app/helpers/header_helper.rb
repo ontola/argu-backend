@@ -83,7 +83,6 @@ module HeaderHelper
                   link_item(t('about.team'), info_path(:team)),
                   link_item(t('about.governments'), info_path(:governments)),
                   link_item(t('about.lobby_organizations'), info_path(:lobby_organizations)),
-                  link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true}),
                   link_item(t('press_media'), 'https://argu.pr.co'),
                   link_item(t('help_support'), 'https://argu.freshdesk.com/support/home')
               ]
