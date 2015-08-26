@@ -21,20 +21,26 @@
   margin: 0;
   position: absolute;
   text-align: left;
-  font-size: 16px;
-  @include bp-small{
-    font-size: 14px;
-  }
   top: 100%;
   width: 15em;
   z-index: 10;
-  @include box-shadow-intense;
   border-top-left-radius: 0;
   overflow: hidden;
   text-transform: none;
   border-top: none;
   max-height: 30em;
   overflow-y: auto;
+  @include box-shadow-intense;
+  font-size: 16px;
+
+  @include transition(all .2s);
+  opacity: 0;
+  @include transform (translate3d(0,1em,0));
+
+  @include bp-small{
+    font-size: 14px;
+  }
+
   li {
     min-width: 100%;
   }
@@ -69,8 +75,10 @@
     color: white;
     background-color: $g3;
   }
+
   .link{
     position: relative;
+
     img {
       position: absolute;
       left: 0;
@@ -78,6 +86,7 @@
       height: 1.6em;
       margin: 0.3em 0.4em;
       border-radius: 999px;
+
       & + span {
         position: relative;
         left: 1.4em;
@@ -113,7 +122,8 @@ span.dropdown-header {
   .dropdown-content {
     visibility: visible;
     -webkit-overflow-scrolling: touch;
-    @include animation(from-bottom-fade .2s both);
+    opacity: 1;
+    @include transform (translate3d(0,0,0));
 
     span {
       display: inline-block !important; //Makes sure the text in dropdowns is not hidden on smaller screens.

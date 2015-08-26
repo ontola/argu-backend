@@ -24,7 +24,6 @@ window.HyperDropdown = React.createClass({
 
     close: function () {
         var elem = this.state.dropdownElement;
-        elem.style.display = 'none';
         // Removes slow descending visibility repaint
         this.timerItem = window.setTimeout(function () {
             elem.style.display = 'block';
