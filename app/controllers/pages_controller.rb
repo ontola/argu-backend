@@ -23,6 +23,8 @@ class PagesController < ApplicationController
       @pubic_vote_count = votes.count
       @collection =  Vote.ordered votes
     end
+
+    render 'profiles/show'
   end
 
   def new

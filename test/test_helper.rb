@@ -47,7 +47,9 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  fixtures :all
+  fixtures %i(activities arguments comments documents forums memberships motions page_memberships pages
+              profiles profiles_roles question_answers questions roles rules settings shortnames taggings
+              tags users votes access_tokens identities)
 
   include FactoryGirl::Syntax::Methods
   #FactoryGirl.lint
