@@ -55,8 +55,29 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+  
+  Capybara.register_driver :selenium_chrome do |app|
+    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+  end
 
-  Capybara.default_driver = ENV['CI'] ? :selenium : :webkit
+  Capybara.register_driver :selenium_safari do |app|
+    Capybara::Selenium::Driver.new(app, :browser => :safari)
+  end
+
+  Capybara.default_driver = case ENV['BROWSER']
+                              when 'chrome'
+                                :selenium_chrome
+                              when 'firefox'
+                                :selenium_firefox
+                              when 'webkit'
+                                :webkit
+                              when 'ie'
+                                :internet_explorer
+                              when 'safari'
+                                :selenium_safari
+                              else
+                                ENV['CI'] ? :selenium : :webkit
+                            end
   #Capybara.default_max_wait_time = 5
 
 end

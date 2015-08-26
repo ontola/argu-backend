@@ -98,6 +98,7 @@ group :development, :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'selenium-webdriver', '~> 2.47.1'
+  gem 'chromedriver-helper'
   gem 'mocha'
   gem 'pry'
   gem 'mailcatcher'

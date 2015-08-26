@@ -48,6 +48,8 @@ GEM
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)
     ansi (1.5.0)
+    archive-zip (0.7.0)
+      io-like (~> 0.3.0)
     arel (6.0.3)
     awesome_nested_set (3.0.2)
       activerecord (>= 4.0.0, < 5)
@@ -129,6 +131,9 @@ GEM
       timers (~> 4.0.0)
     childprocess (0.5.6)
       ffi (~> 1.0, >= 1.0.11)
+    chromedriver-helper (1.0.0)
+      archive-zip (~> 0.7.0)
+      nokogiri (~> 1.6)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -182,6 +187,7 @@ GEM
       rake
       rake-compiler
     fastercsv (1.5.5)
+    ffi (1.9.8)
     ffi (1.9.8-x86-mingw32)
     flamegraph (0.1.0)
       fast_stack
@@ -214,6 +220,7 @@ GEM
     i18n_data (0.7.0)
     indefinite_article (0.2.4)
       activesupport
+    io-like (0.3.0)
     jbuilder (2.2.16)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -565,6 +572,7 @@ DEPENDENCIES
   carrierwave-aws
   carrierwave-vips
   carrierwave_backgrounder (~> 0.4.1)
+  chromedriver-helper
   coffee-rails (~> 4.1.0)
   counter_culture (~> 0.1.27)
   country_select
