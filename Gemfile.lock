@@ -566,7 +566,7 @@ DEPENDENCIES
   capistrano-bundler (~> 1.1.3)
   capistrano-rails (~> 1.1.3)
   capistrano-rvm (~> 0.1.2)
-  capybara
+  capybara (~> 2.4.4)
   capybara-webkit
   carrierwave (~> 0.10.0)
   carrierwave-aws

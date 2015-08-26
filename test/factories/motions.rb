@@ -4,7 +4,7 @@ FactoryGirl.define do
     association :forum, strategy: :create
     association :creator, factory: :profile
 
-    title 'title'
+    sequence(:title) { |n| "title#{n}" }
     content 'content'
     is_trashed false
   end

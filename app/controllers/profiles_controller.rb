@@ -62,7 +62,7 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if updated && @resource.try(:r).present?
-        r = @resource.r
+        r = URI.decode(@resource.r)
         @resource.update r: ''
         format.html { redirect_to r_to_url_options(r)[0],
                       status: r.match(/\/v(\?|\/)|\/c(\?|\/)/) ? 307 : 302 }
