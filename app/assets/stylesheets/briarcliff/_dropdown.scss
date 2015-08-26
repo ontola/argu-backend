@@ -94,6 +94,10 @@
   }
 }
 
+.dropdown-content--helper {
+  visibility: hidden;
+}
+
 .dropdown--left {
   right: 0;
   left: auto;

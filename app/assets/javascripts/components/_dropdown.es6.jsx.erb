@@ -165,7 +165,8 @@ window.HyperDropdown = React.createClass({
 
         return (<li tabIndex="1"  className={dropdownClass} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} >
             {trigger}
-            <ul className={'dropdown-content ' + this.props.contentClassName}></ul><%# This makes sure renderLeft is calculated correctly %>
+            <%# This makes sure renderLeft is calculated correctly %>
+            <ul className={'dropdown-content dropdown-content--helper ' + this.props.contentClassName}></ul>
             <ReactCSSTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
                 {sections}
             </ReactCSSTransitionGroup>
