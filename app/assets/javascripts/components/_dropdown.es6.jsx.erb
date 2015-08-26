@@ -19,7 +19,8 @@ window.HyperDropdown = React.createClass({
         this.referenceDropdownElement().style.left = '0';
         this.referenceDropdownElement().style.right = 'auto';
         var elemRect = this.referenceDropdownElement().getBoundingClientRect();
-        this.setState({renderLeft: (elemRect.width + elemRect.left) > window.innerWidth});
+        var shouldRenderLeft = (elemRect.width + elemRect.left) > window.innerWidth;
+        this.setState({renderLeft: shouldRenderLeft});
     },
 
     close: function () {
@@ -107,15 +108,13 @@ window.HyperDropdown = React.createClass({
     },
 
     render: function () {
-        var collapseStyle = {
-            left: this.state.renderLeft ? 'auto' : 0,
-            right: this.state.renderLeft ? 0 : undefined
-        };
+        var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+        var collapseClass = this.state.renderLeft ? 'dropdown--left ' : 'dropdown-right ';
 
         var sections,
             _this = this;
-        if (this.props.sections) {
-            sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle} >
+        if (this.props.sections && this.state.openState) {
+            sections = (<ul className={'dropdown-content ' + collapseClass + this.props.contentClassName } style={null}>
                 {this.props.sections.map(function (section, i) {
                     if (typeof(section.type) == "string") {
                         return (<Notifications key={i} done={_this.close} {...section} />);
@@ -135,10 +134,11 @@ window.HyperDropdown = React.createClass({
                             }
                         });
 
-                        return (<div key={i}>
-                            {title}
-                            {items}
-                        </div>);
+                        return (
+                            <div key={i}>
+                                {title}
+                                {items}
+                            </div>);
                     }
                 })}
             </ul>);
@@ -166,7 +166,9 @@ window.HyperDropdown = React.createClass({
         return (<li tabIndex="1"  className={dropdownClass} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} >
             {trigger}
             <ul className={'dropdown-content ' + this.props.contentClassName}></ul><%# This makes sure renderLeft is calculated correctly %>
-            {sections}
+            <ReactCSSTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
+                {sections}
+            </ReactCSSTransitionGroup>
         </li>);
     }
 });

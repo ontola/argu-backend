@@ -16,7 +16,7 @@
 .dropdown-content {
   background-color: white;
   // This isn't display: none; to make javascript return bounding box dimensions
-  visibility: hidden;
+  //visibility: hidden;
   left: 0;
   margin: 0;
   position: absolute;
@@ -33,9 +33,7 @@
   @include box-shadow-intense;
   font-size: 16px;
 
-  @include transition(all .2s);
-  opacity: 0;
-  @include transform (translate3d(0,1em,0));
+  @include transition(all .15s);
 
   @include bp-small{
     font-size: 14px;
@@ -96,9 +94,14 @@
   }
 }
 
-.dropdown-right {
+.dropdown--left {
   right: 0;
   left: auto;
+}
+
+.dropdown--right{
+  left: 0;
+  right: auto;
 }
 
 span.dropdown-header {
@@ -114,20 +117,37 @@ span.dropdown-header {
 
 //.dropdown:hover .dropdown-content,
 .dropdown-active {
-
   .dropdown-trigger{
     background-color: $lighten3 !important;
   }
+}
 
-  .dropdown-content {
-    visibility: visible;
-    -webkit-overflow-scrolling: touch;
-    opacity: 1;
-    @include transform (translate3d(0,0,0));
+// ReactCSSTransitionGroup
+.dropdown-enter {
+  opacity: 0;
+  @include transform (translate3d(0,1em,0));
 
-    span {
-      display: inline-block !important; //Makes sure the text in dropdowns is not hidden on smaller screens.
+  &.dropdown-enter-active {
+    &.dropdown-content {
+      -webkit-overflow-scrolling: touch;
+      opacity: 1;
+
+      @include transform (translate3d(0,0,0));
+
+      span {
+        display: inline-block !important; //Makes sure the text in dropdowns is not hidden on smaller screens.
+      }
     }
+  }
+}
+
+.dropdown-leave{
+  opacity: 1;
+
+  &.dropdown-leave-active{
+    opacity: 0;
+    @include transform (translate3d(0,1em,0));
+    pointer-events: none;
   }
 }
 

@@ -1,12 +1,19 @@
 @import "variables";
 @import "mixins";
 
+html {
+  max-width: 100%;
+  width: 100vw;
+  overflow-x: hidden;
+}
+
 html, body {
   height: calc(100% - 2.5em);
 }
 
 body {
   background-color: $g1;
+
   @include bp-smaller{
     font-size: .9em;
   }
