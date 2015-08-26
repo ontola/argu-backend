@@ -26,21 +26,6 @@
     @include transition(.2s);
   }
 
-  a:hover, a:active {
-    color: $g4;
-
-    &:after {
-      background-color: $g0;
-      max-height: 100%;
-      top: 0;
-    }
-  }
-
-  a:active:after {
-    background-color: $g1;
-    transition: none;
-  }
-
   a:after {
     position: absolute;
     content: "";
@@ -51,6 +36,43 @@
     left: 0;
     right: 0;
     @include transition(.5s);
+  }
+
+  // Hover & current styling
+  .tab--current a, a:hover, a:active{
+    color: $g4;
+
+    &:after {
+      max-width: 100%;
+      //max-height: 100%;
+      //top: 0;
+
+      max-height: 15%;
+      top: 85%;
+    }
+  }
+
+  a:active {
+    background-color: $g1;
+  }
+
+  a:hover, a:active{
+    &:after{
+      background-color: $g1;
+    }
+  }
+
+  .tab--current a {
+    pointer-events: none;
+
+    &:after{
+      background-color: $g2;
+    }
+  }
+
+  a:active:after {
+    background-color: $g1;
+    transition: none;
   }
 }
 
@@ -75,11 +97,17 @@
     top: 0;
   }
 
+  a:active {
+    background-color: white;
+  }
+
   .tab--current a:after, a:hover:after {
     background-color: $g0;
-    width: calc(100% + 3em);
-    max-width: calc(100% + 3em);
+    width: calc(100% + 2.1em);
+    max-width: calc(100% + 2.1em);
     margin-right: -4em;
+    max-height: 100%;
+    top: 0;
 
     @include bp-medium-large {
       width: 100%;
@@ -89,18 +117,6 @@
   .tab--current a:after, a:active:after {
     transition: none;
     background-color: white;
-  }
-}
-
-.tab--current a{
-  color: $g4;
-  pointer-events: none;
-
-  &:after {
-    background-color: $g1;
-    max-width: 100%;
-    max-height: 100%;
-    top: 0;
   }
 }
 
