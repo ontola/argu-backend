@@ -95,7 +95,7 @@ group :development, :test do
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'minitest-bang'
   gem 'rspec-rails', '~> 3.3.0'
-  gem 'capybara'
+  gem 'capybara', '~> 2.4.4'
   gem 'capybara-webkit'
   gem 'selenium-webdriver', '~> 2.47.1'
   gem 'chromedriver-helper'

@@ -52,6 +52,14 @@ class Forum < ActiveRecord::Base
     AccessToken.where(item: self).first.try(:access_token)
   end
 
+  def m_access_tokens
+    m_access_tokens! if self.visible_with_a_link
+  end
+
+  def m_access_tokens!
+    AccessToken.where(item: self).pluck(:access_token)
+  end
+
   def check_access_token
     if visible_with_a_link && access_token!.blank?
       self.access_tokens.build(item: self, profile: self.page.profile)
