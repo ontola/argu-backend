@@ -56,7 +56,7 @@ RSpec.configure do |config|
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
 
-  Capybara.default_driver = :webkit # :selenium
+  Capybara.default_driver = ENV['CI'] ? :selenium : :webkit
   #Capybara.default_max_wait_time = 5
 
 end
