@@ -138,9 +138,11 @@ span.dropdown-header {
 
       @include transform (translate3d(0,0,0));
 
+      /* Seems like this one is not necessary anymore
       span {
         display: inline-block !important; //Makes sure the text in dropdowns is not hidden on smaller screens.
       }
+      */
     }
   }
 }
