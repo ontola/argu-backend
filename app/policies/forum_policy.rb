@@ -44,7 +44,7 @@ class ForumPolicy < RestrictivePolicy
     end
 
     def has_access_token?
-      access_token if Set.new(record.m_access_tokens).union(session[:a_tokens] || []).present? && record.visible_with_a_link?
+      access_token if Set.new(record.m_access_tokens).intersect?(Set.new(session[:a_tokens])) && record.visible_with_a_link?
     end
 
     # Is the current user a member of the group?

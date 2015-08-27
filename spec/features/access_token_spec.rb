@@ -41,7 +41,7 @@ RSpec.feature 'Access tokens', type: :feature do
       fill_in 'profile_about', with: profile_attr[:about]
       click_button 'Volgende'
     end
-    
+
     expect(page).to have_content 'Title2'
     expect(page).to have_css 'a.btn-neu[data-voted-on=true]'
   end
