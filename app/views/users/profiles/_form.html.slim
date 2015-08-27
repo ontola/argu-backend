@@ -13,8 +13,8 @@
     =f.input :about, input_html: { :rows => 5 }, label: t('profiles.about_me')
     =f.input :profile_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }
     =f.input :profile_photo
-    =p.input :cover_photo
-    =p.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 96px; margin-bottom: 0.5em;'}
+    =f.input :cover_photo
+    =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 96px; margin-bottom: 0.5em;'}
   =f.inputs name: t('profiles.edit.privacy') do
     p= t('profiles.edit.privacy_notice')
     =f.input :are_votes_public, as: :reverse_boolean
