@@ -84,7 +84,8 @@ module HeaderHelper
                   link_item(t('about.governments'), info_path(:governments)),
                   link_item(t('about.lobby_organizations'), info_path(:lobby_organizations)),
                   link_item(t('press_media'), 'https://argu.pr.co'),
-                  link_item(t('help_support'), 'https://argu.freshdesk.com/support/home')
+                  link_item(t('help_support'), 'https://argu.freshdesk.com/support/home'),
+                  link_item(t('about.contact'), info_path(:contact)),
               ]
           }
         ],
