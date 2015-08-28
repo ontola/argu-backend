@@ -39,6 +39,6 @@ body
     .push-footer
   =render 'footer'
   =javascript_include_tag 'application'
-  - if Rails.env.production? || Rails.env.test?
+  - if Rails.env.production?
     =render partial: 'analytics'
   audio[id="notificationSound" src="/notification.wav" preload="auto"]

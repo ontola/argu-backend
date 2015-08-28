@@ -35,7 +35,7 @@ body
     .push-footer
   =render 'footer'
   =javascript_include_tag 'application'
-  - if Rails.env.production? || Rails.env.test?
+  - if Rails.env.production?
     =render partial: 'analytics'
   script[id="motion-template" type="text/x-handlebars-template"]
     =render partial: 'motions/motion_template'
