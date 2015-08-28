@@ -7,7 +7,8 @@ FactoryGirl.define do
 
     factory :profile_with_memberships do
       after(:create) do |profile, evaluator|
-        profile.memberships.create(forum: evaluator.forum)
+        forum = evaluator.respond_to?(:forum) || FactoryGirl.create(:forum)
+        profile.memberships.create(forum: forum)
       end
     end
   end

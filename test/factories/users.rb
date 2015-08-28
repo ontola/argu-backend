@@ -11,6 +11,7 @@ FactoryGirl.define do
     password 'password'
     password_confirmation 'password'
     finished_intro true
+    has_analytics false
     first_name { |n| 'first_name#{n}'}
     last_name { |n| 'last_name#{n}'}
 

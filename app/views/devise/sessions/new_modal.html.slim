@@ -2,7 +2,6 @@ div[class=['modal-container', ('no-close' unless defined?(no_close) && no_close 
   .overlay
   .modal
     header
-      h1
-        =t('sign_up_sign_in')
+      h1=t('sign_up_sign_in')
     =render partial: 'devise/sessions/sign_up', locals: local_assigns
     =render partial: 'devise/sessions/sign_in', locals: local_assigns

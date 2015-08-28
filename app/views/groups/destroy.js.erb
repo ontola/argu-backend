@@ -1,2 +1,4 @@
 $('.container').append("<%= escape_javascript render(template: 'groups/destroy.html', layout: false, locals: local_assigns) %>");
-$('body').addClass('modal-opened');
+window.setTimeout(function () {
+    $('body').addClass('modal-opened');
+}, 300);

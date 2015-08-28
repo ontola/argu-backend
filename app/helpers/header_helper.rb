@@ -99,10 +99,17 @@ module HeaderHelper
 
   def managed_pages_items
     items = []
-    if current_user.managed_pages.present?
-      items << actor_item(current_user.display_name, actors_path(na: current_user.profile.id, format: :json), image: current_user.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
-      current_user.managed_pages.includes(:profile).each do |p|
-        items << actor_item(p.profile.name, actors_path(na: p.profile.id, format: :json), image: p.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
+    managed_pages = current_user.managed_pages.includes(:profile)
+    if managed_pages.present?
+      items << actor_item(current_user.display_name,
+                          actors_path(na: current_user.profile.id, format: :json),
+                          image: current_user.profile.profile_photo.url(:icon),
+                          data: { method: 'put', 'skip-pjax' => 'true'})
+      managed_pages.each do |p|
+        items << actor_item(p.profile.name,
+                            actors_path(na: p.profile.id, format: :json),
+                            image: p.profile.profile_photo.url(:icon),
+                            data: { method: 'put', 'skip-pjax' => 'true'})
       end
     end
     items

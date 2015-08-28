@@ -1,5 +1,5 @@
 class RestrictivePolicy
-  include AccessTokenHelper, UsersHelper
+  include AccessTokenHelper
   prepend ExceptionToTheRule
 
   attr_reader :context, :record
@@ -179,6 +179,15 @@ class RestrictivePolicy
 
   def scope
     Pundit.policy_scope!(context, record.class)
+  end
+
+  protected
+  def platform_open?
+    context.opts[:platform_open]
+  end
+
+  def within_user_cap?
+    context.opts[:within_user_cap]
   end
 
 end

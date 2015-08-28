@@ -11,6 +11,13 @@ class ApplicationController < ActionController::Base
   after_action :verify_policy_scoped, :only => :index
   around_action :set_time_zone
   #after_action :set_notification_header
+  if Rails.env.development? || Rails.env.staging?
+    before_action do
+      if current_user && current_user.profile.has_role?(:staff)
+        Rack::MiniProfiler.authorize_request
+      end
+    end
+  end
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
     flash[:warning] = t(:twice_warning)
@@ -108,7 +115,12 @@ class ApplicationController < ActionController::Base
   def preferred_forum(profile = nil)
     profile ||= current_profile
     if profile.present?
-      policy(profile.preferred_forum).show? ? profile.preferred_forum : profile.memberships.first.try(:forum) || Forum.first_public
+      preferred = profile.preferred_forum
+      if preferred && policy(preferred).show?
+        preferred
+      else
+        profile.memberships.first.try(:forum) || Forum.first_public
+      end
     else
       forum_by_geocode || Forum.first_public
     end
@@ -116,7 +128,14 @@ class ApplicationController < ActionController::Base
 
   # @private
   def pundit_user
-    UserContext.new(current_user, current_profile, session, @forum)
+    UserContext.new(current_user,
+                    current_profile,
+                    session,
+                    @forum,
+                    {
+                        platform_open: platform_open?,
+                        within_user_cap: within_user_cap?
+                    })
   end
 
   def render_register_modal(base_url=nil, *r_options)

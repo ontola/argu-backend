@@ -130,7 +130,7 @@ group :production, :staging do
 end
 
 group :staging, :development do
-  #gem 'rack-mini-profiler'
+  gem 'rack-mini-profiler', require: false
   gem 'stackprof'
   gem 'flamegraph'
 end
