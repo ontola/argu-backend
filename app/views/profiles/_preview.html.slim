@@ -1,0 +1,27 @@
+.box.box-grid.profile-box[itemscope="itemscope" itemprop="creator" itemtype="http://schema.org/Person"]
+  =link_to dual_profile_url(profile) do
+    section.unpadded.cover--small.cover--light
+      .cover-image[style="background-image: url('#{profile.cover_photo.url(:box)}'); "]
+        =image_tag profile.profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
+        h3= profile.display_name
+      .cover-overlay
+      - if policy(profile).update?
+        .btns-sticky.btns-sticky-top
+          /=link_to profile_edit_path(profile), class: ('btn-subtle') do
+          =link_to url_for([:settings, profile.owner]), class: ('btn-subtle') do
+            span.fa.fa-gear
+            span.icon-left= t('settings')
+  section.section-info.motion-bg
+    .details
+      .details-part.details-part--type.neutral-bg
+        span[class="fa fa-building"]
+        span.icon-left= t('pages.type')
+      /.details-part
+        span.fa.fa-group
+        span.icon-left= profile.managers.count
+      /.details-part
+        span.fa.fa-question
+        span.icon-left= profile.questions.count
+      /.details-part
+        span.fa.fa-lightbulb-o
+        span.icon-left= profile.motions.count

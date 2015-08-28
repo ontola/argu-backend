@@ -40,6 +40,12 @@
                         b= person['name']
                         - if person['function'].present?
                           =", #{person['function']}"
+                      - if person['links'].present?
+                        - person['links'].each do |link|
+                          a.block-person-link[href="#{link['url']}"]
+                            - if link['icon'].present?
+                              span.fa.icon-right[class=('fa-' + link['icon'])]
+                            span= link['body']
               - if section['features'].present?
                 ul.block-features
                   - section['features'].each do |feature|

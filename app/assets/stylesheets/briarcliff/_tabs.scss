@@ -18,7 +18,7 @@
   a {
     color: $g3;
     width: 100%;
-    padding: 1em .7em;
+    padding: .7em .7em;
     display: inline-block;
     position: relative;
     cursor: pointer;
@@ -29,7 +29,7 @@
   a:after {
     position: absolute;
     content: "";
-    z-index: -1;
+    //z-index: -1;
     max-height: 0;
     top: 100%;
     bottom: 0;
@@ -47,8 +47,8 @@
       //max-height: 100%;
       //top: 0;
 
-      max-height: 15%;
-      top: 85%;
+      max-height: 10%;
+      top: 90%;
     }
   }
 
@@ -57,21 +57,23 @@
   }
 
   a:hover, a:active{
-    &:after{
-      background-color: $g1;
-    }
-  }
-
-  .tab--current a {
-    pointer-events: none;
-
+    background-color: $g00;
     &:after{
       background-color: $g2;
     }
   }
 
+  .tab--current a {
+    pointer-events: none;
+    background-color: $g00;
+
+    &:after{
+      background-color: $g2a;
+    }
+  }
+
   a:active:after {
-    background-color: $g1;
+    background-color: $g2a;
     transition: none;
   }
 }
@@ -89,16 +91,25 @@
 
   li {
     display: block;
+
+    span {
+      z-index: 1;
+    }
   }
 
   a:after {
     max-width: 0;
     max-height: 100%;
     top: 0;
+    z-index: -1;
   }
 
-  a:active {
+  a:active, .tab--current a {
     background-color: white;
+  }
+
+  a:hover {
+    background: none;
   }
 
   .tab--current a:after, a:hover:after {
@@ -108,6 +119,7 @@
     margin-right: -4em;
     max-height: 100%;
     top: 0;
+
 
     @include bp-medium-large {
       width: 100%;

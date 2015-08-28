@@ -3,6 +3,8 @@
   header
     h1= t('forums.management.title')
   - @forums.each do |forum|
+    =render partial: 'forums/forum', locals: {forum: forum}
+  /- @forums.each do |forum|
     - fo_po = policy(forum)
     .box
       section

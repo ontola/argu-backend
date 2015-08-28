@@ -17,6 +17,11 @@
         =image_tag forum.profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
         h3= forum.display_name
       .cover-overlay
+      - if policy(forum).update?
+        .btns-sticky.btns-sticky-top
+          =link_to settings_forum_path(forum), class: ('btn--transparant') do
+            span.fa.fa-gear
+            span.icon-left= t('settings')
   section.section-info.motion-bg
     .details
       .details-part.details-part--type.neutral-bg

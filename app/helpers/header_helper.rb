@@ -15,7 +15,7 @@ module HeaderHelper
                 url: current_profile.profile_photo.url(:icon),
                 className: 'profile-picture--navbar'
             },
-            triggerClass: 'navbar-item'
+            triggerClass: 'navbar-item navbar-profile'
         },
         sections: [
           {
@@ -85,7 +85,7 @@ module HeaderHelper
                   link_item(t('about.lobby_organizations'), info_path(:lobby_organizations)),
                   link_item(t('press_media'), 'https://argu.pr.co'),
                   link_item(t('help_support'), 'https://argu.freshdesk.com/support/home'),
-                  link_item(t('about.contact'), info_path(:contact)),
+                  link_item(t('about.contact'), info_path(:contact))
               ]
           }
         ],

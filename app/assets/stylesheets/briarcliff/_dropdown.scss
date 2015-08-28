@@ -13,6 +13,18 @@
   cursor: pointer;
 }
 
+@mixin closed-state {
+  @include transition(all .2s);
+  @include transform (translate3d(0,1em,0));
+  opacity: 0;
+}
+
+@mixin opened-state {
+  @include transition(all .2s);
+  @include transform (translate3d(0,0,0));
+  opacity: 1;
+}
+
 .dropdown-content {
   background-color: white;
   // This isn't display: none; to make javascript return bounding box dimensions
@@ -32,8 +44,9 @@
   overflow-y: auto;
   @include box-shadow-intense;
   font-size: 16px;
+  -webkit-overflow-scrolling: touch;
 
-  @include transition(all .15s);
+  @include closed-state();
 
   @include bp-small{
     font-size: 14px;
@@ -128,29 +141,20 @@ span.dropdown-header {
 
 // ReactCSSTransitionGroup
 .dropdown-enter {
-  opacity: 0;
-  @include transform (translate3d(0,1em,0));
+  @include closed-state();
 
   &.dropdown-enter-active {
     &.dropdown-content {
-      -webkit-overflow-scrolling: touch;
-      opacity: 1;
-
-      @include transform (translate3d(0,0,0));
-
-      span {
-        display: inline-block !important; //Makes sure the text in dropdowns is not hidden on smaller screens.
-      }
+      @include opened-state();
     }
   }
 }
 
 .dropdown-leave{
-  opacity: 1;
+  @include opened-state();
 
   &.dropdown-leave-active{
-    opacity: 0;
-    @include transform (translate3d(0,1em,0));
+    @include closed-state();
     pointer-events: none;
   }
 }
