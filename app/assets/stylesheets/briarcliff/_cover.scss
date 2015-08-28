@@ -120,6 +120,17 @@
   }
 }
 
+.cover--light {
+  .cover-overlay {
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+
+  h3 {
+    color: $g4;
+    text-shadow: none;
+  }
+}
+
 .cover .cover-image {
   @include bp-large{
     height: 16em;

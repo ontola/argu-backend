@@ -13,6 +13,7 @@ en:
   sign_in_twitter: "Log in with twitter"
   sign_in_existing: "Log in with an existing argu account:"
   forgot_password: "Forgot password?"
+  settings: "Settings"
   sign_up: "Sign up"
   sign_up_description: "Sign up with a free account:"
   argu_sign_up: "Create argu account"

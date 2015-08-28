@@ -5,6 +5,6 @@
         span.fa.fa-home
         span.icon-left= t('pages.show')
       li[class=('tab--current' if local_assigns[:active] == :settings)]
-        = link_to url_for([:settings, resource]), data: {intro: t('intro.pages.settings.general')}
+        = link_to url_for([:settings, resource])
           span.fa.fa-gear
           span.icon-left= t('pages.settings.title')

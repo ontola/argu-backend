@@ -144,35 +144,6 @@
 }
 
 .profile-box {
-  .header {
-    display: inline-block;
-    h3 {
-      margin: 0.5em 0 0.1em 0.4em;
-    }
-    .info-block {
-      margin-left: .4em;
-      font-size: 0.8em;
-      color: $g2;
-      font-style: italic;
-      li {
-        line-height: 1em;
-        float: left;
-        margin-right: 1.1em;
-        margin-bottom: 0.5em;
-      }
-    }
-  }
-
-
-  a, .additional-info, img {
-    float: left;
-    clear: right;
-  }
-
-  img {
-    width: 5em;
-    height: 5em;
-  }
 }
 
 .response {
