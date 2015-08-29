@@ -35,8 +35,7 @@ class User < ActiveRecord::Base
   validates :profile, presence: true
 
   def active_at(redis = nil)
-    redis ||= Redis.new
-    redis.get("user:#{self.id}:active.at")
+    Argu::Redis.get("user:#{self.id}:active.at", redis)
   end
 
   def active_since?(datetime, redis = nil)
@@ -75,8 +74,7 @@ class User < ActiveRecord::Base
   end
 
   def last_email_sent_at(redis = nil)
-    redis ||= Redis.new
-    redis.get("user:#{self.id}:email.sent.at")
+    Argu::Redis.get("user:#{self.id}:email.sent.at", redis)
   end
 
   def managed_pages
@@ -100,30 +98,17 @@ class User < ActiveRecord::Base
     if encrypted_password.presence
       ::BCrypt::Password.new(encrypted_password).salt
     else
-      begin
-      redis = Redis.new
-      salt = redis.get("users:#{id}:salt")
+      salt = Argu::Redis.get("user:#{id}:salt")
       if salt.blank?
         salt = ::BCrypt::Engine.generate_salt(Rails.application.config.devise.stretches)
-        redis.set("users:#{id}:salt", salt)
-        salt
+        Argu::Redis.set("user:#{id}:salt", salt)
       end
-      salt
-      rescue Redis::CannotConnectError => e
-        Bugsnag.notify e
-      ensure
-        salt.presence || ::BCrypt::Engine.generate_salt(Rails.application.config.devise.stretches)
-      end
+      salt.presence || ::BCrypt::Engine.generate_salt(Rails.application.config.devise.stretches)
     end
   end
 
   def sync_notification_count
-    begin
-      redis = Redis.new
-      redis.set("user:#{self.id}:notification.count", self.profile.notifications.count)
-    rescue Redis::CannotConnectError => e
-      Bugsnag.notify(e)
-    end
+    Argu::Redis.set("user:#{self.id}:notification.count", self.profile.notifications.count)
   end
 
   def update_acesss_token_counts

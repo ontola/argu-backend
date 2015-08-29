@@ -1,17 +1,10 @@
 module ApplicationHelper
-  include ActivityStringHelper, AlternativeNamesHelper, UsersHelper
+  include ActivityStringHelper, AlternativeNamesHelper, UsersHelper, StubbornCookie
   EU_COUNTRIES = %w(BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT AT PL PT RO SI SK FI SE UK ME IS AL RS TR)
 
   # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)
-    begin
-      $rollout.active?(feature, user)
-    rescue RuntimeError => e
-      Rails.logger.error 'Redis not available'
-      ::Bugsnag.notify(e, {
-          :severity => 'error',
-      })
-    end
+    $rollout.active?(feature, user)
   end
 
   def analytics_token

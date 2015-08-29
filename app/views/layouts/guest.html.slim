@@ -23,7 +23,7 @@ head[itemscope itemtype="http://schema.org/WebSite"]
 body
   #fb-root
   =render 'guest/navbar'
-  - active_for_user?('welcome_video', current_user)
+  - if stubborn_get('hide_video') != 'true'
     =render partial: 'welcome_video'
   .wrapper
     /[if lt IE 10]

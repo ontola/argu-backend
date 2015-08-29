@@ -30,6 +30,18 @@ class StaticPagesController < ApplicationController
     render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, safari: #{browser.safari?}, mobile: #{browser.mobile?}, tablet: #{browser.tablet?}, ua: #{browser.ua}"
   end
 
+  # Used for persistent redis-backed cookies
+  def persist_cookie
+    authorize :static_page
+    respond_to do |format|
+      if stubborn_set_from_params
+        format.json { head 200 }
+      else
+        format.json { head 400 }
+      end
+    end
+  end
+
   private
   def default_forum_path
     current_profile.present? ? preferred_forum : Forum.first_public

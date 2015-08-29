@@ -62,8 +62,10 @@ var _authenticityHeader = function (options) {
     "use strict";
     options = options || {};
     return Object.assign(options, {
-        "X-CSRF-Token": getAuthenticityToken(),
-        "X-Requested-With": "XMLHttpRequest"
+        'X-CSRF-Token': getAuthenticityToken(),
+        'X-Requested-With': 'XMLHttpRequest',
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
     });
 };
 

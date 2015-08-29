@@ -157,6 +157,7 @@ Argu::Application.routes.draw do
   get '/settings', to: 'users#edit', as: 'settings'
   put '/settings', to: 'users#update'
   get '/c_a', to: 'users#current_actor'
+  put 'persist_cookie', to: 'static_pages#persist_cookie'
 
   # @deprecated Please use info_controller. Kept for cached searches etc. do
   get '/about', to: redirect('/i/about')

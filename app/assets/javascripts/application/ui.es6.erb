@@ -207,7 +207,15 @@ Argu.ui = {
             videoElement.remove();
         }, 1000);
 
-        // TODO: Set a cookie!
+        fetch('/persist_cookie.json', _safeCredentials({
+            method: 'put',
+            body: JSON.stringify({
+                user: {
+                    key: 'hide_video',
+                    value: 'true'
+                }
+            })
+        }));
     },
 
     welcomeVideoToggle: function () {
