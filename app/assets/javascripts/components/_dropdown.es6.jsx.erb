@@ -1,5 +1,12 @@
 /*global React, $*/
 
+function is_touch_device() {
+    return (('ontouchstart' in window)
+    || (navigator.MaxTouchPoints > 0)
+    || (navigator.msMaxTouchPoints > 0));
+    //navigator.msMaxTouchPoints for microsoft IE backwards compatibility
+}
+
 window.HyperDropdown = React.createClass({
     mixins: [
         (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
@@ -57,7 +64,9 @@ window.HyperDropdown = React.createClass({
     },
 
     handleClickOutside: function () {
-        this.close();
+        if (this.state.openState == true) {
+            this.close();
+        }
     },
 
     mouseEnterTimeoutCallback: function () {
@@ -65,7 +74,7 @@ window.HyperDropdown = React.createClass({
     },
 
     onMouseEnter: function () {
-        if (!('ontouchstart' in window)) {
+        if (!is_touch_device()) {
             this.listeningToClick = false;
             // Start timer to prevent a quick close after clicking on the trigger
             this.mouseEnterTimeout = window.setTimeout(this.mouseEnterTimeoutCallback, 1000);
@@ -74,7 +83,7 @@ window.HyperDropdown = React.createClass({
     },
 
     onMouseLeave: function () {
-        if (this.state.openState) {
+        if (!is_touch_device() && this.state.openState) {
             this.close();
             // Remove / reset timer
             window.clearTimeout(this.mouseEnterTimeout);
@@ -120,7 +129,7 @@ window.HyperDropdown = React.createClass({
             const image_after  = _image({fa: this.props.fa_after});
             const triggerClass = "dropdown-trigger " + this.props.triggerClass;
             const TriggerContainer = this.props.triggerTag || 'div';
-            trigger = (<TriggerContainer className={triggerClass} onClick={this.handleClick} onTouchEnd={this.handleTap} done={this.close}>
+            trigger = (<TriggerContainer className={triggerClass} onClick={this.handleClick} done={this.close}>
                           {_image(this.props)}
                           <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
                           {image_after}
@@ -136,7 +145,10 @@ window.HyperDropdown = React.createClass({
                                                key='required' />;
         }
         const ReactTransitionGroup = React.addons.TransitionGroup;
-        return (<li tabIndex="1"  className={dropdownClass} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} >
+        return (<li tabIndex="1"
+                    className={dropdownClass}
+                    onMouseEnter={this.onMouseEnter}
+                    onMouseLeave={this.onMouseLeave} >
             {trigger}
             <%# This makes sure renderLeft is calculated correctly %>
             <ul className={'dropdown-content dropdown-content--helper ' + this.props.contentClassName}></ul>

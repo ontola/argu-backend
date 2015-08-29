@@ -74,7 +74,8 @@ var getAuthenticityToken = function () {
 };
 
 var getMetaContent = function (name) {
-    return document.querySelector(`meta[name="${name}"]`).content;
+    let header = document.querySelector(`meta[name="${name}"]`);
+    return header && header.content;
 };
 
 var getUserIdentityToken = function () {
