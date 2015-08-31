@@ -22,8 +22,8 @@ RSpec.configure do |config|
   # end
 
   config.before(:suite) do
-    DatabaseCleaner.strategy = :truncation
-    DatabaseCleaner.clean_with(:truncation)
+    DatabaseCleaner.strategy = :deletion
+    DatabaseCleaner.clean_with(:deletion)
   end
 
   # If an example has one of the following options: :js, :driver
@@ -47,7 +47,7 @@ RSpec.configure do |config|
     end
 
     if example.metadata[:clean_db_strategy]
-      DatabaseCleaner.strategy = :truncation
+      DatabaseCleaner.strategy = :deletion
     end
   end
 
