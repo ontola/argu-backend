@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :forum do
     association :shortname,  strategy: :build
     association :page, strategy: :create
+    visibility Forum.visibilities[:open]
     transient do
       #visible_with_a_link false
       motion_count 0
