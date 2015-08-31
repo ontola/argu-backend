@@ -1,67 +1,112 @@
 /*global React, $*/
 
+window.ProfileOption = React.createClass({
+    propTypes: {
+        addLabelText: React.PropTypes.string,
+        className: React.PropTypes.string,
+        mouseDown: React.PropTypes.func,
+        mouseEnter: React.PropTypes.func,
+        mouseLeave: React.PropTypes.func,
+        option: React.PropTypes.object.isRequired,
+        renderFunc: React.PropTypes.func
+    },
+
+    render () {
+        const obj = this.props.option;
+        return (
+                <div className={this.props.className}
+                     onMouseEnter={this.props.mouseEnter}
+                     onMouseLeave={this.props.mouseLeave}
+                     onMouseDown={this.props.mouseDown}
+                     onClick={this.props.mouseDown}>
+                    <img class="Select-item-result-icon" height='25em' src={obj.avatar_url} />
+                    {obj.name}
+                </div>
+        );
+    }
+});
+
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = ProfileOption;
+}
+
+window.SingleValue = React.createClass({
+    propTypes: {
+        placeholder: React.PropTypes.string,
+        value: React.PropTypes.object
+    },
+    render () {
+        var obj = this.props.value;
+
+        const item = obj ? (
+            <div>
+                <img class="Select-item-result-icon" height='25em' src={obj.avatar_url} />
+                {obj.name}
+            </div>
+        ) : (this.props.placeholder);
+
+        return (
+            <div className="Select-placeholder">
+                {item}
+            </div>);
+    }
+});
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = SingleValue;
+}
+
 window.NewMembership = React.createClass({
-    getInitialState: function () {
+    getInitialState () {
         return {
             display_name: this.props.display_name,
             image: this.props.image
         };
     },
 
-    componentDidMount: function () {
-        var _this = this;
-        var addBlock = $(this.getDOMNode());
-        var input = $(this.getDOMNode()).find('.select-input');
-        input.selectize({
-            valueField: 'id',
-            searchField: ['shortname', 'name'],
-            persist: false,
-            create: false,
-            onItemAdd: function (value) {
-                addBlock.find('.profile-photo').attr('src', addBlock.find('[data-id="' + value + '"]').attr('data-src'));
-            },
-            onDelete: function () {
-                addBlock.find('.profile-photo').attr('src', '/profile_photos/original/missing.png');
-            },
-            render: {
-                option: function(item, escape) {
-                    return '<div class="search-result" data-id="' + escape(item.id) + '" data-src="' + escape(item.profile_photo.icon.url) + '"><span><img class="profile-xs" src="' + escape(item.profile_photo.icon.url) + '"></span><span class="label">' + escape(item.name) + '</span></div>';
-                },
-                item: function(data, escape) {
-                    return '<div data-value="' + escape(data.id) + '" class="item">' + escape(data.name) + ' (' + escape(data.shortname) + ')</div>';
-                }
-            },
-            load: function(query, callback) {
-                if (!query.length) return callback();
-                fetch('/profiles.json', _safeCredentials({
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        q: query,
-                        thing: _this.props.thing,
-                        things: _this.props.things
-                    })
-                })).then(statusSuccess)
-                   .then(json)
-                   .then((data) => {
-                        callback(data.profiles);
-                    }).catch((e) => {
-                        Argu.Alert(`Server error occured, please try again later`, 'alert', true);
-                        callback();
+    loadOptions (input, callback) {
+        input = input.toLowerCase();
+        if (!input.length) {
+            return callback({
+                options: [],
+                complete: true
+            });
+        }
+
+        fetch('/profiles.json', _safeCredentials({
+            method: 'POST',
+            body: JSON.stringify({
+                q: input,
+                thing: this.props.thing,
+                things: this.props.things
+            })
+        })).then(statusSuccess)
+                .then(json)
+                .then((data) => {
+                    callback(null, {
+                        options: data.profiles.map((profile) => {
+                            return {
+                                value: profile.shortname,
+                                id: profile.id.toString(),
+                                name: profile.name,
+                                avatar_url: profile.profile_photo.avatar.url
+                            };
+                        }),
+                        complete: false
                     });
-            }
-        });
+                }).catch((e) => {
+                    Argu.Alert('Server error occured, please try again later', 'alert', true);
+                    callback();
+                });
     },
 
-    render: function () {
+    render () {
 
-        return (<li className="template">
-            <img src="/profile_photos/original/missing.png"  className="profile-photo" />
-            <select name="profile_id" className="select-input"></select>
-        </li>);
+        return (<Select
+                  name="profile_id"
+                  placeholder="Select user"
+                  optionComponent={ProfileOption}
+                  singleValueComponent={SingleValue}
+                  asyncOptions={this.loadOptions}  />);
     }
 });
 

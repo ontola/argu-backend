@@ -63,9 +63,7 @@ var _authenticityHeader = function (options) {
     options = options || {};
     return Object.assign(options, {
         'X-CSRF-Token': getAuthenticityToken(),
-        'X-Requested-With': 'XMLHttpRequest',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
+        'X-Requested-With': 'XMLHttpRequest'
     });
 };
 
@@ -82,13 +80,21 @@ var getUserIdentityToken = function () {
     return {token: getMetaContent('user-identity-token')};
 };
 
+var jsonHeader = function (options) {
+    options = options || {};
+    return Object.assign(options, {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    });
+};
+
 var _safeCredentials = function (options) {
     "use strict";
     options = options || {};
     return Object.assign(options, {
         credentials: 'include',
         mode: 'same-origin',
-        headers: Object.assign((options['headers'] || {}), _authenticityHeader())
+        headers: Object.assign((options['headers'] || {}), _authenticityHeader(), jsonHeader())
     });
 };
 

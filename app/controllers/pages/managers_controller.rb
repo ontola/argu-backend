@@ -9,7 +9,8 @@ class Pages::ManagersController < ApplicationController
   def create
     @page = Page.find_via_shortname params[:page_id]
     authorize @page, :update?
-    @membership = @page.memberships.find_or_initialize_by(profile_id: params[:profile_id])
+    user = User.find_via_shortname params[:profile_id]
+    @membership = @page.memberships.find_or_initialize_by(profile_id: user.profile.id)
 
     Pundit.policy!(pundit_user, @page).add_manager?(@membership)
 

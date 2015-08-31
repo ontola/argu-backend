@@ -13,7 +13,8 @@ class ManagersController < ApplicationController
   def create
     @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :update?
-    @membership = @forum.memberships.find_or_initialize_by(profile_id: params[:profile_id])
+    user = User.find_via_shortname params[:profile_id]
+    @membership = @forum.memberships.find_or_initialize_by(profile_id: user.profile.id)
 
     Pundit.policy!(pundit_user, @forum).add_manager?(@membership)
 
