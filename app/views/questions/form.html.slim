@@ -15,7 +15,7 @@
             h3= t('questions.form.content_heading')
             p= t('questions.form.content_body_html')
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(@question, :content, question_type)
-            =f.input :tag_list, input_html: {class: 'tag-list'}
+            /=f.input :tag_list, input_html: {class: 'tag-list'}
           =f.inputs
             =f.input :cover_photo, label: t('image')
             -if !@question.new_record?

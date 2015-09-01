@@ -26,6 +26,9 @@
 //= require microplugin/src/microplugin
 //= require sifter/sifter.js
 //= require selectize/dist/js/selectize.js
+//= require react-input-autosize.min
+//= require classnames
+//= require react-select
 // Briarcliff dependencies :: GO
 //= require fastclick/lib/fastclick
 //= require isotope/dist/isotope.pkgd.js

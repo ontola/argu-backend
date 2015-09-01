@@ -6,12 +6,18 @@ Argu is an online discussion platform for substantive debate.
 
 [Visit argu.co](https://argu.co)
 
-Install dependencies
+Prerequisites
 --------------------
 
 Make sure these are installed on your computer:
 
-1. Qt `brew link --force qt5`
+* Ubuntu basics: `#apt-get install build-essential git nodejs`
+* ImageMagick:
+  - `Ubuntu`: `#apt-get install imagemagick libvips-dev libgsf-1-dev libxml2 zlib1g-dev`
+* Qt: `brew link --force qt5`
+* PostgreSQL:
+  - `OSX` Postgres.app: http://postgresapp.com/
+  - `Ubuntu`: `#apt-get install postgresql postgresql-contrib libpq-dev`
 
 
 Setting up

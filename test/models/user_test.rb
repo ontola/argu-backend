@@ -21,6 +21,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def notification_count(user)
-    Redis.new.get("user:#{user.id}:notification.count").to_i
+    Argu::Redis.get("user:#{user.id}:notification.count").to_i
   end
 end

@@ -2,6 +2,7 @@ FactoryGirl.define do
   factory :forum do
     association :shortname,  strategy: :build
     association :page, strategy: :create
+    visibility Forum.visibilities[:open]
     transient do
       #visible_with_a_link false
       motion_count 0
@@ -21,6 +22,8 @@ FactoryGirl.define do
         create_list :motion, 10, forum: forum
         create_list :motion, 10, forum: forum, is_trashed: true
         create :access_token, item: forum
+        cap = Setting.get('user_cap').try(:to_i)
+        Setting.set('user_cap', -1) unless cap.present?
       end
 
       factory :populated_forum_vwal, traits: [:vwal]

@@ -58,6 +58,9 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
+  rescue_from Redis::ConnectionError do |e|
+    Redis.rescue_redis_connection_error(e)
+  end
 
   def after_sign_in_path_for(resource)
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'

@@ -17,7 +17,7 @@ function removeMetaContent() {
     "use strict";
     let meta = document.getElementById('meta_content');
     if (meta) {
-        meta.remove();
+        typeof meta.remove === 'undefined' ? meta.removeNode() : meta.remove();
     }
 }
 

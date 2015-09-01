@@ -62,8 +62,8 @@ var _authenticityHeader = function (options) {
     "use strict";
     options = options || {};
     return Object.assign(options, {
-        "X-CSRF-Token": getAuthenticityToken(),
-        "X-Requested-With": "XMLHttpRequest"
+        'X-CSRF-Token': getAuthenticityToken(),
+        'X-Requested-With': 'XMLHttpRequest'
     });
 };
 
@@ -72,11 +72,20 @@ var getAuthenticityToken = function () {
 };
 
 var getMetaContent = function (name) {
-    return document.querySelector(`meta[name="${name}"]`).content;
+    let header = document.querySelector(`meta[name="${name}"]`);
+    return header && header.content;
 };
 
 var getUserIdentityToken = function () {
     return {token: getMetaContent('user-identity-token')};
+};
+
+var jsonHeader = function (options) {
+    options = options || {};
+    return Object.assign(options, {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    });
 };
 
 var _safeCredentials = function (options) {
@@ -85,7 +94,7 @@ var _safeCredentials = function (options) {
     return Object.assign(options, {
         credentials: 'include',
         mode: 'same-origin',
-        headers: Object.assign((options['headers'] || {}), _authenticityHeader())
+        headers: Object.assign((options['headers'] || {}), _authenticityHeader(), jsonHeader())
     });
 };
 

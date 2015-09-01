@@ -97,15 +97,7 @@ class Profile < ActiveRecord::Base
 
   # Returns the preffered forum of the user, based on their last forum visit
   def preferred_forum
-    begin
-      @redis ||= Redis.new
-      last_forum = @redis.get("profiles:#{self.id}:last_forum")
-    rescue RuntimeError => e
-      Rails.logger.error 'Redis not available'
-      ::Bugsnag.notify(e, {
-          :severity => 'error',
-      })
-    end
+    last_forum = Argu::Redis.get("profile:#{self.id}:last_forum")
 
     (Forum.find(last_forum) if last_forum.present?) || self.memberships.first.try(:forum) || Forum.first_public
   end

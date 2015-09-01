@@ -8,6 +8,7 @@ module HeaderHelper
   def profile_dropdown_items
     @profile = current_profile
     {
+        defaultAction: dual_profile_url(current_profile),
         trigger: {
             type: 'current_user',
             title: truncate(current_profile.display_name, length: 20),
@@ -75,6 +76,7 @@ module HeaderHelper
     {
         title: t('about.info'),
         fa: 'fa-info',
+        defaultAction: info_path(:about),
         sections: [
           {
               items: [

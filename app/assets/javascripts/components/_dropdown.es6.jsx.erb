@@ -1,5 +1,12 @@
 /*global React, $*/
 
+function is_touch_device() {
+    return (('ontouchstart' in window)
+    || (navigator.MaxTouchPoints > 0)
+    || (navigator.msMaxTouchPoints > 0));
+    //navigator.msMaxTouchPoints for microsoft IE backwards compatibility
+}
+
 window.HyperDropdown = React.createClass({
     mixins: [
         (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
@@ -42,22 +49,28 @@ window.HyperDropdown = React.createClass({
 
     componentWillUnmount: function () {
         this.unsubscribe();
-        window.clearTimeout(this.timerItem);
+        //window.clearTimeout(this.timerItem);
         window.removeEventListener('resize', this.handleResize);
     },
 
-    handleClick: function () {
+    handleClick: function (e) {
+        e.preventDefault();
+        e.stopPropagation();
         if (this.listeningToClick) {
             if (this.state.openState) {
                 this.close();
             } else {
                 this.open();
             }
+        } else {
+            this.listeningToClick = true;
         }
     },
 
     handleClickOutside: function () {
-        this.close();
+        if (this.state.openState == true) {
+            this.close();
+        }
     },
 
     mouseEnterTimeoutCallback: function () {
@@ -65,19 +78,22 @@ window.HyperDropdown = React.createClass({
     },
 
     onMouseEnter: function () {
-        if (!('ontouchstart' in window)) {
+        if (!is_touch_device() && !this.state.openState) {
             this.listeningToClick = false;
             // Start timer to prevent a quick close after clicking on the trigger
-            this.mouseEnterTimeout = window.setTimeout(this.mouseEnterTimeoutCallback, 1000);
+            this.mouseEnterOpenedTimeout = window.setTimeout(this.mouseEnterTimeoutCallback, 1000);
             this.open();
         }
     },
 
     onMouseLeave: function () {
-        if (this.state.openState) {
-            this.close();
-            // Remove / reset timer
-            window.clearTimeout(this.mouseEnterTimeout);
+        if (!is_touch_device() && this.state.openState) {
+            if (!this.listeningToClick) {
+                this.close();
+                // Remove / reset timer
+                window.clearTimeout(this.mouseEnterOpenedTimeout);
+                this.listeningToClick = true;
+            }
         }
     },
 
@@ -107,7 +123,7 @@ window.HyperDropdown = React.createClass({
 
     render: function () {
         const { openState, renderLeft, current_actor } = this.state;
-        const dropdownClass = "dropdown" + (openState ? ' dropdown-active' :'');
+        const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass || ''}`;
 
         var trigger;
         if (this.props.trigger) {
@@ -119,8 +135,8 @@ window.HyperDropdown = React.createClass({
         } else {
             const image_after  = _image({fa: this.props.fa_after});
             const triggerClass = "dropdown-trigger " + this.props.triggerClass;
-            const TriggerContainer = this.props.triggerTag || 'div';
-            trigger = (<TriggerContainer className={triggerClass} onClick={this.handleClick} onTouchEnd={this.handleTap} done={this.close}>
+            const TriggerContainer = this.props.triggerTag || 'a';
+            trigger = (<TriggerContainer href={this.props.defaultAction} className={triggerClass} onClick={this.handleClick} done={this.close} data-skip-pjax="true">
                           {_image(this.props)}
                           <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
                           {image_after}
@@ -136,7 +152,10 @@ window.HyperDropdown = React.createClass({
                                                key='required' />;
         }
         const ReactTransitionGroup = React.addons.TransitionGroup;
-        return (<li tabIndex="1"  className={dropdownClass} onMouseEnter={this.onMouseEnter} onMouseLeave={this.onMouseLeave} >
+        return (<li tabIndex="1"
+                    className={dropdownClass}
+                    onMouseEnter={this.onMouseEnter}
+                    onMouseLeave={this.onMouseLeave} >
             {trigger}
             <%# This makes sure renderLeft is calculated correctly %>
             <ul className={'dropdown-content dropdown-content--helper ' + this.props.contentClassName}></ul>
