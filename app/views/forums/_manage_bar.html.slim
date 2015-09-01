@@ -1,7 +1,7 @@
 .tabs-container.tabs-to-top
   ul.tabs
     li= link_to url_for(resource), data: {intro: t("intro.#{resource.class_name}.settings.home")}
-      span.fa.fa-home
+      span.fa.fa-group
       span.icon-left= resource.display_name
     li[class=('tab--current' if local_assigns[:active] == :settings)]
       =link_to url_for([:settings, resource]), data: {intro: t("intro.#{resource.class_name}.settings.general")}
