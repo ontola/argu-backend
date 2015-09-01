@@ -1,4 +1,4 @@
-=semantic_form_for([resource, comment], html: {id: "cf#{parent_id.to_s}", class: 'comment_form', autocomplete: 'off', style: visible ? '' : 'display: none;', data: remote_if_user(local_assigns[:remote])}) do |f|
+=semantic_form_for([resource, comment], html: {id: "cf#{parent_id.to_s}", class: 'comment_form', autocomplete: 'off', style: visible ? '' : 'display: none;'}) do |f|
   section.smallpadded
     =f.text_area :body, :rows => 2, :cols => 50, placeholder: t('comments.placeholder'), class: 'form-input-content margin-bottom'
     -unless parent_id.blank?

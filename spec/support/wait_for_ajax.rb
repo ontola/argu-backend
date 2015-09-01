@@ -1,4 +1,14 @@
+require 'timeout'
+
 module WaitForAjax
+
+  def wait_until
+    Timeout.timeout(Capybara.default_wait_time) do
+      sleep(0.1) until value = yield
+      value
+    end
+  end
+
   def wait_for_ajax
     Timeout.timeout(Capybara.default_wait_time) do
       loop until finished_all_ajax_requests?
@@ -6,18 +16,19 @@ module WaitForAjax
   end
 
   def wait_for_modal
-    Timeout.timeout(Capybara.default_wait_time) do
-      loop until modal_opened?
+    Timeout.timeout(1000) do
+      sleep(0.1) until modal_opened?
     end
   end
 
   def wait_for_async_modal
     Timeout.timeout(Capybara.default_wait_time) do
-      loop until finished_all_ajax_requests? && modal_opened?
+      sleep(0.1) until finished_all_ajax_requests? && modal_opened?
     end
   end
 
   def modal_opened?
+    save_and_open_screenshot
     page.find('body')[:class].include?('modal-opened')
   end
 

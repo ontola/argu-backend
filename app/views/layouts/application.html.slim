@@ -29,7 +29,7 @@ body
   #fb-root
   =render 'navbar'
   - if stubborn_get('hide_video') != 'true'
-    =render partial: 'welcome_video'
+    =render partial: 'welcome_video', locals: {domain: Rails.env.test? ? '//example.com' : 'https://youtube.com'}
   .wrapper
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')

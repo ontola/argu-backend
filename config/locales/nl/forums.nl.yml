@@ -81,7 +81,7 @@ nl:
     join:
       title: "Voeg toe aan mijn forums"
       header: "Forum toevoegen"
-      body: "Voeg ''%{forum}'' toe aan jouw forums en doe mee aan de discussie!"
+      body: "Voeg \"%{forum}\" toe aan jouw forums en doe mee aan de discussie!"
     invite_others: "Betrek anderen"
     sign_up:
       header: "Word lid van Argu en discussieer mee"

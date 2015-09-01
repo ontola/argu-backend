@@ -25,7 +25,7 @@ RSpec.feature 'Access tokens', type: :feature do
     save_and_open_screenshot
     expect(page).to have_content 'Sign up'
 
-    click_link 'Create argu account'
+    click_link 'Create Argu account'
     expect(current_path).to eq new_user_registration_path
 
     user_attr = FactoryGirl.attributes_for(:user)

@@ -41,6 +41,7 @@ gem 'country_select'
 gem 'http_accept_language'
 gem 'geokit-rails', '2.1.0'
 gem 'browser'
+gem 'addressable', '~> 2.3.8'
 
 #Search
 
@@ -94,9 +95,9 @@ group :development, :test do
   gem 'minitest-rails', '~> 2.2.0'
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'minitest-bang'
-  gem 'rspec-rails', '~> 3.3.0'
-  gem 'capybara', '~> 2.4.4'
-  gem 'capybara-webkit'
+  gem 'rspec-rails', '~> 3.3.3'
+  gem 'capybara', '~> 2.5.0'
+  gem 'capybara-webkit', '~> 1.7.0'
   gem 'selenium-webdriver', '~> 2.47.1'
   gem 'chromedriver-helper'
   gem 'mocha'
