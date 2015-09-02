@@ -96,6 +96,7 @@ class ActionDispatch::IntegrationTest
     Capybara::Webkit.configure do |config|
       config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'
       config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
+      config.allow_url 'https://www.youtube.com/embed/mxQZNodm8OI'
     end
   end
 end

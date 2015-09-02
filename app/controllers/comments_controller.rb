@@ -55,11 +55,12 @@ class CommentsController < ApplicationController
   # POST /resource/1/comments
   def create
     resource = get_commentable
+    comment_body = params[:comment].is_a?(String) ? params[:comment] : params[:comment][:body]
     if current_profile.blank?
       authorize resource, :show?
-      render_register_modal(nil, [:comment, params[:comment]], [:parent_id, params[:parent_id]])
+      render_register_modal(nil, [:comment, comment_body], [:parent_id, params[:parent_id]])
     else
-      @comment = Comment.build_from(resource, current_profile.id, params[:comment][:body])
+      @comment = Comment.build_from(resource, current_profile.id, comment_body)
       authorize @comment
       parent = Comment.find_by_id params[:parent_id] unless params[:parent_id].blank?
       #unless params[:parent_id].blank?
@@ -70,7 +71,7 @@ class CommentsController < ApplicationController
       respond_to do |format|
         if !current_profile.member_of? resource.forum
           redirect_url = URI.parse(request.fullpath)
-          redirect_url.query= [[:comment, CGI::escape(params[:comment])], [:parent_id, params[:parent_id]]].map { |a| a.join('=') }.join('&')
+          redirect_url.query= [[:comment, CGI::escape(comment_body)], [:parent_id, params[:parent_id]]].map { |a| a.join('=') }.join('&')
           format.js { render partial: 'forums/join', layout: false, locals: { forum: resource.forum, r: redirect_url.to_s } }
           format.html { render template: 'forums/join', locals: { forum: resource.forum, r: redirect_url.to_s } }
         elsif @comment.save

@@ -145,6 +145,8 @@ class ApplicationController < ActionController::Base
     if !r_options || r_options.first != false   # Only skip if r_options is false
       r = URI.parse(base_url || request.fullpath)
       r.query = r_options.map(&:to_a).reject { |a| a.last.blank? }.map { |a| [a[0], URI.encode(a[1])].join('=') }.join('&')
+      # r = Addressable::URI.new(base_url || request.fullpath)
+      # r.query_values = r_options.map(&:to_a).reject { |a| a.last.blank? }
     else
       r = nil
     end

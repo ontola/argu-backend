@@ -20,8 +20,6 @@ head[itemscope itemtype="http://schema.org/WebSite"]
 body
   =render partial: 'alerts'
   =render 'closed/navbar'
-  - active_for_user?('welcome_video', current_user)
-    =render partial: 'welcome_video'
   .wrapper
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')

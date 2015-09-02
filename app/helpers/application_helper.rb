@@ -53,7 +53,7 @@ module ApplicationHelper
   end
 
   def r_to_url_options(r)
-    url_options = Rails.application.routes.recognize_path(URI.decode(r))
+    url_options = Rails.application.routes.recognize_path(Addressable::URI.parse(URI.decode(r)).path)
     return url_options, "#{url_options[:controller]}_controller".camelize.safe_constantize
   end
 
