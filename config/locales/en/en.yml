@@ -95,6 +95,7 @@ en:
   accepted: "Accepted"
   rejected: "Rejected"
   contemplating: "Contemplating"
+  use_a_high_res_image: "Use an appropriate image with a high resolution."
 #Home
   home_title: "Argu"
   #Not logged in

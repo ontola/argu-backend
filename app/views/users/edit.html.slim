@@ -57,7 +57,7 @@
           =f.input :has_analytics, as: :reverse_boolean
           li.form-helper
             span=t('users.edit.analytics_helper')
-          =f.semantic_fields_for :profile do |profile|
+          /=f.semantic_fields_for :profile do |profile|
             =profile.input :are_votes_public, as: :reverse_boolean
         =f.inputs name: t('users.registrations.categories.authentication') do
           -if @user.password_required?
