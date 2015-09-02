@@ -69,7 +69,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     sign_in @holland_owner
 
     assert_difference 'GroupMembership.count', 1 do
-      post :create, group_id: @group, profile_id: user.profile
+      post :create, group_id: @group, profile_id: user.to_param
     end
 
     assert_redirected_to settings_forum_path(@holland.url, tab: :groups)
