@@ -64,4 +64,8 @@ RSpec.feature 'Comments', type: :feature do
     expect(page).to have_content comment_args[:body]
   end
 
+  ####################################
+  # As member
+  ####################################
+
 end
