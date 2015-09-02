@@ -1,3 +1,4 @@
+
 #English general translations
 
 en:
@@ -5,3 +6,6 @@ en:
     s_404:
       header: "Item not found"
       body: "The link does not exist. This could be because the object you're looking for is deleted or never existed."
+    s_413:
+      header: "Request entity too large"
+      body: "The item that you are uploading is too large. Go back and try a smaller file."
