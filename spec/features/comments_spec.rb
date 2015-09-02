@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Comments', type: :feature do
 
   let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
-  let!(:argument) { FactoryGirl.create(:argument) }
+  let!(:argument) { FactoryGirl.create(:argument, forum: holland) }
 
   ####################################
   # Not logged in
@@ -36,7 +36,7 @@ RSpec.feature 'Comments', type: :feature do
       click_button 'Volgende'
     end
 
-    find('#join-forum').click()
+    # find('#join-forum').click()
 
     expect(page).to have_content argument.title
     expect(page).to have_content comment_args[:body]
@@ -67,5 +67,21 @@ RSpec.feature 'Comments', type: :feature do
   ####################################
   # As member
   ####################################
+  let!(:member) { create_member(holland) }
+
+  scenario 'Member places a comment' do
+    login_as(member, :scope => :user)
+    visit argument_path(argument)
+
+    comment_args = attributes_for(:comment)
+    within('#cf') do
+      expect(page).to have_field('comment[body]')
+      fill_in 'comment[body]', with: comment_args[:body]
+      click_button 'Reageer'
+    end
+
+    expect(page).to have_content argument.title
+    expect(page).to have_content comment_args[:body]
+  end
 
 end
