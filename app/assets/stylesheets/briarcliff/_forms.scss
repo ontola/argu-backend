@@ -281,6 +281,7 @@ li.form-helper {
 
 .formtastic .actions {
   text-align: center;
+  margin-bottom: 1em;
 }
 
 .formtastic li {
@@ -321,7 +322,7 @@ p.inline-hints {
   pointer-events: none;
   padding: 0;
   position: absolute;
-  top: 100%;
+  bottom: 100%;
   z-index: 10;
   @include transition(.2s);
   @include box-shadow-intense;
@@ -347,6 +348,7 @@ p.inline-hints {
   bottom: 0;
   z-index: 1;
   right: 0;
+
   li {
     margin: 0;
   }
