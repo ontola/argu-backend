@@ -28,7 +28,7 @@
   -ms-filter: $opts;
 }
 
-@mixin border-radius($opts:3px){
+@mixin border-radius($opts: 3px){
   border-radius: $opts;
 }
 

@@ -4,6 +4,8 @@ nl:
   users:
     type: "Gebruiker"
     settings: "Gebruikersinstellingen"
+    edit:
+      analytics_helper: "We gebruiken Google Analytics om de gebruikerservaring te verbeteren."
     registrations:
       categories:
         general: "Algemeen"

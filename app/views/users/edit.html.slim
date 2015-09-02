@@ -8,11 +8,12 @@
       section.inspectlet-sensitive
         =f.semantic_errors :email, :base
         =f.inputs name: t('users.registrations.categories.general') do
-          p= t('profiles.edit.shortname_not_allowed')
+          //p= t('profiles.edit.shortname_not_allowed')
           =f.inputs :shortname, for: :shortname, disabled: true
+          li.form-helper
+            span=t('profiles.edit.shortname_not_allowed')
           =f.input :email, label: t('users_email'), value: @user.email, placeholder: @user.email.blank? ? t('users_email_placeholder') : @user.email
-          li
-            label
+          li.form-helper
             - if @user.confirmed_at.present?
               span= t('users.registrations.confirmed')
             - else
@@ -54,6 +55,8 @@
 
         =f.inputs name: t('users.registrations.categories.privacy') do
           =f.input :has_analytics, as: :reverse_boolean
+          li.form-helper
+            span=t('users.edit.analytics_helper')
           =f.semantic_fields_for :profile do |profile|
             =profile.input :are_votes_public, as: :reverse_boolean
         =f.inputs name: t('users.registrations.categories.authentication') do
