@@ -67,7 +67,9 @@ class ArgumentsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     assert_difference('Argument.count') do
-      post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents'}
+      assert_difference('Vote.count') do
+        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents', auto_vote: true}
+      end
     end
 
     assert assigns(:argument)
@@ -82,7 +84,9 @@ class ArgumentsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     assert_difference('Argument.count') do
-      post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'con', title: 'Test argument con', content: 'Test argument con-tents'}
+      assert_difference('Vote.count') do
+        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'con', title: 'Test argument con', content: 'Test argument con-tents', auto_vote: true}
+      end
     end
 
     assert assigns(:argument)
@@ -91,6 +95,16 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert assigns(:argument).content == 'Test argument con-tents', "content isn't assigned"
     assert assigns(:argument).pro === false, "isn't assigned pro attribute"
     assert_redirected_to assigns(:argument).motion
+  end
+
+  test 'should post create pro without auto_vote' do
+    sign_in users(:user)
+
+    assert_difference('Argument.count') do
+      assert_no_difference('Vote.count') do
+        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents', auto_vote: false}
+      end
+    end
   end
 
   test 'should put update on own argument' do

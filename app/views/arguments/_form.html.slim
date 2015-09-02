@@ -17,6 +17,7 @@
           .span8
             fieldset.control-group
             =f.hidden_field(:motion_id)
+            =f.hidden_field(:auto_vote, value: true) if @argument.new_record?
     =f.actions
       .sticky-submit= f.action :submit, as: :button
     - if @argument.new_record?
