@@ -21,9 +21,7 @@
                 =t('users.registrations.unconfirmed')
                 =link_to " (#{t('devise.confirmations.send')})", user_confirmation_path(user: {email: @user.email}), rel: :nofollow, data: {method: :post}
           =f.input :time_zone
-          =f.input :language, as: :select, collection: I18n.available_locales, include_blank: false
           =f.input :language, as: :react_select, collection: I18n.available_locales, include_blank: false
-          =f.input :country, as: :country, priority_countries: %w(NL BE)
           =f.input :country, as: :react_country, priority_countries: %w(NL BE)
           =f.input :birthday, as: :date_picker
         - if active_for_user?(:notifications, current_user)
