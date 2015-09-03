@@ -5,7 +5,7 @@
     .profile-small
       img[src=model.creator.profile_photo.url(:icon)]
       .info-block
-        =link_to dual_profile_path(model.creator)
+        =link_to dual_profile_url(model.creator)
           h3[class="#{model.side}-t"]= model.creator.display_name
         time.info[datetime=model.created_at]= l model.created_at, format: :long
     - if model.text.present?

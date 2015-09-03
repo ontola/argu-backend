@@ -7,6 +7,8 @@ en:
     new_btn: "Add question"
     header: "questions"
     view_all_motions: "View all %{amount} ideas..."
+    tooltips:
+      count: "number of questions"
     call_to_action:
       title: "Looking for good ideas?"
       body: "Are you looking for good ideas to a burning question?"

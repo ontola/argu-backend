@@ -44,20 +44,20 @@ class ForumPolicy < RestrictivePolicy
     end
 
     def has_access_token?
-      access_token if (session[:a_tokens] || []).find_index(record.access_token).present? && record.visible_with_a_link?
+      access_token if Set.new(record.m_access_tokens).intersect?(Set.new(session[:a_tokens])) && record.visible_with_a_link?
     end
 
     # Is the current user a member of the group?
     # @note This tells nothing about whether the user can make edits on the object
     def is_member?
-      member if actor && actor.memberships.where(forum: record).present?
+      member if actor && actor.memberships.where(forum: record).count > 0
     end
 
     # Is the user a manager of the page or of the forum?
     # @note Trickles up
     def is_manager?
       _mems = user.profile if user
-      [(manager if user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).present?), is_owner?].compact.presence
+      [(manager if user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).count > 0), is_owner?].compact.presence
     end
 
     # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.
@@ -117,7 +117,7 @@ class ForumPolicy < RestrictivePolicy
 
   # Forum#index is for management, not to be confused with forum#discover
   def index?
-    user && user.profile.pages.length > 0 || user.profile.managerships.presence || staff?
+    user && (user.profile.pages.length > 0 || user.profile.managerships.presence) || staff?
   end
 
   def invite?

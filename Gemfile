@@ -2,7 +2,7 @@ source 'https://rubygems.org/'
 
 gem 'sass-rails', '~> 5.0.3'
 gem 'sass', '= 3.2.19'
-gem 'rails', '~>4.2.0'
+gem 'rails', '~>4.2.3'
 
 gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
@@ -41,6 +41,7 @@ gem 'country_select'
 gem 'http_accept_language'
 gem 'geokit-rails', '2.1.0'
 gem 'browser'
+gem 'addressable', '~> 2.3.8'
 
 #Search
 
@@ -94,8 +95,14 @@ group :development, :test do
   gem 'minitest-rails', '~> 2.2.0'
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'minitest-bang'
+  gem 'rspec-rails', '~> 3.3.3'
+  gem 'capybara', '~> 2.5.0'
+  gem 'capybara-webkit', '~> 1.7.0'
+  gem 'selenium-webdriver', '~> 2.47.1'
+  gem 'chromedriver-helper'
   gem 'mocha'
   gem 'pry'
+  gem 'mailcatcher'
   #gem 'byebug'
   #gem 'pry-byebug'
   gem 'meta_request'
@@ -114,6 +121,7 @@ group :development, :test do
   gem 'capistrano-rvm', '~> 0.1.2'
   gem 'license_finder'
   gem 'database_cleaner'
+  gem 'brakeman'
 end
 
 group :production, :staging do
@@ -123,7 +131,7 @@ group :production, :staging do
 end
 
 group :staging, :development do
-  #gem 'rack-mini-profiler'
+  gem 'rack-mini-profiler', require: false
   gem 'stackprof'
   gem 'flamegraph'
 end

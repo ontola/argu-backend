@@ -1,31 +1,31 @@
 /*global React, $*/
 
 
-var cancelScrollEvent = function (e) {
-    e.stopImmediatePropagation();
-    e.preventDefault();
-    e.returnValue = false;
-    return false;
-};
-
-var addScrollEventListener = function (elem, handler) {
-    elem.addEventListener('wheel', handler, false);
-};
-
-var removeScrollEventListener = function (elem, handler) {
-    elem.removeEventListener('wheel', handler, false);
-};
-
 var ScrollLockMixin = {
+    cancelScrollEvent: function (e) {
+        e.stopImmediatePropagation();
+        e.preventDefault();
+        e.returnValue = false;
+        return false;
+    },
+
+    addScrollEventListener: function (elem, handler) {
+        elem.addEventListener('wheel', handler, false);
+    },
+
+    removeScrollEventListener: function (elem, handler) {
+        elem.removeEventListener('wheel', handler, false);
+    },
+
     scrollLock: function (elem) {
         elem = elem || this.getDOMNode();
         this.scrollElem = elem;
-        addScrollEventListener(elem, this.onScrollHandler);
+        ScrollLockMixin.addScrollEventListener(elem, this.onScrollHandler);
     },
 
     scrollRelease: function (elem) {
         elem = elem || this.scrollElem;
-        removeScrollEventListener(elem, this.onScrollHandler);
+        ScrollLockMixin.removeScrollEventListener(elem, this.onScrollHandler);
     },
 
     onScrollHandler: function (e) {
@@ -38,11 +38,11 @@ var ScrollLockMixin = {
 
         if (isDeltaPositive && wheelDelta > scrollHeight - height - scrollTop) {
             elem.scrollTop = scrollHeight;
-            return cancelScrollEvent(e);
+            return ScrollLockMixin.cancelScrollEvent(e);
         }
         else if (!isDeltaPositive && -wheelDelta > scrollTop) {
             elem.scrollTop = 0;
-            return cancelScrollEvent(e);
+            return ScrollLockMixin.cancelScrollEvent(e);
         }
     }
 };

@@ -9,12 +9,14 @@ class ArgumentsController < ApplicationController
     authorize @argument, :show?
     @parent_id = params[:parent_id].to_s
     
-    @comments = @argument.filtered_threads(show_trashed?)
+    @comments = @argument.filtered_threads(show_trashed?, params[:page])
     @length = @argument.root_comments.length
     @vote = Vote.find_by(voteable: @argument, voter: current_profile)
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html { render locals: {
+                               comment: Comment.new
+                           } }
       format.widget { render @argument }
       format.json { render json: @argument }
     end
@@ -66,15 +68,24 @@ class ArgumentsController < ApplicationController
   def create
     @forum = Forum.find_via_shortname params[:forum_id]
     @motion = Motion.find params[:argument][:motion_id]
-    @argument = @forum.arguments.new motion: @motion
-    @argument.attributes= argument_params
-    @argument.creator = current_profile
-    authorize @argument, :create?
+    saved = false
+    Argument.transaction do
+      @argument = @forum.arguments.new motion: @motion
+      @argument.attributes= argument_params
+      @argument.creator = current_profile
+      authorize @argument, :create?
+      if params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile
+        @argument.save
+        @argument.votes.pro.build(forum: @forum, voter: current_profile)
+      end
+      saved = @argument.save
+    end
 
     respond_to do |format|
-      if @argument.save
+      if saved
         create_activity @argument, action: :create, recipient: @argument.motion, owner: current_profile, forum_id: @argument.forum.id
-        format.html { redirect_to (argument_params[:motion_id].blank? ? @argument : Motion.find_by_id(argument_params[:motion_id])), notice: 'Argument was successfully created.' }
+        argument = argument_params[:motion_id].blank? ? @argument : Motion.find_by_id(argument_params[:motion_id])
+        format.html { redirect_to argument, notice: 'Argument was successfully created.' }
         format.json { render json: @argument, status: :created, location: @argument }
       else
         format.html { render action: 'form', pro: argument_params[:pro], motion_id: argument_params[:motion_id] }

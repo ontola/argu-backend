@@ -13,7 +13,7 @@ nl:
   sign_in_twitter: "Log in met twitter"
   sign_in_existing: "Log in met een bestaand argu account:"
   forgot_password: "Wachtwoord vergeten?"
-
+  settings: "Instellingen"
   sign_up: "Account aanmaken"
   sign_up_description: "Maak gratis een account aan:"
   argu_sign_up: "Argu account aanmaken"
@@ -95,6 +95,7 @@ nl:
   accepted: "Aangenomen"
   rejected: "Afgewezen"
   contemplating: "In overweging"
+  use_a_high_res_image: "Kies een gepaste afbeelding met een hoge resolutie."
 #Home
   home_title: "Argu"
   #Not logged in
@@ -112,8 +113,10 @@ nl:
     how_argu_works: "Hoe werkt Argu?"
     team: "Ons team"
     product: "Ons product"
-    organisations: "Argu voor organisaties"
+    organizations: "Argu voor organisaties"
+    lobby_organizations: "Voor belangenbehartigers"
     governments: "Argu voor overheden"
+    contact: "Contact"
   how_argu_works:
     title: "Hoe Argu werkt"
   product:

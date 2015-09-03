@@ -28,7 +28,7 @@
   -ms-filter: $opts;
 }
 
-@mixin border-radius($opts:3px){
+@mixin border-radius($opts: 3px){
   border-radius: $opts;
 }
 
@@ -244,7 +244,7 @@
 
 @include keyframes(from-bottom-fade) {
   0% {
-    transform: translate(0,5em);
+    transform: translate(0,2em);
     opacity: 0;
   }
   100% {
@@ -281,6 +281,24 @@
   100% {
     transform: translate(0,0);
     opacity: 1;
+  }
+}
+
+@include keyframes(grow-from-bottom) {
+  0% {
+    max-height: 0;
+  }
+  100% {
+    max-height: 10em;
+  }
+}
+
+@include keyframes(collapse-from-top) {
+  0% {
+    max-height: 10em;
+  }
+  100% {
+    max-height: 0;
   }
 }
 

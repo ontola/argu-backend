@@ -8,11 +8,12 @@
       section.inspectlet-sensitive
         =f.semantic_errors :email, :base
         =f.inputs name: t('users.registrations.categories.general') do
-          p= t('profiles.edit.shortname_not_allowed')
+          //p= t('profiles.edit.shortname_not_allowed')
           =f.inputs :shortname, for: :shortname, disabled: true
+          li.form-helper
+            span=t('profiles.edit.shortname_not_allowed')
           =f.input :email, label: t('users_email'), value: @user.email, placeholder: @user.email.blank? ? t('users_email_placeholder') : @user.email
-          li
-            label
+          li.form-helper
             - if @user.confirmed_at.present?
               span= t('users.registrations.confirmed')
             - else
@@ -20,8 +21,8 @@
                 =t('users.registrations.unconfirmed')
                 =link_to " (#{t('devise.confirmations.send')})", user_confirmation_path(user: {email: @user.email}), rel: :nofollow, data: {method: :post}
           =f.input :time_zone
-          =f.input :language, as: :select, collection: I18n.available_locales, include_blank: false
-          =f.input :country, as: :country, priority_countries: %w(NL BE)
+          =f.input :language, as: :react_select, collection: I18n.available_locales, include_blank: false
+          =f.input :country, as: :react_country, priority_countries: %w(NL BE)
           =f.input :birthday, as: :date_picker
         - if active_for_user?(:notifications, current_user)
           =f.inputs name: t('users.registrations.categories.notifications') do
@@ -54,7 +55,9 @@
 
         =f.inputs name: t('users.registrations.categories.privacy') do
           =f.input :has_analytics, as: :reverse_boolean
-          =f.semantic_fields_for :profile do |profile|
+          li.form-helper
+            span=t('users.edit.analytics_helper')
+          /=f.semantic_fields_for :profile do |profile|
             =profile.input :are_votes_public, as: :reverse_boolean
         =f.inputs name: t('users.registrations.categories.authentication') do
           -if @user.password_required?

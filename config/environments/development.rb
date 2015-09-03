@@ -1,5 +1,5 @@
 Rails.application.configure do
-  config.host = ENV['HOSTNAME'].presence || 'local.host:3000'
+  config.host = ENV['HOSTNAME'].presence || 'localhost:3000'
   # Settings specified here will take precedence over those in config/application.rb#
 
   config.react.variant = :development
@@ -24,17 +24,10 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = false
-  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'].presence || 'argu.co' }
+  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'].presence || 'localhost:3000' }
 
   config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-      address:              'smtp.gmail.com',
-      port:                 587,
-      domain:               'argu.nl',
-      user_name:            'info@argu.nl',
-      password:             Rails.application.secrets.argu_gmail_pass,
-      authentication:       'plain',
-      enable_starttls_auto: true  }
+  config.action_mailer.smtp_settings = { :address => 'localhost', :port => 1025 }
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

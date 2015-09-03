@@ -1,11 +1,19 @@
 /*global React, $*/
 
+function is_touch_device() {
+    return (('ontouchstart' in window)
+    || (navigator.MaxTouchPoints > 0)
+    || (navigator.msMaxTouchPoints > 0));
+    //navigator.msMaxTouchPoints for microsoft IE backwards compatibility
+}
+
 window.HyperDropdown = React.createClass({
     mixins: [
         (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
     ],
 
     getInitialState: function () {
+        this.listeningToClick = true;
         return {
             openState: false,
             renderLeft: false,
@@ -18,15 +26,16 @@ window.HyperDropdown = React.createClass({
         this.referenceDropdownElement().style.left = '0';
         this.referenceDropdownElement().style.right = 'auto';
         var elemRect = this.referenceDropdownElement().getBoundingClientRect();
-        this.setState({renderLeft: (elemRect.width + elemRect.left) > window.innerWidth});
+        var shouldRenderLeft = (elemRect.width + elemRect.left) > window.innerWidth;
+        this.setState({renderLeft: shouldRenderLeft});
     },
 
     close: function () {
         var elem = this.state.dropdownElement;
-        elem.style.display = 'none';
-        this.timerItem = window.setTimeout(function () {
+        // Removes slow descending visibility repaint
+        /*this.timerItem = window.setTimeout(function () {
             elem.style.display = 'block';
-        }, 50);
+        }, 50);*/
         this.setState({openState: false});
     },
 
@@ -40,21 +49,51 @@ window.HyperDropdown = React.createClass({
 
     componentWillUnmount: function () {
         this.unsubscribe();
-        window.clearTimeout(this.timerItem);
+        //window.clearTimeout(this.timerItem);
         window.removeEventListener('resize', this.handleResize);
     },
 
-    handleClick: function () {
-        if (this.state.openState) {
-            this.close();
+    handleClick: function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        if (this.listeningToClick) {
+            if (this.state.openState) {
+                this.close();
+            } else {
+                this.open();
+            }
         } else {
-            this.open();
+            this.listeningToClick = true;
         }
     },
 
     handleClickOutside: function () {
-        if (this.state.openState) {
+        if (this.state.openState == true) {
             this.close();
+        }
+    },
+
+    mouseEnterTimeoutCallback: function () {
+        this.listeningToClick = true;
+    },
+
+    onMouseEnter: function () {
+        if (!is_touch_device() && !this.state.openState) {
+            this.listeningToClick = false;
+            // Start timer to prevent a quick close after clicking on the trigger
+            this.mouseEnterOpenedTimeout = window.setTimeout(this.mouseEnterTimeoutCallback, 1000);
+            this.open();
+        }
+    },
+
+    onMouseLeave: function () {
+        if (!is_touch_device() && this.state.openState) {
+            if (!this.listeningToClick) {
+                this.close();
+                // Remove / reset timer
+                window.clearTimeout(this.mouseEnterOpenedTimeout);
+                this.listeningToClick = true;
+            }
         }
     },
 
@@ -71,6 +110,7 @@ window.HyperDropdown = React.createClass({
         this.setState({current_actor: data});
     },
 
+    // Used to calculate the width of a dropdown content menu
     referenceDropdownElement: function () {
         let refDropdown;
         if (typeof(this.state.referenceDropdownElement) !== "undefined") {
@@ -82,44 +122,8 @@ window.HyperDropdown = React.createClass({
     },
 
     render: function () {
-        var collapseStyle = {
-            visibility: this.state.openState ? 'visible' : 'hidden',
-            left: this.state.renderLeft ? 'auto' : 0,
-            right: this.state.renderLeft ? 0 : undefined
-        };
-
-        var sections,
-            _this = this;
-        if (this.props.sections) {
-            sections = (<ul className={'dropdown-content ' + this.props.contentClassName} style={collapseStyle}>
-                {this.props.sections.map(function (section, i) {
-                    if (typeof(section.type) == "string") {
-                        return (<Notifications key={i} done={_this.close} {...section} />);
-                    } else {
-                        var title;
-                        if (section.title && section.items.length > 0) {
-                            title = <span className="dropdown-header">{section.title}</span>
-                        }
-
-                        var items = section.items.map(function(item) {
-                            if (item.type == 'link') {
-                                return <LinkItem key={item.title} done={_this.close} current_actor={_this.state.current_actor} {...item} />;
-                            } else if (item.type == 'actor') {
-                                return <ActorItem key={item.title} done={_this.close} {...item} />;
-                            } else if (item.type == 'fb_share') {
-                                return <FBShareItem key={item.title} done={_this.close} {...item} />;
-                            }
-                        });
-
-                        return (<div key={i}>
-                            {title}
-                            {items}
-                        </div>);
-                    }
-                })}
-            </ul>);
-        }
-        var dropdownClass = "dropdown" + (this.state.openState ? ' dropdown-active' :'');
+        const { openState, renderLeft, current_actor } = this.state;
+        const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass || ''}`;
 
         var trigger;
         if (this.props.trigger) {
@@ -129,21 +133,102 @@ window.HyperDropdown = React.createClass({
                 trigger = <NotificationTrigger handleClick={this.handleClick} handleTap={this.handleTap} {...this.props} />
             }
         } else {
-            var image_after  = _image({fa: this.props.fa_after});
-            var triggerClass = "dropdown-trigger " + this.props.triggerClass;
-            var TriggerContainer = this.props.triggerTag || 'div';
-            trigger = (<TriggerContainer className={triggerClass} onClick={this.handleClick} onTouchEnd={this.handleTap} done={this.close}>
+            const image_after  = _image({fa: this.props.fa_after});
+            const triggerClass = "dropdown-trigger " + this.props.triggerClass;
+            const TriggerContainer = this.props.triggerTag || 'a';
+            trigger = (<TriggerContainer href={this.props.defaultAction} className={triggerClass} onClick={this.handleClick} done={this.close} data-skip-pjax="true">
                           {_image(this.props)}
                           <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
                           {image_after}
                        </TriggerContainer>);
         }
 
-        return (<li tabIndex="1"  className={dropdownClass}>
+        let dropdownContent;
+        if (openState) {
+            dropdownContent = <DropdownContent renderLeft={renderLeft}
+                                               close={this.close}
+                                               currentActor={current_actor}
+                                               {...this.props}
+                                               key='required' />;
+        }
+        const ReactTransitionGroup = React.addons.TransitionGroup;
+        return (<li tabIndex="1"
+                    className={dropdownClass}
+                    onMouseEnter={this.onMouseEnter}
+                    onMouseLeave={this.onMouseLeave} >
             {trigger}
-            <ul className={'dropdown-content ' + this.props.contentClassName}></ul><%# This makes sure renderLeft is calculated correctly %>
-            {sections}
+            <%# This makes sure renderLeft is calculated correctly %>
+            <ul className={'dropdown-content dropdown-content--helper ' + this.props.contentClassName}></ul>
+            <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
+                {dropdownContent}
+            </ReactTransitionGroup>
         </li>);
+    }
+});
+
+window.DropdownContent = React.createClass({
+    getInitialState: function () {
+        return {
+            appearState: ''
+        };
+    },
+
+    componentWillEnter: function (callback) {
+        this.setState(
+            {appearState: 'dropdown-enter'}, () => {
+            window.setTimeout(() => {
+                this.setState({appearState: 'dropdown-enter dropdown-enter-active'}, callback);
+            }, 10);
+        });
+    },
+
+    componentWillLeave: function (callback) {
+        this.setState(
+            {appearState: 'dropdown-leave'}, () => {
+            window.setTimeout(() => {
+                this.setState(
+                    {appearState: 'dropdown-leave dropdown-leave-active'},
+                    () => { window.setTimeout(callback, 200) });
+            }, 0);
+        });
+    },
+
+    render: function() {
+        const { close, sections, contentClassName, currentActor } = this.props;
+        const collapseClass = this.props.renderLeft ? 'dropdown--left ' : 'dropdown-right ';
+
+        const renderedSections = (<ul className={'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState} style={null}>
+            {sections.map((section, i) => {
+                if (typeof(section.type) === "string") {
+                    return (<Notifications key={i} done={close} {...section} />);
+                } else {
+                    let title;
+                    if (section.title && section.items.length > 0) {
+                        title = <span className="dropdown-header">{section.title}</span>
+                    }
+
+                    const items = section.items.map(function(item) {
+                        if (item.type === 'link') {
+                            return <LinkItem key={item.title} done={close} current_actor={currentActor} {...item} />;
+                        } else if (item.type === 'actor') {
+                            return <ActorItem key={item.title} done={close} {...item} />;
+                        } else if (item.type === 'fb_share') {
+                            return <FBShareItem key={item.title} done={close} {...item} />;
+                        }
+                    });
+
+                    return (
+                        <div key={i}>
+                            {title}
+                            {items}
+                        </div>);
+                }
+            })}
+        </ul>);
+
+        return (<div>
+            {renderedSections}
+        </div>);
     }
 });
 
@@ -281,7 +366,7 @@ var CurrentUserTrigger = React.createClass({
         var triggerClass = "dropdown-trigger " + this.props.triggerClass;
         var TriggerContainer = this.props.triggerTag || 'div';
 
-        return (<TriggerContainer className={triggerClass} onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
+        return (<TriggerContainer className={triggerClass} onClick={this.props.handleClick} onTouchEnd={this.props.handleTap} >
             {_image({image: {url: this.state.profile_photo.url, title: this.state.profile_photo.title, className: 'profile-picture--navbar'}})}
             <span className="icon-left">{this.state.display_name}</span>
         </TriggerContainer>);

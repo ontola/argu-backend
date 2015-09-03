@@ -18,15 +18,17 @@ client-bundle.js.map
 node_modules
 /vendor/assets/bower_components
 .env
+spec/argu.txt
 
 # Ignore secrets
 secrets.yml
 /config/database.yml
 
 # Ignore image uploads
-/public/uploads/tmp/*.*
-/public/profiles/*.*
-/public/forums/*.*
-/public/motions/*.*
-/public/organisations/*.*
-/public/system/*.*
+/public/uploads
+/public/profiles
+/public/forums
+/public/motions
+/public/questions
+/public/organisations
+/public/system

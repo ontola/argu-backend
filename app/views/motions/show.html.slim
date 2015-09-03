@@ -11,25 +11,29 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     div[data-intro= t('intro.motion.back')]= to_parent
     =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}
     .col--motion
-      div[data-intro= t('intro.motion.body') itemprop="text"]= render partial: 'body', locals: { motion: @motion }
-      =react_component 'CombiBigVote', motion_combi_vote_props(current_profile, @motion, @vote), {prerender: true}
+      .motion-body[data-intro= t('intro.motion.body') itemprop="text"]= render partial: 'body', locals: { motion: @motion }
+      .motion-votes=react_component 'CombiBigVote', motion_combi_vote_props(current_profile, @motion, @vote), {prerender: true}
       /=render partial: 'updates/update', locals: {item: @motion}
 .col-2
-  .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top"]
-=render_columns(@arguments, buttons_url: new_forum_argument_path(@motion.forum, motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false, buttons_options: {data: remote_unless_user})
+  .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top "]
+.argument-columns=render_columns(@arguments, buttons_url: new_forum_argument_path(@motion.forum, motion_id: @motion), collection_model: Argument, buttons_param: :pro, buttons_form_on_empty: false, buttons_options: {data: remote_unless_user})
 
-- if active_for_user?(:groups, current_user) && @group_responses && (@group_responses.keys | ((current_profile && current_profile.groups) || [])).present?
+- if @group_responses && (@group_responses.keys | ((current_profile && current_profile.groups) || [])).present?
   .col-3
     .intro-filler[data-intro= t('intro.motion.groups') data-position= "top"]
   -@group_responses && @group_responses.each do |k,v|
     - if v[:collection].values.map { |c| c[:collection].length }.reduce(&:+) > 0 || k.include?(current_profile)
-      =render_columns(v[:collection], collection_model: GroupResponse, buttons_url: new_motion_group_response_path(@motion, k), show_new_buttons: v[:responses_left] > 0, buttons_param: :side, header_text: header_values(k))
+      =render_columns(v[:collection],
+                      collection_model: GroupResponse,
+                      buttons_url: new_motion_group_response_path(@motion, k),
+                      show_new_buttons: v[:responses_left] > 0,
+                      buttons_param: :side,
+                      header: k.name,
+                      header_text: header_values(k))
     - else
       .col-1
         header
-          h1= k.name
+          h2= k.name
         .box
           section
             p= t('groups.empty', type: k.name.downcase)
-
-// @TODO: Render four random motions / questions from the same forum

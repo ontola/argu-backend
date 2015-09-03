@@ -63,6 +63,7 @@ nl:
       reply: "Reageer"
       delete: "Verwijder"
       more: "Toon meer"
+      edit: "Wijzig reactie"
       placed_by: "%{user} - %{date}"
       none: "Geen reacties"
       comments:

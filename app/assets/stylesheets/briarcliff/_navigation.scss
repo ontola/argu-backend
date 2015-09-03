@@ -18,20 +18,13 @@
   font-size: 1em;
   background-color: $blu;
   height: 3em;
+
   @include transition(.1s);
+
   span {
     line-height: 3em;
     display: inline-block;
     vertical-align: top;
-    @include bp-medium-large() {
-      display: none;
-      &.dont-hide{
-        display: inline-block;
-      }
-      &.fa {
-        display: inline-block;
-      }
-    }
   }
 
   > .fa {
@@ -46,7 +39,7 @@
   }
 }
 
-.navbar-item:active{
+.navbar-item:active {
   background-color: $lighten3;
   transition: none;
 }
@@ -54,13 +47,16 @@
 .navbar-links {
   margin-left: 1em;
   float: left;
+
   > li {
     float: left;
   }
+
   > div {
     display: inline-block;
     float: left;
   }
+
   @include bp-small {
     margin-left: 0;
   }
@@ -70,6 +66,7 @@
   float: right;
   margin-right: 1em;
   margin-left: 0;
+
   @include bp-small {
     margin-right: 0;
   }
@@ -86,9 +83,11 @@
   text-align: center;
   width: 5.8em;
   background-color: $blu;
+
   img {
     width: 82%;
     margin-top: 4.6%;
+
     @include bp-small{
       width: 60%;
       margin-top: 10.6%;
@@ -160,5 +159,33 @@ input[type="submit"].nav-search-button {
     left: auto;
     padding: 0;
     width: auto;
+  }
+}
+
+.navbar-profile span {
+  @include bp-medium-large() {
+    display: none;
+
+    &.dont-hide{
+      display: inline-block;
+    }
+
+    &.fa {
+      display: inline-block;
+    }
+  }
+}
+
+.navbar-item span {
+  @include bp-small() {
+    display: none;
+
+    &.dont-hide{
+      display: inline-block;
+    }
+
+    &.fa {
+      display: inline-block;
+    }
   }
 }

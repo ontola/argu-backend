@@ -2,13 +2,15 @@ window.NotificationActions = Reflux.createActions({
     "notificationUpdate": {},
     "markAllAsRead": {asyncResult: true},
     "fetchNextPage": {asyncResult: true},
-    "checkForNew": {asyncResult: true}
+    "checkForNew": {asyncResult: true},
+    "fetchNew": {asyncResult: true}
 });
 
 window.notificationStore = Reflux.createStore({
     state: {
         notifications: {
             unread: 0,
+            notificationCount: 0,
             lastNotification: new Date(null),
             oldestNotification: new Date(null),
             notifications: new OrderedMap()
@@ -21,13 +23,16 @@ window.notificationStore = Reflux.createStore({
         this.listenTo(NotificationActions.markAllAsRead, this.onMarkAllAsRead);
         this.listenTo(NotificationActions.fetchNextPage, this.fetchNextPage);
         this.listenTo(NotificationActions.checkForNew, this.checkForNew);
+        this.listenTo(NotificationActions.fetchNew, this.fetchNew);
 
-        this.checkForNew();
+        Promise.resolve()
+            .then(NotificationActions.checkForNew)
+            .then(NotificationActions.fetchNew)
     },
 
     fetchNextPage: function () {
         "use strict";
-        fetch(`/n.json?from_time=${this.state.notifications.oldestNotification.toISOString()}`, _safeCredentials())
+        return fetch(`/n.json?from_time=${this.state.notifications.oldestNotification.toISOString()}`, _safeCredentials())
             .then(function (response) {
                 if (response.status == 200) {
                     response.json().then(function (data) {
@@ -46,15 +51,33 @@ window.notificationStore = Reflux.createStore({
 
     checkForNew: function () {
         "use strict";
-        fetch(`/n.json?lastNotification=${this.state.notifications.lastNotification.toISOString()}`, _safeCredentials())
+        return fetch('//meta.argu.co/n', _userIdentityToken({method: 'post', headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }}))
             .then(statusSuccess)
             .then(json)
-            .then(function (data) {
-                if (typeof(data) !== "undefined") {
-                    NotificationActions.notificationUpdate(data.notifications);
-                }
-                NotificationActions.checkForNew.completed();
-            }).catch(NotificationActions.checkForNew.failed);
+            .then((response) => {
+                return NotificationActions.checkForNew.completed(parseInt(response.notificationCount) > this.state.notifications.notificationCount ? response.notificationCount : false);
+            })
+    },
+
+    fetchNew: function (notificationCount) {
+        "use strict";
+        if (notificationCount) {
+            return fetch(`/n.json?lastNotification=${this.state.notifications.lastNotification.toISOString()}`, _safeCredentials())
+                .then(statusSuccess)
+                .then(json)
+                .then(function (data) {
+                    if (typeof(data) !== "undefined") {
+                        data.notifications.notificationCount = notificationCount;
+                        NotificationActions.notificationUpdate(data.notifications);
+                    }
+                    return NotificationActions.fetchNew.completed();
+                }).catch(NotificationActions.fetchNew.failed);
+        } else {
+            return NotificationActions.fetchNew.completed();
+        }
     },
 
     onMarkAllAsRead: function () {
@@ -80,6 +103,7 @@ window.notificationStore = Reflux.createStore({
                 this.setLastNotification(notifications.lastNotification);
                 this.state.notifications.unread = notifications.unread;
                 this.state.notifications.oldestNotification = new Date(this.state.notifications.notifications.get(this.state.notifications.notifications.length - 1).created_at);
+                this.state.notifications.notificationCount = notifications.notificationCount;
                 // Pass on to listeners
                 this.trigger(this.state.notifications);
             }

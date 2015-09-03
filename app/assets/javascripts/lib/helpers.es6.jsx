@@ -58,17 +58,33 @@ var _url = function (url, obj) {
     }
 };
 
-var _authenticityToken = function () {
-    "use strict";
-    return document.querySelector('meta[name="csrf-token"]').content;
-};
-
 var _authenticityHeader = function (options) {
     "use strict";
     options = options || {};
     return Object.assign(options, {
-        "X-CSRF-Token": _authenticityToken(),
-        "X-Requested-With": "XMLHttpRequest"
+        'X-CSRF-Token': getAuthenticityToken(),
+        'X-Requested-With': 'XMLHttpRequest'
+    });
+};
+
+var getAuthenticityToken = function () {
+    return getMetaContent('csrf-token');
+};
+
+var getMetaContent = function (name) {
+    let header = document.querySelector(`meta[name="${name}"]`);
+    return header && header.content;
+};
+
+var getUserIdentityToken = function () {
+    return {token: getMetaContent('user-identity-token')};
+};
+
+var jsonHeader = function (options) {
+    options = options || {};
+    return Object.assign(options, {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
     });
 };
 
@@ -78,7 +94,7 @@ var _safeCredentials = function (options) {
     return Object.assign(options, {
         credentials: 'include',
         mode: 'same-origin',
-        headers: Object.assign((options['headers'] || {}), _authenticityHeader())
+        headers: Object.assign((options['headers'] || {}), _authenticityHeader(), jsonHeader())
     });
 };
 
@@ -97,6 +113,14 @@ var tryLogin = function (response) {
     } else {
         return Promise.reject(new Error('unknown status code'));
     }
+};
+
+var _userIdentityToken = function (options) {
+    "use strict";
+    options = options || {};
+    return Object.assign(options, {
+      body: JSON.stringify(Object.assign((options['body'] || {}), getUserIdentityToken()))
+    })
 };
 
 var json = function (response) {

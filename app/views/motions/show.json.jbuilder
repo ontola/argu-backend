@@ -18,7 +18,7 @@ json.groups @group_responses do |group, responses|
   json.responses_left responses[:responses_left].to_s
   json.collection responses[:collection].flat_map { |k, v| v[:collection] } do |g_r|
     json.id g_r.id
-    json.creator_url dual_profile_path(g_r.profile)
+    json.creator_url dual_profile_url(g_r.profile)
     json.text g_r.text
     json.side g_r.side
     json.created_at g_r.created_at

@@ -1,32 +1,40 @@
 @import "variables";
 @import "mixins";
 
-.alert-container {
+.alert-wrapper {
   position: fixed;
-  pointer-events: none;
   width: 100%;
   bottom: 3em;
   z-index: 100;
+}
+
+.alert-container {
+  position: relative;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
+  pointer-events: none;
+
 }
 
 .alert {
+  position: relative;
   bottom: 3em;
   padding: 1em;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 1em;
   background-color: rgba(255, 255, 255, 1);
   color: rgb(92, 92, 92);
   display: block;
   font-weight: bold;
   z-index: 100;
-  border: solid 3px;
+  //border: solid 3px;
   text-align: center;
   font-family: $font-sans;
-  @include animation(fade-in 1s both, from-bottom ease-out 1s both);
-  pointer-events: none;
+  @include animation(from-bottom-fade .5s both, grow-from-bottom .5s both);
+  @include box-shadow-intense;
+
   @include bp-small{
     width: 100%;
     left: 0;
@@ -35,12 +43,19 @@
 }
 
 .alert-hidden {
-  @include animation(fade-out 1s both);
+  @include animation(fade-out .5s both, collapse-from-top .5s both);
+
+  // When an alert is about to be removed, the user should not get the idea that he can still interact with it.
+  pointer-events: none;
+  * {
+    pointer-events: none;
+  }
 }
 
 .alert-notice {
   border-color: $gre;
   color: $gre;
+  pointer-events: auto;
 }
 
 .alert-alert {

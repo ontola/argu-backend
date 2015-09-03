@@ -1,6 +1,6 @@
 =set_title t('home_title')
-.content
-  .sidebar.col-3-1
+.col-3.content
+  .col-3-1.sidebar
     -if current_user.present?
       .box
         section
@@ -20,8 +20,8 @@
                     =o.name
           .group
             =link_to t('forums.discover'), discover_forums_url
-  .activity-feed
-    .activities.col-3-2
+  .col-3-2.activity-feed
+    .activities
       =render_activities(@activities, layout: 'activity')
     .center
       p.btn.load-more= t('activities.ui.load_more')

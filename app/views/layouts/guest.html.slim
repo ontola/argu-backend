@@ -23,21 +23,19 @@ head[itemscope itemtype="http://schema.org/WebSite"]
 body
   #fb-root
   =render 'guest/navbar'
-  - active_for_user?('welcome_video', current_user)
-    =render partial: 'welcome_video'
+  - if stubborn_get('hide_video') != 'true'
+    =render partial: 'welcome_video', locals: {domain: Rails.env.test? ? '//example.com' : 'https://youtube.com'}
   .wrapper
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')
-    -flash.each do |key, value|
-      .alert-container
-        .alert.alert-block[class="alert-#{key}" data-dismiss="alert"]= value.capitalize
+    =render partial: 'alerts'
     /= render 'responsibility_notice'
     #pjax-container.container
       =yield
     .push-footer
   =render 'footer'
   =javascript_include_tag 'application'
-  - if Rails.env.production? || Rails.env.test?
+  - if Rails.env.production?
     =render partial: 'analytics'
   script[id="motion-template" type="text/x-handlebars-template"]
     =render partial: 'motions/motion_template'

@@ -143,7 +143,7 @@
 }
 
 .btn-subtle{
-  @include button(rgba(255,255,255,1));
+  @include button(rgba(255,255,255,0));
   border: none;
   color: $g3;
   padding-left: 1em;
@@ -151,6 +151,11 @@
 
   &:hover{
     color: $g4;
+    background-color: $darken1;
+  }
+
+  &:active{
+    background-color: $darken2;
   }
 }
 
@@ -517,8 +522,14 @@ a.is-loading{
 }
 
 .pagination {
-  span {
+  a, .current {
     @extend .btn-subtle;
     padding: .7em !important;
+  }
+
+  .current {
+    color: $blu;
+    pointer-events: none;
+    background-color: $g1;
   }
 }

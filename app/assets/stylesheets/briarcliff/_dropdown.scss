@@ -13,28 +13,45 @@
   cursor: pointer;
 }
 
+@mixin closed-state {
+  @include transition(all .2s);
+  @include transform (translate3d(0,1em,0));
+  opacity: 0;
+}
+
+@mixin opened-state {
+  @include transition(all .2s);
+  @include transform (translate3d(0,0,0));
+  opacity: 1;
+}
+
 .dropdown-content {
   background-color: white;
   // This isn't display: none; to make javascript return bounding box dimensions
-  visibility: hidden;
+  //visibility: hidden;
   left: 0;
   margin: 0;
   position: absolute;
   text-align: left;
-  font-size: 16px;
-  @include bp-small{
-    font-size: 14px;
-  }
   top: 100%;
   width: 15em;
   z-index: 10;
-  @include box-shadow-intense;
   border-top-left-radius: 0;
   overflow: hidden;
   text-transform: none;
   border-top: none;
   max-height: 30em;
   overflow-y: auto;
+  @include box-shadow-intense;
+  font-size: 16px;
+  -webkit-overflow-scrolling: touch;
+
+  @include closed-state();
+
+  @include bp-small{
+    font-size: 14px;
+  }
+
   li {
     min-width: 100%;
   }
@@ -44,7 +61,6 @@
     padding: .6em .7em;
     min-width: 100%;
     display: block;
-    @include transition(.1s);
 
     &:hover {
       background-color: $darken1;
@@ -70,8 +86,10 @@
     color: white;
     background-color: $g3;
   }
+
   .link{
     position: relative;
+
     img {
       position: absolute;
       left: 0;
@@ -79,6 +97,7 @@
       height: 1.6em;
       margin: 0.3em 0.4em;
       border-radius: 999px;
+
       & + span {
         position: relative;
         left: 1.4em;
@@ -88,15 +107,18 @@
   }
 }
 
-.dropdown-active {
-  .dropdown-trigger{
-    background-color: $lighten3 !important;
-  }
+.dropdown-content--helper {
+  visibility: hidden;
 }
 
-.dropdown-right {
+.dropdown--left {
   right: 0;
   left: auto;
+}
+
+.dropdown--right{
+  left: 0;
+  right: auto;
 }
 
 span.dropdown-header {
@@ -111,14 +133,29 @@ span.dropdown-header {
 }
 
 //.dropdown:hover .dropdown-content,
-.dropdown-active .dropdown-content {
-  //Dit moet nog gemaakt worden voor touch devices. Op mijn iPad werkt de hover niet, dus daarom een css klasse voor on-touch-event wat de dropdown triggert
-  visibility: visible;
-  -webkit-overflow-scrolling: touch;
-  //text-transform: initial;
-  @include animation(fade-in .2s);
-  span {
-    display: inline-block !important; //Makes sure the text in dropdowns is not hidden on smaller screens.
+.dropdown-active {
+  .dropdown-trigger{
+    background-color: $lighten3 !important;
+  }
+}
+
+// ReactCSSTransitionGroup
+.dropdown-enter {
+  @include closed-state();
+
+  &.dropdown-enter-active {
+    &.dropdown-content {
+      @include opened-state();
+    }
+  }
+}
+
+.dropdown-leave{
+  @include opened-state();
+
+  &.dropdown-leave-active{
+    @include closed-state();
+    pointer-events: none;
   }
 }
 
@@ -131,16 +168,6 @@ span.dropdown-header {
   width: 100%;
   border-top: solid 1px $g2;
 }
-
-/*.dropdown-header {
-  background-color: $g2;
-  width: 100%;
-  li{
-    display: inline-block !important;
-    min-width: 0;
-    font-size: .8em;
-  }
-}*/
 
 .dropdown-title {
   float: left;

@@ -18,7 +18,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
     .cover-buttons.cover-buttons--top
       .cover-buttons-container
         ul.btns-horizontal
-          - if !policy(@forum).is_member? && policy(@forum).is_open? && current_user.present?
+          - if !policy(@forum).is_member? && policy(@forum).join? && current_user.present?
             li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn--transparant'
               span.fa.fa-plus
               span.icon-left= t('forums.join.title')
@@ -44,7 +44,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
             li= link_to new_user_invitation_path(forum: @forum.url), remote: true, class: 'btn--pro remote-link', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite'), step: 14}
               span.fa.fa-user-plus
               span.icon-left= t('forums.invite_others')
-          - if policy(@forum).is_manager?
+          - if policy(@forum).update?
             li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
               span.fa.fa-gear
               span.icon-left= t('forums.settings.title')
@@ -58,19 +58,6 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
           - if @forum.bio_long.present?
             a[href="#forum-info" class="smoothscroll"]
               span.icon-left= t('forums.more_info')
-  / The skeleton for the tabs layout!
-  /.tabs-container
-    ul.tabs
-      li.tab--current
-        a
-          span items
-      li
-        a
-          span activities
-      li
-        a
-          span menu
-
   - if policy(@forum).show?
     =render partial: 'filter_and_sort'
     .grid

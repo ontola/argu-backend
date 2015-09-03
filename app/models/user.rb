@@ -34,6 +34,14 @@ class User < ActiveRecord::Base
         format: { with: RFC822::EMAIL }
   validates :profile, presence: true
 
+  def active_at(redis = nil)
+    Argu::Redis.get("user:#{self.id}:active.at", redis)
+  end
+
+  def active_since?(datetime, redis = nil)
+    active_at(redis).to_i >= datetime.to_i
+  end
+
   # @private
   # Note: Fix for devise_invitable w/ shortnameable
   # Override deletes the shortname if
@@ -65,6 +73,10 @@ class User < ActiveRecord::Base
     authentications.any? && password.blank?
   end
 
+  def last_email_sent_at(redis = nil)
+    Argu::Redis.get("user:#{self.id}:email.sent.at", redis)
+  end
+
   def managed_pages
     t = Page.arel_table
     Page.where(t[:id].in(self.profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id)).or(t[:owner_id].eq(self.profile.id)))
@@ -86,21 +98,17 @@ class User < ActiveRecord::Base
     if encrypted_password.presence
       ::BCrypt::Password.new(encrypted_password).salt
     else
-      begin
-      redis = Redis.new
-      salt = redis.get("users:#{id}:salt")
+      salt = Argu::Redis.get("user:#{id}:salt")
       if salt.blank?
         salt = ::BCrypt::Engine.generate_salt(Rails.application.config.devise.stretches)
-        redis.set("users:#{id}:salt", salt)
-        salt
+        Argu::Redis.set("user:#{id}:salt", salt)
       end
-      salt
-      rescue Redis::CannotConnectError => e
-        Bugsnag.notify e
-      ensure
-        salt.presence || ::BCrypt::Engine.generate_salt(Rails.application.config.devise.stretches)
-      end
+      salt.presence || ::BCrypt::Engine.generate_salt(Rails.application.config.devise.stretches)
     end
+  end
+
+  def sync_notification_count
+    Argu::Redis.set("user:#{self.id}:notification.count", self.profile.notifications.count)
   end
 
   def update_acesss_token_counts

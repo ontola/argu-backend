@@ -15,20 +15,26 @@
             h3= t('motions.form.content_heading')
             p= t('motions.form.content_body_html')
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(@motion, :content, motion_type)
-            =f.input :tag_list, input_html: {class: 'tag-list'}, label: true
-            =f.input :cover_photo, label: t('image')
-            -if !@motion.new_record?
+            /=f.input :tag_list, input_html: {class: 'tag-list'}, label: true
+
+          =f.inputs name: t('image') do
+            p= t('use_a_high_res_image')
+            =f.input :cover_photo, label: t('profiles.edit.upload_piture')
+            li.form-helper
+              span=t('profiles.edit.file_limit_notice')
+            - if @motion.cover_photo.present?
+              =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 256px;'}
               =f.input :remove_cover_photo, as: :reverse_boolean
 
-            -if !@motion.new_record? && policy(@motion).trash?
-              =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-                - if policy(@motion).trash?
-                  =f.input :is_trashed, as: :reverse_boolean
-                - if policy(@motion).move?
-                  =f.input :f_move, as: :link, url: motion_move_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
-                  =f.input :f_convert, as: :link, url: motion_convert_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
-                  =f.input :invert_arguments, as: :reverse_boolean
-                  /TODO invert arguments only visible when in edit, not in new.
+          -if !@motion.new_record? && policy(@motion).trash?
+            =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+              - if policy(@motion).trash?
+                =f.input :is_trashed, as: :reverse_boolean
+              - if policy(@motion).move?
+                =f.input :f_move, as: :link, url: motion_move_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
+                =f.input :f_convert, as: :link, url: motion_convert_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
+                =f.input :invert_arguments, as: :reverse_boolean
+                /TODO invert arguments only visible when in edit, not in new.
         - if @motion.new_record?
           =render partial: 'profiles/profile_current'
         - else

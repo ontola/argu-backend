@@ -9,8 +9,7 @@ class ProfilesController < ApplicationController
     if current_user.present?
       if params[:q].present?
         # This is a working mess.
-        @profiles = Profile.where(is_public: true).where('lower(name) LIKE lower(?)', "%#{params[:q]}%")#.page params[:profile] # Pages
-        @profiles += Profile.where(is_public: true).where(profileable_type: 'User',
+        @profiles = Profile.where(is_public: true).where(profileable_type: 'User',
                                                          profileable_id: User.where(finished_intro: true).joins(:shortname)
                                                                              .where('lower(shortname) LIKE lower(?) OR '\
                                                                                     'lower(first_name) LIKE lower(?) OR '\
@@ -18,6 +17,9 @@ class ProfilesController < ApplicationController
                                                                                     "%#{params[:q]}%",
                                                                                     "%#{params[:q]}%",
                                                                                     "%#{params[:q]}%").pluck(:owner_id))
+        if params[:things] && params[:things].split(',').include?('pages')
+          @profiles += Profile.where(is_public: true).where('lower(name) LIKE lower(?)', "%#{params[:q]}%")#.page params[:profile] # Pages
+        end
       end
     end
   end
@@ -62,12 +64,13 @@ class ProfilesController < ApplicationController
 
     respond_to do |format|
       if updated && @resource.try(:r).present?
-        r = @resource.r
+        r = URI.decode(@resource.r)
         @resource.update r: ''
-        format.html { redirect_to r,
+        r_opts = r_to_url_options(r)[0].merge(Addressable::URI.parse(r).query_values || {})
+        format.html { redirect_to r_opts,
                       status: r.match(/\/v(\?|\/)|\/c(\?|\/)/) ? 307 : 302 }
       elsif updated
-        format.html { redirect_to dual_profile_path(@profile), notice: 'Profile was successfully updated.' }
+        format.html { redirect_to dual_profile_url(@profile), notice: 'Profile was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render profile_edit_view_path(@resource) }

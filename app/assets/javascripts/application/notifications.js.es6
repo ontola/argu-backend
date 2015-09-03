@@ -43,20 +43,25 @@ Argu.n = {
         }
     },
 
-    refreshNotifications: function () {
+    refreshNotifications: function (force = false) {
         "use strict";
-        if (window.lastNotification != '-1' && !Argu.n.refreshing && (!window.lastNotification || Date.now() - Argu.n.lastNotificationCheck >= 15000)) {
+        if (force || window.lastNotification != '-1' && !Argu.n.refreshing && (!window.lastNotification || Date.now() - Argu.n.lastNotificationCheck >= 15000)) {
             window.clearTimeout(Argu.n.notificationTimeout);
             Argu.n.refreshing = true;
             Argu.n.lastNotificationCheck = Date.now();
-            NotificationActions.checkForNew().then(function () {
+            let done = function () {
                 Argu.n.refreshing = false;
                 Argu.n.resetTimeout();
-            }, function () {
-                console.log('failed');
-                Argu.n.refreshing = false;
-                Argu.n.resetTimeout();
-            });
+                return Promise.resolve();
+            };
+            Promise.resolve()
+                .then(NotificationActions.checkForNew)
+                .then(NotificationActions.fetchNew)
+                .then(done)
+                .catch((e) => {
+                    console.log('error', e);
+                    done();
+                });
         } else if (window.lastNotification != '-1' && !Argu.n.refreshing) {
             Argu.n.resetTimeout();
         }

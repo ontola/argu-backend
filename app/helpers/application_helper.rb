@@ -1,17 +1,10 @@
 module ApplicationHelper
-  include ActivityStringHelper, AlternativeNamesHelper, UsersHelper
+  include ActivityStringHelper, AlternativeNamesHelper, UsersHelper, StubbornCookie
   EU_COUNTRIES = %w(BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT AT PL PT RO SI SK FI SE UK ME IS AL RS TR)
 
   # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)
-    begin
-      $rollout.active?(feature, user)
-    rescue RuntimeError => e
-      Rails.logger.error 'Redis not available'
-      ::Bugsnag.notify(e, {
-          :severity => 'error',
-      })
-    end
+    $rollout.active?(feature, user)
   end
 
   def analytics_token
@@ -31,14 +24,21 @@ module ApplicationHelper
     end
   end
 
+  def user_identity_token(user)
+    sign_payload({
+                     user: user.id,
+                     exp: 2.days.from_now.to_i,
+                     iss: 'argu.co'
+                 })
+  end
+
   def sign_payload(payload)
     JWT.encode payload, Rails.application.secrets.jwt_encryption_token, 'HS256'
   end
 
-  def decode_token(token)
-    JWT.decode(token, Rails.application.secrets.jwt_encryption_token, 'HS256')[0]
+  def decode_token(token, verify = false)
+    JWT.decode(token, Rails.application.secrets.jwt_encryption_token, {algorithm: 'HS256'})[0]
   end
-
 
   # Merges a URI with a params Hash
   def merge_query_parameter(uri, params)
@@ -53,7 +53,7 @@ module ApplicationHelper
   end
 
   def r_to_url_options(r)
-    url_options = Rails.application.routes.recognize_path(URI.decode(r))
+    url_options = Rails.application.routes.recognize_path(Addressable::URI.parse(URI.decode(r)).path)
     return url_options, "#{url_options[:controller]}_controller".camelize.safe_constantize
   end
 
@@ -62,8 +62,12 @@ module ApplicationHelper
   end
 
   # Used in forms for the 'r' system
-  def remote_if_user
-    current_profile.present? ? {remote: true} : {}
+  def remote_if_user(override = nil)
+    if override != nil
+      override ? {remote: override} : {}
+    else
+      current_profile.present? ? {remote: true} : {}
+    end
   end
 
   # Used in forms for the 'r' system
@@ -124,11 +128,11 @@ module ApplicationHelper
 
   # Generates a link to the Profile's profileable
   # Either a Page or a User
-  def dual_profile_path(profile)
+  def dual_profile_url(profile)
     if profile.profileable.class == User
-      user_path(profile.profileable)
+      user_url(profile.profileable)
     elsif profile.profileable.class == Page
-      page_path(profile.profileable)
+      page_url(profile.profileable)
     else
       'deleted'
     end
@@ -136,12 +140,11 @@ module ApplicationHelper
 
   # Generates a link to the Profile's profileable edit action
   # Either a Page or a User
-  def dual_profile_edit_path(profile)
+  def dual_profile_edit_url(profile)
     if profile.profileable.class == User
-      edit_user_path(profile.profileable)
+      edit_user_url(profile.profileable)
     elsif profile.profileable.class == Page
-      #edit_page_path?
-      settings_page_path(profile.profileable)
+      settings_page_url(profile.profileable)
     else
       'deleted'
     end
@@ -176,8 +179,9 @@ module ApplicationHelper
 
 
   def safe_truncated_text(contents, url, cutting_point = 220)
-    _html = escape_once HTML_Truncator.truncate(markdown_to_plaintext(contents), cutting_point, {length_in_chars: true, ellipsis: ('... ') })
-    _html << url if _html.length > cutting_point
+    adjusted_content = markdown_to_plaintext(contents)
+    _html = escape_once HTML_Truncator.truncate(adjusted_content, cutting_point, {length_in_chars: true, ellipsis: ('... ') })
+    _html << url if adjusted_content.length > cutting_point
     _html
   end
 

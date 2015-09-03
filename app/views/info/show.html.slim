@@ -7,8 +7,14 @@
     - @document['sections'].each do |section|
       - unless section['hidden']
         - if section['type'] == 'image-wide'
-          .blocks[class=section['class'] id=section['id']]
-            img.block-image-wide[src="#{asset_path section['image']}"]
+          .blocks.blocks--dark-background[class=section['class'] id=section['id']]
+            img.block-image-wide[src="#{asset_path section['image']}" style="opacity:#{section['opacity'].present? ? section['opacity'] : '1' };" ]
+              .block-image-contents
+                - if section['header'].present?
+                  h2.block-image-header= section['header']
+                - if section['c2a'].present?
+                  =link_to section['c2a']['url'] do
+                    .block-c2a= section['c2a']['body']
         - elsif section['type'] == 'video'
           .blocks[class=section['class'] id=section['id']]
             .block-video
@@ -22,7 +28,7 @@
               - if section['body'].present?
                 - section['body'].each do |body|
                   .markdown[itemprop="text"]
-                    = markdown_to_html(body)
+                    =markdown_to_html(body)
               - if section['people'].present?
                 ul.block-references
                   - section['people'].each do |person|
@@ -33,7 +39,13 @@
                       p.block-subtle
                         b= person['name']
                         - if person['function'].present?
-                          == ", #{person['function']}"
+                          =", #{person['function']}"
+                      - if person['links'].present?
+                        - person['links'].each do |link|
+                          a.block-person-link[href="#{link['url']}"]
+                            - if link['icon'].present?
+                              span.fa.icon-right[class=('fa-' + link['icon'])]
+                            span= link['body']
               - if section['features'].present?
                 ul.block-features
                   - section['features'].each do |feature|
@@ -51,7 +63,7 @@
                         a[href=partner['url'] title=partner['name']]
                           .block-partner-image[style="background-image: url(#{asset_path partner['image']})"]
               - if section['link'].present?
-                a.block-link[href=section['link']['url']]= section['link']['body']
+                a.block-link[href=section['link']['url'] onmousedown=section['link']['onmousedown']]= section['link']['body']
             - if section['image'].present?
               .block--img.block--img--full
                 .img.img[style="background-image: url(#{asset_path section['image']})"]
@@ -67,7 +79,7 @@
                   header
                     h2= section['header']
                 - section['body'].each do |body|
-                  p.block-subtle == body
+                  p.block-subtle== body
                 - if section['social']
                   ul.block-social-buttons
                     - section['social'].each do |social|
@@ -82,7 +94,7 @@
                   h2= section['expand']['header']
                 - section['expand']['body'].each do |body|
                   .markdown[itemprop="text"]
-                    = markdown_to_html(body)
+                    =markdown_to_html(body)
               - if section['expand']['image'].present?
                 .block--img.block--img--full
                   .img[style="background-image: url(#{asset_path section['expand']['image']})"]

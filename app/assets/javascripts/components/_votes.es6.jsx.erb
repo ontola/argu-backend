@@ -1,59 +1,5 @@
 /*global React, $*/
 
-
-window.CombiBigVote = React.createClass({
-    getInitialState: function () {
-        return {
-            actor: this.props.actor,
-            groups: this.props.groups,
-            object_type: this.props.object_type,
-            object_id: this.props.object_id,
-            current_vote: this.props.current_vote,
-            distribution: this.props.distribution,
-            percent: this.props.percent
-        };
-    },
-
-    onActorChange: function (actor) {
-        this.refreshGroups();
-        this.setState({actor: actor});
-    },
-
-    componentDidMount: function () {
-        this.unsubscribe = actorStore.listen(this.onActorChange);
-    },
-
-    componentWillUnmount: function () {
-        this.unsubscribe();
-    },
-
-    refreshGroups: function () {
-        fetch(`${this.state.object_id}.json`, _safeCredentials())
-            .then(statusSuccess)
-            .then(json)
-            .then((data) => {
-                this.setState({groups: data.groups});
-            }).catch(() => {
-                Argu.Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
-            });
-    },
-
-    render: function () {
-        let voteComponent;
-        if (!this.state.actor || this.state.actor.actor_type == "User") {
-            voteComponent = <BigVote {...this.state} {...this.props}/>;
-        } else if (this.state.actor.actor_type == "Page") {
-            voteComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
-        }
-
-        return (
-            <div>
-                {voteComponent}
-            </div>
-        );
-    }
-});
-
 window.BigVote = React.createClass({
     getInitialState: function () {
         return {

@@ -29,7 +29,9 @@
   font-size: 13px; // Not em, since parent items with smaller fonts could otherwise influence the tooltip font size
   @include box-shadow-intense;
   opacity:0;
-  @include bp-medium {
+  max-width: 0;
+
+  @include bp-large {
     display: none;
   }
 }
@@ -51,4 +53,7 @@
 .no-touch [data-title]:hover:after {
   opacity: 1;
   top: 100%;
+  max-width: auto;
+  @include transition (.2s ease-in-out);
+
 }

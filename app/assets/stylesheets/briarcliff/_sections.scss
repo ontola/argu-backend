@@ -7,12 +7,12 @@ section {
 }
 
 .section-info {
-
   padding-top: 0.1em;
   line-height: 1.1em;
   background-color: $g3;
   color: white;
   text-transform: uppercase;
+  height: 1.4em;
 
   span {
     font-size: .8em;
@@ -119,4 +119,25 @@ section.smallpadded {
 
 .section-info--contemplating {
   background-color: $g3;
+}
+
+.section-video {
+  padding: 0;
+  position:relative;
+  padding-bottom:56.25%;
+  padding-top:30px;
+  height:0;
+  overflow:hidden;
+
+  iframe, object, embed {
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+  }
+}
+
+.section--has-readmore {
+  padding-bottom: .4em;
 }

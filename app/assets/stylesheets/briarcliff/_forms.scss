@@ -1,9 +1,12 @@
 @import "variables";
 @import "mixins";
 
-input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"] {
+$label_width: 30%;
+
+input[type="text"], textarea, input[type="password"], input[type="email"], input[type="url"], input[type="date"], .Select-control {
   background-color: $darken1;
   padding: .5em;
+  margin-bottom: 1em;
   font-size: 1em;
   font-family: $font-sans;
   display: inline-block;
@@ -12,6 +15,8 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   line-height: 1.4em;
   border: solid 1px $g1;
   -webkit-appearance: none;
+  -moz-appearance:none;
+  appearance:none;
   word-break: normal; //Fixes a bug in chrome where the content in an input glitches between two lines.
   @include border-radius(0);
   @include transition(.2s);
@@ -35,7 +40,7 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   &.h1 {
     font-family: $font-special;
     font-size: 2.5em;
-    font-weight: 800;
+    font-weight: 700;
     width: 100%;
     padding: .2em;
   }
@@ -82,10 +87,11 @@ label {
   text-transform: uppercase;
   color: $g3;
   font-size: 0.9em;
-  width: 30%;
+  width: $label_width;
   letter-spacing: 0.1em;
   vertical-align: top;
   line-height: 1.5em;
+
   @include bp-medium {
     width: 100%;
   }
@@ -93,7 +99,7 @@ label {
 
 legend {
   width: 100%;
-  margin-bottom: 1em;
+  margin-bottom: .4em;
   padding: 0.3em 0;
   text-align: left;
   border-bottom: solid $g1 1px;
@@ -109,9 +115,10 @@ legend {
 }
 
 fieldset {
+
   //Fieldset within fieldset since formtastic makes the form's top level a fieldset too
   fieldset {
-    margin-bottom: -1.5em;
+    //margin-bottom: -1.5em; //fixes too big margin if
     &.control-group{
       margin-bottom: 0;
     }
@@ -120,7 +127,19 @@ fieldset {
     margin-left: 0;
   }
   li {
-    margin-bottom: 1.5em;
+    //margin-bottom: 1.5em;
+  }
+}
+
+// List item that gives some extra information about the field above it
+li.form-helper {
+  padding-left: $label_width;
+  margin-top: -0.6em;
+  margin-bottom: 1.2em;
+  line-height: 1.5em;
+
+  @include bp-medium{
+    padding-left: 0;
   }
 }
 
@@ -140,7 +159,7 @@ fieldset {
 
 .form-input-title {
   font-size: 1.8em !important;;
-  font-weight: 800 !important;;
+  font-weight: 700 !important;;
   padding: .2em !important;
   width: 100% !important;;
   @include bp-medium{
@@ -262,15 +281,16 @@ fieldset {
 
 .formtastic .actions {
   text-align: center;
+  margin-bottom: 1em;
 }
 
 .formtastic li {
   clear: both;
   position: relative;
-  line-height: 0; //Fixes a weird margin before inline hints.
+  //line-height: 0; //Fixes a weird margin before inline hints, but also causes a weird issue for normal helpers.
 }
 
-input[type="file"], select {
+input[type="file"] {
   padding: 0.3em 0;
   font-size: 1em;
 }
@@ -282,7 +302,10 @@ input[type="file"], select {
 .inline-errors, .inline-hints {
   padding: 0.2em .5em;
   font-size: .8em;
-  margin-bottom: 0 !important;
+}
+
+.inline-errors {
+  margin: -1.3em 0 1.5em 0;
 }
 
 input:focus + p.inline-hints, textarea:focus + p.inline-hints {
@@ -302,7 +325,7 @@ p.inline-hints {
   pointer-events: none;
   padding: 0;
   position: absolute;
-  top: 100%;
+  bottom: 100%;
   z-index: 10;
   @include transition(.2s);
   @include box-shadow-intense;
@@ -328,7 +351,29 @@ p.inline-hints {
   bottom: 0;
   z-index: 1;
   right: 0;
+
   li {
     margin: 0;
   }
 }
+/*
+select {
+  padding:.3em;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  cursor:pointer;
+
+  &:after {
+    content: '';
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 1em .6em 0 .6em;
+    border-color: #000000 transparent transparent transparent;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+*/

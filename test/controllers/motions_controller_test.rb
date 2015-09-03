@@ -3,6 +3,8 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+
   ####################################
   # Not logged in
   ####################################
@@ -27,6 +29,8 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As user
   ####################################
+  let(:user) { FactoryGirl.create(:user) }
+
   test 'should get show' do
     sign_in users(:user)
 
@@ -69,6 +73,25 @@ class MotionsControllerTest < ActionController::TestCase
     assert_redirected_to motion_path(assigns(:motion))
   end
 
+  test 'should show tutorial only on first post create' do
+    sign_in user
+    FactoryGirl.create(:membership, profile: user.profile, forum: holland)
+
+    assert_difference 'Motion.count' do
+      post :create, forum_id: holland, motion: {title: 'Motion', content: 'Contents'}
+    end
+    assert_not_nil assigns(:motion)
+    assert_not_nil assigns(:forum)
+    assert_redirected_to motion_path(assigns(:motion), start_motion_tour: true)
+
+    assert_difference 'Motion.count' do
+      post :create, forum_id: holland, motion: {title: 'Motion2', content: 'Contents'}
+    end
+    assert_not_nil assigns(:motion)
+    assert_not_nil assigns(:forum)
+    assert_redirected_to motion_path(assigns(:motion))
+  end
+
   test 'should not post create without create_without_question' do
     sign_in users(:user)
 
@@ -78,6 +101,7 @@ class MotionsControllerTest < ActionController::TestCase
                title: 'Motion',
                content: 'Contents'
            }
+      puts ''
     end
     assert_not_nil assigns(:motion)
     assert_not assigns(:motion).persisted?

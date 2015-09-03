@@ -3,6 +3,11 @@ require 'test_helper'
 class GroupsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  setup do
+    @holland, @holland_owner = create_forum_owner_pair({type: :populated_forum})
+    @group = FactoryGirl.create(:group, forum: @holland)
+  end
+
   let(:holland) { FactoryGirl.create(:forum, name: 'holland') }
   let!(:group) { FactoryGirl.create(:group, forum: holland) }
 
@@ -43,12 +48,11 @@ class GroupsControllerTest < ActionController::TestCase
   ####################################
   # For owners
   ####################################
-  let(:holland_owner) { create_owner(holland) }
 
   test 'should show new' do
-    sign_in holland_owner
+    sign_in @holland_owner
 
-    get :new, id: group, forum_id: holland
+    get :new, id: @group, forum_id: @holland
 
     assert_response 200
     assert assigns(:forum)
@@ -56,9 +60,9 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test 'should show edit' do
-    sign_in holland_owner
+    sign_in @holland_owner
 
-    get :edit, id: group, forum_id: holland
+    get :edit, id: @group, forum_id: @holland
 
     assert_response 200
     assert assigns(:forum)
@@ -66,10 +70,10 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test 'should delete destroy!' do
-    sign_in holland_owner
+    sign_in @holland_owner
 
     assert_difference 'Group.count', -1 do
-      delete :destroy!, id: group
+      delete :destroy!, id: @group
     end
 
     assert_response 303

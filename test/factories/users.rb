@@ -11,9 +11,9 @@ FactoryGirl.define do
     password 'password'
     password_confirmation 'password'
     finished_intro true
-    first_name 'Thom'
-    last_name 'van Kalkeren'
-
+    has_analytics false
+    first_name { |n| 'first_name#{n}'}
+    last_name { |n| 'last_name#{n}'}
 
     trait :forum_manager do
       after(:create) do |user, evaluator|
@@ -21,10 +21,17 @@ FactoryGirl.define do
       end
     end
 
+    factory :user_with_notification do
+      after(:create) do |user, evaluator|
+        user.profile.notifications.create
+      end
+
+    end
+
 
     factory :user_with_memberships do
       after(:create) do |user, evaluator|
-        user.profile.memberships.create(forum: Forum.find_via_shortname('utrecht'))
+        user.profile.memberships.create(forum: FactoryGirl.create(:forum))
       end
 
       factory :user_with_votes do

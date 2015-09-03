@@ -17,16 +17,6 @@ class StaticPagesController < ApplicationController
 	  end
   end
 
-  def about
-    authorize :static_page
-    redirect_to info_path('about'), status: 302
-  end
-
-  def product
-    authorize :static_pages
-    redirect_to info_path('product'), status: 302
-  end
-
   def developers
     authorize :static_page
   end
@@ -40,14 +30,16 @@ class StaticPagesController < ApplicationController
     render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, safari: #{browser.safari?}, mobile: #{browser.mobile?}, tablet: #{browser.tablet?}, ua: #{browser.ua}"
   end
 
-  def team
+  # Used for persistent redis-backed cookies
+  def persist_cookie
     authorize :static_page
-    redirect_to info_path('team'), status: 302
-  end
-
-  def governments
-    authorize :static_page
-    redirect_to info_path('governments'), status: 302
+    respond_to do |format|
+      if stubborn_set_from_params
+        format.json { head 200 }
+      else
+        format.json { head 400 }
+      end
+    end
   end
 
   private

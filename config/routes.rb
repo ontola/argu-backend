@@ -110,7 +110,7 @@ Argu::Application.routes.draw do
   end
 
   resources :arguments, path: 'a', except: [:index, :new, :create], concerns: [:votable] do
-    resources :comments, path: 'c', only: [:new, :index, :show, :create, :destroy]
+    resources :comments, path: 'c', only: [:new, :index, :show, :create, :update, :edit, :destroy]
     patch 'comments' => 'comments#create'
   end
 
@@ -157,17 +157,15 @@ Argu::Application.routes.draw do
   get '/settings', to: 'users#edit', as: 'settings'
   put '/settings', to: 'users#update'
   get '/c_a', to: 'users#current_actor'
+  put 'persist_cookie', to: 'static_pages#persist_cookie'
 
-  # @deprecated Please use info_controller. Kept for cached searches etc.
-  get '/about', to: 'static_pages#about'
-  # @deprecated Please use info_controller. Kept for cached searches etc.
-  get '/product', to: 'static_pages#product'
-  # @deprecated Please use info_controller. Kept for cached searches etc.
+  # @deprecated Please use info_controller. Kept for cached searches etc. do
+  get '/about', to: redirect('/i/about')
+  get '/product', to: redirect('/i/product')
+  get '/team', to: redirect('/i/team')
+  get '/governments', to: redirect('/i/governments')
   get '/how_argu_works', to: 'static_pages#how_argu_works'
-  # @deprecated Please use info_controller. Kept for cached searches etc.
-  get '/team', to: 'static_pages#team'
-  # @deprecated Please use info_controller. Kept for cached searches etc.
-  get '/governments', to: 'static_pages#governments'
+  # end
 
   get '/portal', to: 'portal/portal#home'
 
@@ -194,6 +192,7 @@ Argu::Application.routes.draw do
     resources :tags, path: 't', only: [:show, :index]
     resources :groups, path: 'g', only: [:new, :edit]
   end
+  get '/forums/:id', to: redirect('/%{id}'), constraints: {format: :html}
   get 'forums/:id', to: 'forums#show'
 
   get '/d/modern', to: 'static_pages#modern'

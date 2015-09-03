@@ -1,12 +1,11 @@
 FactoryGirl.define do
 
   factory :motion do
-    title 'title'
+    association :forum, strategy: :create
+    association :creator, factory: :profile
+
+    sequence(:title) { |n| "title#{n}" }
     content 'content'
-    transient do
-      trashed false
-      association :forum, strategy: :create
-      association :creator, factory: :profile
-    end
+    is_trashed false
   end
 end

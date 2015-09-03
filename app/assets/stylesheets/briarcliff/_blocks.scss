@@ -21,6 +21,10 @@ $grey_light: $g0;
   padding: 0;
 }
 
+.blocks--dark-background {
+  background-color: $primary;
+}
+
 .block{
   width: 50%;
   background-color: #ffffff;
@@ -103,6 +107,39 @@ $grey_light: $g0;
   }
 }
 
+.block-c2a {
+  @include button();
+  font-size: 1em;
+}
+
+.block-image-contents {
+  position: absolute;
+  margin: auto;
+  z-index: 1;
+  padding: 1em;
+  text-align: center;
+  bottom: 30%;
+  width: 100%;
+  @include bp-small {
+    bottom: 10%;
+  }
+}
+
+.block-image-header {
+  color: white;
+  font-size: 3.8em;
+  text-align: center;
+  @include bp-large{
+    font-size: 2.4em;
+  }
+  @include bp-medium{
+    font-size: 2em;
+  }
+  @include bp-small{
+    font-size: 1.8em;
+  }
+}
+
 .block--img {
   padding: 0;
   .img {
@@ -163,6 +200,11 @@ $grey_light: $g0;
       }
     }
   }
+}
+
+.blocks--hero {
+  max-width: 100%;
+  margin-top: -3em;
 }
 
 .block--hidden {
@@ -286,6 +328,15 @@ $grey_light: $g0;
   }
 }
 
+.block-big-list {
+  ul, ol {
+    font-size: 1.2em;
+  }
+  li {
+    margin-bottom: .2em;
+  }
+}
+
 .block-subtle {
   color: lighten($primary, 5);
 }
@@ -297,6 +348,20 @@ $grey_light: $g0;
 .block-image-wide {
   width: 100%;
   display: block;
+  &:before {
+    content: "";
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,0);
+    opacity: .2;
+    @include transition(.5s)
+  }
 }
 
 p.block-slogan {
@@ -387,4 +452,21 @@ p.block-slogan {
     width: 100%;
     height: 100%;
   }
+}
+
+.block .markdown a {
+
+  &:hover {
+    color: black;
+  }
+
+  &:visited {
+    color: $g3;
+  }
+}
+
+.block-person-link {
+  padding: 0.4em;
+  margin: 0.5em;
+  background-color: $g0;
 }

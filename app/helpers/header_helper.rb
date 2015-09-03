@@ -8,6 +8,7 @@ module HeaderHelper
   def profile_dropdown_items
     @profile = current_profile
     {
+        defaultAction: dual_profile_url(current_profile),
         trigger: {
             type: 'current_user',
             title: truncate(current_profile.display_name, length: 20),
@@ -15,15 +16,15 @@ module HeaderHelper
                 url: current_profile.profile_photo.url(:icon),
                 className: 'profile-picture--navbar'
             },
-            triggerClass: 'navbar-item'
+            triggerClass: 'navbar-item navbar-profile'
         },
         sections: [
           {
               items: [
-                  link_item(t('show_type', type: t("#{current_profile.profileable.class_name}.type")), dual_profile_path(current_profile), fa: 'user'),
-                  link_item(t('profiles.edit.title'), dual_profile_edit_path(current_profile), fa: 'pencil'),
+                  link_item(t('show_type', type: t("#{current_profile.profileable.class_name}.type")), dual_profile_url(current_profile), fa: 'user'),
+                  link_item(t('profiles.edit.title'), dual_profile_edit_url(current_profile), fa: 'pencil'),
                   link_item(t('users.settings'), settings_url, fa: 'gear'),
-                  policy(Page).index? ? link_item(t('pages.page_management').capitalize, pages_user_url(current_user), fa: 'building') : link_item(t('pages.create'), new_page_path, fa: 'building'),
+                  policy(Page).index? ? link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building') : link_item(t('pages.create'), new_page_path, fa: 'building'),
                   (link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group') if policy(Forum).index? ),
                   link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'}),
                   nil #NotABug Make sure compact! actually returns the array and not nil
@@ -75,16 +76,18 @@ module HeaderHelper
     {
         title: t('about.info'),
         fa: 'fa-info',
+        defaultAction: info_path(:about),
         sections: [
           {
               items: [
                   link_item(t('about.vision'), info_path(:about)),
+                  link_item(t('about.how_argu_works'), how_argu_works_path),
                   link_item(t('about.team'), info_path(:team)),
                   link_item(t('about.governments'), info_path(:governments)),
-                  link_item(t('about.how_argu_works'), how_argu_works_path),
-                  link_item(t('intro.start'), nil, className: 'intro-trigger', data: {:'skip-pjax' => true}),
+                  link_item(t('about.lobby_organizations'), info_path(:lobby_organizations)),
                   link_item(t('press_media'), 'https://argu.pr.co'),
-                  link_item(t('help_support'), 'https://argu.freshdesk.com/support/home')
+                  link_item(t('help_support'), 'https://argu.freshdesk.com/support/home'),
+                  link_item(t('about.contact'), info_path(:contact))
               ]
           }
         ],
@@ -98,10 +101,17 @@ module HeaderHelper
 
   def managed_pages_items
     items = []
-    if current_user.managed_pages.present?
-      items << actor_item(current_user.display_name, actors_path(na: current_user.profile.id, format: :json), image: current_user.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
-      current_user.managed_pages.includes(:profile).each do |p|
-        items << actor_item(p.profile.name, actors_path(na: p.profile.id, format: :json), image: p.profile.profile_photo.url(:icon), data: { method: 'put', 'skip-pjax' => 'true'})
+    managed_pages = current_user.managed_pages.includes(:profile)
+    if managed_pages.present?
+      items << actor_item(current_user.display_name,
+                          actors_path(na: current_user.profile.id, format: :json),
+                          image: current_user.profile.profile_photo.url(:icon),
+                          data: { method: 'put', 'skip-pjax' => 'true'})
+      managed_pages.each do |p|
+        items << actor_item(p.profile.name,
+                            actors_path(na: p.profile.id, format: :json),
+                            image: p.profile.profile_photo.url(:icon),
+                            data: { method: 'put', 'skip-pjax' => 'true'})
       end
     end
     items

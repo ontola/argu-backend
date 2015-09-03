@@ -46,7 +46,9 @@ module AccessTokenHelper
 
   # Gets access tokens which have been stored in a user model or in the session
   def get_access_tokens(user=nil)
-    ((eval(user.access_tokens.to_s) if user) || session[:a_tokens] || []).map { |at| AccessToken.find_by_access_token(at) }
+    ((eval(user.access_tokens.to_s) if user) || session[:a_tokens] || [])
+        .map { |at| AccessToken.find_by_access_token(at) }
+        .compact
   end
 
   # This must be done via the database, since it ensures the eval function can be run safely later on

@@ -1,43 +1,43 @@
 en:
   pages:
-    resource_name: "Pages"
-    type: "Page"
-    show: "Show page"
+    resource_name: "Organizations"
+    type: "Organization"
+    show: "Show organization"
     settings:
-      title: "Page settings"
+      title: "organization settings"
       menu:
         general: 'General'
         advanced: 'Advanced'
         managers: 'Managers'
       managers:
         owner: "Owner"
-        about_owner: "Users own a Page. Users can own multiple Pages, but Pages can only have one owner."
+        about_owner: "Users own an organization. Users can own multiple organizations, but organization can only have a single owner."
         title: "Managers"
-        about_managers: "Page managers are users with extra rights, but noas many as an administrator. Managers can place questions, motions, arguments and replies in name of the Page. They can also vote on their own name and delete previously placed items."
-        transferred: "Page transferred"
-        users_only: "Only users can own pages"
+        about_managers: "Organization managers are users with extra rights, but not many as an administrator. Managers can place questions, motions, arguments and replies in name of the organization. They can also vote on their own name and delete previously placed items."
+        transferred: "Organization transferred"
+        users_only: "Only users can own organizations."
         transfer:
           confirm:
             header: "Are you absolutely sure?"
-            body_html: "Transferring this page means that the ownership of all its contents (including forums!) will be transferred to a different user."
-            repeat: "Enter the Argu URL of this page to confirm the tranfer. This is the username of your page, which is visible in the address bar."
+            body_html: "Transferring this organization means that the ownership of all its contents (including forums!) will be transferred to a different user."
+            repeat: "Enter the Argu URL of this organization to confirm the transfer. This is the username of your organization, which is visible in the address bar."
     management:
-      title: "Page management"
-      managed_current_out_of_max: "%{current} of max %{max} page(s) managed."
+      title: "Organization management"
+      managed_current_out_of_max: "%{current} of max %{max} organization(s) managed."
       members: "%{members} members"
       owner: "Owner"
-    display: "Display page"
-    create: "Create a page"
-    legal: "By creating this page you declare having permission to represent the related organisation on Argu, and that you agree to the general terms and conditions."
-    limit_reached_amount: "You can create no more than %{amount} page(s)."
-    page_management: "page management"
-    page_management_html: "Go to %{href} to manage your pages."
+    display: "Display organization"
+    create: "Create an organization"
+    legal: "By creating this organization you declare having permission to represent the related organisation on Argu, and that you agree to the general terms and conditions."
+    limit_reached_amount: "You can create no more than %{amount} organization(s)."
+    page_management: "organization management"
+    page_management_html: "Go to %{href} to manage your organization."
     helper:
-      side: "<h2>What's a page?</h2>
-             <p>A page is a <b>profile</b> of an organisation, like a company, NGO, political party or a lobby group.
-             <h2>What can I do with a page?</h2>
+      side: "<h2>What's an organization?</h2>
+             <p>An organization is a <b>profile</b> of an organisation, like a company, NGO, political party or a lobby group. It can be managed by several Argu users.
+             <h2>What can I do with an organization?</h2>
              <p>Just like a normal profile, you can <b>place replices, motions and questions, vote, and become a member of forums</b>. You can <b>share viewpoints</b> of the organisation you represent.</p>
-             <h2>When am I allowed to create a page?</h2>
+             <h2>When am I allowed to create an organization?</h2>
              <p>Only if you have <b>permission</b> to participate on Argu on behalf of your organisation.</p>
              "
   activerecord:

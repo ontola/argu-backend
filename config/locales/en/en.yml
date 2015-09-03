@@ -13,11 +13,12 @@ en:
   sign_in_twitter: "Log in with twitter"
   sign_in_existing: "Log in with an existing argu account:"
   forgot_password: "Forgot password?"
+  settings: "Settings"
   sign_up: "Sign up"
   sign_up_description: "Sign up with a free account:"
-  argu_sign_up: "Create argu account"
+  argu_sign_up: "Create Argu account"
   cant_change_username: "You can't change your username after signing up."
-  sign_up_argu: "Create argu account"
+  sign_up_argu: "Create Argu account"
   sign_out: "Sign out"
   no_confirmation_instructions: "Didn't receive confirmation instructions?"
   no_unlock_instructions: "Didn't receive unlock instructions?"
@@ -94,6 +95,7 @@ en:
   accepted: "Accepted"
   rejected: "Rejected"
   contemplating: "Contemplating"
+  use_a_high_res_image: "Use an appropriate image with a high resolution."
 #Home
   home_title: "Argu"
   #Not logged in
@@ -111,8 +113,10 @@ en:
     how_argu_works: "How does Argu work?"
     team: "Our team"
     product: "Our product"
-    organisations: "Argu for organisations"
+    organizations: "Argu for organisations"
+    lobby_organizations: "For lobby organisations"
     governments: "Argu for governments"
+    contact: "Contact"
   how_argu_works:
     title: "How Argu works"
   product:

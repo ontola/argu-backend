@@ -65,6 +65,11 @@ class CoverUploader < CarrierWave::Uploader::Base
     process :resize_to_fill => [1500, 600]
   end
 
+  version :cover_small do
+    process convert: 'jpeg'
+    process :resize_to_fill => [600, 300]
+  end
+
   version :avatar do
     process convert: 'jpeg'
     process :resize_to_fill => [256, 256]

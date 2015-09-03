@@ -31,8 +31,12 @@ module UsersHelper
 
   # Set user_cap to 0 to close the platform
   def platform_open?
-    cap = Setting.get('user_cap').try(:to_i)
-    cap.present? and cap > 0 || cap == -1
+    if instance_variable_defined?(:@_open)
+      @_open
+    else
+      cap = Setting.get('user_cap').try(:to_i)
+      instance_variable_set(:@_open, (cap.present? and cap > 0 || cap == -1))
+    end
   end
 
   # Assigns certain memberships based on
@@ -51,7 +55,12 @@ module UsersHelper
 
   # Set user_cap to -1 to disable the cap
   def within_user_cap?
-    cap = Setting.get('user_cap').try(:to_i)
-    cap.present? and cap == -1 || (cap > 0 && Shortname.where(owner_type: 'User').count < cap)
+    if instance_variable_defined?(:@_cap)
+      @_cap
+    else
+      cap = Setting.get('user_cap').try(:to_i)
+      instance_variable_set(:@_cap, (cap.present? and cap == -1 || (cap > 0 && Shortname.where(owner_type: 'User').count < cap)))
+    end
+
   end
 end

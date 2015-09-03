@@ -32,14 +32,13 @@ class Group < ActiveRecord::Base
 
   def responses_left(group_respondable, profile)
     if include?(profile)
-      max_responses_per_member == -1 ? Float::INFINITY : max_responses_per_member - group_respondable.responses_from(profile)
       if max_responses_per_member == -1
         Float::INFINITY
       else
         max_responses_per_member - group_respondable.responses_from(profile)
       end
     else
-      0
+      -1
     end
   end
 

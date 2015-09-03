@@ -29,7 +29,7 @@ class UsersController < ApplicationController
         format.json { render json: @user }
       end
     else
-      flash['User not found']
+      flash[:error]= 'User not found'
       request.env['HTTP_REFERER'] ||= root_path
       respond_to do |format|
         format.html { redirect_to :back }
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
     successfully_updated = if email_changed or !permit_params[:password].blank? or @user.invitation_token.present?
       if @user.update_with_password(permit_params)
         sign_in(@user, :bypass => true)
-        UserMailer.password_changed_mail(@user)
+        UserFollowerCollector.password_changed_mail(@user)
       end
     else
       @user.update_without_password(passwordless_permit_params)
@@ -142,7 +142,7 @@ class UsersController < ApplicationController
     @user = current_user
     if current_user.blank?
       flash[:error] = t('devise.failure.unauthenticated')
-      redirect_to :back
+      raise Argu::NotLoggedInError.new(t('devise.failure.unauthenticated'))
     end
   end
 

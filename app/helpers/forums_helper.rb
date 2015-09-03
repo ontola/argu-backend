@@ -16,7 +16,9 @@ module ForumsHelper
         title: t('forums.plural'),
         fa: 'fa-group',
         sections: sections,
-        triggerClass: 'navbar-item'
+        defaultAction: discover_forums_path,
+        dropdownClass: 'navbar-forum-selector',
+        triggerClass: 'navbar-item navbar-forums'
     }
   end
 

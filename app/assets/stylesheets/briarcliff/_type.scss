@@ -231,3 +231,12 @@ blockquote {
 .smaller-7 {
   font-size: .7em;
 }
+
+.blockquote--inline {
+  &::before{
+    position: relative;
+  }
+  &::after{
+    position: relative;
+  }
+}

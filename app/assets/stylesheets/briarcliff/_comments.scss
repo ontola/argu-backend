@@ -5,7 +5,7 @@
   position: relative;
 }
 
-.comment .comment {
+.comment .comment:not(.comment_form) {
   padding-left: 1em;
   &:before{
     content: "";

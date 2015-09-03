@@ -16,7 +16,7 @@ class GroupMembershipsController < ApplicationController
     @group = Group.includes(:forum).find(params[:group_id])
     @forum = @group.forum
     authorize @forum, :add_group_member?
-    profile = Profile.find params[:profile_id]
+    profile = Shortname.find_resource(params[:profile_id]).profile
 
     @membership = @group.group_memberships.new member: profile, profile: current_user.profile
     respond_to do |format|

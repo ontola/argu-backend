@@ -47,6 +47,7 @@ module Argu
     end
     config.middleware.use Rack::Attack
 
+    config.react.addons = true
     # Enable the asset pipeline
     config.assets.enabled = true
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')

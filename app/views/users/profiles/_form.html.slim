@@ -11,10 +11,23 @@
     - elsif @profile.profileable.class == Page
       =f.input :name
     =f.input :about, input_html: { :rows => 5 }, label: t('profiles.about_me')
-    =f.input :profile_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }
-    =f.input :profile_photo
+  =f.inputs name: t('profiles.edit.profile_photo') do
+    =f.input :profile_photo, label: t('profiles.edit.upload_piture')
+    li.form-helper
+      span=t('profiles.edit.file_limit_notice')
+    - if @profile.profile_photo.present?
+      =f.input :profile_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }, label: t('profiles.edit.current_picture')
+
+  =f.inputs name: t('profiles.edit.cover_photo') do
+    p= t('profiles.edit.cover_photo_helper')
+    =f.input :cover_photo, label: t('profiles.edit.upload_piture')
+    li.form-helper
+      span=t('profiles.edit.file_limit_notice')
+    - if @profile.cover_photo.present?
+      =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 96px; margin-bottom: 0.5em;'}, label: t('profiles.edit.current_picture')
   =f.inputs name: t('profiles.edit.privacy') do
     p= t('profiles.edit.privacy_notice')
     =f.input :are_votes_public, as: :reverse_boolean
+    =f.input :is_public, as: :reverse_boolean
   =f.actions do
     =f.action :submit, :as => :button, label: current_user.finished_intro? ? t('save') : t('next')

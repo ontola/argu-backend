@@ -11,6 +11,13 @@ class ApplicationController < ActionController::Base
   after_action :verify_policy_scoped, :only => :index
   around_action :set_time_zone
   #after_action :set_notification_header
+  if Rails.env.development? || Rails.env.staging?
+    before_action do
+      if current_user && current_user.profile.has_role?(:staff)
+        Rack::MiniProfiler.authorize_request
+      end
+    end
+  end
 
   rescue_from ActiveRecord::RecordNotUnique, with: lambda {
     flash[:warning] = t(:twice_warning)
@@ -42,7 +49,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from ActiveRecord::RecordNotFound do |exception|
-    @quote = Setting.get(:quotes).split(';').sample
+    @quote = (Setting.get(:quotes) || '').split(';').sample
     respond_to do |format|
       format.html { render 'status/404', status: 404 }
       format.js { head 404 }
@@ -51,6 +58,9 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
+  rescue_from Redis::ConnectionError do |e|
+    Redis.rescue_redis_connection_error(e)
+  end
 
   def after_sign_in_path_for(resource)
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
@@ -72,6 +82,7 @@ class ApplicationController < ActionController::Base
   def create_activity(model, params)
     a = model.create_activity params
     Argu::NotificationWorker.perform_async(a.id)
+    Argu::EmailNotificationWorker.perform_async(a.id)
   end
 
   def current_scope
@@ -107,7 +118,12 @@ class ApplicationController < ActionController::Base
   def preferred_forum(profile = nil)
     profile ||= current_profile
     if profile.present?
-      policy(profile.preferred_forum).show? ? profile.preferred_forum : profile.memberships.first.try(:forum) || Forum.first_public
+      preferred = profile.preferred_forum
+      if preferred && policy(preferred).show?
+        preferred
+      else
+        profile.memberships.first.try(:forum) || Forum.first_public
+      end
     else
       forum_by_geocode || Forum.first_public
     end
@@ -115,13 +131,22 @@ class ApplicationController < ActionController::Base
 
   # @private
   def pundit_user
-    UserContext.new(current_user, current_profile, session, @forum)
+    UserContext.new(current_user,
+                    current_profile,
+                    session,
+                    @forum,
+                    {
+                        platform_open: platform_open?,
+                        within_user_cap: within_user_cap?
+                    })
   end
 
   def render_register_modal(base_url=nil, *r_options)
     if !r_options || r_options.first != false   # Only skip if r_options is false
       r = URI.parse(base_url || request.fullpath)
       r.query = r_options.map(&:to_a).reject { |a| a.last.blank? }.map { |a| [a[0], URI.encode(a[1])].join('=') }.join('&')
+      # r = Addressable::URI.new(base_url || request.fullpath)
+      # r.query_values = r_options.map(&:to_a).reject { |a| a.last.blank? }
     else
       r = nil
     end

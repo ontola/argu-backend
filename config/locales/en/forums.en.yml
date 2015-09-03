@@ -13,7 +13,7 @@ en:
     settings:
       title: "Forum settings"
       general: "General settings"
-      profile: "Profile settings"
+      profile: "Forum profile"
       menu:
         general: "General"
         advanced: 'Advanced'
@@ -43,6 +43,7 @@ en:
       hints:
         bio: "Summarize the goal of the forum in one sentence. This text will appear under the forum. At most 140 characters."
         remove_admin: "This only removes administrator rights."
+      new_helper: "You're about to create a new forum for the organization '%{page}'.  "
     statistics:
       title: "Statistics"
       memberships: "Members"
@@ -80,7 +81,7 @@ en:
       f_management_invite_desc: "Only manager(s) can add new members."
     join:
       title: "Add to my forums"
-      header: "Become a member"
+      header: "Add forum"
       body: "Become a member of the forum ''%{forum}'' and participate in the discussion!"
     invite_others: "Involve others"
     sign_up:
@@ -100,6 +101,9 @@ en:
       body: "We deliver discussion environments for municipalities, companies, education facilities and other organisations. Read more about <b>%{governments}</b>. <b><a href='mailto:info@argu.co'>Contact us</a></b> for more information."
     selector:
       at_least_error: "Choose at least 2 forums"
+    tooltips:
+      members_count: "number of members"
+    visit: "Visit forum"
   activerecord: #These currently aren't used for forms.
     attributes:
       forum:

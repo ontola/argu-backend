@@ -1,13 +1,24 @@
-=semantic_form_for @page do |f|
+=semantic_form_for @page do |p|
   - @page.errors.full_messages.each do |message|
     =message
-  =f.inputs do
-    =f.inputs for: :profile, name: t('forums.settings.profile') do |p|
-      =p.input :name
-      =p.input :about
-      =p.input :profile_photo
-      =p.input :profile_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }
-      =p.input :cover_photo
-      =p.input :cover_photo, as: :preview_image, html_options: { style: 'max-height: 96px; margin-bottom: 0.5em;' }
-  =f.actions do
-    =f.action :submit, :as => :button
+  =p.inputs for: :profile do |f|
+    =f.inputs name: t('forums.settings.profile') do
+      =f.input :name
+      =f.input :about
+    =f.inputs name: t('profiles.edit.profile_photo') do
+      =f.input :profile_photo, label: t('profiles.edit.upload_piture')
+      li.form-helper
+        span=t('profiles.edit.file_limit_notice')
+      - if @page.profile.profile_photo.present?
+        =f.input :profile_photo, as: :preview_image, html_options: {style: 'max-height: 256px'}
+        =f.input :remove_profile_photo, as: :reverse_boolean
+    =f.inputs name: t('profiles.edit.cover_photo') do
+      p= t('use_a_high_res_image')
+      =f.input :cover_photo, label: t('profiles.edit.upload_piture')
+      li.form-helper
+        span=t('profiles.edit.file_limit_notice')
+      - if @page.profile.cover_photo.present?
+        =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 256px;'}
+        =f.input :remove_cover_photo, as: :reverse_boolean
+  =p.actions do
+    =p.action :submit, :as => :button

@@ -1,4 +1,4 @@
-.box.profile-box.box-grid
+/.box.profile-box.box-grid
   .header
     =link_to forum_path(forum) do
       = image_tag forum.profile_photo.url(:avatar), size: '64x64'
@@ -10,5 +10,36 @@
           li= "#{forum.memberships_count} #{t('forums.statistics.memberships')}"
           li="#{forum.questions_count} #{t('forums.statistics.questions')}"
           li="#{forum.motions_count} #{t('forums.statistics.motions')}"
-  section.section-description
-    p= forum.bio.presence || t('forums.no_bio')
+.box.box-grid
+  =link_to forum_path(forum) do
+    section.unpadded.cover--small
+      .cover-image[style="background-image: url('#{forum.cover_photo.url(:box)}'); "]
+        =image_tag forum.profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
+        h3= forum.display_name
+      .cover-overlay
+      - if policy(forum).update?
+        .btns-sticky.btns-sticky-top
+          =link_to settings_forum_path(forum), class: ('btn--transparant') do
+            span.fa.fa-gear
+            span.icon-left= t('settings')
+  section.section-info.motion-bg
+    .details
+      .details-part.details-part--type.neutral-bg
+        span[class="fa fa-group"]
+        span.icon-left= t('forums.type')
+      .details-part[data-title=t('forums.tooltips.members_count')]
+        span.fa.fa-user
+        span.icon-left= forum.memberships.count
+      .details-part[data-title=t('questions.tooltips.count')]
+        span.fa.fa-question
+        span.icon-left= forum.questions.count
+      .details-part[data-title=t('motions.tooltips.count')]
+        span.fa.fa-lightbulb-o
+        span.icon-left= forum.motions.count
+  - if forum.bio.presence
+    section.section-description
+      //h3= forum.display_name
+      p= forum.bio.presence || t('forums.no_bio')
+      =link_to forum_path(forum)
+        .read-more
+          span= t('forums.visit')
