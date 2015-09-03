@@ -27,7 +27,6 @@ RSpec.feature 'Login', type: :feature do
     within('#new_user') do
       fill_in 'user_email', with: holland_member.email
       fill_in 'user_password', with: 'password'
-      save_and_open_screenshot
       click_button 'log_in'
     end
 
