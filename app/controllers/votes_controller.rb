@@ -41,19 +41,19 @@ class VotesController < ApplicationController
     else
       authorize @model.forum, :show?
 
-      @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile, forum: @model.forum)
+      @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile)
 
       respond_to do |format|
-        if !current_profile.member_of? @model.forum
-          format.json { render status: 403, json: { error: 'NO_MEMBERSHIP', membership_url: forum_memberships_url(@model.forum, redirect: false) } }
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @model.forum, r: request.fullpath } }
-          format.html { render template: 'forums/join', locals: { forum: @model.forum, r: request.fullpath } }
+        if !current_profile.member_of? current_forum
+          format.json { render status: 403, json: { error: 'NO_MEMBERSHIP', membership_url: forum_memberships_url(current_forum, redirect: false) } }
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: current_forum, r: request.fullpath } }
+          format.html { render template: 'forums/join', locals: { forum: current_forum, r: request.fullpath } }
         elsif @vote.for == params[:for]
           format.json { render status: 304 }
           format.js { head :not_modified }
           format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.not_modified') }
         elsif @vote.update(for: params[:for])
-          create_activity_with_cleanup @vote, action: :create, parameters: {for: @vote.for}, recipient: @vote.voteable, owner: current_profile, forum_id: @vote.forum.id
+          create_activity_with_cleanup @vote, action: :create, parameters: {for: @vote.for}, recipient: @vote.voteable, owner: current_profile, forum_id: current_forum.id
           @model.reload
           save_vote_to_stats @vote
           format.json { render location: @vote }
@@ -114,7 +114,7 @@ class VotesController < ApplicationController
 
 private
   def get_context
-    @forum = @model.forum
+    @forum = current_forum
   end
 
   # noinspection RubyUnusedLocalVariable

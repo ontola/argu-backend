@@ -25,6 +25,7 @@ gem 'rest-client'
 gem 'multimap'
 
 ##################Features########################
+gem 'apartment', '~> 1.0.2'
 gem 'acts-as-taggable-on', '~> 3.4.2'
 gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 2.0.0'

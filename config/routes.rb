@@ -197,6 +197,6 @@ Argu::Application.routes.draw do
 
   get '/d/modern', to: 'static_pages#modern'
 
-  root to: 'static_pages#home'
-  get '/', to: 'static_pages#home'
+  root to: 'forums#show'
+  get '/', to: 'forums#show'
 end

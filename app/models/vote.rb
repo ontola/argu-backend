@@ -4,14 +4,13 @@ class Vote < ActiveRecord::Base
   belongs_to :voteable, polymorphic: true, inverse_of: :votes
   belongs_to :voter, polymorphic: true #class_name: 'Profile'
   has_many :activities, as: :trackable, dependent: :destroy
-  belongs_to :forum
 
-  after_create :update_counter_cache
+  after_save :update_counter_cache
   after_destroy :decrement_counter_cache
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
 
-  validates :voteable_id, :voteable_type, :voter_id, :forum_id, :voter_type, :for, presence: true
+  validates :voteable_id, :voteable_type, :voter_id, :voter_type, :for, presence: true
 
   ##########methods###########
   def for?(item)

@@ -17,7 +17,7 @@ class ForumsController < ApplicationController
   end
 
   def show
-    @forum = Forum.find_via_shortname params[:id]
+    @forum = current_forum
     authorize @forum, :list?
     current_context @forum
 

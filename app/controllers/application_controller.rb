@@ -85,6 +85,10 @@ class ApplicationController < ActionController::Base
     Argu::EmailNotificationWorker.perform_async(a.id)
   end
 
+  def current_forum
+    @_current_forum ||= Forum.find_via_shortname Apartment::Tenant.current
+  end
+
   def current_scope
     @current_scope ||= (current_context.context_scope(current_profile) || current_context)
   end
