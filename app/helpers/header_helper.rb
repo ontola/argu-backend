@@ -60,7 +60,7 @@ module HeaderHelper
     Forum.top_public_forums(limit)
         .select { |f| ['nederland', 'utrecht', 'houten', 'feedback'].include?(f.shortname.shortname) }
         .each do |forum|
-      items << link_item(forum.display_name, forum_path(forum), image: forum.profile_photo.url(:icon))
+      items << link_item(forum.display_name, root_url(subdomain: forum), image: forum.profile_photo.url(:icon))
     end
     items
   end
@@ -68,7 +68,7 @@ module HeaderHelper
   def profile_membership_items
     ids = current_profile.present? ? current_profile.memberships.pluck(:forum_id) : []
     Shortname.shortname_owners_for_klass('Forum', ids).map do |shortname|
-      link_item(shortname.owner.display_name, forum_path(shortname.shortname), image: shortname.owner.profile_photo.url(:icon))
+      link_item(shortname.owner.display_name, root_url(subdomain: shortname.shortname), image: shortname.owner.profile_photo.url(:icon))
     end
   end
 
