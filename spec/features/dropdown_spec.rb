@@ -6,7 +6,7 @@ RSpec.feature 'Login', type: :feature do
   let!(:holland) { FactoryGirl.create(:populated_forum, name: 'nederland') }
   let!(:other) { FactoryGirl.create(:populated_forum, name: 'houten') }
 
-  scenario 'User logs in from a Forum' do
+  scenario 'User switches forum with forum dropdown' do
     visit forum_path(holland)
 
     within('.navbar-forum-selector') do
@@ -14,6 +14,7 @@ RSpec.feature 'Login', type: :feature do
       click_link other.name
     end
 
+    expect(page).to have_content other.display_name
     expect(current_path).to eq forum_path(other)
   end
 end
