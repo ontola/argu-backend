@@ -9,7 +9,6 @@ class ProfilesController < ApplicationController
     if current_user.present?
       if params[:q].present?
         # This is a working mess.
-        #@profiles = Profile.where(is_public: true).where('lower(name) LIKE lower(?)', "%#{params[:q]}%")#.page params[:profile] # Pages
         @profiles = Profile.where(is_public: true).where(profileable_type: 'User',
                                                          profileable_id: User.where(finished_intro: true).joins(:shortname)
                                                                              .where('lower(shortname) LIKE lower(?) OR '\
@@ -18,6 +17,9 @@ class ProfilesController < ApplicationController
                                                                                     "%#{params[:q]}%",
                                                                                     "%#{params[:q]}%",
                                                                                     "%#{params[:q]}%").pluck(:owner_id))
+        if params[:things] && params[:things].split(',').include?('pages')
+          @profiles += Profile.where(is_public: true).where('lower(name) LIKE lower(?)', "%#{params[:q]}%")#.page params[:profile] # Pages
+        end
       end
     end
   end

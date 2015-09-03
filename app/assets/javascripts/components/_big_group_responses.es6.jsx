@@ -25,7 +25,13 @@ window.BigGroupResponse = React.createClass({
             {this.props.groups.map((group) => {
                 let respond, buttons;
                 if (group.responses_left > 0) {
-                    respond = (<p className="group-response-pre center">Stem namens {this.props.actor.name} als {group.name_singular}:</p>);
+                    if (this.props.actor.name) {
+                        respond = (<p className="group-response-pre center">Stem namens {this.props.actor.name} als {group.name_singular}:</p>);
+                    }
+                    else {
+                        respond = (<p className="group-response-pre center">Stem als {group.name_singular}:</p>);
+                    }
+
                     buttons = (
                         <ul className="btns-opinion center">
                             <li><a href={`${this.props.object_id}/groups/${group.id}/responses/new?side=pro`} rel="nofollow" className="btn-pro">
@@ -43,6 +49,7 @@ window.BigGroupResponse = React.createClass({
                         </ul>
                     );
                 }
+
 
                 let responses;
                 if (group.actor_group_responses.length > 0) {

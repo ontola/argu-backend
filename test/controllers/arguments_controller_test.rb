@@ -68,7 +68,7 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     assert_difference('Argument.count') do
       assert_difference('Vote.count') do
-        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents', auto_vote: true}
+        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents', auto_vote: 'true'}
       end
     end
 
@@ -85,7 +85,7 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     assert_difference('Argument.count') do
       assert_difference('Vote.count') do
-        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'con', title: 'Test argument con', content: 'Test argument con-tents', auto_vote: true}
+        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'con', title: 'Test argument con', content: 'Test argument con-tents', auto_vote: 'true'}
       end
     end
 
@@ -102,7 +102,7 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     assert_difference('Argument.count') do
       assert_no_difference('Vote.count') do
-        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents', auto_vote: false}
+        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents', auto_vote: 'false'}
       end
     end
   end
