@@ -36,19 +36,19 @@ window.BigVoteButtons = React.createClass({
     proHandler: function (e) {
         if (this.props.actor !== null) {
             e.preventDefault();
-            this.vote('pro')
+            this.vote('pro');
         }
     },
     neutralHandler: function (e) {
         if (this.props.actor !== null) {
             e.preventDefault();
-            this.vote('neutral')
+            this.vote('neutral');
         }
     },
     conHandler: function (e) {
         if (this.props.actor !== null) {
             e.preventDefault();
-            this.vote('con')
+            this.vote('con');
         }
     },
 
@@ -64,16 +64,15 @@ window.BigVoteButtons = React.createClass({
                             return this.vote(side);
                         });
             } else {
-                console.log('!403');
                 return statusSuccess(response);
             }
-        })
-                .then(json, tryLogin)
-                .then((data) => {
-                    this.setState(data.vote);
-                }).catch((e) => {
-                    console.log('failed');
-                });
+        }).then(json, tryLogin)
+          .then((data) => {
+            this.setState(data.vote);
+            this.props.parentSetVote(data.vote);
+          }).catch((e) => {
+            console.log('failed');
+          });
     },
 
     render: function () {
@@ -96,39 +95,17 @@ window.BigVoteButtons = React.createClass({
 });
 
 window.BigVoteResults = React.createClass({
-    getInitialState: function () {
-        return {
-            object_type: this.props.object_type,
-            object_id: this.props.object_id,
-            total_votes: this.props.total_votes,
-            current_vote: this.props.current_vote,
-            distribution: this.props.distribution,
-            percent: this.props.percent,
-            show_results: this.props.show_results
-        };
-    },
-
-    refresh: function () {
-        fetch(`${this.state.vote_url}.json`, _safeCredentials())
-                .then(statusSuccess)
-                .then(json)
-                .then((data) => {
-                    data.vote && this.setState(data.vote);
-                }).catch(() => {
-                    Argu.Alert('<%= I18n.t('votes.alerts.failed') %>', 'alert', true);
-                });
-    },
-
     voteWidth: function (side) {
-        var supplemented_values = { pro:     this.state.percent.pro     < 5 ? 5 : this.state.percent.pro,
-            neutral: this.state.percent.neutral < 5 ? 5 : this.state.percent.neutral,
-            con:     this.state.percent.con     < 5 ? 5 : this.state.percent.con
+        var supplemented_values = {
+            pro:     this.props.percent.pro     < 5 ? 5 : this.props.percent.pro,
+            neutral: this.props.percent.neutral < 5 ? 5 : this.props.percent.neutral,
+            con:     this.props.percent.con     < 5 ? 5 : this.props.percent.con
         };
         var overflow = -100;
         for(var o in supplemented_values) {
             overflow += supplemented_values[o];
         }
-        var width = supplemented_values[side] - (overflow*(this.state.percent[side]/100));
+        var width = supplemented_values[side] - (overflow*(this.props.percent[side]/100));
 
         return {
             width: width + '%'
@@ -136,20 +113,17 @@ window.BigVoteResults = React.createClass({
     },
 
     render: function () {
-        var results;
+        let results;
 
-        if (this.state.show_results) {
+        if (this.props.show_results) {
             results = (
                     <ul className="progress-bar progress-bar-stacked">
-                        <li style={this.voteWidth('pro')}><span className="btn-pro">{this.state.distribution.pro}</span></li>
-                        <li style={this.voteWidth('neutral')}><span className="btn-neu">{this.state.distribution.neutral}</span></li>
-                        <li style={this.voteWidth('con')}><span className="btn-con">{this.state.distribution.con}</span></li>
+                        <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.distribution.pro}</span></li>
+                        <li style={this.voteWidth('neutral')}><span className="btn-neu">{this.props.distribution.neutral}</span></li>
+                        <li style={this.voteWidth('con')}><span className="btn-con">{this.props.distribution.con}</span></li>
                     </ul>);
         } else {
-            results = (
-                    <p>
-                        Stem om te zien wat <b>{this.state.total_votes}</b> anderen gestemd hebben!
-                    </p>);
+            results = (<p>Stem om te zien wat <b>{this.props.total_votes}</b> anderen gestemd hebben!</p>);
         }
 
         return results;
