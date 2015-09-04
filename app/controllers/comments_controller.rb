@@ -69,14 +69,14 @@ class CommentsController < ApplicationController
       #end
 
       respond_to do |format|
-        if !current_profile.member_of? resource.forum
+        if !current_profile.member_of? current_forum
           redirect_url = URI.parse(request.fullpath)
           redirect_url.query= [[:comment, CGI::escape(comment_body)], [:parent_id, params[:parent_id]]].map { |a| a.join('=') }.join('&')
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: resource.forum, r: redirect_url.to_s } }
-          format.html { render template: 'forums/join', locals: { forum: resource.forum, r: redirect_url.to_s } }
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: current_forum, r: redirect_url.to_s } }
+          format.html { render template: 'forums/join', locals: { forum: current_forum, r: redirect_url.to_s } }
         elsif @comment.save
           @comment.move_to_child_of(parent) if parent.present? # Apparently, move_possible? doesn't exists anymore
-          create_activity @comment, action: :create, recipient: resource, parameters: { parent: parent.try(:id) }, owner: current_profile, forum_id: resource.forum.id
+          create_activity @comment, action: :create, recipient: resource, parameters: { parent: parent.try(:id) }, owner: current_profile, forum_id: current_forum.id
           format.js { render }
           format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: t('type_create_success', type: t('comments.type')) }
         else

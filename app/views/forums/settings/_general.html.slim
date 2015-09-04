@@ -13,13 +13,13 @@
     =f.input :profile_photo, label: t('profiles.edit.upload_piture')
     li.form-helper
       span=t('profiles.edit.file_limit_notice')
-    - if @forum.profile_photo.present?
+    - if current_forum.profile_photo.present?
       =f.input :profile_photo, as: :preview_image, html_options: {style: 'max-height: 256px'}
       =f.input :remove_profile_photo, as: :reverse_boolean
   =f.inputs name: t('profiles.edit.cover_photo') do
     p= t('use_a_high_res_image')
     =f.input :cover_photo, label: t('profiles.edit.upload_piture')
-    - if @forum.cover_photo.present?
+    - if current_forum.cover_photo.present?
       =f.input :cover_photo, as: :preview_image, html_options: { style: 'max-height: 256px;' }
       =f.input :remove_cover_photo, as: :reverse_boolean
     =f.input :cover_photo_attribution

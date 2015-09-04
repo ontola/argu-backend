@@ -1,4 +1,4 @@
 li[class=('tab--current' if local_assigns[:active] == tab.to_s)]
-  =link_to url_for([:settings, resource, tab: tab]), data: {intro: t("intro.#{resource.class_name}.settings.#{tab}")}
+  =link_to settings_forums_path(tab: tab), data: {intro: t("intro.#{resource.class_name}.settings.#{tab}")}
     span[class="fa fa-#{tab_icon_for(tab)}"]
     span.icon-left= t("#{resource.class_name}.settings.menu.#{tab}")

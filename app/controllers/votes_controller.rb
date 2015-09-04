@@ -10,14 +10,14 @@ class VotesController < ApplicationController
     else
       authorize @model.forum, :show?
 
-      @vote = Vote.find_by(voteable: @model, voter: current_profile, forum: @model.forum)
+      @vote = Vote.find_by(voteable: @model, voter: current_profile)
 
       respond_to do |format|
-        if current_profile.member_of? @model.forum
+        if current_profile.member_of? current_forum
           format.json { render 'create', location: @vote }
         else
-          format.html { render template: 'forums/join', locals: { forum: @model.forum, r: request.fullpath } }
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @model.forum, r: request.fullpath } }
+          format.html { render template: 'forums/join', locals: { forum: current_forum, r: request.fullpath } }
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: current_forum, r: request.fullpath } }
           format.json { render 'create', location: @vote }
         end
       end
@@ -33,13 +33,12 @@ class VotesController < ApplicationController
   # POST /model/:model_id/v/:for
   def create
     @model = voteable_class.find params[voteable_param]
-    get_context
 
     if current_profile.blank?
       authorize @model, :show?
       render_register_modal(nil)
     else
-      authorize @model.forum, :show?
+      authorize current_forum, :show?
 
       @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile)
 
@@ -113,10 +112,6 @@ class VotesController < ApplicationController
   end
 
 private
-  def get_context
-    @forum = current_forum
-  end
-
   # noinspection RubyUnusedLocalVariable
   def save_vote_to_stats(vote)
     #TODO: @implement this

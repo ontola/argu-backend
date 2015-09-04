@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
 
   def create
-    forum = Forum.find_via_shortname params[:forum_id]
+    forum = current_forum
     authorize forum, :show?
     if current_profile.blank?
       render_register_modal(forum_path(forum.url))

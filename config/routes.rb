@@ -98,18 +98,18 @@ Argu::Application.routes.draw do
   post 'v/:for' => 'votes#create', as: :vote
   resources :votes, only: [:destroy], path: :v
 
-  resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible] do
+  resources :questions, path: 'q', except: [:index], concerns: [:moveable, :convertible] do
     resources :tags, path: 't', only: [:index]
   end
 
-  resources :motions, path: 'm', except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
+  resources :motions, path: 'm', except: [:index], concerns: [:moveable, :convertible, :votable] do
     resources :groups, only: [] do
       resources :group_responses, path: 'responses', as: 'responses', only: [:new, :create]
     end
     resources :tags, path: 't', only: [:index]
   end
 
-  resources :arguments, path: 'a', except: [:index, :new, :create], concerns: [:votable] do
+  resources :arguments, path: 'a', except: [:index], concerns: [:votable] do
     resources :comments, path: 'c', only: [:new, :index, :show, :create, :update, :edit, :destroy]
     patch 'comments' => 'comments#create'
   end
@@ -180,15 +180,14 @@ Argu::Application.routes.draw do
 
   resources :forums, only: [:show, :update], path: '' do
     get :discover, on: :collection, action: :discover, constraints: {subdomain: ''}
-    get :settings, on: :member
+    get :settings, on: :collection
     get :statistics, on: :member
     get :selector, on: :collection
     post :memberships, on: :collection
     resources :memberships, only: [:create, :destroy]
     resources :managers, only: [:new, :create, :destroy]
-    resources :questions, path: 'q', only: [:index, :new, :create]
-    resources :motions, path: 'm', only: [:new, :create]
-    resources :arguments, path: 'a', only: [:new, :create]
+    resources :questions, path: 'q', only: [:index]
+    resources :motions, path: 'm'
     resources :tags, path: 't', only: [:show, :index]
     resources :groups, path: 'g', only: [:new, :edit]
   end
@@ -197,6 +196,7 @@ Argu::Application.routes.draw do
 
   get '/d/modern', to: 'static_pages#modern', constraints: {subdomain: ''}
 
+  get '/', to: 'info#show', id: 'about', constraints: {subdomain: ''}
   root to: 'forums#show'
   get '/', to: 'forums#show'
 end

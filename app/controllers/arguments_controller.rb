@@ -25,9 +25,8 @@ class ArgumentsController < ApplicationController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    @forum = Forum.find_via_shortname params[:forum_id]
-    @argument = @forum.arguments.new motion_id: params[:motion_id]
-    authorize @forum, :show?
+    @argument = Argument.new motion_id: params[:motion_id]
+    authorize current_forum, :show?
     if current_profile.blank?
       render_register_modal(nil, [:motion_id, params[:motion_id]], [:pro, params[:pro]])
     else
@@ -36,9 +35,9 @@ class ArgumentsController < ApplicationController
       @argument.assign_attributes({pro: %w(con pro).index(params[:pro]) })
 
       respond_to do |format|
-        if !current_profile.member_of? @argument.forum
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @argument.forum, r: request.fullpath } }
-          format.html { render template: 'forums/join', locals: { forum: @argument.forum, r: request.fullpath } }
+        if !current_profile.member_of? current_forum
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: current_forum, r: request.fullpath } }
+          format.html { render template: 'forums/join', locals: { forum: current_forum, r: request.fullpath } }
         elsif params[:motion_id].present?
           format.js { render js: "window.location = #{request.url.to_json}" }
           format.html { render :form }
@@ -56,7 +55,6 @@ class ArgumentsController < ApplicationController
     @argument = Argument.find params[:id]
     authorize @argument, :edit?
     current_context @argument
-    @forum = @argument.forum
 
     respond_to do |format|
       format.html { render :form}
@@ -66,24 +64,23 @@ class ArgumentsController < ApplicationController
   # POST /arguments
   # POST /arguments.json
   def create
-    @forum = Forum.find_via_shortname params[:forum_id]
     @motion = Motion.find params[:argument][:motion_id]
     saved = false
     Argument.transaction do
-      @argument = @forum.arguments.new motion: @motion
+      @argument = Argument.new motion: @motion
       @argument.attributes= argument_params
       @argument.creator = current_profile
       authorize @argument, :create?
       if params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile
         @argument.save
-        @argument.votes.pro.build(forum: @forum, voter: current_profile)
+        @argument.votes.pro.build(voter: current_profile)
       end
       saved = @argument.save
     end
 
     respond_to do |format|
       if saved
-        create_activity @argument, action: :create, recipient: @argument.motion, owner: current_profile, forum_id: @argument.forum.id
+        create_activity @argument, action: :create, recipient: @argument.motion, owner: current_profile, forum_id: current_forum.id
         argument = argument_params[:motion_id].blank? ? @argument : Motion.find_by_id(argument_params[:motion_id])
         format.html { redirect_to argument, notice: 'Argument was successfully created.' }
         format.json { render json: @argument, status: :created, location: @argument }

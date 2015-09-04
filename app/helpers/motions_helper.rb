@@ -2,7 +2,7 @@ include ActsAsTaggableOn::TagsHelper
 module MotionsHelper
 
   def motion_combi_vote_props(actor, motion, vote)
-    groups = motion.forum.groups.collect do |group|
+    groups = current_forum.groups.collect do |group|
       {
           id: group.id,
           name: group.name,

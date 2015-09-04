@@ -36,9 +36,9 @@ class ForumsController < ApplicationController
   end
 
   def settings
-    @forum = Forum.find_via_shortname params[:id]
-    authorize @forum, :update?
-    current_context @forum
+    forum = current_forum
+    authorize forum, :update?
+    current_context current_forum
 
     render locals: {
                tab: tab,
@@ -47,7 +47,7 @@ class ForumsController < ApplicationController
   end
 
   def statistics
-    @forum = Forum.find_via_shortname params[:id]
+    @forum = current_forum
     authorize @forum, :statistics?
     current_context @forum
 
@@ -132,6 +132,6 @@ private
   end
 
   def tab
-    policy(@forum || Forum).verify_tab(params[:tab])
+    policy(current_forum || Forum).verify_tab(params[:tab])
   end
 end

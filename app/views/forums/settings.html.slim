@@ -1,14 +1,14 @@
 =set_title t('forums.settings.title')
 .tabs-to-top
-  =render partial: 'forums/manage_bar', locals: {resource: @forum, active: :settings} if policy(@forum).update?
+  =render partial: 'forums/manage_bar', locals: {resource: current_forum, active: :settings} if policy(current_forum).update?
 .col-3
   header
     h1= t('forums.settings.title')
   .col-3-1
-    =render_settings_items_for(@forum, active)
+    =render_settings_items_for(current_forum, active)
   .col-3-2
     .box
       section
         / Protects against Directory Traversal Attacks
         -if local_assigns[:tab] && !tab.gsub(/\\/, '').index('../')
-          =render partial: "forums/settings/#{tab}", locals: {resource: @forum, tab: tab, active: active}
+          =render partial: "forums/settings/#{tab}", locals: {resource: current_forum, tab: tab, active: active}

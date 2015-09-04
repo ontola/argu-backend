@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
-  helper_method :current_profile, :current_context, :current_scope, :show_trashed?
+  helper_method :current_profile, :current_context, :current_scope, :show_trashed?, :current_forum
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
   before_action :check_finished_intro
@@ -138,7 +138,7 @@ class ApplicationController < ActionController::Base
     UserContext.new(current_user,
                     current_profile,
                     session,
-                    @forum,
+                    current_forum,
                     {
                         platform_open: platform_open?,
                         within_user_cap: within_user_cap?

@@ -5,11 +5,10 @@ class MotionsController < ApplicationController
   # GET /motions/1.json
   def show
     @motion = Motion.includes(:arguments).find(params[:id])
-    @forum = @motion.forum
     current_context @motion
     authorize @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes))
-    @group_responses = Group.ordered_with_meta @motion.group_responses, @forum.groups, current_profile, @motion
+    @group_responses = Group.ordered_with_meta @motion.group_responses, current_forum.groups, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
 
@@ -24,10 +23,10 @@ class MotionsController < ApplicationController
   # GET /motions/new.json
   def new
     get_context
-    @motion = @forum.motions.new params[:motion]
+    @motion = Motion.new params[:motion]
     if params[:question_id]
       question = Question.find(params[:question_id])
-      @motion.questions << question if @motion.forum_id == question.forum_id
+      @motion.questions << question
     end
     if current_profile.blank?
       authorize @motion, :show?
@@ -36,13 +35,13 @@ class MotionsController < ApplicationController
       authorize @motion, @motion.questions.presence ? :new? : :new_without_question?
       current_context @motion
       respond_to do |format|
-        if current_profile.member_of? @motion.forum
+        if current_profile.member_of? current_forum
           format.js { render js: "window.location = #{request.url.to_json}" }
           format.html { render 'form' }
           format.json { render json: @motion }
         else
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath} }
-          format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath, no_close: true } }
+          format.js { render partial: 'forums/join', layout: false, locals: { forum: current_forum, r: request.fullpath} }
+          format.html { render template: 'forums/join', locals: { forum: current_forum, r: request.fullpath, no_close: true } }
         end
       end
     end
@@ -63,9 +62,9 @@ class MotionsController < ApplicationController
   # POST /motions.json
   def create
     get_context
-    authorize @forum, :add_motion?
+    authorize current_forum, :add_motion?
 
-    @motion = @forum.motions.new
+    @motion = Motion.new
     @motion.attributes= permit_params
     @question_id = params[:question_id] || params[:motion][:question_id]
     @motion.creator = current_profile
@@ -75,7 +74,7 @@ class MotionsController < ApplicationController
 
     respond_to do |format|
       if @motion.save
-        create_activity @motion, action: :create, recipient: (@question.presence || @motion.forum), owner: current_profile, forum_id: @motion.forum.id
+        create_activity @motion, action: :create, recipient: (@question.presence || current_forum), owner: current_profile, forum_id: current_forum.id
         format.html { redirect_to motion_path(@motion, start_motion_tour: first), notice: t('type_save_success', type: motion_type) }
         format.json { render json: @motion, status: :created, location: @motion }
       else
@@ -90,7 +89,6 @@ class MotionsController < ApplicationController
   def update
     @motion = Motion.find_by_id params[:id]
     @creator = @motion.creator
-    @forum = @motion.forum
     authorize @motion
 
     @motion.reload if process_cover_photo @motion, permit_params

@@ -26,7 +26,7 @@ class Motion < ActiveRecord::Base
 
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 110 }
-  validates :forum_id, :creator_id, presence: true
+  validates :creator_id, presence: true
 
   def cap_title
     self.title[0] = self.title[0].upcase

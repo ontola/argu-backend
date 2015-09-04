@@ -32,20 +32,20 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
           /TODO: Make this check the current profile, not the user
           -if policy(Motion).new_without_question?
             li[data-intro=t('intro.motion.create', name: @forum.name) data-step=12 data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]
-              =link_to new_forum_motion_path(@forum), data: remote_unless_user, class: 'btn--motion'
+              =link_to new_forum_motion_url(@forum), data: remote_unless_user, class: 'btn--motion'
                 span.fa[class="fa-#{motion_icon}"]
                 span.icon-left= t('new') + ' ' + motion_type
           -if policy(Question).new?
             li[data-intro=t('intro.question.create', name: @forum.name) data-step=13 class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]
-              =link_to new_forum_question_path(@forum), data: remote_unless_user, class: 'btn--question'
+              =link_to new_forum_question_url(@forum), data: remote_unless_user, class: 'btn--question'
                 span.fa[class="fa-#{question_icon}"]
                 span.icon-left= t('new') + ' ' + question_type
           - if policy(@forum).invite?
-            li= link_to new_user_invitation_path(forum: @forum.url), remote: true, class: 'btn--pro remote-link', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite'), step: 14}
+            li= link_to new_user_invitation_url(forum: @forum.url), remote: true, class: 'btn--pro remote-link', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite'), step: 14}
               span.fa.fa-user-plus
               span.icon-left= t('forums.invite_others')
           - if policy(@forum).update?
-            li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
+            li.float-right= link_to settings_forums_url, class: 'btn--transparant'
               span.fa.fa-gear
               span.icon-left= t('forums.settings.title')
             /li[class='float-right']

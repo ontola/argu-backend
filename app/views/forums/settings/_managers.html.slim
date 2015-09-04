@@ -1,29 +1,29 @@
 
 h3= t('forums.settings.managers.owner')
 p= t('forums.settings.managers.about_owner')
-p= t('forums.settings.managers.about_owner_name', name: @forum.url)
-=image_tag @forum.page.profile.profile_photo, class: 'profile-photo'
-span=@forum.page.profile.display_name
+p= t('forums.settings.managers.about_owner_name', name: current_forum.url)
+=image_tag current_forum.page.profile.profile_photo, class: 'profile-photo'
+span=current_forum.page.profile.display_name
 .clear
 br
 
 h3= t('forums.settings.managers.administrator')
 p= t('forums.settings.managers.about_page_owner')
-p= t('forums.settings.managers.about_page_owner_name', name: @forum.page.url)
-=image_tag @forum.page.owner.profile_photo, class: 'profile-photo'
-span=@forum.page.owner.display_name
+p= t('forums.settings.managers.about_page_owner_name', name: current_forum.page.url)
+=image_tag current_forum.page.owner.profile_photo, class: 'profile-photo'
+span=current_forum.page.owner.display_name
 .clear
 br
 
 h3= t('forums.settings.managers.title')
 p= t('forums.settings.managers.about_managers')
 table.styled
-  -@forum.managers.each do |manager|
+  -current_forum.managers.each do |manager|
     tr
       =image_tag manager.profile_photo, class: 'profile-photo'
       span
         =manager.display_name
         p.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
-          =link_to t('forums.managers.revoke'), forum_manager_path(@forum, manager.id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
+          =link_to t('forums.managers.revoke'), forum_manager_path(current_forum, manager.id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
 
-  =link_to  t('forums.managers.add'), new_forum_manager_path(@forum), class: 'btn'
+  =link_to  t('forums.managers.add'), new_forum_manager_path(current_forum), class: 'btn'
