@@ -16,7 +16,6 @@ en:
     form:
       title_heading: "What's your question?"
       title_body_html: "<ul class='bullets'>
-                         <li>Post a <b class='question-t'>question</b> to present a problem and find a solution.</li>
                          <li>Ask an <b>open question</b> that invites people to submit their own ideas and solutions.</li>
                        </ul>"
       content_heading: "Explain your question"
@@ -24,6 +23,7 @@ en:
       content_body_html: "<ul class='bullets'>
                             <li>Explain the <b>current situation</b>. Give background information about the problem and why it hasn't been solved yet.</li>
                             <li>Explain what constitutes a good solution.</li>
+                            <li>End by <b>repeating the question</b> to encourage readers to submit their ideas.</li>
                           </ul>"
       themes: "theme1, theme2"
       invert: "invert all arguments"
