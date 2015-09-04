@@ -22,12 +22,11 @@ RSpec.feature 'Login', type: :feature do
 
   scenario 'User logs in from a profile' do
     visit(user_path(user))
-    expect(page).to have_content 'NEUTRAL'
+    expect(page).to have_content('Neutral')
     click_link('sign_in')
     within('#new_user') do
       fill_in 'user_email', with: holland_member.email
       fill_in 'user_password', with: 'password'
-      save_and_open_screenshot
       click_button 'log_in'
     end
 

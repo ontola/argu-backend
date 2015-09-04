@@ -26,6 +26,10 @@ window.CombiBigVote = React.createClass({
         this.unsubscribe();
     },
 
+    setVote: function (vote) {
+        this.setState(vote);
+    },
+
     refreshGroups: function () {
         fetch(`${this.state.object_id}.json`, _safeCredentials())
                 .then(statusSuccess)
@@ -42,9 +46,9 @@ window.CombiBigVote = React.createClass({
         let voteResultsComponent;
         let groupResponsesComponent;
         if (!this.state.actor || this.state.actor.actor_type == "User") {
-            voteButtonsComponent = <BigVoteButtons {...this.state} {...this.props}/>;
+            voteButtonsComponent = <BigVoteButtons parentSetVote={this.setVote} {...this.state} {...this.props}/>;
+            voteResultsComponent = <BigVoteResults {...this.state} show_results={this.state.current_vote !== "abstain"}/>;
             groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
-            voteResultsComponent = <BigVoteResults {...this.state} {...this.props} show_results={this.state.current_vote !== "abstain"}/>;
         } else if (this.state.actor.actor_type == "Page") {
             groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
             voteResultsComponent = <BigVoteResults {...this.state} {...this.props} show_results={true}/>;
