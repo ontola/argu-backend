@@ -14,7 +14,7 @@ Apartment.configure do |config|
   # Add any models that you do not want to be multi-tenanted, but remain in the global (public) namespace.
   # A typical example would be a Customer or Tenant model that stores each Tenant's information.
   #
-  config.excluded_models = %w{ Authentication Document Edit Forum Identity Notification Page PageMembership Setting Session Shortname User }
+  config.excluded_models = %w{ Authentication Document Edit Forum Identity Notification Page PageMembership Setting Shortname User }
 
   # In order to migrate all of your Tenants you need to provide a list of Tenant names to Apartment.
   # You can make this dynamic by providing a Proc object to be called on migrations.
@@ -57,11 +57,7 @@ Apartment.configure do |config|
   # config.prepend_environment = !Rails.env.production?
 end
 
-# Setup a custom Tenant switching middleware. The Proc should return the name of the Tenant that
-# you want to switch to.
-# Rails.application.config.middleware.use 'Apartment::Elevators::Generic', lambda { |request|
-#   request.host.split('.').first
-# }
+Apartment::Elevators::Subdomain.excluded_subdomains = %w(www accounts mail mx pop pop3 smtp ftp ssh)
 
 # Rails.application.config.middleware.use 'Apartment::Elevators::Domain'
 Rails.application.config.middleware.use 'Apartment::Elevators::Subdomain'

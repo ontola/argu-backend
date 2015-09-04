@@ -54,15 +54,15 @@ Argu::Application.routes.draw do
     controllers :applications => 'oauth/applications'
   end
 
-  resources :notifications, only: [:index, :update], path: 'n' do
+  resources :notifications, only: [:index, :update], path: 'n', constraints: {subdomain: ''} do
     patch :read, on: :collection
   end
-  put 'actors', to: 'actors#update'
+  put 'actors', to: 'actors#update', constraints: {subdomain: 'accounts'}
 
   require 'sidekiq/web'
 
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
-  get '/developers', to: 'static_pages#developers'
+  get '/developers', to: 'static_pages#developers', constraints: {subdomain: ''}
 
   devise_for :users, controllers: {
                        registrations: 'registrations',
@@ -71,17 +71,17 @@ Argu::Application.routes.draw do
                        passwords: 'users/passwords',
                        omniauth_callbacks: 'omniauth_callbacks',
                        confirmations: 'users/confirmations'
-                   }, skip: :registrations
+                   }, skip: :registrations, constraints: {subdomain: ''}
 
   as :user do
-    get 'users/verify', to: 'users/sessions#verify'
-    get 'users/cancel', to: 'registrations#cancel', as: :cancel_user_registration
-    get 'users/sign_up', to: 'registrations#new', as: :new_user_registration
-    post 'users', to: 'registrations#create', as: :user_registration
-    delete 'users', to: 'registrations#destroy', as: nil
+    get 'users/verify', to: 'users/sessions#verify', constraints: {subdomain: ''}
+    get 'users/cancel', to: 'registrations#cancel', as: :cancel_user_registration, constraints: {subdomain: ''}
+    get 'users/sign_up', to: 'registrations#new', as: :new_user_registration, constraints: {subdomain: ''}
+    post 'users', to: 'registrations#create', as: :user_registration, constraints: {subdomain: ''}
+    delete 'users', to: 'registrations#destroy', as: nil, constraints: {subdomain: ''}
   end
 
-  resources :users, path: 'u', only: [:show, :update] do
+  resources :users, path: 'u', only: [:show, :update], constraints: {subdomain: ''} do
     resources :identities, only: :destroy, controller: 'users/identities'
     get :edit, to: 'profiles#edit', on: :member
 
@@ -129,7 +129,7 @@ Argu::Application.routes.draw do
     resources :managers, only: [:new, :create, :destroy], controller: 'pages/managers'
   end
 
-  authenticate :user, lambda { |p| p.profile.has_role? :staff } do
+  authenticate :user, lambda { |u| u.staff? } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
     resources :notifications, only: :create
     namespace :portal do
@@ -140,7 +140,7 @@ Argu::Application.routes.draw do
     end
   end
 
-  resources :profiles, only: [:index, :update] do
+  resources :profiles, only: [:index, :update], constraints: {subdomain: ''} do
     post :index, action: :index, on: :collection
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
     post ':id' => 'profiles#update', on: :collection
@@ -152,34 +152,34 @@ Argu::Application.routes.draw do
     delete :destroy, on: :collection
   end
 
-  match '/search/' => 'search#show', as: 'search', via: [:get, :post]
+  #match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
-  get '/settings', to: 'users#edit', as: 'settings'
-  put '/settings', to: 'users#update'
-  get '/c_a', to: 'users#current_actor'
-  put 'persist_cookie', to: 'static_pages#persist_cookie'
+  get '/settings', to: 'users#edit', as: 'settings', constraints: {subdomain: ''}
+  put '/settings', to: 'users#update', constraints: {subdomain: ''}
+  get '/c_a', to: 'users#current_actor', constraints: {subdomain: ''}
+  put 'persist_cookie', to: 'static_pages#persist_cookie', constraints: {subdomain: ''}
 
   # @deprecated Please use info_controller. Kept for cached searches etc. do
-  get '/about', to: redirect('/i/about')
-  get '/product', to: redirect('/i/product')
-  get '/team', to: redirect('/i/team')
-  get '/governments', to: redirect('/i/governments')
-  get '/how_argu_works', to: 'static_pages#how_argu_works'
+  get '/about', to: redirect('/i/about'), constraints: {subdomain: ''}
+  get '/product', to: redirect('/i/product'), constraints: {subdomain: ''}
+  get '/team', to: redirect('/i/team'), constraints: {subdomain: ''}
+  get '/governments', to: redirect('/i/governments'), constraints: {subdomain: ''}
+  get '/how_argu_works', to: 'static_pages#how_argu_works', constraints: {subdomain: ''}
   # end
 
-  get '/portal', to: 'portal/portal#home'
+  get '/portal', to: 'portal/portal#home', constraints: {subdomain: ''}
 
-  get '/values', to: 'documents#show', name: 'values'
-  get '/policy', to: 'documents#show', name: 'policy'
-  get '/privacy', to: 'documents#show', name: 'privacy'
-  get '/cookies', to: 'documents#show', name: 'cookies'
+  get '/values', to: 'documents#show', name: 'values', constraints: {subdomain: ''}
+  get '/policy', to: 'documents#show', name: 'policy', constraints: {subdomain: ''}
+  get '/privacy', to: 'documents#show', name: 'privacy', constraints: {subdomain: ''}
+  get '/cookies', to: 'documents#show', name: 'cookies', constraints: {subdomain: ''}
 
-  get '/activities', to: 'activities#index'
+  get '/activities', to: 'activities#index', constraints: {subdomain: ''}
 
-  resources :info, path: 'i', only: [:show]
+  resources :info, path: 'i', only: [:show], constraints: {subdomain: ''}
 
   resources :forums, only: [:show, :update], path: '' do
-    get :discover, on: :collection, action: :discover
+    get :discover, on: :collection, action: :discover, constraints: {subdomain: ''}
     get :settings, on: :member
     get :statistics, on: :member
     get :selector, on: :collection
@@ -195,7 +195,7 @@ Argu::Application.routes.draw do
   get '/forums/:id', to: redirect('/%{id}'), constraints: {format: :html}
   get 'forums/:id', to: 'forums#show'
 
-  get '/d/modern', to: 'static_pages#modern'
+  get '/d/modern', to: 'static_pages#modern', constraints: {subdomain: ''}
 
   root to: 'forums#show'
   get '/', to: 'forums#show'
