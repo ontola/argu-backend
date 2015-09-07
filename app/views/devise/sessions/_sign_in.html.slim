@@ -1,15 +1,10 @@
 .box.box-small
   section
     =semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name, host_url: params[:host_url].presence) ) do |f|
-      - if resource.errors.any?
-        #error_explanation
-          ul
-            - resource.errors.full_messages.each do |msg|
-              li= msg
       =devise_error_messages!
       .form-small
         h2= t('sign_in')
-        .inspectlet-sensitive=f.inputs
+        .inspectlet-sensitive=f.inputs do
           /.info.info-signup= t('sign_in_existing')
           =f.input :email, placeholder: false, input_html: {autofocus: :autofocus, required: true}
           =f.input :password, placeholder: false, hint: false, input_html: {required: true}
