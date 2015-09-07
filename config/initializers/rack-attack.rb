@@ -16,6 +16,8 @@ class Rack::Attack
       /erot.co/,
       /howtostopreferralspam.eu/,
       /floating-share-buttons.com/,
+      /buttons.com/,
+      /social-traffic.com/,
       /videos-for-your-business.com/,
       /sexyali.com/,
       /chinese-amezon.com/

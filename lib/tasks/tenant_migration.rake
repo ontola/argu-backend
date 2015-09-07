@@ -5,13 +5,13 @@ namespace :argu do
     ActiveRecord::Base.establish_connection
     tenants = Shortname.where(owner_type: 'Forum').pluck :shortname
 
-    easy_models = [AccessToken, Argument, Comment, Group, GroupResponse, Membership, Motion,
+    models = [AccessToken, Argument, Comment, Group, GroupResponse, Membership, Motion,
                    Question, Tagging, Vote, Tag, Follow, GroupMembership, QuestionAnswer, Rule]
 
     ActiveRecord::Base.transaction do
       sql = ''
       tenants.each do |t_name|
-        easy_models.each do |model|
+        models.each do |model|
           sql << "TRUNCATE TABLE #{t_name}.#{model.model_name.collection} RESTART IDENTITY; "
         end
       end
@@ -20,7 +20,7 @@ namespace :argu do
     end
   end
 
-  EASY_MODELS = [Argument, Group, GroupResponse, Membership, Motion,
+  EASY_MODELS = [Argument, Group, GroupResponse, Motion,
                  Question, Tagging, Vote]
   HARD_MODELS = {
       Comment => Proc.new do |model, t_name, t_id|

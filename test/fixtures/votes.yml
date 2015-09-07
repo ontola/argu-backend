@@ -10,40 +10,34 @@ one:
   voter: profile_two
   voter_type: 'Profile'
   for: <%= Vote.fors[:neutral] %>
-  forum: :utrecht
 #
 two:
   voteable: three (Motion)
   voter: profile_two
   voter_type: 'Profile'
   for: <%= Vote.fors[:pro] %>
-  forum: :amsterdam
 #
 three:
   voteable: three (Motion)
   voter: profile_one
   voter_type: 'Profile'
   for: <%= Vote.fors[:con] %>
-  forum: :amsterdam
 #
 four:
   voteable: three (Motion)
   voter: profile_three
   voter_type: 'Profile'
   for: <%= Vote.fors[:con] %>
-  forum: :amsterdam
 five:
   voteable: one (Argument)
   voter: profile_two
   voter_type: 'Profile'
   for: <%= Vote.fors[:neutral] %>
-  forum: :utrecht
 six:
   voteable: one (Question)
   voter: profile_one
   voter_type: 'Profile'
   for: <%= Vote.fors[:con] %>
-  forum: :utrecht
 
 
 page_one:
@@ -51,18 +45,15 @@ page_one:
   voter: utrecht
   voter_type: 'Page'
   for: <%= Vote.fors[:neutral] %>
-  forum: :utrecht
 #
 page_two:
   voteable: three (Motion)
   voter: utrecht
   voter_type: 'Page'
   for: <%= Vote.fors[:pro] %>
-  forum: :amsterdam
 #
 page_three:
   voteable: one (Argument)
   voter: utrecht
   voter_type: 'Page'
   for: <%= Vote.fors[:neutral] %>
-  forum: :utrecht

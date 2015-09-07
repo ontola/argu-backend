@@ -1,9 +1,6 @@
 FactoryGirl.define do
 
   factory :group do
-    transient do
-      association :forum, strategy: :build
-    end
     name 'Groups'
     name_singular 'Group'
 

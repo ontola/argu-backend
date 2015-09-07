@@ -35,6 +35,7 @@ class Forum < ActiveRecord::Base
   validates :bio, length: {maximum: 90}
   validates :bio_long, length: {maximum: 5000}
 
+  after_commit :create_schema, on: :create
   after_validation :check_access_token, if: :visible_with_a_link_changed?
 
   # @!attribute visibility
@@ -65,6 +66,10 @@ class Forum < ActiveRecord::Base
       self.access_tokens.build(item: self, profile: self.page.profile)
       #AccessToken.create(item: self, profile: self.page.profile)
     end
+  end
+
+  def create_schema
+    Apartment::Tenant.create(self.shortname.shortname)
   end
 
   def display_name

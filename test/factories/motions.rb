@@ -1,7 +1,6 @@
 FactoryGirl.define do
 
   factory :motion do
-    association :forum, strategy: :create
     association :creator, factory: :profile
 
     sequence(:title) { |n| "title#{n}" }

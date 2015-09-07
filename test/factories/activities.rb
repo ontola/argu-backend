@@ -1,7 +1,6 @@
 FactoryGirl.define do
 
   factory :activity do
-    association :forum
     association :owner, factory: :profile
     association :trackable, factory: :question
     association :recipient, factory: :forum

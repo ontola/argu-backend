@@ -31,7 +31,10 @@ module Shortnameable
 
     # Finds an object via its shortname, returns nil when not found
     def find_via_shortname_nil(url)
-      self.joins(:shortname).where('lower(shortname) = lower(?)', url).first
+      self.where(id: Shortname
+                         .where('lower(shortname) = lower(?)', url)
+                         .where(owner_type: self.name)
+                         .select(:owner_id)).first
     end
 
     # Finds an object via its shortname or id, throws an exception when not found

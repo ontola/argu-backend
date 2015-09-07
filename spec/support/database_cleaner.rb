@@ -2,28 +2,26 @@ RSpec.configure do |config|
 
   config.use_transactional_fixtures = false
 
-  # config.before(:suite) do
-  #   DatabaseCleaner.clean_with :deletion
-  #   DatabaseCleaner.strategy = :transaction
-  #   Rails.application.load_seed
-  # end
-  #
-  # config.before(:each) do
-  #   DatabaseCleaner.start
-  # end
-  #
-  # config.before(:each, :js => true) do
-  #   DatabaseCleaner.strategy = :deletion
-  #   DatabaseCleaner.start
-  # end
-  #
-  # config.after(:each) do
-  #   DatabaseCleaner.clean
-  # end
+  FORUMS = %w(nl houten utrecht holland helsinki cologne)
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :deletion
     DatabaseCleaner.clean_with(:deletion)
+
+    FORUMS.each do |f|
+      Apartment::Database.drop(f) rescue nil
+      Forum.create!(name: f, subdomain: f)
+    end
+  end
+
+  config.before(:each) do
+    # Switch into the default tenant
+    Apartment::Database.switch 'nl'
+  end
+
+  config.after(:each) do
+    # Reset tentant back to `public`
+    Apartment::Database.reset
   end
 
   # If an example has one of the following options: :js, :driver
