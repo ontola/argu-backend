@@ -186,8 +186,8 @@ Argu::Application.routes.draw do
     post :memberships, on: :collection
     resources :memberships, only: [:create, :destroy]
     resources :managers, only: [:new, :create, :destroy]
-    resources :questions, path: 'q', only: [:index]
-    resources :motions, path: 'm'
+    #resources :questions, path: 'q', only: [:index]
+    #resources :motions, path: 'm', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
     resources :groups, path: 'g', only: [:new, :edit]
   end
