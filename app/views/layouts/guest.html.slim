@@ -10,12 +10,12 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   meta[charset="UTF-8"]
   title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
   =csrf_meta_tags
-  =render 'layouts/meta'
   =render partial: 'polyfill'
 
   / unless current_user.blank?
   =stylesheet_link_tag 'application', :media => 'all'
   =yield :connected_web
+  =render 'layouts/meta'
 
   link[rel="copyright" content="#{t('site.copyright')}"]
   - if active_for_user?('inspectlet', current_user)
