@@ -1,6 +1,10 @@
 .col-1
   header
     h1= t('arguments.comments.comments.confirm')
-  =render partial: 'arguments/show', locals: {model: resource}
+  =render partial: 'arguments/show', locals: {model: resource,
+                                              comment: local_assigns[:comment]}
   .box
-    =render partial: 'comments/form', locals: {resource: resource, parent_id: @parent_id, visible: true}
+    =render partial: 'comments/form', locals: {resource: resource,
+                                               parent_id: local_assigns[:parent_id],
+                                               visible: true,
+                                               comment: local_assigns[:comment]}

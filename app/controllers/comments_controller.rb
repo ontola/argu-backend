@@ -12,10 +12,12 @@ class CommentsController < ApplicationController
 
   def new
     @commentable = commentable_class.find params[commentable_param]
-    @comment = Comment.build_from(@commentable, current_profile.id, params[:comment])
+    @comment = @commentable.comment_threads.new(profile: current_profile, body: params[:comment])
+    #@comment = Comment.build_from(@commentable, current_profile.id, params[:comment])
     authorize @comment, :create?
 
     render locals: {
+               parent_id: params[:comment].is_a?(Hash) ? params[:comment][:parent_id] : nil,
                resource: @commentable,
                comment: @comment
            }
@@ -90,7 +92,6 @@ class CommentsController < ApplicationController
 
   def update
     @commentable = commentable_class.find params[commentable_param]
-    authorize @commentable, :show?
     @comment = @commentable.comment_threads.find params[:id]
     authorize @comment, :edit?
 
