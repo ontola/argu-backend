@@ -306,6 +306,10 @@ input[type="file"] {
 
 .inline-errors {
   margin: -1.3em 0 1.5em 0;
+  &.full-width {
+    width: 100%;
+    margin-left: auto;
+  }
 }
 
 input:focus + p.inline-hints, textarea:focus + p.inline-hints {
@@ -339,6 +343,10 @@ p.inline-hints {
 .formtastic .inline-errors, .formtastic .inline-hints {
   margin-left: 30%;
   width: 70%;
+  &.full-width {
+    width: 100%;
+    margin-left: auto;
+  }
   @include bp-medium{
     margin-left: 0 !important;
     width: 100%;

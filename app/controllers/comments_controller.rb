@@ -90,16 +90,22 @@ class CommentsController < ApplicationController
 
   def update
     @commentable = commentable_class.find params[commentable_param]
+    authorize @commentable, :show?
     @comment = @commentable.comment_threads.find params[:id]
     authorize @comment, :edit?
 
     respond_to do |format|
-      if @comment.update_attributes(comment_params)
+      if @comment.update(comment_params)
         format.html { redirect_to @comment, notice: t('comments.notices.updated') }
         format.js { render }
         format.json { head :no_content }
       else
-        format.html { render :form }
+        format.html { render 'edit',
+                             locals: {
+                                 resource: @commentable,
+                                 comment: @comment,
+                                 parent_id: nil
+                             }}
         format.js { render 'failed', status: 400 }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
