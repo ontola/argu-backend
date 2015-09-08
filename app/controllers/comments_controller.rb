@@ -12,10 +12,12 @@ class CommentsController < ApplicationController
 
   def new
     @commentable = commentable_class.find params[commentable_param]
-    @comment = Comment.build_from(@commentable, current_profile.id, params[:comment])
+    @comment = @commentable.comment_threads.new(profile: current_profile, body: params[:comment])
+    #@comment = Comment.build_from(@commentable, current_profile.id, params[:comment])
     authorize @comment, :create?
 
     render locals: {
+               parent_id: params[:comment].is_a?(Hash) ? params[:comment][:parent_id] : nil,
                resource: @commentable,
                comment: @comment
            }
@@ -94,12 +96,17 @@ class CommentsController < ApplicationController
     authorize @comment, :edit?
 
     respond_to do |format|
-      if @comment.update_attributes(comment_params)
+      if @comment.update(comment_params)
         format.html { redirect_to @comment, notice: t('comments.notices.updated') }
         format.js { render }
         format.json { head :no_content }
       else
-        format.html { render :form }
+        format.html { render 'edit',
+                             locals: {
+                                 resource: @commentable,
+                                 comment: @comment,
+                                 parent_id: nil
+                             }}
         format.js { render 'failed', status: 400 }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end

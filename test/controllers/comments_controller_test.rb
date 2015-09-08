@@ -47,6 +47,15 @@ class CommentsControllerTest < ActionController::TestCase
     assert_redirected_to comment_url(assigns(:comment))
   end
 
+  test 'should put update invalid data on own comment' do
+    sign_in user
+
+    put :update, argument_id: comment.commentable, id: comment, comment: {body: ''}
+
+    assert_not_nil assigns(:comment)
+    assert_response 200
+  end
+
   test 'should not put update on other comment' do
     sign_in create_member(holland)
 
