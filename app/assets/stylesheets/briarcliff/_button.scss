@@ -283,7 +283,10 @@
 
   text-transform: uppercase;
   text-decoration: none;
-  span {font-size: .8em;}
+  //span {font-size: .8em;}
+  a > span {
+    font-size: .8em;
+  }
   border: none;
   -webkit-appearance: none;
   border-radius: 0;

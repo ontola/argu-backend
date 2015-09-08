@@ -7,8 +7,8 @@ function is_touch_device() {
     //navigator.msMaxTouchPoints for microsoft IE backwards compatibility
 }
 
-window.HyperDropdown = React.createClass({
-    mixins: [
+window.HyperDropdownMixin = {
+    mixin: [
         (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
     ],
 
@@ -17,8 +17,7 @@ window.HyperDropdown = React.createClass({
         return {
             openState: false,
             renderLeft: false,
-            dropdownElement: {},
-            current_actor: this.props.current_actor
+            dropdownElement: {}
         };
     },
 
@@ -34,13 +33,12 @@ window.HyperDropdown = React.createClass({
         var elem = this.state.dropdownElement;
         // Removes slow descending visibility repaint
         /*this.timerItem = window.setTimeout(function () {
-            elem.style.display = 'block';
-        }, 50);*/
+         elem.style.display = 'block';
+         }, 50);*/
         this.setState({openState: false});
     },
 
     componentDidMount: function () {
-        this.unsubscribe = actorStore.listen(this.onActorChange);
         this.setState({referenceDropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0],
             dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[1]});
         window.addEventListener('resize', this.handleResize);
@@ -48,7 +46,6 @@ window.HyperDropdown = React.createClass({
     },
 
     componentWillUnmount: function () {
-        this.unsubscribe();
         //window.clearTimeout(this.timerItem);
         window.removeEventListener('resize', this.handleResize);
     },
@@ -106,10 +103,6 @@ window.HyperDropdown = React.createClass({
         this.setState({openState: true});
     },
 
-    onActorChange: function (data) {
-        this.setState({current_actor: data});
-    },
-
     // Used to calculate the width of a dropdown content menu
     referenceDropdownElement: function () {
         let refDropdown;
@@ -119,6 +112,29 @@ window.HyperDropdown = React.createClass({
             refDropdown = this.getDOMNode().getElementsByClassName('dropdown-content')[0];
         }
         return refDropdown;
+    }
+};
+
+
+window.HyperDropdown = React.createClass({
+    mixins: [HyperDropdownMixin],
+
+    getInitialState: function () {
+        return {
+            current_actor: this.props.current_actor
+        };
+    },
+
+    componentDidMount: function () {
+        this.unsubscribe = actorStore.listen(this.onActorChange);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+    },
+
+    onActorChange: function (data) {
+        this.setState({current_actor: data});
     },
 
     render: function () {
@@ -148,6 +164,103 @@ window.HyperDropdown = React.createClass({
                                                currentActor={current_actor}
                                                {...this.props}
                                                key='required' />;
+
+        const ReactTransitionGroup = React.addons.TransitionGroup;
+        return (<li tabIndex="1"
+                    className={dropdownClass}
+                    onMouseEnter={this.onMouseEnter}
+                    onMouseLeave={this.onMouseLeave} >
+            {trigger}
+            <div className="reference-elem" style={{visibility: 'hidden', overflow: 'hidden', 'pointer-events': 'none', position: 'absolute'}}>{dropdownContent}</div>
+            <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
+                {openState && dropdownContent}
+            </ReactTransitionGroup>
+        </li>);
+    }
+});
+
+window.ShareDropdown = React.createClass({
+    mixins: [HyperDropdownMixin],
+
+    getInitialState: function () {
+        return {
+            counts: {
+                facebook: 0,
+                linkedIn: 0,
+                twitter: 0
+            }
+        };
+    },
+
+    componentDidMount: function () {
+        this.fetchFacebookCount();
+        this.fetchLinkedInCount();
+        this.fetchTwitterCount();
+    },
+
+    updateCount: function (network, amount) {
+        this.setState({counts: Object.assign(this.state.counts, {[network]: amount})});
+    },
+
+    fetchFacebookCount: function () {
+        $.getJSON(`http://graph.facebook.com/?id=${this.props.url}`, data => {
+            this.updateCount('facebook', data.shares);
+        });
+    },
+
+    fetchLinkedInCount: function () {
+        $.getJSON(`http://www.linkedin.com/countserv/count/share?url=${this.props.url}&callback=?`, data => {
+            this.updateCount('linkedIn', data.count);
+        });
+    },
+
+    fetchTwitterCount: function () {
+        $.getJSON(`https://cdn.api.twitter.com/1/urls/count.json?url=${this.props.url}&callback=?`, data => {
+            this.updateCount('twitter', data.count);
+        });
+    },
+
+    totalShares: function () {
+        return Object.keys(this.state.counts)
+                .map(k => {return this.state.counts[k]})
+                .reduce((a, b) => {
+                    return a + b;
+                });
+    },
+
+    render: function () {
+        const { openState, renderLeft, counts } = this.state;
+        const { title, shareUrls } = this.props;
+        const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass || ''}`;
+
+        const trigger = (<a href={this.props.defaultAction}
+                            className="dropdown-trigger"
+                            onClick={this.handleClick}
+                            done={this.close}
+                            data-skip-pjax="true">
+            {_image('fa-share-alt')}
+            <span className="icon-left">{title} ({this.totalShares()})</span>
+        </a>);
+
+        let dropdownContent = <DropdownContent renderLeft={renderLeft}
+                                               close={this.close}
+                                               {...this.props}
+                                               key='required' >
+            <FBShareItem
+                    shareUrl={shareUrls.facebook}
+                    title={title}
+                    count={counts.facebook} />
+            <LinkItem
+                    type="link"
+                    title={`Twitter (${counts.twitter})`}
+                    url={shareUrls.twitter}
+                    fa="fa-twitter" />
+            <LinkItem
+                    type="link"
+                    title={`LinkedIn (${counts.linkedIn})`}
+                    url={shareUrls.linkedIn}
+                    fa="fa-linkedin" />
+            </DropdownContent>;
 
         const ReactTransitionGroup = React.addons.TransitionGroup;
         return (<li tabIndex="1"
@@ -194,8 +307,11 @@ window.DropdownContent = React.createClass({
         const { close, sections, contentClassName, currentActor } = this.props;
         const collapseClass = this.props.renderLeft ? 'dropdown--left ' : 'dropdown-right ';
 
-        const renderedSections = (<ul className={'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState} style={null}>
-            {sections.map((section, i) => {
+        let children;
+        if (typeof this.props.children !== "undefined") {
+            children = this.props.children;
+        } else {
+            children = sections.map((section, i) => {
                 if (typeof(section.type) === "string") {
                     return (<Notifications key={i} done={close} {...section} />);
                 } else {
@@ -220,11 +336,13 @@ window.DropdownContent = React.createClass({
                             {items}
                         </div>);
                 }
-            })}
-        </ul>);
+            });
+        }
 
         return (<div>
-            {renderedSections}
+            <ul className={'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState} style={null}>
+                {children}
+            </ul>
         </div>);
     }
 });
@@ -270,13 +388,12 @@ var LinkItem = React.createClass({
 });
 
 var FBShareItem = React.createClass({
-
     handleClick: function (e) {
         if (typeof(FB) !== "undefined") {
             e.preventDefault();
             FB.ui({
                 method: 'share',
-                href: this.props.data.share_url,
+                href: this.props.data.shareUrl,
                 caption: this.props.title
             }, (response) => {
                 console.log(response);
@@ -289,11 +406,13 @@ var FBShareItem = React.createClass({
         return (<li className={this.props.type}>
             <a href={this.props.url} data-skip-pjax="true" onClick={this.handleClick}>
                 {_image({fa: 'fa-facebook'})}
-                <span className="icon-left">{this.props.title}</span>
+                <span className="icon-left">Facebook ({this.props.count})</span>
             </a>
         </li>);
     }
 });
+
+
 
 var ActorItem = React.createClass({
     getInitialState: function () {

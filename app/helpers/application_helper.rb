@@ -99,6 +99,16 @@ module ApplicationHelper
     link_items << link_item('LinkedIn', ShareHelper.linkedin_share_url(url, title: resource.display_name), fa: 'linkedin')
 
     dropdown_options(t('share'), [{items: link_items}], fa: 'fa-share-alt')
+
+    {
+        title: t('share'),
+        url: 'https://argu.co/m/466',
+        shareUrls: {
+            facebook: ShareHelper.facebook_share_url(url),
+            linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
+            twitter: ShareHelper.twitter_share_url(url, title: resource.display_name)
+        }
+    }
   end
 
   def sort_items
