@@ -18,12 +18,12 @@ nl:
       unauthenticated: 'Je moet inloggen voordat je door kan gaan.'
       unconfirmed: 'Je moet je account bevestigen voordat je door kan gaan.'
       locked: 'Jouw account is vergrendeld.'
-      invalid: 'Ongeldig email-adres of wachtwoord.'
       invalid_token: 'Ongeldige authentication token.'
       timeout: 'Jouw sessie is verlopen, log opnieuw in om door te gaan.'
       inactive: 'Jouw account is nog niet geactiveerd.'
+      invalid: 'We konden geen gebruiker vinden met dat e-mailadres en wachtwoord.'
       user:
-        not_found_in_database: 'Ongeldig email-adres of wachtwoord.'
+        not_found_in_database: 'We konden geen gebruiker vinden met dat e-mailadres en wachtwoord.'
     sessions:
       signed_in: 'Welkom terug!'
       signed_out: 'Je bent succesvol uitgelogd, tot ziens.'

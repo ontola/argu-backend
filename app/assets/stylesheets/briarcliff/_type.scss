@@ -131,7 +131,7 @@ header {
   text-align: center;
 }
 
-header h1, header h2 {
+header h1, header h2, header h3 {
   color: $g4;
   margin-bottom: 0.8em;
   @include uppercase;
