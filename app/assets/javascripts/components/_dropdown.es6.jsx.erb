@@ -143,24 +143,21 @@ window.HyperDropdown = React.createClass({
                        </TriggerContainer>);
         }
 
-        let dropdownContent;
-        if (openState) {
-            dropdownContent = <DropdownContent renderLeft={renderLeft}
+        let dropdownContent = <DropdownContent renderLeft={renderLeft}
                                                close={this.close}
                                                currentActor={current_actor}
                                                {...this.props}
                                                key='required' />;
-        }
+
         const ReactTransitionGroup = React.addons.TransitionGroup;
         return (<li tabIndex="1"
                     className={dropdownClass}
                     onMouseEnter={this.onMouseEnter}
                     onMouseLeave={this.onMouseLeave} >
             {trigger}
-            <%# This makes sure renderLeft is calculated correctly %>
-            <ul className={'dropdown-content dropdown-content--helper ' + this.props.contentClassName}></ul>
+            <div className="reference-elem" style={{visibility: 'hidden', overflow: 'hidden', 'pointer-events': 'none', position: 'absolute'}}>{dropdownContent}</div>
             <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
-                {dropdownContent}
+                {openState && dropdownContent}
             </ReactTransitionGroup>
         </li>);
     }
