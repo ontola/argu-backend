@@ -5,6 +5,7 @@ require 'minitest/rails'
 require 'mocha/mini_test'
 require 'model_test_base'
 require 'capybara/rails'
+require 'support/test_case'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -15,7 +16,6 @@ require 'minitest/pride'
 DatabaseCleaner.strategy = :transaction
 
 module TestHelper
-
   # Runs assert_difference with a number of conditions and varying difference
   # counts.
   #
@@ -55,16 +55,19 @@ class ActiveSupport::TestCase
   #FactoryGirl.lint
   # Add more helper methods to be used by all tests here...
 
-
   def create_manager(forum, user = nil)
     user ||= FactoryGirl.create(:user)
-    FactoryGirl.create(:managership, forum: forum, profile: user.profile)
+    FactoryGirl.create(:managership,
+                       forum: forum,
+                       profile: user.profile)
     user
   end
 
   def create_member(forum, user = nil)
     user ||= FactoryGirl.create(:user)
-    FactoryGirl.create(:membership, forum: forum, profile: user.profile)
+    FactoryGirl.create(:membership,
+                       forum: forum,
+                       profile: user.profile)
     user
   end
 

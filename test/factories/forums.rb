@@ -14,6 +14,10 @@ FactoryGirl.define do
       forum.shortname.shortname = forum.name
     end
 
+    after(:create) do |forum, evaluator|
+      Apartment::Tenant.create(forum.shortname.shortname)
+    end
+
     # Holland (the default)
     factory :populated_forum do
       motion_count 20

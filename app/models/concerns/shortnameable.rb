@@ -26,6 +26,7 @@ module Shortnameable
   module ClassMethods
     # Finds an object via its shortname, throws an exception when not found
     def find_via_shortname(url)
+      Rails.logger.info "+++++++++++++++++++#{url}+++++++++++++++++++"
       find_via_shortname_nil(url) or raise(ActiveRecord::RecordNotFound)
     end
 

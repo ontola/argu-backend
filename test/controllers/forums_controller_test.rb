@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class ForumsControllerTest < ActionController::TestCase
+class ForumsControllerTest < Argu::TestCase
   include Devise::TestHelpers
 
   let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
@@ -24,7 +24,7 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
-  test 'should get show' do
+  test 'should get show', tenant: :holland do
     sign_in user
 
     get :show, id: holland

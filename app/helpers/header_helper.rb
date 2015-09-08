@@ -39,13 +39,14 @@ module HeaderHelper
   end
 
   def notification_dropdown_items
-    dropdown_options('', [{
-                            type: 'notifications',
-                            unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count,
-                            lastNotification: nil,
-                            notifications: [],
-                            loadMore: true
-                        }],
+    dropdown_options('',
+                     [{
+                         type: 'notifications',
+                         unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count,
+                         lastNotification: nil,
+                         notifications: [],
+                         loadMore: true
+                     }],
                      trigger: {
                          type: 'notifications',
                          triggerClass: 'navbar-item'
@@ -60,7 +61,10 @@ module HeaderHelper
     Forum.top_public_forums(limit)
         .select { |f| ['nederland', 'utrecht', 'houten', 'feedback'].include?(f.shortname.shortname) }
         .each do |forum|
-      items << link_item(forum.display_name, root_url(subdomain: forum), image: forum.profile_photo.url(:icon), data: {'skip-pjax' => true})
+      items << link_item(forum.display_name,
+                         root_url(subdomain: forum),
+                         image: forum.profile_photo.url(:icon),
+                         data: {'skip-pjax' => true})
     end
     items
   end
@@ -68,7 +72,9 @@ module HeaderHelper
   def profile_membership_items
     ids = current_profile.present? ? current_profile.memberships.pluck(:forum_id) : []
     Shortname.shortname_owners_for_klass('Forum', ids).map do |shortname|
-      link_item(shortname.owner.display_name, root_url(subdomain: shortname.shortname), image: shortname.owner.profile_photo.url(:icon))
+      link_item(shortname.owner.display_name,
+                root_url(subdomain: shortname.shortname),
+                image: shortname.owner.profile_photo.url(:icon))
     end
   end
 
