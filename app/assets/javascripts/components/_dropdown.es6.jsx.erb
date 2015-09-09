@@ -233,6 +233,8 @@ window.ShareDropdown = React.createClass({
         const { title, shareUrls } = this.props;
         const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass || ''}`;
 
+        let totalSharesCounter = <div className="notification-counter share-counter">{this.totalShares()}</div>;
+
         const trigger = (<a href={this.props.defaultAction}
                             className="dropdown-trigger"
                             onClick={this.handleClick}
@@ -240,7 +242,7 @@ window.ShareDropdown = React.createClass({
                             data-skip-pjax="true">
             <span className="fa fa-share-alt"></span>
             <span className="icon-left">{title}</span>
-            <div className="notification-counter share-counter">{this.totalShares()}</div>
+            {totalSharesCounter && this.totalShares() > 0}
         </a>);
 
         let dropdownContent = <DropdownContent renderLeft={renderLeft}
@@ -412,8 +414,6 @@ var FBShareItem = React.createClass({
         </li>);
     }
 });
-
-
 
 var ActorItem = React.createClass({
     getInitialState: function () {
