@@ -238,8 +238,9 @@ window.ShareDropdown = React.createClass({
                             onClick={this.handleClick}
                             done={this.close}
                             data-skip-pjax="true">
-            {_image('fa-share-alt')}
-            <span className="icon-left">{title} ({this.totalShares()})</span>
+            <span className="fa fa-share-alt"></span>
+            <span className="icon-left">{title}</span>
+            <div className="notification-counter share-counter">{this.totalShares()}</div>
         </a>);
 
         let dropdownContent = <DropdownContent renderLeft={renderLeft}
@@ -393,7 +394,7 @@ var FBShareItem = React.createClass({
             e.preventDefault();
             FB.ui({
                 method: 'share',
-                href: this.props.data.shareUrl,
+                href: this.props.shareUrl,
                 caption: this.props.title
             }, (response) => {
                 console.log(response);

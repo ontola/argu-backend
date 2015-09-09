@@ -90,19 +90,11 @@ module ApplicationHelper
 
   # Generates social media links for any resource for HyperDropdown
   def share_items(resource)
-    link_items = []
     url = url_for([resource, only_path: false])
-
-    #link_items << fb_share_item('Facebook', ShareHelper.facebook_share_url(url), fa: 'facebook', class: 'fb-share-dialog', data: {share_url: url})
-    link_items << item('fb_share', 'Facebook', ShareHelper.facebook_share_url(url), data: {share_url: url, title: resource.display_name})
-    link_items << link_item('Twitter', ShareHelper.twitter_share_url(url, title: resource.display_name), fa: 'twitter')
-    link_items << link_item('LinkedIn', ShareHelper.linkedin_share_url(url, title: resource.display_name), fa: 'linkedin')
-
-    dropdown_options(t('share'), [{items: link_items}], fa: 'fa-share-alt')
 
     {
         title: t('share'),
-        url: 'https://argu.co/m/466',
+        url: url,
         shareUrls: {
             facebook: ShareHelper.facebook_share_url(url),
             linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),

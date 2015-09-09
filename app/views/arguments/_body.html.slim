@@ -19,5 +19,6 @@
     - if current_user.present? && policy(@argument).update?
       li
         ul= react_component 'HyperDropdown', argument_items(@argument), {prerender: true}
-    li
-      ul= react_component 'ShareDropdown', share_items(@argument), {prerender: true}
+    - if @argument.forum.visibility
+      li
+        ul= react_component 'ShareDropdown', share_items(@argument), {prerender: true}

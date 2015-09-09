@@ -117,3 +117,10 @@
   @include border-radius(99px);
   @include box-shadow(0em 0.1em 0.25em 0em rgba(0, 0, 0, 0.2));
 }
+
+.share-counter {
+  right: -0.7em;
+  left: auto;
+  top: -0.6em;
+  background-color: $gre;
+}

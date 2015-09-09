@@ -29,13 +29,6 @@
     background-color: $darken2;
     @include transition(.2s);
   }
-  &:hover {
-    //transform: translateY(-.1em);
-    //color: $g5 !important;
-  }
-  &:active {
-    color: $g5 !important;
-  }
   &:hover:before {
     opacity: 1;
     height: .15em;
