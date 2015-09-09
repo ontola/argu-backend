@@ -10,13 +10,21 @@ class ForumsControllerTest < Argu::TestCase
   ####################################
   # Not logged in
   ####################################
-  test 'should get show when not logged in' do
-    get :show, id: holland
+  test 'should get show when not logged in', tenant: :holland do
+    get :show
     assert_response 200
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:items)
 
     assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
+  end
+
+  # Forum id's don't matter anymore, only the tentant decides
+  test 'should not get show when not logged in', tenant: :helsinki do
+    get :show
+    assert_response 404
+    assert_not_nil assigns(:forum)
+    assert_nil assigns(:items)
   end
 
   ####################################
@@ -27,7 +35,7 @@ class ForumsControllerTest < Argu::TestCase
   test 'should get show', tenant: :holland do
     sign_in user
 
-    get :show, id: holland
+    get :show
     assert_response 200
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:items)
@@ -35,41 +43,41 @@ class ForumsControllerTest < Argu::TestCase
     assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
   end
 
-  test 'should not show settings' do
+  test 'should not show settings', tenant: :holland do
     sign_in user
 
-    get :settings, id: holland
+    get :settings
     assert_redirected_to root_path, 'Settings are publicly visible'
   end
 
-  test 'should not show statistics' do
+  test 'should not show statistics', tenant: :holland do
     sign_in user
 
-    get :statistics, id: holland
+    get :statistics
     assert_redirected_to root_path, 'Statistics are publicly visible'
   end
 
-  test 'should not leak closed children to non-members' do
+  test 'should not leak closed children to non-members', tenant: :cologne do
     sign_in user
 
-    get :show, id: cologne
+    get :show
     assert_response 200
 
     assert cologne.motions.count > 0
     assert_nil assigns(:items), 'Closed forums are leaking content'
   end
 
-  test 'should not show hidden to non-members' do
+  test 'should not show hidden to non-members', tenant: :helsinki do
     sign_in user
 
-    get :show, id: helsinki
+    get :show
     assert_response 404, 'Hidden forums are visible'
   end
 
-  test 'should not put update on others question' do
+  test 'should not put update on others question', tenant: :holland do
     sign_in user
 
-    put :update, id: holland, question: {title: 'New title', content: 'new contents'}
+    put :update, question: {title: 'New title', content: 'new contents'}
     assert_redirected_to root_path, 'Others can update questions'
   end
 
@@ -87,48 +95,48 @@ class ForumsControllerTest < Argu::TestCase
   let(:cologne_member) { create_member(cologne) }
   let(:helsinki_member) { create_member(helsinki) }
 
-  test 'should show closed children to members' do
+  test 'should show closed children to members', tenant: :cologne do
     sign_in cologne_member
 
-    get :show, id: cologne
+    get :show
     assert_response 200
 
     assert cologne.motions.count > 0
     assert assigns(:items), 'Closed forum content is not present'
   end
 
-  test 'should show hidden to members' do
+  test 'should show hidden to members', tenant: :helsinki do
     sign_in helsinki_member
 
-    get :show, id: helsinki
+    get :show
     assert_response 200
   end
 
   ####################################
   # As owner
   ####################################
-  let(:forum_pair) { create_forum_owner_pair({type: :populated_forum}) }
+  let(:owner_forum) { FactoryGirl.create(:populated_forum) }
+  let(:owner_user) { create_owner(owner_forum) }
 
-  test 'should show settings and all tabs' do
-    forum, owner = forum_pair
-    sign_in owner
+  test 'should show settings and all tabs', tenant: :owner_forum do
+    sign_in owner_user
 
-    get :settings, id: forum
+    get :settings
     assert_response 200
     assert assigns(:forum)
 
     [:general, :advanced, :groups, :privacy, :managers].each do |tab|
-      get :settings, id: forum, tab: tab
+      get :settings, tab: tab
       assert_response 200
       assert assigns(:forum)
     end
   end
 
-  test 'should update settings' do
+  test 'should update settings', tenant: :forum_pair do
     forum, owner = forum_pair
     sign_in owner
 
-    put :update, id: forum, forum: {
+    put :update, forum: {
                      name: 'new name',
                      bio: 'new bio',
                      cover_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg'),
@@ -152,7 +160,7 @@ class ForumsControllerTest < Argu::TestCase
     assert assigns(:forum)
   end
 
-  test 'should not show statistics yet' do
+  test 'should not show statistics yet', tenant: :holland do
     forum, owner = forum_pair
     sign_in owner
 
