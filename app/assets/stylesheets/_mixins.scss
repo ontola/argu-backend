@@ -61,9 +61,10 @@
   outline: none;
   display: inline-block;
   cursor: pointer;
-  border-bottom: solid 3px darken($color, 5%);
+  border-bottom: solid 3px darken($color, 10%);
   @include transition(.15s);
   border-top: solid 3px $color;
+  @include border-radius(.4em);
   //vertical-align: bottom;
   &:hover {
     background-color: darken($color, 5%);

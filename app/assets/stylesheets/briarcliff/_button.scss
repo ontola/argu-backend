@@ -83,6 +83,7 @@
   @include button(rgba(0,0,0,0));
   padding-left: 1em;
   padding-right: 1em;
+  @include border-radius(0);
 
   &:hover{
     background-color: $lighten2;
@@ -537,4 +538,8 @@ a.is-loading{
     pointer-events: none;
     background-color: $g1;
   }
+}
+
+.btn--square {
+  @include border-radius(0);
 }

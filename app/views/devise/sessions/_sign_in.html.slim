@@ -10,7 +10,7 @@
           =f.input :password, placeholder: false, hint: false, input_html: {required: true}
           =f.input :r, as: :hidden
           - if devise_mapping.rememberable?
-            .remember= f.input :remember_me, as: :boolean
+            .remember.margin-bottom= f.input :remember_me, as: :boolean
         =f.actions do
           =f.action :submit, as: :button, label: t('sign_in'), button_html: { id: 'log_in' }
         /= render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}
