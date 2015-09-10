@@ -124,10 +124,12 @@
   top: -0.9em;
   background-color: #539844;
   font-size: 0.8em;
-  @include animation(enlarge-shake 1.3s);
+
+  @include animation(enlarge-twist 1.3s);
   @include transform(scale(1) rotate(7deg));
   @include transition(.3s);
-  .dropdown:hover & {
-    transform: scale(1.2) rotate(12deg);
+
+  .dropdown-active & {
+    @include transform(scale(1.2) rotate(12deg));
   }
 }

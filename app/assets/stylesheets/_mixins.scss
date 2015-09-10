@@ -303,7 +303,7 @@
   }
 }
 
-@include keyframes(enlarge-shake) {
+@include keyframes(enlarge-twist) {
   0% {
     @include transform(scale(0) rotate(0deg));
   }

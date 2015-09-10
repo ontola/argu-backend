@@ -118,9 +118,9 @@ window.BigVoteResults = React.createClass({
         if (this.props.show_results) {
             results = (
                     <ul className="progress-bar progress-bar-stacked">
-                        <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.distribution.pro}</span></li>
-                        <li style={this.voteWidth('neutral')}><span className="btn-neu">{this.props.distribution.neutral}</span></li>
-                        <li style={this.voteWidth('con')}><span className="btn-con">{this.props.distribution.con}</span></li>
+                        <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.percent.pro + '%'}</span></li>
+                        <li style={this.voteWidth('neutral')}><span className="btn-neu">{this.props.percent.neutral + '%'}</span></li>
+                        <li style={this.voteWidth('con')}><span className="btn-con">{this.props.percent.con + '%'}</span></li>
                     </ul>);
         } else {
             results = (<p>Stem om te zien wat <b>{this.props.total_votes}</b> anderen gestemd hebben!</p>);
