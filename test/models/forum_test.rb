@@ -6,7 +6,7 @@ class ForumTest < ActiveSupport::TestCase
   subject { FactoryGirl.create(:populated_forum) }
   let(:venice) { FactoryGirl.create(:populated_forum_vwal) }
   let(:user) { FactoryGirl.create(:user) }
-  let(:subject_member) { create_member(subject) }
+  let(:subject_member) { make_member(subject) }
 
   test 'valid' do
     assert subject.valid?, subject.errors.to_a.join(',').to_s

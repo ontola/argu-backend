@@ -31,8 +31,8 @@ class CommentsController < ApplicationController
   end
 
   def edit
-    @commentable = commentable_class.find params[commentable_param]
-    @comment = @commentable.comment_threads.find params[:id]
+    @comment = Comment.find params[:id]
+    @commentable = @comment.commentable
     current_context @comment
     authorize @comment, :edit?
 
@@ -89,12 +89,12 @@ class CommentsController < ApplicationController
   end
 
   def update
-    @commentable = commentable_class.find params[commentable_param]
-    @comment = @commentable.comment_threads.find params[:id]
-    authorize @comment, :edit?
+    @comment = Comment.find params[:id]
+    @commentable = @commentable = @comment.commentable
+    authorize @comment, :update?
 
     respond_to do |format|
-      if @comment.update_attributes(comment_params)
+      if @comment.update(comment_params)
         format.html { redirect_to @comment, notice: t('comments.notices.updated') }
         format.js { render }
         format.json { head :no_content }

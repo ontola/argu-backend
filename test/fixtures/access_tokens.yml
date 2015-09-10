@@ -5,14 +5,14 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-token_hidden:
-  item_id: 140372415
-  item_type: 'Forum'
-  profile: :profile_fletcher91
-  access_token: f8669476cb873acfbd730d65
-#
-token_super_hidden:
-  item_id: 32812423
-  item_type: 'Forum'
-  profile: :profile_fletcher91
-  access_token: 9eb45b4297e6140eb36fe3ed
+#token_hidden:
+#  item_id: 140372415
+#  item_type: 'Forum'
+#  creator_id: :profile_fletcher91 (Profile)
+#  access_token: f8669476cb873acfbd730d65
+##
+#token_super_hidden:
+#  item_id: 32812423
+#  item_type: 'Forum'
+#  creator_id: :profile_fletcher91 (Profile)
+#  access_token: 9eb45b4297e6140eb36fe3ed

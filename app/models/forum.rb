@@ -15,6 +15,7 @@ class Forum < ActiveRecord::Base
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :groups
+  has_many :notifications
 
   # @private
   # Used in the forum selector

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150904090141) do
+ActiveRecord::Schema.define(version: 20150910161135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,7 +20,7 @@ ActiveRecord::Schema.define(version: 20150904090141) do
     t.integer  "item_id"
     t.string   "item_type"
     t.string   "access_token",             null: false
-    t.integer  "profile_id",               null: false
+    t.integer  "creator_id",               null: false
     t.integer  "usages",       default: 0
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20150904090141) do
     t.string   "title",            limit: 255, default: ""
     t.text     "body",                         default: ""
     t.string   "subject",          limit: 255, default: ""
-    t.integer  "profile_id",                   default: 0
+    t.integer  "creator_id",                   default: 0
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 20150904090141) do
 
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
-  add_index "comments", ["profile_id"], name: "index_comments_on_profile_id", using: :btree
+  add_index "comments", ["creator_id"], name: "index_comments_on_creator_id", using: :btree
 
   create_table "documents", force: :cascade do |t|
     t.string   "name"
@@ -186,7 +186,7 @@ ActiveRecord::Schema.define(version: 20150904090141) do
   create_table "group_responses", force: :cascade do |t|
     t.integer  "forum_id"
     t.integer  "group_id"
-    t.integer  "profile_id"
+    t.integer  "creator_id"
     t.integer  "motion_id"
     t.text     "text",            default: ""
     t.integer  "created_by_id"
@@ -272,9 +272,11 @@ ActiveRecord::Schema.define(version: 20150904090141) do
     t.datetime "updated_at"
     t.string   "title"
     t.string   "url"
+    t.integer  "forum_id"
   end
 
   add_index "notifications", ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
+  add_index "notifications", ["forum_id"], name: "index_notifications_on_forum_id", using: :btree
   add_index "notifications", ["profile_id", "created_at"], name: "index_notifications_on_profile_id_and_created_at", using: :btree
   add_index "notifications", ["profile_id"], name: "index_notifications_on_profile_id", using: :btree
 
@@ -573,4 +575,5 @@ ActiveRecord::Schema.define(version: 20150904090141) do
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
   add_foreign_key "identities", "users"
+  add_foreign_key "notifications", "forums"
 end

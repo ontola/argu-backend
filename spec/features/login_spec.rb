@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.feature 'Login', type: :feature do
 
   let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
-  let!(:holland_member) { create_member(holland) }
+  let!(:holland_member) { make_member(holland) }
   let(:user) { FactoryGirl.create(:user_with_votes) }
 
   scenario 'User logs in from a Forum' do

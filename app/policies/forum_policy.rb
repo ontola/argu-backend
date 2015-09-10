@@ -162,7 +162,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def update?
-    rule is_manager?, super
+    rule is_manager?, is_owner?, super
   end
 
   # Whether the user can add (a specified) manager(s)

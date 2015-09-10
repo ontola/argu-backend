@@ -3,7 +3,7 @@
 # People can activate an `access_token` with argu.co?at=xxx
 class AccessToken < ActiveRecord::Base
   belongs_to :item, polymorphic: true
-  belongs_to :profile
+  belongs_to :creator, class_name: 'Profile'
 
   has_secure_token :access_token
 

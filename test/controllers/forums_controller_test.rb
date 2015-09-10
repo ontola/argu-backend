@@ -77,7 +77,7 @@ class ForumsControllerTest < Argu::TestCase
   test 'should not put update on others question', tenant: :holland do
     sign_in user
 
-    put :update, question: {title: 'New title', content: 'new contents'}
+    put :update, id: holland.to_param, question: {title: 'New title', content: 'new contents'}
     assert_redirected_to root_path, 'Others can update questions'
   end
 
@@ -92,8 +92,8 @@ class ForumsControllerTest < Argu::TestCase
   ####################################
   # As member
   ####################################
-  let(:cologne_member) { create_member(cologne) }
-  let(:helsinki_member) { create_member(helsinki) }
+  let(:cologne_member) { make_member(cologne) }
+  let(:helsinki_member) { make_member(helsinki) }
 
   test 'should show closed children to members', tenant: :cologne do
     sign_in cologne_member
@@ -115,58 +115,51 @@ class ForumsControllerTest < Argu::TestCase
   ####################################
   # As owner
   ####################################
-  let(:owner_forum) { FactoryGirl.create(:populated_forum) }
-  let(:owner_user) { create_owner(owner_forum) }
+  let(:holland_owner) { make_owner(holland) }
+  let(:helsinki_owner) { make_owner(helsinki) }
 
-  test 'should show settings and all tabs', tenant: :owner_forum do
-    sign_in owner_user
+  test 'should show settings and all tabs', tenant: :helsinki do
+    sign_in helsinki_owner
 
     get :settings
     assert_response 200
-    assert assigns(:forum)
 
     [:general, :advanced, :groups, :privacy, :managers].each do |tab|
       get :settings, tab: tab
       assert_response 200
-      assert assigns(:forum)
     end
   end
 
-  test 'should update settings', tenant: :forum_pair do
-    forum, owner = forum_pair
-    sign_in owner
+  test 'should update settings', tenant: :helsinki do
+    sign_in helsinki_owner
 
-    put :update, forum: {
+    put :update, id: helsinki.to_param , forum: {
                      name: 'new name',
                      bio: 'new bio',
                      cover_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg'),
                      profile_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg')
                  }
 
-    assert_redirected_to settings_forum_path(forum.url, tab: :general)
+    assert_redirected_to settings_forums_path(tab: :general)
     assert assigns(:forum)
     assert_equal 'new name', assigns(:forum).reload.name
     assert_equal 'new bio', assigns(:forum).reload.bio
     assert_equal 2, assigns(:forum).lock_version, "Lock version didn't increase"
   end
 
-  test 'should show settings/groups' do
-    forum, owner = forum_pair
-    sign_in owner
+  test 'should show settings/groups', tenant: :helsinki do
+    sign_in helsinki_owner
 
-    get :settings, id: forum, tab: :groups
+    get :settings, tab: :groups
 
     assert_response :success
-    assert assigns(:forum)
   end
 
   test 'should not show statistics yet', tenant: :holland do
-    forum, owner = forum_pair
-    sign_in owner
+    sign_in holland_owner
 
-    get :statistics, id: forum
+    get :statistics
     assert_redirected_to root_url
-    assert assigns(:forum)
     assert_nil assigns(:tags), "Doesn't assign tags"
     #assert_equal 2, assigns(:tags).length
   end
@@ -175,21 +168,19 @@ class ForumsControllerTest < Argu::TestCase
   ####################################
   # As manager
   ####################################
-  let(:holland_manager) { create_manager(holland) }
+  let(:holland_manager) { make_manager(holland) }
 
-  test 'should show settings and some tabs' do
+  test 'should show settings and some tabs', tenant: :holland do
     sign_in holland_manager
 
     [:general, :advanced, :groups].each do |tab|
-      get :settings, id: holland, tab: tab
+      get :settings, tab: tab
       assert_response 200
-      assert assigns(:forum)
     end
 
     [:privacy, :managers].each do |tab|
-      get :settings, id: holland, tab: tab
+      get :settings, tab: tab
       assert_redirected_to root_path
-      assert assigns(:forum)
     end
   end
 end

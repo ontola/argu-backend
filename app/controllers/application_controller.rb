@@ -90,6 +90,10 @@ class ApplicationController < ActionController::Base
     @_current_forum ||= Forum.find_via_shortname Apartment::Tenant.current
   end
 
+  def current_forum!
+    @_current_forum ||= Forum.find_via_shortname_nil Apartment::Tenant.current
+  end
+
   def current_scope
     @current_scope ||= (current_context.context_scope(current_profile) || current_context)
   end
@@ -139,7 +143,7 @@ class ApplicationController < ActionController::Base
     UserContext.new(current_user,
                     current_profile,
                     session,
-                    current_forum,
+                    current_forum!,
                     {
                         platform_open: platform_open?,
                         within_user_cap: within_user_cap?

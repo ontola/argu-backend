@@ -55,7 +55,7 @@ class ActiveSupport::TestCase
   #FactoryGirl.lint
   # Add more helper methods to be used by all tests here...
 
-  def create_manager(forum, user = nil)
+  def make_manager(forum, user = nil)
     user ||= FactoryGirl.create(:user)
     FactoryGirl.create(:managership,
                        forum: forum,
@@ -63,7 +63,7 @@ class ActiveSupport::TestCase
     user
   end
 
-  def create_member(forum, user = nil)
+  def make_member(forum, user = nil)
     user ||= FactoryGirl.create(:user)
     FactoryGirl.create(:membership,
                        forum: forum,
@@ -74,10 +74,9 @@ class ActiveSupport::TestCase
   # Makes the given `User` a manager of the `Page` of the `Forum`
   # Creates one if not given
   # @note overwrites the current owner in the `Page`
-  def create_owner(forum, user = nil)
+  def make_owner(forum, user = nil)
     user ||= FactoryGirl.create(:user)
-    forum.page.owner = user.profile
-    forum.page.save
+    raise 'Could not update owner' unless forum.page.update owner: user.profile
     user
   end
 
@@ -87,6 +86,12 @@ class ActiveSupport::TestCase
                                page: FactoryGirl.create(:page,
                                                         owner: user.profile))
     return forum, user
+  end
+
+  def make_creator(model, user = nil)
+    user ||= FactoryGirl.create(:user)
+    raise 'Could not update owner' unless model.update creator: user.profile
+    user
   end
 
 end

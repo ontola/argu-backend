@@ -9,13 +9,13 @@ class Comment < ActiveRecord::Base
   after_validation :refresh_counter_cache, :touch_parent
   after_destroy :refresh_counter_cache
 
-  validates_presence_of :profile
+  validates_presence_of :creator
   validates :body, presence: true, length: {minimum: 4, maximum: 5000}
 
   attr_accessor :is_processed
 
   belongs_to :commentable, :polymorphic => true
-  belongs_to :profile
+  belongs_to :creator, class_name: 'Profile'
   has_many :activities, as: :trackable, dependent: :destroy
 
   def abandoned?
@@ -25,17 +25,13 @@ class Comment < ActiveRecord::Base
   # Helper class method that allows you to build a comment
   # by passing a commentable object, a user_id, and comment text
   # example in readme
-  def self.build_from(obj, profile_id, comment)
+  def self.build_from(obj, creator_id, comment)
     c = self.new
     c.commentable_id = obj.id
     c.commentable_type = obj.class.base_class.name
     c.body = comment
-    c.profile_id = profile_id
+    c.creator_id = creator_id
     c
-  end
-
-  def creator
-    self.profile
   end
 
   def creator_follow
@@ -54,7 +50,7 @@ class Comment < ActiveRecord::Base
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.
   scope :find_comments_by_user, lambda { |user|
-    where(:profile_id => user.profile.id).order('created_at DESC')
+    where(:creator_id => user.profile.id).order('created_at DESC')
   }
 
   # Helper class method to look up all comments for
@@ -76,18 +72,14 @@ class Comment < ActiveRecord::Base
   def refresh_counter_cache
     self.commentable.update_columns comments_count: self.commentable.comment_threads
                                                         .where(is_trashed: false)
-                                                        .where.not(profile: nil)
+                                                        .where.not(creator_id: nil)
                                                         .count
-  end
-
-  def forum
-    commentable.forum
   end
 
   # Comments can't be deleted since all comments below would be hidden as well
   def wipe
     Comment.transaction do
-      if self.update_columns profile_id: nil, body: '', is_trashed: true
+      if self.update_columns creator_id: nil, body: '', is_trashed: true
         refresh_counter_cache
         self.activities.destroy_all
       end

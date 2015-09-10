@@ -4,7 +4,6 @@ class ArgumentsController < ApplicationController
   # GET /arguments/1.json
   def show
     @argument = Argument.includes(:comment_threads).find params[:id]
-    @forum = @argument.forum
     current_context @argument
     authorize @argument, :show?
     @parent_id = params[:parent_id].to_s
@@ -25,7 +24,7 @@ class ArgumentsController < ApplicationController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    @argument = Argument.new motion_id: params[:motion_id]
+    @argument = Argument.new motion: Motion.find(params[:motion_id])
     authorize current_forum, :show?
     if current_profile.blank?
       render_register_modal(nil, [:motion_id, params[:motion_id]], [:pro, params[:pro]])
@@ -98,7 +97,7 @@ class ArgumentsController < ApplicationController
     authorize @argument, :update?
 
     respond_to do |format|
-      if @argument.update_attributes(argument_params)
+      if @argument.update(argument_params)
         format.html { redirect_to @argument, notice: t('arguments.notices.updated') }
         format.json { head :no_content }
       else

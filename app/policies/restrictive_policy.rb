@@ -16,6 +16,7 @@ class RestrictivePolicy
 
     delegate :user, to: :context
     delegate :actor, to: :context
+    delegate :forum, to: :context
     delegate :session, to: :context
 
     def resolve
@@ -50,7 +51,7 @@ class RestrictivePolicy
     end
 
     def is_member?
-      member if user && user.profile.member_of?(record.forum || record.forum_id)
+      member if user && user.profile.member_of?(forum)
     end
 
     def staff?
@@ -58,7 +59,7 @@ class RestrictivePolicy
     end
 
     def forum_policy
-      Pundit.policy(context, record.try(:forum) || context.context_model)
+      Pundit.policy(context, forum || Forum)
     end
   end
   include Roles
@@ -78,6 +79,7 @@ class RestrictivePolicy
 
   delegate :user, to: :context
   delegate :actor, to: :context
+  delegate :forum, to: :context
   delegate :session, to: :context
 
   def permitted_attributes

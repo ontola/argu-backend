@@ -10,17 +10,17 @@ one:
   content: "Contents of argument one"
   motion: :one
   pro: true
-  forum: :utrecht
   creator: :profile_one
   comments_count: 1
+  #forum: :utrecht
 #
 two:
   title: "Argument two"
   content: "Contents of argument two"
   motion: :one
   pro: false
-  forum: :utrecht
   creator: :profile_two
+#  forum: :utrecht
 #
 trashed:
   title: "Argument trashed"
@@ -28,13 +28,13 @@ trashed:
   motion: :one
   is_trashed: true
   pro: true
-  forum: :utrecht
   creator: :profile_one
+#  forum: :utrecht
 trashed_con:
   title: "Argument con trashed"
   content: "Contents of argument trashed"
   motion: :one
   is_trashed: true
   pro: false
-  forum: :utrecht
   creator: :profile_one
+#  forum: :utrecht

@@ -34,7 +34,7 @@ class StaticPagesControllerTest < ActionController::TestCase
       activities << FactoryGirl.create(:activity, trait, forum: holland)
     end
     sign_in users(:user_thom)
-    create_member(holland, users(:user_thom))
+    make_member(holland, users(:user_thom))
 
     get :home
 

@@ -8,7 +8,6 @@ module ProCon
     has_many :votes, as: :voteable, :dependent => :destroy, inverse_of: :voteable
     has_many :activities, as: :trackable, dependent: :destroy
     belongs_to :creator, class_name: 'Profile'
-    belongs_to :forum
 
     before_save :trim_data
     before_save :cap_title
@@ -19,7 +18,7 @@ module ProCon
     validates :creator_id, :motion_id, presence: true
 
     acts_as_commentable
-    parentable :motion, :forum
+    parentable :motion#, :forum
 
     #todo: Doesn't seem like a good idea
     #def creator

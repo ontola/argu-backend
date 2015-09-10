@@ -12,8 +12,8 @@ FactoryGirl.define do
     password_confirmation 'password'
     finished_intro true
     has_analytics false
-    first_name { |n| 'first_name#{n}'}
-    last_name { |n| 'last_name#{n}'}
+    first_name { |n| 'first_name#{n}' }
+    last_name { |n| 'last_name#{n}' }
 
     trait :forum_manager do
       after(:create) do |user, evaluator|
@@ -21,11 +21,14 @@ FactoryGirl.define do
       end
     end
 
+    trait :staff do
+      staff true
+    end
+
     factory :user_with_notification do
       after(:create) do |user, evaluator|
         user.profile.notifications.create
       end
-
     end
 
 

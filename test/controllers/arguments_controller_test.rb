@@ -1,28 +1,35 @@
 require 'test_helper'
 
-class ArgumentsControllerTest < ActionController::TestCase
+class ArgumentsControllerTest < Argu::TestCase
   include Devise::TestHelpers
+
+  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+  let(:motion) { FactoryGirl.create(:motion, tenant: :holland) }
+  let(:argument) { FactoryGirl.create(:argument, :with_comments, tenant: :holland, motion: motion) }
 
   ####################################
   # Not logged in
   ####################################
-  test 'should get show when not logged in' do
-    get :show, id: arguments(:one)
+  test 'should get show when not logged in', tenant: :holland do
+    get :show,
+        id: argument
 
     assert_response 200
     assert assigns(:argument)
     assert assigns(:comments)
 
+    assert argument.comment_threads.any?(&:is_trashed), 'No thrashed comments in test'
     assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, 'Trashed comments are visible'
   end
 
   ####################################
   # As user
   ####################################
-  test 'should get show' do
+  test 'should get show', tenant: :holland do
     sign_in users(:user)
 
-    get :show, id: arguments(:one)
+    get :show,
+        id: argument
 
     assert_response 200
     assert assigns(:argument)
@@ -31,49 +38,57 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, 'Trashed comments are visible'
   end
 
-  test 'should get new pro' do
+  test 'should get new pro', tenant: :holland do
     sign_in users(:user)
 
-    get :new, forum_id: forums(:utrecht), motion_id: motions(:one).id, pro: 'pro'
+    _motion = motion
+
+    get :new,
+        motion_id: _motion,
+        pro: 'pro'
 
     assert_response 200
     assert assigns(:argument)
-    assert assigns(:argument).motion == motions(:one)
+    assert assigns(:argument).motion == _motion
     assert assigns(:argument).pro === true, "isn't assigned pro attribute"
   end
 
-  test 'should get new con' do
+  test 'should get new con', tenant: :holland do
     sign_in users(:user)
 
-    get :new, forum_id: forums(:utrecht), motion_id: motions(:one).id, pro: 'con'
+    get :new,
+        motion_id: motion,
+        pro: 'con'
 
     assert_response 200
     assert assigns(:argument)
-    assert assigns(:argument).motion == motions(:one)
+    assert assigns(:argument).motion == motion
     assert assigns(:argument).pro === false, "isn't assigned pro attribute"
   end
 
-  test 'should get edit' do
-    sign_in users(:user)
-
-    get :edit, id: arguments(:one)
-
-    assert_response 200
-    assert assigns(:argument)
-    assert assigns(:forum)
-  end
+  ####################################
+  # As member
+  ####################################
+  let(:member) { make_member(holland) }
 
   test 'should post create pro' do
-    sign_in users(:user)
+    sign_in member
 
     assert_difference('Argument.count') do
       assert_difference('Vote.count') do
-        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents', auto_vote: 'true'}
+        post :create,
+             argument: {
+                 motion_id: motion,
+                 pro: 'pro',
+                 title: 'Test argument pro',
+                 content: 'Test argument pro-tents',
+                 auto_vote: 'true'
+             }
       end
     end
 
     assert assigns(:argument)
-    assert assigns(:argument).motion == motions(:one)
+    assert assigns(:argument).motion == motion
     assert assigns(:argument).title == 'Test argument pro', "title isn't assigned"
     assert assigns(:argument).content == 'Test argument pro-tents', "content isn't assigned"
     assert assigns(:argument).pro === true, "isn't assigned pro attribute"
@@ -81,16 +96,23 @@ class ArgumentsControllerTest < ActionController::TestCase
   end
 
   test 'should post create con' do
-    sign_in users(:user)
+    sign_in member
 
     assert_difference('Argument.count') do
       assert_difference('Vote.count') do
-        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'con', title: 'Test argument con', content: 'Test argument con-tents', auto_vote: 'true'}
+        post :create,
+             argument: {
+                 motion_id: motion,
+                 pro: 'con',
+                 title: 'Test argument con',
+                 content: 'Test argument con-tents',
+                 auto_vote: 'true'
+             }
       end
     end
 
     assert assigns(:argument)
-    assert assigns(:argument).motion == motions(:one)
+    assert assigns(:argument).motion == motion
     assert assigns(:argument).title == 'Test argument con', "title isn't assigned"
     assert assigns(:argument).content == 'Test argument con-tents', "content isn't assigned"
     assert assigns(:argument).pro === false, "isn't assigned pro attribute"
@@ -98,19 +120,45 @@ class ArgumentsControllerTest < ActionController::TestCase
   end
 
   test 'should post create pro without auto_vote' do
-    sign_in users(:user)
+    sign_in member
 
     assert_difference('Argument.count') do
       assert_no_difference('Vote.count') do
-        post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents', auto_vote: 'false'}
+        post :create,
+             argument: {
+                 motion_id: motion,
+                 pro: 'pro',
+                 title: 'Test argument pro',
+                 content: 'Test argument pro-tents',
+                 auto_vote: 'false'
+             }
       end
     end
   end
 
-  test 'should put update on own argument' do
-    sign_in users(:user)
+  ####################################
+  # As creator
+  ####################################
+  let(:creator) { make_creator(argument, make_member(holland)) }
 
-    put :update, id: arguments(:one), argument: {title: 'New title', content: 'new contents'}
+  test 'should get edit' do
+    sign_in creator
+
+    get :edit, id: argument
+
+    assert_response 200
+    assert assigns(:argument)
+  end
+
+  test 'should put update on own argument' do
+    sign_in creator
+
+    put :update,
+        id: argument,
+        argument: {
+            title: 'New title',
+            content: 'new contents'
+        }
 
     assert_not_nil assigns(:argument)
     assert_equal 'New title', assigns(:argument).title
@@ -119,11 +167,16 @@ class ArgumentsControllerTest < ActionController::TestCase
   end
 
   test "'should not put update on others' argument'" do
-    sign_in users(:user2)
+    sign_in make_member(holland)
 
-    put :update, id: arguments(:one), argument: {title: 'New title', content: 'new contents'}
+    put :update,
+        id: argument,
+        argument: {
+            title: 'New title',
+            content: 'new contents'
+        }
 
-    assert_equal arguments(:one), assigns(:argument)
+    assert_equal argument, assigns(:argument)
   end
 
 end

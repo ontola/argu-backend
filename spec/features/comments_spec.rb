@@ -67,7 +67,7 @@ RSpec.feature 'Comments', type: :feature do
   ####################################
   # As member
   ####################################
-  let!(:member) { create_member(holland) }
+  let!(:member) { make_member(holland) }
 
   scenario 'Member places a comment' do
     login_as(member, :scope => :user)

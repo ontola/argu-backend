@@ -110,7 +110,7 @@ Argu::Application.routes.draw do
   end
 
   resources :arguments, path: 'a', except: [:index], concerns: [:votable] do
-    resources :comments, path: 'c', only: [:new, :index, :show, :create, :update, :edit, :destroy]
+    resources :comments, path: 'c', only: [:new, :index, :show, :create]
     patch 'comments' => 'comments#create'
   end
 
@@ -146,7 +146,7 @@ Argu::Application.routes.draw do
     post ':id' => 'profiles#update', on: :collection
   end
 
-  resources :comments, only: :show
+  resources :comments, only: [:show, :update, :edit, :destroy]
 
   resources :follows, only: :create do
     delete :destroy, on: :collection
@@ -181,7 +181,7 @@ Argu::Application.routes.draw do
   resources :forums, only: [:show, :update], path: '' do
     get :discover, on: :collection, action: :discover, constraints: {subdomain: ''}
     get :settings, on: :collection
-    get :statistics, on: :member
+    get :statistics, on: :collection
     get :selector, on: :collection
     post :memberships, on: :collection
     resources :memberships, only: [:create, :destroy]

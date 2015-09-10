@@ -67,12 +67,13 @@ class ForumsController < ApplicationController
     @forum.reload if process_cover_photo @forum, permit_params
     respond_to do |format|
       if @forum.update permit_params
-        format.html { redirect_to settings_forum_path(@forum, tab: tab) }
+        format.html { redirect_to settings_forums_path(tab: tab) }
       else
-        format.html { render 'settings', locals: {
-                                           tab: tab,
-                                           active: tab
-                                       }
+        format.html { render 'settings',
+                             locals: {
+                                 tab: tab,
+                                 active: tab
+                             }
         }
       end
     end

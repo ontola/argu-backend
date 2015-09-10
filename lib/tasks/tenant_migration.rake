@@ -66,6 +66,10 @@ namespace :argu do
                              t_id,
                              :id,
                              collect_follow_ids(t_id))
+
+        Forum.find_each do |f|
+          Notification.where(activity_id: Activity.where(forum_id: f.id)).update_all forum_id: f.id
+        end
       end
       Rails.logger.info(sql)
       ActiveRecord::Base.connection.execute(sql)

@@ -5,13 +5,13 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one:
-  commentable: one (Argument)
-  profile: :profile_one
-  body: "Just a comment"
-#
-two:
-  commentable: one (Argument)
-  profile: :profile_one
-  is_trashed: true
-  body: "Just a second comment"
+#one:
+#  commentable: one (Argument)
+#  creator_id: :profile_one (Profile)
+#  body: "Just a comment"
+##
+#two:
+#  commentable: one (Argument)
+#  creator_id: :profile_one (Profile)
+#  is_trashed: true
+#  body: "Just a second comment"

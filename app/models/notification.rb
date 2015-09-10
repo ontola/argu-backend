@@ -2,6 +2,7 @@ class Notification < ActiveRecord::Base
   include ActivityStringHelper
   belongs_to :profile
   belongs_to :activity
+  belongs_to :forum
   after_destroy :sync_notification_count
   after_update :sync_notification_count
 

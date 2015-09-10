@@ -60,8 +60,4 @@ class CommentPolicy < RestrictivePolicy
     user || has_access_token_access_to(record.commentable.forum)
   end
 
-  private
-  def forum_policy
-    Pundit.policy(context, record.try(:forum) || record.commentable.forum || context.context_model)
-  end
 end
