@@ -94,8 +94,7 @@ module ApplicationHelper
 
     {
         title: t('share'),
-        #url: url,
-        url: 'https://argu.co/m/444',
+        url: url,
         shareUrls: {
             facebook: ShareHelper.facebook_share_url(url),
             linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
