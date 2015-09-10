@@ -170,6 +170,7 @@
   transition: $args;
 }
 
+// Example usage: @include animate(from-top-fade .2s both)
 @mixin animation($animate...) {
   $max: length($animate);
   $animations: '';
@@ -299,6 +300,21 @@
   }
   100% {
     max-height: 0;
+  }
+}
+
+@include keyframes(enlarge-shake) {
+  0% {
+    @include transform(scale(0) rotate(0deg));
+  }
+  50% {
+    @include transform(scale(0) rotate(0deg));
+  }
+  80% {
+    @include transform(scale(1.4) rotate(15deg));
+  }
+  100% {
+    @include transform(scale(1) rotate(7deg));
   }
 }
 
