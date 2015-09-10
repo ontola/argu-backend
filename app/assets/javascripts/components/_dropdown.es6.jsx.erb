@@ -8,12 +8,10 @@ function is_touch_device() {
 }
 
 window.HyperDropdownMixin = {
-    mixin: [
-        (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
-    ],
 
     getInitialState: function () {
         this.listeningToClick = true;
+        this.openedByClick = false;
         return {
             openState: false,
             renderLeft: false,
@@ -30,23 +28,20 @@ window.HyperDropdownMixin = {
     },
 
     close: function () {
-        var elem = this.state.dropdownElement;
-        // Removes slow descending visibility repaint
-        /*this.timerItem = window.setTimeout(function () {
-         elem.style.display = 'block';
-         }, 50);*/
+        this.listeningToClick = true;
+        this.openedByClick = false;
         this.setState({openState: false});
     },
 
     componentDidMount: function () {
-        this.setState({referenceDropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0],
+        this.setState({
+            referenceDropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0],
             dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[1]});
         window.addEventListener('resize', this.handleResize);
         this.calculateRenderLeft();
     },
 
     componentWillUnmount: function () {
-        //window.clearTimeout(this.timerItem);
         window.removeEventListener('resize', this.handleResize);
     },
 
@@ -60,6 +55,7 @@ window.HyperDropdownMixin = {
                 this.open();
             }
         } else {
+            this.openedByClick = true;
             this.listeningToClick = true;
         }
     },
@@ -85,11 +81,10 @@ window.HyperDropdownMixin = {
 
     onMouseLeave: function () {
         if (!is_touch_device() && this.state.openState) {
-            if (!this.listeningToClick) {
+            if (!this.openedByClick) {
                 this.close();
                 // Remove / reset timer
                 window.clearTimeout(this.mouseEnterOpenedTimeout);
-                this.listeningToClick = true;
             }
         }
     },
@@ -117,7 +112,10 @@ window.HyperDropdownMixin = {
 
 
 window.HyperDropdown = React.createClass({
-    mixins: [HyperDropdownMixin],
+    mixins: [
+        HyperDropdownMixin,
+        (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
+    ],
 
     getInitialState: function () {
         return {
@@ -180,7 +178,10 @@ window.HyperDropdown = React.createClass({
 });
 
 window.ShareDropdown = React.createClass({
-    mixins: [HyperDropdownMixin],
+    mixins: [
+        HyperDropdownMixin,
+        (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
+    ],
 
     getInitialState: function () {
         return {
