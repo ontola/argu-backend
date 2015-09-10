@@ -12,11 +12,11 @@
   }
 }
 
-.box h3 a, .box a h1, .box a h2,.box a h3 {
+.box h3 a, .box a h1, .box a h2, .box a h3, .box a h4 {
   display: inline-block;
   position: relative;
   @include transition(.2s);
-  //transform: translateY(-0em);
+
   &:before {
     content: "";
     width: 100%;
@@ -29,10 +29,12 @@
     background-color: $darken2;
     @include transition(.2s);
   }
+
   &:hover:before {
     opacity: 1;
     height: .15em;
   }
+
   &:active:before {
     transition: none;
     background-color: $darken4;
@@ -46,9 +48,11 @@
 
 .box.box-link {
   opacity: .8;
+
   &:hover {
     opacity: 1;
     text-decoration: none !important;
+
     *{
       text-decoration: none !important;
     }
@@ -65,7 +69,7 @@
   }
 }
 
-.box h1, .box h2, .box h3 {
+.box h1, .box h2, .box h3, .box h4 {
   margin-bottom: .5em;
   line-height: 1.15em;
 }
