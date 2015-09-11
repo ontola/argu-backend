@@ -146,6 +146,7 @@
 .btn-subtle{
   @include button(rgba(255,255,255,0));
   border: none;
+  @include border-radius(0);
   color: $g3;
   padding-left: 1em;
   padding-right: 1em;

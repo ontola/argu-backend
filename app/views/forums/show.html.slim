@@ -26,7 +26,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
       .cover-buttons-container
         ul.btns-horizontal
           - if current_user.blank?
-            li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn--pro'
+            li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn--pro btn--square'
               span.fa.fa-plus
               span.icon-left= t('sign_up')
           /TODO: Make this check the current profile, not the user
