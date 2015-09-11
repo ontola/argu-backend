@@ -14,7 +14,7 @@ ul.boxed-list
       =link_to new_group_membership_path(group), class: 'btn--light btn--smaller' do
         span.fa.fa-plus
         span.icon-left= t('groups.member.new')
-      =link_to edit_forum_group_path(current_forum, group), class: 'btn--light btn--smaller' do
+      =link_to edit_group_path(current_forum, group), class: 'btn--light btn--smaller' do
         span.fa.fa-pencil
         span.icon-left= t('edit_type', type: t('groups.type'))
       - if policy(group).destroy?
@@ -22,6 +22,6 @@ ul.boxed-list
           span.fa.fa-close
           span.icon-left= t('destroy_type', type: t('groups.type'))
 - if policy(Group).create?(current_forum)
-  =link_to new_forum_group_path(current_forum), class: 'btn margin-bottom' do
+  =link_to new_group_path(current_forum), class: 'btn margin-bottom' do
     span.fa.fa-plus
     span.icon-left= t('groups.new')

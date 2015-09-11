@@ -1,32 +1,26 @@
 require 'test_helper'
 
-class GroupMembershipsControllerTest < ActionController::TestCase
+class GroupMembershipsControllerTest < Argu::TestCase
   include Devise::TestHelpers
 
-  setup do
-    @holland, @holland_owner = create_forum_owner_pair({type: :populated_forum})
-    @group = FactoryGirl.create(:group, forum: @holland)
-  end
-
-  let(:holland) { FactoryGirl.create(:forum, name: 'holland') }
-  let!(:group) { FactoryGirl.create(:group, forum: holland) }
+  let!(:holland) { FactoryGirl.create(:forum, name: 'holland') }
+  let!(:group) { FactoryGirl.create(:group, tenant: holland.name) }
 
   ####################################
   # For users
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
-  test 'should not show new' do
+  test 'should not show new', tenant: :holland do
     sign_in user
 
     get :new, group_id: group
 
     assert_redirected_to root_path
-    assert assigns(:forum)
     assert_not assigns(:membership)
   end
 
-  test 'should not post create' do
+  test 'should not post create', tenant: :holland do
     sign_in user
 
     assert_no_difference 'GroupMembership.count' do
@@ -34,11 +28,10 @@ class GroupMembershipsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to root_path
-    assert assigns(:forum)
     assert_not assigns(:membership)
   end
 
-  test 'should not delete destroy' do
+  test 'should not delete destroy', tenant: :holland do
     sign_in user
 
     group_membership = FactoryGirl.create(:group_membership, group: group)
@@ -53,40 +46,39 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   ####################################
   # For owners
   ####################################
+  let(:owner) { make_owner(holland) }
 
-  test 'should show new' do
-    sign_in @holland_owner
+  test 'should show new', tenant: :holland do
+    sign_in owner
 
-    get :new, group_id: @group
+    get :new, group_id: group
 
     assert_response 200
-    assert assigns(:forum)
     assert assigns(:group)
     assert assigns(:membership)
   end
 
-  test 'owner should post create' do
-    sign_in @holland_owner
+  test 'owner should post create', tenant: :holland do
+    sign_in owner
 
     assert_difference 'GroupMembership.count', 1 do
-      post :create, group_id: @group, profile_id: user.to_param
+      post :create, group_id: group, profile_id: user.to_param
     end
 
-    assert_redirected_to settings_forum_path(@holland.url, tab: :groups)
-    assert assigns(:forum)
+    assert_redirected_to settings_forums_path(tab: :groups)
     assert assigns(:membership)
   end
 
-  test 'owner should delete destroy' do
-    sign_in @holland_owner
+  test 'owner should delete destroy', tenant: :holland do
+    sign_in owner
 
-    group_membership = FactoryGirl.create(:group_membership, group: @group)
+    group_membership = FactoryGirl.create(:group_membership, group: group)
 
     assert_difference 'GroupMembership.count', -1 do
       delete :destroy, id: group_membership
     end
 
-    assert_redirected_to settings_forum_path(@holland.url, tab: :groups)
+    assert_redirected_to settings_forums_path(tab: :groups)
   end
 
 

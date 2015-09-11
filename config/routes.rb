@@ -115,7 +115,7 @@ Argu::Application.routes.draw do
   end
 
   resources :group_responses, only: [:edit, :update, :destroy], as: :responses
-  resources :groups, path: 'g', only: [:create, :update, :edit], concerns: [:destroyable] do
+  resources :groups, path: 'g', only: [:new, :create, :edit, :update], concerns: [:destroyable] do
     resources :group_memberships, path: 'memberships', only: [:new, :create], as: :membership
   end
   resources :group_memberships, only: :destroy
@@ -189,7 +189,6 @@ Argu::Application.routes.draw do
     #resources :questions, path: 'q', only: [:index]
     #resources :motions, path: 'm', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
-    resources :groups, path: 'g', only: [:new, :edit]
   end
   get '/forums/:id', to: redirect('/%{id}'), constraints: {format: :html}
   get 'forums/:id', to: 'forums#show'

@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-  factory :question do
+  factory :question, traits: [:tenantable] do
     association :creator, factory: :profile
 
     title 'title'

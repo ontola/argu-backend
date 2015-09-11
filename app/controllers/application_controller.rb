@@ -86,7 +86,6 @@ class ApplicationController < ActionController::Base
   end
 
   def current_forum
-    Rails.logger.info "====================#{Apartment::Tenant.current}============================"
     @_current_forum ||= Forum.find_via_shortname Apartment::Tenant.current
   end
 

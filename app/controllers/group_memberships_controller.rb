@@ -1,9 +1,8 @@
 class GroupMembershipsController < ApplicationController
 
   def new
-    @group = Group.includes(:forum).find(params[:group_id])
-    @forum = @group.forum
-    authorize @forum, :add_group_member?
+    authorize current_forum, :add_group_member?
+    @group = Group.find(params[:group_id])
     @membership = @group.group_memberships.new
 
     render 'forums/settings', locals: {
@@ -13,21 +12,21 @@ class GroupMembershipsController < ApplicationController
   end
 
   def create
-    @group = Group.includes(:forum).find(params[:group_id])
-    @forum = @group.forum
-    authorize @forum, :add_group_member?
+    authorize current_forum, :add_group_member?
+    @group = Group.find(params[:group_id])
     profile = Shortname.find_resource(params[:profile_id]).profile
 
     @membership = @group.group_memberships.new member: profile, profile: current_user.profile
     respond_to do |format|
       if @membership.save
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
+        format.html { redirect_to settings_forums_path(tab: :groups) }
       else
         format.html do
-          render 'forums/settings', locals: {
-                                      tab: 'groups/add',
-                                      active: 'groups'
-                                  }
+          render 'forums/settings',
+                 locals: {
+                     tab: 'groups/add',
+                     active: 'groups'
+                 }
         end
       end
     end
@@ -39,9 +38,9 @@ class GroupMembershipsController < ApplicationController
 
     respond_to do |format|
       if @group_membership.destroy
-        format.html { redirect_to settings_forum_path @group_membership.group.forum, tab: :groups }
+        format.html { redirect_to settings_forums_path tab: :groups }
       else
-        format.html { redirect_to settings_forum_path @group_membership.group.forum, tab: :groups }
+        format.html { redirect_to settings_forums_path tab: :groups }
       end
     end
   end

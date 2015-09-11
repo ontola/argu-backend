@@ -133,12 +133,14 @@ class ForumsControllerTest < Argu::TestCase
   test 'should update settings', tenant: :helsinki do
     sign_in helsinki_owner
 
-    put :update, id: helsinki.to_param , forum: {
-                     name: 'new name',
-                     bio: 'new bio',
-                     cover_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg'),
-                     profile_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg')
-                 }
+    put :update,
+        id: helsinki.to_param ,
+        forum: {
+            name: 'new name',
+            bio: 'new bio',
+            cover_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg'),
+            profile_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg')
+        }
 
     assert_redirected_to settings_forums_path(tab: :general)
     assert assigns(:forum)

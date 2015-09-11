@@ -1,6 +1,6 @@
 FactoryGirl.define do
 
-  factory :comment do
+  factory :comment, traits: [:tenantable] do
     association :commentable, factory: :argument
     association :creator, factory: :profile
     body 'comment'
@@ -10,6 +10,7 @@ FactoryGirl.define do
       comment.create_activity action: :create,
                               recipient: comment.commentable,
                               owner: comment.creator
+      comment.refresh_counter_cache
     end
   end
 end

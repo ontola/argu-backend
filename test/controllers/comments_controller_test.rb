@@ -21,7 +21,7 @@ class CommentsControllerTest < Argu::TestCase
   # As member
   ####################################
   let(:holland_member) { make_member(holland) }
-  let(:argument) { FactoryGirl.create(:argument, tenant: :holland) }
+  let(:argument) { FactoryGirl.create(:argument, :with_comments, tenant: :holland) }
   let!(:comment) { FactoryGirl.create(:comment, creator: creator.profile, commentable: argument) }
 
   test 'should post create comment', tenant: :holland do
@@ -92,14 +92,17 @@ class CommentsControllerTest < Argu::TestCase
   test 'should not delete destroy own comment twice affecting counter caches', tenant: :holland do
     sign_in creator
 
-    assert_equal 1, comment.commentable.comments_count
+    assert_equal comment.commentable_comments_count,
+                 comment.commentable.comments_count
+    assert comment.commentable.comment_threads.count > 1
 
     assert_difference('comment.commentable.reload.comments_count', -1) do
       delete :destroy, id: comment
+      assert_redirected_to argument_path(argument, anchor: comment.id)
       delete :destroy, id: comment
+      assert_response 404
     end
 
-    assert_redirected_to argument_path(argument, anchor: comment.id)
   end
 
   ####################################
@@ -110,14 +113,16 @@ class CommentsControllerTest < Argu::TestCase
   test 'should not delete wipe own comment twice affecting counter caches', tenant: :holland do
     sign_in owner
 
-    assert_equal 1, comment.commentable.comments_count
+    assert_equal comment.commentable_comments_count,
+                 comment.commentable.comments_count
+    assert comment.commentable.comment_threads.count > 1
 
     assert_difference('comment.commentable.reload.comments_count', -1) do
       delete :destroy, id: comment, wipe: 'true'
+      assert_redirected_to argument_url(argument, anchor: comment.id)
       delete :destroy, id: comment, wipe: 'true'
+      assert_response 404
     end
-
-    assert_redirected_to argument_url(argument, anchor: comment.id)
   end
 
   ####################################

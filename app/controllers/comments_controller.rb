@@ -108,18 +108,29 @@ class CommentsController < ApplicationController
 
   # DELETE /arguments/1/comments/1
   def destroy
-    @comment = Comment.find_by_id params[:id]
+    @comment = Comment.find params[:id]
     resource = @comment.commentable
-    if params[:wipe] == 'true'
+    deleted = if params[:wipe] == 'true'
       authorize @comment
+      raise ActiveRecord::RecordNotFound if @comment.is_wiped?
       @comment.wipe
     else
       authorize @comment, :trash?
+      raise ActiveRecord::RecordNotFound if @comment.is_trashed?
       @comment.trash
     end
     respond_to do |format|
-      format.html { redirect_to polymorphic_url([resource], anchor: @comment.id) }
-      format.js # destroy_comment.js
+      if deleted
+        format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), status: 303 }
+        format.js # destroy_comment.js
+      else
+        format.html do
+          flash[:error] << t('error')
+          render status: 500
+          redirect_to polymorphic_url([resource], anchor: @comment.id), status: 302
+        end
+        format.js { head 500 }# destroy_comment.js
+      end
     end
   end
 

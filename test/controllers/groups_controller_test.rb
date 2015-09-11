@@ -1,41 +1,34 @@
 require 'test_helper'
 
-class GroupsControllerTest < ActionController::TestCase
+class GroupsControllerTest < Argu::TestCase
   include Devise::TestHelpers
 
-  setup do
-    @holland, @holland_owner = create_forum_owner_pair({type: :populated_forum})
-    @group = FactoryGirl.create(:group, forum: @holland)
-  end
-
-  let(:holland) { FactoryGirl.create(:forum, name: 'holland') }
-  let!(:group) { FactoryGirl.create(:group, forum: holland) }
+  let!(:holland) { FactoryGirl.create(:forum, name: 'holland') }
+  let!(:group) { FactoryGirl.create(:group, tenant: holland.name) }
 
   ####################################
   # For users
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
-  test 'should not show new' do
+  test 'should not show new', tenant: :holland do
     sign_in user
 
-    get :new, id: group, forum_id: holland
+    get :new, id: group
 
     assert_redirected_to root_path
-    assert assigns(:forum)
   end
 
-  test 'should not show edit' do
+  test 'should not show edit', tenant: :holland do
     sign_in user
 
-    get :edit, id: group, forum_id: holland
+    get :edit, id: group
 
     assert_redirected_to root_path
-    assert assigns(:forum)
     assert assigns(:group)
   end
 
-  test 'should not delete destroy' do
+  test 'should not delete destroy', tenant: :holland do
     sign_in user
 
     assert_no_difference 'Group.count' do
@@ -48,36 +41,34 @@ class GroupsControllerTest < ActionController::TestCase
   ####################################
   # For owners
   ####################################
+  let(:owner) { make_owner(holland) }
 
-  test 'should show new' do
-    sign_in @holland_owner
+  test 'should show new', tenant: :holland do
+    sign_in owner
 
-    get :new, id: @group, forum_id: @holland
+    get :new, id: group
 
     assert_response 200
-    assert assigns(:forum)
     assert assigns(:group)
   end
 
-  test 'should show edit' do
-    sign_in @holland_owner
+  test 'should show edit', tenant: :holland do
+    sign_in owner
 
-    get :edit, id: @group, forum_id: @holland
+    get :edit, id: group
 
     assert_response 200
-    assert assigns(:forum)
     assert assigns(:group)
   end
 
-  test 'should delete destroy!' do
-    sign_in @holland_owner
+  test 'should delete destroy!', tenant: :holland do
+    sign_in owner
 
     assert_difference 'Group.count', -1 do
-      delete :destroy!, id: @group
+      delete :destroy!, id: group
     end
 
     assert_response 303
-    assert assigns(:forum)
     assert assigns(:group)
   end
 end

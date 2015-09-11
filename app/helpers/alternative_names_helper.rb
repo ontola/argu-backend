@@ -115,11 +115,11 @@ module AlternativeNamesHelper
   #@private
   def type_for(item, plural=false)
     if item.class == Motion
-      motion_type(item.forum)
+      motion_type(Forum.find_via_shortname(Apartment::Tenant.current))
     elsif item.class == Question
-      question_type(item.forum)
+      question_type(Forum.find_via_shortname(Apartment::Tenant.current))
     elsif item.class == Argument
-      argument_type(item.forum)
+      argument_type(Forum.find_via_shortname(Apartment::Tenant.current))
     end
   end
 end

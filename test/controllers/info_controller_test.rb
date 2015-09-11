@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class InfoControllerTest < ActionController::TestCase
+class InfoControllerTest < Argu::TestCase
   include Devise::TestHelpers
 
   ####################################

@@ -28,7 +28,7 @@ class GroupPolicy < RestrictivePolicy
   def create?(forum = nil)
     if forum.present?
       record.present? || raise(SecurityError)
-      record = Group.new(forum: forum)
+      record = Group.new
     end
     rule is_manager?, super()
   end

@@ -1,9 +1,7 @@
 class GroupsController < ApplicationController
-  before_action :find_forum_and_group, only: [:edit, :update, :destroy, :destroy!]
 
   def new
-    @forum = Forum.find_via_shortname params[:forum_id]
-    @group = @forum.groups.new
+    @group = current_forum.groups.new
     authorize @group, :create?
 
     render 'forums/settings', locals: {
@@ -13,14 +11,13 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @forum = Forum.find_via_shortname params[:forum_id]
-    @group = @forum.groups.new
+    @group = current_forum.groups.new
     @group.attributes= permit_params
     authorize @group, :create?
 
     respond_to do |format|
       if @group.save
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
+        format.html { redirect_to settings_forums_path(tab: :groups) }
       else
         format.html do
           render 'forums/settings', locals: {
@@ -33,6 +30,7 @@ class GroupsController < ApplicationController
   end
 
   def edit
+    @group = Group.find(params[:id])
     authorize @group, :edit?
 
     render 'forums/settings', locals: {
@@ -42,11 +40,12 @@ class GroupsController < ApplicationController
   end
 
   def update
+    @group = Group.find(params[:id])
     authorize @group, :update?
 
     respond_to do |format|
       if @group.update permit_params
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
+        format.html { redirect_to settings_forums_path(tab: :groups) }
       else
         format.html { render 'edit' }
       end
@@ -54,6 +53,7 @@ class GroupsController < ApplicationController
   end
 
   def destroy
+    @group = Group.find(params[:id])
     authorize @group, :destroy?
 
     locals = {
@@ -68,25 +68,21 @@ class GroupsController < ApplicationController
   end
 
   def destroy!
+    @group = Group.find(params[:id])
     authorize @group, :destroy?
 
     respond_to do |format|
       if @group.destroy
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups), status: 303 }
+        format.html { redirect_to settings_forums_path(tab: :groups), status: 303 }
       else
         flash[:error] = t('error')
-        format.html { redirect_to settings_forum_path(@forum, tab: :groups) }
+        format.html { redirect_to settings_forums_path(tab: :groups) }
       end
     end
   end
 
 
 private
-  def find_forum_and_group
-    @group = Group.includes(:forum).find(params[:id])
-    @forum = @group.forum
-  end
-
   def permit_params
     params.require(:group).permit(*policy(@group || Group).permitted_attributes)
   end

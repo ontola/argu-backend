@@ -38,6 +38,13 @@ class Comment < ActiveRecord::Base
     self.creator.follow self
   end
 
+  def commentable_comments_count
+    self.commentable.comment_threads
+        .where(is_trashed: false)
+        .where.not(creator_id: nil)
+        .count
+  end
+
   def display_name
     self.body
   end
@@ -45,6 +52,10 @@ class Comment < ActiveRecord::Base
   #helper method to check if a comment has children
   def has_children?
     self.lft || self.rgt
+  end
+
+  def is_wiped?
+    self.is_trashed? && self.creator.nil? && self.body.blank?
   end
 
   # Helper class method to lookup all comments assigned
@@ -70,20 +81,20 @@ class Comment < ActiveRecord::Base
   end
 
   def refresh_counter_cache
-    self.commentable.update_columns comments_count: self.commentable.comment_threads
-                                                        .where(is_trashed: false)
-                                                        .where.not(creator_id: nil)
-                                                        .count
+    self.commentable.update_columns comments_count: commentable_comments_count
   end
 
   # Comments can't be deleted since all comments below would be hidden as well
   def wipe
+    success = false
     Comment.transaction do
       if self.update_columns creator_id: nil, body: '', is_trashed: true
         refresh_counter_cache
         self.activities.destroy_all
+        success = true
       end
     end
+    success
   end
 
 end
