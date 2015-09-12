@@ -112,7 +112,7 @@ var Notifications = React.createClass({
         NotificationActions.notificationUpdate(this.props);
         this.unsubscribe = notificationStore.listen(this.onNotificationChange);
         this.scrollLock(this.getDOMNode().parentElement);
-        NotificationActions.checkForNew();
+        NotificationActions.fetchNew();
     },
 
     componentWillUnmount: function () {
