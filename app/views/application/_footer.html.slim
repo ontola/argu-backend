@@ -8,7 +8,7 @@ footer
     li= link_to 'Argu Feedback', forum_path('feedback')
   ul.footer-list
     li
-      h3.footer-heading= t('about.title')
+      h3.footer-heading= t('about.info')
     li= link_to t('about.vision'), info_path(:about)
     li= link_to t('about.team'), info_path(:team)
     /li= link_to t('about.product'), product_path
@@ -18,12 +18,6 @@ footer
     li= link_to t('press_media'), 'https://argu.pr.co'
     li= link_to t('help_support'), 'https://argu.freshdesk.com/support/home'
     li= link_to t('about.contact'), info_path(:contact)
-  ul.footer-list
-    li
-      h3.footer-heading= t('legal.header')
-    li= link_to t('legal.policy'), policy_path
-    li= link_to t('legal.privacy'), privacy_path
-    /li= link_to t('legal.cookies'), cookies_path
   ul.footer-list
     li
       h3.footer-heading= t('footer_item_follow_uw')
@@ -40,3 +34,7 @@ footer
           span.fa.fa-youtube
   .footer-bottom
     span= t('site.copyright')
+    span= " | "
+    span= link_to t('legal.policy'), policy_path
+    span= " | "
+    span= link_to t('legal.privacy'), privacy_path
