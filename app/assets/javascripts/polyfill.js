@@ -11,9 +11,10 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require polyfills/json3
-//= require js-polyfills/es5
+//= require polyfills/es5
 //= require js-polyfills/es6
 //= require js-polyfills/html
+//= require polyfills/html5-shiv
 //= require js-polyfills/dom
 //= require js-polyfills/xhr
 //= require js-polyfills/cssom
