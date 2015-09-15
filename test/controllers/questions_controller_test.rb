@@ -4,7 +4,7 @@ class QuestionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   ####################################
-  # Not logged in
+  # As guest
   ####################################
   test 'should get show when not logged in' do
     get :show, id: questions(:one).id

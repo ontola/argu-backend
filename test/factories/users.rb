@@ -45,6 +45,12 @@ FactoryGirl.define do
           user.profile.votes.create(voteable: trashed, forum: trashed.forum, for: :pro)
         end
       end
+
+      trait :with_motions do
+        after(:create) do |user, evaluator|
+          create_list :motion, 5, creator: user.profile
+        end
+      end
     end
   end
 end

@@ -9,6 +9,11 @@ class Notification < ActiveRecord::Base
   validates :title, length: {maximum: 75}
   validates :url, length: {maximum: 255}
 
+  def self.cascaded_move_sql(ids, old_tenant, new_tenant)
+    new_tenant_id = Forum.find_via_shortname(new_tenant).id
+    "UPDATE #{self.table_name} SET forum_id = #{new_tenant_id} WHERE id IN (#{ids.join(',')})"
+  end
+
   def sync_notification_count
     self.profile.profileable.sync_notification_count
   end

@@ -1,7 +1,8 @@
 module ArguBase
   extend ActiveSupport::Concern
 
-  included do
+  def self.included base
+    base.extend Argu::TenantUtilities::SQLMethods
   end
 
   def edited?

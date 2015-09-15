@@ -3,6 +3,22 @@ class Argument < ActiveRecord::Base
 
   scope :argument_comments, -> { includes(:comment_threads).order(votes_pro_count: :desc).references(:comment_threads) }
 
+  def self.cascaded_move_sql(ids, old_tenant, new_tenant)
+    sql = ''
+    Argument.where(id: ids).lock(true).find_each do |subject|
+      comments_ids = subject.comment_threads.pluck(:id)
+      votes_ids = subject.votes.pluck(:id)
+      activities_ids = subject.activities.pluck(:id)
+
+      sql << self.migration_base_sql(subject.class, new_tenant, old_tenant) +
+          "where id = #{subject.id}; "
+
+      #sql << Vote.cascaded_move_sql(votes_ids, old_tenant, new_tenant) if votes_ids.present?
+      #sql << Activity.cascaded_move_sql(activities_ids, old_tenant, new_tenant) if activities_ids.present?
+      #sql << Comment.cascaded_move_sql(comments_ids, old_tenant, new_tenant) if comments_ids.present?
+    end
+    sql
+  end
   # http://schema.org/description
   def description
     self.content

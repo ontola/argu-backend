@@ -1,8 +1,8 @@
 FactoryGirl.define do
 
   factory :argument, traits: [:tenantable] do
-    association :motion, strategy: :create
     association :creator, factory: :profile
+    association :motion, strategy: :create
     pro true
     title 'title'
     content 'argument'

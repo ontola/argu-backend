@@ -8,7 +8,7 @@ class ForumsControllerTest < Argu::TestCase
   let!(:helsinki) { FactoryGirl.create(:hidden_populated_forum, name: 'helsinki') }
 
   ####################################
-  # Not logged in
+  # As guest
   ####################################
   test 'should get show when not logged in', tenant: :holland do
     get :show

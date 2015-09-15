@@ -6,7 +6,7 @@ RSpec.feature 'Comments', type: :feature do
   let!(:argument) { FactoryGirl.create(:argument, forum: holland) }
 
   ####################################
-  # Not logged in
+  # As guest
   ####################################
 
   scenario 'Guest places a comment' do

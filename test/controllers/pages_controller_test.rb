@@ -4,7 +4,7 @@ class PagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   ####################################
-  # Not logged in
+  # As guest
   ####################################
   let!(:page) { FactoryGirl.create(:page) }
   let(:page_non_public) { FactoryGirl.create(:page, visibility: Page.visibilities[:closed]) }

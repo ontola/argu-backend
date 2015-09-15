@@ -63,7 +63,9 @@ module ProCon
   module ClassMethods
     def ordered (coll=[])
       grouped = coll.group_by { |a| a.key }
-      HashWithIndifferentAccess.new(pro: {collection: grouped[:pro]}, con: {collection: grouped[:con]})
+      HashWithIndifferentAccess.new(
+          pro: {collection: grouped[:pro] || []},
+          con: {collection: grouped[:con] || []})
     end
   end
 end

@@ -2,6 +2,7 @@ include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
   include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common, Mailable
+  extend Argu::TenantUtilities
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :votes, as: :voteable, :dependent => :destroy
@@ -68,14 +69,14 @@ class Motion < ActiveRecord::Base
     end
   end
 
-  def move_to(forum, unlink_questions = true)
+  def move_to(forum)
     Motion.transaction do
       old_forum = self.forum.lock!
       self.forum = forum.lock!
       self.save
       self.arguments.lock(true).update_all forum_id: forum.id
       self.votes.lock(true).update_all forum_id: forum.id
-      self.question_answers.lock(true).delete_all if unlink_questions
+      self.question_answers.lock(true).delete_all
       self.activities.lock(true).update_all forum_id: forum.id
       self.taggings.lock(true).update_all forum_id: forum.id
       self.group_responses.lock(true).delete_all
@@ -87,6 +88,28 @@ class Motion < ActiveRecord::Base
       forum.save
       true
     end
+  end
+
+  def self.cascaded_move_sql(ids, old_tenant, new_tenant)
+    sql = ''
+    Motion.where(id: ids).lock(true).find_each do |subject|
+      arguments_ids = subject.arguments.pluck(:id)
+      votes_ids = subject.votes.pluck(:id)
+      activities_ids = subject.activities.pluck(:id)
+      taggings_ids = subject.taggings.pluck(:id)
+
+      sql << "DELETE FROM #{self.class_name} WHERE id IN (#{subject.question_answers.pluck(:id)}); "
+      sql << "DELETE FROM #{self.class_name} WHERE id IN (#{subject.group_responses.pluck(:id)}); "
+
+      sql << migration_base_sql(subject.class, new_tenant, old_tenant) +
+                "where id = #{subject.id}; "
+
+      sql << Argument.cascaded_move_sql(arguments_ids, old_tenant, new_tenant) if arguments_ids.present?
+      sql << Vote.cascaded_move_sql(votes_ids, old_tenant, new_tenant) if votes_ids.present?
+      sql << Activity.cascaded_move_sql(activities_ids, old_tenant, new_tenant) if activities_ids.present?
+      #sql << Tagging.cascaded_move(taggings_ids, old_tenant, new_tenant) if taggings_ids.present?
+    end
+    sql
   end
 
   def next(show_trashed= false)

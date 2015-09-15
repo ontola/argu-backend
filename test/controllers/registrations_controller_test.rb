@@ -5,7 +5,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   ####################################
-  # Not logged in
+  # As guest
   ####################################
 
   test 'should post create' do

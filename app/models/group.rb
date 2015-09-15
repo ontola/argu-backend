@@ -42,6 +42,6 @@ class Group < ActiveRecord::Base
   end
 
   def responses_for(group_respondable, profile)
-    group_respondable.group_responses.where(group: self, profile: profile)
+    group_respondable.group_responses.where(group: self, creator: profile)
   end
 end

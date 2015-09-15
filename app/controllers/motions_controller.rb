@@ -94,13 +94,8 @@ class MotionsController < ApplicationController
     @motion.reload if process_cover_photo @motion, permit_params
     respond_to do |format|
       if @motion.update(permit_params)
-        if params[:motion].present? && params[:motion][:tag_id].present? && @motion.tags.reject { |a,b| a.motion==b }.first.present?
-          format.html { redirect_to tag_motions_url(Tag.find_by_id(@motion.tag_id).name)}
-          format.json { head :no_content }
-        else
-          format.html { redirect_to @motion, notice: t('type_save_success', type: motion_type) }
-          format.json { head :no_content }
-        end
+        format.html { redirect_to @motion, notice: t('type_save_success', type: motion_type) }
+        format.json { head status: 204 }
       else
         format.html { render 'form' }
         format.json { render json: @motion.errors, status: :unprocessable_entity }

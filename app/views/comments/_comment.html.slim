@@ -9,7 +9,7 @@
         li
           ul= react_component 'HyperDropdown', comment_items(resource, c), {prerender: true}
       - if !c.is_trashed? && policy(c).update?
-        li= link_to polymorphic_url_for_action(:edit, [resource, c], {}), {data: { remote: :true, comment_id: c.id, skip_pjax: true }, class: 'btn-edit'} do
+        li= link_to edit_comment_url(c), {data: { remote: :true, comment_id: c.id, skip_pjax: true }, class: 'btn-edit'} do
           span.fa.fa-edit
           span.icon-left= t('edit')
       - if !c.is_trashed? && policy(c).create?

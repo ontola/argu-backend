@@ -8,7 +8,7 @@ class ArgumentsControllerTest < Argu::TestCase
   let(:argument) { FactoryGirl.create(:argument, :with_comments, tenant: :holland, motion: motion) }
 
   ####################################
-  # Not logged in
+  # As guest
   ####################################
   test 'should get show when not logged in', tenant: :holland do
     get :show,

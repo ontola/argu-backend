@@ -3,7 +3,7 @@ require 'test_helper'
 class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
   ####################################
-  # Not logged in
+  # As guest
   ####################################
 
 

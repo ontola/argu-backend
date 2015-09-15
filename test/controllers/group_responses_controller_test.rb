@@ -5,7 +5,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   ####################################
-  # Not logged in
+  # As guest
   ####################################
   test 'should not get edit when not logged in' do
   end

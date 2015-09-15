@@ -4,7 +4,7 @@ class UsersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   ####################################
-  # Not logged in
+  # As guest
   ####################################
   let(:user) { FactoryGirl.create(:user) }
   let(:user_non_public) { FactoryGirl.create(:user, profile: FactoryGirl.create(:profile, is_public: false )) }

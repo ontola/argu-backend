@@ -7,5 +7,15 @@ FactoryGirl.define do
     content 'content'
     is_trashed false
 
+    trait :with_arguments do
+      after :create do |motion|
+        create_list :argument, 10,
+                    motion: motion
+        create_list :argument, 10,
+                    motion: motion,
+                    pro: false,
+                    is_trashed: true
+      end
+    end
   end
 end

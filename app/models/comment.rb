@@ -34,6 +34,18 @@ class Comment < ActiveRecord::Base
     c
   end
 
+  def self.cascaded_move_sql(ids, old_tenant, new_tenant)
+    activities_ids = Activity
+                         .where(trackable_type: self.class.name,
+                                trackable_id: ids)
+                         .pluck(:id)
+
+    sql = ''
+    sql << self.migration_base_sql(self, new_tenant, old_tenant) +
+              "where commentable_id IS NOT NULL AND id IN (#{ids.join(',')}); "
+    sql << Activity.cascaded_move_sql(activities_ids, old_tenant, new_tenant) if activities_ids.present?
+  end
+
   def creator_follow
     self.creator.follow self
   end

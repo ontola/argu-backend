@@ -24,8 +24,8 @@ FactoryGirl.define do
 
       after(:create) do |forum, evaluator|
         Apartment::Tenant.switch forum.to_param do
-          create_list :motion, 10, forum: forum
-          create_list :motion, 10, forum: forum, is_trashed: true
+          create_list :motion, 10, tenant: forum.to_param
+          create_list :motion, 10, tenant: forum.to_param, is_trashed: true
           create :access_token, item: forum
           cap = Setting.get('user_cap').try(:to_i)
           Setting.set('user_cap', -1) unless cap.present?
