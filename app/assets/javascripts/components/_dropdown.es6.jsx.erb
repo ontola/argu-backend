@@ -306,9 +306,8 @@ var ActorItem = React.createClass({
     handleClick: function (e) {
         e.preventDefault();
     },
-
-    handleMouseDown: function (e) {
-        e.preventDefault();
+    
+    switchActor: function () {
         this.props.done();
         fetch(this.props.url, _safeCredentials({
             method: 'PUT'
@@ -320,6 +319,15 @@ var ActorItem = React.createClass({
                    location.reload();
                }
         }).catch(console.log);
+    },
+    
+    handleTap: function (e) {
+        this.switchActor();
+    },
+
+    handleMouseDown: function (e) {
+        e.preventDefault();
+        this.switchActor();
     },
 
     render: function () {
@@ -334,7 +342,7 @@ var ActorItem = React.createClass({
 
         return (<li className={'link ' + this.props.type}>
             {divider}
-            <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow" onClickCapture={this.handleClick} data-skip-pjax={skipPjax}>
+            <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow" onTouchEnd={this.handleTap} onClickCapture={this.handleClick} data-skip-pjax={skipPjax}>
                 {_image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
