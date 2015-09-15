@@ -20,7 +20,7 @@ window.ProfileOption = React.createClass({
                      onMouseDown={this.props.mouseDown}
                      onClick={this.props.mouseDown}>
                     <img class="Select-item-result-icon" height='25em' src={obj.avatar_url} />
-                    {obj.name}
+                    {obj.label}
                 </div>
         );
     }
@@ -87,7 +87,7 @@ window.NewMembership = React.createClass({
                             return {
                                 value: profile.shortname,
                                 id: profile.id.toString(),
-                                name: profile.name,
+                                label: profile.name,
                                 avatar_url: profile.profile_photo.avatar.url
                             };
                         }),
@@ -104,6 +104,8 @@ window.NewMembership = React.createClass({
         return (<Select
                   name="profile_id"
                   placeholder="Select user"
+                  matchProp="any"
+                  ignoreCase="true"
                   optionComponent={ProfileOption}
                   singleValueComponent={SingleValue}
                   asyncOptions={this.loadOptions}  />);
