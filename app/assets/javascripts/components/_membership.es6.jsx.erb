@@ -20,7 +20,7 @@ window.ProfileOption = React.createClass({
                      onMouseDown={this.props.mouseDown}
                      onClick={this.props.mouseDown}>
                     <img class="Select-item-result-icon" height='25em' src={obj.avatar_url} />
-                    {obj.label}
+                    {obj.label} ({obj.value})
                 </div>
         );
     }
@@ -57,6 +57,7 @@ if (typeof module !== 'undefined' && module.exports) {
 
 window.NewMembership = React.createClass({
     getInitialState () {
+        this.currentFetchTimer = 0;
         return {
             display_name: this.props.display_name,
             image: this.props.image
@@ -72,31 +73,34 @@ window.NewMembership = React.createClass({
             });
         }
 
-        fetch('/profiles.json', _safeCredentials({
-            method: 'POST',
-            body: JSON.stringify({
-                q: input,
-                thing: this.props.thing,
-                things: this.props.things
-            })
-        })).then(statusSuccess)
-                .then(json)
-                .then((data) => {
-                    callback(null, {
-                        options: data.profiles.map((profile) => {
-                            return {
-                                value: profile.shortname,
-                                id: profile.id.toString(),
-                                label: profile.name,
-                                avatar_url: profile.profile_photo.avatar.url
-                            };
-                        }),
-                        complete: false
-                    });
-                }).catch((e) => {
-                    Argu.Alert('Server error occured, please try again later', 'alert', true);
-                    callback();
-                });
+        window.clearTimeout(this.currentFetchTimeout);
+        this.currentFetchTimeout = window.setTimeout(() => {
+            fetch('/profiles.json', _safeCredentials({
+                method: 'POST',
+                body: JSON.stringify({
+                    q: input,
+                    thing: this.props.thing,
+                    things: this.props.things
+                })
+            })).then(statusSuccess)
+               .then(json)
+               .then((data) => {
+                   callback(null, {
+                       options: data.profiles.map((profile) => {
+                           return {
+                               value: profile.shortname,
+                               id: profile.id.toString(),
+                               label: profile.name,
+                               avatar_url: profile.profile_photo.avatar.url
+                           };
+                       }),
+                       complete: false
+                   });
+               }).catch((e) => {
+                   Argu.Alert('Server error occured, please try again later', 'alert', true);
+                   callback();
+               });
+        }, 500);
     },
 
     filterOptions: function (results, filter, currentValues) {
