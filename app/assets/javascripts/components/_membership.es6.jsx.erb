@@ -99,6 +99,10 @@ window.NewMembership = React.createClass({
                 });
     },
 
+    filterOptions: function (results, filter, currentValues) {
+        return results || currentValues;
+    },
+
     render () {
 
         return (<Select
@@ -106,6 +110,7 @@ window.NewMembership = React.createClass({
                   placeholder="Select user"
                   matchProp="any"
                   ignoreCase="true"
+                  filterOptions={this.filterOptions}
                   optionComponent={ProfileOption}
                   singleValueComponent={SingleValue}
                   asyncOptions={this.loadOptions}  />);
