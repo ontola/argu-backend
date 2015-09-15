@@ -468,7 +468,7 @@ var ActorItem = React.createClass({
 
         return (<li className={'link ' + this.props.type}>
             {divider}
-            <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow" onTap={this.handleTap} onClickCapture={this.handleClick} data-skip-pjax={skipPjax}>
+            <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow" onTouchEnd={this.handleTap} onClickCapture={this.handleClick} data-skip-pjax={skipPjax}>
                 {_image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
