@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
+  after_action :set_profile_forum
   around_action :set_time_zone
   #after_action :set_notification_header
   if Rails.env.development? || Rails.env.staging?
@@ -179,6 +180,12 @@ class ApplicationController < ActionController::Base
       response.headers[:lastNotification] = policy_scope(Notification).order(created_at: :desc).limit(1).pluck(:created_at)[0] || '-1'
     else
       response.headers[:lastNotification] = '-1'
+    end
+  end
+
+  def set_profile_forum
+    if instance_variable_defined?(:@forum) && @forum.is_a?(Forum) && current_profile.present?
+      Argu::Redis.set("profile:#{current_profile.id}:last_forum", @forum.id)
     end
   end
 
