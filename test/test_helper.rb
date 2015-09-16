@@ -55,20 +55,30 @@ class ActiveSupport::TestCase
   #FactoryGirl.lint
   # Add more helper methods to be used by all tests here...
 
-  def make_manager(forum, user = nil)
+  def make_member(forum, user = nil, *traits)
     user ||= FactoryGirl.create(:user)
-    FactoryGirl.create(:managership,
+    FactoryGirl.create(:membership,
+                       *traits,
                        forum: forum,
                        profile: user.profile)
     user
   end
 
-  def make_member(forum, user = nil)
+  def make_manager(forum, user = nil)
+    make_member(forum, user, :managership)
+  end
+
+  def make_page_member(page, user = nil, *traits)
     user ||= FactoryGirl.create(:user)
-    FactoryGirl.create(:membership,
-                       forum: forum,
+    FactoryGirl.create(:page_membership,
+                       *traits,
+                       page: page,
                        profile: user.profile)
     user
+  end
+
+  def make_page_manager(page, user = nil)
+    make_page_member(page, user, :managership)
   end
 
   # Makes the given `User` a manager of the `Page` of the `Forum`

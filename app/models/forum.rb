@@ -62,6 +62,10 @@ class Forum < ActiveRecord::Base
     AccessToken.where(item: self).pluck(:access_token)
   end
 
+  def as_json
+    super(methods: [:url, :display_name, :identity])
+  end
+
   def check_access_token
     if visible_with_a_link && access_token!.blank?
       self.access_tokens.build(item: self, profile: self.page.profile)

@@ -3,7 +3,7 @@ class QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     authorize @question
-    @forum = @question.forum
+    @forum = current_forum
     current_context @question
     @motions = policy_scope(@question.motions.trashed(show_trashed?)).order(updated_at: :desc)
 
@@ -15,7 +15,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
-    @forum = Forum.find_via_shortname params[:forum_id]
+    @forum = current_forum
     @question = Question.new params[:question]
     @question.forum= @forum
     if current_profile.blank?
@@ -41,7 +41,7 @@ class QuestionsController < ApplicationController
   def edit
     @question = Question.find(params[:id])
     authorize @question
-    @forum = @question.forum
+    @forum = current_forum
     current_context @question
     respond_to do |format|
       format.html { render 'form' }
@@ -49,7 +49,7 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @forum = Forum.find_via_shortname params[:forum_id]
+    @forum = current_forum
     authorize @forum, :add_question?
 
     @question = @forum.questions.new
@@ -74,7 +74,7 @@ class QuestionsController < ApplicationController
   def update
     @question = Question.includes(:taggings).find(params[:id])
     authorize @question
-    @forum = @question.forum
+    @forum = current_forum
 
     @question.reload if process_cover_photo @question, permit_params
     respond_to do |format|
@@ -120,7 +120,7 @@ class QuestionsController < ApplicationController
   def convert!
     @question = Question.find(params[:question_id])
     authorize @question, :move?
-    @forum = Forum.find_by_id permit_params[:forum_id]
+    @forum = current_forum
     authorize @question.forum, :update?
     @question.with_lock do
       @result = @question.convert_to convertible_param_to_model(permit_params[:f_convert])

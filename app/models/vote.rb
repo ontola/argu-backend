@@ -35,8 +35,8 @@ class Vote < ActiveRecord::Base
     self.for.to_s === item.to_s
   end
 
-  def self.ordered(votes)
-    grouped = votes.to_a.group_by(&:for)
+  def self.ordered(votes, key = :for)
+    grouped = votes.to_a.group_by(&key)
     HashWithIndifferentAccess.new(pro: {collection: grouped['pro'] || []},
                                   neutral: {collection: grouped['neutral'] || []},
                                   con: {collection: grouped['con'] || []})

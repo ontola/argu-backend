@@ -188,6 +188,6 @@ private
     if params[:question_id].present? || defined?(params[:motion][:question_id]) && params[:motion][:question_id].present?
       @question = Question.find(params[:question_id] || params[:motion][:question_id])
     end
-    @forum = Forum.find_via_shortname(params[:forum_id]) if params[:forum_id].present?
+    @forum = current_forum
   end
 end

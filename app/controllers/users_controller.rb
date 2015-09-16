@@ -5,11 +5,32 @@ class UsersController < ApplicationController
     @profile = @user.profile
     authorize @profile, :show?
 
+    data = HashWithIndifferentAccess.new ({
+        forums: {},
+        motions: {}
+    })
     if @profile.are_votes_public?
-      @collection = Vote.ordered Vote.find_by_sql('SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" WHERE ("votes"."voter_type" = \'Profile\' AND "votes"."voter_id" = '+@profile.id.to_s+') AND ("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') AND ("forums"."visibility" = '+Forum.visibilities[:open].to_s+' OR "forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) ORDER BY created_at DESC').reject { |v| v.voteable.is_trashed? }
+      data[:forums] = policy_scope(Forum.where(id: @profile.memberships.pluck(:forum_id))).index_by(&:to_param).as_json
+      data[:forums].keys.each do |key, f|
+        Apartment::Tenant.switch(key) do
+          motions = Motion.where(id: @profile
+                                         .votes
+                                         .where(voteable_type: 'Motion')
+                                         .order(created_at: :desc)
+                                         .limit(50)
+                                         .pluck(:voteable_id))
+                        .each { |m| m.vote = @profile.votes.find_by(voteable_id: m.id).for }
+                        .index_by(&:identifier)
+          data[:motions].merge! motions
+          data[:forums][key][:motions] = motions.keys
+        end
+      end
+
+      #@collection = Vote.ordered Vote.find_by_sql('SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" WHERE ("votes"."voter_type" = \'Profile\' AND "votes"."voter_id" = '+@profile.id.to_s+') AND ("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') AND ("forums"."visibility" = '+Forum.visibilities[:open].to_s+' OR "forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) ORDER BY created_at DESC').reject { |v| v.voteable.is_trashed? }
     end
 
-    render 'profiles/show'
+    render 'profiles/show',
+           locals: data
   end
 
   def current_actor

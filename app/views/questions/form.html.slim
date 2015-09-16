@@ -6,7 +6,7 @@
       section.section-info.question-bg
         span[class="fa fa-#{question_icon}"]
         span.icon-left= questions_type
-      =semantic_form_for((@question.new_record? ? [@forum, @question] : @question), html: {autocomplete: 'off'}, multipart: true) do |f|
+      =semantic_form_for(@question, html: {autocomplete: 'off'}, multipart: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
             h3= t('questions.form.title_heading')

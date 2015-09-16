@@ -1,0 +1,11 @@
+.context.context--vertical[itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList"]
+  div[itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem"]
+    =link_to forum_url(resource), itemprop: 'item'
+      .box.box-link
+        section.section-info
+          span.fa.fa-group
+          span.icon-left= t('forums.type')
+        section
+          h3[class=resource.class.to_s.downcase]
+            span.fa.fa-arrow-up
+            span.icon-left[itemprop="name"]= resource.display_name

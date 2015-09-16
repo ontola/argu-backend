@@ -124,10 +124,20 @@ class Context
   # @!attribute url
   # @return [String] A URL to the current model
   def url
-    Rails.application.routes.url_helpers.url_for(controller: single_model.class.name.downcase.pluralize,
-                                                 action: 'show',
-                                                 id: single_model.to_param,
-                                                 only_path: true) if single_model
+    Rails.application.routes.url_helpers.url_for(options_for_url)
+  end
+
+  def options_for_url
+    if single_model.is_a?(Forum)
+      {subdomain: single_model.url,
+       controller: 'forums',
+       action: 'show'}
+    elsif single_model.present?
+      {controller: single_model.class.name.downcase.pluralize,
+       action: 'show',
+       id: single_model.to_param,
+       only_path: true}
+    end
   end
 
   protected

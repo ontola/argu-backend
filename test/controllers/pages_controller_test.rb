@@ -3,12 +3,12 @@ require 'test_helper'
 class PagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  ####################################
-  # As guest
-  ####################################
   let!(:page) { FactoryGirl.create(:page) }
   let(:page_non_public) { FactoryGirl.create(:page, visibility: Page.visibilities[:closed]) }
 
+  ####################################
+  # As Guest
+  ####################################
   test 'should get show when public' do
     get :show, id: page
 
@@ -33,12 +33,14 @@ class PagesControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As user
+  # As User
   ####################################
-  test 'should get show' do
-    sign_in users(:user)
+  let(:user) { FactoryGirl.create(:user) }
 
-    get :show, id: pages(:utrecht)
+  test 'should get show' do
+    sign_in user
+
+    get :show, id: page
 
     assert_response 200
     assert_not_nil assigns(:profile)
@@ -49,9 +51,9 @@ class PagesControllerTest < ActionController::TestCase
   end
 
   test 'should not show all votes' do
-    sign_in users(:user2)
+    sign_in user
 
-    get :show, id: pages(:utrecht)
+    get :show, id: page
     assert_response 200
     assert assigns(:collection)
 
@@ -102,36 +104,57 @@ class PagesControllerTest < ActionController::TestCase
     assert_equal 'new_about', assigns(:page).profile.reload.about
   end
 
-  test 'should not get settings when not page owner' do
-    sign_in users(:user)
+  ####################################
+  # As Member
+  ####################################
+  let(:member) { make_page_member(page) }
 
-    get :settings, id: pages(:page_argu).url
+  test 'should not get settings as member' do
+    sign_in member
+
+    get :settings, id: page
 
     assert_response 302
-    assert_equal pages(:page_argu), assigns(:page)
+    assert_equal page, assigns(:page)
   end
 
   test 'should not update settings when not page owner' do
-    sign_in users(:user)
+    sign_in member
 
-    put :update, id: pages(:page_argu).url, page: {
-                   profile_attributes: {
-                       id: pages(:page_argu).profile.id,
-                       about: 'new_about'
-                   }
-               }
+    put :update, id: page.url,
+                 page: {
+                     profile_attributes: {
+                         id: page.profile.id,
+                         about: 'new_about'
+                     }
+                 }
 
     assert_redirected_to root_path
-    assert_equal pages(:page_argu), assigns(:page)
-    assert_equal pages(:page_argu).profile.about, assigns(:page).profile.reload.about
+    assert_equal page, assigns(:page)
+    assert_equal page.profile.about, assigns(:page).profile.reload.about
   end
 
   ####################################
-  # As staff
+  # As Manager
   ####################################
+  let(:manager) { make_page_manager(page) }
+
+  test 'should not get all settings as manager' do
+    sign_in manager
+
+    get :settings, id: page
+
+    assert_response 302
+    assert_equal page, assigns(:page)
+  end
+
+  ####################################
+  # As Staff
+  ####################################
+  let(:staff) { FactoryGirl.create(:user, :staff) }
 
   test 'should be able to create a page' do
-    sign_in users(:user_thom)
+    sign_in staff
 
     post :create, page: {
                     profile_attributes: {

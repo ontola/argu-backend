@@ -2,6 +2,14 @@ module ApplicationHelper
   include ActivityStringHelper, AlternativeNamesHelper, UsersHelper, StubbornCookie
   EU_COUNTRIES = %w(BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT AT PL PT RO SI SK FI SE UK ME IS AL RS TR)
 
+  def forum_url(forum)
+    root_url(subdomain: forum)
+  end
+
+  def forums_url(forum)
+    root_url(subdomain: forum)
+  end
+
   # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)
     $rollout.active?(feature, user)

@@ -1,13 +1,11 @@
 FactoryGirl.define do
 
   factory :membership do
-    transient do
-      association :profile
-      association :forum
-    end
+    association :profile
+    association :forum
     role Membership.roles[:member]
 
-    factory :managership do
+    trait :managership do
       role Membership.roles[:manager]
     end
   end

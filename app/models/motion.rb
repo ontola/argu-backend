@@ -13,12 +13,13 @@ class Motion < ActiveRecord::Base
   belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
 
-  counter_culture :forum
+  attr_accessor :vote
 
   before_save :trim_data
   before_save :cap_title
   after_save :creator_follow
 
+  counter_culture :forum
   parentable :questions, :forum
   convertible :votes, :taggings, :activities
   mailable MotionFollowerCollector, :directly, :daily, :weekly

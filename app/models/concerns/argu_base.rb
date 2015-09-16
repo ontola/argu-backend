@@ -10,7 +10,7 @@ module ArguBase
   end
 
   def identifier
-    "#{self.class_name}_#{self.id}"
+    "#{Apartment::Tenant.current != 'public' ? Apartment::Tenant.current + '_' : ''}#{self.class_name}_#{self.id}"
   end
 
   def class_name
