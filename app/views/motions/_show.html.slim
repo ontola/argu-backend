@@ -4,12 +4,12 @@
       .box-image[style="background-image: url('#{model.cover_photo.url(:box)}'); "]
   =contextual_link_to motion_path(model) do
     section.section-info.motion-bg
-      span[class="fa #{motion_icon(forum_from_scope_or_model(current_scope, model))}"]
-      span.icon-left= motion_type(forum_from_scope_or_model(current_scope, model))
+      span[class="fa #{motion_icon(current_forum)}"]
+      span.icon-left= motion_type(current_forum)
       .details
         .details-part.details-part--type.motion-bg
-          span[class="fa fa-#{motion_icon(forum_from_scope_or_model(current_scope, model))}"]
-          span.icon-left= motion_type(forum_from_scope_or_model(current_scope, model))
+          span[class="fa fa-#{motion_icon(current_forum)}"]
+          span.icon-left= motion_type(current_forum)
         .details-part[data-title=t('tooltips.motion.vote_count')]
           span.fa.fa-check-square-o
           span.icon-left= model.total_vote_count

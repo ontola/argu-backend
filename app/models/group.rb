@@ -8,7 +8,7 @@ class Group < ActiveRecord::Base
   validates :name, length: {maximum: 75}
 
   def as_json(options)
-    super(options.merge(except: [:max_responses_per_member, :created_at, :updated_at, :forum_id]))
+    super(options.merge(except: [:max_responses_per_member, :created_at, :updated_at]))
   end
 
   def display_name

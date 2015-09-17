@@ -3,7 +3,9 @@ FactoryGirl.define do
   factory :argument, traits: [:tenantable] do
     association :creator, factory: :profile
     association :motion, strategy: :create
-    pro true
+    sequence :pro do |n|
+      n % 2 == 0 ? true : false
+    end
     title 'title'
     content 'argument'
 

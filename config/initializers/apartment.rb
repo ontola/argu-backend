@@ -57,7 +57,7 @@ Apartment.configure do |config|
   # config.prepend_environment = !Rails.env.production?
 end
 
-Apartment::Elevators::Subdomain.excluded_subdomains = %w(www accounts mail mx pop pop3 smtp ftp ssh)
+Apartment::Elevators::Subdomain.excluded_subdomains = %w(www accounts mail mx pop pop3 smtp ftp ssh me my stream meta auth secure login)
 
 # Rails.application.config.middleware.use 'Apartment::Elevators::Domain'
 Rails.application.config.middleware.use 'Apartment::Elevators::Subdomain'

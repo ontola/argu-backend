@@ -44,6 +44,12 @@ FactoryGirl.define do
       visible_with_a_link true
     end
 
+    trait :with_access_token do
+      after(:create) do |forum, evaluator|
+        forum.access_tokens.create(creator: forum.page.profile)
+      end
+    end
+
     # Cologne
     trait :closed do
       visibility Forum.visibilities[:closed]

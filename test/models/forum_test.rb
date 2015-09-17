@@ -4,6 +4,7 @@ class ForumTest < ActiveSupport::TestCase
   include ModelTestBase
 
   subject { FactoryGirl.create(:populated_forum) }
+  let(:athens) { FactoryGirl.create(:forum, :with_access_token) }
   let(:venice) { FactoryGirl.create(:populated_forum_vwal) }
   let(:user) { FactoryGirl.create(:user) }
   let(:subject_member) { make_member(subject) }
@@ -13,9 +14,9 @@ class ForumTest < ActiveSupport::TestCase
   end
 
   test 'should not leak access_token if disabled' do
-    assert_equal false, subject.visible_with_a_link?
-    assert_equal nil, subject.access_token, 'access tokens are returned if turned off'
-    assert_not_equal nil, subject.access_token!, 'test is useless since forum has no access_token'
+    assert_equal false, athens.visible_with_a_link?
+    assert_equal nil, athens.access_token, 'access tokens are returned if turned off'
+    assert_not_equal nil, athens.access_token!, 'test is useless since forum has no access_token'
   end
 
   test 'should return access_token if enabled' do

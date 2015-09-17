@@ -2,20 +2,18 @@ require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
 
-  def setup
-    @group = create(:group)
-  end
+  subject { FactoryGirl.create(:group) }
 
   test 'valid' do
-    assert @group.valid?, @group.errors.to_a.join(',').to_s
+    assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
   test 'associated memberships and responses should be destroyed' do
-    create(:group_membership, group: @group)
-    create(:group_response, group: @group)
+    create(:group_membership, group: subject)
+    create(:group_response, group: subject)
 
     assert_difference ['GroupMembership.count', 'GroupResponse.count'], -1 do
-      @group.destroy
+      subject.destroy
     end
   end
 

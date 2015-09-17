@@ -178,6 +178,7 @@ Argu::Application.routes.draw do
 
   resources :info, path: 'i', only: [:show], constraints: {subdomain: ''}
 
+  get '/', to: 'static_pages#home', constraints: {subdomain: 'stream'}
   resources :forums, only: [:update], path: '' do
     get :discover, on: :collection, action: :discover, constraints: {subdomain: ''}
     get :settings, on: :collection
@@ -192,11 +193,11 @@ Argu::Application.routes.draw do
   end
   get '/forums/:id', to: redirect('/%{id}'), constraints: {format: :html}
   get 'forums/:id', to: redirect('%{id}.#{domain}')
-  get ':id', to: redirect {|params, req| "#{req.scheme}://#{params[:id]}.#{req.host_with_port}" }, constraints: {subdomain: ''}
 
   get '/d/modern', to: 'static_pages#modern', constraints: {subdomain: ''}
 
+  get ':id', to: redirect {|params, req| "#{req.scheme}://#{params[:id]}.#{req.host_with_port}" }, constraints: {subdomain: ''}
   get '/', to: 'info#show', id: 'about', constraints: {subdomain: ''}
-  root to: 'forums#show'
   get '/', to: 'forums#show'
+  root to: 'forums#show'
 end

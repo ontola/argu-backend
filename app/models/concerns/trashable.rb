@@ -12,6 +12,9 @@ module Trashable
   def trash
     self.class.transaction do
       update_column :is_trashed, true
+      if (self.respond_to? :votes)
+        self.votes.update_all is_trashed: true
+      end
       refresh_counter_cache if self.respond_to? :refresh_counter_cache
     end
   end

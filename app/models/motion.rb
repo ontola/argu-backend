@@ -1,7 +1,7 @@
 include ActionView::Helpers::NumberHelper
 
-class Motion < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common, Mailable
+class Motion < Argu::Base
+  include Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common, Mailable
   extend Argu::TenantUtilities
 
   has_many :arguments, -> { argument_comments }, :dependent => :destroy

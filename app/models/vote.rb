@@ -1,5 +1,5 @@
-class Vote < ActiveRecord::Base
-  include ArguBase, PublicActivity::Model
+class Vote < Argu::Base
+  include PublicActivity::Model
 
   belongs_to :voteable, polymorphic: true, inverse_of: :votes
   belongs_to :voter, polymorphic: true #class_name: 'Profile'

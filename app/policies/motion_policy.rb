@@ -63,7 +63,7 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def update?
-    rule (is_member? && is_creator?), is_manager?, is_owner?, super
+    rule is_creator?, is_manager?, is_owner?, super
   end
 
   def vote?

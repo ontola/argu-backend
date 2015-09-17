@@ -57,5 +57,5 @@
                 td= f.memberships_count || '-'
                 td= f.questions_count || '-'
                 td= f.motions_count || '-'
-                td= link_to t('portal.settings'), settings_forum_path(f)
+                td= link_to t('portal.settings'), settings_forums_path(f)
         =paginate @pages, param_name: :forums_page

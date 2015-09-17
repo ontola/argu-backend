@@ -8,5 +8,5 @@
       time[datetime=activity.created_at]
         small[style="font-size: 0.8em; color: grey;"]= awesome_time_ago_in_words activity.created_at
   .test
-    =render partial: "public_activity/#{activity.key.gsub('.','/')}", locals: {activity: activity}
+    /=render partial: "public_activity/#{activity.key.gsub('.','/')}", locals: {activity: activity}
     /= render_columns activity.trackable

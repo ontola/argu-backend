@@ -72,7 +72,7 @@ class QuestionsController < ApplicationController
   # PUT /questions/1
   # PUT /questions/1.json
   def update
-    @question = Question.includes(:taggings).find(params[:id])
+    @question = Question.find(params[:id])
     authorize @question
     @forum = current_forum
 
@@ -127,33 +127,6 @@ class QuestionsController < ApplicationController
     end
     if @result
       redirect_to polymorphic_url(@result[:new])
-    else
-      redirect_to edit_question_url @question
-    end
-  end
-
-  # GET /motions/1/move
-  def move
-    @question = Question.find params[:question_id]
-    authorize @question, :move?
-
-    respond_to do |format|
-      format.html { render locals: {resource: @question} }
-      format.js { render }
-    end
-  end
-
-  def move!
-    @question = Question.find(params[:question_id])
-    authorize @question, :move?
-    @forum = Forum.find permit_params[:forum_id]
-    authorize @forum, :update?
-    moved = nil
-    @question.with_lock do
-      moved = @question.move_to @forum, permit_params[:include_motions] == '1'
-    end
-    if moved
-      redirect_to question_url(@question)
     else
       redirect_to edit_question_url @question
     end

@@ -90,6 +90,10 @@ class ActiveSupport::TestCase
     user
   end
 
+  def set_current_profile(profile)
+    @controller.instance_variable_set :@current_profile, profile
+  end
+
   def create_forum_owner_pair(forum_opts = {}, manager_opts = {})
     user = FactoryGirl.create(:user, manager_opts)
     forum = FactoryGirl.create((forum_opts[:type] || :forum),

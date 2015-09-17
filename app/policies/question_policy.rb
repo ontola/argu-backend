@@ -25,8 +25,9 @@ class QuestionPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:id, :title, :content, :tag_list, :forum_id, :cover_photo, :remove_cover_photo, :cover_photo_attribution, :expires_at] if create?
-    attributes << [:include_motions, :f_convert] if staff?
+    attributes << %i(id title content tag_list cover_photo remove_cover_photo cover_photo_attribution expires_at) if create?
+    attributes << %i(title content cover_photo remove_cover_photo cover_photo_attribution expires_at) if update?
+    attributes << %i(include_motions f_convert) if staff?
     attributes
   end
 
@@ -63,7 +64,7 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def update?
-    rule (is_member? && is_creator?), is_manager?, super
+    rule is_creator?, is_manager?, super
   end
 
 end

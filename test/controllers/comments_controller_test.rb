@@ -21,7 +21,7 @@ class CommentsControllerTest < Argu::TestCase
   # As member
   ####################################
   let(:holland_member) { make_member(holland) }
-  let(:argument) { FactoryGirl.create(:argument, :with_comments, tenant: :holland) }
+  let!(:argument) { FactoryGirl.create(:argument, :with_comments, tenant: :holland) }
   let!(:comment) { FactoryGirl.create(:comment, creator: creator.profile, commentable: argument) }
 
   test 'should post create comment', tenant: :holland do

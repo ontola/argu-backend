@@ -1,102 +1,143 @@
 require 'test_helper'
 
-class QuestionsControllerTest < ActionController::TestCase
+class QuestionsControllerTest < Argu::TestCase
   include Devise::TestHelpers
 
+  let!(:holland) { FactoryGirl.create(:populated_forum,
+                                      name: 'holland') }
+  let(:subject) { FactoryGirl.create(:question,
+                                     :with_motions) }
+
   ####################################
-  # As guest
+  # As Guest
   ####################################
-  test 'should get show when not logged in' do
-    get :show, id: questions(:one).id
+  test 'should get show when not logged in', tenant: :holland do
+    get :show, id: subject.id
     assert_response 200
     assert_not_nil assigns(:question)
-    assert_not_nil assigns(:forum)
+    assert_not_nil assigns(:motions)
+
+    assert subject.motions.where(is_trashed: true).count > 0, 'No trashed motions to test visibility on'
+    assert_not assigns(:motions).any?(&:is_trashed?), 'Trashed motions are visible'
+  end
+
+  ####################################
+  # As User
+  ####################################
+  let(:user) { FactoryGirl.create(:user) }
+
+  test 'should get show', tenant: :holland do
+    sign_in user
+
+    get :show, id: subject.id
+    assert_response 200
+    assert_not_nil assigns(:question)
     assert_not_nil assigns(:motions)
 
     assert_not assigns(:motions).any?(&:is_trashed?), 'Trashed motions are visible'
   end
 
   ####################################
-  # As user
+  # As Member
   ####################################
-  test 'should get show' do
-    sign_in users(:user)
+  let(:member) { make_member(holland) }
 
-    get :show, id: questions(:one).id
-    assert_response 200
-    assert_not_nil assigns(:question)
-    assert_not_nil assigns(:forum)
-    assert_not_nil assigns(:motions)
-
-    assert_not assigns(:motions).any?(&:is_trashed?), 'Trashed motions are visible'
-  end
-
-  test 'should post create' do
-    sign_in users(:user)
+  test 'should post create', tenant: :holland do
+    sign_in member
 
     assert_difference('Question.count') do
-      post :create, forum_id: :utrecht, question: {title: 'Question', content: 'Contents'}
+      post :create,
+           question: {
+               title: 'Question',
+               content: 'Contents'}
     end
     assert_not_nil assigns(:question)
-    assert_not_nil assigns(:forum)
     assert_redirected_to question_url(assigns(:question))
   end
 
-  test 'should put update on own question' do
-    sign_in users(:user)
+  test 'should not put update on others question', tenant: :holland do
+    sign_in member
 
-    put :update, id: questions(:one), question: {title: 'New title', content: 'new contents'}
+    put :update,
+        id: subject,
+        question: {
+            title: 'New title',
+            content: 'new contents'}
+
+    assert_equal subject, assigns(:question)
+  end
+
+
+  test 'should not get convert', tenant: :holland do
+    sign_in member
+
+    get :convert, question_id: subject
+    assert_redirected_to root_url
+  end
+
+  test 'should not put convert', tenant: :holland do
+    sign_in member
+
+    put :convert, question_id: subject
+    assert_redirected_to root_url
+  end
+
+  test 'should not get move', tenant: :holland do
+    sign_in member
+
+    get :move, question_id: subject
+    assert_redirected_to root_url
+  end
+
+  test 'should not put move', tenant: :holland do
+    sign_in member
+
+    put :move, question_id: subject
+    assert_redirected_to root_url
+  end
+
+
+  ####################################
+  # As Creator
+  ####################################
+  let(:creator) { make_member(holland) }
+  let(:creator_question) { FactoryGirl.create(:question,
+                                            tenant: :holland,
+                                            creator: creator.profile) }
+
+  test 'should put update on own question', tenant: :holland do
+    sign_in creator
+
+    put :update,
+        id: creator_question,
+        question: {
+            title: 'New title',
+            content: 'new contents'}
 
     assert_not_nil assigns(:question)
     assert_equal 'New title', assigns(:question).title
     assert_equal 'new contents', assigns(:question).content
-    assert_redirected_to question_url(assigns(:question))
-  end
-
-  test 'should not put update on others question' do
-    sign_in users(:user2)
-
-    put :update, id: questions(:one), question: {title: 'New title', content: 'new contents'}
-
-    assert_equal questions(:one), assigns(:question)
-  end
-
-  test 'should not get convert' do
-    sign_in users(:user)
-
-    get :convert, question_id: questions(:one)
-    assert_redirected_to root_url
-  end
-
-  test 'should not put convert' do
-    sign_in users(:user)
-
-    put :convert, question_id: questions(:one)
-    assert_redirected_to root_url
-  end
-
-  test 'should not get move' do
-    sign_in users(:user)
-
-    get :move, question_id: questions(:one)
-    assert_redirected_to root_url
-  end
-
-  test 'should not put move' do
-    sign_in users(:user)
-
-    put :move, question_id: questions(:one)
-    assert_redirected_to root_url
+    assert_redirected_to question_url(creator_question)
   end
 
   ####################################
   # For Page owners
   ####################################
-  test 'should put update on page owner own question' do
-    sign_in users(:user_page_manager)
-    @controller.instance_variable_set :@current_profile, profiles(:profile_page)
+  let(:page_owner) { FactoryGirl.create(:user) }
+  let(:page) { FactoryGirl.create(:page, owner: page_owner.profile) }
+  let(:page_question) { FactoryGirl.create(:question,
+                                              tenant: :holland,
+                                              creator: page.profile) }
 
-    put :update, id: questions(:page_one), question: {title: 'New title', content: 'new contents'}
+  test 'should put update on page owner own question', tenant: :holland do
+    sign_in page_owner
+    set_current_profile page.profile
+
+    put :update,
+        id: page_question,
+        question: {
+            title: 'New title',
+            content: 'new contents'}
 
     assert_redirected_to question_url(assigns(:question))
     assert_not_nil assigns(:question)
@@ -105,22 +146,23 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # For managers
+  # For Staff
   ####################################
+  let(:staff) { FactoryGirl.create(:user, :staff) }
 
   # Currently only staffers can convert items
-  test 'should get convert' do
-    sign_in users(:user_thom)
+  test 'should get convert', tenant: :holland do
+    sign_in staff
 
-    get :convert, question_id: questions(:one)
+    get :convert, question_id: subject
     assert_response 200
   end
 
   # Currently only staffers can convert items
-  test 'should put convert' do
-    sign_in users(:user_thom)
+  test 'should put convert', tenant: :holland do
+    sign_in staff
 
-    put :convert!, question_id: questions(:one), question: {f_convert: 'motions'}
+    put :convert!, question_id: subject, question: {f_convert: 'motions'}
     assert assigns(:result)
     assert_redirected_to assigns(:result)[:new]
 
@@ -136,40 +178,6 @@ class QuestionsControllerTest < ActionController::TestCase
 
     assert_equal 0, assigns(:result)[:old].activities.count
     assert_equal 1, assigns(:result)[:new].activities.count
-
-  end
-
-
-  # Currently only staffers can move items
-  test 'should get move' do
-    sign_in users(:user_thom)
-
-    get :move, question_id: questions(:one)
-    assert_response 200
-  end
-
-  # Currently only staffers can convert items
-  test 'should put move!' do
-    sign_in users(:user_thom)
-
-    assert_differences [['forums(:utrecht).reload.questions_count', -1], ['forums(:amsterdam).reload.questions_count', 1]] do
-      put :move!, question_id: questions(:one), question: { forum_id: forums(:amsterdam).id }
-    end
-    assert_redirected_to assigns(:question)
-
-    assert assigns(:question)
-    assert_equal forums(:amsterdam), assigns(:question).forum
-    forum_id = forums(:amsterdam).id
-    assigns(:question).motions.pluck(:forum_id).each do |id|
-      assert_equal forum_id, id
-    end
-    assert assigns(:question).motions.blank?
-    assigns(:question).activities.pluck(:forum_id).each do |id|
-      assert_equal forum_id, id
-    end
-    assigns(:question).taggings.pluck(:forum_id).each do |id|
-      assert_equal forum_id, id
-    end
 
   end
 

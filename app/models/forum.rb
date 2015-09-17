@@ -2,7 +2,7 @@ class Forum < ActiveRecord::Base
   include ArguBase, Attribution, Shortnameable
 
   belongs_to :page
-  has_many :access_tokens, inverse_of: :item, foreign_key: :item_id
+  has_many :access_tokens, inverse_of: :item, as: :item
   has_many :questions, inverse_of: :forum
   has_many :motions, inverse_of: :forum
   has_many :arguments, inverse_of: :forum
@@ -68,7 +68,7 @@ class Forum < ActiveRecord::Base
 
   def check_access_token
     if visible_with_a_link && access_token!.blank?
-      self.access_tokens.build(item: self, profile: self.page.profile)
+      self.access_tokens.build(item: self, creator: self.page.profile)
       #AccessToken.create(item: self, profile: self.page.profile)
     end
   end

@@ -3,7 +3,6 @@ class GroupResponse < ActiveRecord::Base
   include ArguBase, Parentable
 
   belongs_to :group
-  belongs_to :forum
   belongs_to :motion
 
   belongs_to :creator, class_name: 'Profile'
@@ -15,7 +14,7 @@ class GroupResponse < ActiveRecord::Base
   enum side: {pro: 1, neutral: 0, con: 2}
 
   validates :text, length: {maximum: 5000}
-  validates_presence_of :side, :group, :forum, :motion, :creator
+  validates_presence_of :side, :group, :motion, :creator
 
   def self.ordered (coll=[])
     dest = {'pro' => {collection: []}, 'neutral' => {collection: []}, 'con' => {collection: []}}
