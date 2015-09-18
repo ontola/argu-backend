@@ -127,6 +127,10 @@ protected
   end
 
 private
+  def self.forum_for(url_options)
+    Forum.find_via_shortname_nil(url_options[:id])
+  end
+
   def permit_params
     params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)
   end
