@@ -28,6 +28,22 @@ class Motion < ActiveRecord::Base
   validates :title, presence: true, length: { minimum: 5, maximum: 110 }
   validates :forum_id, :creator_id, presence: true
 
+  scope :search, ->(q) { where('lower(title) SIMILAR TO lower(?) OR ' +
+                                'lower(content) LIKE lower(?)',
+                                "%#{q}%",
+                                "%#{q}%") }
+
+  def as_json(options = {})
+    super(options.merge(
+              {
+                  methods: %i(display_name),
+                  only: %i(id content forum_id created_at cover_photo
+                           updated_at pro_count con_count
+                           votes_pro_count votes_con_count votes_neutral_count
+                           argument_pro_count argument_con_count)
+              }))
+  end
+
   def cap_title
     self.title[0] = self.title[0].upcase
     self.title

@@ -19,7 +19,7 @@ window.ProfileOption = React.createClass({
                      onMouseLeave={this.props.mouseLeave}
                      onMouseDown={this.props.mouseDown}
                      onClick={this.props.mouseDown}>
-                    <img class="Select-item-result-icon" height='25em' src={obj.avatar_url} />
+                    <img class="Select-item-result-icon" height='25em' src={obj.image} />
                     {obj.label} ({obj.value})
                 </div>
         );
@@ -40,7 +40,7 @@ window.SingleValue = React.createClass({
 
         const item = obj ? (
             <div>
-                <img class="Select-item-result-icon" height='25em' src={obj.avatar_url} />
+                <img class="Select-item-result-icon" height='25em' src={obj.image} />
                 {obj.name}
             </div>
         ) : (this.props.placeholder);
@@ -91,7 +91,7 @@ window.NewMembership = React.createClass({
                                value: profile.shortname,
                                id: profile.id.toString(),
                                label: profile.name,
-                               avatar_url: profile.profile_photo.avatar.url
+                               image: profile.profile_photo.avatar.url
                            };
                        }),
                        complete: false

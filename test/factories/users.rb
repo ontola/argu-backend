@@ -15,6 +15,12 @@ FactoryGirl.define do
     first_name { |n| 'first_name#{n}'}
     last_name { |n| 'last_name#{n}'}
 
+    trait :staff do
+      after(:create) do |user, evaluator|
+        user.profile.add_role :staff
+      end
+    end
+
     trait :forum_manager do
       after(:create) do |user, evaluator|
         create(:profile_with_memberships)

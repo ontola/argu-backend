@@ -99,8 +99,11 @@ Argu::Application.routes.draw do
   resources :votes, only: [:destroy], path: :v
 
   resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible] do
+    resources :question_answers, path: 'qa', only: [:new, :create]
     resources :tags, path: 't', only: [:index]
   end
+
+  resources :question_answers, path: 'qa', only: [:edit, :update, :destroy, :delete]
 
   resources :motions, path: 'm', except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
     resources :groups, only: [] do
@@ -187,7 +190,7 @@ Argu::Application.routes.draw do
     resources :memberships, only: [:create, :destroy]
     resources :managers, only: [:new, :create, :destroy]
     resources :questions, path: 'q', only: [:index, :new, :create]
-    resources :motions, path: 'm', only: [:new, :create]
+    resources :motions, path: 'm', only: [:index, :new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
     resources :groups, path: 'g', only: [:new, :edit]

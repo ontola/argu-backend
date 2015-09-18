@@ -1,7 +1,7 @@
 module ContextHelper
 
   # Renders a to_parent breadcrumb block
-  def to_parent
+  def  to_parent
     render partial: 'contextualize/to_parent' if current_context.parent_initialized?
   end
 

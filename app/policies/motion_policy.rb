@@ -14,7 +14,9 @@ class MotionPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      scope
+      if context.forum.present?
+        scope.where(forum_id: context.forum.id)
+      end
     end
   end
 

@@ -106,6 +106,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Deletes all other activities created within 6 hours of the new activity.
+  def destroy_recent_similar_activities(model, params)
+    Activity.delete Activity.where('created_at >= :date', :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
+  end
+
   def forum_by_geocode
     if session[:geo_location].present?
       forum = Forum.find_via_shortname_nil(session[:geo_location].city.downcase) if session[:geo_location].city.present?
@@ -194,11 +199,6 @@ class ApplicationController < ActionController::Base
     Time.use_zone(time_zone, &block)
   end
 
-  # Deletes all other activities created within 6 hours of the new activity.
-  def destroy_recent_similar_activities(model, params)
-    Activity.delete Activity.where('created_at >= :date', :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
-  end
-
   # Has the {User} enabled the `trashed` `param` and is he authorized?
   def show_trashed?
     if params[:trashed].present? && policy(current_scope.model).update?
@@ -206,6 +206,10 @@ class ApplicationController < ActionController::Base
     else
       false
     end
+  end
+
+  def skip_verify_policy_scoped(sure = false)
+    @_pundit_policy_scoped = true if sure
   end
 
   protected

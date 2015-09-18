@@ -251,3 +251,17 @@
   width: 90% !important;
   width: calc(100% - 2em) !important;
 }
+
+.box {
+  margin-left: 2em;
+  .outside-the-box {
+    visibility: hidden;
+    position: absolute;
+    left: -2em;
+    top: 0;
+    padding: .25em 2em 5em .5em;
+  }
+  &:hover .outside-the-box{
+    visibility: visible;
+  }
+}
