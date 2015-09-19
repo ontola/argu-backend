@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
   end
 
   def password_required?
-    (identities.blank? && password.blank?) ? super : false
+    (!self.persisted? && identities.blank?) || (identities.blank? && password.blank?) ? super : false
   end
 
   def profile
