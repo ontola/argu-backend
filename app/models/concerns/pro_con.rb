@@ -20,12 +20,6 @@ module ProCon
 
     acts_as_commentable
     parentable :motion, :forum
-
-    #todo: Doesn't seem like a good idea
-    #def creator
-    #  super || Profile.first_or_create(username: 'Onbekend')
-    #end
-
   end
 
   def creator_follow
@@ -52,13 +46,20 @@ module ProCon
     super value.to_s == 'pro' || value
   end
 
+  def root_comments
+    self.comment_threads.where(is_trashed: false, :parent_id => nil)
+  end
+
   def trim_data
     self.title = title.strip
     self.content = content.strip
   end
 
-  def root_comments
-    self.comment_threads.where(is_trashed: false, :parent_id => nil)
+  def update_vote_counters
+    vote_counts = self.votes.group('"for"').count
+    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
+                votes_con_count: vote_counts[Vote.fors[:con]] || 0,
+                votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
   end
 
   module ClassMethods

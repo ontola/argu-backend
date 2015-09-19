@@ -17,4 +17,10 @@ class QuestionAnswer < ActiveRecord::Base
       false
     end
   end
+
+  def update_vote_counters
+    vote_counts = self.votes.group('"for"').count
+    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
+                votes_con_count: vote_counts[Vote.fors[:con]] || 0
+  end
 end

@@ -6,8 +6,8 @@ class Vote < ActiveRecord::Base
   has_many :activities, as: :trackable, dependent: :destroy
   belongs_to :forum
 
-  after_save :update_counter_cache
-  after_destroy :decrement_counter_cache
+  after_save :update_parentable_counter
+  after_destroy :update_parentable_counter
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
 
@@ -18,18 +18,8 @@ class Vote < ActiveRecord::Base
     self.for.to_s === item.to_s
   end
 
-  def update_counter_cache
-    if self.for_was != self.for
-      voteable.class.decrement_counter("votes_#{self.for_was}_count", voteable.id) if self.for_was
-      voteable.class.increment_counter("votes_#{self.for}_count", voteable.id)
-    end
-  end
-
-  def decrement_counter_cache
-    voteable.class.decrement_counter(
-        voteable.class.respond_to?("votes_#{self.for}_count") ? "votes_#{self.for}_count" : 'votes_pro_count',
-        voteable.id
-    )
+  def update_parentable_counter
+    self.voteable.update_vote_counters
   end
 
   ##########Class methods###########
