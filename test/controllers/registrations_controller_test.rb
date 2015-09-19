@@ -31,7 +31,8 @@ class RegistrationsControllerTest < ActionController::TestCase
     user_params = attributes_for(:user)
     @request.env['devise.mapping'] = Devise.mappings[:user]
 
-    assert_no_difference('User.count') do
+    assert_differences([['User.count', 0],
+                        ['ActionMailer::Base.deliveries.count', 0]]) do
       post :create,
            user: {
                email: user_params[:email],
@@ -39,8 +40,6 @@ class RegistrationsControllerTest < ActionController::TestCase
                password_confirmation: 'random gibberish'
            }
     end
-
-    assert ActionMailer::Base.deliveries.empty?
 
     assert_response 200
   end
