@@ -10,13 +10,14 @@ module ProCon
     belongs_to :creator, class_name: 'Profile'
     belongs_to :forum
 
-    before_save :trim_data
     before_save :cap_title
     after_create :creator_follow
 
     validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
     validates :creator_id, :motion_id, :forum_id, presence: true
+    auto_strip_attributes :title, squish: true
+    auto_strip_attributes :content
 
     acts_as_commentable
     parentable :motion, :forum
@@ -48,11 +49,6 @@ module ProCon
 
   def root_comments
     self.comment_threads.where(is_trashed: false, :parent_id => nil)
-  end
-
-  def trim_data
-    self.title = title.strip
-    self.content = content.strip
   end
 
   def update_vote_counters

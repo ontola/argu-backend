@@ -11,6 +11,7 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :profile
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
+  auto_strip_attributes :body
 
   attr_accessor :is_processed
 

@@ -14,7 +14,6 @@ class Motion < ActiveRecord::Base
 
   counter_culture :forum
 
-  before_save :trim_data
   before_save :cap_title
   after_save :creator_follow
 
@@ -27,6 +26,8 @@ class Motion < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 110 }
   validates :forum_id, :creator_id, presence: true
+  auto_strip_attributes :title, squish: true
+  auto_strip_attributes :content
 
   scope :search, ->(q) { where('lower(title) SIMILAR TO lower(?) OR ' +
                                 'lower(content) LIKE lower(?)',
@@ -149,11 +150,6 @@ class Motion < ActiveRecord::Base
 
   def total_vote_count
     votes_pro_count.abs + votes_con_count.abs + votes_neutral_count.abs
-  end
-
-  def trim_data
-    self.title = title.strip
-    self.content = content.strip
   end
 
   def update_vote_counters

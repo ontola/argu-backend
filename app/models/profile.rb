@@ -31,6 +31,8 @@ class Profile < ActiveRecord::Base
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}
+  auto_strip_attributes :name, :squish => true
+  auto_strip_attributes :about, :nullify => false
 
   def as_json(options)
     # Hide profileable for the more friendly actor
