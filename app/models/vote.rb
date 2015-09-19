@@ -6,7 +6,7 @@ class Vote < ActiveRecord::Base
   has_many :activities, as: :trackable, dependent: :destroy
   belongs_to :forum
 
-  after_create :update_counter_cache
+  after_save :update_counter_cache
   after_destroy :decrement_counter_cache
 
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
