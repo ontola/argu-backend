@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713115903) do
+ActiveRecord::Schema.define(version: 20150918120241) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -396,6 +396,7 @@ ActiveRecord::Schema.define(version: 20150713115903) do
     t.integer  "votes_con_count", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "creator_id"
   end
 
   add_index "question_answers", ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
@@ -572,4 +573,5 @@ ActiveRecord::Schema.define(version: 20150713115903) do
 
   add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
   add_foreign_key "identities", "users"
+  add_foreign_key "question_answers", "profiles", column: "creator_id"
 end

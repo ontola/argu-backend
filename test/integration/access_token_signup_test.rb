@@ -58,7 +58,9 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     get forum_path(forums(:hidden).url, at: access_tokens(:token_hidden).access_token)
     assert_response :success
 
-    post forum_memberships_path(forums(:hidden).url, r: forum_path(forums(:hidden).url), at: access_tokens(:token_hidden).access_token)
+    post forum_memberships_path(forums(:hidden).url,
+                                r: forum_path(forums(:hidden).url),
+                                at: access_tokens(:token_hidden).access_token)
     assert_response :success
     assert assigns(:resource)
 
@@ -87,8 +89,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_redirected_to forum_url(forums(:hidden).url)
     assert assigns(:resource)
     assert assigns(:profile)
-    assert_equal 2, assigns(:profile).memberships.count
-
+    assert_equal 1, assigns(:profile).memberships.count
   end
 
   test 'should register and become a member with an access token and preserve vote' do

@@ -15,10 +15,12 @@ class Rack::Attack
       /-seo.com/,
       /erot.co/,
       /howtostopreferralspam.eu/,
-      /floating-share-buttons.com/,
+      /-buttons.com/,
       /videos-for-your-business.com/,
       /sexyali.com/,
-      /chinese-amezon.com/
+      /chinese-amezon.com/,
+      /hulfingtonpost.com/,
+      /qualitymarketzone.com/
   ].freeze
 
   HACKERS = [

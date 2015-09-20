@@ -16,6 +16,8 @@ class Question < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 110 }
   validates :forum_id, :creator_id, presence: true
+  auto_strip_attributes :title, squish: true
+  auto_strip_attributes :content
   #TODO validate expires_at
 
   attr_accessor :include_motions
@@ -76,6 +78,12 @@ class Question < ActiveRecord::Base
 
   def top_motions
     motions.trashed(false).order(updated_at: :desc).limit(3)
+  end
+
+  def update_vote_counters
+    vote_counts = self.votes.group('"for"').count
+    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
+                votes_con_count: vote_counts[Vote.fors[:con]] || 0
   end
 
   scope :index, ->(trashed, page) { trashed(trashed).page(page) }

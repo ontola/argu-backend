@@ -14,7 +14,6 @@ class Motion < ActiveRecord::Base
 
   counter_culture :forum
 
-  before_save :trim_data
   before_save :cap_title
   after_save :creator_follow
 
@@ -27,6 +26,24 @@ class Motion < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 110 }
   validates :forum_id, :creator_id, presence: true
+  auto_strip_attributes :title, squish: true
+  auto_strip_attributes :content
+
+  scope :search, ->(q) { where('lower(title) SIMILAR TO lower(?) OR ' +
+                                'lower(content) LIKE lower(?)',
+                                "%#{q}%",
+                                "%#{q}%") }
+
+  def as_json(options = {})
+    super(options.merge(
+              {
+                  methods: %i(display_name),
+                  only: %i(id content forum_id created_at cover_photo
+                           updated_at pro_count con_count
+                           votes_pro_count votes_con_count votes_neutral_count
+                           argument_pro_count argument_con_count)
+              }))
+  end
 
   def cap_title
     self.title[0] = self.title[0].upcase
@@ -135,9 +152,12 @@ class Motion < ActiveRecord::Base
     votes_pro_count.abs + votes_con_count.abs + votes_neutral_count.abs
   end
 
-  def trim_data
-    self.title = title.strip
-    self.content = content.strip
+  def update_vote_counters
+    vote_counts = self.votes.group('"for"').count
+    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
+                votes_con_count: vote_counts[Vote.fors[:con]] || 0,
+                votes_neutral_count: vote_counts[Vote.fors[:neutral]] || 0,
+                votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
   end
 
   def votes_pro_percentage

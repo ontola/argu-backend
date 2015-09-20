@@ -143,13 +143,10 @@ class PagesController < ApplicationController
   def transfer!
     @page = Page.find_via_shortname params[:id]
     authorize @page, :transfer?
-    @new_profile = Profile.find_by(id: params[:profile_id])
+    @new_profile = User.find_via_shortname!(params[:profile_id]).profile
 
     respond_to do |format|
-      if @new_profile.profileable_type != 'User'
-        flash[:error] = t('pages.settings.managers.users_only')
-        format.html { render 'transfer', locals: {no_close: true} }
-      elsif @page.transfer_to!(params[:page][:repeat_name], @new_profile)
+      if @page.transfer_to!(params[:page][:repeat_name], @new_profile)
         reset_current_actor
         flash[:success] = t('pages.settings.managers.transferred')
         format.html { redirect_to settings_page_path(@page) }

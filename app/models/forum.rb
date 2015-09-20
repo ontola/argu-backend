@@ -36,6 +36,11 @@ class Forum < ActiveRecord::Base
   validates :bio_long, length: {maximum: 5000}
 
   after_validation :check_access_token, if: :visible_with_a_link_changed?
+  auto_strip_attributes :name, :cover_photo_attribution, :questions_title,
+                        :questions_title_singular, :motions_title, :motions_title_singular,
+                        :arguments_title, :arguments_title_singular, :squish => true
+  auto_strip_attributes :featured_tags, squish: true, nullify: false
+  auto_strip_attributes :bio, :nullify => false
 
   # @!attribute visibility
   # @return [Enum] The visibility of the {Forum}

@@ -33,6 +33,7 @@ class User < ActiveRecord::Base
   validates :email, allow_blank: false,
         format: { with: RFC822::EMAIL }
   validates :profile, presence: true
+  auto_strip_attributes :first_name, :last_name, :middle_name, :postal_code, :squish => true
 
   def active_at(redis = nil)
     Argu::Redis.get("user:#{self.id}:active.at", redis)
@@ -83,7 +84,7 @@ class User < ActiveRecord::Base
   end
 
   def password_required?
-    (identities.blank? && password.blank?) ? super : false
+    (!self.persisted? && identities.blank?) || (identities.blank? && password.blank?) ? super : false
   end
 
   def profile

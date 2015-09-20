@@ -10,9 +10,11 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require js-polyfills/es5
+//= require polyfills/json3
+//= require polyfills/es5
 //= require js-polyfills/es6
 //= require js-polyfills/html
+//= require polyfills/html5-shiv
 //= require js-polyfills/dom
 //= require js-polyfills/xhr
 //= require js-polyfills/cssom

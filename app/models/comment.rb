@@ -11,12 +11,25 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :profile
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
+  auto_strip_attributes :body
 
   attr_accessor :is_processed
 
   belongs_to :commentable, :polymorphic => true
   belongs_to :profile
   has_many :activities, as: :trackable, dependent: :destroy
+
+  # Helper class method to lookup all comments assigned
+  # to all commentable types for a given user.
+  scope :find_comments_by_user, lambda { |user|
+    where(:profile_id => user.profile.id).order('created_at DESC')
+  }
+
+  # Helper class method to look up all comments for
+  # commentable class name and commentable id.
+  scope :find_comments_for_commentable, lambda { |commentable_str, commentable_id|
+    where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
+  }
 
   def abandoned?
     self.is_trashed? && self.children.length == 0
@@ -46,31 +59,23 @@ class Comment < ActiveRecord::Base
     self.body
   end
 
+  # Helper class method to look up a commentable object
+  # given the commentable class name and id
+  def self.find_commentable(commentable_str, commentable_id)
+    commentable_str.constantize.find(commentable_id)
+  end
+
+  def forum
+    commentable.forum
+  end
+
   #helper method to check if a comment has children
   def has_children?
     self.lft || self.rgt
   end
 
-  # Helper class method to lookup all comments assigned
-  # to all commentable types for a given user.
-  scope :find_comments_by_user, lambda { |user|
-    where(:profile_id => user.profile.id).order('created_at DESC')
-  }
-
-  # Helper class method to look up all comments for
-  # commentable class name and commentable id.
-  scope :find_comments_for_commentable, lambda { |commentable_str, commentable_id|
-    where(:commentable_type => commentable_str.to_s, :commentable_id => commentable_id).order('created_at DESC')
-  }
-
   def touch_parent
     self.get_parent.model.touch
-  end
-
-  # Helper class method to look up a commentable object
-  # given the commentable class name and id
-  def self.find_commentable(commentable_str, commentable_id)
-    commentable_str.constantize.find(commentable_id)
   end
 
   def refresh_counter_cache
@@ -78,10 +83,6 @@ class Comment < ActiveRecord::Base
                                                         .where(is_trashed: false)
                                                         .where.not(profile: nil)
                                                         .count
-  end
-
-  def forum
-    commentable.forum
   end
 
   # Comments can't be deleted since all comments below would be hidden as well

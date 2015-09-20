@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   after_action :verify_authorized, :except => :index, :unless => :devise_controller?
   after_action :verify_policy_scoped, :only => :index
+  after_action :set_profile_forum
   around_action :set_time_zone
   #after_action :set_notification_header
   if Rails.env.development? || Rails.env.staging?
@@ -105,6 +106,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Deletes all other activities created within 6 hours of the new activity.
+  def destroy_recent_similar_activities(model, params)
+    Activity.delete Activity.where('created_at >= :date', :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
+  end
+
   def forum_by_geocode
     if session[:geo_location].present?
       forum = Forum.find_via_shortname_nil(session[:geo_location].city.downcase) if session[:geo_location].city.present?
@@ -182,14 +188,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_profile_forum
+    if instance_variable_defined?(:@forum) && @forum.is_a?(Forum) && current_profile.present?
+      Argu::Redis.set("profile:#{current_profile.id}:last_forum", @forum.id)
+    end
+  end
+
   def set_time_zone(&block)
     time_zone = current_user.try(:time_zone) || 'Amsterdam'
     Time.use_zone(time_zone, &block)
-  end
-
-  # Deletes all other activities created within 6 hours of the new activity.
-  def destroy_recent_similar_activities(model, params)
-    Activity.delete Activity.where('created_at >= :date', :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
   end
 
   # Has the {User} enabled the `trashed` `param` and is he authorized?
@@ -199,6 +206,10 @@ class ApplicationController < ActionController::Base
     else
       false
     end
+  end
+
+  def skip_verify_policy_scoped(sure = false)
+    @_pundit_policy_scoped = true if sure
   end
 
   protected

@@ -125,7 +125,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def join?
-    rule is_open?, has_access_token?, staff?
+    rule is_open?, has_access_token?, is_manager?, staff?
   end
 
   def list?

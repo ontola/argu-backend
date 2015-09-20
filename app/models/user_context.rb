@@ -2,6 +2,7 @@
 # Puppet class to help [Pundit](https://github.com/elabs/pundit) grasp our complex {Profile} system.
 class UserContext
   attr_reader :user, :actor, :session, :context_model, :opts
+  alias_method :forum, :context_model
 
   def initialize(user, profile, session, context_model= nil, opts = {})
     @user = user

@@ -1,5 +1,24 @@
 class MotionsController < ApplicationController
-  before_action :get_context, only: [:new, :create]
+  before_action :get_context, only: [:index, :new, :create]
+
+  def index
+    authorize Motion, :index?
+    if params[:q].present? && params[:thing].present?
+      @motions = policy_scope(Motion).search(params[:q])
+      if @motions.present?
+        render json: @motions
+      else
+        head 204
+      end
+    else
+      skip_verify_policy_scoped(true)
+      errors = []
+      errors << { title: 'Query parameter `q` not present' } unless params[:q].present?
+      errors << { title: 'Type parameter `thing` not present' } unless params[:thing].present?
+      render status: 400,
+             json: {errors: errors}
+    end
+  end
 
   # GET /motions/1
   # GET /motions/1.json

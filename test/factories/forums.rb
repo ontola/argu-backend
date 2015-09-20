@@ -4,7 +4,6 @@ FactoryGirl.define do
     association :page, strategy: :create
     visibility Forum.visibilities[:open]
     transient do
-      #visible_with_a_link false
       motion_count 0
     end
 

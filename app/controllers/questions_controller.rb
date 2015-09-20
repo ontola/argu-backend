@@ -5,7 +5,9 @@ class QuestionsController < ApplicationController
     authorize @question
     @forum = @question.forum
     current_context @question
-    @motions = policy_scope(@question.motions.trashed(show_trashed?)).order(updated_at: :desc)
+    @question_answers = @question.question_answers
+                            .where(motion_id: policy_scope(@question.motions.trashed(show_trashed?))
+                                                  .order(updated_at: :desc).pluck(:id))
 
     respond_to do |format|
       format.html # show.html.erb

@@ -11,9 +11,9 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_response 200
     assert_not_nil assigns(:question)
     assert_not_nil assigns(:forum)
-    assert_not_nil assigns(:motions)
+    assert_not_nil assigns(:question_answers)
 
-    assert_not assigns(:motions).any?(&:is_trashed?), 'Trashed motions are visible'
+    assert_not assigns(:question_answers).any? { |qa| qa.is_trashed? }, 'Trashed motions are visible'
   end
 
   ####################################
@@ -26,9 +26,9 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_response 200
     assert_not_nil assigns(:question)
     assert_not_nil assigns(:forum)
-    assert_not_nil assigns(:motions)
+    assert_not_nil assigns(:question_answers)
 
-    assert_not assigns(:motions).any?(&:is_trashed?), 'Trashed motions are visible'
+    assert_not assigns(:question_answers).any? { |qa| qa.is_trashed? }, 'Trashed motions are visible'
   end
 
   test 'should post create' do
