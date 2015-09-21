@@ -43,6 +43,7 @@ gem 'geokit-rails', '2.1.0'
 gem 'browser'
 gem 'addressable', '~> 2.3.8'
 gem 'auto_strip_attributes', '~> 2.0.6'
+gem 'mailgun_rails', '0.7.0'
 
 #Search
 
