@@ -53,7 +53,7 @@ class CommentPolicy < RestrictivePolicy
   end
 
   def update?
-    rule (is_member? && is_creator?), is_manager?, is_owner?, super
+    rule is_creator?
   end
 
   def has_access_to_platform?

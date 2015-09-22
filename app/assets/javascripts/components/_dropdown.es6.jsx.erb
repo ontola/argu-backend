@@ -1,6 +1,6 @@
 /*global React, $*/
 
-function is_touch_device() {
+function isTouchDevice() {
     return (('ontouchstart' in window)
     || (navigator.MaxTouchPoints > 0)
     || (navigator.msMaxTouchPoints > 0));
@@ -71,7 +71,7 @@ window.HyperDropdownMixin = {
     },
 
     onMouseEnter: function () {
-        if (!is_touch_device() && !this.state.openState) {
+        if (!isTouchDevice() && !this.state.openState) {
             this.listeningToClick = false;
             // Start timer to prevent a quick close after clicking on the trigger
             this.mouseEnterOpenedTimeout = window.setTimeout(this.mouseEnterTimeoutCallback, 1000);
@@ -80,7 +80,7 @@ window.HyperDropdownMixin = {
     },
 
     onMouseLeave: function () {
-        if (!is_touch_device() && this.state.openState) {
+        if (!isTouchDevice() && this.state.openState) {
             if (!this.openedByClick) {
                 this.close();
                 // Remove / reset timer
