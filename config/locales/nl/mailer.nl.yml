@@ -10,3 +10,6 @@ nl:
     direct_mail:
       header: "Hoi %recipient.name%"
       first_paragraph: "Iemand heeft een bericht voor je achtergelaten"
+    user_mailer:
+      user_commented:
+        subject: "Nieuwe reactie toegevoegd bij %{title}"

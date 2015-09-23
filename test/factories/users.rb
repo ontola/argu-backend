@@ -29,7 +29,7 @@ FactoryGirl.define do
 
     factory :user_with_notification do
       after(:create) do |user, evaluator|
-        user.profile.notifications.create
+        user.notifications.create
       end
 
     end

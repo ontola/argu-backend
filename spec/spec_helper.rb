@@ -88,12 +88,4 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
-
-  Capybara::Webkit.configure do |config|
-    config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'
-    config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
-    config.allow_url '//www.youtube.com/embed/*'
-    config.allow_url 'http://example.com/embed/*'
-    config.allow_url '//www.gravatar.com/*'
-  end
 end

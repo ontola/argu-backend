@@ -1,7 +1,7 @@
 FactoryGirl.define do
 
   factory :notification do
-    association :profile
+    association :user
     association :activity
   end
 end

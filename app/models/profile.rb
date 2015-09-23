@@ -16,7 +16,6 @@ class Profile < ActiveRecord::Base
   has_many :groups, through: :group_memberships
   has_many :memberships, dependent: :destroy
   has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
-  has_many :notifications, dependent: :destroy
   has_many :page_memberships, dependent: :destroy
   has_many :page_managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
   has_many :pages, inverse_of: :owner, foreign_key: :owner_id
@@ -27,7 +26,6 @@ class Profile < ActiveRecord::Base
   mount_uploader :cover_photo, CoverUploader
 
   #pica_pica :profile_photo
-  acts_as_follower
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}
@@ -45,6 +43,10 @@ class Profile < ActiveRecord::Base
 
   def actor_id
     profileable_id
+  end
+
+  def confirmed?
+    profileable.try :confirmed?
   end
 
   # http://schema.org/description

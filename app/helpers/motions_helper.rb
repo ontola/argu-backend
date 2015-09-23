@@ -18,8 +18,8 @@ module MotionsHelper
     }.merge(motion_vote_props(motion, vote))
   end
 
-  def motion_vote_props(motion, vote)
-    {
+  def motion_vote_props(motion, vote, opts={})
+    opts.merge({
         object_type: 'motion',
         object_id: motion.id,
         current_vote: vote.for,
@@ -35,7 +35,7 @@ module MotionsHelper
             neutral: motion.votes_neutral_percentage,
             con: motion.votes_con_percentage
         }
-    }
+    })
   end
 
   def motion_items(motion)

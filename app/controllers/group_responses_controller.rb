@@ -3,7 +3,10 @@ class GroupResponsesController < ApplicationController
   def new
     group = Group.find params[:group_id]
     motion = Motion.find params[:motion_id]
-    @group_response = motion.group_responses.new group: group, forum: group.forum, created_by: current_user.profile, side: params[:side]
+    @group_response = motion.group_responses.new group: group,
+                                                 forum: group.forum,
+                                                 publisher: current_user,
+                                                 side: params[:side]
     authorize @group_response, :new?
     current_context @group_response
     @forum = @group_response.forum
@@ -15,7 +18,11 @@ class GroupResponsesController < ApplicationController
     motion = Motion.find(params[:motion_id])
     authorize motion, :show?
     group = motion.forum.groups.find(params[:group_id])
-    @group_response = motion.group_responses.new group: group, forum: group.forum, profile: current_profile, created_by: current_user.profile, side: params[:side]
+    @group_response = motion.group_responses.new group: group,
+                                                 forum: group.forum,
+                                                 profile: current_profile,
+                                                 publisher: current_user,
+                                                 side: params[:side]
     @group_response.attributes= permit_params
     authorize @group_response, :create?
 

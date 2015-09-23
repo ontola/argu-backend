@@ -3,6 +3,7 @@ class User < ActiveRecord::Base
 
   has_many :identities, dependent: :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
+  has_many :notifications
   has_one :profile, as: :profileable, dependent: :destroy
 
   accepts_nested_attributes_for :profile
@@ -13,6 +14,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable, :timeoutable,
          :omniauthable, omniauth_providers: [:facebook].freeze
+  acts_as_follower
 
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
@@ -109,7 +111,7 @@ class User < ActiveRecord::Base
   end
 
   def sync_notification_count
-    Argu::Redis.set("user:#{self.id}:notification.count", self.profile.notifications.count)
+    Argu::Redis.set("user:#{self.id}:notification.count", self.notifications.count)
   end
 
   def update_acesss_token_counts
@@ -139,7 +141,6 @@ private
     self.profile.activities.destroy_all
     self.profile.memberships.destroy_all
     self.profile.page_memberships.destroy_all
-    self.profile.notifications.destroy_all
   end
 
   def self.koala(auth)

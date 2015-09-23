@@ -12,11 +12,11 @@ class Motion < ActiveRecord::Base
   belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
 
-  counter_culture :forum
-
   before_save :cap_title
   after_save :creator_follow
 
+  counter_culture :forum
+  acts_as_followable
   parentable :questions, :forum
   convertible :votes, :taggings, :activities
   mailable MotionFollowerCollector, :directly, :daily, :weekly
@@ -28,6 +28,8 @@ class Motion < ActiveRecord::Base
   validates :forum_id, :creator_id, presence: true
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
+
+  VOTE_OPTIONS = [:pro, :neutral, :con]
 
   scope :search, ->(q) { where('lower(title) SIMILAR TO lower(?) OR ' +
                                 'lower(content) LIKE lower(?)',
@@ -59,7 +61,9 @@ class Motion < ActiveRecord::Base
   end
 
   def creator_follow
-    self.creator.follow self
+    if self.creator.profileable.is_a?(User)
+      self.creator.profileable.follow self
+    end
   end
 
   # http://schema.org/description

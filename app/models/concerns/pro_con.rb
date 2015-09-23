@@ -1,6 +1,8 @@
 module ProCon
   extend ActiveSupport::Concern
 
+  VOTE_OPTIONS = [:pro]
+
   included do
     include ArguBase, Trashable, Parentable, HasLinks, PublicActivity::Common
 
@@ -20,11 +22,14 @@ module ProCon
     auto_strip_attributes :content
 
     acts_as_commentable
+    acts_as_followable
     parentable :motion, :forum
   end
 
   def creator_follow
-    self.creator.follow self
+    if self.creator.profileable.is_a?(User)
+      self.creator.profileable.follow self
+    end
   end
 
   def cap_title

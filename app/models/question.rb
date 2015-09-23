@@ -8,6 +8,7 @@ class Question < ActiveRecord::Base
   has_many :motions, through: :question_answers
   has_many :activities, as: :trackable, dependent: :destroy
 
+  acts_as_followable
   counter_culture :forum
   parentable :forum
   convertible :votes, :taggings, :activities
@@ -30,7 +31,9 @@ class Question < ActiveRecord::Base
   end
 
   def creator_follow
-    self.creator.follow self
+    if self.creator.profileable.is_a?(User)
+      self.creator.profileable.follow self
+    end
   end
 
   def display_name

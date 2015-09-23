@@ -1,8 +1,10 @@
 class VotesController < ApplicationController
+  before_action :check_if_registered, only: [:create]
+  before_action :check_if_member, only: [:create]
 
   # GET /model/:model_id/vote
   def show
-    @model = voteable_class.find params[voteable_param]
+    @model = get_voteable
 
     if current_profile.blank?
       authorize @model, :show?
@@ -25,45 +27,40 @@ class VotesController < ApplicationController
   end
 
   def new
-    @model = voteable_class.find params[voteable_param]
+    @model = get_voteable
     authorize @model, :show?
-    redirect_to url_for(@model)
+
+    render locals: {
+               resource: @model,
+               vote: Vote.new
+           }
   end
 
   # POST /model/:model_id/v/:for
   def create
-    @model = voteable_class.find params[voteable_param]
+    @model = get_voteable
     get_context
 
-    if current_profile.blank?
-      authorize @model, :show?
-      render_register_modal(nil)
-    else
-      authorize @model.forum, :show?
+    authorize @model.forum, :show?
 
-      @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile, forum: @model.forum)
+    @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile, forum: @model.forum)
 
-      respond_to do |format|
-        if !current_profile.member_of? @model.forum
-          format.json { render status: 403, json: { error: 'NO_MEMBERSHIP', membership_url: forum_memberships_url(@model.forum, redirect: false) } }
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @model.forum, r: request.fullpath } }
-          format.html { render template: 'forums/join', locals: { forum: @model.forum, r: request.fullpath } }
-        elsif @vote.for == params[:for]
-          format.json { render status: 304 }
-          format.js { head :not_modified }
-          format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.not_modified') }
-        elsif @vote.update(for: params[:for])
-          create_activity_with_cleanup @vote, action: :create, parameters: {for: @vote.for}, recipient: @vote.voteable, owner: current_profile, forum_id: @vote.forum.id
-          @model.reload
-          save_vote_to_stats @vote
-          format.json { render location: @vote }
-          format.js
-          format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.success') }
-        else
-          format.json { render json: @vote.errors, status: 400 }
-          format.js { head :bad_request }
-          format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.failed') }
-        end
+    respond_to do |format|
+      if @vote.for == params[:for]
+        format.json { render status: 304 }
+        format.js { head :not_modified }
+        format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.not_modified') }
+      elsif @vote.update(for: params[:for])
+        create_activity_with_cleanup @vote, action: :create, parameters: {for: @vote.for}, recipient: @vote.voteable, owner: current_profile, forum_id: @vote.forum.id
+        @model.reload
+        save_vote_to_stats @vote
+        format.json { render location: @vote }
+        format.js
+        format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.success') }
+      else
+        format.json { render json: @vote.errors, status: 400 }
+        format.js { head :bad_request }
+        format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.failed') }
       end
     end
   end
@@ -86,20 +83,67 @@ class VotesController < ApplicationController
     end
   end
 
+  def self.forum_for(url_options)
+    voteable = voteable_klass(url_options).find_by(id: url_options[voteable_key(url_options)])
+    voteable.try :forum if voteable.present?
+  end
+
+  def get_voteable
+    voteable_class.find params[voteable_param]
+  end
+
+  private
+  def check_if_member
+    resource = get_voteable
+    if current_profile.present? && !current_profile.member_of?(resource.forum)
+      options = {
+          forum: resource.forum,
+          r: redirect_url
+      }
+      if request.format == 'json'
+        options[:body] = {
+            error: 'NO_MEMBERSHIP',
+            membership_url: forum_memberships_url(get_voteable.forum, redirect: false)
+        }
+      end
+      raise Argu::NotAMemberError.new(options)
+    end
+  end
+
+  def check_if_registered
+    if current_profile.blank?
+      resource = get_voteable
+      authorize resource, :show?
+      raise Argu::NotAUserError.new(resource.forum, redirect_url)
+    end
+  end
+
+  def get_context
+    @forum = @model.forum
+  end
+
+  def query_payload(opts = {})
+    query = opts.merge({vote: {for: params[:for]}})
+    query.to_query
+  end
+
+  def redirect_url
+    redirect_url = URI.parse(url_for([:new, get_voteable, :vote, only_path: true]))
+    redirect_url.query = query_payload(confirm: true)
+    redirect_url
+  end
+
+  # noinspection RubyUnusedLocalVariable
+  def save_vote_to_stats(vote)
+    #TODO: @implement this
+  end
+
   def voteable_class
     VotesController.voteable_klass(request.path_parameters)
   end
 
-  def voteable_param
-    VotesController.voteable_key(request.path_parameters)
-  end
-
   def self.voteable_key(hash)
     hash.keys.find { |k| /_id/ =~ k }
-  end
-
-  def self.voteable_type(opts = nil)
-    voteable_key(opts)[0..-4]
   end
 
   # Note: Safe to constantize since `path_parameters` uses the routes for naming.
@@ -107,19 +151,12 @@ class VotesController < ApplicationController
     voteable_type(opts).capitalize.constantize
   end
 
-  def self.forum_for(url_options)
-    voteable = voteable_klass(url_options).find_by(id: url_options[voteable_key(url_options)])
-    voteable.try :forum if voteable.present?
+  def voteable_param
+    VotesController.voteable_key(request.path_parameters)
   end
 
-private
-  def get_context
-    @forum = @model.forum
-  end
-
-  # noinspection RubyUnusedLocalVariable
-  def save_vote_to_stats(vote)
-    #TODO: @implement this
+  def self.voteable_type(opts = nil)
+    voteable_key(opts)[0..-4]
   end
 
 end

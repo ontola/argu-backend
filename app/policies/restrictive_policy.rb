@@ -83,7 +83,7 @@ class RestrictivePolicy
   def permitted_attributes
     attributes = [:lock_version]
     attributes << :shortname if shortname?
-    attributes << :is_trashed if trash?
+    attributes << :is_trashed if !record.is_a?(Class) && trash?
     attributes
   end
 

@@ -97,7 +97,10 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_response :success
 
     post motion_vote_path(motions(:hidden_one), 'neutral')
-    assert_response :success
+    redirect_url = new_motion_vote_path(motion_id: motions(:hidden_one).id,
+                                        vote: {for: :neutral},
+                                        confirm: true)
+    assert_redirected_to new_user_session_path(r: redirect_url)
 
     post forum_memberships_path(forums(:hidden).url, r: motion_vote_path(motions(:hidden_one), 'neutral'), at: access_tokens(:token_hidden).access_token)
     assert_response :success
@@ -125,7 +128,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
                                    about: 'Something ab'
                                }}
     assert_redirected_to motion_vote_path(motions(:hidden_one), 'neutral')
-    assert_response 307
+    assert_response 302
     assert assigns(:resource)
     assert assigns(:profile)
     assert_equal 'new user', assigns(:profile).display_name

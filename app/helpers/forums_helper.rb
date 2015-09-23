@@ -74,7 +74,7 @@ module ForumsHelper
     if policy(@forum).is_member?
       if active_for_user?(:notifications, current_user)
         divided = true
-        if current_profile.following?(@forum)
+        if current_user.following?(@forum)
           items << link_item(t('forums.unfollow'), follows_path(forum_id: @forum.url), fa: 'times', data: {method: 'delete', 'skip-pjax' => 'true'})
         else
           items << link_item(t('forums.follow'), follows_path(forum_id: @forum.url), fa: 'check', rel: :nofollow, data: {method: 'post', 'skip-pjax' => 'true'})

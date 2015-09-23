@@ -3,6 +3,7 @@ FactoryGirl.define do
   factory :comment do
     association :commentable, factory: :argument
     association :profile
+    association :publisher, factory: :user
     body 'comment'
     is_trashed false
 

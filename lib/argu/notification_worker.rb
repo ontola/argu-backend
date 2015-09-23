@@ -27,12 +27,12 @@ class Argu::NotificationWorker
 
       try_pipelined(redis) do
         recipients.each do |r|
-          inserts.push "(#{r.profile.id}, #{activity.id}, '#{time}', '#{time}')"
+          inserts.push "(#{r.id}, #{activity.id}, '#{time}', '#{time}')"
           redis.incr("user:#{r.id}:notification.count") if redis.present?
         end
       end
 
-      sql = "INSERT INTO notifications (profile_id, activity_id, created_at, updated_at) VALUES #{inserts.join(', ')}"
+      sql = "INSERT INTO notifications (user_id, activity_id, created_at, updated_at) VALUES #{inserts.join(', ')}"
       ActiveRecord::Base.connection.execute(sql)
     end
   end

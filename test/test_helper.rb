@@ -5,6 +5,8 @@ require 'minitest/rails'
 require 'mocha/mini_test'
 require 'model_test_base'
 require 'capybara/rails'
+require 'wisper/minitest/assertions'
+#require 'fakeredis'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -54,7 +56,6 @@ class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
   #FactoryGirl.lint
   # Add more helper methods to be used by all tests here...
-
 
   def create_manager(forum, user = nil)
     user ||= FactoryGirl.create(:user)

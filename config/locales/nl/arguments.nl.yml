@@ -67,7 +67,9 @@ nl:
       placed_by: "%{user} - %{date}"
       none: "Geen reacties"
       comments:
-        confirm: "Bevestig reactie"
+        confirm:
+          headline: "Bevestig reactie"
+          skip: "Niet nu, laat het argument zien"
     notices:
       restored: "Het argument is teruggeplaatst."
       created: "Het argument is geplaatst."

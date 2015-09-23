@@ -7,14 +7,14 @@
 #
 motion_one_create:
   trackable: one (Motion)
-  forum_id: utrecht.id
-  owner: profile_one (Profile)
+  forum: utrecht
+  owner: profile_one
   key: motion.create
   recipient: one (Question)
 #
 question_one_create:
   trackable: one (Question)
-  forum_id: utrecht.id
-  owner: profile_one (Profile)
+  forum: utrecht
+  owner: profile_one
   key: motion.create
   recipient: utrecht (Forum)

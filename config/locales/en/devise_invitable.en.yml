@@ -17,9 +17,9 @@ en:
         submit_button: "Save password"
     mailer:
       invitation_instructions:
-        subject: 'Invitation for argue'
+        subject: 'Invitation for Argu'
         hello: 'Dear gooder,'
-        someone_invited_you: 'Congratulations! Someone has invited you to the closed beta test of Argue. You can accept this invitation by clicking the link below.'
+        someone_invited_you: 'Congratulations! Someone has invited you to the closed beta test of Argu. You can accept this invitation by clicking the link below.'
         someone_invited_you_forum: 'Congratulations! Someone has invited you to the %{forum} on Argu. You can accept this invitation by clicking the link below.'
         accept: 'Accept invitation'
         ignore: "If you're not interested, you can ignore this invitation. Your account isn't created until you open the link and enter a password."

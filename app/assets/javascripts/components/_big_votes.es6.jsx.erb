@@ -94,6 +94,18 @@ window.BigVoteButtons = React.createClass({
     }
 });
 
+window.BigVoteFormButton = React.createClass({
+
+    render () {
+        return(
+            <a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method="post" rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
+                <span className="fa fa-thumbs-up" />
+                <span className="icon-left"><%= I18n.t('motions.votes.pro') %></span>
+            </a>
+        )
+    }
+});
+
 window.BigVoteResults = React.createClass({
     voteWidth: function (side) {
         var supplemented_values = {

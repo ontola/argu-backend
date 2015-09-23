@@ -49,6 +49,35 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # TODO: Fill in
+  rescue_from Argu::NotAUserError do |exception|
+    @resource ||= User.new(r: exception.r.to_s, shortname: Shortname.new)
+    respond_to do |format|
+      format.js  do
+        render 'devise/sessions/new',
+               layout: false,
+               locals: {
+                   resource: @resource,
+                   resource_name: :user,
+                   devise_mapping: Devise.mappings[:user],
+                   r: exception.r.to_s
+               }
+      end
+      format.html do
+        redirect_to new_user_session_path(r: exception.r.to_s)
+      end
+    end
+  end
+
+  rescue_from Argu::NotAMemberError do |exception|
+    authorize exception.forum, :join?
+    respond_to do |format|
+      format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r.to_s } }
+      format.js { render partial: 'forums/join', layout: false, locals: { forum: exception.forum, r: exception.r.to_s } }
+      format.json { render json: exception.body, status: 403 }
+    end
+  end
+
   rescue_from ActiveRecord::RecordNotFound do |exception|
     @quote = (Setting.get(:quotes) || '').split(';').sample
     respond_to do |format|

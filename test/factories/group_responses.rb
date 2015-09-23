@@ -5,6 +5,6 @@ FactoryGirl.define do
     association :forum, strategy: :build
     association :motion
     association :profile, factory: :profile
-    association :created_by, factory: :profile
+    association :publisher, factory: :user
   end
 end

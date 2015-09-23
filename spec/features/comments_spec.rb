@@ -9,7 +9,7 @@ RSpec.feature 'Comments', type: :feature do
   # As guest
   ####################################
 
-    scenario 'Guest places a comment and signs up' do
+  scenario 'Guest places a comment and signs up' do
     visit argument_path(argument)
 
     comment_args = attributes_for(:comment)

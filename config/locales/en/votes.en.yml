@@ -18,3 +18,4 @@ en:
       con: "Con"
     confirm:
       headline: "Confirm vote"
+      skip: "Not now, skip voting"
