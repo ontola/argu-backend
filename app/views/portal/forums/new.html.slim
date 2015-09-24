@@ -7,6 +7,8 @@
         = f.inputs do
           = f.input :name
           = f.inputs :shortname, for: :shortname
+          li.form-helper
+            span=t('forums.shortname_helper_html')
           = f.input :page_id, as: :hidden
 
         = f.actions do

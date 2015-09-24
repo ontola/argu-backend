@@ -76,7 +76,6 @@ en:
       tag_list: "Choose themes related to your subject."
       username: "At least 4 characters. Numbers, letters and '_'. only."
       cover_photo_attribution: "If you do not posess the copyright to a photo, you can name the author and the license here. For example: CC-BY @argu_joep"
-      shortname: "You can enter a shortname for the URL here. Changing the URL can cause previously shared links to stop functioning."
       password: "At least 8 characters."
       question:
         title: "A question usually begins with 'How...' or 'What...'."

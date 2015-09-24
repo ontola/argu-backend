@@ -7,12 +7,16 @@
         section
           =semantic_form_for page do |f|
             =f.inputs do
-              =f.inputs :name, for: :profile, label: t('formtastic.labels.page.name')
+              =f.inputs :name, for: :profile
               -if policy(page).shortname?
-                =f.inputs :shortname, for: :shortname
+                =f.inputs :shortname, for: :shortname, placeholder: false
+                li.form-helper
+                  span=t('pages.shortname_helper_html')
               =f.semantic_fields_for :profile do |p|
-                =p.input :about, as: :text
+                =p.input :about, as: :text, input_html: {rows: 4}
                 =p.input :profile_photo, as: :file
+              li.form-helper
+                span=t('profiles.edit.file_limit_notice')
             p= t('pages.legal')
             =f.input :last_accepted, as: :boolean
             =f.actions do

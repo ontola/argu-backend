@@ -287,6 +287,7 @@ li.form-helper {
 .formtastic li {
   clear: both;
   position: relative;
+  list-style: none;
   //line-height: 0; //Fixes a weird margin before inline hints, but also causes a weird issue for normal helpers.
 }
 
