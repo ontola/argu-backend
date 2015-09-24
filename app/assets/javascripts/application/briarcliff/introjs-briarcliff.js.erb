@@ -33,15 +33,13 @@ $(function() {
         ]
     });
 
-    //start introJs on click
-    $(document).on("click", '.intro-trigger', function() {
-        introJs.start();
-    });
-
-    //Closes introJS when a new page is opened
-    $(document).on('pjax:click', function() {
-        introJs().exit();
-    });
+    $(document)
+            .on("click", '.intro-trigger', function () {
+                introJs.start();
+            })
+            .on('pjax:click', function () {
+                introJs().exit();
+            });
 
     //start introJs after posting an idea
     if (window.location.search.indexOf('start_motion_tour=true') > -1) {
