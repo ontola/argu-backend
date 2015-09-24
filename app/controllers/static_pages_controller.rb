@@ -23,6 +23,7 @@ class StaticPagesController < ApplicationController
 
   def new_discussion
     authorize :static_page
+    @forum = preferred_forum
   end
 
   def how_argu_works
