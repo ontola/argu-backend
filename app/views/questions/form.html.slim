@@ -11,10 +11,10 @@
           =f.inputs
             h3= t('questions.form.title_heading')
             p= t('questions.form.title_body_html')
-            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'question-t form-input-title', autofocus: :autofocus}, label: false, placeholder: placeholder_for(@question, :title, question_type)
+            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'question-t form-input-title'}, label: false, placeholder: placeholder_for(@question, :title, question_type.downcase)
             h3= t('questions.form.content_heading')
             p= t('questions.form.content_body_html')
-            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(@question, :content, question_type)
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(@question, :content, question_type.downcase)
             /=f.input :tag_list, input_html: {class: 'tag-list'}
           =f.inputs name: t('image') do
             p= t('use_a_high_res_image')

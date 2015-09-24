@@ -9,7 +9,8 @@
           h3[class="#{model.side}-t"]= model.creator.display_name
         time.info[datetime=model.created_at]= l model.created_at, format: :long
     - if model.text.present?
-      p= model.text
+      .markdown[itemprop="text"]
+        =markdown_to_html(model.text)
     ul.btns-list--subtle.btns-horizontal.btn-sticky-bottom.btn-sticky
       -if policy(model).destroy?
         li= link_to response_path(model), data: {method: :delete, remote: true, confirm: t('destroy_confirmation'), 'skip-pjax' => true}

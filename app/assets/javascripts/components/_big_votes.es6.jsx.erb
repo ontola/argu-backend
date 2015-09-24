@@ -123,7 +123,7 @@ window.BigVoteResults = React.createClass({
                         <li style={this.voteWidth('con')}><span className="btn-con">{this.props.percent.con + '%'}</span></li>
                     </ul>);
         } else {
-            results = (<p>Stem om te zien wat <b>{this.props.total_votes}</b> anderen gestemd hebben!</p>);
+            results = null;
         }
 
         return results;

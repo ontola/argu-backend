@@ -14,12 +14,11 @@ en:
       body: "Are you looking for good ideas to a burning question?"
       action: "Share your question!"
     form:
-      title_heading: "What's your question?"
+      title_heading: "Ask an open question."
       title_body_html: "<ul class='bullets'>
-                         <li>Ask an <b>open question</b> that invites people to submit their own ideas and solutions.</li>
+                         <li>A question should invite people to submit their own ideas and solutions.</li>
                        </ul>"
       content_heading: "Explain your question"
-      content_body_html: " Explain what constitutes a good solution."
       content_body_html: "<ul class='bullets'>
                             <li>Explain the <b>current situation</b>. Give background information about the problem and why it hasn't been solved yet.</li>
                             <li>Explain what constitutes a good solution.</li>

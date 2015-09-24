@@ -21,6 +21,10 @@ class StaticPagesController < ApplicationController
     authorize :static_page
   end
 
+  def new_discussion
+    authorize :static_page
+  end
+
   def how_argu_works
     authorize :static_page
   end
