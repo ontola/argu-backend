@@ -329,9 +329,11 @@ p.inline-hints {
   color: white;
   pointer-events: none;
   padding: 0;
-  position: absolute;
+  position: relative;
   bottom: 100%;
   z-index: 10;
+  margin-top: -1.3em;
+  margin-bottom: 1.3em;
   @include transition(.2s);
   @include box-shadow-intense;
 }
