@@ -95,7 +95,8 @@ class NotificationsController < ApplicationController
   end
 
   def last_notification
-    params[:lastNotification] || request.headers[:lastNotification]
+    date = params[:lastNotification].presence || request.headers[:lastNotification].presence
+    date if date != 'null' && date != 'undefined'
   end
 
   def permit_params
