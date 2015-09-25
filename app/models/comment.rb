@@ -1,10 +1,15 @@
 class Comment < ActiveRecord::Base
-  include ArguBase, Parentable, Trashable, PublicActivity::Common, Mailable
+  include ArguBase, Parentable, Trashable, PublicActivity::Common
 
   acts_as_nested_set :scope => [:commentable_id, :commentable_type]
   acts_as_followable
   parentable :commentable
-  mailable CommentFollowerCollector, :directly, :daily, :weekly
+
+  belongs_to :commentable, :polymorphic => true
+  belongs_to :profile
+  belongs_to :publisher, class_name: 'User'
+  has_many :activities, as: :trackable, dependent: :destroy
+  has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   after_validation :refresh_counter_cache, :touch_parent
   after_destroy :refresh_counter_cache
@@ -15,10 +20,6 @@ class Comment < ActiveRecord::Base
 
   attr_accessor :is_processed
 
-  belongs_to :commentable, :polymorphic => true
-  belongs_to :profile
-  belongs_to :publisher, class_name: 'User'
-  has_many :activities, as: :trackable, dependent: :destroy
 
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.

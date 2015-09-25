@@ -12,12 +12,9 @@ class MailerListener
 
   def follower_emails_for(resource, in_response_to)
     in_response_to
-        .followers
-        .map { |u| u.email if follower_inclusion_clause(u, resource) }
-        .compact
-  end
-
-  def follower_inclusion_clause(user, resource)
-    user != resource.creator && user.confirmed?
+        .subscribers
+        .where.not(id: resource.creator.id)
+        .where.not(confirmed_at: nil)
+        .pluck(:email)
   end
 end

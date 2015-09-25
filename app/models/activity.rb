@@ -15,13 +15,4 @@ class Activity < PublicActivity::Activity
   def object
     trackable_type.downcase
   end
-
-  def followers
-    follower_collector = "#{object}_follower_collector".classify.safe_constantize
-    if follower_collector
-      follower_collector.new(self).send(action)
-    else
-      []
-    end
-  end
 end

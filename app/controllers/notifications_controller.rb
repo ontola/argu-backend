@@ -68,11 +68,18 @@ class NotificationsController < ApplicationController
   end
 
   def get_notifications(since=nil)
-    policy_scope(Notification).includes(activity: :trackable).order(created_at: :desc).where(since ? ['created_at > ?', since] : nil).page params[:page]
+    policy_scope(Notification)
+        .includes(activity: :trackable)
+        .order(created_at: :desc)
+        .where(since ? ['created_at > ?', since] : nil)
+        .page params[:page]
   end
 
   def get_unread
-    policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count
+    policy_scope(Notification)
+        .where('read_at is NULL')
+        .order(created_at: :desc)
+        .count
   end
 
   def refresh
@@ -80,7 +87,10 @@ class NotificationsController < ApplicationController
       since = DateTime.parse(last_notification).to_s(:db) if last_notification
       new_available = true
       if since.present?
-        new_available = policy_scope(Notification).order(created_at: :desc).where('created_at > ?', since).count > 0
+        new_available = policy_scope(Notification)
+                            .order(created_at: :desc)
+                            .where('created_at > ?', since)
+                            .count > 0
       end
       @notifications = get_notifications(since) if new_available
       if @notifications.present?
