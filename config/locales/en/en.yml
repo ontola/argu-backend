@@ -60,6 +60,7 @@ en:
   reply: "Reply"
   report: "Report"
   clearance: "Clearance"
+  access_denied: "You're not authorized for that action. (%{action})"
   forum: "Forum"
   share: "Share"
   menu: "Menu"

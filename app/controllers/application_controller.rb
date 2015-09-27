@@ -27,12 +27,16 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     Rails.logger.error exception
+    action = exception.query.to_s[0..-2]
+    error = t("#{exception.record.try(:class_name)}.pundit.#{action}",
+              action: "#{exception.record.class}##{action}",
+              default: t('access_denied'))
     respond_to do |format|
-      format.js { render status: 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
-      format.json { render status: 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.js { render status: 403, json: { notifications: [{type: :error, message: error }] } }
+      format.json { render status: 403, json: { notifications: [{type: :error, message: error }] } }
       format.html {
         request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
-        redirect_to :back, :alert => exception.message
+        redirect_to :back, alert: error
       }
     end
   end
@@ -42,40 +46,15 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.js { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {
-        r = request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
-        @resource ||= User.new r: r.to_s
-        render 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: r, preview: exception.preview }
-      }
-    end
-  end
-
-  # TODO: Fill in
-  rescue_from Argu::NotAUserError do |exception|
-    @resource ||= User.new(r: exception.r, shortname: Shortname.new)
-    respond_to do |format|
-      format.js  do
+        @resource ||= User.new r: exception.r
         render 'devise/sessions/new',
-               status: 401,
-               layout: false,
                locals: {
                    resource: @resource,
                    resource_name: :user,
                    devise_mapping: Devise.mappings[:user],
-                   r: exception.r
+                   r: exception.r, preview: exception.preview
                }
-      end
-      format.html do
-        redirect_to new_user_session_path(r: exception.r)
-      end
-    end
-  end
-
-  rescue_from Argu::NotAMemberError do |exception|
-    authorize exception.forum, :join?
-    respond_to do |format|
-      format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r } }
-      format.js { render partial: 'forums/join', layout: false, locals: { forum: exception.forum, r: exception.r } }
-      format.json { render json: exception.body, status: 403 }
+      }
     end
   end
 
@@ -191,6 +170,7 @@ class ApplicationController < ActionController::Base
       format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
     end
   end
+  deprecate :render_register_modal
 
   def rescue_stale
     respond_to do |format|

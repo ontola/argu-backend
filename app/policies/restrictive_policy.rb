@@ -66,14 +66,6 @@ class RestrictivePolicy
   def initialize(context, record)
     @context = context
     @record = record
-
-    # This can't only check for access to a record when the platform is public,
-    # since it would require the user to be logged in to see anything (requirements
-    # decrease security here, so it is absolutely necessary to authorize properly
-    # in all child classes)
-    unless platform_open? || within_user_cap? || has_access_to_record?
-      raise Argu::NotLoggedInError.new(nil, record), 'must be logged in'
-    end
   end
 
   delegate :user, to: :context
@@ -87,11 +79,9 @@ class RestrictivePolicy
     attributes
   end
 
-
-  def self.assert!(assertion)
-    raise Pundit::NotAuthorizedError unless assertion
+  def assert!(assertion, query = nil)
+    raise Pundit::NotAuthorizedError.new(record: record, query: query) unless assertion
   end
-  delegate :assert!, to: :class
 
   def change_owner?
     rule is_owner?, staff?

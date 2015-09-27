@@ -60,6 +60,7 @@ nl:
   reply: "Reageer"
   report: "Rapporteer"
   clearance: "Bevoegdheid"
+  access_denied: "Je bent niet bevoegd om deze actie uit te voeren.  (%{action})"
   forum: "Forum"
   share: "Delen"
   menu: "Menu"

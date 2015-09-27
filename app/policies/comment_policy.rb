@@ -64,7 +64,7 @@ class CommentPolicy < RestrictivePolicy
   private
 
   def assert_siblings!
-    assert! record.commentable == record.parent.commentable
+    assert! record.commentable == record.parent.commentable, :siblings?
   end
 
   def forum_policy

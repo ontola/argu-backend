@@ -1,4 +1,4 @@
-class GroupResponsesController < ApplicationController
+class GroupResponsesController < AuthenticatedController
 
   def new
     group = Group.find params[:group_id]
@@ -69,7 +69,11 @@ class GroupResponsesController < ApplicationController
   end
 
 private
-    def permit_params
-      params.require(:group_response).permit(*policy(@group_response || GroupResponse).permitted_attributes)
-    end
+  def tenant_by_param
+    Motion.find(params[:motion_id]).forum
+  end
+
+  def permit_params
+    params.require(:group_response).permit(*policy(@group_response || GroupResponse).permitted_attributes)
+  end
 end

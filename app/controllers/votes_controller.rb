@@ -1,6 +1,6 @@
-class VotesController < ApplicationController
-  before_action :check_if_registered, only: [:create]
-  before_action :check_if_member, only: [:create]
+class VotesController < AuthenticatedController
+  skip_before_action :check_if_registered, except: :create
+  skip_before_action :check_if_member, except: :create
 
   # GET /model/:model_id/vote
   def show

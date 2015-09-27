@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   end
 
   def edit
-    get_user_or_redirect
+    get_user_or_redirect(settings_path)
     authorize @user
 
     if @user.present?
@@ -138,11 +138,12 @@ class UsersController < ApplicationController
   end
 
   private
-  def get_user_or_redirect
+  def get_user_or_redirect(redirect = nil)
     @user = current_user
     if current_user.blank?
       flash[:error] = t('devise.failure.unauthenticated')
-      raise Argu::NotLoggedInError.new(t('devise.failure.unauthenticated'))
+      raise Argu::NotLoggedInError.new(t('devise.failure.unauthenticated'),
+                                       redirect: redirect)
     end
   end
 
