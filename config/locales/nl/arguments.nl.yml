@@ -81,6 +81,8 @@ nl:
           attributes:
             title:
               blank: "Je moet een titel voor jouw argument opgeven."
+            forum:
+              different: "The argument and it's motion must belong to the same forum"
     attributes:
       argument:
         title: "Titel"

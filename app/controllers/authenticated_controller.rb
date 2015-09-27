@@ -57,7 +57,7 @@ private
   end
 
   def authenticated_resource!
-    if params[:action] == 'new'
+    if params[:action] == 'new' || params[:action] == 'create'
       controller_name
           .classify
           .constantize
@@ -72,7 +72,7 @@ private
 
   def authenticated_context
     if authenticated_resource!.present?
-      authenticated_resource.forum
+      authenticated_resource!.forum
     else
       tenant_by_param
     end

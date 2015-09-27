@@ -101,3 +101,11 @@ class ActionDispatch::IntegrationTest
     end
   end
 end
+
+class FactoryGirl::Evaluator
+  def passed_in?(name)
+    # https://groups.google.com/forum/?fromgroups#!searchin/factory_girl/stack$20level/factory_girl/MyYKwbq76d0/JrKJZCgaXMIJ
+    # Also check that we didn't pass in nil.
+    __override_names__.include?(name) && send(name)
+  end
+end

@@ -13,11 +13,11 @@ module ProCon
     belongs_to :forum
 
     before_save :cap_title
-    after_create :creator_follow
+    after_create :creator_follow, :update_vote_counters
 
     validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
-    validates :creator_id, :motion_id, :forum_id, presence: true
+    validates :creator, :motion, :forum, presence: true
     auto_strip_attributes :title, squish: true
     auto_strip_attributes :content
 

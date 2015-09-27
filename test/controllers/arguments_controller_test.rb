@@ -72,12 +72,13 @@ class ArgumentsControllerTest < ActionController::TestCase
       end
     end
 
-    assert assigns(:argument)
-    assert assigns(:argument).motion == motions(:one)
-    assert assigns(:argument).title == 'Test argument pro', "title isn't assigned"
-    assert assigns(:argument).content == 'Test argument pro-tents', "content isn't assigned"
-    assert assigns(:argument).pro === true, "isn't assigned pro attribute"
-    assert_redirected_to assigns(:argument).motion
+    argument = assigns(:ca).resource
+    assert argument
+    assert argument.motion == motions(:one)
+    assert argument.title == 'Test argument pro', "title isn't assigned"
+    assert argument.content == 'Test argument pro-tents', "content isn't assigned"
+    assert argument.pro === true, "isn't assigned pro attribute"
+    assert_redirected_to argument.motion
   end
 
   test 'should post create con' do
@@ -89,12 +90,13 @@ class ArgumentsControllerTest < ActionController::TestCase
       end
     end
 
-    assert assigns(:argument)
-    assert assigns(:argument).motion == motions(:one)
-    assert assigns(:argument).title == 'Test argument con', "title isn't assigned"
-    assert assigns(:argument).content == 'Test argument con-tents', "content isn't assigned"
-    assert assigns(:argument).pro === false, "isn't assigned pro attribute"
-    assert_redirected_to assigns(:argument).motion
+    argument = assigns(:ca).resource
+    assert argument
+    assert argument.motion == motions(:one)
+    assert argument.title == 'Test argument con', "title isn't assigned"
+    assert argument.content == 'Test argument con-tents', "content isn't assigned"
+    assert argument.pro === false, "isn't assigned pro attribute"
+    assert_redirected_to argument.motion
   end
 
   test 'should post create pro without auto_vote' do

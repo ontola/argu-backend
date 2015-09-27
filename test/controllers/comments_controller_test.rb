@@ -152,7 +152,8 @@ class CommentsControllerTest < ActionController::TestCase
   ####################################
   test 'should destroy comments' do
     comment = FactoryGirl.create(:comment,
-                                 commentable: FactoryGirl.create(:argument),
+                                 commentable: FactoryGirl.create(:argument,
+                                                                 forum: holland),
                                  profile: user.profile)
     FactoryGirl.create_list(:notification, 40,
                             activity: Activity.find_by(trackable: comment))

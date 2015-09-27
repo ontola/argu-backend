@@ -25,7 +25,7 @@ class Motion < ActiveRecord::Base
 
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 110 }
-  validates :forum_id, :creator_id, presence: true
+  validates :forum, :creator, presence: true
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
 

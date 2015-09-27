@@ -11,7 +11,7 @@ class Comment < ActiveRecord::Base
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
-  after_validation :refresh_counter_cache, :touch_parent
+  after_save :refresh_counter_cache, :touch_parent, if: Proc.new { |c| c.commentable.persisted? }
   after_destroy :refresh_counter_cache
 
   validates_presence_of :profile

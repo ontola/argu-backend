@@ -10,6 +10,7 @@ class Profile < ActiveRecord::Base
 
   has_many :access_tokens, dependent: :destroy
   has_many :activities, as: :owner, dependent: :destroy
+  has_many :arguments, inverse_of: :creator, foreign_key: 'creator_id'
   has_many :comments, dependent: :destroy
   has_many :forums, through: :memberships
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy

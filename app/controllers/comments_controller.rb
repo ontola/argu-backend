@@ -2,7 +2,7 @@ class CommentsController < AuthenticatedController
 
   def new
     @commentable = commentable_class.find params[commentable_param]
-    set_forum(@commentable)
+    set_tenant(@commentable)
     @comment = @commentable.comment_threads.new(new_comment_params)
     authorize @comment, :create?
 
@@ -15,7 +15,7 @@ class CommentsController < AuthenticatedController
 
   def show
     @comment = Comment.find params[:id]
-    set_forum(@comment)
+    set_tenant(@comment)
     authorize @comment, :show?
 
     respond_to do |format|
@@ -26,7 +26,7 @@ class CommentsController < AuthenticatedController
   def edit
     @commentable = commentable_class.find params[commentable_param]
     @comment = @commentable.comment_threads.find params[:id]
-    set_forum(@comment)
+    set_tenant(@comment)
     current_context @comment
     authorize @comment, :edit?
 
@@ -51,7 +51,7 @@ class CommentsController < AuthenticatedController
   # POST /resource/1/comments
   def create
     resource = authenticated_resource!
-    set_forum(resource)
+    set_tenant(resource)
     @cc = CreateComment.new current_profile,
                            {
                                commentable: resource,
@@ -74,7 +74,7 @@ class CommentsController < AuthenticatedController
   def update
     @commentable = commentable_class.find params[commentable_param]
     @comment = @commentable.comment_threads.find params[:id]
-    set_forum(@comment)
+    set_tenant(@comment)
     authorize @comment, :edit?
 
     respond_to do |format|
@@ -101,7 +101,7 @@ class CommentsController < AuthenticatedController
   # DELETE /arguments/1/comments/1
   def destroy
     @comment = Comment.find_by_id params[:id]
-    set_forum(@comment)
+    set_tenant(@comment)
     resource = @comment.commentable
     if params[:wipe] == 'true'
       authorize @comment
@@ -170,7 +170,7 @@ private
     end
   end
 
-  def set_forum(item)
+  def set_tenant(item)
     @forum = item.forum
   end
 

@@ -59,32 +59,33 @@ class ArgumentsController < AuthenticatedController
   # POST /arguments
   # POST /arguments.json
   def create
-    @forum = Forum.find_via_shortname params[:forum_id]
-    @motion = Motion.find params[:argument][:motion_id]
-    saved = false
-    Argument.transaction do
-      @argument = @forum.arguments.new motion: @motion
-      @argument.attributes= argument_params
-      @argument.creator = current_profile
-      authorize @argument, :create?
-      if params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile
-        @argument.save
-        @argument.votes.pro.build(forum: @forum, voter: current_profile)
-      end
-      saved = @argument.save
-    end
-
-    respond_to do |format|
-      if saved
-        create_activity @argument, action: :create, recipient: @argument.motion, owner: current_profile, forum_id: @argument.forum.id
-        argument = argument_params[:motion_id].blank? ? @argument : Motion.find_by_id(argument_params[:motion_id])
-        format.html { redirect_to argument, notice: 'Argument was successfully created.' }
-        format.json { render json: @argument, status: :created, location: @argument }
-      else
-        format.html { render action: 'form', pro: argument_params[:pro], motion_id: argument_params[:motion_id] }
-        format.json { render json: @argument.errors, status: :unprocessable_entity }
+    set_tenant(authenticated_resource!)
+    @ca = CreateArgument.new current_profile,
+                             {
+                                 forum: @forum,
+                                 publisher: current_user
+                             }.merge(argument_params),
+                             {
+                               auto_vote: params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile
+                             }
+    authorize @ca.resource, :create?
+    @ca.subscribe(ActivityListener.new)
+    @ca.subscribe(MailerListener.new)
+    @ca.on(:create_argument_successful) do |argument|
+      respond_to do |format|
+        argument = argument_params[:motion_id].blank? ? argument : argument.motion
+        format.html { redirect_to argument, notice: t('arguments.notices.created') }
+        format.json { render json: argument, status: :created, location: argument }
       end
     end
+    @ca.on(:create_argument_failed) do |argument|
+      respond_to do |format|
+        format.html { render action: 'form',
+                             locals: {argument: argument} }
+        format.json { render json: argument.errors, status: :unprocessable_entity }
+      end
+    end
+    @ca.commit
   end
 
   # PUT /arguments/1
@@ -129,6 +130,10 @@ private
 
   def self.forum_for(url_options)
     Argument.find_by(url_options[:argument_id] || url_options[:id]).try(:forum)
+  end
+
+  def set_tenant(item)
+    @forum = item.forum
   end
 
 end
