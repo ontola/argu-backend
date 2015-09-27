@@ -21,9 +21,7 @@ class MotionsControllerTest < ActionController::TestCase
   test 'should not get edit when not logged in' do
     get :edit, id: motions(:one)
 
-    assert_redirected_to root_path
-    assert assigns(:motion)
-    assert assigns(:forum)
+    assert_redirected_to new_user_session_path(r: edit_motion_path(motions(:one)))
   end
 
   ####################################

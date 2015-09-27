@@ -63,9 +63,7 @@ Argu.ui = {
 
     handleAjaxCalls: function (e, xhr, options) {
         if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201) {
-            if (xhr.status === 400) {
-                new Argu.Alert('Er ging iets fout in het verzoek.', 'alert', true);
-            } else if (xhr.status === 401) {
+            if (xhr.status === 401) {
                 new Argu.Alert('Je moet ingelogd zijn voor deze actie.', 'alert', true);
             } else if (xhr.status === 404) {
                 new Argu.Alert('Het item is niet gevonden, probeer de pagina te verversen.', 'alert', true);

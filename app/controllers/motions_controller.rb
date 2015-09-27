@@ -1,4 +1,4 @@
-class MotionsController < ApplicationController
+class MotionsController < AuthenticatedController
   before_action :get_context, only: [:index, :new, :create]
 
   def index
@@ -48,22 +48,12 @@ class MotionsController < ApplicationController
       question = Question.find(params[:question_id])
       @motion.questions << question if @motion.forum_id == question.forum_id
     end
-    if current_profile.blank?
-      authorize @motion, :show?
-      render_register_modal(nil)
-    else
-      authorize @motion, @motion.questions.presence ? :new? : :new_without_question?
-      current_context @motion
-      respond_to do |format|
-        if current_profile.member_of? @motion.forum
-          format.js { render js: "window.location = #{request.url.to_json}" }
-          format.html { render 'form' }
-          format.json { render json: @motion }
-        else
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath} }
-          format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath, no_close: true } }
-        end
-      end
+    authorize @motion, @motion.questions.presence ? :new? : :new_without_question?
+    current_context @motion
+    respond_to do |format|
+      format.js { render js: "window.location = #{request.url.to_json}" }
+      format.html { render 'form' }
+      format.json { render json: @motion }
     end
   end
 
@@ -202,10 +192,6 @@ class MotionsController < ApplicationController
   end
 
 private
-  def permit_params
-    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
-  end
-
   def self.forum_for(url_options)
     Motion.find_by(url_options[:motion_id] || url_options[:id]).try(:forum)
   end
@@ -214,6 +200,10 @@ private
     if params[:question_id].present? || defined?(params[:motion][:question_id]) && params[:motion][:question_id].present?
       @question = Question.find(params[:question_id] || params[:motion][:question_id])
     end
-    @forum = Forum.find_via_shortname(params[:forum_id]) if params[:forum_id].present?
+    @forum = authenticated_context
+  end
+
+  def permit_params
+    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
   end
 end

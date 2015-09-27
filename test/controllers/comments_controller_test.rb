@@ -128,16 +128,23 @@ class CommentsControllerTest < ActionController::TestCase
   # As owner
   ####################################
   test 'should not delete wipe own comment twice affecting counter caches' do
-    sign_in users(:user_thom)
+    sign_in users(:user_utrecht_owner)
 
     assert_equal 1, comments(:one).commentable.comments_count
 
+    redirect_path = argument_url(arguments(:one), anchor: comments(:one).id)
     assert_difference('comments(:one).commentable.reload.comments_count', -1) do
-      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one), wipe: 'true'
-      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one), wipe: 'true'
+      delete :destroy,
+             argument_id: comments(:one).commentable.id,
+             id: comments(:one),
+             wipe: 'true'
+      assert_redirected_to redirect_path
+      delete :destroy,
+             argument_id: comments(:one).commentable.id,
+             id: comments(:one),
+             wipe: 'true'
+      assert_redirected_to redirect_path
     end
-
-    assert_redirected_to argument_url(arguments(:one), anchor: comments(:one).id)
   end
 
   ####################################
@@ -145,9 +152,10 @@ class CommentsControllerTest < ActionController::TestCase
   ####################################
   test 'should destroy comments' do
     comment = FactoryGirl.create(:comment,
-                       commentable: FactoryGirl.create(:argument),
-                       profile: user.profile)
-    FactoryGirl.create_list(:notification, 40, activity: Activity.find_by(trackable: comment))
+                                 commentable: FactoryGirl.create(:argument),
+                                 profile: user.profile)
+    FactoryGirl.create_list(:notification, 40,
+                            activity: Activity.find_by(trackable: comment))
     sign_in users(:user_thom)
 
     delete :destroy,

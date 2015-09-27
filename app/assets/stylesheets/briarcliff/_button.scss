@@ -386,7 +386,7 @@
     @include button($color: $gre);
 
   }
-  .btn-neu, .btn-neutral {
+  .btn-neutral {
     background-color: $g3;
     @include button($color: $g3);
 

@@ -46,11 +46,11 @@ class VotesController < ApplicationController
     @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile, forum: @model.forum)
 
     respond_to do |format|
-      if @vote.for == params[:for]
+      if @vote.for == for_param
         format.json { render status: 304 }
         format.js { head :not_modified }
         format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.not_modified') }
-      elsif @vote.update(for: params[:for])
+      elsif @vote.update(for: for_param)
         create_activity_with_cleanup @vote, action: :create, parameters: {for: @vote.for}, recipient: @vote.voteable, owner: current_profile, forum_id: @vote.forum.id
         @model.reload
         save_vote_to_stats @vote
@@ -118,12 +118,21 @@ class VotesController < ApplicationController
     end
   end
 
+  def for_param
+    if params[:for].present?
+      warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
+      params[:for]
+    else
+      params[:vote][:for]
+    end
+  end
+
   def get_context
     @forum = @model.forum
   end
 
   def query_payload(opts = {})
-    query = opts.merge({vote: {for: params[:for]}})
+    query = opts.merge({vote: {for: for_param}})
     query.to_query
   end
 

@@ -1,11 +1,9 @@
-class CommentsController < ApplicationController
-  before_action :check_if_registered, only: [:create]
-  before_action :check_if_member, only: [:create]
+class CommentsController < AuthenticatedController
 
   def new
     @commentable = commentable_class.find params[commentable_param]
     set_forum(@commentable)
-    @comment = @commentable.comment_threads.new(comment_params_relaxed)
+    @comment = @commentable.comment_threads.new(new_comment_params)
     authorize @comment, :create?
 
     render locals: {
@@ -52,7 +50,7 @@ class CommentsController < ApplicationController
 
   # POST /resource/1/comments
   def create
-    resource = get_commentable
+    resource = authenticated_resource!
     set_forum(resource)
     @cc = CreateComment.new current_profile,
                            {
@@ -119,31 +117,24 @@ class CommentsController < ApplicationController
   end
 
 private
-  def check_if_member
-    resource = get_commentable
-    if current_profile.present? && !current_profile.member_of?(resource.forum)
-      raise Argu::NotAMemberError.new(forum: resource.forum, r: redirect_url)
+  def authenticated_resource!
+    resource, id = request.path.split('/')[1,2]
+    # noinspection RubyCaseWithoutElseBlockInspection
+    resource = case resource
+      when 'a' then Argument
     end
-  end
-
-  def check_if_registered
-    if current_profile.blank?
-      resource = get_commentable
-      authorize resource, :show?
-      raise Argu::NotAUserError.new(resource.forum, redirect_url)
-    end
+    resource.find(id)
   end
 
   def comment_body
+    if Rails.env.development?
+      raise StandardError('should always be a hash') if params[:comment].is_a?(String)
+    end
     params[:comment].is_a?(String) ? params[:comment] : params[:comment][:body]
   end
 
   def comment_params
     params.require(:comment).permit(*policy(@comment || Comment).permitted_attributes)
-  end
-
-  def comment_params_relaxed
-    params.permit(:comment).permit(*policy(@comment || Comment).permitted_attributes)
   end
 
   def commentable_param
@@ -159,13 +150,8 @@ private
     commentable_type.capitalize.constantize
   end
 
-  def get_commentable
-    resource, id = request.path.split('/')[1,2]
-    # noinspection RubyCaseWithoutElseBlockInspection
-    resource = case resource
-      when 'a' then Argument
-    end
-    resource.find(id)
+  def new_comment_params
+    params[:comment].present? ? comment_params : nil
   end
 
   def query_payload(opts = {})
@@ -175,9 +161,13 @@ private
   end
 
   def redirect_url
-    redirect_url = URI.parse(new_argument_comment_path(argument_id: params[:argument_id]))
-    redirect_url.query = query_payload(confirm: true)
-    redirect_url
+    if params[:action] == 'create'
+      redirect_url = URI.parse(new_argument_comment_path(argument_id: params[:argument_id]))
+      redirect_url.query = query_payload(confirm: true)
+      redirect_url
+    else
+      super
+    end
   end
 
   def set_forum(item)

@@ -17,7 +17,7 @@ nl:
       count: "aantal ideeën"
     votes:
       pro: "Ik ben voor"
-      neu: "Geen van beiden"
+      neutral: "Geen van beiden"
       con: "Ik ben tegen"
       show: "Laat stemresultaten zien"
     preview:

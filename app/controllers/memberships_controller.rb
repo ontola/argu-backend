@@ -1,26 +1,22 @@
-class MembershipsController < ApplicationController
+class MembershipsController < AuthenticatedController
+  skip_before_action :check_if_member, only: %i(create)
 
   def create
     forum = Forum.find_via_shortname params[:forum_id]
     authorize forum, :show?
-    if current_profile.blank?
-      render_register_modal(forum_path(forum.url))
-    else
-      @membership = Membership.new profile: current_profile, forum: forum, role: (permit_params[:role] || Membership.roles[:member])
-      authorize @membership, :create?
 
-      should_307 = request.fullpath.match(/\/v(\?|\/)|\/c(\?|\/)/) || (params[:r].presence && params[:r].match(/\/v(\?|\/)|\/c(\?|\/)/))
-      created = params[:redirect] == 'false' ? 201 : nil
-      if @membership.save
-        if created
-          head 201
-        else
-          redirect_to params[:r].presence || @membership.forum,
-                      status: should_307 ? 307 : 302
-        end
+    @membership = Membership.new profile: current_profile, forum: forum, role: (permit_params[:role] || Membership.roles[:member])
+    authorize @membership, :create?
+
+    created = params[:redirect] == 'false' ? 201 : nil
+    if @membership.save
+      if created
+        head 201
       else
-        render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
+        redirect_to params[:r].presence || @membership.forum
       end
+    else
+      render notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
     end
   end
 
@@ -55,7 +51,19 @@ class MembershipsController < ApplicationController
   end
 
 private
+  def authenticated_resource
+    if params[:action] == 'create'
+      authenticated_context or super
+    else
+      super
+    end
+  end
+
   def permit_params
     params.permit :forum_id, :role, :r
+  end
+
+  def redirect_url
+    params[:action] == 'create' ? forum_path(params[:forum_id]) : super
   end
 end

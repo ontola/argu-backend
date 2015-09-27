@@ -9,16 +9,14 @@ RSpec.describe ApplicationController, type: :controller do
   let(:user) { create_member(holland) }
 
   describe '#create_activity' do
-    it 'creates two activities' do
-      assert_equal 0, Argu::NotificationWorker.jobs.size
-      assert_equal 0, Argu::EmailNotificationWorker.jobs.size
-      controller.create_activity(motion,
-                                 action: :create,
-                                 recipient: holland,
-                                 owner: user.profile,
-                                 forum: holland)
-      assert_equal 1, Argu::NotificationWorker.jobs.size
-      assert_equal 1, Argu::EmailNotificationWorker.jobs.size
+    it 'creates an activity' do
+      expect do
+        controller.create_activity(motion,
+                                   action: :create,
+                                   recipient: holland,
+                                   owner: user.profile,
+                                   forum: holland)
+      end.to change { Activity.count }
     end
   end
 

@@ -103,7 +103,7 @@ class Profile < ActiveRecord::Base
   def preferred_forum
     last_forum = Argu::Redis.get("profile:#{self.id}:last_forum")
 
-    (Forum.find(last_forum) if last_forum.present?) || self.memberships.first.try(:forum) || Forum.first_public
+    (Forum.find_by(id: last_forum) if last_forum.present?) || self.memberships.first.try(:forum) || Forum.first_public
   end
 
   def requires_name?
@@ -112,6 +112,10 @@ class Profile < ActiveRecord::Base
 
   def member_of?(_forum)
     _forum.present? && self.memberships.where(forum_id: _forum.is_a?(Forum) ? _forum.id : _forum).present?
+  end
+
+  def owner_of(forum)
+    self == forum.page.owner
   end
 
   def unfreeze

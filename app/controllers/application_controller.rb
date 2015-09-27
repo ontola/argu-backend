@@ -51,20 +51,21 @@ class ApplicationController < ActionController::Base
 
   # TODO: Fill in
   rescue_from Argu::NotAUserError do |exception|
-    @resource ||= User.new(r: exception.r.to_s, shortname: Shortname.new)
+    @resource ||= User.new(r: exception.r, shortname: Shortname.new)
     respond_to do |format|
       format.js  do
         render 'devise/sessions/new',
+               status: 401,
                layout: false,
                locals: {
                    resource: @resource,
                    resource_name: :user,
                    devise_mapping: Devise.mappings[:user],
-                   r: exception.r.to_s
+                   r: exception.r
                }
       end
       format.html do
-        redirect_to new_user_session_path(r: exception.r.to_s)
+        redirect_to new_user_session_path(r: exception.r)
       end
     end
   end
@@ -72,8 +73,8 @@ class ApplicationController < ActionController::Base
   rescue_from Argu::NotAMemberError do |exception|
     authorize exception.forum, :join?
     respond_to do |format|
-      format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r.to_s } }
-      format.js { render partial: 'forums/join', layout: false, locals: { forum: exception.forum, r: exception.r.to_s } }
+      format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r } }
+      format.js { render partial: 'forums/join', layout: false, locals: { forum: exception.forum, r: exception.r } }
       format.json { render json: exception.body, status: 403 }
     end
   end
@@ -111,9 +112,8 @@ class ApplicationController < ActionController::Base
   # @param [Hash] params options for {PublicActivity::Common#create_activity}
   def create_activity(model, params)
     a = model.create_activity params
-    Argu::NotificationWorker.perform_async(a.id)
-    Argu::EmailNotificationWorker.perform_async(a.id)
   end
+  deprecate :create_activity
 
   def current_scope
     @current_scope ||= (current_context.context_scope(current_profile) || current_context)

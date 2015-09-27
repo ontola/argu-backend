@@ -1,4 +1,4 @@
-class QuestionsController < ApplicationController
+class QuestionsController < AuthenticatedController
 
   def show
     @question = Question.find(params[:id])
@@ -7,7 +7,7 @@ class QuestionsController < ApplicationController
     current_context @question
     @question_answers = @question.question_answers
                             .where(motion_id: policy_scope(@question.motions.trashed(show_trashed?))
-                                                  .order(updated_at: :desc).pluck(:id))
+                                              .order(updated_at: :desc).pluck(:id))
 
     respond_to do |format|
       format.html # show.html.erb
@@ -20,22 +20,13 @@ class QuestionsController < ApplicationController
     @forum = Forum.find_via_shortname params[:forum_id]
     @question = Question.new params[:question]
     @question.forum= @forum
-    if current_profile.blank?
-      authorize @question, :show?
-      render_register_modal(nil)
-    else
-      authorize @question
-      current_context @question
-      respond_to do |format|
-        if !current_profile.member_of? @question.forum
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @question.forum, r: request.fullpath } }
-          format.html { render template: 'forums/join', locals: { forum: @question.forum, r: request.fullpath } }
-        else
-          format.js { render js: "window.location = #{request.url.to_json}" }
-          format.html { render 'form' }
-          format.json { render json: @question }
-        end
-      end
+
+    authorize @question
+    current_context @question
+    respond_to do |format|
+      format.js { render js: "window.location = #{request.url.to_json}" }
+      format.html { render 'form' }
+      format.json { render json: @question }
     end
   end
 

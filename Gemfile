@@ -127,6 +127,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'brakeman'
   gem 'wisper-minitest', require: false
+  gem 'wisper-rspec', require: false
   #gem 'fakeredis', require: false
 end
 

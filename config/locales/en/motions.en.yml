@@ -17,7 +17,7 @@ en:
       count: "number of ideas"
     votes:
       pro: "Agree"
-      neu: "Neutral"
+      neutral: "Neutral"
       con: "Disagree"
       show: "Show vote results"
     preview:
