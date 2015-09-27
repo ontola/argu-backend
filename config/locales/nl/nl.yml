@@ -242,7 +242,7 @@ nl:
       description: ''
     motion:
       name: 'Bekijk argumenten, discussieer mee en stem!'
-      description: 'Alle voordelen en nadelen van %{title} in één overzicht. Denk mee en geef jouw mening!'
+      description: 'Alle voordelen en nadelen van %{title} in één overzicht. Denk mee en geef jouw mening over deze petitie!'
     page:
       name: 'Bekijk alle standpunten'
       description: 'Alle standpunten van %{title} in één overzicht.'
