@@ -3,6 +3,9 @@ include ActionView::Helpers::NumberHelper
 class Motion < ActiveRecord::Base
   include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common
 
+  belongs_to :forum, inverse_of: :motions
+  belongs_to :creator, class_name: 'Profile'
+  belongs_to :publisher, class_name: 'User'
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :votes, as: :voteable, :dependent => :destroy
   has_many :question_answers, inverse_of: :motion, dependent: :destroy
@@ -10,8 +13,6 @@ class Motion < ActiveRecord::Base
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :group_responses
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
-  belongs_to :forum, inverse_of: :motions
-  belongs_to :creator, class_name: 'Profile'
 
   before_save :cap_title
   after_save :creator_follow
@@ -26,6 +27,7 @@ class Motion < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 110 }
   validates :forum, :creator, presence: true
+  validate :assert_tenant
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
 
@@ -35,6 +37,12 @@ class Motion < ActiveRecord::Base
                                 'lower(content) LIKE lower(?)',
                                 "%#{q}%",
                                 "%#{q}%") }
+
+  def assert_tenant
+    if self.questions.map { |q| q.forum }.uniq.length > 1
+      errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))
+    end
+  end
 
   def as_json(options = {})
     super(options.merge(

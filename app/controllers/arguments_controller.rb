@@ -61,10 +61,10 @@ class ArgumentsController < AuthenticatedController
   def create
     set_tenant(authenticated_resource!)
     @ca = CreateArgument.new current_profile,
-                             {
+                             argument_params.merge({
                                  forum: @forum,
                                  publisher: current_user
-                             }.merge(argument_params),
+                             }),
                              {
                                auto_vote: params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile
                              }

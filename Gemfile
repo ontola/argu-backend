@@ -128,7 +128,8 @@ group :development, :test do
   gem 'brakeman'
   gem 'wisper-minitest', require: false
   gem 'wisper-rspec', require: false
-  #gem 'fakeredis', require: false
+  gem 'fakeredis', require: false
+  gem 'simplecov', require: false
 end
 
 group :production, :staging do

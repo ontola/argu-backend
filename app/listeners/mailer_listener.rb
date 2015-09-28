@@ -10,6 +10,17 @@ class MailerListener
     end
   end
 
+  def create_motion_successful(motion)
+    parent = motion.questions.length == 1 ? motion.questions.first : motion.forum
+    recipients = follower_emails_for(motion, parent)
+    # TODO: single out the creator and send a different mail
+    if recipients.present?
+      UserMailer
+          .user_created_motion(motion, recipients)
+          .deliver_now
+    end
+  end
+
   def follower_emails_for(resource, in_response_to)
     in_response_to
         .subscribers

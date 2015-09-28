@@ -28,6 +28,9 @@ user3_amsterdam:
 user_no_create_without_question:
   profile: :profile_one
   forum: :no_create_without_question
+user_no_create_without_question:
+  profile: :profile_two
+  forum: :no_create_without_question
 page_utrecht:
   profile: profile_page_page
   forum: :utrecht

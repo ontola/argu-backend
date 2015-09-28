@@ -63,53 +63,52 @@ class MotionsControllerTest < ActionController::TestCase
   test 'should post create' do
     sign_in users(:user)
 
-    assert_difference 'Motion.count' do
+    assert_differences create_changes_array do
       post :create, forum_id: :utrecht, motion: {title: 'Motion', content: 'Contents'}
     end
-    assert_not_nil assigns(:motion)
+    assert_not_nil assigns(:cm).resource
     assert_not_nil assigns(:forum)
-    assert_redirected_to motion_path(assigns(:motion))
+    assert_redirected_to motion_path(assigns(:cm).resource)
   end
 
   test 'should show tutorial only on first post create' do
     sign_in user
     FactoryGirl.create(:membership, profile: user.profile, forum: holland)
 
-    assert_difference 'Motion.count' do
+    assert_differences create_changes_array do
       post :create, forum_id: holland, motion: {title: 'Motion', content: 'Contents'}
     end
-    assert_not_nil assigns(:motion)
+    assert_not_nil assigns(:cm).resource
     assert_not_nil assigns(:forum)
-    assert_redirected_to motion_path(assigns(:motion), start_motion_tour: true)
+    assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
 
-    assert_difference 'Motion.count' do
+    assert_differences create_changes_array do
       post :create, forum_id: holland, motion: {title: 'Motion2', content: 'Contents'}
     end
-    assert_not_nil assigns(:motion)
+    assert_not_nil assigns(:cm).resource
     assert_not_nil assigns(:forum)
-    assert_redirected_to motion_path(assigns(:motion))
+    assert_redirected_to motion_path(assigns(:cm).resource)
   end
 
   test 'should not post create without create_without_question' do
     sign_in users(:user)
 
-    assert_difference 'Motion.count', 0 do
+    assert_differences [['Motion.count', 0],
+                        ['Activity.count', 0]] do
       post :create, forum_id: :no_create_without_question,
            motion: {
                title: 'Motion',
                content: 'Contents'
            }
-      puts ''
     end
-    assert_not_nil assigns(:motion)
-    assert_not assigns(:motion).persisted?
-    assert_redirected_to root_path
+    assert_nil assigns(:cm)
+    assert_response 200
   end
 
   test 'should post create without create_without_question with question' do
-    sign_in users(:user)
+    sign_in users(:user2)
 
-    assert_difference 'Motion.count', 1 do
+    assert_differences create_changes_array do
       post :create, forum_id: :no_create_without_question,
            motion: {
                title: 'Motion',
@@ -117,9 +116,9 @@ class MotionsControllerTest < ActionController::TestCase
                question_id: questions(:question_one_no_create_without_question).id
            }
     end
-    assert_not_nil assigns(:motion)
-    assert assigns(:motion).persisted?
-    assert_redirected_to motion_path(assigns(:motion))
+    assert_not_nil assigns(:cm).resource
+    assert assigns(:cm).resource.persisted?
+    assert_redirected_to motion_path(assigns(:cm).resource)
   end
 
   test 'should put update on own motion' do
@@ -238,4 +237,8 @@ class MotionsControllerTest < ActionController::TestCase
 
   end
 
+  private
+  def create_changes_array
+    [['Motion.count', 1], ['Activity.count', 1], ['UserMailer.deliveries.size', 1]]
+  end
 end

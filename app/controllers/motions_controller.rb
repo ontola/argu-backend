@@ -52,7 +52,7 @@ class MotionsController < AuthenticatedController
     current_context @motion
     respond_to do |format|
       format.js { render js: "window.location = #{request.url.to_json}" }
-      format.html { render 'form' }
+      format.html { render 'form', locals: {motion: @motion} }
       format.json { render json: @motion }
     end
   end
@@ -64,7 +64,7 @@ class MotionsController < AuthenticatedController
     current_context @motion
     authorize @motion
     respond_to do |format|
-      format.html { render 'form' }
+      format.html { render 'form', locals: {motion: @motion} }
     end
   end
 
@@ -72,26 +72,30 @@ class MotionsController < AuthenticatedController
   # POST /motions.json
   def create
     get_context
-    authorize @forum, :add_motion?
 
-    @motion = @forum.motions.new
-    @motion.attributes= permit_params
-    @question_id = params[:question_id] || params[:motion][:question_id]
-    @motion.creator = current_profile
-    @motion.questions << @question if @question.present?
-    authorize @motion, @motion.questions.presence ? :create? : :create_without_question?
-    first = current_profile.motions.count == 0 || nil
-
-    respond_to do |format|
-      if @motion.save
-        create_activity @motion, action: :create, recipient: (@question.presence || @motion.forum), owner: current_profile, forum_id: @motion.forum.id
-        format.html { redirect_to motion_path(@motion, start_motion_tour: first), notice: t('type_save_success', type: motion_type) }
-        format.json { render json: @motion, status: :created, location: @motion }
-      else
-        format.html { render 'form' }
-        format.json { render json: @motion.errors, status: :unprocessable_entity }
+    @cm = CreateMotion.new current_profile,
+                           permit_params.merge({
+                               questions: [@question].compact,
+                               forum_id: @forum.id
+                           })
+    action = @cm.resource.questions.presence ? :create? : :create_without_question?
+    authorize @cm.resource, action
+    @cm.subscribe(ActivityListener.new)
+    @cm.subscribe(MailerListener.new)
+    @cm.on(:create_motion_successful) do |motion|
+      respond_to do |format|
+        first = current_profile.motions.count == 1 || nil
+        format.html { redirect_to motion_path(motion, start_motion_tour: first), notice: t('type_save_success', type: motion_type) }
+        format.json { render json: motion, status: :created, location: motion }
       end
     end
+    @cm.on(:create_motion_failed) do |motion|
+      respond_to do |format|
+        format.html { render 'form', locals: {motion: @cm.resource} }
+        format.json { render json: motion.errors, status: :unprocessable_entity }
+      end
+    end
+    @cm.commit
   end
 
   # PUT /motions/1

@@ -6,7 +6,8 @@ require 'mocha/mini_test'
 require 'model_test_base'
 require 'capybara/rails'
 require 'wisper/minitest/assertions'
-#require 'fakeredis'
+require 'simplecov'
+require 'fakeredis'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -49,7 +50,7 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  fixtures %i(activities arguments comments documents forums memberships motions page_memberships pages
+  fixtures %i(activities arguments comments documents forums follows memberships motions page_memberships pages
               profiles profiles_roles question_answers questions roles rules settings shortnames taggings
               tags users votes access_tokens identities)
 

@@ -1,4 +1,4 @@
-=set_title @motion.new_record? ? t('new_type', type: t('motions.type')) : t('edit_type', type: t('motions.type'))
+=set_title motion.new_record? ? t('new_type', type: t('motions.type')) : t('edit_type', type: t('motions.type'))
 .col-3
   .col-3-2
     =to_parent
@@ -6,15 +6,15 @@
       section.section-info.motion-bg
         span[class="fa fa-#{motion_icon}"]
         span.icon-left= motion_type
-      =semantic_form_for((@motion.new_record? ? [@forum, @motion] : @motion), html: {autocomplete: 'off'}) do |f|
+      =semantic_form_for((motion.new_record? ? [@forum, motion] : motion), html: {autocomplete: 'off'}) do |f|
         section.smallpadded.form-filled
           =f.inputs
             h3= t('motions.form.title_heading')
             p= t('motions.form.title_body_html')
-            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'motion-t form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(@motion, :title, motion_type)
+            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'motion-t form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(motion, :title, motion_type)
             h3= t('motions.form.content_heading')
             p= t('motions.form.content_body_html')
-            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(@motion, :content, motion_type)
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(motion, :content, motion_type)
             /=f.input :tag_list, input_html: {class: 'tag-list'}, label: true
 
           =f.inputs name: t('image') do
@@ -22,23 +22,23 @@
             =f.input :cover_photo, label: t('profiles.edit.upload_piture')
             li.form-helper
               span=t('profiles.edit.file_limit_notice')
-            - if @motion.cover_photo.present?
+            - if motion.cover_photo.present?
               =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 256px;'}
               =f.input :remove_cover_photo, as: :reverse_boolean
 
-          -if !@motion.new_record? && policy(@motion).trash?
+          -if !motion.new_record? && policy(motion).trash?
             =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-              - if policy(@motion).trash?
+              - if policy(motion).trash?
                 =f.input :is_trashed, as: :reverse_boolean
-              - if policy(@motion).move?
-                =f.input :f_move, as: :link, url: motion_move_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
-                =f.input :f_convert, as: :link, url: motion_convert_url(@motion), input_html: {data: {remote: true}, class: 'btn--warning'}
+              - if policy(motion).move?
+                =f.input :f_move, as: :link, url: motion_move_url(motion), input_html: {data: {remote: true}, class: 'btn--warning'}
+                =f.input :f_convert, as: :link, url: motion_convert_url(motion), input_html: {data: {remote: true}, class: 'btn--warning'}
                 =f.input :invert_arguments, as: :reverse_boolean
                 /TODO invert arguments only visible when in edit, not in new.
-        - if @motion.new_record?
+        - if motion.new_record?
           =render partial: 'profiles/profile_current'
         - else
-          =render partial: @motion.creator, locals: {resource: @motion}
+          =render partial: motion.creator, locals: {resource: motion}
 
         =f.hidden_field :question_id, value: @question_id || params[:question_id]
         =f.actions
