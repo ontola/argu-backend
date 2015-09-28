@@ -17,7 +17,7 @@ nl:
       count: "aantal ideeën"
     votes:
       pro: "Ik ben voor"
-      neu: "Geen van beiden"
+      neutral: "Geen van beiden"
       con: "Ik ben tegen"
       show: "Laat stemresultaten zien"
     preview:
@@ -91,3 +91,10 @@ nl:
     motion_policy:
       vote?: "Je mag nog niet op items stemmen. Zorg ervoor dat je lid van het forum bent."
       create_without_question?: "Je mag hier geen idee aanmaken zonder het eerst te koppelen aan een vraagstuk."
+  activerecord:
+    errors:
+      models:
+        motions:
+          attributes:
+            forum:
+              different: "Het idee en haar vraagstuk(ken) moeten tot hetzelfde forum behoren"

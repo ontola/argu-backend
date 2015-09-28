@@ -27,12 +27,16 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError do |exception|
     Rails.logger.error exception
+    action = exception.query.to_s[0..-2]
+    error = t("#{exception.record.try(:class_name)}.pundit.#{action}",
+              action: "#{exception.record.class}##{action}",
+              default: t('access_denied'))
     respond_to do |format|
-      format.js { render status: 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
-      format.json { render status: 403, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.js { render status: 403, json: { notifications: [{type: :error, message: error }] } }
+      format.json { render status: 403, json: { notifications: [{type: :error, message: error }] } }
       format.html {
         request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
-        redirect_to :back, :alert => exception.message
+        redirect_to :back, alert: error
       }
     end
   end
@@ -42,9 +46,14 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.js { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {
-        r = request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
-        @resource ||= User.new r: r.to_s
-        render 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: r, preview: exception.preview }
+        @resource ||= User.new r: exception.r
+        render 'devise/sessions/new',
+               locals: {
+                   resource: @resource,
+                   resource_name: :user,
+                   devise_mapping: Devise.mappings[:user],
+                   r: exception.r, preview: exception.preview
+               }
       }
     end
   end
@@ -82,9 +91,8 @@ class ApplicationController < ActionController::Base
   # @param [Hash] params options for {PublicActivity::Common#create_activity}
   def create_activity(model, params)
     a = model.create_activity params
-    Argu::NotificationWorker.perform_async(a.id)
-    Argu::EmailNotificationWorker.perform_async(a.id)
   end
+  deprecate :create_activity
 
   def current_scope
     @current_scope ||= (current_context.context_scope(current_profile) || current_context)
@@ -162,6 +170,7 @@ class ApplicationController < ActionController::Base
       format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
     end
   end
+  deprecate :render_register_modal
 
   def rescue_stale
     respond_to do |format|

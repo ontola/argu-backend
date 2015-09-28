@@ -7,15 +7,16 @@
     =render partial: 'arguments/shr', locals: {model: @argument, vote: @vote}
     .markdown[itemprop="text"]
       =markdown_to_html(@argument.content)
-  =render @argument.creator, locals= {resource: @argument} if @argument.creator.present?
+  =render partial: @argument.creator, locals: {resource: @argument} if @argument.creator.present?
   ul.btns-list--subtle.btns-horizontal.btn-sticky.btn-sticky-bottom.btns-list--grey
-    - if active_for_user?(:notifications, current_user) && current_profile.present?
+    - if current_user.present? && active_for_user?(:notifications, current_user)
       li[data-title=I18n.t('tooltips.follow')]
-        =react_component 'ActiveToggle', {url: follows_path(argument_id: @argument.id, format: :json),
-                                        initialState: current_profile.following?(@argument),
-                                        true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
-                                        false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
-                       {prerender: true}
+        =react_component 'ActiveToggle',
+                         {url: follows_path(argument_id: @argument.id, format: :json),
+                          initialState: current_user.following?(@argument),
+                          true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
+                          false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
+                         {prerender: true}
     - if current_user.present? && policy(@argument).update?
       li
         ul= react_component 'HyperDropdown', argument_items(@argument), {prerender: true}

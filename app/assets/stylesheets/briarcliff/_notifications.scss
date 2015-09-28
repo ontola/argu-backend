@@ -63,9 +63,9 @@
   color: $g2;
 }
 
-.notifications-mark-all-as-read {
+.notifications-btn-top {
   background-color: $g0;
-  a {
+  a, span {
     padding: .3em;
     padding-left: 1em;
   }

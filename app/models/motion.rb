@@ -1,38 +1,48 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common, Mailable
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common
 
+  belongs_to :forum, inverse_of: :motions
+  belongs_to :creator, class_name: 'Profile'
+  belongs_to :publisher, class_name: 'User'
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :votes, as: :voteable, :dependent => :destroy
   has_many :question_answers, inverse_of: :motion, dependent: :destroy
   has_many :questions, through: :question_answers
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :group_responses
-  belongs_to :forum, inverse_of: :motions
-  belongs_to :creator, class_name: 'Profile'
-
-  counter_culture :forum
+  has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   before_save :cap_title
   after_save :creator_follow
 
+  counter_culture :forum
+  acts_as_followable
   parentable :questions, :forum
   convertible :votes, :taggings, :activities
-  mailable MotionFollowerCollector, :directly, :daily, :weekly
   resourcify
   mount_uploader :cover_photo, CoverUploader
 
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 110 }
-  validates :forum_id, :creator_id, presence: true
+  validates :forum, :creator, presence: true
+  validate :assert_tenant
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
+
+  VOTE_OPTIONS = [:pro, :neutral, :con]
 
   scope :search, ->(q) { where('lower(title) SIMILAR TO lower(?) OR ' +
                                 'lower(content) LIKE lower(?)',
                                 "%#{q}%",
                                 "%#{q}%") }
+
+  def assert_tenant
+    if self.questions.map { |q| q.forum }.uniq.length > 1
+      errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))
+    end
+  end
 
   def as_json(options = {})
     super(options.merge(
@@ -59,7 +69,9 @@ class Motion < ActiveRecord::Base
   end
 
   def creator_follow
-    self.creator.follow self
+    if self.creator.profileable.is_a?(User)
+      self.creator.profileable.follow self
+    end
   end
 
   # http://schema.org/description

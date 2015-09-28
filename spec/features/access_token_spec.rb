@@ -21,8 +21,7 @@ RSpec.feature 'Access tokens', type: :feature do
     expect(page).to have_content('content')
 
     click_link 'Geen van beiden'
-    wait_for_async_modal
-    save_and_open_screenshot
+    #wait_for_async_modal
     expect(page).to have_content 'Sign up'
 
     click_link 'Create Argu account'
@@ -47,8 +46,10 @@ RSpec.feature 'Access tokens', type: :feature do
       click_button 'Volgende'
     end
 
+    click_button 'Geen van beiden'
+
     expect(page).to have_content motion.title
-    expect(page).to have_css 'a.btn-neu[data-voted-on=true]'
+    expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
   end
 
 end

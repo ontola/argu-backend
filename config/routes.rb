@@ -41,6 +41,7 @@ Argu::Application.routes.draw do
     put :transfer, action: :transfer!
   end
   concern :votable do
+    resources :votes, only: [:new, :create], path: 'v'
     get 'v' => 'votes#show', shallow: true, as: :show_vote
     post 'v/:for' => 'votes#create', shallow: true, as: :vote
     get 'v/:for' => 'votes#new', shallow: true

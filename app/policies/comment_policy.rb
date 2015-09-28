@@ -20,11 +20,12 @@ class CommentPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:body] if create?
+    attributes << [:body, :parent_id] if create?
     attributes
   end
 
   def create?
+    assert_siblings! if record.try(:parent_id).present?
     rule is_open?, is_member?, super
   end
 
@@ -61,7 +62,12 @@ class CommentPolicy < RestrictivePolicy
   end
 
   private
+
+  def assert_siblings!
+    assert! record.commentable == record.parent.commentable, :siblings?
+  end
+
   def forum_policy
-    Pundit.policy(context, record.try(:forum) || record.commentable.forum || context.context_model)
+    Pundit.policy(context, context.forum)
   end
 end

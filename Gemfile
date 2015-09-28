@@ -44,6 +44,8 @@ gem 'browser'
 gem 'addressable', '~> 2.3.8'
 gem 'auto_strip_attributes', '~> 2.0.6'
 gem 'mailgun_rails', '0.7.0'
+gem 'wisper', '~> 1.6.1'
+# gem 'wisper-activerecord', '~> 0.3.0'
 
 #Search
 
@@ -124,6 +126,10 @@ group :development, :test do
   gem 'license_finder'
   gem 'database_cleaner'
   gem 'brakeman'
+  gem 'wisper-minitest', require: false
+  gem 'wisper-rspec', require: false
+  gem 'fakeredis', require: false
+  gem 'simplecov', require: false
 end
 
 group :production, :staging do

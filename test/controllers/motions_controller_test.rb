@@ -21,9 +21,7 @@ class MotionsControllerTest < ActionController::TestCase
   test 'should not get edit when not logged in' do
     get :edit, id: motions(:one)
 
-    assert_redirected_to root_path
-    assert assigns(:motion)
-    assert assigns(:forum)
+    assert_redirected_to new_user_session_path(r: edit_motion_path(motions(:one)))
   end
 
   ####################################
@@ -65,53 +63,52 @@ class MotionsControllerTest < ActionController::TestCase
   test 'should post create' do
     sign_in users(:user)
 
-    assert_difference 'Motion.count' do
+    assert_differences create_changes_array do
       post :create, forum_id: :utrecht, motion: {title: 'Motion', content: 'Contents'}
     end
-    assert_not_nil assigns(:motion)
+    assert_not_nil assigns(:cm).resource
     assert_not_nil assigns(:forum)
-    assert_redirected_to motion_path(assigns(:motion))
+    assert_redirected_to motion_path(assigns(:cm).resource)
   end
 
   test 'should show tutorial only on first post create' do
     sign_in user
     FactoryGirl.create(:membership, profile: user.profile, forum: holland)
 
-    assert_difference 'Motion.count' do
+    assert_differences create_changes_array do
       post :create, forum_id: holland, motion: {title: 'Motion', content: 'Contents'}
     end
-    assert_not_nil assigns(:motion)
+    assert_not_nil assigns(:cm).resource
     assert_not_nil assigns(:forum)
-    assert_redirected_to motion_path(assigns(:motion), start_motion_tour: true)
+    assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
 
-    assert_difference 'Motion.count' do
+    assert_differences create_changes_array do
       post :create, forum_id: holland, motion: {title: 'Motion2', content: 'Contents'}
     end
-    assert_not_nil assigns(:motion)
+    assert_not_nil assigns(:cm).resource
     assert_not_nil assigns(:forum)
-    assert_redirected_to motion_path(assigns(:motion))
+    assert_redirected_to motion_path(assigns(:cm).resource)
   end
 
   test 'should not post create without create_without_question' do
     sign_in users(:user)
 
-    assert_difference 'Motion.count', 0 do
+    assert_differences [['Motion.count', 0],
+                        ['Activity.count', 0]] do
       post :create, forum_id: :no_create_without_question,
            motion: {
                title: 'Motion',
                content: 'Contents'
            }
-      puts ''
     end
-    assert_not_nil assigns(:motion)
-    assert_not assigns(:motion).persisted?
-    assert_redirected_to root_path
+    assert_nil assigns(:cm)
+    assert_response 200
   end
 
   test 'should post create without create_without_question with question' do
-    sign_in users(:user)
+    sign_in users(:user2)
 
-    assert_difference 'Motion.count', 1 do
+    assert_differences create_changes_array do
       post :create, forum_id: :no_create_without_question,
            motion: {
                title: 'Motion',
@@ -119,20 +116,9 @@ class MotionsControllerTest < ActionController::TestCase
                question_id: questions(:question_one_no_create_without_question).id
            }
     end
-    assert_not_nil assigns(:motion)
-    assert assigns(:motion).persisted?
-    assert_redirected_to motion_path(assigns(:motion))
-  end
-
-  test 'should put update on own motion' do
-    sign_in users(:user)
-
-    put :update, id: motions(:one), motion: {title: 'New title', content: 'new contents'}
-
-    assert_not_nil assigns(:motion)
-    assert_equal 'New title', assigns(:motion).title
-    assert_equal 'new contents', assigns(:motion).content
-    assert_redirected_to motion_url(assigns(:motion))
+    assert_not_nil assigns(:cm).resource
+    assert assigns(:cm).resource.persisted?
+    assert_redirected_to motion_path(assigns(:cm).resource)
   end
 
   test 'should not put update on others motion' do
@@ -169,6 +155,39 @@ class MotionsControllerTest < ActionController::TestCase
 
     put :move, motion_id: motions(:one)
     assert_redirected_to root_url
+  end
+
+  ####################################
+  # As Owner
+  ####################################
+  let(:owner) { create_member(holland) }
+  let(:owner_motion) { FactoryGirl.create(:motion,
+                                            creator: owner.profile,
+                                            forum: holland) }
+
+  test 'owner should put update' do
+    sign_in users(:user)
+
+    put :update, id: motions(:one), motion: {title: 'New title', content: 'new contents'}
+
+    assert_not_nil assigns(:motion)
+    assert_equal 'New title', assigns(:motion).title
+    assert_equal 'new contents', assigns(:motion).content
+    assert_redirected_to motion_url(assigns(:motion))
+  end
+
+  test 'owner should render form for faulty put update' do
+    sign_in owner
+
+    put :update,
+        id: owner_motion,
+        motion: {
+            title: 't',
+            content: 'new contents'
+        }
+
+    assert_response 200
+    assert assigns(:motion).changed?
   end
 
   ####################################
@@ -240,4 +259,8 @@ class MotionsControllerTest < ActionController::TestCase
 
   end
 
+  private
+  def create_changes_array
+    [['Motion.count', 1], ['Activity.count', 1], ['UserMailer.deliveries.size', 1]]
+  end
 end

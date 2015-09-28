@@ -1,4 +1,4 @@
-=set_title @question.new_record? ? t('new_type', type: t('questions.type')) : t('edit_type', type: t('questions.type'))
+=set_title question.new_record? ? t('new_type', type: t('questions.type')) : t('edit_type', type: t('questions.type'))
 .col-3
   .col-3-2
     =to_parent
@@ -6,41 +6,41 @@
       section.section-info.question-bg
         span[class="fa fa-#{question_icon}"]
         span.icon-left= questions_type
-      =semantic_form_for((@question.new_record? ? [@forum, @question] : @question), html: {autocomplete: 'off'}, multipart: true) do |f|
+      =semantic_form_for((question.new_record? ? [@forum, question] : question), html: {autocomplete: 'off'}, multipart: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
             h3= t('questions.form.title_heading')
             p= t('questions.form.title_body_html')
-            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'question-t form-input-title'}, hint: false, label: false, placeholder: placeholder_for(@question, :title, question_type.downcase)
+            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'question-t form-input-title'}, hint: false, label: false, placeholder: placeholder_for(question, :title, question_type.downcase)
             h3= t('questions.form.content_heading')
             p= t('questions.form.content_body_html')
-            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(@question, :content, question_type.downcase)
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(question, :content, question_type.downcase)
             /=f.input :tag_list, input_html: {class: 'tag-list'}
           =f.inputs name: t('image') do
             p= t('use_a_high_res_image')
             =f.input :cover_photo, label: t('profiles.edit.upload_piture')
             li.form-helper
               span=t('profiles.edit.file_limit_notice')
-            - if @question.cover_photo.present?
+            - if question.cover_photo.present?
               =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 256px;'}
               =f.input :remove_cover_photo, as: :reverse_boolean
             /TODO Add Checkbox for using expires_at.
             /TODO Hide expires_at input unless checkbox is checked.
             /TODO Use current datetime as default input.
-            - if active_for_user?(:expires_at, current_user) && policy(@question).set_expire_as?
+            - if active_for_user?(:expires_at, current_user) && policy(question).set_expire_as?
               =f.inputs name: t('deadline') do
                 =f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
-          - if !@question.new_record? && policy(@question).trash?
+          - if !question.new_record? && policy(question).trash?
             =f.inputs name: t('forms.danger_zone'), class: 'danger-zone'
-              - if policy(@question).trash?
+              - if policy(question).trash?
                 =f.input :is_trashed, as: :reverse_boolean
-              - if policy(@question).move?
-                =f.input :f_move, as: :link, url: question_move_url(@question), input_html: {data: {remote: true}, class: 'btn--warning'}
-                =f.input :f_convert, as: :link, url: question_convert_url(@question), input_html: {data: {remote: true}, class: 'btn--warning'}
-        - if @question.new_record?
+              - if policy(question).move?
+                =f.input :f_move, as: :link, url: question_move_url(question), input_html: {data: {remote: true}, class: 'btn--warning'}
+                =f.input :f_convert, as: :link, url: question_convert_url(question), input_html: {data: {remote: true}, class: 'btn--warning'}
+        - if question.new_record?
           =render partial: 'profiles/profile_current'
         - else
-          =render partial: @question.creator, locals: {resource: @question}
+          =render partial: question.creator, locals: {resource: question}
         =f.actions
           .sticky-submit
             =f.action :submit, as: :button

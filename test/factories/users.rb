@@ -21,6 +21,10 @@ FactoryGirl.define do
       end
     end
 
+    trait :confirmed do
+      confirmed_at Time.now
+    end
+
     trait :forum_manager do
       after(:create) do |user, evaluator|
         create(:profile_with_memberships)
@@ -29,7 +33,7 @@ FactoryGirl.define do
 
     factory :user_with_notification do
       after(:create) do |user, evaluator|
-        user.profile.notifications.create
+        user.notifications.create
       end
 
     end

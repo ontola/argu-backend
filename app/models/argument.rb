@@ -1,7 +1,17 @@
 class Argument < ActiveRecord::Base
   include ProCon
+  has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
+  belongs_to :publisher, class_name: 'User'
+
+  validate :assert_tenant
 
   scope :argument_comments, -> { includes(:comment_threads).order(votes_pro_count: :desc).references(:comment_threads) }
+
+  def assert_tenant
+    if self.forum != self.motion.forum
+      errors.add(:forum, I18n.t('activerecord.errors.models.arguments.attributes.forum.different'))
+    end
+  end
 
   # http://schema.org/description
   def description

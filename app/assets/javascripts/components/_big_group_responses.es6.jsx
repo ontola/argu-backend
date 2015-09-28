@@ -38,7 +38,7 @@ window.BigGroupResponse = React.createClass({
                                 <span className="fa fa-thumbs-up" />
                                 <span className="icon-left">Voor</span>
                             </a></li>
-                            <li><a href={`${this.props.object_id}/groups/${group.id}/responses/new?side=neutral`} rel="nofollow" className="btn-neu">
+                            <li><a href={`${this.props.object_id}/groups/${group.id}/responses/new?side=neutral`} rel="nofollow" className="btn-neutral">
                                 <span className="fa fa-pause" />
                                 <span className="icon-left">Geen van beiden</span>
                             </a></li>

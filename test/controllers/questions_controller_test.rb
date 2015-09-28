@@ -3,8 +3,10 @@ require 'test_helper'
 class QuestionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+
   ####################################
-  # Not logged in
+  # As Guest
   ####################################
   test 'should get show when not logged in' do
     get :show, id: questions(:one).id
@@ -17,8 +19,10 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As user
+  # As User
   ####################################
+  let(:user) { FactoryGirl.create(:user) }
+
   test 'should get show' do
     sign_in users(:user)
 
@@ -34,12 +38,12 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'should post create' do
     sign_in users(:user)
 
-    assert_difference('Question.count') do
+    assert_differences create_changes_array do
       post :create, forum_id: :utrecht, question: {title: 'Question', content: 'Contents'}
     end
-    assert_not_nil assigns(:question)
+    assert_not_nil assigns(:cq).resource
     assert_not_nil assigns(:forum)
-    assert_redirected_to question_url(assigns(:question))
+    assert_redirected_to question_url(assigns(:cq).resource)
   end
 
   test 'should put update on own question' do
@@ -88,6 +92,68 @@ class QuestionsControllerTest < ActionController::TestCase
     put :move, question_id: questions(:one)
     assert_redirected_to root_url
   end
+
+  ####################################
+  # As Member
+  ####################################
+  let(:member) { create_member(holland) }
+
+  test 'member should get new' do
+    sign_in member
+
+    get :new, forum_id: holland
+    assert_response 200
+    assert_not_nil assigns(:question)
+    assert_not_nil assigns(:forum)
+  end
+
+  ####################################
+  # As Owner
+  ####################################
+  let(:owner) { create_member(holland) }
+  let(:owner_question) { FactoryGirl.create(:question,
+                                            creator: owner.profile,
+                                            forum: holland) }
+
+  test 'owner should get edit' do
+    sign_in owner
+
+    get :edit, id: owner_question
+
+    assert_response 200
+    assert assigns(:question)
+    assert assigns(:forum)
+  end
+
+  test 'owner should put update' do
+    sign_in owner
+
+    put :update,
+        id: owner_question,
+        question: {
+            title: 'new title',
+            content: 'new contents'
+        }
+
+    assert_redirected_to question_path(owner_question)
+    assert_equal 'new title', assigns(:question).title
+    assert_equal 'new contents', assigns(:question).content
+  end
+
+  test 'owner should render form for faulty put update' do
+    sign_in owner
+
+    put :update,
+        id: owner_question,
+        question: {
+            title: 't',
+            content: 'new contents'
+        }
+
+    assert_response 200
+    assert assigns(:question).changed?
+  end
+
 
   ####################################
   # For Page owners
@@ -173,4 +239,8 @@ class QuestionsControllerTest < ActionController::TestCase
 
   end
 
+  private
+  def create_changes_array
+    [['Question.count', 1], ['Activity.count', 1], ['UserMailer.deliveries.size', 1]]
+  end
 end

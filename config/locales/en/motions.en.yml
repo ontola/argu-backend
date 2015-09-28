@@ -17,7 +17,7 @@ en:
       count: "number of ideas"
     votes:
       pro: "Agree"
-      neu: "Neutral"
+      neutral: "Neutral"
       con: "Disagree"
       show: "Show vote results"
     preview:
@@ -104,3 +104,10 @@ en:
   pundit:
     motion_policy:
       vote?: "You can't vote on items yet. Make sure to become a member of the forum."
+  activerecord:
+    errors:
+      models:
+        motions:
+          attributes:
+            forum:
+              different: "The motion and it's question(s) must belong to the same forum"

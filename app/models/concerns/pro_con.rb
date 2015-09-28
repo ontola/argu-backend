@@ -1,6 +1,8 @@
 module ProCon
   extend ActiveSupport::Concern
 
+  VOTE_OPTIONS = [:pro]
+
   included do
     include ArguBase, Trashable, Parentable, HasLinks, PublicActivity::Common
 
@@ -11,20 +13,23 @@ module ProCon
     belongs_to :forum
 
     before_save :cap_title
-    after_create :creator_follow
+    after_create :creator_follow, :update_vote_counters
 
     validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
-    validates :creator_id, :motion_id, :forum_id, presence: true
+    validates :creator, :motion, :forum, presence: true
     auto_strip_attributes :title, squish: true
     auto_strip_attributes :content
 
     acts_as_commentable
+    acts_as_followable
     parentable :motion, :forum
   end
 
   def creator_follow
-    self.creator.follow self
+    if self.creator.profileable.is_a?(User)
+      self.creator.profileable.follow self
+    end
   end
 
   def cap_title

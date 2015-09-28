@@ -13,8 +13,8 @@ en:
       create: "Posted a %{type} for a forum %{thing}"
       create_your: "Posted a %{type} for your forum %{thing}"
     motions:
-      create: "Posted a %{type} for a forum %{thing}"
-      create_your: "Posted a %{type} for your forum %{thing}"
+      create: "Posted a %{type} for a %{thing}"
+      create_your: "Posted a %{type} for your %{thing}"
     arguments:
       create: "Posted a %{type} for a %{thing}"
       create_your: "Posted a %{type} for your %{thing}"

@@ -30,8 +30,8 @@ class OmniauthTest < ActionDispatch::IntegrationTest
 
     assert_difference 'Membership.count' do
       follow_redirect!
+      assert_redirected_to setup_users_path
     end
-    assert_redirected_to setup_users_path
 
     follow_redirect!
     assert_response 200

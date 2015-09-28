@@ -9,7 +9,7 @@ RSpec.feature 'Comments', type: :feature do
   # As guest
   ####################################
 
-    scenario 'Guest places a comment and signs up' do
+  scenario 'Guest places a comment and signs up' do
     visit argument_path(argument)
 
     comment_args = attributes_for(:comment)
@@ -36,7 +36,10 @@ RSpec.feature 'Comments', type: :feature do
       click_button 'Volgende'
     end
 
-    # find('#join-forum').click()
+    expect(page).to have_content argument.title
+    within('#comment_submit_action') do
+      click_button 'Reageer'
+    end
 
     expect(page).to have_content argument.title
     expect(page).to have_content comment_args[:body]
