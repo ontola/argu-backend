@@ -106,18 +106,7 @@
 }
 
 .box-hidden {
-  position: absolute;
-  top: 100%;
-  background-color: white;
-  color: white;
-  width: 100%;
-  height: 100%;
-  @include transition(.5s);
-}
-
-.box:hover .box-hidden {
-  top: 0;
-  @include animation(fade-in .5s both)
+  @include transition(opacity, .5s);
 }
 
 .box-image{
@@ -214,7 +203,7 @@
   padding-left: 1.5em;
   font-size: .8em;
   margin-bottom: .4em;
-  display: inline-block;
+  display: block;
 }
 
 .box-list--icons {
@@ -296,4 +285,15 @@
   left: 1em;
   bottom: 0.75em;
   }
+}
+
+.list-explanation {
+  font-weight: normal;
+  font-size: 0.9em;
+  position: relative;
+  margin-left: 1.5em;
+  line-height: 1.2em;
+  display: block;
+  margin-top: .2em;
+  color: $g4;
 }

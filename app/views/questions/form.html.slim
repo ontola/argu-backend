@@ -44,6 +44,29 @@
         =f.actions
           .sticky-submit
             =f.action :submit, as: :button
-  - unless alternative_questions?
-    .col-3-1
-      =render partial: 'markdown_helper'
+  .col-3-1
+    .box#question-title-helper
+      section
+        h2= t('questions.form.helper.examples.title')
+        ul.box-list.box-list--icons
+          li
+            h3.pro-t
+              span.fa.fa-check
+              span.icon-left= t('questions.form.helper.examples.first')
+              span.list-explanation= t('questions.form.helper.examples.1_explained')
+          li
+            h3.pro-t
+              span.fa.fa-check
+              span.icon-left= t('questions.form.helper.examples.second')
+              span.list-explanation= t('questions.form.helper.examples.2_explained')
+          li
+            h3.con-t
+              span.fa.fa-close
+              span.icon-left= t('questions.form.helper.examples.third')
+              span.list-explanation= t('questions.form.helper.examples.3_explained')
+          li
+            h3.con-t
+              span.fa.fa-close.con-t
+              span.icon-left= t('questions.form.helper.examples.fourth')
+              span.list-explanation= t('questions.form.helper.examples.4_explained')
+    =render partial: 'markdown_helper'

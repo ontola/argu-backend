@@ -27,6 +27,16 @@ en:
       themes: "theme1, theme2"
       invert: "invert all arguments"
       helper:
+        examples:
+          title: "Examples"
+          first: "What measures can we take to prevent traffic accidents?"
+          1_explained: "Be sure to use an open question."
+          second: "How can we lower CO2 emissions?"
+          2_explained: "A question should invite other to submit their ideas."
+          third: "Should we ban tobacco?"
+          3_explained: "The question should not be answerable by 'yes' or 'no'."
+          fourth: "Should we use more wind turbines?"
+          4_explained: "No closed questions. If your question is closed, try posting an idea."
         title: "Describe the core of the question here"
         content: "Describe the question in detail, give a background story and explain the current situation. Do not place arguments here."
         themes: "Themes or subjects related to this question. Place comma's between the themes."
