@@ -88,6 +88,9 @@
   margin-top: 1em;
   font-weight: 400;
   font-size: 1.3em;
+  @include bp-medium() {
+    font-size: 1.1em;
+  }
 }
 
 .cover-image{
@@ -173,7 +176,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(71, 86, 104, 0.47);
+  background-color: rgba(71, 86, 104, 0.6);
 
   .profile-picture {
     width: 5em;
@@ -184,8 +187,15 @@
 
 .cover-switcher-wrapper {
   position: absolute;
-  bottom: 3em;
+  bottom: 3.5em;
   width: 100%;
+
+  @include bp-large {
+    bottom: 3em;
+  }
+  @include bp-medium {
+    bottom: 2em;
+  }
 
   .profile-picture {
     height: 3em;
@@ -241,4 +251,14 @@
 
 .cover--forum {
   margin-bottom: 1em;
+  background-color: $blu;
+}
+
+.bg-img {
+  opacity: 0;
+  @include transition(opacity 1s ease-in-out)
+}
+
+.bg-loaded {
+  opacity: 1;
 }

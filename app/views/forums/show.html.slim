@@ -6,7 +6,7 @@
 div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
   .cover.cover--forum
     -if @forum.cover_photo.url.present?
-      .cover-image.cover-image--bigger[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
+      .cover-image.cover-image--bigger.bg-img[onload="this.style.opacity='1'" style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
       span.header-attribution = @forum.cover_photo_attribution
     -else
       .cover-image.cover-image-empty
@@ -50,9 +50,9 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
           span.fa.fa-plus
           span.icon-left Nieuwe discussie
     .btns-center-container
-      =link_to about_path, class: 'btn btn--pro'
+      =link_to new_discussion_path(forum: @forum), class: 'btn btn--pro'
         span.fa.fa-plus
-        span.icon-left Nieuwe discussie
+        span.icon-left= t('new_discussion.title')
       =render partial: 'filter_and_sort'
     /ul.btns-horizontal.btns-padded.center
       /TODO: Make this check the current profile, not the user

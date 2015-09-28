@@ -14,7 +14,7 @@ en:
       body: "Are you looking for good ideas to a burning question?"
       action: "Share your question!"
     form:
-      title_heading: "Ask an open question."
+      title_heading: "Ask an open question"
       title_body_html: "<ul class='bullets'>
                          <li>A question should invite people to submit their own ideas and solutions.</li>
                        </ul>"

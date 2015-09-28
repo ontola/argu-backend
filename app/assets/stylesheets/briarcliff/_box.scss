@@ -268,3 +268,13 @@
     visibility: visible;
   }
 }
+
+.box-image--container{
+
+  .motion & {
+    background-color: lighten($blu, 40);
+  }
+  .question & {
+    background-color: lighten($bro, 40);
+  }
+}

@@ -6,7 +6,7 @@
 
 div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .cover-behind
-    .cover-image[style="background-image: url('#{@motion.cover_photo.url(:cover)}'); "]
+    .cover-image.bg-img[style="background-image: url('#{@motion.cover_photo.url(:cover)}'); "]
   .col-1
     div[data-intro= t('intro.motion.back')]= to_parent
     =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}

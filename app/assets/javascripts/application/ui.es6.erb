@@ -97,6 +97,7 @@ Argu.ui = {
         $('button:submit').click(Argu.ui.disableSubmitButton);
         $('a[href*=#]:not([href=#])[class~=smoothscroll]').click(Argu.ui.handleClickSmoothly);
         Argu.ui.bindRemoteLinks();
+        $('.bg-img').bgLoaded({});
     },
 
     handleEditableSettings: function () {
