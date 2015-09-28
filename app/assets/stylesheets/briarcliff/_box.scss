@@ -278,3 +278,22 @@
     background-color: lighten($bro, 40);
   }
 }
+
+.back-to-forum {
+  background-color: $blu;
+  h3 {
+    color: white;
+    display: inline-block;
+    position: relative;
+    left: 1.8em;
+  }
+  .profile-picture {
+  width: 2em;
+  height: 2em;
+  display: inline-block;
+  background-size: cover;
+  position: absolute;
+  left: 1em;
+  bottom: 0.75em;
+  }
+}

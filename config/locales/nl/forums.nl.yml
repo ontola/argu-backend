@@ -8,6 +8,7 @@ nl:
     plural: "Forums"
     my: "Mijn forums"
     current: "Dit forum"
+    back_to: "Ga terug naar forum"
     resource_name:
       management: "Forum beheer"
     settings:

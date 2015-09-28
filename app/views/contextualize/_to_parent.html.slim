@@ -4,9 +4,9 @@
       .box.box-link
         - classname = current_context.parent.single_model.class_name
         - if classname == 'forums'
-          section.section-info
-            span.fa.fa-group
-            span.icon-left= t('forums.type')
+          section.section-info.motion-bg
+            span[class="fa fa-arrow-up"]
+            span.icon-left= t('forums.back_to')
         - elsif classname == 'questions'
           section.section-info.question-bg
             span[class="fa fa-#{question_icon}"]
@@ -18,7 +18,13 @@
         - else
           section.section-info
             span.fa.fa-arrow-up
-        section
-          h3[class=current_context.parent.single_model.class.to_s.downcase]
-            span.fa.fa-arrow-up
-            span.icon-left[itemprop="name"]= current_context.parent.single_model.display_name
+        - unless classname == 'forums'
+          section
+            h3[class=current_context.parent.single_model.class.to_s.downcase]
+              span.fa.fa-arrow-up
+              span.icon-left[itemprop="name"]= current_context.parent.single_model.display_name
+        - else
+          section.back-to-forum
+            -if current_context.parent.single_model.profile_photo.url.present?
+              .profile-picture[style="background-image: url('#{current_context.parent.single_model.profile_photo.url(:avatar)}')"]
+            h3= current_context.parent.single_model.display_name

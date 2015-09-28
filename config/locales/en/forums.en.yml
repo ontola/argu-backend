@@ -8,6 +8,7 @@ en:
     plural: "Forums"
     my: "My forums"
     current: "This forum"
+    back_to: "Go back to forum"
     resource_name:
       management: "forum management"
     settings:
