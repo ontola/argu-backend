@@ -10,6 +10,10 @@ nav#navbar.navbar role="navigation"
           / TODO: home text shows last visited (or current) forum. Same n guest navbar.
           /span= preferred_forum
       =react_component 'HyperDropdown', forum_selector_items, {prerender: true}
+      li
+        =link_to new_discussion_path, class: 'navbar-item'
+          span.fa.fa-plus
+          span.icon-left.hide-ml= t('new_discussion.title')
     ul.navbar-links.navbar-links-right
       =react_component 'HyperDropdown', profile_dropdown_items, {prerender: true}
       - if active_for_user? :notifications, current_user

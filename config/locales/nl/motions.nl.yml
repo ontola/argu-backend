@@ -32,10 +32,9 @@ nl:
     revisions:
       title_wiped: 'Gewiste argumenten'
     form:
-      title_heading: "Geef jouw idee een titel"
+      title_heading: "Vat je idee samen in één zin."
       title_body_html: "<ul class='bullets'>
                     <li>Beschrijf jouw idee zo <b>kort en bondig</b> als je maar kan.</li>
-                    <li>Wees <b>duidelijk</b> en gebruik woorden die de meeste mensen kennen.</li>
                   </ul>"
       content_heading: "Licht je idee toe"
       content_body_html: "<ul class='bullets'>
@@ -62,8 +61,8 @@ nl:
       tags: "Zoek vraagstukken en ideeën met het thema "
     call_to_action:
       title: "Heb jij een goed idee?"
-      body: "Weet jij hoe een probleem kan worden opgelost? Heb jij een voorstel?"
-      action: "Deel jouw idee!"
+      body: "Heb jij een goed idee en wil je anderen daarvan overtuigen?"
+      action: "Deel jouw idee."
 
     #motion types
     type_social: "Maatschappelijk"

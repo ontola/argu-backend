@@ -11,15 +11,14 @@ nl:
       count: "aantal vraagstukken"
     call_to_action:
       title: "Oplossing nodig?"
-      body: "Ben jij op zoek naar goede ideeën? Heb jij een vraagstuk waar je voorstellen voor zou willen?"
-      action: "Deel jouw vraagstuk!"
+      body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'
+      action: "Deel jouw vraagstuk."
     form:
-      title_heading: "Geef jouw vraagstuk een titel"
+      title_heading: "Stel een open vraag"
       title_body_html: "<ul class='bullets'>
-                     <li>Een vraagstuk is een <b>open vraag</b> die mensen uitdaagt om eigen ideeën in te dienen.</li>
+                     <li>Een vraagstuk moet mensen uitdagen om eigen ideeën in te dienen.</li>
                    </ul>"
       content_heading: "Licht je vraagstuk toe"
-      content_body: "Leg de huidige situatie uit. Geef achtergrondinformatie van het probleem en leg uit waarom er nog geen oplossing is. Geef aan waar de ideeën aan zouden moeten voldoen."
       content_body_html: "<ul class='bullets'>
                             <li>Leg de <b>huidige situatie</b> uit. Geef achtergrondinformatie van het probleem en leg uit waarom er nog geen oplossing is.</li>
                             <li>Geef aan waar een mogelijke oplossing (een idee) aan zouden moeten voldoen.</li>
