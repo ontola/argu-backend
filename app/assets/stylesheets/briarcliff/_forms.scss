@@ -368,24 +368,9 @@ p.inline-hints {
     margin: 0;
   }
 }
-/*
-select {
-  padding:.3em;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  appearance:none;
-  cursor:pointer;
 
-  &:after {
-    content: '';
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 1em .6em 0 .6em;
-    border-color: #000000 transparent transparent transparent;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+.avatar-preview {
+  height: 4em;
+  width: 4em;
+  border-radius: 999px;
 }
-*/

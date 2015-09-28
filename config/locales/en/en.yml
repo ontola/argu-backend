@@ -212,6 +212,7 @@ en:
   columns: "Columns"
   info_bar: "Info bar"
   images: "Images"
+  display: "Display"
   markdown_helper_html: "<h2>Add links</h2>
                 <p>You can add links in your text by using square brackets and normal brackets.</p>
                 <code>This is [Argu](www.argu.co).</code>

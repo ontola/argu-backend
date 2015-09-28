@@ -4,9 +4,9 @@
                description: seolized_description(@forum),
                image: @forum.cover_photo.url
 div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
-  .cover
+  .cover.cover--forum
     -if @forum.cover_photo.url.present?
-      .cover-image[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
+      .cover-image.cover-image--bigger[style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
       span.header-attribution = @forum.cover_photo_attribution
     -else
       .cover-image.cover-image-empty
@@ -15,6 +15,8 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
         -if @forum.profile_photo.url.present?
           .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
         .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
+        -if @forum.bio.present?
+          h2.cover-hero-text=@forum.bio
     .cover-buttons.cover-buttons--top
       .cover-buttons-container
         ul.btns-horizontal
@@ -26,40 +28,48 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
       .cover-buttons-container
         ul.btns-horizontal
           - if current_user.blank?
-            li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn--pro btn--square'
+            li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn--pro'
               span.fa.fa-plus
               span.icon-left= t('sign_up')
-          /TODO: Make this check the current profile, not the user
-          -if policy(Motion).new_without_question?
-            li[data-intro=t('intro.motion.create', name: @forum.name) data-step=12 data-position='right' class=('tooltip tooltip--right' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]
-              =link_to new_forum_motion_path(@forum), data: remote_unless_user, class: 'btn--motion btn--square'
-                span.fa[class="fa-#{motion_icon}"]
-                span.icon-left= t('new') + ' ' + motion_type
-          -if policy(Question).new?
-            li[data-intro=t('intro.question.create', name: @forum.name) data-step=13 class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]
-              =link_to new_forum_question_path(@forum), data: remote_unless_user, class: 'btn--question btn--square'
-                span.fa[class="fa-#{question_icon}"]
-                span.icon-left= t('new') + ' ' + question_type
-          - if policy(@forum).invite?
-            li= link_to new_user_invitation_path(forum: @forum.url), remote: true, class: 'btn--pro remote-link btn--square', data: {title: t('tooltips.forum.invite'), intro: t('intro.forums.invite'), step: 14}
-              span.fa.fa-user-plus
-              span.icon-left= t('forums.invite_others')
           - if policy(@forum).update?
             li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
               span.fa.fa-gear
               span.icon-left= t('forums.settings.title')
-            /li[class='float-right']
-              ul.btn--transparant.btn--dropdown-trigger= render partial: 'application/menus/settings', locals: {resource: @forum}
-  .cover-bar
-    .cover-container
-      - if @forum.bio.present?
-        p.cover-oneliner
-          =@forum.bio
-          - if @forum.bio_long.present?
-            a[href="#forum-info" class="smoothscroll"]
-              span.icon-left= t('forums.more_info')
+  /.cover-bar
+      .cover-container
+        - if @forum.bio.present?
+          p.cover-oneliner
+            =@forum.bio
+            - if @forum.bio_long.present?
+              a[href="#forum-info" class="smoothscroll"]
+                span.icon-left= t('forums.more_info')
   - if policy(@forum).show?
-    =render partial: 'filter_and_sort'
+    /.cover-bar
+      .cover-container
+        =link_to about_path, class: 'btn--pro btn--in-subtle-list'
+          span.fa.fa-plus
+          span.icon-left Nieuwe discussie
+    .btns-center-container
+      =link_to about_path, class: 'btn btn--pro'
+        span.fa.fa-plus
+        span.icon-left Nieuwe discussie
+      =render partial: 'filter_and_sort'
+    /ul.btns-horizontal.btns-padded.center
+      /TODO: Make this check the current profile, not the user
+      li=link_to about_path, class: 'btn--pro'
+        span.fa.fa-plus
+        span.icon-left Nieuwe discussie
+
+      /-if policy(Motion).new_without_question?
+        li[data-intro=t('intro.motion.create', name: @forum.name) data-step=12 data-position='right' class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]
+          =link_to new_forum_motion_path(@forum), data: remote_unless_user, class: 'btn--motion'
+            span.fa[class="fa-#{motion_icon}"]
+            span.icon-left= t('new') + ' ' + motion_type
+      /-if policy(Question).new?
+        li[data-intro=t('intro.question.create', name: @forum.name) data-step=13 class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]
+          =link_to new_forum_question_path(@forum), data: remote_unless_user, class: 'btn--question'
+            span.fa[class="fa-#{question_icon}"]
+            span.icon-left= t('new') + ' ' + question_type
     .grid
       .box.box-grid-sizer
       .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
