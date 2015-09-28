@@ -170,7 +170,7 @@ Argu::Application.routes.draw do
   get '/how_argu_works', to: 'static_pages#how_argu_works'
   # end
 
-  get '/new_discussion', to: 'static_pages#new_discussion'
+  resources :discussions, only: [:new]
 
   get '/portal', to: 'portal/portal#home'
 

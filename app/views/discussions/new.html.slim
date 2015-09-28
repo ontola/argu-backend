@@ -19,8 +19,9 @@
           span= t('questions.call_to_action.body') + ' '
           =link_to new_forum_question_path(@forum), data: remote_unless_user do
             b.question-t= t('questions.call_to_action.action')
-    .box
-      .box-image[style="background-image: url('#{asset_path('new-discussion-question-cover.jpg')}'); "]
+    .box.question
+      .box-image--container
+        .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-question-cover.jpg')}'); "]
       section.section-info.question-bg
         span.fa.fa-question
         span.icon-left= t('questions.type')
@@ -46,8 +47,9 @@
           span= t('motions.call_to_action.body') + ' '
           =link_to new_forum_motion_path(@forum), data: remote_unless_user do
             b.motion-t= t('motions.call_to_action.action')
-    .box
-      .box-image[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
+    .box.motion
+      .box-image--container
+        .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
       section.section-info.motion-bg
         span.fa.fa-lightbulb-o
         span.icon-left= t('motions.type')

@@ -27,10 +27,6 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
     .cover-buttons
       .cover-buttons-container
         ul.btns-horizontal
-          - if current_user.blank?
-            li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn--pro'
-              span.fa.fa-plus
-              span.icon-left= t('sign_up')
           - if policy(@forum).update?
             li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
               span.fa.fa-gear
