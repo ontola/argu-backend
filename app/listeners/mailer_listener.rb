@@ -21,6 +21,16 @@ class MailerListener
     end
   end
 
+  def create_question_successful(question)
+    recipients = follower_emails_for(question, question.forum)
+    # TODO: single out the creator and send a different mail
+    if recipients.present?
+      UserMailer
+          .user_created_question(question, recipients)
+          .deliver_now
+    end
+  end
+
   def follower_emails_for(resource, in_response_to)
     in_response_to
         .subscribers

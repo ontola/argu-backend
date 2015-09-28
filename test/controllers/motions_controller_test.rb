@@ -121,17 +121,6 @@ class MotionsControllerTest < ActionController::TestCase
     assert_redirected_to motion_path(assigns(:cm).resource)
   end
 
-  test 'should put update on own motion' do
-    sign_in users(:user)
-
-    put :update, id: motions(:one), motion: {title: 'New title', content: 'new contents'}
-
-    assert_not_nil assigns(:motion)
-    assert_equal 'New title', assigns(:motion).title
-    assert_equal 'new contents', assigns(:motion).content
-    assert_redirected_to motion_url(assigns(:motion))
-  end
-
   test 'should not put update on others motion' do
     sign_in users(:user2)
 
@@ -166,6 +155,39 @@ class MotionsControllerTest < ActionController::TestCase
 
     put :move, motion_id: motions(:one)
     assert_redirected_to root_url
+  end
+
+  ####################################
+  # As Owner
+  ####################################
+  let(:owner) { create_member(holland) }
+  let(:owner_motion) { FactoryGirl.create(:motion,
+                                            creator: owner.profile,
+                                            forum: holland) }
+
+  test 'owner should put update' do
+    sign_in users(:user)
+
+    put :update, id: motions(:one), motion: {title: 'New title', content: 'new contents'}
+
+    assert_not_nil assigns(:motion)
+    assert_equal 'New title', assigns(:motion).title
+    assert_equal 'new contents', assigns(:motion).content
+    assert_redirected_to motion_url(assigns(:motion))
+  end
+
+  test 'owner should render form for faulty put update' do
+    sign_in owner
+
+    put :update,
+        id: owner_motion,
+        motion: {
+            title: 't',
+            content: 'new contents'
+        }
+
+    assert_response 200
+    assert assigns(:motion).changed?
   end
 
   ####################################

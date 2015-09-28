@@ -18,6 +18,12 @@ class UserMailer < ApplicationMailer
          subject: t('mailer.user_mailer.user_created_motion.subject', title: @motion.forum.display_name)
   end
 
+  def user_created_question(item, recipients, opts = {})
+    @question = item
+    mail to: recipients,
+         subject: t('mailer.user_mailer.user_created_question.subject', title: @question.forum.display_name)
+  end
+
   def user_password_changed(user)
     @user = user
     mail to: @user.email,

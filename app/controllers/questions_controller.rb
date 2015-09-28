@@ -25,7 +25,7 @@ class QuestionsController < AuthenticatedController
     current_context @question
     respond_to do |format|
       format.js { render js: "window.location = #{request.url.to_json}" }
-      format.html { render 'form' }
+      format.html { render 'form', locals: {question: @question} }
       format.json { render json: @question }
     end
   end
@@ -37,29 +37,33 @@ class QuestionsController < AuthenticatedController
     @forum = @question.forum
     current_context @question
     respond_to do |format|
-      format.html { render 'form' }
+      format.html { render 'form', locals: {question: @question} }
     end
   end
 
   def create
     @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :add_question?
-
-    @question = @forum.questions.new
-    @question.attributes = permit_params
-    @question.creator = current_profile
-    authorize @question
-
-    respond_to do |format|
-      if @question.save
-        create_activity @question, action: :create, recipient: @question.forum, owner: current_profile, forum_id: @forum.id
-        format.html { redirect_to @question, notice: t('type_save_success', type: question_type) }
-        format.json { render json: @question, status: :created, location: @question }
-      else
-        format.html { render 'form' }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
+    @cq = CreateQuestion.new current_profile,
+                          permit_params.merge({
+                              forum: @forum
+                          })
+    authorize @cq.resource, :create?
+    @cq.subscribe(ActivityListener.new)
+    @cq.subscribe(MailerListener.new)
+    @cq.on(:create_question_successful) do |question|
+      respond_to do |format|
+        format.html { redirect_to question, notice: t('type_save_success', type: question_type) }
+        format.json { render json: question, status: :created, location: question }
       end
     end
+    @cq.on(:create_question_failed) do |question|
+      respond_to do |format|
+        format.html { render 'form', locals: {question: question} }
+        format.json { render json: question.errors, status: :unprocessable_entity }
+      end
+    end
+    @cq.commit
   end
 
   # PUT /questions/1
@@ -75,7 +79,7 @@ class QuestionsController < AuthenticatedController
         format.html { redirect_to @question, notice: t('type_save_success', type: question_type) }
         format.json { head :no_content }
       else
-        format.html { render 'form' }
+        format.html { render 'form', locals: {question: @question} }
         format.json { render json: @question.errors, status: :unprocessable_entity }
       end
     end

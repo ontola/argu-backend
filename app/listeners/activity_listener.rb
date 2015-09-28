@@ -22,4 +22,15 @@ class ActivityListener
                  recipient: recipient)
     a.commit
   end
+
+  def create_question_successful(question)
+    a = CreateActivity
+            .new(question.creator,
+                 trackable: question,
+                 key: 'question.create',
+                 owner: question.creator,
+                 forum: question.forum,
+                 recipient: question.forum)
+    a.commit
+  end
 end

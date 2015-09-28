@@ -22,6 +22,7 @@ class Profile < ActiveRecord::Base
   has_many :pages, inverse_of: :owner, foreign_key: :owner_id
   has_many :votes, as: :voter, dependent: :destroy
   has_many :motions, inverse_of: :creator, foreign_key: 'creator_id'
+  has_many :questions, inverse_of: :creator, foreign_key: 'creator_id'
 
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, CoverUploader

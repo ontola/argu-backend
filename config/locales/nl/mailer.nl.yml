@@ -13,3 +13,13 @@ nl:
     user_mailer:
       user_commented:
         subject: "Nieuwe reactie toegevoegd bij %{title}"
+        responded_to: " heeft gereageerd op een %{type} welke je volgt"
+        view_reply: "Bekijk reactie"
+      user_created_motion:
+        subject: "Nieuw idee voor %{title}"
+        responded_to: " heeft een idee geplaatst voor een %{type} welke je volgt"
+        view_reply: "Bekijk idee"
+      user_created_question:
+        subject: "Nieuw vraagstuk geplaatst in forum %{title}"
+        responded_to: " heeft een vraagstuk geplaatst voor een forum dat je volgt."
+        view_reply: "Bekijk vraagstuk"
