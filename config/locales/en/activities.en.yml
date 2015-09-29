@@ -10,7 +10,7 @@ en:
         con: "opposes a %{thing}"
         con_your: "opposes your %{thing}"
     questions:
-      create: "Posted a %{type} for a forum %{thing}"
+      create: "Posted a %{type} on the forum %{thing}"
       create_your: "Posted a %{type} for your forum %{thing}"
     motions:
       create: "Posted an %{type} for a %{thing}"
