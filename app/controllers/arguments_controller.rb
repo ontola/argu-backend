@@ -3,10 +3,8 @@ class ArgumentsController < AuthenticatedController
   # GET /arguments/1
   # GET /arguments/1.json
   def show
-    @argument = Argument.includes(:comment_threads).find params[:id]
     @forum = @argument.forum
     current_context @argument
-    authorize @argument, :show?
     @parent_id = params[:parent_id].to_s
     
     @comments = @argument.filtered_threads(show_trashed?, params[:page])
@@ -124,6 +122,11 @@ class ArgumentsController < AuthenticatedController
   end
 
 private
+  def authorize_show
+    @argument = Argument.includes(:comment_threads).find params[:id]
+    authorize @argument, :show?
+  end
+
   def argument_params
     params.require(:argument).permit(*policy(@argument || Argument).permitted_attributes)
   end

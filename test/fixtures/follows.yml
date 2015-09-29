@@ -12,3 +12,9 @@ utrecht_owner_follows_utrecht:
 user_follows_question_one_no_create_without_question:
   followable: question_one_no_create_without_question (Question)
   follower: user (User)
+utrecht_owner_follows_motion_one:
+  followable: one (Motion)
+  follower: user_utrecht_owner (User)
+utrecht_owner_follows_argument_one:
+  followable: one (Argument)
+  follower: user_utrecht_owner (User)

@@ -1,13 +1,13 @@
 class NotificationListener
 
   def create_activity_successful(activity)
-    create_notifications_for(activity, activity.trackable.followers)
+    create_notifications_for(activity, activity.recipient.followers)
   end
 
 private
 
   def create_notifications_for(activity, followers)
     notifications = followers.map { |f| {user: f, activity: activity}  }
-    Notification.create([notifications])
+    Notification.create!([notifications])
   end
 end

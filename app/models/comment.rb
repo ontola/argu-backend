@@ -63,6 +63,10 @@ class Comment < ActiveRecord::Base
     commentable_str.constantize.find(commentable_id)
   end
 
+  def subscribable
+    self.parent || self.commentable
+  end
+
   def forum
     commentable.forum
   end

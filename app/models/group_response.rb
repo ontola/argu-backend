@@ -35,7 +35,7 @@ class GroupResponse < ActiveRecord::Base
                                     if group.max_responses_per_member == -1
                                       Float::INFINITY
                                     else
-                                      group.max_responses_per_member - obj.responses_from(profile)
+                                      group.max_responses_per_member - obj.responses_from(profile, group)
                                     end
                                   else
                                     0

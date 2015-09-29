@@ -1,5 +1,17 @@
 class ActivityListener
 
+  def create_argument_successful(argument)
+    a = CreateActivity
+            .new(argument.creator,
+                 trackable: argument,
+                 key: 'argument.create',
+                 owner: argument.creator,
+                 forum: argument.forum,
+                 recipient: argument.motion)
+    a.subscribe(NotificationListener.new)
+    a.commit
+  end
+
   def create_comment_successful(comment)
     a = CreateActivity
             .new(comment.creator,
@@ -7,7 +19,8 @@ class ActivityListener
                  key: 'comment.create',
                  owner: comment.creator,
                  forum: comment.forum,
-                 recipient: comment.commentable)
+                 recipient: comment.subscribable)
+    a.subscribe(NotificationListener.new)
     a.commit
   end
 
@@ -20,6 +33,7 @@ class ActivityListener
                  owner: motion.creator,
                  forum: motion.forum,
                  recipient: recipient)
+    a.subscribe(NotificationListener.new)
     a.commit
   end
 
@@ -31,6 +45,7 @@ class ActivityListener
                  owner: question.creator,
                  forum: question.forum,
                  recipient: question.forum)
+    a.subscribe(NotificationListener.new)
     a.commit
   end
 end

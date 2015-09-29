@@ -38,7 +38,7 @@ module ActivityStringHelper
       item_type = question_type(item.forum)
     else
       item = motion.forum
-      item_type = t("#{item.class_name}.type")
+      item_type = I18n.t("#{item.class_name}.type")
     end
     thing = embedded_link ? link_to(item_type, item, title: item.display_name) : item_type
     activity_string = I18n.t("activities.motions.create#{your}", type: item_type, thing: thing)

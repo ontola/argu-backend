@@ -1,8 +1,6 @@
 class QuestionsController < AuthenticatedController
 
   def show
-    @question = Question.find(params[:id])
-    authorize @question
     @forum = @question.forum
     current_context @question
     @question_answers = @question.question_answers
@@ -157,6 +155,11 @@ class QuestionsController < AuthenticatedController
   end
 
 private
+  def authorize_show
+    @question = Question.find(params[:id])
+    authorize @question, :show?
+  end
+
   def self.forum_for(url_options)
     Question.find_by(url_options[:question_id] || url_options[:id]).try(:forum)
   end

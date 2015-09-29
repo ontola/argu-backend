@@ -4,6 +4,7 @@ class AuthenticatedController < ApplicationController
                 only: %i(new create delete destroy edit update)
   before_action :check_if_member,
                 only: %i(new create delete destroy edit update)
+  before_action :authorize_show, only: :show
 
   rescue_from Argu::NotAUserError do |exception|
     @resource ||= User.new(r: exception.r, shortname: Shortname.new)
@@ -35,6 +36,10 @@ class AuthenticatedController < ApplicationController
   end
 
 private
+  def authorize_show
+    authorize authenticated_resource!, :show?
+  end
+
   def check_if_member
     if current_profile.present? &&
         !(current_profile.member_of?(authenticated_context) ||

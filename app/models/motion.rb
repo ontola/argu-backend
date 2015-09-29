@@ -134,8 +134,8 @@ class Motion < ActiveRecord::Base
     self.votes_pro_count - self.votes_con_count
   end
 
-  def responses_from(profile)
-    self.group_responses.where(profile_id: profile.id).count
+  def responses_from(profile, group)
+    self.group_responses.where(profile_id: profile.id, group: group).count
   end
 
   def score

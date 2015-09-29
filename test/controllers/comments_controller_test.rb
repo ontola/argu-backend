@@ -25,7 +25,7 @@ class CommentsControllerTest < ActionController::TestCase
     sign_in users(:user)
 
     assert_broadcast(:create_comment_successful) do
-      assert_difference('Comment.count') do
+      assert_differences create_changes_array do
         post :create,
              argument_id: arguments(:one),
              comment: {
@@ -165,5 +165,13 @@ class CommentsControllerTest < ActionController::TestCase
            wipe: 'true'
 
     assert_redirected_to argument_url(comment.commentable, anchor: comment.id)
+  end
+
+private
+  def create_changes_array
+    [['Comment.count', 1],
+     ['Activity.count', 1],
+     ['UserMailer.deliveries.size', 1],
+     ['Notification.count', 1]]
   end
 end

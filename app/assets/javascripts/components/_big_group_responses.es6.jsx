@@ -92,7 +92,6 @@ window.BigGroupResponse = React.createClass({
                 return (<div key={group.id}>
                     {respond}
                     {buttons}
-                    {responses}
                 </div>);
             })}
         </div>);

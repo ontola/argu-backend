@@ -14,10 +14,6 @@ class CommentsController < AuthenticatedController
   end
 
   def show
-    @comment = Comment.find params[:id]
-    set_tenant(@comment)
-    authorize @comment, :show?
-
     respond_to do |format|
       format.html { redirect_to url_for([@comment.commentable, anchor: @comment.identifier]) }
     end
@@ -117,6 +113,12 @@ class CommentsController < AuthenticatedController
   end
 
 private
+  def authorize_show
+    @comment = Comment.find params[:id]
+    set_tenant(@comment)
+    authorize @comment, :show?
+  end
+
   def authenticated_resource!
     resource, id = request.path.split('/')[1,2]
     # noinspection RubyCaseWithoutElseBlockInspection

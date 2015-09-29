@@ -1,11 +1,21 @@
 class MailerListener
 
-  def create_comment_successful(comment)
-    recipients = follower_emails_for(comment, comment.commentable)
+  def create_argument_successful(argument)
+    recipients = follower_emails_for(argument, argument.motion)
     # TODO: single out the creator and send a different mail
     if recipients.present?
       UserMailer
-          .user_commented(comment, recipients)
+          .user_created_argument(argument, recipients)
+          .deliver_now
+    end
+  end
+
+  def create_comment_successful(comment)
+    recipients = follower_emails_for(comment, comment.subscribable)
+    # TODO: single out the creator and send a different mail
+    if recipients.present?
+      UserMailer
+          .user_created_comment(comment, recipients)
           .deliver_now
     end
   end

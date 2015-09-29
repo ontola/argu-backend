@@ -66,7 +66,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'should post create pro' do
     sign_in users(:user)
 
-    assert_difference('Argument.count') do
+    assert_differences create_changes_array do
       assert_difference('Vote.count') do
         post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents', auto_vote: 'true'}
       end
@@ -84,7 +84,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'should post create con' do
     sign_in users(:user)
 
-    assert_difference('Argument.count') do
+    assert_differences create_changes_array do
       assert_difference('Vote.count') do
         post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'con', title: 'Test argument con', content: 'Test argument con-tents', auto_vote: 'true'}
       end
@@ -102,7 +102,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'should post create pro without auto_vote' do
     sign_in users(:user)
 
-    assert_difference('Argument.count') do
+    assert_differences create_changes_array do
       assert_no_difference('Vote.count') do
         post :create, forum_id: forums(:utrecht), argument: {motion_id: motions(:one).id, pro: 'pro', title: 'Test argument pro', content: 'Test argument pro-tents', auto_vote: 'false'}
       end
@@ -128,4 +128,11 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_equal arguments(:one), assigns(:argument)
   end
 
+private
+  def create_changes_array
+    [['Argument.count', 1],
+     ['Activity.count', 1],
+     ['UserMailer.deliveries.size', 1],
+     ['Notification.count', 1]]
+  end
 end

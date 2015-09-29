@@ -11,14 +11,18 @@ en:
       header: "Hello %recipient.name%"
       first_paragraph: "Someone left you a message"
     user_mailer:
-      user_commented:
+      user_created_comment:
         subject: "New comment on %{title}"
         responded_to: " has replied to an %{type} you're following"
         view_reply: "View reply"
+      user_created_argument:
+        subject: "New argument placed for %{title}"
+        responded_to: " has placed an argument for a %{type} you're following"
+        view_reply: "View argument"
       user_created_motion:
         subject: "New idea on %{title}"
-        responded_to: " has replied to an %{type} you're following"
-        view_reply: "View reply"
+        responded_to: " has added an idea to a %{type} you're following"
+        view_reply: "View idea"
       user_created_question:
         subject: "New question added to forum %{title}"
         responded_to: " has added a question to a forum you're following"

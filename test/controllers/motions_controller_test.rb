@@ -261,6 +261,9 @@ class MotionsControllerTest < ActionController::TestCase
 
   private
   def create_changes_array
-    [['Motion.count', 1], ['Activity.count', 1], ['UserMailer.deliveries.size', 1]]
+    [['Motion.count', 1],
+     ['Activity.count', 1],
+     ['UserMailer.deliveries.size', 1],
+     ['Notification.count', 1]]
   end
 end

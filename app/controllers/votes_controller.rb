@@ -1,27 +1,22 @@
 class VotesController < AuthenticatedController
-  skip_before_action :check_if_registered, except: :create
-  skip_before_action :check_if_member, except: :create
+  skip_before_action :check_if_member, only: :destroy
 
   # GET /model/:model_id/vote
   def show
     @model = get_voteable
 
-    if current_profile.blank?
-      authorize @model, :show?
-      render_register_modal(nil)
-    else
-      authorize @model.forum, :show?
+    authorize @model.forum, :show?
 
-      @vote = Vote.find_by(voteable: @model, voter: current_profile, forum: @model.forum)
+    @vote = Vote.find_by(voteable: @model, voter: current_profile, forum: @model.forum)
 
-      respond_to do |format|
-        if current_profile.member_of? @model.forum
-          format.json { render 'create', location: @vote }
-        else
-          format.html { render template: 'forums/join', locals: { forum: @model.forum, r: request.fullpath } }
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @model.forum, r: request.fullpath } }
-          format.json { render 'create', location: @vote }
-        end
+    respond_to do |format|
+      if current_profile.member_of? @model.forum
+        format.html { redirect_to url_for([:new, @model, :vote, for: for_param]) }
+        format.json { render 'create', location: @vote }
+      else
+        format.html { render template: 'forums/join', locals: { forum: @model.forum, r: request.fullpath } }
+        format.js { render partial: 'forums/join', layout: false, locals: { forum: @model.forum, r: request.fullpath } }
+        format.json { render 'create', location: @vote }
       end
     end
   end
@@ -93,6 +88,11 @@ class VotesController < AuthenticatedController
   end
 
   private
+
+  def authenticated_resource!
+    get_voteable
+  end
+
   def check_if_member
     resource = get_voteable
     if current_profile.present? && !current_profile.member_of?(resource.forum)
@@ -119,11 +119,13 @@ class VotesController < AuthenticatedController
   end
 
   def for_param
-    if params[:for].present?
+    if params[:for].is_a?(Hash)
+      params[:vote][:for]
+    elsif params[:for].is_a?(String)
       warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
       params[:for]
     else
-      params[:vote][:for]
+      nil
     end
   end
 

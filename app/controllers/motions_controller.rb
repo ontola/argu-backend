@@ -23,10 +23,8 @@ class MotionsController < AuthenticatedController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    @motion = Motion.includes(:arguments).find(params[:id])
     @forum = @motion.forum
     current_context @motion
-    authorize @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes))
     @group_responses = Group.ordered_with_meta @motion.group_responses, @forum.groups, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
@@ -196,6 +194,11 @@ class MotionsController < AuthenticatedController
   end
 
 private
+  def authorize_show
+    @motion = Motion.includes(:arguments).find(params[:id])
+    authorize @motion, :show?
+  end
+
   def self.forum_for(url_options)
     Motion.find_by(url_options[:motion_id] || url_options[:id]).try(:forum)
   end

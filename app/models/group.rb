@@ -20,11 +20,6 @@ class Group < ActiveRecord::Base
     self.members.include?(profile)
   end
 
-  def self.ordered (coll=[], keys= [])
-    grouped = coll.group_by { |g| g.group }
-    (keys + grouped.keys).map { |g| {g => GroupResponse.ordered_with_meta(grouped[g] || {}) } }.reduce(&:merge)
-  end
-
   def self.ordered_with_meta (coll=[], keys= [], profile, obj)
     grouped = coll.group_by { |g| g.group }
     (keys + grouped.keys).map { |g| {g => GroupResponse.ordered_with_meta(grouped[g] || {}, profile, obj, g) } }.reduce(&:merge)
@@ -35,7 +30,7 @@ class Group < ActiveRecord::Base
       if max_responses_per_member == -1
         Float::INFINITY
       else
-        max_responses_per_member - group_respondable.responses_from(profile)
+        max_responses_per_member - group_respondable.responses_from(profile, self)
       end
     else
       -1
