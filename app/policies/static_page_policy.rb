@@ -25,6 +25,10 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
     true
   end
 
+  def new_discussion?
+    true
+  end
+
   def team?
     true
   end

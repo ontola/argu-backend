@@ -82,12 +82,35 @@
   z-index: -1;
 }
 
+.cover-hero-text {
+  color: white;
+  @include text-shadow--blue;
+  margin-top: 1em;
+  font-weight: 400;
+  font-size: 1.3em;
+  @include bp-medium() {
+    font-size: 1.1em;
+  }
+}
+
 .cover-image{
   width: 100%;
   background-size: cover;
   background-position: center;
   height: 100%;
   height: 19em;
+}
+
+.cover .cover-image {
+  @include bp-large{
+    height: 16em;
+  }
+  @include bp-medium {
+    height: 12em;
+  }
+  @include bp-small {
+    height: 11em;
+  }
 }
 
 .cover--small {
@@ -116,7 +139,7 @@
     color: white;
     font-size: 1.6em;
     display: block !important;
-    text-shadow: 0em 0em 0.1em rgba(0,0,0,0.3);
+    @include text-shadow--blue;
   }
 }
 
@@ -128,18 +151,6 @@
   h3 {
     color: $g4;
     text-shadow: none;
-  }
-}
-
-.cover .cover-image {
-  @include bp-large{
-    height: 16em;
-  }
-  @include bp-medium {
-    height: 12em;
-  }
-  @include bp-small {
-    height: 11em;
   }
 }
 
@@ -165,7 +176,7 @@
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: rgba(71, 86, 104, 0.47);
+  background-color: rgba(71, 86, 104, 0.6);
 
   .profile-picture {
     width: 5em;
@@ -176,18 +187,25 @@
 
 .cover-switcher-wrapper {
   position: absolute;
-  bottom: 3em;
+  bottom: 3.5em;
   width: 100%;
 
+  @include bp-large {
+    bottom: 3em;
+  }
+  @include bp-medium {
+    bottom: 2em;
+  }
+
   .profile-picture {
-    height: 7em;
-    width: 7em;
+    height: 3em;
+    width: 3em;
     background-size: cover;
     display: inline-block;
     border-radius: 99999px;
     @include bp-large {
-      height: 5em;
-      width: 5em;
+      height: 3em;
+      width: 3em;
     }
     @include bp-medium {
       height: 3em;
@@ -197,13 +215,14 @@
 }
 
 .cover-switcher {
+  display: inline-block;
 
   .dropdown {
     display: inline-block;
   }
 
   .dropdown-trigger {
-    padding: .4em;
+    padding: 0 0.3em;
     position: relative;
     display: inline-block;
     color: white;
@@ -228,4 +247,18 @@
 
 .cover-in-box {
 
+}
+
+.cover--forum {
+  margin-bottom: 1em;
+  background-color: $blu;
+}
+
+.bg-img {
+  opacity: 0;
+  @include transition(opacity 1s ease-in-out)
+}
+
+.bg-loaded {
+  opacity: 1;
 }

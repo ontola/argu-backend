@@ -2,7 +2,7 @@ require 'test_helper'
 
 class StaticPagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
-  EXCLUDED_METHODS = [:modern, :how_argu_works, :persist_cookie]
+  EXCLUDED_METHODS = [:modern, :how_argu_works, :persist_cookie, :new_discussion]
 
   test 'should get redirect' do
     sign_in users(:user)

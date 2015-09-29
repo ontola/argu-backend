@@ -117,6 +117,18 @@ module ApplicationHelper
     dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
   end
 
+  def display_settings_items
+    link_items = []
+
+    link_items = [
+        link_item(t('info_bar'), nil, fa: 'info', data: {'display-setting' => 'info_bar'}),
+        link_item(t('images'), nil, fa: 'image', data: {'display-setting' => 'image'}),
+        link_item(t('columns'), nil, fa: 'columns', data: {'display-setting' => 'columns'})
+    ]
+
+    dropdown_options(t('display'), [{items: link_items}], fa: 'fa-columns')
+  end
+
   def process_cover_photo(object, _params)
     if params[object.class.name.downcase][:cover_photo].present?
       object.assign_attributes(_params.except(:cover_photo))

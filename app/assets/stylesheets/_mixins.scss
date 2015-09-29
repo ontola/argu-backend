@@ -96,6 +96,9 @@
 @mixin text-shadow {
   text-shadow: 0em 0em 0.1em rgba(0, 0, 0, 0.3);
 }
+@mixin text-shadow--blue {
+  text-shadow: 0em 0em 0.2em $blu;
+}
 
 @mixin container-width {
   max-width: 1200px;

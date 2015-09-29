@@ -119,10 +119,10 @@ input[type="submit"].nav-search-button {
 .profile-picture--navbar{
   height: 2.2em;
   width: 2.2em;
-  margin: 7px;
+  margin: .4em;
   margin-left: 0;
-  margin-right: 7px;
-  border-radius: 999px;
+  margin-right: .4em;
+  @include border-radius(999px);
   @include bp-medium-large{
     margin-right: 0;
   }
@@ -187,5 +187,23 @@ input[type="submit"].nav-search-button {
     &.fa {
       display: inline-block;
     }
+  }
+}
+
+.hide-l {
+  @include bp-large {
+    display: none !important;
+  }
+}
+
+.hide-ml {
+  @include bp-medium-large {
+    display: none !important;
+  }
+}
+
+.hide-m {
+  @include bp-medium {
+    display: none !important;
   }
 }

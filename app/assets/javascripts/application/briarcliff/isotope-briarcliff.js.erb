@@ -100,6 +100,15 @@ $(function () {
     }).on('click', '#sorts a', function () {
         var sortValue = $(this).attr('data-sort-value');
         $container.isotope({ sortBy: sortValue });
+    }).on('click', '#display [data-display-setting="info_bar"]', function () {
+        console.log($(this));
+       $('.grid').toggleClass( 'display-hide-details'); $( '.grid' ).isotope()
+    }).on('click', '#display [data-display-setting="image"]', function () {
+        console.log($(this));
+       $('.grid').toggleClass( 'display-hide-images'); $( '.grid' ).isotope()
+    }).on('click', '#display [data-display-setting="columns"]', function () {
+        console.log($(this));
+       $('.grid').toggleClass( 'display-single-column'); $( '.grid' ).isotope()
     });
 
     // change is-checked class on buttons

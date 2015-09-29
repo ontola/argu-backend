@@ -455,6 +455,10 @@
   display: inline-block;
 }
 
+.btns-padded li {
+  margin: 0.6em;
+}
+
 .btns--vote a{
   padding: .5em !important;
   margin: 0;
@@ -543,4 +547,11 @@ a.is-loading{
 
 .btn--square {
   @include border-radius(0);
+}
+
+.btn--in-subtle-list{
+  vertical-align: top;
+  @include border-radius(0);
+  line-height: 1.3em;
+  box-sizing: border-box;
 }
