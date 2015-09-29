@@ -1,0 +1,8 @@
+.box[class="#{'trashed' if model.is_trashed?}" itemscope="itemscope" itemtype="Question"]
+  section
+    h3[itemprop="headline"]= contextual_link_to model.title, question_path(model), class: 'question-t'
+    p[itemprop="text"]= model.supped_content[0..150] + (model.supped_content[151] ? '...' : '')
+    =contextual_link_to question_path(model), class: 'read-more' do
+      span.icon-right= t('read_more')
+      span.fa.fa-arrow-right
+    .clearfix

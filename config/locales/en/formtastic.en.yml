@@ -72,6 +72,7 @@ en:
         middle_name: "Middele name(s)"
         last_name: "Last name*"
         has_analytics: "Google Analytics"
+        follows_email: "Email"
     hints:
       tag_list: "Choose themes related to your subject."
       username: "At least 4 characters. Numbers, letters and '_'. only."

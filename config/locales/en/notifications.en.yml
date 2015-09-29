@@ -4,3 +4,6 @@ en:
     all: "All notifications"
     settings: "Settings"
     mark_as_read: "Mark as read"
+    email:
+      tooltip: "Email notifications"
+      beta: "Email notifications are still in beta, so not all the kinks and quirks are ironed out yet"

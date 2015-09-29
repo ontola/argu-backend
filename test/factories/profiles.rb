@@ -11,5 +11,9 @@ FactoryGirl.define do
         profile.memberships.create(forum: forum)
       end
     end
+
+    factory :profile_direct_email do
+      association :profileable, factory: [:user, :follows_email], strategy: :build
+    end
   end
 end

@@ -14,7 +14,7 @@ FactoryGirl.define do
     end
 
     # Holland (the default)
-    factory :populated_forum, traits: [:with_follower] do
+    factory :populated_forum do
       motion_count 20
 
       after(:create) do |forum, evaluator|
@@ -23,6 +23,7 @@ FactoryGirl.define do
         create :access_token, item: forum
         cap = Setting.get('user_cap').try(:to_i)
         Setting.set('user_cap', -1) unless cap.present?
+        forum.page.owner.profileable.follow forum
       end
 
       factory :populated_forum_vwal, traits: [:vwal]
@@ -45,12 +46,6 @@ FactoryGirl.define do
     # Helsinki
     trait :hidden do
       visibility Forum.visibilities[:hidden]
-    end
-
-    trait :with_follower do
-      after(:create) do |forum, evaluator|
-        FactoryGirl.create(:user, :confirmed).follow(forum)
-      end
     end
   end
 end

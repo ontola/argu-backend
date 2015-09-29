@@ -46,7 +46,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
           span.fa.fa-plus
           span.icon-left Nieuwe discussie
     .btns-center-container
-      =link_to new_discussion_path(forum: @forum), class: 'btn btn--pro'
+      =link_to new_discussion_path(forum_id: @forum), class: 'btn btn--pro'
         span.fa.fa-plus
         span.icon-left= t('new_discussion.title')
       =render partial: 'filter_and_sort'

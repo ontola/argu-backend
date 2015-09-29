@@ -25,6 +25,11 @@ FactoryGirl.define do
       confirmed_at Time.now
     end
 
+    trait :follows_email do
+      confirmed_at Time.now
+      follows_email User.follows_emails[:direct_follows_email]
+    end
+
     trait :forum_manager do
       after(:create) do |user, evaluator|
         create(:profile_with_memberships)
