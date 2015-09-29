@@ -79,7 +79,7 @@ class CommentsController < AuthenticatedController
 
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to @comment,
+        format.html { redirect_to comment_url(@comment),
                                   notice: t('comments.notices.updated') }
         format.js { render }
         format.json { head :no_content }
