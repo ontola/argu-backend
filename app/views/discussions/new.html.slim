@@ -17,7 +17,7 @@
       section
         p
           span= t('questions.call_to_action.body') + ' '
-          =link_to new_forum_question_path(@forum), data: remote_unless_user do
+          =link_to new_forum_question_path(@forum)
             b.question-t= t('questions.call_to_action.action')
     .box.question
       .box-image--container
@@ -37,7 +37,7 @@
               span.fa.fa-lightbulb-o
               span.icon-left= t('new_discussion.question_motion2')
     .center
-      =link_to new_forum_question_path(@forum), data: remote_unless_user, class: 'btn--question' do
+      =link_to new_forum_question_path(@forum), class: 'btn--question'
         span.fa.fa-plus
         span.icon-left= t('questions.type_new')
   .col-2-1
@@ -45,7 +45,7 @@
       section
         p
           span= t('motions.call_to_action.body') + ' '
-          =link_to new_forum_motion_path(@forum), data: remote_unless_user do
+          =link_to new_forum_motion_path(@forum)
             b.motion-t= t('motions.call_to_action.action')
     .box.motion
       .box-image--container
@@ -56,21 +56,20 @@
       section
         h3.motion-t= t('new_discussion.motion_title')
         ul.box-list.box-list--arguments.box-list--icons
-            li
-              h3[class="pro-t tooltip--wider"]
-                span.fa.fa-plus
-                /span.icon-left= t('arguments.form.side.pro').capitalize
-                span.icon-left= t('new_discussion.motion_argument1')
-            li
-              h3[class="pro-t tooltip--wider"]
-                span.fa.fa-plus
-                span.icon-left= t('new_discussion.motion_argument2')
+          li
+            h3[class="pro-t tooltip--wider"]
+              span.fa.fa-plus
+              span.icon-left= t('new_discussion.motion_argument1')
+          li
+            h3[class="pro-t tooltip--wider"]
+              span.fa.fa-plus
+              span.icon-left= t('new_discussion.motion_argument2')
         ul.box-list.box-list--arguments.box-list--icons
-            li
-              h3[class="con-t tooltip--wider"]
-                span.fa.fa-minus
-                span.icon-left= t('new_discussion.motion_argument3')
+          li
+            h3[class="con-t tooltip--wider"]
+              span.fa.fa-minus
+              span.icon-left= t('new_discussion.motion_argument3')
     .center
-      =link_to new_forum_motion_path(@forum), data: remote_unless_user, class: 'btn--motion' do
+      =link_to new_forum_motion_path(@forum), class: 'btn--motion'
         span.fa.fa-plus
         span.icon-left= t('motions.type_new')
