@@ -4,7 +4,11 @@ class ChangeNotificationProfileToUser < ActiveRecord::Migration
 
     Notification.find_each do |n|
       u = Profile.find(n.user_id).profileable
-      n.update_column(:user_id, u.id) if u.is_a? User
+      if u.is_a? User
+        n.update_column(:user_id, u.id)
+      elsif u.is_a? Page
+        n.destroy
+      end
     end
 
     add_foreign_key :notifications, :users, on_delete: :cascade
