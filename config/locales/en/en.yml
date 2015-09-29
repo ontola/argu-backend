@@ -6,6 +6,7 @@ en:
   name_phonetic: "\\\'är-(ˌ)gyü\\"
   owner: "Thom van Kalkeren & Joep Meindertsma"
   system_not_allowed: "you do not have clearance for this action."
+  still_in_development: "Still in development"
   sign_in: "Log in"
   sign_up_sign_in: "Register or log in"
   sign_in_facebook: "Log in with facebook"

@@ -10,7 +10,7 @@ en:
       categories:
         general: "General"
         authentication: "Authentication"
-        notifications: "Meldingen"
+        notifications: "Alerts beta"
       confirmed: "E-mail confirmed"
       unconfirmed: "E-mail not yet confirmed"
     follows_email:
