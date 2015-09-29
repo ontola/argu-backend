@@ -67,4 +67,5 @@ module Argu
     config.i18n.default_locale = :nl
     I18n.locale = :nl
   end
+  require_dependency 'app/services/application_service'
 end
