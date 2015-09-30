@@ -119,11 +119,11 @@ class VotesController < AuthenticatedController
   end
 
   def for_param
-    if params[:vote].is_a?(Hash)
-      params[:vote][:for]
-    elsif params[:for].is_a?(String)
+    if params[:for].is_a?(String)
       warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
       params[:for]
+    elsif params[:vote].is_a?(Hash)
+      params[:vote][:for]
     else
       nil
     end
