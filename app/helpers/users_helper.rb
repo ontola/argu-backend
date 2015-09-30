@@ -47,8 +47,12 @@ module UsersHelper
     # changed? so we can safely write back to the DB
     if user.valid? && user.persisted? && !user.changed?
       if user.profile.memberships.blank?
-        forum = forum_from_r_action(user) || preferred_forum(user.profile)
-        user.profile.memberships.create(forum: forum) if forum.present? && policy(forum).join?
+        begin
+          forum = forum_from_r_action(user) || preferred_forum(user.profile)
+          user.profile.memberships.create(forum: forum) if forum.present? && policy(forum).join?
+        rescue ActiveRecord::RecordNotFound => e
+          Bugsnag.notify(e)
+        end
       end
     end
   end

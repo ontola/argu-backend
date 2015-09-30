@@ -18,12 +18,12 @@ en:
       unauthenticated: 'You must authenticate before you can continue.'
       unconfirmed: 'You must confirm your account before you can continue.'
       locked: 'Your account is locked.'
-      invalid: 'Invalid email adress or password.'
       invalid_token: 'Invalid authentication token.'
       timeout: 'Your session has expired, log in to continue.'
       inactive: 'Your account has not been activated.'
+      invalid: 'We couldn''t find a user with that email and password combination.'
       user:
-        not_found_in_database: 'Invalid email adress or password.'
+        not_found_in_database: 'We couldn''t find a user with that email and password combination.'
     sessions:
       signed_in: 'Welcome back!'
       signed_out: 'You have signed out successfully.'

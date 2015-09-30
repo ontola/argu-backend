@@ -2,10 +2,19 @@
 
 Argu.alert = {
     init: function () {
+        function fadeOnStart () {
+            Argu.alert.fadeAll();
+            document.removeEventListener('mousemove', fadeOnStart, false);
+            document.removeEventListener('keydown', fadeOnStart, false);
+            document.removeEventListener('touchstart', fadeOnStart, false);
+        }
+        document.addEventListener('mousemove', fadeOnStart, false);
+        document.addEventListener('keydown', fadeOnStart, false);
+        document.addEventListener('touchstart', fadeOnStart, false);
+
         $(document)
             .on('pjax:end', Argu.alert.fadeAll)
             .ajaxComplete(Argu.alert.handleJSONBody);
-        Argu.alert.fadeAll();
     },
 
     fade: function (duration, _alert) {

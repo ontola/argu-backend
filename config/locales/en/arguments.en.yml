@@ -64,6 +64,9 @@ en:
       edit: "Edit comment"
       placed_by: "%{user} - %{date}"
       none: "No replies"
+      confirm:
+        headline: "Confirm reaction"
+        skip: "Not now, just show the argument"
     notices:
       restored: "The argument has been restored."
       created: "The argument has been placed."
@@ -75,6 +78,8 @@ en:
           attributes:
             title:
               blank: "You need to add a title for your argument."
+            forum:
+              different: "The argument and it's motion must belong to the same forum"
     attributes:
       argument:
         title: "Title"

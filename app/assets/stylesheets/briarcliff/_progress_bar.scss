@@ -12,6 +12,8 @@
     display: inline-block;
     margin: 0 0;
     width: 33.3%;
+    overflow: hidden;
+    white-space: nowrap;
   }
   span {
     width: 100%;
@@ -24,12 +26,16 @@
     color: white;
     border-left: solid .1em $g1;
     border-right: solid .1em $g1;
+    @include bp-small {
+      // Compensates for the percent sign
+      padding-left: 0.2em;
+    }
   }
   .btn-pro {
     background-color: $gre;
     border-left: none;
   }
-  .btn-neu {
+  .btn-neutral {
     background-color: $g3;
   }
   .btn-con {

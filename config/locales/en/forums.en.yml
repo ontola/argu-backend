@@ -8,6 +8,7 @@ en:
     plural: "Forums"
     my: "My forums"
     current: "This forum"
+    back_to: "Go back to forum"
     resource_name:
       management: "forum management"
     settings:
@@ -104,6 +105,7 @@ en:
     tooltips:
       members_count: "number of members"
     visit: "Visit forum"
+    shortname_helper_html: "https://argu.co/<b>your_argu_url</b>"
   activerecord: #These currently aren't used for forms.
     attributes:
       forum:

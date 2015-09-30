@@ -14,20 +14,29 @@ en:
       body: "Are you looking for good ideas to a burning question?"
       action: "Share your question!"
     form:
-      title_heading: "What's your question?"
+      title_heading: "Ask an open question"
       title_body_html: "<ul class='bullets'>
-                         <li>Post a <b class='question-t'>question</b> to present a problem and find a solution.</li>
-                         <li>Ask an <b>open question</b> that invites people to submit their own ideas and solutions.</li>
+                         <li>A question should invite people to submit their own ideas and solutions.</li>
                        </ul>"
       content_heading: "Explain your question"
-      content_body_html: " Explain what constitutes a good solution."
       content_body_html: "<ul class='bullets'>
                             <li>Explain the <b>current situation</b>. Give background information about the problem and why it hasn't been solved yet.</li>
                             <li>Explain what constitutes a good solution.</li>
+                            <li>End by <b>repeating the question</b> to encourage readers to submit their ideas.</li>
                           </ul>"
       themes: "theme1, theme2"
       invert: "invert all arguments"
       helper:
+        examples:
+          title: "Examples"
+          first: "What measures can we take to prevent traffic accidents?"
+          1_explained: "Be sure to use an open question."
+          second: "How can we lower CO2 emissions?"
+          2_explained: "A question should invite other to submit their ideas."
+          third: "Should we ban tobacco?"
+          3_explained: "The question should not be answerable by 'yes' or 'no'."
+          fourth: "Should we use more wind turbines?"
+          4_explained: "No closed questions. If your question is closed, try posting an idea."
         title: "Describe the core of the question here"
         content: "Describe the question in detail, give a background story and explain the current situation. Do not place arguments here."
         themes: "Themes or subjects related to this question. Place comma's between the themes."

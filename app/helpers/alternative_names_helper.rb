@@ -120,6 +120,8 @@ module AlternativeNamesHelper
       question_type(item.forum)
     elsif item.class == Argument
       argument_type(item.forum)
+    elsif item.class == Comment
+      I18n.t('comments.type')
     end
   end
 end

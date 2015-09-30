@@ -1,0 +1,75 @@
+/.col-1
+  header
+    h1= t('new_discussion.title')
+  .box
+    section
+      p
+        span= t('new_discussion.forum_notice')
+        =link_to @forum do
+          b= @forum.name
+        span= '. '
+        span= t('new_discussion.forum_notice2')
+.col-2.col-2--small
+  header
+    h2= t('new_discussion.what_kind')
+  .col-2-1
+    .box
+      section
+        p
+          span= t('questions.call_to_action.body') + ' '
+          =link_to new_forum_question_path(@forum)
+            b.question-t= t('questions.call_to_action.action')
+    .box.question
+      .box-image--container
+        .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-question-cover.jpg')}'); "]
+      section.section-info.question-bg
+        span.fa.fa-question
+        span.icon-left= t('questions.type')
+      section
+        h3.question-t= t('new_discussion.question_title')
+        ul.box-list.box-list--icons
+          li
+            h3.motion-t
+              span.fa.fa-lightbulb-o
+              span.icon-left= t('new_discussion.question_motion1')
+          li
+            h3.motion-t
+              span.fa.fa-lightbulb-o
+              span.icon-left= t('new_discussion.question_motion2')
+    .center
+      =link_to new_forum_question_path(@forum), class: 'btn--question'
+        span.fa.fa-plus
+        span.icon-left= t('questions.type_new')
+  .col-2-1
+    .box
+      section
+        p
+          span= t('motions.call_to_action.body') + ' '
+          =link_to new_forum_motion_path(@forum)
+            b.motion-t= t('motions.call_to_action.action')
+    .box.motion
+      .box-image--container
+        .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
+      section.section-info.motion-bg
+        span.fa.fa-lightbulb-o
+        span.icon-left= t('motions.type')
+      section
+        h3.motion-t= t('new_discussion.motion_title')
+        ul.box-list.box-list--arguments.box-list--icons
+          li
+            h3[class="pro-t tooltip--wider"]
+              span.fa.fa-plus
+              span.icon-left= t('new_discussion.motion_argument1')
+          li
+            h3[class="pro-t tooltip--wider"]
+              span.fa.fa-plus
+              span.icon-left= t('new_discussion.motion_argument2')
+        ul.box-list.box-list--arguments.box-list--icons
+          li
+            h3[class="con-t tooltip--wider"]
+              span.fa.fa-minus
+              span.icon-left= t('new_discussion.motion_argument3')
+    .center
+      =link_to new_forum_motion_path(@forum), class: 'btn--motion'
+        span.fa.fa-plus
+        span.icon-left= t('motions.type_new')

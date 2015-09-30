@@ -1,13 +1,30 @@
-class MotionsController < ApplicationController
-  before_action :get_context, only: [:new, :create]
+class MotionsController < AuthenticatedController
+  before_action :get_context, only: [:index, :new, :create]
+
+  def index
+    authorize Motion, :index?
+    if params[:q].present? && params[:thing].present?
+      @motions = policy_scope(Motion).search(params[:q])
+      if @motions.present?
+        render json: @motions
+      else
+        head 204
+      end
+    else
+      skip_verify_policy_scoped(true)
+      errors = []
+      errors << { title: 'Query parameter `q` not present' } unless params[:q].present?
+      errors << { title: 'Type parameter `thing` not present' } unless params[:thing].present?
+      render status: 400,
+             json: {errors: errors}
+    end
+  end
 
   # GET /motions/1
   # GET /motions/1.json
   def show
-    @motion = Motion.includes(:arguments).find(params[:id])
     @forum = @motion.forum
     current_context @motion
-    authorize @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes))
     @group_responses = Group.ordered_with_meta @motion.group_responses, @forum.groups, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
@@ -29,22 +46,12 @@ class MotionsController < ApplicationController
       question = Question.find(params[:question_id])
       @motion.questions << question if @motion.forum_id == question.forum_id
     end
-    if current_profile.blank?
-      authorize @motion, :show?
-      render_register_modal(nil)
-    else
-      authorize @motion, @motion.questions.presence ? :new? : :new_without_question?
-      current_context @motion
-      respond_to do |format|
-        if current_profile.member_of? @motion.forum
-          format.js { render js: "window.location = #{request.url.to_json}" }
-          format.html { render 'form' }
-          format.json { render json: @motion }
-        else
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: @motion.forum, r: request.fullpath} }
-          format.html { render template: 'forums/join', locals: { forum: @motion.forum, r: request.fullpath, no_close: true } }
-        end
-      end
+    authorize @motion, @motion.questions.presence ? :new? : :new_without_question?
+    current_context @motion
+    respond_to do |format|
+      format.js { render js: "window.location = #{request.url.to_json}" }
+      format.html { render 'form', locals: {motion: @motion} }
+      format.json { render json: @motion }
     end
   end
 
@@ -55,7 +62,7 @@ class MotionsController < ApplicationController
     current_context @motion
     authorize @motion
     respond_to do |format|
-      format.html { render 'form' }
+      format.html { render 'form', locals: {motion: @motion} }
     end
   end
 
@@ -63,26 +70,30 @@ class MotionsController < ApplicationController
   # POST /motions.json
   def create
     get_context
-    authorize @forum, :add_motion?
 
-    @motion = @forum.motions.new
-    @motion.attributes= permit_params
-    @question_id = params[:question_id] || params[:motion][:question_id]
-    @motion.creator = current_profile
-    @motion.questions << @question if @question.present?
-    authorize @motion, @motion.questions.presence ? :create? : :create_without_question?
-    first = current_profile.motions.count == 0 || nil
-
-    respond_to do |format|
-      if @motion.save
-        create_activity @motion, action: :create, recipient: (@question.presence || @motion.forum), owner: current_profile, forum_id: @motion.forum.id
-        format.html { redirect_to motion_path(@motion, start_motion_tour: first), notice: t('type_save_success', type: motion_type) }
-        format.json { render json: @motion, status: :created, location: @motion }
-      else
-        format.html { render 'form' }
-        format.json { render json: @motion.errors, status: :unprocessable_entity }
+    @cm = CreateMotion.new current_profile,
+                           permit_params.merge({
+                               questions: [@question].compact,
+                               forum_id: @forum.id
+                           })
+    action = @cm.resource.questions.presence ? :create? : :create_without_question?
+    authorize @cm.resource, action
+    @cm.subscribe(ActivityListener.new)
+    @cm.subscribe(MailerListener.new)
+    @cm.on(:create_motion_successful) do |motion|
+      respond_to do |format|
+        first = current_profile.motions.count == 1 || nil
+        format.html { redirect_to motion_path(motion, start_motion_tour: first), notice: t('type_save_success', type: motion_type) }
+        format.json { render json: motion, status: :created, location: motion }
       end
     end
+    @cm.on(:create_motion_failed) do |motion|
+      respond_to do |format|
+        format.html { render 'form', locals: {motion: @cm.resource} }
+        format.json { render json: motion.errors, status: :unprocessable_entity }
+      end
+    end
+    @cm.commit
   end
 
   # PUT /motions/1
@@ -96,7 +107,7 @@ class MotionsController < ApplicationController
     @motion.reload if process_cover_photo @motion, permit_params
     respond_to do |format|
       if @motion.update(permit_params)
-        if params[:motion].present? && params[:motion][:tag_id].present? && @motion.tags.reject { |a,b| a.motion==b }.first.present?
+        if params[:motion].present? && params[:motion][:tag_id].present? && @motion.tags.reject { |a,b| a.motion == b }.first.present?
           format.html { redirect_to tag_motions_url(Tag.find_by_id(@motion.tag_id).name)}
           format.json { head :no_content }
         else
@@ -104,7 +115,7 @@ class MotionsController < ApplicationController
           format.json { head :no_content }
         end
       else
-        format.html { render 'form' }
+        format.html { render 'form', locals: {motion: @motion} }
         format.json { render json: @motion.errors, status: :unprocessable_entity }
       end
     end
@@ -183,8 +194,9 @@ class MotionsController < ApplicationController
   end
 
 private
-  def permit_params
-    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+  def authorize_show
+    @motion = Motion.includes(:arguments).find(params[:id])
+    authorize @motion, :show?
   end
 
   def self.forum_for(url_options)
@@ -195,6 +207,10 @@ private
     if params[:question_id].present? || defined?(params[:motion][:question_id]) && params[:motion][:question_id].present?
       @question = Question.find(params[:question_id] || params[:motion][:question_id])
     end
-    @forum = Forum.find_via_shortname(params[:forum_id]) if params[:forum_id].present?
+    @forum = authenticated_context
+  end
+
+  def permit_params
+    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
   end
 end

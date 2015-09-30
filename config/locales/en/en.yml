@@ -6,6 +6,7 @@ en:
   name_phonetic: "\\\'är-(ˌ)gyü\\"
   owner: "Thom van Kalkeren & Joep Meindertsma"
   system_not_allowed: "you do not have clearance for this action."
+  still_in_development: "Still in development"
   sign_in: "Log in"
   sign_up_sign_in: "Register or log in"
   sign_in_facebook: "Log in with facebook"
@@ -60,6 +61,7 @@ en:
   reply: "Reply"
   report: "Report"
   clearance: "Clearance"
+  access_denied: "You're not authorized for that action. (%{action})"
   forum: "Forum"
   share: "Share"
   menu: "Menu"
@@ -212,6 +214,7 @@ en:
   columns: "Columns"
   info_bar: "Info bar"
   images: "Images"
+  display: "Display"
   markdown_helper_html: "<h2>Add links</h2>
                 <p>You can add links in your text by using square brackets and normal brackets.</p>
                 <code>This is [Argu](www.argu.co).</code>
@@ -229,6 +232,18 @@ en:
   welcome_video_dismiss: "Hide this message."
   follow: 'Follow'
   unfollow: 'Unfollow'
+  new_discussion:
+    title: 'New discussion'
+    what_kind: 'What kind of discussion do you want to start?'
+    question_title: 'How can we increase happiness?'
+    question_motion1: 'Free access to spas'
+    question_motion2: 'Subsidies for street artists'
+    motion_title: 'Free access to spas'
+    motion_argument1: 'Cleaner people'
+    motion_argument2: 'Social cohesion'
+    motion_argument3: 'High cost'
+    forum_notice: "You're about to start a discussion in the forum: "
+    forum_notice2: 'Make sure your discussion is relevant to this forum.'
   seo:
     argument:
       name: 'Argument %{side} %{motiontitle}'

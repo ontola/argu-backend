@@ -1,32 +1,59 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common, Mailable
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common
 
+  belongs_to :forum, inverse_of: :motions
+  belongs_to :creator, class_name: 'Profile'
+  belongs_to :publisher, class_name: 'User'
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :votes, as: :voteable, :dependent => :destroy
   has_many :question_answers, inverse_of: :motion, dependent: :destroy
   has_many :questions, through: :question_answers
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :group_responses
-  belongs_to :forum, inverse_of: :motions
-  belongs_to :creator, class_name: 'Profile'
+  has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
-  counter_culture :forum
-
-  before_save :trim_data
   before_save :cap_title
   after_save :creator_follow
 
+  counter_culture :forum
+  acts_as_followable
   parentable :questions, :forum
   convertible :votes, :taggings, :activities
-  mailable MotionFollowerCollector, :directly, :daily, :weekly
   resourcify
   mount_uploader :cover_photo, CoverUploader
 
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 110 }
-  validates :forum_id, :creator_id, presence: true
+  validates :forum, :creator, presence: true
+  validate :assert_tenant
+  auto_strip_attributes :title, squish: true
+  auto_strip_attributes :content
+
+  VOTE_OPTIONS = [:pro, :neutral, :con]
+
+  scope :search, ->(q) { where('lower(title) SIMILAR TO lower(?) OR ' +
+                                'lower(content) LIKE lower(?)',
+                                "%#{q}%",
+                                "%#{q}%") }
+
+  def assert_tenant
+    if self.questions.map { |q| q.forum }.uniq.length > 1
+      errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))
+    end
+  end
+
+  def as_json(options = {})
+    super(options.merge(
+              {
+                  methods: %i(display_name),
+                  only: %i(id content forum_id created_at cover_photo
+                           updated_at pro_count con_count
+                           votes_pro_count votes_con_count votes_neutral_count
+                           argument_pro_count argument_con_count)
+              }))
+  end
 
   def cap_title
     self.title[0] = self.title[0].upcase
@@ -42,7 +69,9 @@ class Motion < ActiveRecord::Base
   end
 
   def creator_follow
-    self.creator.follow self
+    if self.creator.profileable.is_a?(User)
+      self.creator.profileable.follow self
+    end
   end
 
   # http://schema.org/description
@@ -105,8 +134,8 @@ class Motion < ActiveRecord::Base
     self.votes_pro_count - self.votes_con_count
   end
 
-  def responses_from(profile)
-    self.group_responses.where(profile_id: profile.id).count
+  def responses_from(profile, group)
+    self.group_responses.where(profile_id: profile.id, group: group).count
   end
 
   def score
@@ -135,9 +164,12 @@ class Motion < ActiveRecord::Base
     votes_pro_count.abs + votes_con_count.abs + votes_neutral_count.abs
   end
 
-  def trim_data
-    self.title = title.strip
-    self.content = content.strip
+  def update_vote_counters
+    vote_counts = self.votes.group('"for"').count
+    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
+                votes_con_count: vote_counts[Vote.fors[:con]] || 0,
+                votes_neutral_count: vote_counts[Vote.fors[:neutral]] || 0,
+                votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
   end
 
   def votes_pro_percentage

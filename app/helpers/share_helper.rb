@@ -8,7 +8,7 @@ module ShareHelper
 
   # https://dev.twitter.com/web/intents
   def self.twitter_share_url(url, options = {})
-    "https://twitter.com/intent/tweet?url=#{CGI.escape(url)}&text=#{CGI.escape(options[:title])}%20%23Argu"
+    "https://twitter.com/intent/tweet?url=#{CGI.escape(url)}&text=#{CGI.escape(options[:title])}%20%40argu_co"
   end
 
   # https://developer.linkedin.com/docs/share-on-linkedin

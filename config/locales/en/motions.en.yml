@@ -17,7 +17,7 @@ en:
       count: "number of ideas"
     votes:
       pro: "Agree"
-      neu: "Neutral"
+      neutral: "Neutral"
       con: "Disagree"
       show: "Show vote results"
     preview:
@@ -32,16 +32,15 @@ en:
     revisions:
       title_wiped: 'Deleted arguments'
     form:
-      title_heading: "Add a title to your idea"
+      title_heading: "Summarize your idea in one sentence"
       title_body_html: "<ul class='bullets'>
                     <li>Describe your idea <b>as short as possible</b>.</li>
-                    <li>Be <b>clear</b> and avoid words that few people understand.</li>
                   </ul>"
       content_heading: "Describe your idea in detail"
       content_body_html: "<ul class='bullets'>
-                            <li>Explain what your idea exactly entails. Explain what needs to happen and how this should happen.</li>
+                            <li>Make your idea <b>concrete</b>. Explain what needs to happen and how this should happen.</li>
                             <li>Give <b>background information</b>. Explain the current situation.</li>
-                            <li><b>Don't add arguments</b> just yet; do that after you've submitted your idea. That way, we keep </li>
+                            <li><b>Don't add arguments</b> just yet; do that after you've submitted your idea.</li>
                           </ul>"
       themes: "theme1, theme2"
       invert: "invert all arguments"
@@ -62,7 +61,7 @@ en:
       tags: "Find questions and motions with the theme "
     call_to_action:
       title: "Do you have a good idea?"
-      body: "Do you know how a problem can be solved? Do you have a proposition?"
+      body: "Do you have a good idea and do you want to convince others?"
       action: "Share your idea!"
 
     #motion types
@@ -105,3 +104,10 @@ en:
   pundit:
     motion_policy:
       vote?: "You can't vote on items yet. Make sure to become a member of the forum."
+  activerecord:
+    errors:
+      models:
+        motions:
+          attributes:
+            forum:
+              different: "The motion and it's question(s) must belong to the same forum"

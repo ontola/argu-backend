@@ -18,3 +18,4 @@ nl:
       con: "Tegen"
     confirm:
       headline: "Bevestig stem"
+      skip: "Niet nu, stemmen overslaan"

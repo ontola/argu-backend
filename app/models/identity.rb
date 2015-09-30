@@ -16,8 +16,8 @@ class Identity < ActiveRecord::Base
   def access_token
     begin
       ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base).decrypt_and_verify(super) if super
-    rescue ActiveSupport::MessageVerifier::InvalidSignature
-      nil
+    rescue ActiveSupport::MessageVerifier::InvalidSignature => e
+      Bugsnag.notify(e)
     end
   end
 
@@ -28,8 +28,8 @@ class Identity < ActiveRecord::Base
   def access_secret
     begin
       ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base).decrypt_and_verify(super) if super
-    rescue ActiveSupport::MessageVerifier::InvalidSignature
-      nil
+    rescue ActiveSupport::MessageVerifier::InvalidSignature => e
+      Bugsnag.notify(e)
     end
   end
 

@@ -9,7 +9,7 @@ class GroupResponse < ActiveRecord::Base
   # Same as `creator`
   belongs_to :profile
   # Physical creator of the GroupReponse (the one responsible).
-  belongs_to :created_by, class_name: 'Profile'
+  belongs_to :publisher, class_name: 'User'
 
   parentable :motion, :forum
 
@@ -35,7 +35,7 @@ class GroupResponse < ActiveRecord::Base
                                     if group.max_responses_per_member == -1
                                       Float::INFINITY
                                     else
-                                      group.max_responses_per_member - obj.responses_from(profile)
+                                      group.max_responses_per_member - obj.responses_from(profile, group)
                                     end
                                   else
                                     0

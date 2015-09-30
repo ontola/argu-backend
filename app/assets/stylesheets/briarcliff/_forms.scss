@@ -287,6 +287,7 @@ li.form-helper {
 .formtastic li {
   clear: both;
   position: relative;
+  list-style: none;
   //line-height: 0; //Fixes a weird margin before inline hints, but also causes a weird issue for normal helpers.
 }
 
@@ -306,6 +307,10 @@ input[type="file"] {
 
 .inline-errors {
   margin: -1.3em 0 1.5em 0;
+  &.full-width {
+    width: 100%;
+    margin-left: auto;
+  }
 }
 
 input:focus + p.inline-hints, textarea:focus + p.inline-hints {
@@ -317,6 +322,7 @@ input:focus + p.inline-hints, textarea:focus + p.inline-hints {
 p.inline-hints {
   //opacity: 0;
   max-height: 0;
+  margin: 0;
   overflow: hidden;
   display: block;
   box-sizing: border-box;
@@ -324,9 +330,11 @@ p.inline-hints {
   color: white;
   pointer-events: none;
   padding: 0;
-  position: absolute;
+  position: relative;
   bottom: 100%;
   z-index: 10;
+  margin-top: -1.3em;
+  margin-bottom: 1.3em;
   @include transition(.2s);
   @include box-shadow-intense;
 }
@@ -339,6 +347,10 @@ p.inline-hints {
 .formtastic .inline-errors, .formtastic .inline-hints {
   margin-left: 30%;
   width: 70%;
+  &.full-width {
+    width: 100%;
+    margin-left: auto;
+  }
   @include bp-medium{
     margin-left: 0 !important;
     width: 100%;
@@ -356,24 +368,9 @@ p.inline-hints {
     margin: 0;
   }
 }
-/*
-select {
-  padding:.3em;
-  -webkit-appearance:none;
-  -moz-appearance:none;
-  appearance:none;
-  cursor:pointer;
 
-  &:after {
-    content: '';
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 1em .6em 0 .6em;
-    border-color: #000000 transparent transparent transparent;
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
+.avatar-preview {
+  height: 4em;
+  width: 4em;
+  border-radius: 999px;
 }
-*/

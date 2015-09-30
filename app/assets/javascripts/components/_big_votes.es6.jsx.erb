@@ -22,6 +22,10 @@ window.BigVoteButtons = React.createClass({
         return this.props.actor === null ? v : undefined;
     },
 
+    ifActor: function (v) {
+        return this.props.actor === null ? undefined : v;
+    },
+
     refresh: function () {
         fetch(`${this.state.vote_url}.json`, _safeCredentials())
                 .then(statusSuccess)
@@ -78,19 +82,31 @@ window.BigVoteButtons = React.createClass({
     render: function () {
         return (
             <ul className="btns-opinion" data-voted={(this.state.current_vote.length > 0 && this.state.current_vote != 'abstain') || null}>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method={this.ifNoActor('post')} data-remote={this.ifNoActor('true')} onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
                     <span className="fa fa-thumbs-up" />
                     <span className="icon-left"><%= I18n.t('motions.votes.pro') %></span>
                 </a></li>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/neutral`)} data-method={this.ifNoActor('post')} data-remote={this.ifNoActor('true')} onClick={this.neutralHandler} rel="nofollow" className="btn-neu" data-voted-on={this.state.current_vote == 'neutral' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/neutral`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.neutralHandler} rel="nofollow" className="btn-neutral" data-voted-on={this.state.current_vote == 'neutral' || null}>
                     <span className="fa fa-pause" />
-                    <span className="icon-left"><%= I18n.t('motions.votes.neu') %></span>
+                    <span className="icon-left"><%= I18n.t('motions.votes.neutral') %></span>
                 </a></li>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/con`)} data-method={this.ifNoActor('post')} data-remote={this.ifNoActor('true')} onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote == 'con' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/con`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote == 'con' || null}>
                     <span className="fa fa-thumbs-down" />
                     <span className="icon-left"><%= I18n.t('motions.votes.con') %></span>
                 </a></li>
             </ul>);
+    }
+});
+
+window.BigVoteFormButton = React.createClass({
+
+    render () {
+        return(
+            <a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method="post" rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
+                <span className="fa fa-thumbs-up" />
+                <span className="icon-left"><%= I18n.t('motions.votes.pro') %></span>
+            </a>
+        )
     }
 });
 
@@ -118,12 +134,12 @@ window.BigVoteResults = React.createClass({
         if (this.props.show_results) {
             results = (
                     <ul className="progress-bar progress-bar-stacked">
-                        <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.distribution.pro}</span></li>
-                        <li style={this.voteWidth('neutral')}><span className="btn-neu">{this.props.distribution.neutral}</span></li>
-                        <li style={this.voteWidth('con')}><span className="btn-con">{this.props.distribution.con}</span></li>
+                        <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.percent.pro + '%'}</span></li>
+                        <li style={this.voteWidth('neutral')}><span className="btn-neutral">{this.props.percent.neutral + '%'}</span></li>
+                        <li style={this.voteWidth('con')}><span className="btn-con">{this.props.percent.con + '%'}</span></li>
                     </ul>);
         } else {
-            results = (<p>Stem om te zien wat <b>{this.props.total_votes}</b> anderen gestemd hebben!</p>);
+            results = null;
         }
 
         return results;

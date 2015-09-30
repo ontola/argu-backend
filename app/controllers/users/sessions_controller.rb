@@ -1,7 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
 
   def new
-    self.resource = resource_class.new({r: request.referer}.merge(sign_in_params))
+    self.resource = resource_class.new({r: r_from_url_or_header}.merge(sign_in_params))
     clean_up_passwords(resource)
     respond_to do |format|
       format.html { render 'devise/sessions/new', layout: 'guest', locals: {resource: resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
@@ -17,7 +17,7 @@ class Users::SessionsController < Devise::SessionsController
       yield resource if block_given?
       r = r_with_authenticity_token(params[:user][:r] || '')
       resource.update r: ''
-      redirect_to r, status: is_post?(r) ? 307 : 302
+      redirect_to r
     else
       super
     end
@@ -42,16 +42,8 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
-  private
-
-  def r_with_authenticity_token(r)
-    uri = URI.parse(r)
-    query = URI.decode_www_form(uri.query || '')
-    query << ['authenticity_token', form_authenticity_token] if is_post?(r)
-    uri.query = URI.encode_www_form(query)
-    uri.to_s
-  end
-
+private
+  # TODO: Code the 307 away
   def is_post?(r)
     r.match(/\/v(\?|\/)|\/c(\?|\/)/)
   end
@@ -61,7 +53,18 @@ class Users::SessionsController < Devise::SessionsController
     "#{Rails.application.secrets.freshdesk_url}login/sso?name=#{current_user.url}&email=#{current_user.email}&timestamp=#{utctime}&hash=#{generate_hash_from_params_hash(utctime)}"
   end
 
-  private
+  def r_from_url_or_header
+    params[:r] || request.referer
+  end
+
+  def r_with_authenticity_token(r)
+    uri = URI.parse(r)
+    query = URI.decode_www_form(uri.query || '')
+    query << ['authenticity_token', form_authenticity_token] if is_post?(r)
+    uri.query = URI.encode_www_form(query)
+    uri.to_s
+  end
+
   def generate_hash_from_params_hash(utctime)
     digest = OpenSSL::Digest::Digest.new('MD5')
     OpenSSL::HMAC.hexdigest(digest, Rails.application.secrets.freshdesk_secret, current_user.url + current_user.email + utctime)

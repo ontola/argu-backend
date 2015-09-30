@@ -67,7 +67,9 @@ nl:
       placed_by: "%{user} - %{date}"
       none: "Geen reacties"
       comments:
-        confirm: "Bevestig reactie"
+        confirm:
+          headline: "Bevestig reactie"
+          skip: "Niet nu, laat het argument zien"
     notices:
       restored: "Het argument is teruggeplaatst."
       created: "Het argument is geplaatst."
@@ -79,6 +81,8 @@ nl:
           attributes:
             title:
               blank: "Je moet een titel voor jouw argument opgeven."
+            forum:
+              different: "The argument and it's motion must belong to the same forum"
     attributes:
       argument:
         title: "Titel"

@@ -1,21 +1,16 @@
 .box.box-small
   section
     =semantic_form_for(resource, :as => resource_name, :url => session_path(resource_name, host_url: params[:host_url].presence) ) do |f|
-      - if resource.errors.any?
-        #error_explanation
-          ul
-            - resource.errors.full_messages.each do |msg|
-              li= msg
       =devise_error_messages!
       .form-small
         h2= t('sign_in')
-        .inspectlet-sensitive=f.inputs
+        .inspectlet-sensitive=f.inputs do
           /.info.info-signup= t('sign_in_existing')
           =f.input :email, placeholder: false, input_html: {autofocus: :autofocus, required: true}
           =f.input :password, placeholder: false, hint: false, input_html: {required: true}
           =f.input :r, as: :hidden
           - if devise_mapping.rememberable?
-            .remember= f.input :remember_me, as: :boolean
+            .remember.margin-bottom= f.input :remember_me, as: :boolean
         =f.actions do
           =f.action :submit, as: :button, label: t('sign_in'), button_html: { id: 'log_in' }
         /= render partial: "devise/shared/links", locals: {resource: resource, resource_name: resource_name, devise_mapping: devise_mapping}

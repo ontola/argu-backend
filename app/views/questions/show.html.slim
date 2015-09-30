@@ -4,7 +4,7 @@
                description: seolized_description(@question),
                image: @question.cover_photo.url || image_url('logo-social.png')
 .cover-behind
-  .cover-image[style="background-image: url('#{@question.cover_photo.url}'); "]
+  .cover-image.bg-img[style="background-image: url('#{@question.cover_photo.url}'); "]
 .col-1
   div[data-intro= t('intro.question.back')]= to_parent
   =render partial: 'contextualize/context_horizontal', locals: {item: @question, type: 'que'}
@@ -24,16 +24,23 @@
     ul.btns-list--subtle.btns-sticky.btns-sticky-bottom.btns-horizontal.btns-list--grey-background
       - if active_for_user?(:notifications, current_user) && current_profile.present?
         li[data-title=I18n.t('tooltips.follow')]
-          =react_component 'ActiveToggle', {url: follows_path(question_id: @question.id, format: :json),
-                                            initialState: current_profile.following?(@question),
-                                            true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
-                                            false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
+          =react_component 'ActiveToggle',
+                           {url: follows_path(question_id: @question.id, format: :json),
+                            initialState: current_user.following?(@question),
+                            true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
+                            false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                            {prerender: true}
       - if current_user.present? && policy(@question).update?
         li
           ul= react_component 'HyperDropdown', question_items(@question), {prerender: true}
-      li
-        ul= react_component 'HyperDropdown', share_items(@question), {prerender: true}
+      - if @question.forum.visibility
+        li
+          ul= react_component 'ShareDropdown', share_items(@question), {prerender: true}
 .col-1
   .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
-=render_columns({'' => {collection: policy_scope(@motions)}}, collection_model: Motion, buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]), buttons_text: t('add_type', type: motion_type))
+=render_columns({'' => {collection: policy_scope(@question_answers)}},
+                header: t('motions.header'),
+                header_text: 'test',
+                collection_model: QuestionAnswer,
+                buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]),
+                buttons_text: t('add_type', type: motion_type))

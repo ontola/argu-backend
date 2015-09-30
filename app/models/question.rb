@@ -3,11 +3,14 @@ class Question < ActiveRecord::Base
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
+  belongs_to :publisher, class_name: 'User'
   has_many :question_answers, inverse_of: :question, dependent: :destroy
   has_many :votes, as: :voteable, :dependent => :destroy
   has_many :motions, through: :question_answers
   has_many :activities, as: :trackable, dependent: :destroy
+  has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
+  acts_as_followable
   counter_culture :forum
   parentable :forum
   convertible :votes, :taggings, :activities
@@ -16,6 +19,8 @@ class Question < ActiveRecord::Base
   validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
   validates :title, presence: true, length: { minimum: 5, maximum: 110 }
   validates :forum_id, :creator_id, presence: true
+  auto_strip_attributes :title, squish: true
+  auto_strip_attributes :content
   #TODO validate expires_at
 
   attr_accessor :include_motions
@@ -28,7 +33,9 @@ class Question < ActiveRecord::Base
   end
 
   def creator_follow
-    self.creator.follow self
+    if self.creator.profileable.is_a?(User)
+      self.creator.profileable.follow self
+    end
   end
 
   def display_name
@@ -76,6 +83,12 @@ class Question < ActiveRecord::Base
 
   def top_motions
     motions.trashed(false).order(updated_at: :desc).limit(3)
+  end
+
+  def update_vote_counters
+    vote_counts = self.votes.group('"for"').count
+    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
+                votes_con_count: vote_counts[Vote.fors[:con]] || 0
   end
 
   scope :index, ->(trashed, page) { trashed(trashed).page(page) }

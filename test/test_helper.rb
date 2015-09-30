@@ -5,6 +5,9 @@ require 'minitest/rails'
 require 'mocha/mini_test'
 require 'model_test_base'
 require 'capybara/rails'
+require 'wisper/minitest/assertions'
+require 'simplecov'
+require 'fakeredis'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -47,14 +50,13 @@ class ActiveSupport::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  fixtures %i(activities arguments comments documents forums memberships motions page_memberships pages
+  fixtures %i(activities arguments comments documents forums follows memberships motions page_memberships pages
               profiles profiles_roles question_answers questions roles rules settings shortnames taggings
               tags users votes access_tokens identities)
 
   include FactoryGirl::Syntax::Methods
   #FactoryGirl.lint
   # Add more helper methods to be used by all tests here...
-
 
   def create_manager(forum, user = nil)
     user ||= FactoryGirl.create(:user)
@@ -98,5 +100,13 @@ class ActionDispatch::IntegrationTest
       config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
       config.allow_url 'https://www.youtube.com/embed/mxQZNodm8OI'
     end
+  end
+end
+
+class FactoryGirl::Evaluator
+  def passed_in?(name)
+    # https://groups.google.com/forum/?fromgroups#!searchin/factory_girl/stack$20level/factory_girl/MyYKwbq76d0/JrKJZCgaXMIJ
+    # Also check that we didn't pass in nil.
+    __override_names__.include?(name) && send(name)
   end
 end

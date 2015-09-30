@@ -23,6 +23,7 @@ user_utrecht_owner:
   first_name: 'User'
   last_name: 'Lastname'
   confirmed_at: <%= Time.now %>
+  follows_email: 3
 # Manager of the page and forum of utrecht
 user_utrecht_manager:
   email: 'user@utrecht.nl'
@@ -47,7 +48,8 @@ user:
   first_name: 'User1'
   last_name: 'Lastname1'
   confirmed_at: <%= Time.now %>
-# A general user, member of utrecht and amsterdam
+  follows_email: 3
+# A general user, member of utrecht, amsterdam and no_create_without_question
 user2:
   email: 'user2@argu.co'
   encrypted_password: <%= Devise.bcrypt User, 'useruser' %>
@@ -55,6 +57,7 @@ user2:
   first_name: 'User2'
   last_name: 'Lastname2'
   confirmed_at: <%= Time.now %>
+  follows_email: 3
 # A general user, member of amsterdam
 # Is assigned fb_login later
 user3:

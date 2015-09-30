@@ -14,14 +14,16 @@ class MotionPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      scope
+      if context.forum.present?
+        scope.where(forum_id: context.forum.id)
+      end
     end
   end
 
   def permitted_attributes
     attributes = super
     attributes << [:title, :content, :votes, :tag_list, :cover_photo, :remove_cover_photo, :cover_photo_attribution] if create?
-    attributes << [:id] if edit?
+    attributes << [:id] if record.is_a?(Motion) && edit?
     attributes << [:invert_arguments, :tag_id, :forum_id, :f_convert] if staff?
     attributes
   end

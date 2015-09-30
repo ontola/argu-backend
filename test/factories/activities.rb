@@ -1,10 +1,18 @@
 FactoryGirl.define do
 
   factory :activity do
-    association :forum
+    transient do
+      tenant {
+        passed_in?(:forum) ? forum : FactoryGirl.build(:forum)
+      }
+    end
+
+    #association :forum
     association :owner, factory: :profile
-    association :trackable, factory: :question
-    association :recipient, factory: :forum
+    #association :trackable, factory: :question
+    recipient {
+      passed_in?(:trackable) ?  trackable : tenant
+    }
     key :create
 
     trait :t_question do
@@ -16,7 +24,9 @@ FactoryGirl.define do
     end
 
     trait :t_argument do
-      association :trackable, factory: :argument
+      trackable {
+        passed_in?(:trackable) ? trackable : FactoryGirl.create(:argument, forum: tenant)
+      }
     end
 
     trait :t_comment do

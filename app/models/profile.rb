@@ -10,27 +10,29 @@ class Profile < ActiveRecord::Base
 
   has_many :access_tokens, dependent: :destroy
   has_many :activities, as: :owner, dependent: :destroy
+  has_many :arguments, inverse_of: :creator, foreign_key: 'creator_id'
   has_many :comments, dependent: :destroy
   has_many :forums, through: :memberships
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships
   has_many :memberships, dependent: :destroy
   has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
-  has_many :notifications, dependent: :destroy
   has_many :page_memberships, dependent: :destroy
   has_many :page_managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
   has_many :pages, inverse_of: :owner, foreign_key: :owner_id
   has_many :votes, as: :voter, dependent: :destroy
   has_many :motions, inverse_of: :creator, foreign_key: 'creator_id'
+  has_many :questions, inverse_of: :creator, foreign_key: 'creator_id'
 
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, CoverUploader
 
   #pica_pica :profile_photo
-  acts_as_follower
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}
+  auto_strip_attributes :name, :squish => true
+  auto_strip_attributes :about, :nullify => false
 
   def as_json(options)
     # Hide profileable for the more friendly actor
@@ -43,6 +45,10 @@ class Profile < ActiveRecord::Base
 
   def actor_id
     profileable_id
+  end
+
+  def confirmed?
+    profileable.try :confirmed?
   end
 
   # http://schema.org/description
@@ -99,7 +105,7 @@ class Profile < ActiveRecord::Base
   def preferred_forum
     last_forum = Argu::Redis.get("profile:#{self.id}:last_forum")
 
-    (Forum.find(last_forum) if last_forum.present?) || self.memberships.first.try(:forum) || Forum.first_public
+    (Forum.find_by(id: last_forum) if last_forum.present?) || self.memberships.first.try(:forum) || Forum.first_public
   end
 
   def requires_name?
@@ -108,6 +114,10 @@ class Profile < ActiveRecord::Base
 
   def member_of?(_forum)
     _forum.present? && self.memberships.where(forum_id: _forum.is_a?(Forum) ? _forum.id : _forum).present?
+  end
+
+  def owner_of(forum)
+    self == forum.page.owner
   end
 
   def unfreeze

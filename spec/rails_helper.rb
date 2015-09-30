@@ -2,12 +2,13 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
-abort("The Rails environment is running in production mode!") if Rails.env.production?
+abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'spec_helper'
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rails'
 require 'database_cleaner'
+require 'sidekiq/testing'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -28,10 +29,13 @@ require 'database_cleaner'
 # If you are not using ActiveRecord, you can remove this line.
 ActiveRecord::Migration.maintain_test_schema!
 
-Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f }
+Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each {|f| require f }
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
+  config.include Capybara::DSL
+
+  Sidekiq::Testing.fake!
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   #config.fixture_path = "#{::Rails.root}/spec/fixtures"
@@ -83,8 +87,24 @@ RSpec.configure do |config|
                                 ENV['CI'] ? :selenium : :selenium
                             end
   #Capybara.default_max_wait_time = 5
-  Capybara.default_wait_time = 10
+  Capybara.default_max_wait_time = 10
 
+  Capybara::Webkit.configure do |config|
+    config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'
+    config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
+    config.allow_url '//www.youtube.com/embed/*'
+    config.allow_url 'http://example.com/embed/*'
+    config.allow_url '//www.gravatar.com/*'
+  end
+
+end
+
+class FactoryGirl::Evaluator
+  def passed_in?(name)
+    # https://groups.google.com/forum/?fromgroups#!searchin/factory_girl/stack$20level/factory_girl/MyYKwbq76d0/JrKJZCgaXMIJ
+    # Also check that we didn't pass in nil.
+    __override_names__.include?(name) && send(name)
+  end
 end
 
 class ActiveRecord::Base

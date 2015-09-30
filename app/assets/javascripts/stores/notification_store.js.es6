@@ -25,9 +25,14 @@ window.notificationStore = Reflux.createStore({
         this.listenTo(NotificationActions.checkForNew, this.checkForNew);
         this.listenTo(NotificationActions.fetchNew, this.fetchNew);
 
-        Promise.resolve()
+        Promise
+            .resolve()
             .then(NotificationActions.checkForNew)
-            .then(NotificationActions.fetchNew)
+            .then(count => {
+                if (count >= 0) {
+                    return NotificationActions.fetchNew();
+                }
+            });
     },
 
     fetchNextPage: function () {
@@ -37,14 +42,18 @@ window.notificationStore = Reflux.createStore({
                 if (response.status == 200) {
                     response.json().then(function (data) {
                         NotificationActions.notificationUpdate(data.notifications);
-                        NotificationActions.fetchNextPage.completed({
-                            moreAvailable: data.notifications.notifications.length == 10
-                        });
+                        NotificationActions
+                            .fetchNextPage
+                            .completed({
+                                moreAvailable: data.notifications.notifications.length == 10
+                            });
                     });
                 } else if (response.status == 201) {
-                    NotificationActions.fetchNextPage.completed({
-                        moreAvailable: false
-                    });
+                    NotificationActions
+                        .fetchNextPage
+                        .completed({
+                            moreAvailable: false
+                        });
                 }
             }).catch(NotificationActions.fetchNextPage.failed);
     },
@@ -64,20 +73,17 @@ window.notificationStore = Reflux.createStore({
 
     fetchNew: function (notificationCount) {
         "use strict";
-        if (notificationCount) {
-            return fetch(`/n.json?lastNotification=${this.state.notifications.lastNotification.toISOString()}`, _safeCredentials())
-                .then(statusSuccess)
-                .then(json)
-                .then(function (data) {
-                    if (typeof(data) !== "undefined") {
-                        data.notifications.notificationCount = notificationCount;
-                        NotificationActions.notificationUpdate(data.notifications);
-                    }
-                    return NotificationActions.fetchNew.completed();
-                }).catch(NotificationActions.fetchNew.failed);
-        } else {
-            return NotificationActions.fetchNew.completed();
-        }
+        let from = this.state.notifications.lastNotification.toISOString();
+        return fetch(`/n.json?lastNotification=${from}`, _safeCredentials())
+            .then(statusSuccess)
+            .then(json)
+            .then(function (data) {
+                if (typeof(data) !== "undefined") {
+                    data.notifications.notificationCount = notificationCount;
+                    NotificationActions.notificationUpdate(data.notifications);
+                }
+                return NotificationActions.fetchNew.completed();
+            }).catch(NotificationActions.fetchNew.failed);
     },
 
     onMarkAllAsRead: function () {

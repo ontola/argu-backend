@@ -3,18 +3,19 @@ class Forum < ActiveRecord::Base
 
   belongs_to :page
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id
-  has_many :questions, inverse_of: :forum
-  has_many :motions, inverse_of: :forum
+  has_many :activities, as: :trackable, dependent: :destroy
   has_many :arguments, inverse_of: :forum
+  has_many :groups
+  has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
+  has_many :managers, through: :managerships, source: :profile
   has_many :memberships
   has_many :members, through: :memberships, source: :profile
   accepts_nested_attributes_for :memberships
-  has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
-  has_many :managers, through: :managerships, source: :profile
-  has_many :votes, inverse_of: :forum
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
-  has_many :activities, as: :trackable, dependent: :destroy
-  has_many :groups
+  has_many :motions, inverse_of: :forum
+  has_many :questions, inverse_of: :forum
+  has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
+  has_many :votes, inverse_of: :forum
 
   # @private
   # Used in the forum selector
@@ -36,6 +37,11 @@ class Forum < ActiveRecord::Base
   validates :bio_long, length: {maximum: 5000}
 
   after_validation :check_access_token, if: :visible_with_a_link_changed?
+  auto_strip_attributes :name, :cover_photo_attribution, :questions_title,
+                        :questions_title_singular, :motions_title, :motions_title_singular,
+                        :arguments_title, :arguments_title_singular, :squish => true
+  auto_strip_attributes :featured_tags, squish: true, nullify: false
+  auto_strip_attributes :bio, :nullify => false
 
   # @!attribute visibility
   # @return [Enum] The visibility of the {Forum}

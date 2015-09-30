@@ -63,9 +63,9 @@
   color: $g2;
 }
 
-.notifications-mark-all-as-read {
+.notifications-btn-top {
   background-color: $g0;
-  a {
+  a, span {
     padding: .3em;
     padding-left: 1em;
   }
@@ -116,4 +116,20 @@
   display: inline-block !important; // Prevents hiding when other navigation spans are hiding
   @include border-radius(99px);
   @include box-shadow(0em 0.1em 0.25em 0em rgba(0, 0, 0, 0.2));
+}
+
+.share-counter {
+  right: -0.9em;
+  left: auto;
+  top: -0.9em;
+  background-color: #539844;
+  font-size: 0.8em;
+
+  @include animation(enlarge-twist 1.3s);
+  @include transform(scale(1) rotate(7deg));
+  @include transition(.3s);
+
+  .dropdown-active & {
+    @include transform(scale(1.2) rotate(12deg));
+  }
 }

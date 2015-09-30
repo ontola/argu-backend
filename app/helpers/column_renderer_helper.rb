@@ -12,6 +12,7 @@ module ColumnRendererHelper
       when Argument then 'arguments/show'
       when Vote then 'votes/show'
       when Question then 'questions/show'
+      when QuestionAnswer then 'question_answers/show'
       when Comment then 'comments/show'
       when GroupResponse then 'group_responses/show'
       else 'column_renderer/show'

@@ -12,20 +12,30 @@ class CommentsControllerTest < ActionController::TestCase
   let(:argument) { FactoryGirl.create(:argument, forum: holland) }
   let(:comment) { FactoryGirl.create(:comment, profile: user.profile, commentable: argument) }
 
+  test 'should get new' do
+    sign_in user
+
+    get :new, argument_id: argument
+
+    assert_response 200
+    assert_equal argument, assigns(:commentable)
+  end
+
   test 'should post create comment' do
     sign_in users(:user)
 
-    assert_difference('Comment.count') do
-      post :create,
-           argument_id: arguments(:one),
-           comment: {
-               body: 'Just å UTF-8 comment.'
-           }
+    assert_broadcast(:create_comment_successful) do
+      assert_differences create_changes_array do
+        post :create,
+             argument_id: arguments(:one),
+             comment: {
+                 body: 'Just å UTF-8 comment.'
+             }
+      end
     end
 
-    assert assigns(:comment)
-    assert_equal arguments(:one), assigns(:comment).commentable
-    assert_redirected_to argument_url(arguments(:one), anchor: assigns(:comment).id)
+    assert_equal arguments(:one), assigns(:cc).resource.commentable
+    assert_redirected_to argument_url(arguments(:one), anchor: assigns(:cc).resource.id)
   end
 
   test 'should post create comment while not logged in rendering register' do
@@ -33,18 +43,36 @@ class CommentsControllerTest < ActionController::TestCase
          argument_id: arguments(:one),
          comment: 'Just å UTF-8 comment.'
 
-    assert_response 200
+    redirect_url = new_argument_comment_path(argument_id: arguments(:one).id,
+                                             comment: {body: 'Just å UTF-8 comment.'},
+                                             confirm: true)
+    assert_redirected_to new_user_session_path(r: redirect_url)
     assert assigns(:resource)
   end
 
   test 'should put update on own comment' do
     sign_in user
 
-    put :update, argument_id: comment.commentable, id: comment, comment: {body: 'new contents'}
+    put :update,
+        argument_id: comment.commentable,
+        id: comment,
+        comment: {body: 'new contents'}
 
     assert_not_nil assigns(:comment)
     assert_equal 'new contents', assigns(:comment).body
     assert_redirected_to comment_url(assigns(:comment))
+  end
+
+  test 'should put update invalid data on own comment' do
+    sign_in user
+
+    put :update,
+        argument_id: comment.commentable,
+        id: comment,
+        comment: {body: ''}
+
+    assert_not_nil assigns(:comment)
+    assert_response 200
   end
 
   test 'should not put update on other comment' do
@@ -63,7 +91,9 @@ class CommentsControllerTest < ActionController::TestCase
     # The no-difference currently says nothing since comments are preserved due to nesting issues,
     # but does become relevant in the future when tree trimming is enabled.
     assert_no_difference('Comment.count') do
-      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one)
+      delete :destroy,
+             argument_id: comments(:one).commentable.id,
+             id: comments(:one)
     end
 
     assert_redirected_to argument_path(arguments(:one), anchor: comments(:one).id)
@@ -98,16 +128,23 @@ class CommentsControllerTest < ActionController::TestCase
   # As owner
   ####################################
   test 'should not delete wipe own comment twice affecting counter caches' do
-    sign_in users(:user_thom)
+    sign_in users(:user_utrecht_owner)
 
     assert_equal 1, comments(:one).commentable.comments_count
 
+    redirect_path = argument_url(arguments(:one), anchor: comments(:one).id)
     assert_difference('comments(:one).commentable.reload.comments_count', -1) do
-      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one), wipe: 'true'
-      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one), wipe: 'true'
+      delete :destroy,
+             argument_id: comments(:one).commentable.id,
+             id: comments(:one),
+             wipe: 'true'
+      assert_redirected_to redirect_path
+      delete :destroy,
+             argument_id: comments(:one).commentable.id,
+             id: comments(:one),
+             wipe: 'true'
+      assert_redirected_to redirect_path
     end
-
-    assert_redirected_to argument_url(arguments(:one), anchor: comments(:one).id)
   end
 
   ####################################
@@ -115,13 +152,26 @@ class CommentsControllerTest < ActionController::TestCase
   ####################################
   test 'should destroy comments' do
     comment = FactoryGirl.create(:comment,
-                       commentable: FactoryGirl.create(:argument),
-                       profile: user.profile)
-    FactoryGirl.create_list(:notification, 40, activity: Activity.find_by(trackable: comment))
+                                 commentable: FactoryGirl.create(:argument,
+                                                                 forum: holland),
+                                 profile: user.profile)
+    FactoryGirl.create_list(:notification, 40,
+                            activity: Activity.find_by(trackable: comment))
     sign_in users(:user_thom)
 
-    delete :destroy, argument_id: comment.commentable.id, id: comment, wipe: 'true'
+    delete :destroy,
+           argument_id: comment.commentable.id,
+           id: comment,
+           wipe: 'true'
 
     assert_redirected_to argument_url(comment.commentable, anchor: comment.id)
+  end
+
+private
+  def create_changes_array
+    [['Comment.count', 1],
+     ['Activity.count', 1],
+     ['UserMailer.deliveries.size', 1],
+     ['Notification.count', 1]]
   end
 end

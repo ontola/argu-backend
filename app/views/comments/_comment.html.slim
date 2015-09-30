@@ -3,11 +3,18 @@
     section
       .markdown[id=c.id itemprop="text"]= c.is_trashed? ? I18n.t('trashed') : markdown_to_html(c.body) || I18n.t('deleted')
         =markdown_to_html(motion.content)
-    =render partial: c.profile, locals: {resource: c} if c.profile.present?
+    =render partial: 'profiles/profile', locals: {profile: c.profile, resource: c} if c.profile.present?
     ul.btns-sticky.btns-sticky-bottom.btns-horizontal.btns-list--subtle
       - if current_user.present? && policy(c).update? || active_for_user?(:notifications, current_user)
         li
           ul= react_component 'HyperDropdown', comment_items(resource, c), {prerender: true}
+      - if current_user.present? && active_for_user?(:notifications, current_user)
+        li= react_component 'ActiveToggle',
+                         {url: follows_path(comment_id: c.id, format: :json),
+                          initialState: current_user.following?(c),
+                          true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
+                          false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
+                         {prerender: true}
       - if !c.is_trashed? && policy(c).update?
         li= link_to polymorphic_url_for_action(:edit, [resource, c], {}), {data: { remote: :true, comment_id: c.id, skip_pjax: true }, class: 'btn-edit'} do
           span.fa.fa-edit

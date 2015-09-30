@@ -3,7 +3,22 @@ require 'test_helper'
 class VotesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:motion) { FactoryGirl.create(:motion) }
+  let!(:holland) { FactoryGirl.create(:populated_forum, name: :holland) }
+  let(:motion) { FactoryGirl.create(:motion, forum: holland) }
+
+  ####################################
+  # As Guest
+  ####################################
+
+  test 'guest shoud not get new' do
+    get :new, motion_id: motion
+
+    assert_redirected_to new_user_session_path(
+                             r: new_motion_vote_path(
+                                 vote: {for: nil},
+                                 confirm: true))
+    assert_not assigns(:model)
+  end
 
   ####################################
   # As user
@@ -60,5 +75,19 @@ class VotesControllerTest < ActionController::TestCase
     post :create, motion_id: motion, for: :pro, format: :json
 
     assert_response 403
+  end
+
+  ####################################
+  # As Member
+  ####################################
+  let(:member) { create_member(holland) }
+
+  test 'member shoud get new' do
+    sign_in member
+
+    get :new, motion_id: motion
+
+    assert_response 200
+    assert assigns(:model)
   end
 end

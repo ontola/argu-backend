@@ -1,0 +1,7 @@
+#Dutch questions translations
+
+en:
+  question_answers:
+    couple_motion: "Couple idea"
+    destroy:
+          confirmation: 'This decouples this idea from its question, these can be coupled again at a later time.'

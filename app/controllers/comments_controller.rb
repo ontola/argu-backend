@@ -1,30 +1,19 @@
-class CommentsController < ApplicationController
-  skip_after_action :verify_policy_scoped, :only => :index
-
-  # Note: Used to redirect to confirm in the 'r' system
-  def index
-    if params[:comment].present?
-      redirect_to({controller: 'comments', action: :new, commentable_param => params[commentable_param], comment: params[:comment]})
-    else
-      raise ActiveRecord::RecordNotFound
-    end
-  end
+class CommentsController < AuthenticatedController
 
   def new
     @commentable = commentable_class.find params[commentable_param]
-    @comment = Comment.build_from(@commentable, current_profile.id, params[:comment])
+    set_tenant(@commentable)
+    @comment = @commentable.comment_threads.new(new_comment_params)
     authorize @comment, :create?
 
     render locals: {
+               parent_id: params[:comment].is_a?(Hash) ? params[:comment][:parent_id] : nil,
                resource: @commentable,
                comment: @comment
            }
   end
 
   def show
-    @comment = Comment.find params[:id]
-    authorize @comment, :show?
-
     respond_to do |format|
       format.html { redirect_to url_for([@comment.commentable, anchor: @comment.identifier]) }
     end
@@ -33,75 +22,74 @@ class CommentsController < ApplicationController
   def edit
     @commentable = commentable_class.find params[commentable_param]
     @comment = @commentable.comment_threads.find params[:id]
+    set_tenant(@comment)
     current_context @comment
     authorize @comment, :edit?
 
     respond_to do |format|
-      format.html { render locals: {
-                               resource: @commentable,
-                               comment: @comment
-                           }
-      }
-      format.js { render locals: {
-                               resource: @commentable,
-                               comment: @comment,
-                               parent_id: nil,
-                               visible: true
-                           }
-      }
+      format.html do
+        render locals: {
+                   resource: @commentable,
+                   comment: @comment
+               }
+      end
+      format.js do
+        render locals: {
+                   resource: @commentable,
+                   comment: @comment,
+                   parent_id: nil,
+                   visible: true
+               }
+      end
     end
   end
 
   # POST /resource/1/comments
   def create
-    resource = get_commentable
-    comment_body = params[:comment].is_a?(String) ? params[:comment] : params[:comment][:body]
-    if current_profile.blank?
-      authorize resource, :show?
-      render_register_modal(nil, [:comment, comment_body], [:parent_id, params[:parent_id]])
-    else
-      @comment = Comment.build_from(resource, current_profile.id, comment_body)
-      authorize @comment
-      parent = Comment.find_by_id params[:parent_id] unless params[:parent_id].blank?
-      #unless params[:parent_id].blank?
-      #  #@TODO Just let them go nuts for now, infinite parenting
-      #  @comment.move_to_child_of Comment.find_by_id params[:parent_id]
-      #end
-
-      respond_to do |format|
-        if !current_profile.member_of? resource.forum
-          redirect_url = URI.parse(request.fullpath)
-          redirect_url.query= [[:comment, CGI::escape(comment_body)], [:parent_id, params[:parent_id]]].map { |a| a.join('=') }.join('&')
-          format.js { render partial: 'forums/join', layout: false, locals: { forum: resource.forum, r: redirect_url.to_s } }
-          format.html { render template: 'forums/join', locals: { forum: resource.forum, r: redirect_url.to_s } }
-        elsif @comment.save
-          @comment.move_to_child_of(parent) if parent.present? # Apparently, move_possible? doesn't exists anymore
-          create_activity @comment, action: :create, recipient: resource, parameters: { parent: parent.try(:id) }, owner: current_profile, forum_id: resource.forum.id
-          format.js { render }
-          format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: t('type_create_success', type: t('comments.type')) }
-        else
-          #@comment.destroy unless @comment.new_record? # TODO: this shit deletes all comments, so thats not really a great thing..
-          format.html { redirect_to polymorphic_url([resource], anchor: @comment.id), notice: '_niet gelukt_' }
-          format.js { render 'failed', status: 400 }
-        end
-      end
+    resource = authenticated_resource!
+    set_tenant(resource)
+    @cc = CreateComment.new current_profile,
+                           {
+                               commentable: resource,
+                               publisher: current_user
+                           }.merge(comment_params)
+    authorize @cc.resource, :create?
+    @cc.subscribe(ActivityListener.new)
+    @cc.subscribe(MailerListener.new)
+    @cc.on(:create_comment_successful) do |c|
+      redirect_to polymorphic_url([resource], anchor: c.id),
+                  notice: t('type_create_success', type: t('comments.type'))
     end
+    @cc.on(:create_comment_failed) do |c|
+      redirect_to polymorphic_url([resource], anchor: c.id),
+                  notice: '_niet gelukt_'
+    end
+    @cc.commit
   end
 
   def update
     @commentable = commentable_class.find params[commentable_param]
     @comment = @commentable.comment_threads.find params[:id]
+    set_tenant(@comment)
     authorize @comment, :edit?
 
     respond_to do |format|
-      if @comment.update_attributes(comment_params)
-        format.html { redirect_to @comment, notice: t('comments.notices.updated') }
+      if @comment.update(comment_params)
+        format.html { redirect_to comment_url(@comment),
+                                  notice: t('comments.notices.updated') }
         format.js { render }
         format.json { head :no_content }
       else
-        format.html { render :form }
-        format.js { render 'failed', status: 400 }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+        format.html { render 'edit',
+                             locals: {
+                                 resource: @commentable,
+                                 comment: @comment,
+                                 parent_id: nil
+                             }}
+        format.js { render 'failed',
+                           status: 400 }
+        format.json { render json: @comment.errors,
+                             status: :unprocessable_entity }
       end
     end
   end
@@ -109,6 +97,7 @@ class CommentsController < ApplicationController
   # DELETE /arguments/1/comments/1
   def destroy
     @comment = Comment.find_by_id params[:id]
+    set_tenant(@comment)
     resource = @comment.commentable
     if params[:wipe] == 'true'
       authorize @comment
@@ -124,17 +113,30 @@ class CommentsController < ApplicationController
   end
 
 private
-  def comment_params
-    params.require(:comment).permit(*policy(@comment || Comment).permitted_attributes)
+  def authorize_show
+    @comment = Comment.find params[:id]
+    set_tenant(@comment)
+    authorize @comment, :show?
   end
 
-  def get_commentable
+  def authenticated_resource!
     resource, id = request.path.split('/')[1,2]
     # noinspection RubyCaseWithoutElseBlockInspection
     resource = case resource
       when 'a' then Argument
     end
     resource.find(id)
+  end
+
+  def comment_body
+    if Rails.env.development?
+      raise StandardError('should always be a hash') if params[:comment].is_a?(String)
+    end
+    params[:comment].is_a?(String) ? params[:comment] : params[:comment][:body]
+  end
+
+  def comment_params
+    params.require(:comment).permit(*policy(@comment || Comment).permitted_attributes)
   end
 
   def commentable_param
@@ -148,6 +150,30 @@ private
   # Note: Safe to constantize since `path_parameters` uses the routes for naming.
   def commentable_class
     commentable_type.capitalize.constantize
+  end
+
+  def new_comment_params
+    params[:comment].present? ? comment_params : nil
+  end
+
+  def query_payload(opts = {})
+    query = opts.merge({comment: {body: comment_body}})
+    query[:comment] << {parent_id: params[:parent_id]} if params[:parent_id].present?
+    query.to_query
+  end
+
+  def redirect_url
+    if params[:action] == 'create'
+      redirect_url = URI.parse(new_argument_comment_path(argument_id: params[:argument_id]))
+      redirect_url.query = query_payload(confirm: true)
+      redirect_url
+    else
+      super
+    end
+  end
+
+  def set_tenant(item)
+    @forum = item.forum
   end
 
 end

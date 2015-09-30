@@ -1,0 +1,20 @@
+# Read about fixtures at
+# http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+# This model initially had no columns defined.  If you add columns to the
+# model remove the '{}' from the fixture names and add the columns immediately
+# below each fixture, per the syntax in the comments below
+#
+
+utrecht_owner_follows_utrecht:
+  followable: utrecht (Forum)
+  follower: user_utrecht_owner (User)
+user_follows_question_one_no_create_without_question:
+  followable: question_one_no_create_without_question (Question)
+  follower: user (User)
+utrecht_owner_follows_motion_one:
+  followable: one (Motion)
+  follower: user_utrecht_owner (User)
+utrecht_owner_follows_argument_one:
+  followable: one (Argument)
+  follower: user_utrecht_owner (User)

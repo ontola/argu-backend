@@ -41,6 +41,7 @@ Argu::Application.routes.draw do
     put :transfer, action: :transfer!
   end
   concern :votable do
+    resources :votes, only: [:new, :create], path: 'v'
     get 'v' => 'votes#show', shallow: true, as: :show_vote
     post 'v/:for' => 'votes#create', shallow: true, as: :vote
     get 'v/:for' => 'votes#new', shallow: true
@@ -99,8 +100,11 @@ Argu::Application.routes.draw do
   resources :votes, only: [:destroy], path: :v
 
   resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible] do
+    resources :question_answers, path: 'qa', only: [:new, :create]
     resources :tags, path: 't', only: [:index]
   end
+
+  resources :question_answers, path: 'qa', only: [:edit, :update, :destroy, :delete]
 
   resources :motions, path: 'm', except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
     resources :groups, only: [] do
@@ -167,6 +171,8 @@ Argu::Application.routes.draw do
   get '/how_argu_works', to: 'static_pages#how_argu_works'
   # end
 
+  resources :discussions, only: [:new]
+
   get '/portal', to: 'portal/portal#home'
 
   get '/values', to: 'documents#show', name: 'values'
@@ -187,7 +193,7 @@ Argu::Application.routes.draw do
     resources :memberships, only: [:create, :destroy]
     resources :managers, only: [:new, :create, :destroy]
     resources :questions, path: 'q', only: [:index, :new, :create]
-    resources :motions, path: 'm', only: [:new, :create]
+    resources :motions, path: 'm', only: [:index, :new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
     resources :groups, path: 'g', only: [:new, :edit]

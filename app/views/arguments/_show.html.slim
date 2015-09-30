@@ -2,7 +2,7 @@
 .box.box-with-btns.argument[id="#{model.id.present? ? 'argument_' + model.id.to_s : ''}" itemscope itemtype="http://schema.org/CreativeWork/Argument" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed}"]
   section
     =contextual_link_to argument_path(model)
-      h3[class="#{model.pro ? 'pro-t' : 'con-t'}" itemprop="headline"]= model.title
+      h4[class="#{model.pro ? 'pro-t' : 'con-t'}" itemprop="headline"]= model.title
     =render partial: 'arguments/shr', locals: {model: model, vote: model.votes.find_by(voter: current_profile)}
     p[class='wrap-normal' itemprop="text"]
       ==safe_truncated_text(model.content, contextual_link_to(t('read_more'), argument_path(model)), 225)

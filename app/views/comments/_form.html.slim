@@ -1,8 +1,10 @@
-=semantic_form_for([resource, comment], html: {id: "cf#{parent_id.to_s}", class: 'comment_form', autocomplete: 'off', style: visible ? '' : 'display: none;'}) do |f|
+=semantic_form_for([resource, comment], html: {id: "cf#{parent_id.to_s}", class: 'comment_form', autocomplete: 'off', style: local_assigns[:visible] ? '' : 'display: none;'}) do |f|
   section.smallpadded
     =f.text_area :body, :rows => 2, :cols => 50, placeholder: t('comments.placeholder'), class: 'form-input-content margin-bottom'
+    -comment.errors.full_messages.each do |message|
+      p.inline-errors.full-width= message
     -unless parent_id.blank?
-      input[type="hidden" class= "btn" name="parent_id" value ="#{parent_id}"]
+      input[type="hidden" class= "btn" name="comment[parent_id]" value ="#{parent_id}"]
   - if comment.blank? || comment.new_record?
     =render partial: 'profiles/profile_current' if current_profile.present?
   - else

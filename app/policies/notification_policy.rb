@@ -13,7 +13,7 @@ class NotificationPolicy < RestrictivePolicy
 
     def resolve
       if user
-        scope.where(profile_id: user.profile.id)
+        scope.where(user_id: user.id)
       else
         scope.where(false)
       end
@@ -27,7 +27,7 @@ class NotificationPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:profile_id, :title, :url] if staff?
+    attributes << [:user_id, :title, :url] if staff?
     attributes
   end
 

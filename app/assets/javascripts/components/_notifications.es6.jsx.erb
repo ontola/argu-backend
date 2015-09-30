@@ -101,17 +101,20 @@ var Notifications = React.createClass({
     },
 
     loadMore: function () {
-        NotificationActions.fetchNextPage().then((data) => {
-            if (typeof data !== "undefined") {
-              this.setState({loadMore: data.moreAvailable});
-            }
-        });
+        NotificationActions
+            .fetchNextPage()
+            .then((data) => {
+                if (typeof data !== "undefined") {
+                    this.setState({loadMore: data.moreAvailable});
+                }
+            });
     },
 
     componentDidMount: function () {
         NotificationActions.notificationUpdate(this.props);
         this.unsubscribe = notificationStore.listen(this.onNotificationChange);
         this.scrollLock(this.getDOMNode().parentElement);
+        NotificationActions.fetchNew();
     },
 
     componentWillUnmount: function () {
@@ -131,7 +134,10 @@ var Notifications = React.createClass({
             </li>;
 
         return (<ul className="notifications">
-            <p className="notifications-mark-all-as-read">
+            <p className="notifications-btn-top">
+                <span>Notificaties bèta</span>
+            </p>
+            <p className="notifications-btn-top">
                 <a href="#" onClick={this.markAsRead}>
                     <span className="fa fa-check"></span>
                     <span className="icon-left">Markeer alle als gelezen</span>

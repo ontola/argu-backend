@@ -25,7 +25,7 @@ class GroupResponsePolicy < RestrictivePolicy
       if record.group.max_responses_per_member == -1
         false
       else
-        record.motion.responses_from(actor) >= record.group.max_responses_per_member
+        record.motion.responses_from(actor, record.group) >= record.group.max_responses_per_member
       end
     end
 

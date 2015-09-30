@@ -83,6 +83,7 @@
   @include button(rgba(0,0,0,0));
   padding-left: 1em;
   padding-right: 1em;
+  @include border-radius(0);
 
   &:hover{
     background-color: $lighten2;
@@ -145,6 +146,7 @@
 .btn-subtle{
   @include button(rgba(255,255,255,0));
   border: none;
+  @include border-radius(0);
   color: $g3;
   padding-left: 1em;
   padding-right: 1em;
@@ -283,7 +285,12 @@
 
   text-transform: uppercase;
   text-decoration: none;
-  span {font-size: .8em;}
+  //span {font-size: .8em;}
+  a > span, > div > div > span {
+    font-size: .8em;
+  }
+
+
   border: none;
   -webkit-appearance: none;
   border-radius: 0;
@@ -379,7 +386,7 @@
     @include button($color: $gre);
 
   }
-  .btn-neu {
+  .btn-neutral {
     background-color: $g3;
     @include button($color: $g3);
 
@@ -446,6 +453,10 @@
 
 .btns-horizontal > li {
   display: inline-block;
+}
+
+.btns-padded li {
+  margin: 0.6em;
 }
 
 .btns--vote a{
@@ -532,4 +543,15 @@ a.is-loading{
     pointer-events: none;
     background-color: $g1;
   }
+}
+
+.btn--square {
+  @include border-radius(0);
+}
+
+.btn--in-subtle-list{
+  vertical-align: top;
+  @include border-radius(0);
+  line-height: 1.3em;
+  box-sizing: border-box;
 }

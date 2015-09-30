@@ -4,8 +4,6 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
   def initialize(context, record)
     @context = context
     @record = record
-
-    #raise Argu::NotLoggedInError.new(nil, record), "must be logged in" unless has_access_to_record?
   end
 
   delegate :user, to: :context
@@ -24,6 +22,10 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
   end
 
   def how_argu_works?
+    true
+  end
+
+  def new_discussion?
     true
   end
 

@@ -12,11 +12,11 @@
   }
 }
 
-.box h3 a, .box a h1, .box a h2,.box a h3 {
+.box h3 a, .box a h1, .box a h2, .box a h3, .box a h4 {
   display: inline-block;
   position: relative;
   @include transition(.2s);
-  //transform: translateY(-0em);
+
   &:before {
     content: "";
     width: 100%;
@@ -29,17 +29,12 @@
     background-color: $darken2;
     @include transition(.2s);
   }
-  &:hover {
-    //transform: translateY(-.1em);
-    //color: $g5 !important;
-  }
-  &:active {
-    color: $g5 !important;
-  }
+
   &:hover:before {
     opacity: 1;
     height: .15em;
   }
+
   &:active:before {
     transition: none;
     background-color: $darken4;
@@ -53,9 +48,11 @@
 
 .box.box-link {
   opacity: .8;
+
   &:hover {
     opacity: 1;
     text-decoration: none !important;
+
     *{
       text-decoration: none !important;
     }
@@ -72,7 +69,7 @@
   }
 }
 
-.box h1, .box h2, .box h3 {
+.box h1, .box h2, .box h3, .box h4 {
   margin-bottom: .5em;
   line-height: 1.15em;
 }
@@ -109,18 +106,7 @@
 }
 
 .box-hidden {
-  position: absolute;
-  top: 100%;
-  background-color: white;
-  color: white;
-  width: 100%;
-  height: 100%;
-  @include transition(.5s);
-}
-
-.box:hover .box-hidden {
-  top: 0;
-  @include animation(fade-in .5s both)
+  @include transition(opacity, .5s);
 }
 
 .box-image{
@@ -129,14 +115,17 @@
   background-size: cover;
   background-position: center;
   @include transition(.2s);
-  &:hover{
-    opacity: .8;
+
+  a & {
+    &:hover{
+      opacity: .8;
+    }
+    &:active{
+      opacity: .6;
+      transition: none;
+    }
   }
-  &:active{
-    opacity: .6;
-    transition: none;
-  }
-  
+
   .display-hide-images & {
     display: none;
   }
@@ -213,7 +202,8 @@
   list-style-type: disc;
   padding-left: 1.5em;
   font-size: .8em;
-  margin-bottom: 1em;
+  margin-bottom: .4em;
+  display: block;
 }
 
 .box-list--icons {
@@ -222,7 +212,7 @@
   span.fa{
     position: absolute;
     font-size: 0.8em;
-    line-height: 1.4em;
+    line-height: 1.6em;
   }
   span.icon-left {
     margin-left: 1.3em;
@@ -253,4 +243,57 @@
 .box-detailed {
   width: 90% !important;
   width: calc(100% - 2em) !important;
+}
+
+.box {
+  .outside-the-box {
+    visibility: hidden;
+    position: absolute;
+    left: -2em;
+    top: 0;
+    padding: .25em 2em 5em .5em;
+  }
+  &:hover .outside-the-box{
+    visibility: visible;
+  }
+}
+
+.box-image--container{
+
+  .motion & {
+    background-color: lighten($blu, 40);
+  }
+  .question & {
+    background-color: lighten($bro, 40);
+  }
+}
+
+.back-to-forum {
+  background-color: $blu;
+  h3 {
+    color: white;
+    display: inline-block;
+    position: relative;
+    left: 1.8em;
+  }
+  .profile-picture {
+  width: 2em;
+  height: 2em;
+  display: inline-block;
+  background-size: cover;
+  position: absolute;
+  left: 1em;
+  bottom: 0.75em;
+  }
+}
+
+.list-explanation {
+  font-weight: normal;
+  font-size: 0.9em;
+  position: relative;
+  margin-left: 1.5em;
+  line-height: 1.2em;
+  display: block;
+  margin-top: .2em;
+  color: $g4;
 }

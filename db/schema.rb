@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150713115903) do
+ActiveRecord::Schema.define(version: 20150929154351) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20150713115903) do
     t.integer  "creator_id"
     t.integer  "votes_con_count",                 default: 0,     null: false
     t.integer  "forum_id"
+    t.integer  "publisher_id"
   end
 
   add_index "arguments", ["id"], name: "index_arguments_on_id", using: :btree
@@ -97,6 +98,7 @@ ActiveRecord::Schema.define(version: 20150713115903) do
     t.datetime "created_at",                                   null: false
     t.datetime "updated_at",                                   null: false
     t.boolean  "is_trashed",                   default: false
+    t.integer  "publisher_id"
   end
 
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
@@ -141,6 +143,7 @@ ActiveRecord::Schema.define(version: 20150713115903) do
 
   add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
   add_index "follows", ["follower_id", "follower_type"], name: "fk_follows", using: :btree
+  add_index "follows", ["follower_type", "follower_id", "followable_type", "followable_id"], name: "index_follower_followable", unique: true, using: :btree
 
   create_table "forums", force: :cascade do |t|
     t.string   "name"
@@ -188,12 +191,11 @@ ActiveRecord::Schema.define(version: 20150713115903) do
     t.integer  "group_id"
     t.integer  "profile_id"
     t.integer  "motion_id"
-    t.text     "text",            default: ""
-    t.integer  "created_by_id"
-    t.string   "created_by_type"
+    t.text     "text",         default: ""
+    t.integer  "publisher_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "side",            default: 0
+    t.integer  "side",         default: 0
   end
 
   add_index "group_responses", ["group_id", "forum_id"], name: "index_group_responses_on_group_id_and_forum_id", using: :btree
@@ -257,6 +259,7 @@ ActiveRecord::Schema.define(version: 20150713115903) do
     t.integer  "creator_id"
     t.string   "cover_photo",                         default: ""
     t.string   "cover_photo_attribution",             default: ""
+    t.integer  "publisher_id"
   end
 
   add_index "motions", ["forum_id"], name: "index_motions_on_forum_id", using: :btree
@@ -265,7 +268,7 @@ ActiveRecord::Schema.define(version: 20150713115903) do
   add_index "motions", ["tag_id"], name: "index_motions_on_tag_id", using: :btree
 
   create_table "notifications", force: :cascade do |t|
-    t.integer  "profile_id"
+    t.integer  "user_id"
     t.integer  "activity_id"
     t.datetime "read_at"
     t.datetime "created_at"
@@ -275,8 +278,8 @@ ActiveRecord::Schema.define(version: 20150713115903) do
   end
 
   add_index "notifications", ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
-  add_index "notifications", ["profile_id", "created_at"], name: "index_notifications_on_profile_id_and_created_at", using: :btree
-  add_index "notifications", ["profile_id"], name: "index_notifications_on_profile_id", using: :btree
+  add_index "notifications", ["user_id", "created_at"], name: "index_notifications_on_user_id_and_created_at", using: :btree
+  add_index "notifications", ["user_id"], name: "index_notifications_on_user_id", using: :btree
 
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer  "resource_owner_id", null: false
@@ -396,6 +399,7 @@ ActiveRecord::Schema.define(version: 20150713115903) do
     t.integer  "votes_con_count", default: 0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "creator_id"
   end
 
   add_index "question_answers", ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
@@ -414,6 +418,7 @@ ActiveRecord::Schema.define(version: 20150713115903) do
     t.string   "cover_photo",                         default: ""
     t.string   "cover_photo_attribution",             default: ""
     t.datetime "expires_at"
+    t.integer  "publisher_id"
   end
 
   add_index "questions", ["forum_id", "is_trashed"], name: "index_questions_on_forum_id_and_is_trashed", using: :btree
@@ -517,7 +522,7 @@ ActiveRecord::Schema.define(version: 20150713115903) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                  default: 0
     t.boolean  "finished_intro",                     default: false
-    t.integer  "follows_email",                      default: 1,     null: false
+    t.integer  "follows_email",                      default: 0,     null: false
     t.boolean  "follows_mobile",                     default: true,  null: false
     t.integer  "memberships_email",                  default: 1,     null: false
     t.boolean  "memberships_mobile",                 default: true,  null: false
@@ -571,5 +576,12 @@ ActiveRecord::Schema.define(version: 20150713115903) do
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
   add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
+  add_foreign_key "arguments", "users", column: "publisher_id"
+  add_foreign_key "comments", "users", column: "publisher_id"
+  add_foreign_key "group_responses", "users", column: "publisher_id"
   add_foreign_key "identities", "users"
+  add_foreign_key "motions", "users", column: "publisher_id"
+  add_foreign_key "notifications", "users", on_delete: :cascade
+  add_foreign_key "question_answers", "profiles", column: "creator_id"
+  add_foreign_key "questions", "users", column: "publisher_id"
 end

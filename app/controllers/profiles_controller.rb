@@ -9,16 +9,21 @@ class ProfilesController < ApplicationController
     if current_user.present?
       if params[:q].present?
         # This is a working mess.
-        @profiles = Profile.where(is_public: true).where(profileable_type: 'User',
-                                                         profileable_id: User.where(finished_intro: true).joins(:shortname)
-                                                                             .where('lower(shortname) LIKE lower(?) OR '\
-                                                                                    'lower(first_name) LIKE lower(?) OR '\
-                                                                                    'lower(last_name) LIKE lower(?)',
-                                                                                    "%#{params[:q]}%",
-                                                                                    "%#{params[:q]}%",
-                                                                                    "%#{params[:q]}%").pluck(:owner_id))
+        q = params[:q].gsub(' ', '|')
+        @profiles = Profile.where(is_public: true)
+                           .where(profileable_type: 'User',
+                                  profileable_id: User.where(finished_intro: true)
+                                                      .joins(:shortname)
+                                                      .where('lower(shortname) SIMILAR TO lower(?) OR ' +
+                                                             'lower(first_name) SIMILAR TO lower(?) OR ' +
+                                                             'lower(last_name) SIMILAR TO lower(?)',
+                                                             "%#{q}%",
+                                                             "%#{q}%",
+                                                             "%#{q}%")
+                                                      .pluck(:owner_id))
+
         if params[:things] && params[:things].split(',').include?('pages')
-          @profiles += Profile.where(is_public: true).where('lower(name) LIKE lower(?)', "%#{params[:q]}%")#.page params[:profile] # Pages
+          @profiles += Profile.where(is_public: true).where('lower(name) SIMILAR TO lower(?)', "%#{q}%")#.page params[:profile] # Pages
         end
       end
     end
@@ -67,8 +72,7 @@ class ProfilesController < ApplicationController
         r = URI.decode(@resource.r)
         @resource.update r: ''
         r_opts = r_to_url_options(r)[0].merge(Addressable::URI.parse(r).query_values || {})
-        format.html { redirect_to r_opts,
-                      status: r.match(/\/v(\?|\/)|\/c(\?|\/)/) ? 307 : 302 }
+        format.html { redirect_to r_opts }
       elsif updated
         format.html { redirect_to dual_profile_url(@profile), notice: 'Profile was successfully updated.' }
         format.json { head :no_content }

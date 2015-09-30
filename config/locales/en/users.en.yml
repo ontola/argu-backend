@@ -10,7 +10,7 @@ en:
       categories:
         general: "General"
         authentication: "Authentication"
-        notifications: "Meldingen"
+        notifications: "Alerts beta"
       confirmed: "E-mail confirmed"
       unconfirmed: "E-mail not yet confirmed"
     follows_email:
@@ -36,3 +36,4 @@ en:
     connect:
       title: "Link accounts"
       text_html: "A user with the name <b>%{to_name}</b> is currently using the same e-mail as your %{from_type} account. In order to link the %{from_type} account from <b>%{from_name}</b> to this Argu account, please enter your Argu account password below."
+    shortname_helper_html: "https://argu.co/u/<b>jouw_gebruikersnaam</b>"

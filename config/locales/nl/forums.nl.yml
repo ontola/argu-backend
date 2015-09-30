@@ -8,6 +8,7 @@ nl:
     plural: "Forums"
     my: "Mijn forums"
     current: "Dit forum"
+    back_to: "Ga terug naar forum"
     resource_name:
       management: "Forum beheer"
     settings:
@@ -103,6 +104,7 @@ nl:
     tooltips:
       members_count: "aantal leden"
     visit: "Bezoek forum"
+    shortname_helper_html: "https://argu.co/<b>jouw_argu_url</b>"
   activerecord: #These currently aren't used for forms.
     attributes:
       forum:

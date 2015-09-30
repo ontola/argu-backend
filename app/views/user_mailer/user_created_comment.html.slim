@@ -1,0 +1,12 @@
+.box.box-grid.question
+  section
+    p
+      =link_to_creator(@comment)
+      =t('mailer.user_mailer.user_created_comment.responded_to',
+         type: link_to_object(@comment, type_for(@comment)))
+  section
+    =link_to url_for(@comment)
+      h2.que-t= @comment.display_name
+    .button
+      =link_to_object(@comment,
+                      t('mailer.user_mailer.user_created_comment.view_reply'))

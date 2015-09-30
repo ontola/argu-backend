@@ -24,40 +24,15 @@
           =f.input :language, as: :react_select, collection: I18n.available_locales, include_blank: false
           =f.input :country, as: :react_country, priority_countries: %w(NL BE)
           =f.input :birthday, as: :date_picker
-        - if active_for_user?(:notifications, current_user)
-          =f.inputs name: t('users.registrations.categories.notifications') do
-            .notification-settings-header
-              label
-              .notification-settings-half-block
-                i.fa.fa-envelope-o[title="_email notificaties_"]
-                i.fa.fa-mobile[title="_Mobiele notificaties_"]
-            li
-              label= t('formtastic.labels.notifications.follows')
-              .notification-settings-half-block
-                span.center
-                  =f.input :follows_email, as: :inline_select, collection: options_for_follows_email, include_blank: false, label: false
-                span.center
-                  =f.check_box :follows_mobile
-            li
-              label= t('formtastic.labels.notifications.memberships')
-              .notification-settings-half-block
-                span.center
-                  =f.input :memberships_email, as: :inline_select, collection: options_for_memberships_email, include_blank: false, label: false
-                span.center
-                  =f.check_box :memberships_mobile
-            li
-              label= t('formtastic.labels.notifications.created')
-              .notification-settings-half-block
-                span.center
-                  =f.input :created_email, as: :inline_select, collection: options_for_created_email, include_blank: false, label: false
-                span.center
-                  =f.check_box :created_mobile
-
+        - if active_for_user?(:email_notifications, current_user)
+          =f.inputs name: t('users.registrations.categories.notifications'), class: 'danger-zone' do
+            p= t('notifications.email.beta')
+            =f.input :follows_email, as: :react_select, collection: options_for_follows_email, include_blank: false
         =f.inputs name: t('users.registrations.categories.privacy') do
           =f.input :has_analytics, as: :reverse_boolean
           li.form-helper
-            span=t('users.edit.analytics_helper')
-          /=f.semantic_fields_for :profile do |profile|
+            span= t('users.edit.analytics_helper')
+          =f.semantic_fields_for :profile do |profile|
             =profile.input :are_votes_public, as: :reverse_boolean
         =f.inputs name: t('users.registrations.categories.authentication') do
           -if @user.password_required?

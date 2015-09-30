@@ -4,3 +4,6 @@ nl:
     all: "Alle meldingen"
     settings: "Instellingen"
     mark_as_read: "Markeer als gelezen"
+    email:
+      tooltip: "Email notificaties"
+      beta: "Email notificaties zijn nog in bèta, dus het kan zijn dat er dingen niet nog helemaal goed werken."

@@ -1,9 +1,10 @@
 class User < ActiveRecord::Base
   include ArguBase, Shortnameable
 
+  has_one :profile, as: :profileable, dependent: :destroy
   has_many :identities, dependent: :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
-  has_one :profile, as: :profileable, dependent: :destroy
+  has_many :notifications
 
   accepts_nested_attributes_for :profile
 
@@ -13,6 +14,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable, :lockable, :timeoutable,
          :omniauthable, omniauth_providers: [:facebook].freeze
+  acts_as_follower
 
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
@@ -26,13 +28,14 @@ class User < ActiveRecord::Base
 
   delegate :description, to: :profile
 
-  enum follows_email: { never_follows_email: 0, weekly_follows_email: 1, daily_follows_email: 2, direct_follows_email: 3 }
-  enum memberships_email: { never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3 }
-  enum created_email: { never_created_email: 0, weekly_created_email: 1, daily_created_email: 2, direct_created_email: 3 }
+  enum follows_email: { never_follows_email: 0, direct_follows_email: 3 } # weekly_follows_email: 1, daily_follows_email: 2,
+  #enum memberships_email: { never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3 }
+  #enum created_email: { never_created_email: 0, weekly_created_email: 1, daily_created_email: 2, direct_created_email: 3 }
 
   validates :email, allow_blank: false,
         format: { with: RFC822::EMAIL }
   validates :profile, presence: true
+  auto_strip_attributes :first_name, :last_name, :middle_name, :postal_code, :squish => true
 
   def active_at(redis = nil)
     Argu::Redis.get("user:#{self.id}:active.at", redis)
@@ -83,7 +86,7 @@ class User < ActiveRecord::Base
   end
 
   def password_required?
-    (identities.blank? && password.blank?) ? super : false
+    (!self.persisted? && identities.blank?) || (identities.blank? && password.blank?) ? super : false
   end
 
   def profile
@@ -108,7 +111,7 @@ class User < ActiveRecord::Base
   end
 
   def sync_notification_count
-    Argu::Redis.set("user:#{self.id}:notification.count", self.profile.notifications.count)
+    Argu::Redis.set("user:#{self.id}:notification.count", self.notifications.count)
   end
 
   def update_acesss_token_counts
@@ -138,7 +141,6 @@ private
     self.profile.activities.destroy_all
     self.profile.memberships.destroy_all
     self.profile.page_memberships.destroy_all
-    self.profile.notifications.destroy_all
   end
 
   def self.koala(auth)

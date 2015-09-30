@@ -16,7 +16,7 @@ module GroupResponsesHelper
   def group_responses_left(motion)
     max = motion.group.max_responses_per_member
     if max != -1
-     max - motion.responses_from(current_profile)
+     max - motion.responses_from(current_profile, motion.group)
     else
       Float::INFINITY
     end

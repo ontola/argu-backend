@@ -50,7 +50,7 @@ nl:
       groups: 'Speciale gebruikers (zoals politieke partijn) kunnen hier aangeven wat hun mening is over het idee.'
       posted:
         body: 'Je idee is geplaatst! Tijd voor de volgende stappen...'
-        vote: 'Op jouw idee is nog niet gestesmd. Geef als eerste aan dat jij achter jouw idee staat!'
+        vote: 'Op jouw idee is nog niet gestemd. Geef als eerste aan dat jij achter jouw idee staat!'
         post_argument: 'Plaats argumenten voor jouw idee om anderen te overtuigen.'
         share: 'Deel je idee om meer stemmen te krijgen en voor verandering te zorgen!'
     argument:

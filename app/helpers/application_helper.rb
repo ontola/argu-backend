@@ -90,15 +90,17 @@ module ApplicationHelper
 
   # Generates social media links for any resource for HyperDropdown
   def share_items(resource)
-    link_items = []
     url = url_for([resource, only_path: false])
 
-    #link_items << fb_share_item('Facebook', ShareHelper.facebook_share_url(url), fa: 'facebook', class: 'fb-share-dialog', data: {share_url: url})
-    link_items << item('fb_share', 'Facebook', ShareHelper.facebook_share_url(url), data: {share_url: url, title: resource.display_name})
-    link_items << link_item('Twitter', ShareHelper.twitter_share_url(url, title: resource.display_name), fa: 'twitter')
-    link_items << link_item('LinkedIn', ShareHelper.linkedin_share_url(url, title: resource.display_name), fa: 'linkedin')
-
-    dropdown_options(t('share'), [{items: link_items}], fa: 'fa-share-alt')
+    {
+        title: t('share'),
+        url: url,
+        shareUrls: {
+            facebook: ShareHelper.facebook_share_url(url),
+            linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
+            twitter: ShareHelper.twitter_share_url(url, title: resource.display_name)
+        }
+    }
   end
 
   def sort_items
@@ -115,6 +117,18 @@ module ApplicationHelper
     dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
   end
 
+  def display_settings_items
+    link_items = []
+
+    link_items = [
+        link_item(t('info_bar'), nil, fa: 'info', data: {'display-setting' => 'info_bar'}),
+        link_item(t('images'), nil, fa: 'image', data: {'display-setting' => 'image'}),
+        link_item(t('columns'), nil, fa: 'columns', data: {'display-setting' => 'columns'})
+    ]
+
+    dropdown_options(t('display'), [{items: link_items}], fa: 'fa-columns')
+  end
+
   def process_cover_photo(object, _params)
     if params[object.class.name.downcase][:cover_photo].present?
       object.assign_attributes(_params.except(:cover_photo))
@@ -124,30 +138,6 @@ module ApplicationHelper
       end
     end
     false
-  end
-
-  # Generates a link to the Profile's profileable
-  # Either a Page or a User
-  def dual_profile_url(profile)
-    if profile.profileable.class == User
-      user_url(profile.profileable)
-    elsif profile.profileable.class == Page
-      page_url(profile.profileable)
-    else
-      'deleted'
-    end
-  end
-
-  # Generates a link to the Profile's profileable edit action
-  # Either a Page or a User
-  def dual_profile_edit_url(profile)
-    if profile.profileable.class == User
-      edit_user_url(profile.profileable)
-    elsif profile.profileable.class == Page
-      settings_page_url(profile.profileable)
-    else
-      'deleted'
-    end
   end
 
   # :nodoc:
@@ -163,7 +153,7 @@ module ApplicationHelper
   # TODO: Something something instance variable with Redcarpet
   def markdown_to_html(markdown)
     Redcarpet::Markdown.new(
-        Redcarpet::Render::HTML.new(filter_html: false, escape_html: true),
+        Argu::Render::HTML.new(filter_html: false, escape_html: true),
         {tables: false, fenced_code_blocks: false, no_styles: true, escape_html: true, autolink: true, lax_spacing: true}
     ).render(markdown).html_safe
   end

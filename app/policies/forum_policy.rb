@@ -125,7 +125,7 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def join?
-    rule is_open?, has_access_token?, staff?
+    rule is_open?, has_access_token?, is_manager?, staff?
   end
 
   def list?
@@ -191,7 +191,7 @@ class ForumPolicy < RestrictivePolicy
   # @return [String] The tab if it is considered valid
   def verify_tab(tab)
     tab ||= 'general'
-    self.assert! self.permitted_tabs.include?(tab.to_sym)
+    self.assert! self.permitted_tabs.include?(tab.to_sym), "#{tab}?"
     tab
   end
 end

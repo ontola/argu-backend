@@ -8,7 +8,7 @@ footer
     li= link_to 'Argu Feedback', forum_path('feedback')
   ul.footer-list
     li
-      h3.footer-heading= t('about.title')
+      h3.footer-heading= t('about.info')
     li= link_to t('about.vision'), info_path(:about)
     li= link_to t('about.team'), info_path(:team)
     /li= link_to t('about.product'), product_path
@@ -20,12 +20,6 @@ footer
     li= link_to t('about.contact'), info_path(:contact)
   ul.footer-list
     li
-      h3.footer-heading= t('legal.header')
-    li= link_to t('legal.policy'), policy_path
-    li= link_to t('legal.privacy'), privacy_path
-    /li= link_to t('legal.cookies'), cookies_path
-  ul.footer-list
-    li
       h3.footer-heading= t('footer_item_follow_uw')
       .footer-social-buttons
         a[href="https://www.facebook.com/argu.co"]
@@ -34,5 +28,13 @@ footer
           span.fa.fa-linkedin
         a[href="https://twitter.com/argu_co"]
           span.fa.fa-twitter
+        a[href="https://www.google.com/+Argu_dot_co"]
+          span.fa.fa-google-plus
+        a[href="https://www.youtube.com/playlist?list=PLkKmFghZIx4_rOwub0YKx6njRmDrwj8TX"]
+          span.fa.fa-youtube
   .footer-bottom
     span= t('site.copyright')
+    span= " | "
+    span= link_to t('legal.policy'), policy_path
+    span= " | "
+    span= link_to t('legal.privacy'), privacy_path

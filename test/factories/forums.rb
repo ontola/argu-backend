@@ -4,7 +4,6 @@ FactoryGirl.define do
     association :page, strategy: :create
     visibility Forum.visibilities[:open]
     transient do
-      #visible_with_a_link false
       motion_count 0
     end
 
@@ -24,6 +23,7 @@ FactoryGirl.define do
         create :access_token, item: forum
         cap = Setting.get('user_cap').try(:to_i)
         Setting.set('user_cap', -1) unless cap.present?
+        forum.page.owner.profileable.follow forum
       end
 
       factory :populated_forum_vwal, traits: [:vwal]
