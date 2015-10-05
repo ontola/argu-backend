@@ -11,13 +11,8 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require fetch/fetch
-//
 //= require jquery/dist/jquery.js
 //= require jquery_ujs
-//= require react/react-with-addons.js
-//= require react-router/build/umd/ReactRouter.js
-//= require react_ujs
-//= require react-onclickoutside/index
 //= require reflux/dist/reflux.js
 //= require jquery.jeditable.mini.js
 //= require jquery-ui/autocomplete
@@ -26,20 +21,31 @@
 //= require microplugin/src/microplugin
 //= require sifter/sifter.js
 //= require selectize/dist/js/selectize.js
-//= require react-input-autosize.min
 //= require classnames
-//= require react-select
 // Briarcliff dependencies :: GO
 //= require fastclick/lib/fastclick
-//= require isotope/dist/isotope.pkgd.js
 //= require intro.js/intro.js
 //= require nprogress/nprogress.js
 // Briarcliff dependencies :: END
-//= require requirejs
 //= require autocomplete-rails
 //= require_tree ./lib
 //= require_tree ./stores
 //= require_tree ./services
-//= require_tree ./components
-//= require initialize.js.jsx
-//= require_tree ./application
+import React from 'react/react-with-addons';
+window.React = React;
+import Intl from 'intl';
+import ReactIntl from 'react-intl';
+import './lib/helpers';
+import './lib/OrderedMap';
+import './components/CombiBigVote';
+import './components/_big_group_responses';
+import './components/_big_vote_elements';
+import './components/_expand';
+import './components/_membership';
+import './components/_search';
+import './components/ActiveToggle';
+import './components/CurrentProfile';
+import './components/Dropdown';
+import './components/Notifications';
+import App from 'initialize';
+App().init();

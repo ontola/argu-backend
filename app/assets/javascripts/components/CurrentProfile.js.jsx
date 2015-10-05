@@ -1,6 +1,7 @@
-/*global React, $*/
+import React from 'react/react-with-addons';
+import { image } from '../lib/helpers';
 
-window.CurrentProfile = React.createClass({
+export var CurrentProfile = React.createClass({
     getInitialState: function () {
         return {
             display_name: this.props.display_name,
@@ -23,7 +24,7 @@ window.CurrentProfile = React.createClass({
     render: function () {
 
         return (<section className="profile-small inspectlet-sensitive">
-            {_image({image: this.state.profile_photo})}
+            {image({image: this.state.profile_photo})}
             <div className="info-block">
                 <div className="info">plaatsen als:</div>
                 <div className="profile-name">{this.state.display_name}</div>
@@ -32,6 +33,4 @@ window.CurrentProfile = React.createClass({
     }
 });
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = CurrentProfile;
-}
+window.CurrentProfile = CurrentProfile;

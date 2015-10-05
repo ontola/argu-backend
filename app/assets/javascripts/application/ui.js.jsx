@@ -206,7 +206,7 @@ Argu.ui = {
             videoElement.remove();
         }, 1000);
 
-        fetch('/persist_cookie.json', _safeCredentials({
+        fetch('/persist_cookie.json', safeCredentials({
             method: 'put',
             body: JSON.stringify({
                 user: {
@@ -263,3 +263,5 @@ Argu.ui.progressbar = {
             .on('pjax:end ajax:after', NProgress.remove);
     }
 };
+
+export default Argu.ui;

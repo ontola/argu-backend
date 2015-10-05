@@ -22,6 +22,7 @@
 //= require nprogress
 //= require isotope.pkgd.min
 //= require onclickoutside
+//= require react-intl/index
 //= require_tree ./lib
 //= require_tree ./stores
 //= require components

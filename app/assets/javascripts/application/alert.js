@@ -1,6 +1,7 @@
 /*global $, Argu*/
 
-Argu.alert = {
+window.Argu = window.Argu || {};
+window.Argu.alert = {
     init: function () {
         function fadeOnStart () {
             Argu.alert.fadeAll();
@@ -83,3 +84,5 @@ Argu.Alert = function (message, messageType, instantShow, prependSelector) {
 
     if(instantShow) this.show();
 };
+
+export default Argu.alert;

@@ -38,15 +38,15 @@ if (!Object.assign) {
     });
 }
 
-var _image = function (props) {
+export function image (props) {
     if (props.image) {
         return <img src={props.image.url} alt={props.image.title} className={props.image.className} />;
     } else if (props.fa) {
         return <span className={['fa', props.fa].join(' ')} />;
     }
-};
+}
 
-var _url = function (url, obj) {
+export function _url (url, obj) {
     "use strict";
     if (typeof(url) === "string" && typeof(obj) === "object") {
         var res = decodeURIComponent(url).replace(/{{([^{}]+)}}/, function (match, p1) {
@@ -56,9 +56,9 @@ var _url = function (url, obj) {
     } else if (url !== null) {
         return decodeURIComponent(url);
     }
-};
+}
 
-var _authenticityHeader = function (options) {
+export function _authenticityHeader (options) {
     "use strict";
     options = options || {};
     return Object.assign(options, {
@@ -67,20 +67,20 @@ var _authenticityHeader = function (options) {
     });
 };
 
-var getAuthenticityToken = function () {
+export function getAuthenticityToken () {
     return getMetaContent('csrf-token');
 };
 
-var getMetaContent = function (name) {
+export function getMetaContent (name) {
     let header = document.querySelector(`meta[name="${name}"]`);
     return header && header.content;
 };
 
-var getUserIdentityToken = function () {
+export function getUserIdentityToken () {
     return {token: getMetaContent('user-identity-token')};
 };
 
-var jsonHeader = function (options) {
+export function jsonHeader (options) {
     options = options || {};
     return Object.assign(options, {
         'Accept': 'application/json',
@@ -88,7 +88,7 @@ var jsonHeader = function (options) {
     });
 };
 
-var _safeCredentials = function (options) {
+export function safeCredentials (options) {
     "use strict";
     options = options || {};
     return Object.assign(options, {
@@ -98,7 +98,7 @@ var _safeCredentials = function (options) {
     });
 };
 
-var statusSuccess = function (response) {
+export function statusSuccess (response) {
     if (response.status >= 200 && response.status < 300) {
         return Promise.resolve(response);
     } else {
@@ -106,7 +106,7 @@ var statusSuccess = function (response) {
     }
 };
 
-var tryLogin = function (response) {
+export function tryLogin (response) {
     "use strict";
     if (response.status == 401) {
         return Promise.resolve(window.alert('You should login.'));
@@ -115,7 +115,7 @@ var tryLogin = function (response) {
     }
 };
 
-var _userIdentityToken = function (options) {
+export function userIdentityToken (options) {
     "use strict";
     options = options || {};
     return Object.assign(options, {
@@ -123,7 +123,7 @@ var _userIdentityToken = function (options) {
     })
 };
 
-var json = function (response) {
+export function json (response) {
     if (response.status !== 204) {
         return response.json();
     } else {
@@ -131,13 +131,11 @@ var json = function (response) {
     }
 };
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = _image;
-    module.exports = _url;
-    module.exports = _authenticityHeader;
-    module.exports = _safeCredentials;
-    module.exports = statusSuccess;
-    module.exports = tryLogin;
-    module.exports = json;
-    module.exports = ScrollLockMixin;
-}
+//module.exports = image;
+//module.exports = _url;
+//module.exports = _authenticityHeader;
+//module.exports = _userIdentityToken;
+//module.exports = safeCredentials;
+//module.exports = statusSuccess;
+//module.exports = tryLogin;
+//module.exports = json;

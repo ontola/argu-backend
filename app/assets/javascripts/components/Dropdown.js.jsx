@@ -1,4 +1,6 @@
-/*global React, $*/
+import React from 'react/react-with-addons';
+import { image } from '../lib/helpers';
+import { NotificationTrigger } from './Notifications';
 
 function isTouchDevice() {
     return (('ontouchstart' in window)
@@ -7,7 +9,7 @@ function isTouchDevice() {
     //navigator.msMaxTouchPoints for microsoft IE backwards compatibility
 }
 
-window.HyperDropdownMixin = {
+export var HyperDropdownMixin = {
 
     getInitialState: function () {
         this.listeningToClick = true;
@@ -109,9 +111,9 @@ window.HyperDropdownMixin = {
         return refDropdown;
     }
 };
+window.HyperDropdown = HyperDropdown;
 
-
-window.HyperDropdown = React.createClass({
+export var HyperDropdown = React.createClass({
     mixins: [
         HyperDropdownMixin,
         (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
@@ -147,11 +149,11 @@ window.HyperDropdown = React.createClass({
                 trigger = <NotificationTrigger handleClick={this.handleClick} handleTap={this.handleTap} {...this.props} />
             }
         } else {
-            const image_after  = _image({fa: this.props.fa_after});
+            const image_after  = image({fa: this.props.fa_after});
             const triggerClass = "dropdown-trigger " + this.props.triggerClass;
             const TriggerContainer = this.props.triggerTag || 'a';
             trigger = (<TriggerContainer href={this.props.defaultAction} className={triggerClass} onClick={this.handleClick} done={this.close} data-skip-pjax="true">
-                          {_image(this.props)}
+                          {image(this.props)}
                           <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
                           {image_after}
                        </TriggerContainer>);
@@ -177,7 +179,7 @@ window.HyperDropdown = React.createClass({
     }
 });
 
-window.ShareDropdown = React.createClass({
+export var ShareDropdown = React.createClass({
     mixins: [
         HyperDropdownMixin,
         (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
@@ -283,8 +285,9 @@ window.ShareDropdown = React.createClass({
         </li>);
     }
 });
+window.ShareDropdown = ShareDropdown;
 
-window.DropdownContent = React.createClass({
+export var DropdownContent = React.createClass({
     getInitialState: function () {
         return {
             appearState: ''
@@ -354,6 +357,7 @@ window.DropdownContent = React.createClass({
         </div>);
     }
 });
+window.HyperDropdown = HyperDropdown;
 
 var LinkItem = React.createClass({
     getInitialState: function () {
@@ -389,7 +393,7 @@ var LinkItem = React.createClass({
         return (<li className={this.props.type}>
             {divider}
             <a href={this.props.url} data-remote={remote} data-method={method} data-confirm={confirm} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} data-sort-value={sortValue} data-display-setting={displaySetting} className={className}>
-                {_image(this.props)}
+                {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
         </li>);
@@ -418,7 +422,7 @@ var FBShareItem = React.createClass({
     render: function () {
         return (<li className={this.props.type}>
             <a href={this.props.url} data-skip-pjax="true" onClick={this.handleClick}>
-                {_image({fa: 'fa-facebook'})}
+                {image({fa: 'fa-facebook'})}
                 <span className="icon-left">Facebook {this.countInParentheses()}</span>
             </a>
         </li>);
@@ -436,13 +440,13 @@ var ActorItem = React.createClass({
     
     switchActor: function () {
         this.props.done();
-        fetch(this.props.url, _safeCredentials({
+        fetch(this.props.url, safeCredentials({
             method: 'PUT'
         })).then(statusSuccess)
            .then(json)
            .then(function (data) {
                Actions.actorUpdate(data);
-               if (window.confirm('<%= I18n.t('profiles.switch_warning') %>')) {
+               if (window.confirm('Sommige mogelijkheden zijn niet zichtbaar totdat de pagina opnieuw geladen is, nu opnieuw laden?')) {
                    location.reload();
                }
         }).catch(console.log);
@@ -470,7 +474,7 @@ var ActorItem = React.createClass({
         return (<li className={'link ' + this.props.type}>
             {divider}
             <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow" onTouchEnd={this.handleTap} onClickCapture={this.handleClick} data-skip-pjax={skipPjax}>
-                {_image(this.props)}
+                {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
         </li>);
@@ -502,12 +506,9 @@ var CurrentUserTrigger = React.createClass({
         var TriggerContainer = this.props.triggerTag || 'div';
 
         return (<TriggerContainer className={triggerClass} onClick={this.props.handleClick} onTouchEnd={this.props.handleTap} >
-            {_image({image: {url: this.state.profile_photo.url, title: this.state.profile_photo.title, className: 'profile-picture--navbar'}})}
+            {image({image: {url: this.state.profile_photo.url, title: this.state.profile_photo.title, className: 'profile-picture--navbar'}})}
             <span className="icon-left">{this.state.display_name}</span>
         </TriggerContainer>);
     }
 });
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = HyperDropdown;
-}

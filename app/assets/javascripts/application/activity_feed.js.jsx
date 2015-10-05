@@ -14,7 +14,7 @@ Argu.activityFeed = {
     loadMore: function () {
         var _this   = $(this),
             feedDOM = $('.activity-feed .activities');
-        _this.text('<%= I18n.t('activities.ui.loading'); %>');
+        _this.text('activities.ui.loading');
         Argu.activityFeed.loading= true;
         $.ajax("/activities.html", {
             data: {
@@ -24,9 +24,9 @@ Argu.activityFeed = {
             success: function (d, s, xhr) {
                 if (xhr.status == 200 || xhr.status == 304) {
                     feedDOM.append(d);
-                    _this.text('<%= I18n.t('activities.ui.load_more') %>');
+                    _this.text('activities.ui.load_more');
                 } else if (xhr.status == 204) {
-                    _this.text('<%= I18n.t('activities.ui.no_more_artivities') %>');
+                    _this.text('activities.ui.no_more_artivities');
                     Argu.activityFeed.reachedEnd = true;
                     window.setTimeout(function() {
                         Argu.activityFeed.reachedEnd = false;
@@ -37,3 +37,5 @@ Argu.activityFeed = {
         });
     }
 };
+
+export default Argu.activityFeed;

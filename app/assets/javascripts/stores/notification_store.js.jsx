@@ -1,3 +1,6 @@
+import { userIdentityToken, statusSuccess, json, safeCredentials } from '../lib/helpers';
+
+
 window.NotificationActions = Reflux.createActions({
     "notificationUpdate": {},
     "markAllAsRead": {asyncResult: true},
@@ -37,7 +40,7 @@ window.notificationStore = Reflux.createStore({
 
     fetchNextPage: function () {
         "use strict";
-        return fetch(`/n.json?from_time=${this.state.notifications.oldestNotification.toISOString()}`, _safeCredentials())
+        return fetch(`/n.json?from_time=${this.state.notifications.oldestNotification.toISOString()}`, safeCredentials())
             .then(function (response) {
                 if (response.status == 200) {
                     response.json().then(function (data) {
@@ -60,7 +63,7 @@ window.notificationStore = Reflux.createStore({
 
     checkForNew: function () {
         "use strict";
-        return fetch('//meta.argu.co/n', _userIdentityToken({method: 'post', headers: {
+        return fetch('//meta.argu.co/n', userIdentityToken({method: 'post', headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }}))
@@ -74,7 +77,7 @@ window.notificationStore = Reflux.createStore({
     fetchNew: function (notificationCount) {
         "use strict";
         let from = this.state.notifications.lastNotification.toISOString();
-        return fetch(`/n.json?lastNotification=${from}`, _safeCredentials())
+        return fetch(`/n.json?lastNotification=${from}`, safeCredentials())
             .then(statusSuccess)
             .then(json)
             .then(function (data) {
@@ -88,7 +91,7 @@ window.notificationStore = Reflux.createStore({
 
     onMarkAllAsRead: function () {
         "use strict";
-        fetch("/n/read.json", _safeCredentials({
+        fetch("/n/read.json", safeCredentials({
             method: 'PATCH'
         })).then(statusSuccess)
            .then(json)

@@ -1,8 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require 'sprockets/es6'
 require 'devise'
+
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -53,7 +53,12 @@ module Argu
     config.react.addons = true
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts')
     config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+    config.assets.paths << Rails.root.join('node_modules')
+
+    config.browserify_rails.evaluate_node_modules = true
+    config.browserify_rails.commandline_options = '-t [ babelify --stage 0 ] -r jquery -t [ deamdify ] -t [ require-globify ] --extension .js.jsx'
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

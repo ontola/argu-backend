@@ -1,4 +1,5 @@
-/*global React, $*/
+/*global $*/
+import React from 'react/react-with-addons';
 
 window.MotionOption = React.createClass({
     propTypes: {
@@ -26,10 +27,6 @@ window.MotionOption = React.createClass({
     }
 });
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = ProfileOption;
-}
-
 window.MotionSelect = React.createClass({
     getInitialState () {
         this.currentFetchTimer = 0;
@@ -54,7 +51,7 @@ window.MotionSelect = React.createClass({
                 q: input,
                 thing: 'motion'
             };
-            fetch(`/${this.props.forum}/m.json?${$.param(params)}`, _safeCredentials())
+            fetch(`/${this.props.forum}/m.json?${$.param(params)}`, safeCredentials())
                 .then(statusSuccess)
                 .then(json)
                 .then((data) => {
@@ -95,7 +92,3 @@ window.MotionSelect = React.createClass({
             asyncOptions={this.loadOptions}  />);
     }
 });
-
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = NewMembership;
-}

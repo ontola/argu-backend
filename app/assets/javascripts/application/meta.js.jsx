@@ -39,3 +39,8 @@ function replaceHeadElement(elem) {
     }
 
 }
+
+export default {
+    processContentForMetaTags: processContentForMetaTags,
+    removeMetaContent: removeMetaContent
+};

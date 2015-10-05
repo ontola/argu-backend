@@ -1,5 +1,6 @@
 
-Argu.n = {
+window.Argu = window.Argu || {};
+window.Argu.n = {
     refreshing: false,
     lastNotificationCheck: Date.now(),
     timeoutValue: 30000,
@@ -93,3 +94,5 @@ Argu.n = {
         return visibilityChange;
     }
 };
+
+export default Argu.n;

@@ -1,4 +1,5 @@
-/*global React, $*/
+/*global $*/
+import React from 'react/react-with-addons';
 
 window.ProfileOption = React.createClass({
     propTypes: {
@@ -75,7 +76,7 @@ window.NewMembership = React.createClass({
 
         window.clearTimeout(this.currentFetchTimeout);
         this.currentFetchTimeout = window.setTimeout(() => {
-            fetch('/profiles.json', _safeCredentials({
+            fetch('/profiles.json', safeCredentials({
                 method: 'POST',
                 body: JSON.stringify({
                     q: input,

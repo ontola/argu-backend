@@ -1,4 +1,6 @@
-var ActiveToggle = React.createClass({
+import React from 'react/react-with-addons';
+
+window.ActiveToggle = React.createClass({
     getDefaultProps: function() {
         "use strict";
         return {
@@ -20,7 +22,7 @@ var ActiveToggle = React.createClass({
         var newState = this.state.toggleState;
         this.setState({loading: true});
 
-        fetch(decodeURI(this.props.url).replace(/{{value}}/, newState.toString()), _safeCredentials({
+        fetch(decodeURI(this.props.url).replace(/{{value}}/, newState.toString()), safeCredentials({
             method: this.props[`${newState}_props`].method || 'PATCH'
         })).then((response) => {
             if (response.status == 201 || response.status == 304) {
@@ -49,6 +51,4 @@ var ActiveToggle = React.createClass({
     }
 });
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = ActiveToggle;
-}
+module.exports = ActiveToggle;

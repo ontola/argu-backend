@@ -1,4 +1,4 @@
-/* global React */
+import React from 'react/react-with-addons';
 
 var Expander = React.createClass({
     getInitialState: function () {

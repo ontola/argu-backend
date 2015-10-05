@@ -1,7 +1,7 @@
-/*global React, $*/
+import React from 'react/react-with-addons';
+import { image } from '../lib/helpers';
 
-
-var ScrollLockMixin = {
+export var ScrollLockMixin = {
     cancelScrollEvent: function (e) {
         e.stopImmediatePropagation();
         e.preventDefault();
@@ -47,7 +47,7 @@ var ScrollLockMixin = {
     }
 };
 
-var NotificationTrigger = React.createClass({
+export var NotificationTrigger = React.createClass({
     getInitialState: function () {
         return {
             unread: this.props.sections[0].unread
@@ -73,13 +73,14 @@ var NotificationTrigger = React.createClass({
         var label = this.state.unread > 0 ? <span className='notification-counter'>{this.state.unread}</span> : null;
 
         return (<div className={triggerClass} rel="nofollow" onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
-            {_image({fa: this.state.unread > 0 ? 'fa-bell' : 'fa-bell'})}
+            {image({fa: this.state.unread > 0 ? 'fa-bell' : 'fa-bell'})}
             {label}
         </div>);
     }
 });
+window.NotificationTrigger = NotificationTrigger;
 
-var Notifications = React.createClass({
+export var Notifications = React.createClass({
     mixins: [ScrollLockMixin],
 
     getInitialState: function () {
@@ -148,15 +149,16 @@ var Notifications = React.createClass({
         </ul>);
     }
 });
+window.Notifications = Notifications;
 
-var NotificationItem = React.createClass({
+export var NotificationItem = React.createClass({
     getInitialState: function () {
         return {};
     },
 
     handleClick: function (e) {
         e.stopPropagation();
-        fetch(`/n/${this.props.id}.json`, _safeCredentials({
+        fetch(`/n/${this.props.id}.json`, safeCredentials({
             method: 'PUT'
         })).then(statusSuccess)
            .then(json)
@@ -181,9 +183,10 @@ var NotificationItem = React.createClass({
                 <span className='notification-description'>{this.props.title}</span>
                 <div className='notification-bottom'>
                     <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.created_at}</span>
-                    {_image(this.props)}
+                    {image(this.props)}
                 </div>
             </a>
         </li>);
     }
 });
+window.NotificationItem = NotificationItem;

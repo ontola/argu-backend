@@ -1,3 +1,5 @@
+import React from 'react/react-with-addons';
+
 window.BigGroupResponse = React.createClass({
     getInitialState: function () {
         return {
@@ -10,7 +12,7 @@ window.BigGroupResponse = React.createClass({
     },
 
     refresh: function () {
-        fetch(`${this.state.object_id}.json`, _safeCredentials())
+        fetch(`${this.state.object_id}.json`, safeCredentials())
             .then(statusSuccess)
             .then(json)
             .then((data)  => {

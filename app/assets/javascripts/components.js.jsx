@@ -1,0 +1,16 @@
+import React from 'react/react-with-addons';
+global.React = React;
+import Intl from 'intl';
+import ReactIntl from 'react-intl';
+import './lib/helpers';
+import './lib/OrderedMap';
+import './components/CombiBigVote';
+import './components/_big_group_responses';
+import './components/_big_vote_elements';
+import './components/_expand';
+import './components/_membership';
+import './components/_search';
+import './components/ActiveToggle';
+import './components/CurrentProfile';
+import './components/Dropdown';
+import './components/Notifications';

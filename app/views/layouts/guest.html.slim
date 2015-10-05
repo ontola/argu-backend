@@ -20,6 +20,7 @@ head[itemscope itemtype="http://schema.org/WebSite"]
   link[rel="copyright" content="#{t('site.copyright')}"]
   - if active_for_user?('inspectlet', current_user)
     =render partial:'external/inspectlet'
+  =render partial: 'external/mixpanel'
 body
   #fb-root
   =render 'guest/navbar'
@@ -29,7 +30,6 @@ body
     /[if lt IE 10]
       p.browsehappy= raw t('outdated_browser')
     =render partial: 'alerts'
-    /= render 'responsibility_notice'
     #pjax-container.container
       =yield
     .push-footer

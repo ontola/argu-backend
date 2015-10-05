@@ -1,6 +1,11 @@
-/*global React, $*/
+/*global $*/
+import React from 'react/react-with-addons';
+import Intl from  'intl';
+import 'intl/locale-data/jsonp/en.js';
+import { IntlMixin, FormattedMessage } from 'react-intl';
 
 window.CombiBigVote = React.createClass({
+
     getInitialState: function () {
         return {
             actor: this.props.actor,
@@ -31,7 +36,7 @@ window.CombiBigVote = React.createClass({
     },
 
     refreshGroups: function () {
-        fetch(`${this.state.object_id}.json`, _safeCredentials())
+        fetch(`${this.state.object_id}.json`, safeCredentials())
                 .then(statusSuccess)
                 .then(json)
                 .then((data) => {
@@ -46,6 +51,7 @@ window.CombiBigVote = React.createClass({
         let voteResultsComponent;
         let groupResponsesComponent;
         if (!this.state.actor || this.state.actor.actor_type == "User") {
+            console.log(this.props.locale, this.props.messages);
             voteButtonsComponent = <BigVoteButtons parentSetVote={this.setVote} {...this.state} {...this.props}/>;
             voteResultsComponent = <BigVoteResults {...this.state} show_results={this.state.current_vote !== "abstain"}/>;
             groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
@@ -63,7 +69,4 @@ window.CombiBigVote = React.createClass({
         );
     }
 });
-
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = CombiBigVote;
-}
+export default CombiBigVote;

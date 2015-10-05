@@ -1,8 +1,106 @@
-function checkForGrid () {
-    var grid = $('.grid');
+import Isotope from 'isotope-layout';
 
-    if (grid.length > 0) {
-        $container = grid.isotope({
+var $container;
+
+function init () {
+    console.log('INIT');
+    // filter functions
+    var lastFilter = "",
+        lastType   = "";
+
+    var filterFns = {
+        // filter by tag using data-tags
+        combined: function () {
+            var correctTag,
+                correctType;
+            if(lastFilter != "") {
+                var tags = this.dataset.tags.split(',');
+                correctTag = tags.indexOf(lastFilter) != -1;
+            } else correctTag = true;
+
+            if (lastType != "") correctType = this.className.indexOf(lastType) != -1;
+            else correctType = true;
+
+            return correctTag && correctType;
+        }
+    };
+
+    checkForGrid();
+
+    $(document).on('pjax:complete pjax:end', function () {
+        checkForGrid();
+    }).on('click', '.sort-random', function () {
+        $container.isotope('updateSortData').isotope({
+            sortBy: 'random'
+        });
+    }).on('click', '#tags a', function (e) {
+        // bind filter button click
+        e.preventDefault();   // this prevents selecting the words in chrome on android
+        var  _this = $(this),
+            filter = _this.attr('data-filter'),
+            value  = this.dataset.filterValue;
+        filterForTag(value);
+        history.pushState({filter: filter, filterValue: value}, value + 'header_title', _this.attr('data-forum-path')+'/t/' + value);
+    }).on('click', '#type a', function (e) {
+        e.preventDefault();   // this prevents selecting the words in chrome on android
+        var  _this = $(this),
+            filter = _this.attr('data-filter'),
+            value  = this.dataset.filterValue || "";
+        filterForType(filter, filter);
+        if (filter == '') {
+            history.pushState({
+                filter: filter,
+                filterValue: value
+            }, value + 'header_title', _this.attr('data-forum-path') + '/' + value);
+        }
+    }).on('click', '#sorts a', function () {
+        var sortValue = $(this).attr('data-sort-value');
+        $container.isotope({ sortBy: sortValue });
+    }).on('click', '#display [data-display-setting="info_bar"]', function () {
+        let grid = $('.grid');
+        grid.toggleClass( 'display-hide-details');
+        grid.isotope();
+    }).on('click', '#display [data-display-setting="image"]', function () {
+        let grid = $('.grid');
+        grid.toggleClass( 'display-hide-images');
+        grid.isotope();
+    }).on('click', '#display [data-display-setting="columns"]', function () {
+        let grid = $('.grid');
+        grid.toggleClass( 'display-single-column');
+        grid.isotope();
+    });
+
+    // change is-checked class on buttons
+    $('#sorts').each(function (i, buttonGroup) {
+        var $buttonGroup = $(buttonGroup);
+        $buttonGroup.on('click', 'a', function () {
+            $buttonGroup.find('.is-checked').removeClass('is-checked');
+            $(this).addClass('is-checked');
+        });
+    });
+
+    window.onpopstate = function(event) {
+        if ($('.grid').length > 0) {
+            if (event.state) {
+                event.state.filterValue = event.state.filterValue || '';
+            }
+            var state = event.state || {filterValue: ''};
+            filterForTag(state.filterValue);
+        }
+    };
+    if ($('.tags-bar')) {
+        var tag =  '';//location.pathname.split('/')[1];
+        if (tag !== null && tag !== "") {
+            filterForTag(tag);
+        }
+    }
+}
+
+function checkForGrid () {
+    let grid = document.querySelector('.grid');
+
+    if (grid !== null) {
+        $container = new Isotope(grid, {
             itemSelector: '.box-grid',
             columnWidth: '.box-grid-sizer',
             getSortData: {
@@ -47,93 +145,9 @@ function setHighlight(type, value) {
     _document.find('#' + type + ' [data-filter-value="'+value+'"]').addClass('is-checked');
 }
 
-$(function () {
-    checkForGrid();
+//$(function () {
+//    checkForGrid();
+//    init();
+//});
 
-    // filter functions
-    var lastFilter = "",
-        lastType   = "";
-
-    var filterFns = {
-        // filter by tag using data-tags
-        combined: function () {
-            var correctTag,
-                correctType;
-            if(lastFilter != "") {
-                var tags = this.dataset.tags.split(',');
-                correctTag = tags.indexOf(lastFilter) != -1;
-            } else correctTag = true;
-
-            if (lastType != "") correctType = this.className.indexOf(lastType) != -1;
-            else correctType = true;
-
-            return correctTag && correctType;
-        }
-    };
-
-    $(document).on('pjax:complete pjax:end', function () {
-        checkForGrid();
-    }).on('click', '.sort-random', function () {
-        $container.isotope('updateSortData').isotope({
-            sortBy: 'random'
-        });
-    }).on('click', '#tags a', function (e) {
-        // bind filter button click
-        e.preventDefault();   // this prevents selecting the words in chrome on android
-        var  _this = $(this),
-            filter = _this.attr('data-filter'),
-            value  = this.dataset.filterValue;
-        filterForTag(value);
-        history.pushState({filter: filter, filterValue: value}, value + '<%= I18n.t('header_title') %>', _this.attr('data-forum-path')+'/t/' + value);
-    }).on('click', '#type a', function (e) {
-        e.preventDefault();   // this prevents selecting the words in chrome on android
-        var  _this = $(this),
-            filter = _this.attr('data-filter'),
-            value  = this.dataset.filterValue || "";
-        filterForType(filter, filter);
-        if (filter == '') {
-            history.pushState({
-                filter: filter,
-                filterValue: value
-            }, value + '<%= I18n.t('header_title') %>', _this.attr('data-forum-path') + '/' + value);
-        }
-    }).on('click', '#sorts a', function () {
-        var sortValue = $(this).attr('data-sort-value');
-        $container.isotope({ sortBy: sortValue });
-    }).on('click', '#display [data-display-setting="info_bar"]', function () {
-        console.log($(this));
-       $('.grid').toggleClass( 'display-hide-details'); $( '.grid' ).isotope()
-    }).on('click', '#display [data-display-setting="image"]', function () {
-        console.log($(this));
-       $('.grid').toggleClass( 'display-hide-images'); $( '.grid' ).isotope()
-    }).on('click', '#display [data-display-setting="columns"]', function () {
-        console.log($(this));
-       $('.grid').toggleClass( 'display-single-column'); $( '.grid' ).isotope()
-    });
-
-    // change is-checked class on buttons
-    $('#sorts').each(function (i, buttonGroup) {
-        var $buttonGroup = $(buttonGroup);
-        $buttonGroup.on('click', 'a', function () {
-            $buttonGroup.find('.is-checked').removeClass('is-checked');
-            $(this).addClass('is-checked');
-        });
-    });
-
-    window.onpopstate = function(event) {
-        if ($('.grid').length > 0) {
-            if (event.state) {
-                event.state.filterValue = event.state.filterValue || '';
-            }
-            var state = event.state || {filterValue: ''};
-            filterForTag(state.filterValue);
-        }
-    };
-    if ($('.tags-bar')) {
-        var tag =  '';//location.pathname.split('/')[1];
-        if (tag !== null && tag !== "") {
-            filterForTag(tag);
-        }
-    }
-
-});
+export default init;

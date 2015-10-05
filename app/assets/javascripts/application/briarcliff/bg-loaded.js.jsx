@@ -5,6 +5,7 @@
  * Copyright (c) 2014 Jonathan Catmull
  * Licensed under the MIT license.
  */
+//import $ from 'jquery';
 
 (function($){
     $.fn.bgLoaded = function(custom) {
@@ -41,6 +42,3 @@
         });
     };
 })(jQuery);
-
-// Example with different callback function
-var startTime = new Date().getTime();

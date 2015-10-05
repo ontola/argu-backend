@@ -1,12 +1,17 @@
-/*global React, $*/
+/*global $*/
+import React from 'react/react-with-addons';
+import Intl from  'intl';
+import { IntlMixin, FormattedMessage } from 'react-intl';
 
 function createMembership(response) {
-    return fetch(response.membership_url, _safeCredentials({
+    return fetch(response.membership_url, safeCredentials({
         method: 'POST'
     })).then(statusSuccess);
 }
 
 window.BigVoteButtons = React.createClass({
+    mixins: [IntlMixin],
+
     getInitialState: function () {
         return {
             object_type: this.props.object_type,
@@ -27,13 +32,13 @@ window.BigVoteButtons = React.createClass({
     },
 
     refresh: function () {
-        fetch(`${this.state.vote_url}.json`, _safeCredentials())
+        fetch(`${this.state.vote_url}.json`, safeCredentials())
                 .then(statusSuccess)
                 .then(json)
                 .then((data) => {
                     data.vote && this.setState(data.vote);
                 }).catch(() => {
-                    Argu.Alert('<%= I18n.t('votes.alerts.failed') %>', 'alert', true);
+                    Argu.Alert(this.getIntlMessage('votes.alerts.failed'), 'alert', true);
                 });
     },
 
@@ -57,7 +62,7 @@ window.BigVoteButtons = React.createClass({
     },
 
     vote: function (side) {
-        fetch(`${this.props.vote_url}/${side}.json`, _safeCredentials({
+        fetch(`${this.props.vote_url}/${side}.json`, safeCredentials({
             method: 'POST'
         })).then((response) => {
             if (response.status == 403) {
@@ -84,15 +89,17 @@ window.BigVoteButtons = React.createClass({
             <ul className="btns-opinion" data-voted={(this.state.current_vote.length > 0 && this.state.current_vote != 'abstain') || null}>
                 <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
                     <span className="fa fa-thumbs-up" />
-                    <span className="icon-left"><%= I18n.t('motions.votes.pro') %></span>
+                    <span className="icon-left">
+                        <FormattedMessage message={this.getIntlMessage('pro')} />
+                    </span>
                 </a></li>
                 <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/neutral`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.neutralHandler} rel="nofollow" className="btn-neutral" data-voted-on={this.state.current_vote == 'neutral' || null}>
                     <span className="fa fa-pause" />
-                    <span className="icon-left"><%= I18n.t('motions.votes.neutral') %></span>
+                    <span className="icon-left"><FormattedMessage message={this.getIntlMessage('neutral')} /></span>
                 </a></li>
                 <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/con`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote == 'con' || null}>
                     <span className="fa fa-thumbs-down" />
-                    <span className="icon-left"><%= I18n.t('motions.votes.con') %></span>
+                    <span className="icon-left"><FormattedMessage message={this.getIntlMessage('con')} /></span>
                 </a></li>
             </ul>);
     }
@@ -104,7 +111,7 @@ window.BigVoteFormButton = React.createClass({
         return(
             <a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method="post" rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
                 <span className="fa fa-thumbs-up" />
-                <span className="icon-left"><%= I18n.t('motions.votes.pro') %></span>
+                <span className="icon-left"><FormattedMessage message={this.getIntlMessage('pro')} /></span>
             </a>
         )
     }
@@ -149,4 +156,5 @@ window.BigVoteResults = React.createClass({
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = BigVoteButtons;
     module.exports = BigVoteResults;
+    module.exports = BigVoteFormButton;
 }
