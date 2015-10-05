@@ -44,7 +44,7 @@ class NotificationPolicy < RestrictivePolicy
   end
 
   def update?
-    user && user.profile == record.profile
+    user && user == record.user
   end
 
 end
