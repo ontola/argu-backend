@@ -200,7 +200,12 @@ private
   end
 
   def self.forum_for(url_options)
-    Motion.find_by(url_options[:motion_id] || url_options[:id]).try(:forum)
+    motion_id = url_options[:motion_id] || url_options[:id]
+    if motion_id.presence
+      Motion.find_by(motion_id).try(:forum)
+    elsif url_options[:forum_id].present?
+      Forum.find_via_shortname_nil url_options[:forum_id]
+    end
   end
 
   def get_context
