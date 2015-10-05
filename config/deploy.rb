@@ -53,7 +53,7 @@ namespace :deploy do
     end
   end
 
-  desc 'Install bower'
+  desc 'Install bower components'
   task :install_bower do
     on roles(:web, :app) do
       within release_path do
@@ -62,6 +62,16 @@ namespace :deploy do
     end
   end
 
+  desc 'Install npm modules'
+  task :npm_install do
+    on roles(:web, :app) do
+      within release_path do
+        execute :npm, 'install'
+      end
+    end
+  end
+
+  before :install_bower, :npm_install
   before 'deploy:compile_assets', :install_bower
   after :updated, :compile_assets
   after :publishing, :update_build_number
