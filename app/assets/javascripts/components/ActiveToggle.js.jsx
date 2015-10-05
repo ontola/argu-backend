@@ -1,4 +1,5 @@
 import React from 'react/react-with-addons';
+import { safeCredentials } from '../lib/helpers;
 
 window.ActiveToggle = React.createClass({
     getDefaultProps: function() {

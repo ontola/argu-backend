@@ -65,20 +65,20 @@ export function _authenticityHeader (options) {
         'X-CSRF-Token': getAuthenticityToken(),
         'X-Requested-With': 'XMLHttpRequest'
     });
-};
+}
 
 export function getAuthenticityToken () {
     return getMetaContent('csrf-token');
-};
+}
 
 export function getMetaContent (name) {
     let header = document.querySelector(`meta[name="${name}"]`);
     return header && header.content;
-};
+}
 
 export function getUserIdentityToken () {
     return {token: getMetaContent('user-identity-token')};
-};
+}
 
 export function jsonHeader (options) {
     options = options || {};
@@ -86,7 +86,7 @@ export function jsonHeader (options) {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     });
-};
+}
 
 export function safeCredentials (options) {
     "use strict";
@@ -96,7 +96,7 @@ export function safeCredentials (options) {
         mode: 'same-origin',
         headers: Object.assign((options['headers'] || {}), _authenticityHeader(), jsonHeader())
     });
-};
+}
 
 export function statusSuccess (response) {
     if (response.status >= 200 && response.status < 300) {
@@ -104,7 +104,7 @@ export function statusSuccess (response) {
     } else {
         return Promise.reject(response);
     }
-};
+}
 
 export function tryLogin (response) {
     "use strict";
@@ -113,7 +113,7 @@ export function tryLogin (response) {
     } else {
         return Promise.reject(new Error('unknown status code'));
     }
-};
+}
 
 export function userIdentityToken (options) {
     "use strict";
@@ -121,7 +121,7 @@ export function userIdentityToken (options) {
     return Object.assign(options, {
       body: JSON.stringify(Object.assign((options['body'] || {}), getUserIdentityToken()))
     })
-};
+}
 
 export function json (response) {
     if (response.status !== 204) {
@@ -129,13 +129,4 @@ export function json (response) {
     } else {
         return Promise.resolve();
     }
-};
-
-//module.exports = image;
-//module.exports = _url;
-//module.exports = _authenticityHeader;
-//module.exports = _userIdentityToken;
-//module.exports = safeCredentials;
-//module.exports = statusSuccess;
-//module.exports = tryLogin;
-//module.exports = json;
+}

@@ -9,6 +9,7 @@ import iso from './application/briarcliff/isotope-briarcliff';
 import ReactUJS from 'argu/react_ujs.js';
 import BGLoaded from 'application/briarcliff/bg-loaded'
 import Meta from 'application/meta'
+import { safeCredentials } from 'lib/helpers;
 
 window.Argu = window.Argu || {};
 window.Argu.alert = window.Argu.alert || alert;

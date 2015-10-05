@@ -3,6 +3,7 @@ import React from 'react/react-with-addons';
 import Intl from  'intl';
 import 'intl/locale-data/jsonp/en.js';
 import { IntlMixin, FormattedMessage } from 'react-intl';
+import { safeCredentials } from '../lib/helpers;
 
 window.CombiBigVote = React.createClass({
 
