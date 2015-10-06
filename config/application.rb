@@ -20,6 +20,7 @@ module Argu
     require_dependency File.expand_path('../../app/models/concerns/pro_con', __FILE__)
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+    config.autoload_paths += %W(#{config.root}/app/models/banners)
     config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += Dir["#{config.root}/app/services/**/"]
     config.autoload_paths += %W(#{config.root}/app/listeners)
