@@ -7,6 +7,6 @@
     =render partial: 'votes/vote_form', locals: { resource: resource, stance: :neutral, icon: 'pause' } if resource.class::VOTE_OPTIONS.include?(:neutral)
     =render partial: 'votes/vote_form', locals: { resource: resource, stance: :con, icon: 'thumbs-down' } if resource.class::VOTE_OPTIONS.include?(:con)
 
-  =link_to resource, class: 'btn-subtle' do
+  .float-right=link_to resource, class: 'btn-subtle' do
     span.fa.fa-arrow-right
     span.icon-left= t('votes.confirm.skip')

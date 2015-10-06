@@ -11,6 +11,7 @@
 .dropdown-trigger {
   position: relative;
   cursor: pointer;
+  @include transition(opacity .2s);
 }
 
 @mixin closed-state {
@@ -138,9 +139,11 @@ span.dropdown-header {
 }
 
 //.dropdown:hover .dropdown-content,
-.dropdown-active {
-  .dropdown-trigger{
-    background-color: $lighten2 !important;
+.navbar{
+  .dropdown-active {
+    .dropdown-trigger{
+      background-color: $lighten2 !important;
+    }
   }
 }
 
@@ -181,6 +184,7 @@ span.dropdown-header {
   color: $g4;
 }
 
-.btns-list--subtle .dropdown-active {
-  background-color: $darken2;
+.btns-list--subtle .dropdown-active .dropdown-trigger {
+  background-color: $darken1;
+  transition: .2s;
 }
