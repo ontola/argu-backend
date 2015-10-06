@@ -53,11 +53,20 @@
     }
   }
   &:active {
-    background-color: $g1;
+    background-color: white;
     transition: none;
   }
 }
 
 .top-comment p {
-  font-style: italic;
+  font-size: .9em;
+}
+
+.comments-counter {
+  color: $g3;
+  font-size: .8em;
+
+  div {
+    display: inline-block;
+  }
 }

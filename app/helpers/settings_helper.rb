@@ -14,6 +14,8 @@ module SettingsHelper
       'rocket'
     when :privacy
       'shield'
+    when :banners
+      'sticky-note'
     end
   end
 
