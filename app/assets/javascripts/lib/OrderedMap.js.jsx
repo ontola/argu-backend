@@ -48,3 +48,5 @@ OrderedMap.prototype.set = function(key, value) {
     this._map.set(key, value);
     this.length = this._array.length
 };
+
+export default OrderedMap;

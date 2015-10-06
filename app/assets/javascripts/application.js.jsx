@@ -24,19 +24,18 @@
 //= require classnames
 // Briarcliff dependencies :: GO
 //= require fastclick/lib/fastclick
-//= require intro.js/intro.js
 //= require nprogress/nprogress.js
 // Briarcliff dependencies :: END
 //= require autocomplete-rails
-//= require_tree ./lib
-//= require_tree ./stores
-//= require_tree ./services
 import React from 'react/react-with-addons';
 window.React = React;
 import Intl from 'intl';
 import ReactIntl from 'react-intl';
 import './lib/helpers';
 import './lib/OrderedMap';
+import './stores/actor_store';
+import './stores/notification_store';
+
 import './components/CombiBigVote';
 import './components/_big_group_responses';
 import './components/_big_vote_elements';

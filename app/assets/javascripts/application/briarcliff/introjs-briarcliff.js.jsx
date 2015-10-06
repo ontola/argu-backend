@@ -1,10 +1,10 @@
-$(function() {
+import introJs from 'intro.js';
 
     introJsOptions = {
-        'skipLabel': '<%= I18n.t('intro.skip') %>',
-        'nextLabel': '<%= I18n.t('intro.next') %>',
-        'prevLabel': '<%= I18n.t('intro.previous') %>',
-        'doneLabel': '<%= I18n.t('intro.done') %>',
+        'skipLabel': 'intro.skip',
+        'nextLabel': 'intro.next',
+        'prevLabel': 'intro.previous',
+        'doneLabel': 'intro.done',
         'disableInteraction': false,
         'showBullets': true,
         'showProgress': false,
@@ -16,34 +16,33 @@ $(function() {
         steps:[
             {
                 element: document.querySelector('.motion-body'),
-                intro: "<%= I18n.t('intro.motion.posted.body') %>"
+                intro: 'intro.motion.posted.body'
             },
             {
                 element: document.querySelector('.motion-votes'),
-                intro: "<%= I18n.t('intro.motion.posted.vote') %>"
+                intro: 'intro.motion.posted.vote'
             },
             {
                 element: document.querySelector('.argument-columns'),
-                intro: "<%= I18n.t('intro.motion.posted.post_argument') %>"
+                intro: 'intro.motion.posted.post_argument'
             },
             {
                 element: document.querySelector('.share-menu'),
-                intro: "<%= I18n.t('intro.motion.posted.share') %>"
+                intro: 'intro.motion.posted.share'
             }
         ]
     });
-
-    $(document)
-            .on("click", '.intro-trigger', function () {
-                introJs.start();
-            })
-            .on('pjax:click', function () {
-                introJs().exit();
-            });
 
     //start introJs after posting an idea
     if (window.location.search.indexOf('start_motion_tour=true') > -1) {
         introJsMotionTour.start();
     }
-
+$(function() {
+    $(document)
+        .on("click", '.intro-trigger', function () {
+            introJs.start();
+        })
+        .on('pjax:click', function () {
+            introJs().exit();
+        });
 });

@@ -1,7 +1,7 @@
 import { safeCredentials } from '../lib/helpers';
 
 Argu.ui = {
-    bg: null,
+    bg: $(".background"),
     window: null,
 
     init: function () {
@@ -23,7 +23,7 @@ Argu.ui = {
 
         this.handleDOMChangedFinished();
         this.initPlaceholderFallback();
-        (this.window = $(window)).resize(this.handleResizeBackground);
+        $(window).resize(this.handleResizeBackground);
         this.handleResizeBackground();
 
         Argu.ui.modal.init();
@@ -146,7 +146,7 @@ Argu.ui = {
 
     handleResizeBackground: function () {
         "use strict";
-        Argu.ui.bg.height(Argu.ui.window.height() + 0);
+        Argu.ui.bg.height($(window).height() + 0);
     },
 
     initPlaceholderFallback: function () {

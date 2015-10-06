@@ -1,4 +1,5 @@
 import { userIdentityToken, statusSuccess, json, safeCredentials } from '../lib/helpers';
+import OrderedMap from '../lib/OrderedMap'
 
 
 window.NotificationActions = Reflux.createActions({
