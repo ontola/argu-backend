@@ -1,8 +1,9 @@
 /*global $*/
 import React from 'react/react-with-addons';
+import Select from 'react-select';
 import { safeCredentials } from '../lib/helpers';
 
-window.ProfileOption = React.createClass({
+export var ProfileOption = React.createClass({
     propTypes: {
         addLabelText: React.PropTypes.string,
         className: React.PropTypes.string,
@@ -27,12 +28,9 @@ window.ProfileOption = React.createClass({
         );
     }
 });
+window.ProfileOption = ProfileOption;
 
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = ProfileOption;
-}
-
-window.SingleValue = React.createClass({
+export var SingleValue = React.createClass({
     propTypes: {
         placeholder: React.PropTypes.string,
         value: React.PropTypes.object
@@ -53,11 +51,9 @@ window.SingleValue = React.createClass({
             </div>);
     }
 });
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = SingleValue;
-}
+window.SingleValue = SingleValue;
 
-window.NewMembership = React.createClass({
+export var NewMembership = React.createClass({
     getInitialState () {
         this.currentFetchTimer = 0;
         return {
@@ -122,7 +118,4 @@ window.NewMembership = React.createClass({
                   asyncOptions={this.loadOptions}  />);
     }
 });
-
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = NewMembership;
-}
+window.NewMembership = NewMembership;

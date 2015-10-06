@@ -1,8 +1,9 @@
 /*global $*/
 import React from 'react/react-with-addons';
+import Select from 'react-select';
 import { safeCredentials } from '../lib/helpers';
 
-window.MotionOption = React.createClass({
+export var MotionOption = React.createClass({
     propTypes: {
         addLabelText: React.PropTypes.string,
         className: React.PropTypes.string,
@@ -93,3 +94,4 @@ window.MotionSelect = React.createClass({
             asyncOptions={this.loadOptions}  />);
     }
 });
+window.MotionOption = MotionOption;
