@@ -1,7 +1,7 @@
 import React from 'react/react-with-addons';
 import { image } from '../lib/helpers';
 import { NotificationTrigger } from './Notifications';
-import { safeCredentials } from '../lib/helpers;
+import { safeCredentials } from '../lib/helpers';
 
 function isTouchDevice() {
     return (('ontouchstart' in window)

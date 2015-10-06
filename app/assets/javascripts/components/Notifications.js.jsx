@@ -1,6 +1,6 @@
 import React from 'react/react-with-addons';
 import { image } from '../lib/helpers';
-import { safeCredentials } from '../lib/helpers;
+import { safeCredentials } from '../lib/helpers';
 
 export var ScrollLockMixin = {
     cancelScrollEvent: function (e) {

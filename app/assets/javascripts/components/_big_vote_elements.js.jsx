@@ -2,7 +2,7 @@
 import React from 'react/react-with-addons';
 import Intl from  'intl';
 import { IntlMixin, FormattedMessage } from 'react-intl';
-import { safeCredentials } from '../lib/helpers;
+import { safeCredentials } from '../lib/helpers';
 
 function createMembership(response) {
     return fetch(response.membership_url, safeCredentials({

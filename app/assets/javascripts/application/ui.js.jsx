@@ -1,4 +1,4 @@
-import { safeCredentials } from '../lib/helpers;
+import { safeCredentials } from '../lib/helpers';
 
 Argu.ui = {
     bg: null,
