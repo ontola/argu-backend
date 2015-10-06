@@ -16,9 +16,11 @@
           li= link_to motion_path(motion) do
             h3.motion-t
               span[class='fa fa-#{motion_icon}']
-              span.icon-left= motion.title
+              .list-item
+                span= motion.title
         - if question.motions.count > 3
           li= contextual_link_to question_path(question)
             h3.motion-t
               span.fa.fa-chevron-right
-              span.icon-left= t('questions.view_all_motions', amount: question.motions.count)
+              .list-item
+                span= t('questions.view_all_motions', amount: question.motions.count)

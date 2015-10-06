@@ -231,6 +231,14 @@
     line-height: 1.6em;
   }
   span.icon-left {
+
+  }
+  .comments-counter{
+    margin-left: .5em;
+    display: inline-block;
+    font-weight: normal;
+  }
+  .list-item {
     margin-left: 1.3em;
     display: block;
   }
@@ -307,11 +315,18 @@
   font-weight: normal;
   font-size: 0.9em;
   position: relative;
-  margin-left: 1.5em;
   line-height: 1.2em;
   display: block;
   margin-top: .2em;
   color: $g4;
+}
+
+.box-close-button {
+  font-size: 1em !important;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.5em !Important;
 }
 
 // Used to hide lazy loaded images. Only shows when the user has JS enabled.

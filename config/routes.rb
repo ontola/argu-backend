@@ -256,6 +256,7 @@ Argu::Application.routes.draw do
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
     resources :groups, path: 'g', only: [:new, :edit]
+    resources :banners, except: :index
   end
   get '/forums/:id', to: redirect('/%{id}'), constraints: {format: :html}
   get 'forums/:id', to: 'forums#show'
