@@ -29,6 +29,7 @@ html[class="no-js"]
     .wrapper
       /[if lt IE 10]
         p.browsehappy= raw t('outdated_browser')
+      =yield :banners
       =render partial: 'alerts'
       .container
         =yield

@@ -74,4 +74,17 @@
 
 .top-comment p {
   font-size: 0.8em;
+  &:active {
+    background-color: white;
+    transition: none;
+  }
+}
+
+.comments-counter {
+  color: $g3;
+  font-size: .8em;
+
+  div {
+    display: inline-block;
+  }
 }

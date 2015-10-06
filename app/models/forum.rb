@@ -18,6 +18,7 @@ class Forum < ActiveRecord::Base
   has_many :stepups, inverse_of: :forum
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, inverse_of: :forum
+  has_many :banners, inverse_of: :forum
 
   # @private
   # Used in the forum selector
