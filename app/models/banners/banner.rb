@@ -7,7 +7,6 @@ class Banner < ActiveRecord::Base
 
   mount_uploader :cited_avatar, AvatarUploader
 
-  scope :announcements, -> { where('forum_id IS NULL') }
   scope :published, -> { where('publish_at <= ?', DateTime.now) }
   scope :unpublished, -> { where('publish_at IS NULL OR publish_at > ?', DateTime.now) }
 

@@ -1,3 +1,4 @@
+<<<<<<< f8141bad54af8e4339981cbdc8374acf971799ae
 class BannersController < AuthorizedController
   skip_before_action :check_if_member, if: :portal_request?
   before_action :set_settings_view_path
@@ -6,7 +7,7 @@ class BannersController < AuthorizedController
     authorize authenticated_resource!, :new?
     @forum = tenant_by_param
 
-    render settings_location,
+    render 'forums/settings',
            locals: {
                banner: authenticated_resource!,
                tab: 'banners/new',
@@ -31,12 +32,8 @@ class BannersController < AuthorizedController
     end
     @cb.on(:create_banner_failed) do |banner|
       respond_to do |format|
-        format.html { render settings_location,
-                             locals: {
-                                 banner: banner,
-                                 tab: 'banners/new',
-                                 active: 'banners'
-                             } }
+        format.html { render action: 'form',
+                             locals: {argument: argument} }
       end
     end
     @cb.commit
@@ -116,33 +113,4 @@ class BannersController < AuthorizedController
   def banner_params
     params.require(:banner).permit(*policy(@banner || Banner).permitted_attributes)
   end
-
-  def portal_request?
-    params[:forum_id].blank? && policy(:Portal).home?
-  end
-
-  def set_settings_view_path
-    if portal_request?
-      prepend_view_path 'app/views/portal/portal'
-    else
-      prepend_view_path 'app/views/forums'
-    end
-  end
-
-  def settings_location
-    portal_request? ? 'portal/portal/home' : 'forums/settings'
-  end
-
-  def banner_settings_path
-    if portal_request?
-      settings_portal_path(tab: :banners)
-    else
-      settings_forum_path(@forum, tab: :banners)
-    end
-  end
-
-  def tenant_by_param
-    portal_request? ? nil : super
-  end
-
 end
