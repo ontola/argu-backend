@@ -91,7 +91,7 @@ class ForumPolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs << :general << :advanced << :groups << :projects << :shortnames if is_manager? || staff?
+    tabs << :general << :advanced << :groups << :projects << :shortnames << :banners if is_manager? || staff?
     tabs << :privacy << :managers if is_owner? || staff?
     tabs
   end

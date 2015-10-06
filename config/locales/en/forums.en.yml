@@ -26,13 +26,21 @@ en:
         projects: "Projects"
         privacy: 'Privacy'
         managers: 'Managers'
+<<<<<<< 08f4bc985aafb9989bbc5288dd275b396f84ae93
         shortnames: 'Argu URLs'
+=======
+        banners: 'Banners'
+>>>>>>> [FEATURE] Banner form. Yield not working, though.
       terminology: "Terminologogy"
       terminology_helper: "You can adjust the names for concepts as 'ideas' and 'challenges'. However, this functionality is not yet fully developed and we recommend that you use the default settings."
       advanced: "Advanced"
       privacy: "Privacy"
       manager: "Manager"
+<<<<<<< 08f4bc985aafb9989bbc5288dd275b396f84ae93
       shortnames: 'Argu URLs'
+=======
+      banner: "Banner"
+>>>>>>> [FEATURE] Banner form. Yield not working, though.
       managers:
         title: "Managers"
         administrator: "Administrator"

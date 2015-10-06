@@ -15,6 +15,8 @@ module SettingsHelper
       'shield'
     when :shortnames
       'external-link'
+    when :banners
+      'sticky-note'
     end
   end
 
