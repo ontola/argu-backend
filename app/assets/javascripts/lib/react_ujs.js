@@ -2,7 +2,6 @@
 var React = require('react/addons');
 window.Select = require('react-select');
 
-// <REQUIRE MARKER>
 var bulk = require('bulk-require');
 var components = bulk(__dirname, [ '../components/**/*.js' ]);
 
