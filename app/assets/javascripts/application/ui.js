@@ -1,6 +1,8 @@
+import Alert from '../components/Alert';
+import { FastClick } from 'fastclick';
 import { safeCredentials } from '../lib/helpers';
 
-export const ui = {
+const ui = {
     bg: $(".background"),
     window: null,
 
@@ -66,13 +68,13 @@ export const ui = {
     handleAjaxCalls: function (e, xhr, options) {
         if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201) {
             if (xhr.status === 401) {
-                new Argu.Alert('Je moet ingelogd zijn voor deze actie.', 'alert', true);
+                new Alert('Je moet ingelogd zijn voor deze actie.', 'alert', true);
             } else if (xhr.status === 404) {
-                new Argu.Alert('Het item is niet gevonden, probeer de pagina te verversen.', 'alert', true);
+                new Alert('Het item is niet gevonden, probeer de pagina te verversen.', 'alert', true);
             } else if (xhr.status === 429) {
-                new Argu.Alert('Je maakt te veel verzoeken, probeer het over halve minuut nog eens.', 'alert', true);
+                new Alert('Je maakt te veel verzoeken, probeer het over halve minuut nog eens.', 'alert', true);
             } else {
-                new Argu.Alert('');
+                new Alert('');
             }
         }
     },
@@ -224,6 +226,8 @@ export const ui = {
     }
 
 };
+
+export default ui;
 
 export const modal = {
     init: function () {

@@ -1,27 +1,18 @@
 /*globals ReactRailsUJS*/
+import activityFeed from './application/activity_feed';
 import React from 'react/addons';
 import fetch from 'whatwg-fetch';
-//import alert from './application/alert';
-//import ui from './application/ui';
-//import n from './application/notifications';
-//import activity_feed from './application/activity_feed';
-//import m from './application/motions';
-//import iso from './application/briarcliff/isotope-briarcliff';
+import alert from './application/alert';
+import ui from './application/ui';
+import n from './application/notifications';
+import activity_feed from './application/activity_feed';
+import m from './application/motions';
+import iso from './application/briarcliff/isotope-briarcliff';
 import ReactUJS from './lib/react_ujs.js';
-import BGLoaded from './application/briarcliff/bg-loaded';
 import Meta from './application/meta';
 import { safeCredentials, statusSuccess } from './lib/helpers';
 import $ from 'jquery/dist/jquery'
 import Pjax from 'pjax';
-
-window.Argu = window.Argu || {};
-console.log('BUNDLE0');
-//window.Argu.alert = window.Argu.alert || alert;
-//window.Argu.ui = window.Argu.ui || ui;
-//window.Argu.n = window.Argu.n || n;
-//window.Argu.activity_feed = window.Argu.activity_feed || activity_feed;
-//window.Argu.m = window.Argu.m || m;
-//window.Argu.iso = window.Argu.iso || iso;
 
 function shallowMountComponents () {
     var nodes = document.querySelectorAll('#pjax-container [data-react-class]');
@@ -52,29 +43,22 @@ function shallowUnmountComponents () {
     }
 }
 
-window.Argu.shallowMountComponents = shallowMountComponents;
-window.Argu.shallowUnmountComponents = shallowUnmountComponents;
-
 //Lets the CSS selector know whether javascript is enabled
 document.body.className = document.body.className.replace("no-js","js");
 
 function init () {
     // All init functions can rest assured that the document is ready.
     try {
-        console.log('start init', typeof ReactUJS);
-        ReactUJS(document, window);
-        window.ReactRailsUJS.mountComponents();
-        console.log('ReactUJS init complete');
-        //Argu.alert.init();
-        //Argu.ui.init();
-        //Argu.n.init();
-        //
-        //Argu.activityFeed.init();
-        //Argu.m.init();
-        //console.log('calling iso');
-        //Argu.iso();
+        //ReactUJS(document, window);
+        //window.ReactRailsUJS.mountComponents();
+        alert.init();
+        ui.init();
+        n.init();
+
+        activityFeed.init();
+        m.init();
     } catch (error) {
-        console.log(error);
+        debugger;
         console.log('Something went wrong during initialisation');
     }
 
@@ -105,8 +89,6 @@ function init () {
 }
 
 export default function moduleInit () {
-    window.Argu = window.Argu || {};
-    window.Argu.init = init;
     return {
         init: init
     };

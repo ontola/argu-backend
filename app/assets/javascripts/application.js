@@ -13,4 +13,11 @@
 // for browserify-rails: module.exports
 //
 //= require jquery
+//= require jquery_ujs
+//= require jquery.jeditable.mini
+//= require bg_loaded
+//= require nprogress
+//= require sifter
+//= require microplugin
+//= require selectize
 //= require _bundle

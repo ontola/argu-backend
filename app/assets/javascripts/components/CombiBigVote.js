@@ -1,4 +1,5 @@
 /*global $*/
+import Alert from '../components/Alert';
 import React from 'react/addons';
 import Intl from  'intl';
 import 'intl/locale-data/jsonp/en.js';
@@ -44,7 +45,7 @@ export const CombiBigVote = React.createClass({
                 .then((data) => {
                     this.setState({groups: data.groups});
                 }).catch(() => {
-                    Argu.Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
+                    Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
                 });
     },
 

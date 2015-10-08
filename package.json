@@ -5,6 +5,7 @@
     "browserify": "~> 11.2.0",
     "browserify-incremental": "^3.0.1",
     "deamdify": "^0.1.1",
+    "fastclick": "^1.0.6",
     "install": "^0.1.8",
     "intl": "^1.0.0",
     "isotope-layout": "^2.2.2",

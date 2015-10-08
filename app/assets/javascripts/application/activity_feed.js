@@ -2,9 +2,9 @@
 let loading = false;
 let reachedEnd = false;
 
-export const activityFeed = {
+const activityFeed = {
     init: () => {
-        $(document).on('click', '.activity-feed .load-more', this.loadMore);
+        $(document).on('click', '.activity-feed .load-more', activityFeed.loadMore);
 
         $(window).scroll(() => {
             if (!loading && !reachedEnd && ($(window).scrollTop() >  $(document).height() - $(window).height() - 300)) {
@@ -39,3 +39,7 @@ export const activityFeed = {
         });
     }
 };
+
+
+export default activityFeed
+;

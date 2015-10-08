@@ -17,7 +17,7 @@ class ReactInput < Formtastic::Inputs::SelectInput
   def to_html
     input_wrapping do
       label_html <<
-          render_react_component(@options[:component], react_render_options, {prerender: false})
+          render_react_component(@options[:component], react_render_options, {prerender: true})
     end
   end
 

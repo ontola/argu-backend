@@ -1,10 +1,10 @@
 /*globals React, Turbolinks*/
 var React = require('react/addons');
+window.Select = require('react-select');
 
 // <REQUIRE MARKER>
 var bulk = require('bulk-require');
 var components = bulk(__dirname, [ '../components/**/*.js' ]);
-window.components = components;
 
 // Unobtrusive scripting adapter for React
 module.exports = (function ReactUJS (document, window) {

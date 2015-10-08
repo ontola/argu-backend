@@ -1,3 +1,4 @@
+import Alert from '../components/Alert';
 import React from 'react/addons';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 
@@ -19,7 +20,7 @@ export const BigGroupResponse = React.createClass({
             .then((data)  => {
                 data.motion && this.setState(data.motion);
             }).catch(() => {
-                Argu.Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
+                Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
             });
     },
 

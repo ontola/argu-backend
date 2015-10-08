@@ -1,4 +1,5 @@
 /*global $*/
+import Alert from '../components/Alert';
 import React from 'react/addons';
 import Intl from  'intl';
 import { IntlMixin, FormattedMessage } from 'react-intl';
@@ -39,7 +40,7 @@ export const BigVoteButtons = React.createClass({
                 .then((data) => {
                     data.vote && this.setState(data.vote);
                 }).catch(() => {
-                    Argu.Alert(this.getIntlMessage('votes.alerts.failed'), 'alert', true);
+                    Alert(this.getIntlMessage('votes.alerts.failed'), 'alert', true);
                 });
     },
 

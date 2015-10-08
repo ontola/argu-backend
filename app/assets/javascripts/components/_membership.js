@@ -1,4 +1,5 @@
 /*global $*/
+import Alert from '../components/Alert';
 import React from 'react/addons';
 import Select from 'react-select';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
@@ -95,7 +96,7 @@ export const NewMembership = React.createClass({
                        complete: false
                    });
                }).catch((e) => {
-                   Argu.Alert('Server error occured, please try again later', 'alert', true);
+                   Alert('Server error occured, please try again later', 'alert', true);
                    callback();
                });
         }, 500);

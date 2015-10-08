@@ -37,7 +37,9 @@ function setupSelectize () {
     });
 }
 
- export function init () {
-     $(document).on('pjax:success', setupSelectize);
-     setupSelectize();
- }
+export default {
+    init: function  () {
+        $(document).on('pjax:success', setupSelectize);
+        setupSelectize();
+    }
+}

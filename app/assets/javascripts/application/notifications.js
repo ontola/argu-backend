@@ -1,5 +1,5 @@
 
-export const n = {
+const n = {
     refreshing: false,
     lastNotificationCheck: Date.now(),
     timeoutValue: 30000,
@@ -93,3 +93,5 @@ export const n = {
         return visibilityChange;
     }
 };
+
+export default n;

@@ -1,5 +1,6 @@
 require('babel/polyfill');
 window.React = require('react/addons');
+window.Select = require('react-select');
 
 var bulk = require('bulk-require');
 var components = bulk(__dirname, [ './components/**/*.js' ]);

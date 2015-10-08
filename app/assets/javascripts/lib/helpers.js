@@ -40,11 +40,9 @@ if (!Object.assign) {
 }
 
 export function image (props) {
-    let test = 'tet';
     if (props.image) {
         return <img src={props.image.url} alt={props.image.title} className={props.image.className} />;
     } else if (props.fa) {
-        console.log(test);
         return <span className={['fa', props.fa].join(' ')} />;
     }
 }
