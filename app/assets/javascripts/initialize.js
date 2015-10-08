@@ -10,7 +10,7 @@ import fetch from 'whatwg-fetch';
 import ReactUJS from './lib/react_ujs.js';
 import BGLoaded from './application/briarcliff/bg-loaded';
 import Meta from './application/meta';
-import { safeCredentials } from './lib/helpers';
+import { safeCredentials, statusSuccess } from './lib/helpers';
 import $ from 'jquery/dist/jquery'
 import Pjax from 'pjax';
 

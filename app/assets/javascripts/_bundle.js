@@ -7,9 +7,7 @@ var _initialize = require('./initialize');
 
 var _initialize2 = _interopRequireDefault(_initialize);
 
-console.log('APP0', typeof _initialize2['default']);
 (0, _initialize2['default'])().init();
-console.log('APP0', 'executed init');
 
 },{"./initialize":14}],2:[function(require,module,exports){
 /*
@@ -260,7 +258,7 @@ var CombiBigVote = _reactAddons2['default'].createClass({
     refreshGroups: function refreshGroups() {
         var _this = this;
 
-        fetch(this.state.object_id + '.json', (0, _libHelpers.safeCredentials)()).then(statusSuccess).then(json).then(function (data) {
+        fetch(this.state.object_id + '.json', (0, _libHelpers.safeCredentials)()).then(_libHelpers.statusSuccess).then(_libHelpers.json).then(function (data) {
             _this.setState({ groups: data.groups });
         })['catch'](function () {
             Argu.Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
@@ -925,7 +923,7 @@ var ActorItem = _reactAddons2['default'].createClass({
         this.props.done();
         fetch(this.props.url, (0, _libHelpers.safeCredentials)({
             method: 'PUT'
-        })).then(statusSuccess).then(json).then(function (data) {
+        })).then(_libHelpers.statusSuccess).then(_libHelpers.json).then(function (data) {
             Actions.actorUpdate(data);
             if (window.confirm('Sommige mogelijkheden zijn niet zichtbaar totdat de pagina opnieuw geladen is, nu opnieuw laden?')) {
                 location.reload();
@@ -1234,7 +1232,7 @@ var NotificationItem = _reactAddons2['default'].createClass({
         e.stopPropagation();
         fetch('/n/' + this.props.id + '.json', (0, _libHelpers.safeCredentials)({
             method: 'PUT'
-        })).then(statusSuccess).then(json).then(function (data) {
+        })).then(_libHelpers.statusSuccess).then(_libHelpers.json).then(function (data) {
             NotificationActions.notificationUpdate(data.notifications);
         })['catch'](console.log);
         this.props.done();
@@ -1311,7 +1309,7 @@ var BigGroupResponse = _reactAddons2['default'].createClass({
     refresh: function refresh() {
         var _this = this;
 
-        fetch(this.state.object_id + '.json', (0, _libHelpers.safeCredentials)()).then(statusSuccess).then(json).then(function (data) {
+        fetch(this.state.object_id + '.json', (0, _libHelpers.safeCredentials)()).then(_libHelpers.statusSuccess).then(_libHelpers.json).then(function (data) {
             data.motion && _this.setState(data.motion);
         })['catch'](function () {
             Argu.Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
@@ -1504,7 +1502,7 @@ var _libHelpers = require('../lib/helpers');
 function createMembership(response) {
     return fetch(response.membership_url, (0, _libHelpers.safeCredentials)({
         method: 'POST'
-    })).then(statusSuccess);
+    })).then(_libHelpers.statusSuccess);
 }
 
 var BigVoteButtons = _reactAddons2['default'].createClass({
@@ -1534,7 +1532,7 @@ var BigVoteButtons = _reactAddons2['default'].createClass({
     refresh: function refresh() {
         var _this = this;
 
-        fetch(this.state.vote_url + '.json', (0, _libHelpers.safeCredentials)()).then(statusSuccess).then(json).then(function (data) {
+        fetch(this.state.vote_url + '.json', (0, _libHelpers.safeCredentials)()).then(_libHelpers.statusSuccess).then(_libHelpers.json).then(function (data) {
             data.vote && _this.setState(data.vote);
         })['catch'](function () {
             Argu.Alert(_this.getIntlMessage('votes.alerts.failed'), 'alert', true);
@@ -1571,9 +1569,9 @@ var BigVoteButtons = _reactAddons2['default'].createClass({
                     return _this2.vote(side);
                 });
             } else {
-                return statusSuccess(response);
+                return (0, _libHelpers.statusSuccess)(response);
             }
-        }).then(json, tryLogin).then(function (data) {
+        }).then(_libHelpers.json, _libHelpers.tryLogin).then(function (data) {
             _this2.setState(data.vote);
             _this2.props.parentSetVote(data.vote);
         })['catch'](function (e) {
@@ -1883,7 +1881,7 @@ var NewMembership = _reactAddons2['default'].createClass({
                     thing: _this.props.thing,
                     things: _this.props.things
                 })
-            })).then(statusSuccess).then(json).then(function (data) {
+            })).then(_libHelpers.statusSuccess).then(_libHelpers.json).then(function (data) {
                 callback(null, {
                     options: data.profiles.map(function (profile) {
                         return {
@@ -2000,7 +1998,7 @@ var MotionSelect = _reactAddons2['default'].createClass({
                 q: input,
                 thing: 'motion'
             };
-            fetch('/' + _this.props.forum + '/m.json?' + $.param(params), (0, _libHelpers.safeCredentials)()).then(statusSuccess).then(json).then(function (data) {
+            fetch('/' + _this.props.forum + '/m.json?' + $.param(params), (0, _libHelpers.safeCredentials)()).then(_libHelpers.statusSuccess).then(_libHelpers.json).then(function (data) {
                 callback(null, {
                     options: data.map(function (motion) {
                         return {
@@ -2154,7 +2152,7 @@ function init() {
     }
 
     function refreshCurrentActor() {
-        (0, _whatwgFetch2['default'])('/c_a.json', (0, _libHelpers.safeCredentials)()).then(statusSuccess).then(json).then(Actions.actorUpdate)['catch'](function () {
+        (0, _whatwgFetch2['default'])('/c_a.json', (0, _libHelpers.safeCredentials)()).then(_libHelpers.statusSuccess).then(json).then(Actions.actorUpdate)['catch'](function () {
             console.log('failed');
         });
     }
@@ -2414,7 +2412,6 @@ window.components = components;
 
 // Unobtrusive scripting adapter for React
 module.exports = (function ReactUJS(document, window) {
-    window.components2 = components;
     // create the  namespace
     window.ReactRailsUJS = {
         CLASS_NAME_ATTR: 'data-react-class',

@@ -1,7 +1,7 @@
 /*global $*/
 import React from 'react/addons';
 import Select from 'react-select';
-import { safeCredentials } from '../lib/helpers';
+import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 
 export const ProfileOption = React.createClass({
     propTypes: {
