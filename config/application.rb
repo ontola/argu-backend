@@ -49,6 +49,7 @@ module Argu
       end
     end
     config.middleware.use Rack::Attack
+    config.middleware.use Rack::Deflater
 
     config.react.addons = true
     # Enable the asset pipeline
