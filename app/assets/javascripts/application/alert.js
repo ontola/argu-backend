@@ -1,7 +1,7 @@
 /*global $, Argu*/
 
 window.Argu = window.Argu || {};
-window.Argu.alert = {
+export const alert = {
     init: function () {
         function fadeOnStart () {
             Argu.alert.fadeAll();
@@ -14,8 +14,8 @@ window.Argu.alert = {
         document.addEventListener('touchstart', fadeOnStart, false);
 
         $(document)
-            .on('pjax:end', Argu.alert.fadeAll)
-            .ajaxComplete(Argu.alert.handleJSONBody);
+            .on('pjax:end', alert.fadeAll)
+            .ajaxComplete(alert.handleJSONBody);
     },
 
     fade: function (duration, _alert) {
@@ -39,7 +39,7 @@ window.Argu.alert = {
     },
 
     fadeAll: function () {
-        $(".alert").slideDown(function() {Argu.alert.fade(3000, $(".alert"));});
+        $(".alert").slideDown(function() {alert.fade(3000, $(".alert"));});
     },
 
     handleJSONBody: function (event, XMLHttpRequest) {
@@ -84,5 +84,3 @@ Argu.Alert = function (message, messageType, instantShow, prependSelector) {
 
     if(instantShow) this.show();
 };
-
-export default Argu.alert;

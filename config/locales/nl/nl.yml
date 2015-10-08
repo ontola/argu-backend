@@ -195,6 +195,7 @@ nl:
   embed: "embed"
   forms:
     danger_zone: "Gevarenzone"
+    legal_html: "Door je aan te melden voor Argu ga je akkoord met de %{link}."
   users:
     logged_in_banner_text: "%{name}"
     registrations:

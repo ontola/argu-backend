@@ -73,13 +73,12 @@ gem 'sidekiq', '~> 3.3.0'
 gem 'sidekiq-logging-json'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
-gem 'jquery-pjax-rails'
 gem 'rack-pjax'
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.0.2'
 gem 'sprockets-es6', require: 'sprockets/rails'
 gem 'babel-transpiler'
-gem 'browserify-rails', '~> 1.4.0'
+#gem 'browserify-rails', '~> 1.4.0', require: 'browserify-rails'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'
