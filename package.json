@@ -49,8 +49,6 @@
     "node": ">= 4.1.0"
   },
   "scripts": {
-    "build": "browserify app/assets/javascripts/App.js -o app/assets/javascripts/_bundle.js",
-    "build_components": "browserify app/assets/javascripts/globbed_components.js -o app/assets/javascripts/_globbed_components.js",
-    "test": "./node_modules/.bin/intern-client config=app/assets/javascripts/tests/intern"
+    "build": "gulp build && gulp build-components"
   }
 }
