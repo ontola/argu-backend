@@ -38,7 +38,7 @@ export const BigVoteButtons = React.createClass({
                 .then((data) => {
                     data.vote && this.setState(data.vote);
                 }).catch(() => {
-                    Alert(this.getIntlMessage('votes.alerts.failed'), 'alert', true);
+                    Alert(this.getIntlMessage('errors.general'), 'alert', true);
                 });
     },
 
@@ -77,9 +77,12 @@ export const BigVoteButtons = React.createClass({
             }
         }).then(json, tryLogin)
           .then((data) => {
-              this.setState(data.vote);
-              this.props.parentSetVote(data.vote);
+              if (typeof data !== 'undefined') {
+                  this.setState(data.vote);
+                  this.props.parentSetVote(data.vote);
+              }
           }).catch((e) => {
+              new Alert(this.getIntlMessage('errors.general'), 'alert', true);
               throw e;
           });
     },

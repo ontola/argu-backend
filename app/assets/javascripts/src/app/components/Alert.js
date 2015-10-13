@@ -1,24 +1,22 @@
 /* globals $ */
 
-export default function Alert (message, messageType, instantShow, prependSelector) {
-    var _alert = undefined,
-        _duration = 4000;
-    message = typeof message !== 'undefined' ? message : '';
-    messageType = typeof messageType !== 'undefined' ? messageType : 'success';
-    instantShow = typeof instantShow !== 'undefined' ? instantShow : false;
-    prependSelector = typeof prependSelector !== 'undefined' ? prependSelector : '.alert-wrapper';
 
-    var render = function () {
-        (_alert = $(`<div class='alert-container'><pre class='alert alert-${messageType}'>${message}</pre></div>`));
-        $(prependSelector).prepend(_alert);
-        return _alert;
-    };
+export default class Alert {
+    constructor (message, messageType, instantShow, prependSelector) {
+        this.message = typeof message !== 'undefined' ? message : '';
+        this.messageType = typeof messageType !== 'undefined' ? messageType : 'success';
+        this.instantShow = typeof instantShow !== 'undefined' ? instantShow : false;
+        this.prependSelector = typeof prependSelector !== 'undefined' ? prependSelector : '.alert-wrapper';
 
-    this.hide = function () {
-        this.fade(_duration, _alert);
-    };
+        this._alert = undefined;
+        this._duration = 4000;
 
-    this.fade = function (duration, _alert) {
+        if (instantShow) {
+            this.show();
+        }
+    }
+
+    fade () {
         const fadeNow = function(a) {
             a.addClass('alert-hidden');
             window.setTimeout(function(a) {
@@ -26,28 +24,34 @@ export default function Alert (message, messageType, instantShow, prependSelecto
             }, 2000, a);
         };
 
-        var timeoutHandle = window.setTimeout(fadeNow, duration, _alert);
+        var timeoutHandle = window.setTimeout(fadeNow, this._duration, this._alert);
 
-        _alert[0].addEventListener('mouseover', function () {
+        this._alert[0].addEventListener('mouseover', function () {
             window.clearTimeout(timeoutHandle);
         });
 
-        _alert[0].addEventListener('mouseout', function () {
-            timeoutHandle = window.setTimeout(fadeNow, 1000, _alert)
+        this._alert[0].addEventListener('mouseout', function () {
+            timeoutHandle = window.setTimeout(fadeNow, 1000, this._alert)
         });
-    };
+    }
 
-    this.show = function (duration, autoHide) {
-        _duration = typeof duration !== 'undefined' ? duration : _duration;
+    hide () {
+        this.fade();
+    }
+
+    render () {
+        (this._alert = $(`<div class='alert-container'><pre class='alert alert-${this.messageType}'>${this.message}</pre></div>`));
+        $(this.prependSelector).prepend(this._alert);
+        return this._alert;
+    }
+
+    show (duration, autoHide) {
+        this._duration = typeof this.duration !== 'undefined' ? duration : this._duration;
         autoHide = typeof autoHide !== 'undefined' ? autoHide : true;
-        render().slideDown();
+        this.render().slideDown();
         if (autoHide) {
-            this.fade(_duration, _alert);
+            this.fade();
         }
-        return _alert;
-    };
-
-    if (instantShow) {
-        this.show();
+        return this._alert;
     }
 }

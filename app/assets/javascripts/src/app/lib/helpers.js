@@ -97,7 +97,7 @@ export function safeCredentials (options) {
 }
 
 export function statusSuccess (response) {
-    if (response.status >= 200 && response.status < 300) {
+    if (response.status >= 200 && response.status < 300 || response.status === 304) {
         return Promise.resolve(response);
     } else {
         return Promise.reject(response);
@@ -120,7 +120,7 @@ export function userIdentityToken (options) {
 }
 
 export function json (response) {
-    if (response.status !== 204) {
+    if (response.status !== 204 && response.status !== 304) {
         return response.json();
     } else {
         return Promise.resolve();

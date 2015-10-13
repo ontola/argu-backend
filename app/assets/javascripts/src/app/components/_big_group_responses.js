@@ -1,5 +1,8 @@
 import Alert from './Alert';
 import React from 'react/addons';
+import Intl from 'intl';
+Intl; // For ESLint
+import 'intl/locale-data/jsonp/en.js';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 
 export const BigGroupResponse = React.createClass({
@@ -20,7 +23,7 @@ export const BigGroupResponse = React.createClass({
             .then((data) => {
                 data.motion && this.setState(data.motion);
             }).catch(() => {
-                Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
+                Alert(this.getIntlMessage('errors.general'), 'alert', true);
             });
     },
 

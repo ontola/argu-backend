@@ -51,7 +51,6 @@ const ui = {
     },
 
     confirmInputHandler: function () {
-        "use strict";
         var _this = $(this);
         console.log(_this.attr('confirm-text'), _this.val());
         _this.closest('.confirm').find('.confirm-action').attr('disabled', _this.val() != _this.attr('confirm-text'));
@@ -68,11 +67,11 @@ const ui = {
     handleAjaxCalls: function (e, xhr, options) {
         if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201) {
             if (xhr.status === 401) {
-                new Alert('Je moet ingelogd zijn voor deze actie.', 'alert', true);
+                new Alert(this.getIntlMessage('errors.status.401'), 'alert', true);
             } else if (xhr.status === 404) {
-                new Alert('Het item is niet gevonden, probeer de pagina te verversen.', 'alert', true);
+                new Alert(this.getIntlMessage('errors.status.404'), 'alert', true);
             } else if (xhr.status === 429) {
-                new Alert('Je maakt te veel verzoeken, probeer het over halve minuut nog eens.', 'alert', true);
+                new Alert(this.getIntlMessage('errors.status.429'), 'alert', true);
             } else {
                 new Alert('');
             }
@@ -103,7 +102,6 @@ const ui = {
     },
 
     handleEditableSettings: function () {
-        "use strict";
         var settings;
         if ((settings = $('.portal-settings'))) {
             var editableOptions = {
@@ -152,19 +150,18 @@ const ui = {
     },
 
     initPlaceholderFallback: function () {
-        "use strict";
-        if ( !("placeholder" in document.createElement("input")) ) {
-            $("input[placeholder], textarea[placeholder]").each(function() {
-                var val = $(this).attr("placeholder");
-                if ( this.value == "" ) {
+        if (!('placeholder' in document.createElement("input"))) {
+            $("input[placeholder], textarea[placeholder]").each(function () {
+                var val = $(this).attr('placeholder');
+                if ( this.value === '' ) {
                     this.value = val;
                 }
                 $(this).focus(function() {
-                    if ( this.value == val ) {
-                        this.value = "";
+                    if ( this.value === val ) {
+                        this.value = '';
                     }
                 }).blur(function() {
-                    if ( $.trim(this.value) == "" ) {
+                    if ( $.trim(this.value) === '' ) {
                         this.value = val;
                     }
                 })
@@ -173,8 +170,8 @@ const ui = {
             // Clear default placeholder values on form submit
             $('form').submit(function() {
                 $(this).find("input[placeholder], textarea[placeholder]").each(function() {
-                    if ( this.value == $(this).attr("placeholder") ) {
-                        this.value = "";
+                    if ( this.value == $(this).attr('placeholder') ) {
+                        this.value = '';
                     }
                 });
             });
