@@ -1,8 +1,9 @@
+/* globals Actions */
 import Reflux from 'reflux';
 
 window.Actions = Reflux.createActions([
-    "forumUpdate",
-    "actorUpdate"
+    'forumUpdate',
+    'actorUpdate'
 ]);
 
 const actorStore = Reflux.createStore({

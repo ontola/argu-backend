@@ -1,9 +1,8 @@
-/*global $*/
-import Alert from '../components/Alert';
+import Alert from './Alert';
 import React from 'react/addons';
-import Intl from  'intl';
+import Intl from 'intl';
+Intl; // For ESLint
 import 'intl/locale-data/jsonp/en.js';
-import { IntlMixin, FormattedMessage } from 'react-intl';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
 
@@ -53,11 +52,11 @@ export const CombiBigVote = React.createClass({
         let voteButtonsComponent;
         let voteResultsComponent;
         let groupResponsesComponent;
-        if (!this.state.actor || this.state.actor.actor_type == "User") {
+        if (!this.state.actor || this.state.actor.actor_type === 'User') {
             voteButtonsComponent = <BigVoteButtons parentSetVote={this.setVote} {...this.state} {...this.props}/>;
-            voteResultsComponent = <BigVoteResults {...this.state} show_results={this.state.current_vote !== "abstain"}/>;
+            voteResultsComponent = <BigVoteResults {...this.state} show_results={this.state.current_vote !== 'abstain'}/>;
             groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
-        } else if (this.state.actor.actor_type == "Page") {
+        } else if (this.state.actor.actor_type === 'Page') {
             groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
             voteResultsComponent = <BigVoteResults {...this.state} {...this.props} show_results={true}/>;
         }

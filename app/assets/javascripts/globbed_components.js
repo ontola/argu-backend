@@ -3,7 +3,7 @@ window.React = require('react/addons');
 window.Select = require('react-select');
 
 var bulk = require('bulk-require');
-var components = bulk(__dirname, [ './components/**/*.js' ]);
+var components = bulk(__dirname, [ './src/app/components/**/*.js' ]);
 
 for (var obj in components) {
     if (components.hasOwnProperty(obj)) {

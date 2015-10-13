@@ -1,21 +1,21 @@
-import alert from '../application/alert';
+/* globals $ */
+
 export default function Alert (message, messageType, instantShow, prependSelector) {
-    var alert = this,
-        _alert = undefined,
+    var _alert = undefined,
         _duration = 4000;
-    message        = typeof message        !== 'undefined' ? message : '';
-    messageType    = typeof messageType    !== 'undefined' ? messageType : 'success';
-    instantShow    = typeof instantShow    !== 'undefined' ? instantShow : false;
+    message = typeof message !== 'undefined' ? message : '';
+    messageType = typeof messageType !== 'undefined' ? messageType : 'success';
+    instantShow = typeof instantShow !== 'undefined' ? instantShow : false;
     prependSelector = typeof prependSelector !== 'undefined' ? prependSelector : '.alert-wrapper';
 
     var render = function () {
-        (_alert = $("<div class='alert-container'><pre class='alert alert-" + messageType + "'>" + message + "</pre></div>"));
+        (_alert = $(`<div class='alert-container'><pre class='alert alert-${messageType}'>${message}</pre></div>`));
         $(prependSelector).prepend(_alert);
         return _alert;
     };
 
     this.hide = function () {
-        fade(_duration, _alert);
+        this.fade(_duration, _alert);
     };
 
     this.fade = function (duration, _alert) {
@@ -41,9 +41,13 @@ export default function Alert (message, messageType, instantShow, prependSelecto
         _duration = typeof duration !== 'undefined' ? duration : _duration;
         autoHide = typeof autoHide !== 'undefined' ? autoHide : true;
         render().slideDown();
-        if(autoHide) fade(_duration, _alert);
+        if (autoHide) {
+            this.fade(_duration, _alert);
+        }
         return _alert;
     };
 
-    if(instantShow) this.show();
+    if (instantShow) {
+        this.show();
+    }
 }

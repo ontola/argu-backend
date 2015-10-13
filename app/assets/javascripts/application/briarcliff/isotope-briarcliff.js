@@ -2,8 +2,7 @@ import Isotope from 'isotope-layout';
 
 var $container;
 
-export function init () {
-    console.log('INIT');
+export default function init () {
     // filter functions
     var lastFilter = "",
         lastType   = "";

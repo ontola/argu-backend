@@ -1,6 +1,6 @@
-import Alert from '../components/Alert';
+import Alert from '../src/app/components/Alert';
 import { FastClick } from 'fastclick';
-import { safeCredentials } from '../lib/helpers';
+import { safeCredentials } from '../src/app/lib/helpers';
 
 const ui = {
     bg: $(".background"),

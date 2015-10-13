@@ -1,3 +1,4 @@
+/* globals NotificationActions */
 import React from 'react/addons';
 import { image } from '../lib/helpers';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
@@ -58,7 +59,7 @@ export const NotificationTrigger = React.createClass({
     },
 
     onNotificationChange: function (data) {
-        if (typeof(data.unread) != "undefined") {
+        if (typeof data.unread !== 'undefined') {
             this.setState({unread: data.unread});
         }
     },
@@ -72,7 +73,7 @@ export const NotificationTrigger = React.createClass({
     },
 
     render: function () {
-        var triggerClass = "dropdown-trigger " + this.props.trigger.triggerClass;
+        var triggerClass = 'dropdown-trigger ' + this.props.trigger.triggerClass;
         var label = this.state.unread > 0 ? <span className='notification-counter'>{this.state.unread}</span> : null;
 
         return (<div className={triggerClass} rel="nofollow" onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
@@ -95,7 +96,7 @@ export const Notifications = React.createClass({
     },
 
     onNotificationChange: function (notifications) {
-        if (typeof(notifications.unread) != "undefined") {
+        if (typeof notifications.unread !== 'undefined') {
             this.setState({
                 unread: notifications.unread || this.state.unread,
                 lastNotification: notifications.lastNotification || this.state.lastNotification,
@@ -108,7 +109,7 @@ export const Notifications = React.createClass({
         NotificationActions
             .fetchNextPage()
             .then((data) => {
-                if (typeof data !== "undefined") {
+                if (typeof data !== 'undefined') {
                     this.setState({loadMore: data.moreAvailable});
                 }
             });
@@ -166,8 +167,10 @@ export const NotificationItem = React.createClass({
         })).then(statusSuccess)
            .then(json)
            .then((data) => {
-                NotificationActions.notificationUpdate(data.notifications);
-           }).catch(console.log);
+               NotificationActions.notificationUpdate(data.notifications);
+           }).catch((e) => {
+               throw e;
+           });
         this.props.done();
     },
 
@@ -181,7 +184,7 @@ export const NotificationItem = React.createClass({
         }
 
         return (<li className={className}>
-            <a href={this.props.url} data-remote={remote} data-method={method}  onClick={this.handleClick} data-skip-pjax={skipPjax}>
+            <a href={this.props.url} data-remote={remote} data-method={method} onClick={this.handleClick} data-skip-pjax={skipPjax}>
                 <img src={this.props.creator.avatar.url} className="notification-avatar" />
                 <span className='notification-description'>{this.props.title}</span>
                 <div className='notification-bottom'>

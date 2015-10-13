@@ -1,14 +1,15 @@
+/* globals NotificationActions */
 import { userIdentityToken, statusSuccess, json, safeCredentials } from '../lib/helpers';
 import Reflux from 'reflux';
 import OrderedMap from '../lib/OrderedMap'
 
 
 window.NotificationActions = Reflux.createActions({
-    "notificationUpdate": {},
-    "markAllAsRead": {asyncResult: true},
-    "fetchNextPage": {asyncResult: true},
-    "checkForNew": {asyncResult: true},
-    "fetchNew": {asyncResult: true}
+    'notificationUpdate': {},
+    'markAllAsRead': {asyncResult: true},
+    'fetchNextPage': {asyncResult: true},
+    'checkForNew': {asyncResult: true},
+    'fetchNew': {asyncResult: true}
 });
 
 const notificationStore = Reflux.createStore({
@@ -41,19 +42,18 @@ const notificationStore = Reflux.createStore({
     },
 
     fetchNextPage: function () {
-        "use strict";
         return fetch(`/n.json?from_time=${this.state.notifications.oldestNotification.toISOString()}`, safeCredentials())
             .then(function (response) {
-                if (response.status == 200) {
+                if (response.status === 200) {
                     response.json().then(function (data) {
                         NotificationActions.notificationUpdate(data.notifications);
                         NotificationActions
                             .fetchNextPage
                             .completed({
-                                moreAvailable: data.notifications.notifications.length == 10
+                                moreAvailable: data.notifications.notifications.length === 10
                             });
                     });
-                } else if (response.status == 201) {
+                } else if (response.status === 201) {
                     NotificationActions
                         .fetchNextPage
                         .completed({
@@ -64,7 +64,6 @@ const notificationStore = Reflux.createStore({
     },
 
     checkForNew: function () {
-        "use strict";
         return fetch('//meta.argu.co/n', userIdentityToken({method: 'post', headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
@@ -77,13 +76,12 @@ const notificationStore = Reflux.createStore({
     },
 
     fetchNew: function (notificationCount) {
-        "use strict";
         let from = this.state.notifications.lastNotification.toISOString();
         return fetch(`/n.json?lastNotification=${from}`, safeCredentials())
             .then(statusSuccess)
             .then(json)
             .then(function (data) {
-                if (typeof(data) !== "undefined") {
+                if (typeof data !== 'undefined') {
                     data.notifications.notificationCount = notificationCount;
                     NotificationActions.notificationUpdate(data.notifications);
                 }
@@ -92,8 +90,7 @@ const notificationStore = Reflux.createStore({
     },
 
     onMarkAllAsRead: function () {
-        "use strict";
-        fetch("/n/read.json", safeCredentials({
+        fetch('/n/read.json', safeCredentials({
             method: 'PATCH'
         })).then(statusSuccess)
            .then(json)
@@ -104,10 +101,9 @@ const notificationStore = Reflux.createStore({
 
     // Callback
     output: function(notifications) {
-        "use strict";
         if (notifications) {
             if (notifications.lastNotification) {
-                if (this.state.notifications.lastNotification && Date.parse(notifications.lastNotification) > this.state.notifications.lastNotification && notifications.notifications[0].read == false) {
+                if (this.state.notifications.lastNotification && Date.parse(notifications.lastNotification) > this.state.notifications.lastNotification && notifications.notifications[0].read === false) {
                     document.getElementById('notificationSound').play();
                 }
                 this.state.notifications.notifications.merge('created_at', notifications.notifications);
@@ -122,7 +118,6 @@ const notificationStore = Reflux.createStore({
     },
 
     setLastNotification: function (date) {
-        "use strict";
         date = new Date(date);
         if (date > this.state.notifications.lastNotification) {
             this.state.notifications.lastNotification = date;

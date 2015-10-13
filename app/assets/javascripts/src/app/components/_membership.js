@@ -1,5 +1,4 @@
-/*global $*/
-import Alert from '../components/Alert';
+import Alert from './Alert';
 import React from 'react/addons';
 import Select from 'react-select';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
@@ -95,7 +94,7 @@ export const NewMembership = React.createClass({
                        }),
                        complete: false
                    });
-               }).catch((e) => {
+               }).catch(() => {
                    Alert('Server error occured, please try again later', 'alert', true);
                    callback();
                });
@@ -116,7 +115,7 @@ export const NewMembership = React.createClass({
                   filterOptions={this.filterOptions}
                   optionComponent={ProfileOption}
                   singleValueComponent={SingleValue}
-                  asyncOptions={this.loadOptions}  />);
+                  asyncOptions={this.loadOptions} />);
     }
 });
 window.NewMembership = NewMembership;

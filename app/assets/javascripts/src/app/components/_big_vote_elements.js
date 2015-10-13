@@ -1,7 +1,5 @@
-/*global $*/
-import Alert from '../components/Alert';
+import Alert from './Alert';
 import React from 'react/addons';
-import Intl from  'intl';
 import { IntlMixin, FormattedMessage } from 'react-intl';
 import { safeCredentials, json, statusSuccess, tryLogin } from '../lib/helpers';
 
@@ -67,11 +65,11 @@ export const BigVoteButtons = React.createClass({
         fetch(`${this.props.vote_url}/${side}.json`, safeCredentials({
             method: 'POST'
         })).then((response) => {
-            if (response.status == 403) {
+            if (response.status === 403) {
                 return response
                         .json()
                         .then(createMembership)
-                        .then(res => {
+                        .then(() => {
                             return this.vote(side);
                         });
             } else {
@@ -79,27 +77,27 @@ export const BigVoteButtons = React.createClass({
             }
         }).then(json, tryLogin)
           .then((data) => {
-            this.setState(data.vote);
-            this.props.parentSetVote(data.vote);
+              this.setState(data.vote);
+              this.props.parentSetVote(data.vote);
           }).catch((e) => {
-            console.log('failed');
+              throw e;
           });
     },
 
     render: function () {
         return (
-            <ul className="btns-opinion" data-voted={(this.state.current_vote.length > 0 && this.state.current_vote != 'abstain') || null}>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
+            <ul className="btns-opinion" data-voted={(this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain') || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote === 'pro' || null}>
                     <span className="fa fa-thumbs-up" />
                     <span className="icon-left">
                         <FormattedMessage message={this.getIntlMessage('pro')} />
                     </span>
                 </a></li>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/neutral`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.neutralHandler} rel="nofollow" className="btn-neutral" data-voted-on={this.state.current_vote == 'neutral' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/neutral`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.neutralHandler} rel="nofollow" className="btn-neutral" data-voted-on={this.state.current_vote === 'neutral' || null}>
                     <span className="fa fa-pause" />
                     <span className="icon-left"><FormattedMessage message={this.getIntlMessage('neutral')} /></span>
                 </a></li>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/con`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote == 'con' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/con`)} data-method={this.ifNoActor('post')} data-remote={this.ifActor('true')} onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote === 'con' || null}>
                     <span className="fa fa-thumbs-down" />
                     <span className="icon-left"><FormattedMessage message={this.getIntlMessage('con')} /></span>
                 </a></li>
@@ -111,8 +109,8 @@ window.BigVoteButtons = BigVoteButtons;
 export const BigVoteFormButton = React.createClass({
 
     render () {
-        return(
-            <a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method="post" rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote == 'pro' || null}>
+        return (
+            <a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method="post" rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote === 'pro' || null}>
                 <span className="fa fa-thumbs-up" />
                 <span className="icon-left"><FormattedMessage message={this.getIntlMessage('pro')} /></span>
             </a>
@@ -124,15 +122,15 @@ window.BigVoteFormButton = BigVoteFormButton;
 export const BigVoteResults = React.createClass({
     voteWidth: function (side) {
         var supplemented_values = {
-            pro:     this.props.percent.pro     < 5 ? 5 : this.props.percent.pro,
+            pro: this.props.percent.pro < 5 ? 5 : this.props.percent.pro,
             neutral: this.props.percent.neutral < 5 ? 5 : this.props.percent.neutral,
-            con:     this.props.percent.con     < 5 ? 5 : this.props.percent.con
+            con: this.props.percent.con < 5 ? 5 : this.props.percent.con
         };
         var overflow = -100;
-        for(var o in supplemented_values) {
+        for (var o in supplemented_values) {
             overflow += supplemented_values[o];
         }
-        var width = supplemented_values[side] - (overflow*(this.props.percent[side]/100));
+        var width = supplemented_values[side] - (overflow * (this.props.percent[side] / 100));
 
         return {
             width: width + '%'

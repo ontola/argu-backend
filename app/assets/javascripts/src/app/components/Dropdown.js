@@ -1,4 +1,6 @@
+/* globals $, FB, Actions */
 import React from 'react/addons';
+import OnClickOutside from 'react-onclickoutside';
 import { image } from '../lib/helpers';
 import { NotificationTrigger } from './Notifications';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
@@ -65,7 +67,7 @@ export const HyperDropdownMixin = {
     },
 
     handleClickOutside: function () {
-        if (this.state.openState == true) {
+        if (this.state.openState === true) {
             this.close();
         }
     },
@@ -105,7 +107,7 @@ export const HyperDropdownMixin = {
     // Used to calculate the width of a dropdown content menu
     referenceDropdownElement: function () {
         let refDropdown;
-        if (typeof(this.state.referenceDropdownElement) !== "undefined") {
+        if (typeof this.state.referenceDropdownElement !== 'undefined') {
             refDropdown = this.state.referenceDropdownElement;
         } else {
             refDropdown = this.getDOMNode().getElementsByClassName('dropdown-content')[0];
@@ -118,7 +120,7 @@ window.HyperDropdownMixin = HyperDropdownMixin;
 export const HyperDropdown = React.createClass({
     mixins: [
         HyperDropdownMixin,
-        (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
+        OnClickOutside
     ],
 
     getInitialState: function () {
@@ -145,14 +147,14 @@ export const HyperDropdown = React.createClass({
 
         var trigger;
         if (this.props.trigger) {
-            if (this.props.trigger.type == 'current_user') {
+            if (this.props.trigger.type === 'current_user') {
                 trigger = <CurrentUserTrigger handleClick={this.handleClick} handleTap={this.handleTap} {...this.props.trigger} />
-            } else if (this.props.trigger.type == 'notifications') {
+            } else if (this.props.trigger.type === 'notifications') {
                 trigger = <NotificationTrigger handleClick={this.handleClick} handleTap={this.handleTap} {...this.props} />
             }
         } else {
-            const image_after  = image({fa: this.props.fa_after});
-            const triggerClass = "dropdown-trigger " + this.props.triggerClass;
+            const image_after = image({fa: this.props.fa_after});
+            const triggerClass = 'dropdown-trigger ' + this.props.triggerClass;
             const TriggerContainer = this.props.triggerTag || 'a';
             trigger = (<TriggerContainer href={this.props.defaultAction} className={triggerClass} onClick={this.handleClick} done={this.close} data-skip-pjax="true">
                           {image(this.props)}
@@ -173,7 +175,7 @@ export const HyperDropdown = React.createClass({
                     onMouseEnter={this.onMouseEnter}
                     onMouseLeave={this.onMouseLeave} >
             {trigger}
-            <div className="reference-elem" style={{visibility: 'hidden', overflow: 'hidden', 'pointer-events': 'none', position: 'absolute'}}>{dropdownContent}</div>
+            <div className="reference-elem" style={{visibility: 'hidden', overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute'}}>{dropdownContent}</div>
             <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
                 {openState && dropdownContent}
             </ReactTransitionGroup>
@@ -185,7 +187,7 @@ window.HyperDropdown = HyperDropdown;
 export const ShareDropdown = React.createClass({
     mixins: [
         HyperDropdownMixin,
-        (typeof(OnClickOutside) !== "undefined" ? OnClickOutside : undefined)
+        OnClickOutside
     ],
 
     getInitialState: function () {
@@ -232,7 +234,7 @@ export const ShareDropdown = React.createClass({
 
     totalShares: function () {
         return Object.keys(this.state.counts)
-                .map(k => {return this.state.counts[k]})
+                .map(k => { return this.state.counts[k] })
                 .reduce((a, b) => {
                     return a + b;
                 });
@@ -281,7 +283,7 @@ export const ShareDropdown = React.createClass({
                     onMouseEnter={this.onMouseEnter}
                     onMouseLeave={this.onMouseLeave} >
             {trigger}
-            <div className="reference-elem" style={{visibility: 'hidden', overflow: 'hidden', 'pointer-events': 'none', position: 'absolute'}}>{dropdownContent}</div>
+            <div className="reference-elem" style={{visibility: 'hidden', overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute'}}>{dropdownContent}</div>
             <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
                 {openState && dropdownContent}
             </ReactTransitionGroup>
@@ -299,22 +301,25 @@ export const DropdownContent = React.createClass({
 
     componentWillEnter: function (callback) {
         this.setState(
-            {appearState: 'dropdown-enter'}, () => {
-            window.setTimeout(() => {
-                this.setState({appearState: 'dropdown-enter dropdown-enter-active'}, callback);
-            }, 10);
-        });
+            {appearState: 'dropdown-enter'},
+            () => {
+                window.setTimeout(() => {
+                    this.setState({appearState: 'dropdown-enter dropdown-enter-active'}, callback);
+                }, 10);
+            }
+        );
     },
 
     componentWillLeave: function (callback) {
         this.setState(
-            {appearState: 'dropdown-leave'}, () => {
-            window.setTimeout(() => {
-                this.setState(
-                    {appearState: 'dropdown-leave dropdown-leave-active'},
-                    () => { window.setTimeout(callback, 200) });
-            }, 0);
-        });
+            {appearState: 'dropdown-leave'},
+            () => {
+                window.setTimeout(() => {
+                    this.setState(
+                        {appearState: 'dropdown-leave dropdown-leave-active'},
+                        () => { window.setTimeout(callback, 200) });
+                }, 0);
+            });
     },
 
     render: function() {
@@ -322,11 +327,11 @@ export const DropdownContent = React.createClass({
         const collapseClass = this.props.renderLeft ? 'dropdown--left ' : 'dropdown-right ';
 
         let children;
-        if (typeof this.props.children !== "undefined") {
+        if (typeof this.props.children !== 'undefined') {
             children = this.props.children;
         } else {
             children = sections.map((section, i) => {
-                if (typeof(section.type) === "string") {
+                if (typeof section.type === 'string') {
                     return (<Notifications key={i} done={close} {...section} />);
                 } else {
                     let title;
@@ -371,7 +376,7 @@ export const LinkItem = React.createClass({
         // Fixes an issue where firefox bubbles events instead of capturing them
         // See: https://github.com/facebook/react/issues/2011
         let dataMethod = this.getDOMNode().getAttribute('data-method');
-        if (dataMethod !== "post" && dataMethod !== "put" && dataMethod !== "patch" && dataMethod !== "delete") {
+        if (dataMethod !== 'post' && dataMethod !== 'put' && dataMethod !== 'patch' && dataMethod !== 'delete') {
             this.getDOMNode().getElementsByTagName('a')[0].click();
             this.props.done();
         }
@@ -379,7 +384,7 @@ export const LinkItem = React.createClass({
 
     render: function () {
         var divider;
-        if (this.props.divider && this.props.divider == 'top') {
+        if (this.props.divider && this.props.divider === 'top') {
             divider = <div className="dropdown-divider"></div>;
         }
         var method, confirm, remote, skipPjax, sortValue, className, displaySetting;
@@ -406,14 +411,13 @@ window.LinkItem = LinkItem;
 
 export const FBShareItem = React.createClass({
     handleClick: function (e) {
-        if (typeof(FB) !== "undefined") {
+        if (typeof FB !== 'undefined') {
             e.preventDefault();
             FB.ui({
                 method: 'share',
                 href: this.props.shareUrl,
                 caption: this.props.title
-            }, (response) => {
-                console.log(response);
+            }, () => {
                 this.props.done();
             });
         }
@@ -454,10 +458,12 @@ export const ActorItem = React.createClass({
                if (window.confirm('Sommige mogelijkheden zijn niet zichtbaar totdat de pagina opnieuw geladen is, nu opnieuw laden?')) {
                    location.reload();
                }
-        }).catch(console.log);
+           }).catch((e) => {
+               throw e;
+           });
     },
     
-    handleTap: function (e) {
+    handleTap: function () {
         this.switchActor();
     },
 
@@ -468,10 +474,10 @@ export const ActorItem = React.createClass({
 
     render: function () {
         var divider;
-        if (this.props.divider && this.props.divider == 'top') {
+        if (this.props.divider && this.props.divider === 'top') {
             divider = <div className="dropdown-divider"></div>;
         }
-        var method, remote, skipPjax;
+        var skipPjax;
         if (this.props.data) {
             skipPjax = this.props.data['skip-pjax'];
         }
@@ -508,7 +514,7 @@ export const CurrentUserTrigger = React.createClass({
     },
 
     render: function () {
-        var triggerClass = "dropdown-trigger " + this.props.triggerClass;
+        var triggerClass = 'dropdown-trigger ' + this.props.triggerClass;
         var TriggerContainer = this.props.triggerTag || 'div';
 
         return (<TriggerContainer className={triggerClass} onClick={this.props.handleClick} onTouchEnd={this.props.handleTap} >

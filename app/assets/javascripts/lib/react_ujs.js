@@ -3,7 +3,7 @@ var React = require('react/addons');
 window.Select = require('react-select');
 
 var bulk = require('bulk-require');
-var components = bulk(__dirname, [ '../components/**/*.js' ]);
+var components = bulk(__dirname, [ '../src/app/components/**/*.js' ]);
 
 // Unobtrusive scripting adapter for React
 module.exports = (function ReactUJS (document, window) {

@@ -10,14 +10,13 @@ OrderedMap.prototype.descending = function (a, b) {
 };
 
 OrderedMap.prototype.merge = function (property, array) {
-    "use strict";
     array.forEach(item => {
         this.set(item[property], item);
     });
 };
 
 OrderedMap.prototype.get = function(key) {
-    if (typeof(key) === "number") {
+    if (typeof key === 'number') {
         return this._map.get(this._array[key])
     } else {
         return this._map.get(key);
@@ -33,7 +32,7 @@ OrderedMap.prototype.map = function (f) {
 
 OrderedMap.prototype.remove = function(key) {
     var index = this._array.indexOf(key);
-    if(index == -1) {
+    if (index === -1) {
         throw new Error('key does not exist');
     }
     this._array.splice(index, 1);
@@ -42,7 +41,7 @@ OrderedMap.prototype.remove = function(key) {
 };
 
 OrderedMap.prototype.set = function(key, value) {
-    if(key in this._map == false) {
+    if (key in this._map === false) {
         this._array.push(key);
     }
     this._map.set(key, value);

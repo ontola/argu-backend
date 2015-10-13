@@ -1,4 +1,5 @@
 import React from 'react/addons';
+React; // For ESLint, jsx compiles to React.createElement, so React must be imported
 
 Object.resolve = function(path, obj) {
     return [obj || self].concat(path.split('.')).reduce(function(prev, curr) {
@@ -12,7 +13,6 @@ if (!Object.assign) {
         configurable: true,
         writable: true,
         value: function(target) {
-            'use strict';
             if (target === undefined || target === null) {
                 throw new TypeError('Cannot convert first argument to object');
             }
@@ -48,7 +48,7 @@ export function image (props) {
 }
 
 export function _url (url, obj) {
-    if (typeof(url) === "string" && typeof(obj) === "object") {
+    if (typeof url === 'string' && typeof obj === 'object') {
         var res = decodeURIComponent(url).replace(/{{([^{}]+)}}/, function (match, p1) {
             return Object.resolve(p1, obj);
         });
@@ -88,7 +88,6 @@ export function jsonHeader (options) {
 }
 
 export function safeCredentials (options) {
-    "use strict";
     options = options || {};
     return Object.assign(options, {
         credentials: 'include',
@@ -106,7 +105,7 @@ export function statusSuccess (response) {
 }
 
 export function tryLogin (response) {
-    if (response.status == 401) {
+    if (response.status === 401) {
         return Promise.resolve(window.alert('You should login.'));
     } else {
         return Promise.reject(new Error('unknown status code'));
@@ -116,7 +115,7 @@ export function tryLogin (response) {
 export function userIdentityToken (options) {
     options = options || {};
     return Object.assign(options, {
-      body: JSON.stringify(Object.assign((options['body'] || {}), getUserIdentityToken()))
+        body: JSON.stringify(Object.assign((options['body'] || {}), getUserIdentityToken()))
     })
 }
 

@@ -14,6 +14,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.pjax
 //= require jquery.jeditable.mini
 //= require bg_loaded
 //= require nprogress

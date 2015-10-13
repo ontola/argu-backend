@@ -1,21 +1,15 @@
 {
   "name": "Argu",
   "dependencies": {
-    "babelify": "^6.3.0",
-    "browserify": "~> 11.2.0",
-    "browserify-incremental": "^3.0.1",
-    "deamdify": "^0.1.1",
     "fastclick": "^1.0.6",
     "install": "^0.1.8",
     "intl": "^1.0.0",
     "isotope-layout": "^2.2.2",
     "jquery": "^2.1.4",
     "jquery-ujs": "^1.0.4",
-    "node-polyglot": "^0.4.3",
-    "npm": "^3.3.5",
-    "pjax": "^0.2.1",
     "react": "^0.13.3",
     "react-intl": "^1.2.0",
+    "react-onclickoutside": "^0.3.3",
     "react-scroll-lock": "^0.1.1",
     "react-select": "^0.6.12",
     "reflux": "^0.2.12",
@@ -23,10 +17,26 @@
   },
   "devDependencies": {
     "babel": "^5.8.23",
+    "babel-eslint": "^4.1.3",
+    "babelify": "^6.3.0",
+    "browserify": "~> 11.2.0",
+    "browserify-incremental": "^3.0.1",
     "browserify-shim": "^3.8.10",
     "bulk-require": "^0.2.1",
     "bulkify": "^1.1.1",
-    "watchify": "^3.4.0"
+    "deamdify": "^0.1.1",
+    "eslint": "^1.6.0",
+    "eslint-plugin-react": "^3.5.1",
+    "gulp": "^3.9.0",
+    "gulp-babel": "^5.2.1",
+    "gulp-batch": "^1.0.5",
+    "gulp-eslint": "^1.0.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-uglify": "^1.4.2",
+    "gulp-util": "^3.0.6",
+    "gulp-watch": "^4.3.5",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
   "license": "UNLICENSED",
   "private": true,
@@ -40,32 +50,7 @@
   },
   "scripts": {
     "build": "browserify app/assets/javascripts/App.js -o app/assets/javascripts/_bundle.js",
-    "build_components": "browserify app/assets/javascripts/globbed_components.js -o app/assets/javascripts/_globbed_components.js"
-  },
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "stage": 0
-        }
-      ],
-      [
-        "bulkify"
-      ],
-      [
-        "browserify-shim"
-      ],
-      [
-        "deamdify"
-      ]
-    ],
-    "exclude": [
-      "jquery"
-    ]
-  },
-  "browserify-shim": {
-    "jQuery": "global:jQuery",
-    "React": "global:React"
+    "build_components": "browserify app/assets/javascripts/globbed_components.js -o app/assets/javascripts/_globbed_components.js",
+    "test": "./node_modules/.bin/intern-client config=app/assets/javascripts/tests/intern"
   }
 }

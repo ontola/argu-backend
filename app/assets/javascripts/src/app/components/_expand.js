@@ -27,16 +27,16 @@ const Expander = React.createClass({
     },
 
     render: function () {
-        var label = typeof(this.props.label) == "object" ?
+        var label = typeof this.props.label === 'object' ?
                 (this.state.openState ? this.props.label.opened : this.props.label.closed)
                 : this.props.label;
         var showCaret;
         if (this.props.showCaret) {
-            showCaret = (<span className={"fa fa-angle-" + (this.state.openState ? 'up' : 'down')}></span>);
+            showCaret = (<span className={'fa fa-angle-' + (this.state.openState ? 'up' : 'down')}></span>);
         }
 
         return (
-            <a href={this.url()} className={"expander "+this.props.className || ''} onClickCapture={this.handleClick} data-skip-pjax>
+            <a href={this.url()} className={'expander ' + this.props.className || ''} onClickCapture={this.handleClick} data-skip-pjax>
                 {label}
                 {showCaret}
             </a>

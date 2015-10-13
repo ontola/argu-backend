@@ -73,6 +73,7 @@ gem 'sidekiq', '~> 3.3.0'
 gem 'sidekiq-logging-json'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
+gem 'jquery-pjax-rails'
 gem 'rack-pjax'
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.0.2'

@@ -1,7 +1,8 @@
 /*global $*/
-import Alert from '../components/Alert';
+import Alert from './Alert';
 import React from 'react/addons';
 import Select from 'react-select';
+import { SingleValue } from './_membership';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 
 export const MotionOption = React.createClass({
@@ -71,9 +72,8 @@ export const MotionSelect = React.createClass({
                         }),
                         complete: false
                     });
-                }).catch((e) => {
+                }).catch(() => {
                     Alert('Server error occured, please try again later', 'alert', true);
-                    console.log('callback');
                     callback(null, {options: [], complete: false});
                 });
         }, 500);
@@ -93,7 +93,7 @@ export const MotionSelect = React.createClass({
             filterOptions={this.filterOptions}
             optionComponent={MotionOption}
             singleValueComponent={SingleValue}
-            asyncOptions={this.loadOptions}  />);
+            asyncOptions={this.loadOptions} />);
     }
 });
 window.MotionSelect = MotionSelect;

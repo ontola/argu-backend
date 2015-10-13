@@ -10,9 +10,7 @@ import m from './application/motions';
 import iso from './application/briarcliff/isotope-briarcliff';
 import ReactUJS from './lib/react_ujs.js';
 import Meta from './application/meta';
-import { safeCredentials, statusSuccess } from './lib/helpers';
-import $ from 'jquery/dist/jquery'
-import Pjax from 'pjax';
+import { safeCredentials, statusSuccess } from './src/app/lib/helpers';
 
 function shallowMountComponents () {
     var nodes = document.querySelectorAll('#pjax-container [data-react-class]');
@@ -49,14 +47,13 @@ document.body.className = document.body.className.replace("no-js","js");
 function init () {
     // All init functions can rest assured that the document is ready.
     try {
-        //ReactUJS(document, window);
-        //window.ReactRailsUJS.mountComponents();
         alert.init();
         ui.init();
         n.init();
 
         activityFeed.init();
         m.init();
+        iso();
     } catch (error) {
         debugger;
         console.log('Something went wrong during initialisation');
@@ -72,16 +69,18 @@ function init () {
             });
     }
 
-    let pjax = new Pjax({
-        elements: 'a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])',
-        selectors: ['#pjax-container']
-    });
+    if (typeof $.pjax.defaults ===  'undefined') {
+        $.pjax.defaults = {};
+    }
+    $.pjax.defaults.timeout = 10000;
 
     $(document)
-        .on('pjax:send', shallowUnmountComponents) // pjax:start seems to have come unnecessary
-        .on('pjax:send', Meta.processContentForMetaTags)
-        .on('pjax:success', shallowMountComponents)
-        .on('pjax:success', Meta.removeMetaContent);
+        .pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container')
+        .on('pjax:beforeReplace', shallowUnmountComponents) // pjax:start seems to have come unnecessary
+        .on('pjax:beforeReplace', Meta.processContentForMetaTags)
+        .on('pjax:end', shallowMountComponents)
+        .on('pjax:end', Meta.removeMetaContent);
+
 
     if (!("ontouchstart" in document.documentElement)) {
         document.documentElement.className += " no-touch";

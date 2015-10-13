@@ -1,5 +1,5 @@
 /*global $, Argu*/
-import Alert from '../components/Alert';
+import Alert from '../src/app/components/Alert';
 
 export default {
     init: function () {
