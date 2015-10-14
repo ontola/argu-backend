@@ -15,13 +15,24 @@ en:
     show: "Show"
     edit: "Edit"
     destroy: "Destroy"
-    settings: "Settings"
     pages: "Pages"
     members: "Members"
     questions: "Challenges"
     motions: "Ideas"
     value: "Value"
     key: "Key"
+    settings:
+      title: "settings"
+      general: "General settings"
+      profile: "Forum profile"
+      menu:
+        general: "General"
+        advanced: 'Advanced'
+        groups: 'Groups'
+        privacy: 'Privacy'
+        managers: 'Managers'
+        setting: 'DB Settings'
+        banners: 'Banners'
   intro:
     initial:
       start_argu: "Start with argu"
