@@ -1,6 +1,6 @@
 =set_title t('forums.settings.title')
 .tabs-to-top
-  =render partial: 'forums/manage_bar', locals: {resource: @forum, active: :settings} if policy(@forum).update?
+  =render partial: 'forums/manage_bar', locals: {resource: @forum, active: :settings}
 .col-3
   header
     h1= t('forums.settings.title')
@@ -11,4 +11,4 @@
       section
         / Protects against Directory Traversal Attacks
         -if local_assigns[:tab] && !tab.gsub(/\\/, '').index('../')
-          =render partial: "forums/settings/#{tab}", locals: {resource: @forum, tab: tab, active: active}.merge(local_assigns)
+          =render partial: "settings/#{tab}", locals: {resource: @forum, tab: tab, active: active}.merge(local_assigns)

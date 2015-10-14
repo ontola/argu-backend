@@ -19,3 +19,5 @@ nav#navbar.navbar[data-turbolinks-permanent role="navigation"]
       .inspectlet-sensitive= react_component 'NotificationDropdown', notification_dropdown_items, {prerender: true}
       =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
   =render partial: 'online_status'
+- if Banner.announcements.published.present?
+  =render partial: 'banners/announcement', collection: Banner.announcements.published

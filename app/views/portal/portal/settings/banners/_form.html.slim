@@ -1,0 +1,7 @@
+=semantic_form_for(banner) do |f|
+  - banner.errors.full_messages.each do |message|
+    =message
+  =f.inputs name: t('newe_type', type: t('forums.settings.banner')) do
+    =f.inputs :title, :content, :cited_avatar, :cited_name, :cited_function, :audience, :sample_size, :dismissable, :publish_at
+  =f.actions do
+    =f.action :submit, as: :button, label: :save

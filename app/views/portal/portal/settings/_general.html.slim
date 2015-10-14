@@ -1,0 +1,58 @@
+=set_title t('portal.title')
+=render partial: 'portal/navbar'
+h2= t('portal.pages')
+-if @pages.blank?
+  p= t('portal.none')
+-else
+  table.styled
+    thead
+      tr
+        td= t('portal.name')
+        td= t('portal.shortname')
+        td= t('portal.created_at')
+        /td= t('portal.updated_at')
+        td= t('portal.forums')
+        td= t('portal.forum_create')
+        td= t('portal.settings.title')
+    tbody
+      - @pages.each do |f|
+        tr[id=f.identifier]
+          td= link_to f.profile.name, page_path(f)
+          td= f.url
+          td= l f.created_at, format: :short
+          /td= l f.updated_at, format: :short
+          td= f.forums.length
+          td= link_to new_portal_forum_path(page: f) do
+            span.fa.fa-plus
+            span.icon-left= t('forums.type_new')
+          td= link_to settings_page_path(f) do
+            span.fa.fa-gear
+            span.icon-left= t('portal.settings.title')
+  =paginate @pages, param_name: :pages_page
+h2= t('portal.forums')
+-if @forums.blank?
+  p= t('portal.none')
+-else
+  table.styled
+    thead
+      tr
+        td= t('portal.name')
+        td= t('portal.shortname')
+        td= t('portal.created_at')
+        /td= t('portal.updated_at')
+        td= t('portal.members')
+        td= t('portal.questions')
+        td= t('portal.motions')
+        td= t('portal.settings.title')
+    tbody
+      - @forums.each do |f|
+        tr[id=f.identifier]
+          td= link_to f.name, forum_path(f)
+          td= f.url
+          td= l f.created_at, format: :short
+          /td= l f.updated_at, format: :short
+          td= f.memberships_count || '-'
+          td= f.questions_count || '-'
+          td= f.motions_count || '-'
+          td= link_to t('portal.settings.title'), settings_forum_path(f)
+  =paginate @pages, param_name: :forums_page
