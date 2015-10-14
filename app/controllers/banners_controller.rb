@@ -1,4 +1,3 @@
-<<<<<<< f8141bad54af8e4339981cbdc8374acf971799ae
 class BannersController < AuthorizedController
   skip_before_action :check_if_member, if: :portal_request?
   before_action :set_settings_view_path
@@ -7,7 +6,7 @@ class BannersController < AuthorizedController
     authorize authenticated_resource!, :new?
     @forum = tenant_by_param
 
-    render 'forums/settings',
+    render settings_location,
            locals: {
                banner: authenticated_resource!,
                tab: 'banners/new',
