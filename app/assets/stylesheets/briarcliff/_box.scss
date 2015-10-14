@@ -9,6 +9,7 @@
   display: block;
   .box {
     margin-bottom: 0;
+    border: solid 1px $g1;
   }
 }
 
@@ -43,6 +44,7 @@
     transition: none;
     background-color: $darken4;
   }
+
 }
 
 .box.trashed, .trashed > .box {

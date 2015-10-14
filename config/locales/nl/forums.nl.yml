@@ -35,6 +35,9 @@ nl:
       manager: "Beheerder"
       shortnames: 'Argu URLs'
       banner: "Banner"
+      banners:
+        title: "Banners"
+        about_banners: "Banners zijn nog in bètafase"
       managers:
         title: "Beheerders"
         administrator: "Administrator"

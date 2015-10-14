@@ -1,3 +1,4 @@
+=render @banners if @banners.present?
 .context.context--vertical[itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList"]
   div[itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem"]
     =link_to parent, itemprop: 'item'

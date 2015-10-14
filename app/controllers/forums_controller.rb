@@ -39,12 +39,16 @@ class ForumsController < ApplicationController
                .page(show_params[:page])
                .per(30)
     end
+
+    render
   end
 
   def settings
     @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
     current_context @forum
+
+    prepend_view_path 'app/views/forums'
 
     render locals: {
       tab: tab,

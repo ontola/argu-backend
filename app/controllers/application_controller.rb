@@ -67,6 +67,8 @@ class ApplicationController < ActionController::Base
           components.reject! { |c| !policy(c).show? }
         end
       end
+    collect_banners unless instance_variable_defined?(:@banners)
+    @current_context
   end
 
   # @return [Profile, nil] The {Profile} the {User} is using to do actions
