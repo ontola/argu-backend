@@ -1,3 +1,4 @@
+=render @banners if @banners.present?
 .context.context--vertical[itemscope="itemscope" itemtype="http://schema.org/BreadcrumbList"]
   div[itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem"]
     =link_to parent, itemprop: 'item'
@@ -9,11 +10,10 @@
             span.icon-left= t('forums.back_to')
         - elsif classname == 'questions'
           section.section-info.question-bg
-            span[class="fa fa-#{question_icon}"]
-            span.icon-left= question_type
+            span[class="fa fa-arrow-up"]
+            span.icon-left= t('back_to', type: question_type)
         - elsif classname == 'motions'
-          section.section-info.mo
-            tion-bg
+          section.section-info.motion-bg
             span[class="fa fa-#{motion_icon}"]
             span.icon-left= motion_type(parent)
         - else

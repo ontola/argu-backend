@@ -6,18 +6,19 @@
       =link_to previous, class: 'context--horizontal-button context--previous'
         .box.box-link
           section.section-info class=("#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-bg")
-            span= horizontal_context_type_name(previous, type)
+            span.fa.fa-arrow-left
+            span.icon-left= horizontal_context_type_name(previous, type)
           section
             h3[class="#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-t"]
-              span.fa.fa-arrow-left
               span.icon-left= truncate(previous.title, length: 64)
     - if _next.present? && _next != item
       =link_to _next, class: 'context--horizontal-button context--next'
         .box.box-link
           section.section-info class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-bg")
-            span= horizontal_context_type_name(_next, type)
+            span.fa.fa-arrow-right
+            span.icon-left= horizontal_context_type_name(_next, type)
           section
             h3[class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-t")]
               span.icon-right= truncate(_next.title, length: 64)
               span.fa.fa-arrow-right
-  .clear 
+  .clear

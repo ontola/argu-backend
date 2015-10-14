@@ -1,13 +1,13 @@
 h3= t('forums.settings.banners.title')
 p= t('forums.settings.banners.about_banners')
-=link_to new_forum_banner_path(@forum), class: 'btn margin-bottom' do
+=link_to new_banner_path(@forum), class: 'btn margin-bottom' do
   span.fa.fa-plus
   span.icon-left= t('forums.settings.banners.new')
 fieldset
   legend= t('forums.settings.banners.published')
 table.styled
-  =render partial: 'settings/banners/banner', collection: @forum.banners.published
+  =render partial: 'settings/banners/banner', collection: Banner.announcements.published
 fieldset
   legend= t('forums.settings.banners.unpublished')
 table.styled
-  =render partial: 'settings/banners/banner', collection: @forum.banners.unpublished
+  =render partial: 'settings/banners/banner', collection: Banner.announcements.unpublished

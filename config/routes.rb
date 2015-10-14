@@ -182,9 +182,11 @@ Argu::Application.routes.draw do
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
     resources :notifications, only: :create
+    resources :banners, except: :index
+    get 'portal/settings', to: 'portal/portal#home', as: :settings_portal
     namespace :portal do
-      get :settings, to: 'portal#settings'
-      post 'settings', to: 'portal#setting!', as: :update_setting
+      get :settings, to: 'portal#home'
+      post 'setting', to: 'portal#setting!', as: :update_setting
       resources :forums, only: [:new, :create]
       mount Sidekiq::Web => '/sidekiq'
     end

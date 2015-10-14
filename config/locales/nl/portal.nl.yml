@@ -5,7 +5,7 @@ nl:
     title: "Portal"
     new_forum: "Forum aanmaken"
     none: "Nog geen"
-    new_page: "Nieuwe Page"
+    new_page: "Nieuwe organisatie"
     name: "Naam"
     shortname: "Shortname"
     created_at: "Aangemaakt"
@@ -22,6 +22,18 @@ nl:
     motions: "Ideeën"
     value: "Value"
     key: "Key"
+    settings:
+      title: "Instellingen"
+      general: "Algemene instellingen"
+      profile: "Profiel instellingen"
+      menu:
+        general: "Algemeen"
+        advanced: 'Geavanceerd'
+        groups: 'Groepen'
+        privacy: 'Privacy'
+        setting: 'DB Settings'
+        managers: 'Beheerders'
+        banners: "Banners"
   intro:
     initial:
       start_argu: "Begin met argu"

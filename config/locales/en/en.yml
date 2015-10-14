@@ -42,6 +42,7 @@ en:
   newe_type: "New %{type}"
   add_type: "Add %{type}"
   back: "Back"
+  back_to: "Back to %{type}"
   cancel: "Cancel"
   show: "Show"
   add: "Add"
