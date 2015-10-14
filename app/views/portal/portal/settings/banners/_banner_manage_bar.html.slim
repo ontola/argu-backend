@@ -1,0 +1,9 @@
+=link_to edit_banner_path(banner), class:'btn-subtle' do
+  span.fa.fa-edit
+  span.icon-left= t('edit')
+=link_to banner_path(banner),
+         data: {method: :delete, confirm: t('destroy_confirmation')},
+         class:'btn-subtle' do
+  span.fa.fa-close
+  span.icon-left= t('destroy')
+.margin-bottom
