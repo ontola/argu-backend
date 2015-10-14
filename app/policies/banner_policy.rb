@@ -21,7 +21,8 @@ class BannerPolicy < RestrictivePolicy
   def permitted_attributes
     attributes = super
     attributes << [:title, :forum, :cited_profile, :content,
-                   :cited_avatar, :cited_name, :cited_function] if create?
+                   :cited_avatar, :cited_name,
+                   :cited_function, :publish_at] if create?
     attributes << [:id] if staff?
     attributes
   end
@@ -44,5 +45,15 @@ class BannerPolicy < RestrictivePolicy
 
   def update?
     rule is_manager?, is_owner?, super
+  end
+
+  private
+
+  def forum_policy
+    if record.is_a?(Class) || record.forum.blank?
+      Pundit.policy(context, :restrictive)
+    else
+      super
+    end
   end
 end

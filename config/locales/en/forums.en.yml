@@ -29,6 +29,9 @@ en:
       privacy: "Privacy"
       manager: "Manager"
       banner: "Banner"
+      banners:
+        title: "Banners"
+        about_banners: "Banners are still in beta"
       managers:
         title: "Managers"
         administrator: "Administrator"

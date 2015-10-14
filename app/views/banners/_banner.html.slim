@@ -1,45 +1,15 @@
 .box.banner
   section
     h2= banner.title
-    .markdown= banner.content
+    .markdown
+      =markdown_to_html(banner.content)
     .profile-signed-message
-      img.profile-picture[src='https://pbs.twimg.com/profile_images/378800000058096471/c3361585c90644407ef1328b297e78c3.jpeg']
-      .profile-name Wouter de Jong
-      .profile-function , burgemeester
-  /img.profile-picture[src='https://pbs.twimg.com/profile_images/378800000058096471/c3361585c90644407ef1328b297e78c3.jpeg']
-  /span= "- Burgemeester Wouter de Jong"
-  /section.profile-small
-    img.profile-picture[src='https://pbs.twimg.com/profile_images/378800000058096471/c3361585c90644407ef1328b297e78c3.jpeg']
-    .info-block
-      .profile-name.profile-name--bigger Wouter de Jong, burgemeester
-    /a.btn
-        span.fa.fa-plus
-        span Start een discussie
-    /a.btn.margin-right[href='#'] Registreer gratis
-    /a.btn.btn--con[href='#']
-          span.fa.fa-play
-          span.icon-left Bekijk de video
-
-  /section.profile-small
-    p[style="margin-left: 1.3em; margin-top: .5em; margin-right: 1em; display: inline-block"]
-
-      | Meer weten over Argu?
-      a
-        b= " Bekijk de video."
-    /ul.btns-list--subtle.btns-horizontal[style="display: inline-block"]
-      li
-        a
-          span.fa.fa-youtube-play
-          span.icon-left bekijk de video
-  /.btns-list--subtle.btns-horizontal.btn-sticky-bottom.btn-sticky.btns-list--grey-background
-    li
-      a
-        span.fa.fa-user
-        span.icon-left Registreer
-    li
-      a
-        span.fa.fa-youtube-play
-        span.icon-left bekijk de video
+      - if banner.cited_avatar.present?
+        img.profile-picture[src=banner.cited_avatar.url(:avatar)]
+      - if banner.cited_name.present?
+        .profile-name= banner.cited_name
+      - if banner.cited_function.present?
+        .profile-function= ', ' + banner.cited_function
   .btns-sticky-top
     a.btn-subtle.box-close-button
       span.fa.fa-close

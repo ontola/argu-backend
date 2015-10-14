@@ -10,8 +10,28 @@ class PortalPolicy < Struct.new(:user, :portal)
   delegate :user, to: :context
   delegate :session, to: :context
 
+  include RestrictivePolicy::Roles
+
+  def assert!(assertion, query = nil)
+    raise Pundit::NotAuthorizedError.new(record: record, query: query) unless assertion
+  end
+
+  def permitted_tabs
+    tabs = []
+    tabs.concat(%i(general documents setting banners)) if staff?
+    tabs
+  end
+
   def home?
     user && user.profile.has_role?(:staff)
+  end
+
+  # Make sure that a tab param is actually accounted for
+  # @return [String] The tab if it is considered valid
+  def verify_tab(tab)
+    tab ||= 'general'
+    self.assert! self.permitted_tabs.include?(tab.to_sym), "#{tab}?"
+    tab
   end
 
   class Scope

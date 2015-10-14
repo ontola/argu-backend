@@ -28,12 +28,16 @@ class ForumsController < ApplicationController
                                                           is_trashed: show_trashed?))
 
     @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(@forum).show?
+
+    render
   end
 
   def settings
     @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
     current_context @forum
+
+    prepend_view_path 'app/views/forums'
 
     render locals: {
                tab: tab,
