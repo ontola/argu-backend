@@ -163,7 +163,7 @@ private
   def self.forum_for(url_options)
     question_id = url_options[:question_id] || url_options[:id]
     if question_id.presence
-      Question.find_by(question_id).try(:forum)
+      Question.find_by(id: question_id).try(:forum)
     elsif url_options[:forum_id].present?
       Forum.find_via_shortname_nil url_options[:forum_id]
     end

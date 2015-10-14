@@ -153,7 +153,7 @@ private
   end
 
   def self.forum_for(url_options)
-    comment = Comment.find_by(url_options[:id]) if url_options[:id].present?
+    comment = Comment.find_by(id: url_options[:id]) if url_options[:id].present?
     if comment.present?
       comment.commentable.try(:forum)
     elsif url_options[:argument_id].present?
