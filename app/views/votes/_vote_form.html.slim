@@ -1,5 +1,6 @@
-=semantic_form_for([resource, Vote.new(for: Vote.fors[stance])]) do |f|
-  =f.hidden_field :for
-  =button_tag :submit, class: "btn-#{stance}"
-    span[class="fa fa-#{icon}"]
-    span= t("motions.votes.#{stance}")
+li
+  =semantic_form_for([resource, Vote.new(for: Vote.fors[stance])]) do |f|
+    =f.hidden_field :for
+    =button_tag :submit, class: "btn-#{stance}"
+      span[class="fa fa-#{icon}"]
+      span.icon-left= t("motions.votes.#{stance}")

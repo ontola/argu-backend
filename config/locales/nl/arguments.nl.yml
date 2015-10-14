@@ -68,7 +68,7 @@ nl:
       none: "Geen reacties"
       comments:
         confirm:
-          headline: "Bevestig reactie"
+          headline: "Bevestig jouw reactie"
           skip: "Niet nu, laat het argument zien"
     notices:
       restored: "Het argument is teruggeplaatst."

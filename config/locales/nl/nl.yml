@@ -20,6 +20,7 @@ nl:
   argu_sign_up: "Argu account aanmaken"
   cant_change_username: "Je kunt jouw gebruikersnaam later niet meer wijzigen."
   sign_up_argu: "Maak Argu account"
+  sign_up_email: "Registreer met e-mail"
   sign_out: "Uitloggen"
   no_confirmation_instructions: "Geen bevestigingsmail ontvangen?"
   no_unlock_instructions: "Geen ontgrendelingsmail ontvangen?"

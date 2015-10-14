@@ -20,6 +20,7 @@ en:
   argu_sign_up: "Create Argu account"
   cant_change_username: "You can't change your username after signing up."
   sign_up_argu: "Create Argu account"
+  sign_up_email: "Sign up with e-mail"
   sign_out: "Sign out"
   no_confirmation_instructions: "Didn't receive confirmation instructions?"
   no_unlock_instructions: "Didn't receive unlock instructions?"
