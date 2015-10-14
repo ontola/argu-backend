@@ -109,6 +109,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def collect_banners
+    if @forum.present?
+      @banners = @forum.banners.published
+    end
+  end
+
   # Combines {ApplicationController#create_activity} with {ApplicationController#destroy_recent_similar_activities}
   def create_activity_with_cleanup(model, params)
     destroy_recent_similar_activities model, params
@@ -136,6 +142,9 @@ class ApplicationController < ActionController::Base
                            components.reject! { |c| !policy(c).show? }
                          end
                        end
+
+    collect_banners unless instance_variable_defined?(:@banners)
+    @current_context
   end
 
   # @return [Profile, nil] The {Profile} the {User} is using to do actions

@@ -74,6 +74,14 @@ class RestrictivePolicy
       end
     end
 
+    def is_manager?
+      nil
+    end
+
+    def is_owner?
+      nil
+    end
+
     def staff?
       staff if user && user.profile.has_role?(:staff)
     end
