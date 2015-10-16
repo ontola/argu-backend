@@ -16,6 +16,7 @@
  *= require simple_text/application
  *= require introjs
  *= require nprogress
+ *= require font-awesome
  *= require_self
  *= require_tree .
 */
