@@ -1,25 +1,147 @@
 @import "variables";
 @import "mixins";
 
-.mail-header{
+h1, h2, h3, h4 {
+  font-family: $font-special;
+  margin-bottom: 0.4em;
+  color: $g4;
+  font-weight: bold;
+  font-weight: 700;
+  word-break: break-word;
+  line-height: 19px;
+}
+
+p, div, small, ol, ul, li, small, span, blockquote, a {
+  font-family: $font-sans;
+  word-break: break-word;
+  color: $g4;
+  &.small {
+    font-size: 12px;
+  }
+}
+
+p {
+  line-height: 20px;
+  color: $g4;
+  margin: 0 0 15px 0;
+}
+
+a {
+  color: $blus !important;
+}
+
+.mail-box {
   background-color: white;
+  padding: 14px;
+  padding-bottom: 0;
+}
+
+.mail-button--alt {
+  table {
+    width: 100%;
+    text-align: center;
+    height: 120px;
+
+  }
+
+  td {
+    height: 35px;
+  }
+
+  a {
+    display: inline-block;
+    color: white !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: $gre;
+    border: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+    width: auto;
+    outline: none;
+    display: inline-block;
+    cursor: pointer;
+    border-bottom: solid 3px darken($gre, 10%);
+    @include transition(.15s);
+    border-top: solid 3px $gre;
+    @include border-radius(6px);
+    height: 35px;
+    line-height: 35px;
+    &:hover {
+      background-color: darken($gre, 5%) !important;
+      border-top-color: darken($gre, 5%) !important;;
+      border-bottom-color: darken($gre, 15%) !important;;
+    }
+    &:active {
+      background-color: darken($gre, 15%) !important;;
+      border-bottom-color: darken($gre, 15%) !important;;
+      border-top-color: darken($gre, 20%) !important;;
+      transition: none;
+    }
+  }
+}
+
+.mail-center {
   text-align: center;
+}
+
+.mail-wrapper{
+  width: 100%;
+  background-color: $g1;
+}
+
+.mail-header{
+  background-color: $blu;
+  text-align: center;
+}
+
+.mail-header-logo {
+  height: 34px;
+  padding-top: 3px;
+}
+
+.mail-hidden {
+  display: none;
 }
 
 .mail-body{
   background-color: $g1;
 }
 
+.mail-center-column {
+  width: 350px;
+  padding: 12px;
+}
+
 .mail-footer{
   background-color: $g4;
+  p, a, span {
+    color: $g2 !important;
+  }
   a {
-    color: $g2;
+    color: $g2 !important;
     &:hover{
       text-decoration: underline;
-      color: $g1;
+      color: $g1 !important;
     }
     &:hover span {
-      color: $g1;
+      color: $g1 !important;
     }
   }
+}
+
+.mail-footer-padding {
+  background-color: $g4;
+  height: 15px;
+}
+
+.mail-margin-top {
+  height: 20px
+}
+.mail-margin-bottom {
+  height: 20px
 }

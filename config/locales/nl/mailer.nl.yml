@@ -11,9 +11,12 @@ nl:
       header: "Hoi %recipient.name%"
       first_paragraph: "Iemand heeft een bericht voor je achtergelaten"
     user_mailer:
+      go_to_discussion: "Ga naar discussie"
+      adjust_settings: "Wijzig jouw instellingen."
+      too_many_notifications: "Te veel meldingen?"
       user_created_comment:
-        subject: "Nieuwe reactie toegevoegd bij %{title}"
-        responded_to: " heeft gereageerd op een %{type} welke je volgt"
+        subject: "Reactie op %{title} '%{parent}' door %{poster}"
+        responded_to: "heeft een reactie geplaatst op het "
         view_reply: "Bekijk reactie"
       user_created_argument:
         subject: "Nieuw argument voor %{title}"

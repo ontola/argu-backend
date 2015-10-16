@@ -1,5 +1,5 @@
 module MailerHelper
-  include AlternativeNamesHelper, ProfilesHelper
+  include AlternativeNamesHelper, ProfilesHelper, MarkdownHelper
 
   def link_to_creator(object)
     link_to object.creator.display_name,

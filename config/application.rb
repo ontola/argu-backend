@@ -3,6 +3,7 @@ require File.expand_path('../boot', __FILE__)
 require 'rails/all'
 require 'sprockets/es6'
 require 'devise'
+ROADIE_I_KNOW_ABOUT_VERSION_3 = true
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -67,4 +68,6 @@ module Argu
     config.i18n.default_locale = :nl
     I18n.locale = :nl
   end
+
 end
+

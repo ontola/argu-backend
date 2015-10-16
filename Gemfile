@@ -46,6 +46,9 @@ gem 'auto_strip_attributes', '~> 2.0.6'
 gem 'mailgun_rails', '0.7.0'
 gem 'wisper', '~> 1.6.1'
 # gem 'wisper-activerecord', '~> 0.3.0'
+gem 'roadie', '~> 3.0.5'
+gem 'roadie-rails', '~> 1.0'
+
 
 #Search
 

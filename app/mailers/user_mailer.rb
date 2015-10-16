@@ -8,8 +8,9 @@ class UserMailer < ApplicationMailer
 
   def user_created_comment(item, recipients, opts = {})
     @comment = item
+    @parent = opts[:parent]
     mail to: recipients,
-         subject: t('mailer.user_mailer.user_created_comment.subject', title: @comment.commentable.display_name)
+         subject: t('mailer.user_mailer.user_created_comment.subject', title: type_for(@parent).downcase, parent: @parent.display_name, poster: @comment.creator.display_name )
   end
 
   def user_created_motion(item, recipients, opts = {})
