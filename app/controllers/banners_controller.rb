@@ -31,8 +31,12 @@ class BannersController < AuthorizedController
     end
     @cb.on(:create_banner_failed) do |banner|
       respond_to do |format|
-        format.html { render action: 'form',
-                             locals: {argument: argument} }
+        format.html { render settings_location,
+                             locals: {
+                                 banner: banner,
+                                 tab: 'banners/new',
+                                 active: 'banners'
+                             } }
       end
     end
     @cb.commit
