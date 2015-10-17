@@ -22,6 +22,9 @@ en:
     value: "Value"
     key: "Key"
     settings:
+      announcements:
+        title: "Announcements"
+        about: "Announcements are site-wide"
       title: "settings"
       general: "General settings"
       profile: "Forum profile"

@@ -1,5 +1,5 @@
-class BannersController < AuthorizedController
-  skip_before_action :check_if_member, if: :portal_request?
+class Portal::AnnouncementsController < AuthenticatedController
+  skip_before_action :check_if_member
   before_action :set_settings_view_path
 
   def new
@@ -8,34 +8,33 @@ class BannersController < AuthorizedController
 
     render settings_location,
            locals: {
-               banner: authenticated_resource!,
-               tab: 'banners/new',
-               active: 'banners'
+               announcement: authenticated_resource!,
+               tab: 'announcements/new',
+               active: 'announcements'
            }
   end
 
   def create
     set_tenant
-    @cb = CreateBanner.new(current_user.profile,
-                           banner_params.merge({
-                                             forum: tenant_by_param
-                                         }))
+    @cb = CreateAnnouncement
+              .new(current_user.profile,
+                   announcement_params)
     authorize @cb.resource, :create?
-    @cb.on(:create_banner_successful) do |banner|
+    @cb.on(:create_announcement_successful) do |announcement|
       respond_to do |format|
         format.html do
-          redirect_to after_create_path(banner),
+          redirect_to after_create_path(announcement),
                       notice: t('banners.notices.created')
         end
       end
     end
-    @cb.on(:create_banner_failed) do |banner|
+    @cb.on(:create_announcement_failed) do |announcement|
       respond_to do |format|
         format.html { render settings_location,
                              locals: {
-                                 banner: banner,
-                                 tab: 'banners/new',
-                                 active: 'banners'
+                                 announcement: announcement,
+                                 tab: 'announcements/new',
+                                 active: 'announcements'
                              } }
       end
     end
@@ -43,7 +42,7 @@ class BannersController < AuthorizedController
   end
 
   def edit
-    banner = Banner.find params[:id]
+    banner = Announcement.find params[:id]
     set_tenant
     authorize banner, :edit?
 
@@ -61,7 +60,7 @@ class BannersController < AuthorizedController
     authorize banner, :update?
 
     respond_to do |format|
-      if banner.update banner_params
+      if banner.update announcement_params
         format.html { redirect_to banner_settings_path }
       else
         format.html do
@@ -85,12 +84,12 @@ class BannersController < AuthorizedController
       if banner.destroy
         format.html do
           flash[:success] = t('type_destroyed', type: t('banners.type'))
-          redirect_to settings_forum_path(@forum, tab: :banners)
+          redirect_to settings_forum_path(@forum, tab: :announcements)
         end
       else
         format.html do
           flash[:error] = t('type_destroyed_failed', type: t('banners.type'))
-          redirect_to settings_forum_path(@forum, tab: :banners)
+          redirect_to settings_forum_path(@forum, tab: :announcements)
         end
       end
     end
@@ -100,29 +99,28 @@ class BannersController < AuthorizedController
 
   def after_create_path(banner)
     if portal_request?
-      settings_portal_path(tab: :banners)
+      settings_portal_path(tab: :announcements)
     else
-      settings_forum_path(banner.forum, tab: :banners)
+      settings_forum_path(banner.forum, tab: :announcements)
     end
   end
 
   def authenticated_resource!
-    if params[:forum_id].present?
-      super
+    if params[:action] == 'new' || params[:action] == 'create'
+      controller_name
+          .classify
+          .constantize
+          .new
     else
-      if params[:action] == 'new' || params[:action] == 'create'
-        controller_name
-            .classify
-            .constantize
-            .new forum: nil
-      else
-        super
-      end
+      super
     end
   end
 
-  def banner_params
-    params.require(:banner).permit(*policy(@banner || Banner).permitted_attributes)
+  def announcement_params
+    params
+        .require(:announcement)
+        .permit(*policy(@announcement || Announcement)
+                     .permitted_attributes)
   end
 
   def portal_request?
@@ -143,9 +141,9 @@ class BannersController < AuthorizedController
 
   def banner_settings_path
     if portal_request?
-      settings_portal_path(tab: :banners)
+      settings_portal_path(tab: :announcements)
     else
-      settings_forum_path(@forum, tab: :banners)
+      settings_forum_path(@forum, tab: :announcements)
     end
   end
 
