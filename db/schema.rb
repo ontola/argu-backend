@@ -51,6 +51,21 @@ ActiveRecord::Schema.define(version: 20160308091020) do
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
+  create_table "announcements", force: :cascade do |t|
+    t.integer  "publisher_id"
+    t.string   "title"
+    t.text     "content"
+    t.integer  "audience",     default: 0,    null: false
+    t.integer  "sample_size",  default: 100,  null: false
+    t.boolean  "dismissable",  default: true, null: false
+    t.datetime "publish_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+  end
+
+  add_index "announcements", ["publish_at", "sample_size", "audience"], name: "index_announcements_on_publish_at_and_sample_size_and_audience", using: :btree
+  add_index "announcements", ["publish_at"], name: "index_announcements_on_publish_at", using: :btree
+
   create_table "arguments", force: :cascade do |t|
     t.text     "content",                                         null: false
     t.integer  "motion_id",                                       null: false
