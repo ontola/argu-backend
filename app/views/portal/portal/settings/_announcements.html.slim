@@ -1,0 +1,13 @@
+h3= t('portal.settings.announcements.title')
+p= t('portal.settings.announcements.about')
+=link_to new_portal_announcement_path, class: 'btn margin-bottom' do
+  span.fa.fa-plus
+  span.icon-left= t('newe_type', type: t('announcements.type'))
+fieldset
+  legend= t('announcements.published').capitalize
+table.styled
+  =render partial: 'portal/portal/settings/announcements/announcement', collection: Announcement.published
+fieldset
+  legend= t('announcements.unpublished').capitalize
+table.styled
+  =render partial: 'portal/portal/settings/announcements/announcement', collection: Announcement.unpublished

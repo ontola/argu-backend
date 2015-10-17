@@ -1,0 +1,10 @@
+en:
+  announcements:
+    type: 'announcement'
+    audiences:
+      guests: 'Guests'
+      users: 'Users'
+      members: 'Members'
+      everyone: 'Everyone'
+    published: 'published'
+    unpublished: 'draft'
