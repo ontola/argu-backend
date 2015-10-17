@@ -23,6 +23,9 @@ nl:
     value: "Value"
     key: "Key"
     settings:
+      announcements:
+        title: "Aankondigingen"
+        about: "Aankondingen zijn site-wide"
       title: "Instellingen"
       general: "Algemene instellingen"
       profile: "Profiel instellingen"
