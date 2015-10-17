@@ -1,0 +1,10 @@
+nl:
+  announcements:
+    type: 'aankondiging'
+    audiences:
+      guests: 'Gasten'
+      users: 'Gebruikers'
+      members: 'Leden'
+      everyone: 'Iedereen'
+    published: 'gepubliceerd'
+    unpublished: 'concept'
