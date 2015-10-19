@@ -78,6 +78,7 @@ gem 'rack-pjax'
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.0.2'
 gem 'sprockets-es6', require: 'sprockets/rails'
+gem 'font-awesome-rails'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'
