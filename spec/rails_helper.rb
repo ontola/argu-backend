@@ -87,7 +87,7 @@ RSpec.configure do |config|
                                 ENV['CI'] ? :selenium : :selenium
                             end
   #Capybara.default_max_wait_time = 5
-  Capybara.default_max_wait_time = 10
+  Capybara.default_max_wait_time = 30
 
   Capybara::Webkit.configure do |config|
     config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'
