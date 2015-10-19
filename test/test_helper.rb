@@ -58,6 +58,13 @@ class ActiveSupport::TestCase
   #FactoryGirl.lint
   # Add more helper methods to be used by all tests here...
 
+  def change_actor(actor)
+    @controller.instance_variable_set(:@_current_actor,
+                                      actor.respond_to?(:profile) ?
+                                          actor.profile :
+                                          actor)
+  end
+
   def create_manager(forum, user = nil)
     user ||= FactoryGirl.create(:user)
     FactoryGirl.create(:managership, forum: forum, profile: user.profile)

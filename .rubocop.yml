@@ -1,0 +1,10 @@
+AllCops:
+  RunRailsCops: true
+Metrics/LineLength:
+  Max: 100
+Style/IfUnlessModifier:
+  MaxLineLength: 100
+Style/WhileUntilModifier:
+  MaxLineLength: 100
+Style/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space

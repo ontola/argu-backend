@@ -4,9 +4,10 @@ class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+  let(:subject) { FactoryGirl.create(:motion, forum: holland) }
 
   ####################################
-  # Not logged in
+  # As Guest
   ####################################
   test 'should get show when not logged in' do
     get :show, id: motions(:one)
@@ -15,7 +16,8 @@ class MotionsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:motion)
     assert_not_nil assigns(:vote)
 
-    assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) }, 'Trashed arguments are visible'
+    assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) },
+               'Trashed arguments are visible'
   end
 
   test 'should not get edit when not logged in' do
@@ -25,7 +27,7 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As user
+  # As User
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
@@ -38,7 +40,8 @@ class MotionsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:motion)
     assert_not_nil assigns(:vote)
 
-    assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) }, 'Trashed arguments are visible'
+    assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) },
+               'Trashed arguments are visible'
   end
 
   test 'should get new' do
@@ -95,10 +98,11 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_differences [['Motion.count', 0],
                         ['Activity.count', 0]] do
-      post :create, forum_id: :no_create_without_question,
+      post :create,
+           forum_id: :no_create_without_question,
            motion: {
-               title: 'Motion',
-               content: 'Contents'
+             title: 'Motion',
+             content: 'Contents'
            }
     end
     assert_nil assigns(:cm)
@@ -109,11 +113,12 @@ class MotionsControllerTest < ActionController::TestCase
     sign_in users(:user2)
 
     assert_differences create_changes_array do
-      post :create, forum_id: :no_create_without_question,
+      post :create,
+           forum_id: :no_create_without_question,
            motion: {
-               title: 'Motion',
-               content: 'Contents',
-               question_id: questions(:question_one_no_create_without_question).id
+             title: 'Motion',
+             content: 'Contents',
+             question_id: questions(:question_one_no_create_without_question).id
            }
     end
     assert_not_nil assigns(:cm).resource
@@ -158,12 +163,33 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   ####################################
+  # As Page
+  ####################################
+  let(:page) { create_member holland, FactoryGirl.create(:page) }
+
+
+  test 'page should post create' do
+    sign_in page.owner.profileable
+    change_actor page
+
+    assert_differences create_changes_array do
+      post :create,
+           forum_id: holland,
+           motion: FactoryGirl.attributes_for(:motion)
+    end
+    assert_not_nil assigns(:cm).resource
+    assert_not_nil assigns(:forum)
+    assert_redirected_to motion_path(assigns(:cm).resource,
+                                     start_motion_tour: true)
+  end
+
+  ####################################
   # As Owner
   ####################################
   let(:owner) { create_member(holland) }
   let(:owner_motion) { FactoryGirl.create(:motion,
-                                            creator: owner.profile,
-                                            forum: holland) }
+                                          creator: owner.profile,
+                                          forum: holland) }
 
   test 'owner should put update' do
     sign_in users(:user)
@@ -191,7 +217,7 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # For managers
+  # As Staff
   ####################################
   # Currently only staffers can convert items
   test 'should get convert' do
@@ -259,7 +285,7 @@ class MotionsControllerTest < ActionController::TestCase
 
   end
 
-  private
+  protected
   def create_changes_array
     [['Motion.count', 1],
      ['Activity.count', 1],

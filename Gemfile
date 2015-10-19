@@ -130,6 +130,7 @@ group :development, :test do
   gem 'wisper-rspec', require: false
   gem 'fakeredis', require: false
   gem 'simplecov', require: false
+  gem 'rubocop'
 end
 
 group :production, :staging do

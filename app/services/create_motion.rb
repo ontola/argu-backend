@@ -16,11 +16,10 @@ class CreateMotion < ApplicationService
   def commit
     Motion.transaction do
       @motion.save!
-      @motion.publisher.follow(@motion)
+      @motion.publisher.follow(@motion) if @motion.publisher.present?
       publish(:create_motion_successful, @motion)
     end
   rescue ActiveRecord::RecordInvalid
-    Bugsnag.notify(e)
     publish(:create_motion_failed, @motion)
   end
 

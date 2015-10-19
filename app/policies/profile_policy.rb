@@ -20,7 +20,7 @@ class ProfilePolicy < RestrictivePolicy
   def permitted_attributes
     attributes = super
     if record.profileable.present?
-      attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public, :is_public] if update?
+      attributes << [:id, :name, :about, :profile_photo, :remove_profile_photo, :cover_photo, :remove_cover_photo, :are_votes_public, :is_public] if update?
     else
       attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public, :is_public] if new?
     end

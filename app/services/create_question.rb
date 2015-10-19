@@ -19,8 +19,7 @@ class CreateQuestion < ApplicationService
       @question.publisher.follow(@question)
       publish(:create_question_successful, @question)
     end
-  rescue ActiveRecord::RecordInvalid => e
-    Bugsnag.notify(e)
+  rescue ActiveRecord::RecordInvalid
     publish(:create_question_failed, @question)
   end
 
