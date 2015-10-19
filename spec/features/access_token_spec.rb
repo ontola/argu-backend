@@ -20,7 +20,7 @@ RSpec.feature 'Access tokens', type: :feature do
 
     expect(page).to have_content('content')
 
-    click_link 'Geen van beiden'
+    click_link 'Neutral'
     #wait_for_async_modal
     expect(page).to have_content 'Sign up'
 
@@ -46,7 +46,7 @@ RSpec.feature 'Access tokens', type: :feature do
       click_button 'Volgende'
     end
 
-    click_button 'Geen van beiden'
+    click_button 'Geen van beide'
 
     expect(page).to have_content motion.title
     expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'

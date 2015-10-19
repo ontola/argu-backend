@@ -76,13 +76,19 @@ en:
   not_allowed: "Action not allowed."
   error: "Error"
   error_prohibited: " whilst saving:"
+  status:
+    400: "Error in request"
+    401: "You have to be logged in to perform this action."
+    404: "The item was not found, try reloading the page."
+    429: "You're making too many requests, please try again later."
+    500: "Something went wrong on our side, please try again later."
+  errors:
+    general: "Something went wrong, reload the page or try again later."
   outdated_browser: "You're using an <strong>outdated and probably unsafe</strong> browser. <a href='http://browsehappy.com/'>Upgrade your browser.</a>"
   view_settings: "View settings"
   share_link:
     header: "Share link"
     body: "Share the link below to directly invite people to this forum."
-  status:
-    400: "Error in request"
   header:
     motions: "Ideas"
     activities: "Activities"
@@ -196,6 +202,7 @@ en:
   embed: "embed"
   forms:
     danger_zone: "Danger zone"
+    legal_html: "By creating an Argu account you agree to our %{link}."
   users:
     logged_in_banner_text: "%{name}"
     registrations:

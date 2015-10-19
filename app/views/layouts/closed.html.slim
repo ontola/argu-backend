@@ -25,6 +25,6 @@ body
       p.browsehappy= raw t('outdated_browser')
     #pjax-container.container
       =yield
-  =javascript_include_tag 'closed'
+  =javascript_include_tag 'application'
   - if Rails.env.production?
     =render partial: 'analytics'

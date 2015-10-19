@@ -1,7 +1,7 @@
 source 'https://rubygems.org/'
 
 gem 'sass-rails', '~> 5.0.3'
-gem 'sass', '= 3.2.19'
+gem 'sass', '= 3.4.18'
 gem 'rails', '~>4.2.3'
 
 gem 'simple_text', '~> 0.0.21'
@@ -55,7 +55,7 @@ gem 'kaminari', '~>0.16.1'
 
 ##################Front-end########################
 #gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
-gem 'react-rails', '~> 1.0'
+gem 'react-rails', '~> 1.3.1'
 
 ##################Asset-y########################
 gem 'slim', '~> 2.1.0'
@@ -79,6 +79,8 @@ gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.0.2'
 gem 'sprockets-es6', require: 'sprockets/rails'
 gem 'font-awesome-rails'
+gem 'babel-transpiler'
+#gem 'browserify-rails', '~> 1.4.0', require: 'browserify-rails'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'

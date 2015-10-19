@@ -13,9 +13,9 @@ en:
       success: "Thanks for your vote!"
       failed: "Something went wrong, please try again."
     type:
-      pro: "Pro"
-      neutral: "Neutral"
-      con: "Con"
+      pro: "I'm in favor"
+      neutral: "I'm neither"
+      con: "I'm against"
     confirm:
       headline: "Confirm vote"
       skip: "Not now, skip voting"

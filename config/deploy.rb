@@ -53,7 +53,7 @@ namespace :deploy do
     end
   end
 
-  desc 'Install bower'
+  desc 'Install bower components'
   task :install_bower do
     on roles(:web, :app) do
       within release_path do
@@ -62,7 +62,29 @@ namespace :deploy do
     end
   end
 
-  before 'deploy:compile_assets', :install_bower
+  desc 'Install npm modules'
+  task :npm_install do
+    on roles(:web, :app) do
+      within release_path do
+        execute :npm, 'install'
+      end
+    end
+  end
+
+  desc 'Compile browserify bundles'
+  task :compile_bundles do
+    on roles(:web, :app) do
+      within release_path do
+        execute :npm, :run, :build
+      end
+    end
+  end
+
+
+
+  before :install_bower, :npm_install
+  before :compile_bundles, :install_bower
+  before 'deploy:compile_assets', :compile_bundles
   after :updated, :compile_assets
   after :publishing, :update_build_number
   after :publishing, :link_staging_assets

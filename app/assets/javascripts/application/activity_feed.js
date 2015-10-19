@@ -1,0 +1,45 @@
+
+let loading = false;
+let reachedEnd = false;
+
+const activityFeed = {
+    init: () => {
+        $(document).on('click', '.activity-feed .load-more', activityFeed.loadMore);
+
+        $(window).scroll(() => {
+            if (!loading && !reachedEnd && ($(window).scrollTop() >  $(document).height() - $(window).height() - 300)) {
+                $('.activity-feed .load-more').click();
+            }
+        });
+    },
+
+    loadMore: function () {
+        var _this   = $(this),
+            feedDOM = $('.activity-feed .activities');
+        _this.text('activities.ui.loading');
+        loading = true;
+        $.ajax("/activities.html", {
+            data: {
+                'from_time': feedDOM.find('.activity:last time').attr('datetime')
+            },
+            cache: false,
+            success: (d, s, xhr) => {
+                if (xhr.status == 200 || xhr.status == 304) {
+                    feedDOM.append(d);
+                    _this.text('activities.ui.load_more');
+                } else if (xhr.status == 204) {
+                    _this.text('activities.ui.no_more_artivities');
+                    reachedEnd = true;
+                    window.setTimeout(() => {
+                        reachedEnd = false;
+                    }, 30*1000);
+                }
+                loading = false;
+            }
+        });
+    }
+};
+
+
+export default activityFeed
+;

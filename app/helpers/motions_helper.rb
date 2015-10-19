@@ -12,10 +12,10 @@ module MotionsHelper
           actor_group_responses: group.responses_for(motion, actor)
       }
     end
-    {
+    localized_react_component({
         actor: actor,
         groups: groups
-    }.merge(motion_vote_props(motion, vote))
+    }.merge(motion_vote_props(motion, vote)))
   end
 
   def motion_vote_props(motion, vote, opts={})

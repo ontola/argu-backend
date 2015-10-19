@@ -4,6 +4,11 @@ class ReactInput < Formtastic::Inputs::SelectInput
     include ActionView::Helpers
     include ActionView::Context
 
+    def initialize
+      new_helper = React::Rails::ViewHelper.helper_implementation_class.new
+      new_helper.setup(self)
+      @__react_component_helper = new_helper    end
+
     def render_react_component(component, props = {}, opts = {})
       react_component(component, props, opts)
     end
@@ -12,7 +17,7 @@ class ReactInput < Formtastic::Inputs::SelectInput
   def to_html
     input_wrapping do
       label_html <<
-          render_react_component(@options[:component], react_render_options, {prerender: false})
+          render_react_component(@options[:component], react_render_options, {prerender: true})
     end
   end
 

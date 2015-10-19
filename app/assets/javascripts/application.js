@@ -10,36 +10,15 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
-//= require fetch/fetch
+// for browserify-rails: module.exports
 //
-//= require jquery/dist/jquery.js
+//= require jquery
 //= require jquery_ujs
-//= require react/react-with-addons.js
-//= require react-router/build/umd/ReactRouter.js
-//= require react_ujs
-//= require react-onclickoutside/index
-//= require reflux/dist/reflux.js
-//= require jquery.jeditable.mini.js
-//= require jquery-ui/autocomplete
-//= require jquery-ui/sortable
-//= require jquery-pjax/jquery.pjax
-//= require microplugin/src/microplugin
-//= require sifter/sifter.js
-//= require selectize/dist/js/selectize.js
-//= require react-input-autosize.min
-//= require classnames
-//= require react-select
-// Briarcliff dependencies :: GO
-//= require fastclick/lib/fastclick
-//= require isotope/dist/isotope.pkgd.js
-//= require intro.js/intro.js
-//= require nprogress/nprogress.js
-// Briarcliff dependencies :: END
-//= require requirejs
-//= require autocomplete-rails
-//= require_tree ./lib
-//= require_tree ./stores
-//= require_tree ./services
-//= require_tree ./components
-//= require initialize.js.jsx
-//= require_tree ./application
+//= require jquery.pjax
+//= require jquery.jeditable.mini
+//= require bg_loaded
+//= require nprogress
+//= require sifter
+//= require microplugin
+//= require selectize
+//= require _bundle

@@ -19,12 +19,7 @@ class CoverUploader < CarrierWave::Uploader::Base
       config.aws_credentials = {
           access_key_id:     Rails.application.secrets.aws_id,
           secret_access_key: Rails.application.secrets.aws_key,
-          region:            'eu-central-1',
-          config: AWS.config({
-                                 access_key_id:     Rails.application.secrets.aws_id,
-                                 secret_access_key: Rails.application.secrets.aws_key,
-                                 region:            'eu-central-1'
-                             })
+          region:            'eu-central-1'
       }
     end
     storage :aws

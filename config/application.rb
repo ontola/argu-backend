@@ -1,8 +1,8 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require 'sprockets/es6'
 require 'devise'
+
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -49,11 +49,15 @@ module Argu
       end
     end
     config.middleware.use Rack::Attack
+    config.middleware.use Rack::Deflater
 
     config.react.addons = true
     # Enable the asset pipeline
     config.assets.enabled = true
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+
+    config.assets.initialize_on_precompile = true
+    config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts')
+    config.assets.paths << Rails.root.join('node_modules')
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'

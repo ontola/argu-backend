@@ -1,0 +1,48 @@
+{
+  "parser": "babel-eslint",
+  "extends": "eslint:recommended",
+  "root": true,
+  "plugins": [
+    "react"
+  ],
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "globals": {
+    "__DEV__": true,
+    "__SERVER__": true
+  },
+  "ecmaFeatures": {
+    "jsx": true,
+    "templateStrings": true,
+    "modules": true
+  },
+  "rules": {
+    "comma-dangle": [2, "never"],
+    "no-console": 2,
+    "strict": [2, "never"],
+    "consistent-return": 2,
+    "curly": [2, "all"],
+    "eqeqeq": [1, "smart"],
+    "no-eval": 2,
+    "no-implied-eval": 2,
+    "no-redeclare": 2,
+    "no-native-reassign": 2,
+
+    // Code style
+    "array-bracket-spacing": [2, "never"],
+    "indent": [2, 4],
+    "block-spacing": [2, "always"],
+    "quotes": [2, "single"],
+    "dot-location": [2, "property"],
+    "key-spacing": [2, {"beforeColon": false, "afterColon": true}],
+    "space-infix-ops": 2,
+    "space-in-parens": [2, "never"],
+    "space-after-keywords": [2, "always"],
+    "space-unary-ops": [2, { "words": true, "nonwords": false }],
+    "space-return-throw-case": 2,
+    "no-multi-spaces": 2
+  }
+}
