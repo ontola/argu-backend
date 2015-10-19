@@ -14,7 +14,7 @@ en:
       failed: "Something went wrong, please try again."
     type:
       pro: "I'm in favor"
-      neutral: "I'm neither"
+      neutral: "Neither"
       con: "I'm against"
     confirm:
       headline: "Confirm vote"

@@ -20,7 +20,7 @@ RSpec.feature 'Access tokens', type: :feature do
 
     expect(page).to have_content('content')
 
-    click_link 'Neutral'
+    click_link 'Neither'
     #wait_for_async_modal
     expect(page).to have_content 'Sign up'
 
