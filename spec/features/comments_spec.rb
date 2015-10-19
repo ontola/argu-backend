@@ -19,7 +19,7 @@ RSpec.feature 'Comments', type: :feature do
       click_button 'Reply'
     end
 
-    click_link 'Create Argu account'
+    click_link 'Sign up with email'
     user_attr = attributes_for(:user)
     within('#new_user') do
       fill_in 'user[email]', with: user_attr[:email]

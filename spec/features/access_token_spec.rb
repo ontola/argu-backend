@@ -24,7 +24,7 @@ RSpec.feature 'Access tokens', type: :feature do
     #wait_for_async_modal
     expect(page).to have_content 'Sign up'
 
-    click_link 'Create Argu account'
+    click_link 'Sign up with email'
     expect(current_path).to eq new_user_registration_path
 
     user_attr = FactoryGirl.attributes_for(:user)
