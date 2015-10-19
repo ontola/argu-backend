@@ -4,7 +4,6 @@
 
 h1, h2, h3, h4 {
   font-family: $font-special;
-  margin-bottom: 0.4em;
   color: $g4;
   font-weight: bold;
   font-weight: 700;
@@ -32,11 +31,14 @@ p, div, small, ol, ul, li, small, span, blockquote, a {
 p {
   line-height: 20px;
   color: $g4;
-  margin: 0 0 15px 0;
+  margin-top: 0;
+  margin-right:0;
+  margin-bottom: 15px;
+  margin-left: 0;
 }
 
 a {
-  color: $blus !important;
+  color: $blus;
   text-decoration: none;
   &:hover {
     text-decoration: underline !important;
@@ -45,7 +47,9 @@ a {
 
 .mail-box {
   background-color: white;
-  padding: 14px;
+  padding-top: 14px;
+  padding-left: 14px;
+  padding-right: 14px;
   padding-bottom: 0;
 }
 
@@ -63,11 +67,15 @@ a {
 
   td {
     height: 35px;
+    line-height: 35px;
+    color: white;
+    //color: white !important;
   }
 
   a {
     display: inline-block;
-    color: white !important;
+    color: white;
+    //color: white !important;
     text-transform: uppercase;
     text-decoration: none;
     font-size: 12px;
@@ -117,7 +125,8 @@ a {
 }
 
 .mail-header-logo {
-  height: 34px;
+  height: 41px;
+  width: 96px;
   padding-top: 3px;
 }
 
@@ -137,11 +146,10 @@ a {
 .mail-footer{
   background-color: $g4;
   p, a, span {
-    color: $g2 !important;
+    color: $g2;
   }
   a {
     text-decoration: underline;
-    color: $g2 !important;
     &:hover{
       color: $g1 !important;
     }
@@ -161,4 +169,24 @@ a {
 }
 .mail-margin-bottom {
   height: 20px
+}
+
+.pro-t{
+  color: $gre;
+}
+
+.con-t{
+  color: $red;
+}
+
+.motion-t{
+  color: $blu;
+}
+
+.neutral-t{
+  color: $g3;
+}
+
+.question-t{
+  color: $bro;
 }
