@@ -1,19 +1,18 @@
-p
-  a[href='aef'] Henk de Vries
-  span heeft gereageerd op het vraagstuk
-  a[href='aeg'] 'Hoe lossen we alle problemen in de wereld op':
-  a[href='aeg'] 'We zouden argu in moeten zetten voor alle overheden!'
-a[href='aeg']  Ga naar de discussie
-
-/.box.box-grid.question
-  section
-    p
-      =link_to_creator(@argument)
-      =t('mailer.user_mailer.user_created_argument.responded_to',
-         type: link_to_object(@argument, type_for(@argument)))
-  section
-    =link_to url_for(@argument)
-      h2.que-t= @argument.display_name
-    .button
-      =link_to_object(@argument,
-                      t('mailer.user_mailer.user_created_argument.view_reply'))
+table
+  tr
+    td
+      p
+        ==t("mailer.user_mailer.user_created_argument.responded_to.#{@argument.pro? ? 'pro' : 'con'}",
+            parent_title: link_to_object(@parent, @parent.display_name),
+            poster: link_to_object(@argument.creator, @argument.creator.display_name))
+  tr
+    td.mail-box.mail-box--clickable
+      =link_to url_for(@argument) do
+        h3[class="#{@argument.pro? ? 'pro' : 'con'}-t"]= @argument.title
+        p= HTML_Truncator.truncate(markdown_to_plaintext(@argument.content), 250, {length_in_chars: true, ellipsis: (' ...')})
+  tr
+    td.mail-button--alt
+      table
+        tr
+          td
+            =link_to_object(@argument, t('mailer.user_mailer.go_to_discussion'))

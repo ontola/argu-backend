@@ -1,11 +1,19 @@
-.box.box-grid.question
-  section
-    p
-      =link_to_creator(@question)
-      =t('mailer.user_mailer.user_created_question.responded_to')
-  section
-    =link_to url_for(@question)
-      h2.que-t= @question.display_name
-    .button
-      =link_to_object(@question,
-                      t('mailer.user_mailer.user_created_question.view_reply'))
+table
+  tr
+    td
+      p
+        ==t('mailer.user_mailer.user_created_question.responded_to',
+            parent_title: link_to_object(@parent, @parent.display_name),
+            poster: link_to_creator(@question),
+            type: type_for(@question).downcase)
+  tr
+    td.mail-box.mail-box--clickable
+      =link_to url_for(@question) do
+        h3.question-t= @question.title
+        p= HTML_Truncator.truncate(markdown_to_plaintext(@question.content), 250, {length_in_chars: true, ellipsis: (' ...')})
+  tr
+    td.mail-button--alt
+      table
+        tr
+          td
+            =link_to_object(@question, t('mailer.user_mailer.go_to_discussion'))

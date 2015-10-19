@@ -8,25 +8,27 @@ nl:
     sent_at_date: 'Verzonden op %{date}'
     settings: 'Notificatie instellingen wijzigen.'
     direct_mail:
-      header: "Hoi %recipient.name%"
+      header: "Beste %recipient.name%,"
       first_paragraph: "Iemand heeft een bericht voor je achtergelaten"
     user_mailer:
-      go_to_discussion: "Ga naar discussie"
+      go_to_discussion: "Bekijk discussie"
       adjust_settings: "Wijzig jouw instellingen."
       too_many_notifications: "Te veel meldingen?"
       user_created_comment:
-        subject: "Reactie op %{title} '%{parent}' door %{poster}"
-        responded_to: "heeft een reactie geplaatst op het "
-        view_reply: "Bekijk reactie"
+        subject: "Nieuwe reactie op '%{parent_title}' door %{poster}"
+        responded_to: "%{poster} heeft gereageerd op een %{parent_type}: '%{parent_title}'"
       user_created_argument:
-        subject: "Nieuw argument voor %{title}"
-        responded_to: " heeft een argument geplaatst voor een %{type} welke je volgt"
-        view_reply: "Bekijk argument"
+        subject_pro: "Nieuw %{type} voor '%{parent_title}' door %{poster}"
+        subject_con: "Nieuw %{type} tegen '%{parent_title}' door %{poster}"
+        responded_to:
+          pro: "%{poster} heeft een argument geplaatst voor '%{parent_title}'"
+          con: "%{poster} heeft een argument geplaatst tegen '%{parent_title}'"
       user_created_motion:
-        subject: "Nieuw idee voor %{title}"
-        responded_to: " heeft een idee geplaatst voor een %{type} welke je volgt"
-        view_reply: "Bekijk idee"
+        subject: "Nieuw idee: '%{title}' door %{poster}"
+        responded_to: "%{poster} heeft een %{type} geplaatst in '%{parent_title}'"
       user_created_question:
-        subject: "Nieuw vraagstuk geplaatst in forum %{title}"
-        responded_to: " heeft een vraagstuk geplaatst voor een forum dat je volgt."
-        view_reply: "Bekijk vraagstuk"
+        subject: "Nieuw vraagstuk: '%{title}' door %{poster}"
+        responded_to: "%{poster} heeft een %{type} geplaatst in forum '%{parent_title}':"
+      password:
+        changed:
+          subject: "Wachtwoord is gewijzigd"

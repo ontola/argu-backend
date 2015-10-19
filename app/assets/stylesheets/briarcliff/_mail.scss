@@ -1,5 +1,6 @@
 @import "variables";
 @import "mixins";
+@import "argu";
 
 h1, h2, h3, h4 {
   font-family: $font-special;
@@ -9,6 +10,14 @@ h1, h2, h3, h4 {
   font-weight: 700;
   word-break: break-word;
   line-height: 19px;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bototom: 19px;
+}
+
+h3 {
+  font-size: 18px;
 }
 
 p, div, small, ol, ul, li, small, span, blockquote, a {
@@ -28,12 +37,20 @@ p {
 
 a {
   color: $blus !important;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline !important;
+  }
 }
 
 .mail-box {
   background-color: white;
   padding: 14px;
   padding-bottom: 0;
+}
+
+.mail-box--clickable {
+  text-decoration: none;
 }
 
 .mail-button--alt {
@@ -123,9 +140,9 @@ a {
     color: $g2 !important;
   }
   a {
+    text-decoration: underline;
     color: $g2 !important;
     &:hover{
-      text-decoration: underline;
       color: $g1 !important;
     }
     &:hover span {

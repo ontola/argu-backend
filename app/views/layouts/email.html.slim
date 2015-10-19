@@ -9,18 +9,19 @@ html
         meta[content="Argu" itemprop="name"]
         link[href="https://argu.co" itemprop="url"]
         link itemprop="url/googlePlus" href="https://plus.google.com/"
-    =stylesheet_link_tag 'mail'
+    =stylesheet_link_tag 'mail', data_roadie_ignore: 'data-roadie-ignore'
   body.mail-body
     table.mail-wrapper
       tr.mail-header
         td
-        td.mail-header-containerw
+        td.mail-header-container
           img.mail-header-logo[src='https://argu.co/assets/logo-white-6647cdbdb64bb43dff3b90fc309587548bbb6417d35a83f2cf5cf88d013ad09f.svg']
         td
       tr.mail-margin-top
       tr
         td
         td.mail-center-column
+          p= t('mailer.direct_mail.header')
           =yield
         td
       tr.mail-margin-bottom
