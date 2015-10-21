@@ -2,6 +2,9 @@ FactoryGirl.define do
 
   factory :banner do
 
+    title 'Banner title'
+    content 'Banner content'
+
     trait :published do
       publish_at { 1.hour.ago }
     end
