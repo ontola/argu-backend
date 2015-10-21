@@ -20,6 +20,15 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 1, notification_count(subject)
   end
 
+  test 'should greet with best available name' do
+    user = FactoryGirl.create(:user,
+                              first_name: 'first_name')
+    assert_equal 'first_name', user.greeting
+    user = FactoryGirl.create(:user,
+                              first_name: nil)
+    assert_includes user.greeting, 'fg_shortname'
+  end
+
   def notification_count(user)
     Argu::Redis.get("user:#{user.id}:notification.count").to_i
   end

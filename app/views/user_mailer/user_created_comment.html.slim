@@ -1,15 +1,18 @@
 table
   tr
-    td
-      p
+    td.mail-p= t('mailer.direct_mail.header')
+  tr
+    td.mail-p
         ==t('mailer.user_mailer.user_created_comment.responded_to',
             parent_type: type_for(@parent).downcase,
             parent_title: link_to_object(@parent, @parent.display_name),
             poster: link_to_creator(@comment))
   tr
-    td.mail-box.mail-box--clickable
-      =link_to url_for(@comment) do
-        p= HTML_Truncator.truncate(markdown_to_plaintext(@comment.body), 250, {length_in_chars: true, ellipsis: (' ...')})
+    td.mail-box
+      table
+        tr
+          td.mail-p.mail-grey-link
+            =link_to (HTML_Truncator.truncate(markdown_to_plaintext(@comment.body), 250, {length_in_chars: true, ellipsis: (' ...')})), url_for(@comment)
   tr
     td.mail-button--alt
       table

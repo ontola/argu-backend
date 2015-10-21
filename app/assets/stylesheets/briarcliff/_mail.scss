@@ -2,39 +2,26 @@
 @import "mixins";
 @import "argu";
 
-h1, h2, h3, h4 {
+.mail-h3 {
   font-family: $font-special;
   color: $g4;
   font-weight: bold;
   font-weight: 700;
   word-break: break-word;
-  line-height: 19px;
-  margin-top: 0;
-  margin-left: 0;
-  margin-right: 0;
-  margin-bototom: 19px;
+  line-height: 20px;
+  font-size: 20px;
+  padding: 0 0 15px 0;
 }
 
-h3 {
-  font-size: 18px;
-}
-
-p, div, small, ol, ul, li, small, span, blockquote, a {
+.mail-p {
   font-family: $font-sans;
   word-break: break-word;
+  line-height: 20px;
   color: $g4;
+  padding: 0 0 15px 0;
   &.small {
     font-size: 12px;
   }
-}
-
-p {
-  line-height: 20px;
-  color: $g4;
-  margin-top: 0;
-  margin-right:0;
-  margin-bottom: 15px;
-  margin-left: 0;
 }
 
 a {
@@ -47,14 +34,13 @@ a {
 
 .mail-box {
   background-color: white;
-  padding-top: 14px;
-  padding-left: 14px;
-  padding-right: 14px;
-  padding-bottom: 0;
+  padding: 14px 14px 0px 14px;
 }
 
-.mail-box--clickable {
-  text-decoration: none;
+.mail-grey-link {
+  a {
+    color: $g4;
+  }
 }
 
 .mail-button--alt {
@@ -73,6 +59,7 @@ a {
   }
 
   a {
+    font-family: $font-sans;
     display: inline-block;
     color: white;
     //color: white !important;
@@ -139,13 +126,18 @@ a {
 }
 
 .mail-center-column {
-  width: 350px;
+  width: 550px;
   padding: 12px;
+}
+
+table {
+  width: 100%;
 }
 
 .mail-footer{
   background-color: $g4;
-  p, a, span {
+  text-align: center;
+  * {
     color: $g2;
   }
   a {
@@ -173,20 +165,35 @@ a {
 
 .pro-t{
   color: $gre;
+  * {
+    color: $gre !important;
+  };
 }
 
 .con-t{
   color: $red;
+  * {
+    color: $red !important;
+  };
 }
 
 .motion-t{
   color: $blu;
+  * {
+    color: $blu !important;
+  };
 }
 
 .neutral-t{
   color: $g3;
+  * {
+    color: $g3 !important;
+  };
 }
 
 .question-t{
   color: $bro;
+  * {
+    color: $bro !important;
+  };
 }

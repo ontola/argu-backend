@@ -21,7 +21,6 @@ html
       tr
         td
         td.mail-center-column
-          p= t('mailer.direct_mail.header')
           =yield
         td
       tr.mail-margin-bottom
@@ -32,8 +31,12 @@ html
       tr.mail-footer
         td
         td.mail-center
-          p.small
-            = t('mailer.user_mailer.too_many_notifications') + ' '
-            =link_to t('mailer.user_mailer.adjust_settings'), settings_path
-          small.mail-hidden= t('mailer.sent_at_date', date: Time.now.utc.strftime('%Y-%m-%d %H:%M:%S'))
+          table
+            tr
+              td.mail-p.small
+                =t('mailer.user_mailer.too_many_notifications') + ' '
+                =link_to t('mailer.user_mailer.adjust_settings'), settings_path
+            tr
+              td.mail-hidden
+                =t('mailer.sent_at_date', date: Time.now.utc.strftime('%Y-%m-%d %H:%M:%S'))
         td

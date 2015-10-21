@@ -1,15 +1,19 @@
 table
   tr
-    td
-      p
+    td.mail-p= t('mailer.direct_mail.header')
+  tr
+    td.mail-p
         ==t("mailer.user_mailer.user_created_argument.responded_to.#{@argument.pro? ? 'pro' : 'con'}",
             parent_title: link_to_object(@parent, @parent.display_name),
             poster: link_to_object(@argument.creator, @argument.creator.display_name))
   tr
     td.mail-box.mail-box--clickable
-      =link_to url_for(@argument) do
-        h3[class="#{@argument.pro? ? 'pro' : 'con'}-t"]= @argument.title
-        p= HTML_Truncator.truncate(markdown_to_plaintext(@argument.content), 250, {length_in_chars: true, ellipsis: (' ...')})
+        table
+          tr
+            td.mail-h3[class="#{@argument.pro? ? 'pro' : 'con'}-t"]
+              =link_to @argument.title, url_for(@argument)
+          tr
+            td.mail-p= HTML_Truncator.truncate(markdown_to_plaintext(@argument.content), 250, {length_in_chars: true, ellipsis: (' ...')})
   tr
     td.mail-button--alt
       table
