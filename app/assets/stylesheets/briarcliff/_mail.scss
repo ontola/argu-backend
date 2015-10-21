@@ -2,6 +2,46 @@
 @import "mixins";
 @import "argu";
 
+// Reset styles by http://templates.mailchimp.com/development/css/reset-styles/
+
+body{
+  margin:0;
+  padding:0;
+}
+
+img{
+  border:0 none;
+  height:auto;
+  line-height:100%;
+  outline:none;
+  text-decoration:none;
+}
+
+a img{
+  border:0 none;
+}
+
+.imageFix{
+  display:block;
+}
+
+table, td{
+  border-collapse:collapse;
+}
+
+.mail-body{
+  height:100% !important;
+  margin:0;
+  padding:0;
+  width:100% !important;
+}
+
+// End of reset styles
+
+.mail-body {
+  background-color: $g1;
+}
+
 .mail-h3 {
   font-family: $font-special;
   color: $g4;
@@ -10,7 +50,7 @@
   word-break: break-word;
   line-height: 20px;
   font-size: 20px;
-  padding: 0 0 15px 0;
+  padding: 0 0 5px 0;
 }
 
 .mail-p {
@@ -26,9 +66,9 @@
 
 a {
   color: $blus;
-  text-decoration: none;
+  text-decoration: underline;
   &:hover {
-    text-decoration: underline !important;
+    color: $blu !important;
   }
 }
 
@@ -121,10 +161,6 @@ a {
   display: none;
 }
 
-.mail-body{
-  background-color: $g1;
-}
-
 .mail-center-column {
   width: 550px;
   padding: 12px;
@@ -148,6 +184,10 @@ table {
     &:hover span {
       color: $g1 !important;
     }
+  }
+  .mail-hidden {
+    color: $g4;
+    font-size: 0;
   }
 }
 
