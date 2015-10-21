@@ -15,7 +15,7 @@ class BannerPolicy < RestrictivePolicy
 
     def resolve
       audience = [Banner.audiences[:everyone]]
-      if user && user.member_of?(@forum)
+      if user && user.member_of?(context.forum)
         audience << Banner.audiences[:members]
       elsif user.present?
         audience << Banner.audiences[:users]
