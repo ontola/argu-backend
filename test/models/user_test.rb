@@ -24,9 +24,16 @@ class UserTest < ActiveSupport::TestCase
     user = FactoryGirl.create(:user,
                               first_name: 'first_name')
     assert_equal 'first_name', user.greeting
+
     user = FactoryGirl.create(:user,
                               first_name: nil)
     assert_includes user.greeting, 'fg_shortname'
+
+    user = FactoryGirl.create(:user,
+                              first_name: nil,
+                              email: 'testmail@example.com',
+                              shortname: nil)
+    assert_equal user.greeting, 'testmail'
   end
 
   def notification_count(user)
