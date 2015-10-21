@@ -128,6 +128,7 @@ RSpec.feature 'Banners', type: :feature do
     expect(page).to_not have_content(banner_users.title)
     expect(page).to have_content(banner_everyone.title)
   end
+
   ####################################
   # As Member
   ####################################
