@@ -79,7 +79,7 @@
   @include button($blu);
 }
 
-.btn--transparant {
+.btn--transparant, .btn--transparant--parent > div > div{
   @include button(rgba(0,0,0,0));
   padding-left: 1em;
   padding-right: 1em;
