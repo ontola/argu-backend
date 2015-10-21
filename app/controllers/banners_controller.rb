@@ -24,7 +24,7 @@ class BannersController < AuthorizedController
     @cb.on(:create_banner_successful) do |banner|
       respond_to do |format|
         format.html do
-          redirect_to after_create_path(banner),
+          redirect_to settings_forum_path(banner.forum, tab: :banners),
                       notice: t('banners.notices.created')
         end
       end
@@ -97,14 +97,6 @@ class BannersController < AuthorizedController
   end
 
   private
-
-  def after_create_path(banner)
-    if portal_request?
-      settings_portal_path(tab: :banners)
-    else
-      settings_forum_path(banner.forum, tab: :banners)
-    end
-  end
 
   def authenticated_resource!
     if params[:forum_id].present?
