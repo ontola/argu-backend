@@ -31,6 +31,14 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
             li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
               span.fa.fa-gear
               span.icon-left= t('forums.settings.title')
+          - if current_user.present? && active_for_user?(:notifications, current_user)
+            li.float-right.btn--transparant[data-title=I18n.t('tooltips.follow')]
+              =react_component 'ActiveToggle',
+                               {url: follows_path(argument_id: @forum.id, format: :json),
+                                initialState: current_user.following?(@forum),
+                                true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
+                                false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
+                               {prerender: true}
   /.cover-bar
       .cover-container
         - if @forum.bio.present?
