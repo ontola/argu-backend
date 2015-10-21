@@ -23,7 +23,8 @@ class Rack::Attack
       /buttons.com/,
       /free-floating-buttons/,
       /social-traffic.com/,
-      /event-tracking.com/
+      /event-tracking.com/,
+      /buttons-for/
   ].freeze
 
   HACKERS = [
