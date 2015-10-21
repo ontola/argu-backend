@@ -8,6 +8,12 @@ FactoryGirl.define do
       end
     end
 
+    after(:create) do |profile, evaluator|
+      if (profile.profileable.is_a?(Page))
+        profile.update name: 'page_profile'
+      end
+    end
+
     factory :profile_with_memberships do
       after(:create) do |profile, evaluator|
         forum = evaluator.respond_to?(:forum) || create(:forum)
