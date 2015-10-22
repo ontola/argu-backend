@@ -47,6 +47,14 @@ class BannersControllerTest < ActionController::TestCase
   ####################################
   # As Manager
   ####################################
+  test 'manager should post create' do
+    sign_in create_manager(holland)
+
+    assert_difference('Banner.count') do
+      post :create, forum_id: holland, banner: FactoryGirl.attributes_for(:banner)
+      assert_redirected_to settings_forum_path(holland, tab: :banners)
+    end
+  end
 
   ####################################
   # As Owner
@@ -58,7 +66,6 @@ class BannersControllerTest < ActionController::TestCase
       post :create, forum_id: holland, banner: FactoryGirl.attributes_for(:banner)
       assert_redirected_to settings_forum_path(holland, tab: :banners)
     end
-
   end
 
 end
