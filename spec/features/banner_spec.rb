@@ -63,6 +63,22 @@ RSpec.feature 'Banners', type: :feature do
                         'Guest sees member banners'
   end
 
+  scenario 'Guest dismisses a banner' do
+    question = holland.questions.first
+    visit question_path(question)
+
+    expect(page).to have_content(question.title)
+    expect(page).to have_content(banner_guests.title)
+    within("##{banner_guests.identifier}") do
+      page.find('.box-close-button').click
+    end
+    expect(page).to_not have_content(banner_guests.title)
+
+    visit question_path(question)
+    expect(page).to_not have_content(banner_guests.title)
+    expect(page).to have_content(banner_everyone.title)
+  end
+
   ####################################
   # As User
   ####################################
@@ -83,6 +99,33 @@ RSpec.feature 'Banners', type: :feature do
                         'User sees members banners'
   end
 
+  scenario 'banner dismissal is persisted across logins' do
+    user = FactoryGirl.create(:user)
+    login_as(user, scope: :user)
+    question = holland.questions.first
+    visit question_path(question)
+
+    expect(page).to have_content(question.title)
+    expect(page).to have_content(banner_users.title)
+    within("##{banner_users.identifier}") do
+      page.find('.box-close-button').click
+    end
+    expect(page).to_not have_content(banner_users.title)
+    logout(:user)
+
+    visit question_path(question)
+    expect(page).to_not have_content(banner_users.title)
+    expect(page).to have_content(banner_everyone.title)
+
+    clear_cookies
+    visit question_path(question)
+    expect(page).to have_content(banner_guests.title)
+    expect(page).to have_content(banner_everyone.title)
+
+    login_as(user, scope: :user)
+    expect(page).to_not have_content(banner_users.title)
+    expect(page).to have_content(banner_everyone.title)
+  end
   ####################################
   # As Member
   ####################################
