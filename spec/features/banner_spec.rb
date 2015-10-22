@@ -123,6 +123,8 @@ RSpec.feature 'Banners', type: :feature do
     expect(page).to have_content(banner_everyone.title)
 
     login_as(user, scope: :user)
+    visit question_path(question)
+    expect(page).to_not have_content('Log in')
     expect(page).to_not have_content(banner_users.title)
     expect(page).to have_content(banner_everyone.title)
   end
