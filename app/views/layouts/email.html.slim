@@ -13,4 +13,4 @@ html
     h1= t('mailer.direct_mail.header')
     =yield
     p
-      small= t('mailer.sent_at_date', date: Time.now.utc.strftime('%Y-%m-%d %H:%M:%S'))
+      small= t('mailer.sent_at_date', date: Time.current.utc.strftime('%Y-%m-%d %H:%M:%S'))

@@ -31,7 +31,7 @@ class NotificationsController < ApplicationController
   def read
     authorize Notification, :read?
 
-    if policy_scope(Notification).where(read_at: nil).update_all read_at: Time.now
+    if policy_scope(Notification).where(read_at: nil).update_all read_at: Time.current
       @notifications = get_notifications
       render 'notifications/index'
     else
@@ -43,7 +43,7 @@ class NotificationsController < ApplicationController
     notification = Notification.includes(activity: :trackable).find(params[:id])
     authorize notification, :update?
 
-    if notification.read_at.present? || notification.update(read_at: Time.now)
+    if notification.read_at.present? || notification.update(read_at: Time.current)
       @notifications = get_notifications
       @unread = get_unread
       render 'index'
@@ -56,7 +56,7 @@ class NotificationsController < ApplicationController
   def fetch_more
     begin
       begin
-        from_time = DateTime.parse(params[:from_time]).to_s
+        from_time = DateTime.parse(params[:from_time]).utc.to_s
       rescue ArgumentError
         from_time = nil
       end
@@ -84,7 +84,7 @@ class NotificationsController < ApplicationController
 
   def refresh
     begin
-      since = DateTime.parse(last_notification).to_s(:db) if last_notification
+      since = DateTime.parse(last_notification).utc.to_s(:db) if last_notification
       new_available = true
       if since.present?
         new_available = policy_scope(Notification)

@@ -63,7 +63,7 @@ class PagesController < ApplicationController
       @page.attributes = permit_params
 
       if permit_params[:last_accepted] == '1'
-        @page.last_accepted = DateTime.now
+        @page.last_accepted = DateTime.current
       end
 
       authorize @page, :create?

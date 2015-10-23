@@ -22,11 +22,11 @@ FactoryGirl.define do
     end
 
     trait :confirmed do
-      confirmed_at Time.now
+      confirmed_at Time.current
     end
 
     trait :follows_email do
-      confirmed_at Time.now
+      confirmed_at Time.current
       follows_email User.follows_emails[:direct_follows_email]
     end
 

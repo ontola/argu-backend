@@ -71,7 +71,7 @@ private
   end
 
   def time_in_utc
-    Time.now.getutc.to_i.to_s
+    Time.current.utc.to_i.to_s
   end
 
 end

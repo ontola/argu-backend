@@ -15,7 +15,7 @@ module ApplicationHelper
   def awesome_time_ago_in_words (date)
     if date.present?
       if 1.day.ago < date
-        distance_of_time_in_words(date, Time.now)
+        distance_of_time_in_words(date, Time.current)
       elsif 1.year.ago < date
         date.strftime("%B #{date.day.ordinalize} %H:%M")
       else

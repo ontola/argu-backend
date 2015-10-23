@@ -20,7 +20,7 @@ html
              polymorphic_url(activity.trackable, host: 'https://argu.co')
 
     p
-      small= t('mailer.sent_at_date', date: Time.now.utc.strftime('%Y-%m-%d %H:%M:%S'))
+      small= t('mailer.sent_at_date', date: Time.current.utc.strftime('%Y-%m-%d %H:%M:%S'))
     / TODO: Link to notification settings.
     /p
       small= t('mailer.settings')
