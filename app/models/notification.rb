@@ -19,6 +19,7 @@ class Notification < ActiveRecord::Base
       super
     end
   end
+  alias_method :display_name, :title
 
   def url_object
     if self.activity.present?

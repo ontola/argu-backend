@@ -4,10 +4,10 @@ class NotificationListener
     create_notifications_for(activity, activity.recipient.followers)
   end
 
-private
+  private
 
   def create_notifications_for(activity, followers)
-    notifications = followers.map { |f| {user: f, activity: activity}  }
+    notifications = followers.map { |f| {user: f, activity: activity} }
     Notification.create!([notifications])
   end
 end

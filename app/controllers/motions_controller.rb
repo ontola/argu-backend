@@ -79,7 +79,6 @@ class MotionsController < AuthenticatedController
     action = @cm.resource.questions.presence ? :create? : :create_without_question?
     authorize @cm.resource, action
     @cm.subscribe(ActivityListener.new)
-    @cm.subscribe(MailerListener.new)
     @cm.on(:create_motion_successful) do |motion|
       respond_to do |format|
         first = current_profile.motions.count == 1 || nil

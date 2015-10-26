@@ -55,7 +55,6 @@ class CommentsController < AuthenticatedController
                            }.merge(comment_params)
     authorize @cc.resource, :create?
     @cc.subscribe(ActivityListener.new)
-    @cc.subscribe(MailerListener.new)
     @cc.on(:create_comment_successful) do |c|
       redirect_to polymorphic_url([resource], anchor: c.id),
                   notice: t('type_create_success', type: t('comments.type'))

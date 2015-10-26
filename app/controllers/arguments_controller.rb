@@ -68,7 +68,6 @@ class ArgumentsController < AuthenticatedController
                              }
     authorize @ca.resource, :create?
     @ca.subscribe(ActivityListener.new)
-    @ca.subscribe(MailerListener.new)
     @ca.on(:create_argument_successful) do |argument|
       respond_to do |format|
         argument = argument_params[:motion_id].blank? ? argument : argument.motion

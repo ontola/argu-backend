@@ -70,6 +70,7 @@ gem 'rmagick', '2.14.0'
 #gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'
+gem 'sidetiq'
 gem 'sidekiq-logging-json'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false

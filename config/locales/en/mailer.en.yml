@@ -27,3 +27,5 @@ en:
         subject: "New question added to forum %{title}"
         responded_to: " has added a question to a forum you're following"
         view_reply: "View question"
+      notifications_mailer:
+        subject: 'New Argu notifications'

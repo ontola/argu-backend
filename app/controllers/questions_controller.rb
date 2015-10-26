@@ -48,7 +48,6 @@ class QuestionsController < AuthenticatedController
                           })
     authorize @cq.resource, :create?
     @cq.subscribe(ActivityListener.new)
-    @cq.subscribe(MailerListener.new)
     @cq.on(:create_question_successful) do |question|
       respond_to do |format|
         format.html { redirect_to question, notice: t('type_save_success', type: question_type) }

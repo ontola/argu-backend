@@ -27,3 +27,5 @@ nl:
         subject: "Nieuw vraagstuk geplaatst in forum %{title}"
         responded_to: " heeft een vraagstuk geplaatst voor een forum dat je volgt."
         view_reply: "Bekijk vraagstuk"
+    notifications_mailer:
+      subject: 'Nieuwe Argu notificaties'
