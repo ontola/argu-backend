@@ -85,7 +85,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
 
-    assert_differences create_changes_array do
+    assert_differences create_changes_array(false) do
       post :create, forum_id: holland, motion: {title: 'Motion2', content: 'Contents'}
     end
     assert_not_nil assigns(:cm).resource
@@ -286,10 +286,14 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   protected
-  def create_changes_array
-    [['Motion.count', 1],
-     ['Activity.count', 1],
-     ['UserMailer.deliveries.size', 1],
-     ['Notification.count', 1]]
+
+  # Detect the changes that should go hand in hand with object creation
+  # @param notifications [Boolean] Set to false if an object is created twice for the same follower
+  def create_changes_array(notifications = true)
+    c = [['Motion.count', 1],
+         ['Activity.count', 1],
+         ['Notification.count', 1]]
+    c << ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1] if notifications
+    c
   end
 end

@@ -243,7 +243,7 @@ class QuestionsControllerTest < ActionController::TestCase
   def create_changes_array
     [['Question.count', 1],
      ['Activity.count', 1],
-     ['UserMailer.deliveries.size', 1],
+     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1],
      ['Notification.count', 1]]
   end
 end

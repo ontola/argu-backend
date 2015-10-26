@@ -8,16 +8,17 @@ require 'capybara/rails'
 require 'wisper/minitest/assertions'
 require 'simplecov'
 require 'fakeredis'
+require 'sidekiq/testing'
+require 'minitest/pride'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
 # require "minitest/rails/capybara"
 
-# Uncomment for awesome colorful output
-require 'minitest/pride'
 DatabaseCleaner.strategy = :transaction
 
 module TestHelper
+  Sidekiq::Testing.fake!
 
   # Runs assert_difference with a number of conditions and varying difference
   # counts.
@@ -57,6 +58,10 @@ class ActiveSupport::TestCase
   include FactoryGirl::Syntax::Methods
   #FactoryGirl.lint
   # Add more helper methods to be used by all tests here...
+
+  def assert_notification_sent
+
+  end
 
   def change_actor(actor)
     @controller.instance_variable_set(:@_current_actor,
@@ -116,4 +121,18 @@ class FactoryGirl::Evaluator
     # Also check that we didn't pass in nil.
     __override_names__.include?(name) && send(name)
   end
+end
+
+module SidekiqMinitestSupport
+  def after_teardown
+    Sidekiq::Worker.clear_all
+  end
+end
+
+class MiniTest::Spec
+  include SidekiqMinitestSupport
+end
+
+class MiniTest::Unit::TestCase
+  include SidekiqMinitestSupport
 end

@@ -167,11 +167,11 @@ class CommentsControllerTest < ActionController::TestCase
     assert_redirected_to argument_url(comment.commentable, anchor: comment.id)
   end
 
-private
+  private
   def create_changes_array
     [['Comment.count', 1],
      ['Activity.count', 1],
-     ['UserMailer.deliveries.size', 1],
+     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1],
      ['Notification.count', 1]]
   end
 end

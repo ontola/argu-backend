@@ -16,15 +16,8 @@ class SendNotificationsWorker
       return
     end
 
-    t_notifications = Notification.arel_table
     ActiveRecord::Base.transaction do
-      notifications = user.notifications
-                          .where(t_notifications[:read_at]
-                                     .eq(nil)
-                                     .and(t_notifications[:created_at]
-                                              .gt(user.notifications_viewed_at)))
-                          .order(created_at: :desc)
-                          .lock('FOR UPDATE NOWAIT')
+      notifications = collect_notifications(user)
 
       if notifications.length == 0
         logger.warn 'No notifications to send'
@@ -42,5 +35,17 @@ class SendNotificationsWorker
     logger.error 'Queue collision occurred'
     logger.error e
     Bugsnag.auto_notify(e) if Rails.env.production?
+  end
+
+  def collect_notifications(user, lock = nil)
+    t_notifications = Notification.arel_table
+    lock = lock === false ? false : 'FOR UPDATE NOWAIT'
+    user.notifications
+        .where(t_notifications[:read_at]
+                   .eq(nil)
+                   .and(t_notifications[:created_at]
+                            .gt(user.notifications_viewed_at || 1.year.ago)))
+        .order(created_at: :desc)
+        .lock(lock)
   end
 end
