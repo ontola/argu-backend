@@ -1,8 +1,11 @@
 /* globals NotificationActions */
 import React from 'react/addons';
+import OnClickOutside from 'react-onclickoutside';
 import { image } from '../lib/helpers';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 import notificationStore from '../stores/notification_store';
+import HyperDropdownMixin from '../mixins/HyperDropdownMixin';
+window.notification_hyper_mixin = HyperDropdownMixin;
 
 export const ScrollLockMixin = {
     cancelScrollEvent: function (e) {
@@ -51,6 +54,49 @@ export const ScrollLockMixin = {
 };
 window.ScrollLockMixin = ScrollLockMixin;
 
+export const NotificationDropdown = React.createClass({
+    mixins: [
+        HyperDropdownMixin,
+        OnClickOutside
+    ],
+
+    onMouseEnterFetch: function () {
+        if (!this.state.opened) {
+            NotificationActions.fetchNew();
+        }
+        NotificationActions.fetchNew();
+        this.onMouseEnter();
+    },
+
+    render: function () {
+        const { openState, renderLeft } = this.state;
+        const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass || ''}`;
+
+        let adaptedProps = this.props;
+        if (typeof notificationStore.state.notifications.notifications !== 'undefined') {
+            adaptedProps.sections[0].notifications = notificationStore.state.notifications.notifications;
+        }
+        let dropdownContent = <DropdownContent renderLeft={renderLeft}
+                                               close={this.close}
+                                               notifications={notificationStore.state.notifications.notifications}
+                                               {...adaptedProps}
+                                               key='required' />;
+
+        const ReactTransitionGroup = React.addons.TransitionGroup;
+        return (<li tabIndex="1"
+                    className={dropdownClass}
+                    onMouseEnter={this.onMouseEnterFetch}
+                    onMouseLeave={this.onMouseLeave} >
+            <NotificationTrigger handleClick={this.handleClick} handleTap={this.handleTap} className='navbar-item' {...this.props} />
+            <div className="reference-elem" style={{visibility: 'hidden', overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute'}}>{dropdownContent}</div>
+            <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
+                {openState && dropdownContent}
+            </ReactTransitionGroup>
+        </li>);
+    }
+});
+window.NotificationDropdown = NotificationDropdown;
+
 export const NotificationTrigger = React.createClass({
     getInitialState: function () {
         return {
@@ -73,10 +119,9 @@ export const NotificationTrigger = React.createClass({
     },
 
     render: function () {
-        var triggerClass = 'dropdown-trigger ' + this.props.trigger.triggerClass;
         var label = this.state.unread > 0 ? <span className='notification-counter'>{this.state.unread}</span> : null;
 
-        return (<div className={triggerClass} rel="nofollow" onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
+        return (<div className="dropdown-trigger navbar-item" rel="nofollow" onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
             {image({fa: this.state.unread > 0 ? 'fa-bell' : 'fa-bell'})}
             {label}
         </div>);
@@ -119,7 +164,6 @@ export const Notifications = React.createClass({
         NotificationActions.notificationUpdate(this.props);
         this.unsubscribe = notificationStore.listen(this.onNotificationChange);
         this.scrollLock(this.getDOMNode().parentElement);
-        NotificationActions.fetchNew();
     },
 
     componentWillUnmount: function () {
@@ -128,7 +172,7 @@ export const Notifications = React.createClass({
     },
 
     render: function () {
-        var notifications = this.state.notifications.map((item) => {
+        var notifications = this.props.notifications.map((item) => {
             return <NotificationItem key={item.id} read={item.read} done={this.props.done} {...item} />
         });
 

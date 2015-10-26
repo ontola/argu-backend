@@ -71,6 +71,7 @@ class NotificationsController < ApplicationController
       end
       @from_time = from_time
       @notifications = policy_scope(Notification).since(from_time).page params[:page]
+      @unread = get_unread
     rescue ArgumentError
       head 400
     end

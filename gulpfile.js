@@ -82,3 +82,5 @@ gulp.task('watch', function () {
         gulp.start(['lint-src', 'build', 'build-components'], done);
     }));
 });
+
+gulp.task('default', ['watch']);
