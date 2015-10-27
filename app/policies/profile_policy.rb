@@ -36,12 +36,9 @@ class ProfilePolicy < RestrictivePolicy
   end
 
   def show?
-    if record.profileable.class == Page
-      record.is_public?
-    else
-      (record.is_public? || user.present?) && record.profileable.finished_intro? || super
-    end
+    Pundit.policy(context, record.profileable).show?
   end
+  deprecate show?: 'Please use the more consise method on profileable instead.'
 
   def update?
     Pundit.policy(context, record.profileable).update? || super

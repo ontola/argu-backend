@@ -7,7 +7,13 @@ class NotificationListener
   private
 
   def create_notifications_for(activity, followers)
-    notifications = followers.map { |f| {user: f, activity: activity} }
+    notifications = collect_followers_for(activity, followers)
     Notification.create!([notifications])
+  end
+
+  def collect_followers_for(activity, followers)
+    followers
+        .reject { |f| f.profile == activity.owner }
+        .map { |f| {user: f, activity: activity} }
   end
 end

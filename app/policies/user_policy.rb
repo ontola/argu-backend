@@ -16,7 +16,7 @@ class UserPolicy < RestrictivePolicy
     end
   end
 
-  def permitted_attributes(password= false)
+  def permitted_attributes(password = false)
     attributes = super()
     attributes << [:email, :password, :password_confirmation, {profile_attributes: [:name, :profile_photo]}] if create?
     attributes << [{shortname_attributes: [:shortname]}] if new_record?
@@ -29,6 +29,10 @@ class UserPolicy < RestrictivePolicy
 
   def index?
     staff?
+  end
+
+  def show?
+    (record.profile.is_public? || user.present?) && record.finished_intro? || super
   end
 
   def create?

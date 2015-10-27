@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   def show
     @user = User.preload(:profile).find_via_shortname params[:id]
     @profile = @user.profile
-    authorize @profile, :show?
+    authorize @user, :show?
 
     if @profile.are_votes_public?
       @collection = Vote.ordered Vote.find_by_sql('SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" WHERE ("votes"."voter_type" = \'Profile\' AND "votes"."voter_id" = '+@profile.id.to_s+') AND ("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') AND ("forums"."visibility" = '+Forum.visibilities[:open].to_s+' OR "forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) ORDER BY created_at DESC').reject { |v| v.voteable.is_trashed? }
@@ -11,13 +11,12 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       format.html { render 'profiles/show' }
-      format.json { render json: @user }
     end
   end
 
   def current_actor
     @profile = current_profile
-    authorize @profile, :show?
+    authorize @profile.profileable, :show?
 
     render
   end
