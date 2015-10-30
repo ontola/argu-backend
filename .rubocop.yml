@@ -8,3 +8,7 @@ Style/WhileUntilModifier:
   MaxLineLength: 100
 Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+Style/RaiseArgs:
+  EnforcedStyle: compact
