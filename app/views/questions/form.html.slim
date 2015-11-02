@@ -30,6 +30,11 @@
             - if active_for_user?(:expires_at, current_user) && policy(question).set_expire_as?
               =f.inputs name: t('deadline') do
                 =f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
+          - if policy(question).is_manager_up?
+            =f.inputs name: t('forms.admin')
+              =f.input :uses_alternative_names, as: :reverse_boolean
+              =f.input :motions_title_singular
+              =f.input :motions_title
           - if !question.new_record? && policy(question).trash?
             =f.inputs name: t('forms.danger_zone'), class: 'danger-zone'
               - if policy(question).trash?

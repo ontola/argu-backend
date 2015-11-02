@@ -18,7 +18,21 @@ module ContextHelper
   end
 
   def forum_from_scope_or_model(current_scope, model)
-    current_scope.model.try(:forum) || current_scope.model || model.forum
+    if model.respond_to? :uses_alternative_names
+      model
+    else
+      current_scope.model.try(:forum) || current_scope.model || model.forum
+    end
+  end
+
+  def horizontal_context_type_name(item, type)
+    if type != 'argument'
+     send("#{item.model_name.singular}_type", item)
+    elsif item.pro
+      t('arguments.form.side.pro')
+    else
+      t('arguments.form.side.con')
+    end
   end
 
 end

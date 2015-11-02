@@ -22,10 +22,10 @@
   ],
   "dependencies": {
     "jquery": "=1.11.3",
-    "react": "latest",
+    "react": "0.13.3",
     "reflux": "latest",
-    "react-onclickoutside": "latest",
-    "react-router": "latest",
+    "react-onclickoutside": "0.3.4",
+    "react-router": "0.13.4",
     "jquery-pjax": "latest",
     "microplugin": "latest",
     "sifter": "latest",

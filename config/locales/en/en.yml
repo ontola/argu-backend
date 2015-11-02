@@ -202,6 +202,7 @@ en:
   embed: "embed"
   forms:
     danger_zone: "Danger zone"
+    admin: "Administrative functions"
     legal_html: "By creating an Argu account you agree to our %{link}."
   users:
     logged_in_banner_text: "%{name}"

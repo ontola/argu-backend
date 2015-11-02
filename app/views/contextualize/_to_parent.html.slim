@@ -14,7 +14,7 @@
         - elsif classname == 'motions'
           section.section-info.motion-bg
             span[class="fa fa-#{motion_icon}"]
-            span.icon-left= motion_type
+            span.icon-left= motion_type(current_context.model)
         - else
           section.section-info
             span.fa.fa-arrow-up

@@ -6,7 +6,7 @@
       =link_to previous, class: 'context--horizontal-button context--previous'
         .box.box-link
           section.section-info class=("#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-bg")
-            span= "#{ type != 'argument' ? t("#{previous.class_name}.type") : (previous.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}"
+            span= horizontal_context_type_name(previous, type)
           section
             h3[class="#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-t"]
               span.fa.fa-arrow-left
@@ -15,7 +15,7 @@
       =link_to _next, class: 'context--horizontal-button context--next'
         .box.box-link
           section.section-info class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-bg")
-            span= "#{ type != 'argument' ? t("#{_next.class_name}.type") : (_next.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con'))}"
+            span= horizontal_context_type_name(_next, type)
           section
             h3[class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-t")]
               span.icon-right= truncate(_next.title, length: 64)

@@ -24,6 +24,8 @@ module ProCon
     acts_as_commentable
     acts_as_followable
     parentable :motion, :forum
+
+    delegate :uses_alternative_names, :motions_title, :motions_title_singular, to: :motion
   end
 
   def creator_follow

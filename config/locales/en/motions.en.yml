@@ -32,11 +32,11 @@ en:
     revisions:
       title_wiped: 'Deleted arguments'
     form:
-      title_heading: "Summarize your idea in one sentence"
+      title_heading: "Summarize your %{type} in one sentence"
       title_body_html: "<ul class='bullets'>
                     <li>Describe your idea <b>as short as possible</b>.</li>
                   </ul>"
-      content_heading: "Describe your idea in detail"
+      content_heading: "Describe your %{type} in detail"
       content_body_html: "<ul class='bullets'>
                             <li>Make your idea <b>concrete</b>. Explain what needs to happen and how this should happen.</li>
                             <li>Give <b>background information</b>. Explain the current situation.</li>

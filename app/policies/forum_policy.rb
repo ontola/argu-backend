@@ -65,11 +65,15 @@ class ForumPolicy < RestrictivePolicy
       #record.page.memberships.where(role: Membership.roles[:manager], profile: user.profile).present?
       owner if user && record.page.owner == user.profile
     end
+
+    def is_manager_up?
+      is_manager? || is_owner? || staff?
+    end
   end
   include Roles
 
   module ForumRoles
-    delegate :is_member?, :is_open?, :is_manager?, :is_owner?, to: :forum_policy
+    delegate :is_member?, :is_open?, :is_manager?, :is_owner?, :is_manager_up?, to: :forum_policy
     delegate :open, :access_token, :member, :manager, :owner, to: :forum_policy
   end
 
