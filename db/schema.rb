@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150929154351) do
+ActiveRecord::Schema.define(version: 20151102090938) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -419,6 +419,9 @@ ActiveRecord::Schema.define(version: 20150929154351) do
     t.string   "cover_photo_attribution",             default: ""
     t.datetime "expires_at"
     t.integer  "publisher_id"
+    t.boolean  "uses_alternative_names",              default: false, null: false
+    t.string   "motions_title_singular"
+    t.string   "motions_title"
   end
 
   add_index "questions", ["forum_id", "is_trashed"], name: "index_questions_on_forum_id_and_is_trashed", using: :btree

@@ -195,6 +195,7 @@ nl:
   embed: "embed"
   forms:
     danger_zone: "Gevarenzone"
+    admin: "Administratieve functies"
   users:
     logged_in_banner_text: "%{name}"
     registrations:

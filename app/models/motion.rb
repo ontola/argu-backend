@@ -97,6 +97,16 @@ class Motion < ActiveRecord::Base
     end
   end
 
+  def motions_title
+    self.questions.first.try(:motions_title) ||
+      self.forum.motions_title
+  end
+
+  def motions_title_singular
+    self.questions.first.try(:motions_title_singular) ||
+      self.forum.motions_title_singular
+  end
+
   def move_to(forum, unlink_questions = true)
     Motion.transaction do
       old_forum = self.forum.lock!
@@ -170,6 +180,11 @@ class Motion < ActiveRecord::Base
                 votes_con_count: vote_counts[Vote.fors[:con]] || 0,
                 votes_neutral_count: vote_counts[Vote.fors[:neutral]] || 0,
                 votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
+  end
+
+  def uses_alternative_names
+    self.questions.first.try(:uses_alternative_names) ||
+      self.forum.uses_alternative_names
   end
 
   def votes_pro_percentage

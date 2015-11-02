@@ -32,11 +32,11 @@ nl:
     revisions:
       title_wiped: 'Gewiste argumenten'
     form:
-      title_heading: "Vat je idee samen in één zin."
+      title_heading: "Vat je %{type} samen in één zin."
       title_body_html: "<ul class='bullets'>
                     <li>Beschrijf jouw idee zo <b>kort en bondig</b> als je maar kan.</li>
                   </ul>"
-      content_heading: "Licht je idee toe"
+      content_heading: "Licht je %{type} toe"
       content_body_html: "<ul class='bullets'>
                             <li>Zorg dat jouw idee <b>concreet</b> is en implementeerbaar. Leg uit wat er precies moet gebeuren.</li>
                             <li>Geef <b>achtergrondinformatie</b>. Wat is de huidige situatie?</li>

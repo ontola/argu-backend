@@ -19,18 +19,18 @@ module AlternativeNamesHelper
 
   # Plural translation for {Motion}
   def motions_type(forum= nil)
-    ((forum || @forum).motions_title if alternative_motions?(forum)) || I18n.t('motions.plural')
+      ((forum || @forum).motions_title if alternative_motions?(forum)) || I18n.t('motions.plural')
   end
 
   # Does the {Forum} use alternative names for {Motion}?
   # :nodoc:
   def alternative_motions?(forum= nil)
     if forum == nil
-      @alternative_motions ||= @forum.uses_alternative_names &&
+      @alternative_motions ||= (@forum.uses_alternative_names &&
           @forum.motions_title_singular.present? &&
-          @forum.motions_title.present?
+          @forum.motions_title.present?)
     else
-      forum.uses_alternative_names &&
+      forum.try(:uses_alternative_names) &&
           forum.motions_title_singular.present? &&
           forum.motions_title.present?
     end

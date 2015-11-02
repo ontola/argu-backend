@@ -195,6 +195,7 @@ en:
   embed: "embed"
   forms:
     danger_zone: "Danger zone"
+    admin: "Administrative functions"
   users:
     logged_in_banner_text: "%{name}"
     registrations:
