@@ -66,15 +66,11 @@ Argu::Application.configure do
 
   config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] || 'argu.co' }
 
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-      address:              'smtp.gmail.com',
-      port:                 587,
-      domain:               'argu.nl',
-      user_name:            'info@argu.nl',
-      password:             ENV['ARGU_GMAIL_PASS'] || Rails.application.secrets.argu_gmail_pass,
-      authentication:       'plain',
-      enable_starttls_auto: true  }
+  config.action_mailer.delivery_method = :mailgun
+  config.action_mailer.mailgun_settings = {
+    api_key: Rails.application.secrets.mailgun_api_token,
+    domain: Rails.application.secrets.mailgun_domain
+  }
 
   # Enable threaded mode
   # config.threadsafe!
