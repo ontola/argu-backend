@@ -4,7 +4,11 @@ module ApplicationHelper
 
   # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)
-    $rollout.active?(feature, user)
+    begin
+      $rollout.active?(feature, user)
+    rescue Redis::CannotConnectError => e
+      Bugsnag.notify(e)
+    end
   end
 
   def analytics_token

@@ -132,7 +132,7 @@ private
   end
 
   def self.forum_for(url_options)
-    Argument.find_by(url_options[:argument_id] || url_options[:id]).try(:forum)
+    Argument.find_by(id: url_options[:argument_id] || url_options[:id]).try(:forum)
   end
 
   def set_tenant(item)

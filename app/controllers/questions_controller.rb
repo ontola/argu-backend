@@ -161,7 +161,7 @@ private
   end
 
   def self.forum_for(url_options)
-    Question.find_by(url_options[:question_id] || url_options[:id]).try(:forum)
+    Question.find_by(id: url_options[:question_id] || url_options[:id]).try(:forum)
   end
 
   def permit_params

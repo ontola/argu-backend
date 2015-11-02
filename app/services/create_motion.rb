@@ -20,7 +20,6 @@ class CreateMotion < ApplicationService
       publish(:create_motion_successful, @motion)
     end
   rescue ActiveRecord::RecordInvalid
-    Bugsnag.notify(e)
     publish(:create_motion_failed, @motion)
   end
 
