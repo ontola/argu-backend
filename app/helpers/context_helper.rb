@@ -25,4 +25,14 @@ module ContextHelper
     end
   end
 
+  def horizontal_context_type_name(item, type)
+    if type != 'argument'
+     send("#{item.model_name.singular}_type", item)
+    elsif item.pro
+      t('arguments.form.side.pro')
+    else
+      t('arguments.form.side.con')
+    end
+  end
+
 end
