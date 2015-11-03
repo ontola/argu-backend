@@ -6,8 +6,8 @@ table
         ==t('mailer.user_mailer.user_created_motion.responded_to',
             parent_type: type_for(@parent).to_s.downcase,
             parent_title: link_to_object(@parent, @parent.display_name),
-            poster: link_to_creator(@motion),
-            type: type_for(@motion).downcase)
+            poster: link_to_creator(@item),
+            type: type_for(@item).downcase)
   tr
     td.mail-box.mail-box--clickable
       table
