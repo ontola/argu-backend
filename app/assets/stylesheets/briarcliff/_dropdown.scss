@@ -92,6 +92,7 @@
     position: relative;
 
     span.icon-left {
+      // This one causes problems, e.g. in the share dropdown, when the icons don't load. Disabling all of these seemed to work.
       padding-left: 1.5em;
       display: block;
       margin: 0;

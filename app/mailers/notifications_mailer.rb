@@ -10,7 +10,8 @@ class NotificationsMailer < ApplicationMailer
            subject: t('mailer.notifications_mailer.subject')
     else
       @notification = @notifications.first
-      @item = @notification.activity.recipient
+      @item = @notification.activity.trackable
+      @parent = @notification.activity.recipient
       mail to: @user.email,
            subject: '_new item for ' + @item.display_name,
            template_name: "user_created_#{@item.model_name.singular}"

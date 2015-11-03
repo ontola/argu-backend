@@ -1,10 +1,10 @@
 module MailerHelper
-  include AlternativeNamesHelper, ProfilesHelper
+  include AlternativeNamesHelper, ProfilesHelper, MarkdownHelper
 
   def link_to_creator(object)
     link_to object.creator.display_name,
             dual_profile_url(object.creator),
-            title: object.display_name
+            title: object.creator.display_name
   end
 
   def link_to_object(object, description = nil)

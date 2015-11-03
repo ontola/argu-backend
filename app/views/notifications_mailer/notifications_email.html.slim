@@ -1,6 +1,5 @@
 h1 _Nieuwe notificaties_
 
 -@notifications.each do |item|
-  -logger.info item.class
   h2= item.display_name
   a[href=url_for(item)] _bekijk item_

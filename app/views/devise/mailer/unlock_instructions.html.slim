@@ -1,7 +1,15 @@
-p Hello <%= @resource.email %>!
-
-p Your account has been locked due to an excessive amount of unsuccessful sign in attempts.
-
-p Click the link below to unlock your account:
-
-p = link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @token)
+table
+  tr
+    td.mail-box
+      table
+        tr
+          td.mail-p= I18n.t('devise.mailer.hello', name: @resource.greeting)
+        tr
+          td.mail-p Your account has been locked due to an excessive amount of unsuccessful sign in attempts.
+        tr
+          td.mail-p Click the link below to unlock your account:
+  tr
+    td.mail-button--alt
+      table
+        tr
+          td= link_to 'Unlock my account', unlock_url(@resource, :unlock_token => @token)

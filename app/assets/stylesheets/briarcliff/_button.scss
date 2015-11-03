@@ -79,7 +79,7 @@
   @include button($blu);
 }
 
-.btn--transparant {
+.btn--transparant, .btn--transparant--parent > div > div{
   @include button(rgba(0,0,0,0));
   padding-left: 1em;
   padding-right: 1em;
@@ -533,6 +533,9 @@ a.is-loading{
 }
 
 .pagination {
+  span {
+    color: $g3;
+  }
   a, .current {
     @extend .btn-subtle;
     padding: .7em !important;
@@ -541,7 +544,7 @@ a.is-loading{
   .current {
     color: $blu;
     pointer-events: none;
-    background-color: $g1;
+    background-color: $g1a;
   }
 }
 

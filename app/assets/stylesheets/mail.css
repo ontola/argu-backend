@@ -8,16 +8,5 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- * require briarcliff/briarcliff
- *= require briarcliff/_reset
- *= stub briarcliff/_mail
- * require selectize
- * require selectize.default
- * require formtastic
- *= require simple_text/application
- *= require introjs
- *= require nprogress
- *= require font-awesome
- *= require_self
- *= require_tree .
+ *= require briarcliff/_mail
 */

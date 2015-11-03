@@ -9,8 +9,34 @@ html
         meta[content="Argu" itemprop="name"]
         link[href="https://argu.co" itemprop="url"]
         link itemprop="url/googlePlus" href="https://plus.google.com/"
-  body
-    h1= t('mailer.direct_mail.header')
-    =yield
-    p
-      small= t('mailer.sent_at_date', date: Time.current.utc.strftime('%Y-%m-%d %H:%M:%S'))
+    =stylesheet_link_tag 'mail', data_roadie_ignore: 'data-roadie-ignore'
+  body.mail-body
+    table.mail-wrapper
+      tr.mail-header
+        td
+        td.mail-header-container
+          img.mail-header-logo[src='https://s3.eu-central-1.amazonaws.com/argu-static/logos/logo_wot_486x207.png' width="96" height="41"]
+        td
+      tr.mail-margin-top
+      tr
+        td
+        td.mail-center-column
+          =yield
+        td
+      tr.mail-margin-bottom
+      tr.mail-footer-padding
+        td
+        td.mail-center
+        td
+      tr.mail-footer
+        td
+        td.mail-center
+          table
+            tr
+              td.mail-p.small
+                =t('mailer.user_mailer.too_many_notifications') + ' '
+                =link_to t('mailer.user_mailer.adjust_settings'), settings_url
+            tr
+              td.mail-hidden
+                =t('mailer.sent_at_date', date: Time.current.utc.strftime('%Y-%m-%d %H:%M:%S'))
+        td

@@ -11,21 +11,27 @@ en:
       header: "Hello %recipient.name%"
       first_paragraph: "Someone left you a message"
     user_mailer:
+      go_to_discussion: "Go to discussion"
+      adjust_settings: "Adjust your settings."
+      too_many_notifications: "Too many notifications?"
       user_created_comment:
-        subject: "New comment on %{title}"
-        responded_to: " has replied to an %{type} you're following"
-        view_reply: "View reply"
+        subject: "New comment on '%{parent_title}' by %{poster}"
+        responded_to: "%{poster} replied to %{parent_type}: '%{parent_title}'"
       user_created_argument:
-        subject: "New argument placed for %{title}"
-        responded_to: " has placed an argument for a %{type} you're following"
-        view_reply: "View argument"
+        subject_pro: "New pro %{type} '%{parent_title}' by %{poster}"
+        subject_con: "Nieuw con %{type} '%{parent_title}' by %{poster}"
+        responded_to:
+          pro: "%{poster} submitted a pro argument for '%{parent_title}'"
+          con: "%{poster} submitted a con argument for '%{parent_title}'"
       user_created_motion:
-        subject: "New idea on %{title}"
-        responded_to: " has added an idea to a %{type} you're following"
-        view_reply: "View idea"
+        subject: "New idea: '%{title}' by %{poster}"
+        responded_to: "%{poster} submitted %{type} in '%{parent_title}'"
       user_created_question:
-        subject: "New question added to forum %{title}"
-        responded_to: " has added a question to a forum you're following"
+        subject: "New question: : '%{title}' door %{poster}"
+        responded_to: "%{poster} submitted %{type} in forum '%{parent_title}':"
         view_reply: "View question"
       notifications_mailer:
         subject: 'New Argu notifications'
+      password:
+        changed:
+          subject: "Password has been changed"

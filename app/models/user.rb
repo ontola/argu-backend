@@ -72,6 +72,10 @@ class User < ActiveRecord::Base
     self.email && self.email !~ TEMP_EMAIL_REGEX
   end
 
+  def greeting
+    self.first_name.presence || self.url.presence || self.email.split('@').first
+  end
+
   def is_omni_only
     authentications.any? && password.blank?
   end
