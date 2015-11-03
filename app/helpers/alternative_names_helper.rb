@@ -31,8 +31,8 @@ module AlternativeNamesHelper
           @forum.motions_title.present?)
     else
       forum.try(:uses_alternative_names) &&
-          forum.motions_title_singular.present? &&
-          forum.motions_title.present?
+          forum.try(:motions_title_singular).present? &&
+          forum.try(:motions_title).present?
     end
   end
 
@@ -58,14 +58,14 @@ module AlternativeNamesHelper
   # @private
   # Does the {Forum} use alternative names for {Question}?
   def alternative_questions?(forum= nil)
-    if forum == nil
+    if forum == nil || !forum.is_a?(Forum)
       @alternative_questions ||= @forum.uses_alternative_names &&
           @forum.questions_title_singular.present? &&
           @forum.questions_title.present?
     else
-      forum.uses_alternative_names &&
-          forum.questions_title_singular.present? &&
-          forum.questions_title.present?
+      forum.try(:uses_alternative_names) &&
+          forum.try(:questions_title_singular).present? &&
+          forum.try(:questions_title).present?
     end
   end
 
@@ -91,14 +91,14 @@ module AlternativeNamesHelper
   # Does the {Forum} use alternative names for {Argument}?
   # :nodoc:
   def alternative_arguments?(forum= nil)
-    if forum == nil
+    if forum == nil || !forum.is_a?(Forum)
       @alternative_arguments ||= @forum.uses_alternative_names &&
           @forum.arguments_title_singular.present? &&
           @forum.arguments_title.present?
     else
-      forum.uses_alternative_names &&
-          forum.arguments_title_singular.present? &&
-          forum.arguments_title.present?
+      forum.try(:uses_alternative_names) &&
+          forum.try(:arguments_title_singular).present? &&
+          forum.try(:arguments_title).present?
     end
   end
 
