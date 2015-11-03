@@ -59,7 +59,7 @@ module SeoHelper
 
       # Facebook
       'og:title' => :name,
-      'og:type' => 'website',
+      'og:type' => {content: 'website'},
       'og:url' => :url,
       'og:description' => :description,
       'og:title' => :name,
