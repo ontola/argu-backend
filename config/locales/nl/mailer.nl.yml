@@ -8,7 +8,7 @@ nl:
     sent_at_date: 'Verzonden op %{date}'
     settings: 'Notificatie instellingen wijzigen.'
     direct_mail:
-      header: "Beste %recipient.name%,"
+      header: "Beste %{first_name},"
       first_paragraph: "Iemand heeft een bericht voor je achtergelaten"
     user_mailer:
       go_to_discussion: "Bekijk discussie"

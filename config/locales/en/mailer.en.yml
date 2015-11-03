@@ -8,7 +8,7 @@ en:
     sent_at_date: 'Sent at %{date}'
     settings: 'Change notification settings.'
     direct_mail:
-      header: "Hello %recipient.name%"
+      header: "Hello %{first_name}"
       first_paragraph: "Someone left you a message"
     user_mailer:
       go_to_discussion: "Go to discussion"

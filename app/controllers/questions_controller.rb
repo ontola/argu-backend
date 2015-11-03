@@ -44,7 +44,8 @@ class QuestionsController < AuthenticatedController
     authorize @forum, :add_question?
     @cq = CreateQuestion.new current_profile,
                           permit_params.merge({
-                              forum: @forum
+                              forum: @forum,
+                              publisher: current_user
                           })
     authorize @cq.resource, :create?
     @cq.subscribe(ActivityListener.new)

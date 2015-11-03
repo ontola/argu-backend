@@ -1,5 +1,6 @@
 
 class NotificationsMailer < ApplicationMailer
+  include MailerHelper
 
   def notifications_email(user, notifications)
     @user = user
@@ -13,8 +14,10 @@ class NotificationsMailer < ApplicationMailer
       @item = @notification.activity.trackable
       @parent = @notification.activity.recipient
       mail to: @user.email,
-           subject: '_new item for ' + @item.display_name,
-           template_name: "user_created_#{@item.model_name.singular}"
+           subject: notification_subject(@notification),
+           template_name: 'single_item_email'
     end
   end
+
+
 end

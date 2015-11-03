@@ -1,22 +1,14 @@
-table
-  tr
-    td.mail-p= t('mailer.direct_mail.header')
-  tr
-    td.mail-p
-        ==t("mailer.user_mailer.user_created_argument.responded_to.#{@item.pro? ? 'pro' : 'con'}",
-            parent_title: link_to_object(@parent, @parent.display_name),
-            poster: link_to_object(@item.creator, @item.creator.display_name))
-  tr
-    td.mail-box.mail-box--clickable
-        table
-          tr
-            td.mail-h3[class="#{@argument.pro? ? 'pro' : 'con'}-t"]
-              =link_to @item.display_name, url_for(@item)
-          tr
-            td.mail-p= HTML_Truncator.truncate(markdown_to_plaintext(@item.content), 250, {length_in_chars: true, ellipsis: (' ...')})
-  tr
-    td.mail-button--alt
+tr
+  td.mail-p
+      ==t("mailer.user_mailer.user_created_argument.responded_to.#{item.pro? ? 'pro' : 'con'}",
+          parent_title: link_to_object(parent, parent.display_name),
+          poster: link_to_object(item.creator, item.creator.display_name))
+tr
+  td.mail-box.mail-box--clickable
       table
         tr
-          td
-            =link_to_object(@item, t('mailer.user_mailer.go_to_discussion'))
+          td.mail-h3[class="#{item.pro? ? 'pro' : 'con'}-t"]
+            =link_to item.display_name, url_for(item)
+        tr
+          td.mail-p= HTML_Truncator.truncate(markdown_to_plaintext(item.content), 250, {length_in_chars: true, ellipsis: (' ...')})
+  td.mail-p

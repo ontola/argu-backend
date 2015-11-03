@@ -1,0 +1,13 @@
+- notification = local_assigns[:notification] || @notification
+- item = local_assigns[:item] || @item
+- parent = local_assigns[:parent] || @parent
+table
+  tr
+    td.mail-p= t('mailer.direct_mail.header', first_name: notification.user.greeting)
+  =render template: action_path(notification),
+          locals: {notification: notification, item: item, parent: parent}
+  tr
+    td.mail-button--alt
+      table
+        tr
+          td= link_to_object(item, t('mailer.user_mailer.go_to_discussion'))
