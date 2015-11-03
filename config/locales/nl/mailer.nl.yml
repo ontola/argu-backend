@@ -32,6 +32,8 @@ nl:
         view_reply: "Bekijk vraagstuk"
     notifications_mailer:
       subject: 'Nieuwe Argu notificaties'
+      header: 'Nieuwe notificaties'
+      view: 'Bekijk item'
     password:
       changed:
         subject: "Wachtwoord is gewijzigd"

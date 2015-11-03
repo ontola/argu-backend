@@ -32,6 +32,8 @@ en:
         view_reply: "View question"
       notifications_mailer:
         subject: 'New Argu notifications'
+        header: 'New notifications'
+        view: 'View item'
       password:
         changed:
           subject: "Password has been changed"
