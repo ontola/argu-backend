@@ -74,7 +74,8 @@ class MotionsController < AuthenticatedController
     @cm = CreateMotion.new current_profile,
                            permit_params.merge({
                                questions: [@question].compact,
-                               forum_id: @forum.id
+                               forum_id: @forum.id,
+                               publisher: current_user
                            })
     action = @cm.resource.questions.presence ? :create? : :create_without_question?
     authorize @cm.resource, action
