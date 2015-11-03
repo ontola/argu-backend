@@ -133,7 +133,7 @@ export const ShareDropdown = React.createClass({
 
     render: function () {
         const { openState, renderLeft, counts } = this.state;
-        const { title, shareUrls } = this.props;
+        const { title, url, shareUrls } = this.props;
         const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass || ''}`;
 
         let totalSharesCounter = <div className="notification-counter share-counter">{this.totalShares()}</div>;
@@ -153,7 +153,8 @@ export const ShareDropdown = React.createClass({
                                                {...this.props}
                                                key='required' >
             <FBShareItem
-                    shareUrl={shareUrls.facebook}
+                    shareUrl={url}
+                    url={shareUrls.facebook}
                     title={title}
                     count={counts.facebook} />
             <LinkItem

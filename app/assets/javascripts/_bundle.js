@@ -1489,6 +1489,7 @@ var ShareDropdown = _reactAddons2['default'].createClass({
         var counts = _state2.counts;
         var _props = this.props;
         var title = _props.title;
+        var url = _props.url;
         var shareUrls = _props.shareUrls;
 
         var dropdownClass = 'dropdown ' + (openState ? 'dropdown-active' : '') + ' ' + (this.props.dropdownClass || '');
@@ -1522,7 +1523,8 @@ var ShareDropdown = _reactAddons2['default'].createClass({
             }, this.props, {
                 key: 'required' }),
             _reactAddons2['default'].createElement(FBShareItem, {
-                shareUrl: shareUrls.facebook,
+                shareUrl: url,
+                url: shareUrls.facebook,
                 title: title,
                 count: counts.facebook }),
             _reactAddons2['default'].createElement(LinkItem, {
