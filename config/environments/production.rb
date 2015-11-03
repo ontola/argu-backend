@@ -55,13 +55,15 @@ Argu::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, pica_pica.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( application.js polyfill.js )
+  config.assets.precompile += %w( application.js polyfill.js mail.css )
 
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.default_url_options = { :host => 'https://argu.co' }
   Rails.application.routes.default_url_options[:host] = 'https://argu.co'
+  config.roadie.url_options = {host: 'argu.co', scheme: 'https'}
+  config.action_mailer.asset_host = nil
 
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {
