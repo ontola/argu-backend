@@ -14,17 +14,20 @@ module MailerHelper
   end
 
   def action_path(item)
-    "user_created_#{item.model_name.singular}"
+    "user_created_#{item.resource.model_name.singular}"
   end
 
   def notification_subject(notification)
     if notification.renderable_resource?
-      t("#{action_path(item)}",
-        title: item.display_name,
-        poster: item.creator.presence)
+      opts = {
+        title: notification.resource.display_name,
+        poster: notification.resource.creator.display_name,
+        parent_title: notification.activity.recipient.display_name
+      }
+      opts[:pro] = t(notification.resource.pro ? 'pro' : 'con') if notification.resource.respond_to?(:pro)
+      t("mailer.user_mailer.#{action_path(notification)}.subject", opts)
     else
       t('mailer.notifications_mailer.subject')
     end
   end
-
 end

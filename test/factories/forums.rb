@@ -1,6 +1,6 @@
 FactoryGirl.define do
   factory :forum do
-    association :shortname,  strategy: :build
+    association :shortname, strategy: :build
     association :page, strategy: :create
     visibility Forum.visibilities[:open]
     transient do

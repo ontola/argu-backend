@@ -4,7 +4,7 @@
 table
   tr
     td.mail-p= t('mailer.direct_mail.header', first_name: notification.user.greeting)
-  =render template: action_path(notification),
+  =render template: "notifications_mailer/#{action_path(notification)}",
           locals: {notification: notification, item: item, parent: parent}
   tr
     td.mail-button--alt

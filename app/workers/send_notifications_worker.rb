@@ -17,24 +17,27 @@ class SendNotificationsWorker
     end
 
     ActiveRecord::Base.transaction do
-      notifications = collect_notifications(user)
+      begin
+        notifications = collect_notifications(user)
 
-      if notifications.length == 0
-        logger.warn 'No notifications to send'
-      else
-        logger.info "Preparing to possibly send #{notifications.length} notifications"
-      end
-      last_viewed = user.reload.notifications_viewed_at
-      if notifications.length > 0 && (last_viewed.blank? || last_viewed && (last_viewed < (Time.current - COOLDOWN_PERIOD)))
-        logger.info "Sending #{notifications.length} notification(s) to #{user.email}"
-        NotificationsMailer.notifications_email(user, notifications).deliver
-        user.update(notifications_viewed_at: Time.current)
+        if notifications.length == 0
+          logger.warn 'No notifications to send'
+        else
+          logger.info "Preparing to possibly send #{notifications.length} notifications"
+        end
+        last_viewed = user.reload.notifications_viewed_at
+        if notifications.length > 0 && (last_viewed.blank? || last_viewed && (last_viewed < (Time.current - COOLDOWN_PERIOD)))
+          logger.info "Sending #{notifications.length} notification(s) to #{user.email}"
+          NotificationsMailer.notifications_email(user, notifications).deliver
+          user.update(notifications_viewed_at: Time.current)
+        end
+      rescue ActiveRecord::StatementInvalid => e
+        if e.message.include? 'LockNotAvailable'
+          logger.error 'Queue collision occurred'
+        end
+        Bugsnag.auto_notify(e) if Rails.env.production?
       end
     end
-  rescue PG::LockNotAvailable => e
-    logger.error 'Queue collision occurred'
-    logger.error e
-    Bugsnag.auto_notify(e) if Rails.env.production?
   end
 
   def collect_notifications(user, lock = nil)
