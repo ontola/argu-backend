@@ -44,9 +44,9 @@ export const MotionSelect = React.createClass({
     loadOptions (input, callback) {
         input = input.toLowerCase();
         if (!input.length) {
-            return callback({
+            return callback(null, {
                 options: [],
-                complete: true
+                complete: false
             });
         }
 

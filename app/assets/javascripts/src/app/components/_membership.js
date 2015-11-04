@@ -41,7 +41,7 @@ export const SingleValue = React.createClass({
         const item = obj ? (
             <div>
                 <img class="Select-item-result-icon" height='25em' src={obj.image} />
-                {obj.name}
+                {obj.label} ({obj.value})
             </div>
         ) : (this.props.placeholder);
 
@@ -65,9 +65,9 @@ export const NewMembership = React.createClass({
     loadOptions (input, callback) {
         input = input.toLowerCase();
         if (!input.length) {
-            return callback({
+            return callback(null, {
                 options: [],
-                complete: true
+                complete: false
             });
         }
 
@@ -111,7 +111,7 @@ export const NewMembership = React.createClass({
                   name="profile_id"
                   placeholder="Select user"
                   matchProp="any"
-                  ignoreCase="true"
+                  ignoreCase={true}
                   filterOptions={this.filterOptions}
                   optionComponent={ProfileOption}
                   singleValueComponent={SingleValue}

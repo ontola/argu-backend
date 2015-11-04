@@ -2694,7 +2694,10 @@ var SingleValue = _reactAddons2['default'].createClass({
             'div',
             null,
             _reactAddons2['default'].createElement('img', { 'class': 'Select-item-result-icon', height: '25em', src: obj.image }),
-            obj.name
+            obj.label,
+            ' (',
+            obj.value,
+            ')'
         ) : this.props.placeholder;
 
         return _reactAddons2['default'].createElement(
@@ -2723,9 +2726,9 @@ var NewMembership = _reactAddons2['default'].createClass({
 
         input = input.toLowerCase();
         if (!input.length) {
-            return callback({
+            return callback(null, {
                 options: [],
-                complete: true
+                complete: false
             });
         }
 
@@ -2767,7 +2770,7 @@ var NewMembership = _reactAddons2['default'].createClass({
             name: 'profile_id',
             placeholder: 'Select user',
             matchProp: 'any',
-            ignoreCase: 'true',
+            ignoreCase: true,
             filterOptions: this.filterOptions,
             optionComponent: ProfileOption,
             singleValueComponent: SingleValue,

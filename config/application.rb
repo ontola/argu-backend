@@ -55,6 +55,7 @@ module Argu
     config.react.addons = true
     # Enable the asset pipeline
     config.assets.enabled = true
+    config.assets.precompile += %w( application.js polyfill.js mail.css )
 
     config.assets.initialize_on_precompile = true
     config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts')
