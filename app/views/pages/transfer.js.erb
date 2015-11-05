@@ -7,7 +7,9 @@ var constructor = window[className] || eval.call(window, className);
 var propsJson = node.getAttribute(window.ReactRailsUJS.PROPS_ATTR);
 var props = propsJson && JSON.parse(propsJson);
 
-React.render(React.createElement(constructor, props), node);
+shallowMountComponents();
 window.setTimeout(function () {
     $('body').addClass('modal-opened');
-}, 300);
+}, 200);
+
+React.render(React.createElement(constructor, props), node);

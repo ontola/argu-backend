@@ -28,6 +28,7 @@ function shallowMountComponents () {
         React.render(React.createElement(constructor, props), node);
     }
 }
+window.shallowMountComponents = shallowMountComponents;
 
 function shallowUnmountComponents () {
     var nodes = document.querySelectorAll('#pjax-container [data-react-class]');
@@ -40,6 +41,7 @@ function shallowUnmountComponents () {
         //node.parentElement && node.parentElement.removeChild(node);
     }
 }
+window.shallowUnmountComponents = shallowUnmountComponents;
 
 //Lets the CSS selector know whether javascript is enabled
 document.body.className = document.body.className.replace("no-js","js");

@@ -1906,9 +1906,9 @@ var MotionSelect = _reactAddons2['default'].createClass({
 
         input = input.toLowerCase();
         if (!input.length) {
-            return callback({
+            return callback(null, {
                 options: [],
-                complete: true
+                complete: false
             });
         }
 

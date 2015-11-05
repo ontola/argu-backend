@@ -840,6 +840,7 @@ function shallowMountComponents() {
         _reactAddons2['default'].render(_reactAddons2['default'].createElement(constructor, props), node);
     }
 }
+window.shallowMountComponents = shallowMountComponents;
 
 function shallowUnmountComponents() {
     var nodes = document.querySelectorAll('#pjax-container [data-react-class]');
@@ -852,6 +853,7 @@ function shallowUnmountComponents() {
         //node.parentElement && node.parentElement.removeChild(node);
     }
 }
+window.shallowUnmountComponents = shallowUnmountComponents;
 
 //Lets the CSS selector know whether javascript is enabled
 document.body.className = document.body.className.replace("no-js", "js");
@@ -2852,9 +2854,9 @@ var MotionSelect = _reactAddons2['default'].createClass({
 
         input = input.toLowerCase();
         if (!input.length) {
-            return callback({
+            return callback(null, {
                 options: [],
-                complete: true
+                complete: false
             });
         }
 
