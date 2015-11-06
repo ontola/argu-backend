@@ -1,30 +1,24 @@
 doctype html
-/[if lt IE 7]
-  | <html class="lt-ie9 lt-ie8 lt-ie7">
-/[if IE 7]
-  | <html class="lt-ie9 lt-ie8">
-/[if IE 8]
-  | <html class="lt-ie9">
-/[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
-head[itemscope itemtype="http://schema.org/WebSite"]
-  meta[charset="UTF-8"]
-  title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
-  =csrf_meta_tags
-  =render 'layouts/meta'
-  =render partial: 'application/polyfill'
+html[class="no-js"]
+  head[itemscope itemtype="http://schema.org/WebSite"]
+    meta[charset="UTF-8"]
+    title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
+    =csrf_meta_tags
+    =render 'layouts/meta'
+    =render partial: 'application/polyfill'
 
-  / unless current_user.blank?
-  =stylesheet_link_tag 'application', :media => 'all'
-  - if active_for_user?('inspectlet', current_user)
-    =render partial:'external/inspectlet'
-body
-  =render partial: 'alerts'
-  =render 'closed/navbar'
-  .wrapper
-    /[if lt IE 10]
-      p.browsehappy= raw t('outdated_browser')
-    #pjax-container.container
-      =yield
-  =javascript_include_tag 'application'
-  - if Rails.env.production?
-    =render partial: 'analytics'
+    / unless current_user.blank?
+    =stylesheet_link_tag 'application', :media => 'all'
+    - if active_for_user?('inspectlet', current_user)
+      =render partial:'external/inspectlet'
+  body
+    =render partial: 'alerts'
+    =render 'closed/navbar'
+    .wrapper
+      /[if lt IE 10]
+        p.browsehappy= raw t('outdated_browser')
+      #pjax-container.container
+        =yield
+    =javascript_include_tag 'application'
+    - if Rails.env.production?
+      =render partial: 'analytics'

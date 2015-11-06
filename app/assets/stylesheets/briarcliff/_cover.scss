@@ -257,7 +257,11 @@
 
 .bg-img {
   opacity: 0;
-  @include transition(opacity 1s ease-in-out)
+  @include transition(opacity 1s ease-in-out);
+
+  html.no-js & {
+    opacity: .8;
+  }
 }
 
 .bg-loaded {

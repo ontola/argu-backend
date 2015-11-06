@@ -1,2 +1,5 @@
+javascript:
+  document.documentElement.className = document.documentElement.className.replace("no-js","js");
+script[src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default,Promise|always"]
 -if !browser.modern?
   =javascript_include_tag 'polyfill'

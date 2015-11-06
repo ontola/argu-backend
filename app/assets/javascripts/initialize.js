@@ -43,9 +43,6 @@ function shallowUnmountComponents () {
 }
 window.shallowUnmountComponents = shallowUnmountComponents;
 
-//Lets the CSS selector know whether javascript is enabled
-document.body.className = document.body.className.replace("no-js","js");
-
 function init () {
     // All init functions can rest assured that the document is ready.
     try {
