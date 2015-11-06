@@ -1,3 +1,5 @@
+import Map from 'es6-map';
+
 function OrderedMap() {
     this._map = new Map();
     this._array = [];

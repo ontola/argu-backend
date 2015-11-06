@@ -52,9 +52,9 @@ protected
   end
 
   def sign_up(resource_name, resource)
-    setup_memberships(resource)
-    resource.send_confirmation_instructions
     super
+    resource.send_confirmation_instructions
+    setup_memberships(resource)
   end
 
 private

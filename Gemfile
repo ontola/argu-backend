@@ -110,6 +110,7 @@ group :development, :test do
   gem 'capybara', '~> 2.5.0'
   gem 'capybara-webkit', '~> 1.7.0'
   gem 'selenium-webdriver', '~> 2.47.1'
+  gem 'poltergeist'
   gem 'chromedriver-helper'
   gem 'mocha'
   gem 'pry'

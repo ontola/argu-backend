@@ -18,12 +18,14 @@ RSpec.feature 'Transfer Page', type: :feature do
     click_link('transfer')
     within('form.page') do
       fill_in 'page_repeat_name', with: holland.page.shortname.shortname
-      selector = '.Select-control .Select-input input'
+      if Capybara.current_driver == :poltergeist
+        selector = '.Select-control .Select-placeholder'
+      else
+        selector = '.Select-control .Select-input input'
+      end
       input_field = find(selector).native
       input_field.send_keys user.first_name
-      sleep 3
-      input_field.send_keys :arrow_down
-      input_field.send_keys :return
+      find('.Select-option').click
 
       click_button 'Ik begrijp de consequenties, draag deze pagina over'
     end

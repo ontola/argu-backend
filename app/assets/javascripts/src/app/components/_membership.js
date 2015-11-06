@@ -22,7 +22,7 @@ export const ProfileOption = React.createClass({
                      onMouseLeave={this.props.mouseLeave}
                      onMouseDown={this.props.mouseDown}
                      onClick={this.props.mouseDown}>
-                    <img class="Select-item-result-icon" height='25em' src={obj.image} />
+                    <img className="Select-item-result-icon" height='25em' src={obj.image} />
                     {obj.label} ({obj.value})
                 </div>
         );
@@ -40,7 +40,7 @@ export const SingleValue = React.createClass({
 
         const item = obj ? (
             <div>
-                <img class="Select-item-result-icon" height='25em' src={obj.image} />
+                <img className="Select-item-result-icon" height='25em' src={obj.image} />
                 {obj.label} ({obj.value})
             </div>
         ) : (this.props.placeholder);

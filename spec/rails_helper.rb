@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'database_cleaner'
 require 'sidekiq/testing'
+require 'capybara/poltergeist'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -72,6 +73,10 @@ RSpec.configure do |config|
     Capybara::Selenium::Driver.new(app, :browser => :safari)
   end
 
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, {timeout: 30})
+  end
+
   Capybara.default_driver = case ENV['BROWSER']
                               when 'chrome'
                                 :selenium_chrome
@@ -84,7 +89,7 @@ RSpec.configure do |config|
                               when 'safari'
                                 :selenium_safari
                               else
-                                ENV['CI'] ? :selenium : :selenium
+                                ENV['CI'].present? ? :selenium : :selenium
                             end
   #Capybara.default_max_wait_time = 5
   Capybara.default_max_wait_time = 30
