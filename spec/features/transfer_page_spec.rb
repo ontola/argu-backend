@@ -21,7 +21,7 @@ RSpec.feature 'Transfer Page', type: :feature do
       selector = '.Select-control .Select-input input'
       input_field = find(selector).native
       input_field.send_keys user.first_name
-      find('.Select-menu .Select-option', wait: 20)
+      sleep 3
       input_field.send_keys :arrow_down
       input_field.send_keys :return
 
