@@ -1,0 +1,80 @@
+@import "variables";
+@import "mixins";
+
+.aod-profiles-list {
+
+  li {
+    margin-bottom: 1em;
+  }
+
+  .profile-picture {
+    background-size: cover;
+    position: absolute;
+    background-position: center;
+  }
+
+  h4 {
+    font-size: 1em;
+    margin-bottom: .2em !important;
+  }
+
+  p {
+    margin-bottom: .2em !important;
+  }
+}
+
+.aod-profile-container {
+  margin-left: 4em;
+}
+
+.aod-counters{
+
+}
+
+.aod-counter {
+  color: $g2;
+  font-style: italic;
+  display: inline-block;
+  margin: 0 1em 0 0;
+  span {
+    margin-bottom: .4em;
+    display: inline-block;
+  }
+
+  .progress-bar--small {
+    min-width: 6em;
+    width: auto;
+  }
+}
+
+.aod-motions-list {
+
+  li {
+    margin-bottom: 1em;
+  }
+
+  h4 {
+    font-size: 1em;
+  }
+
+}
+
+.aod-motion-status {
+  margin-right: .3em;
+  font-size: .9em;
+}
+
+.aod-search {
+  text-align: center;
+  .form-input {
+    text-align: left;
+    color: $g2;
+    max-width: 20em;
+    display: inline-block;
+    margin: auto;
+  }
+}
+
+.aod-text-subtle {
+  color: $g2;
+}

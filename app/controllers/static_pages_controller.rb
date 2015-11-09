@@ -25,6 +25,10 @@ class StaticPagesController < ApplicationController
     authorize :static_page
   end
 
+  def open_data
+    authorize :static_page
+  end
+
   def modern
     authorize :static_page, :about?
     render text: "modern: #{browser.modern?}, chrome: #{browser.chrome?}, safari: #{browser.safari?}, mobile: #{browser.mobile?}, tablet: #{browser.tablet?}, ua: #{browser.ua}"

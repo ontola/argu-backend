@@ -169,6 +169,7 @@ Argu::Application.routes.draw do
   get '/team', to: redirect('/i/team')
   get '/governments', to: redirect('/i/governments')
   get '/how_argu_works', to: 'static_pages#how_argu_works'
+  get '/open_data', to: 'static_pages#open_data'
   # end
 
   resources :discussions, only: [:new]

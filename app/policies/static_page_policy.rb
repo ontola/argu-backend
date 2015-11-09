@@ -29,6 +29,10 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
     true
   end
 
+  def open_data?
+    true
+  end
+
   def team?
     true
   end

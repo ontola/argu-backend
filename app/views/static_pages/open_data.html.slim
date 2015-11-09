@@ -1,0 +1,229 @@
+- @forum = Forum.first
+- url =  'https://docs.google.com/forms/d/1rE0BlvmCjQAoac29CVzDJzfXHb-9JrlmX0HJZsIfJCU/viewform?utm_source=argu_local&utm_medium=open%20data%20page&utm_campaign='
+.cover.cover--forum
+  -if @forum.cover_photo.url.present?
+    .cover-image.cover-image--bigger.bg-img[onload="this.style.opacity='1'" style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
+    span.header-attribution = @forum.cover_photo_attribution
+  -else
+    .cover-image.cover-image-empty
+  .cover-overlay
+    .cover-switcher-wrapper
+      -if @forum.profile_photo.url.present?
+        .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
+      .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
+      -if @forum.bio.present?
+        h2.cover-hero-text= 'Voor meer inzicht in de Nederlandse politiek'
+
+
+.aod-search
+  a.form-input[href=(url + 'search')]
+    span.fa.fa-search
+    span.icon-left Zoek op onderwerp, naam, partij...
+
+.grid
+  .box.box-grid-sizer
+  .box.box-grid
+    section
+      h2 Kamerleden
+      ul.aod-profiles-list
+        li
+          a[href= (url + 'politici')]
+            .profile-picture.profile-picture--medium[style="background-image: url('#{image_url('aod/politici-pechtold.jpeg')}')"]
+            .aod-profile-container
+              h4 Alexander Pechtold (D66)
+              .aod-counters
+                .aod-counter
+                  span 36 voorstellen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 30%;"]
+                    li.progress-bar--con[style="width: 70%;"]
+                .aod-counter
+                  span 204 stemmen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 50%;"]
+                    li.progress-bar--neutral[style="width: 20%;"]
+                    li.progress-bar--con[style="width: 30%;"]
+        li
+          a[href= (url + 'politici')]
+            .profile-picture.profile-picture--medium[style="background-image: url('#{image_url('aod/politici-wilders.jpeg')}')"]
+            .aod-profile-container
+              h4 Geert Wilders (PVV)
+              .aod-counters
+                .aod-counter
+                  span 25 voorstellen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 2%;"]
+                    li.progress-bar--con[style="width: 98%;"]
+                .aod-counter
+                  span 214 stemmen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 25%;"]
+                    li.progress-bar--con[style="width: 75%;"]
+        li
+          a[href= (url + 'politici')]
+            .profile-picture.profile-picture--medium[style="background-image: url('#{image_url('aod/politici-thieme.jpeg')}')"]
+            .aod-profile-container
+              h4 Marianne Thieme (PvdD)
+              .aod-counters
+                .aod-counter
+                  span 155 voorstellen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 25%;"]
+                    li.progress-bar--con[style="width: 75%;"]
+                .aod-counter
+                  span 225 stemmen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 60%;"]
+                    li.progress-bar--neutral[style="width: 10%;"]
+                    li.progress-bar--con[style="width: 30%;"]
+        li
+          a[href= (url + 'politici')]
+            .profile-picture.profile-picture--medium[style="background-image: url('#{image_url('aod/politici-samsom.jpeg')}')"]
+            .aod-profile-container
+              h4 Diederik Samsom (PvdA)
+              .aod-counters
+                .aod-counter
+                  span 17 voorstellen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 25%;"]
+                    li.progress-bar--con[style="width: 75%;"]
+                .aod-counter
+                  span 215 stemmen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 80%;"]
+                    li.progress-bar--con[style="width: 20%;"]
+  .box.box-grid
+    section
+      h2 Politieke partijen
+      ul.aod-profiles-list
+        li
+          a[href= (url + 'partijen')]
+            .profile-picture.profile-picture--medium[style="background-image: url('#{image_url('aod/partij-vvd.png')}')"]
+            .aod-profile-container
+              h4 VVD
+              .aod-counters
+                .aod-counter
+                  span 374 voorstellen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 55%;"]
+                    li.progress-bar--con[style="width: 45%;"]
+                .aod-counter
+                  span 529 stemmen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 25%;"]
+                    li.progress-bar--neutral[style="width: 10%;"]
+                    li.progress-bar--con[style="width: 65%;"]
+        li
+          a[href= (url + 'partijen')]
+            .profile-picture.profile-picture--medium[style="background-image: url('#{image_url('aod/partij-pvda.png')}')"]
+            .aod-profile-container
+              h4 PvdA
+              .aod-counters
+                .aod-counter
+                  span 25 voorstellen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 2%;"]
+                    li.progress-bar--con[style="width: 98%;"]
+                .aod-counter
+                  span 529 stemmen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 25%;"]
+                    li.progress-bar--con[style="width: 75%;"]
+        li
+          a[href= (url + 'partijen')]
+            .profile-picture.profile-picture--medium[style="background-image: url('#{image_url('aod/partij-pvv.png')}')"]
+            .aod-profile-container
+              h4 PVV
+              .aod-counters
+                .aod-counter
+                  span 155 voorstellen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 25%;"]
+                    li.progress-bar--con[style="width: 75%;"]
+                .aod-counter
+                  span 529 stemmen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 60%;"]
+                    li.progress-bar--neutral[style="width: 10%;"]
+                    li.progress-bar--con[style="width: 30%;"]
+        li
+          a[href= (url + 'politici')]
+            .profile-picture.profile-picture--medium[style="background-image: url('#{image_url('aod/partij-sp.png')}')"]
+            .aod-profile-container
+              h4 SP
+              .aod-counters
+                .aod-counter
+                  span 17 voorstellen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 25%;"]
+                    li.progress-bar--con[style="width: 75%;"]
+                .aod-counter
+                  span 529 stemmen
+                  ul.progress-bar.progress-bar--small
+                    li.progress-bar--pro[style="width: 80%;"]
+                    li.progress-bar--con[style="width: 20%;"]
+  a[href= (url + 'politici')]
+    .box.box-grid
+      .box-image--container
+        .box-image.bg-img[style="background-image: url('#{image_url('aod/article-1.jpg')}')"]
+      section
+        h2 Welke partijen steunen elkaar het meest?
+  .box.box-grid
+    section
+      h2 De laatste voorstellen
+      ul.aod-motions-list
+        li
+          a[href= (url + 'voorstel')]
+            h4 Een plan van aanpak waarin de integratiemogelijkheden van vreemdelingen middels arbeid en scholing worden vergroot
+            .aod-counter
+              ul.progress-bar.progress-bar--small
+                li.progress-bar--pro[style="width: 60%;"]
+                li.progress-bar--neutral[style="width: 5%;"]
+                li.progress-bar--con[style="width: 35%;"]
+            span.aod-motion-status
+              b.pro-t AANGENOMEN
+            span.aod-text-subtle op 10 september 2015
+        li
+          a[href= (url + 'voorstel')]
+            h4 Een plan van aanpak waarin de integratiemogelijkheden van vreemdelingen middels arbeid en scholing worden vergroot
+            .aod-counter
+              ul.progress-bar.progress-bar--small
+                li.progress-bar--pro[style="width: 60%;"]
+                li.progress-bar--neutral[style="width: 5%;"]
+                li.progress-bar--con[style="width: 35%;"]
+            span.aod-motion-status
+              b.pro-t AANGENOMEN
+            span.aod-text-subtle op 10 september 2015
+        li
+          a[href= (url + 'voorstel')]
+            h4 Een plan van aanpak waarin de integratiemogelijkheden van vreemdelingen middels arbeid en scholing worden vergroot
+            .aod-counter
+              ul.progress-bar.progress-bar--small
+                li.progress-bar--pro[style="width: 60%;"]
+                li.progress-bar--neutral[style="width: 5%;"]
+                li.progress-bar--con[style="width: 35%;"]
+            span.aod-motion-status
+              b.pro-t AANGENOMEN
+            span.aod-text-subtle op 10 september 2015
+        li
+          a[href= (url + 'voorstel')]
+            h4 Een plan van aanpak waarin de integratiemogelijkheden van vreemdelingen middels arbeid en scholing worden vergroot
+            .aod-counter
+              ul.progress-bar.progress-bar--small
+                li.progress-bar--pro[style="width: 60%;"]
+                li.progress-bar--neutral[style="width: 5%;"]
+                li.progress-bar--con[style="width: 35%;"]
+            span.aod-motion-status
+              b.pro-t AANGENOMEN
+            span.aod-text-subtle op 10 september 2015
+        li
+          a[href= (url + 'voorstel')]
+            h4 Een plan van aanpak waarin de integratiemogelijkheden van vreemdelingen middels arbeid en scholing worden vergroot
+            .aod-counter
+              ul.progress-bar.progress-bar--small
+                li.progress-bar--pro[style="width: 60%;"]
+                li.progress-bar--neutral[style="width: 5%;"]
+                li.progress-bar--con[style="width: 35%;"]
+            span.aod-motion-status
+              b.pro-t AANGENOMEN
+            span.aod-text-subtle op 10 september 2015
