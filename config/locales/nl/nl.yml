@@ -228,7 +228,7 @@ nl:
                 <p>Je kan in jouw tekst links toevoegen met blokhaken en normale haakjes. Dat doe je als volgt:</p>
                 <code>Dit is [Argu](www.argu.co).</code>
                 <p>Verschijnt als:</p>
-                <code>Dit is <a href='http://www.argu.co'>Argu</a>.</code>
+                <code>Dit is <a target='_blank' href='http://www.argu.co'>Argu</a>.</code>
                 <h2>Opmaak</h2>
                 <p>Je kunt je tekst eenvoudig opmaken door leestekens te gebruiken:</p>
                 <code>*Schuingedrukt*</code>
@@ -236,7 +236,8 @@ nl:
                 <code>##Tussenkop</code>
                 <code>1. Genummerde <br> 2. Lijst</code>
                 <code>* Ongenummerde <br> * Lijst</code>
-                "
+                <p>Wanneer je een speciaal teken wil laten zien (#) kan je deze <a target='_blank' href='https://en.wikipedia.org/wiki/Escape_character'>escapen</a> met een backslash (\\):</p>
+                <code>\\#hashtag</code>"
   welcome_video_open: 'Nieuw op Argu? Bekijk de video!'
   welcome_video_close: 'Sluit deze banner'
   welcome_video_dismiss: 'Verberg deze boodschap.'
