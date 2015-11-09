@@ -39,9 +39,10 @@ var ActiveToggle = React.createClass({
         if (this.props.label !== false) {
             var label = <span className='icon-left'>{currentProps.label}</span>;
         }
+        let className = this.props.hrefClassName + ' ' + (this.state.loading ? 'is-loading' : '');
 
         return (
-            <this.state.tagName onClick={this.handleClick} className={this.state.loading ? 'is-loading' : ''}>
+            <this.state.tagName onClick={this.handleClick} className={className}>
                 <span className={`fa fa-${currentProps.icon}`}></span>
                 {label}
             </this.state.tagName>
