@@ -94,6 +94,23 @@
   }
 }
 
+.cover-hero-link {
+  color: rgb(255, 255, 255);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.2em 0.7em;
+  font-size: .8em;
+  text-decoration: underline;
+  opacity: .8;
+  position: absolute;
+  bottom: -1em;
+  left: 0;
+  right: 0;
+  &:hover{
+    opacity: 1;
+  }
+}
+
 .cover-image{
   width: 100%;
   background-size: cover;

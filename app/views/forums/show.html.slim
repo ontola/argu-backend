@@ -7,7 +7,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
   .cover.cover--forum
     -if @forum.cover_photo.url.present?
       .cover-image.cover-image--bigger.bg-img[onload="this.style.opacity='1'" style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
-      span.header-attribution = @forum.cover_photo_attribution
+      span.header-attribution= @forum.cover_photo_attribution
     -else
       .cover-image.cover-image-empty
     .cover-overlay
@@ -16,20 +16,21 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
           .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
         .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
         -if @forum.bio.present?
-          h2.cover-hero-text=@forum.bio
+          h2.cover-hero-text= @forum.bio
+        -if @forum.bio_long.present?
+          a.smoothscroll.cover-hero-link[href="#forum-info"]= t('forums.more_info')
     .cover-buttons.cover-buttons--top
       .cover-buttons-container
         ul.btns-horizontal
           - if !policy(@forum).is_member? && policy(@forum).join? && current_user.present?
-            li=link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn--transparant'
+            li= link_to forum_memberships_path(@forum.url), data: {method: :post, 'skip-pjax' => true}, rel: :nofollow, class: 'btn--transparant'
               span.fa.fa-plus
               span.icon-left= t('forums.join.title')
     .cover-buttons
       .cover-buttons-container
         ul.btns-horizontal
           - if policy(@forum).update?
-            li.float-right
-              = link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
+            li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
                 span.fa.fa-gear
                 span.icon-left= t('forums.settings.title')
           - if current_user.present? && active_for_user?(:notifications, current_user)
@@ -40,41 +41,12 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
                                 true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
                                 false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                                {prerender: true}
-  /.cover-bar
-      .cover-container
-        - if @forum.bio.present?
-          p.cover-oneliner
-            =@forum.bio
-            - if @forum.bio_long.present?
-              a[href="#forum-info" class="smoothscroll"]
-                span.icon-left= t('forums.more_info')
   - if policy(@forum).show?
-    /.cover-bar
-      .cover-container
-        =link_to about_path, class: 'btn--pro btn--in-subtle-list'
-          span.fa.fa-plus
-          span.icon-left Nieuwe discussie
     .btns-center-container
       =link_to new_discussion_path(forum_id: @forum), class: 'btn btn--pro'
         span.fa.fa-plus
         span.icon-left= t('new_discussion.title')
       =render partial: 'filter_and_sort'
-    /ul.btns-horizontal.btns-padded.center
-      /TODO: Make this check the current profile, not the user
-      li=link_to about_path, class: 'btn--pro'
-        span.fa.fa-plus
-        span.icon-left Nieuwe discussie
-
-      /-if policy(Motion).new_without_question?
-        li[data-intro=t('intro.motion.create', name: @forum.name) data-step=12 data-position='right' class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.motion.create')]
-          =link_to new_forum_motion_path(@forum), data: remote_unless_user, class: 'btn--motion'
-            span.fa[class="fa-#{motion_icon}"]
-            span.icon-left= t('new') + ' ' + motion_type
-      /-if policy(Question).new?
-        li[data-intro=t('intro.question.create', name: @forum.name) data-step=13 class=('tooltip' unless @forum.uses_alternative_names) data-title=t('tooltips.question.create')]
-          =link_to new_forum_question_path(@forum), data: remote_unless_user, class: 'btn--question'
-            span.fa[class="fa-#{question_icon}"]
-            span.icon-left= t('new') + ' ' + question_type
     .grid
       .box.box-grid-sizer
       .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
@@ -86,7 +58,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
       .box
         - if @forum.bio_long.present?
           section
-            p= @forum.bio_long
+            .markdown= markdown_to_html @forum.bio_long
         section
           p
             b== t('forums.about.body')
