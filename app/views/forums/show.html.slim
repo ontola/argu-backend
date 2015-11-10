@@ -17,6 +17,8 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
         .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
         -if @forum.bio.present?
           h2.cover-hero-text=@forum.bio
+          - if @forum.bio_long.present?
+            a.smoothscroll.cover-hero-link[href="#forum-info" class="smoothscroll"]= t('forums.more_info')
     .cover-buttons.cover-buttons--top
       .cover-buttons-container
         ul.btns-horizontal
