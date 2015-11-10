@@ -1,25 +1,16 @@
 - @forum = Forum.first
 - url =  'https://docs.google.com/forms/d/1rE0BlvmCjQAoac29CVzDJzfXHb-9JrlmX0HJZsIfJCU/viewform?utm_source=argu_local&utm_medium=open%20data%20page&utm_campaign='
 .cover.cover--forum
-  -if @forum.cover_photo.url.present?
-    .cover-image.cover-image--bigger.bg-img[onload="this.style.opacity='1'" style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
-    span.header-attribution = @forum.cover_photo_attribution
-  -else
-    .cover-image.cover-image-empty
+  .cover-image.cover-image--bigger.bg-img[onload="this.style.opacity='1'" style="background-image: url('https://argu-logos.s3.amazonaws.com/forums/2/cover/cover_copy_of_Tweede_Kamer_2.jpg')"]
   .cover-overlay
     .cover-switcher-wrapper
-      -if @forum.profile_photo.url.present?
-        .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
       .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
-      -if @forum.bio.present?
-        h2.cover-hero-text= 'Voor meer inzicht in de Nederlandse politiek'
-
-
+      h2.cover-hero-text= 'Voor meer inzicht in de Tweede Kamer'
 .aod-search
   a.form-input[href=(url + 'search')]
-    span.fa.fa-search
     span.icon-left Zoek op onderwerp, naam, partij...
-
+  a.aod-search-button[href=(url + 'search')]
+    span.fa.fa-search
 .grid
   .box.box-grid-sizer
   .box.box-grid
@@ -92,6 +83,10 @@
                   ul.progress-bar.progress-bar--small
                     li.progress-bar--pro[style="width: 80%;"]
                     li.progress-bar--con[style="width: 20%;"]
+    a[href= (url + 'politici')]
+      .read-more
+        span.icon-right lees meer
+        span.fa.fa-arrow-right
   .box.box-grid
     section
       h2 Politieke partijen
@@ -120,15 +115,16 @@
               h4 PvdA
               .aod-counters
                 .aod-counter
-                  span 25 voorstellen
+                  span 422 voorstellen
                   ul.progress-bar.progress-bar--small
-                    li.progress-bar--pro[style="width: 2%;"]
-                    li.progress-bar--con[style="width: 98%;"]
+                    li.progress-bar--pro[style="width: 50%;"]
+                    li.progress-bar--con[style="width: 50%;"]
                 .aod-counter
                   span 529 stemmen
                   ul.progress-bar.progress-bar--small
-                    li.progress-bar--pro[style="width: 25%;"]
-                    li.progress-bar--con[style="width: 75%;"]
+                    li.progress-bar--pro[style="width: 43%;"]
+                    li.progress-bar--neutral[style="width: 7%;"]
+                    li.progress-bar--con[style="width: 50%;"]
         li
           a[href= (url + 'partijen')]
             .profile-picture.profile-picture--medium[style="background-image: url('#{image_url('aod/partij-pvv.png')}')"]
@@ -136,94 +132,108 @@
               h4 PVV
               .aod-counters
                 .aod-counter
-                  span 155 voorstellen
+                  span 210 voorstellen
                   ul.progress-bar.progress-bar--small
-                    li.progress-bar--pro[style="width: 25%;"]
-                    li.progress-bar--con[style="width: 75%;"]
+                    li.progress-bar--pro[style="width: 15%;"]
+                    li.progress-bar--con[style="width: 85%;"]
                 .aod-counter
                   span 529 stemmen
                   ul.progress-bar.progress-bar--small
-                    li.progress-bar--pro[style="width: 60%;"]
-                    li.progress-bar--neutral[style="width: 10%;"]
-                    li.progress-bar--con[style="width: 30%;"]
+                    li.progress-bar--pro[style="width: 23%;"]
+                    li.progress-bar--con[style="width: 77%;"]
         li
-          a[href= (url + 'politici')]
+          a[href= (url + 'partijen')]
             .profile-picture.profile-picture--medium[style="background-image: url('#{image_url('aod/partij-sp.png')}')"]
             .aod-profile-container
               h4 SP
               .aod-counters
                 .aod-counter
-                  span 17 voorstellen
+                  span 462 voorstellen
                   ul.progress-bar.progress-bar--small
-                    li.progress-bar--pro[style="width: 25%;"]
-                    li.progress-bar--con[style="width: 75%;"]
+                    li.progress-bar--pro[style="width: 45%;"]
+                    li.progress-bar--con[style="width: 55%;"]
                 .aod-counter
                   span 529 stemmen
                   ul.progress-bar.progress-bar--small
-                    li.progress-bar--pro[style="width: 80%;"]
-                    li.progress-bar--con[style="width: 20%;"]
+                    li.progress-bar--pro[style="width: 55%;"]
+                    li.progress-bar--neutral[style="width: 5%;"]
+                    li.progress-bar--con[style="width: 40%;"]
+    a[href= (url + 'partijen')]
+      .read-more
+        span.icon-right lees meer
+        span.fa.fa-arrow-right
+  a[href= (url + 'kieswijzer')]
+    .box.box-grid
+      .box-image--container
+        .box-image.bg-img[style="background-image: url('#{image_url('aod/kieswijzer.jpg')}')"]
+      section
+        h2 Doe de Argu kieswijzer: stem mee met de Tweede Kamer!
+        .center.margin-bottom
+          .btn Start kieswijzer
   a[href= (url + 'politici')]
     .box.box-grid
       .box-image--container
         .box-image.bg-img[style="background-image: url('#{image_url('aod/article-1.jpg')}')"]
       section
-        h2 Welke partijen steunen elkaar het meest?
+        h2 Welke partijen stemmen het vaakst gelijk?
   .box.box-grid
     section
       h2 De laatste voorstellen
       ul.aod-motions-list
         li
           a[href= (url + 'voorstel')]
-            h4 Een plan van aanpak waarin de integratiemogelijkheden van vreemdelingen middels arbeid en scholing worden vergroot
+            h4 Steun op korte termijn om de humanitaire nood in Lesbos te ledigen
             .aod-counter
               ul.progress-bar.progress-bar--small
-                li.progress-bar--pro[style="width: 60%;"]
-                li.progress-bar--neutral[style="width: 5%;"]
-                li.progress-bar--con[style="width: 35%;"]
+                li.progress-bar--pro[style="width: 85%;"]
+                li.progress-bar--neutral[style="width: 1%;"]
+                li.progress-bar--con[style="width: 12%;"]
             span.aod-motion-status
               b.pro-t AANGENOMEN
-            span.aod-text-subtle op 10 september 2015
+            span.aod-text-subtle op 5 november 2015
         li
           a[href= (url + 'voorstel')]
-            h4 Een plan van aanpak waarin de integratiemogelijkheden van vreemdelingen middels arbeid en scholing worden vergroot
+            h4 Meer middelen voor verbetering van de onderwijsvoorzieningen in opvangkampen
             .aod-counter
               ul.progress-bar.progress-bar--small
-                li.progress-bar--pro[style="width: 60%;"]
+                li.progress-bar--pro[style="width: 80%;"]
                 li.progress-bar--neutral[style="width: 5%;"]
-                li.progress-bar--con[style="width: 35%;"]
+                li.progress-bar--con[style="width: 15%;"]
             span.aod-motion-status
               b.pro-t AANGENOMEN
-            span.aod-text-subtle op 10 september 2015
+            span.aod-text-subtle op 5 november 2015
         li
           a[href= (url + 'voorstel')]
-            h4 Een plan van aanpak waarin de integratiemogelijkheden van vreemdelingen middels arbeid en scholing worden vergroot
+            h4 Afstand nemen van de suggestie dat succesvolle samenwerking met Turkije kan leiden tot versnelde toetreding tot de EU
             .aod-counter
               ul.progress-bar.progress-bar--small
-                li.progress-bar--pro[style="width: 60%;"]
-                li.progress-bar--neutral[style="width: 5%;"]
-                li.progress-bar--con[style="width: 35%;"]
+                li.progress-bar--pro[style="width: 75%;"]
+                li.progress-bar--con[style="width: 25%;"]
             span.aod-motion-status
               b.pro-t AANGENOMEN
-            span.aod-text-subtle op 10 september 2015
+            span.aod-text-subtle op 5 november 2015
         li
           a[href= (url + 'voorstel')]
-            h4 Een plan van aanpak waarin de integratiemogelijkheden van vreemdelingen middels arbeid en scholing worden vergroot
+            h4 Sluiten van de Nederlandse grenzen
             .aod-counter
               ul.progress-bar.progress-bar--small
-                li.progress-bar--pro[style="width: 60%;"]
-                li.progress-bar--neutral[style="width: 5%;"]
-                li.progress-bar--con[style="width: 35%;"]
+                li.progress-bar--pro[style="width: 8%;"]
+                li.progress-bar--con[style="width: 92%;"]
             span.aod-motion-status
-              b.pro-t AANGENOMEN
-            span.aod-text-subtle op 10 september 2015
+              b.con-t VERWORPEN
+            span.aod-text-subtle op 5 november 2015
         li
           a[href= (url + 'voorstel')]
-            h4 Een plan van aanpak waarin de integratiemogelijkheden van vreemdelingen middels arbeid en scholing worden vergroot
+            h4 Een permanent verdelingsmechanisme voor vluchtelingen over EU-lidstaten
             .aod-counter
               ul.progress-bar.progress-bar--small
-                li.progress-bar--pro[style="width: 60%;"]
-                li.progress-bar--neutral[style="width: 5%;"]
-                li.progress-bar--con[style="width: 35%;"]
+                li.progress-bar--pro[style="width: 52%;"]
+                li.progress-bar--neutral[style="width: 2%;"]
+                li.progress-bar--con[style="width: 43%;"]
             span.aod-motion-status
               b.pro-t AANGENOMEN
-            span.aod-text-subtle op 10 september 2015
+            span.aod-text-subtle op 5 november 2015
+    a[href= (url + 'voorstel')]
+      .read-more
+        span.icon-right lees meer
+        span.fa.fa-arrow-right
