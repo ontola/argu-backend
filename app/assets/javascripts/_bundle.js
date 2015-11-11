@@ -2628,15 +2628,24 @@ var ProfileOption = exports.ProfileOption = _react2.default.createClass({
         renderFunc: _react2.default.PropTypes.func
     },
 
+    handleMouseDown: function handleMouseDown(e) {
+        this.props.mouseDown(this.props.option, e);
+    },
+    handleMouseEnter: function handleMouseEnter(e) {
+        this.props.mouseEnter(this.props.option, e);
+    },
+    handleMouseLeave: function handleMouseLeave(e) {
+        this.props.mouseLeave(this.props.option, e);
+    },
     render: function render() {
         var obj = this.props.option;
+
         return _react2.default.createElement(
             'div',
             { className: this.props.className,
-                onMouseEnter: this.props.mouseEnter,
-                onMouseLeave: this.props.mouseLeave,
-                onMouseDown: this.props.mouseDown,
-                onClick: this.props.mouseDown },
+                onMouseEnter: this.handleMouseEnter,
+                onMouseLeave: this.handleMouseLeave,
+                onMouseDown: this.handleMouseDown },
             _react2.default.createElement('img', { className: 'Select-item-result-icon', height: '25em', src: obj.image }),
             obj.label,
             ' (',

@@ -14,14 +14,26 @@ export const ProfileOption = React.createClass({
         renderFunc: React.PropTypes.func
     },
 
+    handleMouseDown (e) {
+        this.props.mouseDown(this.props.option, e);
+    },
+
+    handleMouseEnter (e) {
+        this.props.mouseEnter(this.props.option, e);
+    }
+    ,
+    handleMouseLeave (e) {
+        this.props.mouseLeave(this.props.option, e);
+    },
+
     render () {
         const obj = this.props.option;
+
         return (
                 <div className={this.props.className}
-                     onMouseEnter={this.props.mouseEnter}
-                     onMouseLeave={this.props.mouseLeave}
-                     onMouseDown={this.props.mouseDown}
-                     onClick={this.props.mouseDown}>
+                     onMouseEnter={this.handleMouseEnter}
+                     onMouseLeave={this.handleMouseLeave}
+                     onMouseDown={this.handleMouseDown}>
                     <img className="Select-item-result-icon" height='25em' src={obj.image} />
                     {obj.label} ({obj.value})
                 </div>
