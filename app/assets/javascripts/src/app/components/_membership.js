@@ -1,5 +1,5 @@
 import Alert from './Alert';
-import React from 'react/addons';
+import React from 'react';
 import Select from 'react-select';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 

@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 React; // For ESLint, jsx compiles to React.createElement, so React must be imported
 
 Object.resolve = function(path, obj) {

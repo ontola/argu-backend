@@ -1,5 +1,5 @@
 import Alert from './Alert';
-import React from 'react/addons';
+import React from 'react';
 import { IntlMixin, FormattedMessage } from 'react-intl';
 import { safeCredentials, json, statusSuccess, tryLogin } from '../lib/helpers';
 

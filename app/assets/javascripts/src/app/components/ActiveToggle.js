@@ -1,6 +1,6 @@
 // for browserify-rails: module.exports
 
-import React from 'react/addons';
+import React from 'react';
 import Intl from 'intl';
 Intl;
 import { safeCredentials } from '../lib/helpers';
@@ -40,8 +40,9 @@ export const ActiveToggle = React.createClass({
 
     render: function () {
         var currentProps = this.props[`${this.state.toggleState}_props`];
+        var label;
         if (this.props.label !== false) {
-            var label = <span className='icon-left'>{currentProps.label}</span>;
+            label = <span className='icon-left'>{currentProps.label}</span>;
         }
 
         return (

@@ -1,5 +1,6 @@
 /*globals React, Turbolinks*/
-var React = require('react/addons');
+var React = require('react');
+var ReactDOM = require('react-dom');
 window.Select = require('react-select');
 
 var bulk = require('bulk-require');
@@ -29,6 +30,7 @@ module.exports = (function ReactUJS (document, window) {
         mountComponents: function(searchSelector) {
             var nodes = window.ReactRailsUJS.findDOMNodes(searchSelector);
 
+
             for (var i = 0; i < nodes.length; ++i) {
                 var node = nodes[i];
                 var className = node.getAttribute(window.ReactRailsUJS.CLASS_NAME_ATTR);
@@ -42,7 +44,7 @@ module.exports = (function ReactUJS (document, window) {
                 var propsJson = node.getAttribute(window.ReactRailsUJS.PROPS_ATTR);
                 var props = propsJson && JSON.parse(propsJson);
 
-                React.render(React.createElement(constructor, props), node);
+                ReactDOM.render(React.createElement(constructor, props), node);
             }
         },
 

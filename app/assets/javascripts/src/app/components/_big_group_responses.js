@@ -1,5 +1,5 @@
 import Alert from './Alert';
-import React from 'react/addons';
+import React from 'react';
 import Intl from 'intl';
 Intl; // For ESLint
 import 'intl/locale-data/jsonp/en.js';
@@ -65,5 +65,6 @@ export const BigGroupResponse = React.createClass({
         </div>);
     }
 });
+export default BigGroupResponse;
 
 window.BigGroupResponse = BigGroupResponse;

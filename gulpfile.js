@@ -32,9 +32,7 @@ function browserifyOptions(name) {
     return {
         entries: basePath + name,
         transform: [
-            [babelify, {
-                "stage": 0
-            }],
+            [babelify],
             [bulkify],
             [deamdify]
         ],

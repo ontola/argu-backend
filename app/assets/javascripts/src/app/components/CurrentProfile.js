@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import { image } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
 

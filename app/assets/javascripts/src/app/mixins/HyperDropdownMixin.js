@@ -1,3 +1,4 @@
+import ReactDOM from 'react-dom';
 
 function isTouchDevice() {
     return (('ontouchstart' in window)
@@ -33,9 +34,10 @@ const HyperDropdownMixin = {
     },
 
     componentDidMount: function () {
+        let domRef = ReactDOM.findDOMNode(this);
         this.setState({
-            referenceDropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[0],
-            dropdownElement: this.getDOMNode().getElementsByClassName('dropdown-content')[1]});
+            referenceDropdownElement: domRef.getElementsByClassName('dropdown-content')[0],
+            dropdownElement: domRef.getElementsByClassName('dropdown-content')[1]});
         window.addEventListener('resize', this.handleResize);
         this.calculateRenderLeft();
     },
@@ -103,7 +105,7 @@ const HyperDropdownMixin = {
         if (typeof this.state.referenceDropdownElement !== 'undefined') {
             refDropdown = this.state.referenceDropdownElement;
         } else {
-            refDropdown = this.getDOMNode().getElementsByClassName('dropdown-content')[0];
+            refDropdown = ReactDOM.findDOMNode(this).getElementsByClassName('dropdown-content')[0];
         }
         return refDropdown;
     }

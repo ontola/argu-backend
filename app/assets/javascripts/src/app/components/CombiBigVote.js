@@ -1,10 +1,12 @@
 import Alert from './Alert';
-import React from 'react/addons';
+import React from 'react';
 import Intl from 'intl';
 Intl; // For ESLint
 import 'intl/locale-data/jsonp/en.js';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
+import { BigVoteButtons, BigVoteResults } from './_big_vote_elements';
+import BigGroupResponse from './_big_group_responses';
 
 export const CombiBigVote = React.createClass({
 

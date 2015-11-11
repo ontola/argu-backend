@@ -1,5 +1,7 @@
 /* globals $, FB, Actions */
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactTransitionGroup from 'react-addons-transition-group';
 import OnClickOutside from 'react-onclickoutside';
 import { image } from '../lib/helpers';
 import { NotificationTrigger } from './Notifications';
@@ -60,7 +62,6 @@ export const HyperDropdown = React.createClass({
                                                {...this.props}
                                                key='required' />;
 
-        const ReactTransitionGroup = React.addons.TransitionGroup;
         return (<li tabIndex="1"
                     className={dropdownClass}
                     onMouseEnter={this.onMouseEnter}
@@ -169,7 +170,6 @@ export const ShareDropdown = React.createClass({
                     fa="fa-linkedin" />
             </DropdownContent>;
 
-        const ReactTransitionGroup = React.addons.TransitionGroup;
         return (<li tabIndex="1"
                     className={dropdownClass}
                     onMouseEnter={this.onMouseEnter}
@@ -267,9 +267,9 @@ export const LinkItem = React.createClass({
     handleMouseDown: function () {
         // Fixes an issue where firefox bubbles events instead of capturing them
         // See: https://github.com/facebook/react/issues/2011
-        let dataMethod = this.getDOMNode().getAttribute('data-method');
+        let dataMethod = ReactDOM.findDOMNode(this).getAttribute('data-method');
         if (dataMethod !== 'post' && dataMethod !== 'put' && dataMethod !== 'patch' && dataMethod !== 'delete') {
-            this.getDOMNode().getElementsByTagName('a')[0].click();
+            ReactDOM.findDOMNode(this).getElementsByTagName('a')[0].click();
             this.props.done();
         }
     },

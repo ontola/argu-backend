@@ -1,5 +1,6 @@
-require('babel/polyfill');
-window.React = require('react/addons');
+require('babel-polyfill');
+window.React = require('react');
+window.ReactDOMServer = require('react-dom/server');
 window.Select = require('react-select');
 
 var bulk = require('bulk-require');

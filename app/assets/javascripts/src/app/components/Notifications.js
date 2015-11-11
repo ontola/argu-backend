@@ -1,5 +1,7 @@
 /* globals NotificationActions */
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import ReactTransitionGroup from 'react-addons-transition-group';
 import OnClickOutside from 'react-onclickoutside';
 import { image } from '../lib/helpers';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
@@ -24,7 +26,7 @@ export const ScrollLockMixin = {
     },
 
     scrollLock: function (elem) {
-        elem = elem || this.getDOMNode();
+        elem = elem || ReactDOM.findDOMNode(this);
         this.scrollElem = elem;
         ScrollLockMixin.addScrollEventListener(elem, this.onScrollHandler);
     },
@@ -82,7 +84,6 @@ export const NotificationDropdown = React.createClass({
                                                {...adaptedProps}
                                                key='required' />;
 
-        const ReactTransitionGroup = React.addons.TransitionGroup;
         return (<li tabIndex="1"
                     className={dropdownClass}
                     onMouseEnter={this.onMouseEnterFetch}
@@ -163,7 +164,7 @@ export const Notifications = React.createClass({
     componentDidMount: function () {
         NotificationActions.notificationUpdate(this.props);
         this.unsubscribe = notificationStore.listen(this.onNotificationChange);
-        this.scrollLock(this.getDOMNode().parentElement);
+        this.scrollLock(ReactDOM.findDOMNode(this).parentElement);
     },
 
     componentWillUnmount: function () {

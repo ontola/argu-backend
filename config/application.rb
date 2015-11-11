@@ -52,7 +52,7 @@ module Argu
     config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
 
-    config.react.addons = true
+    config.react.addons = false
     # Enable the asset pipeline
     config.assets.enabled = true
     config.assets.precompile += %w( application.js polyfill.js mail.css )

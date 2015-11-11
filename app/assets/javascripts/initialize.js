@@ -1,6 +1,7 @@
 /*globals ReactRailsUJS*/
 import activityFeed from './application/activity_feed';
-import React from 'react/addons';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import fetch from 'whatwg-fetch';
 import alert from './application/alert';
 import ui from './application/ui';
@@ -25,7 +26,7 @@ function shallowMountComponents () {
         var propsJson = node.getAttribute(window.ReactRailsUJS.PROPS_ATTR);
         var props = propsJson && JSON.parse(propsJson);
 
-        React.render(React.createElement(constructor, props), node);
+        ReactDOM.render(React.createElement(constructor, props), node);
     }
 }
 window.shallowMountComponents = shallowMountComponents;
