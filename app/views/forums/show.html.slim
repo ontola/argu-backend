@@ -36,7 +36,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
           - if current_user.present? && active_for_user?(:notifications, current_user)
             li.float-right.btn--transparant--parent[data-title=I18n.t('tooltips.follow')]
               =react_component 'ActiveToggle',
-                               {url: follows_path(argument_id: @forum.id, format: :json),
+                               {url: follows_path(forum_id: @forum, format: :json),
                                 initialState: current_user.following?(@forum),
                                 true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
                                 false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
