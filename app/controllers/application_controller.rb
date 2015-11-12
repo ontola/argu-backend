@@ -139,7 +139,8 @@ class ApplicationController < ActionController::Base
         profile.memberships.first.try(:forum) || Forum.first_public
       end
     else
-      forum_by_geocode || Forum.first_public
+      last_forum = Argu::Redis.get("session:#{session.id}:last_forum")
+      (Forum.find_by(id: last_forum) if last_forum.present?) || Forum.first_public
     end
   end
 
@@ -200,6 +201,8 @@ class ApplicationController < ActionController::Base
   def set_profile_forum
     if instance_variable_defined?(:@forum) && @forum.is_a?(Forum) && current_profile.present?
       Argu::Redis.set("profile:#{current_profile.id}:last_forum", @forum.id)
+    elsif instance_variable_defined?(:@forum) && @forum.is_a?(Forum)
+      Argu::Redis.setex("session:#{session.id}:last_forum", 1.day.seconds.to_i, @forum.id)
     end
   end
 
