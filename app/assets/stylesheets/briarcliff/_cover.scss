@@ -95,7 +95,7 @@
 }
 
 .cover-hero-link {
-  color: rgb(255, 255, 255);
+  color: white;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   padding: 0.2em 0.7em;
@@ -103,9 +103,9 @@
   text-decoration: underline;
   opacity: .8;
   position: absolute;
-  bottom: -1em;
-  left: 0;
-  right: 0;
+  left: 50%;
+  @include transform(translate(-50%, 0));
+
   &:hover{
     opacity: 1;
   }
