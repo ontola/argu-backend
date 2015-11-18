@@ -93,6 +93,7 @@ class Profile < ActiveRecord::Base
         .try(:for) == 'pro'
   end
 
+  # Warn: Doesn't check for parent deletion
   def votes_questions_motions
     votes.where("voteable_type = 'Question' OR voteable_type = 'Motion'")
   end

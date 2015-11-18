@@ -44,7 +44,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As user
+  # As User
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 

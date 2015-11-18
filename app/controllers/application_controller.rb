@@ -26,6 +26,7 @@ class ApplicationController < ActionController::Base
   }
 
   rescue_from Pundit::NotAuthorizedError do |exception|
+    @_not_authorized_caught = true
     Rails.logger.error exception
     action = exception.query.to_s[0..-2]
     error = t("#{exception.record.try(:class_name)}.pundit.#{action}",

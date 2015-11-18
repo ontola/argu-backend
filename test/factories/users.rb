@@ -12,8 +12,8 @@ FactoryGirl.define do
     password_confirmation 'password'
     finished_intro true
     has_analytics false
-    first_name { |n| 'first_name#{n}'}
-    last_name { |n| 'last_name#{n}'}
+    sequence(:first_name) { |n| "first_name_#{n}" }
+    sequence(:last_name) { |n| "last_name_#{n}" }
 
     trait :staff do
       after(:create) do |user, evaluator|

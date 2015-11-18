@@ -4,8 +4,10 @@ class RegistrationsControllerTest < ActionController::TestCase
   include TestHelper
   include Devise::TestHelpers
 
+  let!(:freetown) { FactoryGirl.create(:forum) }
+
   ####################################
-  # Not logged in
+  # As Guest
   ####################################
 
   test 'should post create' do

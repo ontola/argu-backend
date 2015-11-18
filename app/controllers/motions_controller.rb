@@ -99,7 +99,7 @@ class MotionsController < AuthenticatedController
   # PUT /motions/1
   # PUT /motions/1.json
   def update
-    @motion = Motion.find_by_id params[:id]
+    @motion = Motion.find params[:id]
     @creator = @motion.creator
     @forum = @motion.forum
     authorize @motion

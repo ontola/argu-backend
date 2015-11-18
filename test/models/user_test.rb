@@ -4,12 +4,8 @@ class UserTest < ActiveSupport::TestCase
 
   subject { FactoryGirl.create(:user) }
 
-  def user
-    @user ||= users(:user)
-  end
-
   def test_valid
-    assert user.valid?, user.errors.to_a.join(',').to_s
+    assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
   subject { FactoryGirl.create(:user_with_notification) }

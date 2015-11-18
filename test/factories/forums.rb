@@ -18,8 +18,9 @@ FactoryGirl.define do
       motion_count 20
 
       after(:create) do |forum, evaluator|
-        create_list :motion, 10, forum: forum
-        create_list :motion, 10, forum: forum, is_trashed: true
+        create_list :motion, 5, forum: forum
+        create_list :motion, 5, forum: forum, is_trashed: true
+        create :question, :with_motions, forum: forum
         create :access_token, item: forum
         cap = Setting.get('user_cap').try(:to_i)
         Setting.set('user_cap', -1) unless cap.present?
