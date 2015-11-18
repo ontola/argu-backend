@@ -4,23 +4,29 @@ class QuestionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   setup do
-    @holland, @holland_owner = create_forum_owner_pair({type: :populated_forum})
+    @freetown, @freetown_owner = create_forum_owner_pair
   end
 
-  let(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+  let!(:freetown) { FactoryGirl.create(:forum, :with_follower, name: 'freetown') }
+  subject do
+    q = FactoryGirl.create(:question, forum: freetown)
+    FactoryGirl.create(:motion, forum: freetown, question: q)
+    FactoryGirl.create(:motion, forum: freetown, question: q, is_trashed: true)
+    q
+  end
 
   ####################################
   # As Guest
   ####################################
   test 'should get show when not logged in' do
-    get :show, id: holland.questions.first
+    get :show, id: subject
     assert_response 200
     assert_not_nil assigns(:question)
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:question_answers)
 
-    assert holland.questions.first.motions.any?(&:is_trashed?), 'No trashed motions to test'
-    assert_not assigns(:question_answers).any? { |qa| qa.is_trashed? }, 'Trashed motions are visible'
+    assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
+    assert_not assigns(:question_answers).any? { |qa| qa.motion.is_trashed? }, 'Trashed motions are visible'
   end
 
   ####################################
@@ -31,26 +37,26 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'should get show' do
     sign_in user
 
-    get :show, id: holland.questions.first
+    get :show, id: subject
     assert_response 200
     assert_not_nil assigns(:question)
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:question_answers)
 
-    assert holland.questions.first.motions.any?(&:is_trashed?), 'No trashed motions to test'
-    assert_not assigns(:question_answers).any? { |qa| qa.is_trashed? }, 'Trashed motions are visible'
+    assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
+    assert_not assigns(:question_answers).any? { |qa| qa.motion.is_trashed? }, 'Trashed motions are visible'
   end
 
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(holland) }
-  let(:member_question) { FactoryGirl.create(:question, forum: holland, creator: member.profile) }
+  let(:member) { create_member(freetown) }
+  let(:member_question) { FactoryGirl.create(:question, forum: freetown, creator: member.profile) }
 
   test 'member should get new' do
     sign_in member
 
-    get :new, forum_id: holland
+    get :new, forum_id: freetown
     assert_response 200
     assert_not_nil assigns(:question)
     assert_not_nil assigns(:forum)
@@ -61,7 +67,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
     assert_differences create_changes_array do
       post :create,
-           forum_id: holland,
+           forum_id: freetown,
            question: {
              title: 'Question',
              content: 'Contents'
@@ -89,7 +95,7 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   test 'should not put update on others question' do
-    sign_in create_member(holland)
+    sign_in create_member(freetown)
 
     put :update,
         id: member_question,
@@ -104,28 +110,28 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'should not get convert' do
     sign_in member
 
-    get :convert, question_id: holland.questions.first
+    get :convert, question_id: subject
     assert_redirected_to root_url
   end
 
   test 'should not put convert' do
     sign_in member
 
-    put :convert, question_id: holland.questions.first
+    put :convert, question_id: subject
     assert_redirected_to root_url
   end
 
   test 'should not get move' do
     sign_in member
 
-    get :move, question_id: holland.questions.first
+    get :move, question_id: subject
     assert_redirected_to root_url
   end
 
   test 'should not put move' do
     sign_in member
 
-    put :move, question_id: holland.questions.first
+    put :move, question_id: subject
     assert_redirected_to root_url
   end
 
@@ -133,10 +139,10 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As Creator
   ####################################
-  let(:creator) { create_member(holland) }
+  let(:creator) { create_member(freetown) }
   let(:creator_question) { FactoryGirl.create(:question,
                                             creator: creator.profile,
-                                            forum: holland) }
+                                            forum: freetown) }
 
   test 'creator should get edit' do
     sign_in creator
@@ -181,11 +187,11 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-  let(:page_question) { FactoryGirl.create(:question, forum: @holland, creator: @holland_owner.profile) }
+  let(:page_question) { FactoryGirl.create(:question, forum: @freetown, creator: @freetown_owner.profile) }
 
   test 'owner should put update on page owner own question' do
-    sign_in @holland_owner
-    @controller.instance_variable_set :@current_profile, @holland.page.profile
+    sign_in @freetown_owner
+    @controller.instance_variable_set :@current_profile, @freetown.page.profile
 
     put :update,
         id: page_question,
@@ -209,23 +215,23 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'should get convert' do
     sign_in staff
 
-    get :convert, question_id: holland.questions.first
+    get :convert, question_id: subject
     assert_response 200
   end
 
   # Currently only staffers can convert items
   test 'should put convert' do
-    question = holland.questions.first
+    question = subject
     vote = FactoryGirl.create(:vote,
-                              forum: holland,
+                              forum: freetown,
                               voteable: question)
     FactoryGirl.create(:activity,
-                       forum: holland,
+                       forum: freetown,
                        trackable: question)
 
     sign_in staff
 
-    put :convert!, question_id: holland.questions.first, question: {f_convert: 'motions'}
+    put :convert!, question_id: subject, question: {f_convert: 'motions'}
     assert assigns(:result)
     assert_redirected_to assigns(:result)[:new]
 
@@ -248,24 +254,27 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'should get move' do
     sign_in staff
 
-    get :move, question_id: holland.questions.first
+    get :move, question_id: subject
     assert_response 200
   end
 
-  let(:freetown) { FactoryGirl.create(:forum) }
+  let(:freetown_to) { FactoryGirl.create(:forum) }
 
   # Currently only staffers can convert items
   test 'should put move!' do
     sign_in staff
 
-    assert_differences [['holland.reload.questions_count', -1], ['freetown.reload.questions_count', 1]] do
-      put :move!, question_id: holland.questions.first, question: { forum_id: freetown.id }
+    assert_differences [['freetown.reload.questions_count', -1],
+                        ['freetown_to.reload.questions_count', 1]] do
+      put :move!,
+          question_id: subject,
+          question: { forum_id: freetown_to.id }
     end
     assert_redirected_to assigns(:question)
 
     assert assigns(:question)
-    assert_equal freetown, assigns(:question).forum
-    forum_id = freetown.id
+    assert_equal freetown_to, assigns(:question).forum
+    forum_id = freetown_to.id
     assigns(:question).motions.pluck(:forum_id).each do |id|
       assert_equal forum_id, id
     end

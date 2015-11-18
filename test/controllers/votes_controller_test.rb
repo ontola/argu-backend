@@ -3,8 +3,8 @@ require 'test_helper'
 class VotesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:holland) { FactoryGirl.create(:populated_forum, name: :holland) }
-  let(:motion) { FactoryGirl.create(:motion, forum: holland) }
+  let!(:freetown) { FactoryGirl.create(:forum, name: :freetown) }
+  let(:motion) { FactoryGirl.create(:motion, forum: freetown) }
   let!(:vote) { FactoryGirl.create(:vote, voteable: motion) }
 
   ####################################
@@ -51,7 +51,7 @@ class VotesControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(holland) }
+  let(:member) { create_member(freetown) }
 
   test 'member shoud get new' do
     sign_in member

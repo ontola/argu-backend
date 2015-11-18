@@ -48,5 +48,13 @@ FactoryGirl.define do
     trait :hidden do
       visibility Forum.visibilities[:hidden]
     end
+
+    trait :with_follower do
+      after :create do |forum|
+        FactoryGirl.create(:follow,
+                           follower: create(:user, :follows_email),
+                           followable: forum)
+      end
+    end
   end
 end

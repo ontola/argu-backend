@@ -3,8 +3,9 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
-  let(:subject) { FactoryGirl.create(:motion, :with_arguments, forum: holland) }
+  let!(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
+  let!(:follower) { FactoryGirl.create(:follow, followable: freetown) }
+  let(:subject) { FactoryGirl.create(:motion, :with_arguments, forum: freetown) }
 
   ####################################
   # As Guest
@@ -51,7 +52,7 @@ class MotionsControllerTest < ActionController::TestCase
   test 'user should get new' do
     sign_in user
 
-    get :new, forum_id: holland
+    get :new, forum_id: freetown
 
     assert_response 200
     assert_not_a_member
@@ -59,17 +60,17 @@ class MotionsControllerTest < ActionController::TestCase
 
   test 'user should show tutorial only on first post create' do
     sign_in user
-    FactoryGirl.create(:membership, profile: user.profile, forum: holland)
+    FactoryGirl.create(:membership, profile: user.profile, forum: freetown)
 
     assert_differences create_changes_array do
-      post :create, forum_id: holland, motion: {title: 'Motion', content: 'Contents'}
+      post :create, forum_id: freetown, motion: {title: 'Motion', content: 'Contents'}
     end
     assert_not_nil assigns(:cm).resource
     assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
 
     assert_differences create_changes_array(false) do
-      post :create, forum_id: holland, motion: {title: 'Motion2', content: 'Contents'}
+      post :create, forum_id: freetown, motion: {title: 'Motion2', content: 'Contents'}
     end
     assert_not_nil assigns(:cm).resource
     assert_not_nil assigns(:forum)
@@ -107,12 +108,12 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(holland) }
+  let(:member) { create_member(freetown) }
 
   test 'member should get new' do
     sign_in member
 
-    get :new, forum_id: holland
+    get :new, forum_id: freetown
 
     assert_response 200
     assert_not_nil assigns(:motion)
@@ -123,7 +124,7 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_differences create_changes_array do
       post :create,
-           forum_id: holland,
+           forum_id: freetown,
            motion: {
              title: 'Motion',
              content: 'Contents'
@@ -206,7 +207,7 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Page
   ####################################
-  let(:page) { create_member holland, FactoryGirl.create(:page) }
+  let(:page) { create_member freetown, FactoryGirl.create(:page) }
 
 
   test 'page should post create' do
@@ -215,7 +216,7 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_differences create_changes_array do
       post :create,
-           forum_id: holland,
+           forum_id: freetown,
            motion: FactoryGirl.attributes_for(:motion)
     end
     assert_not_nil assigns(:cm).resource
@@ -227,10 +228,10 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Creator
   ####################################
-  let(:creator) { create_member(holland) }
+  let(:creator) { create_member(freetown) }
   let(:creator_motion) { FactoryGirl.create(:motion,
                                           creator: creator.profile,
-                                          forum: holland) }
+                                          forum: freetown) }
   test 'creator should get edit' do
     sign_in creator
 

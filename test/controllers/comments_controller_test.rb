@@ -3,15 +3,15 @@ require 'test_helper'
 class CommentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+  let!(:freetown) { FactoryGirl.create(:forum) }
 
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(holland, FactoryGirl.create(:user, :follows_email)) }
+  let(:member) { create_member(freetown, FactoryGirl.create(:user, :follows_email)) }
   let(:argument) do
     FactoryGirl.create(:argument,
-                       forum: holland,
+                       forum: freetown,
                        creator: FactoryGirl
                                   .create(:user,
                                           :follows_email)
@@ -86,7 +86,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test 'member should not put update on other comment' do
-    sign_in create_member(holland)
+    sign_in create_member(freetown)
 
     put :update,
         argument_id: comment.commentable,
@@ -130,7 +130,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test "member should not delete destroy on others' comment" do
-    sign_in create_member(holland)
+    sign_in create_member(freetown)
 
     # Trip let to initialize the comment
     comment
@@ -150,7 +150,7 @@ class CommentsControllerTest < ActionController::TestCase
   ####################################
 
   test 'owner should not delete wipe own comment twice affecting counter caches' do
-    sign_in holland.page.owner.profileable
+    sign_in freetown.page.owner.profileable
 
     assert_equal 1, comment.commentable.comments_count
 
@@ -177,7 +177,7 @@ class CommentsControllerTest < ActionController::TestCase
   test 'staff should destroy comments' do
     comment = FactoryGirl.create(:comment,
                                  commentable: FactoryGirl.create(:argument,
-                                                                 forum: holland),
+                                                                 forum: freetown),
                                  profile: member.profile)
     FactoryGirl.create_list(:notification, 10,
                             activity: Activity.find_by(trackable: comment))
