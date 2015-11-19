@@ -9,6 +9,7 @@ class Motion < ActiveRecord::Base
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :votes, as: :voteable, :dependent => :destroy
   has_many :question_answers, inverse_of: :motion, dependent: :destroy
+  accepts_nested_attributes_for :question_answers
   has_many :questions, through: :question_answers
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :group_responses

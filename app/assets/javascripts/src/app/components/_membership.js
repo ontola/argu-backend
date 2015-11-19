@@ -98,8 +98,8 @@ export const NewMembership = React.createClass({
                    callback(null, {
                        options: data.profiles.map((profile) => {
                            return {
-                               value: profile.shortname,
                                id: profile.id.toString(),
+                               value: profile.shortname,
                                label: profile.name,
                                image: profile.profile_photo.avatar.url
                            };

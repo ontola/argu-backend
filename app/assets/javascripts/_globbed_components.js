@@ -273,21 +273,16 @@ var CombiBigVote = exports.CombiBigVote = _react2.default.createClass({
         var groupResponsesComponent = undefined;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
             voteButtonsComponent = _react2.default.createElement(_big_vote_elements.BigVoteButtons, _extends({ parentSetVote: this.setVote }, this.state, this.props));
-            //    voteResultsComponent = <BigVoteResults {...this.state} show_results={this.state.current_vote !== 'abstain'}/>;
-            //    groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
+            voteResultsComponent = _react2.default.createElement(_big_vote_elements.BigVoteResults, _extends({}, this.state, { show_results: this.state.current_vote !== 'abstain' }));
+            groupResponsesComponent = _react2.default.createElement(_big_group_responses2.default, { groups: this.state.groups || [], actor: this.state.actor, object_type: this.props.object_type, object_id: this.props.object_id });
         } else if (this.state.actor.actor_type === 'Page') {
-                //    groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
-                //    voteResultsComponent = <BigVoteResults {...this.state} {...this.props} show_results={true}/>;
-            }
+            groupResponsesComponent = _react2.default.createElement(_big_group_responses2.default, { groups: this.state.groups || [], actor: this.state.actor, object_type: this.props.object_type, object_id: this.props.object_id });
+            voteResultsComponent = _react2.default.createElement(_big_vote_elements.BigVoteResults, _extends({}, this.state, this.props, { show_results: true }));
+        }
 
         return _react2.default.createElement(
             'div',
             { className: 'center motion-shr' },
-            _react2.default.createElement(
-                'p',
-                null,
-                'test'
-            ),
             voteButtonsComponent,
             voteResultsComponent,
             groupResponsesComponent
@@ -1690,15 +1685,24 @@ var ProfileOption = exports.ProfileOption = _react2.default.createClass({
         renderFunc: _react2.default.PropTypes.func
     },
 
+    handleMouseDown: function handleMouseDown(e) {
+        this.props.mouseDown(this.props.option, e);
+    },
+    handleMouseEnter: function handleMouseEnter(e) {
+        this.props.mouseEnter(this.props.option, e);
+    },
+    handleMouseLeave: function handleMouseLeave(e) {
+        this.props.mouseLeave(this.props.option, e);
+    },
     render: function render() {
         var obj = this.props.option;
+
         return _react2.default.createElement(
             'div',
             { className: this.props.className,
-                onMouseEnter: this.props.mouseEnter,
-                onMouseLeave: this.props.mouseLeave,
-                onMouseDown: this.props.mouseDown,
-                onClick: this.props.mouseDown },
+                onMouseEnter: this.handleMouseEnter,
+                onMouseLeave: this.handleMouseLeave,
+                onMouseDown: this.handleMouseDown },
             _react2.default.createElement('img', { className: 'Select-item-result-icon', height: '25em', src: obj.image }),
             obj.label,
             ' (',
@@ -1768,8 +1772,8 @@ var NewMembership = exports.NewMembership = _react2.default.createClass({
                 callback(null, {
                     options: data.profiles.map(function (profile) {
                         return {
-                            value: profile.shortname,
                             id: profile.id.toString(),
+                            value: profile.shortname,
                             label: profile.name,
                             image: profile.profile_photo.avatar.url
                         };
@@ -1839,15 +1843,23 @@ var MotionOption = exports.MotionOption = _react2.default.createClass({
         renderFunc: _react2.default.PropTypes.func
     },
 
+    handleMouseDown: function handleMouseDown(e) {
+        this.props.mouseDown(this.props.option, e);
+    },
+    handleMouseEnter: function handleMouseEnter(e) {
+        this.props.mouseEnter(this.props.option, e);
+    },
+    handleMouseLeave: function handleMouseLeave(e) {
+        this.props.mouseLeave(this.props.option, e);
+    },
     render: function render() {
         var obj = this.props.option;
         return _react2.default.createElement(
             'div',
             { className: this.props.className,
-                onMouseEnter: this.props.mouseEnter,
-                onMouseLeave: this.props.mouseLeave,
-                onMouseDown: this.props.mouseDown,
-                onClick: this.props.mouseDown },
+                onMouseEnter: this.handleMouseEnter,
+                onMouseLeave: this.handleMouseLeave,
+                onMouseDown: this.handleMouseDown },
             _react2.default.createElement('img', { className: 'Select-item-result-icon', height: '25em', src: obj.image }),
             obj.label
         );

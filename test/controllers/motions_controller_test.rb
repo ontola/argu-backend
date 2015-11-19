@@ -5,6 +5,7 @@ class MotionsControllerTest < ActionController::TestCase
 
   let!(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
   let!(:follower) { FactoryGirl.create(:follow, followable: freetown) }
+  let(:question) { FactoryGirl.create(:question, forum: freetown) }
   let(:subject) { FactoryGirl.create(:motion, :with_arguments, forum: freetown) }
 
   ####################################
@@ -136,6 +137,54 @@ class MotionsControllerTest < ActionController::TestCase
                                      start_motion_tour: true)
   end
 
+  test 'member should post create with question' do
+    sign_in member
+
+    assert_differences create_changes_array do
+      post :create,
+           forum_id: freetown,
+           motion: {
+             title: 'Motion',
+             content: 'Contents',
+             question_answers_attributes: {
+               '0' => {
+                 question_id: question.id
+               }
+             }
+           }
+    end
+    assert_not_nil assigns(:cm).resource
+    assert_not_nil assigns(:forum)
+    assert assigns(:cm).resource.reload.questions.include?(question)
+    assert_redirected_to motion_path(assigns(:cm).resource,
+                                     start_motion_tour: true)
+  end
+
+  test 'member should keep data on erroneous post create' do
+    sign_in member
+
+    assert_differences create_changes_array(nil, 0) do
+      post :create,
+           forum_id: freetown,
+           motion: {
+             title: 'Motion',
+             content: 'C',
+             question_answers_attributes: {
+               '0' => {
+                 question_id: question.id
+               }
+             }
+           }
+    end
+    assert_not_nil assigns(:cm).resource
+    assert_not_nil assigns(:forum)
+    assert_response 200
+
+    assert_select "[name=motion[title]]", 'Motion'
+    assert_select "[name=motion[content]]", 'C'
+    assert_select "[name=motion[question_answers_attributes][0][question_id]]", question.id.to_s
+  end
+
   test 'member should not put update on others motion' do
     sign_in member
 
@@ -195,11 +244,17 @@ class MotionsControllerTest < ActionController::TestCase
            motion: {
              title: 'Motion',
              content: 'Contents',
-             question_id: no_create_question
+             question_answers_attributes: {
+               '0' => {
+                 question_id: no_create_question
+               }
+             }
            }
+      puts
     end
     assert_not_nil assigns(:cm).resource
     assert assigns(:cm).resource.persisted?
+    assert assigns(:cm).resource.questions.include?(no_create_question)
     assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
   end
 
@@ -367,11 +422,11 @@ class MotionsControllerTest < ActionController::TestCase
 
   # Detect the changes that should go hand in hand with object creation
   # @param notifications [Boolean] Set to false if an object is created twice for the same follower
-  def create_changes_array(notifications = true)
-    c = [['Motion.count', 1],
-         ['Activity.count', 1],
-         ['Notification.count', 1]]
-    c << ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1] if notifications
+  def create_changes_array(notifications = true, count = 1)
+    c = [['Motion.count', count],
+         ['Activity.count', count],
+         ['Notification.count', count]]
+    c << ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', count] if notifications
     c
   end
 end
