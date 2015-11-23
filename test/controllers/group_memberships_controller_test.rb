@@ -12,7 +12,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   let!(:group) { FactoryGirl.create(:group, forum: holland) }
 
   ####################################
-  # For users
+  # As User
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
@@ -51,7 +51,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # For owners
+  # As Owner
   ####################################
 
   test 'should show new' do

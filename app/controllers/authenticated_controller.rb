@@ -7,6 +7,7 @@ class AuthenticatedController < ApplicationController
   before_action :authorize_show, only: :show
 
   rescue_from Argu::NotAUserError do |exception|
+    @_not_a_user_caught = true
     @resource ||= User.new(r: exception.r, shortname: Shortname.new)
     respond_to do |format|
       format.js  do
@@ -27,6 +28,7 @@ class AuthenticatedController < ApplicationController
   end
 
   rescue_from Argu::NotAMemberError do |exception|
+    @_not_a_member_caught = true
     authorize exception.forum, :join?
     respond_to do |format|
       format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r } }
@@ -43,8 +45,9 @@ private
   def check_if_member
     if current_profile.present? &&
         !(current_profile.member_of?(authenticated_context) ||
-            current_profile.owner_of(authenticated_context) ||
-        current_user.profile.has_role?(:staff))
+          current_profile.owner_of(authenticated_context) ||
+          current_profile == authenticated_context.try(:page).try(:profile) ||
+          current_user.profile.has_role?(:staff))
       raise Argu::NotAMemberError.new(forum: authenticated_context,
                                       r: redirect_url)
     end

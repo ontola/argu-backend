@@ -1,9 +1,0 @@
-
-dont_permit_create_without_question:
-  model_type: 'Motion'
-  action: 'create_without_question?'
-  role: 'member'
-  permit: false
-  context_type: 'Forum'
-  context: no_create_without_question
-  trickles: <%= Rule.trickles[:trickles_down] %>

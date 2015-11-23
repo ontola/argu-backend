@@ -16,6 +16,8 @@ class CreateMotion < ApplicationService
   def commit
     Motion.transaction do
       @motion.save!
+      # Reload the motion to let the question_answers become active in the `through` relation
+      @motion.reload
       @motion.publisher.follow(@motion) if @motion.publisher.present?
       publish(:create_motion_successful, @motion)
     end

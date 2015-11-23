@@ -48,6 +48,7 @@ gem 'wisper', '~> 1.6.1'
 # gem 'wisper-activerecord', '~> 0.3.0'
 gem 'roadie', '~> 3.0.5'
 gem 'roadie-rails', '~> 1.0'
+gem 'cocoon', '~> 1.2.6'
 
 
 #Search

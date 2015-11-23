@@ -2,12 +2,10 @@ require 'test_helper'
 
 class CommentTest < ActiveSupport::TestCase
 
-  def comment
-    @comment ||= comments(:one)
-  end
+  subject { FactoryGirl.create(:comment) }
 
   def test_valid
-    assert comment.valid?, comment.errors.to_a.join(',').to_s
+    assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
 end

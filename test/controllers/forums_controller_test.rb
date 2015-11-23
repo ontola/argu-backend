@@ -8,7 +8,7 @@ class ForumsControllerTest < ActionController::TestCase
   let!(:helsinki) { FactoryGirl.create(:hidden_populated_forum, name: 'helsinki') }
 
   ####################################
-  # Not logged in
+  # As Guest
   ####################################
   test 'should get show when not logged in' do
     get :show, id: holland
@@ -20,7 +20,7 @@ class ForumsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As user
+  # As User
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
@@ -82,7 +82,7 @@ class ForumsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As member
+  # As Member
   ####################################
   let(:cologne_member) { create_member(cologne) }
   let(:helsinki_member) { create_member(helsinki) }
@@ -105,7 +105,7 @@ class ForumsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As owner
+  # As Owner
   ####################################
   let(:forum_pair) { create_forum_owner_pair({type: :populated_forum}) }
 
@@ -165,7 +165,7 @@ class ForumsControllerTest < ActionController::TestCase
 
 
   ####################################
-  # As manager
+  # As Manager
   ####################################
   let(:holland_manager) { create_manager(holland) }
 

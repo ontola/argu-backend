@@ -2,16 +2,27 @@ require 'test_helper'
 
 class PageTest < ActiveSupport::TestCase
 
-  def page
-    @page ||= pages(:page_argu)
+  subject do
+    FactoryGirl.create(:page,
+                       profile: FactoryGirl.create(:profile,
+                         name: 'test'
+                       ))
   end
 
   def test_valid
-    assert page.valid?, page.errors.to_a.join(',').to_s
+    assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
   test 'should invalidate policy not accepted' do
-    assert_not pages(:not_accepted).valid?, 'Terms can be unaccepted'
+    begin
+      page = FactoryGirl.create(:page, last_accepted: nil)
+    rescue ActiveRecord::RecordInvalid
+      assert true
+    else
+      assert_not true, 'Terms can be unaccepted'
+    ensure
+      assert_nil page
+    end
   end
 
 end

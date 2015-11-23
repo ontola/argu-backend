@@ -51,6 +51,9 @@ class ForumTest < ActiveSupport::TestCase
   end
 
   test 'first_public should return a public forum' do
+    FactoryGirl.create(:forum, :closed)
+    FactoryGirl.create(:forum)
+    FactoryGirl.create(:forum, :closed)
     forum = Forum.first_public
     assert forum.open?
   end

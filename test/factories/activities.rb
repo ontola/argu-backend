@@ -19,11 +19,11 @@ FactoryGirl.define do
     key :create
 
     trait :t_question do
-      association :trackable, factory: :question
+      trackable { FactoryGirl.create(:question, creator: owner) }
     end
 
     trait :t_motion do
-      association :trackable, factory: :motion
+      trackable { FactoryGirl.create(:motion, creator: owner) }
       recipient {
         passed_in?(:recipient) ?  recipient : tenant
       }
@@ -31,7 +31,9 @@ FactoryGirl.define do
 
     trait :t_argument do
       trackable {
-        passed_in?(:trackable) ? trackable : FactoryGirl.create(:argument, forum: tenant)
+        passed_in?(:trackable) ? trackable : FactoryGirl.create(:argument,
+                                                                forum: tenant,
+                                                                creator: owner)
       }
       recipient {
         passed_in?(:recipient) ?  recipient : trackable.motion
@@ -39,21 +41,21 @@ FactoryGirl.define do
     end
 
     trait :t_comment do
-      association :trackable, factory: :comment
+      trackable { FactoryGirl.create(:comment, profile: owner) }
       recipient {
         passed_in?(:recipient) ?  recipient : FactoryGirl.create(:argument, forum: tenant)
       }
     end
 
     trait :t_vote do
-      association :trackable, factory: :vote
+      trackable { FactoryGirl.create(:vote, voter: owner) }
       recipient {
         passed_in?(:recipient) ?  recipient : FactoryGirl.create(:motion, forum: tenant)
       }
     end
 
     trait :t_group_response do
-      association :trackable, factory: :group_response
+      trackable { FactoryGirl.create(:group_response, profile: owner) }
     end
   end
 end

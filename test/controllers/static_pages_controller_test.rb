@@ -4,8 +4,13 @@ class StaticPagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   EXCLUDED_METHODS = [:modern, :how_argu_works, :persist_cookie, :new_discussion]
 
+  let(:user) { FactoryGirl.create(:user) }
+
+  ####################################
+  # As User
+  ####################################
   test 'should get redirect' do
-    sign_in users(:user)
+    sign_in user
 
     StaticPagesController.public_instance_methods(false).-(EXCLUDED_METHODS).each do |action|
       get action
@@ -15,7 +20,7 @@ class StaticPagesControllerTest < ActionController::TestCase
   end
 
   test 'should get how_argu_works' do
-    sign_in users(:user)
+    sign_in user
 
     get :how_argu_works
 
@@ -24,17 +29,18 @@ class StaticPagesControllerTest < ActionController::TestCase
 
 
   ####################################
-  # As staff
+  # As Staff
   ####################################
-  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+  let!(:freetown) { FactoryGirl.create(:forum) }
+  let(:staff) { FactoryGirl.create(:user, :staff) }
 
   test 'should get activity feed' do
     activities = []
     %i(t_question t_motion t_argument t_comment t_vote).each do |trait|
-      activities << FactoryGirl.create(:activity, trait, forum: holland)
+      activities << FactoryGirl.create(:activity, trait, forum: freetown)
     end
-    sign_in users(:user_thom)
-    create_member(holland, users(:user_thom))
+    sign_in staff
+    create_member(freetown, staff)
 
     get :home
 

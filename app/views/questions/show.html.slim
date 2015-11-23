@@ -42,5 +42,5 @@
                 header: motions_type(@question),
                 header_text: 'test',
                 collection_model: QuestionAnswer,
-                buttons_url: url_for([:new, @forum, :motion, question_id: @question.id]),
+                buttons_url: url_for([:new, @forum, :motion, motion: {question_answers_attributes: {'0' => {question_id: @question.id}}}]),
                 buttons_text: t('add_type', type: motion_type(@question)))

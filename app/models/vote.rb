@@ -18,6 +18,8 @@ class Vote < ActiveRecord::Base
     self.for.to_s === item.to_s
   end
 
+  delegate :is_trashed?, to: :voteable
+
   def update_parentable_counter
     self.voteable.update_vote_counters
   end

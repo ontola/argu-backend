@@ -48,7 +48,7 @@ class Rack::Attack
 
   blacklist('block referer spam') do |req|
     Rack::Attack::Fail2Ban.filter(req.ip, maxretry: 0, findtime: 10.minutes, bantime: 5.hours) do
-      SPAMMERS.find { |spammer| req.referer =~ spammer }
+      SPAMMERS.find { |spammer| req.referer =~ spammer } || SPAMMERS.find { |spammer| req.query_string =~ spammer }
     end
   end
 

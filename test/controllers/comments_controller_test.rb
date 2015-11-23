@@ -3,17 +3,24 @@ require 'test_helper'
 class CommentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+  let!(:freetown) { FactoryGirl.create(:forum) }
 
   ####################################
-  # As user
+  # As Member
   ####################################
-  let(:user) { create_member(holland) }
-  let(:argument) { FactoryGirl.create(:argument, forum: holland) }
-  let(:comment) { FactoryGirl.create(:comment, profile: user.profile, commentable: argument) }
+  let(:member) { create_member(freetown, FactoryGirl.create(:user, :follows_email)) }
+  let(:argument) do
+    FactoryGirl.create(:argument,
+                       forum: freetown,
+                       creator: FactoryGirl
+                                  .create(:user,
+                                          :follows_email)
+                                  .profile)
+  end
+  let(:comment) { FactoryGirl.create(:comment, profile: member.profile, commentable: argument) }
 
-  test 'should get new' do
-    sign_in user
+  test 'member should get new' do
+    sign_in member
 
     get :new, argument_id: argument
 
@@ -21,29 +28,32 @@ class CommentsControllerTest < ActionController::TestCase
     assert_equal argument, assigns(:commentable)
   end
 
-  test 'should post create comment' do
-    sign_in users(:user)
+  test 'member should post create comment' do
+    sign_in member
 
+    # Trip let to initialize the comment
+    argument
     assert_broadcast(:create_comment_successful) do
       assert_differences create_changes_array do
         post :create,
-             argument_id: arguments(:one),
+             argument_id: argument,
              comment: {
                  body: 'Just å UTF-8 comment.'
              }
+        puts
       end
     end
 
-    assert_equal arguments(:one), assigns(:cc).resource.commentable
-    assert_redirected_to argument_url(arguments(:one), anchor: assigns(:cc).resource.id)
+    assert_equal argument, assigns(:cc).resource.commentable
+    assert_redirected_to argument_url(argument, anchor: assigns(:cc).resource.id)
   end
 
   test 'should post create comment while not logged in rendering register' do
     post :create,
-         argument_id: arguments(:one),
+         argument_id: argument,
          comment: 'Just å UTF-8 comment.'
 
-    redirect_url = new_argument_comment_path(argument_id: arguments(:one).id,
+    redirect_url = new_argument_comment_path(argument_id: argument.id,
                                              comment: {body: 'Just å UTF-8 comment.'},
                                              confirm: true)
     assert_redirected_to new_user_session_path(r: redirect_url)
@@ -51,7 +61,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test 'should put update on own comment' do
-    sign_in user
+    sign_in member
 
     put :update,
         argument_id: comment.commentable,
@@ -64,7 +74,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   test 'should put update invalid data on own comment' do
-    sign_in user
+    sign_in member
 
     put :update,
         argument_id: comment.commentable,
@@ -75,89 +85,103 @@ class CommentsControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  test 'should not put update on other comment' do
-    sign_in create_member(holland)
+  test 'member should not put update on other comment' do
+    sign_in create_member(freetown)
 
-    put :update, argument_id: comment.commentable, id: comment, comment: {body: 'new contents'}
+    put :update,
+        argument_id: comment.commentable,
+        id: comment,
+        comment: {
+          body: 'new contents'
+        }
 
     assert_not_nil assigns(:comment)
     assert_equal 'comment', assigns(:comment).body
     assert_redirected_to root_url
   end
 
-  test 'should delete destroy own comment' do
-    sign_in users(:user)
+  test 'member should delete destroy own comment' do
+    sign_in member
 
+    # Trip let to initialize the comment
+    comment
     # The no-difference currently says nothing since comments are preserved due to nesting issues,
     # but does become relevant in the future when tree trimming is enabled.
     assert_no_difference('Comment.count') do
       delete :destroy,
-             argument_id: comments(:one).commentable.id,
-             id: comments(:one)
+             argument_id: comment.commentable.id,
+             id: comment
     end
 
-    assert_redirected_to argument_path(arguments(:one), anchor: comments(:one).id)
+    assert_redirected_to argument_path(argument, anchor: comment.id)
   end
 
-  test 'should not delete destroy own comment twice affecting counter caches' do
-    sign_in users(:user)
+  test 'member should not delete destroy own comment twice affecting counter caches' do
+    sign_in member
 
-    assert_equal 1, comments(:one).commentable.comments_count
+    assert_equal 1, comment.commentable.comments_count
 
-    assert_difference('comments(:one).commentable.reload.comments_count', -1) do
-      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one)
-      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one)
+    assert_difference('comment.commentable.reload.comments_count', -1) do
+      delete :destroy, argument_id: comment.commentable.id, id: comment
+      delete :destroy, argument_id: comment.commentable.id, id: comment
     end
 
-    assert_redirected_to argument_path(arguments(:one), anchor: comments(:one).id)
+    assert_redirected_to argument_path(argument, anchor: comment.id)
   end
 
-  test "'should not delete destroy on others' comment'" do
-    sign_in users(:user2)
+  test "member should not delete destroy on others' comment" do
+    sign_in create_member(freetown)
 
+    # Trip let to initialize the comment
+    comment
     # The no-difference currently says nothing since comments are preserved due to nesting issues,
     # but does become relevant in the future when tree trimming is enabled.
     assert_no_difference('Comment.count') do
-      delete :destroy, argument_id: comments(:one).commentable.id, id: comments(:one)
+      delete :destroy,
+             argument_id: comment.commentable.id,
+             id: comment
     end
 
     assert_redirected_to root_path
   end
 
   ####################################
-  # As owner
+  # As Owner
   ####################################
-  test 'should not delete wipe own comment twice affecting counter caches' do
-    sign_in users(:user_utrecht_owner)
 
-    assert_equal 1, comments(:one).commentable.comments_count
+  test 'owner should not delete wipe own comment twice affecting counter caches' do
+    sign_in freetown.page.owner.profileable
 
-    redirect_path = argument_url(arguments(:one), anchor: comments(:one).id)
-    assert_difference('comments(:one).commentable.reload.comments_count', -1) do
+    assert_equal 1, comment.commentable.comments_count
+
+    redirect_path = argument_url(argument, anchor: comment.id)
+    assert_difference('comment.commentable.reload.comments_count', -1) do
       delete :destroy,
-             argument_id: comments(:one).commentable.id,
-             id: comments(:one),
+             argument_id: comment.commentable.id,
+             id: comment,
              wipe: 'true'
       assert_redirected_to redirect_path
       delete :destroy,
-             argument_id: comments(:one).commentable.id,
-             id: comments(:one),
+             argument_id: comment.commentable.id,
+             id: comment,
              wipe: 'true'
       assert_redirected_to redirect_path
     end
   end
 
   ####################################
-  # As staff
+  # As Staff
   ####################################
-  test 'should destroy comments' do
+  let(:staff) { FactoryGirl.create(:user, :staff) }
+
+  test 'staff should destroy comments' do
     comment = FactoryGirl.create(:comment,
                                  commentable: FactoryGirl.create(:argument,
-                                                                 forum: holland),
-                                 profile: user.profile)
-    FactoryGirl.create_list(:notification, 40,
+                                                                 forum: freetown),
+                                 profile: member.profile)
+    FactoryGirl.create_list(:notification, 10,
                             activity: Activity.find_by(trackable: comment))
-    sign_in users(:user_thom)
+    sign_in staff
 
     delete :destroy,
            argument_id: comment.commentable.id,

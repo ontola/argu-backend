@@ -47,20 +47,25 @@ class ActiveSupport::TestCase
   include TestHelper
   ActiveRecord::Migration.check_pending!
 
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  fixtures %i(activities arguments comments documents forums follows memberships motions page_memberships pages
-              profiles profiles_roles question_answers questions roles rules settings shortnames taggings
-              tags users votes access_tokens identities)
-
   include FactoryGirl::Syntax::Methods
   #FactoryGirl.lint
+  Setting.set('user_cap', '-1')
   # Add more helper methods to be used by all tests here...
 
   def assert_notification_sent
 
+  end
+
+  def assert_not_a_member
+    assert_equal true, assigns(:_not_a_member_caught)
+  end
+
+  def assert_not_a_user
+    assert_equal true, assigns(:_not_a_user_caught) || assigns(:_not_logged_in_caught)
+  end
+
+  def assert_not_authorized
+    assert_equal true, assigns(:_not_authorized_caught)
   end
 
   def change_actor(actor)

@@ -5,9 +5,9 @@ class QuestionAnswersControllerTest < ActionController::TestCase
 
   let!(:owner) { FactoryGirl.create(:user) }
   let!(:page) { FactoryGirl.create(:page, owner: owner.profile) }
-  let!(:holland) { FactoryGirl.create(:forum, page: page, name: 'holland') }
-  let(:question) { FactoryGirl.create(:question, forum: holland) }
-  let(:motion) { FactoryGirl.create(:motion, forum: holland) }
+  let!(:freetown) { FactoryGirl.create(:forum, page: page, name: 'freetown') }
+  let(:question) { FactoryGirl.create(:question, forum: freetown) }
+  let(:motion) { FactoryGirl.create(:motion, forum: freetown) }
   let!(:question_answer) { FactoryGirl.create(:question_answer, question: question) }
 
   ####################################
@@ -44,7 +44,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As user
+  # As User
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
@@ -85,7 +85,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   ####################################
   # As Manager
   ####################################
-  let(:manager) { create_manager(holland) }
+  let(:manager) { create_manager(freetown) }
 
   test 'manager should get new' do
     sign_in manager

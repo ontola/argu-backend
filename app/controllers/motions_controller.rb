@@ -41,7 +41,7 @@ class MotionsController < AuthenticatedController
   # GET /motions/new.json
   def new
     get_context
-    @motion = @forum.motions.new params[:motion]
+    @motion = @forum.motions.new permit_params
     if params[:question_id]
       question = Question.find(params[:question_id])
       @motion.questions << question if @motion.forum_id == question.forum_id
@@ -70,14 +70,12 @@ class MotionsController < AuthenticatedController
   # POST /motions.json
   def create
     get_context
-
     @cm = CreateMotion.new current_profile,
                            permit_params.merge({
-                               questions: [@question].compact,
                                forum_id: @forum.id,
                                publisher: current_user
                            })
-    action = @cm.resource.questions.presence ? :create? : :create_without_question?
+    action = @cm.resource.question_answers.presence ? :create? : :create_without_question?
     authorize @cm.resource, action
     @cm.subscribe(ActivityListener.new)
     @cm.on(:create_motion_successful) do |motion|
@@ -99,7 +97,7 @@ class MotionsController < AuthenticatedController
   # PUT /motions/1
   # PUT /motions/1.json
   def update
-    @motion = Motion.find_by_id params[:id]
+    @motion = Motion.find params[:id]
     @creator = @motion.creator
     @forum = @motion.forum
     authorize @motion
@@ -216,6 +214,8 @@ private
   end
 
   def permit_params
-    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+    if params[:motion].present?
+      params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+    end
   end
 end

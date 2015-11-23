@@ -4,22 +4,22 @@ class GroupsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   setup do
-    @holland, @holland_owner = create_forum_owner_pair({type: :populated_forum})
-    @group = FactoryGirl.create(:group, forum: @holland)
+    @freetown, @freetown_owner = create_forum_owner_pair
+    @group = FactoryGirl.create(:group, forum: @freetown)
   end
 
-  let(:holland) { FactoryGirl.create(:forum, name: 'holland') }
-  let!(:group) { FactoryGirl.create(:group, forum: holland) }
+  let(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
+  let!(:group) { FactoryGirl.create(:group, forum: freetown) }
 
   ####################################
-  # For users
+  # As User
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
   test 'should not show new' do
     sign_in user
 
-    get :new, id: group, forum_id: holland
+    get :new, id: group, forum_id: freetown
 
     assert_redirected_to root_path
     assert assigns(:forum)
@@ -28,7 +28,7 @@ class GroupsControllerTest < ActionController::TestCase
   test 'should not show edit' do
     sign_in user
 
-    get :edit, id: group, forum_id: holland
+    get :edit, id: group, forum_id: freetown
 
     assert_redirected_to root_path
     assert assigns(:forum)
@@ -46,13 +46,13 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # For owners
+  # As Owner
   ####################################
 
   test 'should show new' do
-    sign_in @holland_owner
+    sign_in @freetown_owner
 
-    get :new, id: @group, forum_id: @holland
+    get :new, id: @group, forum_id: @freetown
 
     assert_response 200
     assert assigns(:forum)
@@ -60,9 +60,9 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test 'should show edit' do
-    sign_in @holland_owner
+    sign_in @freetown_owner
 
-    get :edit, id: @group, forum_id: @holland
+    get :edit, id: @group, forum_id: @freetown
 
     assert_response 200
     assert assigns(:forum)
@@ -70,7 +70,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   test 'should delete destroy!' do
-    sign_in @holland_owner
+    sign_in @freetown_owner
 
     assert_difference 'Group.count', -1 do
       delete :destroy!, id: @group

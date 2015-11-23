@@ -10,6 +10,7 @@ class MailerHelperTest < ActionView::TestCase
     FactoryGirl.create(:notification,
                        activity: FactoryGirl.create(:activity,
                                                     :t_question,
+                                                    owner: creator.profile,
                                                     forum: holland))
   end
 
@@ -17,6 +18,7 @@ class MailerHelperTest < ActionView::TestCase
     FactoryGirl.create(:notification,
                        activity: FactoryGirl.create(:activity,
                                                     :t_motion,
+                                                    owner: creator.profile,
                                                     forum: holland))
   end
 
@@ -25,6 +27,7 @@ class MailerHelperTest < ActionView::TestCase
     FactoryGirl.create(:notification,
                        activity: FactoryGirl.create(:activity,
                                                     :t_motion,
+                                                    owner: creator.profile,
                                                     recipient: question,
                                                     forum: holland))
   end
@@ -33,12 +36,14 @@ class MailerHelperTest < ActionView::TestCase
     FactoryGirl.create(:notification,
                        activity: FactoryGirl.create(:activity,
                                                     :t_argument,
+                                                    owner: creator.profile,
                                                     forum: holland))
   end
 
   let(:argument_con) do
     argument = FactoryGirl.create(:argument,
                        forum: holland,
+                       creator: creator.profile,
                        pro: false)
 
     FactoryGirl.create(:notification,
@@ -53,7 +58,8 @@ class MailerHelperTest < ActionView::TestCase
     FactoryGirl.create(:notification,
                        activity: FactoryGirl.create(:activity,
                                                     :t_comment,
-                                                    forum: holland))
+                                                    forum: holland,
+                                                    owner: creator.profile))
   end
 
   let(:comment_comment) do
@@ -61,6 +67,7 @@ class MailerHelperTest < ActionView::TestCase
     FactoryGirl.create(:notification,
                        activity: FactoryGirl.create(:activity,
                                                     :t_comment,
+                                                    owner: creator.profile,
                                                     recipient: comment,
                                                     forum: holland))
   end
