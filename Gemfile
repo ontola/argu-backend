@@ -23,6 +23,7 @@ gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
 gem 'rest-client'
 gem 'multimap'
+gem 'squirm_rails', require: 'squirm/rails'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
