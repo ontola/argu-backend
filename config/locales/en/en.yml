@@ -165,6 +165,7 @@ en:
   #cancel
   users_cancel_title: "Delete Argu account"
   users_cancel_info: "If you delete your account, you permanently lose access to everything you've posted, folowed and voted. Are you sure you wish to delete your account?"
+  users_cancer_howto: "Enter your username (your unique Argu URL) and yoru password below to confirm the deletion of your account."
   users_cancel_confirm: "Yes, delete my account."
 
 #vote
@@ -254,6 +255,8 @@ en:
     motion_argument3: 'High cost'
     forum_notice: "You're about to start a discussion in the forum: "
     forum_notice2: 'Make sure your discussion is relevant to this forum.'
+    start_header: 'Start a new discussion'
+    start_body: 'Do you have a good idea that you want to share, or a challenge that needs a solution?'
   seo:
     argument:
       name: 'Argument %{side} %{motiontitle}'

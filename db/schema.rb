@@ -51,21 +51,6 @@ ActiveRecord::Schema.define(version: 20151102090938) do
   add_index "activities", ["recipient_id", "recipient_type"], name: "index_activities_on_recipient_id_and_recipient_type", using: :btree
   add_index "activities", ["trackable_id", "trackable_type"], name: "index_activities_on_trackable_id_and_trackable_type", using: :btree
 
-  create_table "announcements", force: :cascade do |t|
-    t.integer  "publisher_id"
-    t.string   "title"
-    t.text     "content"
-    t.integer  "audience",     default: 0,    null: false
-    t.integer  "sample_size",  default: 100,  null: false
-    t.boolean  "dismissable",  default: true, null: false
-    t.datetime "publish_at"
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
-  end
-
-  add_index "announcements", ["publish_at", "sample_size", "audience"], name: "index_announcements_on_publish_at_and_sample_size_and_audience", using: :btree
-  add_index "announcements", ["publish_at"], name: "index_announcements_on_publish_at", using: :btree
-
   create_table "arguments", force: :cascade do |t|
     t.text     "content",                                         null: false
     t.integer  "motion_id",                                       null: false
@@ -105,7 +90,7 @@ ActiveRecord::Schema.define(version: 20151102090938) do
     t.integer  "forum_id"
     t.integer  "publisher_id"
     t.string   "title"
-    t.text     "content"
+    t.string   "content"
     t.integer  "cited_profile_id"
     t.string   "cited_avatar"
     t.string   "cited_name"
@@ -549,8 +534,8 @@ ActiveRecord::Schema.define(version: 20151102090938) do
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip",      limit: 255
     t.string   "last_sign_in_ip",         limit: 255
-    t.datetime "created_at",                                          null: false
-    t.datetime "updated_at",                                          null: false
+    t.datetime "created_at",                                                null: false
+    t.datetime "updated_at",                                                null: false
     t.string   "unconfirmed_email",       limit: 255
     t.string   "invitation_token"
     t.datetime "invitation_created_at"
@@ -561,19 +546,19 @@ ActiveRecord::Schema.define(version: 20151102090938) do
     t.string   "invited_by_type"
     t.integer  "invitations_count",                   default: 0
     t.boolean  "finished_intro",                      default: false
-    t.integer  "follows_email",                       default: 0,     null: false
-    t.boolean  "follows_mobile",                      default: true,  null: false
-    t.integer  "memberships_email",                   default: 1,     null: false
-    t.boolean  "memberships_mobile",                  default: true,  null: false
-    t.integer  "created_email",                       default: 1,     null: false
-    t.boolean  "created_mobile",                      default: true,  null: false
+    t.integer  "follows_email",                       default: 0,           null: false
+    t.boolean  "follows_mobile",                      default: true,        null: false
+    t.integer  "memberships_email",                   default: 1,           null: false
+    t.boolean  "memberships_mobile",                  default: true,        null: false
+    t.integer  "created_email",                       default: 1,           null: false
+    t.boolean  "created_mobile",                      default: true,        null: false
     t.text     "r"
     t.text     "access_tokens"
     t.text     "omni_info"
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
-    t.text     "active_sessions",                     default: [],                 array: true
+    t.text     "active_sessions",                     default: [],                       array: true
     t.string   "first_name"
     t.string   "middle_name"
     t.string   "last_name"
@@ -583,10 +568,10 @@ ActiveRecord::Schema.define(version: 20151102090938) do
     t.boolean  "has_analytics",                       default: true
     t.integer  "gender"
     t.integer  "hometown"
-    t.string   "time_zone",                           default: "UTC"
+    t.string   "time_zone",                           default: "Amsterdam"
     t.string   "language",                            default: "nl"
     t.string   "country",                             default: "NL"
-    t.integer  "failed_attempts",                     default: 0
+    t.integer  "failed_attempts",                     default: 0,           null: false
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.datetime "notifications_viewed_at"
@@ -615,7 +600,7 @@ ActiveRecord::Schema.define(version: 20151102090938) do
   add_index "votes", ["voteable_id", "voteable_type"], name: "index_votes_on_voteable_id_and_voteable_type", using: :btree
   add_index "votes", ["voter_id", "voter_type"], name: "index_votes_on_voter_id_and_voter_type", using: :btree
 
-  add_foreign_key "access_tokens", "profiles"
+  add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
   add_foreign_key "arguments", "users", column: "publisher_id"
   add_foreign_key "banners", "forums", on_delete: :cascade
   add_foreign_key "comments", "users", column: "publisher_id"

@@ -165,6 +165,7 @@ nl:
   #cancel
   users_cancel_title: "Argu account verwijderen"
   users_cancel_info: "Als je jouw account verwijdert, verlies je permanent toegang tot alles wat je geplaatst, gevolgd en gestemd hebt. Weet je zeker dat je jouw account wilt verwijderen?"
+  users_cancer_howto: "Voer hieronder je gebruikersnaam (jouw unieke Argu URL) en wachtwoord in om het verwijderen van je account te bevestigen"
   users_cancel_confirm: "Ja, verwijder mijn account."
 
 #vote
@@ -255,6 +256,8 @@ nl:
     motion_argument3: 'Hoge kosten'
     forum_notice: 'Je staat op het punt een discussie te starten in het forum: '
     forum_notice2: 'Zorg er voor dat jouw discussie relevant is voor dit forum.'
+    start_header: 'Start een nieuwe discussie'
+    start_body: 'Heb jij over een ander onderwerp een goed idee, of wil je anderen mee laten denken over een bepaald vraagstuk?'
   seo:
     argument:
       name: 'Argument %{side} %{motiontitle}'

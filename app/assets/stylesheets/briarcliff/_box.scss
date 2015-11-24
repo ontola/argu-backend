@@ -42,8 +42,7 @@
 }
 
 .box.trashed, .trashed > .box {
- // background-color: $trashed;
-  opacity: .5;
+  background-color: $g00;
 }
 
 .box.box-link {
