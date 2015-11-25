@@ -7,6 +7,8 @@ gem 'rails', '~>4.2.3'
 gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
 gem 'logstasher'
+gem 'yard'
+gem 'yard-activesupport-concern'
 
 ##################DB########################
 gem 'pg', '0.18.2'
