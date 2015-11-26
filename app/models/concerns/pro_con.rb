@@ -4,7 +4,7 @@ module ProCon
   VOTE_OPTIONS = [:pro]
 
   included do
-    include ArguBase, Trashable, Parentable, HasLinks, PublicActivity::Common
+    include ArguBase, Trashable, Parentable, HasLinks, PublicActivity::Common, CounterChainable
 
     belongs_to :motion, touch: true
     has_many :votes, as: :voteable, :dependent => :destroy, inverse_of: :voteable
@@ -13,7 +13,7 @@ module ProCon
     belongs_to :forum
 
     before_save :cap_title
-    after_create :creator_follow, :update_vote_counters
+    after_create :creator_follow, :update_counter_chain
 
     validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
     validates :title, presence: true, length: { minimum: 5, maximum: 75 }
@@ -26,6 +26,26 @@ module ProCon
     parentable :motion, :forum
 
     delegate :uses_alternative_names, :motions_title, :motions_title_singular, to: :motion
+
+    def update_counter_chain
+      update_counters
+      motion.update_counter_chain
+    end
+
+    def update_counters
+      vote_counts = votes
+                      .group('"for"')
+                      .count
+      comment_count = comment_threads
+                        .where(is_trashed: false)
+                        .where.not(profile: nil)
+                        .count
+
+      self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
+                  votes_con_count: vote_counts[Vote.fors[:con]] || 0,
+                  votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0,
+                  comments_count: comment_count
+    end
   end
 
   def creator_follow
@@ -56,13 +76,6 @@ module ProCon
 
   def root_comments
     self.comment_threads.where(is_trashed: false, :parent_id => nil)
-  end
-
-  def update_vote_counters
-    vote_counts = self.votes.group('"for"').count
-    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
-                votes_con_count: vote_counts[Vote.fors[:con]] || 0,
-                votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
   end
 
   module ClassMethods

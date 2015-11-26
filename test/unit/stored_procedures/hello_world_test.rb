@@ -7,9 +7,9 @@ module StoredProcedureTests
       @procedure = Squirm.procedure "hello_world"
     end
 
-    test "hello_world should emit a greeting" do
-      assert_equal "hello world!", @procedure.call
-    end
+    # test "hello_world should emit a greeting" do
+    #   assert_equal "hello world!", @procedure.call
+    # end
   end
 
 end

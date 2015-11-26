@@ -1,7 +1,8 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable,
+          Attribution, HasLinks, PublicActivity::Common, CounterChainable
 
   belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
@@ -17,6 +18,7 @@ class Motion < ActiveRecord::Base
 
   before_save :cap_title
   after_save :creator_follow
+  after_create :update_counter_chain
 
   counter_culture :forum
   acts_as_followable
@@ -175,7 +177,12 @@ class Motion < ActiveRecord::Base
     votes_pro_count.abs + votes_con_count.abs + votes_neutral_count.abs
   end
 
-  def update_vote_counters
+  def update_counter_chain
+    update_counters
+    questions.each(&:update_counter_chain) if questions.present?
+  end
+
+  def update_counters
     vote_counts = self.votes.group('"for"').count
     self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
                 votes_con_count: vote_counts[Vote.fors[:con]] || 0,

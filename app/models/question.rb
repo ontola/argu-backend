@@ -1,5 +1,6 @@
 class Question < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, HasLinks, Attribution, PublicActivity::Common
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, HasLinks, Attribution,
+          PublicActivity::Common, CounterChainable
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
@@ -85,7 +86,11 @@ class Question < ActiveRecord::Base
     motions.trashed(false).order(updated_at: :desc).limit(3)
   end
 
-  def update_vote_counters
+  def update_counter_chain
+    update_counters
+  end
+
+  def update_counters
     vote_counts = self.votes.group('"for"').count
     self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
                 votes_con_count: vote_counts[Vote.fors[:con]] || 0

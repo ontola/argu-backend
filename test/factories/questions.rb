@@ -2,7 +2,7 @@ FactoryGirl.define do
 
   factory :question do
     association :forum, strategy: :create
-    association :creator, factory: :profile
+    association :creator, factory: :profile_direct_email
 
     title 'title'
     content 'content'
