@@ -28,6 +28,9 @@ class Question < ActiveRecord::Base
 
   after_save :creator_follow
 
+  # For compatibility with convertible, not to be actually used
+  VOTE_OPTIONS = [:pro, :neutral, :con]
+
   # Might not be a good idea
   def creator
     super || Profile.first_or_initialize(shortname: 'Onbekend')

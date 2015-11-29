@@ -144,6 +144,7 @@ group :development, :test do
   gem 'fakeredis', require: false
   gem 'simplecov', require: false
   gem 'rubocop'
+  gem 'dotenv-rails'
 end
 
 group :production, :staging do

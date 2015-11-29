@@ -36,15 +36,18 @@ module ProCon
       vote_counts = votes
                       .group('"for"')
                       .count
-      comment_count = comment_threads
+      comments = comment_threads
                         .where(is_trashed: false)
                         .where.not(profile: nil)
-                        .count
+      comment_count = comments.count
+      comment_interactions = comments.pluck(:interactions_count).reduce(&:+) || 0
+      interactions_count = votes.count + comment_interactions + followers.count
 
       self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
                   votes_con_count: vote_counts[Vote.fors[:con]] || 0,
                   votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0,
-                  comments_count: comment_count
+                  comments_count: comment_count,
+                  interactions_count: interactions_count
     end
   end
 

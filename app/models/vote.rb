@@ -12,6 +12,12 @@ class Vote < ActiveRecord::Base
   enum for: {con: 0, pro: 1, neutral: 2, abstain: 3}
 
   validates :voteable, :voter, :forum, :for, presence: true
+  validates :for,
+            unless: 'voteable.blank?',
+            inclusion: {
+              in: ->(arg) {
+                arg.voteable.class::VOTE_OPTIONS.map(&:to_s)
+              } }
 
   ##########methods###########
   def for?(item)

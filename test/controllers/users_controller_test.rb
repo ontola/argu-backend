@@ -115,8 +115,8 @@ class UsersControllerTest < ActionController::TestCase
     argument1 = FactoryGirl.create(:argument, forum: utrecht, motion: motion1)
     FactoryGirl.create(:vote, voteable: motion1, for: :neutral, forum: utrecht, voter: user2.profile)
     FactoryGirl.create(:vote, voteable: motion3, for: :pro, forum: amsterdam, voter: user2.profile)
-    FactoryGirl.create(:vote, voteable: argument1, for: :neutral, forum: utrecht, voter: user2.profile)
-    FactoryGirl.create(:vote, voteable: motion4, for: :pro, forum: utrecht, voter: user2.profile)
+    FactoryGirl.create(:vote, voteable: argument1, for: :pro, forum: utrecht, voter: user2.profile)
+    FactoryGirl.create(:vote, voteable: motion4, for: :neutral, forum: utrecht, voter: user2.profile)
     user2
   end
 

@@ -3,13 +3,14 @@ FactoryGirl.define do
   factory :motion do
     association :forum, strategy: :create
     association :creator, factory: :profile
-    ignore do
+    transient do
       question nil
     end
 
     sequence(:title) { |n| "title#{n}" }
     content 'content'
     is_trashed false
+    interactions_count 0
 
     after :create do |motion, evaluator|
       if evaluator.passed_in?(:question)
@@ -37,6 +38,9 @@ FactoryGirl.define do
                     forum: motion.forum,
                     pro: false,
                     is_trashed: true
+        # Due to https://github.com/thoughtbot/factory_girl/issues/549
+        motion.reload
+        motion.update_counters
       end
     end
 
@@ -51,6 +55,9 @@ FactoryGirl.define do
         create_list :vote, 2,
                     voteable: motion,
                     for: :con
+        # Due to https://github.com/thoughtbot/factory_girl/issues/549
+        motion.reload
+        motion.update_counters
       end
     end
   end

@@ -8,8 +8,9 @@ module CounterChainable
     # @abstract
     # Used to call `update_counter_chain` in the upward lineage.
     # @note Should always be called in a transaction since can leave the counts incorrect if an
-    #       exception is thrown up the lineage chain
+    #       exception is thrown up the lineage chain.
     # @note Should be called from the appropriate lifecycle hooks
+    # @return [Boolean] Whether the update succeeded for the chain
     def update_counter_chain
       raise 'Abstract method called'
     end

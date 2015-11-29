@@ -15,6 +15,7 @@ class AddPublisherToTables < ActiveRecord::Migration
     rename_column :group_responses, :created_by_id, :publisher_id
     remove_column :group_responses, :created_by_type
     GroupResponse.find_each do |n|
+      throw 'NOT EXISTANT' unless n.publisher_id.present?
       u = Profile.find(n.publisher_id).profileable
       n.update_column(:publisher_id, u.id) if u.is_a? User
     end

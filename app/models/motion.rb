@@ -180,14 +180,24 @@ class Motion < ActiveRecord::Base
   def update_counter_chain
     update_counters
     questions.each(&:update_counter_chain) if questions.present?
+    true
   end
 
   def update_counters
-    vote_counts = self.votes.group('"for"').count
+    vote_counts = votes
+                    .group('"for"')
+                    .count
+
+    interactions = vote_counts
+                     .values
+                     .reduce(&:+) || 0
+    interactions += arguments.reload.map(&:interactions_count).reduce(&:+) || 0
+
     self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
                 votes_con_count: vote_counts[Vote.fors[:con]] || 0,
                 votes_neutral_count: vote_counts[Vote.fors[:neutral]] || 0,
-                votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
+                votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0,
+                interactions_count: interactions
   end
 
   def uses_alternative_names

@@ -180,7 +180,7 @@ class PagesControllerTest < ActionController::TestCase
     argument1 = FactoryGirl.create(:argument, forum: utrecht, motion: motion1)
     FactoryGirl.create(:vote, voteable: motion1, for: :neutral, forum: utrecht)
     FactoryGirl.create(:vote, voteable: motion3, for: :pro, forum: amsterdam)
-    FactoryGirl.create(:vote, voteable: argument1, for: :neutral, forum: utrecht)
+    FactoryGirl.create(:vote, voteable: argument1, for: :pro, forum: utrecht)
   end
 
 end

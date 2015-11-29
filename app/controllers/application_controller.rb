@@ -106,7 +106,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # @return the {Profile} the {User} is using to do actions
+  # @return [Profile] the {Profile} the {User} is using to do actions
   def current_profile
     if current_user.present?
       @current_profile ||= get_current_actor
