@@ -8,4 +8,12 @@ class CommentTest < ActiveSupport::TestCase
     assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
+  def test_followers_increase_interactions_count
+    assert_equal 0, subject.interactions_count
+    FactoryGirl.create(:follow, followable: subject)
+    assert_equal 1, subject.reload.interactions_count
+    FactoryGirl.create(:follow, followable: subject)
+    assert_equal 2, subject.interactions_count
+  end
+
 end

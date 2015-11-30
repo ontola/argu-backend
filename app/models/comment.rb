@@ -11,7 +11,8 @@ class Comment < ActiveRecord::Base
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
-  after_save :update_counter_chain, :touch_parent, if: Proc.new { |c| c.commentable.persisted? }
+  after_create :update_counter_chain
+  after_save :touch_parent, if: Proc.new { |c| c.commentable.persisted? }
   after_destroy :update_counter_chain
 
   validates_presence_of :profile
@@ -19,7 +20,6 @@ class Comment < ActiveRecord::Base
   auto_strip_attributes :body
 
   attr_accessor :is_processed
-
 
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.
@@ -81,7 +81,13 @@ class Comment < ActiveRecord::Base
   end
 
   def update_counter_chain
+    update_counters
     commentable.update_counter_chain
+  end
+
+  def update_counters
+    count = followers.count
+    update interactions_count: count
   end
 
   # Comments can't be deleted since all comments below would be hidden as well

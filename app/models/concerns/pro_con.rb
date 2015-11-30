@@ -41,7 +41,7 @@ module ProCon
                         .where.not(profile: nil)
       comment_count = comments.count
       comment_interactions = comments.pluck(:interactions_count).reduce(&:+) || 0
-      interactions_count = votes.count + comment_interactions + followers.count
+      interactions_count = votes.count + comment_interactions + comment_count + followers.count
 
       self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
                   votes_con_count: vote_counts[Vote.fors[:con]] || 0,
