@@ -145,32 +145,32 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var $container;
 
+// filter functions
+var lastFilter = "";
+var lastType = "";
+
+var filterFns = {
+    // filter by tag using data-tags
+    combined: function combined() {
+        var correctTag, correctType;
+        if (lastFilter != "") {
+            var tags = this.dataset.tags.split(',');
+            correctTag = tags.indexOf(lastFilter) != -1;
+        } else correctTag = true;
+
+        if (lastType != "") correctType = this.className.indexOf(lastType) != -1;else correctType = true;
+
+        return correctTag && correctType;
+    }
+};
+
 function init() {
-    // filter functions
-    var lastFilter = "",
-        lastType = "";
-
-    var filterFns = {
-        // filter by tag using data-tags
-        combined: function combined() {
-            var correctTag, correctType;
-            if (lastFilter != "") {
-                var tags = this.dataset.tags.split(',');
-                correctTag = tags.indexOf(lastFilter) != -1;
-            } else correctTag = true;
-
-            if (lastType != "") correctType = this.className.indexOf(lastType) != -1;else correctType = true;
-
-            return correctTag && correctType;
-        }
-    };
-
     checkForGrid();
 
     $(document).on('pjax:complete pjax:end', function () {
         checkForGrid();
     }).on('click', '.sort-random', function () {
-        $container.isotope('updateSortData').isotope({
+        $container.arrange('updateSortData').arrange({
             sortBy: 'random'
         });
     }).on('click', '#tags a', function (e) {
@@ -195,19 +195,19 @@ function init() {
         }
     }).on('click', '#sorts a', function () {
         var sortValue = $(this).attr('data-sort-value');
-        $container.isotope({ sortBy: sortValue });
+        $container.arrange({ sortBy: sortValue });
     }).on('click', '#display [data-display-setting="info_bar"]', function () {
         var grid = $('.grid');
         grid.toggleClass('display-hide-details');
-        grid.isotope();
+        grid.arrange();
     }).on('click', '#display [data-display-setting="image"]', function () {
         var grid = $('.grid');
         grid.toggleClass('display-hide-images');
-        grid.isotope();
+        grid.arrange();
     }).on('click', '#display [data-display-setting="columns"]', function () {
         var grid = $('.grid');
         grid.toggleClass('display-single-column');
-        grid.isotope();
+        grid.arrange();
     });
 
     // change is-checked class on buttons
@@ -221,6 +221,9 @@ function init() {
 
     window.onpopstate = function (event) {
         if ($('.grid').length > 0) {
+            if (typeof $container.isotope !== 'function') {
+                checkForGrid();
+            }
             if (event.state) {
                 event.state.filterValue = event.state.filterValue || '';
             }
@@ -261,7 +264,7 @@ function checkForGrid() {
 var _document = $(document);
 
 function activateFilter(type, filter, value) {
-    $container.isotope({ filter: filterFns['combined'] });
+    $container.arrange({ filter: filterFns['combined'] });
     if ((filterFns[filter] || filter || '') == '') setHighlight('tags', '');
 }
 
@@ -850,7 +853,7 @@ function shallowUnmountComponents() {
     for (var i = 0; i < nodes.length; ++i) {
         var node = nodes[i];
 
-        _react2.default.unmountComponentAtNode(node);
+        _reactDom2.default.unmountComponentAtNode(node);
         // now remove the `data-react-class` wrapper as well
         //node.parentElement && node.parentElement.removeChild(node);
     }
@@ -1402,7 +1405,7 @@ var HyperDropdown = exports.HyperDropdown = _react2.default.createClass({
             key: 'required' }));
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { tabIndex: '1',
                 className: dropdownClass,
                 onMouseEnter: this.onMouseEnter,
@@ -1542,7 +1545,7 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
         );
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { tabIndex: '1',
                 className: dropdownClass,
                 onMouseEnter: this.onMouseEnter,
@@ -1640,12 +1643,8 @@ var DropdownContent = exports.DropdownContent = _react2.default.createClass({
 
         return _react2.default.createElement(
             'div',
-            null,
-            _react2.default.createElement(
-                'ul',
-                { className: 'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState, style: null },
-                children
-            )
+            { className: 'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState, style: null },
+            children
         );
     }
 });
@@ -1683,7 +1682,7 @@ var LinkItem = exports.LinkItem = _react2.default.createClass({
         className = this.props.className;
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { className: this.props.type },
             divider,
             _react2.default.createElement(
@@ -1723,7 +1722,7 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
 
     render: function render() {
         return _react2.default.createElement(
-            'li',
+            'div',
             { className: this.props.type },
             _react2.default.createElement(
                 'a',
@@ -1784,7 +1783,7 @@ var ActorItem = exports.ActorItem = _react2.default.createClass({
         }
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { className: 'link ' + this.props.type },
             divider,
             _react2.default.createElement(

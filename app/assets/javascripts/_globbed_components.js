@@ -459,7 +459,7 @@ var HyperDropdown = exports.HyperDropdown = _react2.default.createClass({
             key: 'required' }));
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { tabIndex: '1',
                 className: dropdownClass,
                 onMouseEnter: this.onMouseEnter,
@@ -599,7 +599,7 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
         );
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { tabIndex: '1',
                 className: dropdownClass,
                 onMouseEnter: this.onMouseEnter,
@@ -697,12 +697,8 @@ var DropdownContent = exports.DropdownContent = _react2.default.createClass({
 
         return _react2.default.createElement(
             'div',
-            null,
-            _react2.default.createElement(
-                'ul',
-                { className: 'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState, style: null },
-                children
-            )
+            { className: 'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState, style: null },
+            children
         );
     }
 });
@@ -740,7 +736,7 @@ var LinkItem = exports.LinkItem = _react2.default.createClass({
         className = this.props.className;
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { className: this.props.type },
             divider,
             _react2.default.createElement(
@@ -780,7 +776,7 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
 
     render: function render() {
         return _react2.default.createElement(
-            'li',
+            'div',
             { className: this.props.type },
             _react2.default.createElement(
                 'a',
@@ -841,7 +837,7 @@ var ActorItem = exports.ActorItem = _react2.default.createClass({
         }
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { className: 'link ' + this.props.type },
             divider,
             _react2.default.createElement(

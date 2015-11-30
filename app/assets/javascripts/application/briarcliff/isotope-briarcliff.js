@@ -2,36 +2,38 @@ import Isotope from 'isotope-layout';
 
 var $container;
 
+// filter functions
+var lastFilter = "";
+var lastType   = "";
+
+var filterFns = {
+    // filter by tag using data-tags
+    combined: function () {
+        var correctTag,
+            correctType;
+        if(lastFilter != "") {
+            var tags = this.dataset.tags.split(',');
+            correctTag = tags.indexOf(lastFilter) != -1;
+        } else correctTag = true;
+
+        if (lastType != "") correctType = this.className.indexOf(lastType) != -1;
+        else correctType = true;
+
+        return correctTag && correctType;
+    }
+};
+
 export default function init () {
-    // filter functions
-    var lastFilter = "",
-        lastType   = "";
-
-    var filterFns = {
-        // filter by tag using data-tags
-        combined: function () {
-            var correctTag,
-                correctType;
-            if(lastFilter != "") {
-                var tags = this.dataset.tags.split(',');
-                correctTag = tags.indexOf(lastFilter) != -1;
-            } else correctTag = true;
-
-            if (lastType != "") correctType = this.className.indexOf(lastType) != -1;
-            else correctType = true;
-
-            return correctTag && correctType;
-        }
-    };
-
     checkForGrid();
 
     $(document).on('pjax:complete pjax:end', function () {
         checkForGrid();
     }).on('click', '.sort-random', function () {
-        $container.isotope('updateSortData').isotope({
-            sortBy: 'random'
-        });
+        $container
+            .arrange('updateSortData')
+            .arrange({
+                sortBy: 'random'
+            });
     }).on('click', '#tags a', function (e) {
         // bind filter button click
         e.preventDefault();   // this prevents selecting the words in chrome on android
@@ -54,19 +56,19 @@ export default function init () {
         }
     }).on('click', '#sorts a', function () {
         var sortValue = $(this).attr('data-sort-value');
-        $container.isotope({ sortBy: sortValue });
+        $container.arrange({ sortBy: sortValue });
     }).on('click', '#display [data-display-setting="info_bar"]', function () {
         let grid = $('.grid');
         grid.toggleClass( 'display-hide-details');
-        grid.isotope();
+        grid.arrange();
     }).on('click', '#display [data-display-setting="image"]', function () {
         let grid = $('.grid');
         grid.toggleClass( 'display-hide-images');
-        grid.isotope();
+        grid.arrange();
     }).on('click', '#display [data-display-setting="columns"]', function () {
         let grid = $('.grid');
         grid.toggleClass( 'display-single-column');
-        grid.isotope();
+        grid.arrange();
     });
 
     // change is-checked class on buttons
@@ -80,6 +82,9 @@ export default function init () {
 
     window.onpopstate = function(event) {
         if ($('.grid').length > 0) {
+            if (typeof $container.isotope !== 'function') {
+                checkForGrid();
+            }
             if (event.state) {
                 event.state.filterValue = event.state.filterValue || '';
             }
@@ -120,7 +125,7 @@ function checkForGrid () {
 var _document = $(document);
 
 function activateFilter(type, filter, value) {
-    $container.isotope({ filter: filterFns['combined'] });
+    $container.arrange({ filter: filterFns['combined'] });
     if ((filterFns[filter] || filter || '') == '') setHighlight('tags', '');
 }
 

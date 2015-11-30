@@ -15,8 +15,8 @@ nav#navbar.navbar role="navigation"
           span.fa.fa-plus
           span.icon-left.hide-ml= t('new_discussion.title')
     ul.navbar-links.navbar-links-right
-      =react_component 'HyperDropdown', profile_dropdown_items, {prerender: true}
+      li= react_component 'HyperDropdown', profile_dropdown_items, {prerender: true}
       - if active_for_user? :notifications, current_user
-        .inspectlet-sensitive=react_component 'NotificationDropdown', notification_dropdown_items, {prerender: true}
-      =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
+        li.inspectlet-sensitive= react_component 'NotificationDropdown', notification_dropdown_items, {prerender: true}
+      li= react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
   =render partial: 'online_status'

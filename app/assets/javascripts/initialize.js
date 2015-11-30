@@ -37,7 +37,7 @@ function shallowUnmountComponents () {
     for (var i = 0; i < nodes.length; ++i) {
         var node = nodes[i];
 
-        React.unmountComponentAtNode(node);
+        ReactDOM.unmountComponentAtNode(node);
         // now remove the `data-react-class` wrapper as well
         //node.parentElement && node.parentElement.removeChild(node);
     }
