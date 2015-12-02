@@ -7,6 +7,7 @@ Argu is an online discussion platform for substantive debate.
 [Visit argu.co](https://argu.co)
 [Visit our wiki](https://bitbucket.org/arguweb/argu/wiki/Home)
 
+`gem yard server -r` and goto [localhost:8808](localhost:8808)
 
 ***
 Legal:
