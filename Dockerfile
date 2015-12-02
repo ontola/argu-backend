@@ -1,14 +1,10 @@
-FROM ruby:2.1
+FROM fletcher91/ruby-vips-qt-unicorn:latest
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
 
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
-
-RUN apt-get update -qq && apt-get install -y build-essential libpq-dev libvips-dev libgsf-1-dev libxml2 zlib1g-dev qt5-default libqt5webkit5-dev unicorn
-RUN apt-get update && apt-get install -y nodejs --no-install-recommends && rm -rf /var/lib/apt/lists/*
-RUN apt-get update && apt-get install -y mysql-client postgresql-client sqlite3 --no-install-recommends && rm -rf /var/lib/apt/lists/*
 
 COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/

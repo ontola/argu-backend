@@ -11,7 +11,7 @@ var filterFns = {
     combined: function () {
         var correctTag,
             correctType;
-        if(lastFilter != "") {
+        if(typeof lastFilter !== 'undefined' && lastFilter != '') {
             var tags = this.dataset.tags.split(',');
             correctTag = tags.indexOf(lastFilter) != -1;
         } else correctTag = true;
