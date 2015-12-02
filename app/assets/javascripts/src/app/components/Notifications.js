@@ -84,7 +84,7 @@ export const NotificationDropdown = React.createClass({
                                                {...adaptedProps}
                                                key='required' />;
 
-        return (<li tabIndex="1"
+        return (<div tabIndex="1"
                     className={dropdownClass}
                     onMouseEnter={this.onMouseEnterFetch}
                     onMouseLeave={this.onMouseLeave} >
@@ -93,7 +93,7 @@ export const NotificationDropdown = React.createClass({
             <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
                 {openState && dropdownContent}
             </ReactTransitionGroup>
-        </li>);
+        </div>);
     }
 });
 window.NotificationDropdown = NotificationDropdown;

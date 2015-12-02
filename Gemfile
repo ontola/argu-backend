@@ -1,8 +1,9 @@
 source 'https://rubygems.org/'
 
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
 gem 'sass', '= 3.4.18'
-gem 'rails', '~>4.2.3'
+gem 'rails', '~>4.2.5'
 
 gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
@@ -82,7 +83,6 @@ gem 'sidetiq'
 gem 'sidekiq-logging-json'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
-gem 'jquery-pjax-rails'
 gem 'rack-pjax'
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.0.2'

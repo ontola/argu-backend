@@ -1008,7 +1008,7 @@ var NotificationDropdown = exports.NotificationDropdown = _react2.default.create
             key: 'required' }));
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { tabIndex: '1',
                 className: dropdownClass,
                 onMouseEnter: this.onMouseEnterFetch,

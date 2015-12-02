@@ -59,15 +59,21 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   Capybara.register_driver :selenium_firefox do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :firefox)
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile.native_events = true
+    Capybara::Selenium::Driver.new(app, browser: :firefox, profile: profile)
   end
 
   Capybara.register_driver :selenium_chrome do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile.native_events = true
+    Capybara::Selenium::Driver.new(app, browser: :chrome, profile: profile)
   end
 
   Capybara.register_driver :selenium_safari do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :safari)
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile.native_events = true
+    Capybara::Selenium::Driver.new(app, browser: :safari, profile: profile)
   end
 
   Capybara.register_driver :poltergeist do |app|

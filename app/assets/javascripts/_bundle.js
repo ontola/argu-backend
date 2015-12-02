@@ -829,34 +829,13 @@ var _helpers = require('./src/app/lib/helpers');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function shallowMountComponents() {
-    var nodes = document.querySelectorAll('#pjax-container [data-react-class]');
-
-    for (var i = 0; i < nodes.length; ++i) {
-        var node = nodes[i];
-        var className = node.getAttribute(window.ReactRailsUJS.CLASS_NAME_ATTR);
-
-        // Assume className is simple and can be found at top-level (window).
-        // Fallback to eval to handle cases like 'My.React.ComponentName'.
-        var constructor = window[className] || eval.call(window, className);
-        var propsJson = node.getAttribute(window.ReactRailsUJS.PROPS_ATTR);
-        var props = propsJson && JSON.parse(propsJson);
-
-        _reactDom2.default.render(_react2.default.createElement(constructor, props), node);
-    }
+    window.ReactRailsUJS.mountComponents('#pjax-container');
 } /*globals ReactRailsUJS*/
 
 window.shallowMountComponents = shallowMountComponents;
 
 function shallowUnmountComponents() {
-    var nodes = document.querySelectorAll('#pjax-container [data-react-class]');
-
-    for (var i = 0; i < nodes.length; ++i) {
-        var node = nodes[i];
-
-        _reactDom2.default.unmountComponentAtNode(node);
-        // now remove the `data-react-class` wrapper as well
-        //node.parentElement && node.parentElement.removeChild(node);
-    }
+    window.ReactRailsUJS.unmountComponents('#pjax-container');
 }
 window.shallowUnmountComponents = shallowUnmountComponents;
 
@@ -886,7 +865,7 @@ function init() {
     }
     $.pjax.defaults.timeout = 10000;
 
-    $(document).pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container').on('pjax:beforeReplace', shallowUnmountComponents) // pjax:start seems to have come unnecessary
+    $(document).pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container').on('pjax:beforeApply', shallowUnmountComponents) // pjax:start seems to have come unnecessary
     .on('pjax:beforeReplace', _meta2.default.processContentForMetaTags).on('pjax:end', shallowMountComponents).on('pjax:end', _meta2.default.removeMetaContent);
 
     if (!("ontouchstart" in document.documentElement)) {
@@ -1954,7 +1933,7 @@ var NotificationDropdown = exports.NotificationDropdown = _react2.default.create
             key: 'required' }));
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { tabIndex: '1',
                 className: dropdownClass,
                 onMouseEnter: this.onMouseEnterFetch,
