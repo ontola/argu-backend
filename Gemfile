@@ -54,9 +54,6 @@ gem 'roadie', '~> 3.0.5'
 gem 'roadie-rails', '~> 1.0'
 gem 'cocoon', '~> 1.2.6'
 
-
-#Search
-
 #Pagination
 gem 'kaminari', '~>0.16.1'
 
