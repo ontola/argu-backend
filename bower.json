@@ -21,7 +21,6 @@
     "tests"
   ],
   "dependencies": {
-    "jquery": "=1.11.3",
     "microplugin": "latest",
     "sifter": "latest",
     "selectize": "latest",

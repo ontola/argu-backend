@@ -7,7 +7,7 @@
     "intl": "^1.0.0",
     "intro.js": "^1.1.1",
     "isotope-layout": "^2.2.2",
-    "jquery": "^2.1.4",
+    "jquery": "^1.11.3",
     "jquery-ujs": "^1.0.4",
     "react": "^0.14.2",
     "react-addons-transition-group": "^0.14.2",
