@@ -65,9 +65,7 @@ RSpec.configure do |config|
   end
 
   Capybara.register_driver :selenium_chrome do |app|
-    profile = Selenium::WebDriver::Chrome::Profile.new
-    profile.native_events = true
-    Capybara::Selenium::Driver.new(app, browser: :chrome, profile: profile)
+    Capybara::Selenium::Driver.new(app, browser: :chrome)
   end
 
   Capybara.register_driver :selenium_safari do |app|
