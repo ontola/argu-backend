@@ -16,7 +16,7 @@ RSpec.feature 'Access tokens', type: :feature do
     expect(page).to have_content 'helsinki'
 
     click_link motion.title
-    wait_for_ajax
+    #wait_for_ajax
 
     expect(page).to have_content('content')
 
