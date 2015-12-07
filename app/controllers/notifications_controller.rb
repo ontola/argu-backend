@@ -14,10 +14,6 @@ class NotificationsController < ApplicationController
       policy_scope(Notification)
       head 204
     end
-
-    respond_to do |format|
-      format.json { render }
-    end
   end
 
   def show

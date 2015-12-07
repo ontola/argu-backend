@@ -51,7 +51,7 @@ function init () {
     if (typeof $.pjax.defaults ===  'undefined') {
         $.pjax.defaults = {};
     }
-    $.pjax.defaults.timeout = 10000;
+    $.pjax.defaults.timeout = 7000;
 
     $(document)
         .pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container')

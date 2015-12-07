@@ -149,20 +149,66 @@ var $container;
 var lastFilter = "";
 var lastType = "";
 
-var filterFns = {
-    // filter by tag using data-tags
-    combined: function combined() {
-        var correctTag, correctType;
-        if (typeof lastFilter !== 'undefined' && lastFilter != '') {
-            var tags = this.dataset.tags.split(',');
-            correctTag = tags.indexOf(lastFilter) != -1;
-        } else correctTag = true;
+function combinedFilter() {
+    var correctTag, correctType;
+    if (typeof lastFilter !== 'undefined' && lastFilter != '') {
+        var tags = this.dataset.tags.split(',');
+        correctTag = tags.indexOf(lastFilter) != -1;
+    } else correctTag = true;
 
-        if (lastType != "") correctType = this.className.indexOf(lastType) != -1;else correctType = true;
+    if (lastType != "") correctType = this.className.indexOf(lastType) != -1;else correctType = true;
 
-        return correctTag && correctType;
+    return correctTag && correctType;
+}
+
+function checkForGrid() {
+    var grid = document.querySelector('.grid');
+
+    if (grid !== null) {
+        $container = new _isotopeLayout2.default(grid, {
+            itemSelector: '.box-grid',
+            columnWidth: '.box-grid-sizer',
+            getSortData: {
+                updated_at: '[data-updated-at]',
+                created_at: '[data-created-at]',
+                name: 'h2',
+                vote_count: '[data-vote-count] parseInt'
+            },
+            sortAscending: {
+                created_at: false,
+                updated_at: false,
+                name: true,
+                vote_count: false
+            }
+        });
     }
-};
+}
+var _document = $(document);
+
+function activateFilter(type, filter, value) {
+    $container.arrange({ filter: combinedFilter });
+    if ((filter || '') == '') setHighlight('tags', '');
+}
+
+function filterForType(filter, value) {
+    lastType = value;
+    if (filter == "") lastFilter = "";
+    activateFilter(filter, filter, value);
+    setHighlight('type', value);
+    if (lastFilter != "") activateFilter('tags', 'tags', lastFilter);
+}
+
+function filterForTag(tag) {
+    lastFilter = tag;
+    activateFilter('tags', 'tags', tag);
+    setHighlight('tags', lastFilter);
+    if (lastType != "") activateFilter('type', lastType, lastType);
+}
+
+function setHighlight(type, value) {
+    _document.find('#' + type + ' .is-checked').removeClass('is-checked');
+    _document.find('#' + type + ' [data-filter-value="' + value + '"]').addClass('is-checked');
+}
 
 function init() {
     checkForGrid();
@@ -199,15 +245,15 @@ function init() {
     }).on('click', '#display [data-display-setting="info_bar"]', function () {
         var grid = $('.grid');
         grid.toggleClass('display-hide-details');
-        grid.arrange();
+        $container.arrange();
     }).on('click', '#display [data-display-setting="image"]', function () {
         var grid = $('.grid');
         grid.toggleClass('display-hide-images');
-        grid.arrange();
+        $container.arrange();
     }).on('click', '#display [data-display-setting="columns"]', function () {
         var grid = $('.grid');
         grid.toggleClass('display-single-column');
-        grid.arrange();
+        $container.arrange();
     });
 
     // change is-checked class on buttons
@@ -237,55 +283,6 @@ function init() {
             filterForTag(tag);
         }
     }
-}
-
-function checkForGrid() {
-    var grid = document.querySelector('.grid');
-
-    if (grid !== null) {
-        $container = new _isotopeLayout2.default(grid, {
-            itemSelector: '.box-grid',
-            columnWidth: '.box-grid-sizer',
-            getSortData: {
-                updated_at: '[data-updated-at]',
-                created_at: '[data-created-at]',
-                name: 'h2',
-                vote_count: '[data-vote-count] parseInt'
-            },
-            sortAscending: {
-                created_at: false,
-                updated_at: false,
-                name: true,
-                vote_count: false
-            }
-        });
-    }
-}
-var _document = $(document);
-
-function activateFilter(type, filter, value) {
-    $container.arrange({ filter: filterFns['combined'] });
-    if ((filterFns[filter] || filter || '') == '') setHighlight('tags', '');
-}
-
-function filterForType(filter, value) {
-    lastType = value;
-    if (filter == "") lastFilter = "";
-    activateFilter(filter, filter, value);
-    setHighlight('type', value);
-    if (lastFilter != "") activateFilter('tags', 'tags', lastFilter);
-}
-
-function filterForTag(tag) {
-    lastFilter = tag;
-    activateFilter('tags', 'tags', tag);
-    setHighlight('tags', lastFilter);
-    if (lastType != "") activateFilter('type', lastType, lastType);
-}
-
-function setHighlight(type, value) {
-    _document.find('#' + type + ' .is-checked').removeClass('is-checked');
-    _document.find('#' + type + ' [data-filter-value="' + value + '"]').addClass('is-checked');
 }
 
 },{"isotope-layout":88}],5:[function(require,module,exports){
@@ -863,7 +860,7 @@ function init() {
     if (typeof $.pjax.defaults === 'undefined') {
         $.pjax.defaults = {};
     }
-    $.pjax.defaults.timeout = 10000;
+    $.pjax.defaults.timeout = 7000;
 
     $(document).pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container').on('pjax:beforeApply', shallowUnmountComponents) // pjax:start seems to have come unnecessary
     .on('pjax:beforeReplace', _meta2.default.processContentForMetaTags).on('pjax:end', shallowMountComponents).on('pjax:end', _meta2.default.removeMetaContent);
@@ -935,7 +932,7 @@ module.exports = (function ReactUJS(document, window) {
             for (var i = 0; i < nodes.length; ++i) {
                 var node = nodes[i];
 
-                React.unmountComponentAtNode(node);
+                ReactDOM.unmountComponentAtNode(node);
             }
         }
     };
