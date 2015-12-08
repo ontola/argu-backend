@@ -1,5 +1,7 @@
 import React from 'react';
 React; // For ESLint, jsx compiles to React.createElement, so React must be imported
+import Intl from 'intl';
+Intl; // For ESLint
 
 Object.resolve = function(path, obj) {
     return [obj || self].concat(path.split('.')).reduce(function(prev, curr) {
@@ -118,7 +120,7 @@ export function tryLogin (response) {
     if (response.status === 401) {
         return Promise.resolve(window.alert(errorMessageForStatus(response.status)));
     } else {
-        message = errorMessageForStatus(response.status) || 'unknown status code';
+        const message = errorMessageForStatus(response.status) || 'unknown status code';
         return Promise.reject(new Error(message));
     }
 }

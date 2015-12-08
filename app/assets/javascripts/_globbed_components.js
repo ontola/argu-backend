@@ -2020,11 +2020,17 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _intl = require('intl');
+
+var _intl2 = _interopRequireDefault(_intl);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
 _react2.default; // For ESLint, jsx compiles to React.createElement, so React must be imported
+
+_intl2.default; // For ESLint
 
 Object.resolve = function (path, obj) {
     return [obj || self].concat(path.split('.')).reduce(function (prev, curr) {
@@ -2143,7 +2149,7 @@ function tryLogin(response) {
     if (response.status === 401) {
         return Promise.resolve(window.alert(errorMessageForStatus(response.status)));
     } else {
-        message = errorMessageForStatus(response.status) || 'unknown status code';
+        var message = errorMessageForStatus(response.status) || 'unknown status code';
         return Promise.reject(new Error(message));
     }
 }
@@ -2163,7 +2169,7 @@ function json(response) {
     }
 }
 
-},{"react":464}],15:[function(require,module,exports){
+},{"intl":262,"react":464}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

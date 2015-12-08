@@ -65,7 +65,7 @@ const ui = {
 
     handleAjaxCalls: function (e, xhr, options) {
         if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201) {
-            message = errorMessageForStatus(xhr.status) || 'Unknown error occurred';
+            const message = errorMessageForStatus(xhr.status) || `Unknown error occurred (status: ${xhr.status})`;
             new Alert(message, 'alert', true);
         }
     },
