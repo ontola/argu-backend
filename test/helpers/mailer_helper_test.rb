@@ -73,7 +73,7 @@ class MailerHelperTest < ActionView::TestCase
   end
 
   test 'notification_subject should return correct sentences for questions' do
-    assert_equal "Nieuw vraagstuk: '#{question.resource.display_name}' door #{creator.first_name} #{creator.last_name}",
+    assert_equal "Nieuwe uitdaging: '#{question.resource.display_name}' door #{creator.first_name} #{creator.last_name}",
                  notification_subject(question)
   end
 

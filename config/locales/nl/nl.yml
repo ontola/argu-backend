@@ -92,7 +92,7 @@ nl:
   header:
     motions: "Voorstellen"
     activities: "Activiteit"
-    questions: "Vraagstukken"
+    questions: "Uitdagingen"
   site:
     description: "Argu is een online discussieplatform waar argumenten centraal staan."
     copyright: "Copyright © 2014-2015 Argu v.o.f."#Footer
@@ -257,7 +257,7 @@ nl:
     forum_notice: 'Je staat op het punt een discussie te starten in het forum: '
     forum_notice2: 'Zorg er voor dat jouw discussie relevant is voor dit forum.'
     start_header: 'Start een nieuwe discussie'
-    start_body: 'Heb jij over een ander onderwerp een goed idee, of wil je anderen mee laten denken over een bepaald vraagstuk?'
+    start_body: 'Wil jij anderen laten meedenken over een bepaalde uitdaging, of heb je een goed idee om te delen?'
   seo:
     argument:
       name: 'Argument %{side} %{motiontitle}'
