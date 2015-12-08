@@ -1,25 +1,239 @@
 @import "variables";
 @import "mixins";
+@import "argu";
 
-.mail-header{
-  background-color: white;
-  text-align: center;
+// Reset styles by http://templates.mailchimp.com/development/css/reset-styles/
+
+body{
+  margin:0;
+  padding:0;
+}
+
+img{
+  border:0 none;
+  height:auto;
+  line-height:100%;
+  outline:none;
+  text-decoration:none;
+}
+
+a img{
+  border:0 none;
+}
+
+.imageFix{
+  display:block;
+}
+
+table, td{
+  border-collapse:collapse;
 }
 
 .mail-body{
+  height:100% !important;
+  margin:0;
+  padding:0;
+  width:100% !important;
+}
+
+// End of reset styles
+
+.mail-body {
   background-color: $g1;
+}
+
+.mail-h3 {
+  font-family: $font-special;
+  color: $g4;
+  font-weight: bold;
+  font-weight: 700;
+  word-break: break-word;
+  line-height: 20px;
+  font-size: 20px;
+  padding: 0 0 5px 0;
+}
+
+.mail-p {
+  font-family: $font-sans;
+  word-break: break-word;
+  line-height: 20px;
+  color: $g4;
+  padding: 0 0 15px 0;
+  &.small {
+    font-size: 12px;
+  }
+}
+
+a {
+  color: $blus;
+  text-decoration: underline;
+  &:hover {
+    color: $blu !important;
+  }
+}
+
+.mail-box {
+  background-color: white;
+  padding: 14px 14px 0px 14px;
+}
+
+.mail-grey-link {
+  a {
+    color: $g4;
+  }
+}
+
+.mail-button--alt {
+  table {
+    width: 100%;
+    text-align: center;
+    height: 120px;
+
+  }
+
+  td {
+    height: 35px;
+    line-height: 35px;
+    color: white;
+    //color: white !important;
+  }
+
+  a {
+    font-family: $font-sans;
+    display: inline-block;
+    color: white;
+    //color: white !important;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: $gre;
+    border: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+    width: auto;
+    outline: none;
+    display: inline-block;
+    cursor: pointer;
+    border-bottom: solid 3px darken($gre, 10%);
+    @include transition(.15s);
+    border-top: solid 3px $gre;
+    @include border-radius(6px);
+    height: 35px;
+    line-height: 35px;
+    &:hover {
+      background-color: darken($gre, 5%) !important;
+      border-top-color: darken($gre, 5%) !important;;
+      border-bottom-color: darken($gre, 15%) !important;;
+    }
+    &:active {
+      background-color: darken($gre, 15%) !important;;
+      border-bottom-color: darken($gre, 15%) !important;;
+      border-top-color: darken($gre, 20%) !important;;
+      transition: none;
+    }
+  }
+}
+
+.mail-center {
+  text-align: center;
+}
+
+.mail-wrapper{
+  width: 100%;
+  background-color: $g1;
+}
+
+.mail-header{
+  background-color: $blu;
+  text-align: center;
+}
+
+.mail-header-logo {
+  height: 41px;
+  width: 96px;
+  padding-top: 3px;
+}
+
+.mail-hidden {
+  display: none;
+}
+
+.mail-center-column {
+  width: 550px;
+  padding: 12px;
+}
+
+table {
+  width: 100%;
 }
 
 .mail-footer{
   background-color: $g4;
-  a {
+  text-align: center;
+  * {
     color: $g2;
+  }
+  a {
+    text-decoration: underline;
     &:hover{
-      text-decoration: underline;
-      color: $g1;
+      color: $g1 !important;
     }
     &:hover span {
-      color: $g1;
+      color: $g1 !important;
     }
   }
+  .mail-hidden {
+    color: $g4;
+    font-size: 0;
+  }
+}
+
+.mail-footer-padding {
+  background-color: $g4;
+  height: 15px;
+}
+
+.mail-margin-top {
+  height: 20px
+}
+.mail-margin-bottom {
+  height: 20px
+}
+
+.pro-t{
+  color: $gre;
+  * {
+    color: $gre !important;
+  };
+}
+
+.con-t{
+  color: $red;
+  * {
+    color: $red !important;
+  };
+}
+
+.motion-t{
+  color: $blu;
+  * {
+    color: $blu !important;
+  };
+}
+
+.neutral-t{
+  color: $g3;
+  * {
+    color: $g3 !important;
+  };
+}
+
+.question-t{
+  color: $bro;
+  * {
+    color: $bro !important;
+  };
 }

@@ -9,16 +9,17 @@ class Notification < ActiveRecord::Base
   validates :url, length: {maximum: 512}
 
   def sync_notification_count
-    self.user.try :sync_notification_count
+    user.try :sync_notification_count
   end
 
   def title
-    if self.activity.present?
-      activity_string_for(self.activity)
+    if activity.present?
+      activity_string_for(activity)
     else
       super
     end
   end
+  alias_method :display_name, :title
 
   def url_object
     if self.activity.present?
@@ -29,11 +30,19 @@ class Notification < ActiveRecord::Base
   end
 
   def image
-    if self.activity.present?
-      self.activity.owner.profile_photo.url(:avatar)
+    if activity.present?
+      activity.owner.profile_photo.url(:avatar)
     else
       ActionController::Base.helpers.asset_path('favicons/favicon-192x192.png')
     end
+  end
+
+  def resource
+    activity.trackable if activity.present?
+  end
+
+  def renderable_resource?
+    activity.present?
   end
 
   scope :since, ->(from_time = nil) { where('created_at < :from_time', {from_time: from_time}) if from_time.present? }

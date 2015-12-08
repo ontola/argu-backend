@@ -3,24 +3,30 @@ require 'test_helper'
 class ProfilesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  test 'should get edit profile with own profile' do
-    sign_in users(:user)
+  let(:user) { FactoryGirl.create(:user) }
+  let(:user2) { FactoryGirl.create(:user) }
 
-    get :edit, id: users(:user).url
+  ####################################
+  # As User
+  ####################################
+  test 'should get edit profile with own profile' do
+    sign_in user
+
+    get :edit, id: user.url
 
     assert_response 200
-    assert_equal users(:user), assigns(:resource), ''
-    assert_equal users(:user).profile, assigns(:profile), ''
+    assert_equal user, assigns(:resource), ''
+    assert_equal user.profile, assigns(:profile), ''
   end
 
   test 'should not get edit profile with other profile' do
-    sign_in users(:user)
+    sign_in user
 
-    get :edit, id: users(:user_thom).url
+    get :edit, id: user2.url
 
     assert_response 302
-    assert_equal users(:user_thom), assigns(:resource)
-    assert_equal users(:user_thom).profile, assigns(:profile)
+    assert_equal user2, assigns(:resource)
+    assert_equal user2.profile, assigns(:profile)
   end
 
 end

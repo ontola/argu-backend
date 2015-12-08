@@ -9,6 +9,7 @@ require 'rspec/rails'
 require 'capybara/rails'
 require 'database_cleaner'
 require 'sidekiq/testing'
+require 'capybara/poltergeist'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -37,9 +38,6 @@ RSpec.configure do |config|
 
   Sidekiq::Testing.fake!
 
-  # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  #config.fixture_path = "#{::Rails.root}/spec/fixtures"
-
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
   # instead of true.
@@ -61,15 +59,21 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   Capybara.register_driver :selenium_firefox do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :firefox)
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile.native_events = true
+    Capybara::Selenium::Driver.new(app, browser: :firefox, profile: profile)
   end
 
   Capybara.register_driver :selenium_chrome do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+    Capybara::Selenium::Driver.new(app, browser: :chrome)
   end
 
   Capybara.register_driver :selenium_safari do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :safari)
+    Capybara::Selenium::Driver.new(app, browser: :safari)
+  end
+
+  Capybara.register_driver :poltergeist do |app|
+    Capybara::Poltergeist::Driver.new(app, {timeout: 30})
   end
 
   Capybara.default_driver = case ENV['BROWSER']
@@ -84,10 +88,10 @@ RSpec.configure do |config|
                               when 'safari'
                                 :selenium_safari
                               else
-                                ENV['CI'] ? :selenium : :selenium
+                                ENV['CI'].present? ? :selenium : :selenium
                             end
   #Capybara.default_max_wait_time = 5
-  Capybara.default_max_wait_time = 10
+  Capybara.default_max_wait_time = 50
 
   Capybara::Webkit.configure do |config|
     config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'

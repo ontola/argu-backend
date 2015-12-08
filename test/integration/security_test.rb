@@ -2,6 +2,8 @@ require 'test_helper'
 
 class SecurityTest < ActionDispatch::IntegrationTest
 
+  let!(:freetown) { FactoryGirl.create(:forum) }
+
   test 'should block referer spam' do
     spammers = %w(
         http://co.lumb.co/
@@ -11,7 +13,25 @@ class SecurityTest < ActionDispatch::IntegrationTest
     )
 
     spammers.each do |spammer|
-      get forum_path(forums(:utrecht)), {}, { 'HTTP_REFERER' => spammer }
+      get forum_path(freetown), {}, { 'HTTP_REFERER' => spammer }
+
+      assert_response 403
+    end
+
+    Rack::Attack.cache.store.clear
+  end
+
+  test 'should block parameter spam' do
+    spammers = %w(
+        co.lumb.co
+        forum.topic56809347.darodar.com
+        site4.floating-share-buttons.com
+        100dollars-seo.com
+    )
+
+    spammers.each do |spammer|
+      Rack::Attack.cache.store.clear
+      get forum_path(freetown, from: spammer)
 
       assert_response 403
     end
@@ -29,10 +49,29 @@ class SecurityTest < ActionDispatch::IntegrationTest
     ]
 
     spammers.each do |spammer|
-      get forum_path(forums(:utrecht)), {}, { 'HTTP_REFERER' => spammer }
+      get forum_path(freetown), {}, { 'HTTP_REFERER' => spammer }
 
       assert_response 200
     end
+  end
+
+  test 'should not block non-spam parameter spam' do
+    spammers = [
+      'facebook.com',
+      'argu.co',
+      'news.google.com',
+      'nu.nl',
+      nil
+    ]
+
+    spammers.each do |spammer|
+      Rack::Attack.cache.store.clear
+      get forum_path(freetown, from: spammer)
+
+      assert_response 200
+    end
+
+    Rack::Attack.cache.store.clear
   end
 
   test 'should block malicious requests' do
@@ -44,15 +83,15 @@ class SecurityTest < ActionDispatch::IntegrationTest
 
     mal_code.each do |malicious|
       Rack::Attack.cache.store.clear
-      get forum_path(forums(:utrecht), inject: malicious), {}, {}
+      get forum_path(freetown, inject: malicious), {}, {}
       assert_response 403
-      get forum_path(forums(:utrecht), inject: malicious), {}, {}
+      get forum_path(freetown, inject: malicious), {}, {}
       assert_response 403
-      get forum_path(forums(:utrecht)), {}, {}
+      get forum_path(freetown), {}, {}
       assert_response 200
-      get forum_path(forums(:utrecht), inject: malicious), {}, {}
+      get forum_path(freetown, inject: malicious), {}, {}
       assert_response 403
-      get forum_path(forums(:utrecht)), {}, {}
+      get forum_path(freetown), {}, {}
       assert_response 403
     end
 

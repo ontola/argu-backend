@@ -2,19 +2,23 @@ require 'test_helper'
 
 class MotionTest < ActiveSupport::TestCase
 
-  def motion
-    @motions ||= motions(:one)
-  end
+  subject { FactoryGirl.create(:motion, :with_arguments) }
 
   def test_valid
-    assert motion.valid?, motion.errors.to_a.join(',').to_s
+    assert subject.valid?, subject.errors.to_a.join(',').to_s
   end
 
   test 'top_arguments_con_light should not include trashed motions' do
-    assert_not motion.top_arguments_con_light.map { |i| i[0] }.include?(arguments(:trashed_con).id)
+    trashed_args = subject.arguments.where(is_trashed: true).pluck(:id)
+    assert trashed_args.present?,
+           'No trashed arguments exist, test is useless'
+    assert_not (subject.top_arguments_con_light.map { |i| i[0] } & trashed_args).present?
   end
 
   test 'top_arguments_pro_light should not include trashed motions' do
-    assert_not motion.top_arguments_con_light.map { |i| i[0] }.include?(arguments(:trashed).id)
+    trashed_args = subject.arguments.where(is_trashed: true).pluck(:id)
+    assert trashed_args.present?,
+           'No trashed arguments exist, test is useless'
+    assert_not (subject.top_arguments_con_light.map { |i| i[0] } & trashed_args).present?
   end
 end

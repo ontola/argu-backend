@@ -68,7 +68,6 @@ class ArgumentsController < AuthenticatedController
                              }
     authorize @ca.resource, :create?
     @ca.subscribe(ActivityListener.new)
-    @ca.subscribe(MailerListener.new)
     @ca.on(:create_argument_successful) do |argument|
       respond_to do |format|
         argument = argument_params[:motion_id].blank? ? argument : argument.motion
@@ -132,7 +131,12 @@ private
   end
 
   def self.forum_for(url_options)
-    Argument.find_by(id: url_options[:argument_id] || url_options[:id]).try(:forum)
+    argument_id = url_options[:argument_id] || url_options[:id]
+    if argument_id.presence
+      Argument.find_by(id: argument_id).try(:forum)
+    elsif url_options[:forum_id].present?
+      Forum.find_via_shortname_nil url_options[:forum_id]
+    end
   end
 
   def set_tenant(item)

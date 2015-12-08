@@ -3,7 +3,7 @@ require 'test_helper'
 class DiscussionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+  let!(:freetown) { FactoryGirl.create(:forum) }
   let!(:helsinki) { FactoryGirl.create(:hidden_populated_forum,
                                        name: 'helsinki',
                                        visible_with_a_link: true) }
@@ -13,7 +13,7 @@ class DiscussionsControllerTest < ActionController::TestCase
   # As Guest
   ####################################
   test 'guest should get new' do
-    get :new, forum_id: holland
+    get :new, forum_id: freetown
 
     assert_response 200
   end
@@ -41,7 +41,7 @@ class DiscussionsControllerTest < ActionController::TestCase
   test 'user should get new' do
     sign_in user
 
-    get :new, forum_id: holland
+    get :new, forum_id: freetown
 
     assert_response 200
   end
@@ -62,7 +62,7 @@ class DiscussionsControllerTest < ActionController::TestCase
   test 'member should get new' do
     sign_in member
 
-    get :new, forum_id: holland
+    get :new, forum_id: freetown
 
     assert_response 200
   end

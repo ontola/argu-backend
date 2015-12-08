@@ -63,7 +63,7 @@ class PagesController < ApplicationController
       @page.attributes = permit_params
 
       if permit_params[:last_accepted] == '1'
-        @page.last_accepted = DateTime.now
+        @page.last_accepted = DateTime.current
       end
 
       authorize @page, :create?
@@ -149,7 +149,13 @@ class PagesController < ApplicationController
       if @page.transfer_to!(params[:page][:repeat_name], @new_profile)
         reset_current_actor
         flash[:success] = t('pages.settings.managers.transferred')
-        format.html { redirect_to settings_page_path(@page) }
+        if policy(@page).update?
+          format.html { redirect_to settings_page_path(@page) }
+        elsif @page.forums.present?
+          format.html { redirect_to forum_path(@page.forums.first) }
+        else
+          format.html { redirect_to(root_path) }
+        end
       else
         format.html { render 'transfer', locals: {no_close: true} }
       end

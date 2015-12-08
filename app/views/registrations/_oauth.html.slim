@@ -6,7 +6,7 @@ ul.btns-signup
   p.smaller-8= t('sign_up_facebook_notice')
   li
     =link_to new_user_registration_url(r: local_assigns[:r]), class: 'btn btn--argu'
-      span.fa.fa-plus
-      span.icon-left= t('sign_up_argu')
+      span.fa.fa-envelope
+      span.icon-left= t('sign_up_email')
 
 =render partial: 'legal'

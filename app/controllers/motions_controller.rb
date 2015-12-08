@@ -41,7 +41,7 @@ class MotionsController < AuthenticatedController
   # GET /motions/new.json
   def new
     get_context
-    @motion = @forum.motions.new params[:motion]
+    @motion = @forum.motions.new permit_params
     if params[:question_id]
       question = Question.find(params[:question_id])
       @motion.questions << question if @motion.forum_id == question.forum_id
@@ -70,17 +70,14 @@ class MotionsController < AuthenticatedController
   # POST /motions.json
   def create
     get_context
-
     @cm = CreateMotion.new current_profile,
                            permit_params.merge({
-                               questions: [@question].compact,
                                forum_id: @forum.id,
                                publisher: current_user
                            })
-    action = @cm.resource.questions.presence ? :create? : :create_without_question?
+    action = @cm.resource.question_answers.presence ? :create? : :create_without_question?
     authorize @cm.resource, action
     @cm.subscribe(ActivityListener.new)
-    @cm.subscribe(MailerListener.new)
     @cm.on(:create_motion_successful) do |motion|
       respond_to do |format|
         first = current_profile.motions.count == 1 || nil
@@ -100,7 +97,7 @@ class MotionsController < AuthenticatedController
   # PUT /motions/1
   # PUT /motions/1.json
   def update
-    @motion = Motion.find_by_id params[:id]
+    @motion = Motion.find params[:id]
     @creator = @motion.creator
     @forum = @motion.forum
     authorize @motion
@@ -201,7 +198,12 @@ private
   end
 
   def self.forum_for(url_options)
-    Motion.find_by(id: url_options[:motion_id] || url_options[:id]).try(:forum)
+    motion_id = url_options[:motion_id] || url_options[:id]
+    if motion_id.presence
+      Motion.find_by(id: motion_id).try(:forum)
+    elsif url_options[:forum_id].present?
+      Forum.find_via_shortname_nil url_options[:forum_id]
+    end
   end
 
   def get_context
@@ -212,6 +214,8 @@ private
   end
 
   def permit_params
-    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+    if params[:motion].present?
+      params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+    end
   end
 end

@@ -67,14 +67,13 @@ nl:
       success: 'Succesvol gekoppeld aan %{kind} account.'
       failure: 'Sorry, het lukte niet om jouw %{kind} account te koppelen vanwege %{reason}.'
     mailer:
+      hello: 'Dear %{name}'
       confirmation_instructions:
-        subject: 'Bevestigings instructies'
-        hello: 'Beste wereldverbeteraar,'
-        confirm: 'Je kunt jouw account bevestigen door op onderstaande link te klikken.'
-        confirm_link: 'Bevestig jouw account'
+        subject: 'Bevestig jouw e-mailadres'
+        confirm: 'Je kunt jouw e-mailadres bevestigen door op onderstaande link te klikken.'
+        confirm_link: 'Bevestig jouw e-mailadres'
       reset_password_instructions:
         subject: 'Wachtwoord reset instructies'
-        hello: 'Beste wereldverbeteraar,'
         someone_requested: 'Iemand heeft gevraagd om een wachtwoord-reset mail te sturen naar dit adres. Klik op onderstaande link als je jouw Argu wachtwoord zou willen wijzigen.'
         confirm_link: 'Wijzig mijn wachtwoord'
         ignore: 'Als jij niet hebt aangevraagd om je wachtwoord te wijzigen, kan je deze e-mail negeren.'

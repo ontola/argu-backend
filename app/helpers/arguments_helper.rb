@@ -17,7 +17,7 @@ module ArgumentsHelper
 private
 
   # Generates radio array for a model
-  # @param model, instance of the item
+  # @param model [Model] instance of the item
   def radio_values_for_pro_con(model)
     values = []
     [:pro, :con].each do |side|

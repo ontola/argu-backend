@@ -2,6 +2,9 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
   require 'omniauth-facebook'
+
+  Devise.parent_mailer = 'ApplicationMailer'
+
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class with default "from" parameter.
@@ -175,7 +178,7 @@ Devise.setup do |config|
   # :none            = No lock strategy. You should handle locking by yourself.
   config.lock_strategy = :failed_attempts
 
-  # Defines which key will be used when locking and unlocking an account
+  # Defines which key will be used when locking and unlocking an acount
   config.unlock_keys = [ :email ]
 
   # Defines which strategy will be used to unlock an account.

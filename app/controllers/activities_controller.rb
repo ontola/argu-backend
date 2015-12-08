@@ -3,7 +3,7 @@ class ActivitiesController < ApplicationController
   def index
     if params[:from_time].present?
       begin
-        from_time = DateTime.parse(params[:from_time]).to_s
+        from_time = DateTime.parse(params[:from_time]).utc.to_s
       rescue ArgumentError
         from_time = nil
       end

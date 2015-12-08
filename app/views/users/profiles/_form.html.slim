@@ -16,9 +16,9 @@
     li.form-helper
       span=t('profiles.edit.file_limit_notice')
     =f.input :profile_photo, as: :preview_image, html_options: {style: 'max-height: 96px; margin-bottom: 0.5em;', class: 'avatar-preview'}, label: t('profiles.edit.current_picture'), class: 'avatar-preview'
-    -unless current_user.finished_intro?
-    li.form-helper
-      span=t('profiles.edit.gravatar_helper_html')
+    - unless @profile.profile_photo.present?
+      li.form-helper
+        span= t('profiles.edit.gravatar_helper_html')
   =f.inputs name: t('profiles.edit.cover_photo') do
     p= t('profiles.edit.cover_photo_helper')
     =f.input :cover_photo, label: t('profiles.edit.upload_piture')

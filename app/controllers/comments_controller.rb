@@ -55,7 +55,6 @@ class CommentsController < AuthenticatedController
                            }.merge(comment_params)
     authorize @cc.resource, :create?
     @cc.subscribe(ActivityListener.new)
-    @cc.subscribe(MailerListener.new)
     @cc.on(:create_comment_successful) do |c|
       redirect_to polymorphic_url([resource], anchor: c.id),
                   notice: t('type_create_success', type: t('comments.type'))
@@ -150,6 +149,15 @@ private
   # Note: Safe to constantize since `path_parameters` uses the routes for naming.
   def commentable_class
     commentable_type.capitalize.constantize
+  end
+
+  def self.forum_for(url_options)
+    comment = Comment.find_by(id: url_options[:id]) if url_options[:id].present?
+    if comment.present?
+      comment.commentable.try(:forum)
+    elsif url_options[:argument_id].present?
+      Argument.find_by(id: url_options[:argument_id]).try(:forum)
+    end
   end
 
   def new_comment_params

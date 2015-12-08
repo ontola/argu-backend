@@ -49,7 +49,6 @@ class QuestionsController < AuthenticatedController
                           })
     authorize @cq.resource, :create?
     @cq.subscribe(ActivityListener.new)
-    @cq.subscribe(MailerListener.new)
     @cq.on(:create_question_successful) do |question|
       respond_to do |format|
         format.html { redirect_to question, notice: t('type_save_success', type: question_type) }
@@ -162,7 +161,12 @@ private
   end
 
   def self.forum_for(url_options)
-    Question.find_by(id: url_options[:question_id] || url_options[:id]).try(:forum)
+    question_id = url_options[:question_id] || url_options[:id]
+    if question_id.presence
+      Question.find_by(id: question_id).try(:forum)
+    elsif url_options[:forum_id].present?
+      Forum.find_via_shortname_nil url_options[:forum_id]
+    end
   end
 
   def permit_params

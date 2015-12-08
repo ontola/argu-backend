@@ -20,6 +20,7 @@ en:
   argu_sign_up: "Create Argu account"
   cant_change_username: "You can't change your username after signing up."
   sign_up_argu: "Create Argu account"
+  sign_up_email: "Sign up with email"
   sign_out: "Sign out"
   no_confirmation_instructions: "Didn't receive confirmation instructions?"
   no_unlock_instructions: "Didn't receive unlock instructions?"
@@ -52,8 +53,8 @@ en:
   empty_type: "There are no %{type}"
   history: "History"
   image: "Image"
-  pro: "Pro"
-  con: "Con"
+  pro: "pro"
+  con: "con"
   search: "Search"
   edited: "Edited"
   deleted: "Deleted"
@@ -75,13 +76,19 @@ en:
   not_allowed: "Action not allowed."
   error: "Error"
   error_prohibited: " whilst saving:"
+  status:
+    400: "Error in request"
+    401: "You have to be logged in to perform this action."
+    404: "The item was not found, try reloading the page."
+    429: "You're making too many requests, please try again later."
+    500: "Something went wrong on our side, please try again later."
+  errors:
+    general: "Something went wrong, reload the page or try again later."
   outdated_browser: "You're using an <strong>outdated and probably unsafe</strong> browser. <a href='http://browsehappy.com/'>Upgrade your browser.</a>"
   view_settings: "View settings"
   share_link:
     header: "Share link"
     body: "Share the link below to directly invite people to this forum."
-  status:
-    400: "Error in request"
   header:
     motions: "Ideas"
     activities: "Activities"
@@ -130,7 +137,7 @@ en:
   users_email: "email"
   users_name: "full name"
   users_name_placeholder: "Enter your full name here."
-  users_email: "e-mail"
+  users_email: "email"
   users_email_placeholder: "Enter your email address here."
   users_votes: "Vote"
   users_clearance: "clearance"
@@ -196,6 +203,7 @@ en:
   forms:
     danger_zone: "Danger zone"
     admin: "Administrative functions"
+    legal_html: "By creating an Argu account you agree to our %{link}."
   users:
     logged_in_banner_text: "%{name}"
     registrations:
@@ -220,14 +228,15 @@ en:
                 <p>You can add links in your text by using square brackets and normal brackets.</p>
                 <code>This is [Argu](www.argu.co).</code>
                 <p>Will appear as:</p>
-                <code>This is <a href='http://www.argu.co'>Argu</a>.</code>
+                <code>This is <a target='_blank' href='http://www.argu.co'>Argu</a>.</code>
                 <h2>Formatting</h2>
                 <p>You can format your text using the following characters:</p>
                 <code>*Cursive*</code>
                 <code>**Bold**</code>
                 <code>##Heading</code>
                 <code>1. Numbered <br> 2. List</code>
-                <code>* Bullet <br> * List</code>"
+                <code>* Bullet <br> * List</code>
+                <p>If you need to display a hash (#) you can <a target='_blank' href='https://en.wikipedia.org/wiki/Escape_character'>escape</a> it with a backslash (\\)<p>"
   welcome_video_open: 'First time on Argu? Watch the video!'
   welcome_video_close: 'Close this banner'
   welcome_video_dismiss: "Hide this message."

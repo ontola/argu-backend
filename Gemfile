@@ -1,12 +1,15 @@
 source 'https://rubygems.org/'
 
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
-gem 'sass', '= 3.2.19'
-gem 'rails', '~>4.2.3'
+gem 'sass', '= 3.4.18'
+gem 'rails', '~>4.2.5'
 
 gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
 gem 'logstasher'
+gem 'yard'
+gem 'yard-activesupport-concern'
 
 ##################DB########################
 gem 'pg', '0.18.2'
@@ -23,6 +26,7 @@ gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
 gem 'rest-client'
 gem 'multimap'
+gem 'squirm_rails', require: 'squirm/rails'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
@@ -46,8 +50,9 @@ gem 'auto_strip_attributes', '~> 2.0.6'
 gem 'mailgun_rails', '0.7.0'
 gem 'wisper', '~> 1.6.1'
 # gem 'wisper-activerecord', '~> 0.3.0'
-
-#Search
+gem 'roadie', '~> 3.0.5'
+gem 'roadie-rails', '~> 1.0'
+gem 'cocoon', '~> 1.2.6'
 
 #Pagination
 gem 'kaminari', '~>0.16.1'
@@ -55,7 +60,8 @@ gem 'kaminari', '~>0.16.1'
 
 ##################Front-end########################
 #gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
-gem 'react-rails', '~> 1.0'
+#gem 'react-rails', '~> 1.3.1'
+gem 'react-rails', '~> 1.4.2'
 
 ##################Asset-y########################
 gem 'slim', '~> 2.1.0'
@@ -70,14 +76,17 @@ gem 'rmagick', '2.14.0'
 #gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'carrierwave-aws'
 gem 'sidekiq', '~> 3.3.0'
+gem 'sidetiq'
 gem 'sidekiq-logging-json'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
-gem 'jquery-pjax-rails'
 gem 'rack-pjax'
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.0.2'
 gem 'sprockets-es6', require: 'sprockets/rails'
+gem 'font-awesome-rails'
+gem 'babel-transpiler'
+#gem 'browserify-rails', '~> 1.4.0', require: 'browserify-rails'
 
 ##################User management########################
 gem 'devise', '~> 3.4.1'
@@ -103,6 +112,7 @@ group :development, :test do
   gem 'capybara', '~> 2.5.0'
   gem 'capybara-webkit', '~> 1.7.0'
   gem 'selenium-webdriver', '~> 2.47.1'
+  gem 'poltergeist'
   gem 'chromedriver-helper'
   gem 'mocha'
   gem 'pry'
@@ -130,6 +140,7 @@ group :development, :test do
   gem 'wisper-rspec', require: false
   gem 'fakeredis', require: false
   gem 'simplecov', require: false
+  gem 'rubocop'
 end
 
 group :production, :staging do

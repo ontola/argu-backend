@@ -72,14 +72,6 @@ module ForumsHelper
     items = []
 
     if policy(@forum).is_member?
-      if active_for_user?(:notifications, current_user)
-        divided = true
-        if current_user.following?(@forum)
-          items << link_item(t('forums.unfollow'), follows_path(forum_id: @forum.url), fa: 'times', data: {method: 'delete', 'skip-pjax' => 'true'})
-        else
-          items << link_item(t('forums.follow'), follows_path(forum_id: @forum.url), fa: 'check', rel: :nofollow, data: {method: 'post', 'skip-pjax' => 'true'})
-        end
-      end
       items << link_item(t('forums.leave'), forum_membership_path(@forum.url, current_profile), fa: 'sign-out',
                          data: {method: :delete, 'skip-pjax' => 'true', confirm: t('forums.leave_confirmation')})
     end

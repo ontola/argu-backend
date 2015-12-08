@@ -16,15 +16,15 @@ RSpec.feature 'Access tokens', type: :feature do
     expect(page).to have_content 'helsinki'
 
     click_link motion.title
-    wait_for_ajax
+    #wait_for_ajax
 
     expect(page).to have_content('content')
 
-    click_link 'Geen van beiden'
+    click_link 'Neither'
     #wait_for_async_modal
     expect(page).to have_content 'Sign up'
 
-    click_link 'Create Argu account'
+    click_link 'Sign up with email'
     expect(current_path).to eq new_user_registration_path
 
     user_attr = FactoryGirl.attributes_for(:user)
@@ -46,7 +46,7 @@ RSpec.feature 'Access tokens', type: :feature do
       click_button 'Volgende'
     end
 
-    click_button 'Geen van beiden'
+    click_button 'Geen van beide'
 
     expect(page).to have_content motion.title
     expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'

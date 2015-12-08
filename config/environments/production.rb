@@ -13,9 +13,9 @@ Argu::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-
+  config.action_controller.asset_host = 'd3hv9pr8szmavn.cloudfront.net'
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_files = true
+  config.serve_static_files = false
 
   # Compress JavaScripts and CSS
   config.assets.js_compressor = :uglifier
@@ -54,14 +54,13 @@ Argu::Application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
 
-  # Precompile additional assets (application.js, pica_pica.css, and all non-JS/CSS are already added)
-  config.assets.precompile += %w( application.js closed.js polyfill.js )
-
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.default_url_options = { :host => 'https://argu.co' }
   Rails.application.routes.default_url_options[:host] = 'https://argu.co'
+  config.roadie.url_options = {host: 'argu.co', scheme: 'https'}
+  config.action_mailer.asset_host = nil
 
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {

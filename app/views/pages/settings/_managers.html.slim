@@ -2,7 +2,7 @@ h3= t('pages.settings.managers.owner')
 p= t('pages.settings.managers.about_owner')
 .margin-bottom
   =image_tag @page.owner.profile_photo, class: 'profile-photo'
-  span=@page.owner.display_name
+  span= @page.owner.display_name
 
 - if policy(@page).transfer?
   h3[style="clear: left;"] Overdracht

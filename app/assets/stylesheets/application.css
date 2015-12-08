@@ -10,12 +10,14 @@
  *
  * require briarcliff/briarcliff
  *= require briarcliff/_reset
+ *= stub briarcliff/_mail
  * require selectize
  * require selectize.default
  * require formtastic
  *= require simple_text/application
  *= require introjs
  *= require nprogress
+ *= require font-awesome
  *= require_self
  *= require_tree .
 */

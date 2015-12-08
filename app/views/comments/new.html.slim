@@ -10,4 +10,6 @@
                      parent_id: local_assigns[:parent_id],
                      visible: true,
                      comment: local_assigns[:comment]}
-  =link_to t('arguments.comments.comments.confirm.skip'), url_for(resource), class: 'btn'
+  .float-right=link_to url_for(resource), class: 'btn-subtle' do
+    span.fa.fa-arrow-right
+    span.icon-left= t('arguments.comments.comments.confirm.skip')

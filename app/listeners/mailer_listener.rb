@@ -5,7 +5,7 @@ class MailerListener
     # TODO: single out the creator and send a different mail
     if recipients.present?
       UserMailer
-          .user_created_argument(argument, recipients)
+          .user_created_argument(argument, recipients, parent: parent_for_resource(argument))
           .deliver_now
     end
   end
@@ -15,7 +15,7 @@ class MailerListener
     # TODO: single out the creator and send a different mail
     if recipients.present?
       UserMailer
-          .user_created_comment(comment, recipients)
+          .user_created_comment(comment, recipients, parent: parent_for_resource(comment))
           .deliver_now
     end
   end
@@ -26,7 +26,7 @@ class MailerListener
     # TODO: single out the creator and send a different mail
     if recipients.present?
       UserMailer
-          .user_created_motion(motion, recipients)
+          .user_created_motion(motion, recipients, parent: parent_for_resource(motion))
           .deliver_now
     end
   end
@@ -36,10 +36,12 @@ class MailerListener
     # TODO: single out the creator and send a different mail
     if recipients.present?
       UserMailer
-          .user_created_question(question, recipients)
+          .user_created_question(question, recipients, parent: parent_for_resource(question))
           .deliver_now
     end
   end
+
+  private
 
   def follower_emails_for(resource, in_response_to)
     in_response_to
@@ -48,5 +50,22 @@ class MailerListener
         .where.not(confirmed_at: nil)
         .where(follows_email: User.follows_emails[:direct_follows_email])
         .pluck(:email)
+  end
+
+  def parent_for_resource(resource)
+    if resource.activities.length > 0
+      notify_bugnsag(resource) if resource.activities.length != 1
+      resource.activities.first.recipient
+    elsif resource.activities.length == 0
+      notify_bugnsag(resource)
+      resource.try :forum
+    end
+  end
+
+  def notify_bugnsag(r)
+    e = StandardError.new "Resource #{r.identifier} has wrong number of activities"
+    ::Bugsnag.notify(e, {
+                          :severity => 'error',
+                      })
   end
 end

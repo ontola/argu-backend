@@ -20,6 +20,7 @@ nl:
   argu_sign_up: "Argu account aanmaken"
   cant_change_username: "Je kunt jouw gebruikersnaam later niet meer wijzigen."
   sign_up_argu: "Maak Argu account"
+  sign_up_email: "Registreer met e-mail"
   sign_out: "Uitloggen"
   no_confirmation_instructions: "Geen bevestigingsmail ontvangen?"
   no_unlock_instructions: "Geen ontgrendelingsmail ontvangen?"
@@ -52,8 +53,8 @@ nl:
   empty_type: "Er zijn geen %{type}"
   history: "Geschiendenis"
   image: "Afbeelding"
-  pro: "Voor"
-  con: "Tegen"
+  pro: "voor"
+  con: "tegen"
   search: "Zoeken"
   edited: "Bewerkt"
   deleted: "Verwijderd"
@@ -75,13 +76,19 @@ nl:
   not_allowed: "Actie niet toegestaan."
   error: "Fout"
   error_prohibited: " bij het opslaan:"
+  status:
+    400: "Fout in de aanvraag"
+    401: "Je moet ingelogd zijn voor deze actie."
+    404: "Het item is niet gevonden, probeer de pagina te verversen."
+    429: "Je maakt te veel verzoeken, probeer het over halve minuut nog eens."
+    500: "Er ging iets aan onze kant fout, probeer het later nog eens."
+  errors:
+    general: "Er is iets fout gegaan herlaad de pagina of probeer het later nog eens."
   outdated_browser: "Je gebruikt een <strong>achterhaalde en waarschijnlijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
   view_settings: "Weergave"
   share_link:
     header: "Link delen"
     body: "Deel onderstaande link om direct mensen uit te nodigen naar dit forum."
-  status:
-    400: "Fout in de aanvraag"
   header:
     motions: "Voorstellen"
     activities: "Activiteit"
@@ -196,6 +203,7 @@ nl:
   forms:
     danger_zone: "Gevarenzone"
     admin: "Administratieve functies"
+    legal_html: "Door je aan te melden voor Argu ga je akkoord met de %{link}."
   users:
     logged_in_banner_text: "%{name}"
     registrations:
@@ -220,7 +228,7 @@ nl:
                 <p>Je kan in jouw tekst links toevoegen met blokhaken en normale haakjes. Dat doe je als volgt:</p>
                 <code>Dit is [Argu](www.argu.co).</code>
                 <p>Verschijnt als:</p>
-                <code>Dit is <a href='http://www.argu.co'>Argu</a>.</code>
+                <code>Dit is <a target='_blank' href='http://www.argu.co'>Argu</a>.</code>
                 <h2>Opmaak</h2>
                 <p>Je kunt je tekst eenvoudig opmaken door leestekens te gebruiken:</p>
                 <code>*Schuingedrukt*</code>
@@ -228,7 +236,8 @@ nl:
                 <code>##Tussenkop</code>
                 <code>1. Genummerde <br> 2. Lijst</code>
                 <code>* Ongenummerde <br> * Lijst</code>
-                "
+                <p>Wanneer je een speciaal teken wil laten zien (#) kan je deze <a target='_blank' href='https://en.wikipedia.org/wiki/Escape_character'>escapen</a> met een backslash (\\):</p>
+                <code>\\#hashtag</code>"
   welcome_video_open: 'Nieuw op Argu? Bekijk de video!'
   welcome_video_close: 'Sluit deze banner'
   welcome_video_dismiss: 'Verberg deze boodschap.'

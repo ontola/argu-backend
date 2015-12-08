@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
 
   delegate :description, to: :profile
 
-  enum follows_email: { never_follows_email: 0, direct_follows_email: 3 } # weekly_follows_email: 1, daily_follows_email: 2,
+  enum follows_email: { never_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3 } # weekly_follows_email: 1, daily_follows_email: 2,
   #enum memberships_email: { never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3 }
   #enum created_email: { never_created_email: 0, weekly_created_email: 1, daily_created_email: 2, direct_created_email: 3 }
 
@@ -70,6 +70,10 @@ class User < ActiveRecord::Base
 
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
+  end
+
+  def greeting
+    self.first_name.presence || self.url.presence || self.email.split('@').first
   end
 
   def is_omni_only

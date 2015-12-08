@@ -1,6 +1,6 @@
 require 'redis'
 
-$redis   = Redis.new
+$redis   = Argu::Redis.redis_instance
 $rollout = Rollout.new($redis)
 
 $rollout.define_group(:staff) do |user|

@@ -3,7 +3,7 @@ h3= t('forums.settings.managers.owner')
 p= t('forums.settings.managers.about_owner')
 p= t('forums.settings.managers.about_owner_name', name: @forum.url)
 =image_tag @forum.page.profile.profile_photo, class: 'profile-photo'
-span=@forum.page.profile.display_name
+span= link_to @forum.page.profile.display_name, settings_page_url(@forum.page)
 .clear
 br
 
@@ -11,7 +11,7 @@ h3= t('forums.settings.managers.administrator')
 p= t('forums.settings.managers.about_page_owner')
 p= t('forums.settings.managers.about_page_owner_name', name: @forum.page.url)
 =image_tag @forum.page.owner.profile_photo, class: 'profile-photo'
-span=@forum.page.owner.display_name
+span= @forum.page.owner.display_name
 .clear
 br
 

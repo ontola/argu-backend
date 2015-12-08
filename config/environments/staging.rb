@@ -17,7 +17,7 @@ Argu::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = true
-
+  config.action_controller.asset_host = 'd3hv9pr8szmavn.cloudfront.net'
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_files = false
 
@@ -68,8 +68,8 @@ Argu::Application.configure do
 
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {
-    api_key: Rails.application.secrets.mailgun_api_token,
-    domain: Rails.application.secrets.mailgun_domain
+      api_key: Rails.application.secrets.mailgun_api_token,
+      domain: Rails.application.secrets.mailgun_domain
   }
 
   # Enable threaded mode

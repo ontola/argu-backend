@@ -1,0 +1,7 @@
+table
+  tr
+    td.mail-p= t('mailer.direct_mail.header', first_name: @user.greeting)
+
+  -@notifications.select(&:renderable_resource?).each do |notification|
+    =render template: "notifications_mailer/user_created_#{notification.resource.model_name.singular}",
+            locals: {item: notification.resource, parent: notification.activity.recipient, notification: notification}

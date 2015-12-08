@@ -9,9 +9,12 @@ class RegistrationsController < Devise::RegistrationsController
   end
 
   def create
-    redirect_to :root unless has_valid_token? || within_user_cap?
-    super
-    session[:omniauth] = nil unless @user.new_record?
+    unless has_valid_token? || within_user_cap?
+      redirect_to :root
+    else
+      super
+      session[:omniauth] = nil unless @user.new_record?
+    end
   end
 
   def cancel
@@ -52,9 +55,9 @@ protected
   end
 
   def sign_up(resource_name, resource)
-    setup_memberships(resource)
-    resource.send_confirmation_instructions
     super
+    resource.send_confirmation_instructions
+    setup_memberships(resource)
   end
 
 private

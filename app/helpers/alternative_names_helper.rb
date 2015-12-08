@@ -9,7 +9,7 @@ module AlternativeNamesHelper
 
   # Icon substring for motions
   def motion_icon(forum= nil)
-    ((forum || @forum).motions_title_singular if alternative_motions?(forum)) || 'lightbulb-o'
+    'lightbulb-o'
   end
 
   # Singular translation for {Motion}
@@ -42,7 +42,7 @@ module AlternativeNamesHelper
 
   # Icon substring for questions
   def question_icon(forum= nil)
-    ((forum || @forum).questions_title_singular if alternative_questions?(forum)) || 'question'
+    'question'
   end
 
   # Singular translation for {Question}

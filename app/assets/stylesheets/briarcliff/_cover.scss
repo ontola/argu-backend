@@ -88,6 +88,7 @@
   margin-top: 1em;
   font-weight: 400;
   font-size: 1.3em;
+  padding: 0 1em;
   @include bp-medium() {
     font-size: 1.1em;
   }
@@ -273,7 +274,11 @@
 
 .bg-img {
   opacity: 0;
-  @include transition(opacity 1s ease-in-out)
+  @include transition(opacity 1s ease-in-out);
+
+  html.no-js & {
+    opacity: .8;
+  }
 }
 
 .bg-loaded {

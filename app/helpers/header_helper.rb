@@ -8,48 +8,47 @@ module HeaderHelper
   def profile_dropdown_items
     @profile = current_profile
     {
-        defaultAction: dual_profile_url(current_profile),
-        trigger: {
-            type: 'current_user',
-            title: truncate(current_profile.display_name, length: 20),
-            profile_photo: {
-                url: current_profile.profile_photo.url(:icon),
-                className: 'profile-picture--navbar'
-            },
-            triggerClass: 'navbar-item navbar-profile'
+      defaultAction: dual_profile_url(current_profile),
+      trigger: {
+        type: 'current_user',
+        title: truncate(current_profile.display_name, length: 20),
+        profile_photo: {
+          url: current_profile.profile_photo.url(:icon),
+          className: 'profile-picture--navbar'
         },
-        sections: [
-          {
-              items: [
-                  link_item(t('show_type', type: t("#{current_profile.profileable.class_name}.type")), dual_profile_url(current_profile), fa: 'user'),
-                  link_item(t('profiles.edit.title'), dual_profile_edit_url(current_profile), fa: 'pencil'),
-                  link_item(t('users.settings'), settings_url, fa: 'gear'),
-                  policy(Page).index? ? link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building') : link_item(t('pages.create'), new_page_path, fa: 'building'),
-                  (link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group') if policy(Forum).index? ),
-                  link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'}),
-                  nil #NotABug Make sure compact! actually returns the array and not nil
-              ].compact!
-          },
-          {
-              title: t('profiles.switch'),
-              items: managed_pages_items
-          }
-        ]
+        triggerClass: 'navbar-item navbar-profile'
+      },
+      sections: [
+        {
+          items: [
+            link_item(t('show_type', type: t("#{current_profile.profileable.class_name}.type")), dual_profile_url(current_profile), fa: 'user'),
+            link_item(t('profiles.edit.title'), dual_profile_edit_url(current_profile), fa: 'pencil'),
+            link_item(t('users.settings'), settings_url, fa: 'gear'),
+            policy(Page).index? ? link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building') : link_item(t('pages.create'), new_page_path, fa: 'building'),
+            (link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group') if policy(Forum).index? ),
+            link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'}),
+            nil # NotABug Make sure compact! actually returns the array and not nil
+          ].compact!
+        },
+        {
+          title: t('profiles.switch'),
+          items: managed_pages_items
+        }
+      ]
     }
   end
 
   def notification_dropdown_items
-    dropdown_options('', [{
-                            type: 'notifications',
-                            unread: policy_scope(Notification).where('read_at is NULL').order(created_at: :desc).count,
-                            lastNotification: nil,
-                            notifications: [],
-                            loadMore: true
-                        }],
-                     trigger: {
-                         type: 'notifications',
-                         triggerClass: 'navbar-item'
-                     },
+    dropdown_options('',
+                     [{
+                       type: 'notifications',
+                       unread: policy_scope(Notification)
+                                   .where('read_at is NULL')
+                                   .order(created_at: :desc).count,
+                       lastNotification: nil,
+                       notifications: [],
+                       loadMore: true
+                     }],
                      fa: 'fa-bell',
                      triggerClass: 'navbar-item',
                      contentClassName: 'notifications notification-container')

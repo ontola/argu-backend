@@ -92,7 +92,7 @@ class PagePolicy < RestrictivePolicy
   end
 
   def update?
-    rule is_manager?, super
+    rule is_manager?, is_owner?, super
   end
 
   def list?

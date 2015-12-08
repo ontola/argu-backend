@@ -1,4 +1,5 @@
 class NotificationsController < ApplicationController
+  after_action :update_viewed_time
 
   def index
     # This must be performed to prevent pundit errors
@@ -13,6 +14,13 @@ class NotificationsController < ApplicationController
       policy_scope(Notification)
       head 204
     end
+  end
+
+  def show
+    notification = Notification.find params[:id]
+    authorize notification, :show?
+
+    redirect_to url_for(notification.activity.trackable)
   end
 
   def create
@@ -31,7 +39,8 @@ class NotificationsController < ApplicationController
   def read
     authorize Notification, :read?
 
-    if policy_scope(Notification).where(read_at: nil).update_all read_at: Time.now
+    if policy_scope(Notification).where(read_at: nil).update_all read_at: Time.current
+
       @notifications = get_notifications
       render 'notifications/index'
     else
@@ -43,7 +52,7 @@ class NotificationsController < ApplicationController
     notification = Notification.includes(activity: :trackable).find(params[:id])
     authorize notification, :update?
 
-    if notification.read_at.present? || notification.update(read_at: Time.now)
+    if notification.read_at.present? || notification.update(read_at: Time.current)
       @notifications = get_notifications
       @unread = get_unread
       render 'index'
@@ -56,12 +65,13 @@ class NotificationsController < ApplicationController
   def fetch_more
     begin
       begin
-        from_time = DateTime.parse(params[:from_time]).to_s
+        from_time = DateTime.parse(params[:from_time]).utc.to_s
       rescue ArgumentError
         from_time = nil
       end
       @from_time = from_time
       @notifications = policy_scope(Notification).since(from_time).page params[:page]
+      @unread = get_unread
     rescue ArgumentError
       head 400
     end
@@ -82,9 +92,13 @@ class NotificationsController < ApplicationController
         .count
   end
 
+  def permit_params
+    params.require(:notification).permit(*policy(@notification || Notification).permitted_attributes)
+  end
+
   def refresh
     begin
-      since = DateTime.parse(last_notification).to_s(:db) if last_notification
+      since = DateTime.parse(last_notification).utc.to_s(:db) if last_notification
       new_available = true
       if since.present?
         new_available = policy_scope(Notification)
@@ -104,12 +118,12 @@ class NotificationsController < ApplicationController
     end
   end
 
+  def update_viewed_time
+    current_user.update(notifications_viewed_at: Time.current) if current_user.present?
+  end
+
   def last_notification
     date = params[:lastNotification].presence || request.headers[:lastNotification].presence
     date if date != 'null' && date != 'undefined'
-  end
-
-  def permit_params
-    params.require(:notification).permit(*policy(@notification || Notification).permitted_attributes)
   end
 end

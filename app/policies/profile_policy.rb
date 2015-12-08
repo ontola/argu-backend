@@ -20,7 +20,7 @@ class ProfilePolicy < RestrictivePolicy
   def permitted_attributes
     attributes = super
     if record.profileable.present?
-      attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public, :is_public] if update?
+      attributes << [:id, :name, :about, :profile_photo, :remove_profile_photo, :cover_photo, :remove_cover_photo, :are_votes_public, :is_public] if update?
     else
       attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public, :is_public] if new?
     end
@@ -36,12 +36,9 @@ class ProfilePolicy < RestrictivePolicy
   end
 
   def show?
-    if record.profileable.class == Page
-      record.is_public?
-    else
-      (record.is_public? || user.present?) && record.profileable.finished_intro? || super
-    end
+    Pundit.policy(context, record.profileable).show?
   end
+  deprecate show?: 'Please use the more consise method on profileable instead.'
 
   def update?
     Pundit.policy(context, record.profileable).update? || super

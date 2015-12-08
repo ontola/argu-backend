@@ -1,5 +1,5 @@
 module ApplicationHelper
-  include ActivityStringHelper, AlternativeNamesHelper, UsersHelper, StubbornCookie
+  include ActivityStringHelper, AlternativeNamesHelper, UsersHelper, StubbornCookie, MarkdownHelper
   EU_COUNTRIES = %w(BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT AT PL PT RO SI SK FI SE UK ME IS AL RS TR)
 
   # Uses Rollout to determine whether a feature is active for a given User
@@ -19,7 +19,7 @@ module ApplicationHelper
   def awesome_time_ago_in_words (date)
     if date.present?
       if 1.day.ago < date
-        distance_of_time_in_words(date, Time.now)
+        distance_of_time_in_words(date, Time.current)
       elsif 1.year.ago < date
         date.strftime("%B #{date.day.ordinalize} %H:%M")
       else
@@ -152,25 +152,6 @@ module ApplicationHelper
       true
     end
   end
-
-
-  # TODO: Something something instance variable with Redcarpet
-  def markdown_to_html(markdown)
-    Redcarpet::Markdown.new(
-        Argu::Render::HTML.new(filter_html: false, escape_html: true),
-        {tables: false, fenced_code_blocks: false, no_styles: true, escape_html: true, autolink: true, lax_spacing: true}
-    ).render(markdown).html_safe
-  end
-
-  def markdown_to_plaintext(markdown)
-    require 'redcarpet/render_strip'
-
-    Redcarpet::Markdown.new(
-        Redcarpet::Render::StripDown.new,
-        {tables: false, fenced_code_blocks: false, no_styles: true, escape_html: true, autolink: false, lax_spacing: true}
-    ).render(markdown)
-  end
-
 
   def safe_truncated_text(contents, url, cutting_point = 220)
     adjusted_content = markdown_to_plaintext(contents)

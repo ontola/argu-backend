@@ -14,7 +14,7 @@ class FollowUniqueConstraint < ActiveRecord::Migration
       end
     end
 
-    Follow.where(followable_type: 'Profile').includes(follower: :profileable).find_each do |f|
+    Follow.where(follower_type: 'Profile').includes(follower: :profileable).find_each do |f|
       if f.follower.is_a? Profile
         if f.follower.profileable.is_a?(User)
           f.update follower: f.follower.profileable

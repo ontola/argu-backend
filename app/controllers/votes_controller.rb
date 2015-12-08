@@ -38,23 +38,23 @@ class VotesController < AuthenticatedController
 
     authorize @model.forum, :show?
 
-    @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile, forum: @model.forum)
+    @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile)
+    @vote.forum ||= @model.forum
 
     respond_to do |format|
       if @vote.for == for_param
         format.json { render status: 304 }
-        format.js { head :not_modified }
+        #format.js { head :not_modified }
         format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.not_modified') }
       elsif @vote.update(for: for_param)
         create_activity_with_cleanup @vote, action: :create, parameters: {for: @vote.for}, recipient: @vote.voteable, owner: current_profile, forum_id: @vote.forum.id
         @model.reload
         save_vote_to_stats @vote
         format.json { render location: @vote }
-        format.js
         format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.success') }
       else
         format.json { render json: @vote.errors, status: 400 }
-        format.js { head :bad_request }
+        #format.js { head :bad_request }
         format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.failed') }
       end
     end
@@ -119,11 +119,11 @@ class VotesController < AuthenticatedController
   end
 
   def for_param
-    if params[:vote].is_a?(Hash)
-      params[:vote][:for]
-    elsif params[:for].is_a?(String)
+    if params[:for].is_a?(String) && params[:for].present?
       warn '[DEPRECATED] Using direct params is deprecated, please use proper nesting instead.'
       params[:for]
+    elsif params[:vote].is_a?(Hash)
+      params[:vote][:for]
     else
       nil
     end

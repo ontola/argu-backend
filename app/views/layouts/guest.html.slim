@@ -1,41 +1,35 @@
 doctype html
-/[if lt IE 7]
-  | <html class="lt-ie9 lt-ie8 lt-ie7">
-/[if IE 7]
-  | <html class="lt-ie9 lt-ie8">
-/[if IE 8]
-  | <html class="lt-ie9">
-/[if gt IE 8]><!--> <html class=""> <!--<![endif]-->
-head[itemscope itemtype="http://schema.org/WebSite"]
-  meta[charset="UTF-8"]
-  title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
-  =csrf_meta_tags
-  =render partial: 'polyfill'
+html[class="no-js"]
+  head[itemscope itemtype="http://schema.org/WebSite"]
+    meta[charset="UTF-8"]
+    title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
+    =csrf_meta_tags
+    =render partial: 'polyfill'
 
-  / unless current_user.blank?
-  =stylesheet_link_tag 'application', :media => 'all'
-  =yield :connected_web
-  =render 'layouts/meta'
+    / unless current_user.blank?
+    =stylesheet_link_tag 'application', :media => 'all'
+    =yield :connected_web
+    =render 'layouts/meta'
 
-  link[rel="copyright" content="#{t('site.copyright')}"]
-  - if active_for_user?('inspectlet', current_user)
-    =render partial:'external/inspectlet'
-body
-  #fb-root
-  =render 'guest/navbar'
-  - if stubborn_get('hide_video') != 'true'
-    =render partial: 'welcome_video', locals: {domain: Rails.env.test? ? '//example.com' : 'https://youtube.com'}
-  .wrapper
-    /[if lt IE 10]
-      p.browsehappy= raw t('outdated_browser')
-    =render partial: 'alerts'
-    /= render 'responsibility_notice'
-    #pjax-container.container
-      =yield
-    .push-footer
-  =render 'footer'
-  =javascript_include_tag 'application'
-  - if Rails.env.production?
-    =render partial: 'analytics'
-  script[id="motion-template" type="text/x-handlebars-template"]
-    =render partial: 'motions/motion_template'
+    link[rel="copyright" content="#{t('site.copyright')}"]
+    - if active_for_user?('inspectlet', current_user)
+      =render partial:'external/inspectlet'
+    =render partial: 'external/mixpanel'
+  body.no-js
+    #fb-root
+    =render 'guest/navbar'
+    /- if stubborn_get('hide_video') != 'true'
+      =render partial: 'welcome_video', locals: {domain: Rails.env.test? ? '//example.com' : 'https://youtube.com'}
+    .wrapper
+      /[if lt IE 10]
+        p.browsehappy= raw t('outdated_browser')
+      =render partial: 'alerts'
+      #pjax-container.container
+        =yield
+      .push-footer
+    =render 'footer'
+    =javascript_include_tag 'application'
+    /- if Rails.env.production?
+      =render partial: 'analytics'
+    script[id="motion-template" type="text/x-handlebars-template"]
+      =render partial: 'motions/motion_template'

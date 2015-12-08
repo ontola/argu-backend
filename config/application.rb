@@ -1,8 +1,9 @@
 require File.expand_path('../boot', __FILE__)
 
 require 'rails/all'
-require 'sprockets/es6'
 require 'devise'
+ROADIE_I_KNOW_ABOUT_VERSION_3 = true
+
 
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
@@ -49,11 +50,16 @@ module Argu
       end
     end
     config.middleware.use Rack::Attack
+    config.middleware.use Rack::Deflater
 
-    config.react.addons = true
+    config.react.addons = false
     # Enable the asset pipeline
     config.assets.enabled = true
-    config.assets.paths << Rails.root.join('vendor', 'assets', 'components')
+    config.assets.precompile += %w( application.js polyfill.js mail.css )
+
+    config.assets.initialize_on_precompile = true
+    config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts')
+    config.assets.paths << Rails.root.join('node_modules')
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
@@ -67,4 +73,6 @@ module Argu
     config.i18n.default_locale = :nl
     I18n.locale = :nl
   end
+
 end
+

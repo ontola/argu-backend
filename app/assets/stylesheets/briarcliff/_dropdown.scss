@@ -11,6 +11,7 @@
 .dropdown-trigger {
   position: relative;
   cursor: pointer;
+  @include transition(opacity .2s);
 }
 
 @mixin closed-state {
@@ -91,6 +92,7 @@
     position: relative;
 
     span.icon-left {
+      // This one causes problems, e.g. in the share dropdown, when the icons don't load. Disabling all of these seemed to work.
       padding-left: 1.5em;
       display: block;
       margin: 0;
@@ -138,9 +140,11 @@ span.dropdown-header {
 }
 
 //.dropdown:hover .dropdown-content,
-.dropdown-active {
-  .dropdown-trigger{
-    background-color: $lighten2 !important;
+.navbar{
+  .dropdown-active {
+    .dropdown-trigger{
+      background-color: $lighten2 !important;
+    }
   }
 }
 
@@ -181,6 +185,7 @@ span.dropdown-header {
   color: $g4;
 }
 
-.btns-list--subtle .dropdown-active {
-  background-color: $darken2;
+.btns-list--subtle .dropdown-active .dropdown-trigger {
+  background-color: $darken1;
+  transition: .2s;
 }

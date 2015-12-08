@@ -1,0 +1,19 @@
+tmp/*
+.git
+log/*
+
+spec/argu.txt
+.yardoc
+
+# Ignore secrets
+secrets.yml
+/config/database.yml
+
+# Ignore image uploads
+/public/uploads
+/public/profiles
+/public/forums
+/public/motions
+/public/questions
+/public/organisations
+/public/system
