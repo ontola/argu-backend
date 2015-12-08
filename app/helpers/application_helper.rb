@@ -125,9 +125,9 @@ module ApplicationHelper
     link_items = []
 
     link_items = [
-        link_item(t('filtersort.all'), nil, fa: 'check', data: {'filter' => ''}),
-        link_item(t('filtersort.questions'), nil, fa: 'question', data: {'filter' => 'question'}),
-        link_item(t('filtersort.motions'), nil, fa: 'lightbulb-o', data: {'filter' => 'motion'})
+        link_item(t('filtersort.all'), nil, fa: 'check', data: {'filter-value' => ''}),
+        link_item(t('filtersort.questions'), nil, fa: 'question', data: {'filter-value' => 'question'}),
+        link_item(t('filtersort.motions'), nil, fa: 'lightbulb-o', data: {'filter-value' => 'motion'})
     ]
 
     dropdown_options(t('filtersort.filter'), [{items: link_items}], fa: 'fa-filter')

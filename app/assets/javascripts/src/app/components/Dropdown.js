@@ -277,20 +277,21 @@ export const LinkItem = React.createClass({
         if (this.props.divider && this.props.divider === 'top') {
             divider = <div className="dropdown-divider"></div>;
         }
-        var method, confirm, remote, skipPjax, sortValue, className, displaySetting;
+        var method, confirm, remote, skipPjax, sortValue, filterValue, className, displaySetting;
         if (this.props.data) {
             method = this.props.data.method;
             confirm = this.props.data.confirm;
             remote = this.props.data.remote;
             skipPjax = this.props.data['skip-pjax'];
             sortValue = this.props.data['sort-value'];
+            filterValue = this.props.data['filter-value'];
             displaySetting = this.props.data['display-setting'];
         }
         className = this.props.className;
 
         return (<div className={this.props.type}>
             {divider}
-            <a href={this.props.url} data-remote={remote} data-method={method} data-confirm={confirm} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} data-sort-value={sortValue} data-display-setting={displaySetting} className={className}>
+            <a href={this.props.url} data-remote={remote} data-method={method} data-confirm={confirm} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} data-sort-value={sortValue} data-filter-value={filterValue} data-display-setting={displaySetting} className={className}>
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>

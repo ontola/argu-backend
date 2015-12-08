@@ -19,14 +19,15 @@
     .btns-list--subtle.btns-subtle
       li
         ul= react_component 'HyperDropdown', display_settings_items, {prerender: true}
-  #type
-    .btns-list--subtle.btns-subtle
-      li
-        ul= react_component 'HyperDropdown', filter_items, {prerender: true}
-    /ul.tags.tags-type
-      li
-        a.tag.tag-all.is-checked[data-filter="" data-forum-path="#{forum_path(@forum)}"]= t('filtersort.all')
-      li
-        a.tag.tag-motions[data-filter="motion"]= t('filtersort.motions')
-      li
-        a.tag.tag-questions[data-filter="question"]= t('filtersort.questions')
+  - if active_for_user?(:type_filter, current_user)
+    #type
+      .btns-list--subtle.btns-subtle
+        li
+          ul= react_component 'HyperDropdown', filter_items, {prerender: true}
+      /ul.tags.tags-type
+        li
+          a.tag.tag-all.is-checked[data-filter="" data-forum-path="#{forum_path(@forum)}"]= t('filtersort.all')
+        li
+          a.tag.tag-motions[data-filter="motion"]= t('filtersort.motions')
+        li
+          a.tag.tag-questions[data-filter="question"]= t('filtersort.questions')
