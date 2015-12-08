@@ -1,12 +1,15 @@
 source 'https://rubygems.org/'
 
+gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
 gem 'sass', '= 3.4.18'
-gem 'rails', '~>4.2.3'
+gem 'rails', '~>4.2.5'
 
 gem 'simple_text', '~> 0.0.21'
 gem 'indefinite_article'
 gem 'logstasher'
+gem 'yard'
+gem 'yard-activesupport-concern'
 
 ##################DB########################
 gem 'pg', '0.18.2'
@@ -23,6 +26,7 @@ gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
 gem 'rest-client'
 gem 'multimap'
+gem 'squirm_rails', require: 'squirm/rails'
 
 ##################Features########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
@@ -50,9 +54,6 @@ gem 'roadie', '~> 3.0.5'
 gem 'roadie-rails', '~> 1.0'
 gem 'cocoon', '~> 1.2.6'
 
-
-#Search
-
 #Pagination
 gem 'kaminari', '~>0.16.1'
 
@@ -79,7 +80,6 @@ gem 'sidetiq'
 gem 'sidekiq-logging-json'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
-gem 'jquery-pjax-rails'
 gem 'rack-pjax'
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.0.2'

@@ -59,15 +59,17 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   Capybara.register_driver :selenium_firefox do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :firefox)
+    profile = Selenium::WebDriver::Firefox::Profile.new
+    profile.native_events = true
+    Capybara::Selenium::Driver.new(app, browser: :firefox, profile: profile)
   end
 
   Capybara.register_driver :selenium_chrome do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :chrome)
+    Capybara::Selenium::Driver.new(app, browser: :chrome)
   end
 
   Capybara.register_driver :selenium_safari do |app|
-    Capybara::Selenium::Driver.new(app, :browser => :safari)
+    Capybara::Selenium::Driver.new(app, browser: :safari)
   end
 
   Capybara.register_driver :poltergeist do |app|
@@ -89,7 +91,7 @@ RSpec.configure do |config|
                                 ENV['CI'].present? ? :selenium : :selenium
                             end
   #Capybara.default_max_wait_time = 5
-  Capybara.default_max_wait_time = 30
+  Capybara.default_max_wait_time = 50
 
   Capybara::Webkit.configure do |config|
     config.allow_url 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700'

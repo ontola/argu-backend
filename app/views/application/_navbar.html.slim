@@ -9,7 +9,7 @@ nav#navbar.navbar role="navigation"
           span.fa.fa-home
           / TODO: home text shows last visited (or current) forum. Same n guest navbar.
           /span= preferred_forum
-      =react_component 'HyperDropdown', forum_selector_items, {prerender: true}
+      li=react_component 'HyperDropdown', forum_selector_items, {prerender: true}
       /li
         =link_to new_discussion_path, class: 'navbar-item'
           span.fa.fa-plus
@@ -17,6 +17,6 @@ nav#navbar.navbar role="navigation"
     ul.navbar-links.navbar-links-right
       =react_component 'HyperDropdown', profile_dropdown_items, {prerender: true}
       - if active_for_user? :notifications, current_user
-        .inspectlet-sensitive=react_component 'NotificationDropdown', notification_dropdown_items, {prerender: true}
+        .inspectlet-sensitive= react_component 'NotificationDropdown', notification_dropdown_items, {prerender: true}
       =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
   =render partial: 'online_status'

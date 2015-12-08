@@ -459,7 +459,7 @@ var HyperDropdown = exports.HyperDropdown = _react2.default.createClass({
             key: 'required' }));
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { tabIndex: '1',
                 className: dropdownClass,
                 onMouseEnter: this.onMouseEnter,
@@ -599,7 +599,7 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
         );
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { tabIndex: '1',
                 className: dropdownClass,
                 onMouseEnter: this.onMouseEnter,
@@ -697,12 +697,8 @@ var DropdownContent = exports.DropdownContent = _react2.default.createClass({
 
         return _react2.default.createElement(
             'div',
-            null,
-            _react2.default.createElement(
-                'ul',
-                { className: 'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState, style: null },
-                children
-            )
+            { className: 'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState, style: null },
+            children
         );
     }
 });
@@ -740,7 +736,7 @@ var LinkItem = exports.LinkItem = _react2.default.createClass({
         className = this.props.className;
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { className: this.props.type },
             divider,
             _react2.default.createElement(
@@ -780,7 +776,7 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
 
     render: function render() {
         return _react2.default.createElement(
-            'li',
+            'div',
             { className: this.props.type },
             _react2.default.createElement(
                 'a',
@@ -841,7 +837,7 @@ var ActorItem = exports.ActorItem = _react2.default.createClass({
         }
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { className: 'link ' + this.props.type },
             divider,
             _react2.default.createElement(
@@ -1012,7 +1008,7 @@ var NotificationDropdown = exports.NotificationDropdown = _react2.default.create
             key: 'required' }));
 
         return _react2.default.createElement(
-            'li',
+            'div',
             { tabIndex: '1',
                 className: dropdownClass,
                 onMouseEnter: this.onMouseEnterFetch,
@@ -2009,6 +2005,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.image = image;
 exports._url = _url;
 exports._authenticityHeader = _authenticityHeader;
+exports.errorMessageForStatus = errorMessageForStatus;
 exports.getAuthenticityToken = getAuthenticityToken;
 exports.getMetaContent = getMetaContent;
 exports.getUserIdentityToken = getUserIdentityToken;
@@ -2023,11 +2020,17 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _intl = require('intl');
+
+var _intl2 = _interopRequireDefault(_intl);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
 _react2.default; // For ESLint, jsx compiles to React.createElement, so React must be imported
+
+_intl2.default; // For ESLint
 
 Object.resolve = function (path, obj) {
     return [obj || self].concat(path.split('.')).reduce(function (prev, curr) {
@@ -2094,6 +2097,16 @@ function _authenticityHeader(options) {
     });
 }
 
+function errorMessageForStatus(status) {
+    if (status === 401) {
+        return this.getIntlMessage('errors.status.401');
+    } else if (status === 404) {
+        return this.getIntlMessage('errors.status.404');
+    } else if (status === 429) {
+        return this.getIntlMessage('errors.status.429');
+    }
+}
+
 function getAuthenticityToken() {
     return getMetaContent('csrf-token');
 }
@@ -2134,9 +2147,10 @@ function statusSuccess(response) {
 
 function tryLogin(response) {
     if (response.status === 401) {
-        return Promise.resolve(window.alert('You should login.'));
+        return Promise.resolve(window.alert(errorMessageForStatus(response.status)));
     } else {
-        return Promise.reject(new Error('unknown status code'));
+        var message = errorMessageForStatus(response.status) || 'unknown status code';
+        return Promise.reject(new Error(message));
     }
 }
 
@@ -2148,14 +2162,14 @@ function userIdentityToken(options) {
 }
 
 function json(response) {
-    if (response.status !== 204 && response.status !== 304) {
+    if (typeof response !== 'undefined' && response.status !== 204 && response.status !== 304) {
         return response.json();
     } else {
         return Promise.resolve();
     }
 }
 
-},{"react":464}],15:[function(require,module,exports){
+},{"intl":262,"react":464}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
