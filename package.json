@@ -44,6 +44,7 @@
     "gulp-uglify": "^1.4.2",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.5",
+    "jsdoc": "^3.4.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
@@ -58,6 +59,7 @@
     "node": ">= 4.1.0"
   },
   "scripts": {
-    "build": "gulp build && gulp build-components"
+    "build": "gulp build && gulp build-components",
+    "doc": "jsdoc -c app/assets/javascripts/jsdoc.json -r"
   }
 }

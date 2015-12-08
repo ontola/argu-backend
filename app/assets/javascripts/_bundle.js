@@ -573,7 +573,7 @@ var ui = {
 
     handleAjaxCalls: function handleAjaxCalls(e, xhr, options) {
         if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201) {
-            var message = (0, _helpers.errorMessageForStatus)(xhr.status) || 'Unknown error occurred (status: ' + xhr.status + ')';
+            var message = (0, _helpers.errorMessageForStatus)(xhr.status).fallback || 'Unknown error occurred (status: ' + xhr.status + ')';
             new _Alert2.default(message, 'alert', true);
         }
     },
@@ -2386,7 +2386,7 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
                 null,
                 _react2.default.createElement(
                     'a',
-                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/pro'), 'data-method': this.ifNoActor('post'), 'data-remote': this.ifActor('true'), onClick: this.proHandler, rel: 'nofollow', className: 'btn-pro', 'data-voted-on': this.state.current_vote === 'pro' || null },
+                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/pro'), 'data-method': this.ifNoActor('post'), onClick: this.proHandler, rel: 'nofollow', className: 'btn-pro', 'data-voted-on': this.state.current_vote === 'pro' || null },
                     _react2.default.createElement('span', { className: 'fa fa-thumbs-up' }),
                     _react2.default.createElement(
                         'span',
@@ -2400,7 +2400,7 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
                 null,
                 _react2.default.createElement(
                     'a',
-                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/neutral'), 'data-method': this.ifNoActor('post'), 'data-remote': this.ifActor('true'), onClick: this.neutralHandler, rel: 'nofollow', className: 'btn-neutral', 'data-voted-on': this.state.current_vote === 'neutral' || null },
+                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/neutral'), 'data-method': this.ifNoActor('post'), onClick: this.neutralHandler, rel: 'nofollow', className: 'btn-neutral', 'data-voted-on': this.state.current_vote === 'neutral' || null },
                     _react2.default.createElement('span', { className: 'fa fa-pause' }),
                     _react2.default.createElement(
                         'span',
@@ -2414,7 +2414,7 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
                 null,
                 _react2.default.createElement(
                     'a',
-                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/con'), 'data-method': this.ifNoActor('post'), 'data-remote': this.ifActor('true'), onClick: this.conHandler, rel: 'nofollow', className: 'btn-con', 'data-voted-on': this.state.current_vote === 'con' || null },
+                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/con'), 'data-method': this.ifNoActor('post'), onClick: this.conHandler, rel: 'nofollow', className: 'btn-con', 'data-voted-on': this.state.current_vote === 'con' || null },
                     _react2.default.createElement('span', { className: 'fa fa-thumbs-down' }),
                     _react2.default.createElement(
                         'span',
@@ -2939,6 +2939,8 @@ var _intl = require('intl');
 
 var _intl2 = _interopRequireDefault(_intl);
 
+var _reactIntl = require('react-intl');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -3014,11 +3016,47 @@ function _authenticityHeader(options) {
 
 function errorMessageForStatus(status) {
     if (status === 401) {
-        return this.getIntlMessage('errors.status.401');
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.401",
+            "fallback": "Je moet ingelogd zijn voor deze actie."
+        };
     } else if (status === 404) {
-        return this.getIntlMessage('errors.status.404');
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.404",
+            "fallback": "Het item is niet gevonden, probeer de pagina te verversen."
+        };
     } else if (status === 429) {
-        return this.getIntlMessage('errors.status.429');
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.429",
+            "fallback": "Je maakt te veel verzoeken, probeer het over halve minuut nog eens."
+        };
+    } else if (status === 500) {
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.500",
+            "fallback": "Er ging iets aan onze kant fout, probeer het later nog eens."
+        };
+    } else if (status === 0) {
+        return {
+            "type": "none",
+            "severity": "",
+            "i18nString": undefined,
+            "fallback": ""
+        };
+    } else {
+        return {
+            "type": "none",
+            "severity": "",
+            "i18nString": undefined,
+            "fallback": undefined
+        };
     }
 }
 
@@ -3035,6 +3073,7 @@ function getUserIdentityToken() {
     return { token: getMetaContent('user-identity-token') };
 }
 
+// For use with window.fetch
 function jsonHeader(options) {
     options = options || {};
     return Object.assign(options, {
@@ -3043,6 +3082,8 @@ function jsonHeader(options) {
     });
 }
 
+// Lets fetch include credentials in the request. This includes cookies and other possibly sensitive data.
+// @note Never use for requests across (untrusted) domains.
 function safeCredentials(options) {
     options = options || {};
     return Object.assign(options, {
@@ -3062,9 +3103,9 @@ function statusSuccess(response) {
 
 function tryLogin(response) {
     if (response.status === 401) {
-        return Promise.resolve(window.alert(errorMessageForStatus(response.status)));
+        return Promise.resolve(window.alert(errorMessageForStatus(response.status).fallback));
     } else {
-        var message = errorMessageForStatus(response.status) || 'unknown status code';
+        var message = errorMessageForStatus(response.status).fallback || 'unknown status code';
         return Promise.reject(new Error(message));
     }
 }
@@ -3084,7 +3125,7 @@ function json(response) {
     }
 }
 
-},{"intl":83,"react":302}],24:[function(require,module,exports){
+},{"intl":83,"react":302,"react-intl":108}],24:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
