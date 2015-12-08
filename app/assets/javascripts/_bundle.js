@@ -1135,6 +1135,13 @@ function createMembership(response) {
     })).then(_helpers.statusSuccess);
 }
 
+/**
+ * Component for the POST-ing of a vote.
+ * This component is not pure.
+ * @class BigVoteButtons
+ * @export BigVoteButtons
+ * @memberof BigVote
+ */
 var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
     mixins: [_reactIntl.IntlMixin],
 
@@ -1157,16 +1164,6 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
         return this.props.actor === null ? undefined : v;
     },
 
-    refresh: function refresh() {
-        var _this = this;
-
-        fetch(this.state.vote_url + '.json', (0, _helpers.safeCredentials)()).then(_helpers.statusSuccess).then(_helpers.json).then(function (data) {
-            data.vote && _this.setState(data.vote);
-        }).catch(function () {
-            (0, _Alert2.default)(_this.getIntlMessage('errors.general'), 'alert', true);
-        });
-    },
-
     proHandler: function proHandler(e) {
         if (this.props.actor !== null) {
             e.preventDefault();
@@ -1187,25 +1184,25 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
     },
 
     vote: function vote(side) {
-        var _this2 = this;
+        var _this = this;
 
         fetch(this.props.vote_url + '/' + side + '.json', (0, _helpers.safeCredentials)({
             method: 'POST'
         })).then(function (response) {
             if (response.status === 403) {
                 return response.json().then(createMembership).then(function () {
-                    return _this2.vote(side);
+                    return _this.vote(side);
                 });
             } else {
                 return (0, _helpers.statusSuccess)(response);
             }
         }).then(_helpers.json, _helpers.tryLogin).then(function (data) {
             if (typeof data !== 'undefined') {
-                _this2.setState(data.vote);
-                _this2.props.parentSetVote(data.vote);
+                _this.setState(data.vote);
+                _this.props.parentSetVote(data.vote);
             }
         }).catch(function (e) {
-            new _Alert2.default(_this2.getIntlMessage('errors.general'), 'alert', true);
+            new _Alert2.default(_this.getIntlMessage('errors.general'), 'alert', true);
             throw e;
         });
     },
@@ -1279,8 +1276,8 @@ window.BigVoteFormButton = BigVoteFormButton;
 
 /**
  * Component to display voting results
- * @exports BigVote/BigVoteResults
- * @global
+ * @class BigVoteResults
+ * @memberof BigVote
  */
 var BigVoteResults = exports.BigVoteResults = _react2.default.createClass({
     voteWidth: function voteWidth(side) {
@@ -1383,6 +1380,17 @@ var _big_group_responses2 = _interopRequireDefault(_big_group_responses);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _intl2.default; // For ESLint
+
+/**
+ * Component that displays current vote options based on whether the user is member of a group.
+ * Also reveals the results if the user has already voted.
+ * This component is not pure.
+ * @class
+ * @exports CombiBigVote
+ * @see {@linkcode BigVote.BigVoteButtons}
+ * @see {@linkcode BigVote.BigVoteResults}
+ * @see {@linkcode BigGroupResponse}
+ */
 var CombiBigVote = exports.CombiBigVote = _react2.default.createClass({
 
     getInitialState: function getInitialState() {
@@ -1653,7 +1661,6 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
     componentDidMount: function componentDidMount() {
         this.fetchFacebookCount();
         this.fetchLinkedInCount();
-        this.fetchTwitterCount();
     },
 
     countInParentheses: function countInParentheses(count) {
@@ -1680,19 +1687,11 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
         });
     },
 
-    fetchTwitterCount: function fetchTwitterCount() {
+    totalShares: function totalShares() {
         var _this3 = this;
 
-        $.getJSON('https://cdn.api.twitter.com/1/urls/count.json?url=' + this.props.url + '&callback=?', function (data) {
-            _this3.updateCount('twitter', data.count);
-        });
-    },
-
-    totalShares: function totalShares() {
-        var _this4 = this;
-
         return Object.keys(this.state.counts).map(function (k) {
-            return _this4.state.counts[k];
+            return _this3.state.counts[k];
         }).reduce(function (a, b) {
             return a + b;
         });
@@ -1785,21 +1784,21 @@ var DropdownContent = exports.DropdownContent = _react2.default.createClass({
     },
 
     componentWillEnter: function componentWillEnter(callback) {
-        var _this5 = this;
+        var _this4 = this;
 
         this.setState({ appearState: 'dropdown-enter' }, function () {
             window.setTimeout(function () {
-                _this5.setState({ appearState: 'dropdown-enter dropdown-enter-active' }, callback);
+                _this4.setState({ appearState: 'dropdown-enter dropdown-enter-active' }, callback);
             }, 10);
         });
     },
 
     componentWillLeave: function componentWillLeave(callback) {
-        var _this6 = this;
+        var _this5 = this;
 
         this.setState({ appearState: 'dropdown-leave' }, function () {
             window.setTimeout(function () {
-                _this6.setState({ appearState: 'dropdown-leave dropdown-leave-active' }, function () {
+                _this5.setState({ appearState: 'dropdown-leave dropdown-leave-active' }, function () {
                     window.setTimeout(callback, 200);
                 });
             }, 0);
@@ -1913,7 +1912,7 @@ window.LinkItem = LinkItem;
 
 var FBShareItem = exports.FBShareItem = _react2.default.createClass({
     handleClick: function handleClick(e) {
-        var _this7 = this;
+        var _this6 = this;
 
         if (typeof FB !== 'undefined') {
             e.preventDefault();
@@ -1922,7 +1921,7 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
                 href: this.props.shareUrl,
                 caption: this.props.title
             }, function () {
-                _this7.props.done();
+                _this6.props.done();
             });
         }
     },
@@ -2403,6 +2402,12 @@ var _helpers = require('../lib/helpers');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _intl2.default; // For ESLint
+
+/**
+ * For making a GroupResponse in a BigVote fashion.
+ * @class
+ * @export BigGroupResponse
+ */
 var BigGroupResponse = exports.BigGroupResponse = _react2.default.createClass({
     getInitialState: function getInitialState() {
         return {
