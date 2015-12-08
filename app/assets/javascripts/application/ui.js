@@ -1,6 +1,6 @@
 import Alert from '../src/app/components/Alert';
 import { FastClick } from 'fastclick';
-import { safeCredentials } from '../src/app/lib/helpers';
+import { safeCredentials, errorMessageForStatus } from '../src/app/lib/helpers';
 
 const ui = {
     bg: $(".background"),
@@ -65,15 +65,8 @@ const ui = {
 
     handleAjaxCalls: function (e, xhr, options) {
         if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201) {
-            if (xhr.status === 401) {
-                new Alert(this.getIntlMessage('errors.status.401'), 'alert', true);
-            } else if (xhr.status === 404) {
-                new Alert(this.getIntlMessage('errors.status.404'), 'alert', true);
-            } else if (xhr.status === 429) {
-                new Alert(this.getIntlMessage('errors.status.429'), 'alert', true);
-            } else {
-                new Alert('');
-            }
+            message = errorMessageForStatus(xhr.status) || 'Unknown error occurred';
+            new Alert(message, 'alert', true);
         }
     },
 

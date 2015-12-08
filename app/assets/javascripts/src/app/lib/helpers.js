@@ -66,6 +66,16 @@ export function _authenticityHeader (options) {
     });
 }
 
+export function errorMessageForStatus(status) {
+    if (status === 401) {
+        return this.getIntlMessage('errors.status.401');
+    } else if (status === 404) {
+        return this.getIntlMessage('errors.status.404');
+    } else if (status === 429) {
+        return this.getIntlMessage('errors.status.429');
+    }
+}
+
 export function getAuthenticityToken () {
     return getMetaContent('csrf-token');
 }
@@ -106,9 +116,10 @@ export function statusSuccess (response) {
 
 export function tryLogin (response) {
     if (response.status === 401) {
-        return Promise.resolve(window.alert('You should login.'));
+        return Promise.resolve(window.alert(errorMessageForStatus(response.status)));
     } else {
-        return Promise.reject(new Error('unknown status code'));
+        message = errorMessageForStatus(response.status) || 'unknown status code';
+        return Promise.reject(new Error(message));
     }
 }
 
@@ -120,7 +131,7 @@ export function userIdentityToken (options) {
 }
 
 export function json (response) {
-    if (response.status !== 204 && response.status !== 304) {
+    if (typeof response !== 'undefined' && response.status !== 204 && response.status !== 304) {
         return response.json();
     } else {
         return Promise.resolve();
