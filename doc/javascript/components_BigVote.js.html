@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/BigVote.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/BigVote.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * BigVote
+ * @module BigVote
+ */
+
+import Alert from './Alert';
+import React from 'react';
+import { IntlMixin, FormattedMessage } from 'react-intl';
+import { safeCredentials, json, statusSuccess, tryLogin } from '../lib/helpers';
+
+function createMembership(response) {
+    return fetch(response.membership_url, safeCredentials({
+        method: 'POST'
+    })).then(statusSuccess);
+}
+
+/**
+ * Component for the POST-ing of a vote.
+ * This component is not pure.
+ * @class BigVoteButtons
+ * @export BigVoteButtons
+ * @memberof BigVote
+ */
+export const BigVoteButtons = React.createClass({
+    mixins: [IntlMixin],
+
+    getInitialState: function () {
+        return {
+            object_type: this.props.object_type,
+            object_id: this.props.object_id,
+            total_votes: this.props.total_votes,
+            current_vote: this.props.current_vote,
+            distribution: this.props.distribution,
+            percent: this.props.percent
+        };
+    },
+
+    ifNoActor: function (v) {
+        return this.props.actor === null ? v : undefined;
+    },
+
+    ifActor: function (v) {
+        return this.props.actor === null ? undefined : v;
+    },
+
+    proHandler: function (e) {
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('pro');
+        }
+    },
+    neutralHandler: function (e) {
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('neutral');
+        }
+    },
+    conHandler: function (e) {
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('con');
+        }
+    },
+
+    vote: function (side) {
+        fetch(`${this.props.vote_url}/${side}.json`, safeCredentials({
+            method: 'POST'
+        })).then((response) => {
+            if (response.status === 403) {
+                return response
+                        .json()
+                        .then(createMembership)
+                        .then(() => {
+                            return this.vote(side);
+                        });
+            } else {
+                return statusSuccess(response);
+            }
+        }).then(json, tryLogin)
+          .then((data) => {
+              if (typeof data !== 'undefined') {
+                  this.setState(data.vote);
+                  this.props.parentSetVote(data.vote);
+              }
+          }).catch((e) => {
+              new Alert(this.getIntlMessage('errors.general'), 'alert', true);
+              throw e;
+          });
+    },
+
+    render: function () {
+        return (
+            &lt;ul className="btns-opinion" data-voted={(this.state.current_vote.length > 0 &amp;&amp; this.state.current_vote !== 'abstain') || null}>
+                &lt;li>&lt;a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method={this.ifNoActor('post')} onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote === 'pro' || null}>
+                    &lt;span className="fa fa-thumbs-up" />
+                    &lt;span className="icon-left">
+                        &lt;FormattedMessage message={this.getIntlMessage('pro')} />
+                    &lt;/span>
+                &lt;/a>&lt;/li>
+                &lt;li>&lt;a href={this.ifNoActor(`/m/${this.props.object_id}/v/neutral`)} data-method={this.ifNoActor('post')} onClick={this.neutralHandler} rel="nofollow" className="btn-neutral" data-voted-on={this.state.current_vote === 'neutral' || null}>
+                    &lt;span className="fa fa-pause" />
+                    &lt;span className="icon-left">&lt;FormattedMessage message={this.getIntlMessage('neutral')} />&lt;/span>
+                &lt;/a>&lt;/li>
+                &lt;li>&lt;a href={this.ifNoActor(`/m/${this.props.object_id}/v/con`)} data-method={this.ifNoActor('post')} onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote === 'con' || null}>
+                    &lt;span className="fa fa-thumbs-down" />
+                    &lt;span className="icon-left">&lt;FormattedMessage message={this.getIntlMessage('con')} />&lt;/span>
+                &lt;/a>&lt;/li>
+            &lt;/ul>);
+    }
+});
+window.BigVoteButtons = BigVoteButtons;
+
+export const BigVoteFormButton = React.createClass({
+
+    render () {
+        return (
+            &lt;a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method="post" rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote === 'pro' || null}>
+                &lt;span className="fa fa-thumbs-up" />
+                &lt;span className="icon-left">&lt;FormattedMessage message={this.getIntlMessage('pro')} />&lt;/span>
+            &lt;/a>
+        )
+    }
+});
+window.BigVoteFormButton = BigVoteFormButton;
+
+/**
+ * Component to display voting results
+ * @class BigVoteResults
+ * @memberof BigVote
+ */
+export const BigVoteResults = React.createClass({
+    voteWidth: function (side) {
+        var supplemented_values = {
+            pro: this.props.percent.pro &lt; 5 ? 5 : this.props.percent.pro,
+            neutral: this.props.percent.neutral &lt; 5 ? 5 : this.props.percent.neutral,
+            con: this.props.percent.con &lt; 5 ? 5 : this.props.percent.con
+        };
+        var overflow = -100;
+        for (var o in supplemented_values) {
+            overflow += supplemented_values[o];
+        }
+        var width = supplemented_values[side] - (overflow * (this.props.percent[side] / 100));
+
+        return {
+            width: width + '%'
+        };
+    },
+
+    render: function () {
+        let results;
+
+        if (this.props.show_results) {
+            results = (
+                    &lt;ul className="progress-bar progress-bar-stacked">
+                        &lt;li style={this.voteWidth('pro')}>&lt;span className="btn-pro">{this.props.percent.pro + '%'}&lt;/span>&lt;/li>
+                        &lt;li style={this.voteWidth('neutral')}>&lt;span className="btn-neutral">{this.props.percent.neutral + '%'}&lt;/span>&lt;/li>
+                        &lt;li style={this.voteWidth('con')}>&lt;span className="btn-con">{this.props.percent.con + '%'}&lt;/span>&lt;/li>
+                    &lt;/ul>);
+        } else {
+            results = null;
+        }
+
+        return results;
+    }
+});
+window.BigVoteResults = BigVoteResults;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BigVote.html">BigVote</a></li><li><a href="module-CombiBigVote.html">CombiBigVote</a></li><li><a href="module-Helpers.html">Helpers</a></li></ul><h3>Classes</h3><ul><li><a href="BigVote.BigVoteButtons.html">BigVoteButtons</a></li><li><a href="BigVote.BigVoteResults.html">BigVoteResults</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Dec 08 2015 17:32:54 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

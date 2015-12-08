@@ -7,7 +7,6 @@
     "include": [
       "app/assets/javascripts"
     ],
-    "exclude": ["app/assets/javascripts/application"],
     "includePattern": ".+\\.js(doc)?$",
     "excludePattern": "(^|\\/|\\\\)_"
   },

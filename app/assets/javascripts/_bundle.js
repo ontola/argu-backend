@@ -878,7 +878,7 @@ var ReactDOM = require('react-dom');
 window.Select = require('react-select');
 
 
-var components = ({"..":({"src":({"app":({"components":({"ActiveToggle":require("../src/app/components/ActiveToggle.js"),"Alert":require("../src/app/components/Alert.js"),"CombiBigVote":require("../src/app/components/CombiBigVote.js"),"CurrentProfile":require("../src/app/components/CurrentProfile.js"),"Dropdown":require("../src/app/components/Dropdown.js"),"Notifications":require("../src/app/components/Notifications.js"),"_big_group_responses":require("../src/app/components/_big_group_responses.js"),"_big_vote_elements":require("../src/app/components/_big_vote_elements.js"),"_expand":require("../src/app/components/_expand.js"),"_membership":require("../src/app/components/_membership.js"),"_search":require("../src/app/components/_search.js")})})})})});
+var components = ({"..":({"src":({"app":({"components":({"ActiveToggle":require("../src/app/components/ActiveToggle.js"),"Alert":require("../src/app/components/Alert.js"),"BigVote":require("../src/app/components/BigVote.js"),"CombiBigVote":require("../src/app/components/CombiBigVote.js"),"CurrentProfile":require("../src/app/components/CurrentProfile.js"),"Dropdown":require("../src/app/components/Dropdown.js"),"Notifications":require("../src/app/components/Notifications.js"),"_big_group_responses":require("../src/app/components/_big_group_responses.js"),"_expand":require("../src/app/components/_expand.js"),"_membership":require("../src/app/components/_membership.js"),"_search":require("../src/app/components/_search.js")})})})})});
 
 // Unobtrusive scripting adapter for React
 module.exports = (function ReactUJS(document, window) {
@@ -942,7 +942,7 @@ module.exports = (function ReactUJS(document, window) {
     handleNativeEvents();
 })(document, window);
 
-},{"../src/app/components/ActiveToggle.js":11,"../src/app/components/Alert.js":12,"../src/app/components/CombiBigVote.js":13,"../src/app/components/CurrentProfile.js":14,"../src/app/components/Dropdown.js":15,"../src/app/components/Notifications.js":16,"../src/app/components/_big_group_responses.js":17,"../src/app/components/_big_vote_elements.js":18,"../src/app/components/_expand.js":19,"../src/app/components/_membership.js":20,"../src/app/components/_search.js":21,"react":302,"react-dom":107,"react-select":140}],11:[function(require,module,exports){
+},{"../src/app/components/ActiveToggle.js":11,"../src/app/components/Alert.js":12,"../src/app/components/BigVote.js":13,"../src/app/components/CombiBigVote.js":14,"../src/app/components/CurrentProfile.js":15,"../src/app/components/Dropdown.js":16,"../src/app/components/Notifications.js":17,"../src/app/components/_big_group_responses.js":18,"../src/app/components/_expand.js":19,"../src/app/components/_membership.js":20,"../src/app/components/_search.js":21,"react":302,"react-dom":107,"react-select":140}],11:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1105,6 +1105,248 @@ exports.default = Alert;
 },{}],13:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.BigVoteResults = exports.BigVoteFormButton = exports.BigVoteButtons = undefined;
+
+var _Alert = require('./Alert');
+
+var _Alert2 = _interopRequireDefault(_Alert);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactIntl = require('react-intl');
+
+var _helpers = require('../lib/helpers');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * BigVote
+ * @module BigVote
+ */
+
+function createMembership(response) {
+    return fetch(response.membership_url, (0, _helpers.safeCredentials)({
+        method: 'POST'
+    })).then(_helpers.statusSuccess);
+}
+
+var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
+    mixins: [_reactIntl.IntlMixin],
+
+    getInitialState: function getInitialState() {
+        return {
+            object_type: this.props.object_type,
+            object_id: this.props.object_id,
+            total_votes: this.props.total_votes,
+            current_vote: this.props.current_vote,
+            distribution: this.props.distribution,
+            percent: this.props.percent
+        };
+    },
+
+    ifNoActor: function ifNoActor(v) {
+        return this.props.actor === null ? v : undefined;
+    },
+
+    ifActor: function ifActor(v) {
+        return this.props.actor === null ? undefined : v;
+    },
+
+    refresh: function refresh() {
+        var _this = this;
+
+        fetch(this.state.vote_url + '.json', (0, _helpers.safeCredentials)()).then(_helpers.statusSuccess).then(_helpers.json).then(function (data) {
+            data.vote && _this.setState(data.vote);
+        }).catch(function () {
+            (0, _Alert2.default)(_this.getIntlMessage('errors.general'), 'alert', true);
+        });
+    },
+
+    proHandler: function proHandler(e) {
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('pro');
+        }
+    },
+    neutralHandler: function neutralHandler(e) {
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('neutral');
+        }
+    },
+    conHandler: function conHandler(e) {
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('con');
+        }
+    },
+
+    vote: function vote(side) {
+        var _this2 = this;
+
+        fetch(this.props.vote_url + '/' + side + '.json', (0, _helpers.safeCredentials)({
+            method: 'POST'
+        })).then(function (response) {
+            if (response.status === 403) {
+                return response.json().then(createMembership).then(function () {
+                    return _this2.vote(side);
+                });
+            } else {
+                return (0, _helpers.statusSuccess)(response);
+            }
+        }).then(_helpers.json, _helpers.tryLogin).then(function (data) {
+            if (typeof data !== 'undefined') {
+                _this2.setState(data.vote);
+                _this2.props.parentSetVote(data.vote);
+            }
+        }).catch(function (e) {
+            new _Alert2.default(_this2.getIntlMessage('errors.general'), 'alert', true);
+            throw e;
+        });
+    },
+
+    render: function render() {
+        return _react2.default.createElement(
+            'ul',
+            { className: 'btns-opinion', 'data-voted': this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain' || null },
+            _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                    'a',
+                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/pro'), 'data-method': this.ifNoActor('post'), onClick: this.proHandler, rel: 'nofollow', className: 'btn-pro', 'data-voted-on': this.state.current_vote === 'pro' || null },
+                    _react2.default.createElement('span', { className: 'fa fa-thumbs-up' }),
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'icon-left' },
+                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('pro') })
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                    'a',
+                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/neutral'), 'data-method': this.ifNoActor('post'), onClick: this.neutralHandler, rel: 'nofollow', className: 'btn-neutral', 'data-voted-on': this.state.current_vote === 'neutral' || null },
+                    _react2.default.createElement('span', { className: 'fa fa-pause' }),
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'icon-left' },
+                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('neutral') })
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                    'a',
+                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/con'), 'data-method': this.ifNoActor('post'), onClick: this.conHandler, rel: 'nofollow', className: 'btn-con', 'data-voted-on': this.state.current_vote === 'con' || null },
+                    _react2.default.createElement('span', { className: 'fa fa-thumbs-down' }),
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'icon-left' },
+                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('con') })
+                    )
+                )
+            )
+        );
+    }
+});
+window.BigVoteButtons = BigVoteButtons;
+
+var BigVoteFormButton = exports.BigVoteFormButton = _react2.default.createClass({
+    render: function render() {
+        return _react2.default.createElement(
+            'a',
+            { href: this.ifNoActor('/m/' + this.props.object_id + '/v/pro'), 'data-method': 'post', rel: 'nofollow', className: 'btn-pro', 'data-voted-on': this.state.current_vote === 'pro' || null },
+            _react2.default.createElement('span', { className: 'fa fa-thumbs-up' }),
+            _react2.default.createElement(
+                'span',
+                { className: 'icon-left' },
+                _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('pro') })
+            )
+        );
+    }
+});
+window.BigVoteFormButton = BigVoteFormButton;
+
+/**
+ * Component to display voting results
+ * @exports BigVote/BigVoteResults
+ * @global
+ */
+var BigVoteResults = exports.BigVoteResults = _react2.default.createClass({
+    voteWidth: function voteWidth(side) {
+        var supplemented_values = {
+            pro: this.props.percent.pro < 5 ? 5 : this.props.percent.pro,
+            neutral: this.props.percent.neutral < 5 ? 5 : this.props.percent.neutral,
+            con: this.props.percent.con < 5 ? 5 : this.props.percent.con
+        };
+        var overflow = -100;
+        for (var o in supplemented_values) {
+            overflow += supplemented_values[o];
+        }
+        var width = supplemented_values[side] - overflow * (this.props.percent[side] / 100);
+
+        return {
+            width: width + '%'
+        };
+    },
+
+    render: function render() {
+        var results = undefined;
+
+        if (this.props.show_results) {
+            results = _react2.default.createElement(
+                'ul',
+                { className: 'progress-bar progress-bar-stacked' },
+                _react2.default.createElement(
+                    'li',
+                    { style: this.voteWidth('pro') },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'btn-pro' },
+                        this.props.percent.pro + '%'
+                    )
+                ),
+                _react2.default.createElement(
+                    'li',
+                    { style: this.voteWidth('neutral') },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'btn-neutral' },
+                        this.props.percent.neutral + '%'
+                    )
+                ),
+                _react2.default.createElement(
+                    'li',
+                    { style: this.voteWidth('con') },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'btn-con' },
+                        this.props.percent.con + '%'
+                    )
+                )
+            );
+        } else {
+            results = null;
+        }
+
+        return results;
+    }
+});
+window.BigVoteResults = BigVoteResults;
+
+},{"../lib/helpers":23,"./Alert":12,"react":302,"react-intl":108}],14:[function(require,module,exports){
+'use strict';
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 Object.defineProperty(exports, "__esModule", {
@@ -1132,7 +1374,7 @@ var _actor_store = require('../stores/actor_store');
 
 var _actor_store2 = _interopRequireDefault(_actor_store);
 
-var _big_vote_elements = require('./_big_vote_elements');
+var _BigVote = require('./BigVote');
 
 var _big_group_responses = require('./_big_group_responses');
 
@@ -1187,12 +1429,12 @@ var CombiBigVote = exports.CombiBigVote = _react2.default.createClass({
         var voteResultsComponent = undefined;
         var groupResponsesComponent = undefined;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
-            voteButtonsComponent = _react2.default.createElement(_big_vote_elements.BigVoteButtons, _extends({ parentSetVote: this.setVote }, this.state, this.props));
-            voteResultsComponent = _react2.default.createElement(_big_vote_elements.BigVoteResults, _extends({}, this.state, { show_results: this.state.current_vote !== 'abstain' }));
+            voteButtonsComponent = _react2.default.createElement(_BigVote.BigVoteButtons, _extends({ parentSetVote: this.setVote }, this.state, this.props));
+            voteResultsComponent = _react2.default.createElement(_BigVote.BigVoteResults, _extends({}, this.state, { show_results: this.state.current_vote !== 'abstain' }));
             groupResponsesComponent = _react2.default.createElement(_big_group_responses2.default, { groups: this.state.groups || [], actor: this.state.actor, object_type: this.props.object_type, object_id: this.props.object_id });
         } else if (this.state.actor.actor_type === 'Page') {
             groupResponsesComponent = _react2.default.createElement(_big_group_responses2.default, { groups: this.state.groups || [], actor: this.state.actor, object_type: this.props.object_type, object_id: this.props.object_id });
-            voteResultsComponent = _react2.default.createElement(_big_vote_elements.BigVoteResults, _extends({}, this.state, this.props, { show_results: true }));
+            voteResultsComponent = _react2.default.createElement(_BigVote.BigVoteResults, _extends({}, this.state, this.props, { show_results: true }));
         }
 
         return _react2.default.createElement(
@@ -1206,7 +1448,7 @@ var CombiBigVote = exports.CombiBigVote = _react2.default.createClass({
 });
 window.CombiBigVote = CombiBigVote;
 
-},{"../lib/helpers":23,"../stores/actor_store":25,"./Alert":12,"./_big_group_responses":17,"./_big_vote_elements":18,"intl":83,"intl/locale-data/jsonp/en.js":87,"react":302}],14:[function(require,module,exports){
+},{"../lib/helpers":23,"../stores/actor_store":25,"./Alert":12,"./BigVote":13,"./_big_group_responses":18,"intl":83,"intl/locale-data/jsonp/en.js":87,"react":302}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1272,7 +1514,7 @@ var CurrentProfile = exports.CurrentProfile = _react2.default.createClass({
 
 window.CurrentProfile = CurrentProfile;
 
-},{"../lib/helpers":23,"../stores/actor_store":25,"react":302}],15:[function(require,module,exports){
+},{"../lib/helpers":23,"../stores/actor_store":25,"react":302}],16:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* globals $, FB, Actions */
@@ -1808,7 +2050,7 @@ var CurrentUserTrigger = exports.CurrentUserTrigger = _react2.default.createClas
 });
 window.CurrentUserTrigger = CurrentUserTrigger;
 
-},{"../lib/helpers":23,"../mixins/HyperDropdownMixin":24,"../stores/actor_store":25,"./Notifications":16,"react":302,"react-addons-transition-group":106,"react-dom":107,"react-onclickoutside":138}],16:[function(require,module,exports){
+},{"../lib/helpers":23,"../mixins/HyperDropdownMixin":24,"../stores/actor_store":25,"./Notifications":17,"react":302,"react-addons-transition-group":106,"react-dom":107,"react-onclickoutside":138}],17:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* globals NotificationActions */
@@ -2134,7 +2376,7 @@ var NotificationItem = exports.NotificationItem = _react2.default.createClass({
 });
 window.NotificationItem = NotificationItem;
 
-},{"../lib/helpers":23,"../mixins/HyperDropdownMixin":24,"../stores/notification_store":26,"react":302,"react-addons-transition-group":106,"react-dom":107,"react-onclickoutside":138}],17:[function(require,module,exports){
+},{"../lib/helpers":23,"../mixins/HyperDropdownMixin":24,"../stores/notification_store":26,"react":302,"react-addons-transition-group":106,"react-dom":107,"react-onclickoutside":138}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2274,239 +2516,7 @@ exports.default = BigGroupResponse;
 
 window.BigGroupResponse = BigGroupResponse;
 
-},{"../lib/helpers":23,"./Alert":12,"intl":83,"intl/locale-data/jsonp/en.js":87,"react":302}],18:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.BigVoteResults = exports.BigVoteFormButton = exports.BigVoteButtons = undefined;
-
-var _Alert = require('./Alert');
-
-var _Alert2 = _interopRequireDefault(_Alert);
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactIntl = require('react-intl');
-
-var _helpers = require('../lib/helpers');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function createMembership(response) {
-    return fetch(response.membership_url, (0, _helpers.safeCredentials)({
-        method: 'POST'
-    })).then(_helpers.statusSuccess);
-}
-
-var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
-    mixins: [_reactIntl.IntlMixin],
-
-    getInitialState: function getInitialState() {
-        return {
-            object_type: this.props.object_type,
-            object_id: this.props.object_id,
-            total_votes: this.props.total_votes,
-            current_vote: this.props.current_vote,
-            distribution: this.props.distribution,
-            percent: this.props.percent
-        };
-    },
-
-    ifNoActor: function ifNoActor(v) {
-        return this.props.actor === null ? v : undefined;
-    },
-
-    ifActor: function ifActor(v) {
-        return this.props.actor === null ? undefined : v;
-    },
-
-    refresh: function refresh() {
-        var _this = this;
-
-        fetch(this.state.vote_url + '.json', (0, _helpers.safeCredentials)()).then(_helpers.statusSuccess).then(_helpers.json).then(function (data) {
-            data.vote && _this.setState(data.vote);
-        }).catch(function () {
-            (0, _Alert2.default)(_this.getIntlMessage('errors.general'), 'alert', true);
-        });
-    },
-
-    proHandler: function proHandler(e) {
-        if (this.props.actor !== null) {
-            e.preventDefault();
-            this.vote('pro');
-        }
-    },
-    neutralHandler: function neutralHandler(e) {
-        if (this.props.actor !== null) {
-            e.preventDefault();
-            this.vote('neutral');
-        }
-    },
-    conHandler: function conHandler(e) {
-        if (this.props.actor !== null) {
-            e.preventDefault();
-            this.vote('con');
-        }
-    },
-
-    vote: function vote(side) {
-        var _this2 = this;
-
-        fetch(this.props.vote_url + '/' + side + '.json', (0, _helpers.safeCredentials)({
-            method: 'POST'
-        })).then(function (response) {
-            if (response.status === 403) {
-                return response.json().then(createMembership).then(function () {
-                    return _this2.vote(side);
-                });
-            } else {
-                return (0, _helpers.statusSuccess)(response);
-            }
-        }).then(_helpers.json, _helpers.tryLogin).then(function (data) {
-            if (typeof data !== 'undefined') {
-                _this2.setState(data.vote);
-                _this2.props.parentSetVote(data.vote);
-            }
-        }).catch(function (e) {
-            new _Alert2.default(_this2.getIntlMessage('errors.general'), 'alert', true);
-            throw e;
-        });
-    },
-
-    render: function render() {
-        return _react2.default.createElement(
-            'ul',
-            { className: 'btns-opinion', 'data-voted': this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain' || null },
-            _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                    'a',
-                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/pro'), 'data-method': this.ifNoActor('post'), onClick: this.proHandler, rel: 'nofollow', className: 'btn-pro', 'data-voted-on': this.state.current_vote === 'pro' || null },
-                    _react2.default.createElement('span', { className: 'fa fa-thumbs-up' }),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'icon-left' },
-                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('pro') })
-                    )
-                )
-            ),
-            _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                    'a',
-                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/neutral'), 'data-method': this.ifNoActor('post'), onClick: this.neutralHandler, rel: 'nofollow', className: 'btn-neutral', 'data-voted-on': this.state.current_vote === 'neutral' || null },
-                    _react2.default.createElement('span', { className: 'fa fa-pause' }),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'icon-left' },
-                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('neutral') })
-                    )
-                )
-            ),
-            _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                    'a',
-                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/con'), 'data-method': this.ifNoActor('post'), onClick: this.conHandler, rel: 'nofollow', className: 'btn-con', 'data-voted-on': this.state.current_vote === 'con' || null },
-                    _react2.default.createElement('span', { className: 'fa fa-thumbs-down' }),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'icon-left' },
-                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('con') })
-                    )
-                )
-            )
-        );
-    }
-});
-window.BigVoteButtons = BigVoteButtons;
-
-var BigVoteFormButton = exports.BigVoteFormButton = _react2.default.createClass({
-    render: function render() {
-        return _react2.default.createElement(
-            'a',
-            { href: this.ifNoActor('/m/' + this.props.object_id + '/v/pro'), 'data-method': 'post', rel: 'nofollow', className: 'btn-pro', 'data-voted-on': this.state.current_vote === 'pro' || null },
-            _react2.default.createElement('span', { className: 'fa fa-thumbs-up' }),
-            _react2.default.createElement(
-                'span',
-                { className: 'icon-left' },
-                _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('pro') })
-            )
-        );
-    }
-});
-window.BigVoteFormButton = BigVoteFormButton;
-
-var BigVoteResults = exports.BigVoteResults = _react2.default.createClass({
-    voteWidth: function voteWidth(side) {
-        var supplemented_values = {
-            pro: this.props.percent.pro < 5 ? 5 : this.props.percent.pro,
-            neutral: this.props.percent.neutral < 5 ? 5 : this.props.percent.neutral,
-            con: this.props.percent.con < 5 ? 5 : this.props.percent.con
-        };
-        var overflow = -100;
-        for (var o in supplemented_values) {
-            overflow += supplemented_values[o];
-        }
-        var width = supplemented_values[side] - overflow * (this.props.percent[side] / 100);
-
-        return {
-            width: width + '%'
-        };
-    },
-
-    render: function render() {
-        var results = undefined;
-
-        if (this.props.show_results) {
-            results = _react2.default.createElement(
-                'ul',
-                { className: 'progress-bar progress-bar-stacked' },
-                _react2.default.createElement(
-                    'li',
-                    { style: this.voteWidth('pro') },
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'btn-pro' },
-                        this.props.percent.pro + '%'
-                    )
-                ),
-                _react2.default.createElement(
-                    'li',
-                    { style: this.voteWidth('neutral') },
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'btn-neutral' },
-                        this.props.percent.neutral + '%'
-                    )
-                ),
-                _react2.default.createElement(
-                    'li',
-                    { style: this.voteWidth('con') },
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'btn-con' },
-                        this.props.percent.con + '%'
-                    )
-                )
-            );
-        } else {
-            results = null;
-        }
-
-        return results;
-    }
-});
-window.BigVoteResults = BigVoteResults;
-
-},{"../lib/helpers":23,"./Alert":12,"react":302,"react-intl":108}],19:[function(require,module,exports){
+},{"../lib/helpers":23,"./Alert":12,"intl":83,"intl/locale-data/jsonp/en.js":87,"react":302}],19:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -2949,6 +2959,10 @@ _react2.default; // For ESLint, jsx compiles to React.createElement, so React mu
 
 _intl2.default; // For ESLint
 
+/**
+ * @module Helpers
+ */
+
 Object.resolve = function (path, obj) {
     return [obj || self].concat(path.split('.')).reduce(function (prev, curr) {
         return prev && prev[curr];
@@ -3073,7 +3087,9 @@ function getUserIdentityToken() {
     return { token: getMetaContent('user-identity-token') };
 }
 
-// For use with window.fetch
+/**
+ * For use with window.fetch
+ */
 function jsonHeader(options) {
     options = options || {};
     return Object.assign(options, {
@@ -3082,8 +3098,10 @@ function jsonHeader(options) {
     });
 }
 
-// Lets fetch include credentials in the request. This includes cookies and other possibly sensitive data.
-// @note Never use for requests across (untrusted) domains.
+/**
+ * Lets fetch include credentials in the request. This includes cookies and other possibly sensitive data.
+ * Note: Never use for requests across (untrusted) domains.
+ */
 function safeCredentials(options) {
     options = options || {};
     return Object.assign(options, {
