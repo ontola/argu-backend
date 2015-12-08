@@ -2,14 +2,7 @@
     ul.btns-list--subtle
       li= react_component 'Expander', {label: t('filtersort.filter_&_sort'), expanderTarget: 'filter-and-sort', showCaret: true}, {prerender: true}
 #filter-and-sort.filter-and-sort
-  /#type
-    ul.tags.tags-type
-      li
-        a.tag.tag-all.is-checked[data-filter="" data-forum-path="#{forum_path(@forum)}"]= t('filtersort.all')
-      li
-        a.tag.tag-motions[data-filter="motion"]= t('filtersort.motions')
-      li
-        a.tag.tag-questions[data-filter="question"]= t('filtersort.questions')
+
   /- if @forum.featured_tags.present?
     #tags
       ul.tags[itemprop="keywords"]
@@ -18,11 +11,22 @@
         - @forum.featured_tags.each do |tag|
           li
             a[class="tag" rel="tag" href="#{forum_tag_path(@forum, tag)}" data-filter='filterByTag' data-filter-value=tag data-forum-path="#{forum_path(@forum)}" data-skip-pjax]= tag
-  #sorts[style="display: inline-block;"]
+  #sorts
     .btns-list--subtle.btns-subtle
       li
         ul= react_component 'HyperDropdown', sort_items, {prerender: true}
-  #display[style="display: inline-block;"]
-    .btns-list--subtle.btns-subtle.btns-horizontal
+  #display
+    .btns-list--subtle.btns-subtle
       li
         ul= react_component 'HyperDropdown', display_settings_items, {prerender: true}
+  #type
+    .btns-list--subtle.btns-subtle
+      li
+        ul= react_component 'HyperDropdown', filter_items, {prerender: true}
+    /ul.tags.tags-type
+      li
+        a.tag.tag-all.is-checked[data-filter="" data-forum-path="#{forum_path(@forum)}"]= t('filtersort.all')
+      li
+        a.tag.tag-motions[data-filter="motion"]= t('filtersort.motions')
+      li
+        a.tag.tag-questions[data-filter="question"]= t('filtersort.questions')

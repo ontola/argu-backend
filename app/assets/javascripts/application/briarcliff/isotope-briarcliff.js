@@ -1,11 +1,11 @@
 import Isotope from 'isotope-layout';
 
 var $container;
+var lastType   = "";
 
 export default function init () {
     // filter functions
-    var lastFilter = "",
-        lastType   = "";
+    var lastFilter = "";
 
     var filterFns = {
         // filter by tag using data-tags
@@ -45,7 +45,7 @@ export default function init () {
         var  _this = $(this),
             filter = _this.attr('data-filter'),
             value  = this.dataset.filterValue || "";
-        filterForType(filter, filter);
+        filterForType(filter, value);
         if (filter == '') {
             history.pushState({
                 filter: filter,

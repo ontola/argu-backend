@@ -144,11 +144,11 @@ var _isotopeLayout2 = _interopRequireDefault(_isotopeLayout);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var $container;
+var lastType = "";
 
 function init() {
     // filter functions
-    var lastFilter = "",
-        lastType = "";
+    var lastFilter = "";
 
     var filterFns = {
         // filter by tag using data-tags
@@ -186,7 +186,7 @@ function init() {
         var _this = $(this),
             filter = _this.attr('data-filter'),
             value = this.dataset.filterValue || "";
-        filterForType(filter, filter);
+        filterForType(filter, value);
         if (filter == '') {
             history.pushState({
                 filter: filter,
@@ -994,6 +994,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _intl2.default;
 var ActiveToggle = exports.ActiveToggle = _react2.default.createClass({
+    displayName: 'ActiveToggle',
+
     getDefaultProps: function getDefaultProps() {
         return {
             tagName: 'div'
@@ -1170,6 +1172,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _intl2.default; // For ESLint
 var CombiBigVote = exports.CombiBigVote = _react2.default.createClass({
+    displayName: 'CombiBigVote',
 
     getInitialState: function getInitialState() {
         return {
@@ -1255,6 +1258,8 @@ var _actor_store2 = _interopRequireDefault(_actor_store);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CurrentProfile = exports.CurrentProfile = _react2.default.createClass({
+    displayName: 'CurrentProfile',
+
     getInitialState: function getInitialState() {
         return {
             display_name: this.props.display_name,
@@ -1343,6 +1348,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var HyperDropdown = exports.HyperDropdown = _react2.default.createClass({
+    displayName: 'HyperDropdown',
+
     mixins: [_HyperDropdownMixin2.default, _reactOnclickoutside2.default],
 
     getInitialState: function getInitialState() {
@@ -1424,6 +1431,8 @@ var HyperDropdown = exports.HyperDropdown = _react2.default.createClass({
 window.HyperDropdown = HyperDropdown;
 
 var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
+    displayName: 'ShareDropdown',
+
     mixins: [_HyperDropdownMixin2.default, _reactOnclickoutside2.default],
 
     getInitialState: function getInitialState() {
@@ -1564,6 +1573,8 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
 window.ShareDropdown = ShareDropdown;
 
 var DropdownContent = exports.DropdownContent = _react2.default.createClass({
+    displayName: 'DropdownContent',
+
     getInitialState: function getInitialState() {
         return {
             appearState: ''
@@ -1652,6 +1663,8 @@ var DropdownContent = exports.DropdownContent = _react2.default.createClass({
 window.DropdownContent = DropdownContent;
 
 var LinkItem = exports.LinkItem = _react2.default.createClass({
+    displayName: 'LinkItem',
+
     getInitialState: function getInitialState() {
         return {};
     },
@@ -1702,6 +1715,8 @@ var LinkItem = exports.LinkItem = _react2.default.createClass({
 window.LinkItem = LinkItem;
 
 var FBShareItem = exports.FBShareItem = _react2.default.createClass({
+    displayName: 'FBShareItem',
+
     handleClick: function handleClick(e) {
         var _this7 = this;
 
@@ -1742,6 +1757,8 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
 window.FBShareItem = FBShareItem;
 
 var ActorItem = exports.ActorItem = _react2.default.createClass({
+    displayName: 'ActorItem',
+
     getInitialState: function getInitialState() {
         return {};
     },
@@ -1803,6 +1820,8 @@ var ActorItem = exports.ActorItem = _react2.default.createClass({
 window.ActorItem = ActorItem;
 
 var CurrentUserTrigger = exports.CurrentUserTrigger = _react2.default.createClass({
+    displayName: 'CurrentUserTrigger',
+
     getInitialState: function getInitialState() {
         return {
             display_name: this.props.title,
@@ -1927,6 +1946,8 @@ var ScrollLockMixin = exports.ScrollLockMixin = {
 window.ScrollLockMixin = ScrollLockMixin;
 
 var NotificationDropdown = exports.NotificationDropdown = _react2.default.createClass({
+    displayName: 'NotificationDropdown',
+
     mixins: [_HyperDropdownMixin2.default, _reactOnclickoutside2.default],
 
     onMouseEnterFetch: function onMouseEnterFetch() {
@@ -1977,6 +1998,8 @@ var NotificationDropdown = exports.NotificationDropdown = _react2.default.create
 window.NotificationDropdown = NotificationDropdown;
 
 var NotificationTrigger = exports.NotificationTrigger = _react2.default.createClass({
+    displayName: 'NotificationTrigger',
+
     getInitialState: function getInitialState() {
         return {
             unread: this.props.sections[0].unread
@@ -2015,6 +2038,8 @@ var NotificationTrigger = exports.NotificationTrigger = _react2.default.createCl
 window.NotificationTrigger = NotificationTrigger;
 
 var Notifications = exports.Notifications = _react2.default.createClass({
+    displayName: 'Notifications',
+
     mixins: [ScrollLockMixin],
 
     getInitialState: function getInitialState() {
@@ -2111,6 +2136,8 @@ var Notifications = exports.Notifications = _react2.default.createClass({
 window.Notifications = Notifications;
 
 var NotificationItem = exports.NotificationItem = _react2.default.createClass({
+    displayName: 'NotificationItem',
+
     getInitialState: function getInitialState() {
         return {};
     },
@@ -2194,6 +2221,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 _intl2.default; // For ESLint
 var BigGroupResponse = exports.BigGroupResponse = _react2.default.createClass({
+    displayName: 'BigGroupResponse',
+
     getInitialState: function getInitialState() {
         return {
             object_type: this.props.object_type,
@@ -2335,6 +2364,8 @@ function createMembership(response) {
 }
 
 var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
+    displayName: 'BigVoteButtons',
+
     mixins: [_reactIntl.IntlMixin],
 
     getInitialState: function getInitialState() {
@@ -2461,6 +2492,7 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
 window.BigVoteButtons = BigVoteButtons;
 
 var BigVoteFormButton = exports.BigVoteFormButton = _react2.default.createClass({
+    displayName: 'BigVoteFormButton',
     render: function render() {
         return _react2.default.createElement(
             'a',
@@ -2477,6 +2509,8 @@ var BigVoteFormButton = exports.BigVoteFormButton = _react2.default.createClass(
 window.BigVoteFormButton = BigVoteFormButton;
 
 var BigVoteResults = exports.BigVoteResults = _react2.default.createClass({
+    displayName: 'BigVoteResults',
+
     voteWidth: function voteWidth(side) {
         var supplemented_values = {
             pro: this.props.percent.pro < 5 ? 5 : this.props.percent.pro,
@@ -2550,6 +2584,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
 var Expander = _react2.default.createClass({
+    displayName: 'Expander',
+
     getInitialState: function getInitialState() {
         return {
             openState: false
@@ -2618,6 +2654,8 @@ var _helpers = require('../lib/helpers');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ProfileOption = exports.ProfileOption = _react2.default.createClass({
+    displayName: 'ProfileOption',
+
     propTypes: {
         addLabelText: _react2.default.PropTypes.string,
         className: _react2.default.PropTypes.string,
@@ -2657,6 +2695,8 @@ var ProfileOption = exports.ProfileOption = _react2.default.createClass({
 window.ProfileOption = ProfileOption;
 
 var SingleValue = exports.SingleValue = _react2.default.createClass({
+    displayName: 'SingleValue',
+
     propTypes: {
         placeholder: _react2.default.PropTypes.string,
         value: _react2.default.PropTypes.object
@@ -2684,6 +2724,7 @@ var SingleValue = exports.SingleValue = _react2.default.createClass({
 window.SingleValue = SingleValue;
 
 var NewMembership = exports.NewMembership = _react2.default.createClass({
+    displayName: 'NewMembership',
     getInitialState: function getInitialState() {
         this.currentFetchTimer = 0;
         return {
@@ -2776,6 +2817,8 @@ var _helpers = require('../lib/helpers');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var MotionOption = exports.MotionOption = _react2.default.createClass({
+    displayName: 'MotionOption',
+
     propTypes: {
         addLabelText: _react2.default.PropTypes.string,
         className: _react2.default.PropTypes.string,
@@ -2812,6 +2855,7 @@ var MotionOption = exports.MotionOption = _react2.default.createClass({
 window.MotionOption = MotionOption;
 
 var MotionSelect = exports.MotionSelect = _react2.default.createClass({
+    displayName: 'MotionSelect',
     getInitialState: function getInitialState() {
         this.currentFetchTimer = 0;
         return {
@@ -3491,13 +3535,13 @@ module.exports = require('./is-implemented')() ? Map : require('./polyfill');
 module.exports = function () {
 	var map, iterator, result;
 	if (typeof Map !== 'function') return false;
-	if (String(Map.prototype) !== '[object Map]') return false;
 	try {
 		// WebKit doesn't support arguments and crashes
 		map = new Map([['raz', 'one'], ['dwa', 'two'], ['trzy', 'three']]);
 	} catch (e) {
 		return false;
 	}
+	if (String(map) !== '[object Map]') return false;
 	if (map.size !== 3) return false;
 	if (typeof map.clear !== 'function') return false;
 	if (typeof map.delete !== 'function') return false;
@@ -16139,17 +16183,19 @@ arguments[4][128][0].apply(exports,arguments)
 (function (root, factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
-    define(['react-dom'], factory);
+    define(['react-dom'], function(reactDom) {
+      return factory(root, reactDom);
+    });
   } else if (typeof exports === 'object') {
     // Node. Note that this does not work with strict
     // CommonJS, but only CommonJS-like environments
     // that support module.exports
-    module.exports = factory(require('react-dom'));
+    module.exports = factory(root, require('react-dom'));
   } else {
     // Browser globals (root is window)
-    root.OnClickOutside = factory(ReactDOM);
+    root.OnClickOutside = factory(root, ReactDOM);
   }
-}(this, function (ReactDOM) {
+}(this, function (root, ReactDOM) {
   "use strict";
 
   // Use a parallel array because we can't use
@@ -16229,8 +16275,10 @@ arguments[4][128][0].apply(exports,arguments)
      */
     enableOnClickOutside: function() {
       var fn = this.__outsideClickHandler;
-      document.addEventListener("mousedown", fn);
-      document.addEventListener("touchstart", fn);
+      if (document != null) {
+        document.addEventListener("mousedown", fn);
+        document.addEventListener("touchstart", fn);
+      }
     },
 
     /**
@@ -16239,8 +16287,10 @@ arguments[4][128][0].apply(exports,arguments)
      */
     disableOnClickOutside: function() {
       var fn = this.__outsideClickHandler;
-      document.removeEventListener("mousedown", fn);
-      document.removeEventListener("touchstart", fn);
+      if (document != null) {
+        document.removeEventListener("mousedown", fn);
+        document.removeEventListener("touchstart", fn);
+      }
     }
   };
 
@@ -20799,6 +20849,7 @@ var HTMLDOMPropertyConfig = {
     multiple: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
     muted: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
     name: null,
+    nonce: MUST_USE_ATTRIBUTE,
     noValidate: HAS_BOOLEAN_VALUE,
     open: HAS_BOOLEAN_VALUE,
     optimum: null,
@@ -20810,6 +20861,7 @@ var HTMLDOMPropertyConfig = {
     readOnly: MUST_USE_PROPERTY | HAS_BOOLEAN_VALUE,
     rel: null,
     required: HAS_BOOLEAN_VALUE,
+    reversed: HAS_BOOLEAN_VALUE,
     role: MUST_USE_ATTRIBUTE,
     rows: MUST_USE_ATTRIBUTE | HAS_POSITIVE_NUMERIC_VALUE,
     rowSpan: null,
@@ -21255,6 +21307,7 @@ assign(React, {
 });
 
 React.__SECRET_DOM_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOM;
+React.__SECRET_DOM_SERVER_DO_NOT_USE_OR_YOU_WILL_BE_FIRED = ReactDOMServer;
 
 module.exports = React;
 },{"./Object.assign":166,"./ReactDOM":179,"./ReactDOMServer":189,"./ReactIsomorphic":207,"./deprecated":252}],169:[function(require,module,exports){
@@ -31768,7 +31821,7 @@ module.exports = ReactUpdates;
 
 'use strict';
 
-module.exports = '0.14.2';
+module.exports = '0.14.3';
 },{}],231:[function(require,module,exports){
 /**
  * Copyright 2013-2015, Facebook, Inc.

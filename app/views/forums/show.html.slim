@@ -51,7 +51,8 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
       .box.box-grid-sizer
       .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
       =render @items
-      =render partial: 'sample_items'
+      /=render partial: 'sample_items'
+    =render partial: 'discussions/new', locals: {forum: @forum}
     .col-1.margin-top
       header#forum-info
         h2= t('forums.about.header')

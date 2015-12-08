@@ -121,6 +121,18 @@ module ApplicationHelper
     dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
   end
 
+  def filter_items
+    link_items = []
+
+    link_items = [
+        link_item(t('filtersort.all'), nil, fa: 'check', data: {'filter' => ''}),
+        link_item(t('filtersort.questions'), nil, fa: 'question', data: {'filter' => 'question'}),
+        link_item(t('filtersort.motions'), nil, fa: 'lightbulb-o', data: {'filter' => 'motion'})
+    ]
+
+    dropdown_options(t('filtersort.filter'), [{items: link_items}], fa: 'fa-filter')
+  end
+
   def display_settings_items
     link_items = []
 

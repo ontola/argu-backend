@@ -1,0 +1,10 @@
+.col-1[style='margin-top: 3em;']
+  header
+    h2= t('new_discussion.start_header')
+  .box
+    section
+      p= t('new_discussion.start_body')
+  .btns-center-container
+    =link_to new_discussion_path(forum_id: @forum), class: 'btn btn--pro'
+      span.fa.fa-plus
+      span.icon-left= t('new_discussion.title')
