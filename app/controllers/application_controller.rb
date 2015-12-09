@@ -101,9 +101,13 @@ class ApplicationController < ActionController::Base
 
   # @return the current context, if a param is given, it will serve as the start of the current context
   def current_context(model=nil)
-    @current_context ||= Context.parse_from_uri(request.url, model) do |components|
-      components.reject! { |c| !policy(c).show? }
-    end
+    @current_context = if @current_context.try :has_parent?
+                         @current_context
+                       else
+                         Context.parse_from_uri(request.url, model) do |components|
+                           components.reject! { |c| !policy(c).show? }
+                         end
+                       end
   end
 
   # @return the {Profile} the {User} is using to do actions
