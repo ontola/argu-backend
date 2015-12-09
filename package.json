@@ -3,6 +3,7 @@
   "dependencies": {
     "es6-map": "^0.1.2",
     "fastclick": "^1.0.6",
+    "immutable": "^3.7.5",
     "install": "^0.2.6",
     "intl": "^1.0.0",
     "intro.js": "^1.1.1",
@@ -14,6 +15,7 @@
     "react-dom": "^0.14.2",
     "react-intl": "=1.2.0",
     "react-onclickoutside": "^4.1.0",
+    "react-redux": "^4.0.0",
     "react-scroll-lock": "^0.1.1",
     "react-select": "^0.9.1",
     "redux": "^3.0.4",

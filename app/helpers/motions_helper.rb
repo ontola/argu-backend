@@ -53,4 +53,24 @@ module MotionsHelper
     dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-gear')
   end
 
+  def motion_timeline_props(motion)
+    {
+      timeLineId: 1,
+      phases: [
+        {
+          id: 1,
+          index: 0,
+          title: 'Fase 1',
+          content: 'Fasebeschrijving voor fase 1'
+        },
+        {
+          id: 2,
+          index: 1,
+          title: 'Fase 2',
+          content: 'Fasebeschrijving voor fase 2'
+        }
+      ]
+    }
+  end
+
 end

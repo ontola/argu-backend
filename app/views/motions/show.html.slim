@@ -13,6 +13,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     .col--motion
       .motion-body[data-intro= t('intro.motion.body') itemprop="text"]= render partial: 'body', locals: { motion: @motion }
       .motion-votes= react_component 'CombiBigVote', motion_combi_vote_props(current_profile, @motion, @vote), {prerender: true}
+      .motion-timeline= react_component 'TimeLineComponentContainerWrapper', motion_timeline_props(@motion), {prerender: false}
       /=render partial: 'updates/update', locals: {item: @motion}
 .col-2
   .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top "]
