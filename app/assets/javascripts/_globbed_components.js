@@ -9,7 +9,7 @@ window.ReactDOMServer = require('react-dom/server');
 window.Select = require('react-select');
 
 
-var components = ({"src":({"app":({"components":({"ActiveToggle":require("./src/app/components/ActiveToggle.js"),"Alert":require("./src/app/components/Alert.js"),"CombiBigVote":require("./src/app/components/CombiBigVote.js"),"CurrentProfile":require("./src/app/components/CurrentProfile.js"),"Dropdown":require("./src/app/components/Dropdown.js"),"Notifications":require("./src/app/components/Notifications.js"),"_big_group_responses":require("./src/app/components/_big_group_responses.js"),"_big_vote_elements":require("./src/app/components/_big_vote_elements.js"),"_expand":require("./src/app/components/_expand.js"),"_membership":require("./src/app/components/_membership.js"),"_search":require("./src/app/components/_search.js")})})})});
+var components = ({"src":({"app":({"components":({"ActiveToggle":require("./src/app/components/ActiveToggle.js"),"Alert":require("./src/app/components/Alert.js"),"BigVote":require("./src/app/components/BigVote.js"),"CombiBigVote":require("./src/app/components/CombiBigVote.js"),"CurrentProfile":require("./src/app/components/CurrentProfile.js"),"Dropdown":require("./src/app/components/Dropdown.js"),"Notifications":require("./src/app/components/Notifications.js"),"_big_group_responses":require("./src/app/components/_big_group_responses.js"),"_expand":require("./src/app/components/_expand.js"),"_membership":require("./src/app/components/_membership.js"),"_search":require("./src/app/components/_search.js")})})})});
 
 for (var obj in components) {
     if (components.hasOwnProperty(obj)) {
@@ -27,7 +27,7 @@ function mineForFunctions(obj) {
     }
 }
 
-},{"./src/app/components/ActiveToggle.js":2,"./src/app/components/Alert.js":3,"./src/app/components/CombiBigVote.js":4,"./src/app/components/CurrentProfile.js":5,"./src/app/components/Dropdown.js":6,"./src/app/components/Notifications.js":7,"./src/app/components/_big_group_responses.js":8,"./src/app/components/_big_vote_elements.js":9,"./src/app/components/_expand.js":10,"./src/app/components/_membership.js":11,"./src/app/components/_search.js":12,"babel-polyfill":18,"react":464,"react-dom/server":269,"react-select":302}],2:[function(require,module,exports){
+},{"./src/app/components/ActiveToggle.js":2,"./src/app/components/Alert.js":3,"./src/app/components/BigVote.js":4,"./src/app/components/CombiBigVote.js":5,"./src/app/components/CurrentProfile.js":6,"./src/app/components/Dropdown.js":7,"./src/app/components/Notifications.js":8,"./src/app/components/_big_group_responses.js":9,"./src/app/components/_expand.js":10,"./src/app/components/_membership.js":11,"./src/app/components/_search.js":12,"babel-polyfill":18,"react":464,"react-dom/server":269,"react-select":302}],2:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -190,6 +190,245 @@ exports.default = Alert;
 },{}],4:[function(require,module,exports){
 'use strict';
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.BigVoteResults = exports.BigVoteFormButton = exports.BigVoteButtons = undefined;
+
+var _Alert = require('./Alert');
+
+var _Alert2 = _interopRequireDefault(_Alert);
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactIntl = require('react-intl');
+
+var _helpers = require('../lib/helpers');
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * BigVote
+ * @module BigVote
+ */
+
+function createMembership(response) {
+    return fetch(response.membership_url, (0, _helpers.safeCredentials)({
+        method: 'POST'
+    })).then(_helpers.statusSuccess);
+}
+
+/**
+ * Component for the POST-ing of a vote.
+ * This component is not pure.
+ * @class BigVoteButtons
+ * @export BigVoteButtons
+ * @memberof BigVote
+ */
+var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
+    mixins: [_reactIntl.IntlMixin],
+
+    getInitialState: function getInitialState() {
+        return {
+            object_type: this.props.object_type,
+            object_id: this.props.object_id,
+            total_votes: this.props.total_votes,
+            current_vote: this.props.current_vote,
+            distribution: this.props.distribution,
+            percent: this.props.percent
+        };
+    },
+
+    ifNoActor: function ifNoActor(v) {
+        return this.props.actor === null ? v : undefined;
+    },
+
+    ifActor: function ifActor(v) {
+        return this.props.actor === null ? undefined : v;
+    },
+
+    proHandler: function proHandler(e) {
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('pro');
+        }
+    },
+    neutralHandler: function neutralHandler(e) {
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('neutral');
+        }
+    },
+    conHandler: function conHandler(e) {
+        if (this.props.actor !== null) {
+            e.preventDefault();
+            this.vote('con');
+        }
+    },
+
+    vote: function vote(side) {
+        var _this = this;
+
+        fetch(this.props.vote_url + '/' + side + '.json', (0, _helpers.safeCredentials)({
+            method: 'POST'
+        })).then(function (response) {
+            if (response.status === 403) {
+                return response.json().then(createMembership).then(function () {
+                    return _this.vote(side);
+                });
+            } else {
+                return (0, _helpers.statusSuccess)(response);
+            }
+        }).then(_helpers.json, _helpers.tryLogin).then(function (data) {
+            if (typeof data !== 'undefined') {
+                _this.setState(data.vote);
+                _this.props.parentSetVote(data.vote);
+            }
+        }).catch(function (e) {
+            new _Alert2.default(_this.getIntlMessage('errors.general'), 'alert', true);
+            throw e;
+        });
+    },
+
+    render: function render() {
+        return _react2.default.createElement(
+            'ul',
+            { className: 'btns-opinion', 'data-voted': this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain' || null },
+            _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                    'a',
+                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/pro'), 'data-method': this.ifNoActor('post'), onClick: this.proHandler, rel: 'nofollow', className: 'btn-pro', 'data-voted-on': this.state.current_vote === 'pro' || null },
+                    _react2.default.createElement('span', { className: 'fa fa-thumbs-up' }),
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'icon-left' },
+                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('pro') })
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                    'a',
+                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/neutral'), 'data-method': this.ifNoActor('post'), onClick: this.neutralHandler, rel: 'nofollow', className: 'btn-neutral', 'data-voted-on': this.state.current_vote === 'neutral' || null },
+                    _react2.default.createElement('span', { className: 'fa fa-pause' }),
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'icon-left' },
+                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('neutral') })
+                    )
+                )
+            ),
+            _react2.default.createElement(
+                'li',
+                null,
+                _react2.default.createElement(
+                    'a',
+                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/con'), 'data-method': this.ifNoActor('post'), onClick: this.conHandler, rel: 'nofollow', className: 'btn-con', 'data-voted-on': this.state.current_vote === 'con' || null },
+                    _react2.default.createElement('span', { className: 'fa fa-thumbs-down' }),
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'icon-left' },
+                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('con') })
+                    )
+                )
+            )
+        );
+    }
+});
+window.BigVoteButtons = BigVoteButtons;
+
+var BigVoteFormButton = exports.BigVoteFormButton = _react2.default.createClass({
+    render: function render() {
+        return _react2.default.createElement(
+            'a',
+            { href: this.ifNoActor('/m/' + this.props.object_id + '/v/pro'), 'data-method': 'post', rel: 'nofollow', className: 'btn-pro', 'data-voted-on': this.state.current_vote === 'pro' || null },
+            _react2.default.createElement('span', { className: 'fa fa-thumbs-up' }),
+            _react2.default.createElement(
+                'span',
+                { className: 'icon-left' },
+                _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('pro') })
+            )
+        );
+    }
+});
+window.BigVoteFormButton = BigVoteFormButton;
+
+/**
+ * Component to display voting results
+ * @class BigVoteResults
+ * @memberof BigVote
+ */
+var BigVoteResults = exports.BigVoteResults = _react2.default.createClass({
+    voteWidth: function voteWidth(side) {
+        var supplemented_values = {
+            pro: this.props.percent.pro < 5 ? 5 : this.props.percent.pro,
+            neutral: this.props.percent.neutral < 5 ? 5 : this.props.percent.neutral,
+            con: this.props.percent.con < 5 ? 5 : this.props.percent.con
+        };
+        var overflow = -100;
+        for (var o in supplemented_values) {
+            overflow += supplemented_values[o];
+        }
+        var width = supplemented_values[side] - overflow * (this.props.percent[side] / 100);
+
+        return {
+            width: width + '%'
+        };
+    },
+
+    render: function render() {
+        var results = undefined;
+
+        if (this.props.show_results) {
+            results = _react2.default.createElement(
+                'ul',
+                { className: 'progress-bar progress-bar-stacked' },
+                _react2.default.createElement(
+                    'li',
+                    { style: this.voteWidth('pro') },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'btn-pro' },
+                        this.props.percent.pro + '%'
+                    )
+                ),
+                _react2.default.createElement(
+                    'li',
+                    { style: this.voteWidth('neutral') },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'btn-neutral' },
+                        this.props.percent.neutral + '%'
+                    )
+                ),
+                _react2.default.createElement(
+                    'li',
+                    { style: this.voteWidth('con') },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'btn-con' },
+                        this.props.percent.con + '%'
+                    )
+                )
+            );
+        } else {
+            results = null;
+        }
+
+        return results;
+    }
+});
+window.BigVoteResults = BigVoteResults;
+
+},{"../lib/helpers":14,"./Alert":3,"react":464,"react-intl":270}],5:[function(require,module,exports){
+'use strict';
+
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 Object.defineProperty(exports, "__esModule", {
@@ -217,7 +456,7 @@ var _actor_store = require('../stores/actor_store');
 
 var _actor_store2 = _interopRequireDefault(_actor_store);
 
-var _big_vote_elements = require('./_big_vote_elements');
+var _BigVote = require('./BigVote');
 
 var _big_group_responses = require('./_big_group_responses');
 
@@ -226,6 +465,17 @@ var _big_group_responses2 = _interopRequireDefault(_big_group_responses);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _intl2.default; // For ESLint
+
+/**
+ * Component that displays current vote options based on whether the user is member of a group.
+ * Also reveals the results if the user has already voted.
+ * This component is not pure.
+ * @class
+ * @exports CombiBigVote
+ * @see {@linkcode BigVote.BigVoteButtons}
+ * @see {@linkcode BigVote.BigVoteResults}
+ * @see {@linkcode BigGroupResponse}
+ */
 var CombiBigVote = exports.CombiBigVote = _react2.default.createClass({
 
     getInitialState: function getInitialState() {
@@ -272,12 +522,12 @@ var CombiBigVote = exports.CombiBigVote = _react2.default.createClass({
         var voteResultsComponent = undefined;
         var groupResponsesComponent = undefined;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
-            voteButtonsComponent = _react2.default.createElement(_big_vote_elements.BigVoteButtons, _extends({ parentSetVote: this.setVote }, this.state, this.props));
-            voteResultsComponent = _react2.default.createElement(_big_vote_elements.BigVoteResults, _extends({}, this.state, { show_results: this.state.current_vote !== 'abstain' }));
+            voteButtonsComponent = _react2.default.createElement(_BigVote.BigVoteButtons, _extends({ parentSetVote: this.setVote }, this.state, this.props));
+            voteResultsComponent = _react2.default.createElement(_BigVote.BigVoteResults, _extends({}, this.state, { show_results: this.state.current_vote !== 'abstain' }));
             groupResponsesComponent = _react2.default.createElement(_big_group_responses2.default, { groups: this.state.groups || [], actor: this.state.actor, object_type: this.props.object_type, object_id: this.props.object_id });
         } else if (this.state.actor.actor_type === 'Page') {
             groupResponsesComponent = _react2.default.createElement(_big_group_responses2.default, { groups: this.state.groups || [], actor: this.state.actor, object_type: this.props.object_type, object_id: this.props.object_id });
-            voteResultsComponent = _react2.default.createElement(_big_vote_elements.BigVoteResults, _extends({}, this.state, this.props, { show_results: true }));
+            voteResultsComponent = _react2.default.createElement(_BigVote.BigVoteResults, _extends({}, this.state, this.props, { show_results: true }));
         }
 
         return _react2.default.createElement(
@@ -291,7 +541,7 @@ var CombiBigVote = exports.CombiBigVote = _react2.default.createClass({
 });
 window.CombiBigVote = CombiBigVote;
 
-},{"../lib/helpers":14,"../stores/actor_store":16,"./Alert":3,"./_big_group_responses":8,"./_big_vote_elements":9,"intl":262,"intl/locale-data/jsonp/en.js":266,"react":464}],5:[function(require,module,exports){
+},{"../lib/helpers":14,"../stores/actor_store":16,"./Alert":3,"./BigVote":4,"./_big_group_responses":9,"intl":262,"intl/locale-data/jsonp/en.js":266,"react":464}],6:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -357,7 +607,7 @@ var CurrentProfile = exports.CurrentProfile = _react2.default.createClass({
 
 window.CurrentProfile = CurrentProfile;
 
-},{"../lib/helpers":14,"../stores/actor_store":16,"react":464}],6:[function(require,module,exports){
+},{"../lib/helpers":14,"../stores/actor_store":16,"react":464}],7:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* globals $, FB, Actions */
@@ -496,7 +746,6 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
     componentDidMount: function componentDidMount() {
         this.fetchFacebookCount();
         this.fetchLinkedInCount();
-        this.fetchTwitterCount();
     },
 
     countInParentheses: function countInParentheses(count) {
@@ -523,19 +772,11 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
         });
     },
 
-    fetchTwitterCount: function fetchTwitterCount() {
+    totalShares: function totalShares() {
         var _this3 = this;
 
-        $.getJSON('https://cdn.api.twitter.com/1/urls/count.json?url=' + this.props.url + '&callback=?', function (data) {
-            _this3.updateCount('twitter', data.count);
-        });
-    },
-
-    totalShares: function totalShares() {
-        var _this4 = this;
-
         return Object.keys(this.state.counts).map(function (k) {
-            return _this4.state.counts[k];
+            return _this3.state.counts[k];
         }).reduce(function (a, b) {
             return a + b;
         });
@@ -628,21 +869,21 @@ var DropdownContent = exports.DropdownContent = _react2.default.createClass({
     },
 
     componentWillEnter: function componentWillEnter(callback) {
-        var _this5 = this;
+        var _this4 = this;
 
         this.setState({ appearState: 'dropdown-enter' }, function () {
             window.setTimeout(function () {
-                _this5.setState({ appearState: 'dropdown-enter dropdown-enter-active' }, callback);
+                _this4.setState({ appearState: 'dropdown-enter dropdown-enter-active' }, callback);
             }, 10);
         });
     },
 
     componentWillLeave: function componentWillLeave(callback) {
-        var _this6 = this;
+        var _this5 = this;
 
         this.setState({ appearState: 'dropdown-leave' }, function () {
             window.setTimeout(function () {
-                _this6.setState({ appearState: 'dropdown-leave dropdown-leave-active' }, function () {
+                _this5.setState({ appearState: 'dropdown-leave dropdown-leave-active' }, function () {
                     window.setTimeout(callback, 200);
                 });
             }, 0);
@@ -756,7 +997,7 @@ window.LinkItem = LinkItem;
 
 var FBShareItem = exports.FBShareItem = _react2.default.createClass({
     handleClick: function handleClick(e) {
-        var _this7 = this;
+        var _this6 = this;
 
         if (typeof FB !== 'undefined') {
             e.preventDefault();
@@ -765,7 +1006,7 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
                 href: this.props.shareUrl,
                 caption: this.props.title
             }, function () {
-                _this7.props.done();
+                _this6.props.done();
             });
         }
     },
@@ -893,7 +1134,7 @@ var CurrentUserTrigger = exports.CurrentUserTrigger = _react2.default.createClas
 });
 window.CurrentUserTrigger = CurrentUserTrigger;
 
-},{"../lib/helpers":14,"../mixins/HyperDropdownMixin":15,"../stores/actor_store":16,"./Notifications":7,"react":464,"react-addons-transition-group":267,"react-dom":268,"react-onclickoutside":300}],7:[function(require,module,exports){
+},{"../lib/helpers":14,"../mixins/HyperDropdownMixin":15,"../stores/actor_store":16,"./Notifications":8,"react":464,"react-addons-transition-group":267,"react-dom":268,"react-onclickoutside":300}],8:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* globals NotificationActions */
@@ -1219,7 +1460,7 @@ var NotificationItem = exports.NotificationItem = _react2.default.createClass({
 });
 window.NotificationItem = NotificationItem;
 
-},{"../lib/helpers":14,"../mixins/HyperDropdownMixin":15,"../stores/notification_store":17,"react":464,"react-addons-transition-group":267,"react-dom":268,"react-onclickoutside":300}],8:[function(require,module,exports){
+},{"../lib/helpers":14,"../mixins/HyperDropdownMixin":15,"../stores/notification_store":17,"react":464,"react-addons-transition-group":267,"react-dom":268,"react-onclickoutside":300}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1246,6 +1487,12 @@ var _helpers = require('../lib/helpers');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 _intl2.default; // For ESLint
+
+/**
+ * For making a GroupResponse in a BigVote fashion.
+ * @class
+ * @export BigGroupResponse
+ */
 var BigGroupResponse = exports.BigGroupResponse = _react2.default.createClass({
     getInitialState: function getInitialState() {
         return {
@@ -1359,239 +1606,7 @@ exports.default = BigGroupResponse;
 
 window.BigGroupResponse = BigGroupResponse;
 
-},{"../lib/helpers":14,"./Alert":3,"intl":262,"intl/locale-data/jsonp/en.js":266,"react":464}],9:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.BigVoteResults = exports.BigVoteFormButton = exports.BigVoteButtons = undefined;
-
-var _Alert = require('./Alert');
-
-var _Alert2 = _interopRequireDefault(_Alert);
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactIntl = require('react-intl');
-
-var _helpers = require('../lib/helpers');
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function createMembership(response) {
-    return fetch(response.membership_url, (0, _helpers.safeCredentials)({
-        method: 'POST'
-    })).then(_helpers.statusSuccess);
-}
-
-var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
-    mixins: [_reactIntl.IntlMixin],
-
-    getInitialState: function getInitialState() {
-        return {
-            object_type: this.props.object_type,
-            object_id: this.props.object_id,
-            total_votes: this.props.total_votes,
-            current_vote: this.props.current_vote,
-            distribution: this.props.distribution,
-            percent: this.props.percent
-        };
-    },
-
-    ifNoActor: function ifNoActor(v) {
-        return this.props.actor === null ? v : undefined;
-    },
-
-    ifActor: function ifActor(v) {
-        return this.props.actor === null ? undefined : v;
-    },
-
-    refresh: function refresh() {
-        var _this = this;
-
-        fetch(this.state.vote_url + '.json', (0, _helpers.safeCredentials)()).then(_helpers.statusSuccess).then(_helpers.json).then(function (data) {
-            data.vote && _this.setState(data.vote);
-        }).catch(function () {
-            (0, _Alert2.default)(_this.getIntlMessage('errors.general'), 'alert', true);
-        });
-    },
-
-    proHandler: function proHandler(e) {
-        if (this.props.actor !== null) {
-            e.preventDefault();
-            this.vote('pro');
-        }
-    },
-    neutralHandler: function neutralHandler(e) {
-        if (this.props.actor !== null) {
-            e.preventDefault();
-            this.vote('neutral');
-        }
-    },
-    conHandler: function conHandler(e) {
-        if (this.props.actor !== null) {
-            e.preventDefault();
-            this.vote('con');
-        }
-    },
-
-    vote: function vote(side) {
-        var _this2 = this;
-
-        fetch(this.props.vote_url + '/' + side + '.json', (0, _helpers.safeCredentials)({
-            method: 'POST'
-        })).then(function (response) {
-            if (response.status === 403) {
-                return response.json().then(createMembership).then(function () {
-                    return _this2.vote(side);
-                });
-            } else {
-                return (0, _helpers.statusSuccess)(response);
-            }
-        }).then(_helpers.json, _helpers.tryLogin).then(function (data) {
-            if (typeof data !== 'undefined') {
-                _this2.setState(data.vote);
-                _this2.props.parentSetVote(data.vote);
-            }
-        }).catch(function (e) {
-            new _Alert2.default(_this2.getIntlMessage('errors.general'), 'alert', true);
-            throw e;
-        });
-    },
-
-    render: function render() {
-        return _react2.default.createElement(
-            'ul',
-            { className: 'btns-opinion', 'data-voted': this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain' || null },
-            _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                    'a',
-                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/pro'), 'data-method': this.ifNoActor('post'), 'data-remote': this.ifActor('true'), onClick: this.proHandler, rel: 'nofollow', className: 'btn-pro', 'data-voted-on': this.state.current_vote === 'pro' || null },
-                    _react2.default.createElement('span', { className: 'fa fa-thumbs-up' }),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'icon-left' },
-                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('pro') })
-                    )
-                )
-            ),
-            _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                    'a',
-                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/neutral'), 'data-method': this.ifNoActor('post'), 'data-remote': this.ifActor('true'), onClick: this.neutralHandler, rel: 'nofollow', className: 'btn-neutral', 'data-voted-on': this.state.current_vote === 'neutral' || null },
-                    _react2.default.createElement('span', { className: 'fa fa-pause' }),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'icon-left' },
-                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('neutral') })
-                    )
-                )
-            ),
-            _react2.default.createElement(
-                'li',
-                null,
-                _react2.default.createElement(
-                    'a',
-                    { href: this.ifNoActor('/m/' + this.props.object_id + '/v/con'), 'data-method': this.ifNoActor('post'), 'data-remote': this.ifActor('true'), onClick: this.conHandler, rel: 'nofollow', className: 'btn-con', 'data-voted-on': this.state.current_vote === 'con' || null },
-                    _react2.default.createElement('span', { className: 'fa fa-thumbs-down' }),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'icon-left' },
-                        _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('con') })
-                    )
-                )
-            )
-        );
-    }
-});
-window.BigVoteButtons = BigVoteButtons;
-
-var BigVoteFormButton = exports.BigVoteFormButton = _react2.default.createClass({
-    render: function render() {
-        return _react2.default.createElement(
-            'a',
-            { href: this.ifNoActor('/m/' + this.props.object_id + '/v/pro'), 'data-method': 'post', rel: 'nofollow', className: 'btn-pro', 'data-voted-on': this.state.current_vote === 'pro' || null },
-            _react2.default.createElement('span', { className: 'fa fa-thumbs-up' }),
-            _react2.default.createElement(
-                'span',
-                { className: 'icon-left' },
-                _react2.default.createElement(_reactIntl.FormattedMessage, { message: this.getIntlMessage('pro') })
-            )
-        );
-    }
-});
-window.BigVoteFormButton = BigVoteFormButton;
-
-var BigVoteResults = exports.BigVoteResults = _react2.default.createClass({
-    voteWidth: function voteWidth(side) {
-        var supplemented_values = {
-            pro: this.props.percent.pro < 5 ? 5 : this.props.percent.pro,
-            neutral: this.props.percent.neutral < 5 ? 5 : this.props.percent.neutral,
-            con: this.props.percent.con < 5 ? 5 : this.props.percent.con
-        };
-        var overflow = -100;
-        for (var o in supplemented_values) {
-            overflow += supplemented_values[o];
-        }
-        var width = supplemented_values[side] - overflow * (this.props.percent[side] / 100);
-
-        return {
-            width: width + '%'
-        };
-    },
-
-    render: function render() {
-        var results = undefined;
-
-        if (this.props.show_results) {
-            results = _react2.default.createElement(
-                'ul',
-                { className: 'progress-bar progress-bar-stacked' },
-                _react2.default.createElement(
-                    'li',
-                    { style: this.voteWidth('pro') },
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'btn-pro' },
-                        this.props.percent.pro + '%'
-                    )
-                ),
-                _react2.default.createElement(
-                    'li',
-                    { style: this.voteWidth('neutral') },
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'btn-neutral' },
-                        this.props.percent.neutral + '%'
-                    )
-                ),
-                _react2.default.createElement(
-                    'li',
-                    { style: this.voteWidth('con') },
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'btn-con' },
-                        this.props.percent.con + '%'
-                    )
-                )
-            );
-        } else {
-            results = null;
-        }
-
-        return results;
-    }
-});
-window.BigVoteResults = BigVoteResults;
-
-},{"../lib/helpers":14,"./Alert":3,"react":464,"react-intl":270}],10:[function(require,module,exports){
+},{"../lib/helpers":14,"./Alert":3,"intl":262,"intl/locale-data/jsonp/en.js":266,"react":464}],10:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -2024,6 +2039,8 @@ var _intl = require('intl');
 
 var _intl2 = _interopRequireDefault(_intl);
 
+var _reactIntl = require('react-intl');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -2031,6 +2048,10 @@ function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.const
 _react2.default; // For ESLint, jsx compiles to React.createElement, so React must be imported
 
 _intl2.default; // For ESLint
+
+/**
+ * @module Helpers
+ */
 
 Object.resolve = function (path, obj) {
     return [obj || self].concat(path.split('.')).reduce(function (prev, curr) {
@@ -2099,11 +2120,47 @@ function _authenticityHeader(options) {
 
 function errorMessageForStatus(status) {
     if (status === 401) {
-        return this.getIntlMessage('errors.status.401');
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.401",
+            "fallback": "Je moet ingelogd zijn voor deze actie."
+        };
     } else if (status === 404) {
-        return this.getIntlMessage('errors.status.404');
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.404",
+            "fallback": "Het item is niet gevonden, probeer de pagina te verversen."
+        };
     } else if (status === 429) {
-        return this.getIntlMessage('errors.status.429');
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.429",
+            "fallback": "Je maakt te veel verzoeken, probeer het over halve minuut nog eens."
+        };
+    } else if (status === 500) {
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.500",
+            "fallback": "Er ging iets aan onze kant fout, probeer het later nog eens."
+        };
+    } else if (status === 0) {
+        return {
+            "type": "none",
+            "severity": "",
+            "i18nString": undefined,
+            "fallback": ""
+        };
+    } else {
+        return {
+            "type": "none",
+            "severity": "",
+            "i18nString": undefined,
+            "fallback": undefined
+        };
     }
 }
 
@@ -2120,6 +2177,9 @@ function getUserIdentityToken() {
     return { token: getMetaContent('user-identity-token') };
 }
 
+/**
+ * For use with window.fetch
+ */
 function jsonHeader(options) {
     options = options || {};
     return Object.assign(options, {
@@ -2128,6 +2188,10 @@ function jsonHeader(options) {
     });
 }
 
+/**
+ * Lets fetch include credentials in the request. This includes cookies and other possibly sensitive data.
+ * Note: Never use for requests across (untrusted) domains.
+ */
 function safeCredentials(options) {
     options = options || {};
     return Object.assign(options, {
@@ -2147,9 +2211,9 @@ function statusSuccess(response) {
 
 function tryLogin(response) {
     if (response.status === 401) {
-        return Promise.resolve(window.alert(errorMessageForStatus(response.status)));
+        return Promise.resolve(window.alert(errorMessageForStatus(response.status).fallback));
     } else {
-        var message = errorMessageForStatus(response.status) || 'unknown status code';
+        var message = errorMessageForStatus(response.status).fallback || 'unknown status code';
         return Promise.reject(new Error(message));
     }
 }
@@ -2169,7 +2233,7 @@ function json(response) {
     }
 }
 
-},{"intl":262,"react":464}],15:[function(require,module,exports){
+},{"intl":262,"react":464,"react-intl":270}],15:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {

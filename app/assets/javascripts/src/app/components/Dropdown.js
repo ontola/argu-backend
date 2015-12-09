@@ -95,7 +95,6 @@ export const ShareDropdown = React.createClass({
     componentDidMount: function () {
         this.fetchFacebookCount();
         this.fetchLinkedInCount();
-        this.fetchTwitterCount();
     },
 
     countInParentheses: function (count) {
@@ -115,12 +114,6 @@ export const ShareDropdown = React.createClass({
     fetchLinkedInCount: function () {
         $.getJSON(`https://www.linkedin.com/countserv/count/share?url=${this.props.url}&callback=?`, data => {
             this.updateCount('linkedIn', data.count);
-        });
-    },
-
-    fetchTwitterCount: function () {
-        $.getJSON(`https://cdn.api.twitter.com/1/urls/count.json?url=${this.props.url}&callback=?`, data => {
-            this.updateCount('twitter', data.count);
         });
     },
 
