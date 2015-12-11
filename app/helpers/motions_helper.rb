@@ -54,22 +54,103 @@ module MotionsHelper
   end
 
   def motion_timeline_props(motion)
-    {
-      timeLineId: 1,
+    merge_state({
+      timelines: {
+        '1' => {
+          id: 1,
+          currentPhase: 2,
+          activePointId: 4,
+          points: [1, 2, 3, 4, 5, 6]
+        }
+      },
+      points: [
+        {
+          id: 1,
+          timelineId: 1,
+          type: 'phase',
+          itemId: 1
+        },
+        {
+          id: 2,
+          timelineId: 1,
+          type: 'phase',
+          itemId: 2
+        },
+        {
+          id: 3,
+          timelineId: 1,
+          type: 'phase',
+          itemId: 3
+        },
+        {
+          id: 4,
+          timelineId: 1,
+          type: 'update',
+          itemId: 1
+        },
+        {
+          id: 5,
+          timelineId: 1,
+          type: 'update',
+          itemId: 2
+        },
+        {
+          id: 6,
+          timelineId: 1,
+          type: 'update',
+          itemId: 3
+        }
+      ],
       phases: [
         {
           id: 1,
+          timelineId: 1,
           index: 0,
           title: 'Fase 1',
           content: 'Fasebeschrijving voor fase 1'
         },
         {
           id: 2,
+          timelineId: 1,
           index: 1,
           title: 'Fase 2',
           content: 'Fasebeschrijving voor fase 2'
+        },
+        {
+          id: 3,
+          timelineId: 1,
+          index: 1,
+          title: 'Fase 3',
+          content: 'Fasebeschrijving voor fase drie'
+        }
+      ],
+      updates: [
+        {
+          id: 1,
+          phaseId: 1,
+          title: 'An update',
+          content: 'description of the update',
+          createdAt: Time.current
+        },
+        {
+          id: 2,
+          phaseId: 1,
+          title: 'Update 2',
+          content: 'description of update 2',
+          createdAt: Time.current
+        },
+        {
+          id: 3,
+          phaseId: 2,
+          title: 'Another update',
+          content: 'Update is in the second phase',
+          createdAt: Time.current
         }
       ]
+    })
+
+    {
+      timeLineId: 1
     }
   end
 

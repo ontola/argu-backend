@@ -8,8 +8,9 @@ import { Record, OrderedMap, List } from 'immutable';
 const RTimeLine = Record({
     parentUrl: '',
     currentPhase: 0,
-    activePoint: 0,
+    activePointId: 0,
     phaseCount: 0,
+    points: new List(),
     phases: new OrderedMap(),
     updates: new List()
 });

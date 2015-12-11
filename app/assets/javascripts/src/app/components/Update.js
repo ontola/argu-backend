@@ -10,9 +10,11 @@ const Update = React.createClass({
     },
 
     render: function render() {
+        const { title, content } = this.props;
         return (
             <div className="update">
-
+                <h2 className="update">{title}</h2>
+                <p>{content}</p>
             </div>
         );
     }

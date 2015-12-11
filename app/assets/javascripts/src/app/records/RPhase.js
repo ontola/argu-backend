@@ -8,6 +8,7 @@ import RProfile from './RProfile';
  */
 const RPhase = Record({
     id: 0,
+    timelineId: 0,
     index: 0,
     title: 'PTitlte',
     content: '',

@@ -1,8 +1,8 @@
-import RPhase from '../records/RPhase';
+import RPoint from '../records/RPoint';
 
 const initialState = [];
 
-export default function phases(state = initialState, action) {
+export default function points(state = initialState, action) {
     switch (action.type) {
         default:
             return state;

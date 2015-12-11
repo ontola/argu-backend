@@ -1,8 +1,6 @@
 import RUpdate from '../records/RUpdate';
 
-const initialState = [
-    new RUpdate()
-];
+const initialState = [];
 
 export default function updates(state = initialState, action) {
     switch (action.type) {
