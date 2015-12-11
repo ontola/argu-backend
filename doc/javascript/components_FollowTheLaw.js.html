@@ -36,8 +36,9 @@ import React from 'react';
 import { Record } from 'immutable';
 import RPhase from '../records/RPhase';
 import RUpdate from '../records/RUpdate';
+import RProfile from '../records/RProfile';
 import RTimeLine from '../records/RTimeLine';
-import Update from './Update';
+import { Update, UpdateContainerWrapper } from './Update';
 
 
 import { bindActionCreators } from 'redux'
@@ -115,8 +116,11 @@ export const TimeLineComponent = React.createClass({
         const { timeLine, points } = this.props;
         const { activePointId } = timeLine;
 
-        return typeof activePointId !== 'undefined' &amp;&amp;
-            points.find((elem) => {
+        if (typeof activePointId === 'undefined') {
+            return undefined;
+        }
+
+        return points.find((elem) => {
                 return elem.id === activePointId
             });
     },
@@ -158,36 +162,43 @@ export const TimeLine = React.createClass({
         return point.id === activePointId ? 'active' : undefined;
     },
 
+    pointByItem: function pointByItem(itemType, itemId) {
+        return this.props.points.find(point => {
+                return point.type === itemType &amp;&amp;
+                    point.itemId === itemId;
+            });
+    },
+
+    pointsForPhase: function pointsForPhase(phaseId) {
+        const { updates, timeLine, actions } = this.props;
+        const { activePointId } = timeLine;
+
+        if (typeof updates === 'undefined') {
+            return undefined;
+        }
+
+        return updates
+            .filter((update) => {
+                return update.phaseId === phaseId;
+            })
+            .map((update) => {
+                const point = this.pointByItem('update', update.id);
+                return &lt;Point key={point.id}
+                              point={point}
+                              active={this.pointActive(point, activePointId)}
+                              actions={actions} />;
+            });
+    },
+
     render: function render() {
-        const { actions, phases, points, updates, timeLine } = this.props;
+        const { actions, phases, timeLine } = this.props;
         const { id, activePointId, currentPhase } = timeLine;
 
         const phasesList = phases.map((phase, i) => {
-            let itemUpdates;
-            if (typeof updates !== 'undefined') {
-                itemUpdates = updates
-                    .filter((update) => {
-                        return update.phaseId === phase.id;
-                    })
-                    .map((update) => {
-                        const point = points
-                            .find(point => {
-                                return point.type === 'update' &amp;&amp;
-                                    point.itemId === update.id;
-                            });
-                        return &lt;Point key={point.id}
-                                      point={point}
-                                      active={this.pointActive(point, activePointId)}
-                                      actions={actions} />;
-                    });
-            }
+            const itemUpdates = this.pointsForPhase(phase.id);
             const current = phase.id === currentPhase ? 'current' : '';
             const last  = i === phases.length - 1;
-            const point = points
-                .find(point => {
-                    return point.type === 'phase' &amp;&amp;
-                        point.itemId === phase.id;
-                });
+            const point = this.pointByItem('phase', phase.id);
             return (&lt;Phase key={phase.id}
                            phase={new RPhase(phase)}
                            point={point}
@@ -223,17 +234,25 @@ export const DetailsPane = React.createClass({
     render: function render() {
         const { phases, point, updates} = this.props;
 
-        if (typeof point !== 'undefined') {
-            const collections = {
-                phase: phases,
-                update: updates
-            };
-            const phase = collections[point.type].find(elem => {
-                return elem.id === point.itemId
-            });
-            return &lt;Update {...phase} />;
+        if (typeof point === 'undefined') {
+            return &lt;div>&lt;/div>;
+        }
+
+        const collections = {
+            phase: phases,
+            update: updates
+        };
+        const phase = collections[point.type].find(elem => {
+            return elem.id === point.itemId
+        });
+
+        if (point.type === 'update') {
+            return &lt;UpdateContainerWrapper updateId={point.itemId}
+                                           {...phase} />;
         } else {
-            return null;
+            // We're mocking an `RUpdate` here since we're hacking this from a phase description
+            return &lt;Update update={new RUpdate()}
+                           {...phase} />;
         }
     }
 });
@@ -253,18 +272,31 @@ export const Phase = React.createClass({
         last: React.PropTypes.bool
     },
 
-    render: function render() {
-        const { actions, phase, point, current, last, active } = this.props;
+    getLabel: function () {
+        const { last, phase } = this.props;
         const { title } = phase;
 
+        if (!last) {
+            return &lt;span className="phase-title" style={{textAlign: 'center'}}>{title}&lt;/span>
+        } else {
+            return &lt;span style={{flex: 1}}>&lt;/span>;
+        }
+    },
+
+    render: function render() {
+        const { actions, point, current, last, active } = this.props;
+
+        const label = this.getLabel();
         return (
-            &lt;div className={`phase ${current}`} style={{display: 'flex', flexGrow: last ? 0 : 1}}>
-                &lt;PhasePoint title={title}
-                            point={point}
-                            active={active}
-                            actions={actions}
-                            current={current} />
-                {this.props.children}
+            &lt;div className={`phase ${current}`} style={{display: 'flex', flexDirection: 'column', flexGrow: last ? 0 : 1}}>
+                {label}
+                &lt;div className="phase-points" style={{display: 'flex', flexDirection: 'row'}}>
+                    &lt;PhasePoint point={point}
+                                active={active}
+                                actions={actions}
+                                current={current} />
+                    {this.props.children}
+                &lt;/div>
             &lt;/div>
         );
     }
@@ -312,14 +344,12 @@ export const PhasePoint = React.createClass({
     },
 
     render: function render() {
-        const { title, current, active } = this.props;
+        const { current, active } = this.props;
 
         return (
             &lt;span className={`point phase-point ${current} ${active}`}
                   onClick={this.setActive}
-                  style={{flexGrow: 1}} >
-                &lt;span className="point-title phase-point-title">{title}&lt;/span>
-            &lt;/span>
+                  style={{flexGrow: 1}}>P&lt;/span>
         );
     }
 });
@@ -336,13 +366,13 @@ export default TimeLineComponentContainer;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BigVote.html">BigVote</a></li><li><a href="module-CombiBigVote.html">CombiBigVote</a></li><li><a href="module-FollowTheLaw.html">FollowTheLaw</a></li><li><a href="module-Helpers.html">Helpers</a></li></ul><h3>Classes</h3><ul><li><a href="BigVote.BigVoteButtons.html">BigVoteButtons</a></li><li><a href="BigVote.BigVoteResults.html">BigVoteResults</a></li><li><a href="module-FollowTheLaw-DetailsPane.html">DetailsPane</a></li><li><a href="module-FollowTheLaw-Phase.html">Phase</a></li><li><a href="module-FollowTheLaw-PhasePoint.html">PhasePoint</a></li><li><a href="module-FollowTheLaw-Point.html">Point</a></li><li><a href="module-FollowTheLaw-TimeLine.html">TimeLine</a></li><li><a href="module-FollowTheLaw-TimeLineComponent.html">TimeLineComponent</a></li><li><a href="module-FollowTheLaw-TimeLineComponentContainer.html">TimeLineComponentContainer</a></li><li><a href="module-FollowTheLaw-TimeLineComponentContainerWrapper.html">TimeLineComponentContainerWrapper</a></li><li><a href="RDateline.html">RDateline</a></li><li><a href="RImage.html">RImage</a></li><li><a href="RPhase.html">RPhase</a></li><li><a href="RPoint.html">RPoint</a></li><li><a href="RProfile.html">RProfile</a></li><li><a href="RTimeLine.html">RTimeLine</a></li><li><a href="RUpdate.html">RUpdate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#SET_ACTIVE_POINT">SET_ACTIVE_POINT</a></li><li><a href="global.html#setActivePoint">setActivePoint</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BigVote.html">BigVote</a></li><li><a href="module-CombiBigVote.html">CombiBigVote</a></li><li><a href="module-FollowTheLaw.html">FollowTheLaw</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Update.html">Update</a></li></ul><h3>Classes</h3><ul><li><a href="BigVote.BigVoteButtons.html">BigVoteButtons</a></li><li><a href="BigVote.BigVoteResults.html">BigVoteResults</a></li><li><a href="module-FollowTheLaw-DetailsPane.html">DetailsPane</a></li><li><a href="module-FollowTheLaw-Phase.html">Phase</a></li><li><a href="module-FollowTheLaw-PhasePoint.html">PhasePoint</a></li><li><a href="module-FollowTheLaw-Point.html">Point</a></li><li><a href="module-FollowTheLaw-TimeLine.html">TimeLine</a></li><li><a href="module-FollowTheLaw-TimeLineComponent.html">TimeLineComponent</a></li><li><a href="module-FollowTheLaw-TimeLineComponentContainer.html">TimeLineComponentContainer</a></li><li><a href="module-FollowTheLaw-TimeLineComponentContainerWrapper.html">TimeLineComponentContainerWrapper</a></li><li><a href="Profile.html">Profile</a></li><li><a href="RDateline.html">RDateline</a></li><li><a href="RImage.html">RImage</a></li><li><a href="RPhase.html">RPhase</a></li><li><a href="RPoint.html">RPoint</a></li><li><a href="RProfile.html">RProfile</a></li><li><a href="RTimeLine.html">RTimeLine</a></li><li><a href="RUpdate.html">RUpdate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#SET_ACTIVE_POINT">SET_ACTIVE_POINT</a></li><li><a href="global.html#setActivePoint">setActivePoint</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Dec 11 2015 01:14:40 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Dec 11 2015 14:42:33 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

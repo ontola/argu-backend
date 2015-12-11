@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: records/RPoint.js</title>
+    <title>JSDoc: Source: reducers/phases.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: records/RPoint.js</h1>
+    <h1 class="page-title">Source: reducers/phases.js</h1>
 
     
 
@@ -26,21 +26,19 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Record } from 'immutable';
-
-/**
- * Point record class.
- * @class RPoint
+            <pre class="prettyprint source linenums"><code>/**
+ * Phases reducer
  * @author Fletcher91 &lt;thom@argu.co>
  */
-const RPoint = Record({
-    id: 0,
-    timelineId: 0,
-    type: '',
-    itemId: 0
-});
 
-export default RPoint;
+const initialState = [];
+
+export default function phases(state = initialState, action) {
+    switch (action.type) {
+        default:
+            return state;
+    }
+};
 </code></pre>
         </article>
     </section>

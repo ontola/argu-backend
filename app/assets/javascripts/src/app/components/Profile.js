@@ -2,13 +2,13 @@ import React from 'react';
 import RProfile from '../records/RProfile';
 
 /**
- * Dateline record class.
- * @class RDateline
+ * Profile component, to display the resource creator/publisher.
+ * @class Profile
  * @author Fletcher91 <thom@argu.co>
  */
 const Profile = React.createClass({
     propTypes: {
-        profile: React.PropTypes.instanceOf(RProfile),
+        profile: React.PropTypes.object,
         resource: React.PropTypes.object
     },
 
@@ -24,7 +24,10 @@ const Profile = React.createClass({
         return (
             <section className="profile-small" itemScope itemProp="creator" itemType="http://schema.org/Person">
                 <a href={url}>
-                    <img src={profilePhoto.icon_url} alt="" className="profile-picture profile-picture--small" itemProp="image"/>
+                    <img src={profilePhoto && profilePhoto.icon_url}
+                         alt=""
+                         className="profile-picture profile-picture--small"
+                         itemProp="image" />
                 </a>
                 <div className="info-block">
                     <a href={url}>

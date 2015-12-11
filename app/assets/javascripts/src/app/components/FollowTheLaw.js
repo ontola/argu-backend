@@ -8,8 +8,9 @@ import React from 'react';
 import { Record } from 'immutable';
 import RPhase from '../records/RPhase';
 import RUpdate from '../records/RUpdate';
+import RProfile from '../records/RProfile';
 import RTimeLine from '../records/RTimeLine';
-import Update from './Update';
+import { Update, UpdateContainerWrapper } from './Update';
 
 
 import { bindActionCreators } from 'redux'
@@ -87,8 +88,11 @@ export const TimeLineComponent = React.createClass({
         const { timeLine, points } = this.props;
         const { activePointId } = timeLine;
 
-        return typeof activePointId !== 'undefined' &&
-            points.find((elem) => {
+        if (typeof activePointId === 'undefined') {
+            return undefined;
+        }
+
+        return points.find((elem) => {
                 return elem.id === activePointId
             });
     },
@@ -130,36 +134,43 @@ export const TimeLine = React.createClass({
         return point.id === activePointId ? 'active' : undefined;
     },
 
+    pointByItem: function pointByItem(itemType, itemId) {
+        return this.props.points.find(point => {
+                return point.type === itemType &&
+                    point.itemId === itemId;
+            });
+    },
+
+    pointsForPhase: function pointsForPhase(phaseId) {
+        const { updates, timeLine, actions } = this.props;
+        const { activePointId } = timeLine;
+
+        if (typeof updates === 'undefined') {
+            return undefined;
+        }
+
+        return updates
+            .filter((update) => {
+                return update.phaseId === phaseId;
+            })
+            .map((update) => {
+                const point = this.pointByItem('update', update.id);
+                return <Point key={point.id}
+                              point={point}
+                              active={this.pointActive(point, activePointId)}
+                              actions={actions} />;
+            });
+    },
+
     render: function render() {
-        const { actions, phases, points, updates, timeLine } = this.props;
+        const { actions, phases, timeLine } = this.props;
         const { id, activePointId, currentPhase } = timeLine;
 
         const phasesList = phases.map((phase, i) => {
-            let itemUpdates;
-            if (typeof updates !== 'undefined') {
-                itemUpdates = updates
-                    .filter((update) => {
-                        return update.phaseId === phase.id;
-                    })
-                    .map((update) => {
-                        const point = points
-                            .find(point => {
-                                return point.type === 'update' &&
-                                    point.itemId === update.id;
-                            });
-                        return <Point key={point.id}
-                                      point={point}
-                                      active={this.pointActive(point, activePointId)}
-                                      actions={actions} />;
-                    });
-            }
+            const itemUpdates = this.pointsForPhase(phase.id);
             const current = phase.id === currentPhase ? 'current' : '';
             const last  = i === phases.length - 1;
-            const point = points
-                .find(point => {
-                    return point.type === 'phase' &&
-                        point.itemId === phase.id;
-                });
+            const point = this.pointByItem('phase', phase.id);
             return (<Phase key={phase.id}
                            phase={new RPhase(phase)}
                            point={point}
@@ -195,17 +206,25 @@ export const DetailsPane = React.createClass({
     render: function render() {
         const { phases, point, updates} = this.props;
 
-        if (typeof point !== 'undefined') {
-            const collections = {
-                phase: phases,
-                update: updates
-            };
-            const phase = collections[point.type].find(elem => {
-                return elem.id === point.itemId
-            });
-            return <Update {...phase} />;
+        if (typeof point === 'undefined') {
+            return <div></div>;
+        }
+
+        const collections = {
+            phase: phases,
+            update: updates
+        };
+        const phase = collections[point.type].find(elem => {
+            return elem.id === point.itemId
+        });
+
+        if (point.type === 'update') {
+            return <UpdateContainerWrapper updateId={point.itemId}
+                                           {...phase} />;
         } else {
-            return null;
+            // We're mocking an `RUpdate` here since we're hacking this from a phase description
+            return <Update update={new RUpdate()}
+                           {...phase} />;
         }
     }
 });
@@ -225,18 +244,31 @@ export const Phase = React.createClass({
         last: React.PropTypes.bool
     },
 
-    render: function render() {
-        const { actions, phase, point, current, last, active } = this.props;
+    getLabel: function () {
+        const { last, phase } = this.props;
         const { title } = phase;
 
+        if (!last) {
+            return <span className="phase-title" style={{textAlign: 'center'}}>{title}</span>
+        } else {
+            return <span style={{flex: 1}}></span>;
+        }
+    },
+
+    render: function render() {
+        const { actions, point, current, last, active } = this.props;
+
+        const label = this.getLabel();
         return (
-            <div className={`phase ${current}`} style={{display: 'flex', flexGrow: last ? 0 : 1}}>
-                <PhasePoint title={title}
-                            point={point}
-                            active={active}
-                            actions={actions}
-                            current={current} />
-                {this.props.children}
+            <div className={`phase ${current}`} style={{display: 'flex', flexDirection: 'column', flexGrow: last ? 0 : 1}}>
+                {label}
+                <div className="phase-points" style={{display: 'flex', flexDirection: 'row'}}>
+                    <PhasePoint point={point}
+                                active={active}
+                                actions={actions}
+                                current={current} />
+                    {this.props.children}
+                </div>
             </div>
         );
     }
@@ -284,14 +316,12 @@ export const PhasePoint = React.createClass({
     },
 
     render: function render() {
-        const { title, current, active } = this.props;
+        const { current, active } = this.props;
 
         return (
             <span className={`point phase-point ${current} ${active}`}
                   onClick={this.setActive}
-                  style={{flexGrow: 1}} >
-                <span className="point-title phase-point-title">{title}</span>
-            </span>
+                  style={{flexGrow: 1}}>P</span>
         );
     }
 });

@@ -99,6 +99,12 @@ module MotionsHelper
           timelineId: 1,
           type: 'update',
           itemId: 3
+        },
+        {
+          id: 7,
+          timelineId: 1,
+          type: 'phase',
+          itemId: 4
         }
       ],
       phases: [
@@ -106,22 +112,29 @@ module MotionsHelper
           id: 1,
           timelineId: 1,
           index: 0,
-          title: 'Fase 1',
+          title: 'Beleidsfase',
           content: 'Fasebeschrijving voor fase 1'
         },
         {
           id: 2,
           timelineId: 1,
           index: 1,
-          title: 'Fase 2',
+          title: 'Initiëren',
           content: 'Fasebeschrijving voor fase 2'
         },
         {
           id: 3,
           timelineId: 1,
-          index: 1,
-          title: 'Fase 3',
+          index: 2,
+          title: 'Behandelen',
           content: 'Fasebeschrijving voor fase drie'
+        },
+        {
+        id: 4,
+          timelineId: 1,
+          index: 3,
+          title: 'Einde',
+          content: ''
         }
       ],
       updates: [
@@ -130,21 +143,43 @@ module MotionsHelper
           phaseId: 1,
           title: 'An update',
           content: 'description of the update',
-          createdAt: Time.current
+          creatorId: 1,
+          createdAt: Time.current,
+          dateline: {
+            date: Time.current - 1.hour,
+            location: ''
+          }
         },
         {
           id: 2,
           phaseId: 1,
           title: 'Update 2',
           content: 'description of update 2',
-          createdAt: Time.current
+          creatorId: 1,
+          createdAt: Time.current,
+          dateline: {
+            date: Time.current - 1.hour,
+            location: ''
+          }
         },
         {
           id: 3,
           phaseId: 2,
           title: 'Another update',
           content: 'Update is in the second phase',
-          createdAt: Time.current
+          creatorId: 1,
+          createdAt: Time.current,
+          dateline: {
+            date: Time.current - 1.hour,
+            location: ''
+          }
+        }
+      ],
+      profiles: [
+        {
+          id: 1,
+          displayName: 'Some creator',
+          url: 'https://argu.co/u/someone'
         }
       ]
     })

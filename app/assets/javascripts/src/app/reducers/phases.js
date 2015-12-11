@@ -1,4 +1,7 @@
-import RPhase from '../records/RPhase';
+/**
+ * Phases reducer
+ * @author Fletcher91 <thom@argu.co>
+ */
 
 const initialState = [];
 

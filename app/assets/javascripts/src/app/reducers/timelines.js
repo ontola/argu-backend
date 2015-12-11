@@ -1,3 +1,8 @@
+/**
+ * Timelines reducer
+ * @author Fletcher91 <thom@argu.co>
+ */
+
 import { Map } from 'immutable';
 import RTimeLine from '../records/RTimeLine';
 import { SET_ACTIVE_POINT } from '../constants/ActionTypes';

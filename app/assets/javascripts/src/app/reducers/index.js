@@ -3,12 +3,14 @@ import timelines from './timelines';
 import points from './points';
 import updates from './updates';
 import phases from './phases';
+import profiles from './profiles';
 
 const rootReducer = combineReducers({
     timelines,
     points,
     phases,
-    updates
+    updates,
+    profiles
 });
 
 export default rootReducer;
