@@ -10,6 +10,8 @@ import RDateline from './RDateline';
 const RUpdate = Record({
     id: 0,
     phaseId: 0,
+    updatable_type: '',
+    updatable_id: 0,
     title: '',
     content: '',
     createdAt: new Date(0),

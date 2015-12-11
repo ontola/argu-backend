@@ -59,7 +59,8 @@ module MotionsHelper
         '1' => {
           id: 1,
           currentPhase: 2,
-          activePointId: 4,
+          phaseCount: 4,
+          activePointId: nil,
           points: [1, 2, 3, 4, 5, 6]
         }
       },

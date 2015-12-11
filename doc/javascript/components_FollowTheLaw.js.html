@@ -125,18 +125,31 @@ export const TimeLineComponent = React.createClass({
             });
     },
 
+    activeItem: function activeItem () {
+        const activePoint = this.activePoint();
+        const collections = {
+            phase: this.props.phases,
+            update: this.props.updates
+        };
+
+        return collections[activePoint.type].find(elem => {
+            return elem.id === activePoint.itemId
+        });
+    },
+
     render: function render() {
         const { phases, timeLine, actions, updates, points } = this.props;
         const { currentPhase, phaseCount } = timeLine;
 
-        const detailsPane = &lt;DetailsPane point={this.activePoint()}
-                                         phases={phases}
-                                         updates={updates} />;
+        const detailsPane = &lt;DetailsPane item={this.activeItem()}
+                                         itemType={this.activePoint().type} />;
+
+        const currentPhaseItem = phases.find(phase => { return phase.id === currentPhase });
 
         return (
             &lt;div className="time-line-component" style={{display: 'flex', flexDirection: 'column'}}>
                 &lt;h2>Volg de wet&lt;/h2>
-                &lt;TimeLine
+                &lt;TimeLinePhases
                     timeLine={timeLine}
                     actions={actions}
                     points={points}
@@ -144,6 +157,8 @@ export const TimeLineComponent = React.createClass({
                     currentPhase={currentPhase}
                     phaseCount={phaseCount}
                     phases={phases} />
+                &lt;TimeLine phaseCount={phaseCount}
+                          currentPhaseIndex={currentPhaseItem.index} />
                 {detailsPane}
             &lt;/div>
         );
@@ -152,12 +167,12 @@ export const TimeLineComponent = React.createClass({
 window.TimeLineComponent = TimeLineComponent;
 
 /**
- * The actual line of the timeline.
+ * The display block for phases and their accompanying updates in order.
  * @todo Rework so it only uses {@link Point}s
  * @class TimeLine
  * @author Fletcher91 &lt;thom@argu.co>
  */
-export const TimeLine = React.createClass({
+export const TimeLinePhases = React.createClass({
     pointActive: function (point, activePointId) {
         return point.id === activePointId ? 'active' : undefined;
     },
@@ -212,14 +227,62 @@ export const TimeLine = React.createClass({
         });
 
         return (
-            &lt;div className="time-line" style={{display: 'flex', flexDirection: 'row'}}>
+            &lt;div className="time-line-phases" style={{display: 'flex', flexDirection: 'row'}}>
                 {phasesList}
             &lt;/div>
         );
     }
 });
-window.TimeLine = TimeLine;
+window.TimeLinePhases = TimeLinePhases;
 
+/**
+ * The actual line of the timeline.
+ * @todo Rework so it only uses {@link Point}s
+ * @class TimeLine
+ * @author Fletcher91 &lt;thom@argu.co>
+ */
+export const TimeLine = React.createClass({
+    propTypes: {
+        phaseCount: React.PropTypes.number,
+        currentPhaseIndex: React.PropTypes.number
+    },
+
+    completionWidth: function completionWidth() {
+        const phasePercentage = 100 / (this.props.phaseCount - 1);
+        const width = (this.props.currentPhaseIndex * phasePercentage) + (phasePercentage / 2);
+        return `${width}%`;
+    },
+
+    render: function render() {
+        const style = {
+            width: '100%',
+            height: 1,
+            border: 0,
+            borderTop: '3px solid #CCC',
+            padding: 0,
+            marginTop: '-.6em',
+            zIndex: 1,
+            marginBottom: '.6em'
+        };
+
+        const innerStyle = Object.assign({},
+            style,
+            {
+                width: this.completionWidth(),
+                borderTop: '3px solid #8BAACA',
+                marginTop: '-.2em',
+                zIndex: 2
+            }
+        );
+
+        return (
+            &lt;div className="time-line" style={style}>
+                &lt;div className="inner-line" style={innerStyle}>&lt;/div>
+            &lt;/div>
+        );
+    }
+});
+window.TimeLinePhases = TimeLinePhases;
 
 /**
  * That thing beneath a {@link TimeLine} when you click on a {@link Point}.
@@ -227,32 +290,20 @@ window.TimeLine = TimeLine;
  * @author Fletcher91 &lt;thom@argu.co>
  */
 export const DetailsPane = React.createClass({
-    pointActive: function (point, activePointId) {
-        return point.id === activePointId ? 'active' : undefined;
-    },
-
     render: function render() {
-        const { phases, point, updates} = this.props;
+        const { item, itemType } = this.props;
 
-        if (typeof point === 'undefined') {
+        if (typeof item === 'undefined') {
             return &lt;div>&lt;/div>;
         }
 
-        const collections = {
-            phase: phases,
-            update: updates
-        };
-        const phase = collections[point.type].find(elem => {
-            return elem.id === point.itemId
-        });
-
-        if (point.type === 'update') {
-            return &lt;UpdateContainerWrapper updateId={point.itemId}
-                                           {...phase} />;
+        if (itemType === 'update') {
+            return &lt;UpdateContainerWrapper updateId={item.id}
+                                           {...item} />;
         } else {
             // We're mocking an `RUpdate` here since we're hacking this from a phase description
             return &lt;Update update={new RUpdate()}
-                           {...phase} />;
+                           {...item} />;
         }
     }
 });
@@ -287,8 +338,14 @@ export const Phase = React.createClass({
         const { actions, point, current, last, active } = this.props;
 
         const label = this.getLabel();
+        const style = {
+            display: 'flex',
+            flexDirection: 'column',
+            flexGrow: last ? 0 : 1,
+            zIndex: 10
+        };
         return (
-            &lt;div className={`phase ${current}`} style={{display: 'flex', flexDirection: 'column', flexGrow: last ? 0 : 1}}>
+            &lt;div className={`phase ${current}`} style={style}>
                 {label}
                 &lt;div className="phase-points" style={{display: 'flex', flexDirection: 'row'}}>
                     &lt;PhasePoint point={point}
@@ -372,7 +429,7 @@ export default TimeLineComponentContainer;
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Dec 11 2015 14:42:33 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Dec 11 2015 16:34:52 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

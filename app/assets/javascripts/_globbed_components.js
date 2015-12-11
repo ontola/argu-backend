@@ -1181,7 +1181,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.PhasePoint = exports.Point = exports.Phase = exports.DetailsPane = exports.TimeLine = exports.TimeLineComponent = exports.TimeLineComponentContainerWrapper = undefined;
+exports.PhasePoint = exports.Point = exports.Phase = exports.DetailsPane = exports.TimeLine = exports.TimeLinePhases = exports.TimeLineComponent = exports.TimeLineComponentContainerWrapper = undefined;
 
 var _react = require('react');
 
@@ -1196,6 +1196,10 @@ var _RPhase2 = _interopRequireDefault(_RPhase);
 var _RUpdate = require('../records/RUpdate');
 
 var _RUpdate2 = _interopRequireDefault(_RUpdate);
+
+var _RProfile = require('../records/RProfile');
+
+var _RProfile2 = _interopRequireDefault(_RProfile);
 
 var _RTimeLine = require('../records/RTimeLine');
 
@@ -1310,6 +1314,37 @@ var TimeLineComponent = exports.TimeLineComponent = _react2.default.createClass(
         });
     },
 
+    activeItem: function activeItem() {
+        var activePoint = this.activePoint();
+        if (typeof activePoint === 'undefined') {
+            return undefined;
+        }
+        var collections = {
+            phase: this.props.phases,
+            update: this.props.updates
+        };
+
+        return collections[activePoint.type].find(function (elem) {
+            return elem.id === activePoint.itemId;
+        });
+    },
+
+    currentPhaseItem: function currentPhaseItem() {
+        var currentPhase = this.props.timeLine.currentPhase;
+
+        return this.props.phases.find(function (phase) {
+            return phase.id === currentPhase;
+        });
+    },
+
+    detailsPane: function detailsPane() {
+        var activePoint = this.activePoint();
+        if (typeof activePoint !== 'undefined') {
+            return _react2.default.createElement(DetailsPane, { item: this.activeItem(),
+                itemType: activePoint.type });
+        }
+    },
+
     render: function render() {
         var _props3 = this.props;
         var phases = _props3.phases;
@@ -1317,12 +1352,12 @@ var TimeLineComponent = exports.TimeLineComponent = _react2.default.createClass(
         var actions = _props3.actions;
         var updates = _props3.updates;
         var points = _props3.points;
-        var currentPhase = timeLine.currentPhase;
         var phaseCount = timeLine.phaseCount;
 
-        var detailsPane = _react2.default.createElement(DetailsPane, { point: this.activePoint(),
-            phases: phases,
-            updates: updates });
+        var activePoint = this.activePoint();
+        if (typeof activePoint !== 'undefined') {}
+        var detailsPane = this.detailsPane();
+        var currentPhaseItem = this.currentPhaseItem();
 
         return _react2.default.createElement(
             'div',
@@ -1332,14 +1367,14 @@ var TimeLineComponent = exports.TimeLineComponent = _react2.default.createClass(
                 null,
                 'Volg de wet'
             ),
-            _react2.default.createElement(TimeLine, {
+            _react2.default.createElement(TimeLinePhases, {
                 timeLine: timeLine,
                 actions: actions,
                 points: points,
                 updates: updates,
-                currentPhase: currentPhase,
-                phaseCount: phaseCount,
                 phases: phases }),
+            _react2.default.createElement(TimeLine, { phaseCount: phaseCount,
+                currentPhaseIndex: currentPhaseItem.index }),
             detailsPane
         );
     }
@@ -1347,12 +1382,12 @@ var TimeLineComponent = exports.TimeLineComponent = _react2.default.createClass(
 window.TimeLineComponent = TimeLineComponent;
 
 /**
- * The actual line of the timeline.
+ * The display block for phases and their accompanying updates in order.
  * @todo Rework so it only uses {@link Point}s
  * @class TimeLine
  * @author Fletcher91 <thom@argu.co>
  */
-var TimeLine = exports.TimeLine = _react2.default.createClass({
+var TimeLinePhases = exports.TimeLinePhases = _react2.default.createClass({
     pointActive: function pointActive(point, activePointId) {
         return point.id === activePointId ? 'active' : undefined;
     },
@@ -1419,12 +1454,58 @@ var TimeLine = exports.TimeLine = _react2.default.createClass({
 
         return _react2.default.createElement(
             'div',
-            { className: 'time-line', style: { display: 'flex', flexDirection: 'row' } },
+            { className: 'time-line-phases', style: { display: 'flex', flexDirection: 'row' } },
             phasesList
         );
     }
 });
-window.TimeLine = TimeLine;
+window.TimeLinePhases = TimeLinePhases;
+
+/**
+ * The actual line of the timeline.
+ * @todo Rework so it only uses {@link Point}s
+ * @class TimeLine
+ * @author Fletcher91 <thom@argu.co>
+ */
+var TimeLine = exports.TimeLine = _react2.default.createClass({
+    propTypes: {
+        phaseCount: _react2.default.PropTypes.number,
+        currentPhaseIndex: _react2.default.PropTypes.number
+    },
+
+    completionWidth: function completionWidth() {
+        var phasePercentage = 100 / (this.props.phaseCount - 1);
+        var width = this.props.currentPhaseIndex * phasePercentage + phasePercentage / 2;
+        return width + '%';
+    },
+
+    render: function render() {
+        var style = {
+            width: '100%',
+            height: 1,
+            border: 0,
+            borderTop: '3px solid #CCC',
+            padding: 0,
+            marginTop: '-.6em',
+            zIndex: 1,
+            marginBottom: '.6em'
+        };
+
+        var innerStyle = Object.assign({}, style, {
+            width: this.completionWidth(),
+            borderTop: '3px solid #8BAACA',
+            marginTop: '-.2em',
+            zIndex: 2
+        });
+
+        return _react2.default.createElement(
+            'div',
+            { className: 'time-line', style: style },
+            _react2.default.createElement('div', { className: 'inner-line', style: innerStyle })
+        );
+    }
+});
+window.TimeLinePhases = TimeLinePhases;
 
 /**
  * That thing beneath a {@link TimeLine} when you click on a {@link Point}.
@@ -1432,32 +1513,22 @@ window.TimeLine = TimeLine;
  * @author Fletcher91 <thom@argu.co>
  */
 var DetailsPane = exports.DetailsPane = _react2.default.createClass({
-    pointActive: function pointActive(point, activePointId) {
-        return point.id === activePointId ? 'active' : undefined;
-    },
-
     render: function render() {
         var _props6 = this.props;
-        var phases = _props6.phases;
-        var point = _props6.point;
-        var updates = _props6.updates;
+        var item = _props6.item;
+        var itemType = _props6.itemType;
 
-        if (typeof point === 'undefined') {
+        if (typeof item === 'undefined') {
             return _react2.default.createElement('div', null);
         }
 
-        var collections = {
-            phase: phases,
-            update: updates
-        };
-        var phase = collections[point.type].find(function (elem) {
-            return elem.id === point.itemId;
-        });
-
-        if (point.type === 'update') {
-            return _react2.default.createElement(_Update.UpdateContainerWrapper, _extends({ updateId: point.itemId }, phase));
+        if (itemType === 'update') {
+            return _react2.default.createElement(_Update.UpdateContainerWrapper, _extends({ updateId: item.id
+            }, item));
         } else {
-            return _react2.default.createElement(_Update.Update, _extends({ profile: {} }, phase));
+            // We're mocking an `RUpdate` here since we're hacking this from a phase description
+            return _react2.default.createElement(_Update.Update, _extends({ update: new _RUpdate2.default()
+            }, item));
         }
     }
 });
@@ -1477,25 +1548,51 @@ var Phase = exports.Phase = _react2.default.createClass({
         last: _react2.default.PropTypes.bool
     },
 
-    render: function render() {
+    getLabel: function getLabel() {
         var _props7 = this.props;
-        var actions = _props7.actions;
-        var phase = _props7.phase;
-        var point = _props7.point;
-        var current = _props7.current;
         var last = _props7.last;
-        var active = _props7.active;
+        var phase = _props7.phase;
         var title = phase.title;
 
+        if (!last) {
+            return _react2.default.createElement(
+                'span',
+                { className: 'phase-title', style: { textAlign: 'center' } },
+                title
+            );
+        } else {
+            return _react2.default.createElement('span', { style: { flex: 1 } });
+        }
+    },
+
+    render: function render() {
+        var _props8 = this.props;
+        var actions = _props8.actions;
+        var point = _props8.point;
+        var current = _props8.current;
+        var last = _props8.last;
+        var active = _props8.active;
+
+        var label = this.getLabel();
+        var style = {
+            display: 'flex',
+            flexDirection: 'column',
+            flexGrow: last ? 0 : 1,
+            zIndex: 10
+        };
         return _react2.default.createElement(
             'div',
-            { className: 'phase ' + current, style: { display: 'flex', flexGrow: last ? 0 : 1 } },
-            _react2.default.createElement(PhasePoint, { title: title,
-                point: point,
-                active: active,
-                actions: actions,
-                current: current }),
-            this.props.children
+            { className: 'phase ' + current, style: style },
+            label,
+            _react2.default.createElement(
+                'div',
+                { className: 'phase-points', style: { display: 'flex', flexDirection: 'row' } },
+                _react2.default.createElement(PhasePoint, { point: point,
+                    active: active,
+                    actions: actions,
+                    current: current }),
+                this.props.children
+            )
         );
     }
 });
@@ -1513,10 +1610,14 @@ var Point = exports.Point = _react2.default.createClass({
     },
 
     setActive: function setActive() {
+        var active = this.props.active;
         var _props$point = this.props.point;
         var id = _props$point.id;
         var timelineId = _props$point.timelineId;
 
+        if (active) {
+            id = 0;
+        }
         this.props.actions.setActivePoint(timelineId, id);
     },
 
@@ -1544,29 +1645,28 @@ var PhasePoint = exports.PhasePoint = _react2.default.createClass({
     },
 
     setActive: function makeActive() {
+        var active = this.props.active;
         var _props$point2 = this.props.point;
         var id = _props$point2.id;
         var timelineId = _props$point2.timelineId;
 
+        if (active) {
+            id = 0;
+        }
         this.props.actions.setActivePoint(timelineId, id);
     },
 
     render: function render() {
-        var _props8 = this.props;
-        var title = _props8.title;
-        var current = _props8.current;
-        var active = _props8.active;
+        var _props9 = this.props;
+        var current = _props9.current;
+        var active = _props9.active;
 
         return _react2.default.createElement(
             'span',
             { className: 'point phase-point ' + current + ' ' + active,
                 onClick: this.setActive,
                 style: { flexGrow: 1 } },
-            _react2.default.createElement(
-                'span',
-                { className: 'point-title phase-point-title' },
-                title
-            )
+            'P'
         );
     }
 });
@@ -1574,7 +1674,7 @@ window.PhasePoint = PhasePoint;
 
 exports.default = TimeLineComponentContainer;
 
-},{"../actions/timeline":2,"../records/RPhase":23,"../records/RTimeLine":26,"../records/RUpdate":27,"../stores/store":37,"./Update":12,"immutable":282,"react":494,"react-redux":324,"redux":496}],10:[function(require,module,exports){
+},{"../actions/timeline":2,"../records/RPhase":23,"../records/RProfile":25,"../records/RTimeLine":26,"../records/RUpdate":27,"../stores/store":37,"./Update":12,"immutable":282,"react":494,"react-redux":324,"redux":496}],10:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* globals NotificationActions */
@@ -2065,31 +2165,63 @@ var Update = exports.Update = _react2.default.createClass({
         id: _react2.default.PropTypes.number,
         title: _react2.default.PropTypes.string,
         content: _react2.default.PropTypes.string,
-        creator: _react2.default.PropTypes.object
+        creator: _react2.default.PropTypes.object,
+        dateline: _react2.default.PropTypes.object
     },
 
-    render: function render() {
+    profile: function profile() {
         var _props2 = this.props;
-        var title = _props2.title;
-        var content = _props2.content;
         var update = _props2.update;
         var creator = _props2.creator;
 
+        if (typeof creator !== 'undefined') {
+            return _react2.default.createElement(_Profile2.default, { profile: creator,
+                resource: update });
+        }
+    },
+
+    render: function render() {
+        var _props3 = this.props;
+        var title = _props3.title;
+        var content = _props3.content;
+        var dateline = _props3.dateline;
+
+        var profile = this.profile();
+
+        var date = dateline && dateline.date;
         return _react2.default.createElement(
             'div',
-            { className: 'update' },
+            { className: 'box update', style: { width: '100%' } },
             _react2.default.createElement(
-                'h2',
-                { className: 'update' },
-                title
+                'section',
+                { className: 'section-info update-bg' },
+                _react2.default.createElement('span', { className: 'fa fa-clock-o' }),
+                _react2.default.createElement(
+                    'span',
+                    { className: 'icon-left' },
+                    '_Update_'
+                ),
+                _react2.default.createElement(
+                    'span',
+                    { className: 'icon-left' },
+                    date
+                )
             ),
             _react2.default.createElement(
-                'p',
+                'section',
                 null,
-                content
+                _react2.default.createElement(
+                    'h3',
+                    null,
+                    title
+                ),
+                _react2.default.createElement(
+                    'p',
+                    null,
+                    content
+                )
             ),
-            _react2.default.createElement(_Profile2.default, { profile: creator,
-                resource: update })
+            profile
         );
     }
 });
@@ -3197,6 +3329,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var RUpdate = (0, _immutable.Record)({
     id: 0,
     phaseId: 0,
+    updatable_type: '',
+    updatable_id: 0,
     title: '',
     content: '',
     createdAt: new Date(0),
