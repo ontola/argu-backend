@@ -1,11 +1,12 @@
 import { Record, OrderedMap, List } from 'immutable';
 
 /**
- * TimeLine record class.
- * @class RTimeLine
+ * Timeline record class.
+ * @class RTimeline
  * @author Fletcher91 <thom@argu.co>
  */
-const RTimeLine = Record({
+const PTimeline = Record({
+    id: 0,
     parentUrl: '',
     currentPhase: 0,
     activePointId: 0,
@@ -15,4 +16,14 @@ const RTimeLine = Record({
     updates: new List()
 });
 
-export default RTimeLine;
+class RTimeline extends PTimeline {
+    getNextPoint () {
+
+    }
+
+    getPreviousPoint () {
+
+    }
+}
+
+export default RTimeline;

@@ -32,9 +32,8 @@ html[class="no-js"]
       #pjax-container.container
         =yield
       .push-footer
-    =render 'footer'
-    javascript:
-      window.__INITIAL_STATE__ = #{@initial_js_state.to_json.html_safe};
+    =render partial: 'footer'
+    =render partial: 'initial_state'
     =javascript_include_tag 'application'
     - if Rails.env.production?
       =render partial: 'analytics'

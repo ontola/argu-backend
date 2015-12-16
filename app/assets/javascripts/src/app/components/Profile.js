@@ -8,13 +8,17 @@ import RProfile from '../records/RProfile';
  */
 const Profile = React.createClass({
     propTypes: {
-        profile: React.PropTypes.object,
+        profile: React.PropTypes.objectOf(RProfile),
         resource: React.PropTypes.object
     },
 
     render: function render() {
-        const { url, displayName, profilePhoto } = this.props.profile;
-        const { createdAt, edited } = this.props.resource;
+        const { profile, resource } = this.props;
+        const url = profile.get('url');
+        const displayName = profile.get('displayName');
+        const profilePhoto = profile.get('profilePhoto');
+        const createdAt = resource.get('createdAt');
+        const edited = resource.get('edited');
 
         let editedComponent;
         if (edited === true) {
@@ -22,7 +26,10 @@ const Profile = React.createClass({
         }
 
         return (
-            <section className="profile-small" itemScope itemProp="creator" itemType="http://schema.org/Person">
+            <section className="profile-small"
+                     itemScope
+                     itemProp="creator"
+                     itemType="http://schema.org/Person">
                 <a href={url}>
                     <img src={profilePhoto && profilePhoto.icon_url}
                          alt=""
@@ -35,7 +42,10 @@ const Profile = React.createClass({
                             <time dateTime={createdAt}></time>
                             {editedComponent}
                         </span>
-                        <span className="profile-name" itemProp="name">{displayName}</span>
+                        <span className="profile-name"
+                              itemProp="name">
+                            {displayName}
+                        </span>
                     </a>
                 </div>
             </section>

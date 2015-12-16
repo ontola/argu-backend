@@ -8,7 +8,7 @@ import { Record } from 'immutable';
 const RPoint = Record({
     id: 0,
     timelineId: 0,
-    type: '',
+    itemType: '',
     itemId: 0
 });
 

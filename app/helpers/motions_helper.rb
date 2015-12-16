@@ -56,122 +56,147 @@ module MotionsHelper
   def motion_timeline_props(motion)
     merge_state({
       timelines: {
-        '1' => {
-          id: 1,
-          currentPhase: 2,
-          phaseCount: 4,
-          activePointId: nil,
-          points: [1, 2, 3, 4, 5, 6]
+        collection: {
+          '1' => {
+            type: 'timeline',
+            id: 1,
+            currentPhase: 2,
+            phaseCount: 4,
+            activePointId: nil,
+            points: [1, 2, 3, 4, 5, 6]
+          }
         }
       },
       points: [
         {
+          type: 'point',
           id: 1,
           timelineId: 1,
-          type: 'phase',
+          itemType: 'phase',
           itemId: 1
         },
         {
+          type: 'point',
           id: 2,
           timelineId: 1,
-          type: 'phase',
+          itemType: 'phase',
           itemId: 2
         },
         {
+          type: 'point',
           id: 3,
           timelineId: 1,
-          type: 'phase',
+          itemType: 'phase',
           itemId: 3
         },
         {
+          type: 'point',
           id: 4,
           timelineId: 1,
-          type: 'update',
+          itemType: 'update',
           itemId: 1
         },
         {
+          type: 'point',
           id: 5,
           timelineId: 1,
-          type: 'update',
+          itemType: 'update',
           itemId: 2
         },
         {
+          type: 'point',
           id: 6,
           timelineId: 1,
-          type: 'update',
+          itemType: 'update',
           itemId: 3
         },
         {
+          type: 'point',
           id: 7,
           timelineId: 1,
-          type: 'phase',
+          itemType: 'phase',
           itemId: 4
         }
       ],
       phases: [
         {
+          type: 'phase',
           id: 1,
           timelineId: 1,
           index: 0,
           title: 'Beleidsfase',
-          content: 'Fasebeschrijving voor fase 1'
+          content: 'Fasebeschrijving voor fase 1',
+          startDate: Time.current - 1.hours,
+          endDate: Time.current + 2.hours
         },
         {
+          type: 'phase',
           id: 2,
           timelineId: 1,
           index: 1,
-          title: 'Initiëren',
-          content: 'Fasebeschrijving voor fase 2'
+          title: 'Initiatiefase',
+          content: 'Fasebeschrijving voor fase 2',
+          startDate: Time.current + 2.hours,
+          endDate: Time.current + 5.hours
         },
         {
+          type: 'phase',
           id: 3,
           timelineId: 1,
           index: 2,
-          title: 'Behandelen',
-          content: 'Fasebeschrijving voor fase drie'
+          title: 'Behandelfase',
+          content: 'Fasebeschrijving voor fase drie',
+          startDate: Time.current + 5.hours,
+          endDate: Time.current + 6.hours
         },
         {
-        id: 4,
+          type: 'phase',
+          id: 4,
           timelineId: 1,
           index: 3,
           title: 'Einde',
-          content: ''
+          content: '',
+          startDate: Time.current + 6.hours,
+          endDate: nil
         }
       ],
       updates: [
         {
           id: 1,
+          type: 'update',
           phaseId: 1,
           title: 'An update',
           content: 'description of the update',
           creatorId: 1,
           createdAt: Time.current,
           dateline: {
-            date: Time.current - 1.hour,
+            date: Time.current - 15.minutes,
             location: ''
           }
         },
         {
           id: 2,
+          type: 'update',
           phaseId: 1,
           title: 'Update 2',
-          content: 'description of update 2',
+          content: 'Happened earlier than An Update',
           creatorId: 1,
           createdAt: Time.current,
           dateline: {
-            date: Time.current - 1.hour,
+            date: Time.current - 45.minutes,
             location: ''
           }
         },
         {
           id: 3,
+          type: 'update',
           phaseId: 2,
           title: 'Another update',
           content: 'Update is in the second phase',
           creatorId: 1,
           createdAt: Time.current,
           dateline: {
-            date: Time.current - 1.hour,
+            date: Time.current + 3.hours,
             location: ''
           }
         }
@@ -179,6 +204,7 @@ module MotionsHelper
       profiles: [
         {
           id: 1,
+          type: 'profile',
           displayName: 'Some creator',
           url: 'https://argu.co/u/someone'
         }
@@ -186,7 +212,7 @@ module MotionsHelper
     })
 
     {
-      timeLineId: 1
+      timelineId: 1
     }
   end
 

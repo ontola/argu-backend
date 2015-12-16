@@ -55,11 +55,7 @@ window.UpdateContainer = UpdateContainer;
 
 export const Update = React.createClass({
     propTypes: {
-        id: React.PropTypes.number,
-        title: React.PropTypes.string,
-        content: React.PropTypes.string,
-        creator: React.PropTypes.object,
-        dateline: React.PropTypes.object
+        update: React.PropTypes.object
     },
 
     profile: function () {
@@ -70,18 +66,29 @@ export const Update = React.createClass({
         }
     },
 
+    dateInText: function (date) {
+        if (typeof date === 'string') {
+            return date;
+        } else {
+            return date && date.toLocaleDateString();
+        }
+    },
+
     render: function render() {
-        const { title, content, dateline } = this.props;
+        const { update } = this.props;
+        const title = update.get('title');
+        const content = update.get('content');
+        const date = update.getIn(['dateline', 'date']);
 
         const profile = this.profile();
+        const dateText = this.dateInText(date);
 
-        const date = dateline && dateline.date;
         return (
             <div className="box update" style={{width: '100%'}}>
                 <section className="section-info update-bg">
                     <span className="fa fa-clock-o"/>
                     <span className="icon-left">_Update_</span>
-                    <span className="icon-left">{date}</span>
+                    <span className="icon-left">{dateText}</span>
                 </section>
                 <section>
                     <h3>{title}</h3>

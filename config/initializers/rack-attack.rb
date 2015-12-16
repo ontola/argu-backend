@@ -12,19 +12,22 @@ class Rack::Attack
   SPAMMERS = [
       /co\.lumb\.co/,
       /darodar/,
-      /-seo.com/,
-      /erot.co/,
-      /howtostopreferralspam.eu/,
-      /videos-for-your-business.com/,
-      /sexyali.com/,
-      /chinese-amezon.com/,
-      /hulfingtonpost.com/,
-      /qualitymarketzone.com/,
-      /buttons.com/,
+      /-seo\.com/,
+      /erot\.co/,
+      /howtostopreferralspam\.eu/,
+      /videos-for-your-business\.com/,
+      /sexyali\.com/,
+      /chinese-amezon\.com/,
+      /hulfingtonpost\.com/,
+      /qualitymarketzone\.com/,
+      /buttons\.com/,
       /free-floating-buttons/,
-      /social-traffic.com/,
-      /event-tracking.com/,
-      /buttons-for/
+      /social-traffic\.com/,
+      /event-tracking\.com/,
+      /buttons-for/,
+      /googlemare/,
+      /quit-smoking/,
+      /\.ga/
   ].freeze
 
   HACKERS = [

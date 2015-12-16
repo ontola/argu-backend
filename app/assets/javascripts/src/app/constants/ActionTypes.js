@@ -6,3 +6,5 @@
 
 export const SET_ACTIVE_POINT = 'SET_ACTIVE_POINT';
 export const SET_CURRENT_PHASE = 'SET_CURRENT_PHASE';
+export const NEXT_POINT = 'NEXT_POINT';
+export const PREVIOUS_POINT = 'PREVIOUS_POINT';

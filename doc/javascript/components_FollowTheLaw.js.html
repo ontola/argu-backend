@@ -33,11 +33,14 @@
  */
 
 import React from 'react';
-import { Record } from 'immutable';
+import {
+    Record,
+    List
+} from 'immutable';
 import RPhase from '../records/RPhase';
 import RUpdate from '../records/RUpdate';
 import RProfile from '../records/RProfile';
-import RTimeLine from '../records/RTimeLine';
+import RTimeline from '../records/RTimeline';
 import { Update, UpdateContainerWrapper } from './Update';
 
 
@@ -85,7 +88,7 @@ let TimeLineComponentContainer = React.createClass({
     render: function render() {
         const { timeLineId, timelines, phases, updates, points, actions } = this.props;
 
-        const timeLine = new RTimeLine(timelines[timeLineId]);
+        const timeLine = timelines.getIn(['collection', timeLineId.toString()]);
 
         return (&lt;div>
             &lt;TimeLineComponent timeLine={timeLine}
@@ -106,10 +109,15 @@ window.TimeLineComponentContainer = TimeLineComponentContainer;
  */
 export const TimeLineComponent = React.createClass({
     propTypes: {
-        phases: React.PropTypes.array,
-        points: React.PropTypes.array,
-        timeLine: React.PropTypes.instanceOf(RTimeLine),
-        updates: React.PropTypes.array
+        phases: React.PropTypes.instanceOf(List),
+        points: React.PropTypes.instanceOf(List),
+        timeLine: React.PropTypes.instanceOf(RTimeline),
+        updates: React.PropTypes.instanceOf(List)
+    },
+
+    style: {
+        display: 'flex',
+        flexDirection: 'column'
     },
 
     activePoint: function () {
@@ -127,35 +135,54 @@ export const TimeLineComponent = React.createClass({
 
     activeItem: function activeItem () {
         const activePoint = this.activePoint();
+        if (typeof activePoint === 'undefined') {
+            return undefined;
+        }
         const collections = {
             phase: this.props.phases,
             update: this.props.updates
         };
 
-        return collections[activePoint.type].find(elem => {
+        return collections[activePoint.itemType].find(elem => {
             return elem.id === activePoint.itemId
         });
     },
 
+    currentPhaseItem: function () {
+        const { currentPhase } = this.props.timeLine;
+        return this.props.phases.find(phase => {
+            return phase.id === currentPhase
+        });
+    },
+
+    detailsPane: function detailsPane () {
+        const activePoint = this.activePoint();
+        if (typeof activePoint !== 'undefined') {
+            return &lt;DetailsPane actions={this.props.actions}
+                                item={this.activeItem()}
+                                point={activePoint} />;
+        }
+    },
+
     render: function render() {
         const { phases, timeLine, actions, updates, points } = this.props;
-        const { currentPhase, phaseCount } = timeLine;
+        const { phaseCount } = timeLine;
 
-        const detailsPane = &lt;DetailsPane item={this.activeItem()}
-                                         itemType={this.activePoint().type} />;
+        const activePoint = this.activePoint();
+        if (typeof activePoint !== 'undefined') {
 
-        const currentPhaseItem = phases.find(phase => { return phase.id === currentPhase });
+        }
+        const detailsPane = this.detailsPane();
+        const currentPhaseItem = this.currentPhaseItem();
 
         return (
-            &lt;div className="time-line-component" style={{display: 'flex', flexDirection: 'column'}}>
+            &lt;div className="time-line-component" style={this.style}>
                 &lt;h2>Volg de wet&lt;/h2>
                 &lt;TimeLinePhases
                     timeLine={timeLine}
                     actions={actions}
                     points={points}
                     updates={updates}
-                    currentPhase={currentPhase}
-                    phaseCount={phaseCount}
                     phases={phases} />
                 &lt;TimeLine phaseCount={phaseCount}
                           currentPhaseIndex={currentPhaseItem.index} />
@@ -173,13 +200,18 @@ window.TimeLineComponent = TimeLineComponent;
  * @author Fletcher91 &lt;thom@argu.co>
  */
 export const TimeLinePhases = React.createClass({
+    style: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+
     pointActive: function (point, activePointId) {
         return point.id === activePointId ? 'active' : undefined;
     },
 
     pointByItem: function pointByItem(itemType, itemId) {
         return this.props.points.find(point => {
-                return point.type === itemType &amp;&amp;
+                return point.itemType === itemType &amp;&amp;
                     point.itemId === itemId;
             });
     },
@@ -227,7 +259,7 @@ export const TimeLinePhases = React.createClass({
         });
 
         return (
-            &lt;div className="time-line-phases" style={{display: 'flex', flexDirection: 'row'}}>
+            &lt;div className="time-line-phases" style={this.style}>
                 {phasesList}
             &lt;/div>
         );
@@ -253,20 +285,20 @@ export const TimeLine = React.createClass({
         return `${width}%`;
     },
 
-    render: function render() {
-        const style = {
-            width: '100%',
-            height: 1,
-            border: 0,
-            borderTop: '3px solid #CCC',
-            padding: 0,
-            marginTop: '-.6em',
-            zIndex: 1,
-            marginBottom: '.6em'
-        };
+    style: {
+        width: '100%',
+        height: 1,
+        border: 0,
+        borderTop: '3px solid #CCC',
+        padding: 0,
+        marginTop: '-.6em',
+        zIndex: 1,
+        marginBottom: '.6em'
+    },
 
+    render: function render() {
         const innerStyle = Object.assign({},
-            style,
+            this.style,
             {
                 width: this.completionWidth(),
                 borderTop: '3px solid #8BAACA',
@@ -276,7 +308,7 @@ export const TimeLine = React.createClass({
         );
 
         return (
-            &lt;div className="time-line" style={style}>
+            &lt;div className="time-line" style={this.style}>
                 &lt;div className="inner-line" style={innerStyle}>&lt;/div>
             &lt;/div>
         );
@@ -290,21 +322,49 @@ window.TimeLinePhases = TimeLinePhases;
  * @author Fletcher91 &lt;thom@argu.co>
  */
 export const DetailsPane = React.createClass({
+    propTypes: {
+        actions: React.PropTypes.object,
+        item: React.PropTypes.object,
+        point: React.PropTypes.object
+    },
+
+    style: {
+        display: 'flex',
+        alignItems: 'center'
+    },
+
+    nextItem: function () {
+        let { timelineId } = this.props.point;
+        this.props.actions.nextPoint(timelineId);
+    },
+
+    previousItem: function () {
+        let { timelineId } = this.props.point;
+        this.props.actions.previousPoint(timelineId);
+    },
+
     render: function render() {
-        const { item, itemType } = this.props;
+        const { item, point } = this.props;
 
         if (typeof item === 'undefined') {
             return &lt;div>&lt;/div>;
         }
 
-        if (itemType === 'update') {
-            return &lt;UpdateContainerWrapper updateId={item.id}
-                                           {...item} />;
-        } else {
-            // We're mocking an `RUpdate` here since we're hacking this from a phase description
-            return &lt;Update update={new RUpdate()}
-                           {...item} />;
-        }
+        const UpdateItem = point.itemType === 'update' ?
+            &lt;UpdateContainerWrapper updateId={item.id}
+                                    {...item} /> :
+            &lt;Update update={new RUpdate()}
+                    {...item} />;
+
+        return (&lt;div className="details-pane" style={this.style}>
+            &lt;span className="details-pane-previous"
+                  style={{fontSize: '2em'}}
+                  onClick={this.previousItem}>&amp;lt;&lt;/span>
+            {UpdateItem}
+            &lt;span className="details-pane-next"
+                  style={{fontSize: '2em'}}
+                  onClick={this.nextItem}>&amp;gt;&lt;/span>
+        &lt;/div>);
     }
 });
 window.DetailsPane = DetailsPane;
@@ -321,6 +381,11 @@ export const Phase = React.createClass({
         point: React.PropTypes.object,
         actions: React.PropTypes.object,
         last: React.PropTypes.bool
+    },
+
+    style: {
+        display: 'flex',
+        flexDirection: 'row'
     },
 
     getLabel: function () {
@@ -347,7 +412,7 @@ export const Phase = React.createClass({
         return (
             &lt;div className={`phase ${current}`} style={style}>
                 {label}
-                &lt;div className="phase-points" style={{display: 'flex', flexDirection: 'row'}}>
+                &lt;div className="phase-points" style={this.style}>
                     &lt;PhasePoint point={point}
                                 active={active}
                                 actions={actions}
@@ -372,14 +437,25 @@ export const Point = React.createClass({
     },
 
     setActive: function setActive() {
-        const { id, timelineId } = this.props.point;
+        const { active } = this.props;
+        let { id, timelineId } = this.props.point;
+        if (active) {
+            id = 0;
+        }
         this.props.actions.setActivePoint(timelineId, id);
     },
 
     render: function render() {
+        const { active } = this.props;
+
+        const style = {
+            flexGrow: 1,
+            border: active ?  '1px solid yellow' : undefined
+        };
+
         return (&lt;span className={`point ${this.props.active}`}
                       onClick={this.setActive}
-                      style={{flexGrow: 1}}>U&lt;/span>);
+                      style={style}>U&lt;/span>);
     }
 });
 window.Point = Point;
@@ -396,17 +472,26 @@ export const PhasePoint = React.createClass({
     },
 
     setActive: function makeActive() {
-        const { id, timelineId } = this.props.point;
+        const { active } = this.props;
+        let { id, timelineId } = this.props.point;
+        if (active) {
+            id = 0;
+        }
         this.props.actions.setActivePoint(timelineId, id);
     },
 
     render: function render() {
         const { current, active } = this.props;
 
+        const style = {
+            flexGrow: 1,
+            border: active ?  '1px solid yellow' : undefined
+        };
+
         return (
             &lt;span className={`point phase-point ${current} ${active}`}
                   onClick={this.setActive}
-                  style={{flexGrow: 1}}>P&lt;/span>
+                  style={style}>P&lt;/span>
         );
     }
 });
@@ -423,13 +508,13 @@ export default TimeLineComponentContainer;
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BigVote.html">BigVote</a></li><li><a href="module-CombiBigVote.html">CombiBigVote</a></li><li><a href="module-FollowTheLaw.html">FollowTheLaw</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Update.html">Update</a></li></ul><h3>Classes</h3><ul><li><a href="BigVote.BigVoteButtons.html">BigVoteButtons</a></li><li><a href="BigVote.BigVoteResults.html">BigVoteResults</a></li><li><a href="module-FollowTheLaw-DetailsPane.html">DetailsPane</a></li><li><a href="module-FollowTheLaw-Phase.html">Phase</a></li><li><a href="module-FollowTheLaw-PhasePoint.html">PhasePoint</a></li><li><a href="module-FollowTheLaw-Point.html">Point</a></li><li><a href="module-FollowTheLaw-TimeLine.html">TimeLine</a></li><li><a href="module-FollowTheLaw-TimeLineComponent.html">TimeLineComponent</a></li><li><a href="module-FollowTheLaw-TimeLineComponentContainer.html">TimeLineComponentContainer</a></li><li><a href="module-FollowTheLaw-TimeLineComponentContainerWrapper.html">TimeLineComponentContainerWrapper</a></li><li><a href="Profile.html">Profile</a></li><li><a href="RDateline.html">RDateline</a></li><li><a href="RImage.html">RImage</a></li><li><a href="RPhase.html">RPhase</a></li><li><a href="RPoint.html">RPoint</a></li><li><a href="RProfile.html">RProfile</a></li><li><a href="RTimeLine.html">RTimeLine</a></li><li><a href="RUpdate.html">RUpdate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#SET_ACTIVE_POINT">SET_ACTIVE_POINT</a></li><li><a href="global.html#setActivePoint">setActivePoint</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BigVote.html">BigVote</a></li><li><a href="module-CombiBigVote.html">CombiBigVote</a></li><li><a href="module-FollowTheLaw.html">FollowTheLaw</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Update.html">Update</a></li></ul><h3>Classes</h3><ul><li><a href="BigVote.BigVoteButtons.html">BigVoteButtons</a></li><li><a href="BigVote.BigVoteResults.html">BigVoteResults</a></li><li><a href="module-FollowTheLaw-DetailsPane.html">DetailsPane</a></li><li><a href="module-FollowTheLaw-Phase.html">Phase</a></li><li><a href="module-FollowTheLaw-PhasePoint.html">PhasePoint</a></li><li><a href="module-FollowTheLaw-Point.html">Point</a></li><li><a href="module-FollowTheLaw-TimeLine.html">TimeLine</a></li><li><a href="module-FollowTheLaw-TimeLineComponent.html">TimeLineComponent</a></li><li><a href="module-FollowTheLaw-TimeLineComponentContainer.html">TimeLineComponentContainer</a></li><li><a href="module-FollowTheLaw-TimeLineComponentContainerWrapper.html">TimeLineComponentContainerWrapper</a></li><li><a href="Profile.html">Profile</a></li><li><a href="RDateline.html">RDateline</a></li><li><a href="RImage.html">RImage</a></li><li><a href="RPhase.html">RPhase</a></li><li><a href="RPoint.html">RPoint</a></li><li><a href="RProfile.html">RProfile</a></li><li><a href="RTimeline.html">RTimeline</a></li><li><a href="RUpdate.html">RUpdate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#nextPoint">nextPoint</a></li><li><a href="global.html#previousPoint">previousPoint</a></li><li><a href="global.html#SET_ACTIVE_POINT">SET_ACTIVE_POINT</a></li><li><a href="global.html#setActivePoint">setActivePoint</a></li><li><a href="global.html#setCurrentPhase">setCurrentPhase</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Dec 11 2015 16:34:52 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Dec 14 2015 15:06:35 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
