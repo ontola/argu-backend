@@ -161,6 +161,11 @@ export const ShareDropdown = React.createClass({
                     title={`LinkedIn ${this.countInParentheses(counts.linkedIn)}`}
                     url={shareUrls.linkedIn}
                     fa="fa-linkedin" />
+            <LinkItem
+                    type="link"
+                    title={`Google+`}
+                    url={shareUrls.googlePlus}
+                    fa="fa-google-plus" />
             </DropdownContent>;
 
         return (<div tabIndex="1"

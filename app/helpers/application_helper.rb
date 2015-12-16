@@ -102,7 +102,8 @@ module ApplicationHelper
         shareUrls: {
             facebook: ShareHelper.facebook_share_url(url),
             linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
-            twitter: ShareHelper.twitter_share_url(url, title: resource.display_name)
+            twitter: ShareHelper.twitter_share_url(url, title: resource.display_name),
+            googlePlus: ShareHelper.googleplus_share_url(url)
         }
     }
   end
