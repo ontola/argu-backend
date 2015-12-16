@@ -27,6 +27,13 @@ module ColumnRendererHelper
     render partial: partial, locals: {model: columns}.merge({options: options})
   end
 
+  def button_box(params)
+    {
+        tag: 'div',
+        class: 'box box-link'
+    }.merge(params.except(:collection))
+  end
+
   #
   def header(options)
     if !(defined?(options[:header]) && options[:header] == false)

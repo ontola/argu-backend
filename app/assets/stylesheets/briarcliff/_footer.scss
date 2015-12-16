@@ -26,7 +26,7 @@ footer {
   overflow: hidden;
   margin-bottom: -5em;
   min-height: 15em;//Change the wrapper bottom margin as wel;
-  margin-top: 3em;
+  margin-top: $footer-margin;
   padding-bottom: 2em;
   @include bp-large {
     height: auto;
@@ -78,6 +78,13 @@ footer {
   width: 100%;
   bottom: 1em;
   font-size: .8em;
+}
+
+.footer-extra {
+  background-color: white;
+  padding: .01em 0;
+  margin-top: $footer-margin;
+  margin-bottom: -$footer-margin;
 }
 
 .footer-social-buttons{

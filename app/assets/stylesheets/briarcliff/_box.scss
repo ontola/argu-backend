@@ -66,6 +66,23 @@
     font-size: 1.2em;
     margin-bottom: .8em;
   }
+
+  &[pro="pro"],&[pro="con"],&[collection_model="QuestionAnswer"] {
+    h3 {
+      color: white;
+    }
+  }
+
+  &[pro="pro"]{
+    background-color: $pro;
+  }
+
+  &[pro="con"]{
+    background-color: $con;
+  }
+  &[collection_model="QuestionAnswer"]{
+    background-color: $motion;
+  }
 }
 
 .box h1, .box h2, .box h3, .box h4 {
