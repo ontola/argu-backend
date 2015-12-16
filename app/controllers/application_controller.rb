@@ -32,13 +32,33 @@ class ApplicationController < ActionController::Base
     error = t("#{exception.record.try(:class_name)}.pundit.#{action}",
               action: "#{exception.record.class}##{action}",
               default: t('access_denied'))
+    error_hash = {
+      type: :error,
+      error_id: 'NOT_AUTHORIZED',
+      message: error
+    }
     respond_to do |format|
-      format.js { render status: 403, json: { notifications: [{type: :error, message: error }] } }
-      format.json { render status: 403, json: { notifications: [{type: :error, message: error }] } }
-      format.html {
-        request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
-        redirect_to :back, alert: error
-      }
+      format.js do
+        render status: 403,
+               json: error_hash.merge({notifications: [error_hash]})
+      end
+      format.json do
+        render status: 403,
+               json: error_hash.merge({notifications: [error_hash]})
+      end
+      format.html do
+        if (request.headers['HTTP_X_PJAX'] == 'true')
+          response.headers['X-PJAX-REFRESH'] = 'false'
+          render status: 403,
+                 json: error_hash.merge({notifications: [error_hash]})
+        else
+          request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url ||
+                                        request.env['HTTP_REFERER'].blank? ?
+                                          root_path :
+                                          request.env['HTTP_REFERER']
+          redirect_to :back, alert: error
+        end
+      end
     end
   end
 

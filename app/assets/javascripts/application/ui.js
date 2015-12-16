@@ -64,7 +64,11 @@ const ui = {
     },
 
     handleAjaxCalls: function (e, xhr, options) {
-        if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201) {
+        if (xhr.status !== 200 &&
+            xhr.status !== 204 &&
+            xhr.status !== 201 &&
+            options.url.search(/facebook\.com|linkedin\.com/) == -1 &&
+            xhr.getResponseHeader('X-PJAX-REFRESH') !== 'false') {
             const message = errorMessageForStatus(xhr.status).fallback || `Unknown error occurred (status: ${xhr.status})`;
             new Alert(message, 'alert', true);
         }

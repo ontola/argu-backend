@@ -29,10 +29,10 @@ FactoryGirl.define do
         passed_in?(:forum) ? forum : FactoryGirl.create(:forum)
       }
       after :create do |motion|
-        create_list :argument, 5,
+        create_list :argument, 3,
                     motion: motion,
                     forum: motion.forum
-        create_list :argument, 5,
+        create_list :argument, 3,
                     motion: motion,
                     forum: motion.forum,
                     pro: false,

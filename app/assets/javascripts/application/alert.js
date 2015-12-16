@@ -48,7 +48,8 @@ export default {
     handleJSONBody: function (event, XMLHttpRequest) {
         try {
             var res = $.parseJSON(XMLHttpRequest.responseText);
-            if (res !== undefined && res.notifications !== undefined) {
+            if (res !== undefined &&
+                res.notifications !== undefined) {
                 res.notifications.forEach(function (notification) {
                     new Alert(notification.message, notification.type, true);
                 });

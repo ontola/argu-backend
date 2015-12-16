@@ -15,11 +15,11 @@ FactoryGirl.define do
 
     # Holland (the default)
     factory :populated_forum do
-      motion_count 20
+      motion_count 6
 
       after(:create) do |forum, evaluator|
-        create_list :motion, 5, forum: forum
-        create_list :motion, 5, forum: forum, is_trashed: true
+        create_list :motion, 3, forum: forum
+        create_list :motion, 3, forum: forum, is_trashed: true
         create :question, :with_motions, forum: forum
         create :access_token, item: forum
         cap = Setting.get('user_cap').try(:to_i)

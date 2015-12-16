@@ -33,7 +33,15 @@ class AuthenticatedController < ApplicationController
     respond_to do |format|
       format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r } }
       format.js { render partial: 'forums/join', layout: false, locals: { forum: exception.forum, r: exception.r } }
-      format.json { render json: exception.body, status: 403 }
+      format.json do
+        error_hash = {
+          type: :error,
+          error_id: 'NOT_A_MEMBER',
+          message: exception.body
+        }.merge(exception.body)
+        render status: 403,
+               json: error_hash.merge({notifications: [error_hash] })
+      end
     end
   end
 

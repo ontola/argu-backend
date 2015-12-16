@@ -23,7 +23,11 @@ class VotesController < AuthenticatedController
 
   def new
     @model = get_voteable
+    get_context
     authorize @model, :show?
+    authorize Vote.new(voteable: @model,
+                       voter: current_profile,
+                       forum: @model.forum)
 
     render locals: {
                resource: @model,
@@ -34,12 +38,13 @@ class VotesController < AuthenticatedController
   # POST /model/:model_id/v/:for
   def create
     @model = get_voteable
-    get_context
-
-    authorize @model.forum, :show?
-
-    @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile)
+    @vote = Vote.find_or_initialize_by(voteable: @model,
+                                       voter: current_profile)
     @vote.forum ||= @model.forum
+
+    get_context
+    authorize @model.forum, :show?
+    authorize @vote, :create?
 
     respond_to do |format|
       if @vote.for == for_param
@@ -130,7 +135,7 @@ class VotesController < AuthenticatedController
   end
 
   def get_context
-    @forum = @model.forum
+    @forum = (@vote || @model).forum
   end
 
   def query_payload(opts = {})

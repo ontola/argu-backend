@@ -15,6 +15,7 @@ module ExceptionToTheRule
     _rules = Rule.arel_table
     rule_query = _rules[:model_type].eq(@record.is_a?(Class) ? @record.to_s : @record.class.to_s)
                    .and(_rules[:model_id].eq(@record.try(:id))
+                          .or(_rules[:model_id].eq(nil))
                    .and(_rules[:action].eq(action.to_s))
                    .and(_rules[:context_type].eq(context.context_model.class.to_s))
                    .and(_rules[:context_id].eq(context.context_model.id.to_s))
