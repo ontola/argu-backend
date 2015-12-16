@@ -54,7 +54,7 @@ module.exports = (function ReactUJS (document, window) {
             for (var i = 0; i < nodes.length; ++i) {
                 var node = nodes[i];
 
-                React.unmountComponentAtNode(node);
+                ReactDOM.unmountComponentAtNode(node);
             }
         }
     };

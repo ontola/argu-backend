@@ -5,9 +5,19 @@ Intl; // For ESLint
 import 'intl/locale-data/jsonp/en.js';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
-import { BigVoteButtons, BigVoteResults } from './_big_vote_elements';
+import { BigVoteButtons, BigVoteResults } from './BigVote';
 import BigGroupResponse from './_big_group_responses';
 
+/**
+ * Component that displays current vote options based on whether the user is member of a group.
+ * Also reveals the results if the user has already voted.
+ * This component is not pure.
+ * @class
+ * @exports CombiBigVote
+ * @see {@linkcode BigVote.BigVoteButtons}
+ * @see {@linkcode BigVote.BigVoteResults}
+ * @see {@linkcode BigGroupResponse}
+ */
 export const CombiBigVote = React.createClass({
 
     getInitialState: function () {

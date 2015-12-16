@@ -5,6 +5,11 @@ Intl; // For ESLint
 import 'intl/locale-data/jsonp/en.js';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 
+/**
+ * For making a GroupResponse in a BigVote fashion.
+ * @class
+ * @export BigGroupResponse
+ */
 export const BigGroupResponse = React.createClass({
     getInitialState: function () {
         return {

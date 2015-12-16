@@ -102,7 +102,8 @@ module ApplicationHelper
         shareUrls: {
             facebook: ShareHelper.facebook_share_url(url),
             linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
-            twitter: ShareHelper.twitter_share_url(url, title: resource.display_name)
+            twitter: ShareHelper.twitter_share_url(url, title: resource.display_name),
+            googlePlus: ShareHelper.googleplus_share_url(url)
         }
     }
   end
@@ -119,6 +120,18 @@ module ApplicationHelper
     ]
 
     dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
+  end
+
+  def filter_items
+    link_items = []
+
+    link_items = [
+        link_item(t('filtersort.all'), nil, fa: 'check', data: {'filter-value' => ''}),
+        link_item(t('filtersort.questions'), nil, fa: 'question', data: {'filter-value' => 'question'}),
+        link_item(t('filtersort.motions'), nil, fa: 'lightbulb-o', data: {'filter-value' => 'motion'})
+    ]
+
+    dropdown_options(t('filtersort.filter'), [{items: link_items}], fa: 'fa-filter')
   end
 
   def display_settings_items

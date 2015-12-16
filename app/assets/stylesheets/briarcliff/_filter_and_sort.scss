@@ -4,6 +4,11 @@
 .filter-and-sort {
   max-width: 1200px;
   display: inline-block;
+
+  > div {
+    display: inline-block;
+  }
+
   @include bp-medium{
     text-align: left;
   }

@@ -5,8 +5,9 @@
     "fastclick": "^1.0.6",
     "install": "^0.2.6",
     "intl": "^1.0.0",
+    "intro.js": "^1.1.1",
     "isotope-layout": "^2.2.2",
-    "jquery": "^2.1.4",
+    "jquery": "^1.11.3",
     "jquery-ujs": "^1.0.4",
     "react": "^0.14.2",
     "react-addons-transition-group": "^0.14.2",
@@ -43,6 +44,7 @@
     "gulp-uglify": "^1.4.2",
     "gulp-util": "^3.0.7",
     "gulp-watch": "^4.3.5",
+    "jsdoc": "^3.4.0",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
@@ -57,6 +59,7 @@
     "node": ">= 4.1.0"
   },
   "scripts": {
-    "build": "gulp build && gulp build-components"
+    "build": "gulp build && gulp build-components",
+    "doc": "jsdoc -c app/assets/javascripts/jsdoc.json -r"
   }
 }

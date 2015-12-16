@@ -5,7 +5,11 @@ class MotionsControllerTest < ActionController::TestCase
 
   let!(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
   let!(:follower) { FactoryGirl.create(:follow, followable: freetown) }
-  let(:question) { FactoryGirl.create(:question, forum: freetown) }
+  let(:question) do
+    FactoryGirl.create(:question,
+                       forum: freetown,
+                       creator: FactoryGirl.create(:profile_direct_email))
+  end
   let(:subject) { FactoryGirl.create(:motion, :with_arguments, forum: freetown) }
 
   ####################################

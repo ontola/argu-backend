@@ -17,4 +17,36 @@ RSpec.feature 'Dropdown', type: :feature do
     expect(page).to have_content other.display_name
     expect(current_path).to eq forum_path(other)
   end
+
+  # scenario 'Dropdown still works after navigating back and forth' do
+  #   visit forum_path(holland)
+  #
+  #   within('.cover-switcher') do
+  #     find('.dropdown-trigger').hover
+  #     click_link other.name
+  #   end
+  #   expect(current_path).to eq forum_path(other)
+  #   expect(page).to have_content other.display_name
+  #
+  #   within('.cover-switcher') do
+  #     find('.dropdown-trigger').hover
+  #     click_link holland.name
+  #   end
+  #   expect(page).to have_content holland.display_name
+  #   expect(current_path).to eq forum_path(holland)
+  #
+  #   page.driver.go_back
+  #   expect(page).to have_content other.display_name
+  #   expect(current_path).to eq forum_path(other)
+  #   page.driver.go_back
+  #   expect(page).to have_content holland.display_name
+  #   expect(current_path).to eq forum_path(holland)
+  #
+  #   within('.cover-switcher') do
+  #     find('.dropdown-trigger').hover
+  #     click_link other.name
+  #   end
+  #   expect(page).to have_content other.display_name
+  #   expect(current_path).to eq forum_path(other)
+  # end
 end

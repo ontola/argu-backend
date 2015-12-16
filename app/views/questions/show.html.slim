@@ -7,7 +7,7 @@
   .cover-image.bg-img[style="background-image: url('#{@question.cover_photo.url}'); "]
 .col-1
   div[data-intro= t('intro.question.back')]= to_parent
-  =render partial: 'contextualize/context_horizontal', locals: {item: @question, type: 'que'}
+  =render partial: 'contextualize/context_horizontal', locals: {item: @question, type: 'question'}
   .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
     section.section-info.question-bg
       span[class="fa fa-#{question_icon}"]
@@ -44,3 +44,4 @@
                 collection_model: QuestionAnswer,
                 buttons_url: url_for([:new, @forum, :motion, motion: {question_answers_attributes: {'0' => {question_id: @question.id}}}]),
                 buttons_text: t('add_type', type: motion_type(@question)))
+=render partial: 'discussions/new', locals: {forum: @forum}

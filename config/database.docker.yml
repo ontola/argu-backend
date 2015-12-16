@@ -1,0 +1,15 @@
+development: &default
+  adapter: postgresql
+  encoding: unicode
+  database: <%= ENV['ARGU_DB_NAME'] %>
+  pool: 5
+  username: <%= ENV['ARGU_DB_USER'] %>
+  password: <%= ENV['ARGU_DB_PASS'] %>
+  host: <%= ENV['ARGU_DB_HOST'] %>
+  port: <%= ENV['ARGU_DB_PORT'] %>
+test:
+  <<: *default
+  database: argu_test
+production:
+  <<: *default
+  database: argu_production

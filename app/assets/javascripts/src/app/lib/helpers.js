@@ -1,5 +1,13 @@
 import React from 'react';
 React; // For ESLint, jsx compiles to React.createElement, so React must be imported
+import Intl from 'intl';
+Intl; // For ESLint
+import { IntlMixin } from 'react-intl';
+
+/**
+ * @module Helpers
+ */
+
 
 Object.resolve = function(path, obj) {
     return [obj || self].concat(path.split('.')).reduce(function(prev, curr) {
@@ -66,6 +74,52 @@ export function _authenticityHeader (options) {
     });
 }
 
+export function errorMessageForStatus(status) {
+    if (status === 401) {
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.401",
+            "fallback": "Je moet ingelogd zijn voor deze actie."
+        };
+    } else if (status === 404) {
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.404",
+            "fallback": "Het item is niet gevonden, probeer de pagina te verversen."
+        };
+    } else if (status === 429) {
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.429",
+            "fallback": "Je maakt te veel verzoeken, probeer het over halve minuut nog eens."
+        };
+    } else if (status === 500) {
+        return {
+            "type": "alert",
+            "severity": "error",
+            "i18nString": "errors.status.500",
+            "fallback": "Er ging iets aan onze kant fout, probeer het later nog eens."
+        };
+    } else if (status === 0) {
+        return {
+            "type": "none",
+            "severity": "",
+            "i18nString": undefined,
+            "fallback": ""
+        };
+    } else {
+        return {
+            "type": "none",
+            "severity": "",
+            "i18nString": undefined,
+            "fallback": undefined
+        };
+    }
+}
+
 export function getAuthenticityToken () {
     return getMetaContent('csrf-token');
 }
@@ -79,6 +133,10 @@ export function getUserIdentityToken () {
     return {token: getMetaContent('user-identity-token')};
 }
 
+
+/**
+ * For use with window.fetch
+ */
 export function jsonHeader (options) {
     options = options || {};
     return Object.assign(options, {
@@ -87,6 +145,10 @@ export function jsonHeader (options) {
     });
 }
 
+/**
+ * Lets fetch include credentials in the request. This includes cookies and other possibly sensitive data.
+ * Note: Never use for requests across (untrusted) domains.
+ */
 export function safeCredentials (options) {
     options = options || {};
     return Object.assign(options, {
@@ -106,9 +168,10 @@ export function statusSuccess (response) {
 
 export function tryLogin (response) {
     if (response.status === 401) {
-        return Promise.resolve(window.alert('You should login.'));
+        return Promise.resolve(window.alert(errorMessageForStatus(response.status).fallback));
     } else {
-        return Promise.reject(new Error('unknown status code'));
+        const message = errorMessageForStatus(response.status).fallback || 'unknown status code';
+        return Promise.reject(new Error(message));
     }
 }
 
@@ -120,7 +183,7 @@ export function userIdentityToken (options) {
 }
 
 export function json (response) {
-    if (response.status !== 204 && response.status !== 304) {
+    if (typeof response !== 'undefined' && response.status !== 204 && response.status !== 304) {
         return response.json();
     } else {
         return Promise.resolve();

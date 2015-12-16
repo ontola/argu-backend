@@ -62,7 +62,7 @@ export const HyperDropdown = React.createClass({
                                                {...this.props}
                                                key='required' />;
 
-        return (<li tabIndex="1"
+        return (<div tabIndex="1"
                     className={dropdownClass}
                     onMouseEnter={this.onMouseEnter}
                     onMouseLeave={this.onMouseLeave} >
@@ -71,7 +71,7 @@ export const HyperDropdown = React.createClass({
             <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
                 {openState && dropdownContent}
             </ReactTransitionGroup>
-        </li>);
+        </div>);
     }
 });
 window.HyperDropdown = HyperDropdown;
@@ -95,7 +95,6 @@ export const ShareDropdown = React.createClass({
     componentDidMount: function () {
         this.fetchFacebookCount();
         this.fetchLinkedInCount();
-        this.fetchTwitterCount();
     },
 
     countInParentheses: function (count) {
@@ -115,12 +114,6 @@ export const ShareDropdown = React.createClass({
     fetchLinkedInCount: function () {
         $.getJSON(`https://www.linkedin.com/countserv/count/share?url=${this.props.url}&callback=?`, data => {
             this.updateCount('linkedIn', data.count);
-        });
-    },
-
-    fetchTwitterCount: function () {
-        $.getJSON(`https://cdn.api.twitter.com/1/urls/count.json?url=${this.props.url}&callback=?`, data => {
-            this.updateCount('twitter', data.count);
         });
     },
 
@@ -168,9 +161,14 @@ export const ShareDropdown = React.createClass({
                     title={`LinkedIn ${this.countInParentheses(counts.linkedIn)}`}
                     url={shareUrls.linkedIn}
                     fa="fa-linkedin" />
+            <LinkItem
+                    type="link"
+                    title={`Google+`}
+                    url={shareUrls.googlePlus}
+                    fa="fa-google-plus" />
             </DropdownContent>;
 
-        return (<li tabIndex="1"
+        return (<div tabIndex="1"
                     className={dropdownClass}
                     onMouseEnter={this.onMouseEnter}
                     onMouseLeave={this.onMouseLeave} >
@@ -179,7 +177,7 @@ export const ShareDropdown = React.createClass({
             <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
                 {openState && dropdownContent}
             </ReactTransitionGroup>
-        </li>);
+        </div>);
     }
 });
 window.ShareDropdown = ShareDropdown;
@@ -250,11 +248,9 @@ export const DropdownContent = React.createClass({
             });
         }
 
-        return (<div>
-            <ul className={'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState} style={null}>
+        return (<div className={'dropdown-content ' + collapseClass + contentClassName + ' ' + this.state.appearState} style={null}>
                 {children}
-            </ul>
-        </div>);
+            </div>);
     }
 });
 window.DropdownContent = DropdownContent;
@@ -279,24 +275,25 @@ export const LinkItem = React.createClass({
         if (this.props.divider && this.props.divider === 'top') {
             divider = <div className="dropdown-divider"></div>;
         }
-        var method, confirm, remote, skipPjax, sortValue, className, displaySetting;
+        var method, confirm, remote, skipPjax, sortValue, filterValue, className, displaySetting;
         if (this.props.data) {
             method = this.props.data.method;
             confirm = this.props.data.confirm;
             remote = this.props.data.remote;
             skipPjax = this.props.data['skip-pjax'];
             sortValue = this.props.data['sort-value'];
+            filterValue = this.props.data['filter-value'];
             displaySetting = this.props.data['display-setting'];
         }
         className = this.props.className;
 
-        return (<li className={this.props.type}>
+        return (<div className={this.props.type}>
             {divider}
-            <a href={this.props.url} data-remote={remote} data-method={method} data-confirm={confirm} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} data-sort-value={sortValue} data-display-setting={displaySetting} className={className}>
+            <a href={this.props.url} data-remote={remote} data-method={method} data-confirm={confirm} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} data-sort-value={sortValue} data-filter-value={filterValue} data-display-setting={displaySetting} className={className}>
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
-        </li>);
+        </div>);
     }
 });
 window.LinkItem = LinkItem;
@@ -320,12 +317,12 @@ export const FBShareItem = React.createClass({
     },
 
     render: function () {
-        return (<li className={this.props.type}>
+        return (<div className={this.props.type}>
             <a href={this.props.url} data-skip-pjax="true" onClick={this.handleClick}>
                 {image({fa: 'fa-facebook'})}
                 <span className="icon-left">Facebook {this.countInParentheses()}</span>
             </a>
-        </li>);
+        </div>);
     }
 });
 window.FBShareItem = FBShareItem;
@@ -374,13 +371,13 @@ export const ActorItem = React.createClass({
             skipPjax = this.props.data['skip-pjax'];
         }
 
-        return (<li className={'link ' + this.props.type}>
+        return (<div className={'link ' + this.props.type}>
             {divider}
             <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow" onTouchEnd={this.handleTap} onClickCapture={this.handleClick} data-skip-pjax={skipPjax}>
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
-        </li>);
+        </div>);
     }
 });
 window.ActorItem = ActorItem;
