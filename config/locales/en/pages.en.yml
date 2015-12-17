@@ -13,7 +13,7 @@ en:
         owner: "Owner"
         about_owner: "Users own an organization. Users can own multiple organizations, but organization can only have a single owner."
         title: "Managers"
-        about_managers: "Organization managers are users with extra rights, but not many as an administrator. Managers can place questions, motions, arguments and replies in name of the organization. They can also vote on their own name and delete previously placed items."
+        about_managers: "Organization managers are users with extra rights, but not many as an administrator. Managers can place challenges, motions, arguments and replies in name of the organization. They can also vote on their own name and delete previously placed items."
         transferred: "Organization transferred"
         users_only: "Only users can own organizations."
         transfer:
@@ -37,7 +37,7 @@ en:
       side: "<h2>What's an organization?</h2>
              <p>An organization is a <b>profile</b> of an organisation, like a company, NGO, political party or a lobby group. It can be managed by several Argu users.
              <h2>What can I do with an organization?</h2>
-             <p>Just like a normal profile, you can <b>place replices, motions and questions, vote, and become a member of forums</b>. You can <b>share viewpoints</b> of the organisation you represent.</p>
+             <p>Just like a normal profile, you can <b>place replices, motions and challenges, vote, and become a member of forums</b>. You can <b>share viewpoints</b> of the organisation you represent.</p>
              <h2>When am I allowed to create an organization?</h2>
              <p>Only if you have <b>permission</b> to participate on Argu on behalf of your organisation.</p>
              "

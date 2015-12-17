@@ -7,7 +7,7 @@ en:
     done: 'done'
     skip: 'skip'
     forums:
-      grid: 'All <b class="motion-t">motions</b> and <b class="question-t">questions</b> are listed below. Click an item to enter the discussion and share your opinion!'
+      grid: 'All <b class="motion-t">motions</b> and <b class="question-t">challenges</b> are listed below. Click an item to enter the discussion and share your opinion!'
       filter: 'This allows you to search items with a certain theme, or sort on, for example, score.'
       invite: 'Invite others to participate in the discussion.'
       switcher: 'On Argu, discussions are sorted into <b>forums</b>. There are forums for various municipalities, companies, organisations, education facilities and diverse projects.'

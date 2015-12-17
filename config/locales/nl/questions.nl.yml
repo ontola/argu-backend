@@ -2,45 +2,46 @@
 
 nl:
   questions:
-    type: "Vraagstuk"
-    type_new: "Nieuw vraagstuk"
-    new_btn: "Vraagstuk toevoegen"
-    header: "vraagstukken"
+    type: "Uitdaging"
+    type_new: "Nieuwe uitdaging"
+    new_btn: "Uitdaging toevoegen"
+    header: "uitdagingen"
     view_all_motions: "Bekijk alle %{amount} ideeën..."
     tooltips:
-      count: "aantal vraagstukken"
+      count: "aantal uitdagingen"
     call_to_action:
       title: "Oplossing nodig?"
       body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'
-      action: "Deel jouw vraagstuk."
+      action: "Deel jouw uitdaging."
     form:
-      title_heading: "Stel een open vraag"
+      title_heading: "Geef jouw uitdaging een titel"
       title_body_html: "<ul class='bullets'>
-                     <li>Een vraagstuk moet mensen uitdagen om eigen ideeën in te dienen.</li>
+                     <li>Open vragen zijn vaak geschikte titels voor uitdagingen.</li>
+                     <li>Een uitdaging moet mensen aanzetten tot het indienen van ideeën.</li>
                    </ul>"
-      content_heading: "Licht je vraagstuk toe"
+      content_heading: "Licht je uitdaging toe"
       content_body_html: "<ul class='bullets'>
                             <li>Leg de <b>huidige situatie</b> uit. Geef achtergrondinformatie van het probleem en leg uit waarom er nog geen oplossing is.</li>
                             <li>Geef aan waar een mogelijke oplossing (een idee) aan zouden moeten voldoen.</li>
-                            <li>Eindig met een <b>herhaling van je vraag</b>, zodat je mensen aanmoedigt om een idee onder het vraagstuk te plaatsen.</li>
+                            <li>Eindig door gebruikers nog eens aan te zetten tot het <b>het indienen van een idee</b>, zodat je meer reacties krijgt.</li>
                           </ul>"
       themes: "thema1, thema2"
       invert: "alle argumenten omkeren"
       helper:
         examples:
           title: "Voorbeelden"
-          first: "Welke maatregelen kunnen we nemen tegen verkeersongevallen?"
-          1_explained: "Open vragen zijn geschikt als vraagstuk."
-          second: "Hoe kunnen we de CO2 uitstoot verlagen?"
-          2_explained: "Zorg dat je vraagstuk mensen uitdaagt om ideeën in te dienen."
+          first: "Hoe kunnen we de CO2 uitstoot verlagen?"
+          1_explained: "Open vragen zijn vaak geschikte titels voor uitdagingen."
+          second: "Bedenk beleid om CO2 te verlagen"
+          2_explained: "Een activerende stelling kan ook werken. Zorg dat je uitdaging mensen stimuleert om ideeën in te dienen."
           third: "Moeten we de CO2 uitstoot verlagen?"
           3_explained: "Geen gesloten vragen. Een discussie over een ja/nee vraag kan je starten door een idee te plaatsen."
           fourth: "Waar moet ik een paspoort halen?"
-          4_explained: "Geen kennisvragen. Argu discussies gaan over het vinden van ideeën voor een bepaald vraagstuk."
-        title: "Plaats hier de kern van het vraagstuk"
-        content: "Beschrijf hier het vraagstuk in detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
-        themes: "Thema's of onderwerpen die aan dit vraagstuk gerelateerd zijn. Plaats komma's tussen de thema's."
+          4_explained: "Geen kennisvragen. Argu discussies gaan over het vinden van ideeën voor een bepaalde uitdaging."
+        title: "Plaats hier de kern van de uitdaging"
+        content: "Beschrijf hier de uitdaging in detail, geef een achtergrondverhaal en leg de huidige situatie uit. Plaats hier geen argumenten."
+        themes: "Thema's of onderwerpen die aan deze uitdaging gerelateerd zijn. Plaats komma's tussen de thema's."
     expired_at:
-      tooltip: "Dit vraagstuk sloot op %{date}."
+      tooltip: "Deze uitdaging sloot op %{date}."
     expires_at:
-      tooltip: "Dit vraagstuk wordt gesloten op %{date}."
+      tooltip: "Deze uitdaging wordt gesloten op %{date}."

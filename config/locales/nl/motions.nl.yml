@@ -58,7 +58,7 @@ nl:
         is_mod: 'is al een mod'
       show_moderation_panel: 'moderator'
     titles:
-      tags: "Zoek vraagstukken en ideeën met het thema "
+      tags: "Zoek uitdagingen en ideeën met het thema "
     call_to_action:
       title: "Heb jij een goed idee?"
       body: "Heb jij een goed idee en wil je anderen daarvan overtuigen?"
@@ -90,11 +90,11 @@ nl:
   pundit:
     motion_policy:
       vote?: "Je mag nog niet op items stemmen. Zorg ervoor dat je lid van het forum bent."
-      create_without_question?: "Je mag hier geen idee aanmaken zonder het eerst te koppelen aan een vraagstuk."
+      create_without_question?: "Je mag hier geen idee aanmaken zonder het eerst te koppelen aan een uitdaging."
   activerecord:
     errors:
       models:
         motions:
           attributes:
             forum:
-              different: "Het idee en haar vraagstuk(ken) moeten tot hetzelfde forum behoren"
+              different: "Het idee en haar uitdaging(en) moeten tot hetzelfde forum behoren"

@@ -26,9 +26,9 @@ nl:
         subject: "Nieuw idee: '%{title}' door %{poster}"
         responded_to: "%{poster} heeft een %{type} geplaatst in '%{parent_title}'"
       user_created_question:
-        subject: "Nieuw vraagstuk: '%{title}' door %{poster}"
+        subject: "Nieuwe uitdaging: '%{title}' door %{poster}"
         responded_to: "%{poster} heeft een %{type} geplaatst in forum '%{parent_title}':"
-        view_reply: "Bekijk vraagstuk"
+        view_reply: "Bekijk uitdaging"
     notifications_mailer:
       subject: 'Nieuwe Argu notificaties'
       header: 'Nieuwe notificaties'

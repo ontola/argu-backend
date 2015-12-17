@@ -7,7 +7,7 @@ nl:
     done: 'klaar'
     skip: 'overslaan'
     forums:
-      grid: 'Alle <b class="motion-t">ideeën</b> en <b class="question-t">vraagstukken</b> staan hieronder. Klik op een item om in de discussie te duiken en jouw mening te geven!'
+      grid: 'Alle <b class="motion-t">ideeën</b> en <b class="question-t">uitdagingen</b> staan hieronder. Klik op een item om in de discussie te duiken en jouw mening te geven!'
       filter: 'Hiermee kan je items zoeken met een bepaald thema, of bijvoorbeeld sorteren op score.'
       invite: 'Nodig anderen uit om deel te nemen aan de discussie.'
       switcher: 'Op Argu staan discussies in <b>forums</b>. Er bestaan forums voor diverse gemeenten, bedrijven, organisaties scholen en diverse projecten.'
@@ -36,13 +36,13 @@ nl:
       profile: 'Hier kan je jouw <b>profiel</b> bekijken en bewerken. Ook vind je hier de instellingen van jouw account.'
       about: 'Hier vind je meer informatie over wat Argu is wie wij zijn.'
     question:
-      create: 'Weet jij welk probleem er opgelost moet worden? Plaats een <b class="question-t">vraagstuk</b> en laat anderen hun ideeën delen.'
+      create: 'Weet jij welk probleem er opgelost moet worden? Plaats een <b class="question-t">uitdaging</b> en laat anderen hun ideeën delen.'
       back: 'Klik hier om terug te gaan naar het <b>forum</b>.'
-      body: 'Een <b class="question-t">vraagstuk</b> presenteert een probleem en vraagt hoe dit zou moeten worden opgelost.'
-      motions: 'Hier onder staan de <b class="motion-t">ideeën</b> van andere gebruikers. Weet jij hoe dit vraagstuk kan worden opgelost? Deel jouw idee!'
+      body: 'Een <b class="question-t">uitdaging</b> presenteert een probleem en vraagt hoe dit zou moeten worden opgelost.'
+      motions: 'Hier onder staan de <b class="motion-t">ideeën</b> van andere gebruikers. Weet jij hoe deze uitdaging kan worden opgelost? Deel jouw idee!'
     motion:
       create: 'Heb jij een goed idee? Deel jouw <b class="motion-t">idee</b> op Argu en overtuig anderen.'
-      back: 'Klik hier om terug te gaan naar het bijbehorende forum of vraagstuk.'
+      back: 'Klik hier om terug te gaan naar het bijbehorende forum of uitdaging.'
       body: 'Een <b class="motion-t">idee</b> is een concreet voorstel voor een oplossing van een probleem.'
       vote: 'Hiermee kan je <b>stemmen</b> op het idee. Je kan jouw stem later nog wijzigen.'
       arguments: 'Op Argu structureren we discussie aan de hand van <b class="pro-t">voor</b>- en <b class="con-t">tegen</b>argumenten. Klik op een argument om reacties te bekijken of te plaatsen.'

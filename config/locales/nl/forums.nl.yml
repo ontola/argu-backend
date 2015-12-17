@@ -22,7 +22,7 @@ nl:
         privacy: 'Privacy'
         managers: 'Beheerders'
       terminology: "Terminologie"
-      terminology_helper: "Je kunt de namen van concepten zoals 'idee' of 'vraagstuk' aanpassen. Wij raden dit echter af, aangezien deze functionaliteit nog niet volledig ontwikkeld is."
+      terminology_helper: "Je kunt de namen van concepten zoals 'idee' of 'uitdaging' aanpassen. Wij raden dit echter af, aangezien deze functionaliteit nog niet volledig ontwikkeld is."
       advanced: "Geavanceerd"
       privacy: "Privacy"
       manager: "Beheerder"
@@ -47,7 +47,7 @@ nl:
     statistics:
       title: "Statistiek"
       memberships: "Leden"
-      questions: "Vraagstukken"
+      questions: "Uitdagingen"
       motions: "Ideeën"
       tags: "Meest gebruikte tags"
       no_tags: "Er zijn nog geen tags gebruikt."
@@ -86,7 +86,7 @@ nl:
     invite_others: "Betrek anderen"
     sign_up:
       header: "Word lid van Argu en discussieer mee"
-    new_question_or_motion: "Nieuw vraagstuk of idee"
+    new_question_or_motion: "Nieuw uitdaging of idee"
     about:
       header: "Waarvoor is dit forum?"
       body: "Een Argu forum is een discussie omgeving waar ideeën worden gedeeld en besproken, zodat er betere beslissingen worden genomen. Lees meer over <a href='/about'>onze visie</a> en over <a href='/how_argu_works'>hoe Argu werkt.</a>"
