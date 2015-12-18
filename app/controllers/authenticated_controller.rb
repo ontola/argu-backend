@@ -94,6 +94,17 @@ private
     end
   end
 
+  def pundit_user
+    UserContext.new(current_user,
+                    current_profile,
+                    session,
+                    authenticated_context,
+                    {
+                      platform_open: platform_open?,
+                      within_user_cap: within_user_cap?
+                    })
+  end
+
   def tenant_by_param
     Forum.find_via_shortname params[:forum_id]
   end

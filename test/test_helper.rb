@@ -93,7 +93,7 @@ class ActiveSupport::TestCase
   def create_owner(forum, user = nil)
     user ||= FactoryGirl.create(:user)
     forum.page.owner = user.profile
-    forum.page.save
+    assert_equal true, forum.page.save, "Couldn't create owner"
     user
   end
 

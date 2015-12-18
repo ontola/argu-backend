@@ -25,11 +25,11 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def new?
-    rule is_open?, create?
+    rule is_open?, is_member?, is_manager?, is_owner?, super
   end
 
   def create?
-    rule is_member?, super
+    rule is_member?, is_manager?, is_owner?, super
   end
 
   def update?
@@ -50,6 +50,6 @@ class ArgumentPolicy < RestrictivePolicy
   end
 
   def show?
-    rule forum_policy.show?, super
+    rule is_open?, has_access_token?, is_member?, is_manager?, super
   end
 end

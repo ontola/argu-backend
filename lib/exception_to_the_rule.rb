@@ -3,7 +3,17 @@ module ExceptionToTheRule
 
   def apply_rules(action, level)
     rules = context.context_model.present? ? find_rules_for_level(action, level) : []
-    rules.presence ? rules.map { |r| r.permit ? level : nil }.compact.presence : level
+    if rules.present?
+      levels, messages = rules
+              .sort { |x, y| self.send(y.role) <=> self.send(x.role) }
+              .map { |r| r.permit ? [level, nil] : [nil, r.message] }
+              .transpose
+              .map(&:compact)
+              .map(&:presence)
+      return levels, messages.compact.try(:first)
+    else
+      level
+    end
   end
 
   def filter_trickle(rules, level)

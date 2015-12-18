@@ -25,7 +25,8 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert assigns(:argument)
     assert assigns(:comments)
 
-    assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, 'Trashed comments are visible'
+    assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' },
+               'Trashed comments are visible'
   end
 
   ####################################
@@ -42,7 +43,8 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert assigns(:argument)
     assert assigns(:comments)
 
-    assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, 'Trashed comments are visible'
+    assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' },
+               'Trashed comments are visible'
   end
 
   ####################################

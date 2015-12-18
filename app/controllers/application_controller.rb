@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
+  include Argu::RuledIt, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
@@ -25,11 +25,11 @@ class ApplicationController < ActionController::Base
     redirect_to :back
   }
 
-  rescue_from Pundit::NotAuthorizedError do |exception|
+  rescue_from Argu::RuledIt::NotAuthorizedError do |exception|
     @_not_authorized_caught = true
     Rails.logger.error exception
     action = exception.query.to_s[0..-2]
-    error = t("#{exception.record.try(:class_name)}.pundit.#{action}",
+    error = exception.try(:verdict) || t("#{exception.record.try(:class_name)}.pundit.#{action}",
               action: "#{exception.record.class}##{action}",
               default: t('access_denied'))
     error_hash = {
@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
                json: error_hash.merge({notifications: [error_hash]})
       end
       format.html do
-        if (request.headers['HTTP_X_PJAX'] == 'true')
+        if request.headers['HTTP_X_PJAX'] == 'true'
           response.headers['X-PJAX-REFRESH'] = 'false'
           render status: 403,
                  json: error_hash.merge({notifications: [error_hash]})
