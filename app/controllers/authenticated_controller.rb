@@ -33,7 +33,15 @@ class AuthenticatedController < ApplicationController
     respond_to do |format|
       format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r } }
       format.js { render partial: 'forums/join', layout: false, locals: { forum: exception.forum, r: exception.r } }
-      format.json { render json: exception.body, status: 403 }
+      format.json do
+        error_hash = {
+          type: :error,
+          error_id: 'NOT_A_MEMBER',
+          message: exception.body
+        }.merge(exception.body)
+        render status: 403,
+               json: error_hash.merge({notifications: [error_hash] })
+      end
     end
   end
 
@@ -74,7 +82,7 @@ private
       controller_name
           .classify
           .constantize
-          .find_by id: params[:id]
+          .find_by id: resource_id
     end
   end
 
@@ -86,12 +94,27 @@ private
     end
   end
 
+  def pundit_user
+    UserContext.new(current_user,
+                    current_profile,
+                    session,
+                    authenticated_context,
+                    {
+                      platform_open: platform_open?,
+                      within_user_cap: within_user_cap?
+                    })
+  end
+
   def tenant_by_param
     Forum.find_via_shortname params[:forum_id]
   end
 
   def redirect_url
     [request.path, request.query_string].reject(&:blank?).join('?')
+  end
+
+  def resource_id
+    params[:id] || params["#{controller_name.singularize}_id"]
   end
 
   def _route?

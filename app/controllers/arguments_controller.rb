@@ -5,6 +5,7 @@ class ArgumentsController < AuthenticatedController
   def show
     @forum = @argument.forum
     current_context @argument
+    authorize authenticated_resource!, :show?
     @parent_id = params[:parent_id].to_s
     
     @comments = @argument.filtered_threads(show_trashed?, params[:page])

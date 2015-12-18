@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102090938) do
+ActiveRecord::Schema.define(version: 20151217112046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -485,6 +485,7 @@ ActiveRecord::Schema.define(version: 20151102090938) do
     t.string   "context_type",             null: false
     t.integer  "context_id",               null: false
     t.integer  "trickles",     default: 0, null: false
+    t.string   "message"
   end
 
   add_index "rules", ["context_id", "context_type"], name: "index_rules_on_context_id_and_context_type", using: :btree

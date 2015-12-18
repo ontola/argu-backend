@@ -38,14 +38,11 @@ function init () {
         console.log('Something went wrong during initialisation');
     }
 
-    function refreshCurrentActor () {
-        fetch('/c_a.json', safeCredentials())
-            .then(statusSuccess)
-            .then(json)
-            .then(Actions.actorUpdate)
-            .catch(function () {
-                console.log('failed');
-            });
+    function stopOnJSONError (e, request, error, options) {
+        if (request.getResponseHeader('X-PJAX-REFRESH') === 'false') {
+            e.preventDefault();
+            e.stopPropagation();
+        }
     }
 
     if (typeof $.pjax.defaults ===  'undefined') {
@@ -58,7 +55,8 @@ function init () {
         .on('pjax:beforeApply', shallowUnmountComponents) // pjax:start seems to have come unnecessary
         .on('pjax:beforeReplace', Meta.processContentForMetaTags)
         .on('pjax:end', shallowMountComponents)
-        .on('pjax:end', Meta.removeMetaContent);
+        .on('pjax:end', Meta.removeMetaContent)
+        .on('pjax:error', stopOnJSONError);
 
     if (!("ontouchstart" in document.documentElement)) {
         document.documentElement.className += " no-touch";

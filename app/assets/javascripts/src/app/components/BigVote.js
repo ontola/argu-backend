@@ -14,6 +14,35 @@ function createMembership(response) {
     })).then(statusSuccess);
 }
 
+function showNotifications (response) {
+    if (typeof response !== 'undefined' &&
+        typeof response.notifications !== 'undefined' &&
+        response.notifications.constructor === Array) {
+        for(let i = 0; i < response.notifications.length; i++) {
+            const item = response.notifications[i];
+            if (item.type === 'error') {
+                new Alert(item.message, item.type, true);
+            }
+        }
+    }
+    return Promise.resolve(response);
+}
+
+function handleNotAMember (response) {
+    if (response.status === 403 &&
+        response.type === 'error' &&
+        response.error_id === 'NOT_A_MEMBER') {
+        return response
+            .json()
+            .then(createMembership)
+            .then(() => {
+                return this.vote(side);
+            });
+    } else {
+        return statusSuccess(response);
+    }
+}
+
 /**
  * Component for the POST-ing of a vote.
  * This component is not pure.
@@ -65,27 +94,24 @@ export const BigVoteButtons = React.createClass({
     vote: function (side) {
         fetch(`${this.props.vote_url}/${side}.json`, safeCredentials({
             method: 'POST'
-        })).then((response) => {
-            if (response.status === 403) {
-                return response
-                        .json()
-                        .then(createMembership)
-                        .then(() => {
-                            return this.vote(side);
-                        });
+        })).then(handleNotAMember)
+           .then(json, tryLogin)
+           .then((data) => {
+               if (typeof data !== 'undefined') {
+                   this.setState(data.vote);
+                   this.props.parentSetVote(data.vote);
+               }
+           }).catch((e) => {
+            if (e.status === 403) {
+                return e
+                    .json()
+                    .then(showNotifications)
             } else {
-                return statusSuccess(response);
+                const message = errorMessageForStatus(e.status).fallback || this.getIntlMessage('errors.general');
+                new Alert(message, 'alert', true);
+                throw e;
             }
-        }).then(json, tryLogin)
-          .then((data) => {
-              if (typeof data !== 'undefined') {
-                  this.setState(data.vote);
-                  this.props.parentSetVote(data.vote);
-              }
-          }).catch((e) => {
-              new Alert(this.getIntlMessage('errors.general'), 'alert', true);
-              throw e;
-          });
+           });
     },
 
     render: function () {

@@ -27,8 +27,8 @@ class VotePolicy < RestrictivePolicy
   end
 
   module Roles
-    def is_owner?
-      owner if user && actor == record.voter
+    def is_creator?
+      creator if user && actor == record.voter
     end
   end
   include Roles
@@ -38,11 +38,11 @@ class VotePolicy < RestrictivePolicy
   end
 
   def new?
-    rule is_open?, create?
+    rule is_open?, create?, super
   end
 
   def destroy?
-    rule is_owner?
+    rule is_creator?, super
   end
 
 end

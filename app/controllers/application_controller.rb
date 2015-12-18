@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
+  include Argu::RuledIt, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
@@ -25,20 +25,40 @@ class ApplicationController < ActionController::Base
     redirect_to :back
   }
 
-  rescue_from Pundit::NotAuthorizedError do |exception|
+  rescue_from Argu::RuledIt::NotAuthorizedError do |exception|
     @_not_authorized_caught = true
     Rails.logger.error exception
     action = exception.query.to_s[0..-2]
-    error = t("#{exception.record.try(:class_name)}.pundit.#{action}",
+    error = exception.try(:verdict) || t("#{exception.record.try(:class_name)}.pundit.#{action}",
               action: "#{exception.record.class}##{action}",
               default: t('access_denied'))
+    error_hash = {
+      type: :error,
+      error_id: 'NOT_AUTHORIZED',
+      message: error
+    }
     respond_to do |format|
-      format.js { render status: 403, json: { notifications: [{type: :error, message: error }] } }
-      format.json { render status: 403, json: { notifications: [{type: :error, message: error }] } }
-      format.html {
-        request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
-        redirect_to :back, alert: error
-      }
+      format.js do
+        render status: 403,
+               json: error_hash.merge({notifications: [error_hash]})
+      end
+      format.json do
+        render status: 403,
+               json: error_hash.merge({notifications: [error_hash]})
+      end
+      format.html do
+        if request.headers['HTTP_X_PJAX'] == 'true'
+          response.headers['X-PJAX-REFRESH'] = 'false'
+          render status: 403,
+                 json: error_hash.merge({notifications: [error_hash]})
+        else
+          request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url ||
+                                        request.env['HTTP_REFERER'].blank? ?
+                                          root_path :
+                                          request.env['HTTP_REFERER']
+          redirect_to :back, alert: error
+        end
+      end
     end
   end
 
@@ -101,9 +121,13 @@ class ApplicationController < ActionController::Base
 
   # @return the current context, if a param is given, it will serve as the start of the current context
   def current_context(model=nil)
-    @current_context ||= Context.parse_from_uri(request.url, model) do |components|
-      components.reject! { |c| !policy(c).show? }
-    end
+    @current_context = if @current_context.try :has_parent?
+                         @current_context
+                       else
+                         Context.parse_from_uri(request.url, model) do |components|
+                           components.reject! { |c| !policy(c).show? }
+                         end
+                       end
   end
 
   # @return the {Profile} the {User} is using to do actions
