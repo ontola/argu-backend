@@ -82,7 +82,7 @@ private
       controller_name
           .classify
           .constantize
-          .find_by id: params[:id]
+          .find_by id: resource_id
     end
   end
 
@@ -111,6 +111,10 @@ private
 
   def redirect_url
     [request.path, request.query_string].reject(&:blank?).join('?')
+  end
+
+  def resource_id
+    params[:id] || params["#{controller_name.singularize}_id"]
   end
 
   def _route?

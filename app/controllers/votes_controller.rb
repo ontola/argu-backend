@@ -95,7 +95,11 @@ class VotesController < AuthenticatedController
   private
 
   def authenticated_resource!
-    get_voteable
+    if params[:action] === 'destroy'
+      super
+    else
+      get_voteable
+    end
   end
 
   def check_if_member

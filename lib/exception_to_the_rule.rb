@@ -9,8 +9,7 @@ module ExceptionToTheRule
               .map { |r| r.permit ? [level, nil] : [nil, r.message] }
               .transpose
               .map(&:compact)
-              .map(&:presence)
-      return levels, messages.compact.try(:first)
+      return levels.presence, messages.compact.try(:first)
     else
       level
     end
