@@ -32,8 +32,26 @@ module ReactHelper
     @initial_js_state = initial_js_state.merge(hash)
   end
 
+  def merge_state_for_props(state, props)
+    {
+      initial_js_state: merge_state(state)
+    }.merge(props)
+  end
+
   def override_state(key, value)
     initial_js_state[key] = value
+  end
+
+  def render_params_from_props(props)
+    return props, prerender_options
+  end
+
+  def prerender_options
+    {
+      prerender: {
+        initial_state: initial_js_state
+      }
+    }
   end
 
   private

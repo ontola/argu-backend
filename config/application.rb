@@ -16,7 +16,8 @@ end
 
 module Argu
   class Application < Rails::Application
-    config.autoload_paths += Dir["#{config.root}/lib/"]  # include all subdirectories
+    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += %W(#{config.root}/app/listeners)
 
@@ -52,7 +53,9 @@ module Argu
     config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
 
+    require 'argu/stateful_server_renderer'
     config.react.addons = false
+    config.react.server_renderer = StatefulServerRenderer
     # Enable the asset pipeline
     config.assets.enabled = true
     config.assets.precompile += %w( application.js polyfill.js mail.css )

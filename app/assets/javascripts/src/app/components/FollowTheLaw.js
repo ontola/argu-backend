@@ -19,6 +19,7 @@ import { Update, UpdateContainerWrapper } from './Update';
 import { bindActionCreators } from 'redux'
 import { Provider, connect } from 'react-redux';
 import store from '../stores/store';
+import { liveStore } from '../stores/store';
 import * as TimeLineActions from '../actions/timeline'
 
 function mapStateToProps(state) {
@@ -44,7 +45,7 @@ function mapDispatchToProps(dispatch) {
 export const TimeLineComponentContainerWrapper = React.createClass({
     render: function render() {
 
-        return (<Provider store={store}>
+        return (<Provider store={liveStore()}>
             <TimeLineComponentContainer timelineId={this.props.timelineId} />
         </Provider>);
     }
@@ -159,7 +160,7 @@ export const TimeLineComponent = React.createClass({
                     updates={updates}
                     phases={phases} />
                 <TimeLine phaseCount={phaseCount}
-                          currentPhaseIndex={currentPhaseItem.index} />
+                          currentPhaseIndex={currentPhaseItem && currentPhaseItem.index} />
                 {detailsPane}
             </div>
         );

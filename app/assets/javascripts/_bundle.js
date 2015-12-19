@@ -2197,7 +2197,7 @@ var TimeLineComponentContainerWrapper = exports.TimeLineComponentContainerWrappe
 
         return _react2.default.createElement(
             _reactRedux.Provider,
-            { store: _store2.default },
+            { store: (0, _store.liveStore)() },
             _react2.default.createElement(TimeLineComponentContainer, { timelineId: this.props.timelineId })
         );
     }
@@ -2335,7 +2335,7 @@ var TimeLineComponent = exports.TimeLineComponent = _react2.default.createClass(
                 updates: updates,
                 phases: phases }),
             _react2.default.createElement(TimeLine, { phaseCount: phaseCount,
-                currentPhaseIndex: currentPhaseItem.index }),
+                currentPhaseIndex: currentPhaseItem && currentPhaseItem.index }),
             detailsPane
         );
     }
@@ -4898,6 +4898,7 @@ exports.default = notificationStore;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.liveStore = liveStore;
 
 var _configureStore = require('../stores/configureStore');
 
@@ -4951,13 +4952,20 @@ function reviver(key, value) {
     }
 }
 
-var immutableInitialState = {};
-Object.keys(window.__INITIAL_STATE__ || {}).forEach(function (value) {
-    immutableInitialState[value] = _immutable2.default.fromJS(window.__INITIAL_STATE__[value], reviver);
-});
-var store = (0, _configureStore2.default)(immutableInitialState);
+function generateInitialState() {
+    var immutableInitialState = {};
+    Object.keys(window.__INITIAL_STATE__ || {}).forEach(function (value) {
+        immutableInitialState[value] = _immutable2.default.fromJS(window.__INITIAL_STATE__[value], reviver);
+    });
+    return immutableInitialState;
+}
+
+var store = (0, _configureStore2.default)(generateInitialState());
 
 exports.default = store;
+function liveStore() {
+    return (0, _configureStore2.default)(generateInitialState());
+}
 
 },{"../records/index":37,"../stores/configureStore":45,"immutable":104}],48:[function(require,module,exports){
 

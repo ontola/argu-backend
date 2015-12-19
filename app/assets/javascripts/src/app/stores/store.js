@@ -55,12 +55,20 @@ function reviver (key, value) {
     }
 }
 
-var immutableInitialState = {};
-Object
-    .keys(window.__INITIAL_STATE__ || {})
-    .forEach((value) => {
-        immutableInitialState[value] = Immutable.fromJS(window.__INITIAL_STATE__[value], reviver);
-    });
-const store = configureStore(immutableInitialState);
+function generateInitialState () {
+    var immutableInitialState = {};
+    Object
+        .keys(window.__INITIAL_STATE__ || {})
+        .forEach((value) => {
+            immutableInitialState[value] = Immutable.fromJS(window.__INITIAL_STATE__[value], reviver);
+        });
+    return immutableInitialState;
+}
+
+const store = configureStore(generateInitialState());
 
 export default store;
+
+export function liveStore () {
+    return configureStore(generateInitialState());
+}
