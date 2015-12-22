@@ -126,18 +126,18 @@ export default function init () {
         });
     });
 
-    window.onpopstate = function(event) {
-        if ($('.grid').length > 0) {
-            if (typeof $container.isotope !== 'function') {
-                checkForGrid();
-            }
-            if (event.state) {
-                event.state.filterValue = event.state.filterValue || '';
-            }
-            var state = event.state || {filterValue: ''};
-            filterForTag(state.filterValue);
-        }
-    };
+    //window.onpopstate = function(event) {
+    //    if ($('.grid').length > 0) {
+    //        if (typeof $container.isotope !== 'function') {
+    //            checkForGrid();
+    //        }
+    //        if (event.state) {
+    //            event.state.filterValue = event.state.filterValue || '';
+    //        }
+    //        var state = event.state || {filterValue: ''};
+    //        filterForTag(state.filterValue);
+    //    }
+    //};
     if ($('.tags-bar')) {
         var tag =  '';//location.pathname.split('/')[1];
         if (tag !== null && tag !== "") {

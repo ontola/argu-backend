@@ -5,22 +5,19 @@
  */
 
 import React from 'react';
-import {
-    Record,
-    List
-} from 'immutable';
+import { List, Map } from 'immutable';
+
 import RPhase from '../records/RPhase';
 import RUpdate from '../records/RUpdate';
-import RProfile from '../records/RProfile';
 import RTimeline from '../records/RTimeline';
-import { Update, UpdateContainerWrapper } from './Update';
+import PointContainer from './Point';
+import DetailsPaneContainer from './DetailsPane';
 
 
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 import { Provider, connect } from 'react-redux';
-import store from '../stores/store';
 import { liveStore } from '../stores/store';
-import * as TimeLineActions from '../actions/timeline'
+import * as TimeLineActions from '../actions/timeline';
 
 function mapStateToProps(state) {
     return {
@@ -89,7 +86,7 @@ window.TimeLineComponentContainer = TimeLineComponentContainer;
 export const TimeLineComponent = React.createClass({
     propTypes: {
         phases: React.PropTypes.instanceOf(List),
-        points: React.PropTypes.instanceOf(List),
+        points: React.PropTypes.instanceOf(Map),
         timeline: React.PropTypes.instanceOf(RTimeline),
         updates: React.PropTypes.instanceOf(List)
     },
@@ -99,34 +96,6 @@ export const TimeLineComponent = React.createClass({
         flexDirection: 'column'
     },
 
-    activePoint: function () {
-        const { timeline, points } = this.props;
-        const activePointId = timeline.get('activePointId');
-
-        if (typeof activePointId === 'undefined') {
-            return undefined;
-        }
-
-        return points.find((elem) => {
-                return elem.id === activePointId
-            });
-    },
-
-    activeItem: function activeItem () {
-        const activePoint = this.activePoint();
-        if (typeof activePoint === 'undefined') {
-            return undefined;
-        }
-        const collections = {
-            phase: this.props.phases,
-            update: this.props.updates
-        };
-
-        return collections[activePoint.itemType].find(elem => {
-            return elem.id === activePoint.itemId
-        });
-    },
-
     currentPhaseItem: function () {
         const { currentPhase } = this.props.timeline;
         return this.props.phases.find(phase => {
@@ -134,20 +103,9 @@ export const TimeLineComponent = React.createClass({
         });
     },
 
-    detailsPane: function detailsPane () {
-        const activePoint = this.activePoint();
-
-        if (typeof activePoint !== 'undefined') {
-            return <DetailsPane actions={this.props.actions}
-                                item={this.activeItem()}
-                                point={activePoint} />;
-        }
-    },
-
     render: function render() {
         const { phases, timeline, actions, updates, points } = this.props;
-        const phaseCount = timeline.get('phaseCount');
-        const detailsPane = this.detailsPane();
+        const phaseCount = 0 ;//timeline.get('phaseCount');
         const currentPhaseItem = this.currentPhaseItem();
 
         return (
@@ -161,7 +119,7 @@ export const TimeLineComponent = React.createClass({
                     phases={phases} />
                 <TimeLine phaseCount={phaseCount}
                           currentPhaseIndex={currentPhaseItem && currentPhaseItem.index} />
-                {detailsPane}
+                <DetailsPaneContainer />
             </div>
         );
     }
@@ -185,15 +143,14 @@ export const TimeLinePhases = React.createClass({
     },
 
     pointByItem: function pointByItem(itemType, itemId) {
-        return this.props.points.find(point => {
+        return this.props.points.get('collection').find(point => {
                 return point.itemType === itemType &&
                     point.itemId === itemId;
             });
     },
 
     pointsForPhase: function pointsForPhase(phaseId) {
-        const { updates, timeline, actions } = this.props;
-        const { activePointId } = timeline;
+        const { updates, timeline } = this.props;
 
         if (typeof updates === 'undefined') {
             return undefined;
@@ -205,10 +162,8 @@ export const TimeLinePhases = React.createClass({
             })
             .map((update) => {
                 const point = this.pointByItem('update', update.id);
-                return <Point key={point.id}
-                              point={point}
-                              active={this.pointActive(point, activePointId)}
-                              actions={actions} />;
+                return <PointContainer key={point.id}
+                                       pointId={point.id} />;
             });
     },
 
@@ -292,59 +247,6 @@ export const TimeLine = React.createClass({
 window.TimeLinePhases = TimeLinePhases;
 
 /**
- * That thing beneath a {@link TimeLine} when you click on a {@link Point}.
- * @class DetailsPane
- * @author Fletcher91 <thom@argu.co>
- */
-export const DetailsPane = React.createClass({
-    propTypes: {
-        actions: React.PropTypes.object,
-        item: React.PropTypes.object,
-        point: React.PropTypes.object
-    },
-
-    style: {
-        display: 'flex',
-        alignItems: 'center'
-    },
-
-    nextItem: function () {
-        let { timelineId } = this.props.point;
-        this.props.actions.nextPoint(timelineId);
-    },
-
-    previousItem: function () {
-        let { timelineId } = this.props.point;
-        this.props.actions.previousPoint(timelineId);
-    },
-
-    render: function render() {
-        const { item, point } = this.props;
-
-        if (typeof item === 'undefined') {
-            return <div></div>;
-        }
-
-        const UpdateItem = point.itemType === 'update' ?
-            <UpdateContainerWrapper updateId={item.get('id')}
-                                    {...item} /> :
-            <Update update={new RUpdate(item)}
-                    {...item} />;
-
-        return (<div className="details-pane" style={this.style}>
-            <span className="details-pane-previous"
-                  style={{fontSize: '2em'}}
-                  onClick={this.previousItem}>&lt;</span>
-            {UpdateItem}
-            <span className="details-pane-next"
-                  style={{fontSize: '2em'}}
-                  onClick={this.nextItem}>&gt;</span>
-        </div>);
-    }
-});
-window.DetailsPane = DetailsPane;
-
-/**
  * Represents a Phase within a {@link TimeLine}
  * Also renders all its children updates as {@link Point}s.
  * @class Phase
@@ -400,40 +302,6 @@ export const Phase = React.createClass({
 });
 window.Phase = Phase;
 
-/**
- * Represents a Point on a {@link TimeLine}.
- * @class Point
- * @author Fletcher91 <thom@argu.co>
- */
-export const Point = React.createClass({
-    propTypes: {
-        point: React.PropTypes.object,
-        actions: React.PropTypes.object
-    },
-
-    setActive: function setActive() {
-        const { active } = this.props;
-        let { id, timelineId } = this.props.point;
-        if (active) {
-            id = 0;
-        }
-        this.props.actions.setActivePoint(timelineId, id);
-    },
-
-    render: function render() {
-        const { active } = this.props;
-
-        const style = {
-            flexGrow: 1,
-            border: active ?  '1px solid yellow' : undefined
-        };
-
-        return (<span className={`point ${this.props.active}`}
-                      onClick={this.setActive}
-                      style={style}>U</span>);
-    }
-});
-window.Point = Point;
 
 /**
  * To display a Phase point on a {@link TimeLine}
@@ -446,13 +314,13 @@ export const PhasePoint = React.createClass({
         point: React.PropTypes.object
     },
 
-    setActive: function makeActive() {
+    setActive: function setActive () {
         const { active } = this.props;
         let { id, timelineId } = this.props.point;
         if (active) {
             id = 0;
         }
-        this.props.actions.setActivePoint(timelineId, id);
+        this.props.actions.setActivePoint(id);
     },
 
     render: function render() {
@@ -464,9 +332,10 @@ export const PhasePoint = React.createClass({
         };
 
         return (
-            <span className={`point phase-point ${current} ${active}`}
-                  onClick={this.setActive}
-                  style={style}>P</span>
+            <a href=""
+               className={`point phase-point ${current} ${active}`}
+               onClick={this.setActive}
+               style={style}>P</a>
         );
     }
 });

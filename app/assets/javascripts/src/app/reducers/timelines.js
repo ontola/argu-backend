@@ -5,14 +5,16 @@
 
 import { Map, OrderedSet } from 'immutable';
 import {
-    SET_ACTIVE_POINT,
     NEXT_POINT,
-    PREVIOUS_POINT
+    PREVIOUS_POINT,
+    SET_ACTIVE_TIMELINE
 } from '../constants/ActionTypes';
 
 const initialState = new Map({
+    activeTimelineId: undefined,
+    activeTimeline: undefined,
     collection: new Map({}),
-    order: new OrderedSet([])
+    order: new OrderedSet()
 });
 
 function replaceTimeline(state, timeline) {
@@ -78,14 +80,17 @@ function updateTimelineInState(state, action, newMembers) {
 
 export default function timelines(state = initialState, action) {
     const currentTimeline = getTimeline(state, action);
-    console.log('timeline action fired', action);
     switch (action.type) {
-        case SET_ACTIVE_POINT:
-            return updateTimelineInState(
-                state,
-                action,
-                {activePointId: action.activePointId}
-            );
+        case SET_ACTIVE_TIMELINE:
+            return state.withMutations((mutState) => {
+                mutState.set('activeTimelineId', action.timelineId);
+                mutState.set('activeTimeline',
+                    state
+                        .get('collection')
+                        .find(t => {
+                            return t.id === action.timelineId;
+                    }))
+            });
         case NEXT_POINT:
             return updateTimelineInState(
                 state,

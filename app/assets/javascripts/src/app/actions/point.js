@@ -5,15 +5,16 @@
 
 import * as Types from '../constants/ActionTypes';
 
+
 /**
- * Sets the active {@link Timeline}
+ * Sets the active {@link Point}
  * @action TimeLine/SET_ACTIVE_POINT
  */
-export function setActiveTimeline(timelineId) {
+export function setActivePoint(pointId) {
     return {
-        type: Types.SET_ACTIVE_TIMELINE,
-        timelineId: timelineId
-    }
+        type: Types.SET_ACTIVE_POINT,
+        pointId: pointId
+    };
 }
 
 /**
@@ -38,15 +39,4 @@ export function previousPoint(timelineId) {
         type: Types.PREVIOUS_POINT,
         timelineId: timelineId
     };
-}
-
-/**
- * Sets the active {@link Point} for the TimeLine
- * @action TimeLine/SET_ACTIVE_POINT
- */
-export function setCurrentPhase(phaseId) {
-    return {
-        type: Types.SET_CURRENT_PHASE,
-        phaseId: phaseId
-    }
 }

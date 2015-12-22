@@ -54,70 +54,80 @@ module MotionsHelper
   end
 
   def motion_timeline_props(motion)
+    points = [
+      {
+        type: 'point',
+        id: 1,
+        timelineId: 1,
+        itemType: 'phase',
+        itemId: 1
+      },
+      {
+        type: 'point',
+        id: 2,
+        timelineId: 1,
+        itemType: 'phase',
+        itemId: 2
+      },
+      {
+        type: 'point',
+        id: 3,
+        timelineId: 1,
+        itemType: 'phase',
+        itemId: 3
+      },
+      {
+        type: 'point',
+        id: 4,
+        timelineId: 1,
+        itemType: 'update',
+        itemId: 1
+      },
+      {
+        type: 'point',
+        id: 5,
+        timelineId: 1,
+        itemType: 'update',
+        itemId: 2
+      },
+      {
+        type: 'point',
+        id: 6,
+        timelineId: 1,
+        itemType: 'update',
+        itemId: 3
+      },
+      {
+        type: 'point',
+        id: 7,
+        timelineId: 1,
+        itemType: 'phase',
+        itemId: 4
+      }
+    ]
+
+    active_point_id = params.fetch(:timeline, {}).fetch(:activePointId, nil).try(:to_i)
+    active_point = points[points.find_index { |p| p[:id] === active_point_id }] if active_point_id.present?
+
     merge_state({
       timelines: {
+        activeTimelineId: 1,
         collection: {
           '1' => {
             type: 'timeline',
             id: 1,
             currentPhase: 2,
             phaseCount: 4,
-            activePointId: nil,
+            activePointId: active_point_id,
             points: [1, 2, 3, 4, 5, 6]
           }
         }
       },
-      points: [
-        {
-          type: 'point',
-          id: 1,
-          timelineId: 1,
-          itemType: 'phase',
-          itemId: 1
-        },
-        {
-          type: 'point',
-          id: 2,
-          timelineId: 1,
-          itemType: 'phase',
-          itemId: 2
-        },
-        {
-          type: 'point',
-          id: 3,
-          timelineId: 1,
-          itemType: 'phase',
-          itemId: 3
-        },
-        {
-          type: 'point',
-          id: 4,
-          timelineId: 1,
-          itemType: 'update',
-          itemId: 1
-        },
-        {
-          type: 'point',
-          id: 5,
-          timelineId: 1,
-          itemType: 'update',
-          itemId: 2
-        },
-        {
-          type: 'point',
-          id: 6,
-          timelineId: 1,
-          itemType: 'update',
-          itemId: 3
-        },
-        {
-          type: 'point',
-          id: 7,
-          timelineId: 1,
-          itemType: 'phase',
-          itemId: 4
-        }
-      ],
+      points: {
+        activePointId: active_point_id,
+        activePoint: active_point,
+        collection: points
+      },
       phases: [
         {
           type: 'phase',

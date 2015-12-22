@@ -8,6 +8,7 @@ import {
     RTimeline,
     RUpdate
 } from '../records/index';
+import popstate from '../actions/popstate';
 
 const types = {
     dateline: RDateline,
@@ -55,17 +56,26 @@ function reviver (key, value) {
     }
 }
 
-function generateInitialState () {
+function generateInitialState (state = window.__INITIAL_STATE__) {
     var immutableInitialState = {};
     Object
-        .keys(window.__INITIAL_STATE__ || {})
+        .keys(state || {})
         .forEach((value) => {
-            immutableInitialState[value] = Immutable.fromJS(window.__INITIAL_STATE__[value], reviver);
+            immutableInitialState[value] = Immutable.fromJS(state[value], reviver);
         });
     return immutableInitialState;
 }
 
 const store = configureStore(generateInitialState());
+
+if (window) {
+    window.onpopstate = function(event) {
+        if (typeof event.state.timelines !== undefined) {
+            debugger;
+            store.dispatch(popstate(generateInitialState(event.state)));
+        }
+    };
+}
 
 export default store;
 

@@ -16,10 +16,12 @@
     "react-intl": "=1.2.0",
     "react-onclickoutside": "^4.1.0",
     "react-redux": "^4.0.0",
+    "react-router": "^1.0.2",
     "react-scroll-lock": "^0.1.1",
     "react-select": "^0.9.1",
     "redux": "^3.0.4",
     "reflux": "^0.2.12",
+    "url": "^0.11.0",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
@@ -62,6 +64,7 @@
   },
   "scripts": {
     "build": "gulp build && gulp build-components",
-    "doc": "jsdoc -c app/assets/javascripts/jsdoc.json -r"
+    "doc": "jsdoc -c app/assets/javascripts/jsdoc.json -r",
+    "lint": "eslint ./app/assets/javascripts"
   }
 }

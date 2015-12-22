@@ -11,7 +11,7 @@ import Profile from './Profile';
 
 
 import { Provider, connect } from 'react-redux';
-import store from '../stores/store';
+import { liveStore } from '../stores/store';
 
 function mapStateToProps(state) {
     return {
@@ -22,7 +22,7 @@ function mapStateToProps(state) {
 
 export const UpdateContainerWrapper = React.createClass({
     render: function render() {
-        return (<Provider store={store}>
+        return (<Provider store={liveStore()}>
             <UpdateContainer updateId={this.props.updateId} />
         </Provider>);
     }
