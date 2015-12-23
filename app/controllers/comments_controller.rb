@@ -119,12 +119,16 @@ private
   end
 
   def authenticated_resource!
-    resource, id = request.path.split('/')[1,2]
-    # noinspection RubyCaseWithoutElseBlockInspection
-    resource = case resource
-      when 'a' then Argument
+    if params[:action] == 'show'
+      Comment.find params[:id]
+    else
+      resource, id = request.path.split('/')[1,2]
+      # noinspection RubyCaseWithoutElseBlockInspection
+      resource = case resource
+        when 'a' then Argument
+      end
+      resource.find(id)
     end
-    resource.find(id)
   end
 
   def comment_body
