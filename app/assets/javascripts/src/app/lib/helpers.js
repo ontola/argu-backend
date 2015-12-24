@@ -170,8 +170,7 @@ export function tryLogin (response) {
     if (response.status === 401) {
         return Promise.resolve(window.alert(errorMessageForStatus(response.status).fallback));
     } else {
-        const message = errorMessageForStatus(response.status).fallback || 'unknown status code';
-        return Promise.reject(new Error(message));
+        return Promise.reject(response);
     }
 }
 

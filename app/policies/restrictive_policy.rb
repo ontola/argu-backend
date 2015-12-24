@@ -80,7 +80,7 @@ class RestrictivePolicy
   end
 
   def assert!(assertion, query = nil)
-    raise Pundit::NotAuthorizedError.new(record: record, query: query) unless assertion
+    raise Argu::RuledIt::NotAuthorizedError.new(record: record, query: query) unless assertion
   end
 
   def change_owner?
@@ -96,7 +96,7 @@ class RestrictivePolicy
   end
 
   def edit?
-    update?
+    staff?
   end
 
   def follow?
@@ -112,7 +112,7 @@ class RestrictivePolicy
   end
 
   def new?
-    create?
+    staff?
   end
 
   def new_record?

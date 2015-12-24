@@ -222,6 +222,30 @@ function createMembership(response) {
     })).then(_helpers.statusSuccess);
 }
 
+function showNotifications(response) {
+    if (typeof response !== 'undefined' && typeof response.notifications !== 'undefined' && response.notifications.constructor === Array) {
+        for (var i = 0; i < response.notifications.length; i++) {
+            var item = response.notifications[i];
+            if (item.type === 'error') {
+                new _Alert2.default(item.message, item.type, true);
+            }
+        }
+    }
+    return Promise.resolve(response);
+}
+
+function handleNotAMember(response) {
+    var _this = this;
+
+    if (response.status === 403 && response.type === 'error' && response.error_id === 'NOT_A_MEMBER') {
+        return response.json().then(createMembership).then(function () {
+            return _this.vote(side);
+        });
+    } else {
+        return (0, _helpers.statusSuccess)(response);
+    }
+}
+
 /**
  * Component for the POST-ing of a vote.
  * This component is not pure.
@@ -273,26 +297,23 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
     },
 
     vote: function vote(side) {
-        var _this = this;
+        var _this2 = this;
 
         fetch(this.props.vote_url + '/' + side + '.json', (0, _helpers.safeCredentials)({
             method: 'POST'
-        })).then(function (response) {
-            if (response.status === 403) {
-                return response.json().then(createMembership).then(function () {
-                    return _this.vote(side);
-                });
-            } else {
-                return (0, _helpers.statusSuccess)(response);
-            }
-        }).then(_helpers.json, _helpers.tryLogin).then(function (data) {
+        })).then(handleNotAMember).then(_helpers.json, _helpers.tryLogin).then(function (data) {
             if (typeof data !== 'undefined') {
-                _this.setState(data.vote);
-                _this.props.parentSetVote(data.vote);
+                _this2.setState(data.vote);
+                _this2.props.parentSetVote(data.vote);
             }
         }).catch(function (e) {
-            new _Alert2.default(_this.getIntlMessage('errors.general'), 'alert', true);
-            throw e;
+            if (e.status === 403) {
+                return e.json().then(showNotifications);
+            } else {
+                var message = errorMessageForStatus(e.status).fallback || _this2.getIntlMessage('errors.general');
+                new _Alert2.default(message, 'alert', true);
+                throw e;
+            }
         });
     },
 
@@ -2263,8 +2284,7 @@ function tryLogin(response) {
     if (response.status === 401) {
         return Promise.resolve(window.alert(errorMessageForStatus(response.status).fallback));
     } else {
-        var message = errorMessageForStatus(response.status).fallback || 'unknown status code';
-        return Promise.reject(new Error(message));
+        return Promise.reject(response);
     }
 }
 

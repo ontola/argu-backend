@@ -23,7 +23,11 @@ class VotesController < AuthenticatedController
 
   def new
     @model = get_voteable
+    get_context
     authorize @model, :show?
+    authorize Vote.new(voteable: @model,
+                       voter: current_profile,
+                       forum: @model.forum)
 
     render locals: {
                resource: @model,
@@ -34,23 +38,25 @@ class VotesController < AuthenticatedController
   # POST /model/:model_id/v/:for
   def create
     @model = get_voteable
-    get_context
-
-    authorize @model.forum, :show?
-
-    @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile)
+    @vote = Vote.find_or_initialize_by(voteable: @model,
+                                       voter: current_profile)
     @vote.forum ||= @model.forum
+
+    get_context
+    authorize @model.forum, :show?
+    authorize @vote, :create?
 
     respond_to do |format|
       if @vote.for == for_param
         format.json { render status: 304 }
-        #format.js { head :not_modified }
+        format.js { head :not_modified }
         format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.not_modified') }
       elsif @vote.update(for: for_param)
         create_activity_with_cleanup @vote, action: :create, parameters: {for: @vote.for}, recipient: @vote.voteable, owner: current_profile, forum_id: @vote.forum.id
         @model.reload
         save_vote_to_stats @vote
         format.json { render location: @vote }
+        format.js
         format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.success') }
       else
         format.json { render json: @vote.errors, status: 400 }
@@ -90,7 +96,11 @@ class VotesController < AuthenticatedController
   private
 
   def authenticated_resource!
-    get_voteable
+    if params[:action] === 'destroy'
+      super
+    else
+      get_voteable
+    end
   end
 
   def check_if_member
@@ -130,7 +140,7 @@ class VotesController < AuthenticatedController
   end
 
   def get_context
-    @forum = @model.forum
+    @forum = (@vote || @model).forum
   end
 
   def query_payload(opts = {})

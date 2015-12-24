@@ -19,6 +19,10 @@ class CommentsControllerTest < ActionController::TestCase
   end
   let(:comment) { FactoryGirl.create(:comment, profile: member.profile, commentable: argument) }
 
+  test 'member should get show' do
+    flunk 'TODO: add test before this fix for all the roles.'
+  end
+
   test 'member should get new' do
     sign_in member
 

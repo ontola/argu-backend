@@ -48,7 +48,7 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def new?
-    rule is_open?, is_member?, create?
+    rule is_open?, is_member?, is_member?, is_manager?, super
   end
 
   def set_expire_as?
