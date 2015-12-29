@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: reducers/points.js</title>
+    <title>JSDoc: Source: reducers/timelines.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: reducers/points.js</h1>
+    <h1 class="page-title">Source: reducers/timelines.js</h1>
 
     
 
@@ -26,41 +26,117 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>import { Map, List } from 'immutable';
-import RPoint from '../records/RPoint';
-import { SET_ACTIVE_POINT, POPSTATE } from '../constants/ActionTypes';
+            <pre class="prettyprint source linenums"><code>import { Map, OrderedSet } from 'immutable';
+import {
+    NEXT_POINT,
+    PREVIOUS_POINT,
+    SET_ACTIVE_TIMELINE
+} from '../constants/ActionTypes';
 
 /**
- * Points state tree structure definition
- * @param {number} activePointId The id of the currently active point.
- * @param {RPoint} activePoint A reference to the object instance in the collection with activePointId
- * @param {!List} collection All the points currently in the system.
+ * Timelines state tree structure definition
+ * @param {number} activeTimelineId The id of the currently active {@link RTimeline}.
+ * @param {RTimeline} activeTimeline A reference to the object instance in the collection with activeTimelineId
+ * @param {Map} collection All the points currently in the system.
+ * @param {OrderedSet.&lt;number>} order The point ids in order.
  */
 const initialState = new Map({
-    activePointId: null,
-    activePoint: null,
-    collection: new List()
+    activeTimelineId: undefined,
+    activeTimeline: undefined,
+    collection: new Map({}),
+    order: new OrderedSet()
 });
 
+function replaceTimeline(state, timeline) {
+    return state.setIn(
+        ['collection', timeline.id.toString()],
+        timeline
+    );
+}
+
 /**
- * Points reducer
+ * @private
+ * Creates a new timeline with {@param newMembers} values replaced.
+ * @param timeline
+ * @param newMembers
+ */
+function updateTimeline(timeline, newMembers) {
+    return timeline.merge(
+        timeline,
+        newMembers
+    );
+}
+
+/**
+ * @private
+ * Returns a timeline from the state for an action or an id.
+ * @param idOrAction The action object or the timeline id.
+ * @returns {RTimeline}
+ */
+function getTimeline(state, idOrAction) {
+    return state.getIn([
+        'collection',
+        tId(idOrAction).toString()
+    ]);
+}
+
+/**
+ * @private
+ * Returns the id of the timeline an action is meant for.
+ * Also returns the instance if it's not an object for shorthand usage.
+ * @param action The action object or the id
+ * @returns {number} The id of the timeline.
+ */
+function tId(idOrAction) {
+    return parseInt(
+        typeof idOrAction === 'object'
+            ? (idOrAction.timelineId || 0)
+            : idOrAction);
+}
+
+/**
+ * Composite function to update attributes on an action defined timeline.
+ * @param newMembers {object} A key value object for the new member values.
+ */
+function updateTimelineInState(state, action, newMembers) {
+    const currentTimeline = getTimeline(state, action);
+    return replaceTimeline(
+        state,
+        updateTimeline(
+            currentTimeline,
+            newMembers
+        ));
+}
+
+/**
+ * Timelines reducer
  * @author Fletcher91 &lt;thom@argu.co>
  */
-export default function points(state = initialState, action) {
+export default function timelines(state = initialState, action) {
+    const currentTimeline = getTimeline(state, action);
     switch (action.type) {
-        case SET_ACTIVE_POINT:
+        case SET_ACTIVE_TIMELINE:
             return state.withMutations((mutState) => {
-                mutState.set('activePointId', action.pointId);
-                mutState.set('activePoint',
+                mutState.set('activeTimelineId', action.timelineId);
+                mutState.set('activeTimeline',
                     state
                         .get('collection')
-                        .find(p => {
-                            return p.id === action.pointId;
-                        }))
+                        .find(t => {
+                            return t.id === action.timelineId;
+                    }))
             });
-        case POPSTATE:
-            debugger;
-            return action.stateTree.points;
+        case NEXT_POINT:
+            return updateTimelineInState(
+                state,
+                action,
+                {activePointId: currentTimeline.activePointId + 1}
+            );
+        case PREVIOUS_POINT:
+            return updateTimelineInState(
+                state,
+                action,
+                {activePointId: currentTimeline.activePointId - 1}
+            );
         default:
             return state;
     }

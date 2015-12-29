@@ -1,8 +1,3 @@
-/**
- * Timelines reducer
- * @author Fletcher91 <thom@argu.co>
- */
-
 import { Map, OrderedSet } from 'immutable';
 import {
     NEXT_POINT,
@@ -10,6 +5,13 @@ import {
     SET_ACTIVE_TIMELINE
 } from '../constants/ActionTypes';
 
+/**
+ * Timelines state tree structure definition
+ * @param {number} activeTimelineId The id of the currently active {@link RTimeline}.
+ * @param {RTimeline} activeTimeline A reference to the object instance in the collection with activeTimelineId
+ * @param {Map} collection All the points currently in the system.
+ * @param {OrderedSet.<number>} order The point ids in order.
+ */
 const initialState = new Map({
     activeTimelineId: undefined,
     activeTimeline: undefined,
@@ -78,6 +80,10 @@ function updateTimelineInState(state, action, newMembers) {
         ));
 }
 
+/**
+ * Timelines reducer
+ * @author Fletcher91 <thom@argu.co>
+ */
 export default function timelines(state = initialState, action) {
     const currentTimeline = getTimeline(state, action);
     switch (action.type) {

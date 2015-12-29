@@ -1,17 +1,23 @@
 import { Map, List } from 'immutable';
 import RPoint from '../records/RPoint';
 import { SET_ACTIVE_POINT, POPSTATE } from '../constants/ActionTypes';
+
+/**
+ * Points state tree structure definition
+ * @param {number} activePointId The id of the currently active point.
+ * @param {RPoint} activePoint A reference to the object instance in the collection with activePointId
+ * @param {!List} collection All the points currently in the system.
+ */
+const initialState = new Map({
+    activePointId: null,
+    activePoint: null,
+    collection: new List()
+});
+
 /**
  * Points reducer
  * @author Fletcher91 <thom@argu.co>
  */
-
-const initialState = new Map({
-    activePointId: -1,
-    activePoint: new RPoint(),
-    collection: new List()
-});
-
 export default function points(state = initialState, action) {
     switch (action.type) {
         case SET_ACTIVE_POINT:

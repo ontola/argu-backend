@@ -5,15 +5,23 @@ import RImage from './RImage';
  * Profile record class.
  * @class RProfile
  * @author Fletcher91 <thom@argu.co>
+ * @param {number} id
+ * @param {string} shortname
+ * @param {string} url
+ * @param {string} displayName
+ * @param {RImage} profilePhoto
+ * @param {RImage} coverPhoto
+ * @param {string} about
+ * @param {string} actorType
  */
 const RProfile = Record({
-    id: 0,
-    shortname: '',
-    url: '',
-    displayName: '',
+    id: null,
+    shortname: null,
+    url: null,
+    displayName: null,
     profilePhoto: new RImage(),
     coverPhoto: new RImage(),
-    about: '',
+    about: null,
     actorType: 'User'
     //memberships: new RMembership() TODO: Implement RMembership
 });

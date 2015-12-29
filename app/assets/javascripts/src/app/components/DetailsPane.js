@@ -12,16 +12,23 @@ import * as actions from '../actions/point';
  * @author Fletcher91 <thom@argu.co>
  */
 const DetailsPaneContainerComponent = React.createClass({
+
+    /**
+     * Searches the current active point from the components props.
+     * @returns {RPoint}
+     */
     activePoint: function activePoint () {
         const { points } = this.props;
-        return typeof points === 'undefined'
-            ? undefined
-            : points.get('activePoint');
+        return points && points.get('activePoint');
     },
 
+    /**
+     * Searches the currently active object from the active RPoint.
+     * @returns {RUpdate|RPhase}
+     */
     activeItem: function activeItem () {
         const activePoint = this.activePoint();
-        if (typeof activePoint === 'undefined') {
+        if (activePoint === null) {
             return undefined;
         }
         const collections = {
@@ -36,7 +43,7 @@ const DetailsPaneContainerComponent = React.createClass({
 
     render: function render () {
         const activePoint = this.activePoint();
-        console.log('DetailsPaneContainer', activePoint, this.activeItem());
+
 
         return (<DetailsPane item={this.activeItem()}
                              point={activePoint} />);
