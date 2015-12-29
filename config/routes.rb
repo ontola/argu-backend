@@ -14,8 +14,8 @@
 # l:
 # m: motions
 # n: notifications
-# o: [RESERVED for opinions]
-# p: pages
+# o: pages (organisations)
+# p: projects
 # q: questions
 # r:
 # s: [RESERVED for search]
@@ -124,7 +124,7 @@ Argu::Application.routes.draw do
   end
   resources :group_memberships, only: :destroy
 
-  resources :pages, path: 'p', only: [:new, :create, :show, :update, :delete, :destroy] do
+  resources :pages, path: 'o', only: [:new, :create, :show, :update, :delete, :destroy] do
     get :delete, on: :member
     get :transfer, on: :member
     put :transfer, on: :member, action: :transfer!
@@ -132,6 +132,8 @@ Argu::Application.routes.draw do
     get :edit, to: 'profiles#edit', on: :member
     resources :managers, only: [:new, :create, :destroy], controller: 'pages/managers'
   end
+
+  resources :projects, path: 'p'
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]

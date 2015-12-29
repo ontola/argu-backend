@@ -1708,15 +1708,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @author Fletcher91 <thom@argu.co>
  */
 var DetailsPaneContainerComponent = _react2.default.createClass({
+
+    /**
+     * Searches the current active point from the components props.
+     * @returns {RPoint}
+     */
     activePoint: function activePoint() {
         var points = this.props.points;
 
-        return typeof points === 'undefined' ? undefined : points.get('activePoint');
+        return points && points.get('activePoint');
     },
 
+    /**
+     * Searches the currently active object from the active RPoint.
+     * @returns {RUpdate|RPhase}
+     */
     activeItem: function activeItem() {
         var activePoint = this.activePoint();
-        if (typeof activePoint === 'undefined') {
+        if (activePoint === null) {
             return undefined;
         }
         var collections = {
@@ -1731,7 +1740,6 @@ var DetailsPaneContainerComponent = _react2.default.createClass({
 
     render: function render() {
         var activePoint = this.activePoint();
-        console.log('DetailsPaneContainer', activePoint, this.activeItem());
 
         return _react2.default.createElement(DetailsPane, { item: this.activeItem(),
             point: activePoint });
@@ -4494,7 +4502,7 @@ exports.default = RImage;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _immutable = require('immutable');
@@ -4509,19 +4517,30 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Phase record class.
  * @class RPhase
  * @author Fletcher91 <thom@argu.co>
+ * @param {number} id
+ * @param {number} timelineId
+ * @param {number} index
+ * @param {string} title
+ * @param {string} content
+ * @param {Date} startDate
+ * @param {Date} endDate
+ * @param {Date} createdAt
+ * @param {Date} updatedAt
+ * @param {RProfile} creator
+ * @param {RProfile} publisher
  */
 var RPhase = (0, _immutable.Record)({
-    id: 0,
-    timelineId: 0,
-    index: 0,
-    title: 'PTitlte',
-    content: '',
-    startDate: new Date(0),
-    endDate: new Date(0),
-    createdAt: new Date(0),
-    updatedAt: new Date(0),
-    creator: new _RProfile2.default(),
-    publisher: new _RProfile2.default()
+  id: null,
+  timelineId: null,
+  index: null,
+  title: '',
+  content: '',
+  startDate: new Date(0),
+  endDate: new Date(0),
+  createdAt: new Date(0),
+  updatedAt: new Date(0),
+  creator: new _RProfile2.default(),
+  publisher: new _RProfile2.default()
 });
 
 exports.default = RPhase;
@@ -4539,12 +4558,16 @@ var _immutable = require('immutable');
  * Point record class.
  * @class RPoint
  * @author Fletcher91 <thom@argu.co>
+ * @param {number} id
+ * @param {number} timelineId
+ * @param {string} itemType
+ * @param {number} itemId
  */
 var RPoint = (0, _immutable.Record)({
-  id: 0,
-  timelineId: 0,
-  itemType: '',
-  itemId: 0
+  id: null,
+  timelineId: null,
+  itemType: null,
+  itemId: null
 });
 
 exports.default = RPoint;
@@ -4553,7 +4576,7 @@ exports.default = RPoint;
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 
 var _immutable = require('immutable');
@@ -4568,17 +4591,25 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * Profile record class.
  * @class RProfile
  * @author Fletcher91 <thom@argu.co>
+ * @param {number} id
+ * @param {string} shortname
+ * @param {string} url
+ * @param {string} displayName
+ * @param {RImage} profilePhoto
+ * @param {RImage} coverPhoto
+ * @param {string} about
+ * @param {string} actorType
  */
 var RProfile = (0, _immutable.Record)({
-    id: 0,
-    shortname: '',
-    url: '',
-    displayName: '',
-    profilePhoto: new _RImage2.default(),
-    coverPhoto: new _RImage2.default(),
-    about: '',
-    actorType: 'User'
-    //memberships: new RMembership() TODO: Implement RMembership
+  id: null,
+  shortname: null,
+  url: null,
+  displayName: null,
+  profilePhoto: new _RImage2.default(),
+  coverPhoto: new _RImage2.default(),
+  about: null,
+  actorType: 'User'
+  //memberships: new RMembership() TODO: Implement RMembership
 });
 
 exports.default = RProfile;
@@ -4604,12 +4635,20 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * Timeline record class.
  * @class RTimeline
  * @author Fletcher91 <thom@argu.co>
+ * @param {number} id
+ * @param {string} parentUrl
+ * @param {number} currentPhase
+ * @param {number} activePointId
+ * @param {!number} phaseCount
+ * @param {!List} points
+ * @param {!OrderedMap} phases
+ * @param {!List} updates
  */
 var PTimeline = (0, _immutable.Record)({
-    id: 0,
-    parentUrl: '',
-    currentPhase: 0,
-    activePointId: 0,
+    id: null,
+    parentUrl: null,
+    currentPhase: null,
+    activePointId: null,
     phaseCount: 0,
     points: new _immutable.List(),
     phases: new _immutable.OrderedMap(),
@@ -4837,16 +4876,21 @@ var _ActionTypes = require('../constants/ActionTypes');
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
- * Points reducer
- * @author Fletcher91 <thom@argu.co>
+ * Points state tree structure definition
+ * @param {number} activePointId The id of the currently active point.
+ * @param {RPoint} activePoint A reference to the object instance in the collection with activePointId
+ * @param {!List} collection All the points currently in the system.
  */
-
 var initialState = new _immutable.Map({
-    activePointId: -1,
-    activePoint: new _RPoint2.default(),
+    activePointId: null,
+    activePoint: null,
     collection: new _immutable.List()
 });
 
+/**
+ * Points reducer
+ * @author Fletcher91 <thom@argu.co>
+ */
 function points() {
     var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
     var action = arguments[1];
@@ -4903,11 +4947,15 @@ var _immutable = require('immutable');
 
 var _ActionTypes = require('../constants/ActionTypes');
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; } /**
-                                                                                                                              * Timelines reducer
-                                                                                                                              * @author Fletcher91 <thom@argu.co>
-                                                                                                                              */
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
 
+/**
+ * Timelines state tree structure definition
+ * @param {number} activeTimelineId The id of the currently active {@link RTimeline}.
+ * @param {RTimeline} activeTimeline A reference to the object instance in the collection with activeTimelineId
+ * @param {Map} collection All the points currently in the system.
+ * @param {OrderedSet.<number>} order The point ids in order.
+ */
 var initialState = new _immutable.Map({
     activeTimelineId: undefined,
     activeTimeline: undefined,
@@ -4959,6 +5007,10 @@ function updateTimelineInState(state, action, newMembers) {
     return replaceTimeline(state, updateTimeline(currentTimeline, newMembers));
 }
 
+/**
+ * Timelines reducer
+ * @author Fletcher91 <thom@argu.co>
+ */
 function timelines() {
     var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
     var action = arguments[1];
@@ -5256,9 +5308,11 @@ function reviver(key, value) {
 }
 
 function generateInitialState() {
+    var state = arguments.length <= 0 || arguments[0] === undefined ? window.__INITIAL_STATE__ : arguments[0];
+
     var immutableInitialState = {};
-    Object.keys(window.__INITIAL_STATE__ || {}).forEach(function (value) {
-        immutableInitialState[value] = _immutable2.default.fromJS(window.__INITIAL_STATE__[value], reviver);
+    Object.keys(state || {}).forEach(function (value) {
+        immutableInitialState[value] = _immutable2.default.fromJS(state[value], reviver);
     });
     return immutableInitialState;
 }
@@ -5266,12 +5320,10 @@ function generateInitialState() {
 var store = (0, _configureStore2.default)(generateInitialState());
 
 if (window) {
-    console.log('popstate initialized');
     window.onpopstate = function (event) {
-        console.log('POPSTATE', event);
         if (_typeof(event.state.timelines) !== undefined) {
             debugger;
-            store.dispatch((0, _popstate2.default)(event.state));
+            store.dispatch((0, _popstate2.default)(generateInitialState(event.state)));
         }
     };
 }
