@@ -61,7 +61,7 @@ class CommentsController < AuthenticatedController
     end
     @cc.on(:create_comment_failed) do |c|
       redirect_to polymorphic_url([resource], anchor: c.id),
-                  notice: '_niet gelukt_'
+                  alert: c.errors.full_messages.first
     end
     @cc.commit
   end
