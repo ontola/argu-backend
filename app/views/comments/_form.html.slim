@@ -3,8 +3,8 @@
     =f.text_area :body, :rows => 2, :cols => 50, placeholder: t('comments.placeholder'), class: 'form-input-content margin-bottom'
     -comment.errors.full_messages.each do |message|
       p.inline-errors.full-width= message
-    -unless parent_id.blank?
-      input[type="hidden" class= "btn" name="comment[parent_id]" value ="#{parent_id}"]
+    -if parent_id.present? || comment.parent_id.present?
+      input[type="hidden" class= "btn" name="comment[parent_id]" value ="#{parent_id.presence || comment.parent_id}"]
   - if comment.blank? || comment.new_record?
     =render partial: 'profiles/profile_current' if current_profile.present?
   - else

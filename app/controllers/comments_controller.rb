@@ -60,7 +60,7 @@ class CommentsController < AuthenticatedController
                   notice: t('type_create_success', type: t('comments.type'))
     end
     @cc.on(:create_comment_failed) do |c|
-      redirect_to polymorphic_url([resource], anchor: c.id),
+      redirect_to polymorphic_url([resource], comment: {body: c.body, parent_id: c.parent_id}, anchor: c.id),
                   alert: c.errors.full_messages.first
     end
     @cc.commit

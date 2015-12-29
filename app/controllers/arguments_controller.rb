@@ -14,7 +14,7 @@ class ArgumentsController < AuthenticatedController
 
     respond_to do |format|
       format.html { render locals: {
-                               comment: Comment.new
+                               comment: Comment.new(comment_params)
                            } }
       format.widget { render @argument }
       format.json { render json: @argument }
@@ -129,6 +129,10 @@ private
 
   def argument_params
     params.require(:argument).permit(*policy(@argument || Argument).permitted_attributes)
+  end
+
+  def comment_params
+    params[:comment].try(:permit, :body, :parent_id)
   end
 
   def self.forum_for(url_options)
