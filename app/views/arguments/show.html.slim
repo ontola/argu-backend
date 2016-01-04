@@ -4,8 +4,9 @@
                description: seolized_description(@argument),
                image: image_url('logo-social.png')
 .col-1[itemscope itemtype="http://schema.org/CreativeWork/Argument"]
-  div[data-intro= t('intro.argument.back')]
+  /div[data-intro= t('intro.argument.back')]
     =to_parent
+  =render partial: 'contextualize/breadcrumbs'
   =render partial: 'contextualize/context_horizontal', locals: {item: @argument, type: 'argument'}
   .intro-filler[data-intro= t('intro.argument.body')]
   =render 'body'

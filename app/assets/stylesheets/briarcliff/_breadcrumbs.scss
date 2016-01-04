@@ -1,0 +1,119 @@
+@import "variables";
+@import "mixins";
+
+$breadcrumb-height: 1.8em;
+$breadcrumb-arrow-width: .5em;
+
+.breadcrumbs-list {
+  margin-bottom: .5em;
+}
+
+
+.breadcrumb {
+  display: inline-block;
+  padding: .4em .3em .4em 1em;
+  background-color: white;
+  margin-right: .5em;
+  margin-bottom: .5em;
+  position: relative; //fixes position of triangle
+  height: $breadcrumb-height;
+  color: $g4;
+  opacity: .8;
+  cursor: pointer;
+
+  span {
+    font-size: .8em;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+  &:after, &:before {
+    position: absolute; //fixes position of triangle
+    top: 0;
+    bottom: 0;
+    content: "";
+    width: 0;
+    height: 0;
+  }
+
+  &:after {
+    right: - $breadcrumb-arrow-width;
+    border-top: $breadcrumb-height / 2 solid transparent;
+    border-bottom: $breadcrumb-height / 2 solid transparent;
+    border-left: $breadcrumb-arrow-width solid white;
+  }
+
+  &:before {
+    left: 0;
+    border-top: $breadcrumb-height / 2 solid transparent;
+    border-bottom: $breadcrumb-height / 2 solid transparent;
+    border-left: $breadcrumb-arrow-width solid $g1;
+  }
+
+  &.motion-bg, &.question-bg, &.pro-bg, &.con-bg, &.neutral-bg, &.project-bg, &.forum-bg {
+    color: white;
+  }
+
+  &.motion-bg:after {
+    border-left-color: $motion;
+  }
+
+  &.question-bg:after {
+    border-left-color: $question;
+  }
+
+  &.con-bg:after {
+    border-left-color: $con;
+  }
+
+  &.pro-bg:after {
+    border-left-color: $pro;
+  }
+
+  &.project-bg:after {
+    border-left-color: $project;
+  }
+
+  &.forum-bg:after {
+    border-left-color: $forum;
+  }
+
+  &:first-child{
+    padding-left: .6em;
+    &:before {
+      display: none;
+    }
+  }
+
+  .profile-picture {
+    width: 1.5em;
+    height: 1.5em;
+    display: inline-block;
+    background-size: cover;
+    position: absolute;
+    left: 0.9em;
+    bottom: 0.1em;
+  }
+}
+
+.breadcrumb--current {
+  text-decoration: underline;
+}
+
+.breadcrumb--with-profile-picture {
+  padding-left: 2.3em;
+
+  &:first-child{
+    padding-left: 2em;
+
+    .profile-picture {
+      left: .6em
+    }
+
+    &:before {
+      display: none;
+    }
+  }
+}

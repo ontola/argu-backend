@@ -26,15 +26,15 @@ $maxCommentDepth: 10;
 }
 
 .pro-bg {
-	background-color: $gre !important;
+	background-color: $pro !important;
 }
 
 .con-bg {
-	background-color: $red !important;
+	background-color: $con !important;
 }
 
 .motion-bg {
-	background-color: $blu !important;
+	background-color: $motion !important;
 }
 
 .neutral-bg{
@@ -42,7 +42,15 @@ $maxCommentDepth: 10;
 }
 
 .question-bg{
-	background-color: $bro !important;
+	background-color: $question !important;
+}
+
+.project-bg{
+	background-color: $project !important;
+}
+
+.forum-bg{
+	background-color: $forum !important;
 }
 
 .pro-t{
@@ -65,6 +73,14 @@ $maxCommentDepth: 10;
 	color: $bro !important;
 }
 
+.project-t{
+  color: $project !important;
+}
+
+.forum-t{
+  color: $forum !important;
+}
+
 .question {
   color: $bro;
 }
@@ -74,8 +90,8 @@ $maxCommentDepth: 10;
 }
 
 .argu-logo {
-	width: 5em;
-	height: 3em;
+  width: 5em;
+  height: 3em;
 }
 
 .browsehappy {

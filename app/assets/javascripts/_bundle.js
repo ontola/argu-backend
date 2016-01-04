@@ -1790,7 +1790,7 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
                 fa: 'fa-linkedin' }),
             _react2.default.createElement(LinkItem, {
                 type: 'link',
-                title: 'GooglePlus',
+                title: 'Google+',
                 url: shareUrls.googlePlus,
                 fa: 'fa-google-plus' })
         );
