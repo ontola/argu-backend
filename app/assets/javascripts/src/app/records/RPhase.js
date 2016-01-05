@@ -18,6 +18,7 @@ import RProfile from './RProfile';
  * @param {RProfile} publisher
  */
 const RPhase = Record({
+    type: 'phase',
     id: null,
     timelineId: null,
     index: null,

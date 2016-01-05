@@ -1,6 +1,9 @@
 import { Map, List } from 'immutable';
-import RPoint from '../records/RPoint';
-import { SET_ACTIVE_POINT, POPSTATE } from '../constants/ActionTypes';
+import {
+    SET_ACTIVE_POINT,
+    NEXT_POINT,
+    POPSTATE
+} from '../constants/ActionTypes';
 
 /**
  * Points state tree structure definition
@@ -11,8 +14,26 @@ import { SET_ACTIVE_POINT, POPSTATE } from '../constants/ActionTypes';
 const initialState = new Map({
     activePointId: null,
     activePoint: null,
-    collection: new List()
+    collection: new Map()
 });
+
+function nextPointByDate(state) {
+    const sortedCol = state
+        .get('collection')
+        .sort(p => {
+            return p.sortDate;
+        });
+    const currentIndex = sortedCol
+        .findIndex(p => {
+            return p.get('id') === state.get('activePointId')
+        });
+
+    if (currentIndex === sortedCol.count() - 1) {
+        return null;
+    } else {
+        return sortedCol.get(currentIndex + 1);
+    }
+}
 
 /**
  * Points reducer
@@ -24,14 +45,15 @@ export default function points(state = initialState, action) {
             return state.withMutations((mutState) => {
                 mutState.set('activePointId', action.pointId);
                 mutState.set('activePoint',
-                    state
-                        .get('collection')
-                        .find(p => {
-                            return p.id === action.pointId;
-                        }))
+                    state.getIn(['collection', action.pointId]))
+            });
+        case NEXT_POINT:
+            const next = nextPointByDate(state);
+            return state.withMutations((mutState) => {
+                mutState.set('activePointId', next && next.get('id'));
+                mutState.set('activePoint', next);
             });
         case POPSTATE:
-            debugger;
             return action.stateTree.points;
         default:
             return state;

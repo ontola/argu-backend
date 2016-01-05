@@ -10,4 +10,4 @@ export default function profiles(state = initialState, action) {
         default:
             return state;
     }
-};
+}

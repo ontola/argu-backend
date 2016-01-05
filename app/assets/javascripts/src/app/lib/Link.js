@@ -12,14 +12,16 @@ import store from '../stores/store';
  */
 export const Link = React.createClass({
     propTypes: {
-        to: React.PropTypes.string, //.isRequired,
-        query: React.PropTypes.object,
-        hash: React.PropTypes.string,
-        state: React.PropTypes.object,
         activeStyle: React.PropTypes.object,
         activeClassName: React.PropTypes.string,
+        hash: React.PropTypes.string,
+        isButton: React.PropTypes.bool,
         onlyActiveOnIndex: React.PropTypes.bool, //.isRequired,
-        onClick: React.PropTypes.func
+        onClick: React.PropTypes.func,
+        query: React.PropTypes.object,
+        state: React.PropTypes.object,
+        style: React.PropTypes.object,
+        to: React.PropTypes.string //.isRequired,
     },
 
     href: function href () {
@@ -44,11 +46,22 @@ export const Link = React.createClass({
         }
     },
 
+    className: function () {
+        const { className, isButton } = this.props;
+        return [
+            className,
+            isButton && isButton === true && 'btn'
+        ].join(' ');
+    },
+
     render: function render () {
-        const { children } = this.props;
+        const { children, style } = this.props;
+
 
         return (<a href={this.href()}
+                   style={style}
                    onClick={this.onClick}
+                   className={this.className()}
                    data-skip-pjax="true">
             {children}
         </a>)

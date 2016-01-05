@@ -10,4 +10,4 @@ export default function phases(state = initialState, action) {
         default:
             return state;
     }
-};
+}

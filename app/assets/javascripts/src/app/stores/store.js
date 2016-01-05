@@ -6,7 +6,8 @@ import {
     RPoint,
     RProfile,
     RTimeline,
-    RUpdate
+    RUpdate,
+    RPlanning
 } from '../records/index';
 import popstate from '../actions/popstate';
 
@@ -16,7 +17,8 @@ const types = {
     point: RPoint,
     profile: RProfile,
     timeline: RTimeline,
-    update: RUpdate
+    update: RUpdate,
+    planning: RPlanning
 };
 
 /**
@@ -71,7 +73,6 @@ const store = configureStore(generateInitialState());
 if (window) {
     window.onpopstate = function(event) {
         if (typeof event.state.timelines !== undefined) {
-            debugger;
             store.dispatch(popstate(generateInitialState(event.state)));
         }
     };

@@ -2,23 +2,19 @@ import { Record } from 'immutable';
 import RDateline from './RDateline';
 
 /**
- * Update record class.
- * @class RUpdate
+ * Planning record class.
+ * @class RPlanning
  * @author Fletcher91 <thom@argu.co>
  */
-const RUpdate = Record({
-    type: 'update',
+const RPlanning = Record({
+    type: 'planning',
     id: 0,
-    phaseId: 0,
-    updatable_type: '',
-    updatable_id: 0,
     title: '',
     content: '',
     createdAt: new Date(0),
     updatedAt: new Date(0),
     dateline: new RDateline(),
-    creatorId: 0,
-    publisherId: 0
+    creatorId: 0
 });
 
-export default RUpdate;
+export default RPlanning;

@@ -6,6 +6,7 @@ import { Record } from 'immutable';
  * @author Fletcher91 <thom@argu.co>
  */
 const RImage = Record({
+    type: 'image',
     id: 0,
     url: '',
     icon_url: ''

@@ -14,6 +14,7 @@ import { Record, OrderedMap, List } from 'immutable';
  * @param {!List} updates
  */
 const PTimeline = Record({
+    type: 'timeline',
     id: null,
     parentUrl: null,
     currentPhase: null,

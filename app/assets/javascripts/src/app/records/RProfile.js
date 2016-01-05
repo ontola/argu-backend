@@ -15,6 +15,7 @@ import RImage from './RImage';
  * @param {string} actorType
  */
 const RProfile = Record({
+    type: 'profile',
     id: null,
     shortname: null,
     url: null,

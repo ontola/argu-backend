@@ -6,6 +6,7 @@ import { Record } from 'immutable';
  * @author Fletcher91 <thom@argu.co>
  */
 const RDateline = Record({
+    type: 'dateline',
     date: new Date(0),
     location: ''
 });

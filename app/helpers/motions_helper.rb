@@ -106,7 +106,7 @@ module MotionsHelper
       }
     ]
 
-    active_point_id = params.fetch(:timeline, {}).fetch(:activePointId, nil).try(:to_i)
+    active_point_id = params.fetch(:timeline, {}).fetch(:activePointId, nil).presence.try(:to_i)
     active_point = points[points.find_index { |p| p[:id] === active_point_id }] if active_point_id.present?
 
     merge_state({
@@ -174,7 +174,6 @@ module MotionsHelper
         {
           id: 1,
           type: 'update',
-          phaseId: 1,
           title: 'An update',
           content: 'description of the update',
           creatorId: 1,
@@ -187,7 +186,6 @@ module MotionsHelper
         {
           id: 2,
           type: 'update',
-          phaseId: 1,
           title: 'Update 2',
           content: 'Happened earlier than An Update',
           creatorId: 1,
@@ -200,7 +198,6 @@ module MotionsHelper
         {
           id: 3,
           type: 'update',
-          phaseId: 2,
           title: 'Another update',
           content: 'Update is in the second phase',
           creatorId: 1,

@@ -8,7 +8,6 @@ import React from 'react';
 import { List, Map } from 'immutable';
 
 import RPhase from '../records/RPhase';
-import RUpdate from '../records/RUpdate';
 import RTimeline from '../records/RTimeline';
 import PointContainer from './Point';
 import DetailsPaneContainer from './DetailsPane';
@@ -144,13 +143,13 @@ export const TimeLinePhases = React.createClass({
 
     pointByItem: function pointByItem(itemType, itemId) {
         return this.props.points.get('collection').find(point => {
-                return point.itemType === itemType &&
-                    point.itemId === itemId;
-            });
+            return point.itemType === itemType &&
+                point.itemId === itemId;
+        });
     },
 
     pointsForPhase: function pointsForPhase(phaseId) {
-        const { updates, timeline } = this.props;
+        const { updates } = this.props;
 
         if (typeof updates === 'undefined') {
             return undefined;
@@ -174,7 +173,7 @@ export const TimeLinePhases = React.createClass({
         const phasesList = phases.map((phase, i) => {
             const itemUpdates = this.pointsForPhase(phase.id);
             const current = phase.id === currentPhase ? 'current' : '';
-            const last  = i === phases.length - 1;
+            const last = i === phases.length - 1;
             const point = this.pointByItem('phase', phase.id);
             return (<Phase key={phase.id}
                            phase={new RPhase(phase)}
@@ -257,7 +256,8 @@ export const Phase = React.createClass({
         phase: React.PropTypes.instanceOf(RPhase),
         point: React.PropTypes.object,
         actions: React.PropTypes.object,
-        last: React.PropTypes.bool
+        last: React.PropTypes.bool,
+        current: React.PropTypes.string
     },
 
     style: {
@@ -277,7 +277,7 @@ export const Phase = React.createClass({
     },
 
     render: function render() {
-        const { actions, point, current, last, active } = this.props;
+        const { point, current, last } = this.props;
 
         const label = this.getLabel();
         const style = {
@@ -290,10 +290,8 @@ export const Phase = React.createClass({
             <div className={`phase ${current}`} style={style}>
                 {label}
                 <div className="phase-points" style={this.style}>
-                    <PhasePoint point={point}
-                                active={active}
-                                actions={actions}
-                                current={current} />
+                    <PointContainer className={current}
+                                    pointId={point.get('id')}/>
                     {this.props.children}
                 </div>
             </div>
@@ -301,44 +299,5 @@ export const Phase = React.createClass({
     }
 });
 window.Phase = Phase;
-
-
-/**
- * To display a Phase point on a {@link TimeLine}
- * @class PhasePoint
- * @author Fletcher91 <thom@argu.co>
- */
-export const PhasePoint = React.createClass({
-    propTypes: {
-        title: React.PropTypes.string,
-        point: React.PropTypes.object
-    },
-
-    setActive: function setActive () {
-        const { active } = this.props;
-        let { id, timelineId } = this.props.point;
-        if (active) {
-            id = 0;
-        }
-        this.props.actions.setActivePoint(id);
-    },
-
-    render: function render() {
-        const { current, active } = this.props;
-
-        const style = {
-            flexGrow: 1,
-            border: active ?  '1px solid yellow' : undefined
-        };
-
-        return (
-            <a href=""
-               className={`point phase-point ${current} ${active}`}
-               onClick={this.setActive}
-               style={style}>P</a>
-        );
-    }
-});
-window.PhasePoint = PhasePoint;
 
 export default TimeLineComponentContainer;

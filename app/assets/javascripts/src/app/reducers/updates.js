@@ -7,7 +7,7 @@ const initialState = [];
 
 export default function updates(state = initialState, action) {
     switch (action.type) {
-        default:
-            return state;
+    default:
+        return state;
     }
-};
+}

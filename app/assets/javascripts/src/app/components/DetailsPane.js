@@ -1,18 +1,17 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { bindActionCreators } from 'redux';
-import { connect }  from 'react-redux';
+import { connect } from 'react-redux';
 
 import { Update, UpdateContainerWrapper } from './Update';
-import { Link } from '../lib/Link';
+import RUpdate from '../records/RUpdate';
 import * as actions from '../actions/point';
 
 /**
  * Shows a {@link DetailsPane} of the currently active point thus $points.activePoint
- * @class DetailsPane
+ * @class DetailsPaneContainerComponent
  * @author Fletcher91 <thom@argu.co>
  */
 const DetailsPaneContainerComponent = React.createClass({
-
     /**
      * Searches the current active point from the components props.
      * @returns {RPoint}
@@ -42,16 +41,23 @@ const DetailsPaneContainerComponent = React.createClass({
     },
 
     render: function render () {
+        const { phases, updates } = this.props;
         const activePoint = this.activePoint();
 
-
-        return (<DetailsPane item={this.activeItem()}
+        return (<DetailsPane actions={this.props.actions}
+                             item={this.activeItem()}
+                             phases={phases}
+                             updates={updates}
                              point={activePoint} />);
     }
 });
 
 function mapState (state) {
-    const { points, phases, updates } = state;
+    const {
+        points,
+        phases,
+        updates
+    } = state;
 
     return {
         points,
@@ -94,6 +100,9 @@ export const DetailsPane = React.createClass({
     },
 
     previousItem: function () {
+        const { updates, phases } = this.props;
+
+
         const { timelineId } = this.props.point;
         this.props.actions.previousPoint(timelineId);
     },

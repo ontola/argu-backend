@@ -6,7 +6,6 @@
  */
 
 import React from 'react';
-import RProfile from '../records/RProfile';
 import Profile from './Profile';
 
 
