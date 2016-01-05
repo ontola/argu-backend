@@ -1,0 +1,2177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: RestrictivePolicy
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!RestrictivePolicy.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (R)</a> &raquo;
+    
+    
+    <span class="title">RestrictivePolicy</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: RestrictivePolicy
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">RestrictivePolicy</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="AccessTokenHelper.html" title="AccessTokenHelper (module)">AccessTokenHelper</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html" title="RestrictivePolicy::Roles (module)">Roles</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">app/policies/restrictive_policy.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+<div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="ActivityPolicy.html" title="ActivityPolicy (class)">ActivityPolicy</a></span>, <span class='object_link'><a href="ActorPolicy.html" title="ActorPolicy (class)">ActorPolicy</a></span>, <span class='object_link'><a href="ArgumentPolicy.html" title="ArgumentPolicy (class)">ArgumentPolicy</a></span>, <span class='object_link'><a href="CommentPolicy.html" title="CommentPolicy (class)">CommentPolicy</a></span>, <span class='object_link'><a href="DocumentPolicy.html" title="DocumentPolicy (class)">DocumentPolicy</a></span>, <span class='object_link'><a href="ForumPolicy.html" title="ForumPolicy (class)">ForumPolicy</a></span>, <span class='object_link'><a href="GroupMembershipPolicy.html" title="GroupMembershipPolicy (class)">GroupMembershipPolicy</a></span>, <span class='object_link'><a href="GroupPolicy.html" title="GroupPolicy (class)">GroupPolicy</a></span>, <span class='object_link'><a href="GroupResponsePolicy.html" title="GroupResponsePolicy (class)">GroupResponsePolicy</a></span>, <span class='object_link'><a href="IdentityPolicy.html" title="IdentityPolicy (class)">IdentityPolicy</a></span>, <span class='object_link'><a href="MembershipPolicy.html" title="MembershipPolicy (class)">MembershipPolicy</a></span>, <span class='object_link'><a href="MotionPolicy.html" title="MotionPolicy (class)">MotionPolicy</a></span>, <span class='object_link'><a href="NilClassPolicy.html" title="NilClassPolicy (class)">NilClassPolicy</a></span>, <span class='object_link'><a href="NotificationPolicy.html" title="NotificationPolicy (class)">NotificationPolicy</a></span>, <span class='object_link'><a href="PagePolicy.html" title="PagePolicy (class)">PagePolicy</a></span>, <span class='object_link'><a href="ProfilePolicy.html" title="ProfilePolicy (class)">ProfilePolicy</a></span>, <span class='object_link'><a href="QuestionAnswerPolicy.html" title="QuestionAnswerPolicy (class)">QuestionAnswerPolicy</a></span>, <span class='object_link'><a href="QuestionPolicy.html" title="QuestionPolicy (class)">QuestionPolicy</a></span>, <span class='object_link'><a href="TagPolicy.html" title="TagPolicy (class)">TagPolicy</a></span>, <span class='object_link'><a href="UserPolicy.html" title="UserPolicy (class)">UserPolicy</a></span>, <span class='object_link'><a href="VotePolicy.html" title="VotePolicy (class)">VotePolicy</a></span></p>
+</div>
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="RestrictivePolicy/Roles.html" title="RestrictivePolicy::Roles (module)">Roles</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="RestrictivePolicy/Scope.html" title="RestrictivePolicy::Scope (class)">Scope</a></span>
+    
+  
+</p>
+
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#context-instance_method" title="#context (instance method)">- (Object) <strong>context</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute context.</p>
+</div></span>
+  
+</li>
+
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#record-instance_method" title="#record (instance method)">- (Object) <strong>record</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute record.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#assert%21-instance_method" title="#assert! (instance method)">- (Object) <strong>assert!</strong>(assertion, query = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#change_owner%3F-instance_method" title="#change_owner? (instance method)">- (Boolean) <strong>change_owner?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#create%3F-instance_method" title="#create? (instance method)">- (Boolean) <strong>create?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#destroy%3F-instance_method" title="#destroy? (instance method)">- (Boolean) <strong>destroy?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#edit%3F-instance_method" title="#edit? (instance method)">- (Boolean) <strong>edit?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#follow%3F-instance_method" title="#follow? (instance method)">- (Boolean) <strong>follow?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_access_to_platform%3F-instance_method" title="#has_access_to_platform? (instance method)">- (Boolean) <strong>has_access_to_platform?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Whether the user has access to Argu in general.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#has_access_to_record%3F-instance_method" title="#has_access_to_record? (instance method)">- (Boolean) <strong>has_access_to_record?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Whether the User is logged in, or has an AccessToken for `record` Note: Not
+to be confused with policy(record).show? which validates       access for a
+specific item.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#index%3F-instance_method" title="#index? (instance method)">- (Boolean) <strong>index?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (RestrictivePolicy) <strong>initialize</strong>(context, record) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of RestrictivePolicy.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#list%3F-instance_method" title="#list? (instance method)">- (Boolean) <strong>list?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Used when items won&#39;t include nested content, this is a less
+restrictive version of show?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#logged_in%3F-instance_method" title="#logged_in? (instance method)">- (Boolean) <strong>logged_in?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move%3F-instance_method" title="#move? (instance method)">- (Boolean) <strong>move?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Move items between forums or converting items.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#new%3F-instance_method" title="#new? (instance method)">- (Boolean) <strong>new?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#new_record%3F-instance_method" title="#new_record? (instance method)">- (Boolean) <strong>new_record?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#permitted_attributes-instance_method" title="#permitted_attributes (instance method)">- (Object) <strong>permitted_attributes</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#platform_open%3F-instance_method" title="#platform_open? (instance method)">- (Boolean) <strong>platform_open?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#scope-instance_method" title="#scope (instance method)">- (Object) <strong>scope</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#shortname%3F-instance_method" title="#shortname? (instance method)">- (Boolean) <strong>shortname?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Can the current user change the item shortname?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#show%3F-instance_method" title="#show? (instance method)">- (Boolean) <strong>show?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Used when an item displays nested content, therefore this should use the
+heaviest restrictions.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#statistics%3F-instance_method" title="#statistics? (instance method)">- (Boolean) <strong>statistics?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#trash%3F-instance_method" title="#trash? (instance method)">- (Boolean) <strong>trash?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#update%3F-instance_method" title="#update? (instance method)">- (Boolean) <strong>update?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#vote%3F-instance_method" title="#vote? (instance method)">- (Boolean) <strong>vote?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="protected ">
+  <span class="summary_signature">
+    
+      <a href="#within_user_cap%3F-instance_method" title="#within_user_cap? (instance method)">- (Boolean) <strong>within_user_cap?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  <span class="note title protected">protected</span>
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="RestrictivePolicy/Roles.html" title="RestrictivePolicy::Roles (module)">Roles</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="RestrictivePolicy/Roles.html#creator-instance_method" title="RestrictivePolicy::Roles#creator (method)">#creator</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#forum_policy-instance_method" title="RestrictivePolicy::Roles#forum_policy (method)">#forum_policy</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#is_creator%3F-instance_method" title="RestrictivePolicy::Roles#is_creator? (method)">#is_creator?</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#is_member%3F-instance_method" title="RestrictivePolicy::Roles#is_member? (method)">#is_member?</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#member-instance_method" title="RestrictivePolicy::Roles#member (method)">#member</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#owner-instance_method" title="RestrictivePolicy::Roles#owner (method)">#owner</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#staff-instance_method" title="RestrictivePolicy::Roles#staff (method)">#staff</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#staff%3F-instance_method" title="RestrictivePolicy::Roles#staff? (method)">#staff?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="AccessTokenHelper.html" title="AccessTokenHelper (module)">AccessTokenHelper</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="AccessTokenHelper.html#check_for_access_token-instance_method" title="AccessTokenHelper#check_for_access_token (method)">#check_for_access_token</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#get_access_token-instance_method" title="AccessTokenHelper#get_access_token (method)">#get_access_token</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#get_access_tokens-instance_method" title="AccessTokenHelper#get_access_tokens (method)">#get_access_tokens</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#get_safe_raw_access_tokens-instance_method" title="AccessTokenHelper#get_safe_raw_access_tokens (method)">#get_safe_raw_access_tokens</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#has_access_token_access_to-instance_method" title="AccessTokenHelper#has_access_token_access_to (method)">#has_access_token_access_to</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#has_valid_token%3F-instance_method" title="AccessTokenHelper#has_valid_token? (method)">#has_valid_token?</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="RestrictivePolicy (class)">RestrictivePolicy</a></span></tt>) <strong>initialize</strong>(context, record) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of RestrictivePolicy</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+66
+67
+68
+69</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 66</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
+  <span class='ivar'>@context</span> <span class='op'>=</span> <span class='id identifier rubyid_context'>context</span>
+  <span class='ivar'>@record</span> <span class='op'>=</span> <span class='id identifier rubyid_record'>record</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="context-instance_method">
+  
+    - (<tt>Object</tt>) <strong>context</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute context</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+5
+6
+7</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 5</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_context'>context</span>
+  <span class='ivar'>@context</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      
+      <span id=""></span>
+      <div class="method_details ">
+  <h3 class="signature " id="record-instance_method">
+  
+    - (<tt>Object</tt>) <strong>record</strong>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute record</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+5
+6
+7</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 5</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_record'>record</span>
+  <span class='ivar'>@record</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="assert!-instance_method">
+  
+    - (<tt>Object</tt>) <strong>assert!</strong>(assertion, query = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Pundit::NotAuthorizedError</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+82
+83
+84</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 82</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_assert!'>assert!</span><span class='lparen'>(</span><span class='id identifier rubyid_assertion'>assertion</span><span class='comma'>,</span> <span class='id identifier rubyid_query'>query</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'>Pundit</span><span class='op'>::</span><span class='const'>NotAuthorizedError</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>record:</span> <span class='id identifier rubyid_record'>record</span><span class='comma'>,</span> <span class='label'>query:</span> <span class='id identifier rubyid_query'>query</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_assertion'>assertion</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="change_owner?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>change_owner?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+86
+87
+88</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 86</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_change_owner?'>change_owner?</span>
+  <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>create?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+90
+91
+92</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 90</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_create?'>create?</span>
+  <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="destroy?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>destroy?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+94
+95
+96</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 94</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_destroy?'>destroy?</span>
+  <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="edit?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>edit?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+98
+99
+100</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 98</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_edit?'>edit?</span>
+  <span class='id identifier rubyid_update?'>update?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="follow?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>follow?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+102
+103
+104</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 102</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_follow?'>follow?</span>
+  <span class='id identifier rubyid_is_member?'>is_member?</span> <span class='op'>||</span> <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="has_access_to_platform?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_access_to_platform?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Whether the user has access to Argu in general</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+159
+160
+161</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 159</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_has_access_to_platform?'>has_access_to_platform?</span>
+  <span class='id identifier rubyid_user'>user</span> <span class='op'>||</span> <span class='id identifier rubyid_has_valid_token?'>has_valid_token?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="has_access_to_record?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>has_access_to_record?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Whether the User is logged in, or has an AccessToken for `record` Note: Not
+to be confused with policy(record).show? which validates</p>
+
+<pre class="code ruby"><code class="ruby">access for a specific item</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+166
+167
+168</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 166</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_has_access_to_record?'>has_access_to_record?</span>
+  <span class='id identifier rubyid_user'>user</span> <span class='op'>||</span> <span class='id identifier rubyid_has_access_token_access_to'>has_access_token_access_to</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="index?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>index?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+106
+107
+108</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 106</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_index?'>index?</span>
+  <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="list?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>list?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used when items won&#39;t include nested content, this is a less
+restrictive version of show?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+132
+133
+134</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 132</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_list?'>list?</span>
+  <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="logged_in?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>logged_in?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+110
+111
+112</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 110</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_logged_in?'>logged_in?</span>
+  <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>move?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Move items between forums or converting items</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+137
+138
+139</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 137</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move?'>move?</span>
+  <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="new?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>new?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+114
+115
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 114</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_new?'>new?</span>
+  <span class='id identifier rubyid_create?'>create?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="new_record?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>new_record?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+118
+119
+120</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 118</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_new_record?'>new_record?</span>
+  <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_new_record?'>new_record?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="permitted_attributes-instance_method">
+  
+    - (<tt>Object</tt>) <strong>permitted_attributes</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+75
+76
+77
+78
+79
+80</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 75</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_permitted_attributes'>permitted_attributes</span>
+  <span class='id identifier rubyid_attributes'>attributes</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:lock_version</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_attributes'>attributes</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:shortname</span> <span class='kw'>if</span> <span class='id identifier rubyid_shortname?'>shortname?</span>
+  <span class='id identifier rubyid_attributes'>attributes</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:is_trashed</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Class</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_trash?'>trash?</span>
+  <span class='id identifier rubyid_attributes'>attributes</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="platform_open?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>platform_open?</strong>  <span class="extras">(protected)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+175
+176
+177</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 175</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_platform_open?'>platform_open?</span>
+  <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:platform_open</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="scope-instance_method">
+  
+    - (<tt>Object</tt>) <strong>scope</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+170
+171
+172</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 170</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_scope'>scope</span>
+  <span class='const'>Pundit</span><span class='period'>.</span><span class='id identifier rubyid_policy_scope!'>policy_scope!</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="shortname?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>shortname?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Can the current user change the item shortname?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+154
+155
+156</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 154</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_shortname?'>shortname?</span>
+  <span class='id identifier rubyid_new_record?'>new_record?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="show?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>show?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Used when an item displays nested content, therefore this should use the
+heaviest restrictions</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+123
+124
+125</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 123</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_show?'>show?</span>
+  <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="statistics?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>statistics?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+127
+128
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 127</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_statistics?'>statistics?</span>
+  <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="trash?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>trash?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+141
+142
+143</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 141</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_trash?'>trash?</span>
+  <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="update?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>update?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+145
+146
+147</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 145</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_update?'>update?</span>
+  <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="vote?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>vote?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+149
+150
+151</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 149</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_vote?'>vote?</span>
+  <span class='id identifier rubyid_staff?'>staff?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="within_user_cap?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>within_user_cap?</strong>  <span class="extras">(protected)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+179
+180
+181</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/restrictive_policy.rb', line 179</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_within_user_cap?'>within_user_cap?</span>
+  <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:within_user_cap</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Jan  5 11:17:45 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.6).
+</div>
+
+  </body>
+</html>

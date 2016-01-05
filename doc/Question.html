@@ -1,0 +1,899 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Question
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!Question.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (Q)</a> &raquo;
+    
+    
+    <span class="title">Question</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Question
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">ActiveRecord::Base</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">ActiveRecord::Base</li>
+          
+            <li class="next">Question</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+      <dt class="r2">Includes:</dt>
+      <dd class="r2"><span class='object_link'><a href="ArguBase.html" title="ArguBase (module)">ArguBase</a></span>, <span class='object_link'><a href="Attribution.html" title="Attribution (module)">Attribution</a></span>, <span class='object_link'><a href="Convertible.html" title="Convertible (module)">Convertible</a></span>, <span class='object_link'><a href="ForumTaggable.html" title="ForumTaggable (module)">ForumTaggable</a></span>, <span class='object_link'><a href="HasLinks.html" title="HasLinks (module)">HasLinks</a></span>, <span class='object_link'><a href="Parentable.html" title="Parentable (module)">Parentable</a></span>, PublicActivity::Common, <span class='object_link'><a href="Trashable.html" title="Trashable (module)">Trashable</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">app/models/question.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#include_motions-instance_method" title="#include_motions (instance method)">- (Object) <strong>include_motions</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>TODO validate expires_at.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#creator-instance_method" title="#creator (instance method)">- (Object) <strong>creator</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Might not be a good idea.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#creator_follow-instance_method" title="#creator_follow (instance method)">- (Object) <strong>creator_follow</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#description-instance_method" title="#description (instance method)">- (Object) <strong>description</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p><a href="http://schema.org/description">schema.org/description</a>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#display_name-instance_method" title="#display_name (instance method)">- (Object) <strong>display_name</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#move_to-instance_method" title="#move_to (instance method)">- (Object) <strong>move_to</strong>(forum, include_motions = false) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#next-instance_method" title="#next (instance method)">- (Object) <strong>next</strong>(show_trashed = false) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#previous-instance_method" title="#previous (instance method)">- (Object) <strong>previous</strong>(show_trashed = false) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#tag_list-instance_method" title="#tag_list (instance method)">- (Object) <strong>tag_list</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#top_motions-instance_method" title="#top_motions (instance method)">- (Object) <strong>top_motions</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#update_vote_counters-instance_method" title="#update_vote_counters (instance method)">- (Object) <strong>update_vote_counters</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="ArguBase.html" title="ArguBase (module)">ArguBase</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="ArguBase.html#class_name-instance_method" title="ArguBase#class_name (method)">#class_name</a></span>, <span class='object_link'><a href="ArguBase.html#edited%3F-instance_method" title="ArguBase#edited? (method)">#edited?</a></span>, <span class='object_link'><a href="ArguBase.html#identifier-instance_method" title="ArguBase#identifier (method)">#identifier</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Trashable.html" title="Trashable (module)">Trashable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Trashable.html#is_trashed%3F-instance_method" title="Trashable#is_trashed? (method)">#is_trashed?</a></span>, <span class='object_link'><a href="Trashable.html#trash-instance_method" title="Trashable#trash (method)">#trash</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Parentable.html" title="Parentable (module)">Parentable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Parentable.html#get_parent-instance_method" title="Parentable#get_parent (method)">#get_parent</a></span>, <span class='object_link'><a href="Parentable.html#is_child_of%3F-instance_method" title="Parentable#is_child_of? (method)">#is_child_of?</a></span>, <span class='object_link'><a href="Parentable.html#is_fertile%3F-instance_method" title="Parentable#is_fertile? (method)">#is_fertile?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Convertible.html" title="Convertible (module)">Convertible</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Convertible.html#convert_to-instance_method" title="Convertible#convert_to (method)">#convert_to</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="ForumTaggable.html" title="ForumTaggable (module)">ForumTaggable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="ForumTaggable.html#mark_taggings_forum_id-instance_method" title="ForumTaggable#mark_taggings_forum_id (method)">#mark_taggings_forum_id</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="HasLinks.html" title="HasLinks (module)">HasLinks</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="HasLinks.html#supped_content-instance_method" title="HasLinks#supped_content (method)">#supped_content</a></span>, <span class='object_link'><a href="HasLinks.html#truncate_preview-instance_method" title="HasLinks#truncate_preview (method)">#truncate_preview</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Attribution.html" title="Attribution (module)">Attribution</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Attribution.html#attribution-instance_method" title="Attribution#attribution (method)">#attribution</a></span></p>
+
+  
+  
+  
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id="include_motions=-instance_method"></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="include_motions-instance_method">
+  
+    - (<tt>Object</tt>) <strong>include_motions</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>TODO validate expires_at</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_include_motions'>include_motions</span>
+  <span class='ivar'>@include_motions</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="creator-instance_method">
+  
+    - (<tt>Object</tt>) <strong>creator</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Might not be a good idea</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+31
+32
+33</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 31</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_creator'>creator</span>
+  <span class='kw'>super</span> <span class='op'>||</span> <span class='const'>Profile</span><span class='period'>.</span><span class='id identifier rubyid_first_or_initialize'>first_or_initialize</span><span class='lparen'>(</span><span class='label'>shortname:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Onbekend</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="creator_follow-instance_method">
+  
+    - (<tt>Object</tt>) <strong>creator_follow</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+35
+36
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 35</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_creator_follow'>creator_follow</span>
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_creator'>creator</span><span class='period'>.</span><span class='id identifier rubyid_profileable'>profileable</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>User</span><span class='rparen'>)</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_creator'>creator</span><span class='period'>.</span><span class='id identifier rubyid_profileable'>profileable</span><span class='period'>.</span><span class='id identifier rubyid_follow'>follow</span> <span class='kw'>self</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="description-instance_method">
+  
+    - (<tt>Object</tt>) <strong>description</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p><a href="http://schema.org/description">schema.org/description</a></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+46
+47
+48</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 46</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_description'>description</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_content'>content</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="display_name-instance_method">
+  
+    - (<tt>Object</tt>) <strong>display_name</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_display_name'>display_name</span>
+  <span class='id identifier rubyid_title'>title</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="move_to-instance_method">
+  
+    - (<tt>Object</tt>) <strong>move_to</strong>(forum, include_motions = false) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 50</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_move_to'>move_to</span><span class='lparen'>(</span><span class='id identifier rubyid_forum'>forum</span><span class='comma'>,</span> <span class='id identifier rubyid_include_motions'>include_motions</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='const'>Question</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_old_forum'>old_forum</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_lock!'>lock!</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_forum'>forum</span> <span class='op'>=</span> <span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_lock!'>lock!</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_votes'>votes</span><span class='period'>.</span><span class='id identifier rubyid_lock'>lock</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update_all'>update_all</span> <span class='label'>forum_id:</span> <span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
+    <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_activities'>activities</span><span class='period'>.</span><span class='id identifier rubyid_lock'>lock</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_update_all'>update_all</span> <span class='label'>forum_id:</span> <span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_include_motions'>include_motions</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_motions'>motions</span><span class='period'>.</span><span class='id identifier rubyid_lock'>lock</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_m'>m</span><span class='op'>|</span>
+        <span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_move_to'>move_to</span> <span class='id identifier rubyid_forum'>forum</span><span class='comma'>,</span> <span class='kw'>false</span>
+      <span class='kw'>end</span>
+    <span class='kw'>else</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_answers'>question_answers</span><span class='period'>.</span><span class='id identifier rubyid_lock'>lock</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_delete_all'>delete_all</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_old_forum'>old_forum</span><span class='period'>.</span><span class='id identifier rubyid_reload'>reload</span><span class='period'>.</span><span class='id identifier rubyid_decrement'>decrement</span> <span class='symbol'>:questions_count</span>
+    <span class='id identifier rubyid_old_forum'>old_forum</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
+    <span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_reload'>reload</span><span class='period'>.</span><span class='id identifier rubyid_increment'>increment</span> <span class='symbol'>:questions_count</span>
+    <span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
+  <span class='kw'>end</span>
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="next-instance_method">
+  
+    - (<tt>Object</tt>) <strong>next</strong>(show_trashed = false) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+72
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 72</span>
+
+<span class='kw'>def</span> <span class='kw'>next</span><span class='lparen'>(</span><span class='id identifier rubyid_show_trashed'>show_trashed</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_questions'>questions</span><span class='period'>.</span><span class='id identifier rubyid_trashed'>trashed</span><span class='lparen'>(</span><span class='id identifier rubyid_show_trashed'>show_trashed</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>updated_at &lt; :date</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_updated_at'>updated_at</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>updated_at</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="previous-instance_method">
+  
+    - (<tt>Object</tt>) <strong>previous</strong>(show_trashed = false) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 76</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_previous'>previous</span><span class='lparen'>(</span><span class='id identifier rubyid_show_trashed'>show_trashed</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_questions'>questions</span><span class='period'>.</span><span class='id identifier rubyid_trashed'>trashed</span><span class='lparen'>(</span><span class='id identifier rubyid_show_trashed'>show_trashed</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>updated_at &gt; :date</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_updated_at'>updated_at</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>updated_at</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="tag_list-instance_method">
+  
+    - (<tt>Object</tt>) <strong>tag_list</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 80</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_tag_list'>tag_list</span>
+  <span class='kw'>super</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>,</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="top_motions-instance_method">
+  
+    - (<tt>Object</tt>) <strong>top_motions</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+84
+85
+86</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 84</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_top_motions'>top_motions</span>
+  <span class='id identifier rubyid_motions'>motions</span><span class='period'>.</span><span class='id identifier rubyid_trashed'>trashed</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='label'>updated_at:</span> <span class='symbol'>:desc</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_limit'>limit</span><span class='lparen'>(</span><span class='int'>3</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="update_vote_counters-instance_method">
+  
+    - (<tt>Object</tt>) <strong>update_vote_counters</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+88
+89
+90
+91
+92</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/models/question.rb', line 88</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_update_vote_counters'>update_vote_counters</span>
+  <span class='id identifier rubyid_vote_counts'>vote_counts</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_votes'>votes</span><span class='period'>.</span><span class='id identifier rubyid_group'>group</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>&quot;for&quot;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span>
+  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_update'>update</span> <span class='label'>votes_pro_count:</span> <span class='id identifier rubyid_vote_counts'>vote_counts</span><span class='lbracket'>[</span><span class='const'>Vote</span><span class='period'>.</span><span class='id identifier rubyid_fors'>fors</span><span class='lbracket'>[</span><span class='symbol'>:pro</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>0</span><span class='comma'>,</span>
+              <span class='label'>votes_con_count:</span> <span class='id identifier rubyid_vote_counts'>vote_counts</span><span class='lbracket'>[</span><span class='const'>Vote</span><span class='period'>.</span><span class='id identifier rubyid_fors'>fors</span><span class='lbracket'>[</span><span class='symbol'>:con</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated on Tue Jan  5 11:17:42 2016 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.8.7.6 (ruby-2.1.6).
+</div>
+
+  </body>
+</html>
