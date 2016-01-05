@@ -42,6 +42,10 @@ module Argu
       Devise::SessionsController.layout 'closed'
     end
 
+    ############################
+    # Middlewares
+    ############################
+
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
@@ -52,6 +56,10 @@ module Argu
     end
     config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
+
+    ############################
+    # Assets
+    ############################
 
     require 'argu/stateful_server_renderer'
     config.react.addons = false
@@ -66,6 +74,11 @@ module Argu
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+
+    ############################
+    # I18n & locales
+    ############################
 
     config.time_zone = 'UTC'
     I18n.available_locales = [:nl, :en]

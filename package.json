@@ -20,6 +20,7 @@
     "react-scroll-lock": "^0.1.1",
     "react-select": "^0.9.1",
     "redux": "^3.0.4",
+    "redux-api-middleware": "^1.0.0-beta3",
     "reflux": "^0.2.12",
     "url": "^0.11.0",
     "whatwg-fetch": "^0.10.1"
@@ -64,7 +65,7 @@
   },
   "scripts": {
     "build": "gulp build && gulp build-components",
-    "doc": "jsdoc -c app/assets/javascripts/jsdoc.json -r",
+    "doc": "jsdoc -R ./README.js.md -c app/assets/javascripts/jsdoc.json -r",
     "lint": "eslint ./app/assets/javascripts"
   }
 }

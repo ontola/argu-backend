@@ -1,9 +1,10 @@
 class VotesController < AuthenticatedController
+  include NestedResourceHelper
   skip_before_action :check_if_member, only: :destroy
 
   # GET /model/:model_id/vote
   def show
-    @model = get_voteable
+    @model = get_parent_resource
 
     authorize @model.forum, :show?
 
@@ -22,7 +23,7 @@ class VotesController < AuthenticatedController
   end
 
   def new
-    @model = get_voteable
+    @model = get_parent_resource
     authorize @model, :show?
 
     render locals: {
@@ -33,7 +34,7 @@ class VotesController < AuthenticatedController
 
   # POST /model/:model_id/v/:for
   def create
-    @model = get_voteable
+    @model = get_parent_resource
     get_context
 
     authorize @model.forum, :show?
@@ -78,23 +79,19 @@ class VotesController < AuthenticatedController
     end
   end
 
+  private
+
   def self.forum_for(url_options)
-    voteable = voteable_klass(url_options).find_by(id: url_options[voteable_key(url_options)])
+    voteable = parent_resource_klass(url_options).find_by(id: url_options[parent_resource_key(url_options)])
     voteable.try :forum if voteable.present?
   end
 
-  def get_voteable
-    voteable_class.find params[voteable_param]
-  end
-
-  private
-
   def authenticated_resource!
-    get_voteable
+    get_parent_resource
   end
 
   def check_if_member
-    resource = get_voteable
+    resource = get_parent_resource
     if current_profile.present? && !current_profile.member_of?(resource.forum)
       options = {
           forum: resource.forum,
@@ -103,7 +100,7 @@ class VotesController < AuthenticatedController
       if request.format == 'json'
         options[:body] = {
             error: 'NO_MEMBERSHIP',
-            membership_url: forum_memberships_url(get_voteable.forum, redirect: false)
+            membership_url: forum_memberships_url(get_parent_resource.forum, redirect: false)
         }
       end
       raise Argu::NotAMemberError.new(options)
@@ -112,7 +109,7 @@ class VotesController < AuthenticatedController
 
   def check_if_registered
     if current_profile.blank?
-      resource = get_voteable
+      resource = get_parent_resource
       authorize resource, :show?
       raise Argu::NotAUserError.new(resource.forum, redirect_url)
     end
@@ -139,7 +136,7 @@ class VotesController < AuthenticatedController
   end
 
   def redirect_url
-    redirect_url = URI.parse(url_for([:new, get_voteable, :vote, only_path: true]))
+    redirect_url = URI.parse(url_for([:new, get_parent_resource, :vote, only_path: true]))
     redirect_url.query = query_payload(confirm: true)
     redirect_url
   end
@@ -148,26 +145,4 @@ class VotesController < AuthenticatedController
   def save_vote_to_stats(vote)
     #TODO: @implement this
   end
-
-  def voteable_class
-    VotesController.voteable_klass(request.path_parameters)
-  end
-
-  def self.voteable_key(hash)
-    hash.keys.find { |k| /_id/ =~ k }
-  end
-
-  # Note: Safe to constantize since `path_parameters` uses the routes for naming.
-  def self.voteable_klass(opts = nil)
-    voteable_type(opts).capitalize.constantize
-  end
-
-  def voteable_param
-    VotesController.voteable_key(request.path_parameters)
-  end
-
-  def self.voteable_type(opts = nil)
-    voteable_key(opts)[0..-4]
-  end
-
 end

@@ -36,6 +36,9 @@ Argu::Application.routes.draw do
     get :convert, action: :convert
     put :convert, action: :convert!
   end
+  concern :flowable do
+    get :flow, controller: :flow, action: :show
+  end
   concern :transferable do
     get :transfer, action: :transfer
     put :transfer, action: :transfer!
@@ -99,21 +102,29 @@ Argu::Application.routes.draw do
   post 'v/:for' => 'votes#create', as: :vote
   resources :votes, only: [:destroy], path: :v
 
-  resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible] do
+  resources :questions,
+            path: 'q', except: [:index, :new, :create],
+            concerns: [:moveable, :convertible, :flowable] do
     resources :question_answers, path: 'qa', only: [:new, :create]
     resources :tags, path: 't', only: [:index]
   end
 
   resources :question_answers, path: 'qa', only: [:edit, :update, :destroy, :delete]
 
-  resources :motions, path: 'm', except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
+  resources :motions,
+            path: 'm',
+            except: [:index, :new, :create],
+            concerns: [:moveable, :convertible, :votable, :flowable] do
     resources :groups, only: [] do
       resources :group_responses, path: 'responses', as: 'responses', only: [:new, :create]
     end
     resources :tags, path: 't', only: [:index]
   end
 
-  resources :arguments, path: 'a', except: [:index, :new, :create], concerns: [:votable] do
+  resources :arguments,
+            path: 'a',
+            except: [:index, :new, :create],
+            concerns: [:votable, :flowable] do
     resources :comments, path: 'c', only: [:new, :index, :show, :create, :update, :edit, :destroy]
     patch 'comments' => 'comments#create'
   end
@@ -186,7 +197,10 @@ Argu::Application.routes.draw do
 
   resources :info, path: 'i', only: [:show]
 
-  resources :forums, only: [:show, :update], path: '' do
+  resources :forums,
+            only: [:show, :update],
+            path: '',
+            concerns: [:flowable] do
     get :discover, on: :collection, action: :discover
     get :settings, on: :member
     get :statistics, on: :member

@@ -155,9 +155,11 @@ export const TimeLinePhases = React.createClass({
             return undefined;
         }
 
+        debugger;
+
         return updates
             .filter((update) => {
-                return update.phaseId === phaseId;
+                return update.get('phaseId') === phaseId;
             })
             .map((update) => {
                 const point = this.pointByItem('update', update.id);

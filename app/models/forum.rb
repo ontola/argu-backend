@@ -73,17 +73,26 @@ class Forum < ActiveRecord::Base
     end
   end
 
-  def display_name
-    name
-  end
-
   def creator
     page.owner
+  end
+
+  def display_name
+    name
   end
 
   # http://schema.org/description
   def description
     self.bio
+  end
+
+  def self.find(*ids)
+    shortname = ids.length == 1 && ids.first.instance_of?(String) && ids.first
+    if (shortname.to_i == 0)
+      find_via_shortname(shortname)
+    else
+      super(*ids)
+    end
   end
 
   def full_access_token
