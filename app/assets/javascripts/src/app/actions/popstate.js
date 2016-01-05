@@ -13,6 +13,8 @@ import * as Types from '../constants/ActionTypes';
 export default function popstate(stateTree) {
     return {
         type: Types.POPSTATE,
-        stateTree: stateTree
+        payload: {
+            stateTree: stateTree
+        }
     };
 }

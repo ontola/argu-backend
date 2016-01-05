@@ -23,6 +23,8 @@ export function setActiveTimeline(timelineId) {
 export function setCurrentPhase(phaseId) {
     return {
         type: Types.SET_CURRENT_PHASE,
-        phaseId: phaseId
+        payload: {
+            phaseId: phaseId
+        }
     }
 }

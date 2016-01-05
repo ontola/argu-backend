@@ -13,7 +13,9 @@ import * as Types from '../constants/ActionTypes';
 export function setActivePoint(pointId) {
     return {
         type: Types.SET_ACTIVE_POINT,
-        pointId: pointId
+        payload: {
+            pointId: pointId
+        }
     };
 }
 
@@ -25,7 +27,9 @@ export function setActivePoint(pointId) {
 export function nextPoint(timelineId) {
     return {
         type: Types.NEXT_POINT,
-        timelineId: timelineId
+        payload: {
+            timelineId: timelineId
+        }
     };
 }
 
@@ -37,6 +41,8 @@ export function nextPoint(timelineId) {
 export function previousPoint(timelineId) {
     return {
         type: Types.PREVIOUS_POINT,
-        timelineId: timelineId
+        payload: {
+            timelineId: timelineId
+        }
     };
 }

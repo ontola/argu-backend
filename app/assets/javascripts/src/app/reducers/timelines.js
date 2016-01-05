@@ -29,12 +29,12 @@ export default function timelines(state = initialState, action) {
     switch (action.type) {
         case SET_ACTIVE_TIMELINE:
             return state.withMutations((mutState) => {
-                mutState.set('activeTimelineId', action.timelineId);
+                mutState.set('activeTimelineId', action.payload.timelineId);
                 mutState.set('activeTimeline',
                     state
                         .get('collection')
                         .find(t => {
-                            return t.id === action.timelineId;
+                            return t.id === action.payload.timelineId;
                     }))
             });
         default:

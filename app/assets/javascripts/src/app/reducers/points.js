@@ -43,9 +43,9 @@ export default function points(state = initialState, action) {
     switch (action.type) {
         case SET_ACTIVE_POINT:
             return state.withMutations((mutState) => {
-                mutState.set('activePointId', action.pointId);
+                mutState.set('activePointId', action.payload.pointId);
                 mutState.set('activePoint',
-                    state.getIn(['collection', action.pointId]))
+                    state.getIn(['collection', action.payload.pointId]))
             });
         case NEXT_POINT:
             const next = nextPointByDate(state);
@@ -54,7 +54,7 @@ export default function points(state = initialState, action) {
                 mutState.set('activePoint', next);
             });
         case POPSTATE:
-            return action.stateTree.points;
+            return action.payload.stateTree.points;
         default:
             return state;
     }
