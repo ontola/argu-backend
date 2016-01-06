@@ -61,10 +61,20 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound do |exception|
     @quote = (Setting.get(:quotes) || '').split(';').sample
+    @additional_error_info = exception.to_s
     respond_to do |format|
       format.html { render 'status/404', status: 404 }
       format.js { head 404 }
       format.json { render json: { title: t('status.s_404.header'), message: t('status.s_404.body'), quote: @quote}, status: 404 }
+    end
+  end
+
+  rescue_from ActionController::ParameterMissing do |exception|
+    @additional_error_info = exception.to_s
+    respond_to do |format|
+      format.html { render 'status/400', status: 400 }
+      format.json { render json: { title: t('status.s_400.header'), message: t('status.s_400.body'), quote: @quote}, status: 400 }
+      format.js { head 400 }
     end
   end
 

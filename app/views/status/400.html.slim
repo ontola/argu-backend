@@ -1,13 +1,13 @@
-=set_title t('status.s_404.header')
+=set_title t('status.s_400.header')
 .col-1
   .box
     section
-      h1= t('status.s_404.header')
-      p= t('status.s_404.body')
+      h1= t('status.s_400.header')
+      p= t('status.s_400.body')
       - if @additional_error_info.present?
         p= t('status.extra_info', info_string: @additional_error_info)
       p
-        a[href=t('status.s_404.reference_link_url') target="_blank"]= t('status.s_404.reference_link_body')
+        a[href=t('status.s_400.reference_link_url') target="_blank"]= t('status.s_400.reference_link_body')
   - if @quote.present?
     .bigger.center
       blockquote.blockquote--inline= @quote
