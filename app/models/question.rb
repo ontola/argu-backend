@@ -4,9 +4,8 @@ class Question < ActiveRecord::Base
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
-  has_many :question_answers, inverse_of: :question, dependent: :destroy
   has_many :votes, as: :voteable, :dependent => :destroy
-  has_many :motions, through: :question_answers
+  has_many :motions
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
@@ -59,7 +58,7 @@ class Question < ActiveRecord::Base
           m.move_to forum, false
         end
       else
-        self.question_answers.lock(true).delete_all
+        self.motions.update_all question_id: nil
       end
       old_forum.reload.decrement :questions_count
       old_forum.save

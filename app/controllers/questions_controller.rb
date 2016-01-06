@@ -3,9 +3,10 @@ class QuestionsController < AuthenticatedController
   def show
     @forum = @question.forum
     current_context @question
-    @question_answers = @question.question_answers
-                            .where(motion_id: policy_scope(@question.motions.trashed(show_trashed?))
-                                              .order(updated_at: :desc).pluck(:id))
+    @motions = policy_scope(@question
+                                       .motions
+                                       .trashed(show_trashed?)
+                                       .order(updated_at: :desc))
 
     respond_to do |format|
       format.html # show.html.erb
@@ -154,19 +155,20 @@ class QuestionsController < AuthenticatedController
     end
   end
 
-private
-  def authorize_show
-    @question = Question.find(params[:id])
-    authorize @question, :show?
-  end
-
-  def self.forum_for(url_options)
+  def forum_for(url_options)
     question_id = url_options[:question_id] || url_options[:id]
     if question_id.presence
       Question.find_by(id: question_id).try(:forum)
     elsif url_options[:forum_id].present?
       Forum.find_via_shortname_nil url_options[:forum_id]
     end
+  end
+
+  private
+
+  def authorize_show
+    @question = Question.find(params[:id])
+    authorize @question, :show?
   end
 
   def permit_params

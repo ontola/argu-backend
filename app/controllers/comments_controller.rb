@@ -111,7 +111,17 @@ class CommentsController < AuthenticatedController
     end
   end
 
-private
+  def forum_for(url_options)
+    comment = Comment.find_by(id: url_options[:id]) if url_options[:id].present?
+    if comment.present?
+      comment.commentable.try(:forum)
+    elsif url_options[:argument_id].present?
+      Argument.find_by(id: url_options[:argument_id]).try(:forum)
+    end
+  end
+
+  private
+
   def authorize_show
     @comment = Comment.find params[:id]
     set_tenant(@comment)
@@ -151,14 +161,6 @@ private
     commentable_type.capitalize.constantize
   end
 
-  def self.forum_for(url_options)
-    comment = Comment.find_by(id: url_options[:id]) if url_options[:id].present?
-    if comment.present?
-      comment.commentable.try(:forum)
-    elsif url_options[:argument_id].present?
-      Argument.find_by(id: url_options[:argument_id]).try(:forum)
-    end
-  end
 
   def new_comment_params
     params[:comment].present? ? comment_params : nil

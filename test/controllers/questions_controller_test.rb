@@ -23,10 +23,9 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_response 200
     assert_not_nil assigns(:question)
     assert_not_nil assigns(:forum)
-    assert_not_nil assigns(:question_answers)
 
     assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
-    assert_not assigns(:question_answers).any? { |qa| qa.motion.is_trashed? }, 'Trashed motions are visible'
+    assert_not assigns(:motions).any? { |motion| motion.is_trashed? }, 'Trashed motions are visible'
   end
 
   ####################################
@@ -41,10 +40,9 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_response 200
     assert_not_nil assigns(:question)
     assert_not_nil assigns(:forum)
-    assert_not_nil assigns(:question_answers)
 
     assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
-    assert_not assigns(:question_answers).any? { |qa| qa.motion.is_trashed? }, 'Trashed motions are visible'
+    assert_not assigns(:motions).any? { |motion| motion.is_trashed? }, 'Trashed motions are visible'
   end
 
   ####################################
@@ -261,14 +259,16 @@ class QuestionsControllerTest < ActionController::TestCase
   let(:freetown_to) { FactoryGirl.create(:forum) }
 
   # Currently only staffers can convert items
-  test 'should put move!' do
+  test 'should put move! without motions' do
     sign_in staff
 
     assert_differences [['freetown.reload.questions_count', -1],
                         ['freetown_to.reload.questions_count', 1]] do
       put :move!,
           question_id: subject,
-          question: { forum_id: freetown_to.id }
+          question: {
+            forum_id: freetown_to.id
+          }
     end
     assert_redirected_to assigns(:question)
 
@@ -276,7 +276,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_equal freetown_to, assigns(:question).forum
     forum_id = freetown_to.id
     assigns(:question).motions.pluck(:forum_id).each do |id|
-      assert_equal forum_id, id
+      assert_equal freetown.id, id
     end
     assert assigns(:question).motions.blank?
     assigns(:question).activities.pluck(:forum_id).each do |id|
@@ -288,7 +288,38 @@ class QuestionsControllerTest < ActionController::TestCase
 
   end
 
+  test 'should put move! with motions' do
+    sign_in staff
+
+    assert_differences [['freetown.reload.questions_count', -1],
+                        ['freetown_to.reload.questions_count', 1]] do
+      put :move!,
+          question_id: subject,
+          question: {
+            include_motions: '1',
+            forum_id: freetown_to.id
+          }
+    end
+    assert_redirected_to assigns(:question)
+
+    assert assigns(:question)
+    assert_equal freetown_to, assigns(:question).forum
+    forum_id = freetown_to.id
+    assigns(:question).motions.pluck(:forum_id).each do |id|
+      assert_equal forum_id, id
+    end
+    assert_equal 2, assigns(:question).motions.length
+    assigns(:question).activities.pluck(:forum_id).each do |id|
+      assert_equal forum_id, id
+    end
+    assigns(:question).taggings.pluck(:forum_id).each do |id|
+      assert_equal forum_id, id
+    end
+
+  end
+
   private
+
   def create_changes_array
     [['Question.count', 1],
      ['Activity.count', 1],

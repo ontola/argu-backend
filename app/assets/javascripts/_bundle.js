@@ -4137,7 +4137,7 @@ var MotionSelect = exports.MotionSelect = _react2.default.createClass({
             name: 'question_answer[motion_id]',
             placeholder: 'Select motion',
             matchProp: 'any',
-            ignoreCase: 'true',
+            ignoreCase: true,
             filterOptions: this.filterOptions,
             optionComponent: MotionOption,
             singleValueComponent: _membership.SingleValue,

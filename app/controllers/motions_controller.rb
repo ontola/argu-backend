@@ -41,12 +41,8 @@ class MotionsController < AuthenticatedController
   # GET /motions/new.json
   def new
     get_context
-    @motion = @forum.motions.new permit_params
-    if params[:question_id]
-      question = Question.find(params[:question_id])
-      @motion.questions << question if @motion.forum_id == question.forum_id
-    end
-    authorize @motion, @motion.questions.presence ? :new? : :new_without_question?
+    @motion = @forum.motions.new permit_paramst
+    authorize @motion, @motion.question.presence ? :new? : :new_without_question?
     current_context @motion
     respond_to do |format|
       format.js { render js: "window.location = #{request.url.to_json}" }
@@ -75,7 +71,7 @@ class MotionsController < AuthenticatedController
                                forum_id: @forum.id,
                                publisher: current_user
                            })
-    action = @cm.resource.question_answers.presence ? :create? : :create_without_question?
+    action = @cm.resource.question.presence ? :create? : :create_without_question?
     authorize @cm.resource, action
     @cm.subscribe(ActivityListener.new)
     @cm.on(:create_motion_successful) do |motion|
@@ -191,19 +187,20 @@ class MotionsController < AuthenticatedController
     end
   end
 
-private
-  def authorize_show
-    @motion = Motion.includes(:arguments).find(params[:id])
-    authorize @motion, :show?
-  end
-
-  def self.forum_for(url_options)
+  def forum_for(url_options)
     motion_id = url_options[:motion_id] || url_options[:id]
     if motion_id.presence
       Motion.find_by(id: motion_id).try(:forum)
     elsif url_options[:forum_id].present?
       Forum.find_via_shortname_nil url_options[:forum_id]
     end
+  end
+
+  private
+
+  def authorize_show
+    @motion = Motion.includes(:arguments).find(params[:id])
+    authorize @motion, :show?
   end
 
   def get_context

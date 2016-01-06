@@ -120,6 +120,15 @@ class ArgumentsController < AuthenticatedController
     end
   end
 
+  def forum_for(url_options)
+    argument_id = url_options[:argument_id] || url_options[:id]
+    if argument_id.presence
+      Argument.find_by(id: argument_id).try(:forum)
+    elsif url_options[:forum_id].present?
+      Forum.find_via_shortname_nil url_options[:forum_id]
+    end
+  end
+
 private
   def authorize_show
     @argument = Argument.includes(:comment_threads).find params[:id]
@@ -128,15 +137,6 @@ private
 
   def argument_params
     params.require(:argument).permit(*policy(@argument || Argument).permitted_attributes)
-  end
-
-  def self.forum_for(url_options)
-    argument_id = url_options[:argument_id] || url_options[:id]
-    if argument_id.presence
-      Argument.find_by(id: argument_id).try(:forum)
-    elsif url_options[:forum_id].present?
-      Forum.find_via_shortname_nil url_options[:forum_id]
-    end
   end
 
   def set_tenant(item)

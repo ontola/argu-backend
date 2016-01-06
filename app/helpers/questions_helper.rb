@@ -8,7 +8,7 @@ module QuestionsHelper
     end
     if policy(QuestionAnswer).new?
       link_items << link_item(t('question_answers.couple_motion'),
-                              new_question_question_answer_url(question),
+                              new_question_answer_url(question_answer: {question_id: question}),
                               fa: 'link')
     end
     if policy(question).trash?

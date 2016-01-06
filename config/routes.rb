@@ -68,14 +68,15 @@ Argu::Application.routes.draw do
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
 
-  devise_for :users, controllers: {
-                       registrations: 'registrations',
-                       sessions: 'users/sessions',
-                       invitations: 'users/invitations',
-                       passwords: 'users/passwords',
-                       omniauth_callbacks: 'omniauth_callbacks',
-                       confirmations: 'users/confirmations'
-                   }, skip: :registrations
+  devise_for :users,
+             controllers: {
+               registrations: 'registrations',
+               sessions: 'users/sessions',
+               invitations: 'users/invitations',
+               passwords: 'users/passwords',
+               omniauth_callbacks: 'omniauth_callbacks',
+               confirmations: 'users/confirmations'
+             }, skip: :registrations
 
   as :user do
     get 'users/verify', to: 'users/sessions#verify'
@@ -105,11 +106,10 @@ Argu::Application.routes.draw do
   resources :questions,
             path: 'q', except: [:index, :new, :create],
             concerns: [:moveable, :convertible, :flowable] do
-    resources :question_answers, path: 'qa', only: [:new, :create]
     resources :tags, path: 't', only: [:index]
   end
 
-  resources :question_answers, path: 'qa', only: [:edit, :update, :destroy, :delete]
+  resources :question_answers, path: 'qa', only: [:new, :create]
 
   resources :motions,
             path: 'm',

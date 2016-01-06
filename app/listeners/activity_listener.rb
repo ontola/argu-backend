@@ -25,7 +25,7 @@ class ActivityListener
   end
 
   def create_motion_successful(motion)
-    recipient = motion.questions.present? ? motion.questions.first : motion.forum
+    recipient = motion.question || motion.forum
     a = CreateActivity
             .new(motion.creator,
                  trackable: motion,

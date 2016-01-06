@@ -10,9 +10,11 @@ FactoryGirl.define do
     trait :with_motions do
       after(:create) do |question, evaluator|
         create_list :motion, 3,
-                    questions: [question]
+                    question: question,
+                    forum: question.forum
         create_list :motion, 3,
-                    questions: [question],
+                    question: question,
+                    forum: question.forum,
                     is_trashed: true
       end
     end

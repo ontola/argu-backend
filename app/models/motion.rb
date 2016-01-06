@@ -6,11 +6,9 @@ class Motion < ActiveRecord::Base
   belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
+  belongs_to :question
   has_many :arguments, -> { argument_comments }, :dependent => :destroy
   has_many :votes, as: :voteable, :dependent => :destroy
-  has_many :question_answers, inverse_of: :motion, dependent: :destroy
-  accepts_nested_attributes_for :question_answers
-  has_many :questions, through: :question_answers
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :group_responses
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
@@ -20,7 +18,7 @@ class Motion < ActiveRecord::Base
 
   counter_culture :forum
   acts_as_followable
-  parentable :questions, :forum
+  parentable :question, :forum
   convertible :votes, :taggings, :activities
   resourcify
   mount_uploader :cover_photo, CoverUploader
@@ -40,7 +38,7 @@ class Motion < ActiveRecord::Base
                                 "%#{q}%") }
 
   def assert_tenant
-    if self.questions.map { |q| q.forum }.uniq.length > 1
+    if self.question.present? && self.question.forum_id != self.forum_id
       errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))
     end
   end
@@ -99,23 +97,23 @@ class Motion < ActiveRecord::Base
   end
 
   def motions_title
-    self.questions.first.try(:motions_title) ||
+    self.question.try(:motions_title) ||
       self.forum.motions_title
   end
 
   def motions_title_singular
-    self.questions.first.try(:motions_title_singular) ||
+    self.question.try(:motions_title_singular) ||
       self.forum.motions_title_singular
   end
 
-  def move_to(forum, unlink_questions = true)
+  def move_to(forum, unlink_question = true)
     Motion.transaction do
       old_forum = self.forum.lock!
       self.forum = forum.lock!
+      self.question_id = nil if unlink_question
       self.save
       self.arguments.lock(true).update_all forum_id: forum.id
       self.votes.lock(true).update_all forum_id: forum.id
-      self.question_answers.lock(true).delete_all if unlink_questions
       self.activities.lock(true).update_all forum_id: forum.id
       self.taggings.lock(true).update_all forum_id: forum.id
       self.group_responses.lock(true).delete_all
@@ -184,7 +182,7 @@ class Motion < ActiveRecord::Base
   end
 
   def uses_alternative_names
-    self.questions.first.try(:uses_alternative_names) ||
+    self.question.try(:uses_alternative_names) ||
       self.forum.uses_alternative_names
   end
 
