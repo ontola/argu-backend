@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  include ArguBase, Shortnameable
+  include ArguBase, Shortnameable, Flowable
 
   has_one :profile, as: :profileable, dependent: :destroy
   has_many :identities, dependent: :destroy
@@ -63,13 +63,17 @@ class User < ActiveRecord::Base
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
 
-#######Attributes########
   def display_name
     [self.first_name, self.middle_name, self.last_name].compact.join(' ').presence || self.url
   end
 
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
+  end
+
+  # Since we're the ones creating activities, we should select them based on us being the owner
+  def flow
+    Activity.where(owner: profile)
   end
 
   def greeting

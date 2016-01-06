@@ -1,5 +1,5 @@
 class Forum < ActiveRecord::Base
-  include ArguBase, Attribution, Shortnameable
+  include ArguBase, Attribution, Shortnameable, Flowable
 
   belongs_to :page
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id
@@ -88,7 +88,7 @@ class Forum < ActiveRecord::Base
 
   def self.find(*ids)
     shortname = ids.length == 1 && ids.first.instance_of?(String) && ids.first
-    if (shortname.to_i == 0)
+    if (shortname && shortname.to_i == 0)
       find_via_shortname(shortname)
     else
       super(*ids)

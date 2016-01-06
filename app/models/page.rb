@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  include ArguBase, Shortnameable
+  include ArguBase, Shortnameable, Flowable
 
   has_one :profile, dependent: :destroy, as: :profileable
   accepts_nested_attributes_for :profile
@@ -31,6 +31,11 @@ class Page < ActiveRecord::Base
     else
      self.url
     end
+  end
+
+  # Since we're the ones creating activities, we should select them based on us being the owner
+  def flow
+    Activity.where(owner: profile)
   end
 
   def finished_intro?

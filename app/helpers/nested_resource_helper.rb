@@ -5,11 +5,16 @@
 module NestedResourceHelper
 
   # Finds the parent resource based on the URL's :foo_id param
+  # @note This method knows {Shortnameable}
   # @return [Model] A resource model if found
   # @raise [ActiveRecord::RecordNotFound] {http://api.rubyonrails.org/classes/ActiveRecord/RecordNotFound.html Rails docs}
   # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
   def get_parent_resource
-    parent_resource_class.find params[parent_resource_param]
+    if parent_resource_class.try(:shortnameable?)
+      parent_resource_class.find_via_shortname! params[parent_resource_param]
+    else
+      parent_resource_class.find params[parent_resource_param]
+    end
   end
 
   # Determines the parent resource's class from the request

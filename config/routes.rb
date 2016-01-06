@@ -86,7 +86,10 @@ Argu::Application.routes.draw do
     delete 'users', to: 'registrations#destroy', as: nil
   end
 
-  resources :users, path: 'u', only: [:show, :update] do
+  resources :users,
+            path: 'u',
+            only: [:show, :update],
+            concerns: [:flowable] do
     resources :identities, only: :destroy, controller: 'users/identities'
     get :edit, to: 'profiles#edit', on: :member
 
@@ -135,7 +138,10 @@ Argu::Application.routes.draw do
   end
   resources :group_memberships, only: :destroy
 
-  resources :pages, path: 'o', only: [:new, :create, :show, :update, :delete, :destroy] do
+  resources :pages,
+            path: 'o',
+            only: [:new, :create, :show, :update, :delete, :destroy] ,
+            concerns: [:flowable] do
     get :delete, on: :member
     get :transfer, on: :member
     put :transfer, on: :member, action: :transfer!
