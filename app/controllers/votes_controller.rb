@@ -1,4 +1,4 @@
-class VotesController < AuthenticatedController
+class VotesController < AuthorizedController
   include NestedResourceHelper
   skip_before_action :check_if_member, only: :destroy
 
@@ -86,8 +86,9 @@ class VotesController < AuthenticatedController
 
   private
 
+  # @return [Model] parent The vote, or if it doesn't exists yet, the parent on which the Vote is created.
   def authenticated_resource!
-    get_parent_resource
+    params[:id].present? ? Vote.find(params[:id]) : get_parent_resource
   end
 
   def check_if_member

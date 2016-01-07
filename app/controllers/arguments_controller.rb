@@ -1,4 +1,4 @@
-class ArgumentsController < AuthenticatedController
+class ArgumentsController < AuthorizedController
 
   # GET /arguments/1
   # GET /arguments/1.json

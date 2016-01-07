@@ -71,14 +71,12 @@ class MotionsControllerTest < ActionController::TestCase
       post :create, forum_id: freetown, motion: {title: 'Motion', content: 'Contents'}
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
 
     assert_differences create_changes_array(false) do
       post :create, forum_id: freetown, motion: {title: 'Motion2', content: 'Contents'}
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:cm).resource)
   end
 
@@ -136,7 +134,6 @@ class MotionsControllerTest < ActionController::TestCase
            }
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:cm).resource,
                                      start_motion_tour: true)
   end
@@ -154,7 +151,6 @@ class MotionsControllerTest < ActionController::TestCase
            }
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_equal question, assigns(:cm).resource.reload.question
     assert_redirected_to motion_path(assigns(:cm).resource,
                                      start_motion_tour: true)
@@ -173,7 +169,6 @@ class MotionsControllerTest < ActionController::TestCase
            }
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_response 200
 
     assert_select '[name=motion[title]]', 'Motion'
@@ -267,7 +262,6 @@ class MotionsControllerTest < ActionController::TestCase
            motion: FactoryGirl.attributes_for(:motion)
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:cm).resource,
                                      start_motion_tour: true)
   end
@@ -286,7 +280,6 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_response 200
     assert assigns(:motion)
-    assert assigns(:forum)
   end
 
   test 'creator should put update' do

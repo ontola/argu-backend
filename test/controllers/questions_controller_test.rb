@@ -22,7 +22,6 @@ class QuestionsControllerTest < ActionController::TestCase
     get :show, id: subject
     assert_response 200
     assert_not_nil assigns(:question)
-    assert_not_nil assigns(:forum)
 
     assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
     assert_not assigns(:motions).any? { |motion| motion.is_trashed? }, 'Trashed motions are visible'
@@ -39,7 +38,6 @@ class QuestionsControllerTest < ActionController::TestCase
     get :show, id: subject
     assert_response 200
     assert_not_nil assigns(:question)
-    assert_not_nil assigns(:forum)
 
     assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
     assert_not assigns(:motions).any? { |motion| motion.is_trashed? }, 'Trashed motions are visible'
@@ -57,7 +55,6 @@ class QuestionsControllerTest < ActionController::TestCase
     get :new, forum_id: freetown
     assert_response 200
     assert_not_nil assigns(:question)
-    assert_not_nil assigns(:forum)
   end
 
   test 'member should post create' do
@@ -72,7 +69,6 @@ class QuestionsControllerTest < ActionController::TestCase
            }
     end
     assert_not_nil assigns(:cq).resource
-    assert_not_nil assigns(:forum)
     assert_redirected_to question_url(assigns(:cq).resource)
   end
 

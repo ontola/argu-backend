@@ -1,9 +1,9 @@
-class FlowController < AuthenticatedController
+class FlowController < AuthorizedController
   include NestedResourceHelper
 
   def show
-    resource = authenticated_resource!
-    @activities = policy_scope(resource.flow)
+    authorize authenticated_resource!, :show?
+    @activities = policy_scope(authenticated_resource!.flow)
 
     respond_to do |format|
       format.json do
@@ -16,7 +16,7 @@ class FlowController < AuthenticatedController
   private
 
   def authenticated_resource!
-    get_parent_resource
+    @_authenticated_resource ||= get_parent_resource
   end
 
 end

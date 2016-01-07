@@ -1,10 +1,11 @@
 
-class AuthenticatedController < ApplicationController
+class AuthorizedController < ApplicationController
   before_action :check_if_registered,
                 only: %i(new create delete destroy edit update)
   before_action :check_if_member,
                 only: %i(new create delete destroy edit update)
   before_action :authorize_show, only: :show
+  helper_method :authenticated_context
 
   rescue_from Argu::NotAUserError do |exception|
     @_not_a_user_caught = true
@@ -37,7 +38,8 @@ class AuthenticatedController < ApplicationController
     end
   end
 
-private
+  private
+
   def authorize_show
     authorize authenticated_resource!, :show?
   end
@@ -78,12 +80,29 @@ private
     end
   end
 
+  # This should be based only on static information and be side-effect free to make memoization possible.
   def authenticated_context
     if authenticated_resource!.present?
       authenticated_resource!.forum
     else
       tenant_by_param
     end
+  end
+
+  def naming_context
+    authenticated_context
+  end
+
+  # @private
+  def pundit_user
+    UserContext.new(current_user,
+                    current_profile,
+                    session,
+                    authenticated_context,
+                    {
+                      platform_open: platform_open?,
+                      within_user_cap: within_user_cap?
+                    })
   end
 
   def tenant_by_param

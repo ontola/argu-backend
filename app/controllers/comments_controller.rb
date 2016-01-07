@@ -1,4 +1,4 @@
-class CommentsController < AuthenticatedController
+class CommentsController < AuthorizedController
 
   def new
     @commentable = commentable_class.find params[commentable_param]

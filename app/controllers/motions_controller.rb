@@ -1,4 +1,4 @@
-class MotionsController < AuthenticatedController
+class MotionsController < AuthorizedController
   before_action :get_context, only: [:index, :new, :create]
 
   def index
@@ -23,10 +23,9 @@ class MotionsController < AuthenticatedController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    @forum = @motion.forum
     current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes))
-    @group_responses = Group.ordered_with_meta @motion.group_responses, @forum.groups, current_profile, @motion
+    @group_responses = Group.ordered_with_meta @motion.group_responses, authenticated_context.groups, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
 
@@ -41,7 +40,7 @@ class MotionsController < AuthenticatedController
   # GET /motions/new.json
   def new
     get_context
-    @motion = @forum.motions.new permit_paramst
+    @motion = authenticated_context.motions.new permit_params
     authorize @motion, @motion.question.presence ? :new? : :new_without_question?
     current_context @motion
     respond_to do |format|
@@ -54,7 +53,6 @@ class MotionsController < AuthenticatedController
   # GET /motions/1/edit
   def edit
     @motion = Motion.find_by_id(params[:id])
-    @forum = @motion.forum
     current_context @motion
     authorize @motion
     respond_to do |format|
@@ -65,10 +63,9 @@ class MotionsController < AuthenticatedController
   # POST /motions
   # POST /motions.json
   def create
-    get_context
     @cm = CreateMotion.new current_profile,
                            permit_params.merge({
-                               forum_id: @forum.id,
+                               forum_id: authenticated_context.id,
                                publisher: current_user
                            })
     action = @cm.resource.question.presence ? :create? : :create_without_question?
@@ -95,7 +92,6 @@ class MotionsController < AuthenticatedController
   def update
     @motion = Motion.find params[:id]
     @creator = @motion.creator
-    @forum = @motion.forum
     authorize @motion
 
     @motion.reload if process_cover_photo @motion, permit_params
@@ -198,6 +194,14 @@ class MotionsController < AuthenticatedController
 
   private
 
+  def authenticated_resource!
+    if (%w(convert convert! move move!) & [params[:action]]).present?
+      Motion.find(params[:motion_id])
+    else
+      super
+    end
+  end
+
   def authorize_show
     @motion = Motion.includes(:arguments).find(params[:id])
     authorize @motion, :show?
@@ -207,7 +211,6 @@ class MotionsController < AuthenticatedController
     if params[:question_id].present? || defined?(params[:motion][:question_id]) && params[:motion][:question_id].present?
       @question = Question.find(params[:question_id] || params[:motion][:question_id])
     end
-    @forum = authenticated_context
   end
 
   def permit_params

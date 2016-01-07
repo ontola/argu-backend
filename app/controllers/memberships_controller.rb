@@ -1,4 +1,4 @@
-class MembershipsController < AuthenticatedController
+class MembershipsController < AuthorizedController
   skip_before_action :check_if_member, only: %i(create)
 
   def create

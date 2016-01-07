@@ -1,4 +1,4 @@
-class GroupResponsesController < AuthenticatedController
+class GroupResponsesController < AuthorizedController
 
   def new
     group = Group.find params[:group_id]

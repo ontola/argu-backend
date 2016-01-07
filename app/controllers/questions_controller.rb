@@ -1,4 +1,4 @@
-class QuestionsController < AuthenticatedController
+class QuestionsController < AuthorizedController
 
   def show
     @forum = @question.forum
@@ -165,6 +165,14 @@ class QuestionsController < AuthenticatedController
   end
 
   private
+
+  def authenticated_resource!
+    if (%w(convert convert! move move!) & [params[:action]]).present?
+      Question.find(params[:question_id])
+    else
+      super
+    end
+  end
 
   def authorize_show
     @question = Question.find(params[:id])

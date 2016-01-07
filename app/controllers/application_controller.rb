@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
+  include Pundit, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController,
+          AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
@@ -167,23 +168,6 @@ class ApplicationController < ActionController::Base
                     })
   end
 
-  def render_register_modal(base_url=nil, *r_options)
-    if !r_options || r_options.first != false   # Only skip if r_options is false
-      r = URI.parse(base_url || request.fullpath)
-      r.query = r_options.map(&:to_a).reject { |a| a.last.blank? }.map { |a| [a[0], URI.encode(a[1])].join('=') }.join('&')
-      # r = Addressable::URI.new(base_url || request.fullpath)
-      # r.query_values = r_options.map(&:to_a).reject { |a| a.last.blank? }
-    else
-      r = nil
-    end
-    @resource ||= User.new(r: r.to_s, shortname: Shortname.new)
-    respond_to do |format|
-      format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
-      format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
-    end
-  end
-  deprecate :render_register_modal
-
   def rescue_stale
     respond_to do |format|
       format.html {
@@ -291,5 +275,11 @@ class ApplicationController < ActionController::Base
   # For Devise
   def after_sending_reset_password_instructions_path_for(resource_name)
     password_reset_confirm_path
+  end
+
+  private
+
+  def naming_context
+    current_context.context_scope(current_profile).root_parent.model
   end
 end

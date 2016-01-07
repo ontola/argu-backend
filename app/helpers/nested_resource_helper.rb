@@ -1,5 +1,5 @@
 # Helper to determine the parent of the nested resource
-# It is to be used with {AuthenticatedController} inherited resource controllers
+# It is to be used with {AuthorizedController} inherited resource controllers
 # @note Has been designed with a single parent resource in mind (route wise)
 # @author Fletcher91 <thom@argu.co>
 module NestedResourceHelper
