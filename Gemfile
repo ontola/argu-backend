@@ -26,7 +26,6 @@ gem 'formtastic', '~> 3.1.2'
 gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
 gem 'rest-client'
-gem 'multimap'
 gem 'squirm_rails', require: 'squirm/rails'
 
 ##################Features########################
@@ -105,7 +104,7 @@ gem 'rolify', '~> 3.4.1'
 group :development, :test do
   #gem 'thin'
   gem 'puma', platform: :ruby
-  gem 'nokogiri', '1.6.5'
+  gem 'nokogiri', '1.6.7.1'
   gem 'minitest-rails', '~> 2.2.0'
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'minitest-bang'
@@ -117,7 +116,7 @@ group :development, :test do
   gem 'chromedriver-helper'
   gem 'mocha'
   gem 'pry'
-  gem 'mailcatcher'
+  gem 'mailcatcher', '~> 0.6.2'
   #gem 'byebug'
   #gem 'pry-byebug'
   gem 'meta_request'
