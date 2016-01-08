@@ -7,7 +7,8 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
   .cover.cover--forum
     -if @forum.cover_photo.url.present?
       .cover-image.cover-image--bigger.bg-img[onload="this.style.opacity='1'" style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
-      span.header-attribution= @forum.cover_photo_attribution
+      - if @forum.cover_photo_attribution.present?
+        span.header-attribution= @forum.cover_photo_attribution
     -else
       .cover-image.cover-image-empty
     .cover-overlay
