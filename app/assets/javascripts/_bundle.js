@@ -2332,14 +2332,15 @@ var Notifications = exports.Notifications = _react2.default.createClass({
 
         var loadMore = _react2.default.createElement(
             'li',
-            null,
+            { className: 'notification-btn' },
             _react2.default.createElement(
                 'a',
                 { href: '#', onMouseDownCapture: this.loadMore, 'data-skip-pjax': 'true' },
+                _react2.default.createElement('span', { className: 'fa fa-arrow-down' }),
                 _react2.default.createElement(
                     'span',
-                    { className: 'notification-description' },
-                    this.state.loadMore ? 'Meer' : 'Geen oudere'
+                    { className: 'icon-left' },
+                    this.state.loadMore ? 'Load more...' : 'No more notifications'
                 )
             )
         );
@@ -2348,17 +2349,8 @@ var Notifications = exports.Notifications = _react2.default.createClass({
             'ul',
             { className: 'notifications' },
             _react2.default.createElement(
-                'p',
-                { className: 'notifications-btn-top' },
-                _react2.default.createElement(
-                    'span',
-                    null,
-                    'Notificaties bèta'
-                )
-            ),
-            _react2.default.createElement(
-                'p',
-                { className: 'notifications-btn-top' },
+                'li',
+                { className: 'notification-btn' },
                 _react2.default.createElement(
                     'a',
                     { href: '#', onClick: this.markAsRead },
@@ -2366,7 +2358,7 @@ var Notifications = exports.Notifications = _react2.default.createClass({
                     _react2.default.createElement(
                         'span',
                         { className: 'icon-left' },
-                        'Markeer alle als gelezen'
+                        'Mark all as read'
                     )
                 )
             ),
@@ -2409,7 +2401,7 @@ var NotificationItem = exports.NotificationItem = _react2.default.createClass({
 
         return _react2.default.createElement(
             'li',
-            { className: className },
+            { className: 'notification-item ' + className },
             _react2.default.createElement(
                 'a',
                 { href: this.props.url, 'data-remote': remote, 'data-method': method, onClick: this.handleClick, 'data-skip-pjax': skipPjax },

@@ -177,22 +177,20 @@ export const Notifications = React.createClass({
             return <NotificationItem key={item.id} read={item.read} done={this.props.done} {...item} />
         });
 
-        var loadMore = <li>
+        var loadMore = <li className="notification-btn">
                 <a href='#' onMouseDownCapture={this.loadMore} data-skip-pjax="true">
-                    <span className='notification-description'>{this.state.loadMore ? 'Meer' : 'Geen oudere'}</span>
+                    <span className="fa fa-arrow-down"></span>
+                    <span className='icon-left'>{this.state.loadMore ? 'Load more...' : 'No more notifications'}</span>
                 </a>
             </li>;
 
         return (<ul className="notifications">
-            <p className="notifications-btn-top">
-                <span>Notificaties bèta</span>
-            </p>
-            <p className="notifications-btn-top">
+            <li className="notification-btn">
                 <a href="#" onClick={this.markAsRead}>
                     <span className="fa fa-check"></span>
-                    <span className="icon-left">Markeer alle als gelezen</span>
+                    <span className="icon-left">Mark all as read</span>
                 </a>
-            </p>
+            </li>
             {notifications}
             {loadMore}
         </ul>);
@@ -228,7 +226,7 @@ export const NotificationItem = React.createClass({
             skipPjax = this.props.data['skip-pjax'];
         }
 
-        return (<li className={className}>
+        return (<li className={'notification-item ' + className}>
             <a href={this.props.url} data-remote={remote} data-method={method} onClick={this.handleClick} data-skip-pjax={skipPjax}>
                 <img src={this.props.creator.avatar.url} className="notification-avatar" />
                 <span className='notification-description'>{this.props.title}</span>
