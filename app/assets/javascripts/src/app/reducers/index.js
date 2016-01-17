@@ -4,15 +4,13 @@ import points from './points';
 import updates from './updates';
 import phases from './phases';
 import profiles from './profiles';
-import plannings from './plannings';
 
 const rootReducer = combineReducers({
     timelines,
     points,
     phases,
     updates,
-    profiles,
-    plannings
+    profiles
 });
 
 export default rootReducer;

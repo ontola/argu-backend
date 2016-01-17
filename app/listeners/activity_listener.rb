@@ -48,4 +48,16 @@ class ActivityListener
     a.subscribe(NotificationListener.new)
     a.commit
   end
+
+  def publish_project_successful(project)
+    a = CreateActivity
+          .new(project.creator,
+               trackable: project,
+               key: 'project.publish',
+               owner: project.creator,
+               forum: project.forum,
+               recipient: project.forum)
+    a.subscribe(NotificationListener.new)
+    a.commit
+  end
 end

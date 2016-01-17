@@ -4,13 +4,8 @@ FactoryGirl.define do
     association :forum, strategy: :create
     association :creator, factory: :profile
 
-    title 'title'
+    sequence(:title) { |n| "title#{n}" }
     content 'content'
 
-    trait :with_content do
-      after(:create) do |project, evaluator|
-
-      end
-    end
   end
 end

@@ -53,7 +53,8 @@ gem 'wisper', '~> 1.6.1'
 gem 'roadie', '~> 3.0.5'
 gem 'roadie-rails', '~> 1.0'
 gem 'cocoon', '~> 1.2.6'
-
+gem 'httparty', '~> 0.13.7'
+gem 'acts_as_list', '~> 0.7.2'
 #Pagination
 gem 'kaminari', '~>0.16.1'
 

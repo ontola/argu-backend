@@ -95,30 +95,4 @@ module ForumsHelper
     t("forums.scope.#{value}")
   end
 
-
-  ####################
-  # Forum settings   #
-  ####################
-
-  def forum_planning_settings_props
-    merge_state({
-      plannings: {
-        collection: [
-          {
-            id: 1,
-            forum_id: 2,
-            forum: 'nederland',
-            title: 'test'
-          },
-          {
-            id: 2,
-            forum_id: 2,
-            forum: 'nederland',
-            title: 'test2'
-          }
-        ]
-      }
-    })
-  end
-
 end

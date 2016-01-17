@@ -1,0 +1,9 @@
+nl:
+  projects:
+    publish_confirmation: 'Publiceren zorgt ervoor dat forum volgers op de hoogte zullen worden gesteld. Verder gaan?'
+    stepups:
+      title: 'Managers'
+      title_singular: 'Manager'
+    phases:
+      title: 'Fases'
+      title_singular: 'Fase'

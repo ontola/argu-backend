@@ -13,6 +13,7 @@ class Forum < ActiveRecord::Base
   accepts_nested_attributes_for :memberships
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
   has_many :motions, inverse_of: :forum
+  has_many :projects, inverse_of: :forum
   has_many :questions, inverse_of: :forum
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, inverse_of: :forum

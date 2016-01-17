@@ -1,14 +1,15 @@
 include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
-  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks, PublicActivity::Common, Flowable
+  include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks,
+          PublicActivity::Common, Flowable, Placeable
 
   belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
   belongs_to :question
-  has_many :arguments, -> { argument_comments }, :dependent => :destroy
-  has_many :votes, as: :voteable, :dependent => :destroy
+  has_many :arguments, -> { argument_comments }, dependent: :destroy
+  has_many :votes, as: :voteable, dependent: :destroy
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :group_responses
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'

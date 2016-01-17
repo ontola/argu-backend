@@ -26,6 +26,8 @@ en:
   no_unlock_instructions: "Didn't receive unlock instructions?"
   learn_more: "Learn more"
   not_found_type: "%{type} not found"
+  draft: "Draft"
+  publish: "Publish"
   edit: "Edit"
   edit_type: "Edit %{type}"
   show_type: "Show %{type}"

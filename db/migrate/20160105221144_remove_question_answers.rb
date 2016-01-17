@@ -11,7 +11,7 @@ class RemoveQuestionAnswers < ActiveRecord::Migration
 
     QuestionAnswer.find_in_batches do |batch|
       batch.each do |qa|
-        qa.motion.update question_id: qa.question.id
+        Motion.find(qa.motion_id).update(question_id: qa.question_id)
         qa.update migrated: true
       end
     end

@@ -5,6 +5,7 @@ class AuthorizedController < ApplicationController
   before_action :check_if_member,
                 only: %i(new create delete destroy edit update)
   before_action :authorize_show, only: :show
+  before_action :authorize_action
   helper_method :authenticated_context
 
   rescue_from Argu::NotAUserError do |exception|
@@ -40,6 +41,13 @@ class AuthorizedController < ApplicationController
 
   private
 
+  def authorize_action
+    # The check can be removed when (at least) memberships_controller is migrated to use a proper membership id
+    if authenticated_resource!.present?
+      authorize authenticated_resource!, "#{params[:action]}?"
+    end
+  end
+
   def authorize_show
     authorize authenticated_resource!, :show?
   end
@@ -62,12 +70,19 @@ class AuthorizedController < ApplicationController
     end
   end
 
+  # A version of {authenticated_resource!} that raises if the record cannot be found
+  # @see {authenticated_resource!}
+  # @raise [ActiveRecord::RecordNotFound]
   def authenticated_resource
     authenticated_resource! or raise ActiveRecord::RecordNotFound
   end
 
+  # Searches for the resource of the current controllers' type by `id`
+  # If the action is one where a resource can't exist yet, a new one is created with the tenant set.
+  # @author Fletcher91 <thom@argu.co>
+  # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
   def authenticated_resource!
-    if params[:action] == 'new' || params[:action] == 'create'
+    @resource = if params[:action] == 'new' || params[:action] == 'create'
       controller_name
           .classify
           .constantize
@@ -80,15 +95,23 @@ class AuthorizedController < ApplicationController
     end
   end
 
-  # This should be based only on static information and be side-effect free to make memoization possible.
+  # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,
+  # otherwise the result from {tenant_by_param} is used.
+  # @author Fletcher91 <thom@argu.co>
+  # @note This function isn't called context_tenant since we might use different scopes in the future (e.g. access to a project)
+  # @note This should be based only on static information and be side-effect free to make memoization possible.
+  # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {tenant_by_param}.
   def authenticated_context
     if authenticated_resource!.present?
-      authenticated_resource!.forum
+      authenticated_resource!.is_a?(Forum) ?
+        authenticated_resource! :
+        authenticated_resource!.forum
     else
       tenant_by_param
     end
   end
 
+  # @private
   def naming_context
     authenticated_context
   end

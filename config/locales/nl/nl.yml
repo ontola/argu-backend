@@ -26,6 +26,8 @@ nl:
   no_unlock_instructions: "Geen ontgrendelingsmail ontvangen?"
   learn_more: "Meer info"
   not_found_type: "%{type} niet gevonden"
+  draft: "Concept"
+  publish: "Publiceer"
   edit: "Bewerken"
   edit_type: "%{type} bewerken"
   show_type: "%{type} weergeven"

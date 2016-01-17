@@ -20,6 +20,7 @@ class Profile < ActiveRecord::Base
   has_many :page_memberships, dependent: :destroy
   has_many :page_managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
   has_many :pages, inverse_of: :owner, foreign_key: :owner_id
+  has_many :projects, inverse_of: :creator, foreign_key: 'creator_id'
   has_many :votes, as: :voter, dependent: :destroy
   has_many :motions, inverse_of: :creator, foreign_key: 'creator_id'
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id'

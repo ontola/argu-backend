@@ -1,0 +1,9 @@
+en:
+  projects:
+    publish_confirmation: 'Publicising will notify forum followers that a project was created. Continue?'
+    stepups:
+      title: 'Managers'
+      title_singular: 'Manager'
+    phases:
+      title: 'Phases'
+      title_singular: 'Phase'

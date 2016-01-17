@@ -6,8 +6,7 @@ import {
     RPoint,
     RProfile,
     RTimeline,
-    RUpdate,
-    RPlanning
+    RUpdate
 } from '../records/index';
 import popstate from '../actions/popstate';
 
@@ -17,8 +16,7 @@ const types = {
     point: RPoint,
     profile: RProfile,
     timeline: RTimeline,
-    update: RUpdate,
-    planning: RPlanning
+    update: RUpdate
 };
 
 /**

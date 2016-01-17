@@ -10,8 +10,8 @@ module SettingsHelper
         'suitcase'
       when :groups
         'group'
-      when :planning
-        'table'
+      when :projects
+        'rocket'
       when :privacy
         'shield'
     end

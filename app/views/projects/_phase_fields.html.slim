@@ -1,0 +1,8 @@
+legend
+  span= t('projects.phases.title_singular')
+.nested_fields
+  =f.inputs do
+    =f.input :name
+    =f.input :description
+    =f.input :start_date, as: :datetime_picker
+    =f.input :end_date, as: :datetime_picker

@@ -150,7 +150,10 @@ Argu::Application.routes.draw do
     resources :managers, only: [:new, :create, :destroy], controller: 'pages/managers'
   end
 
-  resources :projects, path: 'p'
+
+  resources :projects,
+            path: 'p',
+            only: [:show, :edit, :update, :destroy]
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
@@ -215,6 +218,7 @@ Argu::Application.routes.draw do
     resources :memberships, only: [:create, :destroy]
     resources :managers, only: [:new, :create, :destroy]
     resources :questions, path: 'q', only: [:index, :new, :create]
+    resources :projects, path: 'p', only: [:new, :create]
     resources :motions, path: 'm', only: [:index, :new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]

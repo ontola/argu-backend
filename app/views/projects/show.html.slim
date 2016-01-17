@@ -1,0 +1,12 @@
+div
+  .col-1
+    .box[class="#{'trashed' if @resource.is_trashed?}"]
+      h1= @resource.display_name
+      p= @resource.content
+    -if @resource.is_draft?
+      div.draftbar.bg-danger
+        =t('draft')
+        =link_to t('publish'), project_path(@resource, project: {publish: true}), class: 'btn btn--warning', data: {method: :put, confirm: t('projects.publish_confirmation')}
+    h2= t('projects.phases.title')
+    p= "DEBUG_Phases: #{@resource.phases_count}"
+    =render partial: 'phases/phase', collection: @resource.phases

@@ -1,0 +1,37 @@
+=set_title project.new_record? ? t('new_type', type: motion_type(project)) : t('edit_type', type: motion_type(project))
+.col-3
+  .col-3-2
+    =to_parent(authenticated_context)
+    .box
+      section.section-info.motion-bg
+        span[class="fa fa-#{motion_icon}"]
+        span.icon-left= motion_type(project)
+      =semantic_form_for(project.new_record? ? [authenticated_context, project] : project, html: {autocomplete: 'off'}) do |f|
+        section.smallpadded.form-filled
+          =f.inputs
+            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'motion-t form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(project, :title, motion_type(project).downcase)
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(project, :content, motion_type(project).downcase)
+            =f.semantic_fields_for :stepups do |stepup|
+              =render 'stepup_fields', f: stepup
+            .links
+              =link_to_add_association '_add manager_', f, :stepups, class: 'btn'
+            =f.semantic_fields_for :phases do |phase|
+              =render 'phase_fields', f: phase
+            .links
+              =link_to_add_association '_add phase_', f, :phases, class: 'btn'
+          -if !project.new_record? && policy(project).trash?
+            =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+              - if policy(project).trash?
+                =f.input :trashed_at, as: :reverse_boolean
+            - if project.is_published? && policy(project).destroy?
+              =f.input :unpublish, as: :reverse_boolean, checked_value: 'true', unchecked_value: 'false'
+        - if project.new_record?
+          =render partial: 'profiles/profile_current'
+        - else
+          =render partial: project.creator, locals: {resource: project}
+        =f.actions
+          .sticky-submit
+            =f.action :submit, as: :button
+  /TODO make translations, make content dependent on focus field
+  .col-3-1
+    =render partial: 'markdown_helper'
