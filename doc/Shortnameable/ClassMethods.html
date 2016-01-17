@@ -189,7 +189,9 @@ found.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Useful to test whether a model is shortnameable.</p>
+</div></span>
   
 </li>
 
@@ -222,6 +224,24 @@ found.</p>
 </div>
 <div class="tags">
   
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ActiveRecord::RecordNotFound</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>When the object wasn&#39;t found</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -229,12 +249,12 @@ found.</p>
       <pre class="lines">
 
 
-28
-29
-30</pre>
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 34</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_via_shortname'>find_via_shortname</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_find_via_shortname_nil'>find_via_shortname_nil</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span> <span class='kw'>or</span> <span class='id identifier rubyid_raise'>raise</span><span class='lparen'>(</span><span class='const'>ActiveRecord</span><span class='op'>::</span><span class='const'>RecordNotFound</span><span class='rparen'>)</span>
@@ -263,6 +283,24 @@ found.</p>
 </div>
 <div class="tags">
   
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ActiveRecord::RecordNotFound</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>When the object wasn&#39;t found</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -270,16 +308,16 @@ found.</p>
       <pre class="lines">
 
 
-38
-39
-40
-41
-42
-43
-44</pre>
+45
+46
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_via_shortname!'>find_via_shortname!</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span> <span class='op'>==</span> <span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -319,12 +357,12 @@ found.</p>
       <pre class="lines">
 
 
-33
-34
-35</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_find_via_shortname_nil'>find_via_shortname_nil</span><span class='lparen'>(</span><span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_joins'>joins</span><span class='lparen'>(</span><span class='symbol'>:shortname</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>lower(shortname) = lower(?)</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -346,6 +384,8 @@ found.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
+<p>Useful to test whether a model is shortnameable</p>
+
 
   </div>
 </div>
@@ -371,12 +411,12 @@ found.</p>
       <pre class="lines">
 
 
-46
-47
-48</pre>
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shortnameable?'>shortnameable?</span>
   <span class='kw'>true</span>
@@ -391,7 +431,7 @@ found.</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:39 2016 by
+  Generated on Sun Jan 17 18:46:22 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

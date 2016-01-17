@@ -206,6 +206,50 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#convert-instance_method" title="#convert (instance method)">- (Object) <strong>convert</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#convert%3F-instance_method" title="#convert? (instance method)">- (Boolean) <strong>convert?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#create%3F-instance_method" title="#create? (instance method)">- (Boolean) <strong>create?</strong> </a>
     
 
@@ -534,7 +578,89 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="create?-instance_method">
+  <h3 class="signature first" id="convert-instance_method">
+  
+    - (<tt>Object</tt>) <strong>convert</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+34
+35
+36</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 34</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_convert'>convert</span>
+  <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_move?'>move?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="convert?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>convert?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+38
+39
+40</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 38</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_convert?'>convert?</span>
+  <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_move?'>move?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="create?-instance_method">
   
     - (<tt>Boolean</tt>) <strong>create?</strong> 
   
@@ -570,12 +696,12 @@
       <pre class="lines">
 
 
-34
-35
-36</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create?'>create?</span>
   <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_member?'>is_member?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='kw'>super</span>
@@ -622,12 +748,12 @@
       <pre class="lines">
 
 
-42
-43
-44</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy?'>destroy?</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_creator_id'>creator_id</span> <span class='op'>==</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_profile'>profile</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>&amp;&amp;</span> <span class='int'>15</span><span class='period'>.</span><span class='id identifier rubyid_minutes'>minutes</span><span class='period'>.</span><span class='id identifier rubyid_ago'>ago</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_created_at'>created_at</span> <span class='kw'>or</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_motions'>motions</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span> <span class='op'>==</span> <span class='int'>0</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span> <span class='op'>||</span> <span class='kw'>super</span>
@@ -674,12 +800,12 @@
       <pre class="lines">
 
 
-38
-39
-40</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit?'>edit?</span>
    <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_update?'>update?</span>
@@ -726,12 +852,12 @@
       <pre class="lines">
 
 
-46
-47
-48</pre>
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_index?'>index?</span>
   <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_member?'>is_member?</span><span class='comma'>,</span> <span class='kw'>super</span>
@@ -778,12 +904,12 @@
       <pre class="lines">
 
 
-50
-51
-52</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new?'>new?</span>
   <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_open?'>is_open?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_member?'>is_member?</span><span class='comma'>,</span> <span class='id identifier rubyid_create?'>create?</span>
@@ -868,12 +994,12 @@
       <pre class="lines">
 
 
-54
-55
-56</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_expire_as?'>set_expire_as?</span>
   <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_staff?'>staff?</span>
@@ -920,12 +1046,12 @@
       <pre class="lines">
 
 
-58
-59
-60</pre>
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show?'>show?</span>
   <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_forum_policy'>forum_policy</span><span class='period'>.</span><span class='id identifier rubyid_show?'>show?</span><span class='comma'>,</span> <span class='kw'>super</span>
@@ -972,12 +1098,12 @@
       <pre class="lines">
 
 
-62
-63
-64</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_trash?'>trash?</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_creator_id'>creator_id</span> <span class='op'>==</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_profile'>profile</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>||</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span> <span class='op'>||</span> <span class='kw'>super</span>
@@ -1024,12 +1150,12 @@
       <pre class="lines">
 
 
-66
-67
-68</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'app/policies/question_policy.rb', line 74</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update?'>update?</span>
   <span class='id identifier rubyid_rule'>rule</span> <span class='lparen'>(</span><span class='id identifier rubyid_is_member?'>is_member?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_is_creator?'>is_creator?</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='kw'>super</span>
@@ -1044,7 +1170,7 @@
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:44 2016 by
+  Generated on Sun Jan 17 18:46:33 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

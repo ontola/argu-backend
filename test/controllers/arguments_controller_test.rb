@@ -183,7 +183,7 @@ class ArgumentsControllerTest < ActionController::TestCase
           content: 'new contents'
         }
 
-    assert_equal argument, assigns(:argument)
+    assert assigns(:_not_authorized_caught)
   end
 
 private

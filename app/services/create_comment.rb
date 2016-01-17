@@ -14,12 +14,13 @@ class CreateComment < ApplicationService
   end
 
   def commit
-    if @comment.valid? && @comment.save
+    Comment.transaction do
+      @comment.save!
       @comment.publisher.follow(@comment)
       publish(:create_comment_successful, @comment)
-    else
-      publish(:create_comment_failed, @comment)
     end
+  rescue ActiveRecord::RecordInvalid
+    publish(:create_comment_failed, @comment)
   end
 
 end

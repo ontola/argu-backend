@@ -103,11 +103,37 @@
 </dl>
 <div class="clear"></div>
 
-<div id="subclasses">
-  <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="CreateActivity.html" title="CreateActivity (class)">CreateActivity</a></span>, <span class='object_link'><a href="CreateArgument.html" title="CreateArgument (class)">CreateArgument</a></span>, <span class='object_link'><a href="CreateComment.html" title="CreateComment (class)">CreateComment</a></span>, <span class='object_link'><a href="CreateMotion.html" title="CreateMotion (class)">CreateMotion</a></span>, <span class='object_link'><a href="CreateQuestion.html" title="CreateQuestion (class)">CreateQuestion</a></span></p>
-</div>
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Superclass for all the services in the system</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Fletcher91 &lt;thom@argu.co&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><div id="subclasses">
+  <h2>Direct Known Subclasses</h2>
+  <p class="children"><span class='object_link'><a href="CreateActivity.html" title="CreateActivity (class)">CreateActivity</a></span>, <span class='object_link'><a href="CreateArgument.html" title="CreateArgument (class)">CreateArgument</a></span>, <span class='object_link'><a href="CreateComment.html" title="CreateComment (class)">CreateComment</a></span>, <span class='object_link'><a href="CreateMotion.html" title="CreateMotion (class)">CreateMotion</a></span>, <span class='object_link'><a href="CreateProject.html" title="CreateProject (class)">CreateProject</a></span>, <span class='object_link'><a href="CreateQuestion.html" title="CreateQuestion (class)">CreateQuestion</a></span>, <span class='object_link'><a href="UpdateProject.html" title="UpdateProject (class)">UpdateProject</a></span></p>
+</div>
 
 
 
@@ -116,11 +142,168 @@
 
 
   
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#commit-instance_method" title="#commit (instance method)">- (Object) <strong>commit</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Executes the action, so generally message broadcasts begin here.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#resource-instance_method" title="#resource (instance method)">- (Object) <strong>resource</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>The resource on which the service works, if any.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="commit-instance_method">
+  
+    - (<tt>Object</tt>) <strong>commit</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Executes the action, so generally message broadcasts begin here.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+13
+14
+15</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/services/application_service.rb', line 13</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_commit'>commit</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Required interface not implemented</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="resource-instance_method">
+  
+    - (<tt>Object</tt>) <strong>resource</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Currently all the services use this method, the requirement might be
+dropped in a future version.</p>
+</div>
+  </div>
+
+
+<p>The resource on which the service works, if any.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/services/application_service.rb', line 8</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_resource'>resource</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Required interface not implemented</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:46 2016 by
+  Generated on Sun Jan 17 18:46:36 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

@@ -98,7 +98,7 @@ class QuestionsControllerTest < ActionController::TestCase
           content: 'new contents'
         }
 
-    assert_equal member_question, assigns(:question)
+    assert_not_nil assigns(:_not_authorized_caught)
   end
 
   test 'should not get convert' do

@@ -82,7 +82,7 @@
   
   
     <dt class="r2">Included in:</dt>
-    <dd class="r2"><span class='object_link'><a href="Comment.html" title="Comment (class)">Comment</a></span>, <span class='object_link'><a href="Motion.html" title="Motion (class)">Motion</a></span>, <span class='object_link'><a href="ProCon.html" title="ProCon (module)">ProCon</a></span>, <span class='object_link'><a href="Question.html" title="Question (class)">Question</a></span></dd>
+    <dd class="r2"><span class='object_link'><a href="Comment.html" title="Comment (class)">Comment</a></span>, <span class='object_link'><a href="Motion.html" title="Motion (class)">Motion</a></span>, <span class='object_link'><a href="ProCon.html" title="ProCon (module)">ProCon</a></span>, <span class='object_link'><a href="Project.html" title="Project (class)">Project</a></span>, <span class='object_link'><a href="Question.html" title="Question (class)">Question</a></span>, <span class='object_link'><a href="Update.html" title="Update (class)">Update</a></span></dd>
     
   
   
@@ -208,15 +208,23 @@
       <pre class="lines">
 
 
-8
-9
-10</pre>
+14
+15
+16
+17
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/concerns/trashable.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'app/models/concerns/trashable.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_trashed?'>is_trashed?</span>
-  <span class='id identifier rubyid_read_attribute'>read_attribute</span> <span class='symbol'>:is_trashed</span>
+  <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:trashed_at</span>
+    <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:trashed_at</span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:is_trashed</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -238,19 +246,27 @@
       <pre class="lines">
 
 
-12
-13
-14
-15
-16
-17</pre>
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/concerns/trashable.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'app/models/concerns/trashable.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_trash'>trash</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_update_column'>update_column</span> <span class='symbol'>:is_trashed</span><span class='comma'>,</span> <span class='kw'>true</span>
+    <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:trashed_at</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_update_column'>update_column</span> <span class='symbol'>:trashed_at</span><span class='comma'>,</span> <span class='const'>DateTime</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_update_column'>update_column</span> <span class='symbol'>:is_trashed</span><span class='comma'>,</span> <span class='kw'>true</span>
+    <span class='kw'>end</span>
     <span class='id identifier rubyid_refresh_counter_cache'>refresh_counter_cache</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:refresh_counter_cache</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -264,7 +280,7 @@
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:39 2016 by
+  Generated on Sun Jan 17 18:46:21 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

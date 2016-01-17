@@ -607,12 +607,12 @@
       <pre class="lines">
 
 
-46
 47
-48</pre>
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_actor_id'>actor_id</span>
   <span class='id identifier rubyid_profileable_id'>profileable_id</span>
@@ -637,12 +637,12 @@
       <pre class="lines">
 
 
-42
 43
-44</pre>
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_actor_type'>actor_type</span>
   <span class='id identifier rubyid_profileable_type'>profileable_type</span>
@@ -667,13 +667,13 @@
       <pre class="lines">
 
 
-37
 38
 39
-40</pre>
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_as_json'>as_json</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
   <span class='comment'># Hide profileable for the more friendly actor
@@ -721,12 +721,12 @@
       <pre class="lines">
 
 
-50
 51
-52</pre>
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_confirmed?'>confirmed?</span>
   <span class='id identifier rubyid_profileable'>profileable</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span> <span class='symbol'>:confirmed?</span>
@@ -762,12 +762,12 @@
       <pre class="lines">
 
 
-55
 56
-57</pre>
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_description'>description</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_about'>about</span>
@@ -792,12 +792,12 @@
       <pre class="lines">
 
 
-59
 60
-61</pre>
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_name'>display_name</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_profileable'>profileable</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:display_name</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span>
@@ -822,12 +822,12 @@
       <pre class="lines">
 
 
-63
 64
-65</pre>
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_email'>email</span>
   <span class='id identifier rubyid_profileable'>profileable</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span> <span class='symbol'>:email</span>
@@ -876,12 +876,12 @@
       <pre class="lines">
 
 
-85
 86
-87</pre>
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_finished_intro?'>finished_intro?</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_profileable'>profileable</span> <span class='op'>&amp;&amp;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_profileable'>profileable</span><span class='period'>.</span><span class='id identifier rubyid_finished_intro?'>finished_intro?</span>
@@ -906,12 +906,12 @@
       <pre class="lines">
 
 
-101
 102
-103</pre>
+103
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_freeze'>freeze</span>
   <span class='id identifier rubyid_add_role'>add_role</span> <span class='symbol'>:frozen</span>
@@ -958,12 +958,12 @@
       <pre class="lines">
 
 
-116
 117
-118</pre>
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_member_of?'>member_of?</span><span class='lparen'>(</span><span class='id identifier rubyid__forum'>_forum</span><span class='rparen'>)</span>
   <span class='id identifier rubyid__forum'>_forum</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_memberships'>memberships</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='label'>forum_id:</span> <span class='id identifier rubyid__forum'>_forum</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Forum</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid__forum'>_forum</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>:</span> <span class='id identifier rubyid__forum'>_forum</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
@@ -988,12 +988,12 @@
       <pre class="lines">
 
 
-71
 72
-73</pre>
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_memberships_ids'>memberships_ids</span>
   <span class='id identifier rubyid_memberships'>memberships</span><span class='period'>.</span><span class='id identifier rubyid_pluck'>pluck</span><span class='lparen'>(</span><span class='symbol'>:forum_id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>,</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span>
@@ -1018,12 +1018,12 @@
       <pre class="lines">
 
 
-75
 76
-77</pre>
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_owner'>owner</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_profileable'>profileable</span>
@@ -1048,12 +1048,12 @@
       <pre class="lines">
 
 
-120
 121
-122</pre>
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_owner_of'>owner_of</span><span class='lparen'>(</span><span class='id identifier rubyid_forum'>forum</span><span class='rparen'>)</span>
   <span class='kw'>self</span> <span class='op'>==</span> <span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_page'>page</span><span class='period'>.</span><span class='id identifier rubyid_owner'>owner</span>
@@ -1089,14 +1089,14 @@
       <pre class="lines">
 
 
-106
 107
 108
 109
-110</pre>
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 106</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 107</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_preferred_forum'>preferred_forum</span>
   <span class='id identifier rubyid_last_forum'>last_forum</span> <span class='op'>=</span> <span class='const'>Argu</span><span class='op'>::</span><span class='const'>Redis</span><span class='period'>.</span><span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>profile:</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='embexpr_end'>}</span><span class='tstring_content'>:last_forum</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1145,12 +1145,12 @@
       <pre class="lines">
 
 
-67
 68
-69</pre>
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_profile_frozen?'>profile_frozen?</span>
   <span class='id identifier rubyid_has_role?'>has_role?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>frozen</span><span class='tstring_end'>&#39;</span></span>
@@ -1197,12 +1197,12 @@
       <pre class="lines">
 
 
-112
 113
-114</pre>
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 112</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requires_name?'>requires_name?</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_profileable'>profileable</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='op'>==</span> <span class='const'>Page</span>
@@ -1227,12 +1227,12 @@
       <pre class="lines">
 
 
-124
 125
-126</pre>
+126
+127</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_unfreeze'>unfreeze</span>
   <span class='id identifier rubyid_remove_role'>remove_role</span> <span class='symbol'>:frozen</span>
@@ -1257,12 +1257,12 @@
       <pre class="lines">
 
 
-80
 81
-82</pre>
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url'>url</span>
   <span class='id identifier rubyid_profileable'>profileable</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_profileable'>profileable</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span>
@@ -1311,14 +1311,14 @@
       <pre class="lines">
 
 
-90
 91
 92
 93
-94</pre>
+94
+95</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_voted_on?'>voted_on?</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
   <span class='const'>Vote</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='label'>voter_id:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>voter_type:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
@@ -1356,12 +1356,12 @@
       <pre class="lines">
 
 
-97
 98
-99</pre>
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'app/models/profile.rb', line 98</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_votes_questions_motions'>votes_questions_motions</span>
   <span class='id identifier rubyid_votes'>votes</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>voteable_type = &#39;Question&#39; OR voteable_type = &#39;Motion&#39;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
@@ -1376,7 +1376,7 @@
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:41 2016 by
+  Generated on Sun Jan 17 18:46:29 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

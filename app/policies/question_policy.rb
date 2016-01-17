@@ -31,6 +31,14 @@ class QuestionPolicy < RestrictivePolicy
     attributes
   end
 
+  def convert
+    rule move?
+  end
+
+  def convert?
+    rule move?
+  end
+
   def create?
     rule is_member?, is_manager?, super
   end

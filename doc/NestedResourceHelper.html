@@ -78,7 +78,7 @@
   
   
     <dt class="r1">Included in:</dt>
-    <dd class="r1"><span class='object_link'><a href="FlowController.html" title="FlowController (class)">FlowController</a></span>, <span class='object_link'><a href="VotesController.html" title="VotesController (class)">VotesController</a></span></dd>
+    <dd class="r1"><span class='object_link'><a href="CommentsController.html" title="CommentsController (class)">CommentsController</a></span>, <span class='object_link'><a href="FlowController.html" title="FlowController (class)">FlowController</a></span>, <span class='object_link'><a href="VotesController.html" title="VotesController (class)">VotesController</a></span></dd>
     
   
   
@@ -88,7 +88,43 @@
 </dl>
 <div class="clear"></div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Has been designed with a single parent resource in mind (route wise)</p>
+</div>
+  </div>
 
+
+<p>Helper to determine the parent of the nested resource It is to be used with
+<span class='object_link'><a href="AuthorizedController.html" title="AuthorizedController (class)">AuthorizedController</a></span> inherited resource controllers</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Author:</p>
+<ul class="author">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'>
+<p>Fletcher91 &lt;thom@argu.co&gt;</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
 
 
 
@@ -106,7 +142,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#get_parent_resource-instance_method" title="#get_parent_resource (instance method)">- (Object) <strong>get_parent_resource</strong> </a>
+      <a href="#get_parent_resource-instance_method" title="#get_parent_resource (instance method)">- (Model) <strong>get_parent_resource</strong> </a>
     
 
     
@@ -120,7 +156,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Finds the parent resource based on the URL&#39;s :foo_id param.</p>
+</div></span>
   
 </li>
 
@@ -128,7 +166,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#parent_resource_class-instance_method" title="#parent_resource_class (instance method)">- (Object) <strong>parent_resource_class</strong> </a>
+      <a href="#parent_resource_class-instance_method" title="#parent_resource_class (instance method)">- (Class) <strong>parent_resource_class</strong> </a>
     
 
     
@@ -142,7 +180,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Determines the parent resource&#39;s class from the request.</p>
+</div></span>
   
 </li>
 
@@ -164,7 +204,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Finds a &#39;resource key&#39; from a params Hash.</p>
+</div></span>
   
 </li>
 
@@ -187,8 +229,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Note: Safe to constantize since `path_parameters` uses the routes for
-naming.</p>
+<p>Constantizes a class string from the params hash.</p>
 </div></span>
   
 </li>
@@ -197,7 +238,7 @@ naming.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#parent_resource_param-instance_method" title="#parent_resource_param (instance method)">- (Object) <strong>parent_resource_param</strong> </a>
+      <a href="#parent_resource_param-instance_method" title="#parent_resource_param (instance method)">- (Symbol) <strong>parent_resource_param</strong> </a>
     
 
     
@@ -211,7 +252,9 @@ naming.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Extracts the parent resource param from the url to get to its value.</p>
+</div></span>
   
 </li>
 
@@ -219,7 +262,7 @@ naming.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#parent_resource_type-instance_method" title="#parent_resource_type (instance method)">- (Object) <strong>parent_resource_type</strong>(opts = nil) </a>
+      <a href="#parent_resource_type-instance_method" title="#parent_resource_type (instance method)">- (String) <strong>parent_resource_type</strong>(opts = nil) </a>
     
 
     
@@ -233,7 +276,9 @@ naming.</p>
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Extracts the resource type string from a params hash.</p>
+</div></span>
   
 </li>
 
@@ -250,27 +295,97 @@ naming.</p>
       <div class="method_details first">
   <h3 class="signature first" id="get_parent_resource-instance_method">
   
-    - (<tt>Object</tt>) <strong>get_parent_resource</strong> 
+    - (<tt>Model</tt>) <strong>get_parent_resource</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>This method knows <span class='object_link'><a href="Shortnameable.html" title="Shortnameable (module)">Shortnameable</a></span></p>
+</div>
+  </div>
+
+
+<p>Finds the parent resource based on the URL&#39;s :foo_id param</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Model</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>A resource model if found</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>ActiveRecord::RecordNotFound</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p><a href="http://api.rubyonrails.org/classes/ActiveRecord/RecordNotFound.html" target="_parent" title="Rails docs">Rails docs</a></p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><a href="http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find" target="_parent" title="ActiveRecord#find">ActiveRecord#find</a></li>
+    
+  </ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-4
-5
-6</pre>
+12
+13
+14
+15
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 4</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 12</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_parent_resource'>get_parent_resource</span>
-  <span class='id identifier rubyid_parent_resource_class'>parent_resource_class</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='id identifier rubyid_parent_resource_param'>parent_resource_param</span><span class='rbracket'>]</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_parent_resource_class'>parent_resource_class</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:shortnameable?</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_parent_resource_class'>parent_resource_class</span><span class='period'>.</span><span class='id identifier rubyid_find_via_shortname!'>find_via_shortname!</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='id identifier rubyid_parent_resource_param'>parent_resource_param</span><span class='rbracket'>]</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_parent_resource_class'>parent_resource_class</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='id identifier rubyid_parent_resource_param'>parent_resource_param</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -280,24 +395,60 @@ naming.</p>
       <div class="method_details ">
   <h3 class="signature " id="parent_resource_class-instance_method">
   
-    - (<tt>Object</tt>) <strong>parent_resource_class</strong> 
+    - (<tt>Class</tt>) <strong>parent_resource_class</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Determines the parent resource&#39;s class from the request</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Class</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The parent resource class object</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#parent_resource_klass-instance_method" title="NestedResourceHelper#parent_resource_klass (method)">#parent_resource_klass</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-8
-9
-10</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 8</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parent_resource_class'>parent_resource_class</span>
   <span class='id identifier rubyid_parent_resource_klass'>parent_resource_klass</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_path_parameters'>path_parameters</span><span class='rparen'>)</span>
@@ -316,18 +467,42 @@ naming.</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Finds a &#39;resource key&#39; from a params Hash</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Find the parent resource key of a vote</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_m_url'>m_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>argu.co/m/8/v/pro</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_parent_resource_key'>parent_resource_key</span><span class='lparen'>(</span><span class='id identifier rubyid_m_url'>m_url</span><span class='rparen'>)</span> <span class='comment'># =&gt; &#39;motion_id&#39;</span></code></pre>
+    
+  </div>
+
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-12
-13
-14</pre>
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parent_resource_key'>parent_resource_key</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>_id</span><span class='regexp_end'>/</span></span> <span class='op'>=~</span> <span class='id identifier rubyid_k'>k</span> <span class='rbrace'>}</span>
@@ -349,14 +524,34 @@ naming.</p>
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Note: Safe to constantize since `path_parameters` uses the routes for
-naming.</p>
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>Safe to constantize since `path_parameters` uses the routes for naming.</p>
+</div>
+  </div>
+
+
+<p>Constantizes a class string from the params hash</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Resource class for a vote request</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_m_url'>m_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>argu.co/m/8/v/pro</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_parent_resource_param'>parent_resource_param</span> <span class='comment'># =&gt; Motion</span></code></pre>
+    
+  </div>
+
 
 </div><table class="source_code">
   <tr>
@@ -364,12 +559,12 @@ naming.</p>
       <pre class="lines">
 
 
-17
-18
-19</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parent_resource_klass'>parent_resource_klass</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parent_resource_type'>parent_resource_type</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span>
@@ -382,24 +577,73 @@ naming.</p>
       <div class="method_details ">
   <h3 class="signature " id="parent_resource_param-instance_method">
   
-    - (<tt>Object</tt>) <strong>parent_resource_param</strong> 
+    - (<tt>Symbol</tt>) <strong>parent_resource_param</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Extracts the parent resource param from the url to get to its value</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Resource param for a vote request</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_m_url'>m_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>argu.co/m/8/v/pro</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_parent_resource_param'>parent_resource_param</span> <span class='comment'># =&gt; :motion_id</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The resource param</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  <p class="tag_title">See Also:</p>
+  <ul class="see">
+    
+      <li><span class='object_link'><a href="#parent_resource_key-instance_method" title="NestedResourceHelper#parent_resource_key (method)">#parent_resource_key</a></span></li>
+    
+  </ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-21
-22
-23</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parent_resource_param'>parent_resource_param</span>
   <span class='id identifier rubyid_parent_resource_key'>parent_resource_key</span><span class='lparen'>(</span><span class='id identifier rubyid_request'>request</span><span class='period'>.</span><span class='id identifier rubyid_path_parameters'>path_parameters</span><span class='rparen'>)</span>
@@ -412,24 +656,66 @@ naming.</p>
       <div class="method_details ">
   <h3 class="signature " id="parent_resource_type-instance_method">
   
-    - (<tt>Object</tt>) <strong>parent_resource_type</strong>(opts = nil) 
+    - (<tt>String</tt>) <strong>parent_resource_type</strong>(opts = nil) 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Extracts the resource type string from a params hash</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Resource type for a vote</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_m_url'>m_url</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>argu.co/m/8/v/pro</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_parent_resource_type'>parent_resource_type</span><span class='lparen'>(</span><span class='id identifier rubyid_m_url'>m_url</span><span class='rparen'>)</span> <span class='comment'># =&gt; &#39;motion&#39;</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The resource type string</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-25
-26
-27</pre>
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'app/helpers/nested_resource_helper.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parent_resource_type'>parent_resource_type</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parent_resource_key'>parent_resource_key</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='int'>0</span><span class='op'>..</span><span class='op'>-</span><span class='int'>4</span><span class='rbracket'>]</span>
@@ -444,7 +730,7 @@ naming.</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:40 2016 by
+  Generated on Sun Jan 17 18:46:23 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

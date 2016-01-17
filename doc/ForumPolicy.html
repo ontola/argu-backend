@@ -1731,7 +1731,7 @@ this.</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_permitted_tabs'>permitted_tabs</span>
   <span class='id identifier rubyid_tabs'>tabs</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_tabs'>tabs</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:general</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:advanced</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:groups</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:planning</span> <span class='kw'>if</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span> <span class='op'>||</span> <span class='id identifier rubyid_staff?'>staff?</span>
+  <span class='id identifier rubyid_tabs'>tabs</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:general</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:advanced</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:groups</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:projects</span> <span class='kw'>if</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span> <span class='op'>||</span> <span class='id identifier rubyid_staff?'>staff?</span>
   <span class='id identifier rubyid_tabs'>tabs</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:privacy</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:managers</span> <span class='kw'>if</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span> <span class='op'>||</span> <span class='id identifier rubyid_staff?'>staff?</span>
   <span class='id identifier rubyid_tabs'>tabs</span>
 <span class='kw'>end</span></pre>
@@ -2120,7 +2120,7 @@ this.</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:43 2016 by
+  Generated on Sun Jan 17 18:46:31 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

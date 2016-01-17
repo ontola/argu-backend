@@ -345,7 +345,7 @@ preferred_forum   if the user hasn&#39;t got any memberships yet.</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_forum_from_r_action'>forum_from_r_action</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
     <span class='id identifier rubyid_url_options'>url_options</span><span class='comma'>,</span> <span class='id identifier rubyid_controller'>controller</span> <span class='op'>=</span> <span class='id identifier rubyid_r_to_url_options'>r_to_url_options</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_r'>r</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_controller'>controller</span><span class='period'>.</span><span class='id identifier rubyid_forum_for'>forum_for</span><span class='lparen'>(</span><span class='id identifier rubyid_url_options'>url_options</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_controller'>controller</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_controller'>controller</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:forum_for</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_controller'>controller</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_forum_for'>forum_for</span><span class='lparen'>(</span><span class='id identifier rubyid_url_options'>url_options</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_controller'>controller</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_controller'>controller</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:forum_for</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -707,7 +707,7 @@ if the user hasn&#39;t got any memberships yet</code></pre>
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:38 2016 by
+  Generated on Sun Jan 17 18:46:20 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

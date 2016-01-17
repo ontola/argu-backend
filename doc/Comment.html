@@ -280,28 +280,6 @@ class name and id.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#forum-instance_method" title="#forum (instance method)">- (Object) <strong>forum</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#has_children%3F-instance_method" title="#has_children? (instance method)">- (Boolean) <strong>has_children?</strong> </a>
     
 
@@ -487,12 +465,12 @@ well.</p>
       <pre class="lines">
 
 
-21
-22
-23</pre>
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_is_processed'>is_processed</span>
   <span class='ivar'>@is_processed</span>
@@ -536,17 +514,17 @@ commentable object, a user_id, and comment text example in readme</p>
       <pre class="lines">
 
 
-43
-44
 45
 46
 47
 48
 49
-50</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_build_from'>build_from</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='comma'>,</span> <span class='id identifier rubyid_profile_id'>profile_id</span><span class='comma'>,</span> <span class='id identifier rubyid_comment'>comment</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_c'>c</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
@@ -588,12 +566,12 @@ class name and id</p>
       <pre class="lines">
 
 
-62
-63
-64</pre>
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_find_commentable'>find_commentable</span><span class='lparen'>(</span><span class='id identifier rubyid_commentable_str'>commentable_str</span><span class='comma'>,</span> <span class='id identifier rubyid_commentable_id'>commentable_id</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_commentable_str'>commentable_str</span><span class='period'>.</span><span class='id identifier rubyid_constantize'>constantize</span><span class='period'>.</span><span class='id identifier rubyid_find'>find</span><span class='lparen'>(</span><span class='id identifier rubyid_commentable_id'>commentable_id</span><span class='rparen'>)</span>
@@ -646,12 +624,12 @@ class name and id</p>
       <pre class="lines">
 
 
-36
-37
-38</pre>
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_abandoned?'>abandoned?</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_is_trashed?'>is_trashed?</span> <span class='op'>&amp;&amp;</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_children'>children</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>0</span>
@@ -676,12 +654,12 @@ class name and id</p>
       <pre class="lines">
 
 
-52
-53
-54</pre>
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 52</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_creator'>creator</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_profile'>profile</span>
@@ -706,45 +684,15 @@ class name and id</p>
       <pre class="lines">
 
 
-56
-57
-58</pre>
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_display_name'>display_name</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_body'>body</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="forum-instance_method">
-  
-    - (<tt>Object</tt>) <strong>forum</strong> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-70
-71
-72</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 70</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_forum'>forum</span>
-  <span class='id identifier rubyid_commentable'>commentable</span><span class='period'>.</span><span class='id identifier rubyid_forum'>forum</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -790,12 +738,12 @@ class name and id</p>
       <pre class="lines">
 
 
-75
-76
-77</pre>
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_has_children?'>has_children?</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_lft'>lft</span> <span class='op'>||</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_rgt'>rgt</span>
@@ -820,15 +768,15 @@ class name and id</p>
       <pre class="lines">
 
 
+81
+82
 83
 84
 85
-86
-87
-88</pre>
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_refresh_counter_cache'>refresh_counter_cache</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_commentable'>commentable</span><span class='period'>.</span><span class='id identifier rubyid_update_columns'>update_columns</span> <span class='label'>comments_count:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_commentable'>commentable</span><span class='period'>.</span><span class='id identifier rubyid_comment_threads'>comment_threads</span><span class='period'>
@@ -856,12 +804,12 @@ class name and id</p>
       <pre class="lines">
 
 
-66
-67
-68</pre>
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_subscribable'>subscribable</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_parent'>parent</span> <span class='op'>||</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_commentable'>commentable</span>
@@ -886,12 +834,12 @@ class name and id</p>
       <pre class="lines">
 
 
-79
-80
-81</pre>
+77
+78
+79</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_touch_parent'>touch_parent</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_get_parent'>get_parent</span><span class='period'>.</span><span class='id identifier rubyid_model'>model</span><span class='period'>.</span><span class='id identifier rubyid_touch'>touch</span>
@@ -928,17 +876,17 @@ well</p>
       <pre class="lines">
 
 
+89
+90
 91
 92
 93
 94
 95
-96
-97
-98</pre>
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'app/models/comment.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_wipe'>wipe</span>
   <span class='const'>Comment</span><span class='period'>.</span><span class='id identifier rubyid_transaction'>transaction</span> <span class='kw'>do</span>
@@ -958,7 +906,7 @@ well</p>
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:41 2016 by
+  Generated on Sun Jan 17 18:46:28 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

@@ -1,5 +1,5 @@
 class ProjectsController < AuthorizedController
-  before_action :redirect_pages, only: :show
+  prepend_before_action :redirect_pages, only: :show
 
   def new
     respond_to do |format|

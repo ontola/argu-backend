@@ -93,7 +93,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="ArguBase.html" title="ArguBase (module)">ArguBase</a></span>, <span class='object_link'><a href="Attribution.html" title="Attribution (module)">Attribution</a></span>, <span class='object_link'><a href="Convertible.html" title="Convertible (module)">Convertible</a></span>, <span class='object_link'><a href="ForumTaggable.html" title="ForumTaggable (module)">ForumTaggable</a></span>, <span class='object_link'><a href="HasLinks.html" title="HasLinks (module)">HasLinks</a></span>, <span class='object_link'><a href="Parentable.html" title="Parentable (module)">Parentable</a></span>, PublicActivity::Common, <span class='object_link'><a href="Trashable.html" title="Trashable (module)">Trashable</a></span></dd>
+      <dd class="r2"><span class='object_link'><a href="ArguBase.html" title="ArguBase (module)">ArguBase</a></span>, <span class='object_link'><a href="Attribution.html" title="Attribution (module)">Attribution</a></span>, <span class='object_link'><a href="Convertible.html" title="Convertible (module)">Convertible</a></span>, <span class='object_link'><a href="Flowable.html" title="Flowable (module)">Flowable</a></span>, <span class='object_link'><a href="ForumTaggable.html" title="ForumTaggable (module)">ForumTaggable</a></span>, <span class='object_link'><a href="HasLinks.html" title="HasLinks (module)">HasLinks</a></span>, <span class='object_link'><a href="Parentable.html" title="Parentable (module)">Parentable</a></span>, <span class='object_link'><a href="Placeable.html" title="Placeable (module)">Placeable</a></span>, PublicActivity::Common, <span class='object_link'><a href="Trashable.html" title="Trashable (module)">Trashable</a></span></dd>
       
     
   
@@ -466,6 +466,25 @@
   
   
   
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Flowable.html" title="Flowable (module)">Flowable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Flowable.html#flow-instance_method" title="Flowable#flow (method)">#flow</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <div id="instance_attr_details" class="attr_details">
     <h2>Instance Attribute Details</h2>
     
@@ -717,7 +736,7 @@
         <span class='id identifier rubyid_m'>m</span><span class='period'>.</span><span class='id identifier rubyid_move_to'>move_to</span> <span class='id identifier rubyid_forum'>forum</span><span class='comma'>,</span> <span class='kw'>false</span>
       <span class='kw'>end</span>
     <span class='kw'>else</span>
-      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_question_answers'>question_answers</span><span class='period'>.</span><span class='id identifier rubyid_lock'>lock</span><span class='lparen'>(</span><span class='kw'>true</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_delete_all'>delete_all</span>
+      <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_motions'>motions</span><span class='period'>.</span><span class='id identifier rubyid_update_all'>update_all</span> <span class='label'>question_id:</span> <span class='kw'>nil</span>
     <span class='kw'>end</span>
     <span class='id identifier rubyid_old_forum'>old_forum</span><span class='period'>.</span><span class='id identifier rubyid_reload'>reload</span><span class='period'>.</span><span class='id identifier rubyid_decrement'>decrement</span> <span class='symbol'>:questions_count</span>
     <span class='id identifier rubyid_old_forum'>old_forum</span><span class='period'>.</span><span class='id identifier rubyid_save'>save</span>
@@ -890,7 +909,7 @@
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:42 2016 by
+  Generated on Sun Jan 17 18:46:29 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

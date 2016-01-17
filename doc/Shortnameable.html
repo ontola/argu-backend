@@ -156,7 +156,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Useful to test whether a model is shortnameable.</p>
+</div></span>
   
 </li>
 
@@ -164,7 +166,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#to_param-instance_method" title="#to_param (instance method)">- (Object) <strong>to_param</strong> </a>
+      <a href="#to_param-instance_method" title="#to_param (instance method)">- (String, Integer) <strong>to_param</strong> </a>
     
 
     
@@ -178,7 +180,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>Makes sure that when included on models, the rails path helpers etc.</p>
+</div></span>
   
 </li>
 
@@ -186,7 +190,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#url-instance_method" title="#url (instance method)">- (Object) <strong>url</strong> </a>
+      <a href="#url-instance_method" title="#url (instance method)">- (String<sup>?</sup>) <strong>url</strong> </a>
     
 
     
@@ -200,7 +204,9 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'>
+<p>The shortname of the model or nil.</p>
+</div></span>
   
 </li>
 
@@ -257,6 +263,8 @@
 </h3><div class="docstring">
   <div class="discussion">
     
+<p>Useful to test whether a model is shortnameable</p>
+
 
   </div>
 </div>
@@ -282,12 +290,12 @@
       <pre class="lines">
 
 
-13
 14
-15</pre>
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_shortnameable?'>shortnameable?</span>
   <span class='kw'>true</span>
@@ -300,24 +308,55 @@
       <div class="method_details ">
   <h3 class="signature " id="to_param-instance_method">
   
-    - (<tt>Object</tt>) <strong>to_param</strong> 
+    - (<tt>String</tt>, <tt>Integer</tt>) <strong>to_param</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Makes sure that when included on models, the rails path helpers etc. use
+the object&#39;s shortname. If it hasn&#39;t got a shortname, it will fall
+back to its id.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The shortname of the model, or its id if not present.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-17
-18
-19</pre>
+21
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_param'>to_param</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span> <span class='op'>||</span> <span class='id identifier rubyid_id'>id</span>
@@ -330,24 +369,53 @@
       <div class="method_details ">
   <h3 class="signature " id="url-instance_method">
   
-    - (<tt>Object</tt>) <strong>url</strong> 
+    - (<tt>String</tt><sup>?</sup>) <strong>url</strong> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns The shortname of the model or nil</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>The shortname of the model or nil</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-21
-22
-23</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'app/models/concerns/shortnameable.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_url'>url</span>
   <span class='const'>Shortname</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='label'>owner_id:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>owner_type:</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_pluck'>pluck</span><span class='lparen'>(</span><span class='symbol'>:shortname</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -362,7 +430,7 @@
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:39 2016 by
+  Generated on Sun Jan 17 18:46:22 2016 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.8.7.6 (ruby-2.1.6).
 </div>

@@ -187,7 +187,7 @@ class MotionsControllerTest < ActionController::TestCase
         }
 
     assert_redirected_to root_path
-    assert_equal subject, assigns(:motion)
+    assert assigns(:_not_authorized_caught)
   end
 
   let(:no_create_without_question) do

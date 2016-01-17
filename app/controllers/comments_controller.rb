@@ -1,4 +1,5 @@
 class CommentsController < AuthorizedController
+  include NestedResourceHelper
 
   def new
     @commentable = commentable_class.find params[commentable_param]
@@ -46,21 +47,20 @@ class CommentsController < AuthorizedController
 
   # POST /resource/1/comments
   def create
-    resource = authenticated_resource!
-    set_tenant(resource)
     @cc = CreateComment.new current_profile,
-                           {
-                               commentable: resource,
+                            comment_params.merge({
+                               commentable: get_parent_resource,
+                               forum: get_parent_resource.forum,
                                publisher: current_user
-                           }.merge(comment_params)
+                           })
     authorize @cc.resource, :create?
     @cc.subscribe(ActivityListener.new)
     @cc.on(:create_comment_successful) do |c|
-      redirect_to polymorphic_url([resource], anchor: c.id),
+      redirect_to polymorphic_url(c.commentable, anchor: c.identifier),
                   notice: t('type_create_success', type: t('comments.type'))
     end
     @cc.on(:create_comment_failed) do |c|
-      redirect_to polymorphic_url([resource], anchor: c.id),
+      redirect_to polymorphic_url([c.commentable], anchor: c.id),
                   notice: '_niet gelukt_'
     end
     @cc.commit
@@ -128,15 +128,6 @@ class CommentsController < AuthorizedController
     authorize @comment, :show?
   end
 
-  def authenticated_resource!
-    resource, id = request.path.split('/')[1,2]
-    # noinspection RubyCaseWithoutElseBlockInspection
-    resource = case resource
-      when 'a' then Argument
-    end
-    resource.find(id)
-  end
-
   def comment_body
     if Rails.env.development?
       raise StandardError('should always be a hash') if params[:comment].is_a?(String)
@@ -184,6 +175,17 @@ class CommentsController < AuthorizedController
 
   def set_tenant(item)
     @forum = item.forum
+  end
+
+  def tenant_by_param
+    return super if params[:forum_id].present?
+
+    resource, id = request.path.split('/')[1,2]
+    # noinspection RubyCaseWithoutElseBlockInspection
+    resource = case resource
+      when 'a' then Argument
+    end
+    resource.find(id).forum
   end
 
 end

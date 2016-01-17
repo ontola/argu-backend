@@ -160,6 +160,17 @@ class AddProjects < ActiveRecord::Migration
 
     add_column :forums, :projects_count, :integer, default: 0, null: false
 
+    add_column :comments, :forum_id, :integer
+    Comment.find_each do |comment|
+      if comment.commentable.present?
+        comment.update forum_id: comment.commentable.forum_id
+      else
+        Rails.logger.info "Comment #{comment.id} abandoned"
+        say "Comment #{comment.id} abandoned"
+      end
+    end
+    add_foreign_key :comments, :forums
+
   end
 
   def down
@@ -191,5 +202,7 @@ class AddProjects < ActiveRecord::Migration
     drop_table :places
 
     remove_column :forums, :projects_count
+
+    remove_column :comments, :forum_id
   end
 end

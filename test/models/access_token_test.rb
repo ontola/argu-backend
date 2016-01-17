@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class AccessTokenTest < ActiveSupport::TestCase
-  include ModelTestBase
 
   subject { FactoryGirl.create(:access_token) }
   # :forum, :vwal is used here instead of :populated_forum_vwal

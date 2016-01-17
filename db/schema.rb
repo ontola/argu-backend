@@ -140,6 +140,7 @@ ActiveRecord::Schema.define(version: 20160112101509) do
     t.boolean  "is_trashed",                   default: false
     t.integer  "publisher_id"
     t.datetime "deleted_at"
+    t.integer  "forum_id"
   end
 
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
@@ -259,8 +260,6 @@ ActiveRecord::Schema.define(version: 20160112101509) do
     t.string   "name_singular"
     t.integer  "max_responses_per_member", default: 1
     t.string   "icon"
-    t.integer  "manages_id"
-    t.string   "manages_type"
     t.integer  "visibility",               default: 0
     t.boolean  "deletable",                default: true
     t.text     "description"
@@ -783,6 +782,7 @@ ActiveRecord::Schema.define(version: 20160112101509) do
   add_foreign_key "access_tokens", "profiles"
   add_foreign_key "arguments", "users", column: "publisher_id"
   add_foreign_key "banners", "forums", on_delete: :cascade
+  add_foreign_key "comments", "forums"
   add_foreign_key "comments", "users", column: "publisher_id"
   add_foreign_key "forums", "places"
   add_foreign_key "group_responses", "users", column: "publisher_id"
