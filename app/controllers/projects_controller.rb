@@ -36,7 +36,7 @@ class ProjectsController < AuthorizedController
 
   def show
     respond_to do |format|
-      format.html
+      format.html { render locals: {project: @resource} }
       format.json { render json: @resource, include: %w(phases) }
     end
   end

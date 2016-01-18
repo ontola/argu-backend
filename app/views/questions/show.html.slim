@@ -30,9 +30,7 @@
                             true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
                             false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                            {prerender: true}
-      - if current_user.present? && policy(@question).update?
-        li
-          ul= react_component 'HyperDropdown', question_items(@question), {prerender: true}
+      =crud_menu_item(@question, question_items(@question))
       - if @question.forum.visibility
         li
           ul= react_component 'ShareDropdown', share_items(@question), {prerender: true}

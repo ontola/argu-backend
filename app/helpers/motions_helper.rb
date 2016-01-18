@@ -38,21 +38,6 @@ module MotionsHelper
     })
   end
 
-  def motion_items(motion)
-    link_items = []
-    mo_po = policy(motion)
-    if mo_po.update?
-      link_items << link_item(t('edit'), edit_motion_path(motion), fa: 'pencil')
-    end
-    if mo_po.trash?
-      link_items << link_item(t('trash'), motion_path(motion), data: {confirm: t('trash_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'trash')
-    end
-    if mo_po.destroy?
-      link_items << link_item(t('destroy'), motion_path(motion, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'close')
-    end
-    dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-gear')
-  end
-
   def motion_timeline_props(motion)
     points = [
       {

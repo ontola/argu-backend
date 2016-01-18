@@ -110,14 +110,14 @@ class ApplicationController < ActionController::Base
     @current_scope ||= (current_context.context_scope(current_profile) || current_context)
   end
 
-  # @return the current context, if a param is given, it will serve as the start of the current context
+  # @return [Context] The current context, if a param is given, it will serve as the start of the current context
   def current_context(model=nil)
     @current_context ||= Context.parse_from_uri(request.url, model) do |components|
       components.reject! { |c| !policy(c).show? }
     end
   end
 
-  # @return the {Profile} the {User} is using to do actions
+  # @return [Profile, nil] The {Profile} the {User} is using to do actions
   def current_profile
     if current_user.present?
       @current_profile ||= get_current_actor

@@ -1,12 +1,17 @@
 div
   .col-1
-    .box[class="#{'trashed' if @resource.is_trashed?}"]
-      h1= @resource.display_name
-      p= @resource.content
-    -if @resource.is_draft?
+    .box[class="#{'trashed' if project.is_trashed?}"]
+      section
+        h1= project.display_name
+        .markdown[itemprop="text"]
+          =markdown_to_html(project.content)
+      =render partial: project.creator, locals: {resource: project}
+      ul.btns-list--subtle.btns-horizontal.btn-sticky-bottom.btn-sticky.btns-list--grey-background
+        =crud_menu_item(project)
+    -if project.is_draft?
       div.draftbar.bg-danger
         =t('draft')
-        =link_to t('publish'), project_path(@resource, project: {publish: true}), class: 'btn btn--warning', data: {method: :put, confirm: t('projects.publish_confirmation')}
+        =link_to t('publish'), project_path(project, project: {publish: true}), class: 'btn btn--warning', data: {method: :put, confirm: t('projects.publish_confirmation')}
     h2= t('projects.phases.title')
-    p= "DEBUG_Phases: #{@resource.phases_count}"
-    =render partial: 'phases/phase', collection: @resource.phases
+    p= "DEBUG_Phases: #{project.phases_count}"
+    =render partial: 'phases/phase', collection: project.phases

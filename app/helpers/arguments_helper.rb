@@ -43,19 +43,4 @@ private
     end
   end
 
-def argument_items(argument)
-  link_items = []
-  arg_po = policy(argument)
-  if arg_po.update?
-    link_items << link_item(t('edit'), edit_argument_path(argument), fa: 'pencil')
-  end
-  if arg_po.trash?
-    link_items << link_item(t('trash'), argument_path(argument), data: {confirm: t('trash_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'trash')
-  end
-  if arg_po.destroy?
-    link_items << link_item(t('destroy'), argument_path(argument, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', 'skip-pjax' => 'true'}, fa: 'close')
-  end
-  dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-gear')
-end
-
 end
