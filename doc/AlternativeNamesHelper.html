@@ -173,6 +173,30 @@ not passed.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#alternative_questions%3F-instance_method" title="#alternative_questions? (instance method)">- (Boolean) <strong>alternative_questions?</strong>(naming_object = nil) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Does the <span class='object_link'><a href="Forum.html" title="Forum (class)">Forum</a></span> use alternative names for <span class='object_link'><a href="Question.html" title="Question (class)">Question</a></span>?.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#argument_icon-instance_method" title="#argument_icon (instance method)">- (Object) <strong>argument_icon</strong>(naming_object = nil) </a>
     
 
@@ -578,6 +602,76 @@ uses_alternative_names.</p>
     <span class='id identifier rubyid_naming_object'>naming_object</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:uses_alternative_names</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
         <span class='id identifier rubyid_naming_object'>naming_object</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:motions_title_singular</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span>
         <span class='id identifier rubyid_naming_object'>naming_object</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:motions_title</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="alternative_questions?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>alternative_questions?</strong>(naming_object = nil) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Does the <span class='object_link'><a href="Forum.html" title="Forum (class)">Forum</a></span> use alternative names for <span class='object_link'><a href="Question.html" title="Question (class)">Question</a></span>?</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/alternative_names_helper.rb', line 93</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_alternative_questions?'>alternative_questions?</span><span class='lparen'>(</span><span class='id identifier rubyid_naming_object'>naming_object</span><span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_naming_object'>naming_object</span> <span class='op'>==</span> <span class='kw'>nil</span> <span class='op'>||</span> <span class='op'>!</span><span class='id identifier rubyid_naming_object'>naming_object</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Forum</span><span class='rparen'>)</span>
+    <span class='ivar'>@alternative_questions</span> <span class='op'>||=</span> <span class='id identifier rubyid_naming_context'>naming_context</span><span class='period'>.</span><span class='id identifier rubyid_uses_alternative_names'>uses_alternative_names</span> <span class='op'>&amp;&amp;</span>
+        <span class='id identifier rubyid_naming_context'>naming_context</span><span class='period'>.</span><span class='id identifier rubyid_questions_title_singular'>questions_title_singular</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span>
+        <span class='id identifier rubyid_naming_context'>naming_context</span><span class='period'>.</span><span class='id identifier rubyid_questions_title'>questions_title</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_naming_object'>naming_object</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:uses_alternative_names</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span>
+        <span class='id identifier rubyid_naming_object'>naming_object</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:questions_title_singular</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>&amp;&amp;</span>
+        <span class='id identifier rubyid_naming_object'>naming_object</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:questions_title</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1096,8 +1190,8 @@ uses_alternative_names</p>
 </div>
 
     <div id="footer">
-  Generated on Sun Jan 17 18:46:24 2016 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  Generated by
+  <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
   0.8.7.6 (ruby-2.1.6).
 </div>
 

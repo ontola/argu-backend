@@ -217,6 +217,28 @@ be run safely later on.</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#grant_viewing_rights_for-instance_method" title="#grant_viewing_rights_for (instance method)">- (Object) <strong>grant_viewing_rights_for</strong>(item) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#has_access_token_access_to-instance_method" title="#has_access_token_access_to (instance method)">- (Object) <strong>has_access_token_access_to</strong>(record = nil) </a>
     
 
@@ -260,6 +282,28 @@ be run safely later on.</p>
 <p>Only works after <span class='object_link'><a href="#check_for_access_token-instance_method" title="AccessTokenHelper#check_for_access_token (method)">#check_for_access_token</a></span> or
 grant_viewing_rights_for has been called, since it doesn&#39;t read params.</p>
 </div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#increment_token_usages-instance_method" title="#increment_token_usages (instance method)">- (Object) <strong>increment_token_usages</strong>(item) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -459,6 +503,44 @@ be run safely later on</p>
 </div>
     
       <div class="method_details ">
+  <h3 class="signature " id="grant_viewing_rights_for-instance_method">
+  
+    - (<tt>Object</tt>) <strong>grant_viewing_rights_for</strong>(item) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+11
+12
+13
+14
+15
+16
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/access_token_helper.rb', line 11</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_grant_viewing_rights_for'>grant_viewing_rights_for</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_current_access_tokens'>current_access_tokens</span> <span class='op'>=</span> <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:a_tokens</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_current_access_tokens'>current_access_tokens</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_access_token'>access_token</span>
+    <span class='id identifier rubyid_session'>session</span><span class='lbracket'>[</span><span class='symbol'>:a_tokens</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='const'>Set</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_current_access_tokens'>current_access_tokens</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_add'>add</span> <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_access_token'>access_token</span>
+    <span class='id identifier rubyid_increment_token_usages'>increment_token_usages</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
   <h3 class="signature " id="has_access_token_access_to-instance_method">
   
     - (<tt>Object</tt>) <strong>has_access_token_access_to</strong>(record = nil) 
@@ -565,13 +647,43 @@ grant_viewing_rights_for has been called, since it doesn&#39;t read params</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="increment_token_usages-instance_method">
+  
+    - (<tt>Object</tt>) <strong>increment_token_usages</strong>(item) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/access_token_helper.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_increment_token_usages'>increment_token_usages</span><span class='lparen'>(</span><span class='id identifier rubyid_item'>item</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_item'>item</span><span class='period'>.</span><span class='id identifier rubyid_increment!'>increment!</span> <span class='symbol'>:usages</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
     <div id="footer">
-  Generated on Sun Jan 17 18:46:22 2016 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  Generated by
+  <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
   0.8.7.6 (ruby-2.1.6).
 </div>
 

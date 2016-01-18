@@ -221,6 +221,28 @@
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#show%3F-instance_method" title="#show? (instance method)">- (Boolean) <strong>show?</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -247,7 +269,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="AccessTokenHelper.html" title="AccessTokenHelper (module)">AccessTokenHelper</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="AccessTokenHelper.html#check_for_access_token-instance_method" title="AccessTokenHelper#check_for_access_token (method)">#check_for_access_token</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#get_access_token-instance_method" title="AccessTokenHelper#get_access_token (method)">#get_access_token</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#get_access_tokens-instance_method" title="AccessTokenHelper#get_access_tokens (method)">#get_access_tokens</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#get_safe_raw_access_tokens-instance_method" title="AccessTokenHelper#get_safe_raw_access_tokens (method)">#get_safe_raw_access_tokens</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#has_access_token_access_to-instance_method" title="AccessTokenHelper#has_access_token_access_to (method)">#has_access_token_access_to</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#has_valid_token%3F-instance_method" title="AccessTokenHelper#has_valid_token? (method)">#has_valid_token?</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="AccessTokenHelper.html#check_for_access_token-instance_method" title="AccessTokenHelper#check_for_access_token (method)">#check_for_access_token</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#get_access_token-instance_method" title="AccessTokenHelper#get_access_token (method)">#get_access_token</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#get_access_tokens-instance_method" title="AccessTokenHelper#get_access_tokens (method)">#get_access_tokens</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#get_safe_raw_access_tokens-instance_method" title="AccessTokenHelper#get_safe_raw_access_tokens (method)">#get_safe_raw_access_tokens</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#grant_viewing_rights_for-instance_method" title="AccessTokenHelper#grant_viewing_rights_for (method)">#grant_viewing_rights_for</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#has_access_token_access_to-instance_method" title="AccessTokenHelper#has_access_token_access_to (method)">#has_access_token_access_to</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#has_valid_token%3F-instance_method" title="AccessTokenHelper#has_valid_token? (method)">#has_valid_token?</a></span>, <span class='object_link'><a href="AccessTokenHelper.html#increment_token_usages-instance_method" title="AccessTokenHelper#increment_token_usages (method)">#increment_token_usages</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -340,17 +362,69 @@
       <pre class="lines">
 
 
-21
-22
-23
-24</pre>
+29
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/activity_policy.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'app/policies/activity_policy.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_permitted_attributes'>permitted_attributes</span>
   <span class='id identifier rubyid_attributes'>attributes</span> <span class='op'>=</span> <span class='kw'>super</span>
   <span class='id identifier rubyid_attributes'>attributes</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="show?-instance_method">
+  
+    - (<tt>Boolean</tt>) <strong>show?</strong> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/policies/activity_policy.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_show?'>show?</span>
+  <span class='const'>Pundit</span><span class='period'>.</span><span class='id identifier rubyid_policy'>policy</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_trackable'>trackable</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -362,8 +436,8 @@
 </div>
 
     <div id="footer">
-  Generated on Tue Jan  5 11:17:44 2016 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  Generated by
+  <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
   0.8.7.6 (ruby-2.1.6).
 </div>
 
