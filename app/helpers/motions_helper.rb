@@ -95,7 +95,7 @@ module MotionsHelper
     active_point = points[points.find_index { |p| p[:id] === active_point_id }] if active_point_id.present?
 
     merge_state({
-      timelines: {
+                  timelines: {
         activeTimelineId: 1,
         collection: {
           '1' => {
@@ -108,12 +108,12 @@ module MotionsHelper
           }
         }
       },
-      points: {
+                  points: {
         activePointId: active_point_id,
         activePoint: active_point,
         collection: points
       },
-      phases: [
+                  phases: [
         {
           type: 'phase',
           id: 1,
@@ -155,7 +155,7 @@ module MotionsHelper
           endDate: nil
         }
       ],
-      updates: [
+                  blog_posts: [
         {
           id: 1,
           type: 'update',
@@ -193,7 +193,7 @@ module MotionsHelper
           }
         }
       ],
-      profiles: [
+                  profiles: [
         {
           id: 1,
           type: 'profile',

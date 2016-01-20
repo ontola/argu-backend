@@ -1,0 +1,7 @@
+#Dutch blog post translations
+
+nl:
+  blog_posts:
+    type: "blog post"
+    type_new: "nieuw blog post"
+    new_btn: "Nieuw blog post"

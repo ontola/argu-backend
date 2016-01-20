@@ -87,13 +87,21 @@ class AuthorizedController < ApplicationController
       controller_name
           .classify
           .constantize
-          .new forum: tenant_by_param
+          .new resource_new_params
     else
       controller_name
           .classify
           .constantize
           .find_by id: params[:id]
     end
+  end
+
+  # Used in {authenticated_resource!} to build a new object. Overwrite this function if the model needs more than just the {Forum}
+  # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
+  def resource_new_params
+    {
+      forum: tenant_by_param
+    }
   end
 
   # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,

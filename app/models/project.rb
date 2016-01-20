@@ -1,5 +1,6 @@
 class Project < ActiveRecord::Base
-  include ArguBase, Placeable, PublicActivity::Common, Flowable, Trashable
+  include ArguBase, Placeable, PublicActivity::Common, Flowable, Trashable,
+          BlogPostable, ActivePublishable
 
   # For Rails 5 attributes
   # attribute :title, :string
@@ -11,7 +12,6 @@ class Project < ActiveRecord::Base
   # attribute :email, :string
   # attribute :trashed_at, :datetime
 
-  attr_accessor :unpublish
   alias_attribute :display_name, :title
 
   belongs_to :forum, inverse_of: :projects
@@ -26,16 +26,6 @@ class Project < ActiveRecord::Base
   validates :forum, presence: true
   validates :creator, presence: true
 
-  scope :published, -> { where.not(published: nil) }
-
-
   counter_culture :forum
 
-  def is_draft?
-    self[:published_at].blank?
-  end
-
-  def is_published?
-    self[:published_at].present?
-  end
 end

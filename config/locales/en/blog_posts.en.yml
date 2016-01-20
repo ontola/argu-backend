@@ -1,0 +1,7 @@
+#English argument translations
+
+en:
+  blog_posts:
+    type: "blog post"
+    type_new: "new blog post"
+    new_btn: "New blog post"

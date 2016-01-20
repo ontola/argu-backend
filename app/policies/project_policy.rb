@@ -43,23 +43,23 @@ class ProjectPolicy < RestrictivePolicy
   end
 
   def new?
-    rule is_manager?, is_owner?, super
+    rule is_moderator?, is_manager?, is_owner?, super
   end
 
   def show?
     if record.is_published? && !record.is_trashed?
       rule is_open?, is_member?, is_manager?, is_owner?, super
     else
-      rule is_manager?, is_owner?, super
+      rule is_moderator?, is_manager?, is_owner?, super
     end
   end
 
   def trash?
-    rule is_creator?, is_manager?, is_owner?, super
+    rule is_moderator?, is_creator?, is_manager?, is_owner?, super
   end
 
   def update?
-    rule is_manager?, is_owner?, super
+    rule is_moderator?, is_manager?, is_owner?, super
   end
 
   private

@@ -123,8 +123,9 @@ class AddProjects < ActiveRecord::Migration
     end
 
 
-    create_table :updates do |t|
+    create_table :blog_posts do |t|
       t.belongs_to :forum, null: false
+      t.belongs_to :blog_postable, polymorphic: true, nil: false
       t.integer    :creator_id,  null: false
       t.integer    :publisher_id
       t.integer    :state,       null: false, default: 0
@@ -135,12 +136,12 @@ class AddProjects < ActiveRecord::Migration
       t.datetime   :trashed_at
       t.timestamps null: false
     end
-    add_foreign_key :updates, :forums
-    add_foreign_key :updates, :users,    column: :publisher_id
-    add_foreign_key :updates, :profiles, column: :creator_id
-    add_index :updates, [:id, :forum_id]
-    add_index :updates, [:forum_id, :published_at]
-    add_index :updates, [:forum_id, :trashed_at]
+    add_foreign_key :blog_posts, :forums
+    add_foreign_key :blog_posts, :users,    column: :publisher_id
+    add_foreign_key :blog_posts, :profiles, column: :creator_id
+    add_index :blog_posts, [:id, :forum_id]
+    add_index :blog_posts, [:forum_id, :published_at]
+    add_index :blog_posts, [:forum_id, :trashed_at]
 
 
     create_table :photos do |t|
@@ -199,7 +200,7 @@ class AddProjects < ActiveRecord::Migration
     remove_column :group_memberships, :start_date
     remove_column :group_memberships, :end_date
 
-    drop_table :updates
+    drop_table :blog_posts
     drop_table :photos
 
     drop_table :placements

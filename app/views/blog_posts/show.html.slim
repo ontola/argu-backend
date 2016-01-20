@@ -1,0 +1,5 @@
+.col-1
+  .box[class="#{'trashed' if blog_post.is_trashed?}"]
+    h1= blog_post.title
+    .markdown= blog_post.content
+    =crud_menu_item(blog_post)

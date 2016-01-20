@@ -125,6 +125,26 @@ ActiveRecord::Schema.define(version: 20160112101509) do
   add_index "banners", ["forum_id", "publish_at"], name: "index_banners_on_forum_id_and_publish_at", using: :btree
   add_index "banners", ["forum_id"], name: "index_banners_on_forum_id", using: :btree
 
+  create_table "blog_posts", force: :cascade do |t|
+    t.integer  "forum_id",                       null: false
+    t.integer  "blog_postable_id"
+    t.string   "blog_postable_type"
+    t.integer  "creator_id",                     null: false
+    t.integer  "publisher_id"
+    t.integer  "state",              default: 0, null: false
+    t.string   "title",                          null: false
+    t.text     "content"
+    t.integer  "comments_count",     default: 0, null: false
+    t.datetime "published_at"
+    t.datetime "trashed_at"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "blog_posts", ["forum_id", "published_at"], name: "index_blog_posts_on_forum_id_and_published_at", using: :btree
+  add_index "blog_posts", ["forum_id", "trashed_at"], name: "index_blog_posts_on_forum_id_and_trashed_at", using: :btree
+  add_index "blog_posts", ["id", "forum_id"], name: "index_blog_posts_on_id_and_forum_id", using: :btree
+
   create_table "comments", force: :cascade do |t|
     t.integer  "commentable_id",               default: 0
     t.string   "commentable_type", limit: 255, default: ""
@@ -685,24 +705,6 @@ ActiveRecord::Schema.define(version: 20160112101509) do
   add_index "translations", ["forum_id", "key", "locale_id"], name: "index_translations_on_forum_id_and_key_and_locale_id", unique: true, using: :btree
   add_index "translations", ["key", "locale_id"], name: "index_translations_on_key_and_locale_id", unique: true, using: :btree
 
-  create_table "updates", force: :cascade do |t|
-    t.integer  "forum_id",                   null: false
-    t.integer  "creator_id",                 null: false
-    t.integer  "publisher_id"
-    t.integer  "state",          default: 0, null: false
-    t.string   "title",                      null: false
-    t.text     "content"
-    t.integer  "comments_count", default: 0, null: false
-    t.datetime "published_at"
-    t.datetime "trashed_at"
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-  end
-
-  add_index "updates", ["forum_id", "published_at"], name: "index_updates_on_forum_id_and_published_at", using: :btree
-  add_index "updates", ["forum_id", "trashed_at"], name: "index_updates_on_forum_id_and_trashed_at", using: :btree
-  add_index "updates", ["id", "forum_id"], name: "index_updates_on_id_and_forum_id", using: :btree
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                   limit: 255, default: ""
     t.string   "encrypted_password",      limit: 255, default: ""
@@ -785,6 +787,9 @@ ActiveRecord::Schema.define(version: 20160112101509) do
   add_foreign_key "access_tokens", "profiles"
   add_foreign_key "arguments", "users", column: "publisher_id"
   add_foreign_key "banners", "forums", on_delete: :cascade
+  add_foreign_key "blog_posts", "forums"
+  add_foreign_key "blog_posts", "profiles", column: "creator_id"
+  add_foreign_key "blog_posts", "users", column: "publisher_id"
   add_foreign_key "comments", "forums"
   add_foreign_key "comments", "users", column: "publisher_id"
   add_foreign_key "forums", "places"
@@ -817,7 +822,4 @@ ActiveRecord::Schema.define(version: 20160112101509) do
   add_foreign_key "stepups", "groups"
   add_foreign_key "stepups", "profiles", column: "creator_id"
   add_foreign_key "stepups", "users"
-  add_foreign_key "updates", "forums"
-  add_foreign_key "updates", "profiles", column: "creator_id"
-  add_foreign_key "updates", "users", column: "publisher_id"
 end

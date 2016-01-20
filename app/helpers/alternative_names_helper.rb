@@ -26,7 +26,14 @@ module AlternativeNamesHelper
     end
   end
 
+  #########################
+  #       Blog Post       #
+  #########################
 
+  # Icon substring for blog posts
+  def blog_post_icon(naming_object= nil)
+    'quote-left'
+  end
 
   #########################
   #        Motions        #

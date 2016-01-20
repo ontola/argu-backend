@@ -16,6 +16,7 @@
 # n: notifications
 # o: pages (organisations)
 # p: projects
+# posts: blog posts
 # q: questions
 # r:
 # s: [RESERVED for search]
@@ -28,6 +29,11 @@
 # z:
 
 Argu::Application.routes.draw do
+  concern :blog_postable do
+    resources :blog_posts,
+              only: [:index, :new, :create],
+              path: 'posts'
+  end
   concern :moveable do
     get :move, action: :move
     put :move, action: :move!
@@ -150,10 +156,15 @@ Argu::Application.routes.draw do
     resources :managers, only: [:new, :create, :destroy], controller: 'pages/managers'
   end
 
+  resources :blog_posts,
+            path: 'posts',
+            only: [:show, :edit, :update, :destroy]
+
 
   resources :projects,
             path: 'p',
-            only: [:show, :edit, :update, :destroy]
+            only: [:show, :edit, :update, :destroy],
+            concerns: [:blog_postable]
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
