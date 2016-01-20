@@ -23,9 +23,8 @@ module TestHelper
   # Runs assert_difference with a number of conditions and varying difference
   # counts.
   #
-  # Call as follows:
-  #
-  # assert_differences([['Model1.count', 2], ['Model2.count', 3]])
+  # @example
+  #   assert_differences([['Model1.count', 2], ['Model2.count', 3]])
   #
   def assert_differences(expression_array, message = nil, &block)
     b = block.send(:binding)

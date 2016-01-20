@@ -86,11 +86,7 @@ class ProjectsController < AuthorizedController
     end
   end
 
-private
-
-  def resolve_manager_fields
-    fdsa
-  end
+  private
 
   def permit_params
     params.require(:project).permit(*policy(authenticated_resource || @project || Project).permitted_attributes)

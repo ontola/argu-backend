@@ -105,10 +105,14 @@ class AddProjects < ActiveRecord::Migration
       t.belongs_to :record, polymorphic: true, null: false
       t.belongs_to :group
       t.belongs_to :user
+      t.belongs_to :creator
+      t.string     :title
+      t.text       :description
     end
     add_foreign_key :stepups, :forums
     add_foreign_key :stepups, :groups
     add_foreign_key :stepups, :users
+    add_foreign_key :stepups, :profiles, column: :creator_id
 
 
     change_table :group_memberships do |t|

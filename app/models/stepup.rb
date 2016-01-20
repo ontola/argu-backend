@@ -6,20 +6,43 @@ class Stepup < ActiveRecord::Base
 
   belongs_to :forum
   belongs_to :record, polymorphic: true, inverse_of: :stepups
+  belongs_to :creator, class_name: 'Profile'
+  # @private
   belongs_to :user
+  # @private
   belongs_to :group
 
-  def manager
-    self[:group] || self[:user]
+  validate :belongs_only_to_one_entity
+
+  def belongs_only_to_one_entity
+    errors.add(:manager, :exclusive) if user && group
   end
 
-  def manager=(value)
+  def display_name
+    moderator.try(:display_name)
+  end
+
+  def moderator
+    self.group || self.user
+  end
+
+  # This is
+  def moderator=(value)
+    if value.is_a?(String)
+      value.is_a?(String)
+      entity = User.find_via_shortname_nil(value)
+      entity ||= Group.find_by(id: value)
+      entity ||= Group.find_by(name: value)
+      value = entity
+    end
     if value.is_a?(Group)
-      self[:group] = value
-      self[:user] = nil
+      self.group = value
+      self.user = nil
     elsif value.is_a?(User)
-      self[:user] = value
-      self[:group] = nil
+      self.user = value
+      self.group = nil
+    elsif value == nil
+      nil
     else
       raise 'Unthought clause happened'
     end

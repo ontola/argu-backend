@@ -36,8 +36,12 @@ class RestrictivePolicy
       4
     end
 
+    def moderator
+      5
+    end
+
     def owner
-      6
+      7
     end
 
     def staff
@@ -51,6 +55,16 @@ class RestrictivePolicy
 
     def is_member?
       member if user && user.profile.member_of?(record.forum || record.forum_id)
+    end
+
+    def is_moderator?
+      if record.respond_to? :stepups
+        if record.stepups.pluck(:user_id).include?(user.id) ||
+            record.stepups.pluck(:group_id) & user.profile.groups.where(forum: record.forum).pluck(:id)
+          moderator
+        end
+      end
+
     end
 
     def staff?

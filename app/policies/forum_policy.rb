@@ -35,7 +35,7 @@ class ForumPolicy < RestrictivePolicy
     end
 
     def manager
-      5
+      6
     end
 
     # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta

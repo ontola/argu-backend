@@ -11,7 +11,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     div[data-intro= t('intro.motion.back')]= to_parent
     =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}
     .col--motion
-      .motion-body[data-intro= t('intro.motion.body') itemprop="text"]= render partial: 'body', locals: { motion: @motion }
+      .motion-body[data-intro= t('intro.motion.body')]= render partial: 'body', locals: { motion: @motion }
       .motion-votes= react_component 'CombiBigVote', motion_combi_vote_props(current_profile, @motion, @vote), prerender_options
       .motion-timeline= react_component 'TimeLineComponentContainerWrapper', *render_params_from_props(motion_timeline_props(@motion))
       /=render partial: 'updates/update', locals: {item: @motion}

@@ -1,8 +1,8 @@
-div
+div[itemscope itemtype="http://www.schema.org/Thing"]
   .col-1
     .box[class="#{'trashed' if project.is_trashed?}"]
       section
-        h1= project.display_name
+        h1[itemprop="headline"]= project.display_name
         .markdown[itemprop="text"]
           =markdown_to_html(project.content)
       =render partial: project.creator, locals: {resource: project}
@@ -15,3 +15,5 @@ div
     h2= t('projects.phases.title')
     p= "DEBUG_Phases: #{project.phases_count}"
     =render partial: 'phases/phase', collection: project.phases
+    h2 _moderators_
+    =render partial: 'stepups/stepup', collection: project.stepups

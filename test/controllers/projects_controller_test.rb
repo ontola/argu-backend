@@ -6,6 +6,7 @@ class ProjectsControllerTest < ActionController::TestCase
   let!(:owner) { FactoryGirl.create(:user) }
   let!(:page) { FactoryGirl.create(:page, owner: owner.profile) }
   let!(:freetown) { FactoryGirl.create(:forum, :with_follower, page: page, name: 'freetown') }
+  let!(:moderator) { create_member(freetown) }
   let!(:subject) do
     FactoryGirl.create(:project,
                        :published,
@@ -32,11 +33,15 @@ class ProjectsControllerTest < ActionController::TestCase
     assert_response response
   end
 
-  def general_create(response = 302, difference = 0)
-    assert_difference('Project.count', difference) do
+  def general_create(response = 302, differences = [['Project.count', 0],
+                                                    ['Stepup.count', 0],
+                                                    ['Phase.count', 0]])
+    assert_differences(differences) do
       post :create,
            forum_id: freetown,
-           project: attributes_for(:project)
+           project: attributes_for(:project,
+                                   stepups_attributes: {'12321' => {moderator: moderator.url}},
+                                   phases_attributes: {'12321' => attributes_for(:phase)})
     end
 
     assert_response response
@@ -97,7 +102,7 @@ class ProjectsControllerTest < ActionController::TestCase
     assert assigns(:_not_authorized_caught)
   end
 
-  test 'guest should post create' do
+  test 'guest should not post create' do
     general_create
   end
 
@@ -204,7 +209,10 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test 'owner should post create' do
     sign_in owner
-    general_create 302, 1
+    general_create 302,
+                   [['Project.count', 1],
+                    ['Stepup.count', 1],
+                    ['Phase.count', 1]]
   end
 
   test 'owner should get edit' do
@@ -238,7 +246,10 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test 'manager should post create' do
     sign_in manager
-    general_create 302, 1
+    general_create 302,
+                   [['Project.count', 1],
+                    ['Stepup.count', 1],
+                    ['Phase.count', 1]]
   end
 
   test 'manager should get edit' do
@@ -273,7 +284,10 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test 'staff should post create' do
     sign_in staff
-    general_create 302, 1
+    general_create 302,
+                   [['Project.count', 1],
+                    ['Stepup.count', 1],
+                    ['Phase.count', 1]]
   end
 
   test 'staff should get edit' do

@@ -645,6 +645,9 @@ ActiveRecord::Schema.define(version: 20160112101509) do
     t.string  "record_type", null: false
     t.integer "group_id"
     t.integer "user_id"
+    t.integer "creator_id"
+    t.string  "title"
+    t.text    "description"
   end
 
   create_table "taggings", force: :cascade do |t|
@@ -812,6 +815,7 @@ ActiveRecord::Schema.define(version: 20160112101509) do
   add_foreign_key "questions", "users", column: "publisher_id"
   add_foreign_key "stepups", "forums"
   add_foreign_key "stepups", "groups"
+  add_foreign_key "stepups", "profiles", column: "creator_id"
   add_foreign_key "stepups", "users"
   add_foreign_key "updates", "forums"
   add_foreign_key "updates", "profiles", column: "creator_id"
