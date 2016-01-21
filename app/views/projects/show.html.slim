@@ -1,6 +1,6 @@
 div[itemscope itemtype="http://www.schema.org/Thing"]
   .col-1
-    .box[class="#{'trashed' if project.is_trashed?}"]
+    .box[class=status_classes_for(project)]
       section
         h1[itemprop="headline"]= project.display_name
         .markdown[itemprop="text"]
@@ -17,3 +17,5 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
     =render partial: 'phases/phase', collection: project.phases
     h2 _moderators_
     =render partial: 'stepups/stepup', collection: project.stepups
+    h2 _blog posts_
+    =render partial: 'blog_posts/blog_post', collection: project.blog_posts

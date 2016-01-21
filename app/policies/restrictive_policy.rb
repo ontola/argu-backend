@@ -59,9 +59,11 @@ class RestrictivePolicy
 
     def is_moderator?
       if record.respond_to? :stepups
-        if user && record.stepups.pluck(:user_id).include?(user.id) ||
-            record.stepups.pluck(:group_id) & user.profile.groups.where(forum: record.forum).pluck(:id)
-          moderator
+        if user
+          if record.stepups.pluck(:user_id).include?(user.id) ||
+              (record.stepups.pluck(:group_id) & user.profile.groups.where(forum: record.forum).pluck(:id)).present?
+            moderator
+          end
         end
       end
 

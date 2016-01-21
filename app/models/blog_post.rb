@@ -1,5 +1,5 @@
 class BlogPost < ActiveRecord::Base
-  include ArguBase, Trashable, Flowable, Placeable, ActivePublishable
+  include ArguBase, Trashable, PublicActivity::Common, Flowable, Placeable, ActivePublishable
 
   # For Rails 5 attributes
   # attribute :state, :enum

@@ -84,28 +84,30 @@ class MotionsControllerTest < ActionController::TestCase
     sign_in user
 
     get :convert, motion_id: subject
-    assert_redirected_to root_url
+
+    assert_not_authorized
+    assert_redirected_to subject.forum
   end
 
   test 'user should not put convert' do
     sign_in user
 
     put :convert, motion_id: subject
-    assert_redirected_to root_url
+    assert_redirected_to subject.forum
   end
 
   test 'user should not get move' do
     sign_in user
 
     get :move, motion_id: subject
-    assert_redirected_to root_url
+    assert_redirected_to subject.forum
   end
 
   test 'user should not put move' do
     sign_in user
 
     put :move, motion_id: subject
-    assert_redirected_to root_url
+    assert_redirected_to subject.forum
   end
 
   ####################################
@@ -186,7 +188,7 @@ class MotionsControllerTest < ActionController::TestCase
           content: 'new contents'
         }
 
-    assert_redirected_to root_path
+    assert_redirected_to subject.forum
     assert assigns(:_not_authorized_caught)
   end
 
@@ -222,8 +224,8 @@ class MotionsControllerTest < ActionController::TestCase
              content: 'Contents'
            }
     end
-    assert_redirected_to root_path
     assert_not_authorized
+    assert_redirected_to no_create_without_question
   end
 
   test 'member should post create without create_without_question with question' do

@@ -105,28 +105,33 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in member
 
     get :convert, question_id: subject
-    assert_redirected_to root_url
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to subject.forum
   end
 
   test 'should not put convert' do
     sign_in member
 
     put :convert, question_id: subject
-    assert_redirected_to root_url
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to subject.forum
   end
 
   test 'should not get move' do
     sign_in member
 
     get :move, question_id: subject
-    assert_redirected_to root_url
+
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to subject.forum
   end
 
   test 'should not put move' do
     sign_in member
 
     put :move, question_id: subject
-    assert_redirected_to root_url
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to subject.forum
   end
 
 

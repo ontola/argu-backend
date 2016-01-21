@@ -1,4 +1,4 @@
-.box[class="#{'trashed' if motion.is_trashed?}"]
+.box[class=status_classes_for(motion)]
   section.section-info.motion-bg
     span[class="fa fa-#{motion_icon}"]
     span.icon-left= motion_type(motion)

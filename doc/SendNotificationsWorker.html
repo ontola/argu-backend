@@ -217,13 +217,13 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_collect_notifications'>collect_notifications</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='comma'>,</span> <span class='id identifier rubyid_lock'>lock</span> <span class='op'>=</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_t_notifications'>t_notifications</span> <span class='op'>=</span> <span class='const'>Notification</span><span class='period'>.</span><span class='id identifier rubyid_arel_table'>arel_table</span>
   <span class='id identifier rubyid_lock'>lock</span> <span class='op'>=</span> <span class='id identifier rubyid_lock'>lock</span> <span class='op'>===</span> <span class='kw'>false</span> <span class='op'>?</span> <span class='kw'>false</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>FOR UPDATE NOWAIT</span><span class='tstring_end'>&#39;</span></span>
-  <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_notifications'>notifications</span><span class='period'>
-</span><span class='id identifier rubyid_      .where'>      .where</span><span class='lparen'>(</span><span class='id identifier rubyid_t_notifications'>t_notifications</span><span class='lbracket'>[</span><span class='symbol'>:read_at</span><span class='rbracket'>]</span><span class='period'>
-</span><span class='id identifier rubyid_                 .eq'>                 .eq</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span><span class='period'>
-</span><span class='id identifier rubyid_                 .and'>                 .and</span><span class='lparen'>(</span><span class='id identifier rubyid_t_notifications'>t_notifications</span><span class='lbracket'>[</span><span class='symbol'>:created_at</span><span class='rbracket'>]</span><span class='period'>
-</span><span class='id identifier rubyid_                          .gt'>                          .gt</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_notifications_viewed_at'>notifications_viewed_at</span> <span class='op'>||</span> <span class='int'>1</span><span class='period'>.</span><span class='id identifier rubyid_year'>year</span><span class='period'>.</span><span class='id identifier rubyid_ago'>ago</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>
-</span><span class='id identifier rubyid_      .order'>      .order</span><span class='lparen'>(</span><span class='label'>created_at:</span> <span class='symbol'>:desc</span><span class='rparen'>)</span><span class='period'>
-</span><span class='id identifier rubyid_      .lock'>      .lock</span><span class='lparen'>(</span><span class='id identifier rubyid_lock'>lock</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_notifications'>notifications</span>
+      <span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='id identifier rubyid_t_notifications'>t_notifications</span><span class='lbracket'>[</span><span class='symbol'>:read_at</span><span class='rbracket'>]</span>
+                 <span class='period'>.</span><span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span>
+                 <span class='period'>.</span><span class='id identifier rubyid_and'>and</span><span class='lparen'>(</span><span class='id identifier rubyid_t_notifications'>t_notifications</span><span class='lbracket'>[</span><span class='symbol'>:created_at</span><span class='rbracket'>]</span>
+                          <span class='period'>.</span><span class='id identifier rubyid_gt'>gt</span><span class='lparen'>(</span><span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_notifications_viewed_at'>notifications_viewed_at</span> <span class='op'>||</span> <span class='int'>1</span><span class='period'>.</span><span class='id identifier rubyid_year'>year</span><span class='period'>.</span><span class='id identifier rubyid_ago'>ago</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='label'>created_at:</span> <span class='symbol'>:desc</span><span class='rparen'>)</span>
+      <span class='period'>.</span><span class='id identifier rubyid_lock'>lock</span><span class='lparen'>(</span><span class='id identifier rubyid_lock'>lock</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -333,7 +333,7 @@
     <div id="footer">
   Generated by
   <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
-  0.8.7.6 (ruby-2.1.6).
+  0.8.7.6 (ruby-2.2.4).
 </div>
 
   </body>

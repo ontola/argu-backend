@@ -25,7 +25,7 @@ Rails.application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
-  config.log_level = ENV['LOG_LEVEL'] || :debug
+  config.log_level = ENV['LOG_LEVEL'] || :fatal
 
   # Raise exceptions instead of rendering exception templates
   config.action_dispatch.show_exceptions = false

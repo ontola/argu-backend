@@ -243,9 +243,9 @@
   <span class='id identifier rubyid_recipients'>recipients</span> <span class='op'>=</span> <span class='id identifier rubyid_follower_emails_for'>follower_emails_for</span><span class='lparen'>(</span><span class='id identifier rubyid_argument'>argument</span><span class='comma'>,</span> <span class='id identifier rubyid_argument'>argument</span><span class='period'>.</span><span class='id identifier rubyid_motion'>motion</span><span class='rparen'>)</span>
   <span class='comment'># TODO: single out the creator and send a different mail
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='const'>UserMailer</span><span class='period'>
-</span><span class='id identifier rubyid_        .user_created_argument'>        .user_created_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_argument'>argument</span><span class='comma'>,</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='comma'>,</span> <span class='label'>parent:</span> <span class='id identifier rubyid_parent_for_resource'>parent_for_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_argument'>argument</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>
-</span><span class='id identifier rubyid_        .deliver_now'>        .deliver_now</span>
+    <span class='const'>UserMailer</span>
+        <span class='period'>.</span><span class='id identifier rubyid_user_created_argument'>user_created_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_argument'>argument</span><span class='comma'>,</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='comma'>,</span> <span class='label'>parent:</span> <span class='id identifier rubyid_parent_for_resource'>parent_for_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_argument'>argument</span><span class='rparen'>)</span><span class='rparen'>)</span>
+        <span class='period'>.</span><span class='id identifier rubyid_deliver_now'>deliver_now</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -285,9 +285,9 @@
   <span class='id identifier rubyid_recipients'>recipients</span> <span class='op'>=</span> <span class='id identifier rubyid_follower_emails_for'>follower_emails_for</span><span class='lparen'>(</span><span class='id identifier rubyid_comment'>comment</span><span class='comma'>,</span> <span class='id identifier rubyid_comment'>comment</span><span class='period'>.</span><span class='id identifier rubyid_subscribable'>subscribable</span><span class='rparen'>)</span>
   <span class='comment'># TODO: single out the creator and send a different mail
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='const'>UserMailer</span><span class='period'>
-</span><span class='id identifier rubyid_        .user_created_comment'>        .user_created_comment</span><span class='lparen'>(</span><span class='id identifier rubyid_comment'>comment</span><span class='comma'>,</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='comma'>,</span> <span class='label'>parent:</span> <span class='id identifier rubyid_parent_for_resource'>parent_for_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_comment'>comment</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>
-</span><span class='id identifier rubyid_        .deliver_now'>        .deliver_now</span>
+    <span class='const'>UserMailer</span>
+        <span class='period'>.</span><span class='id identifier rubyid_user_created_comment'>user_created_comment</span><span class='lparen'>(</span><span class='id identifier rubyid_comment'>comment</span><span class='comma'>,</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='comma'>,</span> <span class='label'>parent:</span> <span class='id identifier rubyid_parent_for_resource'>parent_for_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_comment'>comment</span><span class='rparen'>)</span><span class='rparen'>)</span>
+        <span class='period'>.</span><span class='id identifier rubyid_deliver_now'>deliver_now</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -329,9 +329,9 @@
   <span class='id identifier rubyid_recipients'>recipients</span> <span class='op'>=</span> <span class='id identifier rubyid_follower_emails_for'>follower_emails_for</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='comma'>,</span> <span class='id identifier rubyid_parent'>parent</span><span class='rparen'>)</span>
   <span class='comment'># TODO: single out the creator and send a different mail
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='const'>UserMailer</span><span class='period'>
-</span><span class='id identifier rubyid_        .user_created_motion'>        .user_created_motion</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='comma'>,</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='comma'>,</span> <span class='label'>parent:</span> <span class='id identifier rubyid_parent_for_resource'>parent_for_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>
-</span><span class='id identifier rubyid_        .deliver_now'>        .deliver_now</span>
+    <span class='const'>UserMailer</span>
+        <span class='period'>.</span><span class='id identifier rubyid_user_created_motion'>user_created_motion</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='comma'>,</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='comma'>,</span> <span class='label'>parent:</span> <span class='id identifier rubyid_parent_for_resource'>parent_for_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='rparen'>)</span><span class='rparen'>)</span>
+        <span class='period'>.</span><span class='id identifier rubyid_deliver_now'>deliver_now</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -371,9 +371,9 @@
   <span class='id identifier rubyid_recipients'>recipients</span> <span class='op'>=</span> <span class='id identifier rubyid_follower_emails_for'>follower_emails_for</span><span class='lparen'>(</span><span class='id identifier rubyid_question'>question</span><span class='comma'>,</span> <span class='id identifier rubyid_question'>question</span><span class='period'>.</span><span class='id identifier rubyid_forum'>forum</span><span class='rparen'>)</span>
   <span class='comment'># TODO: single out the creator and send a different mail
 </span>  <span class='kw'>if</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-    <span class='const'>UserMailer</span><span class='period'>
-</span><span class='id identifier rubyid_        .user_created_question'>        .user_created_question</span><span class='lparen'>(</span><span class='id identifier rubyid_question'>question</span><span class='comma'>,</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='comma'>,</span> <span class='label'>parent:</span> <span class='id identifier rubyid_parent_for_resource'>parent_for_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_question'>question</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>
-</span><span class='id identifier rubyid_        .deliver_now'>        .deliver_now</span>
+    <span class='const'>UserMailer</span>
+        <span class='period'>.</span><span class='id identifier rubyid_user_created_question'>user_created_question</span><span class='lparen'>(</span><span class='id identifier rubyid_question'>question</span><span class='comma'>,</span> <span class='id identifier rubyid_recipients'>recipients</span><span class='comma'>,</span> <span class='label'>parent:</span> <span class='id identifier rubyid_parent_for_resource'>parent_for_resource</span><span class='lparen'>(</span><span class='id identifier rubyid_question'>question</span><span class='rparen'>)</span><span class='rparen'>)</span>
+        <span class='period'>.</span><span class='id identifier rubyid_deliver_now'>deliver_now</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -388,7 +388,7 @@
     <div id="footer">
   Generated by
   <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
-  0.8.7.6 (ruby-2.1.6).
+  0.8.7.6 (ruby-2.2.4).
 </div>
 
   </body>

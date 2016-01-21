@@ -8,7 +8,7 @@
 .col-1
   div[data-intro= t('intro.question.back')]= to_parent
   =render partial: 'contextualize/context_horizontal', locals: {item: @question, type: 'que'}
-  .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
+  .box[class=status_classes_for(@question) data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
     section.section-info.question-bg
       span[class="fa fa-#{question_icon}"]
       span.icon-left= question_type

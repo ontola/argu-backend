@@ -1,8 +1,10 @@
-/.box.update
-  section.update-decision.pro-bg
-    h3
-      span.fa.fa-check
-      span.icon-left= t('accepted')
+.box[class=status_classes_for(blog_post)]
+  section.section-info.blog-post-bg
+    span[class="fa fa-#{blog_post_icon}"]
+    span.icon-left= t('blog_posts.type')
   section
-    p Altijd leuk, dit soort plannen. Wij zijn voorstander. Keileuk.
-  =render partial: 'profiles/profile_current'
+    h1[itemprop="headline"]= blog_post.title
+    .markdown[itemprop="text"]= markdown_to_html(blog_post.content)
+  =render partial: blog_post.creator, locals: {resource: blog_post}
+  ul.btns-list--subtle.btns-horizontal.btn-sticky-bottom.btn-sticky.btns-list--grey-background
+    =crud_menu_item(blog_post)

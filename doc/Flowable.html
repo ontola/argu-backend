@@ -82,7 +82,7 @@
   
   
     <dt class="r2">Included in:</dt>
-    <dd class="r2"><span class='object_link'><a href="Argument.html" title="Argument (class)">Argument</a></span>, <span class='object_link'><a href="Forum.html" title="Forum (class)">Forum</a></span>, <span class='object_link'><a href="Motion.html" title="Motion (class)">Motion</a></span>, <span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span>, <span class='object_link'><a href="Project.html" title="Project (class)">Project</a></span>, <span class='object_link'><a href="Question.html" title="Question (class)">Question</a></span>, <span class='object_link'><a href="Update.html" title="Update (class)">Update</a></span>, <span class='object_link'><a href="User.html" title="User (class)">User</a></span></dd>
+    <dd class="r2"><span class='object_link'><a href="Argument.html" title="Argument (class)">Argument</a></span>, <span class='object_link'><a href="BlogPost.html" title="BlogPost (class)">BlogPost</a></span>, <span class='object_link'><a href="Forum.html" title="Forum (class)">Forum</a></span>, <span class='object_link'><a href="Motion.html" title="Motion (class)">Motion</a></span>, <span class='object_link'><a href="Page.html" title="Page (class)">Page</a></span>, <span class='object_link'><a href="Project.html" title="Project (class)">Project</a></span>, <span class='object_link'><a href="Question.html" title="Question (class)">Question</a></span>, <span class='object_link'><a href="User.html" title="User (class)">User</a></span></dd>
     
   
   
@@ -221,8 +221,8 @@ the activity.</p>
   <span class='id identifier rubyid_activities'>activities</span> <span class='op'>=</span> <span class='const'>Activity</span><span class='period'>.</span><span class='id identifier rubyid_arel_table'>arel_table</span>
   <span class='const'>Activity</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span>
     <span class='id identifier rubyid_activities'>activities</span><span class='lbracket'>[</span><span class='symbol'>:trackable_id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_id'>id</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_and'>and</span><span class='lparen'>(</span>
-      <span class='id identifier rubyid_activities'>activities</span><span class='lbracket'>[</span><span class='symbol'>:trackable_type</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='period'>
-</span><span class='id identifier rubyid_      .or'>      .or</span><span class='lparen'>(</span><span class='id identifier rubyid_activities'>activities</span><span class='lbracket'>[</span><span class='symbol'>:recipient_id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_and'>and</span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_activities'>activities</span><span class='lbracket'>[</span><span class='symbol'>:trackable_type</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='rparen'>)</span>
+      <span class='period'>.</span><span class='id identifier rubyid_or'>or</span><span class='lparen'>(</span><span class='id identifier rubyid_activities'>activities</span><span class='lbracket'>[</span><span class='symbol'>:recipient_id</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='kw'>self</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_and'>and</span><span class='lparen'>(</span>
         <span class='id identifier rubyid_activities'>activities</span><span class='lbracket'>[</span><span class='symbol'>:recipient_type</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_model_name'>model_name</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -237,7 +237,7 @@ the activity.</p>
     <div id="footer">
   Generated by
   <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
-  0.8.7.6 (ruby-2.1.6).
+  0.8.7.6 (ruby-2.2.4).
 </div>
 
   </body>

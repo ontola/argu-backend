@@ -1,9 +1,10 @@
 
-class CreateQuestion < ApplicationService
+class CreateQuestion < CreateService
   include Wisper::Publisher
 
   def initialize(profile, attributes = {}, options = {})
-    @question = profile.questions.new(attributes)
+    @question = profile.questions.new
+    super
     if attributes[:publisher].blank? && profile.profileable.is_a?(User)
       @question.publisher = profile.profileable
     end
@@ -11,16 +12,6 @@ class CreateQuestion < ApplicationService
 
   def resource
     @question
-  end
-
-  def commit
-    Question.transaction do
-      @question.save!
-      @question.publisher.follow(@question)
-      publish(:create_question_successful, @question)
-    end
-  rescue ActiveRecord::RecordInvalid
-    publish(:create_question_failed, @question)
   end
 
 end

@@ -12,6 +12,7 @@ class BlogPostsController < AuthorizedController
     @cbp = CreateBlogPost.new(
       current_profile,
       permit_params.merge({
+                            published_at: Time.current,
                             forum: authenticated_context,
                             publisher: current_user,
                             blog_postable: get_parent_resource

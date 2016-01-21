@@ -1,28 +1,18 @@
 # Service for the creation of projects
 # @author Fletcher91 <thom@argu.co>
-class CreateProject < ApplicationService
+class CreateProject < CreateService
   include Wisper::Publisher
 
   def initialize(profile, attributes = {}, options = {})
-    @project = profile.projects.new(attributes)
+    @project = profile.projects.new
+    super
     if attributes[:publisher].blank? && profile.profileable.is_a?(User)
       @project.publisher = profile.profileable
     end
-    set_nested_associations
   end
 
   def resource
     @project
-  end
-
-  def commit
-    Project.transaction do
-      @project.save!
-      @project.publisher.follow(@project)
-      publish(:create_project_successful, @project)
-    end
-  rescue ActiveRecord::RecordInvalid
-    publish(:create_project_failed, @project)
   end
 
   private

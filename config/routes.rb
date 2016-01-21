@@ -164,7 +164,7 @@ Argu::Application.routes.draw do
   resources :projects,
             path: 'p',
             only: [:show, :edit, :update, :destroy],
-            concerns: [:blog_postable]
+            concerns: [:blog_postable, :flowable]
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]

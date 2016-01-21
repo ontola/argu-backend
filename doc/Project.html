@@ -93,7 +93,7 @@
   
     
       <dt class="r2">Includes:</dt>
-      <dd class="r2"><span class='object_link'><a href="ArguBase.html" title="ArguBase (module)">ArguBase</a></span>, <span class='object_link'><a href="Flowable.html" title="Flowable (module)">Flowable</a></span>, <span class='object_link'><a href="Placeable.html" title="Placeable (module)">Placeable</a></span>, PublicActivity::Common, <span class='object_link'><a href="Trashable.html" title="Trashable (module)">Trashable</a></span></dd>
+      <dd class="r2"><span class='object_link'><a href="ActivePublishable.html" title="ActivePublishable (module)">ActivePublishable</a></span>, <span class='object_link'><a href="ArguBase.html" title="ArguBase (module)">ArguBase</a></span>, <span class='object_link'><a href="BlogPostable.html" title="BlogPostable (module)">BlogPostable</a></span>, <span class='object_link'><a href="Flowable.html" title="Flowable (module)">Flowable</a></span>, <span class='object_link'><a href="Placeable.html" title="Placeable (module)">Placeable</a></span>, PublicActivity::Common, <span class='object_link'><a href="Trashable.html" title="Trashable (module)">Trashable</a></span></dd>
       
     
   
@@ -109,107 +109,22 @@
 
 
 
-  <h2>Instance Attribute Summary <small>(<a href="#" class="summary_toggle">collapse</a>)</small></h2>
-  <ul class="summary">
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#unpublish-instance_method" title="#unpublish (instance method)">- (Object) <strong>unpublish</strong> </a>
-    
 
-    
-  </span>
-  
-  
-  
-    
-    
-  
-  
-  
-  
-  
 
+  <h2>Instance Attribute Summary</h2>
   
-    <span class="summary_desc"><div class='inline'>
-<p>For Rails 5 attributes attribute :title, :string attribute :content, :text
-attribute :state, :integer, default: 0  # enum attribute :start_date,
-:datetime attribute :end_date, :datetime attribute :achieved_end_date,
-:datetime attribute :email, :string attribute :trashed_at, :datetime.</p>
-</div></span>
-  
-</li>
-
-    
-  </ul>
-
+  <h3 class="inherited">Attributes included from <span class='object_link'><a href="ActivePublishable.html" title="ActivePublishable (module)">ActivePublishable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="ActivePublishable.html#unpublish-instance_method" title="ActivePublishable#unpublish (method)">#unpublish</a></span></p>
 
 
 
   
-    <h2>
-      Instance Method Summary
-      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
-    </h2>
-
-    <ul class="summary">
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#is_draft%3F-instance_method" title="#is_draft? (instance method)">- (Boolean) <strong>is_draft?</strong> </a>
-    
-
-    
-  </span>
   
   
   
   
   
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#is_published%3F-instance_method" title="#is_published? (instance method)">- (Boolean) <strong>is_published?</strong> </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-    </ul>
-  
-
-
-  
-  
-  
-  
-  
-  
-  
+  <h2>Method Summary</h2>
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="ArguBase.html" title="ArguBase (module)">ArguBase</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="ArguBase.html#class_name-instance_method" title="ArguBase#class_name (method)">#class_name</a></span>, <span class='object_link'><a href="ArguBase.html#edited%3F-instance_method" title="ArguBase#edited? (method)">#edited?</a></span>, <span class='object_link'><a href="ArguBase.html#identifier-instance_method" title="ArguBase#identifier (method)">#identifier</a></span></p>
@@ -248,174 +163,32 @@ attribute :state, :integer, default: 0  # enum attribute :start_date,
 
   
   
-  <div id="instance_attr_details" class="attr_details">
-    <h2>Instance Attribute Details</h2>
-    
-      
-      <span id="unpublish=-instance_method"></span>
-      <div class="method_details first">
-  <h3 class="signature first" id="unpublish-instance_method">
   
-    - (<tt>Object</tt>) <strong>unpublish</strong> 
   
-
   
-
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-<p>For Rails 5 attributes attribute :title, :string attribute :content, :text
-attribute :state, :integer, default: 0  # enum attribute :start_date,
-:datetime attribute :end_date, :datetime attribute :achieved_end_date,
-:datetime attribute :email, :string attribute :trashed_at, :datetime</p>
-
-
-  </div>
-</div>
-<div class="tags">
   
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-14
-15
-16</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/project.rb', line 14</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_unpublish'>unpublish</span>
-  <span class='ivar'>@unpublish</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
-
-
-  <div id="instance_method_details" class="method_details_list">
-    <h2>Instance Method Details</h2>
-
-    
-      <div class="method_details first">
-  <h3 class="signature first" id="is_draft?-instance_method">
   
-    - (<tt>Boolean</tt>) <strong>is_draft?</strong> 
   
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="ActivePublishable.html" title="ActivePublishable (module)">ActivePublishable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="ActivePublishable.html#is_draft%3F-instance_method" title="ActivePublishable#is_draft? (method)">#is_draft?</a></span>, <span class='object_link'><a href="ActivePublishable.html#is_published%3F-instance_method" title="ActivePublishable#is_published? (method)">#is_published?</a></span></p>
 
   
-
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-34
-35
-36</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/project.rb', line 34</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_is_draft?'>is_draft?</span>
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:published_at</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="is_published?-instance_method">
-  
-    - (<tt>Boolean</tt>) <strong>is_published?</strong> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-38
-39
-40</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'app/models/project.rb', line 38</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_is_published?'>is_published?</span>
-  <span class='kw'>self</span><span class='lbracket'>[</span><span class='symbol'>:published_at</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-  </div>
 
 </div>
 
     <div id="footer">
   Generated by
   <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
-  0.8.7.6 (ruby-2.1.6).
+  0.8.7.6 (ruby-2.2.4).
 </div>
 
   </body>

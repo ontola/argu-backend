@@ -37,8 +37,14 @@ class ApplicationController < ActionController::Base
       format.js { render status: 403, json: { notifications: [{type: :error, message: error }] } }
       format.json { render status: 403, json: { notifications: [{type: :error, message: error }] } }
       format.html {
-        request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url || request.env['HTTP_REFERER'].blank? ? root_path : request.env['HTTP_REFERER']
-        redirect_to :back, alert: error
+        redirect_location = if defined?(authenticated_context) && authenticated_context.present?
+          url_for(authenticated_context)
+        elsif request.env['HTTP_REFERER'].present? && request.env['HTTP_REFERER'] != request.original_url
+          request.env['HTTP_REFERER']
+        else
+          root_path
+        end
+        redirect_to redirect_location, alert: error
       }
     end
   end

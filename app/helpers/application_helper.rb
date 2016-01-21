@@ -121,6 +121,13 @@ module ApplicationHelper
     dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
   end
 
+  def status_classes_for(resource)
+    classes = []
+    classes << 'draft' if resource.try(:is_draft?)
+    classes << 'trashed' if resource.try(:is_trashed?)
+    classes.compact.join(' ')
+  end
+
   def display_settings_items
     link_items = []
 

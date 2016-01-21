@@ -96,7 +96,7 @@ class CommentsControllerTest < ActionController::TestCase
         }
 
     assert_not_nil assigns(:_not_authorized_caught)
-    assert_redirected_to root_url
+    assert_redirected_to comment.forum
   end
 
   test 'member should delete destroy own comment' do
@@ -141,7 +141,8 @@ class CommentsControllerTest < ActionController::TestCase
              id: comment
     end
 
-    assert_redirected_to root_path
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to comment.forum
   end
 
   ####################################

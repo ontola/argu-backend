@@ -1,9 +1,10 @@
 
-class CreateArgument < ApplicationService
+class CreateArgument < CreateService
   include Wisper::Publisher
 
   def initialize(profile, attributes = {}, options = {})
-    @argument = profile.arguments.new(attributes)
+    @argument = profile.arguments.new
+    super
     if attributes[:publisher].blank? && profile.profileable.is_a?(User)
       @argument.publisher = profile.profileable
     end
@@ -18,15 +19,6 @@ class CreateArgument < ApplicationService
 
   def resource
     @argument
-  end
-
-  def commit
-    if @argument.valid? && @argument.save
-      @argument.publisher.follow(@argument)
-      publish(:create_argument_successful, @argument)
-    else
-      publish(:create_argument_failed, @argument)
-    end
   end
 
 end

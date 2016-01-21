@@ -400,7 +400,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="RestrictivePolicy/Roles.html" title="RestrictivePolicy::Roles (module)">RestrictivePolicy::Roles</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="RestrictivePolicy/Roles.html#creator-instance_method" title="RestrictivePolicy::Roles#creator (method)">#creator</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#is_creator%3F-instance_method" title="RestrictivePolicy::Roles#is_creator? (method)">#is_creator?</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#is_member%3F-instance_method" title="RestrictivePolicy::Roles#is_member? (method)">#is_member?</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#member-instance_method" title="RestrictivePolicy::Roles#member (method)">#member</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#owner-instance_method" title="RestrictivePolicy::Roles#owner (method)">#owner</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#staff-instance_method" title="RestrictivePolicy::Roles#staff (method)">#staff</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#staff%3F-instance_method" title="RestrictivePolicy::Roles#staff? (method)">#staff?</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="RestrictivePolicy/Roles.html#creator-instance_method" title="RestrictivePolicy::Roles#creator (method)">#creator</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#is_creator%3F-instance_method" title="RestrictivePolicy::Roles#is_creator? (method)">#is_creator?</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#is_member%3F-instance_method" title="RestrictivePolicy::Roles#is_member? (method)">#is_member?</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#is_moderator%3F-instance_method" title="RestrictivePolicy::Roles#is_moderator? (method)">#is_moderator?</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#member-instance_method" title="RestrictivePolicy::Roles#member (method)">#member</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#moderator-instance_method" title="RestrictivePolicy::Roles#moderator (method)">#moderator</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#owner-instance_method" title="RestrictivePolicy::Roles#owner (method)">#owner</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#staff-instance_method" title="RestrictivePolicy::Roles#staff (method)">#staff</a></span>, <span class='object_link'><a href="RestrictivePolicy/Roles.html#staff%3F-instance_method" title="RestrictivePolicy::Roles#staff? (method)">#staff?</a></span></p>
 
   
   
@@ -526,12 +526,12 @@
       <pre class="lines">
 
 
-31
-32
-33</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_create?'>create?</span>
   <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='kw'>super</span>
@@ -578,12 +578,12 @@
       <pre class="lines">
 
 
-35
-36
-37</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy?'>destroy?</span>
   <span class='id identifier rubyid_user'>user</span> <span class='op'>&amp;&amp;</span> <span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_creator_id'>creator_id</span> <span class='op'>==</span> <span class='id identifier rubyid_user'>user</span><span class='period'>.</span><span class='id identifier rubyid_profile'>profile</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span> <span class='op'>&amp;&amp;</span> <span class='int'>15</span><span class='period'>.</span><span class='id identifier rubyid_minutes'>minutes</span><span class='period'>.</span><span class='id identifier rubyid_ago'>ago</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_created_at'>created_at</span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span> <span class='op'>||</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span> <span class='op'>||</span> <span class='kw'>super</span>
@@ -630,12 +630,12 @@
       <pre class="lines">
 
 
-39
-40
-41</pre>
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_edit?'>edit?</span>
   <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_update?'>update?</span>
@@ -682,15 +682,15 @@
       <pre class="lines">
 
 
-43
-44
-45</pre>
+45
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 45</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new?'>new?</span>
-  <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='kw'>super</span>
+  <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_moderator?'>is_moderator?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='kw'>super</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -719,7 +719,9 @@
 26
 27
 28
-29</pre>
+29
+30
+31</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 22</span>
@@ -729,6 +731,8 @@
   <span class='id identifier rubyid_attributes'>attributes</span> <span class='op'>&lt;&lt;</span> <span class='qsymbols_beg'>%i(</span><span class='tstring_content'>id</span><span class='words_sep'> </span><span class='tstring_content'>title</span><span class='words_sep'> </span><span class='tstring_content'>content</span><span class='words_sep'> </span><span class='tstring_content'>start_date</span><span class='words_sep'> </span><span class='tstring_content'>end_date</span><span class='words_sep'> </span><span class='tstring_content'>email</span><span class='words_sep'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_create?'>create?</span>
   <span class='id identifier rubyid_phase'>phase</span> <span class='op'>=</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Project</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_phases'>phases</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
   <span class='id identifier rubyid_attributes'>attributes</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='label'>phases_attributes:</span> <span class='const'>Pundit</span><span class='period'>.</span><span class='id identifier rubyid_policy'>policy</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_phase'>phase</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_permitted_attributes'>permitted_attributes</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_phase'>phase</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_create?'>create?</span>
+  <span class='id identifier rubyid_stepup'>stepup</span> <span class='op'>=</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Project</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_stepups'>stepups</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+  <span class='id identifier rubyid_attributes'>attributes</span> <span class='op'>&lt;&lt;</span> <span class='lbrace'>{</span><span class='label'>stepups_attributes:</span> <span class='const'>Pundit</span><span class='period'>.</span><span class='id identifier rubyid_policy'>policy</span><span class='lparen'>(</span><span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='id identifier rubyid_stepup'>stepup</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_permitted_attributes'>permitted_attributes</span><span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_stepup'>stepup</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_is_manager_up?'>is_manager_up?</span>
   <span class='id identifier rubyid_attributes'>attributes</span> <span class='op'>&lt;&lt;</span> <span class='qsymbols_beg'>%i(</span><span class='tstring_content'>id</span><span class='words_sep'> </span><span class='tstring_content'>title</span><span class='words_sep'> </span><span class='tstring_content'>content</span><span class='words_sep'> </span><span class='tstring_content'>start_date</span><span class='words_sep'> </span><span class='tstring_content'>end_date</span><span class='words_sep'> </span><span class='tstring_content'>achieved_end_date</span><span class='words_sep'> </span><span class='tstring_content'>email</span><span class='words_sep'> </span><span class='tstring_content'>publish</span><span class='words_sep'> </span><span class='tstring_content'>unpublish</span><span class='words_sep'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_update?'>update?</span>
   <span class='id identifier rubyid_attributes'>attributes</span>
 <span class='kw'>end</span></pre>
@@ -774,22 +778,22 @@
       <pre class="lines">
 
 
-47
-48
 49
 50
 51
 52
-53</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show?'>show?</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_is_published?'>is_published?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_record'>record</span><span class='period'>.</span><span class='id identifier rubyid_is_trashed?'>is_trashed?</span>
     <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_open?'>is_open?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_member?'>is_member?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='kw'>super</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='kw'>super</span>
+    <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_moderator?'>is_moderator?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='kw'>super</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -834,15 +838,15 @@
       <pre class="lines">
 
 
-55
-56
-57</pre>
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_trash?'>trash?</span>
-  <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_creator?'>is_creator?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='kw'>super</span>
+  <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_moderator?'>is_moderator?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_creator?'>is_creator?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='kw'>super</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -886,15 +890,15 @@
       <pre class="lines">
 
 
-59
-60
-61</pre>
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'app/policies/project_policy.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_update?'>update?</span>
-  <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='kw'>super</span>
+  <span class='id identifier rubyid_rule'>rule</span> <span class='id identifier rubyid_is_moderator?'>is_moderator?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_manager?'>is_manager?</span><span class='comma'>,</span> <span class='id identifier rubyid_is_owner?'>is_owner?</span><span class='comma'>,</span> <span class='kw'>super</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -908,7 +912,7 @@
     <div id="footer">
   Generated by
   <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
-  0.8.7.6 (ruby-2.1.6).
+  0.8.7.6 (ruby-2.2.4).
 </div>
 
   </body>

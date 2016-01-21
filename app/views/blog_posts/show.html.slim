@@ -1,5 +1,11 @@
 .col-1
-  .box[class="#{'trashed' if blog_post.is_trashed?}"]
-    h1= blog_post.title
-    .markdown= blog_post.content
-    =crud_menu_item(blog_post)
+  .box[class=status_classes_for(blog_post)]
+    section.section-info.blog-post-bg
+      span[class="fa fa-#{blog_post_icon}"]
+      span.icon-left= t('blog_posts.type')
+    section
+      h1[itemprop="headline"]= blog_post.title
+      .markdown[itemprop="text"]= markdown_to_html(blog_post.content)
+    =render partial: blog_post.creator, locals: {resource: blog_post}
+    ul.btns-list--subtle.btns-horizontal.btn-sticky-bottom.btn-sticky.btns-list--grey-background
+      =crud_menu_item(blog_post)
