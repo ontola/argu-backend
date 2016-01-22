@@ -21,4 +21,8 @@ class Phase < ActiveRecord::Base
 
   counter_culture :project
 
+  def blog_posts
+    project.blog_posts.where(published_at: start_date..end_date)
+  end
+
 end

@@ -1,0 +1,10 @@
+.time-line-component[style="display: flex; flex-direction: column;"]
+  div[className="time-line-phases" style="display: flex; flex-direction: row;"]
+    -project.phases.order(start_date: :asc).each do |phase|
+      div[className="phase" style="display: flex; flex-direction: column; flex-grow: 1; z-index: 10"]
+        span[data-title=start_end_title_string(phase) style="flex-grow: 1; align-self: center;"]= phase.display_name
+        div[className="phase-points" style="display: flex; flex-direction: row; flex-grow: 1; z-index: 9"]
+          -phase.blog_posts.each do |blog_post|
+            =link_to 'B', blog_post_path(blog_post), data: {title: blog_post.title}, class: 'point point-blog-post', style: 'flex-grow: 1'
+  .time-line[style="width: 100%; height: 1; border: 0; border-top: 3px solid #CCC; padding: 0; margin-top: -.6em; z-index: 1; margin-bottom: .6em;"]
+    .inner-line[style="{innerStyle}"]

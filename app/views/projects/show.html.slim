@@ -12,9 +12,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
       div.draftbar.bg-danger
         =t('draft')
         =link_to t('publish'), project_path(project, project: {publish: true}), class: 'btn btn--warning', data: {method: :put, confirm: t('projects.publish_confirmation')}
-    h2= t('projects.phases.title')
-    p= "DEBUG_Phases: #{project.phases_count}"
-    =render partial: 'phases/phase', collection: project.phases
+    =render partial: 'projects/time_line', locals: {project: project}
     h2 _moderators_
     =render partial: 'stepups/stepup', collection: project.stepups
     h2 _blog posts_
