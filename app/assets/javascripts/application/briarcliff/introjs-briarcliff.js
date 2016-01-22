@@ -39,9 +39,11 @@ import introJs from 'intro.js';
     }
 $(function() {
     $(document)
+        // read all the introJs content on the page. May be deprecated.
         .on("click", '.intro-trigger', function () {
             introJs.start();
         })
+        // Stops intro when user opens a new page.
         .on('pjax:click', function () {
             introJs().exit();
         });

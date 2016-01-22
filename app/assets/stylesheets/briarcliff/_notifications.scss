@@ -34,6 +34,10 @@
   &:hover .notification-settings{
     opacity: 1;
   }
+
+  &:last-child {
+    border-bottom: none;
+  }
 }
 
 .notification-item {
