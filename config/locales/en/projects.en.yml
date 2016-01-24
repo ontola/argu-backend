@@ -1,5 +1,7 @@
 en:
   projects:
+    type: 'Project'
+    plural: 'Projects'
     publish_confirmation: 'Publicising will notify forum followers that a project was created. Continue?'
     stepups:
       title: 'Managers'

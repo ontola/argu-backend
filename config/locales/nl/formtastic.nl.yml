@@ -100,6 +100,9 @@ nl:
       argument:
         title: "Plaats hier de kern van jouw argument"
         content: "Plaats hier de details en achtergrondinformatie van jouw argument."
+      blogpost:
+        title: "Plaats de kern van de update"
+        content: "Licht je update hier toe."
       motion:
         title: "Plaats hier de kern van jouw %{type}"
         content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."

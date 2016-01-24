@@ -99,6 +99,9 @@ en:
       argument:
         title: "Enter the core of your argument here"
         content: "Enter details and background information on your argument here."
+      blogpost:
+        title: "Enter the core of your update here"
+        content: "Enter details and background information on your update here."
       motion:
         title: "Enter the core of your %{type} here"
         content: "Enter details and background information on your %{type} here."

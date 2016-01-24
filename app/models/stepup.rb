@@ -26,7 +26,7 @@ class Stepup < ActiveRecord::Base
     self.group || self.user
   end
 
-  # This is
+  # This is a useless comment
   def moderator=(value)
     if value.is_a?(String)
       value.is_a?(String)

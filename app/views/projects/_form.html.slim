@@ -4,8 +4,8 @@
     =to_parent(authenticated_context)
     .box
       section.section-info.motion-bg
-        span[class="fa fa-#{motion_icon}"]
-        span.icon-left= motion_type(project)
+        span[class="fa fa-folder-o"]
+        span.icon-left= t('projects.type')
       =semantic_form_for(project.new_record? ? [authenticated_context, project] : project, html: {autocomplete: 'off'}) do |f|
         section.smallpadded.form-filled
           =f.inputs
