@@ -4,11 +4,6 @@ class CommentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   let!(:freetown) { FactoryGirl.create(:forum) }
-
-  ####################################
-  # As Member
-  ####################################
-  let(:member) { create_member(freetown, FactoryGirl.create(:user, :follows_email)) }
   let(:argument) do
     FactoryGirl.create(:argument,
                        forum: freetown,
@@ -19,8 +14,58 @@ class CommentsControllerTest < ActionController::TestCase
   end
   let(:comment) { FactoryGirl.create(:comment, profile: member.profile, commentable: argument) }
 
+  let(:cairo) { FactoryGirl.create(:forum, :closed) }
+  let(:closed_argument) { FactoryGirl.create(:argument, forum: cairo) }
+  let(:cairo_comment) { FactoryGirl.create(:comment, profile: member.profile, commentable: closed_argument) }
+
+  let(:second_cairo) { FactoryGirl.create(:forum, :closed) }
+  let(:second_closed_argument) { FactoryGirl.create(:argument, forum: second_cairo) }
+  let(:second_cairo_comment) { FactoryGirl.create(:comment, profile: member.profile, commentable: second_closed_argument) }
+
+  ####################################
+  # As Guest
+  ####################################
+
+  test 'guest should get show' do
+    get :show, id: comment
+
+    assert_redirected_to argument_path(argument, anchor: comment.identifier)
+    end
+
+  test 'guest should not get show on cairo' do
+    get :show, id: cairo_comment
+
+    assert_redirected_to root_path
+  end
+
+  ####################################
+  # As Member
+  ####################################
+  let(:member) { create_member(freetown, FactoryGirl.create(:user, :follows_email)) }
+  let(:cairo_member) { create_member(cairo, FactoryGirl.create(:user, :follows_email)) }
+
   test 'member should get show' do
-    flunk 'TODO: add test before this fix for all the roles.'
+    sign_in member
+
+    get :show, id: comment
+
+    assert_redirected_to argument_path(argument, anchor: comment.identifier)
+  end
+
+  test 'guest should get show on cairo' do
+    sign_in cairo_member
+
+    get :show, id: cairo_comment
+
+    assert_redirected_to argument_path(closed_argument, anchor: cairo_comment.identifier)
+  end
+
+  test 'guest should not get show on second_cairo' do
+    sign_in cairo_member
+
+    get :show, id: second_cairo_comment
+
+    assert_redirected_to root_path
   end
 
   test 'member should get new' do
@@ -152,6 +197,14 @@ class CommentsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
+
+  test 'owner should get show' do
+    sign_in freetown.page.owner.profileable
+
+    get :show, id: comment
+
+    assert_redirected_to argument_path(argument, anchor: comment.identifier)
+  end
 
   test 'owner should not delete wipe own comment twice affecting counter caches' do
     sign_in freetown.page.owner.profileable
