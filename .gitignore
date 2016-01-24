@@ -26,10 +26,11 @@ secrets.yml
 /config/database.yml
 
 # Ignore image uploads
-/public/uploads
-/public/profiles
+/public/banners
 /public/forums
 /public/motions
-/public/questions
 /public/organisations
+/public/profiles
+/public/questions
 /public/system
+/public/uploads
