@@ -25,6 +25,8 @@ ENV RAILS_ENV 'production'
 ENV REDIS_HOST '192.168.99.100'
 ENV REDIS_PORT '6379'
 
+RUN bundle exec rake assets:precompile
+VOLUME ["/usr/src/app/public"]
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
