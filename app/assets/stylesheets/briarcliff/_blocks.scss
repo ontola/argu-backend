@@ -202,9 +202,30 @@ $grey_light: $g0;
   }
 }
 
+.block--hero-image {
+  height: 100%;
+  width: 100%;
+  display: block;
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+}
+
+.block--hero-contents {
+  z-index: 1;
+  position: absolute;
+  top: 40%;
+  text-align: center;
+  width: 100%;
+}
+
+//Fixed the previous image method
 .blocks--hero {
   max-width: 100%;
   margin-top: -3em;
+  max-height: calc(100vh - 8em);
+  overflow: hidden;
+  min-height: 70vh;
 }
 
 .block--hidden {
