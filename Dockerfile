@@ -11,7 +11,7 @@ COPY Gemfile.lock /usr/src/app/
 RUN bundle install
 
 COPY . /usr/src/app
-RUN unlink -i /usr/src/app/config/database.yml
+RUN unlink -f /usr/src/app/config/database.yml
 COPY ./config/database.docker.yml /usr/src/app/config/database.yml
 
 ENV ARGU_DB_HOST '192.168.99.100'
