@@ -11,8 +11,10 @@ COPY Gemfile.lock /usr/src/app/
 RUN bundle install
 
 COPY . /usr/src/app
-RUN unlink /usr/src/app/config/database.yml
+RUN rm -f /usr/src/app/config/database.yml
+RUN rm -f /usr/src/app/config/secrets.yml
 COPY ./config/database.docker.yml /usr/src/app/config/database.yml
+COPY ./config/secrets.docker.yml /usr/src/app/config/secrets.yml
 
 ENV ARGU_DB_HOST '192.168.99.100'
 ENV ARGU_DB_PORT '5432'
