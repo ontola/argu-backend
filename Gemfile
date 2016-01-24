@@ -25,7 +25,7 @@ gem 'formtastic', '~> 3.1.2'
 gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
 gem 'rest-client'
-gem 'multimap'
+gem 'multimap', github: 'apalmblad/multimap', ref: '96eeacc1606ea7f008ce0a50641c31a2c844fd9e'
 gem 'squirm_rails', require: 'squirm/rails'
 
 ##################Features########################
