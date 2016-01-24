@@ -16,6 +16,7 @@
 # n: notifications
 # o: pages (organisations)
 # p: projects
+# phase: phases
 # posts: blog posts
 # q: questions
 # r:
@@ -165,6 +166,9 @@ Argu::Application.routes.draw do
             path: 'p',
             only: [:show, :edit, :update, :destroy],
             concerns: [:blog_postable, :flowable]
+
+  resources :phases,
+            only: [:show]
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
