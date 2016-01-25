@@ -76,9 +76,9 @@ class SecurityTest < ActionDispatch::IntegrationTest
 
   test 'should block malicious requests' do
     mal_code = [
-        '/etc/passwd',
-        '../',
-        "env X='() { (a)=>\\' bash -c \"echo date\"; cat echo"
+      '/etc/passwd',
+      '../',
+      "env X='() { (a)=>\\' bash -c \"echo date\"; cat echo"
     ]
 
     mal_code.each do |malicious|

@@ -17,5 +17,4 @@ class AccessTokenTest < ActiveSupport::TestCase
     assert_equal 'Forum', venice.full_access_token.item_type
     assert_equal venice.id, venice.full_access_token.item_id
   end
-
 end

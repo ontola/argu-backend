@@ -12,15 +12,27 @@ class CommentsControllerTest < ActionController::TestCase
                                           :follows_email)
                                   .profile)
   end
-  let(:comment) { FactoryGirl.create(:comment, profile: member.profile, commentable: argument) }
+  let(:comment) do
+    FactoryGirl.create(:comment,
+                       profile: member.profile,
+                       commentable: argument)
+  end
 
   let(:cairo) { FactoryGirl.create(:forum, :closed) }
   let(:closed_argument) { FactoryGirl.create(:argument, forum: cairo) }
-  let(:cairo_comment) { FactoryGirl.create(:comment, profile: member.profile, commentable: closed_argument) }
+  let(:cairo_comment) do
+    FactoryGirl.create(:comment,
+                       profile: member.profile,
+                       commentable: closed_argument)
+  end
 
   let(:second_cairo) { FactoryGirl.create(:forum, :closed) }
   let(:second_closed_argument) { FactoryGirl.create(:argument, forum: second_cairo) }
-  let(:second_cairo_comment) { FactoryGirl.create(:comment, profile: member.profile, commentable: second_closed_argument) }
+  let(:second_cairo_comment) do
+    FactoryGirl.create(:comment,
+                       profile: member.profile,
+                       commentable: second_closed_argument)
+  end
 
   ####################################
   # As Guest
@@ -87,7 +99,7 @@ class CommentsControllerTest < ActionController::TestCase
         post :create,
              argument_id: argument,
              comment: {
-                 body: 'Just å UTF-8 comment.'
+               body: 'Just å UTF-8 comment.'
              }
         puts
       end

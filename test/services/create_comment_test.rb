@@ -1,13 +1,16 @@
 require 'test_helper'
 
 class CreateCommentTest < ActiveSupport::TestCase
-
   let!(:freetown) { FactoryGirl.create :forum }
   let(:user) { create_member(freetown) }
-  let(:commentable) { FactoryGirl.create(:argument,
-                                         forum: freetown) }
-  let(:comment_attributes) { attributes_for(:comment)
-                                 .merge({commentable: commentable}) }
+  let(:commentable) do
+    FactoryGirl.create(:argument,
+                       forum: freetown)
+  end
+  let(:comment_attributes) do
+    attributes_for(:comment)
+      .merge({commentable: commentable})
+  end
 
   test 'it creates a comment' do
     c = CreateComment.new(user.profile,

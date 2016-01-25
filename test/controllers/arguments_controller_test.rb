@@ -11,9 +11,11 @@ class ArgumentsControllerTest < ActionController::TestCase
                        follower: FactoryGirl.create(:user, :follows_email))
   end
 
-  let(:argument) { FactoryGirl.create(:argument,
-                                      forum: freetown,
-                                      motion: motion) }
+  let(:argument) do
+    FactoryGirl.create(:argument,
+                       forum: freetown,
+                       motion: motion)
+  end
 
   ####################################
   # As Guest
@@ -147,7 +149,8 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     assert_differences create_changes_array do
       assert_no_difference('Vote.count') do
-        post :create, forum_id: freetown,
+        post :create,
+             forum_id: freetown,
              argument: {
                motion_id: motion.id,
                pro: 'pro',
@@ -188,7 +191,8 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_equal argument, assigns(:argument)
   end
 
-private
+  private
+
   def create_changes_array
     [['Argument.count', 1],
      ['Activity.count', 1],

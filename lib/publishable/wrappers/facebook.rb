@@ -1,7 +1,6 @@
 module Publishable
   module Wrappers
     class Facebook < Wrapper
-
       def initialize(access_token, *args)
         super()
         @_access_token = access_token
@@ -17,7 +16,7 @@ module Publishable
       end
 
       def image_url
-        @_client && get_picture
+        @_client && fetch_picture
       end
 
       def name
@@ -29,19 +28,19 @@ module Publishable
       end
 
       def me
-        response = cached_response_for('get_object/me')
+        response = cached_response_for('fetch_object/me')
         if response.blank?
           response = @_client.get_object('me')
-          cache_response('get_object/me', response)
+          cache_response('fetch_object/me', response)
         end
         response
       end
 
-      def get_picture
-        response = cached_response_for('get_picture/me')
+      def fetch_picture
+        response = cached_response_for('fetch_picture/me')
         if response.blank?
           response = @_client.get_picture('me')
-          cache_response('get_picture/me', response)
+          cache_response('fetch_picture/me', response)
         end
         response
       end

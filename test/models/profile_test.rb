@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class ProfileTest < ActiveSupport::TestCase
-
   let(:freetown) { FactoryGirl.create(:forum) }
   let(:capetown) { FactoryGirl.create(:forum, name: 'capetown') }
   subject { create_member(freetown).profile }
@@ -27,5 +26,4 @@ class ProfileTest < ActiveSupport::TestCase
     assert subject.member_of?(freetown.id), 'false negative when forum_id is passed'
     assert_not subject.member_of?(capetown.id), 'false positive when forum_id is passed'
   end
-
 end

@@ -51,7 +51,7 @@ RSpec.feature 'Comments', type: :feature do
   let!(:user) { FactoryGirl.create(:user) }
 
   scenario 'User places a comment' do
-    login_as(user, :scope => :user)
+    login_as(user, scope: :user)
     visit argument_path(argument)
 
     comment_args = attributes_for(:comment)
@@ -73,7 +73,7 @@ RSpec.feature 'Comments', type: :feature do
   let!(:member) { create_member(holland) }
 
   scenario 'Member places a comment' do
-    login_as(member, :scope => :user)
+    login_as(member, scope: :user)
     visit argument_path(argument)
 
     comment_args = attributes_for(:comment)

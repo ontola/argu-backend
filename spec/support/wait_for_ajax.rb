@@ -44,7 +44,7 @@ end
 class ActionDispatch::IntegrationTest
   def teardown
     # detects both Prototype and jQuery AJAX requests
-    active=evaluate_script('window.Ajax ? Ajax.activeRequestCount : (window.jQuery ? jQuery.active : 0)')
+    active = evaluate_script('window.Ajax ? Ajax.activeRequestCount : (window.jQuery ? jQuery.active : 0)')
     assert_equal 0, active, 'Active AJAX request after test end'
   end
 end

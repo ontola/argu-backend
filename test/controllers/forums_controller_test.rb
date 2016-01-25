@@ -128,12 +128,14 @@ class ForumsControllerTest < ActionController::TestCase
     forum, owner = forum_pair
     sign_in owner
 
-    put :update, id: forum, forum: {
-                     name: 'new name',
-                     bio: 'new bio',
-                     cover_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg'),
-                     profile_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg')
-                 }
+    put :update,
+        id: forum,
+        forum: {
+          name: 'new name',
+          bio: 'new bio',
+          cover_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg'),
+          profile_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg')
+        }
 
     assert_redirected_to settings_forum_path(forum.url, tab: :general)
     assert assigns(:forum)
@@ -160,7 +162,7 @@ class ForumsControllerTest < ActionController::TestCase
     assert_redirected_to root_url
     assert assigns(:forum)
     assert_nil assigns(:tags), "Doesn't assign tags"
-    #assert_equal 2, assigns(:tags).length
+    # assert_equal 2, assigns(:tags).length
   end
 
 

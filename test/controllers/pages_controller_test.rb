@@ -49,8 +49,8 @@ class PagesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:profile)
     assert_not_nil assigns(:collection)
 
-    _memberships = assigns(:current_profile).memberships.pluck(:forum_id)
-    assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| _memberships.include?(v.forum_id) || v.forum.open? } },
+    memberships = assigns(:current_profile).memberships.pluck(:forum_id)
+    assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| memberships.include?(v.forum_id) || v.forum.open? } },
            'Votes of closed fora are visible to non-members'
   end
 
@@ -68,7 +68,7 @@ class PagesControllerTest < ActionController::TestCase
 
     assert_not assigns(:collection)[:con][:collection].any?, 'all votes are shown'
     assert_equal utrecht.page.profile.votes_questions_motions.length,
-                 assigns(:collection).values.map {|i| i[:collection].length }.inject(&:+),
+                 assigns(:collection).values.map { |i| i[:collection].length }.inject(&:+),
                  'Not all/too many votes are shown'
   end
 
@@ -134,7 +134,7 @@ class PagesControllerTest < ActionController::TestCase
     post :create, page: {
       profile_attributes: {
         name: 'Utrecht Two',
-        about: 'Utrecht Two bio',
+        about: 'Utrecht Two bio'
       },
       shortname_attributes: {
         shortname: 'UtrechtNumberTwo'
@@ -159,7 +159,7 @@ class PagesControllerTest < ActionController::TestCase
          page: {
            profile_attributes: {
              name: 'Utrecht Two',
-             about: 'Utrecht Two bio',
+             about: 'Utrecht Two bio'
            },
            shortname_attributes: {
              shortname: 'UtrechtNumberTwo'

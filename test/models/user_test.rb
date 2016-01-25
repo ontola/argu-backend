@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-
   subject { FactoryGirl.create(:user) }
 
   def test_valid

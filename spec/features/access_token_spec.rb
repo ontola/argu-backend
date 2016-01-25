@@ -1,13 +1,16 @@
 require 'rails_helper'
 
 RSpec.feature 'Access tokens', type: :feature do
-
-  let!(:helsinki) { FactoryGirl.create(:hidden_populated_forum,
-                                         name: 'helsinki',
-                                         visible_with_a_link: true) }
-  let!(:motion) { FactoryGirl.create(:motion,
-                                      title: 'proposition',
-                                      forum: helsinki) }
+  let!(:helsinki) do
+    FactoryGirl.create(:hidden_populated_forum,
+                       name: 'helsinki',
+                       visible_with_a_link: true)
+  end
+  let!(:motion) do
+    FactoryGirl.create(:motion,
+                       title: 'proposition',
+                       forum: helsinki)
+  end
   let(:helsinki_key) { FactoryGirl.create(:access_token, item: helsinki) }
 
   @javascript
@@ -16,12 +19,12 @@ RSpec.feature 'Access tokens', type: :feature do
     expect(page).to have_content 'helsinki'
 
     click_link motion.title
-    #wait_for_ajax
+    # wait_for_ajax
 
     expect(page).to have_content('content')
 
     click_link 'Neither'
-    #wait_for_async_modal
+    # wait_for_async_modal
     expect(page).to have_content 'Sign up'
 
     click_link 'Sign up with email'

@@ -62,5 +62,4 @@ class ForumTest < ActiveSupport::TestCase
     assert_not subject.profile_is_member?(user.profile)
     assert subject.profile_is_member?(subject_member.profile)
   end
-
 end

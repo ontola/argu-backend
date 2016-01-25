@@ -1,8 +1,6 @@
 module Publishable
-
   module Wrappers
     class Wrapper
-
       def initialize
         @_request_cache = {}
       end

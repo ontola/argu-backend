@@ -24,10 +24,12 @@ class OmniauthTest < ActionDispatch::IntegrationTest
                        last_name: 'Lastname_facebook',
                        confirmed_at: Time.current)
   end
-  let!(:fb_user_identity) { FactoryGirl.create(:identity,
-                                               provider: :facebook,
-                                               uid: 111903726898977,
-                                               user: user_fb_only) }
+  let!(:fb_user_identity) do
+    FactoryGirl.create(:identity,
+                       provider: :facebook,
+                       uid: 111903726898977,
+                       user: user_fb_only)
+  end
 
   test 'should sign up with facebook' do
     OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new({
@@ -132,7 +134,8 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_omniauth_callback_path(:facebook)
 
     follow_redirect!
-    assert_redirected_to connect_user_path(user3, token: identity_token(Identity.find_by(uid: 1119134323213)))
+    assert_redirected_to connect_user_path(user3,
+                                           token: identity_token(Identity.find_by(uid: 1119134323213)))
 
     follow_redirect!
     assert_response 200
@@ -168,14 +171,17 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert_redirected_to user_omniauth_callback_path(:facebook)
 
     follow_redirect!
-    assert_redirected_to connect_user_path(user3, token: identity_token(Identity.find_by(uid: 1119134323213)))
+    assert_redirected_to connect_user_path(user3,
+                                           token: identity_token(Identity.find_by(uid: 1119134323213)))
 
     get connect_user_path(user2, token: identity_token(Identity.find_by(uid: 1119134323213)))
     assert_response 200
 
-    post connect_user_path(user2, token: identity_token(Identity.find_by(uid: 1119134323213))), user: {
-                                                                                                          password: 'useruser'
-                                                                                                      }
+    post connect_user_path(user2,
+                           token: identity_token(Identity.find_by(uid: 1119134323213))),
+         user: {
+           password: 'useruser'
+         }
     assert_response 200
     assert_not_equal user2, assigns(:identity).user
     assert_equal nil, assigns(:identity).user

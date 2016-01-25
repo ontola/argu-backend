@@ -1,5 +1,12 @@
 AllCops:
   RunRailsCops: true
+  Exclude:
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
+    - 'tmp/**/*'
+    - 'doc/**/*'
+    - 'app/assets/javascripts/_*'
+    - 'app/assets/javascripts/_*'
 Metrics/LineLength:
   Max: 100
 Style/IfUnlessModifier:

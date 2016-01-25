@@ -1,7 +1,6 @@
 module Publishable
   module Wrappers
     class Twitter < Wrapper
-
       def initialize(access_token, access_secret)
         super()
         @_access_token = access_token

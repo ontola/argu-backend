@@ -288,9 +288,12 @@ class MotionsControllerTest < ActionController::TestCase
   # As Creator
   ####################################
   let(:creator) { create_member(freetown) }
-  let(:creator_motion) { FactoryGirl.create(:motion,
-                                          creator: creator.profile,
-                                          forum: freetown) }
+  let(:creator_motion) do
+    FactoryGirl.create(:motion,
+                       creator: creator.profile,
+                       forum: freetown)
+  end
+
   test 'creator should get edit' do
     sign_in creator
 
@@ -323,8 +326,8 @@ class MotionsControllerTest < ActionController::TestCase
     put :update,
         id: creator_motion,
         motion: {
-            title: 't',
-            content: 'new contents'
+          title: 't',
+          content: 'new contents'
         }
 
     assert_response 200
@@ -399,8 +402,11 @@ class MotionsControllerTest < ActionController::TestCase
   test 'staff should put move!' do
     sign_in staff
 
-    assert_differences [['forum_from.reload.motions_count', -1], ['forum_to.reload.motions_count', 1]] do
-      put :move!, motion_id: motion_move, motion: { forum_id: forum_to.id }
+    assert_differences [['forum_from.reload.motions_count', -1],
+                        ['forum_to.reload.motions_count', 1]] do
+      put :move!,
+          motion_id: motion_move,
+          motion: {forum_id: forum_to.id}
     end
     assert_redirected_to assigns(:motion)
 

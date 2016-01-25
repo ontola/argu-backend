@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class GroupTest < ActiveSupport::TestCase
-
   subject { FactoryGirl.create(:group) }
 
   test 'valid' do
@@ -16,5 +15,4 @@ class GroupTest < ActiveSupport::TestCase
       subject.destroy
     end
   end
-
 end

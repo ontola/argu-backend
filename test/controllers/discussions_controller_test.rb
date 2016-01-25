@@ -4,9 +4,11 @@ class DiscussionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   let!(:freetown) { FactoryGirl.create(:forum) }
-  let!(:helsinki) { FactoryGirl.create(:hidden_populated_forum,
-                                       name: 'helsinki',
-                                       visible_with_a_link: true) }
+  let!(:helsinki) do
+    FactoryGirl.create(:hidden_populated_forum,
+                       name: 'helsinki',
+                       visible_with_a_link: true)
+    end
   let(:helsinki_key) { FactoryGirl.create(:access_token, item: helsinki) }
 
   ####################################

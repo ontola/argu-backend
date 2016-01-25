@@ -77,18 +77,18 @@ RSpec.configure do |config|
   end
 
   Capybara.default_driver = case ENV['BROWSER']
-                              when 'chrome'
-                                :selenium_chrome
-                              when 'firefox'
-                                :selenium_firefox
-                              when 'webkit'
-                                :webkit
-                              when 'ie'
-                                :internet_explorer
-                              when 'safari'
-                                :selenium_safari
-                              else
-                                ENV['CI'].present? ? :selenium : :selenium
+                            when 'chrome'
+                              :selenium_chrome
+                            when 'firefox'
+                              :selenium_firefox
+                            when 'webkit'
+                              :webkit
+                            when 'ie'
+                              :internet_explorer
+                            when 'safari'
+                              :selenium_safari
+                            else
+                              ENV['CI'].present? ? :selenium : :selenium
                             end
   #Capybara.default_max_wait_time = 5
   Capybara.default_max_wait_time = 50

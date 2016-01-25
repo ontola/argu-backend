@@ -80,7 +80,7 @@ class RuleTest < ActionDispatch::IntegrationTest
   end
 
   test 'shows appropriate message level to owners' do
-    log_in_as(freetown_manager, :scope => :user)
+    log_in_as(freetown_manager, scope: :user)
     no_show_users
     no_show_managers
 

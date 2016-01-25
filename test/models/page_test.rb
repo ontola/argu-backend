@@ -4,7 +4,8 @@ class PageTest < ActiveSupport::TestCase
 
   subject do
     FactoryGirl.create(:page,
-                       profile: FactoryGirl.create(:profile,
+                       profile: FactoryGirl.create(
+                         :profile,
                          name: 'test'
                        ))
   end
