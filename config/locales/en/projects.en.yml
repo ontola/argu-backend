@@ -1,6 +1,9 @@
 en:
   projects:
+    type: 'Project'
+    plural: 'Projects'
     publish_confirmation: 'Publicising will notify forum followers that a project was created. Continue?'
+    timeline: 'Timeline'
     stepups:
       title: 'Managers'
       title_singular: 'Manager'

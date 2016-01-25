@@ -1,6 +1,9 @@
 nl:
   projects:
+    type: 'Project'
+    plural: 'Projecten'
     publish_confirmation: 'Publiceren zorgt ervoor dat forum volgers op de hoogte zullen worden gesteld. Verder gaan?'
+    timeline: 'Tijdlijn'
     stepups:
       title: 'Managers'
       title_singular: 'Manager'
