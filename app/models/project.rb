@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
   include ArguBase, Placeable, PublicActivity::Common, Flowable, Trashable,
-          BlogPostable, ActivePublishable
+          BlogPostable, ActivePublishable, Parentable
 
   # For Rails 5 attributes
   # attribute :title, :string
@@ -28,4 +28,5 @@ class Project < ActiveRecord::Base
 
   counter_culture :forum
 
+  parentable :forum
 end

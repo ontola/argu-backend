@@ -42,8 +42,7 @@ class AuthorizedController < ApplicationController
   private
 
   def authorize_action
-    # The check can be removed when (at least) memberships_controller is migrated to use a proper membership id
-    if authenticated_resource!.present?
+    unless params[:controller].equal?('memberships')
       authorize authenticated_resource!, "#{params[:action].chomp('!')}?"
     end
   end
@@ -83,7 +82,7 @@ class AuthorizedController < ApplicationController
   # @author Fletcher91 <thom@argu.co>
   # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
   def authenticated_resource!
-    @resource = if params[:action] == 'new' || params[:action] == 'create'
+    @resource ||= if params[:action] == 'new' || params[:action] == 'create'
       controller_name
           .classify
           .constantize
@@ -94,14 +93,6 @@ class AuthorizedController < ApplicationController
           .constantize
           .find_by id: params[:id]
     end
-  end
-
-  # Used in {authenticated_resource!} to build a new object. Overwrite this function if the model needs more than just the {Forum}
-  # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
-  def resource_new_params
-    {
-      forum: tenant_by_param
-    }
   end
 
   # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,
@@ -120,6 +111,12 @@ class AuthorizedController < ApplicationController
     end
   end
 
+  def current_context
+    Context.parse_from_uri(nil, authenticated_resource!) do |components|
+      components.reject! { |c| !policy(c).show? }
+    end
+  end
+
   # @private
   def naming_context
     authenticated_context
@@ -135,6 +132,14 @@ class AuthorizedController < ApplicationController
                       platform_open: platform_open?,
                       within_user_cap: within_user_cap?
                     })
+  end
+
+  # Used in {authenticated_resource!} to build a new object. Overwrite this function if the model needs more than just the {Forum}
+  # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
+  def resource_new_params
+    {
+      forum: tenant_by_param
+    }
   end
 
   def tenant_by_param

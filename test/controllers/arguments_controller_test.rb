@@ -18,14 +18,20 @@ class ArgumentsControllerTest < ActionController::TestCase
   ####################################
   # As Guest
   ####################################
-  test 'should get show when not logged in' do
+  test 'guest should get show when not logged in' do
     get :show, id: argument
 
     assert_response 200
-    assert assigns(:argument)
     assert assigns(:comments)
 
     assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, 'Trashed comments are visible'
+  end
+
+  test 'guest should not get new' do
+    get :new, forum_id: freetown, motion_id: motion.id, pro: 'pro'
+
+    assert_response 302
+    assert assigns(:_not_a_user_caught)
   end
 
   ####################################
@@ -33,16 +39,23 @@ class ArgumentsControllerTest < ActionController::TestCase
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
-  test 'should get show' do
+  test 'user should get show' do
     sign_in user
 
     get :show, id: argument
 
     assert_response 200
-    assert assigns(:argument)
     assert assigns(:comments)
 
     assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, 'Trashed comments are visible'
+  end
+
+  test 'user should not get new' do
+    sign_in user
+
+    get :new, forum_id: freetown, motion_id: motion.id, pro: 'pro'
+
+    assert assigns(:_not_a_member_caught)
   end
 
   ####################################
@@ -55,39 +68,37 @@ class ArgumentsControllerTest < ActionController::TestCase
                                       creator: member.profile) }
 
 
-  test 'should get new pro' do
+  test 'member should get new pro' do
     sign_in member
 
     get :new, forum_id: freetown, motion_id: motion.id, pro: 'pro'
 
     assert_response 200
-    assert assigns(:argument)
-    assert assigns(:argument).motion == motion
-    assert assigns(:argument).pro === true, "isn't assigned pro attribute"
+    assert assigns(:resource)
+    assert assigns(:resource).motion == motion
+    assert assigns(:resource).pro === true, "isn't assigned pro attribute"
   end
 
-  test 'should get new con' do
+  test 'member should get new' do
     sign_in member
 
     get :new, forum_id: freetown, motion_id: motion.id, pro: 'con'
 
     assert_response 200
-    assert assigns(:argument)
-    assert assigns(:argument).motion == motion
-    assert assigns(:argument).pro === false, "isn't assigned pro attribute"
+    assert assigns(:resource)
+    assert assigns(:resource).motion == motion
+    assert assigns(:resource).pro === false, "isn't assigned pro attribute"
   end
 
-  test 'should get edit' do
+  test 'member should get edit' do
     sign_in member
 
     get :edit, id: member_argument
 
     assert_response 200
-    assert assigns(:argument)
-    assert assigns(:forum)
   end
 
-  test 'should post create pro' do
+  test 'member should post create pro' do
     sign_in member
 
     assert_differences create_changes_array do
@@ -113,7 +124,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_redirected_to argument.motion
   end
 
-  test 'should post create con' do
+  test 'member should post create con' do
     sign_in member
 
     assert_differences create_changes_array do
@@ -140,7 +151,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_redirected_to argument.motion
   end
 
-  test 'should post create pro without auto_vote' do
+  test 'member should post create pro without auto_vote' do
     sign_in member
 
     assert_differences create_changes_array do
@@ -157,7 +168,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     end
   end
 
-  test 'should put update on own argument' do
+  test 'member should put update on own argument' do
     sign_in member
 
     put :update,
@@ -167,13 +178,13 @@ class ArgumentsControllerTest < ActionController::TestCase
           content: 'new contents'
         }
 
-    assert_not_nil assigns(:argument)
-    assert_equal 'New title', assigns(:argument).title
-    assert_equal 'new contents', assigns(:argument).content
-    assert_redirected_to assigns(:argument)
+    assert_not_nil assigns(:resource)
+    assert_equal 'New title', assigns(:resource).title
+    assert_equal 'new contents', assigns(:resource).content
+    assert_redirected_to assigns(:resource)
   end
 
-  test "'should not put update on others' argument'" do
+  test "'member should not put update on others' argument'" do
     sign_in member
 
     put :update,

@@ -23,7 +23,6 @@ class MotionsController < AuthorizedController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes))
     @group_responses = Group.ordered_with_meta @motion.group_responses, authenticated_context.groups, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
@@ -42,7 +41,6 @@ class MotionsController < AuthorizedController
     get_context
     @motion = authenticated_context.motions.new permit_params
     authorize @motion, @motion.question.presence ? :new? : :new_without_question?
-    current_context @motion
     respond_to do |format|
       format.js { render js: "window.location = #{request.url.to_json}" }
       format.html { render 'form', locals: {motion: @motion} }
@@ -53,7 +51,6 @@ class MotionsController < AuthorizedController
   # GET /motions/1/edit
   def edit
     @motion = Motion.find_by_id(params[:id])
-    current_context @motion
     authorize @motion
     respond_to do |format|
       format.html { render 'form', locals: {motion: @motion} }
