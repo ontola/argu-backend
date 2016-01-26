@@ -77,7 +77,7 @@ $timeline-height: .3em;
 }
 
 .point {
-  background-color: $g3;
+  background-color: $g2;
   @include border-radius(999px);
   width: $point-size;
   height: $point-size;
@@ -91,11 +91,11 @@ $timeline-height: .3em;
 }
 
 .point--current, .point:hover {
-  background-color: white;
+  background-color: $g3;
   border-color: $g3;
 
   .fa {
-    color: $g3;
+    color: white;
   }
 }
 
