@@ -7,7 +7,7 @@ FactoryGirl.define do
     association :shortname, strategy: :build
 
     email
-    encrypted_password { Devise.bcrypt(User, 'password') }
+    encrypted_password { Devise::Encryptor.digest(User, 'password') }
     password 'password'
     password_confirmation 'password'
     finished_intro true
