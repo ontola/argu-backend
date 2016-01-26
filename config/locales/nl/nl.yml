@@ -285,3 +285,6 @@ nl:
     user:
       name: ''
       description: ''
+  time:
+    formats:
+      dateline: '%A, %d %B %Y'
