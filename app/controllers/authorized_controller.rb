@@ -138,7 +138,8 @@ class AuthorizedController < ApplicationController
   # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
   def resource_new_params
     {
-      forum: resource_tenant
+      forum: resource_tenant,
+      publisher: current_user
     }
   end
 

@@ -14,9 +14,11 @@ class Project < ActiveRecord::Base
 
   alias_attribute :display_name, :title
 
-  belongs_to :forum, inverse_of: :projects
   belongs_to :creator, class_name: 'Profile', inverse_of: :projects
+  belongs_to :forum, inverse_of: :projects
   belongs_to :publisher, class_name: 'User'
+
+  has_many   :motions, inverse_of: :project
   has_many   :phases, inverse_of: :project
   has_many   :stepups, as: :record
   has_many   :questions, inverse_of: :project

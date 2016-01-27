@@ -63,16 +63,11 @@ module NestedResourceHelper
 
   def resource_new_params
     if parent_resource_klass(request.path_parameters) == Forum
-      {
-        forum: resource_tenant,
-        publisher: current_user
-      }
+      super
     else
-      {
-        forum: resource_tenant,
-        parent_resource_param => params[parent_resource_param],
-        publisher: current_user
-      }
+      super.merge({
+        parent_resource_param => params[parent_resource_param]
+      })
     end
   end
 

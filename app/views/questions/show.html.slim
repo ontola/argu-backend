@@ -39,5 +39,5 @@
                 header_text: 'test',
                 collection_model: Motion,
                 partial: 'question_answers/show',
-                buttons_url: url_for([:new, authenticated_context, :motion, motion: {question_id: question.id}]),
+                buttons_url: polymorphic_url([:new, question, :motion]),
                 buttons_text: t('add_type', type: motion_type(question)))

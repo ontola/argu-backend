@@ -122,6 +122,7 @@ Argu::Application.routes.draw do
             path: 'q', except: [:index, :new, :create],
             concerns: [:moveable, :convertible, :flowable] do
     resources :tags, path: 't', only: [:index]
+    resources :motions, path: 'm', only: [:index, :new, :create]
   end
 
   resources :question_answers, path: 'qa', only: [:new, :create]

@@ -1,4 +1,5 @@
 class MotionsController < AuthorizedController
+  include NestedResourceHelper
   before_action :get_context, only: [:index, :new, :create]
 
   def index
@@ -38,13 +39,11 @@ class MotionsController < AuthorizedController
   # GET /motions/new
   # GET /motions/new.json
   def new
-    get_context
-    @motion = authenticated_context.motions.new permit_params
-    authorize @motion, @motion.question.presence ? :new? : :new_without_question?
+    authorize authenticated_resource!, authenticated_resource!.question.presence ? :new? : :new_without_question?
     respond_to do |format|
       format.js { render js: "window.location = #{request.url.to_json}" }
-      format.html { render 'form', locals: {motion: @motion} }
-      format.json { render json: @motion }
+      format.html { render 'form', locals: {motion: authenticated_resource!} }
+      format.json { render json: authenticated_resource! }
     end
   end
 
@@ -61,10 +60,7 @@ class MotionsController < AuthorizedController
   # POST /motions.json
   def create
     @cm = CreateMotion.new current_profile,
-                           permit_params.merge({
-                               forum_id: authenticated_context.id,
-                               publisher: current_user
-                           })
+                           permit_params.merge(resource_new_params)
     action = @cm.resource.question.presence ? :create? : :create_without_question?
     authorize @cm.resource, action
     @cm.subscribe(ActivityListener.new)
@@ -213,6 +209,16 @@ class MotionsController < AuthorizedController
   def permit_params
     if params[:motion].present?
       params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+    end
+  end
+
+  def resource_new_params
+    if get_parent_resource.try(:project).present?
+      super.merge({
+        project: get_parent_resource.project
+      })
+    else
+      super
     end
   end
 end

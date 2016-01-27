@@ -247,6 +247,54 @@ class MotionsControllerTest < ActionController::TestCase
     assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
   end
 
+  ####################################
+  # As Moderator
+  ####################################
+  let(:project) { create(:project, forum: freetown) }
+  let(:project_question) do
+    create(:question,
+           forum: freetown,
+           project: project,
+           creator: FactoryGirl.create(:profile_direct_email))
+  end
+  let(:moderator) { create_moderator(project) }
+
+  test 'moderator should get new within project' do
+    sign_in moderator
+
+    get :new, project_id: project
+
+    assert_response 200
+    assert_not_nil assigns(:motion)
+  end
+
+  test 'moderator should post create within project' do
+    sign_in moderator
+
+    assert_differences create_changes_array do
+      post :create,
+           project_id: project,
+           motion: attributes_for(:motion)
+    end
+    assert_not_nil assigns(:cm).resource
+    assert_redirected_to motion_path(assigns(:cm).resource,
+                                     start_motion_tour: true)
+  end
+
+  test 'moderator should post create within question within project' do
+    sign_in moderator
+
+    assert_differences create_changes_array do
+      post :create,
+           question_id: project_question,
+           motion: attributes_for(:motion)
+    end
+    assert_not_nil assigns(:cm).resource
+    assert_equal project, assigns(:cm).resource.reload.project
+    assert_equal project_question, assigns(:cm).resource.reload.question
+    assert_redirected_to motion_path(assigns(:cm).resource,
+                                     start_motion_tour: true)
+  end
 
   ####################################
   # As Page
