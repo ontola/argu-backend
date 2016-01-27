@@ -17,9 +17,9 @@
       section
         p
           span= t('questions.call_to_action.body') + ' '
-          =link_to new_forum_question_path(@forum)
+          =link_to polymorphic_url([:new, get_parent_resource, :question])
             b.question-t= t('questions.call_to_action.action')
-    =link_to new_forum_question_path(@forum)
+    =link_to polymorphic_url([:new, get_parent_resource, :question])
       .box.question
         .box-image--container
           .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-question-cover.jpg')}'); "]
@@ -38,7 +38,7 @@
                 span.fa.fa-lightbulb-o
                 span.icon-left= t('new_discussion.question_motion2')
     .center
-      =link_to new_forum_question_path(@forum), class: 'btn--question'
+      =link_to polymorphic_url([:new, get_parent_resource, :question]), class: 'btn--question'
         span.fa.fa-plus
         span.icon-left= t('questions.type_new')
   .col-2-1
@@ -46,9 +46,9 @@
       section
         p
           span= t('motions.call_to_action.body') + ' '
-          =link_to new_forum_motion_path(@forum)
+          =link_to polymorphic_url([:new, get_parent_resource, :motion])
             b.motion-t= t('motions.call_to_action.action')
-    =link_to new_forum_motion_path(@forum)
+    =link_to polymorphic_url([:new, get_parent_resource, :motion])
       .box.motion
         .box-image--container
           .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
@@ -72,6 +72,6 @@
                 span.fa.fa-minus
                 span.icon-left= t('new_discussion.motion_argument3')
     .center
-      =link_to new_forum_motion_path(@forum), class: 'btn--motion'
+      =link_to polymorphic_url([:new, get_parent_resource, :motion]), class: 'btn--motion'
         span.fa.fa-plus
         span.icon-left= t('motions.type_new')

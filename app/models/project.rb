@@ -19,6 +19,7 @@ class Project < ActiveRecord::Base
   belongs_to :publisher, class_name: 'User'
   has_many   :phases, inverse_of: :project
   has_many   :stepups, as: :record
+  has_many   :questions, inverse_of: :project
 
   accepts_nested_attributes_for :phases
   accepts_nested_attributes_for :stepups

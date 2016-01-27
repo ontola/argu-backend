@@ -86,6 +86,13 @@ class ActiveSupport::TestCase
     user
   end
 
+  def create_moderator(record, user = nil)
+    user ||= FactoryGirl.create(:user)
+    forum = record.is_a?(Forum) ? record : record.forum
+    FactoryGirl.create(:stepup, forum: forum, record: record, moderator: create_member(forum, user))
+    user
+  end
+
   # Makes the given `User` a manager of the `Page` of the `Forum`
   # Creates one if not given
   # @note overwrites the current owner in the `Page`
@@ -116,6 +123,15 @@ class ActionDispatch::IntegrationTest
       config.allow_url 'http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css'
       config.allow_url 'https://www.youtube.com/embed/mxQZNodm8OI'
     end
+  end
+
+  def log_in_user(user = FactoryGirl.create(:user))
+    post user_session_path,
+         user: {
+           email: user.email,
+           password: user.password
+         }
+    assert_response 302
   end
 end
 

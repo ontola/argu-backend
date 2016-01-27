@@ -58,15 +58,12 @@ class RestrictivePolicy
     end
 
     def is_moderator?
-      if record.respond_to? :stepups
-        if user
-          if record.stepups.pluck(:user_id).include?(user.id) ||
-              (record.stepups.pluck(:group_id) & user.profile.groups.where(forum: record.forum).pluck(:id)).present?
-            moderator
-          end
-        end
-      end
-
+      # Stepups within the forum based if they apply to the user or one of its group memberships
+      forum_stepups = record.forum.stepups.where('user_id=? OR group_id=?', user.id, user.profile.groups.where(forum: record.forum).pluck(:id))
+      # Get the tuples of the entire parent chain
+      cc = Context.new(record).map(&:polymorphic_tuple).compact
+      # Match them against the set of stepups within the forum
+      moderator if forum_stepups.where("(record_type, record_id) IN #{"(#{cc.map { |t| "('#{t[0]}', #{t[1]})" }.join(', ')})"}").presence
     end
 
     def staff?

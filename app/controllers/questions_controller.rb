@@ -1,4 +1,5 @@
 class QuestionsController < AuthorizedController
+  include NestedResourceHelper
 
   def show
     @motions = policy_scope(authenticated_resource!
@@ -31,10 +32,7 @@ class QuestionsController < AuthorizedController
   def create
     authorize authenticated_context, :add_question?
     @cq = CreateQuestion.new current_profile,
-                          permit_params.merge({
-                              forum: authenticated_context,
-                              publisher: current_user
-                          })
+                          permit_params.merge(resource_new_params)
     authorize @cq.resource, :create?
     @cq.subscribe(ActivityListener.new)
     @cq.on(:create_question_successful) do |question|

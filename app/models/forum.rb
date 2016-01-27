@@ -15,6 +15,7 @@ class Forum < ActiveRecord::Base
   has_many :motions, inverse_of: :forum
   has_many :projects, inverse_of: :forum
   has_many :questions, inverse_of: :forum
+  has_many :stepups, inverse_of: :forum
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, inverse_of: :forum
 

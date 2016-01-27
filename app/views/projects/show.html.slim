@@ -13,7 +13,14 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
       div.draftbar.bg-danger
         =t('draft')
         =link_to t('publish'), project_path(project, project: {publish: true}), class: 'btn btn--warning', data: {method: :put, confirm: t('projects.publish_confirmation')}
+    -else
+      =link_to new_project_discussion_path(project), class: 'btn btn--pro'
+        span.fa.fa-plus
+        span.icon-left= t('new_discussion.title')
     =render partial: 'projects/timeline', locals: {project: project}
-    =render partial: 'blog_posts/blog_post', collection: project.blog_posts
-    h2 _moderators_
+    .grid
+      .box.box-grid-sizer
+      .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
+      =render @items
+    h2 _debug moderators_
     =render partial: 'stepups/stepup', collection: project.stepups

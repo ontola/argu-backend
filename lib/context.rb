@@ -4,6 +4,7 @@
 # todo: lazy load items when parsed from a string (every item currently creates a db request)
 class Context
   using StringExtensions
+  include Enumerable
   extend ArguExtensions::Context # WHY DOES THE SEND :EXTEND NOT WORK
   #include Rails.application.routes.url_helpers
   include ApplicationHelper # For merge_query_parameters
@@ -25,6 +26,16 @@ class Context
   # Generates a URL to the current object with it's parents as a query string
   def contextized_url
     merge_query_parameter(url, (parent.to_query if parent.present?))
+  end
+
+  def each
+    #return enum_for(:each) unless block_given?
+
+    m = self
+    while m.present?
+      yield m
+      m = m.has_parent? && m.parent
+    end
   end
 
   def has_parent?
@@ -73,6 +84,13 @@ class Context
     context = Context.new(components.shift)
     components.each { context.push(components.shift) }
     context
+  end
+
+  # Only returns a value when the model has been saved
+  def polymorphic_tuple
+    if model.present?
+      [model.class.name, model.id.to_s] if model.persisted?
+    end
   end
 
   # Takes the topmost item off the stack and returns the item

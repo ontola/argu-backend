@@ -96,18 +96,18 @@ class AuthorizedController < ApplicationController
   end
 
   # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,
-  # otherwise the result from {tenant_by_param} is used.
+  # otherwise the result from {resource_tenant} is used.
   # @author Fletcher91 <thom@argu.co>
   # @note This function isn't called context_tenant since we might use different scopes in the future (e.g. access to a project)
   # @note This should be based only on static information and be side-effect free to make memoization possible.
-  # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {tenant_by_param}.
+  # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {resource_tenant}.
   def authenticated_context
     if authenticated_resource!.present?
       authenticated_resource!.is_a?(Forum) ?
         authenticated_resource! :
         authenticated_resource!.forum
     else
-      tenant_by_param
+      resource_tenant
     end
   end
 
@@ -138,11 +138,11 @@ class AuthorizedController < ApplicationController
   # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
   def resource_new_params
     {
-      forum: tenant_by_param
+      forum: resource_tenant
     }
   end
 
-  def tenant_by_param
+  def resource_tenant
     Forum.find_via_shortname params[:forum_id]
   end
 

@@ -35,9 +35,11 @@ class ProjectsController < AuthorizedController
   end
 
   def show
+    @items = authenticated_resource!.questions
+
     respond_to do |format|
-      format.html { render locals: {project: @resource} }
-      format.json { render json: @resource, include: %w(phases blog_posts) }
+      format.html { render locals: {project: authenticated_resource!} }
+      format.json { render json: authenticated_resource!, include: %w(phases blog_posts) }
     end
   end
 

@@ -43,6 +43,11 @@ Argu::Application.routes.draw do
     get :convert, action: :convert
     put :convert, action: :convert!
   end
+  concern :discussable do
+    resources :discussions, only: [:new]
+    resources :questions, path: 'q', only: [:index, :new, :create]
+    resources :motions, path: 'm', only: [:index, :new, :create]
+  end
   concern :flowable do
     get :flow, controller: :flow, action: :show
   end
@@ -165,7 +170,7 @@ Argu::Application.routes.draw do
   resources :projects,
             path: 'p',
             only: [:show, :edit, :update, :destroy],
-            concerns: [:blog_postable, :flowable]
+            concerns: [:blog_postable, :flowable, :discussable]
 
   resources :phases,
             only: [:show]
@@ -208,8 +213,6 @@ Argu::Application.routes.draw do
   get '/how_argu_works', to: 'static_pages#how_argu_works'
   # end
 
-  resources :discussions, only: [:new]
-
   get '/portal', to: 'portal/portal#home'
 
   get '/values', to: 'documents#show', name: 'values'
@@ -224,7 +227,7 @@ Argu::Application.routes.draw do
   resources :forums,
             only: [:show, :update],
             path: '',
-            concerns: [:flowable] do
+            concerns: [:flowable, :discussable] do
     get :discover, on: :collection, action: :discover
     get :settings, on: :member
     get :statistics, on: :member
@@ -232,9 +235,7 @@ Argu::Application.routes.draw do
     post :memberships, on: :collection
     resources :memberships, only: [:create, :destroy]
     resources :managers, only: [:new, :create, :destroy]
-    resources :questions, path: 'q', only: [:index, :new, :create]
     resources :projects, path: 'p', only: [:new, :create]
-    resources :motions, path: 'm', only: [:index, :new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
     resources :groups, path: 'g', only: [:new, :edit]

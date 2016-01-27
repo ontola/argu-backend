@@ -10,7 +10,7 @@ module NestedResourceHelper
   # @raise [ActiveRecord::RecordNotFound] {http://api.rubyonrails.org/classes/ActiveRecord/RecordNotFound.html Rails docs}
   # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
   def get_parent_resource
-    if parent_resource_class.try(:shortnameable?)
+    @parent_resource ||= if parent_resource_class.try(:shortnameable?)
       parent_resource_class.find_via_shortname! params[parent_resource_param]
     else
       parent_resource_class.find params[parent_resource_param]
@@ -59,6 +59,27 @@ module NestedResourceHelper
   #   parent_resource_type(m_url) # => 'motion'
   def parent_resource_type(opts = nil)
     parent_resource_key(opts)[0..-4]
+  end
+
+  def resource_new_params
+    if parent_resource_klass(request.path_parameters) == Forum
+      {
+        forum: resource_tenant,
+        publisher: current_user
+      }
+    else
+      {
+        forum: resource_tenant,
+        parent_resource_param => params[parent_resource_param],
+        publisher: current_user
+      }
+    end
+  end
+
+  def resource_tenant
+    get_parent_resource.is_a?(Forum) ?
+      get_parent_resource :
+      get_parent_resource.forum
   end
 
 end

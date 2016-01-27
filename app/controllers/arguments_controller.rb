@@ -126,7 +126,7 @@ private
 
   def resource_new_params
     {
-      forum: tenant_by_param,
+      forum: resource_tenant,
       motion_id: params[:motion_id]
     }
   end

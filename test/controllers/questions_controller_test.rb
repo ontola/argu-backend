@@ -173,6 +173,43 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_redirected_to subject.forum
   end
 
+  ####################################
+  # As Moderator
+  ####################################
+  let(:moderator) { create_moderator(freetown) }
+  let(:project) { create(:project, forum: freetown) }
+  let(:project_moderator) { create_moderator(project) }
+
+  test 'moderator should post create' do
+    sign_in moderator
+
+    assert_differences create_changes_array do
+      post :create,
+           forum_id: freetown,
+           question: {
+             title: 'Question',
+             content: 'Contents'
+           }
+    end
+    assert_not_nil assigns(:cq).resource
+    assert_redirected_to question_url(assigns(:cq).resource)
+  end
+
+  test 'moderator should post create with project' do
+    sign_in project_moderator
+
+    assert_differences create_changes_array do
+      post :create,
+           project_id: project.id,
+           question: {
+             title: 'Question',
+             content: 'Contents'
+           }
+    end
+    assert_not_nil assigns(:cq).resource
+    assert_equal project, assigns(:resource).project
+    assert_redirected_to question_url(assigns(:cq).resource)
+  end
 
   ####################################
   # As Creator
