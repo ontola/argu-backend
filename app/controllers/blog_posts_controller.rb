@@ -40,6 +40,7 @@ class BlogPostsController < AuthorizedController
     respond_to do |format|
       format.html { render locals: {blog_post: @resource} }
       format.json { render json: @resource }
+      format.js   { render locals: {blog_post: @resource} }
     end
   end
 

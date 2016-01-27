@@ -18,7 +18,8 @@ const ui = {
             .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
             .ajaxComplete(this.handleAjaxCalls)
             .on('click', '.welcome-video-hide', this.welcomeVideoHide)
-            .on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle);
+            .on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle)
+            .on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive);
 
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);
@@ -186,6 +187,10 @@ const ui = {
         e.preventDefault();
         $('#comments_' + $(this).data('comment-id')+' .box:first-child').show();
         $('#comments_' + $(this).data('comment-id')+' .box:last-child').remove();
+    },
+
+    setActive: function () {
+        $(this).addClass('active');
     },
 
     welcomeVideoHide: function () {

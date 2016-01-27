@@ -1,3 +1,8 @@
 .box[itemscope]
-  h2[itemprop="headline"]= phase.display_name
-  .markdown[itemprop="text"]= markdown_to_html phase.description
+  section.section-info
+    span[class="fa fa-arrows-h"]
+    span.icon-left= t('projects.phases.title_singular')
+  section
+    h3[itemprop="headline"]= phase.display_name
+    .markdown[itemprop="text"]= markdown_to_html phase.description
+  =render partial: phase.creator, locals: {resource: phase}
