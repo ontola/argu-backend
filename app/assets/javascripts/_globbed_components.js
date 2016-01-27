@@ -807,11 +807,19 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
         });
     },
 
-    totalShares: function totalShares() {
+    fetchTwitterCount: function fetchTwitterCount() {
         var _this3 = this;
 
+        $.getJSON('http://opensharecount.com/count.json?url=' + this.props.url, function (data) {
+            _this3.updateCount('twitter', data.count);
+        });
+    },
+
+    totalShares: function totalShares() {
+        var _this4 = this;
+
         return Object.keys(this.state.counts).map(function (k) {
-            return _this3.state.counts[k];
+            return _this4.state.counts[k];
         }).reduce(function (a, b) {
             return a + b;
         });
@@ -911,21 +919,21 @@ var DropdownContent = exports.DropdownContent = _react2.default.createClass({
     },
 
     componentWillEnter: function componentWillEnter(callback) {
-        var _this4 = this;
+        var _this5 = this;
 
         this.setState({ appearState: 'dropdown-enter' }, function () {
             window.setTimeout(function () {
-                _this4.setState({ appearState: 'dropdown-enter dropdown-enter-active' }, callback);
+                _this5.setState({ appearState: 'dropdown-enter dropdown-enter-active' }, callback);
             }, 10);
         });
     },
 
     componentWillLeave: function componentWillLeave(callback) {
-        var _this5 = this;
+        var _this6 = this;
 
         this.setState({ appearState: 'dropdown-leave' }, function () {
             window.setTimeout(function () {
-                _this5.setState({ appearState: 'dropdown-leave dropdown-leave-active' }, function () {
+                _this6.setState({ appearState: 'dropdown-leave dropdown-leave-active' }, function () {
                     window.setTimeout(callback, 200);
                 });
             }, 0);
@@ -1044,7 +1052,7 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
     displayName: 'FBShareItem',
 
     handleClick: function handleClick(e) {
-        var _this6 = this;
+        var _this7 = this;
 
         if (typeof FB !== 'undefined') {
             e.preventDefault();
@@ -1053,7 +1061,7 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
                 href: this.props.shareUrl,
                 caption: this.props.title
             }, function () {
-                _this6.props.done();
+                _this7.props.done();
             });
         }
     },

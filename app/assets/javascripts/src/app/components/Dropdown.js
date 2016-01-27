@@ -117,6 +117,12 @@ export const ShareDropdown = React.createClass({
         });
     },
 
+    fetchTwitterCount: function () {
+        $.getJSON(`http://opensharecount.com/count.json?url=${this.props.url}`, data => {
+            this.updateCount('twitter', data.count);
+        });
+    },
+
     totalShares: function () {
         return Object.keys(this.state.counts)
                 .map(k => { return this.state.counts[k] })
