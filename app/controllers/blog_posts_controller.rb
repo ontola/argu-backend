@@ -11,12 +11,7 @@ class BlogPostsController < AuthorizedController
   def create
     @cbp = CreateBlogPost.new(
       current_profile,
-      permit_params.merge({
-                            published_at: Time.current,
-                            forum: authenticated_context,
-                            publisher: current_user,
-                            blog_postable: get_parent_resource
-                          }))
+      permit_params.merge(resource_new_params))
 
     authorize @cbp.resource, :create?
     @cbp.subscribe(ActivityListener.new)
@@ -91,9 +86,12 @@ class BlogPostsController < AuthorizedController
   private
 
   def resource_new_params
-    super.merge({
+    h = super.merge({
+      published_at: Time.current,
       blog_postable: get_parent_resource
     })
+    h.delete(parent_resource_param)
+    h
   end
 
   def permit_params

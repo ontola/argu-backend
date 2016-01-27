@@ -5,6 +5,7 @@
 module NestedResourceHelper
 
   # Finds the parent resource based on the URL's :foo_id param
+  # If the controller is an {AuthorizedController}, it'll check for a persited {authenticated_resource!!}
   # @note This method knows {Shortnameable}
   # @return [Model] A resource model if found
   # @raise [ActiveRecord::RecordNotFound] {http://api.rubyonrails.org/classes/ActiveRecord/RecordNotFound.html Rails docs}

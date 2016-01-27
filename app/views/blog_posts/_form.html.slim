@@ -1,7 +1,7 @@
 =set_title blog_post.new_record? ? t('new_type', type: t('blog_posts.type')) : t('edit_type', type: t('blog_posts.type'))
 .col-3
   .col-3-2
-    =to_parent(authenticated_context)
+    =to_parent
     .box
       section.section-info.blog-post-bg
         span[class="fa fa-#{blog_post_icon}"]

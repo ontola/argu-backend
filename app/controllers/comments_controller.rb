@@ -4,7 +4,7 @@ class CommentsController < AuthorizedController
   def new
     @commentable = commentable_class.find params[commentable_param]
     set_tenant(@commentable)
-    @comment = @commentable.comment_threads.new(new_comment_params)
+    @comment = @commentable.comment_threads.new(new_comment_params.merge(resource_new_params))
     authorize @comment, :create?
 
     render locals: {
@@ -154,7 +154,15 @@ class CommentsController < AuthorizedController
 
 
   def new_comment_params
-    params[:comment].present? ? comment_params : nil
+    params[:comment].present? ? comment_params : {}
+  end
+
+  def resource_new_params
+    h = super.merge({
+      commentable: get_parent_resource
+    })
+    h.delete(parent_resource_param)
+    h
   end
 
   def query_payload(opts = {})

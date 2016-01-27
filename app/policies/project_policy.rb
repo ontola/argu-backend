@@ -42,6 +42,14 @@ class ProjectPolicy < RestrictivePolicy
     rule update?
   end
 
+  def list?
+    if record.is_published? && !record.is_trashed?
+      rule is_open?, is_member?, is_manager?, is_owner?, super
+    else
+      rule is_moderator?, is_manager?, is_owner?, super
+    end
+  end
+
   def new?
     rule is_moderator?, is_manager?, is_owner?, super
   end
@@ -65,7 +73,7 @@ class ProjectPolicy < RestrictivePolicy
   private
 
   def forum_policy
-    Pundit.policy(context, context.forum)
+    Pundit.policy(context, record.forum)
   end
 
 end
