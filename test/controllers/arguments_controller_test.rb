@@ -10,21 +10,50 @@ class ArgumentsControllerTest < ActionController::TestCase
                        followable: motion,
                        follower: FactoryGirl.create(:user, :follows_email))
   end
+  let(:argument) do
+    FactoryGirl.create(:argument,
+                       forum: freetown,
+                       motion: motion)
+  end
 
-  let(:argument) { FactoryGirl.create(:argument,
-                                      forum: freetown,
-                                      motion: motion) }
+  let(:project) { create(:project, forum: freetown) }
+  let(:project_motion) { create(:motion, forum: freetown, project: project) }
+  let(:project_argument) do
+    FactoryGirl.create(:argument,
+                       forum: freetown,
+                       motion: project_motion)
+  end
+
+  let(:pub_project) { create(:project, :published, forum: freetown) }
+  let(:pub_project_motion) { create(:motion, forum: freetown, project: pub_project) }
+  let(:pub_project_argument) do
+    FactoryGirl.create(:argument,
+                       forum: freetown,
+                       motion: pub_project_motion)
+  end
 
   ####################################
   # As Guest
   ####################################
-  test 'guest should get show when not logged in' do
+  test 'guest should get show' do
     get :show, id: argument
 
     assert_response 200
     assert assigns(:comments)
 
     assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, 'Trashed comments are visible'
+  end
+
+  test 'guest should not get show nested unpublished' do
+    get :show, id: project_argument
+
+    assert_redirected_to forum_url(freetown)
+  end
+
+  test 'guest should get show nested published' do
+    get :show, id: pub_project_argument
+
+    assert_response 200
   end
 
   test 'guest should not get new' do
@@ -50,6 +79,22 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_not assigns(:comments).any? { |c| c.is_trashed? && c.body != '[DELETED]' }, 'Trashed comments are visible'
   end
 
+  test 'user should not get show nested unpublished' do
+    sign_in user
+
+    get :show, id: project_argument
+
+    assert_redirected_to forum_url(freetown)
+  end
+
+  test 'user should get show nested published' do
+    sign_in user
+
+    get :show, id: pub_project_argument
+
+    assert_response 200
+  end
+
   test 'user should not get new' do
     sign_in user
 
@@ -67,6 +112,21 @@ class ArgumentsControllerTest < ActionController::TestCase
                                       motion: motion,
                                       creator: member.profile) }
 
+  test 'member should not get show nested unpublished' do
+    sign_in member
+
+    get :show, id: project_argument
+
+    assert_redirected_to forum_url(freetown)
+  end
+
+  test 'member should get show nested published' do
+    sign_in member
+
+    get :show, id: pub_project_argument
+
+    assert_response 200
+  end
 
   test 'member should get new pro' do
     sign_in member
