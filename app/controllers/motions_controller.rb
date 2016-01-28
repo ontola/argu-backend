@@ -25,7 +25,7 @@ class MotionsController < AuthorizedController
   # GET /motions/1.json
   def show
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes))
-    @group_responses = Group.ordered_with_meta @motion.group_responses, authenticated_context.groups, current_profile, @motion
+    @group_responses = Group.ordered_with_meta @motion.group_responses, authenticated_context.groups.discussion, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
 

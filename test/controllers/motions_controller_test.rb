@@ -3,14 +3,19 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
-  let!(:follower) { FactoryGirl.create(:follow, followable: freetown) }
+  let!(:freetown) { create(:forum, name: 'freetown') }
+  let!(:follower) { create(:follow, followable: freetown) }
   let(:question) do
-    FactoryGirl.create(:question,
-                       forum: freetown,
-                       creator: FactoryGirl.create(:profile_direct_email))
+    create(:question,
+           forum: freetown,
+           creator: create(:profile_direct_email))
   end
-  let(:subject) { FactoryGirl.create(:motion, :with_arguments, forum: freetown) }
+  let(:subject) do
+    create(:motion,
+           :with_arguments,
+           :with_group_responses,
+           forum: freetown)
+  end
 
   ####################################
   # As Guest
@@ -26,6 +31,8 @@ class MotionsControllerTest < ActionController::TestCase
            'No trashed arguments to test on'
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) },
                'Trashed arguments are visible'
+    assert assigns(:group_responses).keys.all?(&:discussion?),
+           'Non discussion groups are shown under motions'
   end
 
   test 'guest should not get edit when not logged in' do

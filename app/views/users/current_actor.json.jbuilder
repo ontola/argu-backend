@@ -18,7 +18,7 @@ json.current_actor do
       json.url @profile.profile_photo.url(:avatar)
     end
   end
-  json.groups @profile.groups do |group|
+  json.groups policy_scope(@profile.groups) do |group|
     json.id group.id
     json.name group.name
   end

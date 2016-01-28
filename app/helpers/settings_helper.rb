@@ -2,18 +2,29 @@ module SettingsHelper
 
   def tab_icon_for(tab)
     case tab
-      when :general
-        'gear'
-      when :advanced
-        'gears'
-      when :managers
-        'suitcase'
-      when :groups
-        'group'
-      when :projects
-        'rocket'
-      when :privacy
-        'shield'
+    when :general
+      'gear'
+    when :advanced
+      'gears'
+    when :managers
+      'suitcase'
+    when :groups
+      'group'
+    when :projects
+      'rocket'
+    when :privacy
+      'shield'
+    end
+  end
+
+  def group_visibility_icon_for(group)
+    case group.visibility
+    when 'hidden'
+      'lock'
+    when 'open'
+      'globe'
+    when 'discussion'
+      'commenting'
     end
   end
 
