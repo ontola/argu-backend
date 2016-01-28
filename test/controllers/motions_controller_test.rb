@@ -121,7 +121,6 @@ class MotionsControllerTest < ActionController::TestCase
     get :new, forum_id: freetown
 
     assert_response 200
-    assert_not_nil assigns(:motion)
   end
 
   test 'member should post create' do
@@ -265,7 +264,6 @@ class MotionsControllerTest < ActionController::TestCase
     get :new, project_id: project
 
     assert_response 200
-    assert_not_nil assigns(:motion)
   end
 
   test 'moderator should post create within project' do
