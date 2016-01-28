@@ -69,7 +69,7 @@ class GroupResponsesController < AuthorizedController
   end
 
 private
-  def tenant_by_param
+  def resource_tenant
     Motion.find(params[:motion_id]).forum
   end
 

@@ -185,7 +185,7 @@ class CommentsController < AuthorizedController
     @forum = item.forum
   end
 
-  def tenant_by_param
+  def resource_tenant
     return super if params[:forum_id].present?
 
     resource, id = request.path.split('/')[1,2]

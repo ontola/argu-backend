@@ -98,7 +98,7 @@ class BlogPostsController < AuthorizedController
     params.require(:blog_post).permit(*policy(authenticated_resource || @blog_post || BlogPost).permitted_attributes)
   end
 
-  def tenant_by_param
+  def resource_tenant
     get_parent_resource.forum
   end
 end
