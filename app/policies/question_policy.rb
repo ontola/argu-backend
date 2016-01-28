@@ -14,7 +14,7 @@ class QuestionPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      scope
+      scope.published
     end
 
     def is_member?

@@ -40,6 +40,11 @@ class Motion < ActiveRecord::Base
                                 "%#{q}%",
                                 "%#{q}%") }
 
+  scope :published, -> do
+    joins('LEFT OUTER JOIN projects ON projects.id = project_id')
+      .where('published_at IS NOT NULL OR project_id IS NULL')
+  end
+
   def assert_tenant
     if self.question.present? && self.question.forum_id != self.forum_id
       errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))

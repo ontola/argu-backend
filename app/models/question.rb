@@ -28,6 +28,11 @@ class Question < ActiveRecord::Base
 
   after_save :creator_follow
 
+  scope :published, -> do
+    joins('LEFT OUTER JOIN projects ON projects.id = project_id')
+      .where('published_at IS NOT NULL OR project_id IS NULL')
+  end
+
   # Might not be a good idea
   def creator
     super || Profile.first_or_initialize(shortname: 'Onbekend')
