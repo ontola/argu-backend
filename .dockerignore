@@ -1,6 +1,7 @@
 tmp/*
 .git
 log/*
+.env
 
 spec/argu.txt
 .yardoc
