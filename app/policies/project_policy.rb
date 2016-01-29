@@ -22,9 +22,9 @@ class ProjectPolicy < RestrictivePolicy
   def permitted_attributes
     attributes = super
     attributes << %i(id title content start_date end_date email) if create?
-    phase = record.is_a?(Project) && record.phases.new
+    phase = record.is_a?(Project) && Phase.new(project: record, forum: record.forum)
     attributes << {phases_attributes: Pundit.policy(context, phase).permitted_attributes} if phase && create?
-    stepup = record.is_a?(Project) && record.stepups.new
+    stepup = record.is_a?(Project) && Stepup.new(record: record, forum: record.forum)
     attributes << {stepups_attributes: Pundit.policy(context, stepup).permitted_attributes} if stepup && is_manager_up?
     attributes << %i(id title content start_date end_date achieved_end_date email publish unpublish) if update?
     attributes

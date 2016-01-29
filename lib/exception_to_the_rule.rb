@@ -2,8 +2,14 @@ module ExceptionToTheRule
   TRICKLE_LOGIC = { 'doesnt_trickle' => :==, 'trickles_down' => :<=, 'trickles_up' => :>= }
 
   def apply_rules(action, level)
-    rules = context.context_model.present? ? find_rules_for_level(action, level) : []
-    rules.presence ? rules.map { |r| r.permit ? level : nil }.compact.presence : level
+    if context.context_model.present?
+      rules = filter_trickle(find_rules_for_action(action), level)
+    end
+    if rules.present?
+      rules.map { |r| r.permit ? level : nil }.compact.presence
+    else
+      level
+    end
   end
 
   def filter_trickle(rules, level)
@@ -11,7 +17,7 @@ module ExceptionToTheRule
   end
 
   # Waarschijnlijk een context_type nil toevoegen aan het eerste query gedeelte.
-  def find_rules_for_level(action, level)
+  def find_rules_for_action(action)
     _rules = Rule.arel_table
     rule_query = _rules[:model_type].eq(@record.is_a?(Class) ? @record.to_s : @record.class.to_s)
                    .and(_rules[:model_id].eq(@record.try(:id))
@@ -19,8 +25,7 @@ module ExceptionToTheRule
                    .and(_rules[:context_type].eq(context.context_model.class.to_s))
                    .and(_rules[:context_id].eq(context.context_model.id.to_s))
                  )
-    rules = Rule.where(rule_query)
-    filter_trickle(rules, level)
+    Rule.where(rule_query)
   end
 
   def max_clearance(*array)
