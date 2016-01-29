@@ -1,4 +1,5 @@
 source 'https://rubygems.org/'
+ruby '2.2.4'
 
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
