@@ -17,6 +17,7 @@ Rails.application.configure do
   config.whiny_nils = true
 
   config.web_console.automount = true
+  config.web_console.whitelisted_ips = ['192.168.0.0/16']
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true

@@ -9,7 +9,12 @@ app:
     - ./.env
   links:
     - postgres
+    - redis
 postgres:
   image: postgres:9.4
   ports:
     - "5432"
+redis:
+  image: redis:2.8.17
+  ports:
+    - "6379"
