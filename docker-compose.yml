@@ -10,6 +10,7 @@ app:
   links:
     - postgres
     - redis
+    - mailcatcher
 postgres:
   image: postgres:9.4
   ports:
@@ -18,3 +19,7 @@ redis:
   image: redis:2.8.17
   ports:
     - "6379"
+mailcatcher:
+  image: schickling/mailcatcher
+  ports:
+    - "1080:1080"
