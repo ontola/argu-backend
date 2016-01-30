@@ -24,11 +24,11 @@
             =f.semantic_fields_for :stepups do |stepup|
               =render 'stepup_fields', f: stepup
             .links
-              =link_to_add_association '_add manager_', f, :stepups, class: 'btn'
+              =link_to_add_association t('projects.add_manager'), f, :stepups, class: 'btn'
             =f.semantic_fields_for :phases do |phase|
               =render 'phase_fields', f: phase
             .links
-              =link_to_add_association '_add phase_', f, :phases, class: 'btn'
+              =link_to_add_association t('projects.add_phase'), f, :phases, class: 'btn'
           -if !project.new_record? && policy(project).trash?
             =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
               - if policy(project).trash?

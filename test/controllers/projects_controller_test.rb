@@ -231,6 +231,70 @@ class ProjectsControllerTest < ActionController::TestCase
   end
 
   ####################################
+  # As NetDem (Moderator)
+  # The following tests are specific to the use case of NetDem
+  ####################################
+  let(:netdem) { create(:group, name: 'Netwerk Democratie', forum: freetown) }
+  let(:netdem_member) { create_member(freetown) }
+  let(:netdem_membership) do
+    create(:group_membership,
+           member: netdem_member.profile,
+           group: netdem)
+  end
+  let(:netdem_rule_new) do
+    create(:rule,
+           context: freetown,
+           model_type: 'Project',
+           action: 'new?',
+           role: netdem.identifier,
+           permit: true)
+  end
+  let(:netdem_rule_create) do
+    create(:rule,
+           context: freetown,
+           model_type: 'Project',
+           action: 'create?',
+           role: netdem.identifier,
+           permit: true)
+  end
+  let(:discussion) { create(:group, name: 'Politieke Partijen', forum: freetown) }
+  let(:discussion_member) { create_member(freetown) }
+  let(:discussion_membership) do
+    create(:group_membership,
+           member: discussion_member.profile,
+           group: discussion)
+  end
+  def netdem_rules
+    [netdem_membership, discussion_membership, netdem_rule_new, netdem_rule_create]
+  end
+
+  test 'netdem should get new project' do
+    netdem_rules # Trigger
+    sign_in netdem_member
+
+    general_new(200)
+  end
+
+  test 'netdem should post create project' do
+    netdem_rules # Trigger
+    sign_in netdem_member
+    # Test post create
+    # Test that the proper stepup is generated
+    general_create 302,
+                   [['Project.count', 1],
+                    ['Stepup.count', 1],
+                    ['Phase.count', 1]]
+  end
+
+  test 'netdem should not cause leaking access' do
+    netdem_rules
+    sign_in discussion_member
+
+    general_new
+    general_create
+  end
+
+  ####################################
   # As Manager
   ####################################
   let(:manager) { create_manager freetown }

@@ -13,7 +13,7 @@ nav#navbar.navbar[role="navigation"]
       /li
         =link_to new_discussion_path, class: 'navbar-item'
           span.fa.fa-plus
-          span.icon-left.hide-ml= t('new_discussion.title')
+          span.icon-left.hide-ml= t('discussions.new.title')
     ul.navbar-links.navbar-links-right
       =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
       li[tabIndex="0"]
