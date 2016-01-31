@@ -1,6 +1,6 @@
-=render layout: 'motions/show', locals: {model: model.motion}
+=render layout: 'motions/show', locals: {model: model}
   - if policy(model).destroy?
     .outside-the-box
-      =link_to question_answer_path(model),
-               data: {method: :delete, confirm: t('question_answers.destroy.confirmation')}
+      =link_to motion_path(model, motion: {question_id: nil}),
+               data: {method: :patch, confirm: t('question_answers.destroy.confirmation')}
         span[class="fa fa-unlink"]

@@ -21,7 +21,7 @@ class QuestionAnswerPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:id, :motion_id, :question_id] if create?
+    attributes << [:id, :motion_id, :question_id]
     attributes
   end
 
@@ -48,7 +48,7 @@ class QuestionAnswerPolicy < RestrictivePolicy
   private
 
   def forum_policy
-    Pundit.policy(context, context.forum || record.question.forum)
+    Pundit.policy(context, context.forum)
   end
 
 end

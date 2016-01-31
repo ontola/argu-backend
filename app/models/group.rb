@@ -2,11 +2,15 @@ class Group < ActiveRecord::Base
   include ArguBase
 
   belongs_to :forum
+
   has_many :group_memberships, dependent: :destroy
   has_many :members, through: :group_memberships, class_name: 'Profile'
   has_many :group_responses, dependent: :destroy
 
   validates :name, length: {maximum: 75}
+  validates :visibility, presence: true
+
+  enum visibility: { hidden: 0, visible: 1, discussion: 2 }
 
   def as_json(options)
     super(options.merge(except: [:max_responses_per_member, :created_at, :updated_at, :forum_id]))

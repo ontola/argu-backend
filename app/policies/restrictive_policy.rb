@@ -36,8 +36,17 @@ class RestrictivePolicy
       4
     end
 
-    def owner
+    # Not an actual role, but reserved nevertheless
+    def group_grant
+      5
+    end
+
+    def moderator
       6
+    end
+
+    def owner
+      8
     end
 
     def staff
@@ -51,6 +60,18 @@ class RestrictivePolicy
 
     def is_member?
       member if user && user.profile.member_of?(record.forum || record.forum_id)
+    end
+
+    def is_moderator?
+      c_model = record.try(:forum) || context.context_model
+      if user.present? && c_model.present?
+        # Stepups within the forum based if they apply to the user or one of its group memberships
+        forum_stepups = c_model.stepups.where('user_id=? OR group_id=?', user.id, user.profile.groups.where(forum: c_model).pluck(:id))
+        # Get the tuples of the entire parent chain
+        cc = Context.new(record).map(&:polymorphic_tuple).compact
+        # Match them against the set of stepups within the forum
+        moderator if forum_stepups.where("(record_type, record_id) IN #{"(#{cc.map { |t| "('#{t[0]}', #{t[1]})" }.join(', ')})"}").presence
+      end
     end
 
     def staff?

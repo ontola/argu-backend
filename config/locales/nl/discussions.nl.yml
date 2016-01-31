@@ -1,0 +1,17 @@
+nl:
+  discussions:
+    new:
+      title: 'Nieuwe discussie'
+      start_header: 'Start een nieuwe discussie'
+      start_body: 'Wil jij anderen laten meedenken over een bepaalde uitdaging, of heb je een goed idee om te delen?'
+      forum_notice: 'Je staat op het punt een discussie te starten in het forum: '
+      forum_notice2: 'Zorg er voor dat jouw discussie relevant is voor dit forum.'
+      what_kind: 'Wat voor soort discussie wil jij starten?'
+      question_title: 'Hoe wordt iedereen gelukkiger?'
+      question_motion1: 'Gratis badplaatsen'
+      question_motion2: 'Subsidies voor straatartiesten'
+      motion_title: 'Gratis badplaatsen'
+      motion_argument1: 'Schonere mensen'
+      motion_argument2: 'Sociale cohesie'
+      motion_argument3: 'Hoge kosten'
+      project_title: 'Realisatie woonwijk Parkwijk'

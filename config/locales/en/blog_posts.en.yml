@@ -1,0 +1,7 @@
+#English argument translations
+
+en:
+  blog_posts:
+    type: "Update"
+    type_new: "New update"
+    unpublished: "Draft"

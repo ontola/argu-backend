@@ -2,9 +2,19 @@
 
 nl:
   status:
+    extra_info: 'Extra foutinformatie: "%{info_string}"'
+    s_400:
+      header: "Fout in het verzoek (400 Bad Request)"
+      body: "Het verzoek bevat een fout waardoor deze niet verwerkt kan worden, check de URL parameters en probeer de pagina welke naar deze verwees te herladen."
+      reference_link_url: "https://nl.wikipedia.org/wiki/Hypertext_Transfer_Protocol#HTTP-responses"
+      reference_link_body: "Klik hier om meer te leren over HTTP en status 400 :)"
     s_404:
-      header: "Item niet gevonden"
+      header: "Item niet gevonden (404 Not Found)"
       body: "De link bestaat niet. Dit kan zijn doordat het object wat je zoekt is verwijderd of nooit bestaan heeft."
+      reference_link_url: "https://nl.wikipedia.org/wiki/Error_404"
+      reference_link_body: "Klik hier om meer te leren over HTTP en status 404 :)"
     s_413:
-      header: "Item te groot"
+      header: "Item te groot (413 Payload Too Large)"
       body: "Het item dat je probeert te verzenden is te groot. Ga terug en probeer een kleiner bestand."
+      reference_link_url: "https://nl.wikipedia.org/wiki/Hypertext_Transfer_Protocol#HTTP-responses"
+      reference_link_body: "Klik hier om meer te leren over HTTP en status codes :)"

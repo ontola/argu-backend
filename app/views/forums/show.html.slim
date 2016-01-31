@@ -32,8 +32,8 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
         ul.btns-horizontal
           - if policy(@forum).update?
             li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
-                span.fa.fa-gear
-                span.icon-left= t('forums.settings.title')
+              span.fa.fa-gear
+              span.icon-left= t('forums.settings.title')
           - if current_user.present? && active_for_user?(:notifications, current_user)
             li.float-right.btn--transparant--parent[data-title=I18n.t('tooltips.follow')]
               =react_component 'ActiveToggle',
@@ -44,9 +44,9 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
                                {prerender: true}
   - if policy(@forum).show?
     .btns-center-container
-      =link_to new_discussion_path(forum_id: @forum), class: 'btn btn--pro'
+      =link_to new_forum_discussion_path(@forum), class: 'btn btn--pro new-discussion'
         span.fa.fa-plus
-        span.icon-left= t('new_discussion.title')
+        span.icon-left= t('discussions.new.title')
       =render partial: 'filter_and_sort'
     .grid
       .box.box-grid-sizer

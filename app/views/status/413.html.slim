@@ -4,5 +4,10 @@
     section
       h1= t('status.s_413.header')
       p= t('status.s_413.body')
-  .bigger.center
-    blockquote.blockquote--inline= @quote
+      - if @additional_error_info.present?
+        p= t('status.extra_info', info_string: @additional_error_info)
+      p
+        a[href=t('status.s_413.reference_link_url') target="_blank"]= t('status.s_413.reference_link_body')
+  - if @quote.present?
+    .bigger.center
+      blockquote.blockquote--inline= @quote

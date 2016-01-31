@@ -1,47 +1,44 @@
-=set_title @question
-=connected_web url: question_url(@question),
-               name: seolized_title(@question),
-               description: seolized_description(@question),
-               image: @question.cover_photo.url || image_url('logo-social.png')
+=set_title question
+=connected_web url: question_url(question),
+               name: seolized_title(question),
+               description: seolized_description(question),
+               image: question.cover_photo.url || image_url('logo-social.png')
 .cover-behind
-  .cover-image.bg-img[style="background-image: url('#{@question.cover_photo.url}'); "]
+  .cover-image.bg-img[style="background-image: url('#{question.cover_photo.url}'); "]
 .col-1
   div[data-intro= t('intro.question.back')]= to_parent
-  =render partial: 'contextualize/context_horizontal', locals: {item: @question, type: 'question'}
-  .box[class="#{'trashed' if @question.is_trashed?}" data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
+  =render partial: 'contextualize/context_horizontal', locals: {item: question, type: 'question'}
+  .box[class=status_classes_for(question) data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
     section.section-info.question-bg
       span[class="fa fa-#{question_icon}"]
       span.icon-left= question_type
-      =render partial: 'decisions/decision_and_deadline', locals: {deadline: @question.expires_at}
+      =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
     section
-      h1.question-t[itemprop="headline"]= @question.title
+      h1.question-t[itemprop="headline"]= question.title
       .markdown[itemprop="text"]
-        =markdown_to_html(@question.content)
-      span.hidden[itemprop="answerCount"]= @question.motions_count
-    /- if @question.tags.present?
-      =render partial: 'tags/tags', locals: {resource: @question}
-    =render @question.creator, locals= {resource: @question}
+        =markdown_to_html(question.content)
+      span.hidden[itemprop="answerCount"]= question.motions_count
+    =render question.creator, locals= {resource: question}
     ul.btns-list--subtle.btns-sticky.btns-sticky-bottom.btns-horizontal.btns-list--grey-background
       - if active_for_user?(:notifications, current_user) && current_profile.present?
         li[data-title=I18n.t('tooltips.follow')]
           =react_component 'ActiveToggle',
-                           {url: follows_path(question_id: @question.id, format: :json),
-                            initialState: current_user.following?(@question),
+                           {url: follows_path(question_id: question.id, format: :json),
+                            initialState: current_user.following?(question),
                             true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
                             false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                            {prerender: true}
-      - if current_user.present? && policy(@question).update?
+      =crud_menu_item(question, question_items(question))
+      - if question.forum.visibility
         li
-          ul= react_component 'HyperDropdown', question_items(@question), {prerender: true}
-      - if @question.forum.visibility
-        li
-          ul= react_component 'ShareDropdown', share_items(@question), {prerender: true}
+          ul= react_component 'ShareDropdown', share_items(question), {prerender: true}
 .col-1
   .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
-=render_columns({'' => {collection: policy_scope(@question_answers)}},
-                header: motions_type(@question),
+=render_columns({'' => {collection: policy_scope(@motions)}},
+                header: motions_type(question),
                 header_text: 'test',
-                collection_model: QuestionAnswer,
-                buttons_url: url_for([:new, @forum, :motion, motion: {question_answers_attributes: {'0' => {question_id: @question.id}}}]),
-                buttons_text: t('add_type', type: motion_type(@question)))
-=render partial: 'discussions/new', locals: {forum: @forum}
+                collection_model: Motion,
+                partial: 'question_answers/show',
+                buttons_url: polymorphic_url([:new, question, :motion]),
+                buttons_text: t('add_type', type: motion_type(question)))
+=render partial: 'discussions/new', locals: {forum: authenticated_context}

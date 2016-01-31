@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: components/CombiBigVote.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: components/CombiBigVote.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Alert from './Alert';
+import React from 'react';
+import Intl from 'intl';
+Intl; // For ESLint
+import 'intl/locale-data/jsonp/en.js';
+import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+import actorStore from '../stores/actor_store';
+import { BigVoteButtons, BigVoteResults } from './BigVote';
+import BigGroupResponse from './_big_group_responses';
+
+/**
+ * Component that displays current vote options based on whether the user is member of a group.
+ * Also reveals the results if the user has already voted.
+ * This component is not pure.
+ * @class
+ * @exports CombiBigVote
+ * @see {@linkcode BigVote.BigVoteButtons}
+ * @see {@linkcode BigVote.BigVoteResults}
+ * @see {@linkcode BigGroupResponse}
+ */
+export const CombiBigVote = React.createClass({
+
+    getInitialState: function () {
+        return {
+            actor: this.props.actor,
+            groups: this.props.groups,
+            object_type: this.props.object_type,
+            object_id: this.props.object_id,
+            current_vote: this.props.current_vote,
+            distribution: this.props.distribution,
+            percent: this.props.percent
+        };
+    },
+
+    onActorChange: function (actor) {
+        this.refreshGroups();
+        this.setState({actor: actor});
+    },
+
+    componentDidMount: function () {
+        this.unsubscribe = actorStore.listen(this.onActorChange);
+    },
+
+    componentWillUnmount: function () {
+        this.unsubscribe();
+    },
+
+    setVote: function (vote) {
+        this.setState(vote);
+    },
+
+    refreshGroups: function () {
+        fetch(`${this.state.object_id}.json`, safeCredentials())
+                .then(statusSuccess)
+                .then(json)
+                .then((data) => {
+                    this.setState({groups: data.groups});
+                }).catch(() => {
+                    Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
+                });
+    },
+
+    render: function () {
+        let voteButtonsComponent;
+        let voteResultsComponent;
+        let groupResponsesComponent;
+        if (!this.state.actor || this.state.actor.actor_type === 'User') {
+            voteButtonsComponent = &lt;BigVoteButtons parentSetVote={this.setVote} {...this.state} {...this.props}/>;
+            voteResultsComponent = &lt;BigVoteResults {...this.state} show_results={this.state.current_vote !== 'abstain'}/>;
+            groupResponsesComponent = &lt;BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
+        } else if (this.state.actor.actor_type === 'Page') {
+            groupResponsesComponent = &lt;BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} object_type={this.props.object_type} object_id={this.props.object_id} />;
+            voteResultsComponent = &lt;BigVoteResults {...this.state} {...this.props} show_results={true}/>;
+        }
+
+        return (
+                &lt;div className="center motion-shr">
+                    {voteButtonsComponent}
+                    {voteResultsComponent}
+                    {groupResponsesComponent}
+                &lt;/div>
+        );
+    }
+});
+window.CombiBigVote = CombiBigVote;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-BigVote.html">BigVote</a></li><li><a href="module-CombiBigVote.html">CombiBigVote</a></li><li><a href="module-FollowTheLaw.html">FollowTheLaw</a></li><li><a href="module-Helpers.html">Helpers</a></li><li><a href="module-Update.html">Update</a></li></ul><h3>Classes</h3><ul><li><a href="BigVote.BigVoteButtons.html">BigVoteButtons</a></li><li><a href="BigVote.BigVoteResults.html">BigVoteResults</a></li><li><a href="DetailsPane.html">DetailsPane</a></li><li><a href="DetailsPaneContainerComponent.html">DetailsPaneContainerComponent</a></li><li><a href="Link.html">Link</a></li><li><a href="module-FollowTheLaw-Phase.html">Phase</a></li><li><a href="module-FollowTheLaw-TimeLine.html">TimeLine</a></li><li><a href="module-FollowTheLaw-TimeLineComponent.html">TimeLineComponent</a></li><li><a href="module-FollowTheLaw-TimeLineComponentContainer.html">TimeLineComponentContainer</a></li><li><a href="module-FollowTheLaw-TimeLineComponentContainerWrapper.html">TimeLineComponentContainerWrapper</a></li><li><a href="Point.html">Point</a></li><li><a href="Profile.html">Profile</a></li><li><a href="RDateline.html">RDateline</a></li><li><a href="RImage.html">RImage</a></li><li><a href="RPhase.html">RPhase</a></li><li><a href="RPoint.html">RPoint</a></li><li><a href="RProfile.html">RProfile</a></li><li><a href="RTimeline.html">RTimeline</a></li><li><a href="RUpdate.html">RUpdate</a></li></ul><h3>Global</h3><ul><li><a href="global.html#activeItem">activeItem</a></li><li><a href="global.html#activePoint">activePoint</a></li><li><a href="global.html#getMarker">getMarker</a></li><li><a href="global.html#initialState">initialState</a></li><li><a href="global.html#nextPoint">nextPoint</a></li><li><a href="global.html#previousPoint">previousPoint</a></li><li><a href="global.html#replaceDateStrings">replaceDateStrings</a></li><li><a href="global.html#reviver">reviver</a></li><li><a href="global.html#SET_ACTIVE_TIMELINE">SET_ACTIVE_TIMELINE</a></li><li><a href="global.html#setActivePoint">setActivePoint</a></li><li><a href="global.html#setActiveTimeline">setActiveTimeline</a></li><li><a href="global.html#setCurrentPhase">setCurrentPhase</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sat Jan 16 2016 15:26:46 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

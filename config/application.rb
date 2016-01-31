@@ -16,7 +16,8 @@ end
 
 module Argu
   class Application < Rails::Application
-    config.autoload_paths += Dir["#{config.root}/lib/"]  # include all subdirectories
+    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += %W(#{config.root}/app/listeners)
 
@@ -41,6 +42,10 @@ module Argu
       Devise::SessionsController.layout 'closed'
     end
 
+    ############################
+    # Middlewares
+    ############################
+
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
@@ -52,7 +57,13 @@ module Argu
     config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
 
+    ############################
+    # Assets
+    ############################
+
+    require 'argu/stateful_server_renderer'
     config.react.addons = false
+    config.react.server_renderer = StatefulServerRenderer
     # Enable the asset pipeline
     config.assets.enabled = true
     config.assets.precompile += %w( application.js polyfill.js mail.css )
@@ -63,6 +74,11 @@ module Argu
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+
+    ############################
+    # I18n & locales
+    ############################
 
     config.time_zone = 'UTC'
     I18n.available_locales = [:nl, :en]

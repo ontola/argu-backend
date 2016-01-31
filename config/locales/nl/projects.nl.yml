@@ -1,0 +1,19 @@
+nl:
+  projects:
+    type: 'Project'
+    type_new: 'nieuw project'
+    plural: 'Projecten'
+    publish_confirmation: 'Publiceren zorgt ervoor dat forum volgers op de hoogte zullen worden gesteld. Verder gaan?'
+    timeline: 'Tijdlijn'
+    add_manager: 'Manager toevoegen'
+    add_phase: 'Fase toevoegen'
+    stepups:
+      title: 'Managers'
+      title_singular: 'Manager'
+    phases:
+      title: 'Fases'
+      title_singular: 'Fase'
+    call_to_action:
+      title: '_project cta titel_'
+      body: '_project cta body_'
+      action: 'Begin jouw project.'

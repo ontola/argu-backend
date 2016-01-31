@@ -1,10 +1,11 @@
 source 'https://rubygems.org/'
-ruby '2.2.4'
+ruby '2.3.0'
 
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
 gem 'sass', '= 3.4.18'
 gem 'rails', '~>4.2.5.1'
+gem 'active_model_serializers', '~> 0.10.0.rc3'
 
 gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
@@ -54,7 +55,8 @@ gem 'wisper', '~> 1.6.1'
 gem 'roadie', '~> 3.1.1'
 gem 'roadie-rails', '~> 1.1.0'
 gem 'cocoon', '~> 1.2.6'
-
+gem 'httparty', '~> 0.13.7'
+gem 'acts_as_list', '~> 0.7.2'
 #Pagination
 gem 'kaminari', '~>0.16.1'
 
@@ -116,7 +118,7 @@ group :development, :test do
   gem 'chromedriver-helper'
   gem 'mocha'
   gem 'pry'
-  gem 'mailcatcher'
+  gem 'mailcatcher', '~> 0.6.2'
   #gem 'byebug'
   #gem 'pry-byebug'
   gem 'meta_request'

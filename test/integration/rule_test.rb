@@ -63,7 +63,6 @@ class RuleTest < ActionDispatch::IntegrationTest
     no_show_users
 
     get argument_path(member_argument)
-    assert_redirected_to root_path
     assert_equal assigns(:_not_authorized_caught), true
     assert_equal flash[:alert], 'user not allowed'
   end
@@ -74,7 +73,6 @@ class RuleTest < ActionDispatch::IntegrationTest
     no_show_owners
 
     get argument_path(member_argument)
-    assert_redirected_to root_path
     assert_equal assigns(:_not_authorized_caught), true
     assert_equal flash[:alert], 'user not allowed'
   end
@@ -85,7 +83,6 @@ class RuleTest < ActionDispatch::IntegrationTest
     no_show_managers
 
     get argument_path(member_argument)
-    assert_redirected_to root_path
     assert_equal assigns(:_not_authorized_caught), true
     assert_equal flash[:alert], 'ask your boss to buy'
   end
@@ -102,7 +99,6 @@ class RuleTest < ActionDispatch::IntegrationTest
     ].each do |user, message|
       log_in_as(user, :scope => :user)
       get argument_path(member_argument)
-      assert_redirected_to root_path
       assert_equal true, assigns(:_not_authorized_caught)
       assert_equal message, flash[:alert]
       log_out

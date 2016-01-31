@@ -14,8 +14,16 @@ class ActivityPolicy < RestrictivePolicy
     def resolve
       activities = Activity.arel_table
       profiles = Profile.arel_table
-      scope.where(['forum_id IN (%s)', user.profile.memberships_ids || 'NULL']).joins(:owner).where(activities[:key].not_eq('vote.create').or(profiles[:are_votes_public].eq(true)))
+      scope
+        .where(['forum_id IN (%s)', user.try(:profile).try(:memberships_ids) || context.context_model.id || 'NULL'])
+        .joins(:owner)
+        .where(activities[:key].not_eq('vote.create').or(
+               profiles[:are_votes_public].eq(true)))
     end
+  end
+
+  def show?
+    Pundit.policy(context, record.trackable)
   end
 
   def permitted_attributes

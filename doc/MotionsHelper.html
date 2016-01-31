@@ -1,0 +1,668 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: MotionsHelper
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!MotionsHelper.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (M)</a> &raquo;
+    
+    
+    <span class="title">MotionsHelper</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: MotionsHelper
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r1 last">Defined in:</dt>
+    <dd class="r1 last">app/helpers/motions_helper.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#motion_combi_vote_props-instance_method" title="#motion_combi_vote_props (instance method)">- (Object) <strong>motion_combi_vote_props</strong>(actor, motion, vote) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#motion_timeline_props-instance_method" title="#motion_timeline_props (instance method)">- (Object) <strong>motion_timeline_props</strong>(motion) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#motion_vote_props-instance_method" title="#motion_vote_props (instance method)">- (Object) <strong>motion_vote_props</strong>(motion, vote, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="motion_combi_vote_props-instance_method">
+  
+    - (<tt>Object</tt>) <strong>motion_combi_vote_props</strong>(actor, motion, vote) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/motions_helper.rb', line 4</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_motion_combi_vote_props'>motion_combi_vote_props</span><span class='lparen'>(</span><span class='id identifier rubyid_actor'>actor</span><span class='comma'>,</span> <span class='id identifier rubyid_motion'>motion</span><span class='comma'>,</span> <span class='id identifier rubyid_vote'>vote</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_groups'>groups</span> <span class='op'>=</span> <span class='id identifier rubyid_motion'>motion</span><span class='period'>.</span><span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_group'>group</span><span class='op'>|</span>
+    <span class='lbrace'>{</span>
+        <span class='label'>id:</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span>
+        <span class='label'>name:</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
+        <span class='label'>name_singular:</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_name_singular'>name_singular</span><span class='comma'>,</span>
+        <span class='label'>icon:</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_icon'>icon</span><span class='comma'>,</span>
+        <span class='label'>responses_left:</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_responses_left'>responses_left</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='comma'>,</span> <span class='id identifier rubyid_actor'>actor</span><span class='rparen'>)</span><span class='comma'>,</span>
+        <span class='label'>actor_group_responses:</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_responses_for'>responses_for</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='comma'>,</span> <span class='id identifier rubyid_actor'>actor</span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_localized_react_component'>localized_react_component</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+      <span class='label'>actor:</span> <span class='id identifier rubyid_actor'>actor</span><span class='comma'>,</span>
+      <span class='label'>groups:</span> <span class='id identifier rubyid_groups'>groups</span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_motion_vote_props'>motion_vote_props</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='comma'>,</span> <span class='id identifier rubyid_vote'>vote</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="motion_timeline_props-instance_method">
+  
+    - (<tt>Object</tt>) <strong>motion_timeline_props</strong>(motion) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/motions_helper.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_motion_timeline_props'>motion_timeline_props</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_points'>points</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>point</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>id:</span> <span class='int'>1</span><span class='comma'>,</span>
+      <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+      <span class='label'>itemType:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>itemId:</span> <span class='int'>1</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>point</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>id:</span> <span class='int'>2</span><span class='comma'>,</span>
+      <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+      <span class='label'>itemType:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>itemId:</span> <span class='int'>2</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>point</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>id:</span> <span class='int'>3</span><span class='comma'>,</span>
+      <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+      <span class='label'>itemType:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>itemId:</span> <span class='int'>3</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>point</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>id:</span> <span class='int'>4</span><span class='comma'>,</span>
+      <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+      <span class='label'>itemType:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>update</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>itemId:</span> <span class='int'>1</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>point</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>id:</span> <span class='int'>5</span><span class='comma'>,</span>
+      <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+      <span class='label'>itemType:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>update</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>itemId:</span> <span class='int'>2</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>point</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>id:</span> <span class='int'>6</span><span class='comma'>,</span>
+      <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+      <span class='label'>itemType:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>update</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>itemId:</span> <span class='int'>3</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span>
+      <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>point</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>id:</span> <span class='int'>7</span><span class='comma'>,</span>
+      <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+      <span class='label'>itemType:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>itemId:</span> <span class='int'>4</span>
+    <span class='rbrace'>}</span>
+  <span class='rbracket'>]</span>
+
+  <span class='id identifier rubyid_active_point_id'>active_point_id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:timeline</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:activePointId</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:to_i</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_active_point'>active_point</span> <span class='op'>=</span> <span class='id identifier rubyid_points'>points</span><span class='lbracket'>[</span><span class='id identifier rubyid_points'>points</span><span class='period'>.</span><span class='id identifier rubyid_find_index'>find_index</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span> <span class='id identifier rubyid_p'>p</span><span class='lbracket'>[</span><span class='symbol'>:id</span><span class='rbracket'>]</span> <span class='op'>===</span> <span class='id identifier rubyid_active_point_id'>active_point_id</span> <span class='rbrace'>}</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_active_point_id'>active_point_id</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+
+  <span class='id identifier rubyid_merge_state'>merge_state</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+                <span class='label'>timelines:</span> <span class='lbrace'>{</span>
+      <span class='label'>activeTimelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+      <span class='label'>collection:</span> <span class='lbrace'>{</span>
+        <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+          <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>timeline</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+          <span class='label'>id:</span> <span class='int'>1</span><span class='comma'>,</span>
+          <span class='label'>currentPhase:</span> <span class='int'>2</span><span class='comma'>,</span>
+          <span class='label'>phaseCount:</span> <span class='int'>4</span><span class='comma'>,</span>
+          <span class='label'>activePointId:</span> <span class='id identifier rubyid_active_point_id'>active_point_id</span><span class='comma'>,</span>
+          <span class='label'>points:</span> <span class='lbracket'>[</span><span class='int'>1</span><span class='comma'>,</span> <span class='int'>2</span><span class='comma'>,</span> <span class='int'>3</span><span class='comma'>,</span> <span class='int'>4</span><span class='comma'>,</span> <span class='int'>5</span><span class='comma'>,</span> <span class='int'>6</span><span class='rbracket'>]</span>
+        <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+                <span class='label'>points:</span> <span class='lbrace'>{</span>
+      <span class='label'>activePointId:</span> <span class='id identifier rubyid_active_point_id'>active_point_id</span><span class='comma'>,</span>
+      <span class='label'>activePoint:</span> <span class='id identifier rubyid_active_point'>active_point</span><span class='comma'>,</span>
+      <span class='label'>collection:</span> <span class='id identifier rubyid_points'>points</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+                <span class='label'>phases:</span> <span class='lbracket'>[</span>
+      <span class='lbrace'>{</span>
+        <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>id:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>index:</span> <span class='int'>0</span><span class='comma'>,</span>
+        <span class='label'>title:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Beleidsfase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>content:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Fasebeschrijving voor fase 1</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>startDate:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span> <span class='op'>-</span> <span class='int'>1</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='comma'>,</span>
+        <span class='label'>endDate:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span> <span class='op'>+</span> <span class='int'>2</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='lbrace'>{</span>
+        <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>id:</span> <span class='int'>2</span><span class='comma'>,</span>
+        <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>index:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>title:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Initiatiefase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>content:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Fasebeschrijving voor fase 2</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>startDate:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span> <span class='op'>+</span> <span class='int'>2</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='comma'>,</span>
+        <span class='label'>endDate:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span> <span class='op'>+</span> <span class='int'>5</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='lbrace'>{</span>
+        <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>id:</span> <span class='int'>3</span><span class='comma'>,</span>
+        <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>index:</span> <span class='int'>2</span><span class='comma'>,</span>
+        <span class='label'>title:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Behandelfase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>content:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Fasebeschrijving voor fase drie</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>startDate:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span> <span class='op'>+</span> <span class='int'>5</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='comma'>,</span>
+        <span class='label'>endDate:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span> <span class='op'>+</span> <span class='int'>6</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='lbrace'>{</span>
+        <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>phase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>id:</span> <span class='int'>4</span><span class='comma'>,</span>
+        <span class='label'>timelineId:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>index:</span> <span class='int'>3</span><span class='comma'>,</span>
+        <span class='label'>title:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Einde</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>content:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>startDate:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span> <span class='op'>+</span> <span class='int'>6</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='comma'>,</span>
+        <span class='label'>endDate:</span> <span class='kw'>nil</span>
+      <span class='rbrace'>}</span>
+    <span class='rbracket'>]</span><span class='comma'>,</span>
+                <span class='label'>blog_posts:</span> <span class='lbracket'>[</span>
+      <span class='lbrace'>{</span>
+        <span class='label'>id:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>update</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>title:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>An update</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>content:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>description of the update</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>creatorId:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>createdAt:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='comma'>,</span>
+        <span class='label'>dateline:</span> <span class='lbrace'>{</span>
+          <span class='label'>date:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span> <span class='op'>-</span> <span class='int'>15</span><span class='period'>.</span><span class='id identifier rubyid_minutes'>minutes</span><span class='comma'>,</span>
+          <span class='label'>location:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+        <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='lbrace'>{</span>
+        <span class='label'>id:</span> <span class='int'>2</span><span class='comma'>,</span>
+        <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>update</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>title:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Update 2</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>content:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Happened earlier than An Update</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>creatorId:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>createdAt:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='comma'>,</span>
+        <span class='label'>dateline:</span> <span class='lbrace'>{</span>
+          <span class='label'>date:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span> <span class='op'>-</span> <span class='int'>45</span><span class='period'>.</span><span class='id identifier rubyid_minutes'>minutes</span><span class='comma'>,</span>
+          <span class='label'>location:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+        <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='lbrace'>{</span>
+        <span class='label'>id:</span> <span class='int'>3</span><span class='comma'>,</span>
+        <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>update</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>title:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Another update</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>content:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Update is in the second phase</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>creatorId:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>createdAt:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span><span class='comma'>,</span>
+        <span class='label'>dateline:</span> <span class='lbrace'>{</span>
+          <span class='label'>date:</span> <span class='const'>Time</span><span class='period'>.</span><span class='id identifier rubyid_current'>current</span> <span class='op'>+</span> <span class='int'>3</span><span class='period'>.</span><span class='id identifier rubyid_hours'>hours</span><span class='comma'>,</span>
+          <span class='label'>location:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+        <span class='rbrace'>}</span>
+      <span class='rbrace'>}</span>
+    <span class='rbracket'>]</span><span class='comma'>,</span>
+                <span class='label'>profiles:</span> <span class='lbracket'>[</span>
+      <span class='lbrace'>{</span>
+        <span class='label'>id:</span> <span class='int'>1</span><span class='comma'>,</span>
+        <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>profile</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>displayName:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Some creator</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+        <span class='label'>url:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://argu.co/u/someone</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rbrace'>}</span>
+    <span class='rbracket'>]</span>
+  <span class='rbrace'>}</span><span class='rparen'>)</span>
+
+  <span class='lbrace'>{</span>
+    <span class='label'>timelineId:</span> <span class='int'>1</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="motion_vote_props-instance_method">
+  
+    - (<tt>Object</tt>) <strong>motion_vote_props</strong>(motion, vote, opts = {}) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/motions_helper.rb', line 21</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_motion_vote_props'>motion_vote_props</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='comma'>,</span> <span class='id identifier rubyid_vote'>vote</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_opts'>opts</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span>
+      <span class='label'>object_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>motion</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>object_id:</span> <span class='id identifier rubyid_motion'>motion</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span>
+      <span class='label'>current_vote:</span> <span class='id identifier rubyid_vote'>vote</span><span class='period'>.</span><span class='id identifier rubyid_for'>for</span><span class='comma'>,</span>
+      <span class='label'>vote_url:</span> <span class='id identifier rubyid_motion_show_vote_path'>motion_show_vote_path</span><span class='lparen'>(</span><span class='id identifier rubyid_motion'>motion</span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>total_votes:</span> <span class='id identifier rubyid_motion'>motion</span><span class='period'>.</span><span class='id identifier rubyid_total_vote_count'>total_vote_count</span><span class='comma'>,</span>
+      <span class='label'>distribution:</span> <span class='lbrace'>{</span>
+        <span class='label'>pro:</span> <span class='id identifier rubyid_motion'>motion</span><span class='period'>.</span><span class='id identifier rubyid_votes_pro_count'>votes_pro_count</span><span class='comma'>,</span>
+        <span class='label'>neutral:</span> <span class='id identifier rubyid_motion'>motion</span><span class='period'>.</span><span class='id identifier rubyid_votes_neutral_count'>votes_neutral_count</span><span class='comma'>,</span>
+        <span class='label'>con:</span> <span class='id identifier rubyid_motion'>motion</span><span class='period'>.</span><span class='id identifier rubyid_votes_con_count'>votes_con_count</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>percent:</span> <span class='lbrace'>{</span>
+          <span class='label'>pro:</span> <span class='id identifier rubyid_motion'>motion</span><span class='period'>.</span><span class='id identifier rubyid_votes_pro_percentage'>votes_pro_percentage</span><span class='comma'>,</span>
+          <span class='label'>neutral:</span> <span class='id identifier rubyid_motion'>motion</span><span class='period'>.</span><span class='id identifier rubyid_votes_neutral_percentage'>votes_neutral_percentage</span><span class='comma'>,</span>
+          <span class='label'>con:</span> <span class='id identifier rubyid_motion'>motion</span><span class='period'>.</span><span class='id identifier rubyid_votes_con_percentage'>votes_con_percentage</span>
+      <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated by
+  <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
+  0.8.7.6 (ruby-2.2.4).
+</div>
+
+  </body>
+</html>

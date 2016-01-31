@@ -16,7 +16,7 @@
     "monospaceLinks": false
   },
   "opts": {
-    "destination": "doc/javascript",
+    "destination": "jsdoc",
     "encoding": "utf8",
     "recurse": true
   }

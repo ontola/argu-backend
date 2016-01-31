@@ -2,7 +2,6 @@ import React from 'react';
 React; // For ESLint, jsx compiles to React.createElement, so React must be imported
 import Intl from 'intl';
 Intl; // For ESLint
-import { IntlMixin } from 'react-intl';
 
 /**
  * @module Helpers
@@ -77,45 +76,45 @@ export function _authenticityHeader (options) {
 export function errorMessageForStatus(status) {
     if (status === 401) {
         return {
-            "type": "alert",
-            "severity": "error",
-            "i18nString": "errors.status.401",
-            "fallback": "Je moet ingelogd zijn voor deze actie."
+            'type': 'alert',
+            'severity': 'error',
+            'i18nString': 'errors.status.401',
+            'fallback': 'Je moet ingelogd zijn voor deze actie.'
         };
     } else if (status === 404) {
         return {
-            "type": "alert",
-            "severity": "error",
-            "i18nString": "errors.status.404",
-            "fallback": "Het item is niet gevonden, probeer de pagina te verversen."
+            'type': 'alert',
+            'severity': 'error',
+            'i18nString': 'errors.status.404',
+            'fallback': 'Het item is niet gevonden, probeer de pagina te verversen.'
         };
     } else if (status === 429) {
         return {
-            "type": "alert",
-            "severity": "error",
-            "i18nString": "errors.status.429",
-            "fallback": "Je maakt te veel verzoeken, probeer het over halve minuut nog eens."
+            'type': 'alert',
+            'severity': 'error',
+            'i18nString': 'errors.status.429',
+            'fallback': 'Je maakt te veel verzoeken, probeer het over halve minuut nog eens.'
         };
     } else if (status === 500) {
         return {
-            "type": "alert",
-            "severity": "error",
-            "i18nString": "errors.status.500",
-            "fallback": "Er ging iets aan onze kant fout, probeer het later nog eens."
+            'type': 'alert',
+            'severity': 'error',
+            'i18nString': 'errors.status.500',
+            'fallback': 'Er ging iets aan onze kant fout, probeer het later nog eens.'
         };
     } else if (status === 0) {
         return {
-            "type": "none",
-            "severity": "",
-            "i18nString": undefined,
-            "fallback": ""
+            'type': 'none',
+            'severity': '',
+            'i18nString': undefined,
+            'fallback': ''
         };
     } else {
         return {
-            "type": "none",
-            "severity": "",
-            "i18nString": undefined,
-            "fallback": undefined
+            'type': 'none',
+            'severity': '',
+            'i18nString': undefined,
+            'fallback': undefined
         };
     }
 }

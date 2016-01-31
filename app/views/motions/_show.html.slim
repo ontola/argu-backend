@@ -1,4 +1,4 @@
-.box.box--extra-margin[class="#{'trashed' if model.is_trashed?}"]
+.box.box--extra-margin[class=status_classes_for(model)]
   -if model.cover_photo.present?
     =contextual_link_to motion_path(model)
       .box-image[style="background-image: url('#{model.cover_photo.url(:box)}'); "]

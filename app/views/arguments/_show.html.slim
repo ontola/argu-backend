@@ -8,7 +8,7 @@
       ==safe_truncated_text(model.content, contextual_link_to(t('read_more'), argument_path(model)), 225)
   - if top_comment.present?
     =link_to argument_path(model) + '#commentstitle'
-      section.top-comment[class="#{'trashed' if top_comment.is_trashed?}"]
+      section.top-comment[class=status_classes_for(top_comment)]
         p.wrap-normal
           =top_comment.is_trashed? ? '[DELETED]' : HTML_Truncator.truncate(markdown_to_plaintext(top_comment.body), 150, {length_in_chars: true, ellipsis: (' ...')})
         .read-more

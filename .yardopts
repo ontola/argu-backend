@@ -1,6 +1,6 @@
 --protected
---no-private
 --embed-mixin ClassMethods
 --plugin activesupport-concern
+--template-path ./doc/template
+--readme readme.md
 -
-readme.md

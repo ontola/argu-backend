@@ -1,0 +1,9 @@
+nl:
+  stepups:
+  activerecord:
+    errors:
+      models:
+        stepup:
+          attributes:
+            manager:
+              exclusive: "Je moet een gebruiker óf een groep instellen (exclusieve disjunctie)."
