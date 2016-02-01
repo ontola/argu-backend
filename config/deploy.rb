@@ -75,7 +75,7 @@ namespace :deploy do
   task :compile_bundles do
     on roles(:web, :app) do
       within release_path do
-        execute :npm, :run, :build
+        execute :npm, :run, 'build:production'
       end
     end
   end

@@ -39,6 +39,7 @@
     "bulk-require": "^0.2.1",
     "bulkify": "^1.1.1",
     "deamdify": "^0.1.1",
+    "envify": "^3.4.0",
     "eslint": "^1.9.0",
     "eslint-plugin-react": "^3.8.0",
     "gulp": "^3.9.0",
@@ -65,6 +66,7 @@
   },
   "scripts": {
     "build": "gulp build && gulp build-components",
+    "build:production": "gulp build:production && gulp build-components:production",
     "doc": "jsdoc -R ./README.js.md -c app/assets/javascripts/jsdoc.json -r",
     "lint": "eslint ./app/assets/javascripts"
   }
