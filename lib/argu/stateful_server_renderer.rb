@@ -1,13 +1,20 @@
+require 'argu/environment_container'
+require 'argu/manifest_container'
 module Argu
   class StatefulServerRenderer < React::ServerRendering::ExecJSRenderer
       def initialize(options={})
         @replay_console = options.fetch(:replay_console, true)
-        filenames = options.fetch(:files, ["react-server.js", "components.js"])
+        filenames = options.fetch(:files, ["production/react-server.js", "components.js"])
         js_code = CONSOLE_POLYFILL.dup
 
+        # filenames.each do |filename|
+        #   js_code << ::Rails.application.assets[filename].to_s
+        # end
+
         filenames.each do |filename|
-          js_code << ::Rails.application.assets[filename].to_s
+          js_code << asset_container.find_asset(filename)
         end
+
 
         super(options.merge(code: js_code))
       end
@@ -56,6 +63,20 @@ module Argu
       end
 
       super(component_name, props, _prerender_options)
+    end
+
+    class << self
+      attr_accessor :asset_container_class
+    end
+
+    def asset_container
+      @asset_container ||= if self.class.asset_container_class.present?
+                             self.class.asset_container_class.new
+                           elsif ::Rails.application.config.assets.compile
+                             EnvironmentContainer.new
+                           else
+                             ManifestContainer.new
+                           end
     end
 
     def before_render(component_name, props, prerender_options)

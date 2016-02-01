@@ -66,7 +66,7 @@ module Argu
     config.react.server_renderer = StatefulServerRenderer
     # Enable the asset pipeline
     config.assets.enabled = true
-    config.assets.precompile += %w( application.js polyfill.js mail.css )
+    config.assets.precompile += %w( application.js polyfill.js react-server.js components.js mail.css )
 
     config.assets.initialize_on_precompile = true
     config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts')
