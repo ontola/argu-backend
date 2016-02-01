@@ -10,5 +10,5 @@ export {default as RImage} from './RImage';
 export {default as RPhase} from './RPhase';
 export {default as RPoint} from './RPoint';
 export {default as RProfile} from './RProfile';
-export {default as RTimeline} from './RTimeline';
+export {default as RTimeline} from './RTimeline.js';
 export {default as RUpdate} from './RUpdate';
