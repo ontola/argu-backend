@@ -35,7 +35,7 @@ function init () {
         iso();
     } catch (error) {
         debugger;
-        console.log('Something went wrong during initialisation');
+        console.log('Something went wrong during initialisation', error);
     }
 
     function stopOnJSONError (e, request, error, options) {

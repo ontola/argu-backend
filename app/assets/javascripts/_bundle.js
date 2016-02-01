@@ -841,7 +841,7 @@ function init() {
         (0, _isotopeBriarcliff2.default)();
     } catch (error) {
         debugger;
-        console.log('Something went wrong during initialisation');
+        console.log('Something went wrong during initialisation', error);
     }
 
     function stopOnJSONError(e, request, error, options) {
