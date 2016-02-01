@@ -14,11 +14,11 @@ app:
 postgres:
   image: postgres:9.4
   ports:
-    - "5432"
+    - "5432:3000"
 redis:
   image: redis:2.8.17
   ports:
-    - "6379"
+    - "6379:3000"
 mailcatcher:
   image: schickling/mailcatcher
   ports:
