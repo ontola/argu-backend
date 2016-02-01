@@ -609,7 +609,7 @@ GEM
       unf_ext
     unf_ext (0.0.7.1)
     unicode_utils (1.4.0)
-    unicorn (4.8.3)
+    unicorn (5.0.1)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
@@ -755,7 +755,7 @@ DEPENDENCIES
   therubyracer (~> 0.12.1)
   tzinfo-data
   uglifier (>= 2.5.3)
-  unicorn (= 4.8.3)
+  unicorn (= 5.0.1)
   web-console (~> 3.0.0)
   whodunnit (= 0.0.5)
   wisper (~> 1.6.1)

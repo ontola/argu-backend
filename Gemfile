@@ -1,5 +1,6 @@
 source 'https://rubygems.org/'
-ruby '2.3.0'
+ruby '2.3.0'  # For rbenv
+ruby="2.3.0"  # For rvm
 
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
@@ -152,7 +153,7 @@ end
 
 group :production, :staging do
   gem 'therubyracer', '~> 0.12.1'
-  gem 'unicorn', '4.8.3'
+  gem 'unicorn', '5.0.1'
   gem 'rack-test', '~> 0.6.2'
 end
 
