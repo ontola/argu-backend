@@ -8,7 +8,7 @@ import React from 'react';
 import { List, Map } from 'immutable';
 
 import RPhase from '../records/RPhase';
-import RTimeline from '../records/RTimeline.js';
+import RTimeline from '../records/RTimeline';
 import PointContainer from './Point';
 import DetailsPaneContainer from './DetailsPane';
 

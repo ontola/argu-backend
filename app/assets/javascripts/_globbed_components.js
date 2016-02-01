@@ -1492,7 +1492,7 @@ var _RPhase = require('../records/RPhase');
 
 var _RPhase2 = _interopRequireDefault(_RPhase);
 
-var _RTimeline = require('../records/RTimeline.js');
+var _RTimeline = require('../records/RTimeline');
 
 var _RTimeline2 = _interopRequireDefault(_RTimeline);
 
@@ -1847,7 +1847,7 @@ window.Phase = Phase;
 
 exports.default = TimeLineComponentContainer;
 
-},{"../actions/timeline":4,"../records/RPhase":28,"../records/RTimeline.js":31,"../stores/store":43,"./DetailsPane":10,"./Point":14,"immutable":294,"react":506,"react-redux":336,"redux":598}],13:[function(require,module,exports){
+},{"../actions/timeline":4,"../records/RPhase":28,"../records/RTimeline":31,"../stores/store":43,"./DetailsPane":10,"./Point":14,"immutable":294,"react":506,"react-redux":336,"redux":598}],13:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* globals NotificationActions */
@@ -3930,7 +3930,7 @@ Object.defineProperty(exports, 'RProfile', {
   }
 });
 
-var _RTimeline = require('./RTimeline.js');
+var _RTimeline = require('./RTimeline');
 
 Object.defineProperty(exports, 'RTimeline', {
   enumerable: true,
@@ -3952,7 +3952,7 @@ var _RDateline2 = _interopRequireDefault(_RDateline);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-},{"./RDateline":26,"./RImage":27,"./RPhase":28,"./RPoint":29,"./RProfile":30,"./RTimeline.js":31,"./RUpdate":32}],34:[function(require,module,exports){
+},{"./RDateline":26,"./RImage":27,"./RPhase":28,"./RPoint":29,"./RProfile":30,"./RTimeline":31,"./RUpdate":32}],34:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
