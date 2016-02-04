@@ -8,4 +8,8 @@ nav#navbar.navbar role="navigation"
         a.navbar-item[href="/"]
           span.fa.fa-home
     ul.navbar-links.navbar-links-right
+      -if current_user.present?
+        =link_to(destroy_user_session_url, class: 'navbar-item', data: {method: 'delete', 'skip-pjax' => 'true'})
+          span.fa.fa-sign-out
+          span= t('sign_out')
   =render partial: 'online_status'

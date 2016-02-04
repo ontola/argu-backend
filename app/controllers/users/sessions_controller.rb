@@ -1,4 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
+  skip_before_action :check_finished_intro, only: :destroy
 
   def new
     self.resource = resource_class.new({r: r_from_url_or_header}.merge(sign_in_params))
