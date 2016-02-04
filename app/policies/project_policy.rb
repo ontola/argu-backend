@@ -56,7 +56,7 @@ class ProjectPolicy < RestrictivePolicy
 
   def show?
     if record.is_published? && !record.is_trashed?
-      rule is_open?, is_member?, is_manager?, is_owner?, super
+      rule is_open?, has_access_token?, is_member?, is_manager?, is_owner?, super
     else
       rule is_moderator?, is_manager?, is_owner?, super
     end
