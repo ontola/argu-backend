@@ -67,8 +67,11 @@ function browserifyBundle(bundleName, entryPoint) {
 function browserifyBundleProduction(bundleName, entryPoint) {
     var b = browserify(browserifyOptions(entryPoint));
     b.transform(envify({
+        _: 'purge',
         NODE_ENV: 'production'
-    }));
+    }), {
+        global: true
+    });
 
     return b.bundle()
         .pipe(source(bundleName))
