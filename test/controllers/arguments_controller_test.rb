@@ -266,6 +266,6 @@ class ArgumentsControllerTest < ActionController::TestCase
     [['Argument.count', 1],
      ['Activity.count', 1],
      ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1],
-     ['Notification.count', 2]]
+     ['Notification.count', 1]]
   end
 end

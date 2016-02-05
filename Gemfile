@@ -79,9 +79,9 @@ gem 'carrierwave-vips'
 gem 'rmagick', '2.14.0'
 #gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'carrierwave-aws'
-gem 'sidekiq', '~> 3.5.4'
-gem 'sidetiq'
-gem 'sidekiq-logging-json'
+gem 'sidekiq', '~> 4.1.0'
+gem 'sidetiq', '~> 0.7.0'
+gem 'sidekiq-logging-json', git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git', ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
 gem 'rack-pjax'

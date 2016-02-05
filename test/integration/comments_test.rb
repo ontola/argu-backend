@@ -30,7 +30,8 @@ class CommentsTest < ActionDispatch::IntegrationTest
     follow_redirect!
 
 
-    assert_difference 'User.count', 1 do
+    assert_differences [['User.count', 1],
+                        ['Sidekiq::Worker.jobs.size', 1]] do
       post user_registration_path,
            {user: {
              shortname_attributes: {shortname: 'newuser'},
@@ -41,7 +42,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
            },
            at: access_token.access_token}
     end
-    assert_not ActionMailer::Base.deliveries.empty?
     assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 

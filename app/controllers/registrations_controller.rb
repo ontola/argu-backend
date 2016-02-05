@@ -45,7 +45,8 @@ class RegistrationsController < Devise::RegistrationsController
     end
   end
 
-protected
+  protected
+
   def after_sign_up_path_for(resource)
     if resource.url
       edit_user_url(resource.url)
@@ -60,11 +61,12 @@ protected
     setup_memberships(resource)
   end
 
-private
+  private
 
   def build_resource(*args)
     super args.first.merge(access_tokens: get_safe_raw_access_tokens)
     self.resource.shortname = nil if self.resource.shortname.shortname.blank?
+    self.resource.build_profile
     if session[:omniauth]
       @user.apply_omniauth(session[:omniauth])
       @user.valid?

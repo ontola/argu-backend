@@ -4,6 +4,7 @@ FactoryGirl.define do
   end
 
   factory :user do
+    association :profile, strategy: :build
     association :shortname, strategy: :build
 
     email

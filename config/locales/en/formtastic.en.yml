@@ -71,7 +71,7 @@ en:
         first_name: "First name*"
         middle_name: "Middele name(s)"
         last_name: "Last name*"
-        has_analytics: "Google Analytics"
+        has_analytics: "Browser services"
         follows_email: "Email"
     hints:
       tag_list: "Choose themes related to your subject."

@@ -35,7 +35,7 @@
           =f.semantic_fields_for :profile do |profile|
             =profile.input :are_votes_public, as: :reverse_boolean
         =f.inputs name: t('users.registrations.categories.authentication') do
-          -if @user.password_required?
+          -if @user.has_password?
             =f.input :password, label: t('users_password_edit'), required: @user.new_record?
             =f.input :password_confirmation, label: t('users_password_confirmation')
             =f.input :current_password

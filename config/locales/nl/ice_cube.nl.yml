@@ -1,0 +1,178 @@
+nl:
+  ice_cube:
+    pieces_connector: ' / '
+    not: 'not %{target}'
+    not_on: 'not on %{target}'
+    date:
+      formats:
+        default: '%B %-d, %Y'
+      month_names:
+      -
+      - Januari
+      - Februari
+      - Maart
+      - April
+      - Mei
+      - Juni
+      - Juli
+      - Augustus
+      - September
+      - October
+      - November
+      - December
+      day_names:
+      - Zondag
+      - Maandag
+      - Dinsdag
+      - Woensdag
+      - Donderdag
+      - Vrijdag
+      - Zaterdag
+    times:
+      other: '%{count} keer'
+      one: '%{count} keer'
+    until: 'tot %{date}'
+    days_of_week: '%{segments} %{day}'
+    days_of_month:
+      other: '%{segments} dagen per maand'
+      one: '%{segments} dag per maand'
+    days_of_year:
+      other: '%{segments} dagen per jaar'
+      one: '%{segments} dag per jaar'
+    at_hours_of_the_day:
+      other: op het %{segments} uur van de dag
+      one: op het %{segments} uur van de dag
+    on_minutes_of_hour:
+      other: op de %{segments} minuten van het uur
+      one: op de %{segments} minuut van het uur
+    at_seconds_of_minute:
+      other: op de %{segments} seconden
+      one: op de %{segments} seconde
+    on_seconds_of_minute:
+      other: op de %{segments} seconden van de minuut
+      one: op de %{segments} seconde van de minuut
+    each_second:
+      one: Secondelijks
+      other: Elke %{count} seconden
+    each_minute:
+      one: Minutely
+      other: Elke %{count} minuten
+    each_hour:
+      one: Uurlijks
+      other: Elke %{count} uur
+    each_day:
+      one: Dagelijks
+      other: Elke %{count} dagen
+    each_week:
+      one: Wekelijks
+      other: Elke %{count} weken
+    each_month:
+      one: Maandelijks
+      other: Elke %{count} maanden
+    each_year:
+      one: Jaarlijks
+      other: Elke %{count} jaar
+    'on': op de %{sentence}
+    in: 'binnen %{target}'
+    integer:
+      negative: '%{ordinal} to last'
+      literal_ordinals:
+        -1: last
+        -2: 2nd to last
+      ordinal: '%{number}%{ordinal}'
+      ordinals:
+        default: ste
+        1: ste
+        2: de
+        3: de
+        11: de
+        12: de
+        13: de
+    on_weekends: in het weekend
+    on_weekdays: doordeweeks
+    days_on:
+      - Zondagen
+      - Maandagen
+      - Dinsdagen
+      - Woensdagen
+      - Donderdagen
+      - Vrijdagen
+      - Zaterdagen
+    on_days: op %{days}
+    array:
+      last_word_connector: ', en '
+      two_words_connector: ' en '
+      words_connector: ', '
+    string:
+      format:
+        day: '%{rest} %{current}'
+        day_of_week: '%{rest} %{current}'
+        day_of_month: '%{rest} %{current}'
+        day_of_year: '%{rest} %{current}'
+        hour_of_day: '%{rest} %{current}'
+        minute_of_hour: '%{rest} %{current}'
+        until: '%{rest} %{current}'
+        count: '%{rest} %{current}'
+        default: '%{rest} %{current}'
+
+  date:
+    abbr_day_names:
+    - Zo
+    - Ma
+    - Di
+    - Wo
+    - Do
+    - Vr
+    - Za
+    abbr_month_names:
+    -
+    - Jan
+    - Feb
+    - Mar
+    - Apr
+    - Mei
+    - Jun
+    - Jul
+    - Aug
+    - Sep
+    - Oct
+    - Nov
+    - Dec
+    day_names:
+    - Zondag
+    - Maandag
+    - Dinsdag
+    - Woensdag
+    - Donderdag
+    - Vrijdag
+    - Zaterdag
+    formats:
+      default: "%Y-%m-%d"
+      long: "%B %d, %Y"
+      short: "%b %d"
+    month_names:
+    -
+    - Januari
+    - Februari
+    - Maart
+    - April
+    - Mei
+    - Juni
+    - Juli
+    - Augustus
+    - September
+    - October
+    - November
+    - December
+    order:
+    - :year
+    - :month
+    - :day
+
+  time:
+    am: am
+    formats:
+      default: "%a, %d %b %Y %H:%M:%S %z"
+      long: "%B %d, %Y %H:%M"
+      short: "%d %b %H:%M"
+    pm: pm
