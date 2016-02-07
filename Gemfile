@@ -2,7 +2,7 @@ source 'https://rubygems.org/'
 ruby '2.3.0'  # For rbenv
 ruby="2.3.0"  # For rvm
 
-gem 'dotenv-rails', :require => 'dotenv/rails-now'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
 gem 'sass', '= 3.4.18'
 gem 'rails', '~>4.2.5.1'
@@ -20,7 +20,7 @@ gem 'pg', '0.18.2'
 gem 'jbuilder', '~> 2.2.5'
 gem 'bcrypt-ruby', '>= 3.1.5'
 gem 'rfc-822', '~> 0.4.0'
-gem 'counter_culture', '~> 0.1.27'
+gem 'counter_culture', '~> 0.1.34'
 gem 'rails-i18n', '~> 4.0.3'
 gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
@@ -125,7 +125,8 @@ group :development, :test do
   gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
-  gem 'spring', '~> 1.3.6'
+  gem 'spring', '~> 1.6.3'
+  gem 'spring-commands-rspec', group: :development
   gem 'coffee-rails', '~> 4.1.0'
   gem 'quiet_assets'
   gem 'factory_girl'
