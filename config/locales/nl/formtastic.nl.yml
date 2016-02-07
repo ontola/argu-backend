@@ -34,6 +34,7 @@ nl:
       motions_title_singular: "Idee"
       password_confirmation: "Wachtwoord bevestigen"
       password: "Wachtwoord"
+      current_password: "Huidig wachtwoord"
       profile_photo: "Profielfoto"
       questions_title: "Uitdagingen"
       questions_title_singular: "Uitdaging"

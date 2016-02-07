@@ -41,9 +41,7 @@ FactoryGirl.define do
       after(:create) do |user, evaluator|
         user.notifications.create
       end
-
     end
-
 
     factory :user_with_memberships do
       after(:create) do |user, evaluator|

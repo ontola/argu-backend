@@ -105,6 +105,12 @@ RSpec.configure do |config|
     config.allow_url '//www.gravatar.com/*'
   end
 
+  config.before(:each) do
+    Setting.set('user_cap', '-1')
+  end
+
+  OmniAuth.config.test_mode = true
+
 end
 
 class FactoryGirl::Evaluator

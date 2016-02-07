@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   end
 
   def password_required?
-    (!persisted? && identities.blank?) || !password.nil? || !password_confirmation.nil?
+    (!persisted? && identities.blank?) || password.present? || password_confirmation.present?
   end
 
   def has_password?
