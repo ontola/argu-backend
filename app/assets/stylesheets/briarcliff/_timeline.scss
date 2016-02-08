@@ -1,0 +1,111 @@
+@import "variables";
+@import "mixins";
+
+$point-size: 1.6em;
+$timeline-height: .3em;
+
+.timeline {
+  position: absolute;
+  width: 100%;
+  border-top: $timeline-height solid $g2;
+  bottom: $point-size / 2 - ($timeline-height / 2);
+  z-index: 1;
+}
+
+.timeline-component {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1em;
+}
+
+.timeline-phases {
+  display: flex;
+  flex-direction: row;
+}
+
+.phase {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  // Is this neccessary?
+  // z-index: 10;
+
+  span {
+    flex-grow: 1;
+    align-self: center;
+    text-align: center;
+    display: block;
+  }
+}
+
+.phase-title {
+  position: relative;
+  text-transform: uppercase;
+  font-size: .8em;
+  padding: .4em;
+  color: $g3;
+  padding-bottom: $point-size;
+  margin-bottom: -1.2em;
+
+  &:after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    //height: 3.3em;
+    background-color: $g2;
+  }
+
+  &:last-child:after {
+    display: none;
+  }
+}
+
+.phase--current .phase-title, .phase-title:hover {
+  background-color: $g0;
+}
+
+.phase-points {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.point {
+  background-color: $g3;
+  @include border-radius(999px);
+  width: $point-size;
+  height: $point-size;
+  margin: 0;
+  display: flex;
+  border: none 2px $g2;
+  z-index: 1;
+  .fa {
+    color: white;
+  }
+}
+
+.point--current, .point:hover {
+  background-color: white;
+  border-color: $g3;
+
+  .fa {
+    color: $g3;
+  }
+}
+
+.point--current {
+  &:after {
+    content: "";
+    background-color: black;
+    height: 1em;
+    width: 1em;
+    position: absolute;
+    display: inline-block;
+  }
+}

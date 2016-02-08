@@ -1,10 +1,12 @@
 source 'https://rubygems.org/'
-ruby '2.3.0'
+ruby '2.3.0'  # For rbenv
+ruby="2.3.0"  # For rvm
 
-gem 'dotenv-rails', :require => 'dotenv/rails-now'
+gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
 gem 'sass', '= 3.4.18'
 gem 'rails', '~>4.2.5.1'
+gem 'active_model_serializers', '~> 0.10.0.rc3'
 
 gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
@@ -18,7 +20,7 @@ gem 'pg', '0.18.2'
 gem 'jbuilder', '~> 2.2.5'
 gem 'bcrypt-ruby', '>= 3.1.5'
 gem 'rfc-822', '~> 0.4.0'
-gem 'counter_culture', '~> 0.1.27'
+gem 'counter_culture', '~> 0.1.34'
 gem 'rails-i18n', '~> 4.0.3'
 gem 'tzinfo-data'
 gem 'rack-cors', :require => 'rack/cors'
@@ -54,7 +56,8 @@ gem 'wisper', '~> 1.6.1'
 gem 'roadie', '~> 3.1.1'
 gem 'roadie-rails', '~> 1.1.0'
 gem 'cocoon', '~> 1.2.6'
-
+gem 'httparty', '~> 0.13.7'
+gem 'acts_as_list', '~> 0.7.2'
 #Pagination
 gem 'kaminari', '~>0.16.1'
 
@@ -76,9 +79,9 @@ gem 'carrierwave-vips'
 gem 'rmagick', '2.14.0'
 #gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'carrierwave-aws'
-gem 'sidekiq', '~> 3.5.4'
-gem 'sidetiq'
-gem 'sidekiq-logging-json'
+gem 'sidekiq', '~> 4.1.0'
+gem 'sidetiq', '~> 0.7.0'
+gem 'sidekiq-logging-json', git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git', ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
 gem 'rack-pjax'
@@ -116,13 +119,14 @@ group :development, :test do
   gem 'chromedriver-helper'
   gem 'mocha'
   gem 'pry'
-  gem 'mailcatcher'
+  gem 'mailcatcher', '~> 0.6.2'
   #gem 'byebug'
   #gem 'pry-byebug'
   gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
-  gem 'spring', '~> 1.3.6'
+  gem 'spring', '~> 1.6.3'
+  gem 'spring-commands-rspec', group: :development
   gem 'coffee-rails', '~> 4.1.0'
   gem 'quiet_assets'
   gem 'factory_girl'
@@ -150,8 +154,8 @@ end
 
 group :production, :staging do
   gem 'libv8', '~> 3.16.14.13'
-  gem 'therubyracer', '0.12.2'
-  gem 'unicorn', '4.8.3'
+  gem 'therubyracer', '~> 0.12.2'
+  gem 'unicorn', '5.0.1'
   gem 'rack-test', '~> 0.6.2'
 end
 

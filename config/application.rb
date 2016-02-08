@@ -16,11 +16,15 @@ end
 
 module Argu
   class Application < Rails::Application
-    config.autoload_paths += Dir["#{config.root}/lib/"]  # include all subdirectories
+    config.autoload_paths += %W(#{config.root}/lib)
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.autoload_paths += %W(#{config.root}/app/services)
     config.autoload_paths += %W(#{config.root}/app/listeners)
 
     config.paths['app/views'].unshift("#{Rails.root}/lib/app/views")
+
+    config.active_job.queue_adapter = :sidekiq
+    ENV['REDIS_URL'] = ENV['REDIS_URL'].presence || "redis://#{ENV['REDIS_HOST'] || 'localhost'}:#{ENV['REDIS_PORT'] || 6379}/12"
 
     config.app_generators.template_engine :slim
 
@@ -41,6 +45,10 @@ module Argu
       Devise::SessionsController.layout 'closed'
     end
 
+    ############################
+    # Middlewares
+    ############################
+
     config.middleware.use Rack::Cors do
       allow do
         origins '*'
@@ -52,10 +60,16 @@ module Argu
     config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
 
+    ############################
+    # Assets
+    ############################
+
+    require 'argu/stateful_server_renderer'
     config.react.addons = false
+    config.react.server_renderer = StatefulServerRenderer
     # Enable the asset pipeline
     config.assets.enabled = true
-    config.assets.precompile += %w( application.js polyfill.js mail.css )
+    config.assets.precompile += %w( application.js polyfill.js react-server.js components.js mail.css )
 
     config.assets.initialize_on_precompile = true
     config.assets.paths << Rails.root.join('lib', 'assets', 'javascripts')
@@ -63,6 +77,11 @@ module Argu
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+
+    ############################
+    # I18n & locales
+    ############################
 
     config.time_zone = 'UTC'
     I18n.available_locales = [:nl, :en]

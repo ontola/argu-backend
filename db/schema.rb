@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151217112046) do
+ActiveRecord::Schema.define(version: 20160112101509) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,6 +106,26 @@ ActiveRecord::Schema.define(version: 20151217112046) do
   add_index "banners", ["forum_id", "publish_at"], name: "index_banners_on_forum_id_and_publish_at", using: :btree
   add_index "banners", ["forum_id"], name: "index_banners_on_forum_id", using: :btree
 
+  create_table "blog_posts", force: :cascade do |t|
+    t.integer  "forum_id",                       null: false
+    t.integer  "blog_postable_id"
+    t.string   "blog_postable_type"
+    t.integer  "creator_id",                     null: false
+    t.integer  "publisher_id"
+    t.integer  "state",              default: 0, null: false
+    t.string   "title",                          null: false
+    t.text     "content"
+    t.integer  "comments_count",     default: 0, null: false
+    t.datetime "published_at"
+    t.datetime "trashed_at"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  add_index "blog_posts", ["forum_id", "published_at"], name: "index_blog_posts_on_forum_id_and_published_at", using: :btree
+  add_index "blog_posts", ["forum_id", "trashed_at"], name: "index_blog_posts_on_forum_id_and_trashed_at", using: :btree
+  add_index "blog_posts", ["id", "forum_id"], name: "index_blog_posts_on_id_and_forum_id", using: :btree
+
   create_table "comments", force: :cascade do |t|
     t.integer  "commentable_id",               default: 0
     t.string   "commentable_type", limit: 255, default: ""
@@ -120,6 +140,7 @@ ActiveRecord::Schema.define(version: 20151217112046) do
     t.datetime "updated_at",                                   null: false
     t.boolean  "is_trashed",                   default: false
     t.integer  "publisher_id"
+    t.integer  "forum_id"
   end
 
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
@@ -169,29 +190,31 @@ ActiveRecord::Schema.define(version: 20151217112046) do
   create_table "forums", force: :cascade do |t|
     t.string   "name"
     t.integer  "page_id"
-    t.integer  "questions_count",          default: 0,     null: false
-    t.integer  "motions_count",            default: 0,     null: false
-    t.integer  "memberships_count",        default: 0,     null: false
+    t.integer  "questions_count",                    default: 0,     null: false
+    t.integer  "motions_count",                      default: 0,     null: false
+    t.integer  "memberships_count",                  default: 0,     null: false
     t.string   "profile_photo"
     t.string   "cover_photo"
-    t.datetime "created_at",                               null: false
-    t.datetime "updated_at",                               null: false
+    t.datetime "created_at",                                         null: false
+    t.datetime "updated_at",                                         null: false
     t.string   "slug"
-    t.text     "bio",                      default: "",    null: false
-    t.text     "featured_tags",            default: "",    null: false
-    t.integer  "visibility",               default: 1
-    t.string   "cover_photo_attribution",  default: ""
-    t.boolean  "visible_with_a_link",      default: false
-    t.boolean  "signup_with_token?",       default: false
-    t.text     "bio_long",                 default: ""
-    t.boolean  "uses_alternative_names",   default: false, null: false
+    t.text     "bio",                                default: "",    null: false
+    t.text     "featured_tags",                      default: "",    null: false
+    t.integer  "visibility",                         default: 1
+    t.string   "cover_photo_attribution",            default: ""
+    t.boolean  "visible_with_a_link",                default: false
+    t.boolean  "signup_with_token?",                 default: false
+    t.text     "bio_long",                           default: ""
+    t.boolean  "uses_alternative_names",             default: false, null: false
     t.string   "questions_title"
     t.string   "questions_title_singular"
     t.string   "motions_title"
     t.string   "motions_title_singular"
     t.string   "arguments_title"
     t.string   "arguments_title_singular"
-    t.integer  "lock_version",             default: 0
+    t.integer  "lock_version",                       default: 0
+    t.integer  "place_id",                 limit: 8
+    t.integer  "projects_count",                     default: 0,     null: false
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
@@ -203,6 +226,10 @@ ActiveRecord::Schema.define(version: 20151217112046) do
     t.integer  "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "start_date"
+    t.datetime "end_date"
   end
 
   add_index "group_memberships", ["group_id", "member_id"], name: "index_group_memberships_on_group_id_and_member_id", unique: true, using: :btree
@@ -230,6 +257,9 @@ ActiveRecord::Schema.define(version: 20151217112046) do
     t.string   "name_singular"
     t.integer  "max_responses_per_member", default: 1
     t.string   "icon"
+    t.integer  "visibility",               default: 0
+    t.boolean  "deletable",                default: true
+    t.text     "description"
   end
 
   add_index "groups", ["forum_id", "name"], name: "index_groups_on_forum_id_and_name", unique: true, using: :btree
@@ -281,6 +311,9 @@ ActiveRecord::Schema.define(version: 20151217112046) do
     t.string   "cover_photo",                         default: ""
     t.string   "cover_photo_attribution",             default: ""
     t.integer  "publisher_id"
+    t.integer  "question_id"
+    t.integer  "place_id",                limit: 8
+    t.integer  "project_id"
   end
 
   add_index "motions", ["forum_id"], name: "index_motions_on_forum_id", using: :btree
@@ -386,6 +419,66 @@ ActiveRecord::Schema.define(version: 20151217112046) do
   add_index "pages", ["owner_id"], name: "index_pages_on_owner_id", using: :btree
   add_index "pages", ["slug"], name: "index_pages_on_slug", unique: true, using: :btree
 
+  create_table "phases", force: :cascade do |t|
+    t.integer  "forum_id",     null: false
+    t.integer  "project_id",   null: false
+    t.integer  "creator_id",   null: false
+    t.integer  "publisher_id"
+    t.integer  "position"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "phases", ["forum_id", "project_id"], name: "index_phases_on_forum_id_and_project_id", using: :btree
+
+  create_table "photos", force: :cascade do |t|
+    t.integer  "forum_id",                 null: false
+    t.integer  "about_id",                 null: false
+    t.string   "about_type",               null: false
+    t.integer  "used_as",      default: 0
+    t.integer  "creator_id"
+    t.integer  "publisher_id"
+    t.string   "image_uid"
+    t.string   "title"
+    t.text     "description"
+    t.datetime "date_created"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+  end
+
+  add_index "photos", ["about_id", "about_type"], name: "index_photos_on_about_id_and_about_type", using: :btree
+  add_index "photos", ["forum_id"], name: "index_photos_on_forum_id", using: :btree
+
+  create_table "placements", force: :cascade do |t|
+    t.integer "forum_id",       null: false
+    t.integer "place_id",       null: false
+    t.integer "placeable_id",   null: false
+    t.string  "placeable_type", null: false
+    t.string  "title"
+    t.text    "about"
+    t.integer "creator_id",     null: false
+    t.integer "publisher_id"
+  end
+
+  add_index "placements", ["forum_id"], name: "index_placements_on_forum_id", using: :btree
+
+  create_table "places", id: :bigserial, force: :cascade do |t|
+    t.string  "licence"
+    t.string  "osm_type"
+    t.integer "osm_id",         limit: 8
+    t.text    "boundingbox",                                        default: [], array: true
+    t.decimal "lat",                      precision: 64, scale: 12
+    t.decimal "lon",                      precision: 64, scale: 12
+    t.string  "display_name"
+    t.string  "osm_class"
+    t.string  "osm_importance"
+    t.string  "icon"
+  end
+
   create_table "profiles", force: :cascade do |t|
     t.string   "name",             limit: 255, default: ""
     t.text     "about",                        default: ""
@@ -413,6 +506,30 @@ ActiveRecord::Schema.define(version: 20151217112046) do
 
   add_index "profiles_roles", ["profile_id", "role_id"], name: "index_profiles_roles_on_profile_id_and_role_id", using: :btree
 
+  create_table "projects", force: :cascade do |t|
+    t.integer  "forum_id",                      null: false
+    t.integer  "creator_id",                    null: false
+    t.integer  "publisher_id"
+    t.integer  "group_id"
+    t.integer  "state",             default: 0, null: false
+    t.string   "title",                         null: false
+    t.text     "content"
+    t.datetime "start_date"
+    t.string   "email"
+    t.datetime "end_date"
+    t.datetime "achieved_end_date"
+    t.integer  "questions_count",   default: 0, null: false
+    t.integer  "motions_count",     default: 0, null: false
+    t.integer  "phases_count",      default: 0, null: false
+    t.datetime "published_at"
+    t.datetime "trashed_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "projects", ["forum_id", "trashed_at"], name: "index_projects_on_forum_id_and_trashed_at", using: :btree
+  add_index "projects", ["forum_id"], name: "index_projects_on_forum_id", using: :btree
+
   create_table "question_answers", force: :cascade do |t|
     t.integer  "question_id"
     t.integer  "motion_id"
@@ -421,6 +538,7 @@ ActiveRecord::Schema.define(version: 20151217112046) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "creator_id"
+    t.boolean  "migrated",        default: false, null: false
   end
 
   add_index "question_answers", ["question_id", "motion_id"], name: "index_question_answers_on_question_id_and_motion_id", unique: true, using: :btree
@@ -443,6 +561,8 @@ ActiveRecord::Schema.define(version: 20151217112046) do
     t.boolean  "uses_alternative_names",              default: false, null: false
     t.string   "motions_title_singular"
     t.string   "motions_title"
+    t.integer  "place_id",                limit: 8
+    t.integer  "project_id"
   end
 
   add_index "questions", ["forum_id", "is_trashed"], name: "index_questions_on_forum_id_and_is_trashed", using: :btree
@@ -502,6 +622,17 @@ ActiveRecord::Schema.define(version: 20151217112046) do
   end
 
   add_index "shortnames", ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, using: :btree
+
+  create_table "stepups", force: :cascade do |t|
+    t.integer "forum_id",    null: false
+    t.integer "record_id",   null: false
+    t.string  "record_type", null: false
+    t.integer "group_id"
+    t.integer "user_id"
+    t.integer "creator_id"
+    t.string  "title"
+    t.text    "description"
+  end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -604,11 +735,39 @@ ActiveRecord::Schema.define(version: 20151217112046) do
   add_foreign_key "access_tokens", "profiles", name: "access_tokens_profile_id_fk"
   add_foreign_key "arguments", "users", column: "publisher_id"
   add_foreign_key "banners", "forums", on_delete: :cascade
+  add_foreign_key "blog_posts", "forums"
+  add_foreign_key "blog_posts", "profiles", column: "creator_id"
+  add_foreign_key "blog_posts", "users", column: "publisher_id"
+  add_foreign_key "comments", "forums"
   add_foreign_key "comments", "users", column: "publisher_id"
+  add_foreign_key "forums", "places"
   add_foreign_key "group_responses", "users", column: "publisher_id"
   add_foreign_key "identities", "users"
+  add_foreign_key "motions", "places"
+  add_foreign_key "motions", "projects"
   add_foreign_key "motions", "users", column: "publisher_id"
   add_foreign_key "notifications", "users", on_delete: :cascade
+  add_foreign_key "phases", "forums"
+  add_foreign_key "phases", "profiles", column: "creator_id"
+  add_foreign_key "phases", "projects"
+  add_foreign_key "phases", "users", column: "publisher_id"
+  add_foreign_key "photos", "forums"
+  add_foreign_key "photos", "profiles", column: "creator_id"
+  add_foreign_key "photos", "users", column: "publisher_id"
+  add_foreign_key "placements", "forums"
+  add_foreign_key "placements", "places"
+  add_foreign_key "placements", "profiles", column: "creator_id"
+  add_foreign_key "placements", "users", column: "publisher_id"
+  add_foreign_key "projects", "forums"
+  add_foreign_key "projects", "groups"
+  add_foreign_key "projects", "profiles", column: "creator_id"
+  add_foreign_key "projects", "users", column: "publisher_id"
   add_foreign_key "question_answers", "profiles", column: "creator_id"
+  add_foreign_key "questions", "places"
+  add_foreign_key "questions", "projects"
   add_foreign_key "questions", "users", column: "publisher_id"
+  add_foreign_key "stepups", "forums"
+  add_foreign_key "stepups", "groups"
+  add_foreign_key "stepups", "profiles", column: "creator_id"
+  add_foreign_key "stepups", "users"
 end

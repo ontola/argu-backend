@@ -3,14 +3,19 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
-  let!(:follower) { FactoryGirl.create(:follow, followable: freetown) }
+  let!(:freetown) { create(:forum, name: 'freetown') }
+  let!(:follower) { create(:follow, followable: freetown) }
   let(:question) do
-    FactoryGirl.create(:question,
-                       forum: freetown,
-                       creator: FactoryGirl.create(:profile_direct_email))
+    create(:question,
+           forum: freetown,
+           creator: create(:profile_direct_email))
   end
-  let(:subject) { FactoryGirl.create(:motion, :with_arguments, forum: freetown) }
+  let(:subject) do
+    create(:motion,
+           :with_arguments,
+           :with_group_responses,
+           forum: freetown)
+  end
 
   ####################################
   # As Guest
@@ -26,6 +31,8 @@ class MotionsControllerTest < ActionController::TestCase
            'No trashed arguments to test on'
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) },
                'Trashed arguments are visible'
+    assert assigns(:group_responses).keys.all?(&:discussion?),
+           'Non discussion groups are shown under motions'
   end
 
   test 'guest should not get edit when not logged in' do
@@ -71,14 +78,12 @@ class MotionsControllerTest < ActionController::TestCase
       post :create, forum_id: freetown, motion: {title: 'Motion', content: 'Contents'}
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
 
     assert_differences create_changes_array(false) do
       post :create, forum_id: freetown, motion: {title: 'Motion2', content: 'Contents'}
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:cm).resource)
   end
 
@@ -86,28 +91,30 @@ class MotionsControllerTest < ActionController::TestCase
     sign_in user
 
     get :convert, motion_id: subject
-    assert_redirected_to root_url
+
+    assert_not_authorized
+    assert_redirected_to subject.forum
   end
 
   test 'user should not put convert' do
     sign_in user
 
     put :convert, motion_id: subject
-    assert_redirected_to root_url
+    assert_redirected_to subject.forum
   end
 
   test 'user should not get move' do
     sign_in user
 
     get :move, motion_id: subject
-    assert_redirected_to root_url
+    assert_redirected_to subject.forum
   end
 
   test 'user should not put move' do
     sign_in user
 
     put :move, motion_id: subject
-    assert_redirected_to root_url
+    assert_redirected_to subject.forum
   end
 
   ####################################
@@ -121,7 +128,6 @@ class MotionsControllerTest < ActionController::TestCase
     get :new, forum_id: freetown
 
     assert_response 200
-    assert_not_nil assigns(:motion)
   end
 
   test 'member should post create' do
@@ -136,7 +142,6 @@ class MotionsControllerTest < ActionController::TestCase
            }
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:cm).resource,
                                      start_motion_tour: true)
   end
@@ -150,16 +155,11 @@ class MotionsControllerTest < ActionController::TestCase
            motion: {
              title: 'Motion',
              content: 'Contents',
-             question_answers_attributes: {
-               '0' => {
-                 question_id: question.id
-               }
-             }
+             question_id: question.id
            }
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
-    assert assigns(:cm).resource.reload.questions.include?(question)
+    assert_equal question, assigns(:cm).resource.reload.question
     assert_redirected_to motion_path(assigns(:cm).resource,
                                      start_motion_tour: true)
   end
@@ -173,20 +173,15 @@ class MotionsControllerTest < ActionController::TestCase
            motion: {
              title: 'Motion',
              content: 'C',
-             question_answers_attributes: {
-               '0' => {
-                 question_id: question.id
-               }
-             }
+             question_id: question.id
            }
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_response 200
 
-    assert_select "[name=motion[title]]", 'Motion'
-    assert_select "[name=motion[content]]", 'C'
-    assert_select "[name=motion[question_answers_attributes][0][question_id]]", question.id.to_s
+    assert_select '[name=motion[title]]', 'Motion'
+    assert_select '[name=motion[content]]', 'C'
+    assert_select '[name=motion[question_id]]', question.id.to_s
   end
 
   test 'member should not put update on others motion' do
@@ -199,8 +194,8 @@ class MotionsControllerTest < ActionController::TestCase
           content: 'new contents'
         }
 
-    assert_redirected_to root_path
-    assert_equal subject, assigns(:motion)
+    assert_redirected_to subject.forum
+    assert assigns(:_not_authorized_caught)
   end
 
   let(:no_create_without_question) do
@@ -235,8 +230,8 @@ class MotionsControllerTest < ActionController::TestCase
              content: 'Contents'
            }
     end
-    assert_redirected_to root_path
     assert_not_authorized
+    assert_redirected_to no_create_without_question
   end
 
   test 'member should post create without create_without_question with question' do
@@ -248,20 +243,63 @@ class MotionsControllerTest < ActionController::TestCase
            motion: {
              title: 'Motion',
              content: 'Contents',
-             question_answers_attributes: {
-               '0' => {
-                 question_id: no_create_question
-               }
-             }
+             question_id: no_create_question
            }
       puts
     end
     assert_not_nil assigns(:cm).resource
     assert assigns(:cm).resource.persisted?
-    assert assigns(:cm).resource.questions.include?(no_create_question)
+    assert_equal no_create_question, assigns(:cm).resource.question
     assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
   end
 
+  ####################################
+  # As Moderator
+  ####################################
+  let(:project) { create(:project, forum: freetown) }
+  let(:project_question) do
+    create(:question,
+           forum: freetown,
+           project: project,
+           creator: FactoryGirl.create(:profile_direct_email))
+  end
+  let(:moderator) { create_moderator(project) }
+
+  test 'moderator should get new within project' do
+    sign_in moderator
+
+    get :new, project_id: project
+
+    assert_response 200
+  end
+
+  test 'moderator should post create within project' do
+    sign_in moderator
+
+    assert_differences create_changes_array do
+      post :create,
+           project_id: project,
+           motion: attributes_for(:motion)
+    end
+    assert_not_nil assigns(:cm).resource
+    assert_redirected_to motion_path(assigns(:cm).resource,
+                                     start_motion_tour: true)
+  end
+
+  test 'moderator should post create within question within project' do
+    sign_in moderator
+
+    assert_differences create_changes_array do
+      post :create,
+           question_id: project_question,
+           motion: attributes_for(:motion)
+    end
+    assert_not_nil assigns(:cm).resource
+    assert_equal project, assigns(:cm).resource.reload.project
+    assert_equal project_question, assigns(:cm).resource.reload.question
+    assert_redirected_to motion_path(assigns(:cm).resource,
+                                     start_motion_tour: true)
+  end
 
   ####################################
   # As Page
@@ -279,7 +317,6 @@ class MotionsControllerTest < ActionController::TestCase
            motion: FactoryGirl.attributes_for(:motion)
     end
     assert_not_nil assigns(:cm).resource
-    assert_not_nil assigns(:forum)
     assert_redirected_to motion_path(assigns(:cm).resource,
                                      start_motion_tour: true)
   end
@@ -301,7 +338,6 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_response 200
     assert assigns(:motion)
-    assert assigns(:forum)
   end
 
   test 'creator should put update' do
@@ -417,7 +453,7 @@ class MotionsControllerTest < ActionController::TestCase
     assigns(:motion).arguments.pluck(:forum_id).each do |id|
       assert_equal forum_id, id
     end
-    assert assigns(:motion).questions.blank?
+    assert assigns(:motion).question.blank?
     assert assigns(:motion).activities.count > 0
     assigns(:motion).activities.pluck(:forum_id).each do |id|
       assert_equal forum_id, id

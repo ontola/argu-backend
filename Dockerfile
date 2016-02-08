@@ -6,11 +6,11 @@ RUN bundle config --global frozen 1
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-COPY Gemfile /usr/src/app/
-COPY Gemfile.lock /usr/src/app/
+ADD Gemfile /usr/src/app/
+ADD Gemfile.lock /usr/src/app/
 RUN bundle install
 
-COPY . /usr/src/app
+ADD . /usr/src/app
 RUN rm -f /usr/src/app/config/database.yml
 RUN rm -f /usr/src/app/config/secrets.yml
 COPY ./config/database.docker.yml /usr/src/app/config/database.yml

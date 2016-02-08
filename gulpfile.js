@@ -9,6 +9,7 @@ var buffer = require('vinyl-buffer');
 var bulkify = require('bulkify');
 var deamdify = require('deamdify');
 var eslint = require('gulp-eslint');
+var envify = require('envify/custom');
 var gulp = require('gulp');
 var gutil = require('gulp-util');
 var source = require('vinyl-source-stream');
@@ -63,12 +64,39 @@ function browserifyBundle(bundleName, entryPoint) {
         .pipe(gulp.dest(basePath));
 }
 
+function browserifyBundleProduction(bundleName, entryPoint) {
+    var b = browserify(browserifyOptions(entryPoint));
+    b.transform(envify({
+        _: 'purge',
+        NODE_ENV: 'production'
+    }), {
+        global: true
+    });
+
+    return b.bundle()
+        .pipe(source(bundleName))
+        .pipe(buffer())
+        // Add transformation tasks to the pipeline here.
+        .pipe(uglify())
+        .on('error', gutil.log)
+        .pipe(gulp.dest(basePath));
+}
+
 gulp.task('build', function () {
     return browserifyBundle('_bundle.js', 'App.js');
 });
 
 gulp.task('build-components', function () {
     return browserifyBundle('_globbed_components.js', 'globbed_components.js');
+});
+
+gulp.task('build:production', function () {
+    browserifyBundleProduction('_bundle.js', 'App.js');
+});
+
+
+gulp.task('build-components:production', function () {
+    browserifyBundleProduction('_globbed_components.js', 'globbed_components.js');
 });
 
 gulp.task('lint-src', function () {

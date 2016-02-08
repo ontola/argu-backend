@@ -1,6 +1,5 @@
 FactoryGirl.define do
   factory :profile do
-    association :profileable, factory: :user, strategy: :build
     are_votes_public true
     is_public true
 

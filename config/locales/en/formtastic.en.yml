@@ -71,7 +71,7 @@ en:
         first_name: "First name*"
         middle_name: "Middele name(s)"
         last_name: "Last name*"
-        has_analytics: "Google Analytics"
+        has_analytics: "Browser services"
         follows_email: "Email"
     hints:
       tag_list: "Choose themes related to your subject."
@@ -96,15 +96,21 @@ en:
       email: "email@example.com"
       login: "email or username"
       tag_list: "theme1, theme2 ..."
-      question:
-        title: "Place the core of your %{type} here"
-        content: "Place details and background information on your %{type} here."
-      motion:
-        title: "Place the core of your %{type} here"
-        content: "Place details and background information on your %{type} here."
       argument:
-        title: "Place the core of your argument here"
-        content: "Place details and background information on your argument here."
+        title: "Enter the core of your argument here"
+        content: "Enter details and background information on your argument here."
+      blogpost:
+        title: "Enter the core of your update here"
+        content: "Enter details and background information on your update here."
+      motion:
+        title: "Enter the core of your %{type} here"
+        content: "Enter details and background information on your %{type} here."
+      project:
+        title: "Enter the title of your project here"
+        content: "Enter a description of the project here"
+      question:
+        title: "Enter the core of your %{type} here"
+        content: "Enter details and background information on your %{type} here."
       user:
         email: "email@example.com"
     actions:

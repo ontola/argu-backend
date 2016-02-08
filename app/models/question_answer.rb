@@ -1,26 +1,40 @@
-class QuestionAnswer < ActiveRecord::Base
-  include ArguBase, Parentable
+class QuestionAnswer
+  extend ActiveModel::Naming
+  include ActiveModel::Validations
 
-  belongs_to :question, inverse_of: :question_answers
-  belongs_to :motion, inverse_of: :question_answers
-  belongs_to :creator, class_name: 'Profile'
+  validates_presence_of :question, :motion
 
-  validates :question, :motion, presence: true
-  validate :same_forum
+  attr_accessor :question, :motion
 
-  parentable :question
+  def initialize(question:, motion: nil)
+    @question, @motion = question, motion
+  end
+
+  def persisted?
+    false
+  end
+
+  def save
+    if same_forum
+      Question.transaction do
+        @motion.update question_id: @question.id
+      end
+    end
+  end
 
   def same_forum
-    if question.forum.present? && motion.forum.present?
-      question.forum.id == motion.forum.id
+    if @question.forum.present? && @motion.forum.present?
+      @question.forum.id == @motion.forum.id
     else
       false
     end
   end
 
-  def update_vote_counters
-    vote_counts = self.votes.group('"for"').count
-    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
-                votes_con_count: vote_counts[Vote.fors[:con]] || 0
+  def to_key
+    []
+  end
+
+  def to_model
+    self
   end
 end

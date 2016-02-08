@@ -4,11 +4,10 @@ module ApplicationHelper
 
   # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)
-    begin
-      $rollout.active?(feature, user)
-    rescue Redis::CannotConnectError => e
-      Bugsnag.notify(e)
-    end
+    $rollout.active?(feature, user)
+  rescue Redis::CannotConnectError => e
+    Bugsnag.notify(e)
+    nil
   end
 
   def analytics_token
@@ -132,6 +131,13 @@ module ApplicationHelper
     ]
 
     dropdown_options(t('filtersort.filter'), [{items: link_items}], fa: 'fa-filter')
+  end
+
+  def status_classes_for(resource)
+    classes = []
+    classes << 'draft' if resource.try(:is_draft?)
+    classes << 'trashed' if resource.try(:is_trashed?)
+    classes.compact.join(' ')
   end
 
   def display_settings_items

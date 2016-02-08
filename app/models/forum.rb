@@ -1,5 +1,5 @@
 class Forum < ActiveRecord::Base
-  include ArguBase, Attribution, Shortnameable
+  include ArguBase, Attribution, Shortnameable, Flowable
 
   belongs_to :page
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id
@@ -13,7 +13,9 @@ class Forum < ActiveRecord::Base
   accepts_nested_attributes_for :memberships
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
   has_many :motions, inverse_of: :forum
+  has_many :projects, inverse_of: :forum
   has_many :questions, inverse_of: :forum
+  has_many :stepups, inverse_of: :forum
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, inverse_of: :forum
 
@@ -73,17 +75,26 @@ class Forum < ActiveRecord::Base
     end
   end
 
-  def display_name
-    name
-  end
-
   def creator
     page.owner
+  end
+
+  def display_name
+    name
   end
 
   # http://schema.org/description
   def description
     self.bio
+  end
+
+  def self.find(*ids)
+    shortname = ids.length == 1 && ids.first.instance_of?(String) && ids.first
+    if (shortname && shortname.to_i == 0)
+      find_via_shortname(shortname)
+    else
+      super(*ids)
+    end
   end
 
   def full_access_token

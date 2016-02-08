@@ -5,7 +5,7 @@ en:
     type: "User"
     settings: "User settings"
     edit:
-      analytics_helper: "We use Google Analytics to improve the user experience."
+      analytics_helper: "We use Bugsnag to get notified of and help fix errors in your browser. We use Google Analytics to improve the user experience."
     registrations:
       categories:
         general: "General"

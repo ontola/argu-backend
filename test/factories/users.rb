@@ -4,6 +4,7 @@ FactoryGirl.define do
   end
 
   factory :user do
+    association :profile, strategy: :build
     association :shortname, strategy: :build
 
     email
@@ -40,9 +41,7 @@ FactoryGirl.define do
       after(:create) do |user, evaluator|
         user.notifications.create
       end
-
     end
-
 
     factory :user_with_memberships do
       after(:create) do |user, evaluator|

@@ -1,9 +1,10 @@
-class CommentsController < AuthenticatedController
+class CommentsController < AuthorizedController
+  include NestedResourceHelper
 
   def new
     @commentable = commentable_class.find params[commentable_param]
     set_tenant(@commentable)
-    @comment = @commentable.comment_threads.new(new_comment_params)
+    @comment = @commentable.comment_threads.new(new_comment_params.merge(resource_new_params))
     authorize @comment, :create?
 
     render locals: {
@@ -46,22 +47,21 @@ class CommentsController < AuthenticatedController
 
   # POST /resource/1/comments
   def create
-    resource = authenticated_resource!
-    set_tenant(resource)
     @cc = CreateComment.new current_profile,
-                           {
-                               commentable: resource,
+                            comment_params.merge({
+                               commentable: get_parent_resource,
+                               forum: get_parent_resource.forum,
                                publisher: current_user
-                           }.merge(comment_params)
+                           })
     authorize @cc.resource, :create?
     @cc.subscribe(ActivityListener.new)
     @cc.on(:create_comment_successful) do |c|
-      redirect_to polymorphic_url([resource], anchor: c.id),
+      redirect_to polymorphic_url(c.commentable, anchor: c.identifier),
                   notice: t('type_create_success', type: t('comments.type'))
     end
     @cc.on(:create_comment_failed) do |c|
-      redirect_to polymorphic_url([resource], comment: {body: c.body, parent_id: c.parent_id}, anchor: c.id),
-                  alert: c.errors.full_messages.first
+      redirect_to polymorphic_url([c.commentable], comment: {body: c.body, parent_id: c.parent_id}, anchor: c.id),
+                  notice: c.errors.full_messages.first
     end
     @cc.commit
   end
@@ -111,24 +111,21 @@ class CommentsController < AuthenticatedController
     end
   end
 
-private
+  def forum_for(url_options)
+    comment = Comment.find_by(id: url_options[:id]) if url_options[:id].present?
+    if comment.present?
+      comment.commentable.try(:forum)
+    elsif url_options[:argument_id].present?
+      Argument.find_by(id: url_options[:argument_id]).try(:forum)
+    end
+  end
+
+  private
+
   def authorize_show
     @comment = Comment.find params[:id]
     set_tenant(@comment)
     authorize @comment, :show?
-  end
-
-  def authenticated_resource!
-    if params[:action] == 'show'
-      Comment.find params[:id]
-    else
-      resource, id = request.path.split('/')[1,2]
-      # noinspection RubyCaseWithoutElseBlockInspection
-      resource = case resource
-        when 'a' then Argument
-      end
-      resource.find(id)
-    end
   end
 
   def comment_body
@@ -155,17 +152,17 @@ private
     commentable_type.capitalize.constantize
   end
 
-  def self.forum_for(url_options)
-    comment = Comment.find_by(id: url_options[:id]) if url_options[:id].present?
-    if comment.present?
-      comment.commentable.try(:forum)
-    elsif url_options[:argument_id].present?
-      Argument.find_by(id: url_options[:argument_id]).try(:forum)
-    end
-  end
 
   def new_comment_params
-    params[:comment].present? ? comment_params : nil
+    params[:comment].present? ? comment_params : {}
+  end
+
+  def resource_new_params
+    h = super.merge({
+      commentable: get_parent_resource
+    })
+    h.delete(parent_resource_param)
+    h
   end
 
   def query_payload(opts = {})
@@ -186,6 +183,17 @@ private
 
   def set_tenant(item)
     @forum = item.forum
+  end
+
+  def resource_tenant
+    return super if params[:forum_id].present?
+
+    resource, id = request.path.split('/')[1,2]
+    # noinspection RubyCaseWithoutElseBlockInspection
+    resource = case resource
+      when 'a' then Argument
+    end
+    resource.find(id).forum
   end
 
 end

@@ -106,7 +106,7 @@ class CommentsControllerTest < ActionController::TestCase
     end
 
     assert_equal argument, assigns(:cc).resource.commentable
-    assert_redirected_to argument_url(argument, anchor: assigns(:cc).resource.id)
+    assert_redirected_to argument_url(argument, anchor: assigns(:cc).resource.identifier)
   end
 
   test 'should post create comment while not logged in rendering register' do
@@ -156,9 +156,8 @@ class CommentsControllerTest < ActionController::TestCase
           body: 'new contents'
         }
 
-    assert_not_nil assigns(:comment)
-    assert_equal 'comment', assigns(:comment).body
-    assert_redirected_to root_url
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to comment.forum
   end
 
   test 'member should delete destroy own comment' do
@@ -203,7 +202,8 @@ class CommentsControllerTest < ActionController::TestCase
              id: comment
     end
 
-    assert_redirected_to root_path
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to comment.forum
   end
 
   ####################################

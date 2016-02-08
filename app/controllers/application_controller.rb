@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
-  include Argu::RuledIt, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController, AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
+  include Argu::RuledIt, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController,
+          AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
   helper_method :current_profile, :current_context, :current_scope, :show_trashed?
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
@@ -47,17 +48,14 @@ class ApplicationController < ActionController::Base
                json: error_hash.merge({notifications: [error_hash]})
       end
       format.html do
-        if request.headers['HTTP_X_PJAX'] == 'true'
-          response.headers['X-PJAX-REFRESH'] = 'false'
-          render status: 403,
-                 json: error_hash.merge({notifications: [error_hash]})
+        redirect_location = if defined?(authenticated_context) && authenticated_context.present? && policy(authenticated_context).show?
+          url_for(authenticated_context)
+        elsif request.env['HTTP_REFERER'].present? && request.env['HTTP_REFERER'] != request.original_url
+          request.env['HTTP_REFERER']
         else
-          request.env['HTTP_REFERER'] = request.env['HTTP_REFERER'] == request.original_url ||
-                                        request.env['HTTP_REFERER'].blank? ?
-                                          root_path :
-                                          request.env['HTTP_REFERER']
-          redirect_to :back, alert: error
+          root_path
         end
+        redirect_to redirect_location, alert: error
       end
     end
   end
@@ -81,10 +79,20 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotFound do |exception|
     @quote = (Setting.get(:quotes) || '').split(';').sample
+    @additional_error_info = exception.to_s
     respond_to do |format|
       format.html { render 'status/404', status: 404 }
       format.js { head 404 }
       format.json { render json: { title: t('status.s_404.header'), message: t('status.s_404.body'), quote: @quote}, status: 404 }
+    end
+  end
+
+  rescue_from ActionController::ParameterMissing do |exception|
+    @additional_error_info = exception.to_s
+    respond_to do |format|
+      format.html { render 'status/400', status: 400 }
+      format.json { render json: { title: t('status.s_400.header'), message: t('status.s_400.body'), quote: @quote}, status: 400 }
+      format.js { head 400 }
     end
   end
 
@@ -119,9 +127,9 @@ class ApplicationController < ActionController::Base
     @current_scope ||= (current_context.context_scope(current_profile) || current_context)
   end
 
-  # @return the current context, if a param is given, it will serve as the start of the current context
+  # @return [Context] The current context, if a param is given, it will serve as the start of the current context
   def current_context(model=nil)
-    @current_context = if @current_context.try :has_parent?
+    @current_context = if @current_context.present? && (@current_context.try(:has_parent?) || @current_context.single_model.is_a?(Forum))
                          @current_context
                        else
                          Context.parse_from_uri(request.url, model) do |components|
@@ -130,7 +138,7 @@ class ApplicationController < ActionController::Base
                        end
   end
 
-  # @return the {Profile} the {User} is using to do actions
+  # @return [Profile, nil] The {Profile} the {User} is using to do actions
   def current_profile
     if current_user.present?
       @current_profile ||= get_current_actor
@@ -180,23 +188,6 @@ class ApplicationController < ActionController::Base
                         within_user_cap: within_user_cap?
                     })
   end
-
-  def render_register_modal(base_url=nil, *r_options)
-    if !r_options || r_options.first != false   # Only skip if r_options is false
-      r = URI.parse(base_url || request.fullpath)
-      r.query = r_options.map(&:to_a).reject { |a| a.last.blank? }.map { |a| [a[0], URI.encode(a[1])].join('=') }.join('&')
-      # r = Addressable::URI.new(base_url || request.fullpath)
-      # r.query_values = r_options.map(&:to_a).reject { |a| a.last.blank? }
-    else
-      r = nil
-    end
-    @resource ||= User.new(r: r.to_s, shortname: Shortname.new)
-    respond_to do |format|
-      format.js { render 'devise/sessions/new', layout: false, locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
-      format.html { render template: 'devise/sessions/new', locals: { resource: @resource, resource_name: :user, devise_mapping: Devise.mappings[:user], r: CGI::escape(r.to_s) } }
-    end
-  end
-  deprecate :render_register_modal
 
   def rescue_stale
     respond_to do |format|
@@ -305,5 +296,11 @@ class ApplicationController < ActionController::Base
   # For Devise
   def after_sending_reset_password_instructions_path_for(resource_name)
     password_reset_confirm_path
+  end
+
+  private
+
+  def naming_context
+    current_context.context_scope(current_profile).root_parent.model
   end
 end

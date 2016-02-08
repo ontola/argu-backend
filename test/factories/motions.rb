@@ -3,20 +3,13 @@ FactoryGirl.define do
   factory :motion do
     association :forum, strategy: :create
     association :creator, factory: :profile
-    ignore do
-      question nil
-    end
+    #association :question, factory: :question
 
     sequence(:title) { |n| "title#{n}" }
     content 'content'
     is_trashed false
 
     after :create do |motion, evaluator|
-      if evaluator.passed_in?(:question)
-        create(:question_answer,
-               motion: motion,
-               question: evaluator.question)
-      end
       create :activity,
              trackable: motion,
              forum: motion.forum,
@@ -51,6 +44,22 @@ FactoryGirl.define do
         create_list :vote, 2,
                     voteable: motion,
                     for: :con
+      end
+    end
+
+    trait :with_group_responses do
+      after :create do |motion|
+        g = create(:group,
+                   visibility: :discussion,
+                   forum: motion.forum)
+        create_list :group_response, 2,
+                    group: g
+        create(:group,
+               visibility: :hidden,
+               forum: motion.forum)
+        create(:group,
+               visibility: :visible,
+               forum: motion.forum)
       end
     end
   end

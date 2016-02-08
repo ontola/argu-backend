@@ -1,4 +1,4 @@
-class GroupResponsesController < AuthenticatedController
+class GroupResponsesController < AuthorizedController
 
   def new
     group = Group.find params[:group_id]
@@ -17,7 +17,7 @@ class GroupResponsesController < AuthenticatedController
   def create
     motion = Motion.find(params[:motion_id])
     authorize motion, :show?
-    group = motion.forum.groups.find(params[:group_id])
+    group = policy_scope(motion.forum.groups).discussion.find(params[:group_id])
     @group_response = motion.group_responses.new group: group,
                                                  forum: group.forum,
                                                  profile: current_profile,
@@ -69,7 +69,7 @@ class GroupResponsesController < AuthenticatedController
   end
 
 private
-  def tenant_by_param
+  def resource_tenant
     Motion.find(params[:motion_id]).forum
   end
 

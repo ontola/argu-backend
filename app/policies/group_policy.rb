@@ -14,13 +14,16 @@ class GroupPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      scope
+      # Don't show closed, unless the user has a membership
+      scope.where('visibility IN (?) OR groups.id IN (?)',
+                  [Group.visibilities[:open], Group.visibilities[:discussion]],
+                  user && user.profile.group_memberships.pluck(:group_id))
     end
   end
 
   def permitted_attributes
     attributes = super
-    attributes << [:name, :name_singular, :icon, :max_responses_per_member] if create?
+    attributes << [:name, :name_singular, :icon, :visibility, :max_responses_per_member] if create?
     attributes << [:id] if staff?
     attributes
   end

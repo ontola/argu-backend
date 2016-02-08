@@ -34,6 +34,7 @@ nl:
       motions_title_singular: "Idee"
       password_confirmation: "Wachtwoord bevestigen"
       password: "Wachtwoord"
+      current_password: "Huidig wachtwoord"
       profile_photo: "Profielfoto"
       questions_title: "Uitdagingen"
       questions_title_singular: "Uitdaging"
@@ -71,7 +72,7 @@ nl:
         first_name: "Voornaam*"
         middle_name: "Middelste naam(en)"
         last_name: "Achternaam*"
-        has_analytics: "Google Analytics"
+        has_analytics: "Browser diensten"
         follows_email: "Emailberichten"
     hints:
       tag_list: "Kies thema's die te maken hebben met jouw ondwerp."
@@ -97,15 +98,21 @@ nl:
       email: "email@voorbeeld.nl"
       login: "email of gebruikersnaam"
       tag_list: "thema1, thema2 ..."
-      question:
-        title: "Plaats hier de kern van jouw %{type}"
-        content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
-      motion:
-        title: "Plaats hier de kern van jouw %{type}"
-        content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
       argument:
         title: "Plaats hier de kern van jouw argument"
         content: "Plaats hier de details en achtergrondinformatie van jouw argument."
+      blogpost:
+        title: "Plaats de kern van de update"
+        content: "Licht je update hier toe."
+      motion:
+        title: "Plaats hier de kern van jouw %{type}"
+        content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
+      project:
+        title: "Plaats hier de titel van jouw project"
+        content: "Plaats hier de details en achtergrondinformatie van jouw argument."
+      question:
+        title: "Plaats hier de kern van jouw %{type}"
+        content: "Plaats hier de details en achtergrondinformatie van jouw %{type}."
       user:
         email: "email@example.com"
     actions:

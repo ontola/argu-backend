@@ -21,18 +21,14 @@ class ForumsController < ApplicationController
     authorize @forum, :list?
     current_context @forum
 
+    # @FIXME TODO Remove the unpublished stuff from projects (in the scope)
     questions = policy_scope(@forum.questions.trashed(show_trashed?))
 
-    question_answers = QuestionAnswer.arel_table
-    motions = Motion.arel_table
-    sql = motions.where(motions[:forum_id].eq(@forum.id).and(motions[:is_trashed].eq(show_trashed?))).join(question_answers, Arel::Nodes::OuterJoin)
-              .on(question_answers[:motion_id].eq(motions[:id])).where(question_answers[:motion_id].eq(nil))
-              .project(motions[Arel.star])
-    motions_without_questions = Motion.find_by_sql(sql)
+    motions_without_questions = policy_scope(Motion.where(forum: @forum,
+                                             question_id: nil,
+                                             is_trashed: show_trashed?))
 
     @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(@forum).show?
-
-    render
   end
 
   def settings
@@ -126,10 +122,11 @@ protected
            }
   end
 
-private
-  def self.forum_for(url_options)
+  def forum_for(url_options)
     Forum.find_via_shortname_nil(url_options[:id])
   end
+
+  private
 
   def permit_params
     params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)

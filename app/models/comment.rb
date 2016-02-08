@@ -5,6 +5,7 @@ class Comment < ActiveRecord::Base
   acts_as_followable
   parentable :commentable
 
+  belongs_to :forum
   belongs_to :commentable, :polymorphic => true
   belongs_to :profile
   belongs_to :publisher, class_name: 'User'
@@ -16,6 +17,7 @@ class Comment < ActiveRecord::Base
 
   validates_presence_of :profile
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
+  validates :forum, presence: true
   auto_strip_attributes :body
 
   attr_accessor :is_processed
@@ -65,10 +67,6 @@ class Comment < ActiveRecord::Base
 
   def subscribable
     self.parent || self.commentable
-  end
-
-  def forum
-    commentable.forum
   end
 
   #helper method to check if a comment has children

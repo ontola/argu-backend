@@ -14,8 +14,10 @@
 # l:
 # m: motions
 # n: notifications
-# o: [RESERVED for opinions]
-# p: pages
+# o: pages (organisations)
+# p: projects
+# phase: phases
+# posts: blog posts
 # q: questions
 # r:
 # s: [RESERVED for search]
@@ -28,6 +30,11 @@
 # z:
 
 Argu::Application.routes.draw do
+  concern :blog_postable do
+    resources :blog_posts,
+              only: [:index, :new, :create],
+              path: 'posts'
+  end
   concern :moveable do
     get :move, action: :move
     put :move, action: :move!
@@ -35,6 +42,14 @@ Argu::Application.routes.draw do
   concern :convertible do
     get :convert, action: :convert
     put :convert, action: :convert!
+  end
+  concern :discussable do
+    resources :discussions, only: [:new]
+    resources :questions, path: 'q', only: [:index, :new, :create]
+    resources :motions, path: 'm', only: [:index, :new, :create]
+  end
+  concern :flowable do
+    get :flow, controller: :flow, action: :show
   end
   concern :transferable do
     get :transfer, action: :transfer
@@ -65,14 +80,15 @@ Argu::Application.routes.draw do
   get '/', to: 'static_pages#developers', constraints: { subdomain: 'developers'}
   get '/developers', to: 'static_pages#developers'
 
-  devise_for :users, controllers: {
-                       registrations: 'registrations',
-                       sessions: 'users/sessions',
-                       invitations: 'users/invitations',
-                       passwords: 'users/passwords',
-                       omniauth_callbacks: 'omniauth_callbacks',
-                       confirmations: 'users/confirmations'
-                   }, skip: :registrations
+  devise_for :users,
+             controllers: {
+               registrations: 'registrations',
+               sessions: 'users/sessions',
+               invitations: 'users/invitations',
+               passwords: 'users/passwords',
+               omniauth_callbacks: 'omniauth_callbacks',
+               confirmations: 'users/confirmations'
+             }, skip: :registrations
 
   as :user do
     get 'users/verify', to: 'users/sessions#verify'
@@ -82,7 +98,10 @@ Argu::Application.routes.draw do
     delete 'users', to: 'registrations#destroy', as: nil
   end
 
-  resources :users, path: 'u', only: [:show, :update] do
+  resources :users,
+            path: 'u',
+            only: [:show, :update],
+            concerns: [:flowable] do
     resources :identities, only: :destroy, controller: 'users/identities'
     get :edit, to: 'profiles#edit', on: :member
 
@@ -99,21 +118,29 @@ Argu::Application.routes.draw do
   post 'v/:for' => 'votes#create', as: :vote
   resources :votes, only: [:destroy], path: :v
 
-  resources :questions, path: 'q', except: [:index, :new, :create], concerns: [:moveable, :convertible] do
-    resources :question_answers, path: 'qa', only: [:new, :create]
+  resources :questions,
+            path: 'q', except: [:index, :new, :create],
+            concerns: [:moveable, :convertible, :flowable] do
     resources :tags, path: 't', only: [:index]
+    resources :motions, path: 'm', only: [:index, :new, :create]
   end
 
-  resources :question_answers, path: 'qa', only: [:edit, :update, :destroy, :delete]
+  resources :question_answers, path: 'qa', only: [:new, :create]
 
-  resources :motions, path: 'm', except: [:index, :new, :create], concerns: [:moveable, :convertible, :votable] do
+  resources :motions,
+            path: 'm',
+            except: [:index, :new, :create],
+            concerns: [:moveable, :convertible, :votable, :flowable] do
     resources :groups, only: [] do
       resources :group_responses, path: 'responses', as: 'responses', only: [:new, :create]
     end
     resources :tags, path: 't', only: [:index]
   end
 
-  resources :arguments, path: 'a', except: [:index, :new, :create], concerns: [:votable] do
+  resources :arguments,
+            path: 'a',
+            except: [:index, :new, :create],
+            concerns: [:votable, :flowable] do
     resources :comments, path: 'c', only: [:new, :index, :show, :create, :update, :edit, :destroy]
     patch 'comments' => 'comments#create'
   end
@@ -124,7 +151,10 @@ Argu::Application.routes.draw do
   end
   resources :group_memberships, only: :destroy
 
-  resources :pages, path: 'p', only: [:new, :create, :show, :update, :delete, :destroy] do
+  resources :pages,
+            path: 'o',
+            only: [:new, :create, :show, :update, :delete, :destroy] ,
+            concerns: [:flowable] do
     get :delete, on: :member
     get :transfer, on: :member
     put :transfer, on: :member, action: :transfer!
@@ -132,6 +162,19 @@ Argu::Application.routes.draw do
     get :edit, to: 'profiles#edit', on: :member
     resources :managers, only: [:new, :create, :destroy], controller: 'pages/managers'
   end
+
+  resources :blog_posts,
+            path: 'posts',
+            only: [:show, :edit, :update, :destroy]
+
+
+  resources :projects,
+            path: 'p',
+            only: [:show, :edit, :update, :destroy],
+            concerns: [:blog_postable, :flowable, :discussable]
+
+  resources :phases,
+            only: [:show]
 
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
@@ -171,8 +214,6 @@ Argu::Application.routes.draw do
   get '/how_argu_works', to: 'static_pages#how_argu_works'
   # end
 
-  resources :discussions, only: [:new]
-
   get '/portal', to: 'portal/portal#home'
 
   get '/values', to: 'documents#show', name: 'values'
@@ -184,7 +225,10 @@ Argu::Application.routes.draw do
 
   resources :info, path: 'i', only: [:show]
 
-  resources :forums, only: [:show, :update], path: '' do
+  resources :forums,
+            only: [:show, :update],
+            path: '',
+            concerns: [:flowable, :discussable] do
     get :discover, on: :collection, action: :discover
     get :settings, on: :member
     get :statistics, on: :member
@@ -192,8 +236,7 @@ Argu::Application.routes.draw do
     post :memberships, on: :collection
     resources :memberships, only: [:create, :destroy]
     resources :managers, only: [:new, :create, :destroy]
-    resources :questions, path: 'q', only: [:index, :new, :create]
-    resources :motions, path: 'm', only: [:index, :new, :create]
+    resources :projects, path: 'p', only: [:new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]
     resources :groups, path: 'g', only: [:new, :edit]

@@ -61,7 +61,11 @@ RSpec.configure do |config|
   Capybara.register_driver :selenium_firefox do |app|
     profile = Selenium::WebDriver::Firefox::Profile.new
     profile.native_events = true
-    Capybara::Selenium::Driver.new(app, browser: :firefox, profile: profile)
+    capabilities = Selenium::WebDriver::Remote::Capabilities.firefox('elementScrollBehavior' => 1)
+    Capybara::Selenium::Driver.new(app,
+                                   browser: :firefox,
+                                   profile: profile,
+                                   desired_capabilities: capabilities)
   end
 
   Capybara.register_driver :selenium_chrome do |app|
@@ -100,6 +104,12 @@ RSpec.configure do |config|
     config.allow_url 'http://example.com/embed/*'
     config.allow_url '//www.gravatar.com/*'
   end
+
+  config.before(:each) do
+    Setting.set('user_cap', '-1')
+  end
+
+  OmniAuth.config.test_mode = true
 
 end
 

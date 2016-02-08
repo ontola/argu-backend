@@ -1,0 +1,719 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Module: HeaderHelper
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!HeaderHelper.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (H)</a> &raquo;
+    
+    
+    <span class="title">HeaderHelper</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Module: HeaderHelper
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+  
+    
+  
+    
+      <dt class="r1">Includes:</dt>
+      <dd class="r1"><span class='object_link'><a href="DropdownHelper.html" title="DropdownHelper (module)">DropdownHelper</a></span></dd>
+      
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/helpers/header_helper.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#actor_item-instance_method" title="#actor_item (instance method)">- (Object) <strong>actor_item</strong>(title, url, opts = {}) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#info_dropdown_items-instance_method" title="#info_dropdown_items (instance method)">- (Object) <strong>info_dropdown_items</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#managed_pages_items-instance_method" title="#managed_pages_items (instance method)">- (Object) <strong>managed_pages_items</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#notification_dropdown_items-instance_method" title="#notification_dropdown_items (instance method)">- (Object) <strong>notification_dropdown_items</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#profile_dropdown_items-instance_method" title="#profile_dropdown_items (instance method)">- (Object) <strong>profile_dropdown_items</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#profile_membership_items-instance_method" title="#profile_membership_items (instance method)">- (Object) <strong>profile_membership_items</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#public_forum_items-instance_method" title="#public_forum_items (instance method)">- (Object) <strong>public_forum_items</strong>(limit = 10) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#suggested_forums-instance_method" title="#suggested_forums (instance method)">- (Object) <strong>suggested_forums</strong> </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="DropdownHelper.html" title="DropdownHelper (module)">DropdownHelper</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="DropdownHelper.html#dropdown_options-instance_method" title="DropdownHelper#dropdown_options (method)">#dropdown_options</a></span>, <span class='object_link'><a href="DropdownHelper.html#item-instance_method" title="DropdownHelper#item (method)">#item</a></span>, <span class='object_link'><a href="DropdownHelper.html#link_item-instance_method" title="DropdownHelper#link_item (method)">#link_item</a></span></p>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="actor_item-instance_method">
+  
+    - (<tt>Object</tt>) <strong>actor_item</strong>(title, url, opts = {}) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+97
+98
+99</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/header_helper.rb', line 97</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_actor_item'>actor_item</span><span class='lparen'>(</span><span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_item'>item</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>actor</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_title'>title</span><span class='comma'>,</span> <span class='id identifier rubyid_url'>url</span><span class='comma'>,</span> <span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="info_dropdown_items-instance_method">
+  
+    - (<tt>Object</tt>) <strong>info_dropdown_items</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/header_helper.rb', line 74</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_info_dropdown_items'>info_dropdown_items</span>
+  <span class='lbrace'>{</span>
+      <span class='label'>title:</span> <span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>about.info</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>fa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fa-info</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>defaultAction:</span> <span class='id identifier rubyid_info_path'>info_path</span><span class='lparen'>(</span><span class='symbol'>:about</span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>sections:</span> <span class='lbracket'>[</span>
+        <span class='lbrace'>{</span>
+            <span class='label'>items:</span> <span class='lbracket'>[</span>
+                <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>about.vision</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_info_path'>info_path</span><span class='lparen'>(</span><span class='symbol'>:about</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
+                <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>about.how_argu_works</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_how_argu_works_path'>how_argu_works_path</span><span class='rparen'>)</span><span class='comma'>,</span>
+                <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>about.team</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_info_path'>info_path</span><span class='lparen'>(</span><span class='symbol'>:team</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
+                <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>about.governments</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_info_path'>info_path</span><span class='lparen'>(</span><span class='symbol'>:governments</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
+                <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>about.lobby_organizations</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_info_path'>info_path</span><span class='lparen'>(</span><span class='symbol'>:lobby_organizations</span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span>
+                <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>press_media</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://argu.pr.co</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+                <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>help_support</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://argu.freshdesk.com/support/home</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+                <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>about.contact</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_info_path'>info_path</span><span class='lparen'>(</span><span class='symbol'>:contact</span><span class='rparen'>)</span><span class='rparen'>)</span>
+            <span class='rbracket'>]</span>
+        <span class='rbrace'>}</span>
+      <span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='label'>triggerClass:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>navbar-item</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="managed_pages_items-instance_method">
+  
+    - (<tt>Object</tt>) <strong>managed_pages_items</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/header_helper.rb', line 101</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_managed_pages_items'>managed_pages_items</span>
+  <span class='id identifier rubyid_items'>items</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_managed_pages'>managed_pages</span> <span class='op'>=</span> <span class='id identifier rubyid_current_user'>current_user</span><span class='period'>.</span><span class='id identifier rubyid_managed_pages'>managed_pages</span><span class='period'>.</span><span class='id identifier rubyid_includes'>includes</span><span class='lparen'>(</span><span class='symbol'>:profile</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_managed_pages'>managed_pages</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_items'>items</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_actor_item'>actor_item</span><span class='lparen'>(</span><span class='id identifier rubyid_current_user'>current_user</span><span class='period'>.</span><span class='id identifier rubyid_display_name'>display_name</span><span class='comma'>,</span>
+                        <span class='id identifier rubyid_actors_path'>actors_path</span><span class='lparen'>(</span><span class='label'>na:</span> <span class='id identifier rubyid_current_user'>current_user</span><span class='period'>.</span><span class='id identifier rubyid_profile'>profile</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:json</span><span class='rparen'>)</span><span class='comma'>,</span>
+                        <span class='label'>image:</span> <span class='id identifier rubyid_current_user'>current_user</span><span class='period'>.</span><span class='id identifier rubyid_profile'>profile</span><span class='period'>.</span><span class='id identifier rubyid_profile_photo'>profile_photo</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='symbol'>:icon</span><span class='rparen'>)</span><span class='comma'>,</span>
+                        <span class='label'>data:</span> <span class='lbrace'>{</span> <span class='label'>method:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>put</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>skip-pjax</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>true</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_managed_pages'>managed_pages</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_p'>p</span><span class='op'>|</span>
+      <span class='id identifier rubyid_items'>items</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_actor_item'>actor_item</span><span class='lparen'>(</span><span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_profile'>profile</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
+                          <span class='id identifier rubyid_actors_path'>actors_path</span><span class='lparen'>(</span><span class='label'>na:</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_profile'>profile</span><span class='period'>.</span><span class='id identifier rubyid_id'>id</span><span class='comma'>,</span> <span class='label'>format:</span> <span class='symbol'>:json</span><span class='rparen'>)</span><span class='comma'>,</span>
+                          <span class='label'>image:</span> <span class='id identifier rubyid_p'>p</span><span class='period'>.</span><span class='id identifier rubyid_profile'>profile</span><span class='period'>.</span><span class='id identifier rubyid_profile_photo'>profile_photo</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='symbol'>:icon</span><span class='rparen'>)</span><span class='comma'>,</span>
+                          <span class='label'>data:</span> <span class='lbrace'>{</span> <span class='label'>method:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>put</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>skip-pjax</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>true</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_items'>items</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="notification_dropdown_items-instance_method">
+  
+    - (<tt>Object</tt>) <strong>notification_dropdown_items</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/header_helper.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_notification_dropdown_items'>notification_dropdown_items</span>
+  <span class='id identifier rubyid_dropdown_options'>dropdown_options</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                   <span class='lbracket'>[</span><span class='lbrace'>{</span>
+                     <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>notifications</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                     <span class='label'>unread:</span> <span class='id identifier rubyid_policy_scope'>policy_scope</span><span class='lparen'>(</span><span class='const'>Notification</span><span class='rparen'>)</span>
+                                 <span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>read_at is NULL</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+                                 <span class='period'>.</span><span class='id identifier rubyid_order'>order</span><span class='lparen'>(</span><span class='label'>created_at:</span> <span class='symbol'>:desc</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_count'>count</span><span class='comma'>,</span>
+                     <span class='label'>lastNotification:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+                     <span class='label'>notifications:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+                     <span class='label'>loadMore:</span> <span class='kw'>true</span>
+                   <span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
+                   <span class='label'>fa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fa-bell</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                   <span class='label'>triggerClass:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>navbar-item</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                   <span class='label'>contentClassName:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>notifications notification-container</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="profile_dropdown_items-instance_method">
+  
+    - (<tt>Object</tt>) <strong>profile_dropdown_items</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/header_helper.rb', line 8</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_profile_dropdown_items'>profile_dropdown_items</span>
+  <span class='ivar'>@profile</span> <span class='op'>=</span> <span class='id identifier rubyid_current_profile'>current_profile</span>
+  <span class='lbrace'>{</span>
+    <span class='label'>defaultAction:</span> <span class='id identifier rubyid_dual_profile_url'>dual_profile_url</span><span class='lparen'>(</span><span class='id identifier rubyid_current_profile'>current_profile</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='label'>trigger:</span> <span class='lbrace'>{</span>
+      <span class='label'>type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>current_user</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+      <span class='label'>title:</span> <span class='id identifier rubyid_truncate'>truncate</span><span class='lparen'>(</span><span class='id identifier rubyid_current_profile'>current_profile</span><span class='period'>.</span><span class='id identifier rubyid_display_name'>display_name</span><span class='comma'>,</span> <span class='label'>length:</span> <span class='int'>20</span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>profile_photo:</span> <span class='lbrace'>{</span>
+        <span class='label'>url:</span> <span class='id identifier rubyid_current_profile'>current_profile</span><span class='period'>.</span><span class='id identifier rubyid_profile_photo'>profile_photo</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='symbol'>:icon</span><span class='rparen'>)</span><span class='comma'>,</span>
+        <span class='label'>className:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>profile-picture--navbar</span><span class='tstring_end'>&#39;</span></span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>triggerClass:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>navbar-item navbar-profile</span><span class='tstring_end'>&#39;</span></span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>sections:</span> <span class='lbracket'>[</span>
+      <span class='lbrace'>{</span>
+        <span class='label'>items:</span> <span class='lbracket'>[</span>
+          <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>show_type</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>type:</span> <span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_profile'>current_profile</span><span class='period'>.</span><span class='id identifier rubyid_profileable'>profileable</span><span class='period'>.</span><span class='id identifier rubyid_class_name'>class_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>.type</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_dual_profile_url'>dual_profile_url</span><span class='lparen'>(</span><span class='id identifier rubyid_current_profile'>current_profile</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>fa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>user</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>profiles.edit.title</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_dual_profile_edit_url'>dual_profile_edit_url</span><span class='lparen'>(</span><span class='id identifier rubyid_current_profile'>current_profile</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>fa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pencil</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>users.settings</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_settings_url'>settings_url</span><span class='comma'>,</span> <span class='label'>fa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gear</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='id identifier rubyid_policy'>policy</span><span class='lparen'>(</span><span class='const'>Page</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_index?'>index?</span> <span class='op'>?</span> <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pages.management.title</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span><span class='comma'>,</span> <span class='id identifier rubyid_pages_user_url'>pages_user_url</span><span class='lparen'>(</span><span class='id identifier rubyid_current_user'>current_user</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>fa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>building</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pages.create</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_new_page_path'>new_page_path</span><span class='comma'>,</span> <span class='label'>fa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>building</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='lparen'>(</span><span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>forums.management.title</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_forums_user_url'>forums_user_url</span><span class='lparen'>(</span><span class='id identifier rubyid_current_user'>current_user</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>fa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>group</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_policy'>policy</span><span class='lparen'>(</span><span class='const'>Forum</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_index?'>index?</span> <span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sign_out</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_destroy_user_session_url'>destroy_user_session_url</span><span class='comma'>,</span> <span class='label'>fa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>sign-out</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>data:</span> <span class='lbrace'>{</span><span class='label'>method:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>delete</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>skip-pjax</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>true</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='comma'>,</span>
+          <span class='kw'>nil</span> <span class='comment'># NotABug Make sure compact! actually returns the array and not nil
+</span>        <span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_compact!'>compact!</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='lbrace'>{</span>
+        <span class='label'>title:</span> <span class='id identifier rubyid_t'>t</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>profiles.switch</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+        <span class='label'>items:</span> <span class='id identifier rubyid_managed_pages_items'>managed_pages_items</span>
+      <span class='rbrace'>}</span>
+    <span class='rbracket'>]</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="profile_membership_items-instance_method">
+  
+    - (<tt>Object</tt>) <strong>profile_membership_items</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/header_helper.rb', line 67</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_profile_membership_items'>profile_membership_items</span>
+  <span class='id identifier rubyid_ids'>ids</span> <span class='op'>=</span> <span class='id identifier rubyid_current_profile'>current_profile</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span> <span class='op'>?</span> <span class='id identifier rubyid_current_profile'>current_profile</span><span class='period'>.</span><span class='id identifier rubyid_memberships'>memberships</span><span class='period'>.</span><span class='id identifier rubyid_pluck'>pluck</span><span class='lparen'>(</span><span class='symbol'>:forum_id</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='const'>Shortname</span><span class='period'>.</span><span class='id identifier rubyid_shortname_owners_for_klass'>shortname_owners_for_klass</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Forum</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='id identifier rubyid_ids'>ids</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_shortname'>shortname</span><span class='op'>|</span>
+    <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_shortname'>shortname</span><span class='period'>.</span><span class='id identifier rubyid_owner'>owner</span><span class='period'>.</span><span class='id identifier rubyid_display_name'>display_name</span><span class='comma'>,</span> <span class='id identifier rubyid_forum_path'>forum_path</span><span class='lparen'>(</span><span class='id identifier rubyid_shortname'>shortname</span><span class='period'>.</span><span class='id identifier rubyid_shortname'>shortname</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>image:</span> <span class='id identifier rubyid_shortname'>shortname</span><span class='period'>.</span><span class='id identifier rubyid_owner'>owner</span><span class='period'>.</span><span class='id identifier rubyid_profile_photo'>profile_photo</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='symbol'>:icon</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="public_forum_items-instance_method">
+  
+    - (<tt>Object</tt>) <strong>public_forum_items</strong>(limit = 10) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+57
+58
+59
+60
+61
+62
+63
+64
+65</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/header_helper.rb', line 57</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_public_forum_items'>public_forum_items</span><span class='lparen'>(</span><span class='id identifier rubyid_limit'>limit</span><span class='op'>=</span> <span class='int'>10</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_items'>items</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='const'>Forum</span><span class='period'>.</span><span class='id identifier rubyid_top_public_forums'>top_public_forums</span><span class='lparen'>(</span><span class='id identifier rubyid_limit'>limit</span><span class='rparen'>)</span>
+      <span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>nederland</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>utrecht</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>houten</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>feedback</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_shortname'>shortname</span><span class='period'>.</span><span class='id identifier rubyid_shortname'>shortname</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_forum'>forum</span><span class='op'>|</span>
+    <span class='id identifier rubyid_items'>items</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_link_item'>link_item</span><span class='lparen'>(</span><span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_display_name'>display_name</span><span class='comma'>,</span> <span class='id identifier rubyid_forum_path'>forum_path</span><span class='lparen'>(</span><span class='id identifier rubyid_forum'>forum</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>image:</span> <span class='id identifier rubyid_forum'>forum</span><span class='period'>.</span><span class='id identifier rubyid_profile_photo'>profile_photo</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='lparen'>(</span><span class='symbol'>:icon</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_items'>items</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="suggested_forums-instance_method">
+  
+    - (<tt>Object</tt>) <strong>suggested_forums</strong> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+4
+5
+6</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/helpers/header_helper.rb', line 4</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_suggested_forums'>suggested_forums</span>
+  <span class='ivar'>@suggested_forums</span> <span class='op'>||=</span> <span class='const'>Forum</span><span class='period'>.</span><span class='id identifier rubyid_where'>where</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>id NOT IN (</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_current_profile'>current_profile</span><span class='period'>.</span><span class='id identifier rubyid_memberships_ids'>memberships_ids</span> <span class='op'>||</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0</span><span class='tstring_end'>&#39;</span></span><span class='embexpr_end'>}</span><span class='tstring_content'>) AND visibility = </span><span class='embexpr_beg'>#{</span><span class='const'>Forum</span><span class='period'>.</span><span class='id identifier rubyid_visibilities'>visibilities</span><span class='lbracket'>[</span><span class='symbol'>:open</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_current_user'>current_user</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated by
+  <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
+  0.8.7.6 (ruby-2.2.4).
+</div>
+
+  </body>
+</html>

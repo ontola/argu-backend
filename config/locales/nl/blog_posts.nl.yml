@@ -1,0 +1,7 @@
+#Dutch blog post translations
+
+nl:
+  blog_posts:
+    type: "Update"
+    type_new: "Nieuwe update"
+    unpublished: "Concept"

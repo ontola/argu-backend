@@ -21,12 +21,28 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'should get show when not logged in' do
     get :show, id: subject
     assert_response 200
-    assert_not_nil assigns(:question)
-    assert_not_nil assigns(:forum)
-    assert_not_nil assigns(:question_answers)
 
     assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
-    assert_not assigns(:question_answers).any? { |qa| qa.motion.is_trashed? }, 'Trashed motions are visible'
+    assert_not assigns(:motions).any? { |motion| motion.is_trashed? }, 'Trashed motions are visible'
+  end
+
+  test 'guest should not get new' do
+    get :new,
+        forum_id: freetown,
+        question_id: subject.id
+
+    assert assigns(:_not_a_user_caught)
+    assert_response 302
+  end
+
+  test 'guest should not post create' do
+    assert_no_difference 'Question.count' do
+      post :create,
+           forum_id: freetown,
+           question: attributes_for(:question)
+    end
+
+    assert assigns(:_not_a_user_caught)
   end
 
   ####################################
@@ -39,12 +55,31 @@ class QuestionsControllerTest < ActionController::TestCase
 
     get :show, id: subject
     assert_response 200
-    assert_not_nil assigns(:question)
-    assert_not_nil assigns(:forum)
-    assert_not_nil assigns(:question_answers)
 
     assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
-    assert_not assigns(:question_answers).any? { |qa| qa.motion.is_trashed? }, 'Trashed motions are visible'
+    assert_not assigns(:motions).any? { |motion| motion.is_trashed? }, 'Trashed motions are visible'
+  end
+
+  test 'user should not get new' do
+    sign_in user
+
+    get :new,
+        forum_id: freetown,
+        question_id: subject.id
+
+    assert assigns(:_not_a_member_caught)
+  end
+
+  test 'user should not post create' do
+    sign_in user
+
+    assert_no_difference 'Question.count' do
+      post :create,
+           forum_id: freetown,
+           question: attributes_for(:question)
+    end
+
+    assert assigns(:_not_a_member_caught)
   end
 
   ####################################
@@ -58,8 +93,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
     get :new, forum_id: freetown
     assert_response 200
-    assert_not_nil assigns(:question)
-    assert_not_nil assigns(:forum)
+    assert_not_nil assigns(:resource)
   end
 
   test 'member should post create' do
@@ -74,7 +108,6 @@ class QuestionsControllerTest < ActionController::TestCase
            }
     end
     assert_not_nil assigns(:cq).resource
-    assert_not_nil assigns(:forum)
     assert_redirected_to question_url(assigns(:cq).resource)
   end
 
@@ -88,10 +121,10 @@ class QuestionsControllerTest < ActionController::TestCase
           content: 'new contents'
         }
 
-    assert_not_nil assigns(:question)
-    assert_equal 'New title', assigns(:question).title
-    assert_equal 'new contents', assigns(:question).content
-    assert_redirected_to question_url(assigns(:question))
+    assert_not_nil assigns(:resource)
+    assert_equal 'New title', assigns(:resource).title
+    assert_equal 'new contents', assigns(:resource).content
+    assert_redirected_to question_url(assigns(:resource))
   end
 
   test 'should not put update on others question' do
@@ -104,37 +137,79 @@ class QuestionsControllerTest < ActionController::TestCase
           content: 'new contents'
         }
 
-    assert_equal member_question, assigns(:question)
+    assert_not_nil assigns(:_not_authorized_caught)
   end
 
   test 'should not get convert' do
     sign_in member
 
     get :convert, question_id: subject
-    assert_redirected_to root_url
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to subject.forum
   end
 
   test 'should not put convert' do
     sign_in member
 
     put :convert, question_id: subject
-    assert_redirected_to root_url
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to subject.forum
   end
 
   test 'should not get move' do
     sign_in member
 
     get :move, question_id: subject
-    assert_redirected_to root_url
+
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to subject.forum
   end
 
   test 'should not put move' do
     sign_in member
 
     put :move, question_id: subject
-    assert_redirected_to root_url
+    assert_not_nil assigns(:_not_authorized_caught)
+    assert_redirected_to subject.forum
   end
 
+  ####################################
+  # As Moderator
+  ####################################
+  let(:moderator) { create_moderator(freetown) }
+  let(:project) { create(:project, forum: freetown) }
+  let(:project_moderator) { create_moderator(project) }
+
+  test 'moderator should post create' do
+    sign_in moderator
+
+    assert_differences create_changes_array do
+      post :create,
+           forum_id: freetown,
+           question: {
+             title: 'Question',
+             content: 'Contents'
+           }
+    end
+    assert_not_nil assigns(:cq).resource
+    assert_redirected_to question_url(assigns(:cq).resource)
+  end
+
+  test 'moderator should post create with project' do
+    sign_in project_moderator
+
+    assert_differences create_changes_array do
+      post :create,
+           project_id: project.id,
+           question: {
+             title: 'Question',
+             content: 'Contents'
+           }
+    end
+    assert_not_nil assigns(:cq).resource
+    assert_equal project, assigns(:resource).project
+    assert_redirected_to question_url(assigns(:cq).resource)
+  end
 
   ####################################
   # As Creator
@@ -150,8 +225,7 @@ class QuestionsControllerTest < ActionController::TestCase
     get :edit, id: creator_question
 
     assert_response 200
-    assert assigns(:question)
-    assert assigns(:forum)
+    assert assigns(:resource)
   end
 
   test 'creator should put update' do
@@ -165,8 +239,8 @@ class QuestionsControllerTest < ActionController::TestCase
         }
 
     assert_redirected_to question_path(creator_question)
-    assert_equal 'new title', assigns(:question).title
-    assert_equal 'new contents', assigns(:question).content
+    assert_equal 'new title', assigns(:resource).title
+    assert_equal 'new contents', assigns(:resource).content
   end
 
   test 'creator should render form for faulty put update' do
@@ -180,7 +254,7 @@ class QuestionsControllerTest < ActionController::TestCase
         }
 
     assert_response 200
-    assert assigns(:question).changed?
+    assert assigns(:resource).changed?
   end
 
 
@@ -201,9 +275,9 @@ class QuestionsControllerTest < ActionController::TestCase
         }
 
     assert_redirected_to question_url(page_question)
-    assert_not_nil assigns(:question)
-    assert_equal 'New title', assigns(:question).title
-    assert_equal 'new contents', assigns(:question).content
+    assert_not_nil assigns(:resource)
+    assert_equal 'New title', assigns(:resource).title
+    assert_equal 'new contents', assigns(:resource).content
   end
 
   ####################################
@@ -261,14 +335,45 @@ class QuestionsControllerTest < ActionController::TestCase
   let(:freetown_to) { FactoryGirl.create(:forum) }
 
   # Currently only staffers can convert items
-  test 'should put move!' do
+  test 'should put move! without motions' do
     sign_in staff
 
     assert_differences [['freetown.reload.questions_count', -1],
                         ['freetown_to.reload.questions_count', 1]] do
       put :move!,
           question_id: subject,
-          question: { forum_id: freetown_to.id }
+          question: {
+            forum_id: freetown_to.id
+          }
+    end
+    assert_redirected_to assigns(:question)
+
+    assert assigns(:question)
+    assert_equal freetown_to, assigns(:question).forum
+    forum_id = freetown_to.id
+    assigns(:question).motions.pluck(:forum_id).each do |id|
+      assert_equal freetown.id, id
+    end
+    assert assigns(:question).motions.blank?
+    assigns(:question).activities.pluck(:forum_id).each do |id|
+      assert_equal forum_id, id
+    end
+    assigns(:question).taggings.pluck(:forum_id).each do |id|
+      assert_equal forum_id, id
+    end
+  end
+
+  test 'should put move! with motions' do
+    sign_in staff
+
+    assert_differences [['freetown.reload.questions_count', -1],
+                        ['freetown_to.reload.questions_count', 1]] do
+      put :move!,
+          question_id: subject,
+          question: {
+            include_motions: '1',
+            forum_id: freetown_to.id
+          }
     end
     assert_redirected_to assigns(:question)
 
@@ -278,7 +383,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assigns(:question).motions.pluck(:forum_id).each do |id|
       assert_equal forum_id, id
     end
-    assert assigns(:question).motions.blank?
+    assert_equal 2, assigns(:question).motions.length
     assigns(:question).activities.pluck(:forum_id).each do |id|
       assert_equal forum_id, id
     end
@@ -289,6 +394,7 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   private
+
   def create_changes_array
     [['Question.count', 1],
      ['Activity.count', 1],

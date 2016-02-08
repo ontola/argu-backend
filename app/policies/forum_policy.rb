@@ -35,7 +35,7 @@ class ForumPolicy < RestrictivePolicy
     end
 
     def manager
-      5
+      7
     end
 
     # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta
@@ -73,7 +73,7 @@ class ForumPolicy < RestrictivePolicy
   include Roles
 
   module ForumRoles
-    delegate :is_member?, :is_open?, :is_manager?, :is_owner?, :is_manager_up?, :has_access_token?, to: :forum_policy
+    delegate :is_member?, :is_open?, :has_access_token?, :is_manager?, :is_owner?, :is_manager_up?, to: :forum_policy
     delegate :open, :access_token, :member, :manager, :owner, to: :forum_policy
   end
 
@@ -93,7 +93,7 @@ class ForumPolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs << :general << :advanced << :groups if is_manager? || staff?
+    tabs << :general << :advanced << :groups << :projects if is_manager? || staff?
     tabs << :privacy << :managers if is_owner? || staff?
     tabs
   end

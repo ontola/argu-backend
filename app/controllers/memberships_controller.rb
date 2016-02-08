@@ -1,11 +1,11 @@
-class MembershipsController < AuthenticatedController
+class MembershipsController < AuthorizedController
   skip_before_action :check_if_member, only: %i(create)
 
   def create
     forum = Forum.find_via_shortname params[:forum_id]
     authorize forum, :show?
 
-    @membership = Membership.new profile: current_profile, forum: forum, role: (permit_params[:role] || Membership.roles[:member])
+    @membership = Membership.new resource_new_params
     authorize @membership, :create?
 
     created = params[:redirect] == 'false' ? 201 : nil
@@ -65,5 +65,13 @@ private
 
   def redirect_url
     params[:action] == 'create' ? forum_path(params[:forum_id]) : super
+  end
+
+  def resource_new_params
+    {
+      profile: current_profile,
+      forum: resource_tenant,
+      role: (permit_params[:role] || Membership.roles[:member])
+    }
   end
 end

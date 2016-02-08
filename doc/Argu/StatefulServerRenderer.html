@@ -1,0 +1,471 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: Argu::StatefulServerRenderer
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '../';
+  framesUrl = "../frames.html#!Argu/StatefulServerRenderer.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Argu.html" title="Argu (module)">Argu</a></span></span>
+     &raquo; 
+    <span class="title">StatefulServerRenderer</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="../method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="../file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: Argu::StatefulServerRenderer
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">React::ServerRendering::ExecJSRenderer</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">React::ServerRendering::ExecJSRenderer</li>
+          
+            <li class="next">Argu::StatefulServerRenderer</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">lib/argu/stateful_server_renderer.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+  <h2>Constant Summary</h2>
+  
+    <dl class="constants">
+      
+        <dt id="CONSOLE_POLYFILL-constant" class="">CONSOLE_POLYFILL =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Reimplement console methods for replaying on the client</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='heredoc_beg'>&lt;&lt;-JS</span>
+<span class='tstring_content'>  var console = { history: [] };
+  [&#39;error&#39;, &#39;log&#39;, &#39;info&#39;, &#39;warn&#39;].forEach(function (fn) {
+    console[fn] = function () {
+      console.history.push({level: fn, arguments: Array.prototype.slice.call(arguments)});
+    };
+  });
+</span><span class='heredoc_end'>JS</span></pre></dd>
+      
+        <dt id="CONSOLE_REPLAY-constant" class="">CONSOLE_REPLAY =
+          <div class="docstring">
+  <div class="discussion">
+    
+<p>Replay message from console history</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='heredoc_beg'>&lt;&lt;-JS</span>
+<span class='tstring_content'>  (function (history) {
+    if (history &amp;&amp; history.length &gt; 0) {
+      result += &#39;\\n&lt;scr&#39;+&#39;ipt&gt;&#39;;
+      history.forEach(function (msg) {
+        result += &#39;\\nconsole.&#39; + msg.level + &#39;.apply(console, &#39; + JSON.stringify(msg.arguments) + &#39;);&#39;;
+      });
+      result += &#39;\\n&lt;/scr&#39;+&#39;ipt&gt;&#39;;
+    }
+  })(console.history);
+</span><span class='heredoc_end'>JS</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#after_render-instance_method" title="#after_render (instance method)">- (Object) <strong>after_render</strong>(component_name, props, prerender_options) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#before_render-instance_method" title="#before_render (instance method)">- (Object) <strong>before_render</strong>(component_name, props, prerender_options) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">- (StatefulServerRenderer) <strong>initialize</strong>(options = {}) </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of StatefulServerRenderer.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#render-instance_method" title="#render (instance method)">- (Object) <strong>render</strong>(component_name, props, prerender_options) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    - (<tt><span class='object_link'><a href="" title="Argu::StatefulServerRenderer (class)">StatefulServerRenderer</a></span></tt>) <strong>initialize</strong>(options = {}) 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of StatefulServerRenderer</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/argu/stateful_server_renderer.rb', line 3</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='op'>=</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='ivar'>@replay_console</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:replay_console</span><span class='comma'>,</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_filenames'>filenames</span> <span class='op'>=</span> <span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:files</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>react-server.js</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>components.js</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_js_code'>js_code</span> <span class='op'>=</span> <span class='const'>CONSOLE_POLYFILL</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+
+  <span class='id identifier rubyid_filenames'>filenames</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_filename'>filename</span><span class='op'>|</span>
+    <span class='id identifier rubyid_js_code'>js_code</span> <span class='op'>&lt;&lt;</span> <span class='op'>::</span><span class='const'>Rails</span><span class='period'>.</span><span class='id identifier rubyid_application'>application</span><span class='period'>.</span><span class='id identifier rubyid_assets'>assets</span><span class='lbracket'>[</span><span class='id identifier rubyid_filename'>filename</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='label'>code:</span> <span class='id identifier rubyid_js_code'>js_code</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="after_render-instance_method">
+  
+    - (<tt>Object</tt>) <strong>after_render</strong>(component_name, props, prerender_options) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+15
+16
+17</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/argu/stateful_server_renderer.rb', line 15</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_after_render'>after_render</span><span class='lparen'>(</span><span class='id identifier rubyid_component_name'>component_name</span><span class='comma'>,</span> <span class='id identifier rubyid_props'>props</span><span class='comma'>,</span> <span class='id identifier rubyid_prerender_options'>prerender_options</span><span class='rparen'>)</span>
+  <span class='ivar'>@replay_console</span> <span class='op'>?</span> <span class='const'>CONSOLE_REPLAY</span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="before_render-instance_method">
+  
+    - (<tt>Object</tt>) <strong>before_render</strong>(component_name, props, prerender_options) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+61
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/argu/stateful_server_renderer.rb', line 61</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_before_render'>before_render</span><span class='lparen'>(</span><span class='id identifier rubyid_component_name'>component_name</span><span class='comma'>,</span> <span class='id identifier rubyid_props'>props</span><span class='comma'>,</span> <span class='id identifier rubyid_prerender_options'>prerender_options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_initial_js_state'>initial_js_state</span> <span class='op'>=</span> <span class='id identifier rubyid_prerender_options'>prerender_options</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='symbol'>:initial_state</span><span class='comma'>,</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>window.__INITIAL_STATE__ = </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_initial_js_state'>initial_js_state</span><span class='embexpr_end'>}</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="render-instance_method">
+  
+    - (<tt>Object</tt>) <strong>render</strong>(component_name, props, prerender_options) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/argu/stateful_server_renderer.rb', line 42</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span><span class='lparen'>(</span><span class='id identifier rubyid_component_name'>component_name</span><span class='comma'>,</span> <span class='id identifier rubyid_props'>props</span><span class='comma'>,</span> <span class='id identifier rubyid_prerender_options'>prerender_options</span><span class='rparen'>)</span>
+  <span class='comment'># pass prerender: :static to use renderToStaticMarkup
+</span>  <span class='id identifier rubyid_react_render_method'>react_render_method</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_prerender_options'>prerender_options</span> <span class='op'>==</span> <span class='symbol'>:static</span>
+                          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>renderToStaticMarkup</span><span class='tstring_end'>&quot;</span></span>
+                        <span class='kw'>else</span>
+                          <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>renderToString</span><span class='tstring_end'>&quot;</span></span>
+                        <span class='kw'>end</span>
+  <span class='id identifier rubyid__prerender_options'>_prerender_options</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+    <span class='label'>render_function:</span> <span class='id identifier rubyid_react_render_method'>react_render_method</span>
+  <span class='rbrace'>}</span>
+  <span class='id identifier rubyid__prerender_options'>_prerender_options</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='id identifier rubyid_prerender_options'>prerender_options</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_prerender_options'>prerender_options</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
+
+  <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_props'>props</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_props'>props</span> <span class='op'>=</span> <span class='id identifier rubyid_props'>props</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
+  <span class='kw'>end</span>
+
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_component_name'>component_name</span><span class='comma'>,</span> <span class='id identifier rubyid_props'>props</span><span class='comma'>,</span> <span class='id identifier rubyid__prerender_options'>_prerender_options</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated by
+  <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
+  0.8.7.6 (ruby-2.2.4).
+</div>
+
+  </body>
+</html>

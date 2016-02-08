@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
-  include ArguBase, Shortnameable
+  include ArguBase, Shortnameable, Flowable
 
-  has_one :profile, as: :profileable, dependent: :destroy
+  has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
   has_many :identities, dependent: :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
   has_many :notifications
@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
-  before_validation :check_for_profile
   after_destroy :cleanup
   after_create :update_acesss_token_counts
   before_save { |user| user.email = email.downcase unless email.blank? }
@@ -64,13 +63,17 @@ class User < ActiveRecord::Base
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
 
-#######Attributes########
   def display_name
     [self.first_name, self.middle_name, self.last_name].compact.join(' ').presence || self.url
   end
 
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
+  end
+
+  # Since we're the ones creating activities, we should select them based on us being the owner
+  def flow
+    Activity.where(owner: profile)
   end
 
   def greeting
@@ -91,11 +94,11 @@ class User < ActiveRecord::Base
   end
 
   def password_required?
-    (!self.persisted? && identities.blank?) || (identities.blank? && password.blank?) ? super : false
+    (!persisted? && identities.blank?) || password.present? || password_confirmation.present?
   end
 
-  def profile
-    super || create_profile
+  def has_password?
+    encrypted_password.present? || password.present? || password_confirmation.present?
   end
 
   def requires_name?
@@ -137,10 +140,6 @@ protected
   end
 
 private
-  def check_for_profile
-    self.profile || self.create_profile
-  end
-
   def cleanup
     self.identities.destroy_all
     self.profile.activities.destroy_all

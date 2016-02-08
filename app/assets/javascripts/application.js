@@ -17,6 +17,7 @@
 //= require jquery.pjax
 //= require jquery.jeditable.mini
 //= require bg_loaded
+//= require cocoon
 //= require nprogress
 //= require sifter
 //= require microplugin

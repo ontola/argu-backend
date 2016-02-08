@@ -62,7 +62,6 @@ module SeoHelper
       'og:type' => {content: 'website'},
       'og:url' => :url,
       'og:description' => :description,
-      'og:title' => :name,
       'og:image' => :image,
 
       # Twitter

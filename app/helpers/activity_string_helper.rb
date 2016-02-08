@@ -33,8 +33,8 @@ module ActivityStringHelper
 
   # :nodoc:
   def as_for_motions_create(motion, your, embedded_link= false)
-    if motion.questions.present?
-      item = motion.questions.first
+    if motion.question.present?
+      item = motion.question
       item_type = question_type(item.forum)
     else
       item = motion.forum

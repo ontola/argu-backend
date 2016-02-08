@@ -1,0 +1,597 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>
+  Class: OmniauthCallbacksController
+  
+    &mdash; Documentation by YARD 0.8.7.6
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" charset="utf-8" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" charset="utf-8" />
+
+<script type="text/javascript" charset="utf-8">
+  hasFrames = window.top.frames.main ? true : false;
+  relpath = '';
+  framesUrl = "frames.html#!OmniauthCallbacksController.html";
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div id="header">
+      <div id="menu">
+  
+    <a href="_index.html">Index (O)</a> &raquo;
+    
+    
+    <span class="title">OmniauthCallbacksController</span>
+  
+
+  <div class="noframes"><span class="title">(</span><a href="." target="_top">no frames</a><span class="title">)</span></div>
+</div>
+
+      <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+      Class List
+    </a>
+  
+    <a class="full_list_link" id="method_list_link"
+        href="method_list.html">
+      Method List
+    </a>
+  
+    <a class="full_list_link" id="file_list_link"
+        href="file_list.html">
+      File List
+    </a>
+  
+</div>
+      <div class="clear"></div>
+    </div>
+
+    <iframe id="search_frame"></iframe>
+
+    <div id="content"><h1>Class: OmniauthCallbacksController
+  
+  
+  
+</h1>
+
+<dl class="box">
+  
+    <dt class="r1">Inherits:</dt>
+    <dd class="r1">
+      <span class="inheritName">Devise::OmniauthCallbacksController</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Devise::OmniauthCallbacksController</li>
+          
+            <li class="next">OmniauthCallbacksController</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+      </dd>
+    
+  
+  
+    
+  
+    
+  
+  
+  
+    <dt class="r2 last">Defined in:</dt>
+    <dd class="r2 last">app/controllers/omniauth_callbacks_controller.rb</dd>
+  
+</dl>
+<div class="clear"></div>
+
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#provides_callback_for-class_method" title="provides_callback_for (class method)">+ (Object) <strong>provides_callback_for</strong>(provider) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small>(<a href="#" class="summary_toggle">collapse</a>)</small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#after_sign_in_path_for-instance_method" title="#after_sign_in_path_for (instance method)">- (Object) <strong>after_sign_in_path_for</strong>(resource) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#r_param-instance_method" title="#r_param (instance method)">- (Object) <strong>r_param</strong>(env) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_facebook_fields-instance_method" title="#set_facebook_fields (instance method)">- (Object) <strong>set_facebook_fields</strong>(identity, auth) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#set_twitter_fields-instance_method" title="#set_twitter_fields (instance method)">- (Object) <strong>set_twitter_fields</strong>(identity, auth) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sign_in_and_redirect_with_r-instance_method" title="#sign_in_and_redirect_with_r (instance method)">- (Object) <strong>sign_in_and_redirect_with_r</strong>(resource_or_scope, *args) </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="provides_callback_for-class_method">
+  
+    + (<tt>Object</tt>) <strong>provides_callback_for</strong>(provider) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/omniauth_callbacks_controller.rb', line 2</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_provides_callback_for'>provides_callback_for</span><span class='lparen'>(</span><span class='id identifier rubyid_provider'>provider</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_class_eval'>class_eval</span> <span class='tstring'><span class='tstring_beg'>%Q{</span><span class='tstring_content'>
+    def </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_provider'>provider</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+      connector = Omniauth::Omniauth</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_provider'>provider</span><span class='period'>.</span><span class='id identifier rubyid_capitalize'>capitalize</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+      @user = User.find_for_oauth(env[&quot;omniauth.auth&quot;])
+      email = connector.email_for(env[&quot;omniauth.auth&quot;])
+
+      if @user.present?
+        if current_user.blank?
+          @user.update r: r_param(env) if r_param(env).present?
+          sign_in_and_redirect_with_r @user, event: :authentication
+        elsif current_user.email != email
+          flash[:error] = t(&quot;users.authentications.email_mismatch&quot;) if is_navigational_format?
+          redirect_to root_path
+        elsif @user == current_user
+          flash[:error] = t(&quot;devise.failure.already_authenticated&quot;) if is_navigational_format?
+          redirect_to root_path
+        end
+      else
+        if (user_with_email = User.where(email: email).first).present?
+          # Email already taken, but connection not present yet
+          # so render connect accounts form
+          # No identity created for this oauth connection
+          if current_user.blank? || current_user == user_with_email
+            identity = Identity.find_or_initialize_by uid: env[&quot;omniauth.auth&quot;][&quot;uid&quot;], provider: :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_provider'>provider</span><span class='embexpr_end'>}</span><span class='tstring_content'> # TODO Store in Redis when not found to prevent stale records
+            set_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_provider'>provider</span><span class='embexpr_end'>}</span><span class='tstring_content'>_fields identity, env[&quot;omniauth.auth&quot;]
+            if identity.save
+              token = identity_token(identity)
+              redirect_to connect_user_path(user_with_email, token: token, r: r_param(env))
+            else
+              raise NotImplementedError
+            end
+          else
+            flash[:error] = t(&quot;users.authentications.email_mismatch&quot;) if is_navigational_format?
+            redirect_to root_path
+          end
+        elsif current_user.blank? &amp;&amp; email.present?
+          # We have a new user! so show the &#39;need some details&#39; form
+          identity = Identity.find_or_initialize_by uid: env[&quot;omniauth.auth&quot;][&quot;uid&quot;], provider: :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_provider'>provider</span><span class='embexpr_end'>}</span><span class='tstring_content'>
+          set_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_provider'>provider</span><span class='embexpr_end'>}</span><span class='tstring_content'>_fields identity, env[&quot;omniauth.auth&quot;]
+          user = connector.create_user_without_shortname(env[&quot;omniauth.auth&quot;], identity, r_param(env))
+          setup_memberships(user)
+          set_flash_message(:notice, :success, kind: &quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_provider'>provider</span><span class='embexpr_end'>}</span><span class='tstring_content'>&quot;.capitalize) if is_navigational_format?
+          sign_in_and_redirect_with_r user
+        elsif current_user.blank?
+          # No connection, no current_user and no email..
+          session[&quot;devise.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_provider'>provider</span><span class='embexpr_end'>}</span><span class='tstring_content'>_data&quot;] = env[&quot;omniauth.auth&quot;]
+          redirect_to new_user_registration_url(r: r_param(env))
+        end
+      end
+    end
+  </span><span class='tstring_end'>}</span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="after_sign_in_path_for-instance_method">
+  
+    - (<tt>Object</tt>) <strong>after_sign_in_path_for</strong>(resource) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/omniauth_callbacks_controller.rb', line 60</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_after_sign_in_path_for'>after_sign_in_path_for</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_email_verified?'>email_verified?</span>
+      <span class='kw'>if</span> <span class='id identifier rubyid_resource'>resource</span><span class='period'>.</span><span class='id identifier rubyid_shortname'>shortname</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+        <span class='kw'>super</span> <span class='id identifier rubyid_resource'>resource</span>
+      <span class='kw'>else</span>
+        <span class='id identifier rubyid_setup_users_path'>setup_users_path</span>
+      <span class='kw'>end</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_finish_signup_path'>finish_signup_path</span><span class='lparen'>(</span><span class='id identifier rubyid_resource'>resource</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="r_param-instance_method">
+  
+    - (<tt>Object</tt>) <strong>r_param</strong>(env) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+72
+73
+74</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/omniauth_callbacks_controller.rb', line 72</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_r_param'>r_param</span><span class='lparen'>(</span><span class='id identifier rubyid_env'>env</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_env'>env</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>omniauth.params</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>r</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_facebook_fields-instance_method">
+  
+    - (<tt>Object</tt>) <strong>set_facebook_fields</strong>(identity, auth) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/omniauth_callbacks_controller.rb', line 76</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_facebook_fields'>set_facebook_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_identity'>identity</span><span class='comma'>,</span> <span class='id identifier rubyid_auth'>auth</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_identity'>identity</span><span class='period'>.</span><span class='id identifier rubyid_access_token'>access_token</span> <span class='op'>=</span> <span class='id identifier rubyid_auth'>auth</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>credentials</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>token</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="set_twitter_fields-instance_method">
+  
+    - (<tt>Object</tt>) <strong>set_twitter_fields</strong>(identity, auth) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+80
+81
+82
+83</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/omniauth_callbacks_controller.rb', line 80</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_set_twitter_fields'>set_twitter_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_identity'>identity</span><span class='comma'>,</span> <span class='id identifier rubyid_auth'>auth</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_identity'>identity</span><span class='period'>.</span><span class='id identifier rubyid_access_token'>access_token</span> <span class='op'>=</span> <span class='id identifier rubyid_auth'>auth</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>credentials</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>token</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_identity'>identity</span><span class='period'>.</span><span class='id identifier rubyid_access_secret'>access_secret</span> <span class='op'>=</span> <span class='id identifier rubyid_auth'>auth</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>credentials</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>secret</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sign_in_and_redirect_with_r-instance_method">
+  
+    - (<tt>Object</tt>) <strong>sign_in_and_redirect_with_r</strong>(resource_or_scope, *args) 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+85
+86
+87
+88
+89
+90
+91
+92
+93</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'app/controllers/omniauth_callbacks_controller.rb', line 85</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_sign_in_and_redirect_with_r'>sign_in_and_redirect_with_r</span><span class='lparen'>(</span><span class='id identifier rubyid_resource_or_scope'>resource_or_scope</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_sign_in'>sign_in</span> <span class='id identifier rubyid_resource_or_scope'>resource_or_scope</span><span class='comma'>,</span> <span class='op'>*</span><span class='id identifier rubyid_args'>args</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_resource_or_scope'>resource_or_scope</span><span class='period'>.</span><span class='id identifier rubyid_try'>try</span><span class='lparen'>(</span><span class='symbol'>:r</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_present?'>present?</span>
+    <span class='id identifier rubyid_r'>r</span> <span class='op'>=</span> <span class='const'>URI</span><span class='period'>.</span><span class='id identifier rubyid_decode'>decode</span><span class='lparen'>(</span><span class='id identifier rubyid_resource_or_scope'>resource_or_scope</span><span class='period'>.</span><span class='id identifier rubyid_r'>r</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_presence'>presence</span> <span class='op'>||</span> <span class='id identifier rubyid_root_path'>root_path</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_redirect_to'>redirect_to</span> <span class='id identifier rubyid_after_sign_in_path_for'>after_sign_in_path_for</span><span class='lparen'>(</span><span class='id identifier rubyid_resource_or_scope'>resource_or_scope</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+    <div id="footer">
+  Generated by
+  <!-- <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a> -->
+  0.8.7.6 (ruby-2.2.4).
+</div>
+
+  </body>
+</html>

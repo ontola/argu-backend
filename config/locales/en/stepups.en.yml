@@ -1,0 +1,9 @@
+en:
+  stepups:
+  activerecord:
+    errors:
+      models:
+        stepup:
+          attributes:
+            manager:
+              exclusive: "You have to choose either a user or a group (exclusive or)."

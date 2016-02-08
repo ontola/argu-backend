@@ -15,7 +15,7 @@ class MotionPolicy < RestrictivePolicy
 
     def resolve
       if context.forum.present?
-        scope.where(forum_id: context.forum.id)
+        scope.where(forum_id: context.forum.id).published
       end
     end
   end
@@ -28,6 +28,14 @@ class MotionPolicy < RestrictivePolicy
     attributes << %i(id) if record.is_a?(Motion) && edit?
     attributes << %i(invert_arguments tag_id forum_id f_convert) if staff?
     attributes
+  end
+
+  def convert
+    rule move?
+  end
+
+  def convert?
+    rule move?
   end
 
   def create?

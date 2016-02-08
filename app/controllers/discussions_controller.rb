@@ -1,10 +1,8 @@
 class DiscussionsController < ApplicationController
+  include NestedResourceHelper
+
   def new
-    if params[:forum_id].present?
-      @forum = Forum.find_via_shortname(params[:forum_id])
-    else
-      @forum = preferred_forum
-    end
-    authorize @forum, :list?
+    @forum = get_parent_resource
+    authorize get_parent_resource, :list?
   end
 end

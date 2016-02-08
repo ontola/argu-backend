@@ -3,6 +3,7 @@
   "dependencies": {
     "es6-map": "^0.1.2",
     "fastclick": "^1.0.6",
+    "immutable": "^3.7.5",
     "install": "^0.2.6",
     "intl": "^1.0.0",
     "intro.js": "^1.1.1",
@@ -14,10 +15,14 @@
     "react-dom": "^0.14.2",
     "react-intl": "=1.2.0",
     "react-onclickoutside": "^4.1.0",
+    "react-redux": "^4.0.0",
+    "react-router": "^1.0.2",
     "react-scroll-lock": "^0.1.1",
     "react-select": "^0.9.1",
     "redux": "^3.0.4",
+    "redux-api-middleware": "^1.0.0-beta3",
     "reflux": "^0.2.12",
+    "url": "^0.11.0",
     "whatwg-fetch": "^0.10.1"
   },
   "devDependencies": {
@@ -34,6 +39,7 @@
     "bulk-require": "^0.2.1",
     "bulkify": "^1.1.1",
     "deamdify": "^0.1.1",
+    "envify": "^3.4.0",
     "eslint": "^1.9.0",
     "eslint-plugin-react": "^3.8.0",
     "gulp": "^3.9.0",
@@ -60,6 +66,8 @@
   },
   "scripts": {
     "build": "gulp build && gulp build-components",
-    "doc": "jsdoc -c app/assets/javascripts/jsdoc.json -r"
+    "build:production": "NODE_ENV=production gulp build:production && gulp build-components:production",
+    "doc": "jsdoc -R ./README.js.md -c app/assets/javascripts/jsdoc.json -r",
+    "lint": "eslint ./app/assets/javascripts"
   }
 }

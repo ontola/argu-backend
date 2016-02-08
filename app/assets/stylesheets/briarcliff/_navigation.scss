@@ -110,6 +110,7 @@ input[type="submit"].nav-search-button {
   @include container-width;
   margin: auto;
   position: relative;
+  height: 100%;
 }
 
 .nav-search {

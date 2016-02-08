@@ -1,0 +1,47 @@
+=set_title project.new_record? ? t('new_type', type: motion_type(project)) : t('edit_type', type: motion_type(project))
+.col-3
+  .col-3-2
+    =to_parent(authenticated_context)
+    .box
+      section.section-info
+        span[class="fa fa-folder-o"]
+        span.icon-left= t('projects.type')
+      =semantic_form_for(project.new_record? ? [authenticated_context, project] : project, html: {autocomplete: 'off'}) do |f|
+        section.smallpadded.form-filled
+          =f.inputs
+            =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(project, :title, motion_type(project).downcase)
+            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(project, :content, motion_type(project).downcase)
+          / Todo: make this work
+            =f.inputs name: t('image') do
+              p= t('use_a_high_res_image')
+              =f.input :cover_photo, label: t('profiles.edit.upload_piture')
+              li.form-helper
+                span=t('profiles.edit.file_limit_notice')
+              - if project.cover_photo.present?
+                =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 256px;'}
+                =f.input :remove_cover_photo, as: :reverse_boolean
+          =f.inputs
+            =f.semantic_fields_for :stepups do |stepup|
+              =render 'stepup_fields', f: stepup
+            .links
+              =link_to_add_association t('projects.add_manager'), f, :stepups, class: 'btn'
+            =f.semantic_fields_for :phases do |phase|
+              =render 'phase_fields', f: phase
+            .links
+              =link_to_add_association t('projects.add_phase'), f, :phases, class: 'btn'
+          -if !project.new_record? && policy(project).trash?
+            =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
+              - if policy(project).trash?
+                =f.input :trashed_at, as: :reverse_boolean
+            - if project.is_published? && policy(project).destroy?
+              =f.input :unpublish, as: :reverse_boolean, checked_value: 'true', unchecked_value: 'false'
+        - if project.new_record?
+          =render partial: 'profiles/profile_current'
+        - else
+          =render partial: project.creator, locals: {resource: project}
+        =f.actions
+          .sticky-submit
+            =f.action :submit, as: :button
+  /TODO make translations, make content dependent on focus field
+  .col-3-1
+    =render partial: 'markdown_helper'

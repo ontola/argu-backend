@@ -6,6 +6,7 @@ module ColumnRendererHelper
   # @option options [String] :buttons_url string for the button beneath a column
   # @option options [Symbol] :buttons_param if present, adds the column name as a parameter to buttons_url
   # @option options [ActiveRecord::Base] :collection_model model of the collection, used for translations @todo: fix this hack so this param is obsolete
+  # @option options [String] :partial The partial path that should be used to render the individual items
   def render_columns(columns, options = {})
     partial = case columns
       when Motion then 'motions/show'
@@ -17,6 +18,7 @@ module ColumnRendererHelper
       when GroupResponse then 'group_responses/show'
       else 'column_renderer/show'
     end
+    partial = options.fetch(:partial, partial) if columns.is_a?(ActiveRecord::Base)
 
     if partial == 'column_renderer/show'
       columns.each do |k,v|

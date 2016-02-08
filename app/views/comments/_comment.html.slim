@@ -1,4 +1,4 @@
-.comment[id=c.identifier class="#{'trashed' if c.is_trashed?}" itemscope="itemscope" itemtype="http://schema.org/Comment"]
+.comment[id=c.identifier class=status_classes_for(c) itemscope="itemscope" itemtype="http://schema.org/Comment"]
   .box
     section
       .markdown[id=c.id itemprop="text"]= c.is_trashed? ? I18n.t('trashed') : markdown_to_html(c.body) || I18n.t('deleted')

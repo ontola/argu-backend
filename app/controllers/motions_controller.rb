@@ -1,4 +1,5 @@
-class MotionsController < AuthenticatedController
+class MotionsController < AuthorizedController
+  include NestedResourceHelper
   before_action :get_context, only: [:index, :new, :create]
 
   def index
@@ -23,10 +24,8 @@ class MotionsController < AuthenticatedController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    @forum = @motion.forum
-    current_context @motion
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes))
-    @group_responses = Group.ordered_with_meta @motion.group_responses, @forum.groups, current_profile, @motion
+    @group_responses = Group.ordered_with_meta @motion.group_responses, authenticated_context.groups.discussion, current_profile, @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
 
@@ -40,26 +39,17 @@ class MotionsController < AuthenticatedController
   # GET /motions/new
   # GET /motions/new.json
   def new
-    get_context
-    @motion = @forum.motions.new permit_params
-    if params[:question_id]
-      question = Question.find(params[:question_id])
-      @motion.questions << question if @motion.forum_id == question.forum_id
-    end
-    authorize @motion, @motion.questions.presence ? :new? : :new_without_question?
-    current_context @motion
+    authorize authenticated_resource!, authenticated_resource!.question.presence ? :new? : :new_without_question?
     respond_to do |format|
       format.js { render js: "window.location = #{request.url.to_json}" }
-      format.html { render 'form', locals: {motion: @motion} }
-      format.json { render json: @motion }
+      format.html { render 'form', locals: {motion: authenticated_resource!} }
+      format.json { render json: authenticated_resource! }
     end
   end
 
   # GET /motions/1/edit
   def edit
     @motion = Motion.find_by_id(params[:id])
-    @forum = @motion.forum
-    current_context @motion
     authorize @motion
     respond_to do |format|
       format.html { render 'form', locals: {motion: @motion} }
@@ -69,13 +59,9 @@ class MotionsController < AuthenticatedController
   # POST /motions
   # POST /motions.json
   def create
-    get_context
     @cm = CreateMotion.new current_profile,
-                           permit_params.merge({
-                               forum_id: @forum.id,
-                               publisher: current_user
-                           })
-    action = @cm.resource.question_answers.presence ? :create? : :create_without_question?
+                           permit_params.merge(resource_new_params)
+    action = @cm.resource.question.presence ? :create? : :create_without_question?
     authorize @cm.resource, action
     @cm.subscribe(ActivityListener.new)
     @cm.on(:create_motion_successful) do |motion|
@@ -99,7 +85,6 @@ class MotionsController < AuthenticatedController
   def update
     @motion = Motion.find params[:id]
     @creator = @motion.creator
-    @forum = @motion.forum
     authorize @motion
 
     @motion.reload if process_cover_photo @motion, permit_params
@@ -191,13 +176,7 @@ class MotionsController < AuthenticatedController
     end
   end
 
-private
-  def authorize_show
-    @motion = Motion.includes(:arguments).find(params[:id])
-    authorize @motion, :show?
-  end
-
-  def self.forum_for(url_options)
+  def forum_for(url_options)
     motion_id = url_options[:motion_id] || url_options[:id]
     if motion_id.presence
       Motion.find_by(id: motion_id).try(:forum)
@@ -206,16 +185,40 @@ private
     end
   end
 
+  private
+
+  def authenticated_resource!
+    if (%w(convert convert! move move!) & [params[:action]]).present?
+      Motion.find(params[:motion_id])
+    else
+      super
+    end
+  end
+
+  def authorize_show
+    @motion = Motion.includes(:arguments).find(params[:id])
+    authorize @motion, :show?
+  end
+
   def get_context
     if params[:question_id].present? || defined?(params[:motion][:question_id]) && params[:motion][:question_id].present?
       @question = Question.find(params[:question_id] || params[:motion][:question_id])
     end
-    @forum = authenticated_context
   end
 
   def permit_params
     if params[:motion].present?
       params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+    end
+  end
+
+  def resource_new_params
+    if get_parent_resource.try(:project).present?
+      super.merge({
+        project: get_parent_resource.project
+      })
+    else
+      super
     end
   end
 end

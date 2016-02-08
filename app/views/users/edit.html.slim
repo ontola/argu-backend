@@ -35,7 +35,7 @@
           =f.semantic_fields_for :profile do |profile|
             =profile.input :are_votes_public, as: :reverse_boolean
         =f.inputs name: t('users.registrations.categories.authentication') do
-          -if @user.password_required?
+          -if @user.has_password?
             =f.input :password, label: t('users_password_edit'), required: @user.new_record?
             =f.input :password_confirmation, label: t('users_password_confirmation')
             =f.input :current_password
@@ -43,7 +43,7 @@
             / TODO: Only show this if user does not have a password.
             p
               =t('users.registrations.no_password')
-              =link_to " #{t('devise.passwords.new.submit')}.", password_path(@user), data: {method: :post, :'skip-pjax' => true}, rel: :nofollow
+              =link_to " #{t('devise.passwords.new.submit')}.", password_path(@user), data: {method: :post, :'skip-pjax' => true}, id: 'send-instructions', rel: :nofollow
           - if @user.identities.present?
             label= t('users_oauth_coupled')
             =render partial: 'authentications/login_providers_connected', locals: { identities: @user.identities, show_decouple: (@user.password_required? || @user.identities.length > 1) }
