@@ -27,6 +27,7 @@ secrets.yml
 
 # Ignore image uploads
 /public/uploads
+/public/banners
 /public/profiles
 /public/forums
 /public/motions
