@@ -698,6 +698,7 @@ DEPENDENCIES
   jwt
   kaminari (~> 0.16.1)
   koala (~> 1.11.1)
+  libv8 (~> 3.16.14.13)
   license_finder
   logstasher
   mailcatcher (~> 0.6.2)
@@ -758,7 +759,7 @@ DEPENDENCIES
   sprockets-es6
   squirm_rails
   stackprof
-  therubyracer (~> 0.12.1)
+  therubyracer (~> 0.12.2)
   tzinfo-data
   uglifier (>= 2.5.3)
   unicorn (= 5.0.1)

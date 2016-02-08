@@ -7,7 +7,6 @@ ub = User.create(email: 'user@argu.co', shortname_attributes: {shortname: 'user_
 ua.build_profile name: 'Staff Account'
 ub.build_profile name: 'User Account'
 
-#ua.profile.add_role :staff
 ua.profile.add_role :staff
 ub.profile.add_role :user
 
