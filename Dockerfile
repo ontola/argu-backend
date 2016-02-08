@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 
 ADD Gemfile /usr/src/app/
 ADD Gemfile.lock /usr/src/app/
-RUN bundle install --deployment --frozen --clean --without test
+RUN bundle install --deployment --frozen --clean --without development
 
 ADD . /usr/src/app
 RUN rm -f /usr/src/app/config/database.yml
@@ -28,6 +28,7 @@ ENV RAILS_ENV 'production'
 ENV ARGU_REDIS_HOST '192.168.99.100'
 ENV ARGU_REDIS_PORT '6379'
 
+RUN npm install
 RUN npm run build:production
 
 RUN bundle exec rake RAILS_ENV=production DEVISE_SECRET=dummythatshouldbelongenoughtoletdevisebeleiveitsanactualtoken assets:precompile
