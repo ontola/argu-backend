@@ -1,53 +1,38 @@
 class QuestionsController < AuthorizedController
+  include NestedResourceHelper
 
   def show
-    @forum = @question.forum
-    current_context @question
-    @motions = policy_scope(@question
-                                       .motions
-                                       .trashed(show_trashed?)
-                                       .order(updated_at: :desc))
+    @motions = policy_scope(authenticated_resource!
+                              .motions
+                              .trashed(show_trashed?)
+                              .order(updated_at: :desc))
 
     respond_to do |format|
-      format.html # show.html.erb
-      format.widget { render @question }
+      format.html { render locals: {question: authenticated_resource!}} # show.html.erb
+      format.widget { render authenticated_resource! }
       format.json # show.json.jbuilder
     end
   end
 
   def new
-    @forum = Forum.find_via_shortname params[:forum_id]
-    @question = Question.new params[:question]
-    @question.forum= @forum
-
-    authorize @question
-    current_context @question
     respond_to do |format|
       format.js { render js: "window.location = #{request.url.to_json}" }
-      format.html { render 'form', locals: {question: @question} }
-      format.json { render json: @question }
+      format.html { render 'form', locals: {question: authenticated_resource!} }
+      format.json { render json: authenticated_resource! }
     end
   end
 
   # GET /questions/1/edit
   def edit
-    @question = Question.find(params[:id])
-    authorize @question
-    @forum = @question.forum
-    current_context @question
     respond_to do |format|
-      format.html { render 'form', locals: {question: @question} }
+      format.html { render 'form', locals: {question: authenticated_resource!} }
     end
   end
 
   def create
-    @forum = Forum.find_via_shortname params[:forum_id]
-    authorize @forum, :add_question?
+    authorize authenticated_context, :add_question?
     @cq = CreateQuestion.new current_profile,
-                          permit_params.merge({
-                              forum: @forum,
-                              publisher: current_user
-                          })
+                          permit_params.merge(resource_new_params)
     authorize @cq.resource, :create?
     @cq.subscribe(ActivityListener.new)
     @cq.on(:create_question_successful) do |question|
@@ -68,18 +53,14 @@ class QuestionsController < AuthorizedController
   # PUT /questions/1
   # PUT /questions/1.json
   def update
-    @question = Question.includes(:taggings).find(params[:id])
-    authorize @question
-    @forum = @question.forum
-
-    @question.reload if process_cover_photo @question, permit_params
+    authenticated_resource!.reload if process_cover_photo authenticated_resource!, permit_params
     respond_to do |format|
-      if @question.update(permit_params)
-        format.html { redirect_to @question, notice: t('type_save_success', type: question_type) }
+      if authenticated_resource!.update(permit_params)
+        format.html { redirect_to authenticated_resource!, notice: t('type_save_success', type: question_type) }
         format.json { head :no_content }
       else
-        format.html { render 'form', locals: {question: @question} }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
+        format.html { render 'form', locals: {question: authenticated_resource!} }
+        format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -172,11 +153,6 @@ class QuestionsController < AuthorizedController
     else
       super
     end
-  end
-
-  def authorize_show
-    @question = Question.find(params[:id])
-    authorize @question, :show?
   end
 
   def permit_params

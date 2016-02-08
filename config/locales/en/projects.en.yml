@@ -1,12 +1,19 @@
 en:
   projects:
     type: 'Project'
+    type_new: 'new project'
     plural: 'Projects'
     publish_confirmation: 'Publicising will notify forum followers that a project was created. Continue?'
     timeline: 'Timeline'
+    add_manager: 'Add manager'
+    add_phase: 'Add phase'
     stepups:
       title: 'Managers'
       title_singular: 'Manager'
     phases:
       title: 'Phases'
       title_singular: 'Phase'
+    call_to_action:
+      title: '_project cta title_'
+      body: '_project cta body_'
+      action: 'Start your project.'

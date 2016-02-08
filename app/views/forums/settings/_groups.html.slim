@@ -2,7 +2,9 @@ p= t('forums.settings.groups.description')
 ul.boxed-list
   - @forum.groups.each do |group|
     li
-      h3= group.display_name
+      h3
+        =group.display_name
+        span[class="fa fa-#{group_visibility_icon_for(group)}"]
       table.styled
         tbody
           -group.group_memberships.each do |member|

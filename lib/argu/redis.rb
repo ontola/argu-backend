@@ -9,27 +9,21 @@ module Argu
     end
 
     def self.get(key, redis = self.redis_instance)
-      begin
-        redis.get(key)
-      rescue ::Redis::CannotConnectError => e
-        self.rescue_redis_connection_error(e)
-      end
+      redis.get(key)
+    rescue ::Redis::CannotConnectError => e
+      self.rescue_redis_connection_error(e)
     end
 
     def self.set(key, value, redis = self.redis_instance)
-      begin
-        redis.set(key, value)
-      rescue ::Redis::CannotConnectError => e
-        self.rescue_redis_connection_error(e)
-      end
+      redis.set(key, value)
+    rescue ::Redis::CannotConnectError => e
+      self.rescue_redis_connection_error(e)
     end
 
     def self.setex(key, timeout, value, redis = self.redis_instance)
-      begin
-        redis.setex(key, timeout, value)
-      rescue ::Redis::CannotConnectError => e
-        self.rescue_redis_connection_error(e)
-      end
+      redis.setex(key, timeout, value)
+    rescue ::Redis::CannotConnectError => e
+      self.rescue_redis_connection_error(e)
     end
 
     # Delegate `::Redis::CannotConnectError` to this method.
@@ -39,6 +33,7 @@ module Argu
       ::Bugsnag.notify(e, {
                             :severity => 'error',
                         })
+      nil
     end
   end
 end

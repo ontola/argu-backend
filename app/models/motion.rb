@@ -4,22 +4,24 @@ class Motion < ActiveRecord::Base
   include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks,
           PublicActivity::Common, Flowable, Placeable
 
-  belongs_to :forum, inverse_of: :motions
   belongs_to :creator, class_name: 'Profile'
+  belongs_to :forum, inverse_of: :motions
+  belongs_to :project, inverse_of: :motions
   belongs_to :publisher, class_name: 'User'
-  belongs_to :question
-  has_many :arguments, -> { argument_comments }, dependent: :destroy
-  has_many :votes, as: :voteable, dependent: :destroy
+  belongs_to :question, inverse_of: :motions
+
   has_many :activities, as: :trackable, dependent: :destroy
+  has_many :arguments, -> { argument_comments }, dependent: :destroy
   has_many :group_responses
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
+  has_many :votes, as: :voteable, dependent: :destroy
 
   before_save :cap_title
   after_save :creator_follow
 
   counter_culture :forum
   acts_as_followable
-  parentable :question, :forum
+  parentable :question, :project, :forum
   convertible :votes, :taggings, :activities
   resourcify
   mount_uploader :cover_photo, CoverUploader
@@ -37,6 +39,11 @@ class Motion < ActiveRecord::Base
                                 'lower(content) LIKE lower(?)',
                                 "%#{q}%",
                                 "%#{q}%") }
+
+  scope :published, -> do
+    joins('LEFT OUTER JOIN projects ON projects.id = project_id')
+      .where('published_at IS NOT NULL OR project_id IS NULL')
+  end
 
   def assert_tenant
     if self.question.present? && self.question.forum_id != self.forum_id

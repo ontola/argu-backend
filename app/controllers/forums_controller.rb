@@ -21,6 +21,7 @@ class ForumsController < ApplicationController
     authorize @forum, :list?
     current_context @forum
 
+    # @FIXME TODO Remove the unpublished stuff from projects (in the scope)
     questions = policy_scope(@forum.questions.trashed(show_trashed?))
 
     motions_without_questions = policy_scope(Motion.where(forum: @forum,

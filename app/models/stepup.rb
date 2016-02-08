@@ -12,6 +12,7 @@ class Stepup < ActiveRecord::Base
   # @private
   belongs_to :group
 
+  validates :moderator, presence: true
   validate :belongs_only_to_one_entity
 
   def belongs_only_to_one_entity

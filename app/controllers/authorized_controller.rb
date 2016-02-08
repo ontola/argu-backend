@@ -42,8 +42,7 @@ class AuthorizedController < ApplicationController
   private
 
   def authorize_action
-    # The check can be removed when (at least) memberships_controller is migrated to use a proper membership id
-    if authenticated_resource!.present?
+    unless params[:controller].equal?('memberships')
       authorize authenticated_resource!, "#{params[:action].chomp('!')}?"
     end
   end
@@ -83,7 +82,7 @@ class AuthorizedController < ApplicationController
   # @author Fletcher91 <thom@argu.co>
   # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
   def authenticated_resource!
-    @resource = if params[:action] == 'new' || params[:action] == 'create'
+    @resource ||= if params[:action] == 'new' || params[:action] == 'create'
       controller_name
           .classify
           .constantize
@@ -96,27 +95,25 @@ class AuthorizedController < ApplicationController
     end
   end
 
-  # Used in {authenticated_resource!} to build a new object. Overwrite this function if the model needs more than just the {Forum}
-  # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
-  def resource_new_params
-    {
-      forum: tenant_by_param
-    }
-  end
-
   # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,
-  # otherwise the result from {tenant_by_param} is used.
+  # otherwise the result from {resource_tenant} is used.
   # @author Fletcher91 <thom@argu.co>
   # @note This function isn't called context_tenant since we might use different scopes in the future (e.g. access to a project)
   # @note This should be based only on static information and be side-effect free to make memoization possible.
-  # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {tenant_by_param}.
+  # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {resource_tenant}.
   def authenticated_context
     if authenticated_resource!.present?
       authenticated_resource!.is_a?(Forum) ?
         authenticated_resource! :
         authenticated_resource!.forum
     else
-      tenant_by_param
+      resource_tenant
+    end
+  end
+
+  def current_context
+    Context.parse_from_uri(nil, authenticated_resource!) do |components|
+      components.reject! { |c| !policy(c).show? }
     end
   end
 
@@ -137,7 +134,16 @@ class AuthorizedController < ApplicationController
                     })
   end
 
-  def tenant_by_param
+  # Used in {authenticated_resource!} to build a new object. Overwrite this function if the model needs more than just the {Forum}
+  # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
+  def resource_new_params
+    {
+      forum: resource_tenant,
+      publisher: current_user
+    }
+  end
+
+  def resource_tenant
     Forum.find_via_shortname params[:forum_id]
   end
 

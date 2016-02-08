@@ -11,10 +11,7 @@ class ProjectsController < AuthorizedController
   def create
     @cp = CreateProject.new(
       current_profile,
-      permit_params.merge({
-        forum: authenticated_context,
-        publisher: current_user
-      }))
+      permit_params.merge(resource_new_params))
 
     authorize @cp.resource, :create?
     @cp.subscribe(ActivityListener.new)
@@ -35,9 +32,19 @@ class ProjectsController < AuthorizedController
   end
 
   def show
+
+    questions = policy_scope(authenticated_resource!.questions.trashed(show_trashed?))
+
+    motions_without_questions = policy_scope(Motion.where(forum: authenticated_context,
+                                                          project: authenticated_resource!,
+                                                          question_id: nil,
+                                                          is_trashed: show_trashed?))
+
+    @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(authenticated_resource!).show?
+
     respond_to do |format|
-      format.html { render locals: {project: @resource} }
-      format.json { render json: @resource, include: %w(phases blog_posts) }
+      format.html { render locals: {project: authenticated_resource!} }
+      format.json { render json: authenticated_resource!, include: %w(phases blog_posts) }
     end
   end
 

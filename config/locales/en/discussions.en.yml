@@ -1,0 +1,15 @@
+en:
+  discussions:
+    new:
+      title: 'New discussion'
+      forum_notice: "You're about to start a discussion in the forum: "
+      forum_notice2: 'Make sure your discussion is relevant to this forum.'
+      what_kind: 'What kind of discussion do you want to start?'
+      question_title: 'How can we increase happiness?'
+      question_motion1: 'Free access to spas'
+      question_motion2: 'Subsidies for street artists'
+      motion_title: 'Free access to spas'
+      motion_argument1: 'Cleaner people'
+      motion_argument2: 'Social cohesion'
+      motion_argument3: 'High cost'
+      project_title: 'Realization of residential area New Garden'

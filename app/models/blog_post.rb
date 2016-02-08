@@ -1,5 +1,6 @@
 class BlogPost < ActiveRecord::Base
-  include ArguBase, Trashable, PublicActivity::Common, Flowable, Placeable, ActivePublishable
+  include ArguBase, Trashable, PublicActivity::Common, Flowable, Placeable,
+          ActivePublishable, Parentable
 
   # For Rails 5 attributes
   # attribute :state, :enum
@@ -21,4 +22,5 @@ class BlogPost < ActiveRecord::Base
 
   validates :blog_postable, presence: true
 
+  parentable :blog_postable, :forum
 end

@@ -1,5 +1,5 @@
 class Phase < ActiveRecord::Base
-  include ArguBase, Placeable
+  include ArguBase, Placeable, Parentable
 
   belongs_to :forum
   belongs_to :project, inverse_of: :phases
@@ -18,7 +18,7 @@ class Phase < ActiveRecord::Base
   # attribute :end_date, :datetime
   alias_attribute :display_name, :name
 
-
+  parentable :project
   counter_culture :project
 
   def blog_posts

@@ -46,5 +46,21 @@ FactoryGirl.define do
                     for: :con
       end
     end
+
+    trait :with_group_responses do
+      after :create do |motion|
+        g = create(:group,
+                   visibility: :discussion,
+                   forum: motion.forum)
+        create_list :group_response, 2,
+                    group: g
+        create(:group,
+               visibility: :hidden,
+               forum: motion.forum)
+        create(:group,
+               visibility: :visible,
+               forum: motion.forum)
+      end
+    end
   end
 end

@@ -245,18 +245,6 @@ nl:
   welcome_video_dismiss: 'Verberg deze boodschap.'
   follow: 'Volgen'
   unfollow: 'Ontvolgen'
-  new_discussion:
-    title: 'Nieuwe discussie'
-    what_kind: 'Wat voor soort discussie wil jij starten?'
-    question_title: 'Hoe wordt iedereen gelukkiger?'
-    question_motion1: 'Gratis badplaatsen'
-    question_motion2: 'Subsidies voor straatartiesten'
-    motion_title: 'Gratis badplaatsen'
-    motion_argument1: 'Schonere mensen'
-    motion_argument2: 'Sociale cohesie'
-    motion_argument3: 'Hoge kosten'
-    forum_notice: 'Je staat op het punt een discussie te starten in het forum: '
-    forum_notice2: 'Zorg er voor dat jouw discussie relevant is voor dit forum.'
   seo:
     argument:
       name: 'Argument %{side} %{motiontitle}'
@@ -285,3 +273,6 @@ nl:
     user:
       name: ''
       description: ''
+  time:
+    formats:
+      dateline: '%A, %d %B %Y'

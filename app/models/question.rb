@@ -4,6 +4,7 @@ class Question < ActiveRecord::Base
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
+  belongs_to :project, inverse_of: :questions
   belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, :dependent => :destroy
   has_many :motions
@@ -12,7 +13,7 @@ class Question < ActiveRecord::Base
 
   acts_as_followable
   counter_culture :forum
-  parentable :forum
+  parentable :project, :forum
   convertible :votes, :taggings, :activities
   mount_uploader :cover_photo, CoverUploader
 
@@ -26,6 +27,11 @@ class Question < ActiveRecord::Base
   attr_accessor :include_motions
 
   after_save :creator_follow
+
+  scope :published, -> do
+    joins('LEFT OUTER JOIN projects ON projects.id = project_id')
+      .where('published_at IS NOT NULL OR project_id IS NULL')
+  end
 
   # Might not be a good idea
   def creator

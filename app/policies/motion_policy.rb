@@ -15,7 +15,7 @@ class MotionPolicy < RestrictivePolicy
 
     def resolve
       if context.forum.present?
-        scope.where(forum_id: context.forum.id)
+        scope.where(forum_id: context.forum.id).published
       end
     end
   end

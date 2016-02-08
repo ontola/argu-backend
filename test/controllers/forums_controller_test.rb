@@ -3,20 +3,32 @@ require 'test_helper'
 class ForumsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  let(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
   let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
   let!(:cologne) { FactoryGirl.create(:closed_populated_forum, name: 'cologne') }
   let!(:helsinki) { FactoryGirl.create(:hidden_populated_forum, name: 'helsinki') }
 
+  let(:project) { create(:project, forum: holland, published_at: nil) }
+  let(:q1) { create(:question, forum: holland, project: project) }
+  let(:m1) { create(:motion, forum: holland, project: project) }
+  def holland_nested_project_items
+    [m1, q1]
+  end
+
   ####################################
   # As Guest
   ####################################
-  test 'should get show when not logged in' do
+  test 'guest should get show when not logged in' do
     get :show, id: holland
     assert_response 200
     assert_not_nil assigns(:forum)
     assert_not_nil assigns(:items)
 
     assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
+    assert_not assigns(:items).map(&:identifier).include?(q1.identifier),
+               "Unpublished projects' questions are visible"
+    assert_not assigns(:items).map(&:identifier).include?(m1.identifier),
+               "Unpublished projects' motions are visible"
   end
 
   ####################################
@@ -24,7 +36,9 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
-  test 'should get show' do
+  test 'user should get show' do
+    # Trigger creation of items
+    holland_nested_project_items
     sign_in user
 
     get :show, id: holland
@@ -33,23 +47,27 @@ class ForumsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:items)
 
     assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
+    assert_not assigns(:items).map(&:identifier).include?(q1.identifier),
+           "Unpublished projects' questions are visible"
+    assert_not assigns(:items).map(&:identifier).include?(m1.identifier),
+           "Unpublished projects' motions are visible"
   end
 
-  test 'should not show settings' do
+  test 'user should not show settings' do
     sign_in user
 
-    get :settings, id: holland
+    get :settings, id: freetown
     assert_redirected_to root_path, 'Settings are publicly visible'
   end
 
   test 'should not show statistics' do
     sign_in user
 
-    get :statistics, id: holland
+    get :statistics, id: freetown
     assert_redirected_to root_path, 'Statistics are publicly visible'
   end
 
-  test 'should not leak closed children to non-members' do
+  test 'user should not leak closed children to non-members' do
     sign_in user
 
     get :show, id: cologne
@@ -59,21 +77,26 @@ class ForumsControllerTest < ActionController::TestCase
     assert_nil assigns(:items), 'Closed forums are leaking content'
   end
 
-  test 'should not show hidden to non-members' do
+  test 'user should not show hidden to non-members' do
     sign_in user
 
     get :show, id: helsinki
     assert_response 404, 'Hidden forums are visible'
   end
 
-  test 'should not put update on others question' do
+  test 'user should not put update on others question' do
     sign_in user
 
-    put :update, id: holland, question: {title: 'New title', content: 'new contents'}
+    put :update,
+        id: holland,
+        question: {
+          title: 'New title',
+          content: 'new contents'
+        }
     assert_redirected_to root_path, 'Others can update questions'
   end
 
-  test 'should get selector' do
+  test 'user should get selector' do
     sign_in user
 
     get :selector
@@ -84,10 +107,26 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
+  let(:holland_member) { create_member(holland) }
   let(:cologne_member) { create_member(cologne) }
   let(:helsinki_member) { create_member(helsinki) }
 
-  test 'should show closed children to members' do
+  test 'member should get show' do
+    # Trigger creation of items
+    holland_nested_project_items
+    sign_in holland_member
+
+    get :show, id: holland
+    assert_response 200
+
+    assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
+    assert_not assigns(:items).map(&:identifier).include?(q1.identifier),
+               "Unpublished projects' questions are visible"
+    assert_not assigns(:items).map(&:identifier).include?(m1.identifier),
+               "Unpublished projects' motions are visible"
+  end
+
+  test 'member should show closed children to members' do
     sign_in cologne_member
 
     get :show, id: cologne
@@ -97,7 +136,7 @@ class ForumsControllerTest < ActionController::TestCase
     assert assigns(:items), 'Closed forum content is not present'
   end
 
-  test 'should show hidden to members' do
+  test 'member should show hidden to members' do
     sign_in helsinki_member
 
     get :show, id: helsinki
@@ -109,7 +148,7 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   let(:forum_pair) { create_forum_owner_pair({type: :populated_forum}) }
 
-  test 'should show settings and all tabs' do
+  test 'owner should show settings and all tabs' do
     forum, owner = forum_pair
     sign_in owner
 
@@ -124,7 +163,7 @@ class ForumsControllerTest < ActionController::TestCase
     end
   end
 
-  test 'should update settings' do
+  test 'owner should update settings' do
     forum, owner = forum_pair
     sign_in owner
 
@@ -142,7 +181,7 @@ class ForumsControllerTest < ActionController::TestCase
     assert_equal 2, assigns(:forum).lock_version, "Lock version didn't increase"
   end
 
-  test 'should show settings/groups' do
+  test 'owner should show settings/groups' do
     forum, owner = forum_pair
     sign_in owner
 
@@ -152,7 +191,7 @@ class ForumsControllerTest < ActionController::TestCase
     assert assigns(:forum)
   end
 
-  test 'should not show statistics yet' do
+  test 'owner should not show statistics yet' do
     forum, owner = forum_pair
     sign_in owner
 
@@ -169,7 +208,7 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   let(:holland_manager) { create_manager(holland) }
 
-  test 'should show settings and some tabs' do
+  test 'manager should show settings and some tabs' do
     sign_in holland_manager
 
     [:general, :advanced, :groups].each do |tab|

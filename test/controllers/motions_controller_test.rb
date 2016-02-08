@@ -3,14 +3,19 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
-  let!(:follower) { FactoryGirl.create(:follow, followable: freetown) }
+  let!(:freetown) { create(:forum, name: 'freetown') }
+  let!(:follower) { create(:follow, followable: freetown) }
   let(:question) do
-    FactoryGirl.create(:question,
-                       forum: freetown,
-                       creator: FactoryGirl.create(:profile_direct_email))
+    create(:question,
+           forum: freetown,
+           creator: create(:profile_direct_email))
   end
-  let(:subject) { FactoryGirl.create(:motion, :with_arguments, forum: freetown) }
+  let(:subject) do
+    create(:motion,
+           :with_arguments,
+           :with_group_responses,
+           forum: freetown)
+  end
 
   ####################################
   # As Guest
@@ -26,6 +31,8 @@ class MotionsControllerTest < ActionController::TestCase
            'No trashed arguments to test on'
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) },
                'Trashed arguments are visible'
+    assert assigns(:group_responses).keys.all?(&:discussion?),
+           'Non discussion groups are shown under motions'
   end
 
   test 'guest should not get edit when not logged in' do
@@ -121,7 +128,6 @@ class MotionsControllerTest < ActionController::TestCase
     get :new, forum_id: freetown
 
     assert_response 200
-    assert_not_nil assigns(:motion)
   end
 
   test 'member should post create' do
@@ -247,6 +253,53 @@ class MotionsControllerTest < ActionController::TestCase
     assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
   end
 
+  ####################################
+  # As Moderator
+  ####################################
+  let(:project) { create(:project, forum: freetown) }
+  let(:project_question) do
+    create(:question,
+           forum: freetown,
+           project: project,
+           creator: FactoryGirl.create(:profile_direct_email))
+  end
+  let(:moderator) { create_moderator(project) }
+
+  test 'moderator should get new within project' do
+    sign_in moderator
+
+    get :new, project_id: project
+
+    assert_response 200
+  end
+
+  test 'moderator should post create within project' do
+    sign_in moderator
+
+    assert_differences create_changes_array do
+      post :create,
+           project_id: project,
+           motion: attributes_for(:motion)
+    end
+    assert_not_nil assigns(:cm).resource
+    assert_redirected_to motion_path(assigns(:cm).resource,
+                                     start_motion_tour: true)
+  end
+
+  test 'moderator should post create within question within project' do
+    sign_in moderator
+
+    assert_differences create_changes_array do
+      post :create,
+           question_id: project_question,
+           motion: attributes_for(:motion)
+    end
+    assert_not_nil assigns(:cm).resource
+    assert_equal project, assigns(:cm).resource.reload.project
+    assert_equal project_question, assigns(:cm).resource.reload.question
+    assert_redirected_to motion_path(assigns(:cm).resource,
+                                     start_motion_tour: true)
+  end
 
   ####################################
   # As Page

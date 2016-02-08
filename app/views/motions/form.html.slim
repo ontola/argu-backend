@@ -1,12 +1,12 @@
 =set_title motion.new_record? ? t('new_type', type: motion_type(motion)) : t('edit_type', type: motion_type(motion))
 .col-3
   .col-3-2
-    =to_parent(motion.question)
+    =to_parent
     .box
       section.section-info.motion-bg
         span[class="fa fa-#{motion_icon}"]
         span.icon-left= motion_type(motion)
-      =semantic_form_for((motion.new_record? ? [authenticated_context, motion] : motion), html: {autocomplete: 'off'}) do |f|
+      =semantic_form_for((motion.new_record? ? [get_parent_resource, motion] : motion), html: {autocomplete: 'off'}) do |f|
         section.smallpadded.form-filled
           =f.inputs
             h3= t('motions.form.title_heading', type: motion_type(motion))

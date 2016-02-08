@@ -3,10 +3,10 @@ source 'https://rubygems.org/'
 gem 'dotenv-rails', :require => 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
 gem 'sass', '= 3.4.18'
-gem 'rails', '~>4.2.5'
+gem 'rails', '~>4.2.5.1'
 gem 'active_model_serializers', '~> 0.10.0.rc3'
 
-gem 'simple_text', '~> 0.0.21'
+gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
 gem 'logstasher'
 gem 'yard'
@@ -26,6 +26,7 @@ gem 'formtastic', '~> 3.1.2'
 gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
 gem 'rest-client'
+gem 'multimap', git: 'https://github.com/apalmblad/multimap.git', ref: '96eeacc1606ea7f008ce0a50641c31a2c844fd9e'
 gem 'squirm_rails', require: 'squirm/rails'
 
 ##################Features########################
@@ -40,7 +41,7 @@ gem 'rollout'
 gem 'html_truncator', '~>0.2'
 gem 'jwt'
 gem 'doorkeeper', '~> 2.2.1'
-gem 'rack-attack'
+gem 'rack-attack', '~> 4.3.1'
 gem 'country_select'
 gem 'http_accept_language'
 gem 'geokit-rails', '2.1.0'
@@ -50,8 +51,8 @@ gem 'auto_strip_attributes', '~> 2.0.6'
 gem 'mailgun_rails', '0.7.0'
 gem 'wisper', '~> 1.6.1'
 # gem 'wisper-activerecord', '~> 0.3.0'
-gem 'roadie', '~> 3.0.5'
-gem 'roadie-rails', '~> 1.0'
+gem 'roadie', '~> 3.1.1'
+gem 'roadie-rails', '~> 1.1.0'
 gem 'cocoon', '~> 1.2.6'
 gem 'httparty', '~> 0.13.7'
 gem 'acts_as_list', '~> 0.7.2'
@@ -76,7 +77,7 @@ gem 'carrierwave-vips'
 gem 'rmagick', '2.14.0'
 #gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'carrierwave-aws'
-gem 'sidekiq', '~> 3.3.0'
+gem 'sidekiq', '~> 3.5.4'
 gem 'sidetiq'
 gem 'sidekiq-logging-json'
 gem 'sinatra', '>= 1.3.0'
@@ -87,10 +88,11 @@ gem 'sprockets', '~>3.0.2'
 gem 'sprockets-es6', require: 'sprockets/rails'
 gem 'font-awesome-rails'
 gem 'babel-transpiler'
+gem 'redcarpet', '~> 3.3.4'
 #gem 'browserify-rails', '~> 1.4.0', require: 'browserify-rails'
 
 ##################User management########################
-gem 'devise', '~> 3.4.1'
+gem 'devise', '~> 3.5.5'
 gem 'devise_invitable', '~> 1.4.0'
 gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-oauth2', '~> 1.2.0'
@@ -103,16 +105,14 @@ gem 'bugsnag'
 gem 'rolify', '~> 3.4.1'
 
 group :development, :test do
-  #gem 'thin'
-  gem 'puma', platform: :ruby
-  gem 'nokogiri', '1.6.7.1'
+  gem 'nokogiri', '~> 1.6.7.2'
   gem 'minitest-rails', '~> 2.2.0'
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'minitest-bang'
   gem 'rspec-rails', '~> 3.3.3'
-  gem 'capybara', '~> 2.5.0'
-  gem 'capybara-webkit', '~> 1.7.0'
-  gem 'selenium-webdriver', '~> 2.47.1'
+  gem 'capybara', '~> 2.6.0'
+  gem 'capybara-webkit', '~> 1.8.0'
+  gem 'selenium-webdriver', '~> 2.49.0'
   gem 'poltergeist'
   gem 'chromedriver-helper'
   gem 'mocha'
@@ -126,7 +126,6 @@ group :development, :test do
   gem 'spring', '~> 1.3.6'
   gem 'coffee-rails', '~> 4.1.0'
   gem 'quiet_assets'
-  gem 'web-console', '~> 2.0.0'
   gem 'factory_girl'
   gem 'factory_girl_rails'
   ####Capistrano#####
@@ -137,11 +136,17 @@ group :development, :test do
   gem 'license_finder'
   gem 'database_cleaner'
   gem 'brakeman'
+  gem 'bundler-audit'
   gem 'wisper-minitest', require: false
   gem 'wisper-rspec', require: false
   gem 'fakeredis', require: false
   gem 'simplecov', require: false
   gem 'rubocop'
+end
+
+group :development do
+  gem 'web-console', '~> 3.0.0'
+  gem 'puma', platform: :ruby
 end
 
 group :production, :staging do

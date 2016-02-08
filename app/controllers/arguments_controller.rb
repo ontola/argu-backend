@@ -3,10 +3,9 @@ class ArgumentsController < AuthorizedController
   # GET /arguments/1
   # GET /arguments/1.json
   def show
-    @forum = @argument.forum
-    current_context @argument
-    @parent_id = params[:parent_id].to_s
-    
+    # @forum = @argument.forum
+    # @parent_id = params[:parent_id].to_s
+
     @comments = @argument.filtered_threads(show_trashed?, params[:page])
     @length = @argument.root_comments.length
     @vote = Vote.find_by(voteable: @argument, voter: current_profile)
@@ -23,17 +22,12 @@ class ArgumentsController < AuthorizedController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    @forum = Forum.find_via_shortname params[:forum_id]
-    @argument = @forum.arguments.new motion_id: params[:motion_id]
-
-    authorize @argument, :new?
-    current_context @argument
-    @argument.assign_attributes({pro: %w(con pro).index(params[:pro]) })
+    authenticated_resource!.assign_attributes({pro: %w(con pro).index(params[:pro]) })
 
     respond_to do |format|
       if params[:motion_id].present?
         format.js { render js: "window.location = #{request.url.to_json}" }
-        format.html { render :form }
+        format.html { render :form, locals: { argument: authenticated_resource! } }
         format.json { render json: @argument }
       else
         format.html { render text: 'Bad request', status: 400 }
@@ -44,23 +38,17 @@ class ArgumentsController < AuthorizedController
 
   # GET /arguments/1/edit
   def edit
-    @argument = Argument.find params[:id]
-    authorize @argument, :edit?
-    current_context @argument
-    @forum = @argument.forum
-
     respond_to do |format|
-      format.html { render :form}
+      format.html { render :form }
     end
   end
 
   # POST /arguments
   # POST /arguments.json
   def create
-    set_tenant(authenticated_resource!)
     @ca = CreateArgument.new current_profile,
                              argument_params.merge({
-                                 forum: @forum,
+                                 forum: authenticated_context,
                                  publisher: current_user
                              }),
                              {
@@ -88,16 +76,13 @@ class ArgumentsController < AuthorizedController
   # PUT /arguments/1
   # PUT /arguments/1.json
   def update
-    @argument = Argument.find params[:id]
-    authorize @argument, :update?
-
     respond_to do |format|
-      if @argument.update_attributes(argument_params)
-        format.html { redirect_to @argument, notice: t('arguments.notices.updated') }
+      if authenticated_resource!.update_attributes(argument_params)
+        format.html { redirect_to authenticated_resource!, notice: t('arguments.notices.updated') }
         format.json { head :no_content }
       else
         format.html { render :form }
-        format.json { render json: @argument.errors, status: :unprocessable_entity }
+        format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -139,8 +124,10 @@ private
     params.require(:argument).permit(*policy(@argument || Argument).permitted_attributes)
   end
 
-  def set_tenant(item)
-    @forum = item.forum
+  def resource_new_params
+    {
+      forum: resource_tenant,
+      motion_id: params[:motion_id]
+    }
   end
-
 end
