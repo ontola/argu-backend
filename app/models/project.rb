@@ -32,4 +32,8 @@ class Project < ActiveRecord::Base
   counter_culture :forum
 
   parentable :forum
+
+  def latest_blog_post
+    blog_posts.order(published_at: :desc).first
+  end
 end

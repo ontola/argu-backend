@@ -1,5 +1,9 @@
 div[itemscope itemtype="http://www.schema.org/Thing"]
   .col-1
+    -if project.is_draft?
+      div.draftbar.bg-danger
+        =t('draft')
+        =link_to t('publish'), project_path(project, project: {publish: true}), class: 'btn btn--warning', data: {method: :put, confirm: t('projects.publish_confirmation')}
     =to_parent
     .box[class=status_classes_for(project)]
       section
@@ -17,6 +21,9 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
       span.fa.fa-plus
       span.icon-left= t('discussions.new.title')
     =render partial: 'projects/timeline', locals: {project: project}
+    #current-blog-post
+      - if project.latest_blog_post.present?
+        = render project.latest_blog_post
     .grid
       .box.box-grid-sizer
       .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]

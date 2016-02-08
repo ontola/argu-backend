@@ -6,9 +6,9 @@ header
   .timeline-phases
     -project.phases.order(start_date: :asc).each do |phase|
       .phase
-        =link_to phase_path(phase), data: {title: start_end_title_string(phase)}, class: 'phase-title' do
+        =link_to phase_path(phase), data: {remote: true}, class: 'phase-title' do
           span= phase.display_name
         .phase-points
           -phase.blog_posts.each do |blog_post|
-            =link_to blog_post_path(blog_post), data: {title: blog_post.title}, class: 'point point-blog-post' do
+            =link_to blog_post_path(blog_post), data: {remote: true}, class: "point point-blog-post #{'active' if blog_post == project.latest_blog_post}" do
               span.fa.fa-newspaper-o

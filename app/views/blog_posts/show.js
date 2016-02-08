@@ -1,0 +1,2 @@
+$("#current-blog-post").html("<%= escape_javascript render(partial: 'blog_posts/blog_post', locals: local_assigns) %>");
+$(".timeline-component .point, .timeline-component .phase-title").removeClass('active');
