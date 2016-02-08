@@ -11,8 +11,6 @@ gem 'active_model_serializers', '~> 0.10.0.rc3'
 gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
 gem 'logstasher'
-gem 'yard'
-gem 'yard-activesupport-concern'
 
 ##################DB########################
 gem 'pg', '0.18.2'
@@ -106,8 +104,7 @@ gem 'pundit', '~> 1.0.0'
 gem 'bugsnag'
 gem 'rolify', '~> 3.4.1'
 
-group :development, :test do
-  gem 'nokogiri', '~> 1.6.7.2'
+group :test do
   gem 'minitest-rails', '~> 2.2.0'
   gem 'minitest-reporters', '~> 1.0.8'
   gem 'minitest-bang'
@@ -118,24 +115,11 @@ group :development, :test do
   gem 'poltergeist'
   gem 'chromedriver-helper'
   gem 'mocha'
-  gem 'pry'
   gem 'mailcatcher', '~> 0.6.2'
-  #gem 'byebug'
-  #gem 'pry-byebug'
-  gem 'meta_request'
-  gem 'better_errors'
-  gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
   gem 'spring', '~> 1.6.3'
   gem 'spring-commands-rspec', group: :development
-  gem 'coffee-rails', '~> 4.1.0'
-  gem 'quiet_assets'
   gem 'factory_girl'
   gem 'factory_girl_rails'
-  ####Capistrano#####
-  gem 'capistrano', '~> 3.3.3'
-  gem 'capistrano-rails', '~> 1.1.3'
-  gem 'capistrano-bundler', '~> 1.1.3'
-  gem 'capistrano-rvm', '~> 0.1.2'
   gem 'license_finder'
   gem 'database_cleaner'
   gem 'brakeman'
@@ -148,6 +132,21 @@ group :development, :test do
 end
 
 group :development do
+  gem 'nokogiri', '~> 1.6.7.2'
+  gem 'pry'
+  #gem 'byebug'
+  #gem 'pry-byebug'
+  gem 'meta_request'
+  gem 'better_errors'
+  gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
+  gem 'coffee-rails', '~> 4.1.0'
+  gem 'quiet_assets'
+  gem 'capistrano', '~> 3.3.3'
+  gem 'capistrano-rails', '~> 1.1.3'
+  gem 'capistrano-bundler', '~> 1.1.3'
+  gem 'capistrano-rvm', '~> 0.1.2'
+  gem 'yard'
+  gem 'yard-activesupport-concern'
   gem 'web-console', '~> 3.0.0'
   gem 'puma', platform: :ruby
 end
