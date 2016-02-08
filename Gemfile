@@ -152,7 +152,8 @@ group :development do
 end
 
 group :production, :staging do
-  gem 'therubyracer', '~> 0.12.1'
+  gem 'libv8', '~> 3.16.14.13'
+  gem 'therubyracer', '~> 0.12.2'
   gem 'unicorn', '5.0.1'
   gem 'rack-test', '~> 0.6.2'
 end
