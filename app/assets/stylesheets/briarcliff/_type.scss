@@ -94,7 +94,7 @@ i {
 
 p {
   line-height: 1.5em;
-  color: $g4;
+  color: $g5;
 }
 
 ol.numbered{
@@ -143,7 +143,7 @@ header {
 }
 
 header h1, header h2, header h3 {
-  color: $g3a;
+  color: $g4;
   margin-bottom: 0.8em;
   @include uppercase;
 }
