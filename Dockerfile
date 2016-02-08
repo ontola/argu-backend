@@ -11,7 +11,7 @@ WORKDIR /usr/src/app
 
 ADD Gemfile /usr/src/app/
 ADD Gemfile.lock /usr/src/app/
-RUN bundle install --deployment --frozen --clean --without test
+RUN bundle install --deployment --frozen --clean --without development
 
 ADD . /usr/src/app
 RUN rm -f /usr/src/app/config/database.yml
