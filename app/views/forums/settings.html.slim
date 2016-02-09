@@ -11,4 +11,4 @@
       section
         / Protects against Directory Traversal Attacks
         -if local_assigns[:tab] && !tab.gsub(/\\/, '').index('../')
-          =render partial: "settings/#{tab}", locals: {resource: @forum, tab: tab, active: active}.merge(local_assigns)
+          =render partial: "forums/settings/#{tab}", locals: {resource: @forum, tab: tab, active: active}.merge(local_assigns)

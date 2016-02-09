@@ -120,6 +120,10 @@ class User < ActiveRecord::Base
                  .or(t[:owner_id].eq(profile.id)))
   end
 
+  def member_of?(forum)
+    self.profile.member_of?(forum)
+  end
+
   def password_required?
     (!persisted? && identities.blank?) || password.present? || password_confirmation.present?
   end
