@@ -9,6 +9,7 @@ en:
     view_all_motions: "View all %{amount} ideas..."
     tooltips:
       count: "number of challenges"
+      info: "A challange is een problem or question to which people can submit their ideas."
     call_to_action:
       title: "Looking for good ideas?"
       body: "Are you looking for good ideas to a burning question?"
