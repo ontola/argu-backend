@@ -16,7 +16,7 @@ class GroupsControllerTest < ActionController::TestCase
   ####################################
   let(:user) { create(:user) }
 
-  test 'should not show new' do
+  test 'user should not show new' do
     sign_in user
 
     get :new, id: group, forum_id: freetown
@@ -25,7 +25,7 @@ class GroupsControllerTest < ActionController::TestCase
     assert assigns(:forum)
   end
 
-  test 'should not show edit' do
+  test 'user should not show edit' do
     sign_in user
 
     get :edit, id: group, forum_id: freetown
@@ -35,7 +35,7 @@ class GroupsControllerTest < ActionController::TestCase
     assert assigns(:group)
   end
 
-  test 'should not delete destroy' do
+  test 'user should not delete destroy' do
     sign_in user
 
     assert_no_difference 'Group.count' do
@@ -49,7 +49,24 @@ class GroupsControllerTest < ActionController::TestCase
   # As Owner
   ####################################
 
-  test 'should show new' do
+  test 'owner should post create visible group' do
+    sign_in @freetown_owner
+
+    post :create,
+         forum_id: freetown,
+         group: {
+             group_id: group.id,
+             name: 'Test group visible',
+             visibilitiy: 'visible'
+         }
+
+    assert true
+
+    # TODO: This test should assert a bit more things.
+
+  end
+
+  test 'owner should show new' do
     sign_in @freetown_owner
 
     get :new, id: @group, forum_id: @freetown
@@ -59,7 +76,7 @@ class GroupsControllerTest < ActionController::TestCase
     assert assigns(:group)
   end
 
-  test 'should show edit' do
+  test 'owner should show edit' do
     sign_in @freetown_owner
 
     get :edit, id: @group, forum_id: @freetown
@@ -69,7 +86,7 @@ class GroupsControllerTest < ActionController::TestCase
     assert assigns(:group)
   end
 
-  test 'should delete destroy' do
+  test 'owner should delete destroy' do
     sign_in @freetown_owner
 
     assert_difference 'Group.count', -1 do

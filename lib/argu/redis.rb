@@ -25,12 +25,36 @@ module Argu
       rescue_redis_connection_error(e)
     end
 
+    def self.hgetall(key, redis = ::Redis.new)
+      begin
+        redis.hgetall(key)
+      rescue ::Redis::CannotConnectError => e
+        self.rescue_redis_connection_error(e)
+      end
+    end
+
+    def self.hmset(key, values: {}, redis: ::Redis.new)
+      begin
+        redis.hmset(key, *values)
+      rescue ::Redis::CannotConnectError => e
+        self.rescue_redis_connection_error(e)
+      end
+    end
+
     # Delegate `::Redis::CannotConnectError` to this method.
     # It automatically logs and sends to bugsnag.
     def self.rescue_redis_connection_error(e)
       Rails.logger.error 'Redis not available'
       ::Bugsnag.notify(e, severity: 'error')
       nil
+    end
+
+    def self.set(key, value, redis = ::Redis.new)
+      begin
+        redis.set(key, value)
+      rescue ::Redis::CannotConnectError => e
+        self.rescue_redis_connection_error(e)
+      end
     end
   end
 end

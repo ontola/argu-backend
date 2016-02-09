@@ -209,6 +209,8 @@ Argu::Application.routes.draw do
     post ':id' => 'profiles#update', on: :collection
   end
 
+  resources :banner_dismissals, only: :create
+  get '/banner_dismissals', to: 'banner_dismissals#create'
   resources :comments, only: :show
 
   resources :follows, only: :create do

@@ -111,6 +111,10 @@ class User < ActiveRecord::Base
     Page.where(t[:id].in(profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id)).or(t[:owner_id].eq(profile.id)))
   end
 
+  def member_of?(forum)
+    self.profile.member_of?(forum)
+  end
+
   def password_required?
     (!persisted? && identities.blank?) || password.present? || password_confirmation.present?
   end
