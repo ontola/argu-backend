@@ -154,6 +154,7 @@ export const ShareDropdown = React.createClass({
                                                key='required' >
             <FBShareItem
                     shareUrl={url}
+                    type="link"
                     url={shareUrls.facebook}
                     title={title}
                     count={counts.facebook} />

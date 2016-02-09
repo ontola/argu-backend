@@ -1158,6 +1158,7 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
                 key: 'required' }),
             _react2.default.createElement(FBShareItem, {
                 shareUrl: url,
+                type: 'link',
                 url: shareUrls.facebook,
                 title: title,
                 count: counts.facebook }),
