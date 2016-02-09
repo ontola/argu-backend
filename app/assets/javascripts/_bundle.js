@@ -527,7 +527,7 @@ var ui = {
     init: function init() {
         "use strict";
 
-        $(document).on('keyup', '.confirm .confirm-text', this.confirmInputHandler).on('click', '.comment .btn-reply', this.openCommentForm).on('click', '.comment .btn-cancel', this.cancelCommentForm).on('pjax:success', this.handleDOMChangedFinished).on('pjax:end', this.checkTabs).on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix).on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick).ajaxComplete(this.handleAjaxCalls).on('click', '.welcome-video-hide', this.welcomeVideoHide).on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle).on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive);
+        $(document).on('keyup', '.confirm .confirm-text', this.confirmInputHandler).on('click', '.comment .btn-reply', this.openCommentForm).on('click', '.comment .btn-cancel', this.cancelCommentForm).on('pjax:success', this.handleDOMChangedFinished).on('pjax:end', this.checkTabs).on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix).on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick).ajaxComplete(this.handleAjaxCalls).on('click', '.welcome-video-hide', this.welcomeVideoHide).on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle).on('click', '.box-close-button', this.bannerHide).on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive);
 
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);
@@ -549,6 +549,20 @@ var ui = {
         //Disable IE-touch selection on non-content items
         $(document).on('selectstart', '#navbar,.filter-and-sort,.tabs,.dropdown', function (e) {
             e.preventDefault();
+        });
+    },
+
+    bannerHide: function bannerHide() {
+        var banner = $(this).closest('.banner');
+        fetch('/banner_dismissals.json', _safeCredentials({
+            method: 'post',
+            body: JSON.stringify({
+                banner_dismissal: {
+                    banner_id: banner.attr('id').split('_')[1]
+                }
+            })
+        })).then(function () {
+            banner.slideUp();
         });
     },
 
@@ -2103,6 +2117,7 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
                 key: 'required' }),
             _react2.default.createElement(FBShareItem, {
                 shareUrl: url,
+                type: 'link',
                 url: shareUrls.facebook,
                 title: title,
                 count: counts.facebook }),
