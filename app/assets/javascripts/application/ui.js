@@ -19,6 +19,7 @@ const ui = {
             .on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive)
             .on('turbolinks:load', this.handleDOMChangedFinished)
             .on('turbolinks:load', this.initPlaceholderFallback)
+            .on('click', '.box-close-button', this.bannerHide)
             .ajaxComplete(this.handleAjaxCalls);
 
         window.addEventListener('online', this.handleOnline);
@@ -39,6 +40,20 @@ const ui = {
         //CBC-fixes
         //Disable IE-touch selection on non-content items
         $(document).on('selectstart', '#navbar,.filter-and-sort,.tabs,.dropdown', function(e) { e.preventDefault(); });
+    },
+
+    bannerHide: function () {
+        let banner = $(this).closest('.banner');
+        fetch('/banner_dismissals.json', _safeCredentials({
+            method: 'post',
+            body: JSON.stringify({
+                banner_dismissal: {
+                    banner_id: banner.attr('id').split('_')[1]
+                }
+            })
+        })).then(() => {
+            banner.slideUp();
+        });
     },
 
     bindRemoteLinks: function () {

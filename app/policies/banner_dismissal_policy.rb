@@ -1,4 +1,4 @@
-class BannerPolicy < RestrictivePolicy
+class BannerDismissalPolicy < RestrictivePolicy
   include ForumPolicy::ForumRoles
 
   class Scope < Scope
@@ -14,51 +14,32 @@ class BannerPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      audience = [Banner.audiences[:everyone]]
-      if user && user.member_of?(@forum)
-        audience << Banner.audiences[:members]
-      elsif user.present?
-        audience << Banner.audiences[:users]
-      else
-        audience << Banner.audiences[:guests]
-      end
-      scope.where(audience: audience)
+      scope
     end
   end
 
   def permitted_attributes
     attributes = super
     attributes << [:title, :forum, :cited_profile, :content,
-                   :cited_avatar, :cited_name, :audience,
+                   :cited_avatar, :cited_name,
                    :cited_function, :publish_at] if create?
     attributes << [:id] if staff?
     attributes
   end
 
   def create?
-    rule is_manager?, is_owner?, super
-  end
-
-  def destroy?
-    rule is_manager?, is_owner?, super
-  end
-
-  def edit?
-    update?
-  end
-
-  def new?
-    create?
-  end
-
-  def update?
-    rule is_manager?, is_owner?, super
+    case record.banner.audience.to_sym
+      when :guests then !user
+      when :users then user && !user.member_of?(@forum)
+      when :members then user && user.member_of?(@forum)
+      when :everyone then true
+    end
   end
 
   private
 
   def forum_policy
-    if record.is_a?(Class) || record.forum.blank?
+    if record.is_a?(Class) || record.banner.try(:forum).blank?
       Pundit.policy(context, :restrictive)
     else
       super

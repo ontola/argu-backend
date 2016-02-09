@@ -90,7 +90,7 @@ ActiveRecord::Schema.define(version: 20160308091020) do
     t.integer  "forum_id"
     t.integer  "publisher_id"
     t.string   "title"
-    t.string   "content"
+    t.text     "content"
     t.integer  "cited_profile_id"
     t.string   "cited_avatar"
     t.string   "cited_name"
