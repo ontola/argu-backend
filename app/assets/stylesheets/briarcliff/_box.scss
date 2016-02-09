@@ -69,7 +69,7 @@
     margin-bottom: .8em;
   }
 
-  &[pro="pro"],&[pro="con"],&[collection_model="QuestionAnswer"] {
+  &[pro="pro"],&[pro="con"],&[collection_model="Motion"] {
     h3 {
       color: white;
     }
@@ -82,7 +82,7 @@
   &[pro="con"]{
     background-color: $con;
   }
-  &[collection_model="QuestionAnswer"]{
+  &[collection_model="Motion"]{
     background-color: $motion;
   }
 }
@@ -233,7 +233,7 @@
     line-height: 1.6em;
   }
   span.icon-left {
-
+    margin-left: 1em;
   }
   .comments-counter{
     margin-left: .5em;

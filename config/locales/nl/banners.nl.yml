@@ -1,3 +1,8 @@
 nl:
   banners:
     type: 'banner'
+    audiences:
+      guests: 'Gasten'
+      users: 'Gebruikers'
+      members: 'Leden'
+      everyone: 'Iedereen'
