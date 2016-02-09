@@ -110,8 +110,13 @@ class ApplicationController < ActionController::Base
   end
 
   def collect_banners
+    banners = stubborn_hgetall('banners') || {}
+    banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
     if @forum.present?
-      @banners = @forum.banners.published
+      @banners = policy_scope(@forum
+                     .banners
+                     .published)
+                     .reject { |b| banners[b.identifier] == 'hidden' }
     end
   end
 

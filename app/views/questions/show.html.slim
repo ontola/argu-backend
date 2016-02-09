@@ -40,5 +40,7 @@
                 collection_model: Motion,
                 partial: 'question_answers/show',
                 buttons_url: polymorphic_url([:new, question, :motion]),
-                buttons_text: t('add_type', type: motion_type(question)))
+                buttons_text: t('add_type', type: motion_type(question)),
+                buttons_icon: 'fa-lightbulb-o',
+                buttons_class: 'box-link--motion')
 =render partial: 'discussions/new', locals: {forum: authenticated_context}

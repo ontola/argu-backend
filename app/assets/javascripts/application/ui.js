@@ -18,7 +18,8 @@ const ui = {
             .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
             .ajaxComplete(this.handleAjaxCalls)
             .on('click', '.welcome-video-hide', this.welcomeVideoHide)
-            .on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle)
+            .on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle);
+            .on('click', '.box-close-button', this.bannerHide);
             .on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive);
 
         window.addEventListener('online', this.handleOnline);
@@ -40,6 +41,20 @@ const ui = {
         //CBC-fixes
         //Disable IE-touch selection on non-content items
         $(document).on('selectstart', '#navbar,.filter-and-sort,.tabs,.dropdown', function(e) { e.preventDefault(); });
+    },
+
+    bannerHide: function () {
+        let banner = $(this).closest('.banner');
+        fetch('/banner_dismissals.json', _safeCredentials({
+            method: 'post',
+            body: JSON.stringify({
+                banner_dismissal: {
+                    banner_id: banner.attr('id').split('_')[1]
+                }
+            })
+        })).then(() => {
+            banner.slideUp();
+        });
     },
 
     bindRemoteLinks: function () {
