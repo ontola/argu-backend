@@ -1,6 +1,7 @@
 {
   "name": "Argu",
   "dependencies": {
+    "blazy": "^1.5.2",
     "es6-map": "^0.1.2",
     "fastclick": "^1.0.6",
     "immutable": "^3.7.5",

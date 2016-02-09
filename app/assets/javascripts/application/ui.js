@@ -33,6 +33,10 @@ const ui = {
         progressbar.init();
         FastClick.attach(document.body);
 
+        var bLazy = new Blazy({
+            offset: 100 // Loads images 100px before they're visible
+        });
+
         //CBC-fixes
         //Disable IE-touch selection on non-content items
         $(document).on('selectstart', '#navbar,.filter-and-sort,.tabs,.dropdown', function(e) { e.preventDefault(); });
@@ -95,6 +99,9 @@ const ui = {
         $('button:submit').click(ui.disableSubmitButton);
         $('a[href*=#]:not([href=#])[class~=smoothscroll]').click(ui.handleClickSmoothly);
         ui.bindRemoteLinks();
+        new Blazy({
+            offset: 100 // Loads images 100px before they're visible
+        });
         $('.bg-img').bgLoaded({});
     },
 

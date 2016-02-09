@@ -313,3 +313,8 @@
   margin-top: .2em;
   color: $g4;
 }
+
+// Used to hide lazy loaded images. Only shows when the user has JS enabled.
+.no-js .b-lazy-hide-container {
+  display: none;
+}

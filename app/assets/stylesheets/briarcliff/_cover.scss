@@ -272,15 +272,15 @@
   background-color: $blu;
 }
 
-.bg-img {
-  opacity: 0;
+.bg-img, .b-lazy {
   @include transition(opacity 1s ease-in-out);
+  opacity: 0;
 
   html.no-js & {
     opacity: .8;
   }
 }
 
-.bg-loaded {
+.bg-loaded, .b-loaded {
   opacity: 1;
 }
