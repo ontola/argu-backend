@@ -139,11 +139,13 @@ span.dropdown-header {
   display: inline-block;
 }
 
-//.dropdown:hover .dropdown-content,
 .navbar{
   .dropdown-active {
     .dropdown-trigger{
-      background-color: $lighten2 !important;
+      background-color: $lighten2;
+      &:active{
+        background-color: $lighten3;
+      }
     }
   }
 }

@@ -64,7 +64,6 @@
   }
 
   .tab--current a {
-    pointer-events: none;
     background-color: $g00;
 
     &:after{
