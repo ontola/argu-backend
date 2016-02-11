@@ -1,7 +1,7 @@
 FROM fletcher91/ruby-vips-qt-unicorn:latest
 
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
-RUN apt-get install -y nodejs
+RUN apt-get update && apt-get install -y nodejs
 
 # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
@@ -11,9 +11,9 @@ WORKDIR /usr/src/app
 
 ADD Gemfile /usr/src/app/
 ADD Gemfile.lock /usr/src/app/
-RUN bundle install --deployment --frozen --clean --without development
+RUN RAILS_ENV=production bundle install --deployment --frozen --clean --without development --path vendor/bundle
 
-ADD . /usr/src/app
+COPY . /usr/src/app
 RUN rm -f /usr/src/app/config/database.yml
 RUN rm -f /usr/src/app/config/secrets.yml
 COPY ./config/database.docker.yml /usr/src/app/config/database.yml

@@ -1,17 +1,42 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-ua = User.new(email: 'staff@argu.co', shortname_attributes: {shortname: 'staff_account'}, password: 'arguargu', password_confirmation:'arguargu')
-ub = User.new(email: 'user@argu.co', shortname_attributes: {shortname: 'user_account'}, password: 'arguargu', password_confirmation:'arguargu')
+User
+  .create!(
+    email: 'staff@argu.co',
+    shortname_attributes: {shortname: 'staff_account'},
+    password: 'arguargu',
+    password_confirmation:'arguargu',
+    first_name: 'Douglas',
+    last_name: 'Engelbart',
+    finished_intro: true,
+    profile: Profile.new)
+  .profile
+  .add_role :staff
 
-ua.build_profile name: 'Staff Account'
-ub.build_profile name: 'User Account'
+User
+  .new(
+    email: 'user@argu.co',
+    shortname_attributes: {shortname: 'user_account'},
+    password: 'arguargu',
+    password_confirmation:'arguargu',
+    first_name: 'Maarten',
+    last_name: 'Scharendrecht',
+    finished_intro: true,
+    profile: Profile.new)
+  .profile
+  .add_role :user
 
-ua.profile.add_role :staff
-ub.profile.add_role :user
+argu = Page
+         .create!(
+           owner: User.find_via_shortname('staff_account').profile,
+           shortname_attributes: {shortname: 'argu'},
+           profile: Profile.new(name: 'Argu'),
+           last_accepted: Time.current)
 
-ua.save!
-ub.save!
+Forum.create!(name: 'Nederland',
+             page: argu,
+             shortname_attributes: {shortname: 'nederland'},)
 
 Setting.set('user_cap', -1)
 Setting.set('quotes', 'Argumenten moet men wegen, niet tellen.')
