@@ -12,6 +12,8 @@
 [data-title]:after {
   text-align: left;
   @include transition (.2s ease-in-out);
+  height: auto;
+  width: auto;
   content: attr(data-title);
   white-space: pre-line;
   padding: .3em .6em;

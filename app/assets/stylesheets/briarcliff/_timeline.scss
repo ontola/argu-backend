@@ -45,8 +45,9 @@ $timeline-height: .3em;
   font-size: .8em;
   padding: .4em;
   color: $g3;
-  padding-bottom: $point-size;
-  margin-bottom: -1.2em;
+  padding-bottom: $point-size / 2 + .2em;
+  margin-bottom: - ($point-size / 2 + .2em);
+  @include transition(background-color, .2s, ease-in-out);
 
   &:after {
     content: "";
@@ -63,8 +64,11 @@ $timeline-height: .3em;
     display: none;
   }
 }
+.phase-title.active {
+  background-color: $g00;
+}
 
-.phase-title.active, .phase-title:hover {
+.phase-title:hover {
   background-color: $g0;
 }
 
@@ -85,6 +89,7 @@ $timeline-height: .3em;
   display: flex;
   border: none 2px $g2;
   z-index: 1;
+  position: relative;
   .fa {
     color: white;
   }
@@ -96,5 +101,18 @@ $timeline-height: .3em;
 
   .fa {
     color: white;
+  }
+}
+
+.point.active{
+  &:after{
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 3em;
+    width: $timeline-height;
+    left: $point-size / 2 - $timeline-height / 2;
+    background-color: $g3;
+    z-index: -1;
   }
 }
