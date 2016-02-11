@@ -292,3 +292,4 @@ en:
   time:
     formats:
       date: "%A, %d %B '%y"
+      dateline: '%A, %d %B %Y'
