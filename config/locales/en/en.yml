@@ -292,6 +292,7 @@ en:
   time:
     formats:
       date: "%A, %d %B '%y"
+      dateline: '%A, %d %B %Y'
   activerecord:
     errors:
       record_not_unique: 'This value has already been taken.'
