@@ -86,7 +86,9 @@ $timeline-height: .3em;
     margin-bottom: 0;
   }
 }
-
+.phase-title.active {
+  background-color: $g00;
+}
 
 .timeline-phase-title.active {
   background-color: $g00;
@@ -182,4 +184,16 @@ $timeline-height: .3em;
 #current-blog-post {
   z-index: 2;
   position: relative;
+}
+.point.active{
+  &:after{
+    content: "";
+    position: absolute;
+    top: 0;
+    height: 3em;
+    width: $timeline-height;
+    left: $point-size / 2 - $timeline-height / 2;
+    background-color: $g3;
+    z-index: -1;
+  }
 }
