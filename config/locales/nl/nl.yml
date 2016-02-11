@@ -280,3 +280,4 @@ nl:
   time:
     formats:
       dateline: '%A, %d %B %Y'
+      date: '%d %B %Y'

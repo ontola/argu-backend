@@ -274,3 +274,7 @@ en:
     user:
       name: ''
       description: ''
+  time:
+    formats:
+      dateline: '%A, %d %B %Y'
+      date: '%d %B %Y'
