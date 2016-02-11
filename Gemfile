@@ -115,20 +115,23 @@ group :test do
   gem 'poltergeist'
   gem 'chromedriver-helper'
   gem 'mocha'
-  gem 'mailcatcher', '~> 0.6.2'
-  gem 'spring', '~> 1.6.3'
-  gem 'spring-commands-rspec', group: :development
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'license_finder'
   gem 'database_cleaner'
-  gem 'brakeman'
   gem 'bundler-audit'
   gem 'wisper-minitest', require: false
   gem 'wisper-rspec', require: false
   gem 'fakeredis', require: false
   gem 'simplecov', require: false
+end
+
+group :development, :test do
   gem 'rubocop'
+  gem 'mailcatcher', '~> 0.6.2'
+  gem 'spring', '~> 1.6.3'
+  gem 'spring-commands-rspec'
+  gem 'brakeman'
 end
 
 group :development do

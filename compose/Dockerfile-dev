@@ -1,0 +1,25 @@
+FROM fletcher91/ruby-vips-qt-unicorn:latest
+
+# throw errors if Gemfile has been modified since Gemfile.lock
+RUN bundle config --global frozen 1
+
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
+
+ADD Gemfile /usr/src/app/
+ADD Gemfile.lock /usr/src/app/
+RUN bundle install --deployment --path ../vendor/bundle
+
+ENV ARGU_DB_HOST 'db'
+ENV ARGU_DB_PORT '5432'
+ENV ARGU_DB_USER 'argu'
+ENV ARGU_DB_PASS ''
+ENV ARGU_DB_NAME 'argu'
+ENV RAILS_ENV 'production'
+ENV ARGU_REDIS_HOST 'redis'
+ENV ARGU_REDIS_PORT '6379'
+
+VOLUME ["/usr/src/app"]
+
+EXPOSE 3000
+CMD ["rails", "server", "-b", "0.0.0.0"]
