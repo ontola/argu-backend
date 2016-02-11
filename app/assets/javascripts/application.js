@@ -19,7 +19,6 @@
 //= require bg_loaded
 //= require cocoon
 //= require nprogress
-//= require blazy
 //= require sifter
 //= require microplugin
 //= require selectize
