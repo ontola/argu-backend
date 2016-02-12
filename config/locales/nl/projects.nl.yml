@@ -18,3 +18,5 @@ nl:
       title: '_project cta titel_'
       body: '_project cta body_'
       action: 'Begin jouw project.'
+    tooltips:
+      info: 'Een project is een plan dat je kan volgen en discusises over kan starten. '
