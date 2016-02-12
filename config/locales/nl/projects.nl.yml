@@ -7,6 +7,7 @@ nl:
     timeline: 'Tijdlijn'
     add_manager: 'Manager toevoegen'
     add_phase: 'Fase toevoegen'
+    back_to: 'Ga terug naar project'
     stepups:
       title: 'Managers'
       title_singular: 'Manager'
