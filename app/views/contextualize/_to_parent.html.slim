@@ -16,6 +16,10 @@
           section.section-info.motion-bg
             span[class="fa fa-#{motion_icon}"]
             span.icon-left= motion_type(parent)
+        - elsif classname == 'projects'
+          section.section-info.neutral-bg
+            span[class="fa fa-rocket"]
+            span.icon-left= t('projects.back_to')
         - else
           section.section-info
             span.fa.fa-arrow-up

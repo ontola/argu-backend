@@ -1,3 +1,6 @@
+- if local_assigns['buttons_header']
+  header
+    h2= buttons_header
 *button_box(local_assigns)
   =contextual_link_to buttons_url({buttons_param: defined?(buttons_param) && buttons_param, buttons_url: buttons_url, pro: pro}), (buttons_options||=nil) do
     section
