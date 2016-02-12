@@ -4,8 +4,8 @@
 // Just add the [data-title] attribute to an element to add a tooltip.
 
 [data-title] {
-  position: relative;
-  text-align: left;
+  position: relative; // Required since the tooltip is absolute positioned.
+  //text-align: left; // This is a bit odd, but it may have a reason to be here so I'll keep it commented out.
   overflow: visible;
 }
 
@@ -46,6 +46,11 @@
 [data-title].tooltip--right:after{
   right: auto;
   left: 0;
+}
+
+[data-title].tooltip--side-right:after{
+  left: calc( 100% + .5em );
+  top: 0 !important;
 }
 
 [data-title].tooltip--wider:after{

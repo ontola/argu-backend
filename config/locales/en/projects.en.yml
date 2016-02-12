@@ -17,3 +17,5 @@ en:
       title: '_project cta title_'
       body: '_project cta body_'
       action: 'Start your project.'
+    tooltips:
+      info: 'A project is a plan that you can follow and start new discussions about.'

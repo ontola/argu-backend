@@ -529,7 +529,7 @@ var ui = {
     window: null,
 
     init: function init() {
-        $(document).on('keyup', '.confirm .confirm-text', this.confirmInputHandler).on('click', '.comment .btn-reply', this.openCommentForm).on('click', '.comment .btn-cancel', this.cancelCommentForm).on('pjax:success', this.handleDOMChangedFinished).on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix).on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick).on('click', '.welcome-video-hide', this.welcomeVideoHide).on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle).on('click', '.box-close-button', this.bannerHide).on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive).ajaxComplete(this.handleAjaxCalls);
+        $(document).on('keyup', '.confirm .confirm-text', this.confirmInputHandler).on('click', '.comment .btn-reply', this.openCommentForm).on('click', '.comment .btn-cancel', this.cancelCommentForm).on('pjax:success', this.handleDOMChangedFinished).on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix).on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick).on('click', '.welcome-video-hide', this.welcomeVideoHide).on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle).on('click', '.box-close-button', this.bannerHide).on('ajax:success', ".timeline-component .timeline-point, .timeline-component .timeline-phase-title, .timeline-component .timeline-post-title", this.setActive).ajaxComplete(this.handleAjaxCalls);
 
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);

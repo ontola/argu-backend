@@ -47,7 +47,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
       =link_to new_forum_discussion_path(@forum), class: 'btn btn--pro new-discussion'
         span.fa.fa-plus
         span.icon-left= t('discussions.new.title')
-      =render partial: 'filter_and_sort'
+      =render partial: 'discussions/filter_and_sort'
     .grid
       .box.box-grid-sizer
       .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
