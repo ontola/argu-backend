@@ -1,4 +1,4 @@
-- if local_assigns['buttons_header']
+- if local_assigns[:buttons_header].present?
   header
     h2= buttons_header
 *button_box(local_assigns)
