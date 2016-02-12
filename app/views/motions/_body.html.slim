@@ -1,7 +1,5 @@
 .box[class=status_classes_for(motion)]
-  section.section-info.motion-bg
-    span[class="fa fa-#{motion_icon}"]
-    span.icon-left= motion_type(motion)
+  =render partial: 'motions/info_bar', locals: {motion: motion}
   section
     h1.motion-t[itemprop="headline"]= motion.title
     .markdown[itemprop="text"]
