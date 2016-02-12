@@ -1,12 +1,3 @@
 .col-1
   =to_parent
-  .box[class=status_classes_for(phase)]
-    section.section-info.motion-bg
-      span[class="fa fa-#{motion_icon}"]
-      span.icon-left= t('projects.phases.title')
-    section
-      h1.motion-t[itemprop="headline"]= phase.name
-      .markdown[itemprop="text"]
-        =markdown_to_html(phase.description)
-      p= start_end_title_string(phase)
-
+  =render partial: 'phases/phase', locals: {phase: phase}
