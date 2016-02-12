@@ -7,6 +7,7 @@ en:
     timeline: 'Timeline'
     add_manager: 'Add manager'
     add_phase: 'Add phase'
+    back_to: 'Go back to project'
     stepups:
       title: 'Managers'
       title_singular: 'Manager'
