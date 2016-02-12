@@ -5,3 +5,5 @@ en:
     type: "Update"
     type_new: "New update"
     unpublished: "Draft"
+    tooltips:
+      info: "An update is a message in which the progress of a project is shared."

@@ -1,7 +1,5 @@
 .box[class=status_classes_for(blog_post)]
-  section.section-info.blog-post-bg
-    span[class="fa fa-#{blog_post_icon}"]
-    span.icon-left= "#{t('blog_posts.type')} - #{blog_post_dateline(blog_post)}"
+  =render partial: 'blog_posts/info_bar', locals: {blog_post: blog_post}
   section
     h3[itemprop="headline"]= blog_post.title
     .markdown[itemprop="text"]= markdown_to_html(blog_post.content)
