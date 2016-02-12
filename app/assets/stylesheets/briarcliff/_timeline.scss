@@ -86,8 +86,14 @@ $timeline-height: .3em;
     margin-bottom: 0;
   }
 }
-.phase-title.active {
+
+
+.timeline-phase-title.active {
   background-color: $g00;
+
+  &:before {
+    opacity: 1;
+  }
 }
 
 .timeline-phase-title.active {
@@ -164,7 +170,7 @@ $timeline-height: .3em;
 
   display: none;
 
-  @include bp-small{
+  @include bp-small {
     display: inline-block;
     padding: 0.6em;
     margin-top: -1.8em;
@@ -177,6 +183,11 @@ $timeline-height: .3em;
     }
     &.active {
       background-color: white;
+    }
+
+    .fa {
+      color: white;
+      align-self: center;
     }
   }
 }
@@ -194,6 +205,25 @@ $timeline-height: .3em;
     width: $timeline-height;
     left: $point-size / 2 - $timeline-height / 2;
     background-color: $g3;
+    opacity: 0;
     z-index: -1;
+    @include transition(.2s, ease-in-out);
+    @include bp-small {
+      display: none;
+    }
   }
+
+  &.active:before {
+    opacity: 1;
+  }
+}
+
+.timeline-point.active, .timeline-point:hover {
+  background-color: $g3;
+  border-color: $g3;
+}
+
+#current-blog-post {
+  z-index: 2;
+  position: relative;
 }
