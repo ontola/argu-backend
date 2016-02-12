@@ -29,6 +29,7 @@ nl:
   learn_more: "Meer info"
   not_found_type: "%{type} niet gevonden"
   draft: "Concept"
+  draft_unpublished: "Concept versie, nog niet gepubliceerd."
   publish: "Publiceer"
   edit: "Bewerken"
   edit_type: "%{type} bewerken"

@@ -2,6 +2,7 @@
 @import "mixins";
 
 $point-size: 1.6em;
+
 $timeline-height: .3em;
 
 .timeline {
@@ -10,6 +11,14 @@ $timeline-height: .3em;
   border-top: $timeline-height solid $g2;
   bottom: $point-size / 2 - ($timeline-height / 2);
   z-index: 1;
+
+  @include bp-small {
+    bottom: 0;
+    height: 100%;
+    width: 1em;
+    border-top: none;
+    border-left: $timeline-height solid $g2 ;
+  }
 }
 
 .timeline-component {
@@ -22,24 +31,21 @@ $timeline-height: .3em;
 .timeline-phases {
   display: flex;
   flex-direction: row;
+
+  @include bp-small {
+    flex-direction: column;
+  }
 }
 
-.phase {
+.timeline-phase {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   // Is this neccessary?
   // z-index: 10;
-
-  span {
-    flex-grow: 1;
-    align-self: center;
-    text-align: center;
-    display: block;
-  }
 }
 
-.phase-title {
+.timeline-phase-title {
   position: relative;
   text-transform: uppercase;
   font-size: .8em;
@@ -49,63 +55,84 @@ $timeline-height: .3em;
   margin-bottom: - ($point-size / 2 + .2em);
   @include transition(background-color, .2s, ease-in-out);
 
-  &:after {
+  span {
+    flex-grow: 1;
+    align-self: center;
+    text-align: center;
+    display: block;
+
+    @include bp-small {
+      text-align: left;
+      margin-left: 1em;
+    }
+  }
+
+  &:before {
     content: "";
     position: absolute;
-    right: 0;
+    left: 0;
     top: 0;
-    width: 0px;
+    width: $timeline-height;
     height: 100%;
-    //height: 3.3em;
-    background-color: $g2;
+    height: 5em;
+    background-color: $g00;
+    opacity: 0;
+    //z-index: 1;
+    @include transition(opacity .2s ease-in-out);
   }
 
-  &:last-child:after {
-    display: none;
+  @include bp-small {
+    padding: .6em;
+    margin-bottom: 0;
   }
 }
-.phase-title.active {
+
+
+.timeline-phase-title.active {
   background-color: $g00;
+
+  &:before {
+    opacity: 1;
+  }
 }
 
-.phase-title:hover {
+.timeline-phase-title:hover {
   background-color: $g0;
 }
 
-.phase-points {
+.timeline-phase-points {
   display: flex;
   flex-direction: row;
   flex-grow: 1;
   align-items: center;
   justify-content: space-around;
+
+  @include bp-small {
+    align-items: flex-start;
+    flex-direction: column;
+    margin-left: - ($point-size / 2);
+  }
 }
 
-.point {
+.timeline-point {
   background-color: $g2;
   @include border-radius(999px);
   width: $point-size;
   height: $point-size;
   margin: 0;
   display: flex;
+  justify-content: center;
   border: none 2px $g2;
-  z-index: 1;
+  z-index: 2;
   position: relative;
-  .fa {
-    color: white;
-  }
-}
-
-.point.active, .point:hover {
-  background-color: $g3;
-  border-color: $g3;
+  @include transition(.2s, ease-in-out);
 
   .fa {
     color: white;
+    align-self: center;
   }
-}
 
-.point.active{
-  &:after{
+  &:before{
     content: "";
     position: absolute;
     top: 0;
@@ -113,6 +140,46 @@ $timeline-height: .3em;
     width: $timeline-height;
     left: $point-size / 2 - $timeline-height / 2;
     background-color: $g3;
+    opacity: 0;
     z-index: -1;
+    @include transition(.2s, ease-in-out);
+    @include bp-small {
+      display: none;
+    }
   }
+
+  &.active:before {
+    opacity: 1;
+  }
+}
+
+.timeline-point.active, .timeline-point:hover {
+  background-color: $g3;
+  border-color: $g3;
+}
+
+.timeline-post-title {
+
+  display: none;
+
+  @include bp-small{
+    display: inline-block;
+    padding: 0.6em;
+    margin-top: -1.8em;
+    margin-bottom: 0em;
+    margin-left: 1em;
+    padding-left: 1em;
+    width: calc(100% - 1em);
+    span {
+      font-size: .9em;
+    }
+    &.active {
+      background-color: white;
+    }
+  }
+}
+
+#current-blog-post {
+  z-index: 2;
+  position: relative;
 }

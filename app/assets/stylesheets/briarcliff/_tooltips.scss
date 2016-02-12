@@ -49,6 +49,11 @@
   left: 0;
 }
 
+[data-title].tooltip--side-right:after{
+  left: calc( 100% + .5em );
+  top: 0 !important;
+}
+
 [data-title].tooltip--wider:after{
   min-width: 24em;
 }
