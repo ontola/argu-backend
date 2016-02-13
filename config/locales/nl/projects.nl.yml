@@ -14,6 +14,7 @@ nl:
     phases:
       title: 'Fases'
       title_singular: 'Fase'
+      info: 'Een fase is een onderdeel van de tijdlijn van een project.'
     call_to_action:
       title: '_project cta titel_'
       body: '_project cta body_'

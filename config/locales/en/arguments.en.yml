@@ -28,6 +28,8 @@ en:
       create: "+ %{side} argument"
     revisions:
       title_wiped: 'Removed replies'
+    tooltips:
+      info: "Een argument is een enkele reden voor of tegen een idee."
     form:
       title_heading: "Core of your argument"
       title_body_html: "<ul class='bullets'>
