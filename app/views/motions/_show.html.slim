@@ -11,10 +11,10 @@
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_pro_light.each do |argument|
           li= link_to argument_path(argument[0])
-            h3[class="pro-t tooltip--wider" data-title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument[4], '...')) : nil)]
+            h3[class="pro-t tooltip--wider"]
               span.fa.fa-plus
               .list-item.icon-left
-                span= argument[1]
+                span[data-title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument[4], '...')) : nil)]= argument[1]
                 - if argument[5] > 0
                   .comments-counter
                     .fa.fa-comment
@@ -23,12 +23,12 @@
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_con_light.each do |argument|
           li= link_to argument_path(argument[0])
-            h3[class="con-t tooltip--wider" data-title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument[4], '...')) : nil)]
+            h3[class="con-t tooltip--wider"]
               span.fa.fa-minus
               .list-item.icon-left
-                span= argument[1]
+                span[data-title=(active_for_user?(:argument_tooltips_content, current_user) ? (safe_truncated_text(argument[4], '...')) : nil)]= argument[1]
                 - if argument[5] > 0
-                  .comments-counter
+                  .comments-counter[data-title=argument[6]]
                     .fa.fa-comment
                     .icon-left= argument[5]
     =contextual_link_to motion_path(model), class: 'btn-subtle btn-sticky btns-sticky-bottom read-more'
