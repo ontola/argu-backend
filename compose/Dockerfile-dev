@@ -12,7 +12,7 @@ RUN bundle install --deployment --path ../vendor/bundle
 
 ENV ARGU_DB_HOST 'db'
 ENV ARGU_DB_PORT '5432'
-ENV ARGU_DB_USER 'argu'
+ENV ARGU_DB_USER 'postgres'
 ENV ARGU_DB_PASS ''
 ENV ARGU_DB_NAME 'argu'
 ENV RAILS_ENV 'production'
