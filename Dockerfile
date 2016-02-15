@@ -36,7 +36,7 @@ ENV JWT_ENCRYPTION_TOKEN ''
 RUN npm install
 RUN npm run build:production
 
-RUN ["RAILS_ENV=production", "C66=${C66}", "DEVISE_SECRET=dummy", "bundle", "exec", "rake", "assets:precompile"]
+RUN ["bundle", "exec", "rake", "RAILS_ENV=production", "C66=true", "DEVISE_SECRET=dummy", "assets:precompile"]
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
