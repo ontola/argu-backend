@@ -37,7 +37,6 @@ RUN npm install
 RUN npm run build:production
 
 RUN bundle exec rake RAILS_ENV=production DEVISE_SECRET=dummythatshouldbelongenoughtoletdevisebeleiveitsanactualtoken assets:precompile
-VOLUME ["/usr/src/app/public"]
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
