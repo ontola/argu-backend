@@ -1,5 +1,6 @@
 import Alert from '../src/app/components/Alert';
 import { FastClick } from 'fastclick';
+import Blazy from 'blazy';
 import { safeCredentials, errorMessageForStatus } from '../src/app/lib/helpers';
 
 const ui = {
@@ -7,19 +8,17 @@ const ui = {
     window: null,
 
     init: function () {
-        "use strict";
         $(document)
             .on('keyup', '.confirm .confirm-text', this.confirmInputHandler)
             .on('click', '.comment .btn-reply', this.openCommentForm)
             .on('click', '.comment .btn-cancel', this.cancelCommentForm)
             .on('pjax:success', this.handleDOMChangedFinished)
-            .on('pjax:end', this.checkTabs)
             .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
             .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
-            .ajaxComplete(this.handleAjaxCalls)
             .on('click', '.welcome-video-hide', this.welcomeVideoHide)
             .on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle)
-            .on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive);
+            .on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive)
+            .ajaxComplete(this.handleAjaxCalls);
 
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);

@@ -13,9 +13,11 @@ Argu::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.action_controller.asset_host = 'd3hv9pr8szmavn.cloudfront.net'
+  unless ENV['C66'] == 'true'
+    config.action_controller.asset_host = 'd3hv9pr8szmavn.cloudfront.net'
+  end
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_files = false
+  config.serve_static_files = ENV['C66'] == 'true' ? true : false
 
   # Compress JavaScripts and CSS
   config.assets.js_compressor = :uglifier

@@ -129,13 +129,14 @@ RSpec.feature 'User Password', type: :feature do
 
     click_link 'Log in with Facebook'
 
-    expect(page).to have_content(user_omni_only.first_name)
+    expect(page).to have_selector('.navbar-item.navbar-profile')
     visit settings_path
     expect(page).to have_content('Gebruikersinstellingen')
     expect(page).to have_content('Je hebt nog geen wachtwoord omdat je je via social media hebt aangemeld. Wil je een wachtwoord aanmaken?')
 
     expect {
       click_link 'send-instructions'
+      expect(page).to have_content('Je zal zometeen een email ontvangen met intructies')
     }.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)

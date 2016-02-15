@@ -28,7 +28,7 @@ nl:
       signed_in: 'Welkom terug!'
       signed_out: 'Je bent succesvol uitgelogd, tot ziens.'
     passwords:
-      send_instructions: 'Je zal straks een email ontvangen met intructies om jouw wachtwoord te resetten.'
+      send_instructions: 'Je zal zometeen een email ontvangen met intructies om jouw wachtwoord te resetten.'
       updated: 'Jouw wachtwoord is succesvol gewijzigd. Je bent nu ingelogd.'
       updated_not_active: 'Jouw wachtwoord is gewijzigd.'
       send_paranoid_instructions: "Als jouw email adres bestaat in onze database, zal je binnen enkele minuten een link ontvangen om jouw wachtwoord te resetten."

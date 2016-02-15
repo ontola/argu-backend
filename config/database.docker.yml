@@ -1,12 +1,12 @@
 development: &default
   adapter: postgresql
   encoding: unicode
-  database: <%= ENV['ARGU_DB_NAME'] %>
+  database: <%= ENV['POSTGRESQL_DATABASE'] %>
   pool: 5
-  username: <%= ENV['ARGU_DB_USER'] %>
-  password: <%= ENV['ARGU_DB_PASS'] %>
-  host: <%= ENV['ARGU_DB_HOST'] %>
-  port: <%= ENV['ARGU_DB_PORT'] %>
+  username: <%= ENV['POSTGRESQL_USERNAME'] %>
+  password: <%= ENV['POSTGRESQL_PASSWORD'] %>
+  host: <%= ENV['POSTGRESQL_ADDRESS'] %>
+  port: <%= ENV['POSTGRESQL_PORT'] %>
 test:
   <<: *default
   database: argu_test
