@@ -36,7 +36,7 @@ ENV JWT_ENCRYPTION_TOKEN ''
 RUN npm install
 RUN npm run build:production
 
-RUN bundle exec rake RAILS_ENV=production DEVISE_SECRET=dummythatshouldbelongenoughtoletdevisebeleiveitsanactualtoken assets:precompile
+RUN bundle exec rake RAILS_ENV=production C66=${$C66} DEVISE_SECRET=dummy assets:precompile
 
 EXPOSE 3000
 CMD ["rails", "server", "-b", "0.0.0.0"]
