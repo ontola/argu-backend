@@ -1,4 +1,4 @@
-class Portal::AnnouncementsController < AuthenticatedController
+class Portal::AnnouncementsController < AuthorizedController
   skip_before_action :check_if_member
   before_action :set_settings_view_path
 
