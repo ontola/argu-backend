@@ -106,7 +106,7 @@ gem 'rolify', '~> 3.4.1'
 
 group :test do
   gem 'minitest-rails', '~> 2.2.0'
-  gem 'minitest-reporters', '~> 1.0.8'
+  gem 'minitest-reporters', '~> 1.1.7'
   gem 'minitest-bang'
   gem 'rspec-rails', '~> 3.3.3'
   gem 'capybara', '~> 2.6.0'
@@ -131,6 +131,7 @@ group :development, :test do
   gem 'mailcatcher', '~> 0.6.2'
   gem 'spring', '~> 1.6.3'
   gem 'spring-commands-rspec'
+  gem 'spring-commands-testunit'
   gem 'brakeman'
 end
 

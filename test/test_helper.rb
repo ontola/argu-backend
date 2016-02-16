@@ -10,6 +10,7 @@ require 'simplecov'
 require 'fakeredis'
 require 'sidekiq/testing'
 require 'minitest/pride'
+require 'minitest/reporters'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -19,6 +20,7 @@ DatabaseCleaner.strategy = :transaction
 
 module TestHelper
   Sidekiq::Testing.fake!
+  MiniTest::Reporters.use!
 
   # Runs assert_difference with a number of conditions and varying difference
   # counts.
