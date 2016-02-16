@@ -145,7 +145,7 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test 'user should not get new' do
     sign_in user
-    general_new 200
+    general_new 403
     assert_not_a_member
   end
 
@@ -156,31 +156,31 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test 'user should not post create' do
     sign_in user
-    general_create 200
+    general_create 403
     assert_not_a_member
   end
 
   test 'user should not get edit' do
     sign_in user
-    general_edit 200
+    general_edit 403
     assert_not_a_member
   end
 
   test 'user should not patch update' do
     sign_in user
-    general_update 200
+    general_update 403
     assert_not_a_member
   end
 
   test 'user should not delete destroy trash' do
     sign_in user
-    general_trash 200
+    general_update 403
     assert_not_a_member
   end
 
   test 'user should not delete destroy' do
     sign_in user
-    general_destroy 200
+    general_destroy 403
     assert_not_a_member
   end
 

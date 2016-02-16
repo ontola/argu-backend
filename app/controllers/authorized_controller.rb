@@ -6,6 +6,7 @@ class AuthorizedController < ApplicationController
                 except: %i(show move move! convert convert!)
   before_action :authorize_show, only: :show
   before_action :authorize_action
+  before_action :collect_banners
   helper_method :authenticated_context
 
   rescue_from Argu::NotAUserError, with: :handle_not_a_user_error
@@ -39,7 +40,14 @@ class AuthorizedController < ApplicationController
     @_not_a_member_caught = true
     authorize exception.forum, :join?
     respond_to do |format|
-      format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r } }
+      format.html do
+        render template: 'forums/join',
+               status: 403,
+               locals: {
+                 forum: exception.forum,
+                 r: exception.r
+               }
+      end
       format.js { render partial: 'forums/join', layout: false, locals: { forum: exception.forum, r: exception.r } }
       format.json do
         f = ActionDispatch::Http::ParameterFilter.new(Rails.application.config.filter_parameters)
@@ -65,6 +73,17 @@ class AuthorizedController < ApplicationController
 
   def authorize_show
     authorize authenticated_resource, :show?
+  end
+
+  def collect_banners
+    banners = stubborn_hgetall('banners') || {}
+    banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
+    if authenticated_context.present?
+      @banners = policy_scope(authenticated_context
+                                .banners
+                                .published)
+                   .reject { |b| banners[b.identifier] == 'hidden' }
+    end
   end
 
   # A version of {authenticated_resource!} that raises if the record cannot be found

@@ -66,7 +66,6 @@ class MotionsControllerTest < ActionController::TestCase
 
     get :new, forum_id: freetown
 
-    assert_response 200
     assert_not_a_member
   end
 
