@@ -67,6 +67,7 @@ class ApplicationController < ActionController::Base
       format.html {
         @resource ||= User.new r: exception.r
         render 'devise/sessions/new',
+               status: 401,
                locals: {
                    resource: @resource,
                    resource_name: :user,
@@ -109,17 +110,6 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def collect_banners
-    banners = stubborn_hgetall('banners') || {}
-    banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
-    if @forum.present?
-      @banners = policy_scope(@forum
-                     .banners
-                     .published)
-                     .reject { |b| banners[b.identifier] == 'hidden' }
-    end
-  end
-
   # Combines {ApplicationController#create_activity} with {ApplicationController#destroy_recent_similar_activities}
   def create_activity_with_cleanup(model, params)
     destroy_recent_similar_activities model, params
@@ -147,8 +137,6 @@ class ApplicationController < ActionController::Base
                            components.reject! { |c| !policy(c).show? }
                          end
                        end
-
-    collect_banners unless instance_variable_defined?(:@banners)
     @current_context
   end
 

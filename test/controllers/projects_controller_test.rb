@@ -125,8 +125,7 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test 'user should not get new' do
     sign_in user
-    general_new 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    general_new 403
   end
 
   test 'user should get show' do
@@ -136,26 +135,22 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test 'user should not post create' do
     sign_in user
-    general_create 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    general_create 403
   end
 
   test 'user should not get edit' do
     sign_in user
-    general_edit 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    general_edit 403
   end
 
   test 'user should not patch update' do
     sign_in user
-    general_update 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    general_update 403
   end
 
   test 'user should not delete destroy' do
     sign_in user
-    general_destroy 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    general_destroy 403
   end
 
   ####################################

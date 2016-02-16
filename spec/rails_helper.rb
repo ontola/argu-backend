@@ -95,7 +95,7 @@ RSpec.configure do |config|
                             when 'safari'
                               :selenium_safari
                             else
-                              ENV['CI'].present? ? :selenium : :selenium
+                              ENV['CI'].present? ? :selenium_firefox : :selenium_firefox
                             end
   #Capybara.default_max_wait_time = 5
   Capybara.default_max_wait_time = 50
