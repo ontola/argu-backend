@@ -1,5 +1,5 @@
 FROM fletcher91/ruby-vips-qt-unicorn:latest
-ARG C66 true
+ARG C66=true
 
 RUN curl -sL https://deb.nodesource.com/setup_4.x | bash -
 RUN apt-get update && apt-get install -y nodejs
