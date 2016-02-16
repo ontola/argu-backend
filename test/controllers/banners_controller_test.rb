@@ -15,7 +15,9 @@ class BannersControllerTest < ActionController::TestCase
   ####################################
   test 'guest should not post create' do
     assert_no_difference('Banner.count') do
-      post :create, forum_id: holland, banner: FactoryGirl.attributes_for(:banner)
+      post :create,
+           forum_id: holland,
+           banner: FactoryGirl.attributes_for(:banner)
       assert_redirected_to new_user_session_path(r: forum_banners_path(holland, banner: FactoryGirl.attributes_for(:banner)))
     end
   end
@@ -27,7 +29,9 @@ class BannersControllerTest < ActionController::TestCase
     sign_in FactoryGirl.create(:user)
 
     assert_no_difference('Banner.count') do
-      post :create, forum_id: holland, banner: FactoryGirl.attributes_for(:banner)
+      post :create,
+           forum_id: holland,
+           banner: FactoryGirl.attributes_for(:banner)
       assert_response 403
     end
   end
@@ -39,8 +43,10 @@ class BannersControllerTest < ActionController::TestCase
     sign_in create_member(holland)
 
     assert_no_difference('Banner.count') do
-      post :create, forum_id: holland, banner: FactoryGirl.attributes_for(:banner)
-      assert_redirected_to root_path
+      post :create,
+           forum_id: holland,
+           banner: FactoryGirl.attributes_for(:banner)
+      assert_redirected_to forum_path(holland)
     end
   end
 
@@ -51,7 +57,9 @@ class BannersControllerTest < ActionController::TestCase
     sign_in create_manager(holland)
 
     assert_difference('Banner.count') do
-      post :create, forum_id: holland, banner: FactoryGirl.attributes_for(:banner)
+      post :create,
+           forum_id: holland,
+           banner: FactoryGirl.attributes_for(:banner)
       assert_redirected_to settings_forum_path(holland, tab: :banners)
     end
   end
@@ -63,7 +71,9 @@ class BannersControllerTest < ActionController::TestCase
     sign_in create_owner(holland, holland_owner)
 
     assert_difference('Banner.count') do
-      post :create, forum_id: holland, banner: FactoryGirl.attributes_for(:banner)
+      post :create,
+           forum_id: holland,
+           banner: FactoryGirl.attributes_for(:banner)
       assert_redirected_to settings_forum_path(holland, tab: :banners)
     end
   end

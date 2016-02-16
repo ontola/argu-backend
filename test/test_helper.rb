@@ -10,6 +10,7 @@ require 'simplecov'
 require 'fakeredis'
 require 'sidekiq/testing'
 require 'minitest/pride'
+require 'minitest/reporters'
 require 'webmock/minitest'
 require 'test_mocks'
 require 'minitest/reporters'
@@ -23,6 +24,7 @@ DatabaseCleaner.strategy = :transaction
 
 module TestHelper
   Sidekiq::Testing.fake!
+  MiniTest::Reporters.use!
 
   User.find_or_create_by(id: 0) do |user|
     user.shortname = Shortname.new(shortname: 'community')
