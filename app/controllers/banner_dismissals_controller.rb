@@ -1,4 +1,4 @@
-class BannerDismissalsController < AuthenticatedController
+class BannerDismissalsController < AuthorizedController
   skip_before_action :check_if_registered
 
   def create

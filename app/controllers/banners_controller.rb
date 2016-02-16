@@ -3,9 +3,6 @@ class BannersController < AuthorizedController
   before_action :set_settings_view_path
 
   def new
-    authorize authenticated_resource!, :new?
-    @forum = tenant_by_param
-
     render settings_location,
            locals: {
                banner: authenticated_resource!,
@@ -15,11 +12,8 @@ class BannersController < AuthorizedController
   end
 
   def create
-    set_tenant
     @cb = CreateBanner.new(current_user.profile,
-                           banner_params.merge({
-                                             forum: tenant_by_param
-                                         }))
+                           banner_params.merge(resource_new_params))
     authorize @cb.resource, :create?
     @cb.on(:create_banner_successful) do |banner|
       respond_to do |format|
@@ -43,31 +37,23 @@ class BannersController < AuthorizedController
   end
 
   def edit
-    banner = Banner.find params[:id]
-    set_tenant
-    authorize banner, :edit?
-
     render settings_location,
            locals: {
-               banner: banner,
+               banner: authenticated_resource,
                tab: 'banners/edit',
                active: 'banners'
            }
   end
 
   def update
-    banner = Banner.find params[:id]
-    set_tenant
-    authorize banner, :update?
-
     respond_to do |format|
-      if banner.update banner_params
+      if authenticated_resource.update banner_params
         format.html { redirect_to banner_settings_path }
       else
         format.html do
           render settings_location,
                  locals: {
-                     banner: banner,
+                     banner: authenticated_resource,
                      tab: 'banners/edit',
                      active: 'banners'
                  }
@@ -77,20 +63,16 @@ class BannersController < AuthorizedController
   end
 
   def destroy
-    banner = Banner.find params[:id]
-    set_tenant
-    authorize banner, :destroy?
-
     respond_to do |format|
-      if banner.destroy
+      if authenticated_resource.destroy
         format.html do
           flash[:success] = t('type_destroyed', type: t('banners.type'))
-          redirect_to settings_forum_path(@forum, tab: :banners)
+          redirect_to settings_forum_path(resource_tenant, tab: :banners)
         end
       else
         format.html do
           flash[:error] = t('type_destroyed_failed', type: t('banners.type'))
-          redirect_to settings_forum_path(@forum, tab: :banners)
+          redirect_to settings_forum_path(resource_tenant, tab: :banners)
         end
       end
     end

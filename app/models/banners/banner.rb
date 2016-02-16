@@ -1,7 +1,7 @@
 class Banner < ActiveRecord::Base
   include ArguBase
   belongs_to :forum
-  belongs_to :publisher, class_name: 'Profile'
+  belongs_to :publisher, class_name: 'User'
 
   enum audience: { guests: 0, users: 1, members: 2, everyone: 3 }
 
