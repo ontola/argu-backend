@@ -10,6 +10,7 @@ require 'simplecov'
 require 'fakeredis'
 require 'sidekiq/testing'
 require 'minitest/pride'
+require 'minitest/reporters'
 require 'webmock/minitest'
 require 'test_mocks'
 
@@ -21,6 +22,7 @@ DatabaseCleaner.strategy = :transaction
 
 module TestHelper
   Sidekiq::Testing.fake!
+  MiniTest::Reporters.use!
 
   # Runs assert_difference with a number of conditions and varying difference
   # counts.
