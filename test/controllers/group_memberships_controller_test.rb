@@ -21,7 +21,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     get :new, group_id: group
 
-    assert_redirected_to root_path
+    assert_redirected_to forum_path(holland)
     assert assigns(:forum)
     assert_not assigns(:membership)
   end
@@ -33,7 +33,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
       post :create, group_id: group, profile_id: user.profile
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to forum_path(holland)
     assert assigns(:forum)
     assert_not assigns(:membership)
   end
