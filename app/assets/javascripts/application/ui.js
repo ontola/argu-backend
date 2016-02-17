@@ -96,7 +96,7 @@ const ui = {
         ui.handleEditableSettings();
         ui.bg = $(".background");
         $('button:submit').click(ui.disableSubmitButton);
-        $('a[href*=#]:not([href=#])[class~=smoothscroll]').click(ui.handleClickSmoothly);
+        $("a[href*='#']:not([href='#'])[class~=smoothscroll]").click(ui.handleClickSmoothly);
         ui.bindRemoteLinks();
         new Blazy({
             offset: 100 // Loads images 100px before they're visible
