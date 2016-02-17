@@ -119,7 +119,7 @@ class BannersController < AuthorizedController
     if portal_request?
       settings_portal_path(tab: :banners)
     else
-      settings_forum_path(@forum, tab: :banners)
+      settings_forum_path(authenticated_context, tab: :banners)
     end
   end
 

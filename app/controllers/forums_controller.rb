@@ -24,11 +24,16 @@ class ForumsController < ApplicationController
     # @FIXME TODO Remove the unpublished stuff from projects (in the scope)
     questions = policy_scope(@forum.questions.trashed(show_trashed?))
 
-    motions_without_questions = policy_scope(Motion.where(forum: @forum,
-                                             question_id: nil,
-                                             is_trashed: show_trashed?))
+    motions_without_questions = policy_scope(Motion.where(
+                                               forum: @forum,
+                                               question_id: nil,
+                                               is_trashed: show_trashed?))
 
-    @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(@forum).show?
+    if policy(@forum).show?
+      @items = (questions + motions_without_questions)
+                 .sort_by(&:updated_at)
+                 .reverse
+    end
 
     render
   end

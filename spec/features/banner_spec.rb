@@ -19,7 +19,7 @@ RSpec.feature 'Banners', type: :feature do
                          :published,
                          audience,
                          forum: holland,
-                         title: "banner_#{audience}")
+                         title: "Banner_#{audience}")
     end
   end
 
@@ -38,7 +38,7 @@ RSpec.feature 'Banners', type: :feature do
                     'Banners not visible on motion pages'
 
     argument = holland.motions.first.arguments.first
-    visit argument_path argument
+    visit argument_path(argument)
     expect(page).to have_content(argument.title)
     expect(page).to have_content(banner_everyone.title),
                     'Banners not visible on argument pages'
@@ -128,6 +128,7 @@ RSpec.feature 'Banners', type: :feature do
     expect(page).to_not have_content(banner_users.title)
     expect(page).to have_content(banner_everyone.title)
   end
+
   ####################################
   # As Member
   ####################################
