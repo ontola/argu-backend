@@ -46,7 +46,7 @@ const ui = {
 
     bannerHide: function () {
         let banner = $(this).closest('.banner');
-        fetch('/banner_dismissals.json', _safeCredentials({
+        fetch('/banner_dismissals.json', safeCredentials({
             method: 'post',
             body: JSON.stringify({
                 banner_dismissal: {
