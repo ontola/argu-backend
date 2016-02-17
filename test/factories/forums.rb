@@ -18,7 +18,7 @@ FactoryGirl.define do
       motion_count 6
 
       after(:create) do |forum, evaluator|
-        create_list :motion, 3, forum: forum
+        create_list :motion, 3, :with_arguments, forum: forum
         create_list :motion, 3, forum: forum, is_trashed: true
         create :question, :with_motions, forum: forum
         create :access_token, item: forum
