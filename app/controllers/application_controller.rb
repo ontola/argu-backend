@@ -3,7 +3,8 @@ require 'argu/not_authorized_error'
 class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController,
           AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper, PhotosHelper
-  helper_method :current_profile, :current_context, :current_scope, :show_trashed?
+  helper_method :current_profile, :current_context, :current_scope, :show_trashed?, :authenticated_context
+
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
   before_action :check_finished_intro
@@ -200,6 +201,11 @@ class ApplicationController < ActionController::Base
   end
 
   protected
+
+  # Shim for the time being
+  def authenticated_context
+    @forum
+  end
 
   # @private
   # For Devise

@@ -57,14 +57,14 @@ class ForumsControllerTest < ActionController::TestCase
     sign_in user
 
     get :settings, id: freetown
-    assert_redirected_to root_path, 'Settings are publicly visible'
+    assert_redirected_to forum_path(freetown), 'Settings are publicly visible'
   end
 
   test 'should not show statistics' do
     sign_in user
 
     get :statistics, id: freetown
-    assert_redirected_to root_path, 'Statistics are publicly visible'
+    assert_redirected_to forum_path(freetown), 'Statistics are publicly visible'
   end
 
   test 'user should not leak closed children to non-members' do
@@ -93,7 +93,7 @@ class ForumsControllerTest < ActionController::TestCase
           title: 'New title',
           content: 'new contents'
         }
-    assert_redirected_to root_path, 'Others can update questions'
+    assert_redirected_to forum_path(holland), 'Others can update questions'
   end
 
   test 'user should get selector' do
@@ -207,7 +207,7 @@ class ForumsControllerTest < ActionController::TestCase
     sign_in owner
 
     get :statistics, id: forum
-    assert_redirected_to root_url
+    assert_redirected_to forum_path(forum)
     assert assigns(:forum)
     assert_nil assigns(:tags), "Doesn't assign tags"
     # assert_equal 2, assigns(:tags).length
@@ -229,7 +229,7 @@ class ForumsControllerTest < ActionController::TestCase
 
     [:privacy, :managers].each do |tab|
       get :settings, id: holland, tab: tab
-      assert_redirected_to root_path
+      assert_redirected_to forum_path(holland)
       assert assigns(:forum)
     end
   end
