@@ -2,7 +2,10 @@ module StubbornCookie
   module HashMethods
 
     def stubborn_hgetall(key)
-      redis_value = stubborn_redis_hgetall(key).with_indifferent_access if stubborn_identifier.present?
+      if stubborn_identifier.present?
+        r_hash = stubborn_redis_hgetall(key)
+        redis_value = r_hash.with_indifferent_access if r_hash.present?
+      end
       permeate_key(key, redis_value)
     end
 
