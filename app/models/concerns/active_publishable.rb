@@ -2,7 +2,8 @@ module ActivePublishable
   extend ActiveSupport::Concern
 
   included do
-    scope :published, -> { where.not(published: nil) }
+    scope :published, -> { where('published_at <= ?', DateTime.current) }
+    scope :unpublished, -> { where('published_at IS NULL OR published_at > ?', DateTime.current) }
 
     attr_accessor :unpublish
   end

@@ -19,7 +19,7 @@ class BannersController < AuthorizedController
       respond_to do |format|
         format.html do
           redirect_to settings_forum_path(banner.forum, tab: :banners),
-                      notice: t('banners.notices.created')
+                      notice: t('type_create_success', type: t('banners.type')).capitalize
         end
       end
     end
@@ -96,7 +96,7 @@ class BannersController < AuthorizedController
   end
 
   def banner_params
-    params.require(:banner).permit(*policy(@banner || Banner).permitted_attributes)
+    params.require(:banner).permit(*policy(authenticated_resource || Banner).permitted_attributes)
   end
 
   def portal_request?

@@ -138,7 +138,7 @@ end
 group :development do
   gem 'nokogiri', '~> 1.6.7.2'
   gem 'pry'
-  #gem 'byebug'
+  #gem 'byebug', '8.2.1'
   #gem 'pry-byebug'
   gem 'meta_request'
   gem 'better_errors'
