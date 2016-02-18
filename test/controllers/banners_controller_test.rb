@@ -14,11 +14,12 @@ class BannersControllerTest < ActionController::TestCase
   # As Guest
   ####################################
   test 'guest should not post create' do
+    banner_attributes = attributes_for(:banner)
     assert_no_difference('Banner.count') do
       post :create,
            forum_id: holland,
-           banner: FactoryGirl.attributes_for(:banner)
-      assert_redirected_to new_user_session_path(r: forum_banners_path(holland, banner: FactoryGirl.attributes_for(:banner)))
+           banner: banner_attributes
+      assert_redirected_to new_user_session_path(r: forum_banners_path(holland, banner: banner_attributes))
     end
   end
 
