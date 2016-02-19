@@ -1,5 +1,6 @@
 import Alert from '../src/app/components/Alert';
 import { FastClick } from 'fastclick';
+import Blazy from 'blazy';
 import { safeCredentials, errorMessageForStatus } from '../src/app/lib/helpers';
 
 const ui = {
@@ -7,20 +8,18 @@ const ui = {
     window: null,
 
     init: function () {
-        "use strict";
         $(document)
             .on('keyup', '.confirm .confirm-text', this.confirmInputHandler)
             .on('click', '.comment .btn-reply', this.openCommentForm)
             .on('click', '.comment .btn-cancel', this.cancelCommentForm)
             .on('pjax:success', this.handleDOMChangedFinished)
-            .on('pjax:end', this.checkTabs)
             .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
             .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
-            .ajaxComplete(this.handleAjaxCalls)
             .on('click', '.welcome-video-hide', this.welcomeVideoHide)
             .on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle)
             .on('click', '.box-close-button', this.bannerHide)
-            .on('ajax:success', ".timeline-component .timeline-point, .timeline-component .timeline-phase-title, .timeline-component .timeline-post-title", this.setActive);
+            .on('ajax:success', ".timeline-component .timeline-point, .timeline-component .timeline-phase-title, .timeline-component .timeline-post-title", this.setActive)
+            .ajaxComplete(this.handleAjaxCalls);
 
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);
@@ -45,7 +44,7 @@ const ui = {
 
     bannerHide: function () {
         let banner = $(this).closest('.banner');
-        fetch('/banner_dismissals.json', _safeCredentials({
+        fetch('/banner_dismissals.json', safeCredentials({
             method: 'post',
             body: JSON.stringify({
                 banner_dismissal: {

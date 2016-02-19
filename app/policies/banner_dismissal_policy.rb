@@ -22,7 +22,7 @@ class BannerDismissalPolicy < RestrictivePolicy
     attributes = super
     attributes << [:title, :forum, :cited_profile, :content,
                    :cited_avatar, :cited_name,
-                   :cited_function, :publish_at] if create?
+                   :cited_function, :published_at] if create?
     attributes << [:id] if staff?
     attributes
   end

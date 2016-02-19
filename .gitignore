@@ -17,13 +17,13 @@ client-bundle.js
 client-bundle.js.map
 node_modules
 /vendor/assets/bower_components
-.env
 spec/argu.txt
 .yardoc
 
 # Ignore secrets
 secrets.yml
 /config/database.yml
+*.env
 
 # Ignore image uploads
 /public/banners

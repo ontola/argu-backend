@@ -6,6 +6,7 @@ class AuthorizedController < ApplicationController
                 only: %i(new create delete destroy edit update)
   before_action :authorize_show, only: :show
   before_action :authorize_action
+  before_action :collect_banners
   helper_method :authenticated_context
 
   rescue_from Argu::NotAUserError do |exception|
@@ -33,7 +34,14 @@ class AuthorizedController < ApplicationController
     @_not_a_member_caught = true
     authorize exception.forum, :join?
     respond_to do |format|
-      format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r } }
+      format.html do
+        render template: 'forums/join',
+               status: 403,
+               locals: {
+                 forum: exception.forum,
+                 r: exception.r
+               }
+      end
       format.js { render partial: 'forums/join', layout: false, locals: { forum: exception.forum, r: exception.r } }
       format.json do
         error_hash = {
@@ -74,6 +82,17 @@ class AuthorizedController < ApplicationController
     if current_profile.blank?
       raise Argu::NotAUserError.new(authenticated_context,
                                     redirect_url)
+    end
+  end
+
+  def collect_banners
+    banners = stubborn_hgetall('banners') || {}
+    banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
+    if authenticated_context.present?
+      @banners = policy_scope(authenticated_context
+                                .banners
+                                .published)
+                   .reject { |b| banners[b.identifier] == 'hidden' }
     end
   end
 

@@ -106,7 +106,7 @@ gem 'rolify', '~> 3.4.1'
 
 group :test do
   gem 'minitest-rails', '~> 2.2.0'
-  gem 'minitest-reporters', '~> 1.0.8'
+  gem 'minitest-reporters', '~> 1.1.7'
   gem 'minitest-bang'
   gem 'rspec-rails', '~> 3.3.3'
   gem 'capybara', '~> 2.6.0'
@@ -115,26 +115,30 @@ group :test do
   gem 'poltergeist'
   gem 'chromedriver-helper'
   gem 'mocha'
-  gem 'mailcatcher', '~> 0.6.2'
-  gem 'spring', '~> 1.6.3'
-  gem 'spring-commands-rspec', group: :development
   gem 'factory_girl'
   gem 'factory_girl_rails'
   gem 'license_finder'
   gem 'database_cleaner'
-  gem 'brakeman'
   gem 'bundler-audit'
   gem 'wisper-minitest', require: false
   gem 'wisper-rspec', require: false
   gem 'fakeredis', require: false
   gem 'simplecov', require: false
+end
+
+group :development, :test do
   gem 'rubocop'
+  gem 'mailcatcher', '~> 0.6.2'
+  gem 'spring', '~> 1.6.3'
+  gem 'spring-commands-rspec'
+  gem 'spring-commands-testunit'
+  gem 'brakeman'
 end
 
 group :development do
   gem 'nokogiri', '~> 1.6.7.2'
   gem 'pry'
-  #gem 'byebug'
+  #gem 'byebug', '8.2.1'
   #gem 'pry-byebug'
   gem 'meta_request'
   gem 'better_errors'
@@ -165,5 +169,4 @@ group :staging, :development do
 end
 
 #  gem 'briarcliff', '~> 0.0.9'
-
 #  gem 'pica_pica', '~> 0.0.1'

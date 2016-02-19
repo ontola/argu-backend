@@ -2,19 +2,19 @@ FactoryGirl.define do
 
   factory :banner do
 
-    title 'Banner title'
+    sequence(:title) { |n| "Banner title #{n}" }
     content 'Banner content'
 
     trait :published do
-      publish_at { 1.hour.ago }
+      published_at { 1.hour.ago }
     end
 
     trait :unpublished do
-      publish_at nil
+      published_at nil
     end
 
     trait :scheduled do
-      publish_at { 1.hour.from_now }
+      published_at { 1.hour.from_now }
     end
 
     %i(guests users members everyone).each do |_audience|

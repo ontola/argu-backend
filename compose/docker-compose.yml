@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: ./compose/Dockerfile-dev
+    image: fletcher91/argu-dev
+    command: bundle exec bin/rails server -p 3000 -b '0.0.0.0'
+    volumes:
+      - ..:/usr/src/app
+    ports:
+      - "3000:3000"
+    env_file:
+      - ../.env
+    links:
+      - "postgres:db"
+      - "redis:redis"
+      - "mailcatcher:mail"
+  sidekiq:
+    image: fletcher91/argu-dev
+    command: bundle exec sidekiq
+    volumes:
+      - ..:/usr/src/app
+    env_file:
+      - ../.env
+    links:
+      - "postgres:db"
+      - "redis:redis"
+      - "mailcatcher:mail"
+  postgres:
+    image: postgres:9.4
+    ports:
+      - "5432:5432"
+    env_file:
+      - postgres.env
+  redis:
+    image: redis:2.8.17
+    ports:
+      - "6379:6379"
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - "1080:1080"

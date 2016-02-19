@@ -19,10 +19,13 @@ RSpec.feature 'Banners', type: :feature do
                          :published,
                          audience,
                          forum: holland,
-                         title: "banner_#{audience}")
+                         title: "Banner_#{audience}")
     end
   end
 
+  ####################################
+  # As Guest
+  ####################################
   scenario 'All objects show banners' do
     question = holland.questions.first
     visit question_path question
@@ -38,15 +41,12 @@ RSpec.feature 'Banners', type: :feature do
                     'Banners not visible on motion pages'
 
     argument = holland.motions.first.arguments.first
-    visit argument_path argument
+    visit argument_path(argument)
     expect(page).to have_content(argument.title)
     expect(page).to have_content(banner_everyone.title),
                     'Banners not visible on argument pages'
   end
 
-  ####################################
-  # As Guest
-  ####################################
   scenario 'Guest sees correct banners' do
     question = holland.questions.first
 
@@ -128,6 +128,7 @@ RSpec.feature 'Banners', type: :feature do
     expect(page).to_not have_content(banner_users.title)
     expect(page).to have_content(banner_everyone.title)
   end
+
   ####################################
   # As Member
   ####################################
@@ -147,5 +148,41 @@ RSpec.feature 'Banners', type: :feature do
                         'Member sees users banners'
     expect(page).to have_content(banner_members.title),
                     "Member doesn't see members banners"
+  end
+
+  ####################################
+  # As Manager
+  ####################################
+
+  scenario 'Manager creates a banner' do
+    login_as(holland.page.owner.profileable, :scope => :user)
+
+    new_banner = attributes_for(:banner)
+
+    visit settings_forum_path(holland, tab: :banners)
+    click_link 'Nieuwe banner'
+
+    expect(page).to have_content('Nieuwe Banner')
+    within('#new_banner') do
+      fill_in :banner_title, with: new_banner[:title]
+      fill_in :banner_content, with: new_banner[:content]
+      within('#banner_audience_input') do
+        if Capybara.current_driver == :poltergeist
+          selector = '.Select-control .Select-placeholder'
+        else
+          selector = '.Select-control .Select-input input'
+        end
+        input_field = find(selector).native
+        input_field.send_keys 'ied'
+        expect(page).to have_content('Iedereen')
+        option = find('.Select-option', text: 'Iedereen')
+        option.click
+      end
+      click_button 'Banner aanmaken'
+    end
+    expect(page).to have_content 'Banner successvol aangemaakt'
+    within('#banners-drafts') do
+      expect(page).to have_content(new_banner[:title])
+    end
   end
 end

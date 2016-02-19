@@ -21,7 +21,7 @@ class GroupsControllerTest < ActionController::TestCase
 
     get :new, id: group, forum_id: freetown
 
-    assert_redirected_to root_path
+    assert_redirected_to forum_path(freetown)
     assert assigns(:forum)
   end
 
@@ -30,7 +30,7 @@ class GroupsControllerTest < ActionController::TestCase
 
     get :edit, id: group, forum_id: freetown
 
-    assert_redirected_to root_path
+    assert_redirected_to forum_path(freetown)
     assert assigns(:forum)
     assert assigns(:group)
   end
@@ -42,7 +42,7 @@ class GroupsControllerTest < ActionController::TestCase
       delete :destroy!, id: group
     end
 
-    assert_redirected_to root_path
+    assert_redirected_to forum_path(freetown)
   end
 
   ####################################

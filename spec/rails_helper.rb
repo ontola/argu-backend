@@ -69,7 +69,10 @@ RSpec.configure do |config|
   end
 
   Capybara.register_driver :selenium_chrome do |app|
-    Capybara::Selenium::Driver.new(app, browser: :chrome)
+    capabilities = Selenium::WebDriver::Remote::Capabilities.chrome('elementScrollBehavior' => 1)
+    Capybara::Selenium::Driver.new(app,
+                                   browser: :chrome,
+                                   desired_capabilities: capabilities)
   end
 
   Capybara.register_driver :selenium_safari do |app|
@@ -92,7 +95,7 @@ RSpec.configure do |config|
                             when 'safari'
                               :selenium_safari
                             else
-                              ENV['CI'].present? ? :selenium : :selenium
+                              ENV['CI'].present? ? :selenium_firefox : :selenium_firefox
                             end
   #Capybara.default_max_wait_time = 5
   Capybara.default_max_wait_time = 50

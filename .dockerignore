@@ -3,8 +3,12 @@ tmp/*
 log/*
 .env
 
+doc/
+jsdoc/
+
 spec/argu.txt
 .yardoc
+vendor/bundle
 
 # Ignore secrets
 secrets.yml
