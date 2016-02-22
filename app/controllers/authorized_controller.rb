@@ -121,17 +121,22 @@ end
   # @author Fletcher91 <thom@argu.co>
   # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
   def authenticated_resource!
-    @resource ||= if params[:action] == 'new' || params[:action] == 'create'
-      controller_name
+    @resource ||=
+      if params[:action] == 'new' || params[:action] == 'create'
+        controller_name
           .classify
           .constantize
           .new resource_new_params
-    else
-      controller_name
+      elsif params[:action] == 'index'
+        controller_name
+          .classify
+          .constantize
+      else
+        controller_name
           .classify
           .constantize
           .find_by id: resource_id
-    end
+      end
   end
 
   # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,
@@ -141,7 +146,7 @@ end
   # @note This should be based only on static information and be side-effect free to make memoization possible.
   # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {resource_tenant}.
   def authenticated_context
-    if authenticated_resource!.present?
+    if params[:action] != 'index' && authenticated_resource!.present?
       authenticated_resource!.is_a?(Forum) ?
         authenticated_resource! :
         authenticated_resource!.forum
