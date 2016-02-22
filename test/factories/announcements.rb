@@ -1,10 +1,12 @@
 FactoryGirl.define do
-  factory :banner do
-    sequence(:title) { |n| "Banner title #{n}" }
-    content 'Banner content'
+
+  factory :announcement do
+
+    sequence(:title) { |n| "Announcement title #{n}" }
+    sequence(:content) { |n| "Announcement content #{n}" }
 
     trait :published do
-      published_at { 1.hours.ago }
+      published_at { 1.hour.ago }
     end
 
     trait :unpublished do
@@ -15,14 +17,11 @@ FactoryGirl.define do
       published_at { 1.hour.from_now }
     end
 
-    trait :ended do
-      ended_at { 15.minutes.ago }
-    end
-
     %i(guests users members everyone).each do |_audience|
        trait _audience do
-         audience Banner.audiences[_audience]
+         audience Announcement.audiences[_audience]
        end
     end
+
   end
 end

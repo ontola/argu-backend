@@ -38,8 +38,8 @@ class BannerDismissalsController < AuthorizedController
     if authenticated_resource!.present?
       case authenticated_resource!.banner.audience.to_sym
         when :guests then !current_user
-        when :users then current_user && !current_user.member_of?(@forum)
-        when :members then current_user && current_user.member_of?(@forum)
+        when :users then current_user && !current_user.member_of?(authenticated_context)
+        when :members then current_user && current_user.member_of?(authenticated_context)
         when :everyone then true
       end
     else

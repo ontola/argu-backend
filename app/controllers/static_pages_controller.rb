@@ -21,6 +21,12 @@ class StaticPagesController < ApplicationController
     authorize :static_page
   end
 
+  def dismiss_announcement
+    authorize :static_page
+    announcement = Announcement.find(params[:id])
+    stubborn_hmset 'announcements', announcement.identifier => :hidden
+  end
+
   def how_argu_works
     authorize :static_page
   end
