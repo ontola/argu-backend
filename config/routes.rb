@@ -180,6 +180,13 @@ Argu::Application.routes.draw do
   resources :phases,
             only: [:show]
 
+  resources :announcements, only: [] do
+    post '/dismissals',
+         to: 'static_pages#dismiss_announcement'
+    get '/dismissals',
+         to: 'static_pages#dismiss_announcement'
+  end
+
   authenticate :user, lambda { |p| p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
     resources :notifications, only: :create

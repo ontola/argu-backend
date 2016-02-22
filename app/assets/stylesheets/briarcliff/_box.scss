@@ -333,6 +333,10 @@
   top: 0;
   right: 0;
   padding: 0.5em !Important;
+
+  .announcement & {
+    margin-right: 4px;
+  }
 }
 
 // Used to hide lazy loaded images. Only shows when the user has JS enabled.
