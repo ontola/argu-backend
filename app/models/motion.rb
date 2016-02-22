@@ -35,8 +35,8 @@ class Motion < ActiveRecord::Base
 
   VOTE_OPTIONS = [:pro, :neutral, :con]
 
-  scope :search, ->(q) { where('lower(title) SIMILAR TO lower(?) OR ' +
-                                'lower(content) LIKE lower(?)',
+  scope :search, ->(q) { where('lower(motions.title) SIMILAR TO lower(?) OR ' +
+                                'lower(motions.content) LIKE lower(?)',
                                 "%#{q}%",
                                 "%#{q}%") }
 
