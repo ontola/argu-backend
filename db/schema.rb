@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
     t.datetime "created_at",                  null: false
     t.datetime "updated_at",                  null: false
     t.datetime "trashed_at"
+    t.datetime "ends_at"
   end
 
   add_index "announcements", ["published_at"], name: "index_announcements_on_published_at", using: :btree
@@ -121,6 +122,8 @@ ActiveRecord::Schema.define(version: 20160329060056) do
     t.datetime "published_at"
     t.datetime "created_at",                      null: false
     t.datetime "updated_at",                      null: false
+    t.datetime "trashed_at"
+    t.datetime "ends_at"
   end
 
   add_index "banners", ["forum_id", "published_at"], name: "index_banners_on_forum_id_and_published_at", using: :btree

@@ -2,24 +2,33 @@ require 'rails_helper'
 
 RSpec.feature 'Banners', type: :feature do
   let!(:holland) do
-    FactoryGirl.create(:populated_forum,
-                       name: 'holland')
+    create(:populated_forum,
+           name: 'holland')
   end
   let!(:unpublished_banner) do
-    FactoryGirl.create(:banner,
-                       :unpublished,
-                       :everyone,
-                       forum: holland,
-                       title: 'unpublished_banner')
+    create(:banner,
+           :unpublished,
+           :everyone,
+           forum: holland,
+           title: 'unpublished_banner')
+  end
+
+  let!(:ended_banner) do
+    create(:banner,
+           :published,
+           :ended,
+           :everyone,
+           forum: holland,
+           title: 'unpublished_banner')
   end
 
   %i(guests users members everyone).each do |audience|
     let!("banner_#{audience}".to_sym) do
-      FactoryGirl.create(:banner,
-                         :published,
-                         audience,
-                         forum: holland,
-                         title: "Banner_#{audience}")
+      create(:banner,
+             :published,
+             audience,
+             forum: holland,
+             title: "Banner_#{audience}")
     end
   end
 
