@@ -21,5 +21,5 @@ nav#navbar.navbar[role="navigation"]
           span.fa.fa-sign-in
           span.icon-left.dont-hide= t('sign_in')
   =render partial: 'online_status'
-- if policy_scope(Announcement).present?
-  =render partial: 'announcements/announcement', collection: policy_scope(Announcement)
+- if collect_announcements.present?
+  =render partial: 'announcements/announcement', collection: collect_announcements
