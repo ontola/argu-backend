@@ -23,8 +23,18 @@ class StaticPagesController < ApplicationController
 
   def dismiss_announcement
     authorize :static_page
-    announcement = Announcement.find(params[:id])
+    announcement = Announcement.find(params[:announcement_id])
+    BannerDismissal.new(banner_class: Announcement,
+                        banner: announcement)
     stubborn_hmset 'announcements', announcement.identifier => :hidden
+
+    respond_to do |format|
+      format.js do
+        render 'announcements/dismissals/create',
+               locals: {announcement: announcement}
+      end
+      format.html { redirect_to :back }
+    end
   end
 
   def how_argu_works

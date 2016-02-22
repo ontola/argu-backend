@@ -5,5 +5,7 @@
       .markdown
         =markdown_to_html(announcement.content)
     .btns-sticky.btns-sticky-top
-      a.btn-subtle.box-close-button
+      =link_to announcement_dismissals_path(announcement),
+              class: 'btn-subtle box-close-button',
+              data: {method: 'post', remote: true} do
         span.fa.fa-close
