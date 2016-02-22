@@ -20,5 +20,6 @@ nav#navbar.navbar role="navigation"
         .inspectlet-sensitive= react_component 'NotificationDropdown', notification_dropdown_items, {prerender: true}
       =react_component 'HyperDropdown', info_dropdown_items, {prerender: true}
   =render partial: 'online_status'
-- if policy_scope(Announcement).present?
-  =render partial: 'announcements/announcement', collection: policy_scope(Announcement)
+- if collect_announcements.present?
+  =render partial: 'announcements/announcement',
+          collection: collect_announcements

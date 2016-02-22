@@ -17,6 +17,10 @@ class StaticPagePolicy < Struct.new(:user, :static_pages)
     true
   end
 
+  def dismiss_announcement?
+    true
+  end
+
   def product?
     true
   end
