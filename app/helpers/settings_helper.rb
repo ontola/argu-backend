@@ -17,6 +17,10 @@ module SettingsHelper
       'external-link'
     when :banners
       'sticky-note'
+    when :setting
+      'sliders'
+    when :announcements
+      'bullhorn'
     end
   end
 
