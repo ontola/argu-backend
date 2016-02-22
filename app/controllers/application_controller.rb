@@ -3,7 +3,8 @@ require 'argu/not_authorized_error'
 class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController,
           AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
-  helper_method :current_profile, :current_context, :current_scope, :show_trashed?, :authenticated_context
+  helper_method :current_profile, :current_context, :current_scope, :show_trashed?,
+                :authenticated_context, :collect_announcements
   protect_from_forgery with: :exception
   prepend_before_action :check_for_access_token
   before_action :check_finished_intro
@@ -38,6 +39,17 @@ class ApplicationController < ActionController::Base
     else
       super
     end
+  end
+
+  def collect_announcements
+    return @announcements if @announcements.present?
+
+    announcements = stubborn_hgetall('announcements') || {}
+    if announcements.present? && announcements.is_a?(String)
+      announcements = JSON.parse(announcements)
+    end
+    @announcements = policy_scope(Announcement)
+                       .reject { |a| announcements[a.identifier] == 'hidden' }
   end
 
   # Combines {ApplicationController#create_activity} with
