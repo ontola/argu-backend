@@ -12,7 +12,6 @@ class ProfilePolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      raise Pundit::NotAuthorizedError, 'must be logged in' unless user
       scope.where(is_public: true)
     end
   end
@@ -28,7 +27,7 @@ class ProfilePolicy < RestrictivePolicy
   end
 
   def index
-    is_owner? || staff?
+    is_manager? || is_owner? || staff?
   end
 
   def new?

@@ -14,13 +14,15 @@ class AnnouncementPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      audience = [Banner.audiences[:everyone]]
+      audience = [Announcement.audiences[:everyone]]
       if user.present?
-        audience << Banner.audiences[:users]
+        audience << Announcement.audiences[:users]
       else
-        audience << Banner.audiences[:guests]
+        audience << Announcement.audiences[:guests]
       end
-      scope.where(audience: audience)
+      scope
+        .where(audience: audience)
+        .published
     end
   end
 
@@ -28,7 +30,7 @@ class AnnouncementPolicy < RestrictivePolicy
     attributes = super
     attributes << [:title, :forum, :cited_profile, :content,
                    :cited_avatar, :cited_name, :audience,
-                   :cited_function, :published_at] if create?
+                   :cited_function, :published_at, :ends_at] if create?
     attributes << [:id] if staff?
     attributes
   end
