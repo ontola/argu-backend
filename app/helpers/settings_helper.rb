@@ -16,6 +16,10 @@ module SettingsHelper
       'shield'
     when :banners
       'sticky-note'
+    when :setting
+      'sliders'
+    when :announcements
+      'bullhorn'
     end
   end
 

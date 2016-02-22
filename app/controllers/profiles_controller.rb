@@ -1,6 +1,7 @@
 class ProfilesController < ApplicationController
 
   def index
+    authorize Profile, :index?
     @resource = Shortname.find_resource 'nederland'  # params[:thing]
     #authorize @resource, :list_members?
 
@@ -10,8 +11,7 @@ class ProfilesController < ApplicationController
       if params[:q].present?
         # This is a working mess.
         q = params[:q].gsub(' ', '|')
-        @profiles = Profile.where(is_public: true)
-                           .where(profileable_type: 'User',
+        @profiles = Profile.where(profileable_type: 'User',
                                   profileable_id: User.where(finished_intro: true)
                                                       .joins(:shortname)
                                                       .where('lower(shortname) SIMILAR TO lower(?) OR ' +

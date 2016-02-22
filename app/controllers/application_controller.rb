@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Argu::RuledIt::NotAuthorizedError do |exception|
     @_not_authorized_caught = true
-    Rails.logger.error exception
+    Rails.logger.error exception.to_s
     action = exception.query.to_s[0..-2]
     error = exception.try(:verdict) || t("#{exception.record.try(:class_name)}.pundit.#{action}",
               action: "#{exception.record.class}##{action}",

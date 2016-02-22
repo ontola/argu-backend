@@ -6,5 +6,6 @@
     =f.input :sample_size
     =f.input :audience, as: :react_select, collection: options_for_announcement_audiences, include_blank: false
     =f.input :published_at, as: :datetime_picker
+    =f.input :ends_at, as: :datetime_picker
   =f.actions do
     =f.action :submit, as: :button, label: :save

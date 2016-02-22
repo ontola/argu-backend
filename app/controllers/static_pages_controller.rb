@@ -3,7 +3,7 @@ class StaticPagesController < ApplicationController
 
   def home
     authorize :static_page
-  	if signed_in? || within_user_cap?
+    if signed_in? || within_user_cap?
       if current_user && policy(current_user).staff?
         @activities = policy_scope(Activity).order(created_at: :desc).limit(10)
         render #stream: true
@@ -14,11 +14,17 @@ class StaticPagesController < ApplicationController
       #redirect_to preferred_forum
       #@document = JSON.parse Setting.get('about') || '{}'
       #render 'document', layout: 'layouts/closed'
-	  end
+    end
   end
 
   def developers
     authorize :static_page
+  end
+
+  def dismiss_announcement
+    authorize :static_page
+    announcement = Announcement.find(params[:id])
+    stubborn_hmset 'announcements', announcement.identifier => :hidden
   end
 
   def how_argu_works
