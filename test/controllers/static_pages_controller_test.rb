@@ -35,7 +35,7 @@ class StaticPagesControllerTest < ActionController::TestCase
   let!(:freetown) { FactoryGirl.create(:forum) }
   let(:staff) { FactoryGirl.create(:user, :staff) }
 
-  test 'should get activity feed' do
+  test 'staff should get activity feed' do
     activities = []
     %i(t_question t_motion t_argument t_comment t_vote).each do |trait|
       activities << FactoryGirl.create(:activity, trait, forum: freetown)
@@ -47,6 +47,21 @@ class StaticPagesControllerTest < ActionController::TestCase
 
     assert_response 200
     assert_equal activities, activities & assigns(:activities)
+  end
+
+  let(:staff_nomember) { FactoryGirl.create(:user, :staff) }
+
+  test 'staff should get activity feed without memberships' do
+    activities = []
+    %i(t_question t_motion t_argument t_comment t_vote).each do |trait|
+      activities << FactoryGirl.create(:activity, trait, forum: freetown)
+    end
+    sign_in staff_nomember
+
+    get :home
+
+    assert_response 200
+    assert assigns(:activities).blank?
   end
 
 end
