@@ -8,11 +8,11 @@
     span.fa.fa-paper-plane
     span.icon-left= t('publish')
 -elsif banner.is_published?
-  = link_to forum_banner_path(authenticated_context, banner, banner: {published_at: nil}),
+  =link_to forum_banner_path(authenticated_context, banner, banner: {published_at: nil}),
           class: 'btn-subtle',
           data: {method: :put, confirm: t('retract_confirmation')}
-  span.fa.fa-eraser
-  span.icon-left= t('retract')
+    span.fa.fa-eraser
+    span.icon-left= t('retract')
 =link_to forum_banner_path(authenticated_context, banner),
          data: {method: :delete, confirm: t('destroy_confirmation')},
          class:'btn-subtle' do
