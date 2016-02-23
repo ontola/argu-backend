@@ -105,7 +105,7 @@ module ApplicationHelper
 
   # Generates social media links for any resource for HyperDropdown
   def share_items(resource)
-    url = url_for([resource, only_path: false])
+    url = polymorphic_url(resource, only_path: false)
 
     {
         title: t('share'),
