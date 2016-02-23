@@ -16,7 +16,7 @@ FactoryGirl.define do
     end
 
     trait :ended do
-      ended_at { 15.minutes.ago }
+      ends_at { 15.minutes.ago }
     end
 
     %i(guests users members everyone).each do |_audience|
