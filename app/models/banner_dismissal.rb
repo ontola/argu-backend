@@ -8,9 +8,10 @@ class BannerDismissal
   validates :banner, :user, presence: true
 
   def initialize(options = {})
-    @user = options[:user]
-    @banner_id = options[:banner_id]
     @banner_class = options[:banner_class] || Banner
+    @user = options[:user]
+    self.banner_id= options[:banner_id] if options[:banner_id].present?
+    self.banner= options[:banner] if options[:banner].present?
     @banner_key = @banner_class.model_name.collection
   end
 
