@@ -23,8 +23,8 @@ class ProfilePolicy < RestrictivePolicy
     attributes
   end
 
-  def index
-    is_manager? || is_owner? || staff?
+  def index?
+    is_manager_somewhere? || is_owner_somewhere? || staff?
   end
 
   def new?
@@ -42,5 +42,15 @@ class ProfilePolicy < RestrictivePolicy
 
   def edit?
     update?
+  end
+
+  private
+
+  def is_manager_somewhere?
+    user && (user.profile.managerships.present? || user.profile.page_managerships.present?)
+  end
+
+  def is_owner_somewhere?
+    user && user.profile.pages.present?
   end
 end
