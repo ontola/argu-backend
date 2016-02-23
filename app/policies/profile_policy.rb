@@ -19,15 +19,16 @@ class ProfilePolicy < RestrictivePolicy
   def permitted_attributes
     attributes = super
     if record.profileable.present?
-      attributes << [:id, :name, :about, :profile_photo, :remove_profile_photo, :cover_photo, :remove_cover_photo, :are_votes_public, :is_public] if update?
+      attributes << [:id, :name, :about, :profile_photo, :remove_profile_photo, :cover_photo,
+                     :remove_cover_photo, :are_votes_public, :is_public] if update?
     else
       attributes << [:id, :name, :about, :profile_photo, :cover_photo, :are_votes_public, :is_public] if new?
     end
     attributes
   end
 
-  def index
-    is_manager? || is_owner? || staff?
+  def index?
+    is_manager_somewhere? || is_owner_somewhere? || staff?
   end
 
   def new?
@@ -45,5 +46,15 @@ class ProfilePolicy < RestrictivePolicy
 
   def edit?
     update?
+  end
+
+  private
+
+  def is_manager_somewhere?
+    user && (user.profile.managerships.present? || user.profile.page_managerships.present?)
+  end
+
+  def is_owner_somewhere?
+    user && user.profile.pages.present?
   end
 end
