@@ -14,12 +14,14 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.pjax
 //= require jquery.jeditable.mini
 //= require bg_loaded
 //= require cocoon
-//= require nprogress
 //= require sifter
 //= require microplugin
 //= require selectize
 //= require _bundle
+//= require turbolinks
+//= require react_ujs_mount
+//= require react_ujs_turbolinks
+//= require react_ujs_event_setup

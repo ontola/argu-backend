@@ -72,7 +72,7 @@ function setHighlight(type, value) {
 export default function init () {
     checkForGrid();
 
-    $(document).on('pjax:complete pjax:end', function () {
+    $(document).on('turbolinks:load', function () {
         checkForGrid();
     }).on('click', '.sort-random', function () {
         $container

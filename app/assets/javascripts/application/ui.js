@@ -29,7 +29,6 @@ const ui = {
         this.handleResizeBackground();
 
         modal.init();
-        progressbar.init();
         FastClick.attach(document.body);
 
         var bLazy = new Blazy({
@@ -236,10 +235,7 @@ export default ui;
 export const modal = {
     init: function () {
         $(document)
-            .on('click', '.modal-container:not(.no-close) .overlay', this.closeModal)
-            .on('pjax:complete', function () {
-                $('body').removeClass('modal-opened');
-            });
+            .on('click', '.modal-container:not(.no-close) .overlay', this.closeModal);
 
         // Close modal when pressing escape button
         // @TODO: Just listen to escape, not all the time all the buttons
@@ -262,14 +258,5 @@ export const modal = {
             container.remove();
             $('body').removeClass('modal-opened');
         }, 500);
-    }
-};
-
-export const progressbar = {
-    init: function () {
-        $(document)
-            .on('pjax:start ajax:beforeSend',   NProgress.start)
-            .on('pjax:success pjax:end ajax:complete',  NProgress.done)
-            .on('pjax:end ajax:after', NProgress.remove);
     }
 };

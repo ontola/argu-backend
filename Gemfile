@@ -61,9 +61,11 @@ gem 'kaminari', '~>0.16.1'
 
 
 ##################Front-end########################
-#gem 'react-rails', github: 'reactjs/react-rails', branch: 'master', ref: 'd0d62c5dd35108e258b8e50d749499269997186d'
-#gem 'react-rails', '~> 1.3.1'
-gem 'react-rails', '~> 1.4.2'
+#gem 'react-rails', '~> 1.6.0'
+gem 'react-rails',
+    github: 'reactjs/react-rails',
+    branch: 'master',
+    ref: '58842d4d06cf4a7f993a112edbd3ef82272a659a'
 
 ##################Asset-y########################
 gem 'slim', '~> 3.0.6'
@@ -82,7 +84,7 @@ gem 'sidetiq', '~> 0.7.0'
 gem 'sidekiq-logging-json', git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git', ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
-gem 'rack-pjax'
+gem 'turbolinks', '>= 5.0.0.beta2'
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.0.2'
 gem 'sprockets-es6', require: 'sprockets/rails'

@@ -1,22 +1,12 @@
 import configureStore from '../stores/configureStore';
 import Immutable from 'immutable';
 import {
-    RDateline,
-    RPhase,
-    RPoint,
-    RProfile,
-    RTimeline,
-    RUpdate
+    RProfile
 } from '../records/index';
 import popstate from '../actions/popstate';
 
 const types = {
-    dateline: RDateline,
-    phase: RPhase,
-    point: RPoint,
-    profile: RProfile,
-    timeline: RTimeline,
-    update: RUpdate
+    profile: RProfile
 };
 
 /**
@@ -67,15 +57,6 @@ function generateInitialState (state = window.__INITIAL_STATE__) {
 }
 
 const store = configureStore(generateInitialState());
-
-if (window) {
-    window.onpopstate = function(event) {
-        if (typeof event.state.timelines !== undefined) {
-            store.dispatch(popstate(generateInitialState(event.state)));
-        }
-    };
-}
-
 export default store;
 
 export function liveStore () {

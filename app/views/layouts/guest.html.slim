@@ -17,9 +17,7 @@ html[class="no-js"]
     =render partial: 'external/mixpanel'
   body.no-js
     #fb-root
-    =render 'guest/navbar'
-    /- if stubborn_get('hide_video') != 'true'
-      =render partial: 'welcome_video', locals: {domain: Rails.env.test? ? '//example.com' : 'https://youtube.com'}
+    =render 'guest/navbar', permanent: 'navbar'
     .wrapper
       /[if lt IE 10]
         p.browsehappy= raw t('outdated_browser')

@@ -55,7 +55,7 @@ private
   end
 
   def r_from_url_or_header
-    params[:r] || request.referer
+    params[:r] || request.env['HTTP_TURBOLINKS_REFERRER'] || request.referer
   end
 
   def r_with_authenticity_token(r)

@@ -128,7 +128,7 @@ exports.default = {
     }
 }; /*global $, Argu*/
 
-},{"../src/app/components/Alert":12}],4:[function(require,module,exports){
+},{"../src/app/components/Alert":11}],4:[function(require,module,exports){
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -212,7 +212,7 @@ function setHighlight(type, value) {
 function init() {
     checkForGrid();
 
-    $(document).on('pjax:complete pjax:end', function () {
+    $(document).on('turbolinks:load', function () {
         checkForGrid();
     }).on('click', '.sort-random', function () {
         $container.arrange('updateSortData').arrange({
@@ -507,7 +507,7 @@ exports.default = n;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.progressbar = exports.modal = undefined;
+exports.modal = undefined;
 
 var _Alert = require('../src/app/components/Alert');
 
@@ -539,7 +539,6 @@ var ui = {
         this.handleResizeBackground();
 
         modal.init();
-        progressbar.init();
         _fastclick.FastClick.attach(document.body);
 
         var bLazy = new _blazy2.default({
@@ -740,9 +739,7 @@ var ui = {
 exports.default = ui;
 var modal = exports.modal = {
     init: function init() {
-        $(document).on('click', '.modal-container:not(.no-close) .overlay', this.closeModal).on('pjax:complete', function () {
-            $('body').removeClass('modal-opened');
-        });
+        $(document).on('click', '.modal-container:not(.no-close) .overlay', this.closeModal);
 
         // Close modal when pressing escape button
         // @TODO: Just listen to escape, not all the time all the buttons
@@ -768,13 +765,7 @@ var modal = exports.modal = {
     }
 };
 
-var progressbar = exports.progressbar = {
-    init: function init() {
-        $(document).on('pjax:start ajax:beforeSend', NProgress.start).on('pjax:success pjax:end ajax:complete', NProgress.done).on('pjax:end ajax:after', NProgress.remove);
-    }
-};
-
-},{"../src/app/components/Alert":12,"../src/app/lib/helpers":24,"blazy":30,"fastclick":86}],9:[function(require,module,exports){
+},{"../src/app/components/Alert":11,"../src/app/lib/helpers":23,"blazy":30,"fastclick":86}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -782,17 +773,13 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = moduleInit;
 
+var _windowize = require('./windowize');
+
+var _windowize2 = _interopRequireDefault(_windowize);
+
 var _activity_feed = require('./application/activity_feed');
 
 var _activity_feed2 = _interopRequireDefault(_activity_feed);
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = require('react-dom');
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
 
 var _whatwgFetch = require('whatwg-fetch');
 
@@ -818,10 +805,6 @@ var _isotopeBriarcliff = require('./application/briarcliff/isotope-briarcliff');
 
 var _isotopeBriarcliff2 = _interopRequireDefault(_isotopeBriarcliff);
 
-var _react_ujs = require('./lib/react_ujs.js');
-
-var _react_ujs2 = _interopRequireDefault(_react_ujs);
-
 var _meta = require('./application/meta');
 
 var _meta2 = _interopRequireDefault(_meta);
@@ -830,16 +813,7 @@ var _helpers = require('./src/app/lib/helpers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function shallowMountComponents() {
-    window.ReactRailsUJS.mountComponents('#pjax-container');
-} /*globals ReactRailsUJS*/
-
-window.shallowMountComponents = shallowMountComponents;
-
-function shallowUnmountComponents() {
-    window.ReactRailsUJS.unmountComponents('#pjax-container');
-}
-window.shallowUnmountComponents = shallowUnmountComponents;
+(0, _windowize2.default)(); /*globals ReactRailsUJS*/
 
 function init() {
     // All init functions can rest assured that the document is ready.
@@ -863,14 +837,6 @@ function init() {
         }
     }
 
-    if (typeof $.pjax.defaults === 'undefined') {
-        $.pjax.defaults = {};
-    }
-    $.pjax.defaults.timeout = 7000;
-
-    $(document).pjax('a:not([data-remote]):not([data-behavior]):not([data-skip-pjax])', '#pjax-container').on('pjax:beforeApply', shallowUnmountComponents) // pjax:start seems to have come unnecessary
-    .on('pjax:beforeReplace', _meta2.default.processContentForMetaTags).on('pjax:end', shallowMountComponents).on('pjax:end', _meta2.default.removeMetaContent).on('pjax:error', stopOnJSONError);
-
     if (!("ontouchstart" in document.documentElement)) {
         document.documentElement.className += " no-touch";
     }
@@ -882,80 +848,7 @@ function moduleInit() {
     };
 }
 
-},{"./application/activity_feed":2,"./application/alert":3,"./application/briarcliff/isotope-briarcliff":4,"./application/meta":5,"./application/motions":6,"./application/notifications":7,"./application/ui":8,"./lib/react_ujs.js":10,"./src/app/lib/helpers":24,"react":307,"react-dom":112,"whatwg-fetch":327}],10:[function(require,module,exports){
-'use strict';
-
-/*globals React, Turbolinks*/
-var React = require('react');
-var ReactDOM = require('react-dom');
-window.Select = require('react-select');
-
-
-var components = ({"..":({"src":({"app":({"components":({"ActiveToggle":require("../src/app/components/ActiveToggle.js"),"Alert":require("../src/app/components/Alert.js"),"BigVote":require("../src/app/components/BigVote.js"),"CombiBigVote":require("../src/app/components/CombiBigVote.js"),"CurrentProfile":require("../src/app/components/CurrentProfile.js"),"Dropdown":require("../src/app/components/Dropdown.js"),"Notifications":require("../src/app/components/Notifications.js"),"Profile":require("../src/app/components/Profile.js"),"_big_group_responses":require("../src/app/components/_big_group_responses.js"),"_expand":require("../src/app/components/_expand.js"),"_membership":require("../src/app/components/_membership.js"),"_search":require("../src/app/components/_search.js")})})})})});
-
-// Unobtrusive scripting adapter for React
-module.exports = (function ReactUJS(document, window) {
-    // create the  namespace
-    window.ReactRailsUJS = {
-        CLASS_NAME_ATTR: 'data-react-class',
-        PROPS_ATTR: 'data-react-props',
-        RAILS_ENV_DEVELOPMENT: true,
-        // helper method for the mount and unmount methods to find the
-        // `data-react-class` DOM elements
-        findDOMNodes: function findDOMNodes(searchSelector) {
-            // we will use fully qualified paths as we do not bind the callbacks
-            var selector;
-            if (typeof searchSelector === 'undefined') {
-                selector = '[' + window.ReactRailsUJS.CLASS_NAME_ATTR + ']';
-            } else {
-                selector = searchSelector + ' [' + window.ReactRailsUJS.CLASS_NAME_ATTR + ']';
-            }
-
-            return document.querySelectorAll(selector);
-        },
-
-        mountComponents: function mountComponents(searchSelector) {
-            var nodes = window.ReactRailsUJS.findDOMNodes(searchSelector);
-
-            for (var i = 0; i < nodes.length; ++i) {
-                var node = nodes[i];
-                var className = node.getAttribute(window.ReactRailsUJS.CLASS_NAME_ATTR);
-
-                // Assume className is simple and can be found at top-level (window).
-                // Fallback to eval to handle cases like 'My.React.ComponentName'.
-                //var constructor = window[className] || require(className) || eval.call(window, className);
-                var constructor = typeof require === "undefined" ? window[className] || eval.call(window, className) : eval.call(this, className);
-                var propsJson = node.getAttribute(window.ReactRailsUJS.PROPS_ATTR);
-                var props = propsJson && JSON.parse(propsJson);
-
-                ReactDOM.render(React.createElement(constructor, props), node);
-            }
-        },
-
-        unmountComponents: function unmountComponents(searchSelector) {
-            var nodes = window.ReactRailsUJS.findDOMNodes(searchSelector);
-
-            for (var i = 0; i < nodes.length; ++i) {
-                var node = nodes[i];
-
-                ReactDOM.unmountComponentAtNode(node);
-            }
-        }
-    };
-
-    function handleNativeEvents() {
-        document.addEventListener('DOMContentLoaded', function () {
-            window.ReactRailsUJS.mountComponents();
-        });
-        window.addEventListener('unload', function () {
-            window.ReactRailsUJS.unmountComponents();
-        });
-    }
-
-    handleNativeEvents();
-})(document, window);
-
-},{"../src/app/components/ActiveToggle.js":11,"../src/app/components/Alert.js":12,"../src/app/components/BigVote.js":13,"../src/app/components/CombiBigVote.js":14,"../src/app/components/CurrentProfile.js":15,"../src/app/components/Dropdown.js":16,"../src/app/components/Notifications.js":17,"../src/app/components/Profile.js":18,"../src/app/components/_big_group_responses.js":19,"../src/app/components/_expand.js":20,"../src/app/components/_membership.js":21,"../src/app/components/_search.js":22,"react":307,"react-dom":112,"react-select":145}],11:[function(require,module,exports){
+},{"./application/activity_feed":2,"./application/alert":3,"./application/briarcliff/isotope-briarcliff":4,"./application/meta":5,"./application/motions":6,"./application/notifications":7,"./application/ui":8,"./src/app/lib/helpers":23,"./windowize":29,"whatwg-fetch":327}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1035,7 +928,7 @@ var ActiveToggle = exports.ActiveToggle = _react2.default.createClass({
 
 window.ActiveToggle = ActiveToggle;
 
-},{"../lib/helpers":24,"intl":88,"react":307}],12:[function(require,module,exports){
+},{"../lib/helpers":23,"intl":88,"react":307}],11:[function(require,module,exports){
 'use strict';
 
 var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
@@ -1115,7 +1008,7 @@ var Alert = (function () {
 
 exports.default = Alert;
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1375,7 +1268,7 @@ var BigVoteResults = exports.BigVoteResults = _react2.default.createClass({
 });
 window.BigVoteResults = BigVoteResults;
 
-},{"../lib/helpers":24,"./Alert":12,"react":307,"react-intl":113}],14:[function(require,module,exports){
+},{"../lib/helpers":23,"./Alert":11,"react":307,"react-intl":113}],13:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
@@ -1490,7 +1383,7 @@ var CombiBigVote = exports.CombiBigVote = _react2.default.createClass({
 });
 window.CombiBigVote = CombiBigVote;
 
-},{"../lib/helpers":24,"../stores/actor_store":28,"./Alert":12,"./BigVote":13,"./_big_group_responses":19,"intl":88,"intl/locale-data/jsonp/en.js":92,"react":307}],15:[function(require,module,exports){
+},{"../lib/helpers":23,"../stores/actor_store":27,"./Alert":11,"./BigVote":12,"./_big_group_responses":18,"intl":88,"intl/locale-data/jsonp/en.js":92,"react":307}],14:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -1556,7 +1449,7 @@ var CurrentProfile = exports.CurrentProfile = _react2.default.createClass({
 
 window.CurrentProfile = CurrentProfile;
 
-},{"../lib/helpers":24,"../stores/actor_store":28,"react":307}],16:[function(require,module,exports){
+},{"../lib/helpers":23,"../stores/actor_store":27,"react":307}],15:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* globals $, FB, Actions */
@@ -2097,7 +1990,7 @@ var CurrentUserTrigger = exports.CurrentUserTrigger = _react2.default.createClas
 });
 window.CurrentUserTrigger = CurrentUserTrigger;
 
-},{"../lib/helpers":24,"../mixins/HyperDropdownMixin":25,"../stores/actor_store":28,"./Notifications":17,"react":307,"react-addons-transition-group":111,"react-dom":112,"react-onclickoutside":143}],17:[function(require,module,exports){
+},{"../lib/helpers":23,"../mixins/HyperDropdownMixin":24,"../stores/actor_store":27,"./Notifications":16,"react":307,"react-addons-transition-group":111,"react-dom":112,"react-onclickoutside":143}],16:[function(require,module,exports){
 'use strict';
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; /* globals NotificationActions */
@@ -2415,7 +2308,7 @@ var NotificationItem = exports.NotificationItem = _react2.default.createClass({
 });
 window.NotificationItem = NotificationItem;
 
-},{"../lib/helpers":24,"../mixins/HyperDropdownMixin":25,"../stores/notification_store":29,"react":307,"react-addons-transition-group":111,"react-dom":112,"react-onclickoutside":143}],18:[function(require,module,exports){
+},{"../lib/helpers":23,"../mixins/HyperDropdownMixin":24,"../stores/notification_store":28,"react":307,"react-addons-transition-group":111,"react-dom":112,"react-onclickoutside":143}],17:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2503,7 +2396,7 @@ var Profile = _react2.default.createClass({
 
 exports.default = Profile;
 
-},{"../records/RProfile":27,"react":307}],19:[function(require,module,exports){
+},{"../records/RProfile":26,"react":307}],18:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2649,7 +2542,7 @@ exports.default = BigGroupResponse;
 
 window.BigGroupResponse = BigGroupResponse;
 
-},{"../lib/helpers":24,"./Alert":12,"intl":88,"intl/locale-data/jsonp/en.js":92,"react":307}],20:[function(require,module,exports){
+},{"../lib/helpers":23,"./Alert":11,"intl":88,"intl/locale-data/jsonp/en.js":92,"react":307}],19:[function(require,module,exports){
 'use strict';
 
 var _react = require('react');
@@ -2704,7 +2597,7 @@ var Expander = _react2.default.createClass({
 
 window.Expander = Expander;
 
-},{"react":307}],21:[function(require,module,exports){
+},{"react":307}],20:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2860,7 +2753,7 @@ var NewMembership = exports.NewMembership = _react2.default.createClass({
 });
 window.NewMembership = NewMembership;
 
-},{"../lib/helpers":24,"./Alert":12,"react":307,"react-select":145}],22:[function(require,module,exports){
+},{"../lib/helpers":23,"./Alert":11,"react":307,"react-select":145}],21:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2986,7 +2879,7 @@ var MotionSelect = exports.MotionSelect = _react2.default.createClass({
 });
 window.MotionSelect = MotionSelect;
 
-},{"../lib/helpers":24,"./Alert":12,"./_membership":21,"react":307,"react-select":145}],23:[function(require,module,exports){
+},{"../lib/helpers":23,"./Alert":11,"./_membership":20,"react":307,"react-select":145}],22:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3054,7 +2947,7 @@ OrderedMap.prototype.set = function (key, value) {
 
 exports.default = OrderedMap;
 
-},{"es6-map":33}],24:[function(require,module,exports){
+},{"es6-map":33}],23:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3273,7 +3166,7 @@ function json(response) {
     }
 }
 
-},{"intl":88,"react":307}],25:[function(require,module,exports){
+},{"intl":88,"react":307}],24:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3398,7 +3291,7 @@ exports.default = HyperDropdownMixin;
 
 window.HyperDropdownMixin = HyperDropdownMixin;
 
-},{"react-dom":112}],26:[function(require,module,exports){
+},{"react-dom":112}],25:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3421,7 +3314,7 @@ var RImage = (0, _immutable.Record)({
 
 exports.default = RImage;
 
-},{"immutable":87}],27:[function(require,module,exports){
+},{"immutable":87}],26:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3464,7 +3357,7 @@ var RProfile = (0, _immutable.Record)({
 
 exports.default = RProfile;
 
-},{"./RImage":26,"immutable":87}],28:[function(require,module,exports){
+},{"./RImage":25,"immutable":87}],27:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3495,7 +3388,7 @@ var actorStore = _reflux2.default.createStore({
 window.actorStore = actorStore;
 exports.default = actorStore;
 
-},{"reflux":324}],29:[function(require,module,exports){
+},{"reflux":324}],28:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -3626,7 +3519,51 @@ window.notificationStore = notificationStore;
 
 exports.default = notificationStore;
 
-},{"../lib/OrderedMap":23,"../lib/helpers":24,"reflux":324}],30:[function(require,module,exports){
+},{"../lib/OrderedMap":22,"../lib/helpers":23,"reflux":324}],29:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = require('react-dom');
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
+
+var components = ({"src":({"app":({"components":({"ActiveToggle":require("./src/app/components/ActiveToggle.js"),"Alert":require("./src/app/components/Alert.js"),"BigVote":require("./src/app/components/BigVote.js"),"CombiBigVote":require("./src/app/components/CombiBigVote.js"),"CurrentProfile":require("./src/app/components/CurrentProfile.js"),"Dropdown":require("./src/app/components/Dropdown.js"),"Notifications":require("./src/app/components/Notifications.js"),"Profile":require("./src/app/components/Profile.js"),"_big_group_responses":require("./src/app/components/_big_group_responses.js"),"_expand":require("./src/app/components/_expand.js"),"_membership":require("./src/app/components/_membership.js"),"_search":require("./src/app/components/_search.js")})})})});
+
+function mine() {
+    window.React = _react2.default;
+    window.ReactDOM = _reactDom2.default;
+    for (var obj in components) {
+        if (components.hasOwnProperty(obj)) {
+            mineForFunctions(obj);
+        }
+    }
+}
+
+function mineForFunctions(obj) {
+    for (var k in obj) {
+        if (_typeof(obj[k]) == 'object' && obj[k] !== null) {
+            mineForFunctions(obj[k]);
+        } else if (typeof obj[k] == 'function') {
+            window[k] = obj[k];
+        }
+    }
+}
+
+exports.default = mine;
+
+},{"./src/app/components/ActiveToggle.js":10,"./src/app/components/Alert.js":11,"./src/app/components/BigVote.js":12,"./src/app/components/CombiBigVote.js":13,"./src/app/components/CurrentProfile.js":14,"./src/app/components/Dropdown.js":15,"./src/app/components/Notifications.js":16,"./src/app/components/Profile.js":17,"./src/app/components/_big_group_responses.js":18,"./src/app/components/_expand.js":19,"./src/app/components/_membership.js":20,"./src/app/components/_search.js":21,"react":307,"react-dom":112}],30:[function(require,module,exports){
 /*!
   hey, [be]Lazy.js - v1.5.2 - 2015.12.01
   A lazy loading and multi-serving image script
