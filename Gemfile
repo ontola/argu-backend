@@ -63,7 +63,7 @@ gem 'kaminari', '~>0.16.1'
 ##################Front-end########################
 #gem 'react-rails', '~> 1.6.0'
 gem 'react-rails',
-    github: 'reactjs/react-rails',
+    git: 'https://github.com/reactjs/react-rails',
     branch: 'master',
     ref: '58842d4d06cf4a7f993a112edbd3ef82272a659a'
 
