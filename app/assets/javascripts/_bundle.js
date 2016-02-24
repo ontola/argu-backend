@@ -110,10 +110,9 @@ exports.default = {
     },
 
     fadeAll: function fadeAll() {
-        var _this2 = this;
-
+        var _this = this;
         $(".alert").slideDown(function () {
-            _this2.fade(3000, $(".alert"));
+            _this.fade(3000, $(this));
         });
     },
 

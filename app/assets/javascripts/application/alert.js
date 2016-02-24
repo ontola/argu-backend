@@ -40,8 +40,9 @@ export default {
     },
 
     fadeAll: function () {
-        $(".alert").slideDown(() => {
-            this.fade(3000, $(".alert"));
+        var _this = this;
+        $(".alert").slideDown(function () {
+            _this.fade(3000, $(this));
         });
     },
 
