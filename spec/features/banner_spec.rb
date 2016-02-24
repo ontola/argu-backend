@@ -166,7 +166,7 @@ RSpec.feature 'Banners', type: :feature do
   scenario 'Manager creates a banner' do
     login_as(holland.page.owner.profileable, :scope => :user)
 
-    new_banner = attributes_for(:banner)
+    new_banner = attributes_for(:banner, :everyone)
 
     visit settings_forum_path(holland, tab: :banners)
     click_link 'Nieuwe banner'
@@ -175,18 +175,7 @@ RSpec.feature 'Banners', type: :feature do
     within('#new_banner') do
       fill_in :banner_title, with: new_banner[:title]
       fill_in :banner_content, with: new_banner[:content]
-      within('#banner_audience_input') do
-        if Capybara.current_driver == :poltergeist
-          selector = '.Select-control .Select-placeholder'
-        else
-          selector = '.Select-control .Select-input input'
-        end
-        input_field = find(selector).native
-        input_field.send_keys 'ied'
-        expect(page).to have_content('Iedereen')
-        option = find('.Select-option', text: 'Iedereen')
-        option.click
-      end
+      select 'Iedereen', from: :banner_audience
       click_button 'Banner aanmaken'
     end
     expect(page).to have_content 'Banner successvol aangemaakt'
