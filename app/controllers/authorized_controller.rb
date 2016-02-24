@@ -10,11 +10,12 @@ class AuthorizedController < ApplicationController
 
   rescue_from Argu::NotAUserError do |exception|
     @_not_a_user_caught = true
-    @resource ||= User.new(r: exception.r, shortname: Shortname.new)
+    if @resource.class != User
+      @resource = User.new(r: exception.r, shortname: Shortname.new)
+    end
     respond_to do |format|
       format.js  do
         render 'devise/sessions/new',
-               status: 401,
                layout: false,
                locals: {
                    resource: @resource,

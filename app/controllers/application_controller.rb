@@ -64,6 +64,7 @@ class ApplicationController < ActionController::Base
     @_not_logged_in_caught = true
     respond_to do |format|
       format.js { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.json { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
       format.html {
         @resource ||= User.new r: exception.r
         render 'devise/sessions/new',
