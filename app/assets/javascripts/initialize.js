@@ -10,6 +10,7 @@ import n from './application/notifications';
 import activity_feed from './application/activity_feed';
 import m from './application/motions';
 import iso from './application/briarcliff/isotope-briarcliff';
+import introJs from './application/briarcliff/introjs-briarcliff';
 import Meta from './application/meta';
 import { safeCredentials, statusSuccess } from './src/app/lib/helpers';
 
