@@ -23,9 +23,7 @@ TestingBot::config do |config|
   config[:desired_capabilities] = {
     browserName: ENV['BROWSER_NAME'] || 'internet explorer',
     version: ENV['BROWSER_VERSION'] || '11',
-    platform: ENV['BROWSER_PLATFORM'] || 'WIN8',
-    api_key: ENV['TESTINGBOT_KEY'],
-    api_secret: ENV['TESTINGBOT_SECRET']
+    platform: ENV['BROWSER_PLATFORM'] || 'WIN8'
   }
   config.require_tunnel # uncomment if you want to use our Tunnel
 end
