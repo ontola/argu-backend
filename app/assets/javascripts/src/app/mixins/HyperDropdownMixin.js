@@ -44,6 +44,7 @@ const HyperDropdownMixin = {
 
     componentWillUnmount: function () {
         window.removeEventListener('resize', this.handleResize);
+        window.clearTimeout(this.mouseEnterOpenedTimeout);
     },
 
     handleClick: function (e) {
@@ -95,7 +96,6 @@ const HyperDropdownMixin = {
     },
 
     open: function () {
-        window.clearTimeout(this.timerItem);
         this.setState({openState: true, opened: true});
     },
 

@@ -906,7 +906,7 @@ var DropdownContent = exports.DropdownContent = _react2.default.createClass({
         var _this5 = this;
 
         this.setState({ appearState: 'dropdown-enter' }, function () {
-            window.setTimeout(function () {
+            _this5.enterTimeout = window.setTimeout(function () {
                 _this5.setState({ appearState: 'dropdown-enter dropdown-enter-active' }, callback);
             }, 10);
         });
@@ -916,12 +916,18 @@ var DropdownContent = exports.DropdownContent = _react2.default.createClass({
         var _this6 = this;
 
         this.setState({ appearState: 'dropdown-leave' }, function () {
-            window.setTimeout(function () {
+            _this6.leaveTimeout = window.setTimeout(function () {
                 _this6.setState({ appearState: 'dropdown-leave dropdown-leave-active' }, function () {
-                    window.setTimeout(callback, 200);
+                    _this6.innerLeaveTimeout = window.setTimeout(callback, 200);
                 });
             }, 0);
         });
+    },
+
+    componentWillUnmount: function componentWillUnmount() {
+        window.clearTimeout(this.enterTimeout);
+        window.clearTimeout(this.leaveTimeout);
+        window.clearTimeout(this.innerLeaveTimeout);
     },
 
     render: function render() {
@@ -1874,6 +1880,11 @@ var NewMembership = exports.NewMembership = _react2.default.createClass({
             image: this.props.image
         };
     },
+
+    componentWillUnmount: function componentWillUnmount() {
+        window.clearTimeout(this.currentFetchTimeout);
+    },
+
     loadOptions: function loadOptions(input, callback) {
         var _this = this;
 
@@ -2002,6 +2013,11 @@ var MotionSelect = exports.MotionSelect = _react2.default.createClass({
             image: this.props.image
         };
     },
+
+    componentWillUnmount: function componentWillUnmount() {
+        window.clearTimeout(this.currentFetchTimeout);
+    },
+
     loadOptions: function loadOptions(input, callback) {
         var _this = this;
 
@@ -2400,6 +2416,7 @@ var HyperDropdownMixin = {
 
     componentWillUnmount: function componentWillUnmount() {
         window.removeEventListener('resize', this.handleResize);
+        window.clearTimeout(this.mouseEnterOpenedTimeout);
     },
 
     handleClick: function handleClick(e) {
@@ -2451,7 +2468,6 @@ var HyperDropdownMixin = {
     },
 
     open: function open() {
-        window.clearTimeout(this.timerItem);
         this.setState({ openState: true, opened: true });
     },
 

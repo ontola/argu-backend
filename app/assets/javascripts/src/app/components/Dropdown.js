@@ -199,7 +199,7 @@ export const DropdownContent = React.createClass({
         this.setState(
             {appearState: 'dropdown-enter'},
             () => {
-                window.setTimeout(() => {
+                this.enterTimeout = window.setTimeout(() => {
                     this.setState({appearState: 'dropdown-enter dropdown-enter-active'}, callback);
                 }, 10);
             }
@@ -210,12 +210,18 @@ export const DropdownContent = React.createClass({
         this.setState(
             {appearState: 'dropdown-leave'},
             () => {
-                window.setTimeout(() => {
+                this.leaveTimeout = window.setTimeout(() => {
                     this.setState(
                         {appearState: 'dropdown-leave dropdown-leave-active'},
-                        () => { window.setTimeout(callback, 200) });
+                        () => { this.innerLeaveTimeout = window.setTimeout(callback, 200) });
                 }, 0);
             });
+    },
+
+    componentWillUnmount: function () {
+        window.clearTimeout(this.enterTimeout);
+        window.clearTimeout(this.leaveTimeout);
+        window.clearTimeout(this.innerLeaveTimeout);
     },
 
     render: function() {

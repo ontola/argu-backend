@@ -74,6 +74,10 @@ export const NewMembership = React.createClass({
         };
     },
 
+    componentWillUnmount: function () {
+        window.clearTimeout(this.currentFetchTimeout);
+    },
+
     loadOptions (input, callback) {
         input = input.toLowerCase();
         if (!input.length) {
