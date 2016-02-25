@@ -38,7 +38,8 @@ function browserifyOptions(name) {
             [deamdify]
         ],
         exclude: [
-            'jquery'
+            'jquery',
+            'i18n-js'
         ]
     }
 }
