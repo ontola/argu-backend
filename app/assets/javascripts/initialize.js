@@ -2,14 +2,15 @@
 import activityFeed from './application/activity_feed';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import I18n from 'i18n-js';
+import iso from './application/briarcliff/isotope-briarcliff';
+import introJs from './application/briarcliff/introjs-briarcliff';
 import fetch from 'whatwg-fetch';
 import alert from './application/alert';
 import ui from './application/ui';
 import n from './application/notifications';
 import activity_feed from './application/activity_feed';
 import m from './application/motions';
-import iso from './application/briarcliff/isotope-briarcliff';
-import introJs from './application/briarcliff/introjs-briarcliff';
 import ReactUJS from './lib/react_ujs.js';
 import Meta from './application/meta';
 import { safeCredentials, statusSuccess } from './src/app/lib/helpers';

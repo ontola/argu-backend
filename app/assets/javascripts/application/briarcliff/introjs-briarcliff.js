@@ -1,10 +1,15 @@
 import { introJs } from 'intro.js';
+import I18n from 'i18n-js';
+
+if(typeof I18n !== 'undefined') {
+    I18n.locale = document.head.querySelector("[name=language]").content;
+}
 
 let introJsOptions = {
-    'skipLabel': 'intro.skip',
-    'nextLabel': 'intro.next',
-    'prevLabel': 'intro.previous',
-    'doneLabel': 'intro.done',
+    'skipLabel': I18n.t('intro.skip'),
+    'nextLabel': I18n.t('intro.next'),
+    'prevLabel': I18n.t('intro.previous'),
+    'doneLabel': I18n.t('intro.done'),
     'disableInteraction': false,
     'showBullets': true,
     'showProgress': false,
@@ -16,19 +21,19 @@ let introJsMotionTour = introJs().setOptions(introJsOptions).setOptions({
     steps:[
         {
             element: document.querySelector('.motion-body'),
-            intro: 'intro.motion.posted.body'
+            intro: I18n.t('intro.motion.posted.body')
         },
         {
             element: document.querySelector('.motion-votes'),
-            intro: 'intro.motion.posted.vote'
+            intro: I18n.t('intro.motion.posted.vote')
         },
         {
             element: document.querySelector('.argument-columns'),
-            intro: 'intro.motion.posted.post_argument'
+            intro: I18n.t('intro.motion.posted.post_argument')
         },
         {
             element: document.querySelector('.share-menu'),
-            intro: 'intro.motion.posted.share'
+            intro: I18n.t('intro.motion.posted.share')
         }
     ]
 });

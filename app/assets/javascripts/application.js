@@ -22,4 +22,6 @@
 //= require sifter
 //= require microplugin
 //= require selectize
+//= require i18n
+//= require i18n/translations
 //= require _bundle
