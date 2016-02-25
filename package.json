@@ -5,6 +5,7 @@
     "es6-map": "^0.1.2",
     "fastclick": "^1.0.6",
     "immutable": "^3.7.5",
+    "i18n-js": "http://github.com/fnando/i18n-js/archive/v3.0.0.rc8.tar.gz",
     "install": "^0.2.6",
     "intl": "^1.0.0",
     "intro.js": "^1.1.1",
