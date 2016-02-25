@@ -63,6 +63,7 @@ module Argu
     end
     config.middleware.use Rack::Attack
     config.middleware.use Rack::Deflater
+    config.middleware.use I18n::JS::Middleware
 
     ############################
     # Assets
