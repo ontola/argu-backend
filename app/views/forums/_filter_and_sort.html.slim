@@ -10,7 +10,7 @@
           .span.fa.fa-eraser
         - @forum.featured_tags.each do |tag|
           li
-            a[class="tag" rel="tag" href="#{forum_tag_path(@forum, tag)}" data-filter='filterByTag' data-filter-value=tag data-forum-path="#{forum_path(@forum)}" data-skip-pjax]= tag
+            a[class="tag" rel="tag" href="#{forum_tag_path(@forum, tag)}" data-filter='filterByTag' data-filter-value=tag data-forum-path="#{forum_path(@forum)}" data-turbolinks="false"]= tag
   #sorts
     .btns-list--subtle.btns-subtle
       li

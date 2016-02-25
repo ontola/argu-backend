@@ -13,7 +13,7 @@
         =markdown_to_html(model.text)
     ul.btns-list--subtle.btns-horizontal.btn-sticky-bottom.btn-sticky
       -if policy(model).destroy?
-        li= link_to response_path(model), data: {method: :delete, remote: true, confirm: t('destroy_confirmation'), 'skip-pjax' => true}
+        li= link_to response_path(model), data: {method: :delete, remote: true, confirm: t('destroy_confirmation'), turbolinks: 'false'}
           span.fa.fa-close
           span.icon-left= t('destroy')
       -if policy(model).update?

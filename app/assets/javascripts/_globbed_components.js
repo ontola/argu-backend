@@ -712,7 +712,7 @@ var HyperDropdown = exports.HyperDropdown = _react2.default.createClass({
             var TriggerContainer = this.props.triggerTag || 'a';
             trigger = _react2.default.createElement(
                 TriggerContainer,
-                { href: this.props.defaultAction, className: triggerClass, onClick: this.handleClick, done: this.close, 'data-skip-pjax': 'true' },
+                { href: this.props.defaultAction, className: triggerClass, onClick: this.handleClick, done: this.close, 'data-turbolinks': 'false' },
                 (0, _helpers.image)(this.props),
                 _react2.default.createElement(
                     'span',
@@ -835,7 +835,7 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
                 className: 'dropdown-trigger',
                 onClick: this.handleClick,
                 done: this.close,
-                'data-skip-pjax': 'true' },
+                'data-turbolinks': 'false' },
             _react2.default.createElement('span', { className: 'fa fa-share-alt' }),
             _react2.default.createElement(
                 'span',
@@ -999,12 +999,12 @@ var LinkItem = exports.LinkItem = _react2.default.createClass({
         if (this.props.divider && this.props.divider === 'top') {
             divider = _react2.default.createElement('div', { className: 'dropdown-divider' });
         }
-        var method, confirm, remote, skipPjax, sortValue, filterValue, className, displaySetting;
+        var method, confirm, remote, turbolinks, sortValue, filterValue, className, displaySetting;
         if (this.props.data) {
             method = this.props.data.method;
             confirm = this.props.data.confirm;
             remote = this.props.data.remote;
-            skipPjax = this.props.data['skip-pjax'];
+            turbolinks = this.props.data['turbolinks'];
             sortValue = this.props.data['sort-value'];
             filterValue = this.props.data['filter-value'];
             displaySetting = this.props.data['display-setting'];
@@ -1017,7 +1017,7 @@ var LinkItem = exports.LinkItem = _react2.default.createClass({
             divider,
             _react2.default.createElement(
                 'a',
-                { href: this.props.url, 'data-remote': remote, 'data-method': method, 'data-confirm': confirm, onMouseDownCapture: this.handleMouseDown, 'data-skip-pjax': skipPjax, 'data-sort-value': sortValue, 'data-filter-value': filterValue, 'data-display-setting': displaySetting, className: className },
+                { href: this.props.url, 'data-remote': remote, 'data-method': method, 'data-confirm': confirm, onMouseDownCapture: this.handleMouseDown, 'data-turbolinks': turbolinks, 'data-sort-value': sortValue, 'data-filter-value': filterValue, 'data-display-setting': displaySetting, className: className },
                 (0, _helpers.image)(this.props),
                 _react2.default.createElement(
                     'span',
@@ -1056,7 +1056,7 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
             { className: this.props.type },
             _react2.default.createElement(
                 'a',
-                { href: this.props.url, 'data-skip-pjax': 'true', onClick: this.handleClick },
+                { href: this.props.url, 'data-turbolinks': 'false', onClick: this.handleClick },
                 (0, _helpers.image)({ fa: 'fa-facebook' }),
                 _react2.default.createElement(
                     'span',
@@ -1107,9 +1107,9 @@ var ActorItem = exports.ActorItem = _react2.default.createClass({
         if (this.props.divider && this.props.divider === 'top') {
             divider = _react2.default.createElement('div', { className: 'dropdown-divider' });
         }
-        var skipPjax;
+        var turbolinks;
         if (this.props.data) {
-            skipPjax = this.props.data['skip-pjax'];
+            turbolinks = this.props.data['turbolinks'];
         }
 
         return _react2.default.createElement(
@@ -1118,7 +1118,7 @@ var ActorItem = exports.ActorItem = _react2.default.createClass({
             divider,
             _react2.default.createElement(
                 'a',
-                { href: '#', onMouseDownCapture: this.handleMouseDown, rel: 'nofollow', onTouchEnd: this.handleTap, onClickCapture: this.handleClick, 'data-skip-pjax': skipPjax },
+                { href: '#', onMouseDownCapture: this.handleMouseDown, rel: 'nofollow', onTouchEnd: this.handleTap, onClickCapture: this.handleClick, 'data-turbolinks': turbolinks },
                 (0, _helpers.image)(this.props),
                 _react2.default.createElement(
                     'span',
@@ -1397,7 +1397,7 @@ var Notifications = exports.Notifications = _react2.default.createClass({
             { className: 'notification-btn' },
             _react2.default.createElement(
                 'a',
-                { href: '#', onMouseDownCapture: this.loadMore, 'data-skip-pjax': 'true' },
+                { href: '#', onMouseDownCapture: this.loadMore, 'data-turbolinks': 'false' },
                 _react2.default.createElement('span', { className: 'fa fa-arrow-down' }),
                 _react2.default.createElement(
                     'span',
@@ -1451,12 +1451,12 @@ var NotificationItem = exports.NotificationItem = _react2.default.createClass({
     render: function render() {
         var method,
             remote,
-            skipPjax,
+            turbolinks,
             className = [this.props.type, this.props.read ? 'read' : 'unread'].join(' ');
         if (this.props.data) {
             method = this.props.data.method;
             remote = this.props.data.remote;
-            skipPjax = this.props.data['skip-pjax'];
+            turbolinks = this.props.data['turbolinks'];
         }
 
         return _react2.default.createElement(
@@ -1464,7 +1464,7 @@ var NotificationItem = exports.NotificationItem = _react2.default.createClass({
             { className: 'notification-item ' + className },
             _react2.default.createElement(
                 'a',
-                { href: this.props.url, 'data-remote': remote, 'data-method': method, onClick: this.handleClick, 'data-skip-pjax': skipPjax },
+                { href: this.props.url, 'data-remote': remote, 'data-method': method, onClick: this.handleClick, 'data-turbolinks': turbolinks },
                 _react2.default.createElement('img', { src: this.props.creator.avatar.url, className: 'notification-avatar' }),
                 _react2.default.createElement(
                     'span',

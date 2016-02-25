@@ -73,60 +73,60 @@ var _Alert2 = _interopRequireDefault(_Alert);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.default = {
-    init: function init() {
-        var _this = this;
-        function fadeOnStart() {
-            _this.fadeAll();
-            document.removeEventListener('mousemove', fadeOnStart, false);
-            document.removeEventListener('keydown', fadeOnStart, false);
-            document.removeEventListener('touchstart', fadeOnStart, false);
-        }
-        document.addEventListener('mousemove', fadeOnStart, false);
-        document.addEventListener('keydown', fadeOnStart, false);
-        document.addEventListener('touchstart', fadeOnStart, false);
+var AlertIntegration = {}; /*global $, Argu*/
 
-        $(document).on('pjax:end', this.fadeAll).ajaxComplete(this.handleJSONBody);
-    },
-
-    fade: function fade(duration, _alert) {
-
-        var fadeNow = function fadeNow(a) {
-            a.addClass('alert-hidden');
-            window.setTimeout(function (a) {
-                a.remove();
-            }, 2000, a);
-        };
-
-        var timeoutHandle = window.setTimeout(fadeNow, duration, _alert);
-
-        _alert[0].addEventListener('mouseover', function () {
-            window.clearTimeout(timeoutHandle);
-        });
-
-        _alert[0].addEventListener('mouseout', function () {
-            timeoutHandle = window.setTimeout(fadeNow, 1000, _alert);
-        });
-    },
-
-    fadeAll: function fadeAll() {
-        var _this = this;
-        $(".alert").slideDown(function () {
-            _this.fade(3000, $(this));
-        });
-    },
-
-    handleJSONBody: function handleJSONBody(event, XMLHttpRequest) {
-        try {
-            var res = $.parseJSON(XMLHttpRequest.responseText);
-            if (res !== undefined && res.notifications !== undefined) {
-                res.notifications.forEach(function (notification) {
-                    new _Alert2.default(notification.message, notification.type, true);
-                });
-            }
-        } catch (e) {}
+AlertIntegration.init = function () {
+    var _this = this;
+    function fadeOnStart() {
+        _this.fadeAll();
+        document.removeEventListener('mousemove', fadeOnStart, false);
+        document.removeEventListener('keydown', fadeOnStart, false);
+        document.removeEventListener('touchstart', fadeOnStart, false);
     }
-}; /*global $, Argu*/
+    document.addEventListener('mousemove', fadeOnStart, false);
+    document.addEventListener('keydown', fadeOnStart, false);
+    document.addEventListener('touchstart', fadeOnStart, false);
+
+    $(document).on('turbolinks:visit', this.fadeAll).ajaxComplete(this.handleJSONBody);
+};
+
+AlertIntegration.fade = function (duration, _alert) {
+    var fadeNow = function fadeNow(a) {
+        a.addClass('alert-hidden');
+        window.setTimeout(function (a) {
+            a.remove();
+        }, 2000, a);
+    };
+
+    var timeoutHandle = window.setTimeout(fadeNow, duration, _alert);
+
+    _alert[0].addEventListener('mouseover', function () {
+        window.clearTimeout(timeoutHandle);
+    });
+
+    _alert[0].addEventListener('mouseout', function () {
+        timeoutHandle = window.setTimeout(fadeNow, 1000, _alert);
+    });
+};
+
+AlertIntegration.fadeAll = function () {
+    $(".alert").slideDown(function () {
+        AlertIntegration.fade(3000, $(this));
+    });
+};
+
+AlertIntegration.handleJSONBody = function (event, XMLHttpRequest) {
+    try {
+        var res = $.parseJSON(XMLHttpRequest.responseText);
+        if (res !== undefined && res.notifications !== undefined) {
+            res.notifications.forEach(function (notification) {
+                new _Alert2.default(notification.message, notification.type, true);
+            });
+        }
+    } catch (e) {}
+};
+
+exports.default = AlertIntegration;
 
 },{"../src/app/components/Alert":11}],4:[function(require,module,exports){
 "use strict";
@@ -390,7 +390,7 @@ function setupSelectize() {
 
 exports.default = {
     init: function init() {
-        $(document).on('pjax:success', setupSelectize);
+        $(document).on('turbolinks:load', setupSelectize);
         setupSelectize();
     }
 };
@@ -528,7 +528,7 @@ var ui = {
     window: null,
 
     init: function init() {
-        $(document).on('keyup', '.confirm .confirm-text', this.confirmInputHandler).on('click', '.comment .btn-reply', this.openCommentForm).on('click', '.comment .btn-cancel', this.cancelCommentForm).on('pjax:success', this.handleDOMChangedFinished).on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix).on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick).on('click', '.welcome-video-hide', this.welcomeVideoHide).on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle).on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive).ajaxComplete(this.handleAjaxCalls);
+        $(document).on('keyup', '.confirm .confirm-text', this.confirmInputHandler).on('click', '.comment .btn-reply', this.openCommentForm).on('click', '.comment .btn-cancel', this.cancelCommentForm).on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix).on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick).on('click', '.welcome-video-hide', this.welcomeVideoHide).on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle).on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive).on('turbolinks:load', this.handleDOMChangedFinished).on('turbolinks:load', this.initPlaceholderFallback).ajaxComplete(this.handleAjaxCalls);
 
         window.addEventListener('online', this.handleOnline);
         window.addEventListener('offline', this.handleOffline);
@@ -576,7 +576,7 @@ var ui = {
     },
 
     handleAjaxCalls: function handleAjaxCalls(e, xhr, options) {
-        if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201 && options.url.search(/facebook\.com|linkedin\.com/) == -1 && xhr.getResponseHeader('X-PJAX-REFRESH') !== 'false') {
+        if (xhr.status !== 200 && xhr.status !== 204 && xhr.status !== 201 && xhr.status !== 0 && options.url.search(/facebook\.com|linkedin\.com/) == -1) {
             var message = (0, _helpers.errorMessageForStatus)(xhr.status).fallback || 'Unknown error occurred (status: ' + xhr.status + ')';
             new _Alert2.default(message, 'alert', true);
         }
@@ -828,13 +828,6 @@ function init() {
     } catch (error) {
         debugger;
         console.log('Something went wrong during initialisation', error);
-    }
-
-    function stopOnJSONError(e, request, error, options) {
-        if (request.getResponseHeader('X-PJAX-REFRESH') === 'false') {
-            e.preventDefault();
-            e.stopPropagation();
-        }
     }
 
     if (!("ontouchstart" in document.documentElement)) {
@@ -1533,7 +1526,7 @@ var HyperDropdown = exports.HyperDropdown = _react2.default.createClass({
             var TriggerContainer = this.props.triggerTag || 'a';
             trigger = _react2.default.createElement(
                 TriggerContainer,
-                { href: this.props.defaultAction, className: triggerClass, onClick: this.handleClick, done: this.close, 'data-skip-pjax': 'true' },
+                { href: this.props.defaultAction, className: triggerClass, onClick: this.handleClick, done: this.close, 'data-turbolinks': 'false' },
                 (0, _helpers.image)(this.props),
                 _react2.default.createElement(
                     'span',
@@ -1656,7 +1649,7 @@ var ShareDropdown = exports.ShareDropdown = _react2.default.createClass({
                 className: 'dropdown-trigger',
                 onClick: this.handleClick,
                 done: this.close,
-                'data-skip-pjax': 'true' },
+                'data-turbolinks': 'false' },
             _react2.default.createElement('span', { className: 'fa fa-share-alt' }),
             _react2.default.createElement(
                 'span',
@@ -1820,12 +1813,12 @@ var LinkItem = exports.LinkItem = _react2.default.createClass({
         if (this.props.divider && this.props.divider === 'top') {
             divider = _react2.default.createElement('div', { className: 'dropdown-divider' });
         }
-        var method, confirm, remote, skipPjax, sortValue, filterValue, className, displaySetting;
+        var method, confirm, remote, turbolinks, sortValue, filterValue, className, displaySetting;
         if (this.props.data) {
             method = this.props.data.method;
             confirm = this.props.data.confirm;
             remote = this.props.data.remote;
-            skipPjax = this.props.data['skip-pjax'];
+            turbolinks = this.props.data['turbolinks'];
             sortValue = this.props.data['sort-value'];
             filterValue = this.props.data['filter-value'];
             displaySetting = this.props.data['display-setting'];
@@ -1838,7 +1831,7 @@ var LinkItem = exports.LinkItem = _react2.default.createClass({
             divider,
             _react2.default.createElement(
                 'a',
-                { href: this.props.url, 'data-remote': remote, 'data-method': method, 'data-confirm': confirm, onMouseDownCapture: this.handleMouseDown, 'data-skip-pjax': skipPjax, 'data-sort-value': sortValue, 'data-filter-value': filterValue, 'data-display-setting': displaySetting, className: className },
+                { href: this.props.url, 'data-remote': remote, 'data-method': method, 'data-confirm': confirm, onMouseDownCapture: this.handleMouseDown, 'data-turbolinks': turbolinks, 'data-sort-value': sortValue, 'data-filter-value': filterValue, 'data-display-setting': displaySetting, className: className },
                 (0, _helpers.image)(this.props),
                 _react2.default.createElement(
                     'span',
@@ -1877,7 +1870,7 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
             { className: this.props.type },
             _react2.default.createElement(
                 'a',
-                { href: this.props.url, 'data-skip-pjax': 'true', onClick: this.handleClick },
+                { href: this.props.url, 'data-turbolinks': 'false', onClick: this.handleClick },
                 (0, _helpers.image)({ fa: 'fa-facebook' }),
                 _react2.default.createElement(
                     'span',
@@ -1928,9 +1921,9 @@ var ActorItem = exports.ActorItem = _react2.default.createClass({
         if (this.props.divider && this.props.divider === 'top') {
             divider = _react2.default.createElement('div', { className: 'dropdown-divider' });
         }
-        var skipPjax;
+        var turbolinks;
         if (this.props.data) {
-            skipPjax = this.props.data['skip-pjax'];
+            turbolinks = this.props.data['turbolinks'];
         }
 
         return _react2.default.createElement(
@@ -1939,7 +1932,7 @@ var ActorItem = exports.ActorItem = _react2.default.createClass({
             divider,
             _react2.default.createElement(
                 'a',
-                { href: '#', onMouseDownCapture: this.handleMouseDown, rel: 'nofollow', onTouchEnd: this.handleTap, onClickCapture: this.handleClick, 'data-skip-pjax': skipPjax },
+                { href: '#', onMouseDownCapture: this.handleMouseDown, rel: 'nofollow', onTouchEnd: this.handleTap, onClickCapture: this.handleClick, 'data-turbolinks': turbolinks },
                 (0, _helpers.image)(this.props),
                 _react2.default.createElement(
                     'span',
@@ -2218,7 +2211,7 @@ var Notifications = exports.Notifications = _react2.default.createClass({
             { className: 'notification-btn' },
             _react2.default.createElement(
                 'a',
-                { href: '#', onMouseDownCapture: this.loadMore, 'data-skip-pjax': 'true' },
+                { href: '#', onMouseDownCapture: this.loadMore, 'data-turbolinks': 'false' },
                 _react2.default.createElement('span', { className: 'fa fa-arrow-down' }),
                 _react2.default.createElement(
                     'span',
@@ -2272,12 +2265,12 @@ var NotificationItem = exports.NotificationItem = _react2.default.createClass({
     render: function render() {
         var method,
             remote,
-            skipPjax,
+            turbolinks,
             className = [this.props.type, this.props.read ? 'read' : 'unread'].join(' ');
         if (this.props.data) {
             method = this.props.data.method;
             remote = this.props.data.remote;
-            skipPjax = this.props.data['skip-pjax'];
+            turbolinks = this.props.data['turbolinks'];
         }
 
         return _react2.default.createElement(
@@ -2285,7 +2278,7 @@ var NotificationItem = exports.NotificationItem = _react2.default.createClass({
             { className: 'notification-item ' + className },
             _react2.default.createElement(
                 'a',
-                { href: this.props.url, 'data-remote': remote, 'data-method': method, onClick: this.handleClick, 'data-skip-pjax': skipPjax },
+                { href: this.props.url, 'data-remote': remote, 'data-method': method, onClick: this.handleClick, 'data-turbolinks': turbolinks },
                 _react2.default.createElement('img', { src: this.props.creator.avatar.url, className: 'notification-avatar' }),
                 _react2.default.createElement(
                     'span',

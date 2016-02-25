@@ -17,7 +17,7 @@ html[class="no-js"]
     .wrapper
       /[if lt IE 10]
         p.browsehappy= raw t('outdated_browser')
-      #pjax-container.container
+      .container
         =yield
     =render partial: 'initial_state'
     =javascript_include_tag 'application'

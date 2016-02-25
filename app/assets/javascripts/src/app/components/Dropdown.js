@@ -49,7 +49,7 @@ export const HyperDropdown = React.createClass({
             const image_after = image({fa: this.props.fa_after});
             const triggerClass = 'dropdown-trigger ' + this.props.triggerClass;
             const TriggerContainer = this.props.triggerTag || 'a';
-            trigger = (<TriggerContainer href={this.props.defaultAction} className={triggerClass} onClick={this.handleClick} done={this.close} data-skip-pjax="true">
+            trigger = (<TriggerContainer href={this.props.defaultAction} className={triggerClass} onClick={this.handleClick} done={this.close} data-turbolinks="false">
                           {image(this.props)}
                           <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
                           {image_after}
@@ -142,7 +142,7 @@ export const ShareDropdown = React.createClass({
                             className="dropdown-trigger"
                             onClick={this.handleClick}
                             done={this.close}
-                            data-skip-pjax="true">
+                            data-turbolinks="false">
             <span className="fa fa-share-alt"></span>
             <span className="icon-left">{title}</span>
             {this.totalShares() > 0 && totalSharesCounter}
@@ -281,12 +281,12 @@ export const LinkItem = React.createClass({
         if (this.props.divider && this.props.divider === 'top') {
             divider = <div className="dropdown-divider"></div>;
         }
-        var method, confirm, remote, skipPjax, sortValue, filterValue, className, displaySetting;
+        var method, confirm, remote, turbolinks, sortValue, filterValue, className, displaySetting;
         if (this.props.data) {
             method = this.props.data.method;
             confirm = this.props.data.confirm;
             remote = this.props.data.remote;
-            skipPjax = this.props.data['skip-pjax'];
+            turbolinks = this.props.data['turbolinks'];
             sortValue = this.props.data['sort-value'];
             filterValue = this.props.data['filter-value'];
             displaySetting = this.props.data['display-setting'];
@@ -295,7 +295,7 @@ export const LinkItem = React.createClass({
 
         return (<div className={this.props.type}>
             {divider}
-            <a href={this.props.url} data-remote={remote} data-method={method} data-confirm={confirm} onMouseDownCapture={this.handleMouseDown} data-skip-pjax={skipPjax} data-sort-value={sortValue} data-filter-value={filterValue} data-display-setting={displaySetting} className={className}>
+            <a href={this.props.url} data-remote={remote} data-method={method} data-confirm={confirm} onMouseDownCapture={this.handleMouseDown} data-turbolinks={turbolinks} data-sort-value={sortValue} data-filter-value={filterValue} data-display-setting={displaySetting} className={className}>
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
@@ -324,7 +324,7 @@ export const FBShareItem = React.createClass({
 
     render: function () {
         return (<div className={this.props.type}>
-            <a href={this.props.url} data-skip-pjax="true" onClick={this.handleClick}>
+            <a href={this.props.url} data-turbolinks="false" onClick={this.handleClick}>
                 {image({fa: 'fa-facebook'})}
                 <span className="icon-left">Facebook {this.countInParentheses()}</span>
             </a>
@@ -372,14 +372,14 @@ export const ActorItem = React.createClass({
         if (this.props.divider && this.props.divider === 'top') {
             divider = <div className="dropdown-divider"></div>;
         }
-        var skipPjax;
+        var turbolinks;
         if (this.props.data) {
-            skipPjax = this.props.data['skip-pjax'];
+            turbolinks = this.props.data['turbolinks'];
         }
 
         return (<div className={'link ' + this.props.type}>
             {divider}
-            <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow" onTouchEnd={this.handleTap} onClickCapture={this.handleClick} data-skip-pjax={skipPjax}>
+            <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow" onTouchEnd={this.handleTap} onClickCapture={this.handleClick} data-turbolinks={turbolinks}>
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>

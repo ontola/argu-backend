@@ -275,9 +275,7 @@ class ApplicationController < ActionController::Base
   # @private
   # Determines what layout the {User} should see.
   def set_layout
-    if request.headers['X-PJAX']
-      self.class.layout false
-    elsif current_user.present? && current_user.finished_intro? && current_user.url.present?
+    if current_user.present? && current_user.finished_intro? && current_user.url.present?
       self.class.layout 'application'
     elsif current_user.present? && current_user.url.blank?
       self.class.layout 'closed'

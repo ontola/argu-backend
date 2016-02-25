@@ -28,13 +28,6 @@ function init () {
         console.log('Something went wrong during initialisation', error);
     }
 
-    function stopOnJSONError (e, request, error, options) {
-        if (request.getResponseHeader('X-PJAX-REFRESH') === 'false') {
-            e.preventDefault();
-            e.stopPropagation();
-        }
-    }
-
     if (!("ontouchstart" in document.documentElement)) {
         document.documentElement.className += " no-touch";
     }

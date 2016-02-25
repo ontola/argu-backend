@@ -24,6 +24,6 @@ table.styled
       span
         =manager.display_name
         p.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
-          =link_to t('forums.managers.revoke'), forum_manager_path(@forum, manager.id), data: {method: :delete, 'skip-pjax' => true, confirmation: t('destroy_confirmation')}
+          =link_to t('forums.managers.revoke'), forum_manager_path(@forum, manager.id), data: {method: :delete, turbolinks: 'false', confirmation: t('destroy_confirmation')}
 
   =link_to  t('forums.managers.add'), new_forum_manager_path(@forum), class: 'btn'

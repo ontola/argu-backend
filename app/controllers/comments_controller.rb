@@ -3,7 +3,6 @@ class CommentsController < AuthorizedController
 
   def new
     @commentable = commentable_class.find params[commentable_param]
-    set_tenant(@commentable)
     @comment = @commentable.comment_threads.new(new_comment_params.merge(resource_new_params))
     authorize @comment, :create?
 
@@ -23,8 +22,6 @@ class CommentsController < AuthorizedController
   def edit
     @commentable = commentable_class.find params[commentable_param]
     @comment = @commentable.comment_threads.find params[:id]
-    set_tenant(@comment)
-    current_context @comment
     authorize @comment, :edit?
 
     respond_to do |format|
@@ -69,7 +66,6 @@ class CommentsController < AuthorizedController
   def update
     @commentable = commentable_class.find params[commentable_param]
     @comment = @commentable.comment_threads.find params[:id]
-    set_tenant(@comment)
     authorize @comment, :edit?
 
     respond_to do |format|
@@ -96,7 +92,6 @@ class CommentsController < AuthorizedController
   # DELETE /arguments/1/comments/1
   def destroy
     @comment = Comment.find_by_id params[:id]
-    set_tenant(@comment)
     resource = @comment.commentable
     if params[:wipe] == 'true'
       authorize @comment
@@ -124,7 +119,6 @@ class CommentsController < AuthorizedController
 
   def authorize_show
     @comment = Comment.find params[:id]
-    set_tenant(@comment)
     authorize @comment, :show?
   end
 
@@ -179,10 +173,6 @@ class CommentsController < AuthorizedController
     else
       super
     end
-  end
-
-  def set_tenant(item)
-    @forum = item.forum
   end
 
   def resource_tenant

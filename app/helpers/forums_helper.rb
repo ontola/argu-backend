@@ -73,7 +73,7 @@ module ForumsHelper
 
     if policy(@forum).is_member?
       items << link_item(t('forums.leave'), forum_membership_path(@forum.url, current_profile), fa: 'sign-out',
-                         data: {method: :delete, 'skip-pjax' => 'true', confirm: t('forums.leave_confirmation')})
+                         data: {method: :delete, turbolinks: 'false', confirm: t('forums.leave_confirmation')})
     end
   end
 

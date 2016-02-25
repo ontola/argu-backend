@@ -11,8 +11,8 @@
         ga('set', '&uid', '<%= analytics_token %>');
         <% end %>
         ga('require', 'linkid', 'linkid.js');
-        ga('send', 'pageview');
-        $(document).on('pjax:end', function() {
+        //ga('send', 'pageview');
+        $(document).on('turbolinks:load', function() {
             ga('set', 'location', window.location.href);
             ga('send', 'pageview');
         });

@@ -12,12 +12,13 @@ const ui = {
             .on('keyup', '.confirm .confirm-text', this.confirmInputHandler)
             .on('click', '.comment .btn-reply', this.openCommentForm)
             .on('click', '.comment .btn-cancel', this.cancelCommentForm)
-            .on('pjax:success', this.handleDOMChangedFinished)
             .on("tap click", '.dropdown div:first', this.mobileTapTooCloseFix)
             .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
             .on('click', '.welcome-video-hide', this.welcomeVideoHide)
             .on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle)
             .on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive)
+            .on('turbolinks:load', this.handleDOMChangedFinished)
+            .on('turbolinks:load', this.initPlaceholderFallback)
             .ajaxComplete(this.handleAjaxCalls);
 
         window.addEventListener('online', this.handleOnline);
@@ -70,8 +71,8 @@ const ui = {
         if (xhr.status !== 200 &&
             xhr.status !== 204 &&
             xhr.status !== 201 &&
-            options.url.search(/facebook\.com|linkedin\.com/) == -1 &&
-            xhr.getResponseHeader('X-PJAX-REFRESH') !== 'false') {
+            xhr.status !== 0 &&
+            options.url.search(/facebook\.com|linkedin\.com/) == -1) {
             const message = errorMessageForStatus(xhr.status).fallback || `Unknown error occurred (status: ${xhr.status})`;
             new Alert(message, 'alert', true);
         }

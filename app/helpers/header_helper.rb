@@ -26,7 +26,7 @@ module HeaderHelper
             link_item(t('users.settings'), settings_url, fa: 'gear'),
             policy(Page).index? ? link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building') : link_item(t('pages.create'), new_page_path, fa: 'building'),
             (link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group') if policy(Forum).index? ),
-            link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', 'skip-pjax' => 'true'}),
+            link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', turbolinks: 'false'}),
             nil # NotABug Make sure compact! actually returns the array and not nil
           ].compact!
         },
@@ -105,12 +105,12 @@ module HeaderHelper
       items << actor_item(current_user.display_name,
                           actors_path(na: current_user.profile.id, format: :json),
                           image: current_user.profile.profile_photo.url(:icon),
-                          data: { method: 'put', 'skip-pjax' => 'true'})
+                          data: { method: 'put', turbolinks: 'false'})
       managed_pages.each do |p|
         items << actor_item(p.profile.name,
                             actors_path(na: p.profile.id, format: :json),
                             image: p.profile.profile_photo.url(:icon),
-                            data: { method: 'put', 'skip-pjax' => 'true'})
+                            data: { method: 'put', turbolinks: 'false'})
       end
     end
     items

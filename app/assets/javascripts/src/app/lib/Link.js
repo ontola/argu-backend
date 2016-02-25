@@ -62,7 +62,7 @@ export const Link = React.createClass({
                    style={style}
                    onClick={this.onClick}
                    className={this.className()}
-                   data-skip-pjax="true">
+                   data-turbolinks="false">
             {children}
         </a>)
     }

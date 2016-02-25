@@ -64,7 +64,7 @@ module ApplicationHelper
   end
 
   def remote_if_non_modern
-    browser.modern? ? {'skip-pjax' => true} : {remote: true, 'skip-pjax' => true}
+    browser.modern? ? {turbolinks: false} : {remote: true, turbolinks: false}
   end
 
   # Used in forms for the 'r' system
@@ -78,7 +78,7 @@ module ApplicationHelper
 
   # Used in forms for the 'r' system
   def remote_unless_user
-    current_profile.present? ? {} : {remote: true, 'skip-pjax' => true}
+    current_profile.present? ? {} : {remote: true, turbolinks: true}
   end
 
   def resource
@@ -87,11 +87,7 @@ module ApplicationHelper
 
   def set_title(model= '', **options)
     title_string = seolized_title(model, **options)
-    if request.env['HTTP_X_PJAX']
-      raw "<title>#{title_string}</title>"
-    else
-      provide :title, title_string
-    end
+    provide :title, title_string
   end
 
   # Generates social media links for any resource for HyperDropdown

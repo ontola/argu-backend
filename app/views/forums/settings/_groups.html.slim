@@ -10,7 +10,7 @@ ul.boxed-list
           -group.group_memberships.each do |member|
             tr
               td= member.member.display_name
-              td= link_to group_membership_path(member), data: {method: :delete, 'skip-pjax' => true, confirm: t('destroy_confirmation')}, class: 'btn--light btn--smaller' do
+              td= link_to group_membership_path(member), data: {method: :delete, turbolinks: 'false', confirm: t('destroy_confirmation')}, class: 'btn--light btn--smaller' do
                 span.fa.fa-close
                 span.icon-left=  t('destroy')
       =link_to new_group_membership_path(group), class: 'btn--light btn--smaller' do

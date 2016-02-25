@@ -178,7 +178,7 @@ export const Notifications = React.createClass({
         });
 
         var loadMore = <li className="notification-btn">
-                <a href='#' onMouseDownCapture={this.loadMore} data-skip-pjax="true">
+                <a href='#' onMouseDownCapture={this.loadMore} data-turbolinks="false">
                     <span className="fa fa-arrow-down"></span>
                     <span className='icon-left'>{this.state.loadMore ? 'Load more...' : 'No more notifications'}</span>
                 </a>
@@ -218,16 +218,16 @@ export const NotificationItem = React.createClass({
     },
 
     render: function () {
-        var method, remote, skipPjax,
+        var method, remote, turbolinks,
             className = [this.props.type, this.props.read ? 'read' : 'unread'].join(' ');
         if (this.props.data) {
             method = this.props.data.method;
             remote = this.props.data.remote;
-            skipPjax = this.props.data['skip-pjax'];
+            turbolinks = this.props.data['turbolinks'];
         }
 
         return (<li className={'notification-item ' + className}>
-            <a href={this.props.url} data-remote={remote} data-method={method} onClick={this.handleClick} data-skip-pjax={skipPjax}>
+            <a href={this.props.url} data-remote={remote} data-method={method} onClick={this.handleClick} data-turbolinks={turbolinks}>
                 <img src={this.props.creator.avatar.url} className="notification-avatar" />
                 <span className='notification-description'>{this.props.title}</span>
                 <div className='notification-bottom'>

@@ -39,7 +39,7 @@ function setupSelectize () {
 
 export default {
     init: function  () {
-        $(document).on('pjax:success', setupSelectize);
+        $(document).on('turbolinks:load', setupSelectize);
         setupSelectize();
     }
 }

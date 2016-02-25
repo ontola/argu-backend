@@ -16,11 +16,11 @@
                           false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                          {prerender: true}
       - if !c.is_trashed? && policy(c).update?
-        li= link_to polymorphic_url_for_action(:edit, [resource, c], {}), {data: { remote: :true, comment_id: c.id, skip_pjax: true }, class: 'btn-edit'} do
+        li= link_to polymorphic_url_for_action(:edit, [resource, c], {}), {data: { remote: :true, comment_id: c.id, turbolinks: false }, class: 'btn-edit'} do
           span.fa.fa-edit
           span.icon-left= t('edit')
       - if !c.is_trashed? && policy(c).create?
-        li= link_to polymorphic_url([resource], parent_id: c.id), {data: { comment_id: c.id, skip_pjax: true }, class: 'btn-reply'} do
+        li= link_to polymorphic_url([resource], parent_id: c.id), {data: { comment_id: c.id, turbolinks: false }, class: 'btn-reply'} do
           span.fa.fa-reply
           span.icon-left= t('reply')
   .comment.comment-form

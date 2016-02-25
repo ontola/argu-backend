@@ -1,11 +1,7 @@
 module SeoHelper
 
   def connected_web(options)
-    if request.env['HTTP_X_PJAX']
-      content_tag(:div, options_hash_to_meta_tags(options), id: 'meta_content')
-    else
-      content_for :connected_web, options_hash_to_meta_tags(options)
-    end
+    content_for :connected_web, options_hash_to_meta_tags(options)
   end
 
   def seolized_title(model, **options)
