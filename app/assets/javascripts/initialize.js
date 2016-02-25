@@ -10,6 +10,7 @@ import ui from './application/ui';
 import n from './application/notifications';
 import m from './application/motions';
 import iso from './application/briarcliff/isotope-briarcliff';
+import introJs from './application/briarcliff/introjs-briarcliff';
 
 function init () {
     // All init functions can rest assured that the document is ready.
