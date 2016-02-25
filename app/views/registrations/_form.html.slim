@@ -1,6 +1,7 @@
 =set_title t('argu_sign_up')
 =semantic_form_for(resource, :as => resource_name, :url => registration_path(resource_name, r: local_assigns.has_key?(:r) ? r : '')) do |f|
-  - resource.errors.full_messages.each do |m|
+  / TODO: Check if this is not neccessary
+  /- resource.errors.full_messages.each do |m|
     p= m
   .inspectlet-sensitive.form-validate=f.inputs do
     =f.input :email, input_html: {autofocus: :autofocus}

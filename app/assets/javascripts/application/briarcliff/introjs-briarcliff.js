@@ -1,6 +1,6 @@
-import introJs from 'intro.js';
+import { introJs } from 'intro.js';
 
-introJsOptions = {
+let introJsOptions = {
     'skipLabel': 'intro.skip',
     'nextLabel': 'intro.next',
     'prevLabel': 'intro.previous',
@@ -12,7 +12,7 @@ introJsOptions = {
     'scrollToElement': true
 };
 
-introJsMotionTour = introJs().setOptions(introJsOptions).setOptions({
+let introJsMotionTour = introJs().setOptions(introJsOptions).setOptions({
     steps:[
         {
             element: document.querySelector('.motion-body'),
