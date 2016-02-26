@@ -22,7 +22,6 @@ namespace :install do
       execute 'curl -sL https://deb.nodesource.com/setup | sudo bash -'
       execute 'export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:/usr/lib/pkgconfig:/usr/X11/lib/pkgconfig'
       execute 'apt-get install -y build-essential lib-imagemagick git libvips-dev libgsf-1-dev nodejs libxml2 zlib1g-dev libxslt libpq-dev'
-      execute 'npm install bower -g'
       execute 'touch /home/rails/argu/shared/config/database.yml'
       execute 'touch /home/rails/argu/shared/config/secrets.yml'
       execute 'gem install bundle bundler'
