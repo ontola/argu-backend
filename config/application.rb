@@ -1,5 +1,7 @@
 require File.expand_path('../boot', __FILE__)
 
+require_relative './initializers/version'
+require_relative './initializers/build'
 require 'rails/all'
 require 'devise'
 ROADIE_I_KNOW_ABOUT_VERSION_3 = true
