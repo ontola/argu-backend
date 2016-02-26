@@ -329,7 +329,7 @@ export const FBShareItem = React.createClass({
     },
 
     render: function () {
-        return (<div className={this.props.type}>
+        return (<div className={`link ${this.props.type}`}>
             <a href={this.props.url} data-turbolinks="false" onClick={this.handleClick}>
                 {image({fa: 'fa-facebook'})}
                 <span className="icon-left">Facebook {this.countInParentheses()}</span>

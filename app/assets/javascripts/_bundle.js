@@ -1873,7 +1873,7 @@ var FBShareItem = exports.FBShareItem = _react2.default.createClass({
     render: function render() {
         return _react2.default.createElement(
             'div',
-            { className: this.props.type },
+            { className: 'link ' + this.props.type },
             _react2.default.createElement(
                 'a',
                 { href: this.props.url, 'data-turbolinks': 'false', onClick: this.handleClick },
