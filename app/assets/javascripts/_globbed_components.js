@@ -956,13 +956,13 @@ var DropdownContent = exports.DropdownContent = _react2.default.createClass({
                         );
                     }
 
-                    var items = section.items.map(function (item) {
+                    var items = section.items.map(function (item, i) {
                         if (item.type === 'link') {
-                            return _react2.default.createElement(LinkItem, _extends({ key: item.title, done: close, current_actor: currentActor }, item));
+                            return _react2.default.createElement(LinkItem, _extends({ key: i, done: close, current_actor: currentActor }, item));
                         } else if (item.type === 'actor') {
-                            return _react2.default.createElement(ActorItem, _extends({ key: item.title, done: close }, item));
+                            return _react2.default.createElement(ActorItem, _extends({ key: i, done: close }, item));
                         } else if (item.type === 'fb_share') {
-                            return _react2.default.createElement(FBShareItem, _extends({ key: item.title, done: close }, item));
+                            return _react2.default.createElement(FBShareItem, _extends({ key: i, done: close }, item));
                         }
                     });
 
@@ -1394,8 +1394,8 @@ var Notifications = exports.Notifications = _react2.default.createClass({
     render: function render() {
         var _this2 = this;
 
-        var notifications = this.props.notifications.map(function (item) {
-            return _react2.default.createElement(NotificationItem, _extends({ key: item.id, read: item.read, done: _this2.props.done }, item));
+        var notifications = this.props.notifications.map(function (item, i) {
+            return _react2.default.createElement(NotificationItem, _extends({ key: i, read: item.read, done: _this2.props.done }, item));
         });
 
         var loadMore = _react2.default.createElement(
@@ -2117,8 +2117,9 @@ OrderedMap.prototype.get = function (key) {
 OrderedMap.prototype.map = function (f) {
     var _this2 = this;
 
+    var i = -1;
     return this._array.sort(this.descending).map(function (date) {
-        return f(_this2._map.get(date));
+        return f(_this2._map.get(date), ++i);
     });
 };
 

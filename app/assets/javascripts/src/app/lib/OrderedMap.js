@@ -26,8 +26,9 @@ OrderedMap.prototype.get = function(key) {
 };
 
 OrderedMap.prototype.map = function (f) {
+    let i = -1;
     return this._array.sort(this.descending).map(date => {
-        return f(this._map.get(date));
+        return f(this._map.get(date), ++i);
     });
 };
 

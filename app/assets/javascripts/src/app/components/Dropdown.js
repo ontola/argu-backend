@@ -241,13 +241,13 @@ export const DropdownContent = React.createClass({
                         title = <span className="dropdown-header">{section.title}</span>
                     }
 
-                    const items = section.items.map(function(item) {
+                    const items = section.items.map(function(item, i) {
                         if (item.type === 'link') {
-                            return <LinkItem key={item.title} done={close} current_actor={currentActor} {...item} />;
+                            return <LinkItem key={i} done={close} current_actor={currentActor} {...item} />;
                         } else if (item.type === 'actor') {
-                            return <ActorItem key={item.title} done={close} {...item} />;
+                            return <ActorItem key={i} done={close} {...item} />;
                         } else if (item.type === 'fb_share') {
-                            return <FBShareItem key={item.title} done={close} {...item} />;
+                            return <FBShareItem key={i} done={close} {...item} />;
                         }
                     });
 

@@ -173,8 +173,8 @@ export const Notifications = React.createClass({
     },
 
     render: function () {
-        var notifications = this.props.notifications.map((item) => {
-            return <NotificationItem key={item.id} read={item.read} done={this.props.done} {...item} />
+        var notifications = this.props.notifications.map((item, i) => {
+            return <NotificationItem key={i} read={item.read} done={this.props.done} {...item} />
         });
 
         var loadMore = <li className="notification-btn">
