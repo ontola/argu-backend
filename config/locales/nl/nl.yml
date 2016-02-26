@@ -97,7 +97,7 @@ nl:
     questions: "Uitdagingen"
   site:
     description: "Argu is een online discussieplatform waar argumenten centraal staan."
-    copyright: "Copyright © 2014-2015 Argu v.o.f."#Footer
+    copyright: "Copyright © 2014-2016 Argu v.o.f."#Footer
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "

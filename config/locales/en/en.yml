@@ -97,7 +97,7 @@ en:
     questions: "Challenges"
   site:
     description: "Argu is an online discussion platform where content is king."
-    copyright: "Copyright © 2014-2015 Argu v.o.f."#Footer
+    copyright: "Copyright © 2014-2016 Argu v.o.f."#Footer
   footer_item_about: "about"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
