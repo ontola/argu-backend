@@ -3,6 +3,7 @@ javascript:
 script[src="https://cdn.polyfill.io/v2/polyfill.min.js?features=default|gated,Intl|gated,Promise|always|gated,fetch"]
 -if !browser.modern?
   =javascript_include_tag 'polyfill'
--if browser.ie? && browser.version.to_i != 0 && browser.version.to_i < 10
-  script[src="https://cdnjs.cloudflare.com/ajax/libs/history/2.0.0/History.min.js"]
+-if browser.ie? && browser.version.to_i != 0 && browser.version.to_i < 11
+  javascript:
+
 
