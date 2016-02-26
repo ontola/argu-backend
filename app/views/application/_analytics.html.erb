@@ -7,11 +7,11 @@
 
         ga('create', 'UA-57491906-1', 'auto');
         ga('require', 'displayfeatures');
+        ga('set', 'appVersion', '<%= "v#{::VERSION}/#{::BUILD}" %>');
         <% if current_user.present? %>
         ga('set', '&uid', '<%= analytics_token %>');
         <% end %>
         ga('require', 'linkid', 'linkid.js');
-        //ga('send', 'pageview');
         $(document).on('turbolinks:load', function() {
             ga('set', 'location', window.location.href);
             ga('send', 'pageview');
@@ -21,5 +21,6 @@
 <% end %>
 <script
     src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
-    data-apikey="a58a9bf57619aa9464a31c33699d4348">
+    data-apikey="a58a9bf57619aa9464a31c33699d4348"
+    data-appversion="<%= "v#{::VERSION}/#{::BUILD}" %>">
 </script>
