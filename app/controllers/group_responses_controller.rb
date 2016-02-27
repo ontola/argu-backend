@@ -1,14 +1,8 @@
 class GroupResponsesController < AuthorizedController
 
   def new
-    group = Group.find params[:group_id]
-    motion = Motion.find params[:motion_id]
-    @group_response = motion.group_responses.new group: group,
-                                                 forum: group.forum,
-                                                 publisher: current_user,
-                                                 side: params[:side]
+    @group_response = authenticated_resource!
     authorize @group_response, :new?
-    current_context @group_response
     @forum = @group_response.forum
 
     render 'form'
@@ -38,7 +32,6 @@ class GroupResponsesController < AuthorizedController
   def edit
     @group_response = GroupResponse.find params[:id]
     authorize @group_response, :edit?
-    current_context @group_response
     @forum = @group_response.forum
 
     render 'form'
@@ -69,6 +62,19 @@ class GroupResponsesController < AuthorizedController
   end
 
 private
+  def authenticated_resource!
+    if params[:action] == 'new' || params[:action] == 'create'
+      group = Group.find params[:group_id]
+      motion = Motion.find params[:motion_id]
+      @resource = motion.group_responses.new group: group,
+                                             forum: group.forum,
+                                             publisher: current_user,
+                                             side: params[:side]
+    else
+      super
+    end
+  end
+
   def resource_tenant
     Motion.find(params[:motion_id]).forum
   end
