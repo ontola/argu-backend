@@ -1,8 +1,7 @@
 import Alert from './Alert';
 import React from 'react';
-import Intl from 'intl';
-Intl; // For ESLint
-import 'intl/locale-data/jsonp/en.js';
+import { IntlMixin } from 'react-intl';
+//import 'intl/locale-data/jsonp/en.js';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 
 /**
@@ -11,6 +10,8 @@ import { safeCredentials, statusSuccess, json } from '../lib/helpers';
  * @export BigGroupResponse
  */
 export const BigGroupResponse = React.createClass({
+    mixins: [IntlMixin],
+
     getInitialState: function () {
         return {
             object_type: this.props.object_type,

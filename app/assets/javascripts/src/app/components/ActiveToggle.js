@@ -1,8 +1,6 @@
 // for browserify-rails: module.exports
 
 import React from 'react';
-import Intl from 'intl';
-Intl;
 import { safeCredentials } from '../lib/helpers';
 
 export const ActiveToggle = React.createClass({

@@ -1,7 +1,5 @@
 import React from 'react';
 React; // For ESLint, jsx compiles to React.createElement, so React must be imported
-import Intl from 'intl';
-Intl; // For ESLint
 
 /**
  * @module Helpers
