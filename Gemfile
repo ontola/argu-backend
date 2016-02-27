@@ -1,6 +1,6 @@
 source 'https://rubygems.org/'
-ruby '2.3.0'  # For rbenv
-ruby="2.3.0"  # For rvm
+ruby '2.3.0'
+ruby="2.3.0"
 
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
