@@ -64,6 +64,23 @@ function browserifyBundle(bundleName, entryPoint) {
         .pipe(gulp.dest(basePath));
 }
 
+function browserifyBundleStaging(bundleName, entryPoint) {
+    var b = browserify(browserifyOptions(entryPoint));
+    b.transform(envify({
+        _: 'purge',
+        NODE_ENV: 'production'
+    }), {
+        global: true
+    });
+
+    return b.bundle()
+        .pipe(source(bundleName))
+        .pipe(buffer())
+        // Add transformation tasks to the pipeline here.
+        .on('error', gutil.log)
+        .pipe(gulp.dest(basePath));
+}
+
 function browserifyBundleProduction(bundleName, entryPoint) {
     var b = browserify(browserifyOptions(entryPoint));
     b.transform(envify({
@@ -88,6 +105,17 @@ gulp.task('build', function () {
 
 gulp.task('build-components', function () {
     return browserifyBundle('_globbed_components.js', 'globbed_components.js');
+});
+
+// Envified but not minified
+gulp.task('build:staging', function () {
+    browserifyBundleStaging('_bundle.js', 'App.js');
+});
+
+
+// Envified but not minified
+gulp.task('build-components:staging', function () {
+    browserifyBundleStaging('_globbed_components.js', 'globbed_components.js');
 });
 
 gulp.task('build:production', function () {

@@ -4,6 +4,7 @@ Intl;
 window.React = require('react');
 window.ReactDOMServer = require('react-dom/server');
 window.Select = require('react-select');
+window.Map = require('es6-map');
 
 var bulk = require('bulk-require');
 var components = bulk(__dirname, ['./src/app/components/**/*.js']);

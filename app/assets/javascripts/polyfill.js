@@ -11,3 +11,4 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require polyfills/dataset
+//= require polyfills/es6-collections
