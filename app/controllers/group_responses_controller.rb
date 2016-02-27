@@ -16,7 +16,7 @@ class GroupResponsesController < AuthorizedController
                                                  forum: group.forum,
                                                  profile: current_profile,
                                                  publisher: current_user,
-                                                 side: params[:side]
+                                                 side: side_param
     @group_response.attributes= permit_params
     authorize @group_response, :create?
 
@@ -69,7 +69,7 @@ private
       @resource = motion.group_responses.new group: group,
                                              forum: group.forum,
                                              publisher: current_user,
-                                             side: params[:side]
+                                             side: side_param
     else
       super
     end
@@ -80,6 +80,10 @@ private
   end
 
   def permit_params
-    params.require(:group_response).permit(*policy(@group_response || GroupResponse).permitted_attributes)
+    params.require(:group_response).permit(*policy(@resource || @group_response || GroupResponse).permitted_attributes)
+  end
+
+  def side_param
+    params[:side].presence || params[:group_response][:side]
   end
 end
