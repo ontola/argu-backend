@@ -1,6 +1,4 @@
 require('babel-polyfill');
-require('Intl');
-Intl;
 window.React = require('react');
 window.ReactDOMServer = require('react-dom/server');
 window.Select = require('react-select');
