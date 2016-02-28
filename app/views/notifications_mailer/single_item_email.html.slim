@@ -1,6 +1,9 @@
 - notification = local_assigns[:notification] || @notification
 - item = local_assigns[:item] || @item
 - parent = local_assigns[:parent] || @parent
+- content_for :email_action do
+  = goto_action name: t('mailer.user_mailer.go_to_discussion'), url: item.url
+view raw
 table
   tr
     td.mail-p= t('mailer.direct_mail.header', first_name: notification.user.greeting)

@@ -11,6 +11,8 @@ html
         link itemprop="url/googlePlus" href="https://plus.google.com/"
     =stylesheet_link_tag 'mail', data_roadie_ignore: 'data-roadie-ignore'
   body.mail-body
+    - if content_for? :email_action
+      = yield :email_action
     table.mail-wrapper
       tr.mail-header
         td
