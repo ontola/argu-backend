@@ -24,7 +24,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     - if v[:collection].values.map { |c| c[:collection].length }.reduce(&:+) > 0 || k.include?(current_profile)
       =render_columns(v[:collection],
                       collection_model: GroupResponse,
-                      buttons_url: new_motion_group_response_path(@motion, k),
+                      buttons_url: new_motion_group_group_response_path(@motion, k),
                       show_new_buttons: v[:responses_left] > 0,
                       buttons_param: :side,
                       header: k.name,
