@@ -6,6 +6,7 @@ module ExceptionToTheRule
   TRICKLE_LOGIC = { 'doesnt_trickle' => :==, 'trickles_down' => :<=, 'trickles_up' => :>= }
   ROLE_NAMES = %w(open access_token member manager creator moderator owner staff)
 
+  attr_reader :last_enacted, :last_verdict
 
   # Throw in the level (or levels) of the user and it'll tell you whether the clearance made it.
   # Whenever someone got permission from a group grant, they will be upped to group_grant clearance.
@@ -31,10 +32,12 @@ module ExceptionToTheRule
   # @return [Array, [nil, message]] Array of the relevant rules or nil if there were none
   def filter_rules(rules, level)
     level_rules, group_rules = rules.partition { |rule| ROLE_NAMES.include?(rule.role) }
-    filter_trickle(level_rules, level)
-      .concat(filter_groups(group_rules, context))
-      .compact
-      .first
+    @last_enacted, @last_verdict =
+      filter_trickle(level_rules, level)
+        .concat(filter_groups(group_rules, context))
+        .compact
+        .first
+    @last_enacted
   end
 
   # @return [Array] Array of the relevant rules

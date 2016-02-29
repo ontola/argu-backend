@@ -29,13 +29,12 @@ module Argu
       @_pundit_policy_authorized = true
 
       policy = policy(record)
-      authorized, verdict = policy.public_send(query)
-      unless authorized
-        raise Argu::NotAuthorizedError.new(
+      unless policy.public_send(query)
+        raise NotAuthorizedError.new(
           query: query,
           record: record,
           policy: policy,
-          verdict: verdict)
+          verdict: policy.last_verdict)
       end
 
       true
