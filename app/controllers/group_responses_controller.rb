@@ -83,6 +83,13 @@ private
   def authenticated_resource!
     if params[:action] == 'new' || params[:action] == 'create'
       group = Group.find params[:group_id]
+      unless @_not_authorized_caught || group.discussion?
+        raise Argu::NotAuthorizedError.new(
+          record: group,
+          query: 'edit?',
+          verdict: t('group_responses.errors.must_be_discussion',
+                     group_name: group.name))
+      end
       motion = Motion.find params[:motion_id]
       @resource = motion.group_responses.new group: group,
                                              forum: group.forum,
