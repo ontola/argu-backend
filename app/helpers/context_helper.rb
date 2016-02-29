@@ -3,15 +3,19 @@ module ContextHelper
   # Renders a to_parent breadcrumb block
   def  to_parent(parent = nil)
     if parent.present?
-      render partial: 'contextualize/to_parent',
-             locals: {
-               parent: parent
-             }
+      if policy(parent).show?
+        render partial: 'contextualize/to_parent',
+               locals: {
+                 parent: parent
+               }
+      end
     elsif current_context.parent_initialized?
-      render partial: 'contextualize/to_parent',
-             locals: {
-               parent: current_context.parent.single_model
-             }
+      if policy(current_context.parent.model).show?
+        render partial: 'contextualize/to_parent',
+               locals: {
+                 parent: current_context.parent.single_model
+               }
+      end
     end
   end
 
