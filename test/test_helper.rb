@@ -86,6 +86,14 @@ class ActiveSupport::TestCase
     user
   end
 
+  def create_group_member(group, user_or_page = nil)
+    user_or_page ||= create_member(group.forum)
+    create(:group_membership,
+           group: group,
+           member: user_or_page.profile)
+    user_or_page
+  end
+
   def create_moderator(record, user = nil)
     user ||= FactoryGirl.create(:user)
     forum = record.is_a?(Forum) ? record : record.forum

@@ -1,12 +1,15 @@
 FactoryGirl.define do
 
   factory :group_response do
-    association :group
     association :forum, strategy: :build
+    association :group
     motion {
-      passed_in?(:motion) ? motion : FactoryGirl.create(:motion, forum: forum)
+      passed_in?(:motion) ? motion : FactoryGirl.create(:motion,
+                                                        forum: forum)
     }
     association :profile, factory: :profile
     association :publisher, factory: :user
+    side :pro
+    sequence(:text) { |i| "fg_group_response_#{i}"  }
   end
 end
