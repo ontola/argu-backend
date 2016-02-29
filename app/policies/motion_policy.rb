@@ -67,7 +67,7 @@ class MotionPolicy < RestrictivePolicy
   end
 
   def show?
-    rule forum_policy.show?, super
+    rule is_open?, has_access_token?, is_member?, is_manager?, is_owner?, super
   end
 
   def trash?
