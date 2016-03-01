@@ -9,7 +9,7 @@ class ProfilesControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  test 'should get edit profile with own profile' do
+  test 'user should get edit profile with own profile' do
     sign_in user
 
     get :edit, id: user.url
@@ -19,7 +19,7 @@ class ProfilesControllerTest < ActionController::TestCase
     assert_equal user.profile, assigns(:profile), ''
   end
 
-  test 'should not get edit profile with other profile' do
+  test 'user should not get edit profile with other profile' do
     sign_in user
 
     get :edit, id: user2.url
