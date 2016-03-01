@@ -5,7 +5,7 @@ ruby="2.3.0"
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
 gem 'sass', '= 3.4.18'
-gem 'rails', '~>4.2.5.1'
+gem 'rails', '~>4.2.5.2'
 gem 'active_model_serializers', '~> 0.10.0.rc3'
 
 gem 'simple_text', '~> 0.0.23'
@@ -86,7 +86,7 @@ gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', :require => false
 gem 'turbolinks', '>= 5.0.0.beta2'
 gem 'uglifier', '>= 2.5.3'
-gem 'sprockets', '~>3.0.2'
+gem 'sprockets', '~>3.5.2'
 gem 'sprockets-es6', require: 'sprockets/rails'
 gem 'font-awesome-rails'
 gem 'babel-transpiler'
@@ -108,9 +108,9 @@ gem 'rolify', '~> 3.4.1'
 
 group :test do
   gem 'minitest-rails', '~> 2.2.0'
-  gem 'minitest-reporters', '~> 1.0.8'
+  gem 'minitest-reporters', '~> 1.1.8'
   gem 'minitest-bang'
-  gem 'rspec-rails', '~> 3.3.3'
+  gem 'rspec-rails', '~> 3.4.2'
   gem 'capybara', '~> 2.6.2'
   gem 'capybara-webkit', '~> 1.8.0'
   gem 'selenium-webdriver', '~> 2.52.0'
@@ -122,7 +122,7 @@ group :test do
   gem 'factory_girl_rails'
   gem 'license_finder'
   gem 'database_cleaner'
-  gem 'bundler-audit'
+  gem 'bundler-audit', '~> 0.5.0'
   gem 'wisper-minitest', require: false
   gem 'wisper-rspec', require: false
   gem 'fakeredis', require: false
@@ -130,11 +130,11 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rubocop'
+  gem 'rubocop', '~> 0.37.2'
   gem 'mailcatcher', '~> 0.6.2'
   gem 'spring', '~> 1.6.3'
   gem 'spring-commands-rspec'
-  gem 'brakeman'
+  gem 'brakeman', '~> 3.2.1'
 end
 
 group :development do
