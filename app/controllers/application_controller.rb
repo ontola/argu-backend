@@ -95,15 +95,27 @@ class ApplicationController < ActionController::Base
   def preferred_forum(profile = nil)
     profile ||= current_profile
     if profile.present?
-      preferred = profile.preferred_forum
-      if preferred && policy(preferred).show?
-        preferred
+      @_preferred_forum = profile.preferred_forum
+      if @_preferred_forum && policy(@_preferred_forum).show?
+        @_preferred_forum
       else
-        profile.memberships.first.try(:forum) || Forum.first_public
+        mem_forum = profile
+                      .memberships
+                      .map do |f|
+                        @_preferred_forum = f
+                        f if policy(f).show?
+                      end
+                      .compact
+                      .presence
+        mem_forum || Forum.first_public
       end
     else
-      last_forum = Argu::Redis.get("session:#{session.id}:last_forum")
-      (Forum.find_by(id: last_forum) if last_forum.present?) || Forum.first_public
+      forum_id = Argu::Redis.get("session:#{session.id}:last_forum")
+      @_preferred_forum = Forum.find_by(id: forum_id) if forum_id.present?
+      if @_preferred_forum.present? && !policy(@_preferred_forum).show?
+        @_preferred_forum = nil
+      end
+      @_preferred_forum || Forum.first_public
     end
   end
 
@@ -112,7 +124,7 @@ class ApplicationController < ActionController::Base
     UserContext.new(current_user,
                     current_profile,
                     session,
-                    @forum,
+                    @forum || @_preferred_forum,
                     {
                         platform_open: platform_open?,
                         within_user_cap: within_user_cap?
