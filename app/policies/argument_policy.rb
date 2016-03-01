@@ -53,7 +53,7 @@ class ArgumentPolicy < RestrictivePolicy
     if record.motion.project.present?
       rule Pundit.policy(context, record.motion.project).show?, super
     else
-      rule forum_policy.show?, super
+      rule is_open?, has_access_token?, is_member?, is_manager?, is_owner?, super
     end
   end
 end

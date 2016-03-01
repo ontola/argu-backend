@@ -136,7 +136,7 @@ class ForumPolicy < RestrictivePolicy
     level = if @record.hidden?
       show?.presence || raise(ActiveRecord::RecordNotFound)
     else
-      [(1 if @record.closed?), show?, is_open?]
+      [(1 if @record.closed?), show?, is_open?, is_manager?, is_owner?]
     end
     rule level
   end
