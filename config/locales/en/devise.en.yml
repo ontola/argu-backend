@@ -67,7 +67,7 @@ en:
       success: 'Succesfully connected to a %{kind} account.'
       failure: 'Sorry, it was unsuccessful to couple your %{kind} account because of %{reason}.'
     mailer:
-      hello: 'Dear %{name}'
+      hello: 'Dear %{name},'
       confirmation_instructions:
         subject: 'Confirm your e-mail address'
         confirm: "You can confirm your account's e-mail address by pressing the link below."

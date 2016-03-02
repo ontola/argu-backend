@@ -67,7 +67,7 @@ nl:
       success: 'Succesvol gekoppeld aan %{kind} account.'
       failure: 'Sorry, het lukte niet om jouw %{kind} account te koppelen vanwege %{reason}.'
     mailer:
-      hello: 'Dear %{name}'
+      hello: 'Beste %{name},'
       confirmation_instructions:
         subject: 'Bevestig jouw e-mailadres'
         confirm: 'Je kunt jouw e-mailadres bevestigen door op onderstaande link te klikken.'

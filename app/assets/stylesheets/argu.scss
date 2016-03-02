@@ -3,76 +3,6 @@
 
 $maxCommentDepth: 10;
 
-.side-con .form-input-title {
-  color: $red;
-  @include placeholder{
-    color: $red;
-  }
-}
-
-.side-con input[type="submit"] {
-  @include button($red);
-}
-
-.side-pro .form-input-title {
-  color: $gre;
-  @include placeholder{
-    color: $gre;
-  }
-}
-
-.side-pro input[type="submit"] {
-  @include button($gre);
-}
-
-.pro-bg {
-	background-color: $gre !important;
-}
-
-.con-bg {
-	background-color: $red !important;
-}
-
-.motion-bg {
-	background-color: $blu !important;
-}
-
-.neutral-bg{
-	background-color: $g3 !important;
-}
-
-.question-bg{
-	background-color: $bro !important;
-}
-
-.pro-t{
-	color: $gre !important;
-}
-
-.con-t{
-	color: $red !important;
-}
-
-.motion-t{
-	color: $blu !important;
-}
-
-.neutral-t{
-	color: $g3 !important;
-}
-
-.question-t{
-	color: $bro !important;
-}
-
-.question {
-  color: $bro;
-}
-
-.motion {
-  color: $blu;
-}
-
 .argu-logo {
 	width: 5em;
 	height: 3em;
@@ -112,4 +42,26 @@ $maxCommentDepth: 10;
     margin: 1em;
     display: inline-block;
   }
+}
+
+.side-con .form-input-title {
+  color: $red;
+  @include placeholder{
+    color: $red;
+  }
+}
+
+.side-con input[type="submit"] {
+  @include button($red);
+}
+
+.side-pro .form-input-title {
+  color: $gre;
+  @include placeholder{
+    color: $gre;
+  }
+}
+
+.side-pro input[type="submit"] {
+  @include button($gre);
 }

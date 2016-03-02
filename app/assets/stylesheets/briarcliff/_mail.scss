@@ -1,6 +1,4 @@
 @import "variables";
-@import "mixins";
-@import "argu";
 
 // Reset styles by http://templates.mailchimp.com/development/css/reset-styles/
 
@@ -118,21 +116,24 @@ a {
     display: inline-block;
     cursor: pointer;
     border-bottom: solid 3px darken($gre, 10%);
-    @include transition(.15s);
+    -webkit-transition: .15s;
+    transition: .15s;
     border-top: solid 3px $gre;
-    @include border-radius(6px);
+    border-radius: 6px;
     height: 35px;
     line-height: 35px;
     &:hover {
       background-color: darken($gre, 5%) !important;
-      border-top-color: darken($gre, 5%) !important;;
-      border-bottom-color: darken($gre, 15%) !important;;
+      border-top-color: darken($gre, 5%) !important;
+      border-bottom-color: darken($gre, 15%) !important;
+      color: white !important;
     }
     &:active {
-      background-color: darken($gre, 15%) !important;;
+      background-color: darken($gre, 15%) !important;
       border-bottom-color: darken($gre, 15%) !important;;
-      border-top-color: darken($gre, 20%) !important;;
+      border-top-color: darken($gre, 20%) !important;
       transition: none;
+      color: white !important;
     }
   }
 }

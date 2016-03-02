@@ -244,6 +244,12 @@
 .cover-switcher {
   display: inline-block;
 
+
+  .dropdown-trigger:hover, .dropdown-active h1{
+    background-color: $lighten2;
+    transition: none;
+  }
+
   .dropdown {
     display: inline-block;
   }
@@ -257,13 +263,9 @@
     vertical-align: bottom;
     @include transition(.2s);
     @include text-shadow();
-    &:hover{
-      background-color: $lighten2;
-    }
 
-    &:active, .dropdown-active{
+    &:active{
       background-color: $lighten3 !important;
-      transition: none;
     }
   }
 }
