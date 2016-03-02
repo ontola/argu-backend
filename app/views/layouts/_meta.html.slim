@@ -7,14 +7,10 @@ link[rel="author" href="humans.txt"]
 
 / Fonts
 link[href='//fonts.googleapis.com/css?family=Open+Sans:400italic,400,300,700' rel='stylesheet' type='text/css']
-/Deprecated since font-aweseome-rails
-/link[href=asset_path("fonts/font-awesome.min.css") rel="stylesheet"]
 
-/ Open graph / twitter stuff
+/ Open graph / share meta info
 meta[property="og:site_name" content="Argu"]
 meta[property="twitter:site" content="@argu_co"]
-/ Can't say I like this image in all FB posts.
-/meta[property="og:image" content="#{asset_url('logo-social.png')}"]
 meta[property="twitter:domain" content="https://argu.co"]
 meta[property="fb:app_id" content="269911176456825"]
 
@@ -43,4 +39,8 @@ meta[name="theme-color" content="#475668"]
 / Hides Chrome for Android browser bar
 meta[name="mobile-web-app-capable" content="yes"]
 / Hides iOS browser bar
-meta[name="apple-mobile-web-app-capable" content="yes"]
+meta[name="apple-mobile-web-app-capable" content="no"]
+
+/ Tracking
+- if Rails.env.production?
+  =render partial: 'analytics'

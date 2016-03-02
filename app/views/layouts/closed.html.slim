@@ -21,5 +21,3 @@ html[class="no-js"]
         =yield
     =render partial: 'initial_state'
     =javascript_include_tag 'application'
-    - if Rails.env.production?
-      =render partial: 'analytics'

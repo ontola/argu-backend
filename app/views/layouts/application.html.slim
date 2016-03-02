@@ -34,6 +34,4 @@ html[class="no-js"]
     =render partial: 'footer'
     =render partial: 'initial_state'
     =javascript_include_tag 'application'
-    - if Rails.env.production?
-      =render partial: 'analytics'
     audio[id="notificationSound" src="/notification.wav" preload="auto"]
