@@ -167,7 +167,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(current_path).to eq forum_path(freetown)
     expect(page).to have_content(freetown.display_name)
     expect(page).to have_content(freetown.bio)
-    expect(page).to have_content('Forum instellingen')
+    expect(page).to have_content('FORUM INSTELLINGEN')
   end
 
   scenario 'manager should visit forum show' do
