@@ -1,14 +1,9 @@
 html
   head
-    div[itemscope="" itemtype="http://schema.org/EmailMessage"]
-      div[itemprop="action" itemscope="" itemtype="http://schema.org/ViewAction"]
-        /link[href=polymorphic_url(activity.trackable, host: 'https://argu.co') itemprop="url"]
-        /meta[content=t('mailer.view_type', type: t("#{activity.trackable.class_name}.type")) itemprop="name"]
-      /meta[content=t('mailer.view_type_on_argu', type: t("#{activity.trackable.class_name}.type")) itemprop="description"]
-      div[itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization"]
-        meta[content="Argu" itemprop="name"]
-        link[href="https://argu.co" itemprop="url"]
-        link itemprop="url/googlePlus" href="https://plus.google.com/"
+    div[itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization"]
+      meta[content="Argu" itemprop="name"]
+      link[href="https://argu.co" itemprop="url"]
+      link itemprop="url/googlePlus" href="https://plus.google.com/"
     =stylesheet_link_tag 'mail', data_roadie_ignore: 'data-roadie-ignore'
   body.mail-body
     table.mail-wrapper
