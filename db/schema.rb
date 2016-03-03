@@ -749,6 +749,7 @@ ActiveRecord::Schema.define(version: 20160308091020) do
   add_foreign_key "motions", "places"
   add_foreign_key "motions", "projects"
   add_foreign_key "motions", "users", column: "publisher_id"
+  add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users", on_delete: :cascade
   add_foreign_key "phases", "forums"
   add_foreign_key "phases", "profiles", column: "creator_id"
