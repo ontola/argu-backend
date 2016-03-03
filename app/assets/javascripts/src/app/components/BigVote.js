@@ -6,7 +6,13 @@
 import Alert from './Alert';
 import React from 'react';
 import { IntlMixin, FormattedMessage } from 'react-intl';
-import { safeCredentials, json, statusSuccess, tryLogin } from '../lib/helpers';
+import {
+    safeCredentials,
+    json,
+    statusSuccess,
+    tryLogin,
+    errorMessageForStatus
+} from '../lib/helpers';
 
 function createMembership(response) {
     return fetch(response.membership_url, safeCredentials({
@@ -28,21 +34,6 @@ function showNotifications (response) {
     return Promise.resolve(response);
 }
 
-function handleNotAMember (response) {
-    if (response.status === 403 &&
-        response.type === 'error' &&
-        response.error_id === 'NOT_A_MEMBER') {
-        return response
-            .json()
-            .then(createMembership)
-            .then(() => {
-                return this.vote(side);
-            });
-    } else {
-        return statusSuccess(response);
-    }
-}
-
 /**
  * Component for the POST-ing of a vote.
  * This component is not pure.
@@ -62,6 +53,18 @@ export const BigVoteButtons = React.createClass({
             distribution: this.props.distribution,
             percent: this.props.percent
         };
+    },
+
+    handleNotAMember: function (response) {
+        if (response.type === 'error' &&
+            response.error_id === 'NOT_A_MEMBER') {
+            return createMembership(response)
+                .then(() => {
+                    return this.vote(response.original_request.for);
+                });
+        } else {
+            return Promise.resolve();
+        }
     },
 
     ifNoActor: function (v) {
@@ -94,8 +97,33 @@ export const BigVoteButtons = React.createClass({
     vote: function (side) {
         fetch(`${this.props.vote_url}/${side}.json`, safeCredentials({
             method: 'POST'
-        })).then(handleNotAMember)
-           .then(json, tryLogin)
+        })).then(statusSuccess, tryLogin)
+           .then(json)
+           .then((data) => {
+               if (typeof data !== 'undefined') {
+                   this.setState(data.vote);
+                   this.props.parentSetVote(data.vote);
+               }
+           }).catch((e) => {
+           if (e.status === 403) {
+               return e.json()
+                   .then(this.handleNotAMember)
+                   .then(() => {
+                       this.vote(side);
+                   });
+           } else {
+               const message = errorMessageForStatus(e.status).fallback || this.getIntlMessage('errors.general');
+               new Alert(message, 'alert', true);
+               throw e;
+           }
+        });
+    },
+
+    vote2: function (side) {
+        fetch(`${this.props.vote_url}/${side}.json`, safeCredentials({
+            method: 'POST'
+        })).then(json, tryLogin)
+           .then(this.handleNotAMember)
            .then((data) => {
                if (typeof data !== 'undefined') {
                    this.setState(data.vote);
