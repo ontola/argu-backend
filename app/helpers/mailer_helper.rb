@@ -24,10 +24,10 @@ module MailerHelper
         poster: notification.resource.creator.display_name,
         parent_title: notification.activity.recipient.display_name
       }
-      opts[:pro] = t(notification.resource.pro ? 'pro' : 'con') if notification.resource.respond_to?(:pro)
-      t("mailer.user_mailer.#{action_path(notification)}.subject", opts)
+      opts[:pro] = I18n.t(notification.resource.pro ? 'pro' : 'con') if notification.resource.respond_to?(:pro)
+      I18n.t("mailer.user_mailer.#{action_path(notification)}.subject", opts)
     else
-      t('mailer.notifications_mailer.subject')
+      I18n.t('mailer.notifications_mailer.subject')
     end
   end
 end

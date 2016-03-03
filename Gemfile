@@ -113,6 +113,7 @@ group :test do
   gem 'rspec-rails', '~> 3.4.2'
   gem 'capybara', '~> 2.6.2'
   gem 'capybara-webkit', '~> 1.8.0'
+  gem 'capybara-email'
   gem 'selenium-webdriver', '~> 2.52.0'
   gem 'poltergeist'
   gem 'chromedriver-helper'

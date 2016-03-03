@@ -7,8 +7,8 @@ FactoryGirl.define do
       passed_in?(:motion) ? motion : FactoryGirl.create(:motion, forum: forum)
     }
     pro true
-    title 'title'
-    content 'argument'
+    sequence(:title) { |i| "fg_title_#{i}" }
+    sequence(:content) { |i| "fg_content_#{i}" }
 
     before :create do |argument, evaluator|
       argument.motion.update forum: argument.forum

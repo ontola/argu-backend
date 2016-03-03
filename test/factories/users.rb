@@ -14,6 +14,7 @@ FactoryGirl.define do
     finished_intro true
     language 'en'
     has_analytics false
+    notifications_viewed_at nil
     sequence(:first_name) { |n| "first_name_#{n}" }
     sequence(:last_name) { |n| "last_name_#{n}" }
 
@@ -27,9 +28,22 @@ FactoryGirl.define do
       confirmed_at Time.current
     end
 
+    trait :viewed_notifications_hour_ago do
+      notifications_viewed_at DateTime.current - 1.hour
+    end
+
+    trait :viewed_notifications_now do
+      notifications_viewed_at DateTime.current
+    end
+
     trait :follows_email do
       confirmed_at Time.current
       follows_email User.follows_emails[:direct_follows_email]
+    end
+
+    trait :follows_email_weekly do
+      confirmed_at Time.current
+      follows_email User.follows_emails[:weekly_follows_email]
     end
 
     trait :forum_manager do

@@ -1,33 +1,113 @@
 require 'test_helper'
 
 class SendNotificationsWorkerTest < ActiveSupport::TestCase
-  let!(:activity) do
-    FactoryGirl.create(:activity,
-                       :t_argument,
-                       trackable: argument,
-                       forum: argument.forum)
+  let(:activity) do
+    create(:activity,
+           :t_argument,
+           trackable: argument,
+           forum: argument.forum)
   end
 
-  let!(:argument) { FactoryGirl.create(:argument) }
+  let!(:argument) { create(:argument) }
 
   let!(:follow) do
-    FactoryGirl.create(:follow,
-                       :t_argument,
-                       followable: argument,
-                       follower: follower)
+    create(:follow,
+           :t_argument,
+           followable: argument,
+           follower: follower)
   end
 
-  let!(:follower) { FactoryGirl.create :user }
+  let!(:follower) { create :user, :viewed_notifications_hour_ago, :follows_email }
 
-  let!(:notification) do
-    FactoryGirl.create(:notification,
-                       activity: activity,
-                       user: follower)
+  let!(:follower_weekly) { create :user, :viewed_notifications_hour_ago, :follows_email_weekly }
+
+  def create_notification_pair_for(user)
+    create(:notification,
+           activity: activity,
+           user: user)
+
+    create(:notification,
+           activity: activity,
+           user: user,
+           created_at: Time.current - 1.day)
   end
 
-  test 'collect_notifications should return notifications' do
+  test 'Should send mail to direct follower' do
+    create_notification_pair_for follower
+
     snw = SendNotificationsWorker.new
+    assert_equal 1, snw.collect_notifications(follower).length
 
-    assert_equal 1, snw.collect_notifications(follow.follower).length
+    email_type = User.follows_emails[:direct_follows_email]
+    assert_difference 'ActionMailer::Base.deliveries.count', 1 do
+      Sidekiq::Testing.inline! do
+        SendNotificationsWorker.perform_async(follower.id, email_type)
+      end
+    end
+
+    follower.reload
+    assert_equal 0, snw.collect_notifications(follower).length, 'Notifications will be send twice'
+  end
+
+  test 'Should send mail to weekly follower' do
+    create_notification_pair_for follower_weekly
+
+    snw = SendNotificationsWorker.new
+    assert_equal 1, snw.collect_notifications(follower_weekly).length
+
+    email_type = User.follows_emails[:weekly_follows_email]
+    assert_difference 'ActionMailer::Base.deliveries.count', 1 do
+      Sidekiq::Testing.inline! do
+        SendNotificationsWorker.perform_async(follower_weekly.id, email_type)
+      end
+    end
+
+    follower_weekly.reload
+    assert_equal 0, snw.collect_notifications(follower_weekly).length, 'Notifications will be send twice'
+  end
+
+  test 'Should send multiple notifications as a digest' do
+    create_list :notification, 10,
+                activity: activity,
+                user: follower
+    create_list :notification, 10,
+                activity: activity,
+                user: follower,
+                created_at: Time.now - 1.day
+
+    snw = SendNotificationsWorker.new
+    assert_equal 10, snw.collect_notifications(follower).length
+
+    email_type = User.follows_emails[:direct_follows_email]
+    assert_difference 'ActionMailer::Base.deliveries.count', 1, "ActionMailer doesn't send in bulk" do
+      Sidekiq::Testing.inline! do
+        SendNotificationsWorker.perform_async(follower.id, email_type)
+      end
+    end
+    
+    follower.reload
+    assert_equal 0, snw.collect_notifications(follower).length, 'Notifications will be send twice'
+  end
+
+  test 'Should not send direct mail to weekly follower' do
+    create_notification_pair_for follower_weekly
+
+    email_type = User.follows_emails[:direct_follows_email]
+    assert_no_difference 'ActionMailer::Base.deliveries.count' do
+      Sidekiq::Testing.inline! do
+        SendNotificationsWorker.perform_async(follower_weekly.id, email_type)
+      end
+    end
+  end
+
+  test 'Should not send weekly mail to direct follower' do
+    create_notification_pair_for follower
+
+    email_type = User.follows_emails[:weekly_follows_email]
+    assert_no_difference 'ActionMailer::Base.deliveries.count' do
+      Sidekiq::Testing.inline! do
+        SendNotificationsWorker.perform_async(follower.id, email_type)
+      end
+    end
   end
 end
