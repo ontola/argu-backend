@@ -9,6 +9,7 @@ nl:
     view_all_motions: "Bekijk alle %{amount} ideeën..."
     tooltips:
       count: "aantal uitdagingen"
+      info: "Een uitdaging is een vraagstuk of probleem waaronder ideeën kunnen worden geplaatst."
     call_to_action:
       title: "Oplossing nodig?"
       body: 'Ben je op zoek naar ideeën, zoals oplossingen voor een probleem?'

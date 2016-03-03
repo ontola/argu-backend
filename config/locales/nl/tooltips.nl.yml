@@ -1,14 +1,17 @@
 nl:
   tooltips:
     motion:
-      create: "Deel jouw idee door een voorstel te plaatsen"
-      vote_count: "Aantal keer op gestemd"
+      create: "Deel jouw idee door een voorstel te plaatsen."
+      vote_count: "Aantal keer op gestemd."
+      vote_pro_count: "Aantal stemmen voor."
+      vote_con_count: "Aantal stemmen tegen."
+      vote_abstain_count: "Aantal neutrale stemmen."
       arguments_pro_count: "Aantal argumenten voor"
       arguments_con_count: "Aantal argumenten tegen"
       date: "Geplaatst op"
     question:
       create: "Stel een vraag aan alle leden en verzamel nieuwe ideeën."
-      motions_count: "Aantal geplaatste ideeën"
+      motions_count: "Aantal geplaatste ideeën."
     forum:
       invite: "Nodig anderen uit om in dit forum mee te discussiëren."
     argument:

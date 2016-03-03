@@ -63,6 +63,17 @@ section {
       color: white;
     }
   }
+
+  .details-part--pro{
+    &:hover{
+      color: $pro;
+    }
+  }
+  .details-part--con{
+    &:hover{
+      color: $con;
+    }
+  }
 }
 
 section.unpadded {

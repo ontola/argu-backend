@@ -5,9 +5,8 @@ header
     .inner-line[style="{innerStyle}"]
   .timeline-phases
     -project.phases.order(start_date: :asc).each do |phase|
-      .phase
-        =link_to phase_path(phase), data: {remote: true}, class: 'phase-title' do
-          span= phase.display_name
+      .timeline-phase
+        = link_to phase_path(phase), data: {remote: true, title: "#{l(phase.start_date, format: :date)} - #{l(phase.end_date, format: :date)}"}, class: 'timeline-phase-title tooltip--top' do          span= phase.display_name
         .phase-points
           -phase.blog_posts.each do |blog_post|
             =link_to blog_post_path(blog_post), data: {remote: true}, class: "point point-blog-post #{'active' if blog_post == project.latest_blog_post}" do

@@ -26,6 +26,8 @@ nl:
       header: "Argument %{side} de stelling: "
       header_short: "%{side}: "
       create: "+ argument %{side}"
+    tooltips:
+      info: "Een argument is een enkele reden voor of tegen een idee."
     revisions:
       title_wiped: 'Gewiste reacties'
     form:

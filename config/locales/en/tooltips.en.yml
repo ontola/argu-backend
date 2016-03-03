@@ -3,6 +3,9 @@ en:
     motion:
       create: "Share your idea by creating a proposition."
       vote_count: "Vote count."
+      vote_pro_count: "Amount of votes in favor."
+      vote_con_count: "Amount of votes against."
+      vote_abstain_count: "Amount of neutral votes."
       arguments_pro_count: "Amount of arguments pro."
       arguments_con_count: "Amount of arguments con."
       date: "Placed on."

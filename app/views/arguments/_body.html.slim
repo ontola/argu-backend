@@ -1,7 +1,5 @@
 .box[id="#{@argument.id.present? ? 'argument_' + @argument.id.to_s : ''}" class="side-#{@argument.pro ? 'pro' : 'con'}"]
-  section.section-info[class="#{@argument.pro ? 'pro' : 'con'}-bg"]
-    span[class="fa #{@argument.pro ? 'fa-plus' : 'fa-minus'}"]
-    span.icon-left= @argument.pro ? t('arguments.form.side.pro') : t('arguments.form.side.con')
+  =render partial: 'arguments/info_bar', locals: {argument: @argument}
   section
     h1[class=(@argument.pro ? 'pro-t' : 'con-t') itemprop="headline"]= @argument.title
     =render partial: 'arguments/shr', locals: {model: @argument, vote: @vote}

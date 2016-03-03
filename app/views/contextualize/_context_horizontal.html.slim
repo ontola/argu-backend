@@ -3,21 +3,11 @@
   - _next = item.next(show_trashed?)
   .context.context--horizontal
     - if previous.present? && item.previous != item
-      =link_to previous, class: 'context--horizontal-button context--previous'
-        .box.box-link
-          section.section-info class=("#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-bg")
-            span= horizontal_context_type_name(previous, type)
-          section
-            h3[class="#{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-t"]
-              span.fa.fa-arrow-left
-              span.icon-left= truncate(previous.title, length: 64)
+      =link_to previous, class: 'context--horizontal-button context--previous' do
+        .context-content.tooltip--left[data-title=previous.title]
+          span[class="fa fa-arrow-left #{ type != 'argument' ? type : (previous.pro ? 'pro' : 'con')}-t"]
     - if _next.present? && _next != item
-      =link_to _next, class: 'context--horizontal-button context--next'
-        .box.box-link
-          section.section-info class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-bg")
-            span= horizontal_context_type_name(_next, type)
-          section
-            h3[class=("#{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-t")]
-              span.icon-right= truncate(_next.title, length: 64)
-              span.fa.fa-arrow-right
+      =link_to _next, class: 'context--horizontal-button context--next' do
+        .context-content.tooltip--right[data-title=_next.title]
+          span[class="fa fa-arrow-right #{ type != 'argument' ? type : (_next.pro ? 'pro' : 'con')}-t"]
   .clear 

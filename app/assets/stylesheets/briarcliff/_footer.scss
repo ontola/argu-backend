@@ -83,7 +83,7 @@ footer {
 .footer-extra {
   background-color: white;
   padding: .01em 0;
-  margin-top: $footer-margin;
+  margin-top: ($footer-margin + 2em);
   margin-bottom: -$footer-margin;
 }
 
