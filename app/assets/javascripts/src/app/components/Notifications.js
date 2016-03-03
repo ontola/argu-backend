@@ -80,7 +80,7 @@ export const NotificationDropdown = React.createClass({
         }
         let dropdownContent = <DropdownContent renderLeft={renderLeft}
                                                close={this.close}
-                                               notifications={notificationStore.state.notifications.notifications}
+                                               notifications={notificationStore.state.notifications.notifications.toJS()}
                                                {...adaptedProps}
                                                key='required' />;
 
@@ -173,7 +173,7 @@ export const Notifications = React.createClass({
     },
 
     render: function () {
-        var notifications = this.props.notifications.map((item, i) => {
+        var notifications = this.state.notifications.map((item, i) => {
             return <NotificationItem key={i} read={item.read} done={this.props.done} {...item} />
         });
 
