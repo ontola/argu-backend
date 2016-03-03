@@ -17,11 +17,14 @@ class DirectNotificationsSchedulerWorker
 
   def collect_user_ids
     t_notifications = Notification.arel_table
+    t_users = User.arel_table
     User.where.not(confirmed_at: nil)
         .where(follows_email: EMAIL_TYPE)
         .joins(:notifications)
-        .where(t_notifications[:read_at]
-                   .eq(nil))
+        .where(t_notifications[:read_at].eq(nil))
+        .where(t_users[:notifications_viewed_at].eq(nil)
+                   .or(t_users[:notifications_viewed_at].lt(t_notifications[:created_at])))
+        .where.not(t_notifications[:activity_id].eq(nil))
         .select('DISTINCT users.id')
         .map(&:id)
   end
