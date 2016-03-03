@@ -1041,18 +1041,6 @@ function showNotifications(response) {
     return Promise.resolve(response);
 }
 
-function handleNotAMember(response) {
-    var _this = this;
-
-    if (response.status === 403 && response.type === 'error' && response.error_id === 'NOT_A_MEMBER') {
-        return response.json().then(createMembership).then(function () {
-            return _this.vote(side);
-        });
-    } else {
-        return (0, _helpers.statusSuccess)(response);
-    }
-}
-
 /**
  * Component for the POST-ing of a vote.
  * This component is not pure.
@@ -1072,6 +1060,18 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
             distribution: this.props.distribution,
             percent: this.props.percent
         };
+    },
+
+    handleNotAMember: function handleNotAMember(response) {
+        var _this = this;
+
+        if (response.type === 'error' && response.error_id === 'NOT_A_MEMBER') {
+            return createMembership(response).then(function () {
+                return _this.vote(response.original_request.for);
+            });
+        } else {
+            return Promise.resolve();
+        }
     },
 
     ifNoActor: function ifNoActor(v) {
@@ -1106,16 +1106,39 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
 
         fetch(this.props.vote_url + '/' + side + '.json', (0, _helpers.safeCredentials)({
             method: 'POST'
-        })).then(handleNotAMember).then(_helpers.json, _helpers.tryLogin).then(function (data) {
+        })).then(_helpers.statusSuccess, _helpers.tryLogin).then(_helpers.json).then(function (data) {
             if (typeof data !== 'undefined') {
                 _this2.setState(data.vote);
                 _this2.props.parentSetVote(data.vote);
             }
         }).catch(function (e) {
             if (e.status === 403) {
+                return e.json().then(_this2.handleNotAMember).then(function () {
+                    _this2.vote(side);
+                });
+            } else {
+                var message = (0, _helpers.errorMessageForStatus)(e.status).fallback || _this2.getIntlMessage('errors.general');
+                new _Alert2.default(message, 'alert', true);
+                throw e;
+            }
+        });
+    },
+
+    vote2: function vote2(side) {
+        var _this3 = this;
+
+        fetch(this.props.vote_url + '/' + side + '.json', (0, _helpers.safeCredentials)({
+            method: 'POST'
+        })).then(_helpers.json, _helpers.tryLogin).then(this.handleNotAMember).then(function (data) {
+            if (typeof data !== 'undefined') {
+                _this3.setState(data.vote);
+                _this3.props.parentSetVote(data.vote);
+            }
+        }).catch(function (e) {
+            if (e.status === 403) {
                 return e.json().then(showNotifications);
             } else {
-                var message = errorMessageForStatus(e.status).fallback || _this2.getIntlMessage('errors.general');
+                var message = (0, _helpers.errorMessageForStatus)(e.status).fallback || _this3.getIntlMessage('errors.general');
                 new _Alert2.default(message, 'alert', true);
                 throw e;
             }

@@ -37,10 +37,12 @@ class AuthorizedController < ApplicationController
       format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r } }
       format.js { render partial: 'forums/join', layout: false, locals: { forum: exception.forum, r: exception.r } }
       format.json do
+        f = ActionDispatch::Http::ParameterFilter.new(Rails.application.config.filter_parameters)
         error_hash = {
           type: :error,
           error_id: 'NOT_A_MEMBER',
-          message: exception.body
+          message: exception.body,
+          original_request: f.filter(params)
         }.merge(exception.body)
         render status: 403,
                json: error_hash.merge({notifications: [error_hash] })
@@ -51,7 +53,7 @@ class AuthorizedController < ApplicationController
   private
 
   def authorize_action
-    unless params[:controller].equal?('memberships')
+    unless params[:controller].eql?('memberships')
       authorize authenticated_resource!, "#{params[:action].chomp('!')}?"
     end
   end
