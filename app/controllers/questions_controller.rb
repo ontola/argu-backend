@@ -5,7 +5,7 @@ class QuestionsController < AuthorizedController
     @motions = policy_scope(authenticated_resource!
                               .motions
                               .trashed(show_trashed?)
-                              .order(updated_at: :desc))
+                              .order(votes_pro_count: :desc))
 
     respond_to do |format|
       format.html { render locals: {question: authenticated_resource!}} # show.html.erb
