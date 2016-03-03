@@ -8,6 +8,8 @@ class Notification < ActiveRecord::Base
   validates :title, length: {maximum: 140}
   validates :url, length: {maximum: 512}
 
+  scope :renderable, -> { where.not(activity_id: nil) }
+
   def sync_notification_count
     user.try :sync_notification_count
   end
@@ -41,7 +43,7 @@ class Notification < ActiveRecord::Base
     activity.trackable if activity.present?
   end
 
-  def renderable_resource?
+  def renderable?
     activity.present?
   end
 

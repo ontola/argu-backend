@@ -44,6 +44,7 @@ class SendNotificationsWorker
     t_notifications = Notification.arel_table
     lock = lock === false ? false : 'FOR UPDATE NOWAIT'
     user.notifications
+        .renderable
         .where(t_notifications[:read_at]
                    .eq(nil)
                    .and(t_notifications[:created_at]

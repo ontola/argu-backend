@@ -18,7 +18,7 @@ module MailerHelper
   end
 
   def notification_subject(notification)
-    if notification.renderable_resource?
+    if notification.renderable?
       opts = {
         title: notification.resource.display_name,
         poster: notification.resource.creator.display_name,
