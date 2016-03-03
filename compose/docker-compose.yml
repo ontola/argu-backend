@@ -34,6 +34,8 @@ services:
       - "5432:5432"
     env_file:
       - postgres.env
+    volumes:
+      - data:/var/lib/postgresql/data
   redis:
     image: redis:2.8.17
     ports:
@@ -43,3 +45,6 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+volumes:
+  data:
+    external: true
