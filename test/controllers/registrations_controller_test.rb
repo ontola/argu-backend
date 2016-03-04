@@ -13,21 +13,21 @@ class RegistrationsControllerTest < ActionController::TestCase
   ####################################
 
   test 'should post create' do
-    user_params = attributes_for(:user)
-    @request.env['devise.mapping'] = Devise.mappings[:user]
+    I18n.available_locales.each do |locale|
+      cookies[:locale] = locale.to_s
+      @request.env['devise.mapping'] = Devise.mappings[:user]
 
-    assert_differences([['User.count', 1],
-                        ['Membership.count', 1],
-                        ['Sidekiq::Worker.jobs.count', 1]]) do
-      post :create,
-           user: {
-               email: user_params[:email],
-               password: user_params[:password],
-               password_confirmation: user_params[:password]
-           }
+      assert_differences([['User.count', 1],
+                          ['Membership.count', 1],
+                          ['Sidekiq::Worker.jobs.count', 1]]) do
+        post :create,
+             user: attributes_for(:user)
+        assert_redirected_to setup_users_path
+      end
+      assert_equal locale, User.last.language.to_sym
+      sign_out :user
+      User.last.destroy
     end
-
-    assert_redirected_to setup_users_path
   end
 
   test "should not post create when passwords don't match" do

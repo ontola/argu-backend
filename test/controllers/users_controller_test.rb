@@ -38,6 +38,13 @@ class UsersControllerTest < ActionController::TestCase
     assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| v.forum.open? } }, 'Votes of closed fora are visible to non-members'
   end
 
+  test 'guest should put language' do
+    request.env['HTTP_REFERER'] = root_url
+    assert_nil cookies['locale']
+    put :language, locale: :en
+    assert_equal 'en', cookies['locale']
+  end
+
   ####################################
   # As User
   ####################################
@@ -104,6 +111,26 @@ class UsersControllerTest < ActionController::TestCase
     assert_response 200
     assert assigns(:collection)[:pro][:collection].length > 0
     assert_not assigns(:collection)[:pro][:collection].any? { |v| v.voteable.is_trashed? }
+  end
+
+  test 'user should put language' do
+    user = create_member(utrecht, create_member(amsterdam))
+    sign_in user
+    request.env['HTTP_REFERER'] = root_url
+    assert_equal 'nl', user.language
+    put :language, locale: :en
+    assert_equal 'en', user.reload.language
+    assert_nil flash[:error]
+  end
+
+  test 'user should not put non-existing language' do
+    user = create_member(utrecht, create_member(amsterdam))
+    sign_in user
+    request.env['HTTP_REFERER'] = root_url
+    assert_equal 'nl', user.language
+    put :language, locale: :fake_language
+    assert_equal 'nl', user.reload.language
+    assert flash[:error].present?
   end
 
   private
