@@ -34,7 +34,7 @@ class MembershipsController < AuthorizedController
   def destroy
     @forum = Forum.find_via_shortname(params[:forum_id])
     authorize @forum, :list?
-    @membership = @forum.memberships.find_by profile_id: params[:id]
+    @membership = current_profile.memberships.find params[:id]
     authorize @membership, :destroy?
 
     if @membership.destroy
