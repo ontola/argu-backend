@@ -144,7 +144,7 @@ class ApplicationController < ActionController::Base
 
   # @private
   def set_locale
-    I18n.locale = current_user.try(:language) || http_accept_language.compatible_language_from(I18n.available_locales)
+    I18n.locale = current_user.try(:language) || cookies['locale'] || http_accept_language.compatible_language_from(I18n.available_locales)
   end
 
   # @private
