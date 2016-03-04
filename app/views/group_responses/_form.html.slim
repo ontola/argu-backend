@@ -1,5 +1,5 @@
 -@group_response ||= resource
-=semantic_form_for(@group_response, url: @group_response.new_record? ? motion_group_responses_path(@group_response.motion, @group_response.group) : response_path(@group_response)) do |f|
+=semantic_form_for(@group_response, url: @group_response.new_record? ? motion_group_responses_path(@group_response.motion, @group_response.group) : group_response_path(@group_response)) do |f|
   .box.form-toggle.choices-3
     =f.input :side, as: :toggle_radio, :collection => radio_values_for_sides(@group_response)
   .box.argument[id="#{@group_response.id.present? ? 'argument_' + @group_response.id.to_s : ''}" class="side-#{@group_response.side}"]

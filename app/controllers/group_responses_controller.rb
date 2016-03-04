@@ -1,5 +1,11 @@
 class GroupResponsesController < AuthorizedController
 
+  def show
+    respond_to do |format|
+      format.html { redirect_to url_for([authenticated_resource.motion, anchor: authenticated_resource.identifier]) }
+    end
+  end
+
   def new
     @group_response = authenticated_resource!
     authorize @group_response, :new?
