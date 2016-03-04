@@ -32,6 +32,8 @@ footer
           span.fa.fa-google-plus
         a[href="https://www.youtube.com/playlist?list=PLkKmFghZIx4_rOwub0YKx6njRmDrwj8TX"]
           span.fa.fa-youtube
+      .footer-language-dropdown
+        = react_component 'HyperDropdown', language_dropdown_items, {prerender: true}
   .footer-bottom
     span= t('site.copyright')
     span= ' | '
