@@ -14,3 +14,5 @@ nl:
         pro: "Voor"
         neutral: "geen van beide"
         con: "Tegen"
+    errors:
+      must_be_discussion: "De groep %{group_name} moet het op type discussie staan voor items kunnen worden toegevoegd."

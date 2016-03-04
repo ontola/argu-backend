@@ -4,13 +4,13 @@ FactoryGirl.define do
     association :forum, strategy: :build
     sequence(:name) { |i| "Fg_groups_#{i}" }
     name_singular 'Group'
+    visibility :hidden
 
-    #before(:create) do |group, evaluator|
-    #  group.forum = Forum.find_via_shortname(evaluator.forum_name)
-    #end
-
-    factory :group_with_members do
-
+    %i(hidden visible discussion).each do |vis|
+      trait vis do
+        visibility vis
+      end
     end
+
   end
 end

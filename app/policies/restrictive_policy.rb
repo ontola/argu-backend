@@ -101,7 +101,7 @@ class RestrictivePolicy
   end
 
   def assert!(assertion, query = nil)
-    raise Argu::RuledIt::NotAuthorizedError.new(record: record, query: query) unless assertion
+    raise Argu::NotAuthorizedError.new(record: record, query: query) unless assertion
   end
 
   def change_owner?

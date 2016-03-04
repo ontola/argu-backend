@@ -1,26 +1,9 @@
+require 'argu/not_authorized_error'
+
 module Argu
   module RuledIt
     extend ActiveSupport::Concern
     include Pundit
-
-    class NotAuthorizedError < Pundit::Error
-      attr_reader :query, :record, :policy, :verdict
-
-      def initialize(options = {})
-        if options.is_a? String
-          message = options
-        else
-          @query  = options[:query]
-          @record = options[:record]
-          @policy = options[:policy]
-          @verdict = options[:verdict]
-
-          message = options.fetch(:message) { "not allowed to #{query} this #{record.inspect}" }
-        end
-
-        super(message)
-      end
-    end
 
     class << self
       def authorize(user, record, query)
@@ -28,7 +11,7 @@ module Argu
 
         authorized, verdict = policy.public_send(query)
         unless authorized
-          raise NotAuthorizedError.new(
+          raise Argu::NotAuthorizedError.new(
             query: query,
             record: record,
             policy: policy,
@@ -48,7 +31,7 @@ module Argu
       policy = policy(record)
       authorized, verdict = policy.public_send(query)
       unless authorized
-        raise NotAuthorizedError.new(
+        raise Argu::NotAuthorizedError.new(
           query: query,
           record: record,
           policy: policy,

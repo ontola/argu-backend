@@ -56,22 +56,17 @@ class GroupResponsesController < AuthorizedController
   end
 
   def update
-    @group_response = GroupResponse.find params[:id]
-    authorize @group_response, :edit?
-
-    if @group_response.update permit_params
-      redirect_to @group_response.motion
+    if authenticated_resource!.update permit_params
+      redirect_to authenticated_resource!.motion
     else
       render 'form'
     end
   end
 
   def destroy
-    @group_response = GroupResponse.find params[:id]
-    authorize @group_response, :destroy?
-
     respond_to do |format|
-      if @group_response.destroy
+      if authenticated_resource!.destroy
+        format.html { redirect_to motion_path(authenticated_resource!.motion) }
         format.js { render }
       else
         format.js { render json: {notifications: [{type: :error, message: 'Kon reponse niet verwijderen.'}]} }
@@ -83,6 +78,13 @@ private
   def authenticated_resource!
     if params[:action] == 'new' || params[:action] == 'create'
       group = Group.find params[:group_id]
+      unless @_not_authorized_caught || group.discussion?
+        raise Argu::NotAuthorizedError.new(
+          record: group,
+          query: 'edit?',
+          verdict: t('group_responses.errors.must_be_discussion',
+                     group_name: group.name))
+      end
       motion = Motion.find params[:motion_id]
       @resource = motion.group_responses.new group: group,
                                              forum: group.forum,

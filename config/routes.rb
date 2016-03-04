@@ -132,7 +132,7 @@ Argu::Application.routes.draw do
             except: [:index, :new, :create],
             concerns: [:moveable, :convertible, :votable, :flowable] do
     resources :groups, only: [] do
-      resources :group_responses, path: 'responses', as: 'responses', only: [:new, :create]
+      resources :group_responses, only: [:new, :create]
     end
     resources :tags, path: 't', only: [:index]
   end

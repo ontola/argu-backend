@@ -14,3 +14,5 @@ en:
         pro: "Agree"
         neutral: "Neutral"
         con: "Disagree"
+    errors:
+      must_be_discussion: "The group %{group_name} must be set to discussion to create responses."

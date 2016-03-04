@@ -8,7 +8,12 @@ class AuthorizedController < ApplicationController
   before_action :authorize_action
   helper_method :authenticated_context
 
-  rescue_from Argu::NotAUserError do |exception|
+  rescue_from Argu::NotAUserError, with: :handle_not_a_user_error
+  rescue_from Argu::NotAMemberError, with: :handle_not_a_member_error
+
+  protected
+
+  def handle_not_a_user_error(exception)
     @_not_a_user_caught = true
     if @resource.class != User
       @resource = User.new(r: exception.r, shortname: Shortname.new)
@@ -18,10 +23,10 @@ class AuthorizedController < ApplicationController
         render 'devise/sessions/new',
                layout: false,
                locals: {
-                   resource: @resource,
-                   resource_name: :user,
-                   devise_mapping: Devise.mappings[:user],
-                   r: exception.r
+                 resource: @resource,
+                 resource_name: :user,
+                 devise_mapping: Devise.mappings[:user],
+                 r: exception.r
                }
       end
       format.html do
@@ -30,7 +35,7 @@ class AuthorizedController < ApplicationController
     end
   end
 
-  rescue_from Argu::NotAMemberError do |exception|
+  def handle_not_a_member_error(exception)
     @_not_a_member_caught = true
     authorize exception.forum, :join?
     respond_to do |format|

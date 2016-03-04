@@ -1,3 +1,5 @@
+require 'argu/not_authorized_error'
+
 class ApplicationController < ActionController::Base
   include Argu::RuledIt, ActorsHelper, ApplicationHelper, ConvertibleHelper, PublicActivity::StoreController,
           AccessTokenHelper, AlternativeNamesHelper, UsersHelper, GroupResponsesHelper
@@ -21,86 +23,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  rescue_from ActiveRecord::RecordNotUnique, with: lambda {
-    flash[:warning] = t(:twice_warning)
-    redirect_to :back
-  }
-
-  rescue_from Argu::RuledIt::NotAuthorizedError do |exception|
-    @_not_authorized_caught = true
-    Rails.logger.error exception
-    action = exception.query.to_s[0..-2]
-    error = exception.try(:verdict) || t("#{exception.record.try(:class_name)}.pundit.#{action}",
-              action: "#{exception.record.class}##{action}",
-              default: t('access_denied'))
-    error_hash = {
-      type: :error,
-      error_id: 'NOT_AUTHORIZED',
-      message: error
-    }
-    respond_to do |format|
-      format.js do
-        render status: 403,
-               json: error_hash.merge({notifications: [error_hash]})
-      end
-      format.json do
-        render status: 403,
-               json: error_hash.merge({notifications: [error_hash]})
-      end
-      format.html do
-        redirect_location = if defined?(authenticated_context) && authenticated_context.present? && policy(authenticated_context).show?
-          url_for(authenticated_context)
-        elsif request.env['HTTP_REFERER'].present? && request.env['HTTP_REFERER'] != request.original_url
-          request.env['HTTP_REFERER']
-        else
-          root_path
-        end
-        redirect_to redirect_location, alert: error
-      end
-    end
-  end
-
-  rescue_from Argu::NotLoggedInError do |exception|
-    @_not_logged_in_caught = true
-    respond_to do |format|
-      format.js { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
-      format.json { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
-      format.html {
-        @resource ||= User.new r: exception.r
-        render 'devise/sessions/new',
-               locals: {
-                   resource: @resource,
-                   resource_name: :user,
-                   devise_mapping: Devise.mappings[:user],
-                   r: exception.r, preview: exception.preview
-               }
-      }
-    end
-  end
-
-  rescue_from ActiveRecord::RecordNotFound do |exception|
-    @quote = (Setting.get(:quotes) || '').split(';').sample
-    @additional_error_info = exception.to_s
-    respond_to do |format|
-      format.html { render 'status/404', status: 404 }
-      format.js { head 404 }
-      format.json { render json: { title: t('status.s_404.header'), message: t('status.s_404.body'), quote: @quote}, status: 404 }
-    end
-  end
-
-  rescue_from ActionController::ParameterMissing do |exception|
-    @additional_error_info = exception.to_s
-    respond_to do |format|
-      format.html { render 'status/400', status: 400 }
-      format.json { render json: { title: t('status.s_400.header'), message: t('status.s_400.body'), quote: @quote}, status: 400 }
-      format.js { head 400 }
-    end
-  end
-
+  rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
+  rescue_from Argu::NotAuthorizedError, with: :handle_not_authorized_error
+  rescue_from Argu::NotLoggedInError, with: :handle_not_logged_in_error
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
+  rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
   rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
-  rescue_from Redis::ConnectionError do |e|
-    Redis.rescue_redis_connection_error(e)
-  end
+  rescue_from Redis::ConnectionError, with: :handle_redis_connection_error
 
   def after_sign_in_path_for(resource)
     if params[:host_url].present? && params[:host_url] == 'argu.freshdesk.com'
@@ -266,6 +195,87 @@ class ApplicationController < ActionController::Base
       end
     end
   end
+
+  def handle_record_not_unique(exception)
+    flash[:warning] = t(:twice_warning)
+    redirect_to :back
+  end
+
+  def handle_not_authorized_error(exception)
+    @_not_authorized_caught = true
+    Rails.logger.error exception
+    action = exception.query.to_s[0..-2]
+    error = exception.try(:verdict) || t("#{exception.record.try(:class_name)}.pundit.#{action}",
+                                         action: "#{exception.record.class}##{action}",
+                                         default: t('access_denied'))
+    error_hash = {
+      type: :error,
+      error_id: 'NOT_AUTHORIZED',
+      message: error
+    }
+    respond_to do |format|
+      format.js do
+        render status: 403,
+               json: error_hash.merge({notifications: [error_hash]})
+      end
+      format.json do
+        render status: 403,
+               json: error_hash.merge({notifications: [error_hash]})
+      end
+      format.html do
+        redirect_location = if defined?(authenticated_context) && authenticated_context.present? && policy(authenticated_context).show?
+                              url_for(authenticated_context)
+                            elsif request.env['HTTP_REFERER'].present? && request.env['HTTP_REFERER'] != request.original_url
+                              request.env['HTTP_REFERER']
+                            else
+                              root_path
+                            end
+        redirect_to redirect_location, alert: error
+      end
+    end
+  end
+
+  def handle_not_logged_in_error(exception)
+    @_not_logged_in_caught = true
+    respond_to do |format|
+      format.js { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.json { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
+      format.html {
+        @resource ||= User.new r: exception.r
+        render 'devise/sessions/new',
+               locals: {
+                 resource: @resource,
+                 resource_name: :user,
+                 devise_mapping: Devise.mappings[:user],
+                 r: exception.r, preview: exception.preview
+               }
+      }
+    end
+  end
+
+  def handle_record_not_found(exception)
+    @quote = (Setting.get(:quotes) || '').split(';').sample
+    @additional_error_info = exception.to_s
+    respond_to do |format|
+      format.html { render 'status/404', status: 404 }
+      format.js { head 404 }
+      format.json { render json: { title: t('status.s_404.header'), message: t('status.s_404.body'), quote: @quote}, status: 404 }
+    end
+  end
+
+  def handle_parameter_missing(exception)
+    @additional_error_info = exception.to_s
+    respond_to do |format|
+      format.html { render 'status/400', status: 400 }
+      format.json { render json: { title: t('status.s_400.header'), message: t('status.s_400.body'), quote: @quote}, status: 400 }
+      format.js { head 400 }
+    end
+  end
+
+  def handle_redis_connection_error(exception)
+    Redis.rescue_redis_connection_error(exception)
+  end
+
 
   # @private
   def intro_urls
