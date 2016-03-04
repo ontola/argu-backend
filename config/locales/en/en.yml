@@ -244,7 +244,9 @@ en:
   welcome_video_close: 'Close this banner'
   welcome_video_dismiss: "Hide this message."
   follow: 'Follow'
+  followed: "We'll keep you posted"
   unfollow: 'Unfollow'
+  unfollowed: 'Item unfollowed'
   seo:
     argument:
       name: 'Argument %{side} %{motiontitle}'

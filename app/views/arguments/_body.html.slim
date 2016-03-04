@@ -9,7 +9,7 @@
       =markdown_to_html(@argument.content)
   =render partial: @argument.creator, locals: {resource: @argument} if @argument.creator.present?
   ul.btns-list--subtle.btns-horizontal.btn-sticky.btn-sticky-bottom.btns-list--grey
-    - if current_user.present? && active_for_user?(:notifications, current_user)
+    - if current_user.present?
       li[data-title=I18n.t('tooltips.follow')]
         =react_component 'ActiveToggle',
                          {url: follows_path(argument_id: @argument.id, format: :json),

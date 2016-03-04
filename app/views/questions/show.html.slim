@@ -20,7 +20,7 @@
       span.hidden[itemprop="answerCount"]= question.motions_count
     =render question.creator, locals= {resource: question}
     ul.btns-list--subtle.btns-sticky.btns-sticky-bottom.btns-horizontal.btns-list--grey-background
-      - if active_for_user?(:notifications, current_user) && current_profile.present?
+      - if current_user.present?
         li[data-title=I18n.t('tooltips.follow')]
           =react_component 'ActiveToggle',
                            {url: follows_path(question_id: question.id, format: :json),

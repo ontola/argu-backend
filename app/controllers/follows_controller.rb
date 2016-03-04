@@ -1,4 +1,5 @@
 class FollowsController < ApplicationController
+  before_action :check_user
   before_action :set_thing
 
   def create
@@ -6,7 +7,7 @@ class FollowsController < ApplicationController
 
     if current_user.follow @thing
       respond_to do |format|
-        format.html { redirect_to :back, notification: '_notifications enabled_' }
+        format.html { redirect_to :back, notification: t('followed') }
         format.js { head 201 }
         format.json { head 201 }
       end
@@ -23,7 +24,7 @@ class FollowsController < ApplicationController
     resp = current_user.stop_following @thing
     if resp == nil || resp
       respond_to do |format|
-        format.html { redirect_to :back, notification: '_notifications disabled_' }
+        format.html { redirect_to :back, notification: t('unfollowed') }
         format.json { head 204 }
       end
     else
@@ -33,7 +34,15 @@ class FollowsController < ApplicationController
     end
   end
 
-private
+  private
+
+  def check_user
+    unless current_user.present?
+      flash[:error] = t('devise.failure.unauthenticated')
+      redirect_to :back
+    end
+  end
+
   def set_thing
     klass = [Forum, Question, Motion, Argument, Comment].detect { |c| params["#{c.name.underscore}_id"] }
     method = klass.respond_to?(:friendly) ? klass.friendly : klass

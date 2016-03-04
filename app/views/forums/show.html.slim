@@ -34,7 +34,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
             li.float-right= link_to settings_forum_path(forum: @forum.url), class: 'btn--transparant'
               span.fa.fa-gear
               span.icon-left= t('forums.settings.title')
-          - if current_user.present? && active_for_user?(:notifications, current_user)
+          - if current_user.present?
             li.float-right.btn--transparant--parent[data-title=I18n.t('tooltips.follow')]
               =react_component 'ActiveToggle',
                                {url: follows_path(forum_id: @forum, format: :json),

@@ -8,7 +8,7 @@
       - if current_user.present? && policy(c).update? || active_for_user?(:notifications, current_user)
         li
           ul= react_component 'HyperDropdown', comment_items(resource, c), {prerender: true}
-      - if current_user.present? && active_for_user?(:notifications, current_user)
+      - if current_user.present?
         li= react_component 'ActiveToggle',
                          {url: follows_path(comment_id: c.id, format: :json),
                           initialState: current_user.following?(c),

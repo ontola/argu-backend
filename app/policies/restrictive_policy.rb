@@ -121,7 +121,7 @@ class RestrictivePolicy
   end
 
   def follow?
-    is_member? || staff?
+    rule is_open?, is_member?, is_moderator?, is_owner?, staff?
   end
 
   def index?
