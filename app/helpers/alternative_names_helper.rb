@@ -122,8 +122,8 @@ module AlternativeNamesHelper
 
   # Singular translation for {Argument}
   def argument_type(naming_object= nil)
-    (naming_object || naming_context).arguments_title_singular ?
-      alternative_arguments?(naming_object) :
+    alternative_arguments?(naming_object) ?
+      (naming_object || naming_context).arguments_title_singular :
       I18n.t('arguments.type')
   end
 

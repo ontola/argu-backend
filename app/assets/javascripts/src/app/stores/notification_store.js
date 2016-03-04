@@ -114,6 +114,8 @@ const notificationStore = Reflux.createStore({
                         notifications.notifications.map((n) => {
                             mutMap.set(n.id, n);
                         });
+                    }).sort(function (a, b) {
+                        return b.created_at - a.created_at;
                     });
                 this.setLastNotification(notifications.lastNotification);
                 this.state.notifications.unread = notifications.unread;
@@ -121,7 +123,7 @@ const notificationStore = Reflux.createStore({
                     .notifications
                     .notifications
                     .sort(function (a, b) {
-                        return a.created_at < b.created_at;
+                        return b.created_at - a.created_at;
                     })
                     .last()
                     .created_at);

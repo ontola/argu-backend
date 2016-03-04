@@ -38,7 +38,9 @@ class GroupResponsesController < AuthorizedController
       respond_to do |format|
         format.html do
           render 'form',
-                 resource: group_response
+                 locals: {
+                   resource: group_response
+                 }
         end
       end
     end

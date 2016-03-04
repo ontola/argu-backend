@@ -80,7 +80,7 @@ export const NotificationDropdown = React.createClass({
         }
         let dropdownContent = <DropdownContent renderLeft={renderLeft}
                                                close={this.close}
-                                               notifications={notificationStore.state.notifications.notifications.toJS()}
+                                               notifications={notificationStore.state.notifications.notifications}
                                                {...adaptedProps}
                                                key='required' />;
 
@@ -173,9 +173,15 @@ export const Notifications = React.createClass({
     },
 
     render: function () {
-        var notifications = this.state.notifications.map((item, i) => {
-            return <NotificationItem key={i} read={item.read} done={this.props.done} {...item} />
-        });
+        var notifications = this
+            .state
+            .notifications
+            .toArray()
+            .sort(function (a, b) {
+                return new Date(b.created_at) - new Date(a.created_at);
+            }).map((item, i) => {
+                return <NotificationItem key={i} read={item.read} done={this.props.done} {...item} />
+            });
 
         var loadMore = <li className="notification-btn">
                 <a href='#' onMouseDownCapture={this.loadMore} data-turbolinks="false">
