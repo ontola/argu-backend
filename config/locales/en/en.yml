@@ -3,6 +3,7 @@
 en:
 #Application
   name: "Argu"
+  language: "English"
   name_phonetic: "\\\'är-(ˌ)gyü\\"
   owner: "Thom van Kalkeren & Joep Meindertsma"
   system_not_allowed: "you do not have clearance for this action."

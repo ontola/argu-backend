@@ -4,6 +4,7 @@ nl:
 #Application
   name: "Argu"
   name_phonetic: "\\\'är-(ˌ)gyü\\"
+  language: "Nederlands"
   owner: "Thom van Kalkeren & Joep Meindertsma"
   system_not_allowed: "je hebt geen toestemming voor deze actie."
   still_in_development: "Nog in ontwikkeling"
