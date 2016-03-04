@@ -145,7 +145,7 @@ Argu::Application.routes.draw do
     patch 'comments' => 'comments#create'
   end
 
-  resources :group_responses, only: [:edit, :update, :destroy], as: :responses
+  resources :group_responses, only: [:show, :edit, :update, :destroy]
   resources :groups,
             path: 'g',
             only: [:create, :update, :edit],

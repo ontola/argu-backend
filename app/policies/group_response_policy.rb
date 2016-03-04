@@ -47,6 +47,14 @@ class GroupResponsePolicy < RestrictivePolicy
     attributes
   end
 
+  def show?
+    if record.motion.project.present?
+      rule Pundit.policy(context, record.motion.project).show?, super
+    else
+      rule forum_policy.show?, super
+    end
+  end
+
   def new?
     create?
   end

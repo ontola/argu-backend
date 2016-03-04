@@ -17,7 +17,7 @@ FactoryGirl.define do
     sequence(:last_name) { |n| "last_name_#{n}" }
 
     trait :staff do
-      after(:create) do |user, evaluator|
+      after(:create) do |user|
         user.profile.add_role :staff
       end
     end
@@ -32,24 +32,31 @@ FactoryGirl.define do
     end
 
     trait :forum_manager do
-      after(:create) do |user, evaluator|
+      after(:create) do
         create(:profile_with_memberships)
       end
     end
 
-    factory :user_with_notification do
-      after(:create) do |user, evaluator|
-        user.notifications.create
+    trait :with_notifications do
+      after(:create) do |user|
+        f = create :forum
+        %i(question motion argument comment vote group_response).each do |type|
+          create :notification,
+                 user: user,
+                 activity: create(:activity,
+                                  "t_#{type}".to_sym,
+                                  forum: f)
+        end
       end
     end
 
     factory :user_with_memberships do
-      after(:create) do |user, evaluator|
-        user.profile.memberships.create(forum: FactoryGirl.create(:forum))
+      after(:create) do |user|
+        user.profile.memberships.create(forum: create(:forum))
       end
 
       factory :user_with_votes do
-        after(:create) do |user, evaluator|
+        after(:create) do |user|
           motion = Motion.find_by(is_trashed: false)
           user.profile.votes.create(voteable: motion, forum: motion.forum, for: :pro)
           trashed = Motion.find_by(is_trashed: true)

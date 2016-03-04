@@ -95,7 +95,7 @@ gem 'redcarpet', '~> 3.3.4'
 
 ##################User management########################
 gem 'devise', '~> 3.5.5'
-gem 'devise_invitable', '~> 1.4.0'
+gem 'devise_invitable', '~> 1.5.5'
 gem 'omniauth', '~> 1.2.2'
 gem 'omniauth-oauth2', '~> 1.2.0'
 gem 'omniauth-facebook', '~> 2.0.1'
@@ -134,6 +134,7 @@ group :development, :test do
   gem 'mailcatcher', '~> 0.6.2'
   gem 'spring', '~> 1.6.3'
   gem 'spring-commands-rspec'
+  gem 'spring-commands-testunit'
   gem 'brakeman', '~> 3.2.1'
 end
 

@@ -21,6 +21,9 @@ en:
     comments:
       create: "Replied to a %{thing}"
       create_your: "Replied to your %{thing}"
+    group_responses:
+      create: "Posted a %{type} as a %{group_singular} for a %{thing}"
+      create_your: "Posted a %{type} as a %{group_singular} for your %{thing}"
     ui:
       load_more: "Load more"
       no_more_artivities: "No more activities"

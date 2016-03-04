@@ -1,6 +1,6 @@
 
 class GroupResponse < ActiveRecord::Base
-  include ArguBase, Parentable
+  include ArguBase, Parentable, PublicActivity::Model
 
   belongs_to :group
   belongs_to :forum
@@ -10,6 +10,7 @@ class GroupResponse < ActiveRecord::Base
   belongs_to :profile
   # Physical creator of the GroupReponse (the one responsible).
   belongs_to :publisher, class_name: 'User'
+  has_many :activities, as: :trackable, dependent: :destroy
 
   parentable :motion, :forum
 

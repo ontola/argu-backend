@@ -1,7 +1,7 @@
 /* globals NotificationActions */
 import { userIdentityToken, statusSuccess, json, safeCredentials } from '../lib/helpers';
 import Reflux from 'reflux';
-import OrderedMap from '../lib/OrderedMap'
+import { OrderedMap } from 'immutable';
 
 
 window.NotificationActions = Reflux.createActions({
@@ -106,10 +106,27 @@ const notificationStore = Reflux.createStore({
                 if (this.state.notifications.lastNotification && Date.parse(notifications.lastNotification) > this.state.notifications.lastNotification && notifications.notifications[0].read === false) {
                     document.getElementById('notificationSound').play();
                 }
-                this.state.notifications.notifications.merge('created_at', notifications.notifications);
+                this.state.notifications.notifications = this
+                    .state
+                    .notifications
+                    .notifications
+                    .withMutations(mutMap => {
+                        notifications.notifications.map((n) => {
+                            mutMap.set(n.id, n);
+                        });
+                    }).sort(function (a, b) {
+                        return b.created_at - a.created_at;
+                    });
                 this.setLastNotification(notifications.lastNotification);
                 this.state.notifications.unread = notifications.unread;
-                this.state.notifications.oldestNotification = new Date(this.state.notifications.notifications.get(this.state.notifications.notifications.length - 1).created_at);
+                this.state.notifications.oldestNotification = new Date(this.state
+                    .notifications
+                    .notifications
+                    .sort(function (a, b) {
+                        return b.created_at - a.created_at;
+                    })
+                    .last()
+                    .created_at);
                 this.state.notifications.notificationCount = notifications.notificationCount;
                 // Pass on to listeners
                 this.trigger(this.state.notifications);
