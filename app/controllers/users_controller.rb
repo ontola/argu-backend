@@ -145,7 +145,29 @@ class UsersController < ApplicationController
     end
   end
 
+  def language
+    authorize :static_page, :home?
+    locale = permit_locale_params
+    if I18n.available_locales.include?(locale.to_sym)
+      success = if current_user.blank?
+        cookies['locale'] = locale
+      else
+        current_user.update(language: locale)
+      end
+
+      respond_to do |format|
+        flash[:error] = t('errors.general') unless success.present?
+        format.html { redirect_to :back }
+      end
+    else
+      Bugsnag.notify(RuntimeError.new("Invalid locale #{params[:locale]} (#{locale})"))
+      flash[:error] = t('errors.general')
+      redirect_to :back
+    end
+  end
+
   private
+
   def get_user_or_redirect(redirect = nil)
     @user = current_user
     if current_user.blank?
@@ -153,6 +175,10 @@ class UsersController < ApplicationController
       raise Argu::NotLoggedInError.new(t('devise.failure.unauthenticated'),
                                        redirect: redirect)
     end
+  end
+
+  def permit_locale_params
+    params.require(:locale)
   end
 
   def permit_params
