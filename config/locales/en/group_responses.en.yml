@@ -2,7 +2,7 @@
 
 en:
   group_responses:
-    type: "Item"
+    type: "reaction"
     new_btn: "Add %{type}"
     header:
       pro: "Agree"

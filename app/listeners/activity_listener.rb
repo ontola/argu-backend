@@ -36,6 +36,18 @@ class ActivityListener
     a.commit
   end
 
+  def create_group_response_successful(group_response)
+    a = CreateActivity.new(
+      group_response.creator,
+      trackable: group_response,
+      key: 'group_response.create',
+      owner: group_response.creator,
+      forum: group_response.forum,
+      recipient: group_response.motion)
+    a.subscribe(NotificationListener.new)
+    a.commit
+  end
+
   def create_motion_successful(motion)
     recipient = motion.question || motion.forum
     a = CreateActivity.new(

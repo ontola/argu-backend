@@ -2,7 +2,7 @@
 
 nl:
   group_responses:
-    type: "Item"
+    type: "reactie"
     new_btn: "%{type} toevoegen"
     header:
       pro: "Voor"

@@ -10,7 +10,7 @@ module ActivityStringHelper
     your = your(activity.trackable, activity.recipient)
 
     # noinspection RubyCaseWithoutElseBlockInspection
-    case activity.trackable
+    string = case activity.trackable
       when Question
         as_for_questions_create activity.trackable, your, embedded_link
       when Motion
@@ -21,7 +21,10 @@ module ActivityStringHelper
         as_for_comments_create activity.trackable, your, embedded_link
       when Vote
         as_for_votes_create activity, prepared_owner_string, your, embedded_link
-    end.html_safe
+      when GroupResponse
+        as_for_group_response activity.trackable, your, embedded_link
+    end
+    string.html_safe
   end
 
   # :nodoc:
@@ -58,6 +61,15 @@ module ActivityStringHelper
     thing = embedded_link ? link_to(type_for(commentable), commentable, title: commentable.display_name) : type_for(commentable)
     activity_string = I18n.t("activities.comments.create#{your}", thing: thing)
     "#{owner_string(comment.creator, embedded_link)} #{activity_string}"
+  end
+
+  def as_for_group_response(group_response, your, embedded_link)
+    thing = embedded_link ? link_to(type_for(group_response.motion), group_response.motion, title: group_response.motion.display_name) : type_for(group_response.motion)
+    activity_string = I18n.t("activities.group_responses.create#{your}",
+                             type: I18n.t('group_responses.type'),
+                             group_singular: group_response.group.name_singular,
+                             thing: thing)
+    "#{owner_string(group_response.creator, embedded_link)} #{activity_string}"
   end
 
   # :nodoc:

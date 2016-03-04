@@ -21,6 +21,9 @@ nl:
     comments:
       create: "heeft gereageerd op een %{thing}"
       create_your: "heeft gereageerd op jouw %{thing}"
+    group_responses:
+      create: "heeft als %{group_singular} een %{type} geplaatst op een %{thing}"
+      create_your: "heeft als %{group_singular} een %{type} geplaatst op jouw %{thing}"
     ui:
       load_more: "Laad meer"
       no_more_artivities: "Geen oudere activiteiten"

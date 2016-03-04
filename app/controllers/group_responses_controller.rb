@@ -18,21 +18,31 @@ class GroupResponsesController < AuthorizedController
     motion = Motion.find(params[:motion_id])
     authorize motion, :show?
     group = policy_scope(motion.forum.groups).discussion.find(params[:group_id])
-    @group_response = motion.group_responses.new group: group,
-                                                 forum: group.forum,
-                                                 profile: current_profile,
-                                                 publisher: current_user,
-                                                 side: side_param
-    @group_response.attributes= permit_params
-    authorize @group_response, :create?
-
-    respond_to do |format|
-      if @group_response.save
-        format.html { redirect_to motion_url(@group_response.motion) }
-      else
-        format.html { render 'form' }
+    @cgr = CreateGroupResponse.new current_profile,
+                                   permit_params.merge({
+                                     forum: authenticated_context,
+                                     publisher: current_user,
+                                     profile: current_profile,
+                                     group: group,
+                                     motion: motion,
+                                     side: side_param
+                                   })
+    authorize @cgr.resource, :create?
+    @cgr.subscribe(ActivityListener.new)
+    @cgr.on(:create_group_response_successful) do |group_response|
+      respond_to do |format|
+        format.html { redirect_to motion_url(group_response.motion) }
       end
     end
+    @cgr.on(:create_group_response_failed) do |group_response|
+      respond_to do |format|
+        format.html do
+          render 'form',
+                 resource: group_response
+        end
+      end
+    end
+    @cgr.commit
   end
 
   def edit
