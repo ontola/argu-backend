@@ -76,7 +76,7 @@ gem 'rails3-jquery-autocomplete', '~> 1.0.14'
 gem 'carrierwave', '~> 0.10.0'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
 gem 'carrierwave-vips'
-gem 'rmagick', '2.14.0'
+#gem 'rmagick', '2.14.0'
 #gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
 gem 'carrierwave-aws'
 gem 'sidekiq', '~> 4.1.0'

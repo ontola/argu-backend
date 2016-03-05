@@ -2,7 +2,7 @@
   - if strip_tags(markdown_to_html(content)).length < 220
     = markdown_to_html(content)
   - else
-    input[type="checkbox" value="selected" id=id class="tooltip-input"]
-    label[for=id class="tooltip-label" data-readmore=t('read_more') data-readless=t('read_less')]
-    .tooltip-content[role="tooltip" id="tooltipID"]
+    input[type="checkbox" value="selected" id=id class="collapsible-input"]
+    label[for=id class="collapsible-label"]
+    .collapsible-content[id="tooltipID"]
       = markdown_to_html(content)

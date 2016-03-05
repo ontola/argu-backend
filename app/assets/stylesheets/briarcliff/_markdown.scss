@@ -72,7 +72,7 @@
   }
 }
 
-.tooltip-label {
+.collapsible-label {
   cursor: pointer;
   position: absolute;
   bottom: 0;
@@ -82,7 +82,6 @@
   padding: 0;
   z-index: 1;
   &:after {
-    //content: attr(data-readmore);
     content: "";
     width: 0;
     height: 0;
@@ -116,42 +115,60 @@
   }
 }
 
-.tooltip-input {
+.collapsible-input {
   display: none;
 }
 
-.tooltip-content {
+.collapsible-content {
   margin-bottom: 0;
-  @include transition(max-height .2s);
 }
 
-.tooltip-input:not(checked) ~ .tooltip-content {
+.collapsible-input:not(checked) ~ .collapsible-content {
   max-height: 6em;
   overflow: hidden;
 }
 
-.tooltip-input:checked ~ .tooltip-content {
+.collapsible-input:checked ~ .collapsible-content {
   max-height: none;
   padding-bottom: 1em;
 }
 
-.tooltip-input:checked ~ .tooltip-label {
+.collapsible-input:checked ~ .collapsible-label {
   max-height: none;
 
   &:before {
-    height: 1em;
+    height: 2.2em;
   }
 
   &:after {
-    //display: none;
-    //content: attr(data-readless);
     @include transform(rotate(0deg));
   }
 }
 
-.tooltip-label:hover {
+.collapsible-label:hover {
   &:after {
-    text-decoration: underline;
     border-color: transparent transparent $g3 transparent;
   }
+
+  &:before {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,f7f7f7+100&0.1+0,1+70,1+100 */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0.1) 0%, rgba(249,249,249,1) 70%, rgba(247,247,247,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0.1) 0%,rgba(249,249,249,1) 70%,rgba(247,247,247,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(255,255,255,0.1) 0%,rgba(249,249,249,1) 70%,rgba(247,247,247,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1affffff', endColorstr='#f7f7f7',GradientType=0 ); /* IE6-9 */
+  }
+}
+
+.collapsible-label:active {
+  &:after {
+    border-color: transparent transparent $g4 transparent;
+  }
+
+  &:before {
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,e8e8e8+100&0.1+0,1+70,1+100 */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0.1) 0%, rgba(239,239,239,1) 70%, rgba(232,232,232,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0.1) 0%,rgba(239,239,239,1) 70%,rgba(232,232,232,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(255,255,255,0.1) 0%,rgba(239,239,239,1) 70%,rgba(232,232,232,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1affffff', endColorstr='#e8e8e8',GradientType=0 ); /* IE6-9 */
+   }
 }
