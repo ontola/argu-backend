@@ -22,7 +22,7 @@
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =contextual_link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title
-    = render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier}
+    =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier}
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_pro_light.each do |argument|
