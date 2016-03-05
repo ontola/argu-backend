@@ -30,6 +30,19 @@ module ApplicationHelper
     end
   end
 
+  def policy_with_tenant!(tenant, record)
+    uc = UserContext.new(
+      current_user,
+      current_profile,
+      session,
+      tenant,
+      {
+        platform_open: platform_open?,
+        within_user_cap: within_user_cap?
+      })
+    Pundit.policy!(uc, record)
+  end
+
   def user_identity_token(user)
     sign_payload({
                      user: user.id,

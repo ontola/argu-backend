@@ -5,7 +5,7 @@
     =render partial: 'arguments/shr', locals: {model: model, vote: model.votes.find_by(voter: current_profile)}
     p[class='wrap-normal' itemprop="text"]
       ==safe_truncated_text(model.content, contextual_link_to(t('read_more'), argument_path(model)), 225)
-  -if policy(Comment).index?
+  -if policy_with_tenant!(model.forum, Comment).index?
     - top_comment = model.top_comment
     - if top_comment.present?
       =link_to argument_path(model) + '#commentstitle'
