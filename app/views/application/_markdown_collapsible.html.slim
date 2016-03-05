@@ -1,8 +1,8 @@
 .markdown.markdown--preview[itemprop="text"]
   - if strip_tags(markdown_to_html(content)).length < 220
-    = markdown_to_html(content)
+    =markdown_to_html(content)
   - else
-    input[type="checkbox" value="selected" id=id class="collapsible-input"]
-    label[for=id class="collapsible-label"]
-    .collapsible-content[id="tooltipID"]
-      = markdown_to_html(content)
+    input.collapsible-input[type="checkbox" value="selected" id="collapse-#{identifier}"]
+    label.collapsible-label[for="collapse-#{identifier}"]
+    .collapsible-content
+      =markdown_to_html(content)

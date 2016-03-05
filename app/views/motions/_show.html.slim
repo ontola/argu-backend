@@ -23,7 +23,7 @@
     =contextual_link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title
     /p.wrap-normal[itemprop="text"]== safe_truncated_text(model.content, contextual_link_to(t('read_more'), motion_path(model)), 170)
-    = render partial: 'application/markdown_collapsible', locals: {content: model.content, id: model.id}
+    = render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier}
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_pro_light.each do |argument|
