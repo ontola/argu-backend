@@ -73,7 +73,7 @@ class ProjectPolicy < RestrictivePolicy
   private
 
   def forum_policy
-    Pundit.policy(context, record.forum)
+    Pundit.policy(context, record.try(:forum) || context.context_model)
   end
 
 end
