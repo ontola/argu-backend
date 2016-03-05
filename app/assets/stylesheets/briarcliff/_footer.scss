@@ -31,22 +31,6 @@ footer {
   @include bp-large {
     height: auto;
   }
-  h3 {
-    color: white;
-  }
-  a {
-    color: $g2;
-    @include transition(.2s);
-    &:hover{
-      color: $g1;
-    }
-    &:hover span {
-      color: $g1;
-    }
-  }
-  span, p {
-    color: $g2;
-  }
 }
 
 .footer-list {
@@ -64,12 +48,29 @@ footer {
   }
 }
 
+.footer-list li a, .footer-link {
+  color: $g2;
+  @include transition(.2s);
+  &:hover {
+    color: $g1;
+  }
+  &:hover span {
+    color: $g1;
+  }
+}
+
 .footer-heading {
   letter-spacing: .1em;
   text-transform: uppercase;
   margin-bottom: .8em;
   margin-top: .7em;
   font-size: 1.2em;
+  color: white;
+}
+
+.footer-heading--language {
+  font-size: 1em;
+  color: $g0;
 }
 
 .footer-bottom {
@@ -91,5 +92,26 @@ footer {
   font-size: 1.5em;
   a {
     margin-right: .3em;
+  }
+}
+
+.footer-language-dropdown {
+
+  display: inline-block;
+
+  .dropdown-trigger {
+    padding: 0.3em 0.4em;
+    background-color: $g3;
+    display: block;
+  }
+
+  .dropdown-trigger span {
+    color: white;
+    font-weight: bold;
+  }
+
+  .dropdown-trigger img {
+    width: 1em;
+    border-radius: 999px;
   }
 }

@@ -1,7 +1,7 @@
 module LanguageHelper
   def language_dropdown_items
     {
-      title: I18n.t(:language, locale: I18n.locale),
+      title: I18n.locale.upcase,
       image: { url: path_to_image("flags/#{I18n.locale}"), title: I18n.t(:language, locale: I18n.locale)},
       sections: [
           {

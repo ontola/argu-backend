@@ -6,6 +6,10 @@ footer
     li= link_to t('forums.show_open'), discover_forums_path
     li= link_to 'Nederland', forum_path('nederland')
     li= link_to 'Argu Feedback', forum_path('feedback')
+    li
+      h4.footer-heading.footer-heading--language= t('language_language')
+    .footer-language-dropdown
+      = react_component 'HyperDropdown', language_dropdown_items, {prerender: true}
   ul.footer-list
     li
       h3.footer-heading= t('about.info')
@@ -32,11 +36,8 @@ footer
           span.fa.fa-google-plus
         a[href="https://www.youtube.com/playlist?list=PLkKmFghZIx4_rOwub0YKx6njRmDrwj8TX"]
           span.fa.fa-youtube
-      .footer-language-dropdown
-        = react_component 'HyperDropdown', language_dropdown_items, {prerender: true}
   .footer-bottom
-    span= t('site.copyright')
+    /span= t('site.copyright')
+    span= link_to t('legal.policy'), policy_path, class: 'footer-link'
     span= ' | '
-    span= link_to t('legal.policy'), policy_path
-    span= ' | '
-    span= link_to t('legal.privacy'), privacy_path
+    span= link_to t('legal.privacy'), privacy_path, class: 'footer-link'
