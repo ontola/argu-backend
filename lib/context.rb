@@ -89,7 +89,7 @@ class Context
   # Only returns a value when the model has been saved
   def polymorphic_tuple
     if model.present?
-      [model.class.name, model.id.to_s] if model.persisted?
+      [model.class.name, model.id.to_s] if model.is_a?(ActiveRecord::Base) && model.persisted?
     end
   end
 
