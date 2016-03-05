@@ -44,9 +44,10 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
                                {prerender: true}
   - if policy(@forum).show?
     .btns-center-container
-      =link_to new_forum_discussion_path(@forum), class: 'btn btn--pro new-discussion'
-        span.fa.fa-plus
-        span.icon-left= t('discussions.new.title')
+      -if can_start_discussion?
+        =link_to new_forum_discussion_path(@forum), class: 'btn btn--pro new-discussion'
+          span.fa.fa-plus
+          span.icon-left= t('discussions.new.title')
       =render partial: 'filter_and_sort'
     .grid
       .box.box-grid-sizer
