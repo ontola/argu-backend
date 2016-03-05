@@ -38,6 +38,46 @@ RSpec.feature 'Adam west', type: :feature do
              context_id: freetown.id)
     end
   end
+  let!(:f_rule_q_c) do
+    create(:rule,
+           model_type: 'Question',
+           model_id: nil,
+           action: :create?,
+           role: 'member',
+           permit: false,
+           context_type: 'Forum',
+           context_id: freetown.id)
+  end
+  let!(:f_rule_q_n) do
+    create(:rule,
+           model_type: 'Question',
+           model_id: nil,
+           action: :new?,
+           role: 'member',
+           permit: false,
+           context_type: 'Forum',
+           context_id: freetown.id)
+  end
+  let!(:f_rule_m_nwq) do
+    create(:rule,
+           model_type: 'Motion',
+           model_id: nil,
+           action: :new_without_question?,
+           role: 'member',
+           permit: false,
+           context_type: 'Forum',
+           context_id: freetown.id)
+  end
+  let!(:f_rule_m_cwq) do
+    create(:rule,
+           model_type: 'Motion',
+           model_id: nil,
+           action: :create_without_question?,
+           role: 'member',
+           permit: false,
+           context_type: 'Forum',
+           context_id: freetown.id)
+  end
   let!(:question) do
     create(:question,
            forum: freetown)
@@ -155,6 +195,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(current_path).to eq motion_path(motion)
     expect(page).to have_content(motion.title)
     expect(page).to have_content(motion.content)
+    expect(page).not_to have_content('START EEN NIEUWE DISCUSSIE')
 
     click_link question.title
     expect(current_path).to eq question_path(question)
@@ -194,10 +235,11 @@ RSpec.feature 'Adam west', type: :feature do
     # Anti-test
     arg = create(:argument)
 
-    visit motion_path(argument.motion)
+    visit motion_path(arg.motion)
 
     expect(page).to have_content(arg.title)
-    expect(page).not_to have_content('REAGEER')
+    expect(page).to have_content('REAGEER')
+    expect(page).to have_content('START EEN NIEUWE DISCUSSIE')
 
     c = create(:comment,
                commentable: arg)
@@ -223,7 +265,6 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).not_to have_content('Reageer')
     expect(page).not_to have_content('Reacties')
   end
-
 
   ####################################
   # As Manager
