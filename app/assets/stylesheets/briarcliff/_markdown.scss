@@ -2,6 +2,7 @@
 @import "mixins";
 
 .markdown{
+  position: relative;
 
   .blocks & {
     text-align: left;
@@ -78,10 +79,24 @@
   width: 100%;
   left: 0;
   right: 0;
-  padding-left: 1.6em;
+  padding: 0;
   z-index: 1;
   &:after {
-    content: attr(data-readmore);
+    //content: attr(data-readmore);
+    content: "";
+    width: 0;
+    height: 0;
+    bottom: .7em;
+    @include transform(rotate(180deg));
+    @include transition(border-width .2s, border-color);
+    border-style: solid;
+    border-width: 0em .7em .7em .7em;
+    border-color: transparent transparent $g2 transparent;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   &:before{
@@ -91,13 +106,13 @@
     height: 4em;
     left: 0;
     right: 0;
-    bottom: 1.6em;
+    bottom: 0em;
     z-index: -1;
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&1+0,0+100;White+to+Transparent */
-    background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#00ffffff',GradientType=0 ); /* IE6-9 */
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ffffff+0,ffffff+100&0+0,1+70,1+100 */
+    background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 70%, rgba(255,255,255,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 70%,rgba(255,255,255,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 70%,rgba(255,255,255,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 ); /* IE6-9 */
   }
 }
 
@@ -106,32 +121,37 @@
 }
 
 .tooltip-content {
-  margin-bottom: 1.5em;
+  margin-bottom: 0;
   @include transition(max-height .2s);
 }
 
 .tooltip-input:not(checked) ~ .tooltip-content {
-  max-height: 4.9em;
+  max-height: 6em;
   overflow: hidden;
 }
 
 .tooltip-input:checked ~ .tooltip-content {
   max-height: none;
+  padding-bottom: 1em;
 }
+
 .tooltip-input:checked ~ .tooltip-label {
   max-height: none;
 
   &:before {
-    display: none;
+    height: 1em;
   }
 
   &:after {
-    content: attr(data-readless);
+    //display: none;
+    //content: attr(data-readless);
+    @include transform(rotate(0deg));
   }
 }
 
 .tooltip-label:hover {
   &:after {
     text-decoration: underline;
+    border-color: transparent transparent $g3 transparent;
   }
 }
