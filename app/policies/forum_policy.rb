@@ -57,7 +57,7 @@ class ForumPolicy < RestrictivePolicy
     # @note Trickles up
     def is_manager?
       _mems = user.profile if user
-      [(manager if user && user.profile.memberships.where(forum: record, role: Membership.roles[:manager]).count > 0), is_owner?].compact.presence
+      [(manager if user && user.profile.managerships.where(forum: record).count > 0), is_owner?].compact.presence
     end
 
     # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.

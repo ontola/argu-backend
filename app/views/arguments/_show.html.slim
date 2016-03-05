@@ -1,4 +1,3 @@
-- top_comment = model.top_comment
 .box.box-with-btns.argument[id="#{model.id.present? ? 'argument_' + model.id.to_s : ''}" itemscope itemtype="http://schema.org/CreativeWork/Argument" class="side-#{model.pro ? 'pro' : 'con'}#{' trashed' if model.is_trashed}"]
   section
     =contextual_link_to argument_path(model)
@@ -6,15 +5,17 @@
     =render partial: 'arguments/shr', locals: {model: model, vote: model.votes.find_by(voter: current_profile)}
     p[class='wrap-normal' itemprop="text"]
       ==safe_truncated_text(model.content, contextual_link_to(t('read_more'), argument_path(model)), 225)
-  - if top_comment.present?
-    =link_to argument_path(model) + '#commentstitle'
-      section.top-comment[class=status_classes_for(top_comment)]
-        p.wrap-normal
-          =top_comment.is_trashed? ? '[DELETED]' : HTML_Truncator.truncate(markdown_to_plaintext(top_comment.body), 150, {length_in_chars: true, ellipsis: (' ...')})
-        .read-more
-          span.icon-right= model.comments_count.to_s
-          span.fa.fa-comments
-  - else
-    =contextual_link_to argument_path(model), class: 'btn-sticky btns-sticky-bottom read-more'
-      span.icon-right= t('reply')
-      span.fa.fa-comments
+  -if policy(Comment).index?
+    - top_comment = model.top_comment
+    - if top_comment.present?
+      =link_to argument_path(model) + '#commentstitle'
+        section.top-comment[class=status_classes_for(top_comment)]
+          p.wrap-normal
+            =top_comment.is_trashed? ? '[DELETED]' : HTML_Truncator.truncate(markdown_to_plaintext(top_comment.body), 150, {length_in_chars: true, ellipsis: (' ...')})
+          .read-more
+            span.icon-right= model.comments_count.to_s
+            span.fa.fa-comments
+    - else
+      =contextual_link_to argument_path(model), class: 'btn-sticky btns-sticky-bottom read-more'
+        span.icon-right= t('reply')
+        span.fa.fa-comments

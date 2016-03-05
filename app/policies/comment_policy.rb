@@ -37,6 +37,10 @@ class CommentPolicy < RestrictivePolicy
     update?
   end
 
+  def index?
+    rule is_open?, has_access_token?, is_member?, is_manager?, is_owner?
+  end
+
   def new?
     rule is_open?, create?
   end

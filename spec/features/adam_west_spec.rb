@@ -26,6 +26,18 @@ RSpec.feature 'Adam west', type: :feature do
            context_type: 'Forum',
            context_id: freetown.id)
   end
+  let!(:f_rule_c) do
+    %w(index? show? create? new?).each do |action|
+      create(:rule,
+             model_type: 'Comment',
+             model_id: nil,
+             action: action,
+             role: 'member',
+             permit: false,
+             context_type: 'Forum',
+             context_id: freetown.id)
+    end
+  end
   let!(:question) do
     create(:question,
            forum: freetown)
@@ -39,6 +51,11 @@ RSpec.feature 'Adam west', type: :feature do
     create(:argument,
            motion: motion,
            forum: freetown)
+  end
+  let(:comment) do
+    create :comment,
+           commentable: argument,
+           forum: freetown
   end
 
   ####################################
@@ -68,6 +85,13 @@ RSpec.feature 'Adam west', type: :feature do
 
     expect(page).not_to have_content(freetown.display_name)
     expect(current_path).to eq(forum_path(default))
+  end
+
+  scenario 'guest should not see comment section' do
+    visit argument_path(argument)
+
+    expect(page).not_to have_content('Reageer')
+    expect(page).not_to have_content('Reacties')
   end
 
   ####################################
@@ -105,6 +129,15 @@ RSpec.feature 'Adam west', type: :feature do
     expect(current_path).to eq(forum_path(default))
   end
 
+  scenario 'user should not see comment section' do
+    login_as(user, scope: :user)
+
+    visit argument_path(argument)
+
+    expect(page).not_to have_content('Reageer')
+    expect(page).not_to have_content('Reacties')
+  end
+
   ####################################
   # As Member
   ####################################
@@ -139,6 +172,58 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).not_to have_content(freetown.display_name)
     expect(current_path).to eq(forum_path(default))
   end
+
+  scenario 'member should not see comment section' do
+    login_as(member, scope: :user)
+
+    visit argument_path(argument)
+
+    expect(page).not_to have_content('Reageer')
+    expect(page).not_to have_content('Reacties')
+  end
+
+  scenario 'member should not see top comment' do
+    login_as(member, scope: :user)
+
+    visit motion_path(motion)
+
+    expect(page).to have_content(argument.title)
+    expect(page).not_to have_content(comment.body)
+    expect(page).not_to have_content('REAGEER')
+
+    # Anti-test
+    arg = create(:argument)
+
+    visit motion_path(argument.motion)
+
+    expect(page).to have_content(arg.title)
+    expect(page).not_to have_content('REAGEER')
+
+    c = create(:comment,
+               commentable: arg)
+
+    visit motion_path(arg.motion)
+    expect(page).to have_content(arg.title)
+    expect(page).to have_content(c.body)
+  end
+
+  scenario 'member should not post create comment' do
+    login_as(member, scope: :user)
+
+    visit argument_path(argument)
+
+    expect(page).not_to have_content('Reageer')
+    expect(page).not_to have_content('Reacties')
+  end
+
+
+  scenario 'guest should not see comment section' do
+    visit argument_path(argument)
+
+    expect(page).not_to have_content('Reageer')
+    expect(page).not_to have_content('Reacties')
+  end
+
 
   ####################################
   # As Manager
@@ -178,5 +263,14 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(freetown.display_name)
     expect(page).to have_content(freetown.bio)
     expect(current_path).to eq(forum_path(freetown))
+  end
+
+  scenario 'manager should not see comment section' do
+    login_as(manager, scope: :user)
+
+    visit argument_path(argument)
+
+    expect(page).not_to have_content('Reageer')
+    expect(page).not_to have_content('Reacties')
   end
 end
