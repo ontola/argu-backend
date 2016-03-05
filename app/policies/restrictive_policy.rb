@@ -70,7 +70,7 @@ class RestrictivePolicy
         # Get the tuples of the entire parent chain
         cc = Context.new(record).map(&:polymorphic_tuple).compact
         # Match them against the set of stepups within the forum
-        moderator if forum_stepups.where("(record_type, record_id) IN #{"(#{cc.map { |t| "('#{t[0]}', #{t[1]})" }.join(', ')})"}").presence
+        moderator if cc.presence && forum_stepups.where("(record_type, record_id) IN #{"(#{cc.map { |t| "('#{t[0]}', #{t[1]})" }.join(', ')})"}").presence
       end
     end
 
