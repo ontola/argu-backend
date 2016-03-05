@@ -33,6 +33,7 @@ nl:
   show_type: "%{type} weergeven"
   settings_type: "%{type}instellingen"
   read_more: "Lees meer"
+  read_less: "Inklappen"
   collapse: "Inklappen"
   update: "Bijwerken"
   update_type: "%{type} bijwerken"

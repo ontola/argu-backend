@@ -494,6 +494,7 @@ h1 + .btn {
   font-size: .8em;
   position: absolute;
   text-transform: uppercase;
+  z-index: 1;
   @include transition(.2s);
   span {
     @include transition(.2s);

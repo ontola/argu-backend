@@ -191,4 +191,11 @@ module ApplicationHelper
     _html
   end
 
+  def truncated_html(contents, url, cutting_point = 220)
+    adjusted_content = markdown_to_html(contents)
+    _html = HTML_Truncator.truncate(adjusted_content, cutting_point, {length_in_chars: true, ellipsis: ('... ') })
+    _html << url if adjusted_content.length > cutting_point
+    _html
+  end
+
 end

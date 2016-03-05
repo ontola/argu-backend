@@ -33,6 +33,7 @@ en:
   show_type: "Show %{type}"
   settings_type: "%{type}settings"
   read_more: "Read more"
+  read_less: "Read less"
   collapse: "Collapse"
   update: "Update"
   update_type: "Update %{type} "
