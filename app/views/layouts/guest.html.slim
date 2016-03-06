@@ -14,7 +14,6 @@ html[class="no-js"]
     link[rel="copyright" content="#{t('site.copyright')}"]
     - if active_for_user?('inspectlet', current_user)
       =render partial:'external/inspectlet'
-    =render partial: 'external/mixpanel'
   body.no-js
     #fb-root
     =render 'guest/navbar', permanent: 'navbar'

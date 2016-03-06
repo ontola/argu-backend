@@ -17,8 +17,6 @@ html[class="no-js"]
     link[rel="copyright" content="#{t('site.copyright')}"]
     - if active_for_user?('inspectlet', current_user)
       =render partial: 'external/inspectlet'
-    - if active_for_user?('mixpanel', current_user)
-      =render partial: 'external/mixpanel'
   body
     - if current_user && current_user.profile.has_role?(:staff)
       =render partial: 'staff_sign'
