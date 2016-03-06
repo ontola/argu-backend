@@ -75,11 +75,12 @@
 }
 
 .cover-behind {
-  position: absolute;
-  top: 0;
+  position: relative;
+  height: 0;
   width: 100%;
   opacity: .5;
   z-index: -1;
+  margin-bottom: 2em;
 }
 
 .cover-hero-text {
@@ -180,6 +181,14 @@
   background-color: white;
 }
 
+.cover--profile {
+  opacity: 1;
+  margin-bottom: 8em;
+  .cover-image {
+    background-color: $blu;
+  }
+}
+
 .cover-oneliner {
   max-width: 51em;
   margin-left: 0.8em;
@@ -261,10 +270,6 @@
 
 .cover-image-empty {
   background-color: $g2;
-}
-
-.cover-in-box {
-
 }
 
 .cover--forum {

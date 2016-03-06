@@ -57,10 +57,12 @@
   }
 }
 
+$profile-big-width: 7em;
+
 // Deprecated
 .profile-picture {
-  width: 8em;
-  height: 8em;
+  width: $profile-big-width;
+  height: $profile-big-width;
   position: relative;
   @include border-radius(999px);
 
@@ -87,9 +89,10 @@
 }
 
 .profile-picture--big{
-  display: block;
-  margin: auto;
-  margin-bottom: 2em;
+  display: inline-block;
+  margin-bottom: -1em;
+  z-index: 1;
+  border: solid 4px white;
 }
 
 .profile-picture--medium{
@@ -162,4 +165,20 @@
       margin-bottom: 0;
     }
   }
+}
+
+.profile-header {
+  position: absolute;
+  left: $profile-big-width;
+  padding-left: 1em;
+  bottom: 0;
+  h1 {
+    color: white;
+    @include text-shadow;
+  }
+}
+
+.profile-top-container {
+  margin-top: 2em;
+  position: relative;
 }

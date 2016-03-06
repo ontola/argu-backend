@@ -7,18 +7,19 @@
   =render partial: 'manage_bar', locals: {resource: @page, active: :show} if policy(@page).update?
 - else
   =render partial: 'profiles/profile_bar', locals: {resource: @profile, active: :show} if policy(@profile).update?
-.cover-behind
+.cover-behind.cover--profile
   .cover-image[style="background-image: url('#{@profile.cover_photo.url(:cover)}'); "]
 .col-1
-  =image_tag @profile.profile_photo.url(:avatar), container_class: 'profile', class: 'profile-picture profile-picture--big'
+  .profile-top-container
+    =image_tag @profile.profile_photo.url(:avatar), container_class: 'profile', class: 'profile-picture profile-picture--big'
+    .profile-header
+      h1= @profile.display_name
   .profile[data-intro= t('intro.profile.show', name: @profile.display_name)]
     .box
       section
-        h1
-          =@profile.display_name
         - if @profile.roles.pluck(:name).include?('staff')
           span.role Staff
-        p.quote= @profile.about
+        p= @profile.about
         - if @profile.forums.present?
           label Forums:
           ul.icon-list.margin-bottom
