@@ -83,6 +83,8 @@
   z-index: 1;
   font-size: 1em;
 
+  @include no-tap-highlight;
+
   &:after {
     content: "";
     width: 0;
