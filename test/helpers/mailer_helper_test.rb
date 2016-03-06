@@ -73,31 +73,31 @@ class MailerHelperTest < ActionView::TestCase
   end
 
   test 'notification_subject should return correct sentences for questions' do
-    assert_equal "Nieuwe uitdaging: '#{question.resource.display_name}' door #{creator.first_name} #{creator.last_name}",
+    assert_equal "New challenge: '#{question.resource.display_name}' by #{creator.first_name} #{creator.last_name}",
                  notification_subject(question)
   end
 
   test 'notification_subject should return correct sentences for motions' do
-    assert_equal "Nieuw idee: '#{motion.resource.display_name}' door #{creator.first_name} #{creator.last_name}",
+    assert_equal "New idea: '#{motion.resource.display_name}' by #{creator.first_name} #{creator.last_name}",
                  notification_subject(motion)
 
-    assert_equal "Nieuw idee: '#{motion_question.resource.display_name}' door #{creator.first_name} #{creator.last_name}",
+    assert_equal "New idea: '#{motion_question.resource.display_name}' by #{creator.first_name} #{creator.last_name}",
                  notification_subject(motion_question)
   end
 
   test 'notification_subject should return correct sentences for arguments' do
-    assert_equal "Nieuw argument voor '#{argument_pro.resource.motion.display_name}' door #{creator.first_name} #{creator.last_name}",
+    assert_equal "New argument: '#{argument_pro.resource.motion.display_name}' by #{creator.first_name} #{creator.last_name}",
                  notification_subject(argument_pro)
 
-    assert_equal "Nieuw argument tegen '#{argument_con.resource.motion.display_name}' door #{creator.first_name} #{creator.last_name}",
+    assert_equal "New argument: '#{argument_con.resource.motion.display_name}' by #{creator.first_name} #{creator.last_name}",
                  notification_subject(argument_con)
   end
 
   test 'notification_subject should return correct sentences for comments' do
-    assert_equal "Nieuwe reactie op '#{comment.resource.commentable.display_name}' door #{creator.first_name} #{creator.last_name}",
+    assert_equal "New comment on '#{comment.resource.commentable.display_name}' by #{creator.first_name} #{creator.last_name}",
                  notification_subject(comment)
 
-    assert_equal "Nieuwe reactie op 'comment' door #{creator.first_name} #{creator.last_name}",
+    assert_equal "New comment on 'comment' by #{creator.first_name} #{creator.last_name}",
                  notification_subject(comment_comment)
   end
 

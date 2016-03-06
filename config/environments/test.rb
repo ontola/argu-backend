@@ -49,7 +49,8 @@ Rails.application.configure do
   config.active_support.test_order = :random
 
   config.i18n.available_locales = [:en, :nl]
-  config.i18n.default_locale= :en
+  config.i18n.default_locale = :en
+  I18n.locale = :en
 
   OmniAuth.config.test_mode = true
 end

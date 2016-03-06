@@ -117,9 +117,9 @@ class UsersControllerTest < ActionController::TestCase
     user = create_member(utrecht, create_member(amsterdam))
     sign_in user
     request.env['HTTP_REFERER'] = root_url
-    assert_equal 'nl', user.language
-    put :language, locale: :en
-    assert_equal 'en', user.reload.language
+    assert_equal 'en', user.language
+    put :language, locale: :nl
+    assert_equal 'nl', user.reload.language
     assert_nil flash[:error]
   end
 
@@ -127,9 +127,9 @@ class UsersControllerTest < ActionController::TestCase
     user = create_member(utrecht, create_member(amsterdam))
     sign_in user
     request.env['HTTP_REFERER'] = root_url
-    assert_equal 'nl', user.language
+    assert_equal 'en', user.language
     put :language, locale: :fake_language
-    assert_equal 'nl', user.reload.language
+    assert_equal 'en', user.reload.language
     assert flash[:error].present?
   end
 

@@ -18,7 +18,7 @@ nl:
         subject: "Nieuwe reactie op '%{parent_title}' door %{poster}"
         responded_to: "%{poster} heeft gereageerd op een %{parent_type}: '%{parent_title}'"
       user_created_argument:
-        subject: "Nieuw argument %{pro} '%{parent_title}' door %{poster}"
+        subject: "Nieuw argument: '%{parent_title}' door %{poster}"
         responded_to:
           pro: "%{poster} heeft een argument geplaatst voor '%{parent_title}'"
           con: "%{poster} heeft een argument geplaatst tegen '%{parent_title}'"
