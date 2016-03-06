@@ -104,7 +104,7 @@
     content: "";
     position: absolute;
     width: 100%;
-    height: 4em;
+    height: 3.3em;
     // Width equal to twice the padding for a section
     width: calc(100% + 2.8em);
     left: -1.4em;
@@ -129,7 +129,7 @@
 }
 
 .collapsible-input:not(checked) ~ .collapsible-content {
-  max-height: 6em;
+  max-height: 7em;
   overflow: hidden;
 }
 
