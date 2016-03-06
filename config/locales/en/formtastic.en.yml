@@ -35,6 +35,7 @@ en:
       password_confirmation: "Confirm password"
       password: "Password"
       postal_code: "Postal code"
+      current_password: "Current password"
       profile_photo: "Profile photo"
       questions_title: "Challenges"
       questions_title_singular: "Question"

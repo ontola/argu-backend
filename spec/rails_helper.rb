@@ -59,6 +59,7 @@ RSpec.configure do |config|
   Capybara.register_driver :selenium_firefox do |app|
     profile = Selenium::WebDriver::Firefox::Profile.new
     profile.native_events = true
+    profile['intl.accept_languages'] = 'en-US'
     capabilities = Selenium::WebDriver::Remote::Capabilities.firefox('elementScrollBehavior' => 1)
     Capybara::Selenium::Driver.new(app,
                                    browser: :firefox,
@@ -68,8 +69,11 @@ RSpec.configure do |config|
 
   Capybara.register_driver :selenium_chrome do |app|
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome('elementScrollBehavior' => 1)
+    profile = Selenium::WebDriver::Chrome::Profile.new
+    profile['intl.accept_languages'] = 'en-US'
     Capybara::Selenium::Driver.new(app,
                                    browser: :chrome,
+                                   profile: profile,
                                    desired_capabilities: capabilities)
   end
 
@@ -95,7 +99,7 @@ RSpec.configure do |config|
                             when 'safari'
                               :selenium_safari
                             else
-                              ENV['CI'].present? ? :selenium : :selenium
+                              ENV['CI'].present? ? :selenium : :selenium_firefox
                             end
   #Capybara.default_max_wait_time = 5
   Capybara.default_max_wait_time = 10

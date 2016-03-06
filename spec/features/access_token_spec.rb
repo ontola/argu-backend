@@ -23,7 +23,7 @@ RSpec.feature 'Access tokens', type: :feature do
 
     expect(page).to have_content('content')
 
-    click_link 'Neither'
+    click_link 'Neutral'
     # wait_for_async_modal
     expect(page).to have_content 'Sign up'
 
@@ -39,17 +39,17 @@ RSpec.feature 'Access tokens', type: :feature do
     end
 
     expect(current_path).to eq setup_users_path
-    click_button 'Volgende'
+    click_button 'Next'
 
     profile_attr = FactoryGirl.attributes_for(:profile)
     within('form') do
       fill_in 'profile_profileable_attributes_first_name', with: user_attr[:first_name]
       fill_in 'profile_profileable_attributes_last_name', with: user_attr[:last_name]
       fill_in 'profile_about', with: profile_attr[:about]
-      click_button 'Volgende'
+      click_button 'Next'
     end
 
-    click_button 'Geen van beide'
+    click_button 'Neutral'
 
     expect(page).to have_content motion.title
     expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'

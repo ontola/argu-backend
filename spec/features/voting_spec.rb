@@ -12,12 +12,12 @@ RSpec.feature 'Voting', type: :feature do
   # As Guest
   ####################################
 
-  scenario 'Member should vote on a motion' do
+  scenario 'Guest should vote on a motion' do
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
 
-    expect(page).not_to have_css('.btn-pro[data-voted-on=true]')
-    find('span span', text: "I'M IN FAVOR").click
+    expect(page).not_to have_css('.btn-con[data-voted-on=true]')
+    find('span span', text: "DISAGREE").click
     expect(page).to have_content 'Sign up'
 
     click_link 'Sign up with email'
@@ -32,20 +32,20 @@ RSpec.feature 'Voting', type: :feature do
     end
 
     expect(current_path).to eq setup_users_path
-    click_button 'Volgende'
+    click_button 'Next'
 
     profile_attr = FactoryGirl.attributes_for(:profile)
     within('form') do
       fill_in 'profile_profileable_attributes_first_name', with: user_attr[:first_name]
       fill_in 'profile_profileable_attributes_last_name', with: user_attr[:last_name]
       fill_in 'profile_about', with: profile_attr[:about]
-      click_button 'Volgende'
+      click_button 'Next'
     end
 
-    click_button 'Ik ben voor'
+    click_button 'Disagree'
 
     expect(current_path).to eq(motion_path(motion))
-    expect(page).to have_css('.btn-pro[data-voted-on=true]')
+    expect(page).to have_css('.btn-con[data-voted-on=true]')
   end
 
   ####################################
@@ -59,12 +59,12 @@ RSpec.feature 'Voting', type: :feature do
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
 
-    expect(page).not_to have_css('.btn-pro[data-voted-on=true]')
-    find('span span', text: 'IK BEN VOOR').click
-    expect(page).to have_css('.btn-pro[data-voted-on=true]')
+    expect(page).not_to have_css('.btn-con[data-voted-on=true]')
+    find('span span', text: "DISAGREE").click
+    expect(page).to have_css('.btn-con[data-voted-on=true]')
 
     visit motion_path(motion)
-    expect(page).to have_css('.btn-pro[data-voted-on=true]')
+    expect(page).to have_css('.btn-con[data-voted-on=true]')
   end
 
   ####################################
@@ -78,12 +78,12 @@ RSpec.feature 'Voting', type: :feature do
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
 
-    expect(page).not_to have_css('.btn-pro[data-voted-on=true]')
-    find('span span', text: 'IK BEN VOOR').click
-    expect(page).to have_css('.btn-pro[data-voted-on=true]')
+    expect(page).not_to have_css('.btn-con[data-voted-on=true]')
+    find('span span', text: "DISAGREE").click
+    expect(page).to have_css('.btn-con[data-voted-on=true]')
 
     visit motion_path(motion)
-    expect(page).to have_css('.btn-pro[data-voted-on=true]')
+    expect(page).to have_css('.btn-con[data-voted-on=true]')
   end
 
 end

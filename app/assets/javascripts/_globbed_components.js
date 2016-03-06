@@ -311,6 +311,7 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
             } else {
                 var message = (0, _helpers.errorMessageForStatus)(e.status).fallback || _this2.getIntlMessage('errors.general');
                 new _Alert2.default(message, 'alert', true);
+                Bugsnag.notifyException(e);
                 throw e;
             }
         });
@@ -332,6 +333,7 @@ var BigVoteButtons = exports.BigVoteButtons = _react2.default.createClass({
             } else {
                 var message = (0, _helpers.errorMessageForStatus)(e.status).fallback || _this3.getIntlMessage('errors.general');
                 new _Alert2.default(message, 'alert', true);
+                Bugsnag.notifyException(e);
                 throw e;
             }
         });
@@ -554,8 +556,9 @@ var CombiBigVote = exports.CombiBigVote = _react2.default.createClass({
 
         fetch(this.state.object_id + '.json', (0, _helpers.safeCredentials)()).then(_helpers.statusSuccess).then(_helpers.json).then(function (data) {
             _this.setState({ groups: data.groups });
-        }).catch(function () {
-            (0, _Alert2.default)('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
+        }).catch(function (e) {
+            (0, _Alert2.default)('Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
+            Bugsnag.notifyException(e);
         });
     },
 
@@ -1137,6 +1140,7 @@ var ActorItem = exports.ActorItem = _react2.default.createClass({
                 location.reload();
             }
         }).catch(function (e) {
+            Bugsnag.notifyException(e);
             throw e;
         });
     },
@@ -1560,10 +1564,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Alert = require('./Alert');
-
-var _Alert2 = _interopRequireDefault(_Alert);
-
 var _helpers = require('../lib/helpers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1584,8 +1584,7 @@ var PostalCodeButton = exports.PostalCodeButton = _react2.default.createClass({
         var that = this;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                //fetch("https://nominatim.openstreetmap.org/search/" + position.coords.latitude + "," + position.coords.longitude + "?format=json&addressdetails=1&limit=1")
-                fetch("https://nominatim.openstreetmap.org/search/40.7141667,-74.0063889?format=json&addressdetails=1&limit=1").then(_helpers.statusSuccess).then(_helpers.json).then(function (data) {
+                fetch("https://nominatim.openstreetmap.org/search/" + position.coords.latitude + "," + position.coords.longitude + "?format=json&addressdetails=1&limit=1").then(_helpers.statusSuccess).then(_helpers.json).then(function (data) {
                     document.getElementById(form_field_id).value = data[0].address.postcode;
                     that.setState({ state: -1 });
                 });
@@ -1618,7 +1617,7 @@ var PostalCodeButton = exports.PostalCodeButton = _react2.default.createClass({
 
 window.PostalCodeButton = PostalCodeButton;
 
-},{"../lib/helpers":15,"./Alert":3,"react":563}],10:[function(require,module,exports){
+},{"../lib/helpers":15,"react":563}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -2053,8 +2052,9 @@ var NewMembership = exports.NewMembership = _react2.default.createClass({
                     }),
                     complete: false
                 });
-            }).catch(function () {
+            }).catch(function (e) {
                 (0, _Alert2.default)('Server error occured, please try again later', 'alert', true);
+                Bugsnag.notifyException(e);
                 callback();
             });
         }, 500);
@@ -2188,8 +2188,9 @@ var MotionSelect = exports.MotionSelect = _react2.default.createClass({
                     }),
                     complete: false
                 });
-            }).catch(function () {
+            }).catch(function (e) {
                 (0, _Alert2.default)('Server error occured, please try again later', 'alert', true);
+                Bugsnag.notifyException(e);
                 callback(null, { options: [], complete: false });
             });
         }, 500);

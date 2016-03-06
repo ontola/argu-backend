@@ -12,6 +12,7 @@ FactoryGirl.define do
     password 'password'
     password_confirmation 'password'
     finished_intro true
+    language 'en'
     has_analytics false
     sequence(:first_name) { |n| "first_name_#{n}" }
     sequence(:last_name) { |n| "last_name_#{n}" }

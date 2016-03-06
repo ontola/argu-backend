@@ -12,9 +12,9 @@ module ReactHelper
     {
         locales: [I18n.locale],
         messages: {
-            pro: t('votes.type.pro'),
-            neutral: t('votes.type.neutral'),
-            con: t('votes.type.con'),
+            pro: t('motions.votes.pro'),
+            neutral: t('motions.votes.neutral'),
+            con: t('motions.votes.con'),
             errors: {
                 general: t('errors.general'),
                 status: {

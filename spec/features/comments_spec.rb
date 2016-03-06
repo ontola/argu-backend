@@ -29,16 +29,16 @@ RSpec.feature 'Comments', type: :feature do
     end
 
     within('#user_submit_action') do
-      click_button 'Volgende'
+      click_button 'Next'
     end
 
     within('.formtastic.profile') do
-      click_button 'Volgende'
+      click_button 'Next'
     end
 
     expect(page).to have_content argument.title
     within('#comment_submit_action') do
-      click_button 'Reageer'
+      click_button 'Reply'
     end
 
     expect(page).to have_content argument.title
