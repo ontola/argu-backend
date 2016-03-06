@@ -6,22 +6,10 @@
       .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
         span[class="fa fa-#{motion_icon}"]
         span.icon-left= motion_type
-      /.details-part
-          span.fa.fa-tag
-          span.icon-left veiligheid
-      /.details-part
-          span.fa.fa-eye
-          span.icon-left 79
-      /.details-part
-          span.fa.fa-comment
-          span.icon-left 7
       - if local_assigns[:show_vote_results]
         .details-part.details-part--pro[data-title=t('tooltips.motion.vote_pro_count')]
           span.fa.fa-thumbs-up
           span.icon-left= motion.votes_pro_count.to_s
-        /.details-part[data-title=t('tooltips.motion.vote_abstain_count')]
-          span.fa.fa-pause
-          span.icon-left= motion.votes_abstain_count.to_s
         .details-part.details-part--con[data-title=t('tooltips.motion.vote_con_count')]
           span.fa.fa-thumbs-down
           span.icon-left= motion.votes_con_count.to_s
@@ -43,6 +31,3 @@
           .details-part[data-title=t('tooltips.motion.arguments_con_count')]
             span.fa.fa-minus
             span.icon-left= motion.argument_con_count
-            /.details-part
-              span.fa.fa-clock-o
-              span.icon-left= time_ago_in_words(motion.updated_at)
