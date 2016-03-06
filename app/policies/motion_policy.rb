@@ -16,6 +16,8 @@ class MotionPolicy < RestrictivePolicy
     def resolve
       if context.forum.present?
         scope.where(forum_id: context.forum.id).published
+      elsif user.present? && user.profile.memberships.present?
+        scope.where(forum_id: user.profile.memberships.pluck(:forum_id)).published
       end
     end
   end

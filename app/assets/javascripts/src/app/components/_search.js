@@ -76,13 +76,12 @@ export const MotionSelect = React.createClass({
                 .then(json)
                 .then((data) => {
                     callback(null, {
-                        options: data.map((motion) => {
+                        options: data.data.map((motion) => {
                             return {
                                 id: motion.id.toString(),
                                 value: motion.id.toString(),
-                                name: motion.display_name,
-                                label: motion.display_name,
-                                image: motion.cover_photo.avatar.url
+                                name: motion.attributes.display_name,
+                                label: motion.attributes.display_name
                             };
                         }),
                         complete: false
