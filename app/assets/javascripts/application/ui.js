@@ -16,7 +16,6 @@ const ui = {
             .on('change', '.form-toggle input[type="radio"]', this.handleFormToggleClick)
             .on('click', '.welcome-video-hide', this.welcomeVideoHide)
             .on('click', '.welcome-video-overlay, .welcome-video-toggle', this.welcomeVideoToggle)
-            .on('click', '.box-close-button', this.bannerHide)
             .on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive)
             .on('turbolinks:load', this.handleDOMChangedFinished)
             .on('turbolinks:load', this.initPlaceholderFallback)
