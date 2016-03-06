@@ -276,3 +276,6 @@ en:
     user:
       name: ''
       description: ''
+  time:
+    formats:
+      date: "%A, %d %B '%y"
