@@ -58,9 +58,9 @@ RSpec.feature 'Comments', type: :feature do
     within('#cf') do
       expect(page).to have_field('comment[body]')
       fill_in 'comment[body]', with: comment_args[:body]
-      click_button 'Reageer'
+      click_button 'Reply'
     end
-    expect(page).to have_content ' toe aan jouw forums en doe mee aan de discussie!'
+    expect(page).to have_content "and participate in the discussion!"
     find('.modal').click_link('join-forum')
 
     expect(page).to have_content argument.title
@@ -80,7 +80,7 @@ RSpec.feature 'Comments', type: :feature do
     within('#cf') do
       expect(page).to have_field('comment[body]')
       fill_in 'comment[body]', with: comment_args[:body]
-      click_button 'Reageer'
+      click_button 'Reply'
     end
 
     expect(page).to have_content argument.title

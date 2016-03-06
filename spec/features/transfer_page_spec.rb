@@ -27,10 +27,10 @@ RSpec.feature 'Transfer Page', type: :feature do
       input_field.send_keys user.first_name
       find('.Select-option').click
 
-      click_button 'Ik begrijp de consequenties, draag deze pagina over'
+      click_button "I understand the consequences, transfer ownership of this organization."
     end
 
-    expect(find('div.alert', text: 'Organisatie overgedragen')).to be_present
+    expect(find('div.alert', text: 'Organization transferred')).to be_present
   end
 
 end

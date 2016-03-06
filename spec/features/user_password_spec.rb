@@ -38,9 +38,9 @@ RSpec.feature 'User Password', type: :feature do
     visit settings_path
     expect(current_path).to eq settings_path
 
-    expect(page).to have_content('WACHTWOORD WIJZIGEN')
-    expect(page).to have_content('WACHTWOORD BEVESTIGEN')
-    expect(page).to have_content('HUIDIG WACHTWOORD')
+    expect(page).to have_content('EDIT PASSWORD')
+    expect(page).to have_content('CONFIRM PASSWORD')
+    expect(page).to have_content('CURRENT PASSWORD')
 
     new_password = 'new password'
     expect {
@@ -48,7 +48,7 @@ RSpec.feature 'User Password', type: :feature do
         fill_in 'user_password', with: new_password
         fill_in 'user_password_confirmation', with: new_password
         fill_in 'user_current_password', with: user.password
-        click_button 'Opslaan'
+        click_button 'Save'
       end
     }.to change {
       Sidekiq::Worker.jobs.size
@@ -56,7 +56,7 @@ RSpec.feature 'User Password', type: :feature do
     expect(current_path).to eq settings_path
 
     visit destroy_user_session_path
-    expect(page).to have_content 'Je bent succesvol uitgelogd, tot ziens.'
+    expect(page).to have_content 'You have signed out successfully.'
 
     visit new_user_session_path
 
@@ -66,7 +66,7 @@ RSpec.feature 'User Password', type: :feature do
       click_button 'Log in'
     end
     expect(current_path).to eq info_path(:about)
-    expect(page).to have_content 'Welkom terug!'
+    expect(page).to have_content 'Welcome back!'
   end
 
   scenario 'user both omni should change their password' do
@@ -75,9 +75,9 @@ RSpec.feature 'User Password', type: :feature do
     visit settings_path
     expect(current_path).to eq settings_path
 
-    expect(page).to have_content('WACHTWOORD WIJZIGEN')
-    expect(page).to have_content('WACHTWOORD BEVESTIGEN')
-    expect(page).to have_content('HUIDIG WACHTWOORD')
+    expect(page).to have_content('EDIT PASSWORD')
+    expect(page).to have_content('CONFIRM PASSWORD')
+    expect(page).to have_content('CURRENT PASSWORD')
 
     expect {
       new_password = 'new password'
@@ -85,30 +85,30 @@ RSpec.feature 'User Password', type: :feature do
         fill_in 'user_password', with: new_password
         fill_in 'user_password_confirmation', with: new_password
         fill_in 'user_current_password', with: user_omni_both.password
-        click_button 'Opslaan'
+        click_button 'Save'
       end
     }.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)
 
     expect(current_path).to eq settings_path
-    expect(page).to have_content('Gebruikersinstellingen')
+    expect(page).to have_content('User settings')
   end
 
   scenario 'user omni both should not request a password reset email' do
     log_in_user user_omni_both
 
     visit settings_path
-    expect(page).not_to have_content('Je hebt nog geen wachtwoord omdat je je via social media hebt aangemeld. Wil je een wachtwoord aanmaken?')
+    expect(page).not_to have_content("You don't have a password yet, because you signed up using a linked account. Do you want to set a password?")
   end
 
   scenario 'user only omni should not change their password' do
     log_in_user user_omni_only
 
     visit settings_path
-    expect(page).not_to have_content('wachtwoord')
-    expect(page).not_to have_content('wachtwoord bevestigen')
-    expect(page).not_to have_content('huidig wachtwoord')
+    expect(page).not_to have_content('password')
+    expect(page).not_to have_content('confirm password')
+    expect(page).not_to have_content('current password')
   end
 
   scenario 'user only omni should request a password reset email' do
@@ -131,12 +131,12 @@ RSpec.feature 'User Password', type: :feature do
 
     expect(page).to have_selector('.navbar-item.navbar-profile')
     visit settings_path
-    expect(page).to have_content('Gebruikersinstellingen')
-    expect(page).to have_content('Je hebt nog geen wachtwoord omdat je je via social media hebt aangemeld. Wil je een wachtwoord aanmaken?')
+    expect(page).to have_content('User settings')
+    expect(page).to have_content("You don't have a password yet, because you signed up using a linked account. Do you want to set a password?")
 
     expect {
       click_link 'send-instructions'
-      expect(page).to have_content('Je zal zometeen een email ontvangen met intructies')
+      expect(page).to have_content("You will receive an email shortly with instructions to reset your password.")
     }.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)

@@ -37,23 +37,23 @@ RSpec.feature 'Netdem', type: :feature do
       click_button 'log_in'
     end
 
-    expect(page).to have_content 'Welkom terug!'
+    expect(page).to have_content 'Welcome back!'
     expect(current_path).to eq forum_path('freetown')
 
-    click_link('Nieuwe discussie')
+    click_link('New discussion')
 
-    click_link('nieuw project')
+    click_link('new project')
 
     project_attributes = attributes_for(:project)
     within('#new_project') do
       fill_in 'project_title', with: project_attributes[:title]
       fill_in 'project_content', with: project_attributes[:content]
-      click_link 'Manager toevoegen'
+      click_link 'Add manager'
       all("input[name*='project[stepups_attributes]']")
         .find("input[name*='[moderator]']")
         .first
         .set(netdem.name)
-      click_button 'Opslaan'
+      click_button 'Save'
     end
     expect(page).to have_content project_attributes[:title]
     expect(current_path).to eq project_path(Project.last)

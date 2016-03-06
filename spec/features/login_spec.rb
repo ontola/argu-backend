@@ -16,7 +16,7 @@ RSpec.feature 'Login', type: :feature do
       click_button 'log_in'
     end
 
-    expect(page).to have_content 'Welkom terug!'
+    expect(page).to have_content 'Welcome back!'
     expect(current_path).to eq forum_path('holland')
   end
 
@@ -30,7 +30,7 @@ RSpec.feature 'Login', type: :feature do
       click_button 'log_in'
     end
 
-    expect(page).to have_content 'Welkom terug!'
+    expect(page).to have_content 'Welcome back!'
     expect(current_path).to eq user_path(user)
   end
 end
