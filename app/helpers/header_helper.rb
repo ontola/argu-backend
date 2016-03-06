@@ -56,11 +56,12 @@ module HeaderHelper
 
   def public_forum_items(limit= 10)
     items = []
-    Forum.top_public_forums(limit)
-        .select { |f| ['nederland', 'utrecht', 'houten', 'feedback'].include?(f.shortname.shortname) }
+    Forum.top_public_forums(100)
+        .select { |f| ['nederland', 'utrecht', 'houten', 'heerenveen', 'feedback'].include?(f.shortname.shortname) }
+        .first(limit)
         .each do |forum|
-      items << link_item(forum.display_name, forum_path(forum), image: forum.profile_photo.url(:icon))
-    end
+          items << link_item(forum.display_name, forum_path(forum), image: forum.profile_photo.url(:icon))
+        end
     items
   end
 
