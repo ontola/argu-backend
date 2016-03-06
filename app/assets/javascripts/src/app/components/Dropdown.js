@@ -160,16 +160,19 @@ export const ShareDropdown = React.createClass({
                     count={counts.facebook} />
             <LinkItem
                     type="link"
+                    target="_blank"
                     title={`Twitter ${this.countInParentheses(counts.twitter)}`}
                     url={shareUrls.twitter}
                     fa="fa-twitter" />
             <LinkItem
                     type="link"
+                    target="_blank"
                     title={`LinkedIn ${this.countInParentheses(counts.linkedIn)}`}
                     url={shareUrls.linkedIn}
                     fa="fa-linkedin" />
             <LinkItem
                     type="link"
+                    target="_blank"
                     title={`Google+`}
                     url={shareUrls.googlePlus}
                     fa="fa-google-plus" />
@@ -288,6 +291,7 @@ export const LinkItem = React.createClass({
         if (this.props.divider && this.props.divider === 'top') {
             divider = <div className="dropdown-divider"></div>;
         }
+        let { target } = this.props;
         var method, confirm, remote, turbolinks, sortValue, filterValue, className, displaySetting;
         if (this.props.data) {
             method = this.props.data.method;
@@ -302,7 +306,7 @@ export const LinkItem = React.createClass({
 
         return (<div className={this.props.type}>
             {divider}
-            <a href={this.props.url} data-remote={remote} data-method={method} data-confirm={confirm} onMouseDownCapture={this.handleMouseDown} data-turbolinks={turbolinks} data-sort-value={sortValue} data-filter-value={filterValue} data-display-setting={displaySetting} className={className}>
+            <a href={this.props.url} target={target} data-remote={remote} data-method={method} data-confirm={confirm} onMouseDownCapture={this.handleMouseDown} data-turbolinks={turbolinks} data-sort-value={sortValue} data-filter-value={filterValue} data-display-setting={displaySetting} className={className}>
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
@@ -331,7 +335,7 @@ export const FBShareItem = React.createClass({
 
     render: function () {
         return (<div className={`link ${this.props.type}`}>
-            <a href={this.props.url} data-turbolinks="false" onClick={this.handleClick}>
+            <a target="_blank" href={this.props.url} data-turbolinks="false" onClick={this.handleClick}>
                 {image({fa: 'fa-facebook'})}
                 <span className="icon-left">Facebook {this.countInParentheses()}</span>
             </a>
