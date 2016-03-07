@@ -4,6 +4,8 @@
 en:
   status:
     extra_info: 'Additional information: "%{info_string}"'
+    mistaken: 'Is this an error?'
+    let_us_know: 'Let us know.'
     s_400:
       header: "Bad request (400 Bad Request)"
       body: "The request made cannot be fulfilled because it contains bad syntax, check your URL parameters or refresh the page that linked to this resource."

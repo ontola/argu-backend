@@ -3,6 +3,8 @@
 nl:
   status:
     extra_info: 'Extra foutinformatie: "%{info_string}"'
+    mistaken: 'Is dit een fout?'
+    let_us_know: 'Laat het ons weten.'
     s_400:
       header: "Fout in het verzoek (400 Bad Request)"
       body: "Het verzoek bevat een fout waardoor deze niet verwerkt kan worden, check de URL parameters en probeer de pagina welke naar deze verwees te herladen."

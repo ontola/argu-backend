@@ -7,6 +7,9 @@
       - if @additional_error_info.present?
         p= t('status.extra_info', info_string: @additional_error_info)
       p
+        =>t('status.mistaken')
+        =link_to t('status.let_us_know'), 'https://argu.freshdesk.com/support/tickets/new', target: '_blank', rel: 'nofollow'
+      p
         a[href=t('status.s_404.reference_link_url') target="_blank"]= t('status.s_404.reference_link_body')
   - if @quote.present?
     .bigger.center
