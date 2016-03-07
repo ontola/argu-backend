@@ -60,6 +60,7 @@ const n = {
                 .then(done)
                 .catch((e) => {
                     console.log('error', e);
+                    Bugsnag.notifyException(e);
                     done();
                 });
         } else if (window.lastNotification != '-1' && !n.refreshing) {

@@ -114,6 +114,7 @@ export const BigVoteButtons = React.createClass({
            } else {
                const message = errorMessageForStatus(e.status).fallback || this.getIntlMessage('errors.general');
                new Alert(message, 'alert', true);
+               Bugsnag.notifyException(e);
                throw e;
            }
         });
@@ -137,6 +138,7 @@ export const BigVoteButtons = React.createClass({
             } else {
                 const message = errorMessageForStatus(e.status).fallback || this.getIntlMessage('errors.general');
                 new Alert(message, 'alert', true);
+                Bugsnag.notifyException(e);
                 throw e;
             }
            });

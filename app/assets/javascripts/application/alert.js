@@ -54,7 +54,9 @@ AlertIntegration.handleJSONBody = function (event, XMLHttpRequest) {
                 new Alert(notification.message, notification.type, true);
             });
         }
-    } catch(e) {}
+    } catch(e) {
+        Bugsnag.notifyException(e);
+    }
 };
 
 export default AlertIntegration;

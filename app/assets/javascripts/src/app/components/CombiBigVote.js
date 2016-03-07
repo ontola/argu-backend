@@ -52,8 +52,9 @@ export const CombiBigVote = React.createClass({
                 .then(json)
                 .then((data) => {
                     this.setState({groups: data.groups});
-                }).catch(() => {
-                    Alert('_Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
+                }).catch((e) => {
+                    Alert('Er is iets fout gegaan, probeer het opnieuw._', 'alert', true);
+                    Bugsnag.notifyException(e);
                 });
     },
 

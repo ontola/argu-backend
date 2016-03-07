@@ -31,8 +31,8 @@ function init () {
             });
         }
     } catch (error) {
-        debugger;
         console.log('Something went wrong during initialisation', error);
+        Bugsnag.notifyException(error);
     }
 
     if (!("ontouchstart" in document.documentElement)) {

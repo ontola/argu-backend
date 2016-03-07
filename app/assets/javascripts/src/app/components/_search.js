@@ -86,8 +86,9 @@ export const MotionSelect = React.createClass({
                         }),
                         complete: false
                     });
-                }).catch(() => {
+                }).catch((e) => {
                     Alert('Server error occured, please try again later', 'alert', true);
+                    Bugsnag.notifyException(e);
                     callback(null, {options: [], complete: false});
                 });
         }, 500);

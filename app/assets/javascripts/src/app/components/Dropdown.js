@@ -365,6 +365,7 @@ export const ActorItem = React.createClass({
                    location.reload();
                }
            }).catch((e) => {
+               Bugsnag.notifyException(e);
                throw e;
            });
     },
