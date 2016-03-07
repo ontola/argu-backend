@@ -7,7 +7,7 @@ module CommentsHelper
       link_items << link_item(t('edit'),
                               polymorphic_url_for_action(:edit, [resource, comment], {}),
                               data: {comment_id: comment.id, turbolinks: 'false'},
-                              fa: 'pencil')
+                              fa: 'edit')
     end
     if comment.is_trashed?
       if policy(comment).trash?
@@ -30,10 +30,10 @@ module CommentsHelper
                                 fa: 'trash')
       end
     end
-    dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-gear')
+    dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-ellipsis-v')
   end
 
   def comment_form_label(comment)
-    comment.persisted? ? t('edit') : t('reply')
+    comment.persisted? ? t('save') : t('reply')
   end
 end
