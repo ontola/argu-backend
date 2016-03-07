@@ -9,9 +9,20 @@ section.section-info.motion-bg
       .details-part.details-part--pro[data-title=t('tooltips.motion.vote_pro_count')]
         span.fa.fa-thumbs-up
         span.icon-left= motion.votes_pro_count.to_s
+      .details-part.details-part--neutral[data-title=t('tooltips.motion.vote_neutral_count')]
+        span.fa.fa-pause
+        span.icon-left= motion.votes_neutral_count.to_s
       .details-part.details-part--con[data-title=t('tooltips.motion.vote_con_count')]
         span.fa.fa-thumbs-down
         span.icon-left= motion.votes_con_count.to_s
+    - if local_assigns[:show_total_vote_count]
+      .details-part[data-title=t('tooltips.motion.vote_count')]
+        span.fa.fa-check-square-o
+        span.icon-left= motion.total_vote_count.to_s
+    - if local_assigns[:show_follows_count]
+      .details-part[data-title=t('tooltips.motion.vote_count')]
+        span.fa.fa-check-square-o
+        span.icon-left= motion.total_vote_count.to_s
     - else
       .details-part[data-title=t('tooltips.motion.vote_count')]
         span.fa.fa-check-square-o

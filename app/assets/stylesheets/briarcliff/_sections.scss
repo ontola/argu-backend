@@ -55,12 +55,13 @@ section {
 
   .details-part--type{
     color: white;
-    margin-right: .3em;
     padding-left: 1.2em;
     padding-right: 1.2em;
-    margin-right: .6em;
     &:hover{
       color: white;
+    }
+    +.details-part {
+      padding-left: 1em;
     }
   }
 

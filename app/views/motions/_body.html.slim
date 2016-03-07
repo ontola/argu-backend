@@ -1,5 +1,5 @@
 .box[class=status_classes_for(motion)]
-  =render partial: 'motions/info_bar', locals: {motion: motion}
+  =render partial: 'motions/info_bar', locals: {motion: motion, show_vote_results: true}
   section
     h1.motion-t[itemprop="headline"]= motion.title
     .markdown[itemprop="text"]
