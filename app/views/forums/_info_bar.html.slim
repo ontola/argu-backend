@@ -1,0 +1,14 @@
+section.section-info.motion-bg
+  .details
+    .details-part.details-part--type.neutral-bg
+      span[class="fa fa-group"]
+      span.icon-left= t('forums.type')
+    .details-part[data-title=t('forums.tooltips.members_count')]
+      span.fa.fa-user
+      span.icon-left= forum.memberships.count
+    .details-part[data-title=t('questions.tooltips.count')]
+      span.fa.fa-question
+      span.icon-left= forum.questions.count
+    .details-part[data-title=t('motions.tooltips.count')]
+      span.fa.fa-lightbulb-o
+      span.icon-left= forum.motions.count

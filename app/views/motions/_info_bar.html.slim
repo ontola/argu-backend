@@ -1,33 +1,32 @@
-=contextual_link_to motion_path(motion) do
-  section.section-info.motion-bg
-    span[class="fa fa-#{motion_icon}"]
-    span.icon-left= motion_type
-    .details
-      .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
-        span[class="fa fa-#{motion_icon}"]
-        span.icon-left= motion_type
-      - if local_assigns[:show_vote_results]
-        .details-part.details-part--pro[data-title=t('tooltips.motion.vote_pro_count')]
-          span.fa.fa-thumbs-up
-          span.icon-left= motion.votes_pro_count.to_s
-        .details-part.details-part--con[data-title=t('tooltips.motion.vote_con_count')]
-          span.fa.fa-thumbs-down
-          span.icon-left= motion.votes_con_count.to_s
-      - else
-        .details-part[data-title=t('tooltips.motion.vote_count')]
-          span.fa.fa-check-square-o
-          span.icon-left= motion.total_vote_count.to_s
-        - if active_for_user?(:argument_tooltips_list, current_user)
-          .details-part.tooltip--wider[data-title=(motion.argument_pro_count == 0 ? t('tooltips.motion.arguments_pro_count') : pro_arguments_preview_tooltip(motion))]
-              span.fa.fa-plus
-              span.icon-left= motion.argument_pro_count
-          .details-part.tooltip--wider[data-title=(motion.argument_con_count == 0 ? t('tooltips.motion.arguments_con_count') : con_arguments_preview_tooltip(motion))]
-              span.fa.fa-minus
-              span.icon-left= motion.argument_con_count
-        - else
-          .details-part[data-title=t('tooltips.motion.arguments_pro_count')]
+section.section-info.motion-bg
+  span[class="fa fa-#{motion_icon}"]
+  span.icon-left= motion_type
+  .details
+    .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
+      span[class="fa fa-#{motion_icon}"]
+      span.icon-left= motion_type
+    - if local_assigns[:show_vote_results]
+      .details-part.details-part--pro[data-title=t('tooltips.motion.vote_pro_count')]
+        span.fa.fa-thumbs-up
+        span.icon-left= motion.votes_pro_count.to_s
+      .details-part.details-part--con[data-title=t('tooltips.motion.vote_con_count')]
+        span.fa.fa-thumbs-down
+        span.icon-left= motion.votes_con_count.to_s
+    - else
+      .details-part[data-title=t('tooltips.motion.vote_count')]
+        span.fa.fa-check-square-o
+        span.icon-left= motion.total_vote_count.to_s
+      - if active_for_user?(:argument_tooltips_list, current_user)
+        .details-part.tooltip--wider[data-title=(motion.argument_pro_count == 0 ? t('tooltips.motion.arguments_pro_count') : pro_arguments_preview_tooltip(motion))]
             span.fa.fa-plus
             span.icon-left= motion.argument_pro_count
-          .details-part[data-title=t('tooltips.motion.arguments_con_count')]
+        .details-part.tooltip--wider[data-title=(motion.argument_con_count == 0 ? t('tooltips.motion.arguments_con_count') : con_arguments_preview_tooltip(motion))]
             span.fa.fa-minus
             span.icon-left= motion.argument_con_count
+      - else
+        .details-part[data-title=t('tooltips.motion.arguments_pro_count')]
+          span.fa.fa-plus
+          span.icon-left= motion.argument_pro_count
+        .details-part[data-title=t('tooltips.motion.arguments_con_count')]
+          span.fa.fa-minus
+          span.icon-left= motion.argument_con_count

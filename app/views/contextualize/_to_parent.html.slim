@@ -8,16 +8,13 @@
             span[class="fa fa-arrow-up"]
             span.icon-left= t('forums.back_to')
         - elsif classname == 'questions'
-          section.section-info.question-bg
-            span[class="fa fa-#{question_icon}"]
-            span.icon-left= question_type
+          =render partial: 'questions/info_bar', locals: {question: parent}
         - elsif classname == 'motions'
-          section.section-info.motion-bg
-            span[class="fa fa-#{motion_icon}"]
-            span.icon-left= motion_type(parent)
+          =render partial: 'motions/info_bar', locals: {motion: parent}
         - else
           section.section-info
             span.fa.fa-arrow-up
+        / This renders the bottom section
         - unless classname == 'forums'
           section
             h3[class=parent.class.to_s.downcase]
