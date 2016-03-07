@@ -1,5 +1,5 @@
 <% if current_user.blank? || current_user.has_analytics? %>
-    <script>
+    <script data-turbolinks-permanent>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
                 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -13,7 +13,7 @@
         <% end %>
         ga('require', 'linkid', 'linkid.js');
         $(document).on('turbolinks:load', function() {
-            ga('set', 'location', window.location.href);
+            ga('set', 'location', window.location.pathname);
             ga('send', 'pageview');
         });
 
@@ -22,5 +22,6 @@
 <script
     src="//d2wy8f7a9ursnm.cloudfront.net/bugsnag-2.min.js"
     data-apikey="a58a9bf57619aa9464a31c33699d4348"
-    data-appversion="<%= "v#{::VERSION}/#{::BUILD}" %>">
+    data-appversion="<%= "v#{::VERSION}/#{::BUILD}" %>"
+    data-turbolinks-permanent>
 </script>
