@@ -4,6 +4,10 @@
 # @author Fletcher91 <thom@argu.co>
 module NestedResourceHelper
 
+  def current_resource_is_nested?
+    parent_resource_key(request.path_parameters).present?
+  end
+
   # Finds the parent resource based on the URL's :foo_id param
   # If the controller is an {AuthorizedController}, it'll check for a persited {authenticated_resource!!}
   # @note This method knows {Shortnameable}
@@ -73,9 +77,11 @@ module NestedResourceHelper
   end
 
   def resource_tenant
-    get_parent_resource.is_a?(Forum) ?
-      get_parent_resource :
-      get_parent_resource.forum
+    if current_resource_is_nested?
+      get_parent_resource.is_a?(Forum) ?
+        get_parent_resource :
+        get_parent_resource.forum
+    end
   end
 
 end

@@ -18,7 +18,13 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As Guest
   ####################################
-  test 'should get show when not logged in' do
+  test 'guest should 404 on nonexistent id' do
+    get :show, id: 'none'
+
+    assert_response 404
+  end
+
+  test 'guest should get show' do
     get :show, id: subject
     assert_response 200
 
@@ -50,7 +56,7 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   let(:user) { FactoryGirl.create(:user) }
 
-  test 'should get show' do
+  test 'user should get show' do
     sign_in user
 
     get :show, id: subject
@@ -58,6 +64,14 @@ class QuestionsControllerTest < ActionController::TestCase
 
     assert subject.motions.any?(&:is_trashed?), 'No trashed motions to test'
     assert_not assigns(:motions).any? { |motion| motion.is_trashed? }, 'Trashed motions are visible'
+  end
+
+  test 'user should 404 on nonexistent id' do
+    sign_in user
+
+    get :show, id: 'none'
+
+    assert_response 404
   end
 
   test 'user should not get new' do
@@ -94,6 +108,14 @@ class QuestionsControllerTest < ActionController::TestCase
     get :new, forum_id: freetown
     assert_response 200
     assert_not_nil assigns(:resource)
+  end
+
+  test 'member should 404 on nonexistent id' do
+    sign_in member
+
+    get :show, id: 'none'
+
+    assert_response 404
   end
 
   test 'member should post create' do

@@ -64,7 +64,7 @@ class AuthorizedController < ApplicationController
   end
 
   def authorize_show
-    authorize authenticated_resource!, :show?
+    authorize authenticated_resource, :show?
   end
 
   def check_if_member
