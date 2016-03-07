@@ -29,7 +29,7 @@ FactoryGirl.define do
     end
 
     trait :viewed_notifications_hour_ago do
-      notifications_viewed_at DateTime.current - 1.hour
+      notifications_viewed_at 1.hour.ago
     end
 
     trait :viewed_notifications_now do

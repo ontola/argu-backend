@@ -27,12 +27,12 @@ class NotificationSchedulerWorkersTest < ActiveSupport::TestCase
     create(:notification,
            activity: activity,
            user: user,
-           created_at: Time.current - 1.minute)
+           created_at: 1.minute.ago)
 
     create(:notification,
            activity: activity,
            user: user,
-           created_at: Time.current - 1.day)
+           created_at: 1.day.ago)
   end
 
   test 'Should collect direct followers to send notificaitons' do

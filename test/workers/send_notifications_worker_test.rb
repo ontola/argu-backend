@@ -29,7 +29,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
     create(:notification,
            activity: activity,
            user: user,
-           created_at: Time.current - 1.day)
+           created_at: 1.day.ago)
   end
 
   test 'Should send mail to direct follower' do
