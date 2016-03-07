@@ -1,5 +1,5 @@
 .markdown.markdown--preview[itemprop="text"]
-  - if strip_tags(markdown_to_html(content)).length < 220
+  - if strip_tags(markdown_to_html(content)).length < (local_assigns[:character_length] || 280)
     =markdown_to_html(content)
   - else
     input.collapsible-input[type="checkbox" value="selected" id="collapse-#{identifier}"]
