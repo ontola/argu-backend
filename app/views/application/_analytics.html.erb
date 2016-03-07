@@ -7,16 +7,12 @@
 
         ga('create', 'UA-57491906-1', 'auto');
         ga('require', 'displayfeatures');
-        ga('set', 'appVersion', '<%= "v#{::VERSION}/#{::BUILD}" %>');
+        ga('set', 'appVersion', '<%= "#{::VERSION}" %>');
         <% if current_user.present? %>
         ga('set', '&uid', '<%= analytics_token %>');
         <% end %>
         ga('require', 'linkid', 'linkid.js');
-        $(document).on('turbolinks:load', function() {
-            ga('set', 'location', window.location.pathname);
-            ga('send', 'pageview');
-        });
-
+        ga('send', 'pageview');
     </script>
 <% end %>
 <script

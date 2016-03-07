@@ -23,6 +23,13 @@ function init () {
         activityFeed.init();
         m.init();
         iso();
+        if (typeof ga === 'function') {
+            let first = true;
+            $(document).on('turbolinks:load', function() {
+                ga('set', 'location', window.location.pathname);
+                first ? (first = false) : ga('send', 'pageview');
+            });
+        }
     } catch (error) {
         debugger;
         console.log('Something went wrong during initialisation', error);
