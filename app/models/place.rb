@@ -4,7 +4,9 @@ class Place < ActiveRecord::Base
            through: :placements
 
   def self.find_or_fetch(postal_code, country_code)
-    place = Place.where("address->>'postcode' = ?", postal_code.upcase)
+    place = Place.where("address->>'postcode' = ? AND address->>'country_code' = ?",
+                        postal_code.try(:upcase).try(:delete, ' '),
+                        country_code.try(:downcase))
     return place.first if place.present?
     Place.fetch url(postal_code, country_code)
   end

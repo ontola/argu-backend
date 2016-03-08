@@ -57,7 +57,7 @@ class ProfilesController < ApplicationController
       if params[:profile][:postal_code] != @profile.postal_code || params[:profile][:country] != @profile.country
         @profile.placements.destroy_all
         place = Place.find_or_fetch(params[:profile][:postal_code], params[:profile][:country])
-        @profile.placements.create place: place, creator: current_user if place.present?
+        @profile.placements.create place: place, creator: @profile if place.present?
       end
 
       updated = @profile.update permit_params
