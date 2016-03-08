@@ -54,6 +54,11 @@ class ProfilesController < ApplicationController
 
     updated = nil
     Profile.transaction do
+      if params[:profile][:postal_code].present? && params[:profile][:postal_code] != @profile.postal_code
+        place = Place.by_postal_code(params[:profile][:postal_code])
+        @profile.placements.create place: place, creator: current_user if place.present?
+      end
+
       updated = @profile.update permit_params
 
       if @profile.profileable.class == User

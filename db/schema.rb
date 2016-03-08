@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160112101509) do
+ActiveRecord::Schema.define(version: 20160307163053) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -454,7 +454,7 @@ ActiveRecord::Schema.define(version: 20160112101509) do
   add_index "photos", ["forum_id"], name: "index_photos_on_forum_id", using: :btree
 
   create_table "placements", force: :cascade do |t|
-    t.integer "forum_id",       null: false
+    t.integer "forum_id"
     t.integer "place_id",       null: false
     t.integer "placeable_id",   null: false
     t.string  "placeable_type", null: false
@@ -477,6 +477,10 @@ ActiveRecord::Schema.define(version: 20160112101509) do
     t.string  "osm_class"
     t.string  "osm_importance"
     t.string  "icon"
+    t.string  "osm_category"
+    t.json    "address"
+    t.json    "extratags"
+    t.json    "namedetails"
   end
 
   create_table "profiles", force: :cascade do |t|

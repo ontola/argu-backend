@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
         format: { with: RFC822::EMAIL }
   validates :profile, presence: true
   validates :language, inclusion: { in: I18n.available_locales.map(&:to_s), message: '%{value} is not a valid locale' }
-  auto_strip_attributes :first_name, :last_name, :middle_name, :postal_code, :squish => true
+  auto_strip_attributes :first_name, :last_name, :middle_name, :squish => true
 
   def active_at(redis = nil)
     Argu::Redis.get("user:#{self.id}:active.at", redis)
