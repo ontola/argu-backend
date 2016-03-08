@@ -1560,6 +1560,10 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Alert = require('./Alert');
+
+var _Alert2 = _interopRequireDefault(_Alert);
+
 var _helpers = require('../lib/helpers');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1567,34 +1571,54 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var PostalCodeButton = exports.PostalCodeButton = _react2.default.createClass({
     displayName: 'PostalCodeButton',
 
+    getInitialState: function getInitialState() {
+        return {
+            state: 0
+        };
+    },
+
     handleClick: function handleClick(e) {
+        e.preventDefault();
+        this.setState({ state: 1 });
+        var form_field_id = this.props.form_field_id;
+        var that = this;
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (position) {
-                var _this = this;
-
-                fetch("https://nominatim.openstreetmap.org/search/" + position.coords.latitude + "," + position.coords.longitude + "?format=json&addressdetails=1&limit=1").then(_helpers.statusSuccess).then(_helpers.json).then(function (data) {
-                    console.log(data[0].address);
-                    document.getElementById('profile_postal_code').value = data[0].address.postcode;
-                }).catch(function () {
-                    Alert(_this.getIntlMessage('errors.general'), 'alert', true);
+                //fetch("https://nominatim.openstreetmap.org/search/" + position.coords.latitude + "," + position.coords.longitude + "?format=json&addressdetails=1&limit=1")
+                fetch("https://nominatim.openstreetmap.org/search/40.7141667,-74.0063889?format=json&addressdetails=1&limit=1").then(_helpers.statusSuccess).then(_helpers.json).then(function (data) {
+                    document.getElementById(form_field_id).value = data[0].address.postcode;
+                    that.setState({ state: -1 });
                 });
             });
         }
-        e.preventDefault();
     },
 
     render: function render() {
-        return _react2.default.createElement(
-            'a',
-            { href: '/', onClick: this.handleClick },
-            _react2.default.createElement('span', { className: 'fa fa-crosshairs' })
-        );
+        switch (this.state.state) {
+            case 0:
+                return _react2.default.createElement(
+                    'a',
+                    { href: '/', onClick: this.handleClick },
+                    this.props.button_text
+                );
+                break;
+            case 1:
+                return _react2.default.createElement(
+                    'span',
+                    null,
+                    this.props.searching_text
+                );
+                break;
+            case -1:
+                return _react2.default.createElement('span', null);
+                break;
+        }
     }
 });
 
 window.PostalCodeButton = PostalCodeButton;
 
-},{"../lib/helpers":15,"react":563}],10:[function(require,module,exports){
+},{"../lib/helpers":15,"./Alert":3,"react":563}],10:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
