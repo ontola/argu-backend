@@ -26,6 +26,12 @@
       span=t('profiles.edit.file_limit_notice')
     - if @profile.cover_photo.present?
       =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 96px; margin-bottom: 0.5em;'}, label: t('profiles.edit.current_picture')
+  =f.inputs name: t('profiles.edit.personal_information') do
+    p=t('profiles.edit.personal_information_notice')
+    =f.input :postal_code, label: t('profiles.edit.postal_code')
+    =f.input :country, as: :react_country, priority_countries: %w(NL BE)
+    =f.semantic_fields_for :profileable do |uf|
+      =uf.input :birthday, as: :date_picker
   =f.inputs name: t('profiles.edit.privacy') do
     p= t('profiles.edit.privacy_notice')
     =f.input :are_votes_public, as: :reverse_boolean
