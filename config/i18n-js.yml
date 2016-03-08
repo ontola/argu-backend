@@ -28,6 +28,5 @@
 #
 #translations:
 #  - file: "app/assets/javascripts/i18n/translations.js"
-translations:
-  - file: "app/assets/javascripts/i18n/translations.js"
+- file: "app/assets/javascripts/i18n/translations.js"
   only: 'intro.*'
