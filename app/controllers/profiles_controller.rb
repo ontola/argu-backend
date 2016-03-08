@@ -54,8 +54,9 @@ class ProfilesController < ApplicationController
 
     updated = nil
     Profile.transaction do
-      if params[:profile][:postal_code].present? && params[:profile][:postal_code] != @profile.postal_code
-        place = Place.by_postal_code(params[:profile][:postal_code])
+      if params[:profile][:postal_code] != @profile.postal_code || params[:profile][:country] != @profile.country
+        @profile.placements.destroy_all
+        place = Place.find_or_fetch(params[:profile][:postal_code], params[:profile][:country])
         @profile.placements.create place: place, creator: current_user if place.present?
       end
 
@@ -94,7 +95,7 @@ private
   end
 
   def user_profileable_params
-    params.require(:profile).require(:profileable_attributes).permit :first_name, :middle_name, :last_name
+    params.require(:profile).require(:profileable_attributes).permit :first_name, :middle_name, :last_name, :birthday, :country
   end
 
   def profile_update_path

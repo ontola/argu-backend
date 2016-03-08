@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :repeat_name
 
-  delegate :description, to: :profile
+  delegate :description, :postal_code, :country, to: :profile
 
   enum follows_email: { never_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3 } # weekly_follows_email: 1, daily_follows_email: 2,
   #enum memberships_email: { never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3 }

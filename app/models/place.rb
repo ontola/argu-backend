@@ -3,10 +3,10 @@ class Place < ActiveRecord::Base
   has_many :placeables,
            through: :placements
 
-  def self.by_postal_code(postal_code)
+  def self.find_or_fetch(postal_code, country_code)
     place = Place.where("address->>'postcode' = ?", postal_code.upcase)
     return place.first if place.present?
-    Place.fetch url(postal_code)
+    Place.fetch url(postal_code, country_code)
   end
 
   def self.fetch(url)
@@ -36,7 +36,7 @@ class Place < ActiveRecord::Base
 
   private
 
-  def self.url(query)
-    "https://nominatim.openstreetmap.org/search/#{query}?format=jsonv2&addressdetails=1&limit=1&polygon=0&extratags=1&namedetails=1"
+  def self.url(postal_code, country_code)
+    "https://nominatim.openstreetmap.org/search?postalcode=#{postal_code}&countrycodes=#{country_code}&format=jsonv2&addressdetails=1&limit=1&polygon=0&extratags=1&namedetails=1"
   end
 end

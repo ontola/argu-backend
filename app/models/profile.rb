@@ -53,6 +53,10 @@ class Profile < ActiveRecord::Base
     profileable.try :confirmed?
   end
 
+  def country
+    self.places.first.try(:address).try(:[], 'country_code').try(:upcase) || 'NL'
+  end
+
   # http://schema.org/description
   def description
     self.about
@@ -64,6 +68,10 @@ class Profile < ActiveRecord::Base
 
   def email
     profileable.try :email
+  end
+
+  def postal_code
+    self.places.first.try(:address).try(:[], 'postcode')
   end
 
   def profile_frozen?
