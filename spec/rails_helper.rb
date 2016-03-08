@@ -69,11 +69,11 @@ RSpec.configure do |config|
 
   Capybara.register_driver :selenium_chrome do |app|
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome('elementScrollBehavior' => 1)
-    profile = Selenium::WebDriver::Chrome::Profile.new
-    profile['intl.accept_languages'] = 'en-US'
+    prefs = Selenium::WebDriver::Chrome::Profile.new
+    prefs['intl.accept_languages'] = 'en-US'
     Capybara::Selenium::Driver.new(app,
                                    browser: :chrome,
-                                   profile: profile,
+                                   prefs: prefs,
                                    desired_capabilities: capabilities)
   end
 
