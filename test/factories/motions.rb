@@ -5,8 +5,8 @@ FactoryGirl.define do
     association :creator, factory: :profile
     #association :question, factory: :question
 
-    sequence(:title) { |n| "title#{n}" }
-    content 'content'
+    sequence(:title) { |n| "fg_motion_title_#{n}" }
+    sequence(:content) { |i| "fg_motion_content_#{i}" }
     is_trashed false
 
     after :create do |motion, evaluator|

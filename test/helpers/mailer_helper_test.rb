@@ -3,73 +3,88 @@ require 'test_helper'
 class MailerHelperTest < ActionView::TestCase
   include MailerHelper
 
-  let!(:holland) { FactoryGirl.create(:populated_forum) }
-  let!(:creator) { FactoryGirl.create(:user) }
+  let!(:holland) { create(:populated_forum) }
+  let!(:creator) { create(:user) }
 
   let(:question) do
-    FactoryGirl.create(:notification,
-                       activity: FactoryGirl.create(:activity,
-                                                    :t_question,
-                                                    owner: creator.profile,
-                                                    forum: holland))
+    create(:notification,
+           activity: create(:activity,
+                            :t_question,
+                            owner: creator.profile,
+                            forum: holland))
   end
 
   let(:motion) do
-    FactoryGirl.create(:notification,
-                       activity: FactoryGirl.create(:activity,
-                                                    :t_motion,
-                                                    owner: creator.profile,
-                                                    forum: holland))
+    create(:notification,
+           activity: create(:activity,
+                            :t_motion,
+                            owner: creator.profile,
+                            forum: holland))
   end
 
   let(:motion_question) do
-    question = FactoryGirl.create(:question)
-    FactoryGirl.create(:notification,
-                       activity: FactoryGirl.create(:activity,
-                                                    :t_motion,
-                                                    owner: creator.profile,
-                                                    recipient: question,
-                                                    forum: holland))
+    question = create(:question)
+    create(:notification,
+           activity: create(:activity,
+                            :t_motion,
+                            owner: creator.profile,
+                            recipient: question,
+                            forum: holland))
   end
 
   let(:argument_pro) do
-    FactoryGirl.create(:notification,
-                       activity: FactoryGirl.create(:activity,
-                                                    :t_argument,
-                                                    owner: creator.profile,
-                                                    forum: holland))
+    create(:argument,
+           forum: holland,
+           pro: true)
+  end
+
+  let(:argument_pro_notification) do
+    create(:notification,
+           activity: create(:activity,
+                            :t_argument,
+                            owner: creator.profile,
+                            forum: holland))
   end
 
   let(:argument_con) do
-    argument = FactoryGirl.create(:argument,
+    argument = create(:argument,
                        forum: holland,
                        creator: creator.profile,
                        pro: false)
 
-    FactoryGirl.create(:notification,
-                       activity: FactoryGirl.create(:activity,
-                                                    :t_argument,
-                                                    forum: holland,
-                                                    trackable: argument,
-                                                    recipient: argument.motion))
+    create(:notification,
+           activity: create(:activity,
+                            :t_argument,
+                            forum: holland,
+                            trackable: argument,
+                            recipient: argument.motion))
   end
 
   let(:comment) do
-    FactoryGirl.create(:notification,
-                       activity: FactoryGirl.create(:activity,
-                                                    :t_comment,
-                                                    forum: holland,
-                                                    owner: creator.profile))
+    _comment = create(:comment,
+                     commentable: argument_pro,
+                     profile: creator.profile)
+    create(:notification,
+           activity: create(:activity,
+                            forum: holland,
+                            trackable: _comment,
+                            recipient: argument_pro,
+                            owner: creator.profile))
   end
 
   let(:comment_comment) do
-    comment = FactoryGirl.create(:comment)
-    FactoryGirl.create(:notification,
-                       activity: FactoryGirl.create(:activity,
-                                                    :t_comment,
-                                                    owner: creator.profile,
-                                                    recipient: comment,
-                                                    forum: holland))
+    comment = create(:comment,
+                     commentable: argument_pro)
+    comment_comment = create(:comment,
+                             commentable: argument_pro,
+                             profile: creator.profile)
+    comment_comment.move_to_child_of comment
+    create(:notification,
+           activity: create(:activity,
+                            forum: holland,
+                            trackable: comment_comment,
+                            recipient: argument_pro,
+                            owner: creator.profile))
   end
 
   test 'notification_subject should return correct sentences for questions' do
@@ -86,8 +101,8 @@ class MailerHelperTest < ActionView::TestCase
   end
 
   test 'notification_subject should return correct sentences for arguments' do
-    assert_equal "New argument: '#{argument_pro.resource.motion.display_name}' by #{creator.first_name} #{creator.last_name}",
-                 notification_subject(argument_pro)
+    assert_equal "New argument: '#{argument_pro_notification.resource.motion.display_name}' by #{creator.first_name} #{creator.last_name}",
+                 notification_subject(argument_pro_notification)
 
     assert_equal "New argument: '#{argument_con.resource.motion.display_name}' by #{creator.first_name} #{creator.last_name}",
                  notification_subject(argument_con)
@@ -97,12 +112,12 @@ class MailerHelperTest < ActionView::TestCase
     assert_equal "New comment on '#{comment.resource.commentable.display_name}' by #{creator.first_name} #{creator.last_name}",
                  notification_subject(comment)
 
-    assert_equal "New comment on 'comment' by #{creator.first_name} #{creator.last_name}",
+    assert_equal "New comment on '#{comment_comment.resource.commentable.display_name}' by #{creator.first_name} #{creator.last_name}",
                  notification_subject(comment_comment)
   end
 
   test 'action_path should return paths' do
-    [question, motion, argument_pro, comment].each do |item|
+    [question, motion, argument_pro_notification, comment].each do |item|
       assert action_path(item).length > 13
     end
   end

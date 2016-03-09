@@ -15,7 +15,7 @@ FactoryGirl.define do
     }
     association :profile
     association :publisher, factory: :user
-    sequence(:body) { |i| "fn_body_#{i}" }
+    sequence(:body) { |i| "fg_comment_body_#{i}" }
     is_trashed false
 
     after(:create) do |comment|
