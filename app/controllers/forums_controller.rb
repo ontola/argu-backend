@@ -10,7 +10,7 @@ class ForumsController < ApplicationController
   end
 
   def discover
-    @forums = policy_scope(Forum).top_public_forums
+    @forums = policy_scope(Forum).top_public_forums(50)
     authorize Forum, :selector?
 
     render
