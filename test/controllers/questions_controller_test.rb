@@ -290,7 +290,7 @@ class QuestionsControllerTest < ActionController::TestCase
     subject # trigger
 
     assert_differences([['Question.trashed(false).count', -1],
-                        ['Question.trashed(false).count', 0]]) do
+                        ['Question.trashed(true).count', 0]]) do
       delete :destroy,
              id: subject
     end
@@ -303,7 +303,7 @@ class QuestionsControllerTest < ActionController::TestCase
     subject # trigger
 
     assert_differences([['Question.trashed(false).count', -1],
-                        ['Question.trashed(false).count', -1]]) do
+                        ['Question.trashed(true).count', -1]]) do
       delete :destroy,
              id: subject,
              destroy: 'true'
