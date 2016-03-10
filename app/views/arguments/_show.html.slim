@@ -11,10 +11,10 @@
         section.top-comment[class=status_classes_for(top_comment)]
           p.wrap-normal
             =top_comment.is_trashed? ? '[DELETED]' : HTML_Truncator.truncate(markdown_to_plaintext(top_comment.body), 150, {length_in_chars: true, ellipsis: (' ...')})
-          .read-more
+          .btn-sticky.btns-sticky-bottom.btn-subtle.btn--mini
             span.icon-right= model.comments_count.to_s
             span.fa.fa-comments
     - else
-      =contextual_link_to argument_path(model), class: 'btn-sticky btns-sticky-bottom read-more'
+      =contextual_link_to argument_path(model), class: 'btn-sticky btns-sticky-bottom btn-subtle btn--smaller btn--mini'
         span.icon-right= t('reply')
         span.fa.fa-comments

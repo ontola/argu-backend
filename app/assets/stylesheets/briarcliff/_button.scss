@@ -175,6 +175,10 @@
   }
 }
 
+.btn--mini {
+  padding: .5em !important;
+}
+
 .btn--smaller {
   padding: 0.3em 0.6em !important;
 }
@@ -486,43 +490,6 @@ h1 + .btn {
 .expander-content {
   display: none;
 }
-
-.read-more{
-  right: 0;
-  bottom: 0;
-  padding: 0.5em 0.5em !important;
-  font-size: .8em;
-  position: absolute;
-  text-transform: uppercase;
-  z-index: 1;
-  @include transition(.2s);
-  span {
-    @include transition(.2s);
-    color: $g2;
-  }
-  &:hover span{
-    color: $g3;
-  }
-}
-
-/*
-button.is-loading{
-  pointer-events: none !important;
-  opacity: .85;
-  color: rgba(255,255,255,0.3);
-  &:after{
-    color: white;
-    border-color: white;
-    content: "test";
-    @include spinner;
-  }
-}
-
-a.is-loading{
-  pointer-events: none !important;
-  opacity: .7;
-}
-*/
 
 .is-loading{
   pointer-events: none !important;
