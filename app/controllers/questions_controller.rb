@@ -68,17 +68,18 @@ class QuestionsController < AuthorizedController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
-    @question = Question.find params[:id]
     if params[:destroy].to_s == 'true'
-      authorize @question
-      @question.destroy
+      authenticated_resource!.destroy
+      flash[:notice] = t('type_save_success',
+                         type: t('questions.type'))
     else
-      authorize @question, :trash?
-      @question.trash
+      authenticated_resource!.trash
+      flash[:notice] = t('type_save_success',
+                         type: t('questions.type'))
     end
 
     respond_to do |format|
-      format.html { redirect_to @question.forum }
+      format.html { redirect_to authenticated_resource!.forum }
       format.json { head :no_content }
     end
   end

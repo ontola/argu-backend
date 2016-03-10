@@ -90,17 +90,14 @@ class ArgumentsController < AuthorizedController
   # DELETE /arguments/1
   # DELETE /arguments/1.json
   def destroy
-    @argument = Argument.find params[:id]
     if params[:destroy].to_s == 'true'
-      authorize @argument, :destroy?
-      @argument.destroy
+      authenticated_resource!.destroy
     else
-      authorize @argument, :trash?
-      @argument.trash
+      authenticated_resource!.trash
     end
 
     respond_to do |format|
-      format.html { redirect_to motion_path(@argument.motion_id) }
+      format.html { redirect_to motion_path(authenticated_resource!.motion_id) }
       format.json { head :no_content }
     end
   end

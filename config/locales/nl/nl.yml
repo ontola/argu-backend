@@ -194,6 +194,8 @@ nl:
       truncate: "..."
   type_save_success: "%{type} successvol opgeslagen"
   type_create_success: "%{type} successvol aangemaakt"
+  type_destroy_success: "%{type} successvol verwijderd"
+  type_trash_success: "%{type} successvol verborgen"
   move:
     current_forum: "Huidig forum:"
     button_label: "Verplaats"

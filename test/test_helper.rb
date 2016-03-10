@@ -75,14 +75,14 @@ class ActiveSupport::TestCase
   end
 
   def create_manager(forum, user = nil)
-    user ||= FactoryGirl.create(:user)
-    FactoryGirl.create(:managership, forum: forum, profile: user.profile)
+    user ||= create(:user)
+    create(:managership, forum: forum, profile: user.profile)
     user
   end
 
   def create_member(forum, user = nil)
-    user ||= FactoryGirl.create(:user)
-    FactoryGirl.create(:membership, forum: forum, profile: user.profile)
+    user ||= create(:user)
+    create(:membership, forum: forum, profile: user.profile)
     user
   end
 
@@ -95,9 +95,9 @@ class ActiveSupport::TestCase
   end
 
   def create_moderator(record, user = nil)
-    user ||= FactoryGirl.create(:user)
+    user ||= create(:user)
     forum = record.is_a?(Forum) ? record : record.forum
-    FactoryGirl.create(:stepup, forum: forum, record: record, moderator: create_member(forum, user))
+    create(:stepup, forum: forum, record: record, moderator: create_member(forum, user))
     user
   end
 
@@ -105,17 +105,17 @@ class ActiveSupport::TestCase
   # Creates one if not given
   # @note overwrites the current owner in the `Page`
   def create_owner(forum, user = nil)
-    user ||= FactoryGirl.create(:user)
+    user ||= create(:user)
     forum.page.owner = user.profile
     assert_equal true, forum.page.save, "Couldn't create owner"
     user
   end
 
   def create_forum_owner_pair(forum_opts = {}, manager_opts = {})
-    user = FactoryGirl.create(:user, manager_opts)
-    forum = FactoryGirl.create((forum_opts[:type] || :forum),
-                               page: FactoryGirl.create(:page,
-                                                        owner: user.profile))
+    user = create(:user, manager_opts)
+    forum = create((forum_opts[:type] || :forum),
+                   page: create(:page,
+                                owner: user.profile))
     return forum, user
   end
 
