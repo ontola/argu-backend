@@ -228,6 +228,8 @@ Argu::Application.routes.draw do
 
   resources :info, path: 'i', only: [:show]
 
+  get '/quawonen_feedback', to: redirect('/quawonen')
+
   resources :forums,
             only: [:show, :update],
             path: '',
