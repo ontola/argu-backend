@@ -92,8 +92,12 @@ class ArgumentsController < AuthorizedController
   def destroy
     if params[:destroy].to_s == 'true'
       authenticated_resource!.destroy
+      flash[:notice] = t('type_destroy_success',
+                         type: t('arguments.type'))
     else
       authenticated_resource!.trash
+      flash[:notice] = t('type_trash_success',
+                         type: t('arguments.type'))
     end
 
     respond_to do |format|

@@ -70,11 +70,11 @@ class QuestionsController < AuthorizedController
   def destroy
     if params[:destroy].to_s == 'true'
       authenticated_resource!.destroy
-      flash[:notice] = t('type_save_success',
+      flash[:notice] = t('type_destroy_success',
                          type: t('questions.type'))
     else
       authenticated_resource!.trash
-      flash[:notice] = t('type_save_success',
+      flash[:notice] = t('type_trash_success',
                          type: t('questions.type'))
     end
 
