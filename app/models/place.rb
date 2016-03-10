@@ -16,9 +16,9 @@ class Place < ActiveRecord::Base
     opts[:country_code] = opts[:country_code].downcase if opts[:country_code].present?
     opts.each do |key, value|
       if value.present?
-        scope = scope.where("address->>'#{key}' = ?", value)
+        scope = scope.where("address->>? = ?", key, value)
       else
-        scope = scope.where("(address->'#{key}') is null")
+        scope = scope.where("(address->?) is null", key)
       end
     end
     return scope.first if scope.present?
