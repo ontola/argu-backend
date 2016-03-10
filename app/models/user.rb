@@ -1,12 +1,13 @@
 class User < ActiveRecord::Base
-  include ArguBase, Shortnameable, Flowable
+  include ArguBase, Shortnameable, Flowable, Placeable
 
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
   has_many :identities, dependent: :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
   has_many :notifications
-
-  accepts_nested_attributes_for :profile
+  has_one :home_placement, -> { where title: 'home', placeable_type: 'User' }, class_name: 'Placement', foreign_key: 'placeable_id', inverse_of: :placeable
+  has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
+  accepts_nested_attributes_for :profile, :home_placement
 
   # Include default devise modules. Others available are:
   # :token_authenticatable,
@@ -25,7 +26,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :repeat_name
 
-  delegate :description, :postal_code, :country, to: :profile
+  delegate :description, to: :profile
 
   enum follows_email: { never_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3 } # weekly_follows_email: 1, daily_follows_email: 2,
   #enum memberships_email: { never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3 }
@@ -63,6 +64,15 @@ class User < ActiveRecord::Base
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
 
+  def country
+    self.home_address.try(:country_code).try(:upcase) || 'NL'
+  end
+
+
+  def country=(value)
+    @country = value.try(:downcase)
+  end
+
   def display_name
     [self.first_name, self.middle_name, self.last_name].compact.join(' ').presence || self.url
   end
@@ -78,6 +88,10 @@ class User < ActiveRecord::Base
 
   def greeting
     self.first_name.presence || self.url.presence || self.email.split('@').first
+  end
+
+  def home_placement
+    super || build_home_placement(creator: self.profile)
   end
 
   def is_omni_only
@@ -99,6 +113,14 @@ class User < ActiveRecord::Base
 
   def has_password?
     encrypted_password.present? || password.present? || password_confirmation.present?
+  end
+
+  def postal_code
+    self.home_address.try(:postal_code)
+  end
+
+  def postal_code=(value)
+    @postal_code = value.try(:upcase).try(:delete, ' ')
   end
 
   def requires_name?
@@ -128,6 +150,23 @@ class User < ActiveRecord::Base
       AccessToken.increment_counter :sign_ups, access_tokens
     end
   end
+
+  def validate_home_placement
+    home_address
+  end
+  #
+  # def home_placement=(val)
+  #   update_attribute :home_placement, self.home_placement.find_or_initialize_by(val)
+  # end
+
+  # def update_home_address
+  #   if self.country != @country || self.postal_code != @postal_code
+  #     home_placement.destroy if home_placement.present?
+  #     return if @country.blank? || @postal_code.blank?
+  #     @place = Place.find_or_fetch_by(postcode: @postal_code, country_code: @country)
+  #     build_home_placement(place: place, creator: profile) if place.present?
+  #   end
+  # end
 
   def user_to_recipient_option
     Hash[self.profile.email, self.profile.attributes.slice('id', 'name')]

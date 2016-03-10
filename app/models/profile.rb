@@ -1,11 +1,10 @@
 class Profile < ActiveRecord::Base
-  include ArguBase, Placeable
+  include ArguBase
 
   # Currently hardcoded to User (whilst it can also be a Profile)
   # to make the mailer implementation more efficient
   #has_one :profileable, class_name: 'User'
   belongs_to :profileable, polymorphic: true, inverse_of: :profile
-  accepts_nested_attributes_for :profileable
   rolify after_remove: :role_removed, before_add: :role_added
 
   has_many :access_tokens, dependent: :destroy
@@ -25,6 +24,7 @@ class Profile < ActiveRecord::Base
   has_many :votes, as: :voter, dependent: :destroy
   has_many :motions, inverse_of: :creator, foreign_key: 'creator_id'
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id'
+  accepts_nested_attributes_for :profileable
 
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, CoverUploader
@@ -53,10 +53,6 @@ class Profile < ActiveRecord::Base
     profileable.try :confirmed?
   end
 
-  def country
-    self.places.first.try(:address).try(:[], 'country_code').try(:upcase) || 'NL'
-  end
-
   # http://schema.org/description
   def description
     self.about
@@ -68,10 +64,6 @@ class Profile < ActiveRecord::Base
 
   def email
     profileable.try :email
-  end
-
-  def postal_code
-    self.places.first.try(:address).try(:[], 'postcode')
   end
 
   def profile_frozen?

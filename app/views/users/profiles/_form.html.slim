@@ -28,9 +28,10 @@
       =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 96px; margin-bottom: 0.5em;'}, label: t('profiles.edit.current_picture')
   =f.inputs name: t('profiles.edit.personal_information') do
     p=t('profiles.edit.personal_information_notice')
-    =f.input :postal_code, label: t('profiles.edit.postal_code')
-    =f.input :country, as: :react_country, priority_countries: %w(NL BE)
     =f.semantic_fields_for :profileable do |uf|
+      =uf.semantic_fields_for :home_placement do |ha|
+        =ha.input :postal_code
+        =ha.input :country_code, as: :react_country, priority_countries: %w(NL BE)
       =uf.input :birthday, as: :date_picker
   =f.inputs name: t('profiles.edit.privacy') do
     p= t('profiles.edit.privacy_notice')

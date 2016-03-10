@@ -1,0 +1,4 @@
+nl:
+  placements:
+    blank_country: "We kunnen je postcode niet zonder land vinden"
+    postal_with_county_not_found: "Postcode in combinatie met land niet gevonden"
