@@ -31,7 +31,7 @@ Argu::Application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
-  #config.ssl_options = {hsts: {subdomains: true}}
+  config.ssl_options = {hsts: {expires: 0}}
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH
