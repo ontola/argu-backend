@@ -11,7 +11,7 @@ class StaticPagesController < ApplicationController
         redirect_to (preferred_forum.presence || info_url('about'))
       end
     else
-      #redirect_to preferred_forum
+      redirect_to (preferred_forum.presence || info_url('about'))
       #@document = JSON.parse Setting.get('about') || '{}'
       #render 'document', layout: 'layouts/closed'
     end
