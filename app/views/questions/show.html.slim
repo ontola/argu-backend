@@ -16,7 +16,7 @@
         =markdown_to_html(question.content)
       span.hidden[itemprop="answerCount"]= question.motions_count
     =render question.creator, locals= {resource: question}
-    ul.btns-list--subtle.btns-sticky.btns-sticky-bottom.btns-horizontal.btns-list--grey-background
+    ul.btns-list--subtle.sticky--bottom-right.btns-horizontal.btns-list--grey-background
       - if current_user.present?
         li[data-title=I18n.t('tooltips.follow')]
           =react_component 'ActiveToggle',

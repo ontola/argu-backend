@@ -8,5 +8,5 @@
       h1[itemprop="headline"]= blog_post.title
       .markdown[itemprop="text"]= markdown_to_html(blog_post.content)
     =render partial: blog_post.creator, locals: {resource: blog_post}
-    ul.btns-list--subtle.btns-horizontal.btn-sticky-bottom.btn-sticky.btns-list--grey-background
+    ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
       =crud_menu_item(blog_post)

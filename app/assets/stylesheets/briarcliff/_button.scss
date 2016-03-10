@@ -121,24 +121,31 @@
   }
 }
 
-.btn-sticky {
+
+// The sticky class 'sticks' elements to a corner of a parent. Make sure the parent is relatively positioned.
+
+.sticky, .sticky--top-right {
   position: absolute !important;
   top: 0;
   right: 0;
 }
 
-.btn-sticky-bottom {
+.sticky--bottom-right {
+  position: absolute !important;
   top: auto;
   bottom: 0;
+  right: 0;
   margin-bottom: 0;
 }
 
-.btn-sticky-left {
+.sticky--top-left {
+  position: absolute !important;
+  top: 0;
   right: auto;
   left: 0;
 }
 
-.btn-sticky-center {
+.sticky--center {
   top: 50%;
   bottom: 50%;
 }
@@ -430,27 +437,6 @@
   }
 }
 
-.btns-sticky {
-  position: absolute;
-  right: 0;
-  text-align: right;
-}
-
-.btns-sticky-center {
-  top: 50%;
-  bottom: 50%;
-}
-
-.btns-sticky-top {
-  top: 0;
-}
-
-.btns-sticky-bottom {
-  bottom: 0;
-  top: auto;
-  margin-bottom: 0;
-}
-
 .btns-horizontal > li {
   display: inline-block;
 }
@@ -464,11 +450,6 @@
   margin: 0;
   color: $g2;
 }
-
-//h1 + .btns-horizontal {
-//  margin-top: -1em;
-//  margin-bottom: 1em;
-//}
 
 h1 + .btn {
   margin-bottom: 2em;

@@ -18,7 +18,7 @@
         h3= forum.display_name
       .cover-overlay
       - if policy(forum).update?
-        .btns-sticky.btns-sticky-top
+        .sticky--top-right
           =link_to settings_forum_path(forum), class: ('btn--transparant') do
             span.fa.fa-gear
             span.icon-left= t('settings')
@@ -41,5 +41,5 @@
       //h3= forum.display_name
       p= forum.bio.presence || t('forums.no_bio')
       =link_to forum_path(forum)
-        .read-more
+        .sticky--bottom-right.btn-subtle.btn--mini
           span= t('forums.visit')

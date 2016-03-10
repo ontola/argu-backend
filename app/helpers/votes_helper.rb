@@ -8,7 +8,7 @@ module VotesHelper
       data[:title] = t('tooltips.argument.vote_up_undo')
     end
 
-    link_to url, rel: :nofollow, class: 'upvote btn-subtle tooltip tooltip--left', data: data do
+    link_to url, rel: :nofollow, class: 'upvote btn-subtle btn--mini tooltip tooltip--left', data: data do
       yield
     end
   end

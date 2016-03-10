@@ -11,7 +11,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
         .markdown[itemprop="text"]
           =markdown_to_html(project.content)
       =render partial: project.creator, locals: {resource: project}
-      ul.btns-list--subtle.btns-horizontal.btn-sticky-bottom.btn-sticky.btns-list--grey-background
+      ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
         =crud_menu_item(project)
     -if project.is_draft?
       div.draftbar.bg-danger

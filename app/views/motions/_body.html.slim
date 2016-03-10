@@ -5,7 +5,7 @@
     .markdown[itemprop="text"]
       =markdown_to_html(motion.content)
   =render partial: motion.creator, locals: {resource: motion}
-  ul.btns-list--subtle.btns-horizontal.btn-sticky-bottom.btn-sticky.btns-list--grey-background
+  ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
     - if current_user.present?
       li[data-title=I18n.t('tooltips.follow')]
         =react_component 'ActiveToggle',

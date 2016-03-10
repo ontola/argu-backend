@@ -6,7 +6,7 @@
     .markdown[itemprop="text"]
       =markdown_to_html(@argument.content)
   =render partial: @argument.creator, locals: {resource: @argument} if @argument.creator.present?
-  ul.btns-list--subtle.btns-horizontal.btn-sticky.btn-sticky-bottom.btns-list--grey
+  ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey
     - if current_user.present?
       li[data-title=I18n.t('tooltips.follow')]
         =react_component 'ActiveToggle',

@@ -12,7 +12,7 @@
   -if current_profile.present?
   -else
     =render partial: 'profiles/empty_profile'
-  ul.btns-sticky.btns-sticky-bottom.btns-horizontal.btns-list--subtle
+  ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
     - if comment.persisted? && (local_assigns[:remote].nil? || local_assigns[:remote] == true)
       li
         div
