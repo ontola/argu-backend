@@ -11,6 +11,13 @@ class Place < ActiveRecord::Base
     self.address['postcode']
   end
 
+  # Find {Place} by provided opts. If {Place} is not found, try to {#fetch} from OSM
+  # @param [Hash] opts the options to find a {Place}.
+  # @option opts [String] :postcode
+  # @option opts [String] :country_code
+  # @example Place.find_or_fetch_by(postcode: "3583GP", country_code: "nl")
+  # @raise [StandardError] when a HTTP error occurs
+  # @return [Place, nil] {Place} or nil if it couldn't be found in OSM
   def self.find_or_fetch_by(opts = {})
     scope = Place.all
     opts[:country_code] = opts[:country_code].downcase if opts[:country_code].present?
@@ -27,6 +34,8 @@ class Place < ActiveRecord::Base
 
   private
 
+  # Fetches Nominatim data from OSM and saves it as a {Place}
+  # @return [Place, nil] {Place} or nil if it couldn't be found in OSM
   def self.fetch(url)
     result = JSON.parse(open(url).read).first
     return nil if result.nil?
@@ -52,6 +61,11 @@ class Place < ActiveRecord::Base
     raise StandardError.new(error_message(error))
   end
 
+  # Converts the provided params to an OSM url to fetch a {Place}
+  # @params [Hash] params
+  # Will convert :postcode to :postalcode and :country_code to :country
+  # @example Place.find_or_fetch_by(postcode: "3583GP", country_code: "nl")
+  # @return [String] OSM url with params
   def self.url_for_osm_query(params = {})
     params = {format: 'jsonv2', addressdetails: 1, limit: 1, polygon: 0, extratags: 1, namedetails: 1}.merge(params)
     params[:postalcode] = params.delete :postcode

@@ -1,13 +1,11 @@
 require 'test_helper'
 
 class ProfilesControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
-  include ProfilesHelper
+  include Devise::TestHelpers, ProfilesHelper
 
   let(:user) { create(:user) }
   let(:user2) { create(:user) }
   let(:place) { create(:place) }
-  let(:placement) { create(:placement) }
 
   ####################################
   # As User
@@ -49,7 +47,8 @@ class ProfilesControllerTest < ActionController::TestCase
                             }].to_json,
         )
 
-    assert_differences [['Place.count', 1],['Placement.count', 1]] do
+    assert_differences [['Place.count', 1],
+                        ['Placement.count', 1]] do
       put :update,
           id: user.url,
           profile: {
@@ -77,7 +76,8 @@ class ProfilesControllerTest < ActionController::TestCase
                             }].to_json,
         )
 
-    assert_differences [['Place.count', 1],['Placement.count', 1]] do
+    assert_differences [['Place.count', 1],
+                        ['Placement.count', 1]] do
       put :update,
           id: user.url,
           profile: {
@@ -96,7 +96,8 @@ class ProfilesControllerTest < ActionController::TestCase
   test 'user should not create place and placement on update with only postal code' do
     sign_in user
 
-    assert_differences [['Place.count', 0],['Placement.count', 0]] do
+    assert_differences [['Place.count', 0],
+                        ['Placement.count', 0]] do
       put :update,
           id: user.url,
           profile: {
@@ -118,7 +119,8 @@ class ProfilesControllerTest < ActionController::TestCase
         to_return(:body => [].to_json,
         )
 
-    assert_differences [['Place.count', 0],['Placement.count', 0]] do
+    assert_differences [['Place.count', 0],
+                        ['Placement.count', 0]] do
       put :update,
           id: user.url,
           profile: {
@@ -138,7 +140,8 @@ class ProfilesControllerTest < ActionController::TestCase
     sign_in user
     place
 
-    assert_differences [['Place.count', 0],['Placement.count', 1]] do
+    assert_differences [['Place.count', 0],
+                        ['Placement.count', 1]] do
       put :update,
           id: user.url,
           profile: {
@@ -160,7 +163,8 @@ class ProfilesControllerTest < ActionController::TestCase
     placement = user.build_home_placement(creator: user.profile, place: place)
     placement.save
 
-    assert_differences [['Place.count', 0],['Placement.count', -1]] do
+    assert_differences [['Place.count', 0],
+                        ['Placement.count', -1]] do
       put :update,
           id: user.url,
           profile: {

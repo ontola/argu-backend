@@ -64,15 +64,6 @@ class User < ActiveRecord::Base
     authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
   end
 
-  def country
-    self.home_address.try(:country_code).try(:upcase) || 'NL'
-  end
-
-
-  def country=(value)
-    @country = value.try(:downcase)
-  end
-
   def display_name
     [self.first_name, self.middle_name, self.last_name].compact.join(' ').presence || self.url
   end
@@ -115,14 +106,6 @@ class User < ActiveRecord::Base
     encrypted_password.present? || password.present? || password_confirmation.present?
   end
 
-  def postal_code
-    self.home_address.try(:postal_code)
-  end
-
-  def postal_code=(value)
-    @postal_code = value.try(:upcase).try(:delete, ' ')
-  end
-
   def requires_name?
     finished_intro?
   end
@@ -150,23 +133,6 @@ class User < ActiveRecord::Base
       AccessToken.increment_counter :sign_ups, access_tokens
     end
   end
-
-  def validate_home_placement
-    home_address
-  end
-  #
-  # def home_placement=(val)
-  #   update_attribute :home_placement, self.home_placement.find_or_initialize_by(val)
-  # end
-
-  # def update_home_address
-  #   if self.country != @country || self.postal_code != @postal_code
-  #     home_placement.destroy if home_placement.present?
-  #     return if @country.blank? || @postal_code.blank?
-  #     @place = Place.find_or_fetch_by(postcode: @postal_code, country_code: @country)
-  #     build_home_placement(place: place, creator: profile) if place.present?
-  #   end
-  # end
 
   def user_to_recipient_option
     Hash[self.profile.email, self.profile.attributes.slice('id', 'name')]

@@ -6,6 +6,7 @@ class Placement < ActiveRecord::Base
   before_validation :destruct_if_unneeded
   validate :validate_place, unless: :destroyed?
 
+  # @return [String] country_code from variable or from associated place
   def country_code
     @country_code || self.place.try(:country_code)
   end
@@ -15,6 +16,7 @@ class Placement < ActiveRecord::Base
     @country_code = val
   end
 
+  # @return [String] postal_code from variable or from associated place
   def postal_code
     @postal_code || self.place.try(:postal_code)
   end
@@ -27,12 +29,16 @@ class Placement < ActiveRecord::Base
 
   private
 
+  # Destroys placement when no country_code and no postal_code is provided
   def destruct_if_unneeded
     if country_code.blank? && postal_code.blank?
       self.destroy
     end
   end
 
+  # Validate whether the postal_code and country_code values are allowed and whether they match a {Place}
+  # Will fail when a postal_code is provided, while the country_code is blank
+  # or when {#Place.find_or_fetch_by} returns nil
   def validate_place
     if country_code.blank? && postal_code.present?
       errors.add(:country_code, I18n.t('placements.blank_country'))

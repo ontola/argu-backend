@@ -19,6 +19,8 @@ ActiveRecord::Migration.maintain_test_schema!
 
 Dir[File.dirname(__FILE__) + '/support/**/*.rb'].each {|f| require f }
 
+WebMock.disable_net_connect!(:allow_localhost => true)
+
 TestingBot::config do |config|
   config[:desired_capabilities] = {
     browserName: ENV['BROWSER_NAME'] || 'internet explorer',
