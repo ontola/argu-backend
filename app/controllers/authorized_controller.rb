@@ -58,10 +58,14 @@ class AuthorizedController < ApplicationController
   private
 
   def authorize_action
-    unless params[:controller].eql?('memberships')
-      authorize authenticated_resource!, "#{params[:action].chomp('!')}?"
+    return nil if params[:controller].eql?('memberships')
+
+    action = params[:action]
+    if params[:action] == 'destroy' && authenticated_resource!.try(:is_trashable?) && params[:destroy] != 'true'
+      action = 'trash'
     end
-  end
+    authorize authenticated_resource!, "#{action.chomp('!')}?"
+end
 
   def authorize_show
     authorize authenticated_resource, :show?

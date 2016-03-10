@@ -11,6 +11,10 @@ module Trashable
     end
   end
 
+  def is_trashable?
+    true
+  end
+
   def is_trashed?
     if self.respond_to? :trashed_at
       self[:trashed_at]
@@ -31,5 +35,8 @@ module Trashable
   end
 
   module ClassMethods
+    def is_trashable?
+      true
+    end
   end
 end
