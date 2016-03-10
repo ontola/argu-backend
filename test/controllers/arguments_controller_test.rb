@@ -3,33 +3,33 @@ require 'test_helper'
 class ArgumentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:freetown) { FactoryGirl.create(:forum) }
-  let(:motion) { FactoryGirl.create(:motion, forum: freetown) }
+  let(:freetown) { create(:forum) }
+  let(:motion) { create(:motion, forum: freetown) }
   let!(:follow) do
-    FactoryGirl.create(:follow,
-                       followable: motion,
-                       follower: FactoryGirl.create(:user, :follows_email))
+    create(:follow,
+           followable: motion,
+           follower: create(:user, :follows_email))
   end
   let(:argument) do
-    FactoryGirl.create(:argument,
-                       forum: freetown,
-                       motion: motion)
+    create(:argument,
+           forum: freetown,
+           motion: motion)
   end
 
   let(:project) { create(:project, forum: freetown) }
   let(:project_motion) { create(:motion, forum: freetown, project: project) }
   let(:project_argument) do
-    FactoryGirl.create(:argument,
-                       forum: freetown,
-                       motion: project_motion)
+    create(:argument,
+           forum: freetown,
+           motion: project_motion)
   end
 
   let(:pub_project) { create(:project, :published, forum: freetown) }
   let(:pub_project_motion) { create(:motion, forum: freetown, project: pub_project) }
   let(:pub_project_argument) do
-    FactoryGirl.create(:argument,
-                       forum: freetown,
-                       motion: pub_project_motion)
+    create(:argument,
+           forum: freetown,
+           motion: pub_project_motion)
   end
 
   ####################################
@@ -109,10 +109,10 @@ class ArgumentsControllerTest < ActionController::TestCase
   # As Member
   ####################################
   let(:member) { create_member(freetown) }
-  let(:member_argument) { FactoryGirl.create(:argument,
-                                      forum: freetown,
-                                      motion: motion,
-                                      creator: member.profile) }
+  let(:member_argument) { create(:argument,
+                                 forum: freetown,
+                                 motion: motion,
+                                 creator: member.profile) }
 
   test 'member should not get show nested unpublished' do
     sign_in member
@@ -258,6 +258,70 @@ class ArgumentsControllerTest < ActionController::TestCase
         }
 
     assert assigns(:_not_authorized_caught)
+  end
+
+  ####################################
+  # As Manager
+  ####################################
+  let(:manager) { create_manager(freetown) }
+
+  test 'manager should delete destroy trash' do
+    sign_in manager
+    argument # trigger
+
+    assert_differences([['Argument.trashed(false).count', -1],
+                        ['Argument.trashed(true).count', 0]]) do
+      delete :destroy,
+             id: argument
+    end
+
+    assert_redirected_to argument.motion
+  end
+
+  test 'manager should delete destroy' do
+    sign_in manager
+    argument # trigger
+
+    assert_differences([['Argument.trashed(false).count', -1],
+                        ['Argument.trashed(true).count', -1]]) do
+      delete :destroy,
+             id: argument,
+             destroy: 'true'
+    end
+
+    assert_redirected_to argument.motion
+  end
+
+  ####################################
+  # As Owner
+  ####################################
+  let(:owner) { freetown.page.owner.profileable }
+
+  test 'owner should delete destroy trash' do
+    sign_in owner
+    argument # trigger
+
+    assert_differences([['Argument.trashed(false).count', -1],
+                        ['Argument.trashed(true).count', 0]]) do
+      delete :destroy,
+             id: argument
+    end
+
+    assert_redirected_to argument.motion
+  end
+
+  test 'owner should delete destroy' do
+    sign_in owner
+    argument # trigger
+
+    assert_differences([['Argument.trashed(false).count', -1],
+                        ['Argument.trashed(true).count', -1]]) do
+      delete :destroy,
+             id: argument,
+             destroy: 'true'
+    end
+
+    assert_redirected_to argument.motion
   end
 
   private

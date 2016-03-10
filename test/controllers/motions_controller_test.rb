@@ -371,6 +371,70 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   ####################################
+  # As Manager
+  ####################################
+  let(:manager) { create_manager(freetown) }
+
+  test 'manager should delete destroy trash' do
+    sign_in manager
+    subject # trigger
+
+    assert_differences([['Motion.trashed(false).count', -1],
+                        ['Motion.trashed(true).count', 0]]) do
+      delete :destroy,
+             id: subject
+    end
+
+    assert_redirected_to freetown
+  end
+
+  test 'manager should delete destroy' do
+    sign_in manager
+    subject # trigger
+
+    assert_differences([['Motion.trashed(false).count', -1],
+                       ['Motion.trashed(true).count', -1]]) do
+      delete :destroy,
+             id: subject,
+             destroy: 'true'
+    end
+
+    assert_redirected_to freetown
+  end
+
+  ####################################
+  # As Owner
+  ####################################
+  let(:owner) { freetown.page.owner.profileable }
+
+  test 'owner should delete destroy trash' do
+    sign_in owner
+    subject # trigger
+
+    assert_differences([['Motion.trashed(false).count', -1],
+                        ['Motion.trashed(true).count', 0]]) do
+      delete :destroy,
+             id: subject
+    end
+
+    assert_redirected_to freetown
+  end
+
+  test 'owner should delete destroy' do
+    sign_in owner
+    subject # trigger
+
+    assert_differences([['Motion.trashed(false).count', -1],
+                        ['Motion.trashed(true).count', -1]]) do
+      delete :destroy,
+             id: subject,
+             destroy: 'true'
+    end
+
+    assert_redirected_to freetown
+  end
+
+  ####################################
   # As Staff
   ####################################
   let(:staff) { FactoryGirl.create(:user, :staff) }

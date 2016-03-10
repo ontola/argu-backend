@@ -5,13 +5,14 @@ class QuestionsControllerTest < ActionController::TestCase
 
   setup do
     @freetown, @freetown_owner = create_forum_owner_pair
+    create(:membership, forum: @freetown, profile: @freetown_owner.profile)
   end
 
-  let!(:freetown) { FactoryGirl.create(:forum, :with_follower, name: 'freetown') }
+  let!(:freetown) { create(:forum, :with_follower, name: 'freetown') }
   subject do
-    q = FactoryGirl.create(:question, forum: freetown)
-    FactoryGirl.create(:motion, forum: freetown, question: q)
-    FactoryGirl.create(:motion, forum: freetown, question: q, is_trashed: true)
+    q = create(:question, forum: freetown)
+    create(:motion, forum: freetown, question: q)
+    create(:motion, forum: freetown, question: q, is_trashed: true)
     q
   end
 
@@ -54,7 +55,7 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'user should get show' do
     sign_in user
@@ -100,7 +101,7 @@ class QuestionsControllerTest < ActionController::TestCase
   # As Member
   ####################################
   let(:member) { create_member(freetown) }
-  let(:member_question) { FactoryGirl.create(:question, forum: freetown, creator: member.profile) }
+  let(:member_question) { create(:question, forum: freetown, creator: member.profile) }
 
   test 'member should get new' do
     sign_in member
@@ -237,9 +238,9 @@ class QuestionsControllerTest < ActionController::TestCase
   # As Creator
   ####################################
   let(:creator) { create_member(freetown) }
-  let(:creator_question) { FactoryGirl.create(:question,
-                                            creator: creator.profile,
-                                            forum: freetown) }
+  let(:creator_question) { create(:question,
+                                  creator: creator.profile,
+                                  forum: freetown) }
 
   test 'creator should get edit' do
     sign_in creator
@@ -279,11 +280,45 @@ class QuestionsControllerTest < ActionController::TestCase
     assert assigns(:resource).changed?
   end
 
+  ####################################
+  # As Manager
+  ####################################
+  let(:manager) { create_manager(freetown) }
+
+  test 'manager should delete destroy trash' do
+    sign_in manager
+    subject # trigger
+
+    assert_differences([['Question.trashed(false).count', -1],
+                        ['Question.trashed(false).count', 0]]) do
+      delete :destroy,
+             id: subject
+    end
+
+    assert_redirected_to freetown
+  end
+
+  test 'manager should delete destroy' do
+    sign_in manager
+    subject # trigger
+
+    assert_differences([['Question.trashed(false).count', -1],
+                        ['Question.trashed(false).count', -1]]) do
+      delete :destroy,
+             id: subject,
+             destroy: 'true'
+    end
+
+    assert_redirected_to freetown
+  end
 
   ####################################
   # As Owner
   ####################################
-  let(:page_question) { FactoryGirl.create(:question, forum: @freetown, creator: @freetown_owner.profile) }
+  let(:page_question) { create(:question,
+                               forum: @freetown,
+                               creator: @freetown_owner.profile) }
+  let(:owner_forum_question) { create(:question, forum: @freetown) }
 
   test 'owner should put update on page owner own question' do
     sign_in @freetown_owner
@@ -300,6 +335,33 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_not_nil assigns(:resource)
     assert_equal 'New title', assigns(:resource).title
     assert_equal 'new contents', assigns(:resource).content
+  end
+
+  test 'owner should delete destroy trash' do
+    sign_in @freetown_owner
+    owner_forum_question # trigger
+
+    assert_differences([['Question.trashed(false).count', -1],
+                        ['Question.trashed(true).count', 0]]) do
+      delete :destroy,
+             id: owner_forum_question
+    end
+
+    assert_redirected_to @freetown
+  end
+
+  test 'owner should delete destroy' do
+    sign_in @freetown_owner
+    owner_forum_question # trigger
+
+    assert_differences([['Question.trashed(false).count', -1],
+                        ['Question.trashed(true).count', -1]]) do
+      delete :destroy,
+             id: owner_forum_question,
+             destroy: 'true'
+    end
+
+    assert_redirected_to @freetown
   end
 
   ####################################
