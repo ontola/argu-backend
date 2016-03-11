@@ -15,6 +15,10 @@
 /.idea
 client-bundle.js
 client-bundle.js.map
+_bundle.js
+_bundle.js.map
+_globbed_components.js
+_globbed_components.js.map
 node_modules
 /vendor/assets/bower_components
 spec/argu.txt
