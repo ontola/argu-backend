@@ -35,15 +35,20 @@ class Argument < ActiveRecord::Base
   end
 
   def next(show_trashed = false)
-    show_trashed = true if self.is_trashed?
-    _next = self.motion.arguments.trashed(show_trashed).order(votes_pro_count: :desc).limit(50).select(:id, :title).reverse
-    _next[((_next.index { |a| a.id == self.id } || 0) + 1) % _next.length]
+    adjacent(false, show_trashed)
   end
 
+  # @return [TODO, nil] The id of the previous item or nil.
   def previous(show_trashed = false)
-    show_trashed = true if self.is_trashed?
-    prev = self.motion.arguments.trashed(show_trashed).order(votes_pro_count: :desc).limit(50).select(:id, :title)
-    prev[(prev.index { |a| a.id == self.id } + 1) % prev.length]
+    adjacent(true, show_trashed)
+  end
+
+  def adjacent(direction, show_trashed = nil)
+    ids = self.motion.arguments_plain.order(votes_pro_count: :desc).ids
+    index = ids.index(self[:id])
+    return nil if ids.length < 2
+    p_id = ids[index.send(direction ? :- : :+, 1) % ids.count]
+    self.motion.arguments.find_by(id: p_id)
   end
 
   def wipe
