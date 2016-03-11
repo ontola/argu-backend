@@ -3,7 +3,8 @@ module UsersHelper
   def forum_from_r_action(user)
     if user.r.present?
       url_options, controller = r_to_url_options(user.r)
-      controller.new.forum_for(url_options) if controller.present? && controller.respond_to?(:forum_for)
+      controller_inst = controller.new
+      controller_inst.forum_for(url_options) if controller.present? && controller_inst.respond_to?(:forum_for)
     end
   end
 
