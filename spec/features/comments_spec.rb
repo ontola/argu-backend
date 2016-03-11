@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Comments', type: :feature do
-  include MarkdownHelper
 
   let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
   let!(:argument) { FactoryGirl.create(:argument, forum: holland) }
@@ -43,7 +42,7 @@ RSpec.feature 'Comments', type: :feature do
     end
 
     expect(page).to have_content argument.title
-    expect(page).to have_content markdown_to_plaintext(comment_args[:body])
+    expect(page).to have_content comment_args[:body]
   end
 
   ####################################
@@ -85,7 +84,7 @@ RSpec.feature 'Comments', type: :feature do
     end
 
     expect(page).to have_content argument.title
-    expect(page).to have_content markdown_to_plaintext(comment_args[:body])
+    expect(page).to have_content comment_args[:body]
   end
 
 end

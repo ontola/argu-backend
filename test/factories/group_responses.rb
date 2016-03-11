@@ -10,6 +10,6 @@ FactoryGirl.define do
     association :profile, factory: :profile
     association :publisher, factory: :user
     side :pro
-    sequence(:text) { |i| "fg_group_response_#{i}"  }
+    sequence(:text) { |i| "fg group response #{i}"  }
   end
 end

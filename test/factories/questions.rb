@@ -4,8 +4,8 @@ FactoryGirl.define do
     association :forum, strategy: :create
     association :creator, factory: :profile
 
-    title 'title'
-    content 'content'
+    sequence(:title) { |n| "fg question title #{n}" }
+    sequence(:content) { |n| "fg question content #{n}" }
 
     trait :with_motions do
       after(:create) do |question, evaluator|

@@ -2,7 +2,7 @@ FactoryGirl.define do
 
   factory :group do
     association :forum, strategy: :build
-    sequence(:name) { |i| "Fg_groups_#{i}" }
+    sequence(:name) { |i| "fg_groups#{i}" }
     name_singular 'Group'
     visibility :hidden
 

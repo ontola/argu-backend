@@ -4,7 +4,7 @@ FactoryGirl.define do
     association :forum
     association :creator, factory: :profile
 
-    sequence(:title) { |n| "fg_blog_post #{n}" }
+    sequence(:title) { |n| "fg blog post #{n}" }
     content 'contents'
   end
 end

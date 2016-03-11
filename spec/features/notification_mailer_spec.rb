@@ -1,6 +1,5 @@
 require 'rails_helper'
 include MailerHelper
-include MarkdownHelper
 
 RSpec.feature 'Notification mailer' do
   let(:activity_argument) do
@@ -59,7 +58,7 @@ RSpec.feature 'Notification mailer' do
     open_email(follower.email)
 
     expect(current_email.subject).to eq notification_subject(notification_argument)
-    expect(current_email).to have_content markdown_to_plaintext(notification_argument.activity.trackable.content)
+    expect(current_email).to have_content notification_argument.activity.trackable.content
 
     current_email.click_link 'Bekijk discussie'
     expect(current_path).to eq argument_path(notification_argument.activity.trackable)
@@ -76,8 +75,8 @@ RSpec.feature 'Notification mailer' do
     open_email(follower.email)
 
     expect(current_email.subject).to eq 'Nieuwe Argu notificaties'
-    expect(current_email).to have_content markdown_to_plaintext(notification_argument.activity.trackable.content)
-    expect(current_email).to have_content markdown_to_plaintext(notification_comment.activity.trackable.body)
+    expect(current_email).to have_content notification_argument.activity.trackable.content
+    expect(current_email).to have_content notification_comment.activity.trackable.body
 
     current_email.click_link notification_argument.activity.trackable.title
     expect(current_path).to eq argument_path(notification_argument.activity.trackable)
