@@ -27,7 +27,7 @@ class NotificationSchedulerWorkersTest < ActiveSupport::TestCase
     create(:notification,
            activity: activity,
            user: user,
-           created_at: 1.minute.ago)
+           created_at: 2.minutes.ago)
 
     create(:notification,
            activity: activity,
