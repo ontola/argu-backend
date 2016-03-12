@@ -3,12 +3,8 @@ require 'test_helper'
 class BannersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:holland) do
-    FactoryGirl.create(:populated_forum,
-                       name: 'holland')
-  end
-
-  let!(:holland_owner) { FactoryGirl.create(:user) }
+  let!(:holland) { create(:populated_forum, name: 'holland') }
+  let!(:holland_owner) { create(:user) }
 
   ####################################
   # As Guest
@@ -27,12 +23,12 @@ class BannersControllerTest < ActionController::TestCase
   # As User
   ####################################
   test 'user should not post create' do
-    sign_in FactoryGirl.create(:user)
+    sign_in create(:user)
 
     assert_no_difference('Banner.count') do
       post :create,
            forum_id: holland,
-           banner: FactoryGirl.attributes_for(:banner)
+           banner: attributes_for(:banner)
       assert_response 403
     end
   end
@@ -46,8 +42,8 @@ class BannersControllerTest < ActionController::TestCase
     assert_no_difference('Banner.count') do
       post :create,
            forum_id: holland,
-           banner: FactoryGirl.attributes_for(:banner)
-      assert_redirected_to forum_path(holland)
+           banner: attributes_for(:banner)
+      assert_redirected_to holland
     end
   end
 
@@ -60,7 +56,7 @@ class BannersControllerTest < ActionController::TestCase
     assert_difference('Banner.count') do
       post :create,
            forum_id: holland,
-           banner: FactoryGirl.attributes_for(:banner)
+           banner: attributes_for(:banner)
       assert_redirected_to settings_forum_path(holland, tab: :banners)
     end
   end
@@ -74,7 +70,7 @@ class BannersControllerTest < ActionController::TestCase
     assert_difference('Banner.count') do
       post :create,
            forum_id: holland,
-           banner: FactoryGirl.attributes_for(:banner)
+           banner: attributes_for(:banner)
       assert_redirected_to settings_forum_path(holland, tab: :banners)
     end
   end
