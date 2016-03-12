@@ -47,12 +47,16 @@ AlertIntegration.fadeAll = function () {
 
 AlertIntegration.handleJSONBody = function (event, XMLHttpRequest) {
     try {
-        var res = $.parseJSON(XMLHttpRequest.responseText);
-        if (res !== undefined &&
-            res.notifications !== undefined) {
-            res.notifications.forEach(function (notification) {
-                new Alert(notification.message, notification.type, true);
-            });
+        if (XMLHttpRequest
+                .getResponseHeader('Content-Type')
+                .includes('application/json')) {
+            var res = JSON.parse(XMLHttpRequest.responseText);
+            if (res !== undefined &&
+                res.notifications !== undefined) {
+                res.notifications.forEach(function (notification) {
+                    new Alert(notification.message, notification.type, true);
+                });
+            }
         }
     } catch(e) {
         Bugsnag.notifyException(e);
