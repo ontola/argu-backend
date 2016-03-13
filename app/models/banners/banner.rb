@@ -6,8 +6,8 @@ class Banner < ActiveRecord::Base
 
   enum audience: { guests: 0, users: 1, members: 2, everyone: 3 }
 
-  scope :published, -> { where('publish_at <= ?', DateTime.now) }
-  scope :unpublished, -> { where('publish_at IS NULL OR publish_at > ?', DateTime.now) }
+  scope :published, -> { where('published_at <= ?', DateTime.now) }
+  scope :unpublished, -> { where('published_at IS NULL OR published_at > ?', DateTime.now) }
 
   validates :forum, :audience, presence: true
   #validates :sample_size, min: 1, max: 100, default: 100
