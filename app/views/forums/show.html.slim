@@ -44,18 +44,11 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
                                {prerender: true}
   - if policy(@forum).show?
     .btns-center-container
-<<<<<<< a4a42fda7efe0262a498f44f05c6ea1ca89873b3
       -if can_start_discussion?
         =link_to new_forum_discussion_path(@forum), class: 'btn btn--pro new-discussion'
           span.fa.fa-plus
           span.icon-left= t('discussions.new.title')
       =render partial: 'filter_and_sort'
-=======
-      =link_to new_forum_discussion_path(@forum), class: 'btn btn--pro new-discussion'
-        span.fa.fa-plus
-        span.icon-left= t('discussions.new.title')
-      =render partial: 'discussions/filter_and_sort'
->>>>>>> [IMP] Timeline responsive css
     .grid
       .box.box-grid-sizer
       .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
