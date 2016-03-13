@@ -1,5 +1,4 @@
 class BannersController < AuthorizedController
-
   def new
     render 'forums/settings',
            locals: {
