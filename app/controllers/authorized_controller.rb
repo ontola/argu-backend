@@ -6,8 +6,7 @@ class AuthorizedController < ApplicationController
                 only: %i(new create delete destroy edit update)
   before_action :authorize_show, only: :show
   before_action :authorize_action
-  before_action :collect_banners
-  helper_method :authenticated_context
+  helper_method :authenticated_context, :collect_banners
 
   rescue_from Argu::NotAUserError, with: :handle_not_a_user_error
   rescue_from Argu::NotAMemberError, with: :handle_not_a_member_error
@@ -73,7 +72,7 @@ class AuthorizedController < ApplicationController
       action = 'trash'
     end
     authorize authenticated_resource!, "#{action.chomp('!')}?"
-end
+  end
 
   def authorize_show
     authorize authenticated_resource, :show?
@@ -98,6 +97,8 @@ end
   end
 
   def collect_banners
+    @banners if @banners.present?
+
     banners = stubborn_hgetall('banners') || {}
     banners = JSON.parse(banners) if banners.present? && banners.is_a?(String)
     if authenticated_context.present?
