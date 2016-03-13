@@ -80,7 +80,6 @@ class ApplicationController < ActionController::Base
                            components.reject! { |c| !policy(c).show? }
                          end
                        end
-    @current_context
   end
 
   # @return [Profile, nil] The {Profile} the {User} is using to do actions
