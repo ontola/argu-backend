@@ -1,11 +1,11 @@
 class BannersController < AuthorizedController
 
   def new
-    render settings_location,
+    render 'forums/settings',
            locals: {
-               banner: authenticated_resource!,
-               tab: 'banners/new',
-               active: 'banners'
+             banner: authenticated_resource!,
+             tab: 'banners/new',
+             active: 'banners'
            }
   end
 
@@ -23,7 +23,7 @@ class BannersController < AuthorizedController
     end
     @cb.on(:create_banner_failed) do |banner|
       respond_to do |format|
-        format.html { render settings_location,
+        format.html { render 'forums/settings',
                              locals: {
                                  banner: banner,
                                  tab: 'banners/new',
@@ -35,7 +35,7 @@ class BannersController < AuthorizedController
   end
 
   def edit
-    render settings_location,
+    render 'forums/settings',
            locals: {
                banner: authenticated_resource,
                tab: 'banners/edit',
@@ -46,10 +46,10 @@ class BannersController < AuthorizedController
   def update
     respond_to do |format|
       if authenticated_resource.update banner_params
-        format.html { redirect_to banner_settings_path }
+        format.html { redirect_to settings_forum_path(resource_tenant, tab: 'banners') }
       else
         format.html do
-          render settings_location,
+          render 'forums/settings',
                  locals: {
                      banner: authenticated_resource,
                      tab: 'banners/edit',
