@@ -68,9 +68,6 @@ class ActiveSupport::TestCase
   # FactoryGirl.lint
   Setting.set('user_cap', '-1')
   # Add more helper methods to be used by all tests here...
-
-  def assert_notification_sent
-  end
 end
 
 class ActionDispatch::IntegrationTest
