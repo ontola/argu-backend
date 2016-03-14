@@ -18,14 +18,14 @@ class PhasePolicy < RestrictivePolicy
     end
   end
 
-  def permitted_attributes
-    attributes = super
-    attributes << %i(id name description integer start_date end_date _destroy) if create?
+  def permitted_attributes(force = false)
+    attributes = super()
+    attributes << %i(id name description integer start_date end_date _destroy) if force || create?
     attributes
   end
 
   def create?
-    rule is_manager?, is_owner?, super
+    rule is_moderator?, is_manager?, is_owner?, super
   end
 
   private
