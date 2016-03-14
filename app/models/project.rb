@@ -23,8 +23,8 @@ class Project < ActiveRecord::Base
   has_many   :stepups, as: :record
   has_many   :questions, inverse_of: :project
 
-  accepts_nested_attributes_for :phases
-  accepts_nested_attributes_for :stepups
+  accepts_nested_attributes_for :phases, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :stepups, reject_if: :all_blank, allow_destroy: true
 
   validates :forum, presence: true
   validates :creator, presence: true
