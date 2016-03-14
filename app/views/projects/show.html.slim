@@ -27,7 +27,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
     =link_to new_project_discussion_path(project), class: 'btn btn--pro new-discussion'
       span.fa.fa-plus
       span.icon-left= t('discussions.new.title')
-    =render partial: 'discussions/filter_and_sort'
+    =render partial: 'application/filter_and_sort'
   .grid
     .box.box-grid-sizer
     .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
