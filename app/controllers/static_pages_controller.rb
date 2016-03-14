@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
   def home
     authorize :static_page
     if signed_in? || within_user_cap?
-      if current_user && policy(current_user).staff? && current_user.profile.memberships.present?
+      if current_user && policy(current_user).staff?
         @activities = policy_scope(Activity).order(created_at: :desc).limit(10)
         render #stream: true
       else

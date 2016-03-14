@@ -1,6 +1,4 @@
 class BannersController < AuthorizedController
-  skip_before_action :check_if_member, if: :portal_request?
-  before_action :set_settings_view_path
 
   def new
     render settings_location,
