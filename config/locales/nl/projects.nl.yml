@@ -9,9 +9,11 @@ nl:
     add_phase: 'Fase toevoegen'
     back_to: 'Ga terug naar project'
     stepups:
+      type: 'Manager'
       title: 'Managers'
       title_singular: 'Manager'
     phases:
+      type: 'Fase'
       title: 'Fases'
       title_singular: 'Fase'
       info: 'Een fase is een onderdeel van de tijdlijn van een project.'

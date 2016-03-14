@@ -73,6 +73,7 @@ nl:
   search: "Zoeken"
   edited: "Bewerkt"
   deleted: "Verwijderd"
+  delete_type: "Verwijder %{type}"
   trashed: "Verborgen"
   reply: "Reageer"
   report: "Rapporteer"

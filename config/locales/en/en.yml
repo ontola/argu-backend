@@ -72,6 +72,7 @@ en:
   search: "Search"
   edited: "Edited"
   deleted: "Deleted"
+  delete_type: "Delete %{type}"
   trashed: "Hidden"
   reply: "Reply"
   report: "Report"
