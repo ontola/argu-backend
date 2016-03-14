@@ -1,6 +1,8 @@
 @import "variables";
 @import "mixins";
 
+$triangle-size: .5em;
+
 .tab--current a {
   font-weight: bold;
 }
@@ -55,14 +57,14 @@
     //z-index: -1;
     max-height: 0;
     top: 100%;
-    bottom: 0;
+    bottom: $triangle-size;
     left: 0;
     width: 0;
     height: 0;
     margin: auto;
-    border-left: 1em solid transparent;
-    border-right: 1em solid transparent;
-    border-bottom: 1em solid transparent;
+    border-left: $triangle-size solid transparent;
+    border-right: $triangle-size solid transparent;
+    border-bottom: $triangle-size solid transparent;
     right: 0;
     @include transition(.2s);
   }
@@ -78,7 +80,7 @@
 
   .tab--current a {
     &:after {
-      border-bottom: 1em solid $g1;
+      border-bottom-color: $g1;
     }
   }
 }
