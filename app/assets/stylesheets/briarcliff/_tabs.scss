@@ -1,15 +1,14 @@
 @import "variables";
 @import "mixins";
 
+.tab--current a {
+  font-weight: bold;
+}
+
 .tabs {
   position: relative;
   margin: auto;
-  margin-bottom: 1em;
-  @include container-width;
   width: 100%;
-  padding-left: 1em;
-  padding-right: 1em;
-  z-index: 1;
 
   li {
     display: inline-block;
@@ -25,6 +24,30 @@
     vertical-align: bottom;
     @include transition(.2s);
   }
+}
+
+.tabs-container {
+  margin: auto;
+  width: 100%;
+  background-color: white;
+}
+
+// Horizontal tabs
+.tabs-container .tabs {
+  @include container-width;
+  margin-bottom: 1em;
+  z-index: 1;
+  padding-left: 1em;
+  padding-right: 1em;
+
+  @include bp-small {
+    padding-left: 0em;
+    padding-right: 0em;
+  }
+
+  a {
+    padding: 1em;
+  }
 
   a:after {
     position: absolute;
@@ -34,54 +57,30 @@
     top: 100%;
     bottom: 0;
     left: 0;
+    width: 0;
+    height: 0;
+    margin: auto;
+    border-left: 1em solid transparent;
+    border-right: 1em solid transparent;
+    border-bottom: 1em solid transparent;
     right: 0;
-    @include transition(.5s);
+    @include transition(.2s);
   }
 
   // Hover & current styling
   .tab--current a, a:hover, a:active{
     color: $g4;
-
-    &:after {
-      max-width: 100%;
-      //max-height: 100%;
-      //top: 0;
-
-      max-height: 10%;
-      top: 90%;
-    }
   }
 
   a:active {
     background-color: $g1;
   }
 
-  a:hover, a:active{
-    background-color: $g00;
-    &:after{
-      background-color: $g2;
-    }
-  }
-
   .tab--current a {
-    pointer-events: none;
-    background-color: $g00;
-
-    &:after{
-      background-color: $g2a;
+    &:after {
+      border-bottom: 1em solid $g1;
     }
   }
-
-  a:active:after {
-    background-color: $g2a;
-    transition: none;
-  }
-}
-
-.tabs-container {
-  margin: auto;
-  width: 100%;
-  background-color: white;
 }
 
 .tabs--vertical {
@@ -98,6 +97,12 @@
   }
 
   a:after {
+    position: absolute;
+    content: "";
+    bottom: 0;
+    left: 0;
+    right: 0;
+    @include transition(.5s);
     max-width: 0;
     max-height: 100%;
     top: 0;
