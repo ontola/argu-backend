@@ -30,8 +30,8 @@ class BannerDismissalPolicy < RestrictivePolicy
   def create?
     case record.banner.audience.to_sym
       when :guests then !user
-      when :users then user && !user.member_of?(@forum)
-      when :members then user && user.member_of?(@forum)
+      when :users then user && !user.member_of?(context.forum)
+      when :members then user && user.member_of?(context.forum)
       when :everyone then true
     end
   end
