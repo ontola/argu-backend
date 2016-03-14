@@ -9,9 +9,11 @@ en:
     add_phase: 'Add phase'
     back_to: 'Go back to project'
     stepups:
+      type: 'Manager'
       title: 'Managers'
       title_singular: 'Manager'
     phases:
+      type: 'Phase'
       title: 'Phases'
       title_singular: 'Phase'
       info: 'A phase is part in a timeline of a project.'
