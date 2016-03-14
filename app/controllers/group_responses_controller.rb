@@ -35,7 +35,7 @@ class GroupResponsesController < AuthorizedController
   end
 
   def edit
-    @group_response = GroupResponse.find params[:id]
+    @group_response = authenticated_resource!
     authorize @group_response, :edit?
     @forum = @group_response.forum
 

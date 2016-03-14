@@ -19,7 +19,7 @@ RSpec.feature 'Banners', type: :feature do
            :ended,
            :everyone,
            forum: holland,
-           title: 'unpublished_banner')
+           title: 'ended_banner')
   end
 
   %i(guests users members everyone).each do |audience|
@@ -39,9 +39,12 @@ RSpec.feature 'Banners', type: :feature do
     question = holland.questions.first
     visit question_path question
     expect(page).to have_content(question.title)
-    expect(page).to have_content(banner_everyone.title)
+    expect(page).to have_content(banner_everyone.title),
+                    'Everyone banners not visible on question pages'
     expect(page).not_to have_content(unpublished_banner.title),
-                        'Banners not visible on question pages'
+                        'Unpublished visible on question pages'
+    expect(page).not_to have_content(ended_banner.title),
+                        'Ended visible on question pages'
 
     motion = holland.motions.first
     visit motion_path motion
@@ -70,6 +73,10 @@ RSpec.feature 'Banners', type: :feature do
                         'Guest sees user banners'
     expect(page).not_to have_content(banner_members.title),
                         'Guest sees member banners'
+    expect(page).not_to have_content(unpublished_banner.title),
+                        'Unpublished visible for guests'
+    expect(page).not_to have_content(ended_banner.title),
+                        'Ended visible for guests'
   end
 
   scenario 'Guest dismisses a banner' do
@@ -106,6 +113,10 @@ RSpec.feature 'Banners', type: :feature do
                     "User doesn't see users banners"
     expect(page).not_to have_content(banner_members.title),
                         'User sees members banners'
+    expect(page).not_to have_content(unpublished_banner.title),
+                        'Unpublished visible for users'
+    expect(page).not_to have_content(ended_banner.title),
+                        'Ended visible for users'
   end
 
   scenario 'banner dismissal is persisted across logins' do
@@ -157,6 +168,10 @@ RSpec.feature 'Banners', type: :feature do
                         'Member sees users banners'
     expect(page).to have_content(banner_members.title),
                     "Member doesn't see members banners"
+    expect(page).not_to have_content(unpublished_banner.title),
+                        'Unpublished visible for members'
+    expect(page).not_to have_content(ended_banner.title),
+                        'Ended visible for members'
   end
 
   ####################################

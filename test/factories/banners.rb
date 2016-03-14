@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :banner do
     sequence(:title) { |n| "Banner title #{n}" }
-    content 'Banner content'
+    sequence(:content) { |n| "Banner content #{n}" }
 
     trait :published do
       published_at { 1.hours.ago }
