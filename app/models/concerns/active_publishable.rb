@@ -12,8 +12,7 @@ module ActivePublishable
             DateTime.current)
     end
     scope :ended, -> do
-      where('published_at IS NOT NULL AND published_at > ?',
-            DateTime.current)
+      where('published_at IS NOT NULL')
       .where('ends_at IS NOT NULL AND ends_at < ?',
              DateTime.current)
     end
