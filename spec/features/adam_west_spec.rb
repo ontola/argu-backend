@@ -32,7 +32,7 @@ RSpec.feature 'Adam west', type: :feature do
              model_type: 'Comment',
              model_id: nil,
              action: action,
-             role: 'member',
+             role: 'manager',
              permit: false,
              context_type: 'Forum',
              context_id: freetown.id)
@@ -130,8 +130,8 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'guest should not see comment section' do
     visit argument_path(argument)
 
-    expect(page).not_to have_content('Reageer')
-    expect(page).not_to have_content('Reacties')
+    expect(page.body).not_to have_content('Reply')
+    expect(page.body).not_to have_content('Comments')
   end
 
   ####################################
@@ -174,8 +174,8 @@ RSpec.feature 'Adam west', type: :feature do
 
     visit argument_path(argument)
 
-    expect(page).not_to have_content('Reageer')
-    expect(page).not_to have_content('Reacties')
+    expect(page.body).not_to have_content('Reply')
+    expect(page.body).not_to have_content('Comments')
   end
 
   ####################################
@@ -195,7 +195,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(current_path).to eq motion_path(motion)
     expect(page).to have_content(motion.title)
     expect(page).to have_content(motion.content)
-    expect(page).not_to have_content('START EEN NIEUWE DISCUSSIE')
+    expect(page.body).not_to have_content('Start a new discussion')
 
     click_link question.title
     expect(current_path).to eq question_path(question)
@@ -219,8 +219,8 @@ RSpec.feature 'Adam west', type: :feature do
 
     visit argument_path(argument)
 
-    expect(page).not_to have_content('Reageer')
-    expect(page).not_to have_content('Reacties')
+    expect(page.body).not_to have_content('Reply')
+    expect(page.body).not_to have_content('Comments')
   end
 
   scenario 'member should not see top comment' do
@@ -230,7 +230,7 @@ RSpec.feature 'Adam west', type: :feature do
 
     expect(page).to have_content(argument.title)
     expect(page).not_to have_content(comment.body)
-    expect(page).not_to have_content('REAGEER')
+    expect(page.body).not_to have_content('Reply')
 
     # Anti-test
     arg = create(:argument)
@@ -238,8 +238,8 @@ RSpec.feature 'Adam west', type: :feature do
     visit motion_path(arg.motion)
 
     expect(page).to have_content(arg.title)
-    expect(page).to have_content('REAGEER')
-    expect(page).to have_content('START EEN NIEUWE DISCUSSIE')
+    expect(page.body).to have_content('Reply')
+    expect(page.body).to have_content('Start a new discussion')
 
     c = create(:comment,
                commentable: arg)
@@ -254,16 +254,16 @@ RSpec.feature 'Adam west', type: :feature do
 
     visit argument_path(argument)
 
-    expect(page).not_to have_content('Reageer')
-    expect(page).not_to have_content('Reacties')
+    expect(page.body).not_to have_content('Reply')
+    expect(page.body).not_to have_content('Comments')
   end
 
 
   scenario 'guest should not see comment section' do
     visit argument_path(argument)
 
-    expect(page).not_to have_content('Reageer')
-    expect(page).not_to have_content('Reacties')
+    expect(page.body).not_to have_content('Reply')
+    expect(page.body).not_to have_content('Comments')
   end
 
   ####################################
@@ -293,7 +293,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(current_path).to eq forum_path(freetown)
     expect(page).to have_content(freetown.display_name)
     expect(page).to have_content(freetown.bio)
-    expect(page).to have_content('FORUM INSTELLINGEN')
+    expect(page.body).to have_content('Forum settings')
   end
 
   scenario 'manager should visit forum show' do
@@ -311,7 +311,7 @@ RSpec.feature 'Adam west', type: :feature do
 
     visit argument_path(argument)
 
-    expect(page).not_to have_content('Reageer')
-    expect(page).not_to have_content('Reacties')
+    expect(page.body).not_to have_content('Reply')
+    expect(page.body).not_to have_content('Comments')
   end
 end
