@@ -24,8 +24,8 @@ class Project < ActiveRecord::Base
   has_many   :questions, inverse_of: :project
   has_many :activities, as: :trackable
 
-  accepts_nested_attributes_for :phases
-  accepts_nested_attributes_for :stepups
+  accepts_nested_attributes_for :phases, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :stepups, reject_if: :all_blank, allow_destroy: true
 
   validates :forum, :creator, presence: true
 
