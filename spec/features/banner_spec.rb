@@ -198,4 +198,21 @@ RSpec.feature 'Banners', type: :feature do
       expect(page).to have_content(new_banner[:title])
     end
   end
+
+  scenario 'Manager views banner settings' do
+    login_as(holland.page.owner.profileable, :scope => :user)
+
+    visit settings_forum_path(holland, tab: :banners)
+    within('#banners-published') do
+      %i(guests users members everyone).each do |level|
+        expect(page).to have_content(send("banner_#{level}").title)
+      end
+    end
+    within('#banners-drafts') do
+      expect(page).to have_content(unpublished_banner.title)
+    end
+    within('#banners-ended') do
+      expect(page).to have_content(ended_banner.title)
+    end
+  end
 end

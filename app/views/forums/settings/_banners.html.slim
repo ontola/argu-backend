@@ -13,3 +13,8 @@ p= t('forums.settings.banners.about_banners')
     legend= t('drafts')
   table.styled
     =render partial: 'settings/banners/banner', collection: @forum.banners.unpublished
+#banners-ended
+  fieldset
+    legend= t('ended')
+  table.styled
+    =render partial: 'settings/banners/banner', collection: @forum.banners.ended
