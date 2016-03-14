@@ -31,6 +31,7 @@ en:
   draft: "Draft"
   drafts: "Drafts"
   draft_unpublished: "Draft version, not yet published."
+  ended: "Ended"
   publish: "Publish"
   published: "Published"
   publish_confirmation: "Are you sure you want to publish this item?"
