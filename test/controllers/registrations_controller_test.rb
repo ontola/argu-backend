@@ -4,7 +4,9 @@ class RegistrationsControllerTest < ActionController::TestCase
   include TestHelper
   include Devise::TestHelpers
 
-  let!(:freetown) { FactoryGirl.create(:forum) }
+  let!(:freetown) { create(:forum) }
+  let(:user) { create(:user) }
+  let(:place) { create(:place) }
 
   ####################################
   # As Guest
@@ -43,6 +45,40 @@ class RegistrationsControllerTest < ActionController::TestCase
     end
 
     assert_response 200
+  end
+
+  ####################################
+  # As User
+  ####################################
+  test 'user should delete destroy' do
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    sign_in user
+
+    assert_difference('User.count', -1) do
+      delete :destroy,
+             user: {
+                 repeat_name: user.shortname.shortname
+             }
+    end
+
+    assert_redirected_to root_path
+  end
+
+  test 'user should delete destroy with placement' do
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    placement = user.build_home_placement(creator: user.profile, place: place)
+    placement.save
+
+    sign_in user
+
+    assert_differences([['User.count', -1], ['Placement.count', -1], ['Place.count', 0]]) do
+      delete :destroy,
+             user: {
+                 repeat_name: user.shortname.shortname
+             }
+    end
+
+    assert_redirected_to root_path
   end
 
 end
