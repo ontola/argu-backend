@@ -1,8 +1,9 @@
-legend
-  span= t('projects.phases.title_singular')
-.nested_fields
+.nested-fields
+  legend
+    span= t('projects.phases.title_singular')
   =f.inputs do
     =f.input :name
     =f.input :description
     =f.input :start_date, as: :datetime_picker
     =f.input :end_date, as: :datetime_picker
+  =link_to_remove_association '_remove phase_', f

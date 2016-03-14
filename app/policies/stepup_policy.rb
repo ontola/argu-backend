@@ -20,7 +20,7 @@ class StepupPolicy < RestrictivePolicy
 
   def permitted_attributes(force = false)
     attributes = super()
-    attributes << %i(id group user moderator title description) if force || create?
+    attributes << %i(id group user moderator title description _destroy) if force || create?
     attributes
   end
 
