@@ -30,7 +30,7 @@ class ForumsController < ApplicationController
                                                           question_id: nil,
                                                           is_trashed: show_trashed?))
 
-    @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(@forum).show?
+    @items = Kaminari.paginate_array((questions + motions_without_questions).sort_by(&:updated_at).reverse).page(params[:page]).per(20) if policy(@forum).show?
   end
 
   def settings
