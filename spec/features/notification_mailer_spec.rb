@@ -49,6 +49,7 @@ RSpec.feature 'Notification mailer' do
   end
 
   scenario 'Send mail with one notification' do
+    login_as(follower)
     email_type = User.follows_emails[:direct_follows_email]
     notification_argument
 
@@ -65,6 +66,7 @@ RSpec.feature 'Notification mailer' do
   end
 
   scenario 'Send mail with two notifications' do
+    login_as(follower)
     email_type = User.follows_emails[:direct_follows_email]
     notification_argument
     notification_comment
