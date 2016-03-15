@@ -58,7 +58,8 @@ gem 'httparty', '~> 0.13.7'
 gem 'acts_as_list', '~> 0.7.2'
 #Pagination
 gem 'kaminari', '~>0.16.1'
-
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 ##################Front-end########################
 #gem 'react-rails', '~> 1.6.0'
