@@ -34,7 +34,11 @@ class VotePolicy < RestrictivePolicy
   include Roles
 
   def create?
-    rule is_open?, is_member?, super
+    rule is_member?, is_manager?, is_owner?, super
+  end
+
+  def update?
+    rule is_creator?, super
   end
 
   def new?

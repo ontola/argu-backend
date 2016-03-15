@@ -2,9 +2,6 @@ class MembershipsController < AuthorizedController
   skip_before_action :check_if_member, only: %i(create)
 
   def create
-    forum = Forum.find_via_shortname params[:forum_id]
-    authorize forum, :show?
-
     @membership = Membership.new resource_new_params
     authorize @membership, :create?
 

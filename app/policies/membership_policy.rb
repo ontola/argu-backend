@@ -1,4 +1,6 @@
 class MembershipPolicy < RestrictivePolicy
+  include ForumPolicy::ForumRoles
+
   class Scope < Scope
     attr_reader :context, :scope
 
@@ -28,7 +30,11 @@ class MembershipPolicy < RestrictivePolicy
 
   def create?
     # TODO: when implementing forum scopes, change this to include whether membership isn't restricted
-    record.role == :member.to_s || super
+    if record.role == :member.to_s
+      rule is_open?, has_access_token?, is_member?, is_manager?, super
+    elsif record.role == :manager.to_s
+      rule is_manager?, is_owner?, super
+    end
   end
 
   def edit?

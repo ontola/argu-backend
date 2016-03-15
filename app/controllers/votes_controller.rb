@@ -40,10 +40,14 @@ class VotesController < AuthorizedController
     @model = get_parent_resource
     get_context
 
-    authorize @model.forum, :show?
-
     @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile)
     @vote.forum ||= @model.forum
+
+    if @vote.persisted?
+      authorize @vote, :update?
+    else
+      authorize @vote, :create?
+    end
 
     respond_to do |format|
       if @vote.for == for_param
