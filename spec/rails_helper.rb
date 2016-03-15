@@ -30,6 +30,9 @@ TestingBot::config do |config|
   config.require_tunnel # uncomment if you want to use our Tunnel
 end
 
+Capybara.server_port = 65000
+Capybara.always_include_port = true
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Capybara::DSL
