@@ -1,5 +1,8 @@
 /*global $, Argu*/
-import Alert from '../src/app/components/Alert';
+import Alert, {
+  ALERT_FADE_TIMEOUT,
+  ALERT_QUICKFADE_TIMEOUT
+} from '../src/app/components/Alert';
 
 let AlertIntegration = {};
 
@@ -17,26 +20,34 @@ AlertIntegration.init =  function () {
 
     $(document)
         .on('turbolinks:visit', this.fadeAll)
+        .on('click', '.alert-close', e => {
+          AlertIntegration.fadeNow(e);
+        })
         .ajaxComplete(this.handleJSONBody);
 };
 
 AlertIntegration.fade = function (duration, _alert) {
-    const fadeNow = function(a) {
-        a.addClass('alert-hidden');
-        window.setTimeout(function(a) {
-            a.remove();
-        }, 2000, a);
-    };
-
-    var timeoutHandle = window.setTimeout(fadeNow, duration, _alert);
+    var timeoutHandle = window.setTimeout(AlertIntegration.fadeNow, duration, _alert);
 
     _alert[0].addEventListener('mouseover', function () {
         window.clearTimeout(timeoutHandle);
     });
 
     _alert[0].addEventListener('mouseout', function () {
-        timeoutHandle = window.setTimeout(fadeNow, 1000, _alert)
+        timeoutHandle = window.setTimeout(
+          AlertIntegration.fadeNow,
+          ALERT_QUICKFADE_TIMEOUT,
+          _alert
+        );
     });
+};
+
+AlertIntegration.fadeNow = function(a) {
+    a = $(a.target).closest('.alert');
+    a.addClass('alert-hidden');
+    window.setTimeout(function(a) {
+        a.remove();
+    }, ALERT_FADE_TIMEOUT, a);
 };
 
 AlertIntegration.fadeAll = function () {

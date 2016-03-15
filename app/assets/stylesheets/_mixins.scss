@@ -331,6 +331,18 @@
   }
 }
 
+
+@include keyframes(collapse-from-top) {
+  0% {
+    max-height: 10em;
+    top: 0;
+  }
+  100% {
+    max-height: 0;
+    top: 3em;
+  }
+}
+
 @include keyframes(enlarge-twist) {
   0% {
     @include transform(scale(0) rotate(0deg));
@@ -349,4 +361,16 @@
 @include keyframes(rotate-forever) {
   0%    { @include transform(rotate(0deg)); }
   100%  { @include transform(rotate(360deg)); }
+}
+
+@include keyframes(shake) {
+  0% {
+    @include transform(rotate(5deg) scale(0));
+  }
+  50% {
+    @include transform(rotate(-5deg) scale(1.1));
+  }
+  100% {
+    @include transform(rotate(0deg) scale(1));
+  }
 }

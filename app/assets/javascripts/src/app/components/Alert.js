@@ -1,7 +1,7 @@
 /* globals $ */
 
-const ALERT_FADE_TIMEOUT = 2000;
-const ALERT_QUICKFADE_TIMEOUT = 1000;
+export const ALERT_FADE_TIMEOUT = 2000;
+export const ALERT_QUICKFADE_TIMEOUT = 1000;
 
 export default class Alert {
     constructor (message, messageType, instantShow, prependSelector) {
@@ -19,22 +19,22 @@ export default class Alert {
     }
 
     fade () {
-        const fadeNow = function(a) {
-            a.addClass('alert-hidden');
-            window.setTimeout(elem => {
-                elem.remove();
-            }, ALERT_FADE_TIMEOUT, a);
-        };
-
-        let timeoutHandle = window.setTimeout(fadeNow, this._duration, this._alert);
+        let timeoutHandle = window.setTimeout(this.fadeNow, this._duration, this._alert);
 
         this._alert[0].addEventListener('mouseover', () => {
             window.clearTimeout(timeoutHandle);
         });
 
         this._alert[0].addEventListener('mouseout', () => {
-            timeoutHandle = window.setTimeout(fadeNow, ALERT_QUICKFADE_TIMEOUT, this._alert)
+            timeoutHandle = window.setTimeout(this.fadeNow, ALERT_QUICKFADE_TIMEOUT, this._alert)
         });
+    }
+
+    fadeNow (a) {
+        a.addClass('alert-hidden');
+        window.setTimeout(elem => {
+            elem.remove();
+        }, ALERT_FADE_TIMEOUT, a);
     }
 
     hide () {
@@ -42,7 +42,7 @@ export default class Alert {
     }
 
     render () {
-        (this._alert = $(`<div class='alert-container'><pre class='alert alert-${this.messageType}'>${this.message}</pre></div>`));
+        (this._alert = $(`<div class='alert-container'><div class='alert alert-${this.messageType}'><div class='alert-close'><span class='fa fa-close'></span></div>${this.message}</div></div>`));
         $(this.prependSelector).prepend(this._alert);
         return this._alert;
     }
@@ -54,6 +54,10 @@ export default class Alert {
         if (autoHide) {
             this.fade();
         }
+        this._alert
+            .on('click', '.alert-close', () => {
+                this.fadeNow(this._alert);
+            });
         return this._alert;
     }
 }

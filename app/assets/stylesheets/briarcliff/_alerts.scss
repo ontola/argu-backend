@@ -4,10 +4,12 @@
 .alert-wrapper {
   position: fixed;
   width: 100%;
-  bottom: 3em;
+  bottom: 0;
   z-index: 100;
   padding-left: .7em;
   padding-right: .7em;
+  padding-bottom: 3em;
+  pointer-events: none;
 }
 
 .alert-container {
@@ -16,12 +18,10 @@
   display: -webkit-flex;
   display: flex;
   pointer-events: none;
-
 }
 
 .alert {
   position: relative;
-  //bottom: 3em;
   padding: 1em;
   margin-left: auto;
   margin-right: auto;
@@ -31,25 +31,51 @@
   display: block;
   font-weight: bold;
   z-index: 100;
-  //border: solid 3px;
+  max-width: 30em;
+  line-height: 1.2em;
   text-align: center;
   font-family: $font-sans;
   pointer-events: auto;
-  @include animation(from-bottom-fade .5s both, grow-from-bottom .5s both);
+  @include animation(shake .5s both);
   @include box-shadow-intense;
 
   @include bp-small{
-    width: 100%;
+    max-width: 100%;
     left: 0;
     right: 0;
   }
 }
 
+.alert-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  color: $g2;
+  padding: .1em;
+
+  &:hover {
+    color: $g3;
+    background-color: $darken1;
+  }
+  &:active {
+    color: $g4;
+    background-color: $darken2;
+  }
+}
+
+// Is added when the alert is about to be removed from the DOM
 .alert-hidden {
   @include animation(fade-out .5s both, collapse-from-top .5s both);
-
+  overflow: visible;
   // When an alert is about to be removed, the user should not get the idea that he can still interact with it.
   pointer-events: none;
+
+  .alert {
+    max-height: none !important;
+    height: 100%;
+  }
+
   * {
     pointer-events: none;
   }
