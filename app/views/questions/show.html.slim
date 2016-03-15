@@ -38,5 +38,6 @@
                 partial: 'question_answers/show',
                 show_new_buttons: policy_with_tenant!(authenticated_context, Motion).new?,
                 buttons_url: polymorphic_url([:new, question, :motion]),
-                buttons_text: t('add_type', type: motion_type(question)))
+                buttons_text: t('add_type', type: motion_type(question)),
+                page_param: :page)
 =render partial: 'discussions/new', locals: {forum: authenticated_context}

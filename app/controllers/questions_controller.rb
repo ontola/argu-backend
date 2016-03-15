@@ -12,6 +12,7 @@ class QuestionsController < AuthorizedController
     end
 
     @motions = policy_scope(scope)
+                 .page(params[:page])
 
     respond_to do |format|
       format.html { render locals: {question: authenticated_resource!}} # show.html.erb
