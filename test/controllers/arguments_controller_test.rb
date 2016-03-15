@@ -4,11 +4,13 @@ class ArgumentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   let(:freetown) { create(:forum) }
-  let(:motion) { create(:motion, forum: freetown) }
+  let(:motion) { create(:motion,
+                        forum: freetown,
+                        creator: create(:user, :follows_email, :viewed_notifications_hour_ago).profile) }
   let!(:follow) do
     create(:follow,
            followable: motion,
-           follower: create(:user, :follows_email))
+           follower: create(:user, :follows_email, :viewed_notifications_hour_ago))
   end
   let(:argument) do
     create(:argument,
@@ -67,7 +69,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'user should get show' do
     sign_in user
@@ -200,7 +202,6 @@ class ArgumentsControllerTest < ActionController::TestCase
                content: 'Test argument con-tents',
                auto_vote: 'true'
              }
-        assert true
       end
     end
 
@@ -329,7 +330,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   def create_changes_array
     [['Argument.count', 1],
      ['Activity.count', 1],
-     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1],
-     ['Notification.count', 1]]
+     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 2],
+     ['Notification.count', 2]]
   end
 end
