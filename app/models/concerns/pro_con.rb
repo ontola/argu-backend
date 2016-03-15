@@ -25,6 +25,9 @@ module ProCon
     acts_as_followable
     parentable :motion, :forum
 
+    scope :pro, -> {where(pro: true)}
+    scope :con, -> {where(pro: false)}
+
     delegate :uses_alternative_names, :motions_title, :motions_title_singular, to: :motion
 
     # Simple method to verify that a model uses {ProCon}
@@ -69,9 +72,17 @@ module ProCon
   end
 
   module ClassMethods
-    def ordered (coll=[])
-      grouped = coll.group_by { |a| a.key }
-      HashWithIndifferentAccess.new(pro: {collection: grouped[:pro] || []}, con: {collection: grouped[:con] || []})
+    def ordered (coll=[], page={})
+      HashWithIndifferentAccess.new(
+          pro: {
+              collection: coll.pro.page(page[:pro] || 1) || [],
+              page_param: :page_arg_pro
+          },
+          con: {
+              collection: coll.con.page(page[:con] || 1) || [],
+              page_param: :page_arg_con
+          }
+      )
     end
   end
 

@@ -3,6 +3,8 @@ class Argument < ActiveRecord::Base
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   belongs_to :publisher, class_name: 'User'
 
+  paginates_per 10
+
   validate :assert_tenant
 
   scope :argument_comments, -> { includes(:comment_threads).order(votes_pro_count: :desc).references(:comment_threads) }

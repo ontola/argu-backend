@@ -6,5 +6,6 @@ div[class="col-#{model.keys.length}"]
         h3= header_text(options, key)
       -render_collection_if_present model, key do |item|
         =render_columns item, options.merge(pro: key)
+      =paginate model[key][:collection], param_name: model[key][:page_param] if model[key][:page_param].present?
       =show_new_buttons(model[key], key)
 .clear
