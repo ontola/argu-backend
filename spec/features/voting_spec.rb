@@ -17,7 +17,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: "DISAGREE").click
+    find('span span', text: 'DISAGREE').click
     expect(page).to have_content 'Sign up'
 
     click_link 'Sign up with email'
@@ -60,7 +60,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: "DISAGREE").click
+    find('span span', text: 'DISAGREE').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
     visit motion_path(motion)
@@ -79,7 +79,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: "DISAGREE").click
+    find('span span', text: 'DISAGREE').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
     visit motion_path(motion)

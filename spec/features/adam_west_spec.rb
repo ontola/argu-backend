@@ -133,6 +133,42 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page.body).not_to have_content('Comments')
   end
 
+  scenario 'guest should vote on a motion' do
+    visit motion_path(motion)
+    expect(page).to have_content(motion.content)
+
+    expect(page).not_to have_css('.btn-neutral[data-voted-on=true]')
+    click_link 'Neutral'
+
+    expect(page).to have_content 'Sign up'
+
+    click_link 'Sign up with email'
+    expect(current_path).to eq new_user_registration_path
+
+    user_attr = attributes_for(:user)
+    within('#new_user') do
+      fill_in 'user_email', with: user_attr[:email]
+      fill_in 'user_password', with: user_attr[:password]
+      fill_in 'user_password_confirmation', with: user_attr[:password]
+      click_button 'Sign up'
+    end
+
+    expect(current_path).to eq setup_users_path
+    click_button 'Next'
+
+    profile_attr = attributes_for(:profile)
+    within('form') do
+      fill_in 'profile_profileable_attributes_first_name', with: user_attr[:first_name]
+      fill_in 'profile_profileable_attributes_last_name', with: user_attr[:last_name]
+      fill_in 'profile_about', with: profile_attr[:about]
+      click_button 'Next'
+    end
+
+    click_button 'Neutral'
+
+    expect(page).to have_css('.btn-neutral[data-voted-on=true]')
+  end
+
   ####################################
   # As User
   ####################################
@@ -178,26 +214,17 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'user should vote on a motion' do
-    login_as(user)
+    login_as(user, scope: :user)
 
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-pro[data-voted-on=true]')
-    find('span span', text: 'IK BEN VOOR').click
+    find('.btn-pro').click
     expect(page).to have_css('.btn-pro[data-voted-on=true]')
 
     visit motion_path(motion)
     expect(page).to have_css('.btn-pro[data-voted-on=true]')
-  end
-
-  scenario 'user should not see comment section' do
-    login_as(user, scope: :user)
-
-    visit argument_path(argument)
-
-    expect(page.body).not_to have_content('Reply')
-    expect(page.body).not_to have_content('Comments')
   end
 
   ####################################
@@ -280,12 +307,18 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page.body).not_to have_content('Comments')
   end
 
+  scenario 'member should vote on a motion' do
+    login_as(member, scope: :user)
 
-  scenario 'guest should not see comment section' do
-    visit argument_path(argument)
+    visit motion_path(motion)
+    expect(page).to have_content(motion.content)
 
-    expect(page.body).not_to have_content('Reply')
-    expect(page.body).not_to have_content('Comments')
+    expect(page).not_to have_css('.btn-pro[data-voted-on=true]')
+    find('.btn-pro').click
+    expect(page).to have_css('.btn-pro[data-voted-on=true]')
+
+    visit motion_path(motion)
+    expect(page).to have_css('.btn-pro[data-voted-on=true]')
   end
 
   ####################################
