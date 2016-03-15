@@ -37,7 +37,7 @@ class Place < ActiveRecord::Base
   # Fetches Nominatim data from OSM and saves it as a {Place}
   # @return [Place, nil] {Place} or nil if it couldn't be found in OSM
   def self.fetch(url)
-    result = JSON.parse(open(url).read).first
+    result = JSON.parse(HTTParty.get(url).body).first
     return nil if result.nil?
     place = Place.create(
         id: result['place_id'],
