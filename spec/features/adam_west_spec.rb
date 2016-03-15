@@ -143,7 +143,7 @@ RSpec.feature 'Adam west', type: :feature do
     login_as(user, scope: :user)
 
     visit argument_path(argument)
-    expect(page).to have_content(user.first_name)
+    expect(page).to have_css("img[src*='#{user.profile.profile_photo.url(:icon)}']")
     expect(page).to have_content(argument.title)
     expect(page).to have_content(argument.content)
 
@@ -187,7 +187,7 @@ RSpec.feature 'Adam west', type: :feature do
     login_as(member, scope: :user)
 
     visit argument_path(argument)
-    expect(page).to have_content(member.first_name)
+    expect(page).to have_css("img[src*='#{member.profile.profile_photo.url(:icon)}']")
     expect(page).to have_content(argument.title)
     expect(page).to have_content(argument.content)
 
@@ -275,7 +275,7 @@ RSpec.feature 'Adam west', type: :feature do
     login_as(manager, scope: :user)
 
     visit argument_path(argument)
-    expect(page).to have_content(manager.first_name)
+    expect(page).to have_css("img[src*='#{manager.profile.profile_photo.url(:icon)}']")
     expect(page).to have_content(argument.title)
     expect(page).to have_content(argument.content)
 
