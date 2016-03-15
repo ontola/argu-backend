@@ -60,7 +60,7 @@ RSpec.feature 'Notification mailer' do
     expect(current_email.subject).to eq notification_subject(notification_argument)
     expect(current_email).to have_content notification_argument.activity.trackable.content
 
-    current_email.click_link 'Bekijk discussie'
+    current_email.click_link 'Go to discussion'
     expect(current_path).to eq argument_path(notification_argument.activity.trackable)
   end
 
@@ -74,7 +74,7 @@ RSpec.feature 'Notification mailer' do
     end
     open_email(follower.email)
 
-    expect(current_email.subject).to eq 'Nieuwe Argu notificaties'
+    expect(current_email.subject).to eq 'New Argu notifications'
     expect(current_email).to have_content notification_argument.activity.trackable.content
     expect(current_email).to have_content notification_comment.activity.trackable.body
 
