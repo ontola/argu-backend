@@ -101,7 +101,6 @@ RSpec.feature 'Adam west', type: :feature do
   ####################################
   # As Guest
   ####################################
-
   scenario 'guest should walk from answer up until question' do
     visit argument_path(argument)
     expect(page).to have_content(argument.title)
@@ -167,6 +166,29 @@ RSpec.feature 'Adam west', type: :feature do
 
     expect(page).not_to have_content(freetown.display_name)
     expect(current_path).to eq(forum_path(default))
+  end
+
+  scenario 'user should not see comment section' do
+    login_as(user, scope: :user)
+
+    visit argument_path(argument)
+
+    expect(page).not_to have_content('Reply')
+    expect(page).not_to have_content('Comments')
+  end
+
+  scenario 'user should vote on a motion' do
+    login_as(user)
+
+    visit motion_path(motion)
+    expect(page).to have_content(motion.content)
+
+    expect(page).not_to have_css('.btn-pro[data-voted-on=true]')
+    find('span span', text: 'IK BEN VOOR').click
+    expect(page).to have_css('.btn-pro[data-voted-on=true]')
+
+    visit motion_path(motion)
+    expect(page).to have_css('.btn-pro[data-voted-on=true]')
   end
 
   scenario 'user should not see comment section' do
