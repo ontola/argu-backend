@@ -40,7 +40,7 @@ class ProfilesController < ApplicationController
         format.html { render profile_edit_view_path(@resource) }
       end
     else
-      @resource.build_home_placement(place: Place.find(Place.find_or_fetch_by(country_code: "NL")))
+      @resource.build_home_placement(place: Place.find(Place.find_or_fetch_by(country_code: 'NL')))
       respond_to do |format|
         format.html { render profile_edit_view_path(@resource), layout: 'closed' } # edit.html.erb
       end
