@@ -12,7 +12,7 @@ class ForumsController < ApplicationController
   end
 
   def discover
-    @forums = policy_scope(Forum).public_forums.page params[:page]
+    @forums = policy_scope(Forum).public_forums.page show_params[:page]
     authorize Forum, :selector?
 
     render
@@ -30,7 +30,7 @@ class ForumsController < ApplicationController
                                                           question_id: nil,
                                                           is_trashed: show_trashed?))
 
-    @items = Kaminari.paginate_array((questions + motions_without_questions).sort_by(&:updated_at).reverse).page(params[:page]).per(20) if policy(@forum).show?
+    @items = Kaminari.paginate_array((questions + motions_without_questions).sort_by(&:updated_at).reverse).page(show_params[:page]).per(20) if policy(@forum).show?
   end
 
   def settings
@@ -144,6 +144,10 @@ class ForumsController < ApplicationController
   def redirect_generic_shortnames
     resource = Shortname.find_resource params[:id]
     redirect_to url_for(resource) unless resource.is_a?(Forum)
+  end
+
+  def show_params
+    params.permit(:page)
   end
 
   def tab

@@ -24,7 +24,7 @@ class MotionsController < AuthorizedController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes)), {pro: params[:page_arg_pro], con: params[:page_arg_con]}
+    @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes)), {pro: show_params[:page_arg_pro], con: show_params[:page_arg_con]}
     discussion_responses = @motion.group_responses.where(group_id: authenticated_context.groups.discussion)
     @group_responses = Group.ordered_with_meta discussion_responses,
                                                authenticated_context.groups.discussion,
@@ -282,6 +282,10 @@ class MotionsController < AuthorizedController
   def permit_params
     return unless params[:motion].present?
     params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+  end
+
+  def show_params
+    params.permit(:page, :page_arg_pro, :page_arg_con)
   end
 
   def resource_new_params

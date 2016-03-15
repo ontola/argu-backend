@@ -12,7 +12,7 @@ class QuestionsController < AuthorizedController
     end
 
     @motions = policy_scope(scope)
-                 .page(params[:page])
+                 .page(show_params[:page])
 
     respond_to do |format|
       format.html { render locals: {question: authenticated_resource!}} # show.html.erb
@@ -220,6 +220,10 @@ class QuestionsController < AuthorizedController
 
   def permit_params
     params.require(:question).permit(*policy(@question || Question).permitted_attributes)
+  end
+
+  def show_params
+    params.permit(:page)
   end
 
   def trash_service
