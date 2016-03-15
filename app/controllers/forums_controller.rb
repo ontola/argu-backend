@@ -12,7 +12,7 @@ class ForumsController < ApplicationController
   end
 
   def discover
-    @forums = policy_scope(Forum).top_public_forums(50)
+    @forums = policy_scope(Forum).public_forums.page params[:page]
     authorize Forum, :selector?
 
     render

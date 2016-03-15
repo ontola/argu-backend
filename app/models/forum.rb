@@ -30,6 +30,7 @@ class Forum < ActiveRecord::Base
   process_in_background :profile_photo
   mount_uploader :cover_photo, CoverUploader
   acts_as_followable
+  paginates_per 21
 
   validates_integrity_of :profile_photo
   validates_processing_of :profile_photo
@@ -56,9 +57,9 @@ class Forum < ActiveRecord::Base
   # @return [Enum] The visibility of the {Forum}
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
 
-  scope :public_forums, -> { where(visibility: Forum.visibilities[:open]) }
   scope :top_public_forums,
         ->(limit = 10) { where(visibility: Forum.visibilities[:open]).order('memberships_count DESC').first(limit) }
+  scope :public_forums, -> { where(visibility: Forum.visibilities[:open]).order('memberships_count DESC') }
 
   def access_token
     access_token! if visible_with_a_link
