@@ -20,6 +20,7 @@
 //= require sifter
 //= require microplugin
 //= require selectize
+//= require application/version
 //= require _bundle
 //= require turbolinks
 //= require react_ujs_mount

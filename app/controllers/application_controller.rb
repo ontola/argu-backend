@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   after_action :verify_policy_scoped, only: :index
   after_action :set_profile_forum
   around_action :set_time_zone
+  after_action :set_version_header
   # after_action :set_notification_header
   if Rails.env.development? || Rails.env.staging?
     before_action do
@@ -159,6 +160,11 @@ class ApplicationController < ActionController::Base
     else
       response.headers[:lastNotification] = '-1'
     end
+  end
+
+  # @private
+  def set_version_header
+    response.headers['Argu-Version'] = ::VERSION
   end
 
   def set_profile_forum

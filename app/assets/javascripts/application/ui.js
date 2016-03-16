@@ -19,6 +19,7 @@ const ui = {
             .on('ajax:success', ".timeline-component .point, .timeline-component .phase-title", this.setActive)
             .on('turbolinks:load', this.handleDOMChangedFinished)
             .on('turbolinks:load', this.initPlaceholderFallback)
+            .on('turbolinks:request-end', this.checkVersionNumber)
             .ajaxComplete(this.handleAjaxCalls);
 
         window.addEventListener('online', this.handleOnline);
@@ -52,6 +53,14 @@ const ui = {
             .bind("ajax:error", function () {
                 $(this).removeClass("is-loading");
             });
+    },
+
+    checkVersionNumber: function () {
+        if (event.data.xhr.getResponseHeader('Argu-Version') !== window.arguVersion) {
+            if (window.confirm("A new version of Argu has been released. Would you like to reload this page? (recommended)") == true) {
+                document.location.reload(true);
+            }
+        }
     },
 
     confirmInputHandler: function () {
