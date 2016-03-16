@@ -11,6 +11,18 @@ class QuestionsController < AuthorizedController
       format.html { render locals: {question: authenticated_resource!}} # show.html.erb
       format.widget { render authenticated_resource! }
       format.json # show.json.jbuilder
+      format.pdf do
+        render pdf: 'Argu_poster_' + authenticated_resource!.title,
+               locals: {question: authenticated_resource!},
+               margin:  {   top:               0,
+                            bottom:            0,
+                            left:              0,
+                            right:             0 },
+               background: true,
+               no_background: false,
+               template: 'questions/show.pdf.html.erb',
+               show_as_html: false
+      end
     end
   end
 

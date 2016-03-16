@@ -59,7 +59,7 @@ gem 'acts_as_list', '~> 0.7.2'
 #Pagination
 gem 'kaminari', '~>0.16.1'
 gem 'wicked_pdf'
-gem 'wkhtmltopdf-binary'
+gem 'wkhtmltopdf-binary-edge', '~>0.12.3.0'
 
 ##################Front-end########################
 #gem 'react-rails', '~> 1.6.0'

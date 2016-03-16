@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <%= wicked_pdf_stylesheet_link_tag 'poster' -%>
+</head>
+  <body>
+    <div id="content">
+      <div class="poster-body">
+        <div class="poster-cover">
+          <%= wicked_pdf_image_tag 'https://argu-logos.s3.amazonaws.com/questions/113/cover/3007419752_0dfd3b90ff_o.jpg', class: 'poster-cover-image'%>
+          <!--<%= wicked_pdf_image_tag question.cover_photo.url, class: 'poster-cover-image'%>-->
+          <!--<div class="cover-image poster-cover-bg-image" style="background-image: url('https://argu-logos.s3.amazonaws.com/questions/113/cover/3007419752_0dfd3b90ff_o.jpg');"></div>-->
+        </div>
+        <div class="poster-room">
+          <div class="poster-profile">
+            <%= wicked_pdf_image_tag question.creator.profile_photo.url, class: 'poster-avatar'%>
+
+            <h1 class="poster-name"><%=question.creator.display_name%> vraagt:</h1>
+            <!--<div class="poster-avatar" style="background-image: url('https://argu-logos.s3.amazonaws.com/forums/28/avatar/houten_simpel.png');"></div>-->
+          </div>
+        </div>
+        <div class="poster-box">
+          <section>
+            <h1><%=question.title%></h1>
+            <!--<p><%=question.content%></p>-->
+            <%=render partial: 'application/markdown_collapsible', locals: {content: question.content, identifier: question.identifier}%>
+          </section>
+        </div>
+        <% @motions.first(2).each do |motion| %>
+            <div class="poster-box poster-box--motion">
+              <h2><%=motion.title%></h2>
+            </div>
+        <% end %>
+        <h2 class="poster-header">Heb jij een beter idee?</h2>
+        <div class="poster-box poster-box--motion-submit">
+          <h2>
+            <span class="fa fa-lightbulb-o"></span>
+            <span>Deel jouw idee op argu.co/q/<%=question.id%></span>
+          </h2>
+        </div>
+      </div>
+      <div class="poster-footer">
+        <%= wicked_pdf_image_tag 'https://scontent-ams3-1.xx.fbcdn.net/hphotos-xat1/v/t1.0-9/10959513_716628621784473_3087150878434618888_n.png?oh=57f755f3de8a9c67454c17c28ed2726a&oe=57933B80', class: 'poster-logo'%>
+      </div>
+    </div>
+  </body>
+</html>
