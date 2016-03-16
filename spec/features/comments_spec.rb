@@ -2,14 +2,15 @@ require 'rails_helper'
 
 RSpec.feature 'Comments', type: :feature do
 
-  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
-  let!(:argument) { FactoryGirl.create(:argument, forum: holland) }
+  let!(:holland) { create(:populated_forum, name: 'holland') }
+  let!(:argument) { create(:argument, forum: holland) }
 
   ####################################
   # As guest
   ####################################
-
   scenario 'Guest places a comment and signs up' do
+    nominatim_netherlands
+
     visit argument_path(argument)
 
     comment_args = attributes_for(:comment)
@@ -48,7 +49,7 @@ RSpec.feature 'Comments', type: :feature do
   ####################################
   # As user
   ####################################
-  let!(:user) { FactoryGirl.create(:user) }
+  let!(:user) { create(:user) }
 
   scenario 'User places a comment' do
     login_as(user, scope: :user)

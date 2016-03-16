@@ -2,19 +2,21 @@ require 'rails_helper'
 
 RSpec.feature 'Access tokens', type: :feature do
   let!(:helsinki) do
-    FactoryGirl.create(:hidden_populated_forum,
-                       name: 'helsinki',
-                       visible_with_a_link: true)
+    create(:hidden_populated_forum,
+           name: 'helsinki',
+           visible_with_a_link: true)
   end
   let!(:motion) do
-    FactoryGirl.create(:motion,
-                       title: 'proposition',
-                       forum: helsinki)
+    create(:motion,
+           title: 'proposition',
+           forum: helsinki)
   end
-  let(:helsinki_key) { FactoryGirl.create(:access_token, item: helsinki) }
+  let(:helsinki_key) { create(:access_token, item: helsinki) }
 
   @javascript
   scenario 'should register and become a member with an access token and preserve vote' do
+    nominatim_netherlands
+
     visit forum_path(helsinki.url, at: helsinki_key.access_token)
     expect(page).to have_content 'helsinki'
 
@@ -30,7 +32,7 @@ RSpec.feature 'Access tokens', type: :feature do
     click_link 'Sign up with email'
     expect(current_path).to eq new_user_registration_path
 
-    user_attr = FactoryGirl.attributes_for(:user)
+    user_attr = attributes_for(:user)
     within('#new_user') do
       fill_in 'user_email', with: user_attr[:email]
       fill_in 'user_password', with: user_attr[:password]
@@ -41,7 +43,7 @@ RSpec.feature 'Access tokens', type: :feature do
     expect(current_path).to eq setup_users_path
     click_button 'Next'
 
-    profile_attr = FactoryGirl.attributes_for(:profile)
+    profile_attr = attributes_for(:profile)
     within('form') do
       fill_in 'profile_profileable_attributes_first_name', with: user_attr[:first_name]
       fill_in 'profile_profileable_attributes_last_name', with: user_attr[:last_name]

@@ -134,6 +134,8 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'guest should vote on a motion' do
+    nominatim_netherlands
+
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
 
@@ -308,6 +310,8 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'member should vote on a motion' do
+    nominatim_netherlands
+
     login_as(member, scope: :user)
 
     visit motion_path(motion)

@@ -13,6 +13,8 @@ RSpec.feature 'Voting', type: :feature do
   ####################################
 
   scenario 'Guest should vote on a motion' do
+    nominatim_netherlands
+
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
 
