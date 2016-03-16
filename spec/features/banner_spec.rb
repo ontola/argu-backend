@@ -184,16 +184,16 @@ RSpec.feature 'Banners', type: :feature do
     new_banner = attributes_for(:banner, :everyone)
 
     visit settings_forum_path(holland, tab: :banners)
-    click_link 'Nieuwe banner'
+    click_link 'New banner'
 
-    expect(page).to have_content('Nieuwe Banner')
+    expect(page).to have_content('New Banner')
     within('#new_banner') do
       fill_in :banner_title, with: new_banner[:title]
       fill_in :banner_content, with: new_banner[:content]
-      select 'Iedereen', from: :banner_audience
-      click_button 'Banner aanmaken'
+      select 'Everyone', from: :banner_audience
+      click_button 'Create banner'
     end
-    expect(page).to have_content 'Banner successvol aangemaakt'
+    expect(page).to have_content 'Banner created successfully'
     within('#banners-drafts') do
       expect(page).to have_content(new_banner[:title])
     end
