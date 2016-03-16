@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Adam west', type: :feature do
-  let!(:default) { create(:forum) }
+  let!(:default_forum) { create(:setting, key: 'default_forum', value: 'default') }
+  let!(:default) { create(:forum, name: 'default') }
   let!(:freetown) do
     create(:forum,
            name: 'freetown')
@@ -270,6 +271,7 @@ RSpec.feature 'Adam west', type: :feature do
     walk_up_to_forum manager
     expect(page).to have_content('Forum settings')
     expect(page).to have_content('New discussion')
+    expect(page.body).to have_css('.fa-gear')
   end
 
   scenario 'manager should visit forum show' do
