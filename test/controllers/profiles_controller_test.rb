@@ -31,21 +31,8 @@ class ProfilesControllerTest < ActionController::TestCase
   end
 
   test 'user should create place and placement on update with postal_code and country code' do
+    nominatim_postal_code_valid
     sign_in user
-    stub_request(:get, 'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl&extratags=1&format=jsonv2&limit=1&namedetails=1&polygon=0&postalcode=3583GP').
-        to_return(:body => [{
-                                place_id: '145555300',
-                                address: {
-                                    suburb: 'Utrecht',
-                                    city: 'Utrecht',
-                                    county: 'Bestuur Regio Utrecht',
-                                    state: 'Utrecht',
-                                    postcode: '3583GP',
-                                    country: 'Koninkrijk der Nederlanden',
-                                    country_code: 'nl'
-                                }
-                            }].to_json,
-        )
 
     assert_differences [['Place.count', 1],
                         ['Placement.count', 1]] do
@@ -65,16 +52,8 @@ class ProfilesControllerTest < ActionController::TestCase
   end
 
   test 'user should create place and placement on update with only country code' do
+    nominatim_country_code_only
     sign_in user
-    stub_request(:get, 'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl&extratags=1&format=jsonv2&limit=1&namedetails=1&polygon=0&postalcode=').
-        to_return(:body => [{
-                                place_id: '144005013',
-                                address: {
-                                    country: 'Koninkrijk der Nederlanden',
-                                    country_code: 'nl'
-                                }
-                            }].to_json,
-        )
 
     assert_differences [['Place.count', 1],
                         ['Placement.count', 1]] do
@@ -114,10 +93,8 @@ class ProfilesControllerTest < ActionController::TestCase
   end
 
   test 'user should not create place and placement on update with wrong postal code' do
+    nominatim_postal_code_wrong
     sign_in user
-    stub_request(:get, 'https://nominatim.openstreetmap.org/search?addressdetails=1&country=nl&extratags=1&format=jsonv2&limit=1&namedetails=1&polygon=0&postalcode=WRONG_POSTAL_CODE').
-        to_return(:body => [].to_json,
-        )
 
     assert_differences [['Place.count', 0],
                         ['Placement.count', 0]] do

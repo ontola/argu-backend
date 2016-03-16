@@ -13,6 +13,7 @@ require 'capybara/poltergeist'
 require 'testingbot'
 require 'testingbot/capybara'
 require 'webmock/rspec'
+require 'test_mocks'
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -37,6 +38,7 @@ Capybara.always_include_port = true
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Capybara::DSL
+  config.include TestMocks
 
   Sidekiq::Testing.fake!
 

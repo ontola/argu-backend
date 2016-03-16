@@ -11,6 +11,7 @@ require 'fakeredis'
 require 'sidekiq/testing'
 require 'minitest/pride'
 require 'webmock/minitest'
+require 'test_mocks'
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
@@ -45,6 +46,7 @@ end
 
 class ActiveSupport::TestCase
   include TestHelper
+  include TestMocks
   ActiveRecord::Migration.check_pending!
 
   include FactoryGirl::Syntax::Methods
@@ -125,6 +127,7 @@ end
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
+  include TestMocks
 
   def setup_allowed_pages
     Capybara::Webkit.configure do |config|

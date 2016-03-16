@@ -17,6 +17,8 @@ class CommentsTest < ActionDispatch::IntegrationTest
   let(:user) { FactoryGirl.create(:user) }
 
   test 'should post create a comment' do
+    nominatim_netherlands
+
     get forum_path(venice.url,
                    at: access_token.access_token)
     assert_response :success

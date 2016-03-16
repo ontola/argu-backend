@@ -112,19 +112,10 @@ RSpec.feature 'User Password', type: :feature do
   end
 
   scenario 'user only omni should request a password reset email' do
-    OmniAuth.config.mock_auth[:facebook] = OmniAuth::AuthHash.new(
-      {
-        provider: 'facebook',
-        uid: '111907595807605',
-        credentials: {
-          token: 'CAAKvnjt9N54BACAJ6Uj5LFywuhmo5vy2VUyvBqtZAPrZAUH10sy4KgxZAU0mZConMqV9ZB6kO4eZCC3Y822NbZCXdBjZAjUE9ubUscZBZB5WGHn32jIn2NU7UZAVYbAYWcmfg0vutOLZAw3LDs8YE2O5k2Nwde7zzMK1hyBrZC30wvIFnbjoaGegXEZBbL1fyJjGTUBLADCOczzZAHkDhH3mYqJp2y2'
-        },
-        info: {
-          email: user_omni_only.email,
-          first_name: user_omni_only.first_name,
-          last_name: user_omni_only.last_name
-        }
-      })
+    OmniAuth.config.mock_auth[:facebook] = facebook_auth_hash(email: user_omni_only.email,
+                                                              first_name: user_omni_only.first_name,
+                                                              last_name: user_omni_only.last_name,
+                                                              middle_name: nil)
     visit new_user_session_path
 
     click_link 'Log in with Facebook'

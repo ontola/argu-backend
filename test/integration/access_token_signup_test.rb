@@ -64,6 +64,8 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
   # Note: The :at params are duplicated everywhere because integration tests apparently don't support session variables
   test 'should register and become a member with an access token' do
+    nominatim_netherlands
+
     hidden_forum_path = forum_path(helsinki.url)
 
     get forum_path(helsinki.url, at: helsinki_at.access_token)
@@ -115,6 +117,8 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
   end
 
   test 'should register and become a member with an access token and preserve vote' do
+    nominatim_netherlands
+
     get forum_path(helsinki.url,
                    at: helsinki_at.access_token)
     assert_response :success
