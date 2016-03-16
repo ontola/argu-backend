@@ -15,7 +15,7 @@ en:
     content: "content"
     tooltips:
       count: "number of ideas"
-      info: "Een idee is een voorstel waar op kan worden gestemd en waar voor- en tegenargumenten onder kunnen worden geplaatst."
+      info: "An idea is a proposal on which people can vote and add pro- or con arguments."
     votes:
       pro: "Agree"
       neutral: "Neutral"
