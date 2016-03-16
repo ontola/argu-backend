@@ -25,16 +25,17 @@ footer
   ul.footer-list
     li
       h3.footer-heading= t('footer_item_follow_uw')
-      .footer-social-buttons
-        a[href="https://www.facebook.com/argu.co"]
+      .footer-social-buttons[itemscope itemtype='http://schema.org/Organization']
+        link[hidden itemprop="url" href="https://argu.co"]
+        a[itemprop="sameAs" href="https://www.facebook.com/argu.co"]
           span.fa.fa-facebook-square
-        a[href="https://www.linkedin.com/company/5322073"]
+        a[itemprop="sameAs" href="https://www.linkedin.com/company/5322073"]
           span.fa.fa-linkedin
-        a[href="https://twitter.com/argu_co"]
+        a[itemprop="sameAs" href="https://twitter.com/argu_co"]
           span.fa.fa-twitter
-        a[href="https://www.google.com/+Argu_dot_co"]
+        a[itemprop="sameAs" href="https://www.google.com/+Argu_dot_co"]
           span.fa.fa-google-plus
-        a[href="https://www.youtube.com/playlist?list=PLkKmFghZIx4_rOwub0YKx6njRmDrwj8TX"]
+        a[itemprop="sameAs" href="https://www.youtube.com/playlist?list=PLkKmFghZIx4_rOwub0YKx6njRmDrwj8TX"]
           span.fa.fa-youtube
   .footer-bottom
     /span= t('site.copyright')
