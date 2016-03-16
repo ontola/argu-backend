@@ -568,8 +568,8 @@ var ui = {
         });
     },
 
-    checkVersionNumber: function checkVersionNumber() {
-        if (event.data.xhr.getResponseHeader('Argu-Version') !== window.arguVersion) {
+    checkVersionNumber: function checkVersionNumber(event) {
+        if (event.originalEvent.data.xhr.getResponseHeader('Argu-Version') !== null && event.originalEvent.data.xhr.getResponseHeader('Argu-Version') !== window.arguVersion) {
             if (window.confirm("A new version of Argu has been released. Would you like to reload this page? (recommended)") == true) {
                 document.location.reload(true);
             }
