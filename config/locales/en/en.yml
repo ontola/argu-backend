@@ -89,7 +89,7 @@ en:
     500: "Something went wrong on our side, please try again later."
   errors:
     general: "Something went wrong, reload the page or try again later."
-  outdated_browser: "You're using an <strong>outdated and probably unsafe</strong> browser. <a href='http://browsehappy.com/'>Upgrade your browser.</a>"
+  outdated_browser: "You're using an <strong>outdated and probably unsafe</strong> browser. This may cause problems on Argu. <a href='http://browsehappy.com/'>Upgrade your browser.</a>"
   view_settings: "View settings"
   share_link:
     header: "Share link"

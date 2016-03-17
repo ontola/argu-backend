@@ -32,6 +32,13 @@
   opacity:0;
   max-width: none;
 
+  // Disables tooltips for IE 8,9 and 10
+  @media screen\0 {
+    .ie8910 {
+      display: none;
+    }
+  }
+
   @include bp-large {
     display: none;
   }

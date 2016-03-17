@@ -89,7 +89,7 @@ nl:
     500: "Er ging iets aan onze kant fout, probeer het later nog eens."
   errors:
     general: "Er is iets fout gegaan herlaad de pagina of probeer het later nog eens."
-  outdated_browser: "Je gebruikt een <strong>achterhaalde en waarschijnlijk onveilige</strong> browser. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
+  outdated_browser: "Je gebruikt een <strong>achterhaalde en waarschijnlijk onveilige</strong> browser. Het kan zijn dat daarom niet alles op deze website werkt. <a href='http://browsehappy.com/'>Upgrade je browser.</a>"
   view_settings: "Weergave"
   share_link:
     header: "Link delen"
