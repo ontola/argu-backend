@@ -1,7 +1,7 @@
 en:
   projects:
     type: 'Project'
-    type_new: 'new project'
+    type_new: 'New project'
     plural: 'Projects'
     publish_confirmation: 'Publicising will notify forum followers that a project was created. Continue?'
     timeline: 'Timeline'

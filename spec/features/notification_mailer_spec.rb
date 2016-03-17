@@ -61,7 +61,7 @@ RSpec.feature 'Notification mailer' do
     expect(current_email).to have_content notification_argument.activity.trackable.content
 
     current_email.click_link 'Go to discussion'
-    expect(current_path).to eq argument_path(notification_argument.activity.trackable)
+    expect(page).to have_current_path argument_path(notification_argument.activity.trackable)
   end
 
   scenario 'Send mail with two notifications' do
@@ -79,6 +79,6 @@ RSpec.feature 'Notification mailer' do
     expect(current_email).to have_content notification_comment.activity.trackable.body
 
     current_email.click_link notification_argument.activity.trackable.title
-    expect(current_path).to eq argument_path(notification_argument.activity.trackable)
+    expect(page).to have_current_path argument_path(notification_argument.activity.trackable)
   end
 end

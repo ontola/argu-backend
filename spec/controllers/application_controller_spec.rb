@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :controller do
-  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
-  let(:motion) { FactoryGirl.create(:motion, forum: holland) }
+  let!(:holland) { create(:populated_forum, name: 'holland') }
+  let(:motion) { create(:motion, forum: holland) }
   let(:user) { create_member(holland) }
 
   describe '#create_activity' do

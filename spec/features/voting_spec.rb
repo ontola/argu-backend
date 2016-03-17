@@ -19,13 +19,15 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: 'DISAGREE').click
+    find('span span', text: 'Disagree').click
     expect(page).to have_content 'Sign up'
 
     click_link 'Sign up with email'
-    expect(current_path).to eq new_user_registration_path
+    expect(page).to have_current_path new_user_registration_path(r: new_motion_vote_path(motion,
+                                                                                         confirm: true,
+                                                                                         vote: {for: :con}))
 
-    user_attr = FactoryGirl.attributes_for(:user)
+    user_attr = attributes_for(:user)
     within('#new_user') do
       fill_in 'user_email', with: user_attr[:email]
       fill_in 'user_password', with: user_attr[:password]
@@ -33,10 +35,10 @@ RSpec.feature 'Voting', type: :feature do
       click_button 'Sign up'
     end
 
-    expect(current_path).to eq setup_users_path
+    expect(page).to have_current_path setup_users_path
     click_button 'Next'
 
-    profile_attr = FactoryGirl.attributes_for(:profile)
+    profile_attr = attributes_for(:profile)
     within('form') do
       fill_in 'profile_profileable_attributes_first_name', with: user_attr[:first_name]
       fill_in 'profile_profileable_attributes_last_name', with: user_attr[:last_name]
@@ -46,7 +48,7 @@ RSpec.feature 'Voting', type: :feature do
 
     click_button 'Disagree'
 
-    expect(current_path).to eq(motion_path(motion))
+    expect(page).to have_current_path(motion_path(motion))
     expect(page).to have_css('.btn-con[data-voted-on=true]')
   end
 
@@ -62,7 +64,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: 'DISAGREE').click
+    find('span span', text: 'Disagree').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
     visit motion_path(motion)
@@ -75,13 +77,13 @@ RSpec.feature 'Voting', type: :feature do
   let(:member) { create_member(freetown) }
 
   scenario 'Member should vote on a motion' do
-    login_as(member)
+    login_as(member, scope: :user)
 
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: 'DISAGREE').click
+    find('span span', text: 'Disagree').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
     visit motion_path(motion)

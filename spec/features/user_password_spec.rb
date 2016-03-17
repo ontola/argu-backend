@@ -36,11 +36,11 @@ RSpec.feature 'User Password', type: :feature do
     log_in_user user
 
     visit settings_path
-    expect(current_path).to eq settings_path
+    expect(page).to have_current_path settings_path
 
-    expect(page).to have_content('EDIT PASSWORD')
-    expect(page).to have_content('CONFIRM PASSWORD')
-    expect(page).to have_content('CURRENT PASSWORD')
+    expect(page).to have_content('Edit password')
+    expect(page).to have_content('Confirm password')
+    expect(page).to have_content('Current password')
 
     new_password = 'new password'
     expect {
@@ -53,7 +53,7 @@ RSpec.feature 'User Password', type: :feature do
     }.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)
-    expect(current_path).to eq settings_path
+    expect(page).to have_current_path settings_path
 
     visit destroy_user_session_path
     expect(page).to have_content 'You have signed out successfully.'
@@ -65,7 +65,7 @@ RSpec.feature 'User Password', type: :feature do
       fill_in 'user_password', with: new_password
       click_button 'Log in'
     end
-    expect(current_path).to eq info_path(:about)
+    expect(page).to have_current_path info_path(:about)
     expect(page).to have_content 'Welcome back!'
   end
 
@@ -73,11 +73,11 @@ RSpec.feature 'User Password', type: :feature do
     log_in_user user_omni_both
 
     visit settings_path
-    expect(current_path).to eq settings_path
+    expect(page).to have_current_path settings_path
 
-    expect(page).to have_content('EDIT PASSWORD')
-    expect(page).to have_content('CONFIRM PASSWORD')
-    expect(page).to have_content('CURRENT PASSWORD')
+    expect(page).to have_content('Edit password')
+    expect(page).to have_content('Confirm password')
+    expect(page).to have_content('Current password')
 
     expect {
       new_password = 'new password'
@@ -91,7 +91,7 @@ RSpec.feature 'User Password', type: :feature do
       Sidekiq::Worker.jobs.size
     }.by(1)
 
-    expect(current_path).to eq settings_path
+    expect(page).to have_current_path settings_path
     expect(page).to have_content('User settings')
   end
 
@@ -103,12 +103,12 @@ RSpec.feature 'User Password', type: :feature do
   end
 
   scenario 'user only omni should not change their password' do
-    log_in_user user_omni_only
+    login_as user_omni_only, scope: :user
 
     visit settings_path
-    expect(page).not_to have_content('password')
-    expect(page).not_to have_content('confirm password')
-    expect(page).not_to have_content('current password')
+    expect(page).not_to have_content('Password')
+    expect(page).not_to have_content('Confirm password')
+    expect(page).not_to have_content('Current password')
   end
 
   scenario 'user only omni should request a password reset email' do

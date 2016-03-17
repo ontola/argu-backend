@@ -1,7 +1,7 @@
 nl:
   projects:
     type: 'Project'
-    type_new: 'nieuw project'
+    type_new: 'Nieuw project'
     plural: 'Projecten'
     publish_confirmation: 'Publiceren zorgt ervoor dat forum volgers op de hoogte zullen worden gesteld. Verder gaan?'
     timeline: 'Tijdlijn'

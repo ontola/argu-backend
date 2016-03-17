@@ -107,12 +107,12 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(argument.content)
 
     click_link motion.title
-    expect(current_path).to eq motion_path(motion)
+    expect(page).to have_current_path motion_path(motion)
     expect(page).to have_content(motion.title)
     expect(page).to have_content(motion.content)
 
     click_link question.title
-    expect(current_path).to eq question_path(question)
+    expect(page).to have_current_path question_path(question)
     expect(page).to have_content(question.title)
     expect(page).to have_content(question.content)
 
@@ -123,7 +123,7 @@ RSpec.feature 'Adam west', type: :feature do
     visit forum_path(freetown)
 
     expect(page).not_to have_content(freetown.display_name)
-    expect(current_path).to eq(forum_path(default))
+    expect(page).to have_current_path(forum_path(default))
   end
 
   scenario 'guest should not see comment section' do
@@ -145,7 +145,10 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content 'Sign up'
 
     click_link 'Sign up with email'
-    expect(current_path).to eq new_user_registration_path
+    redirect_url = new_motion_vote_path(motion_id: motion,
+                                        confirm: 'true',
+                                        vote: {for: 'neutral'})
+    expect(page).to have_current_path new_user_registration_path(r: redirect_url)
 
     user_attr = attributes_for(:user)
     within('#new_user') do
@@ -155,7 +158,7 @@ RSpec.feature 'Adam west', type: :feature do
       click_button 'Sign up'
     end
 
-    expect(current_path).to eq setup_users_path
+    expect(page).to have_current_path setup_users_path
     click_button 'Next'
 
     profile_attr = attributes_for(:profile)
@@ -166,7 +169,7 @@ RSpec.feature 'Adam west', type: :feature do
       click_button 'Next'
     end
 
-    click_button 'Neutral'
+    click_button 'btn-neutral'
 
     expect(page).to have_css('.btn-neutral[data-voted-on=true]')
   end
@@ -185,12 +188,12 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(argument.content)
 
     click_link motion.title
-    expect(current_path).to eq motion_path(motion)
+    expect(page).to have_current_path motion_path(motion)
     expect(page).to have_content(motion.title)
     expect(page).to have_content(motion.content)
 
     click_link question.title
-    expect(current_path).to eq question_path(question)
+    expect(page).to have_current_path question_path(question)
     expect(page).to have_content(question.title)
     expect(page).to have_content(question.content)
 
@@ -203,7 +206,7 @@ RSpec.feature 'Adam west', type: :feature do
     visit forum_path(freetown)
 
     expect(page).not_to have_content(freetown.display_name)
-    expect(current_path).to eq(forum_path(default))
+    expect(page).to have_current_path(forum_path(default))
   end
 
   scenario 'user should not see comment section' do
@@ -243,13 +246,13 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(argument.content)
 
     click_link motion.title
-    expect(current_path).to eq motion_path(motion)
+    expect(page).to have_current_path motion_path(motion)
     expect(page).to have_content(motion.title)
     expect(page).to have_content(motion.content)
     expect(page.body).not_to have_content('Start a new discussion')
 
     click_link question.title
-    expect(current_path).to eq question_path(question)
+    expect(page).to have_current_path question_path(question)
     expect(page).to have_content(question.title)
     expect(page).to have_content(question.content)
 
@@ -262,7 +265,7 @@ RSpec.feature 'Adam west', type: :feature do
     visit forum_path(freetown)
 
     expect(page).not_to have_content(freetown.display_name)
-    expect(current_path).to eq(forum_path(default))
+    expect(page).to have_current_path(forum_path(default))
   end
 
   scenario 'member should not see comment section' do
@@ -339,20 +342,20 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(argument.content)
 
     click_link motion.title
-    expect(current_path).to eq motion_path(motion)
+    expect(page).to have_current_path motion_path(motion)
     expect(page).to have_content(motion.title)
     expect(page).to have_content(motion.content)
 
     click_link question.title
-    expect(current_path).to eq question_path(question)
+    expect(page).to have_current_path question_path(question)
     expect(page).to have_content(question.title)
     expect(page).to have_content(question.content)
 
     click_link freetown.display_name
-    expect(current_path).to eq forum_path(freetown)
+    expect(page).to have_current_path forum_path(freetown)
     expect(page).to have_content(freetown.display_name)
     expect(page).to have_content(freetown.bio)
-    expect(page.body).to have_content('Forum settings')
+    expect(page).to have_content('Forum settings')
   end
 
   scenario 'manager should visit forum show' do
@@ -362,7 +365,7 @@ RSpec.feature 'Adam west', type: :feature do
 
     expect(page).to have_content(freetown.display_name)
     expect(page).to have_content(freetown.bio)
-    expect(current_path).to eq(forum_path(freetown))
+    expect(page).to have_current_path(forum_path(freetown))
   end
 
   scenario 'manager should not see comment section' do

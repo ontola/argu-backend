@@ -38,11 +38,11 @@ RSpec.feature 'Netdem', type: :feature do
     end
 
     expect(page).to have_content 'Welcome back!'
-    expect(current_path).to eq forum_path('freetown')
+    expect(page).to have_current_path forum_path('freetown')
 
     click_link('New discussion')
 
-    click_link('new project')
+    click_link('New project')
 
     project_attributes = attributes_for(:project)
     within('#new_project') do
@@ -56,6 +56,6 @@ RSpec.feature 'Netdem', type: :feature do
       click_button 'Save'
     end
     expect(page).to have_content project_attributes[:title]
-    expect(current_path).to eq project_path(Project.last)
+    expect(page).to have_current_path project_path(Project.last)
   end
 end

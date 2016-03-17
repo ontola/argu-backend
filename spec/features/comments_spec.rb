@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Comments', type: :feature do
-
   let!(:holland) { create(:populated_forum, name: 'holland') }
   let!(:argument) { create(:argument, forum: holland) }
 
@@ -49,7 +48,7 @@ RSpec.feature 'Comments', type: :feature do
   ####################################
   # As user
   ####################################
-  let!(:user) { create(:user) }
+  let(:user) { create(:user) }
 
   scenario 'User places a comment' do
     login_as(user, scope: :user)
@@ -61,7 +60,7 @@ RSpec.feature 'Comments', type: :feature do
       fill_in 'comment[body]', with: comment_args[:body]
       click_button 'Reply'
     end
-    expect(page).to have_content "and participate in the discussion!"
+    expect(page).to have_content 'and participate in the discussion!'
     find('.modal').click_link('join-forum')
 
     expect(page).to have_content argument.title
@@ -71,7 +70,7 @@ RSpec.feature 'Comments', type: :feature do
   ####################################
   # As member
   ####################################
-  let!(:member) { create_member(holland) }
+  let(:member) { create_member(holland) }
 
   scenario 'Member places a comment' do
     login_as(member, scope: :user)

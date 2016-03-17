@@ -2,13 +2,10 @@ require 'rails_helper'
 
 RSpec.feature 'Transfer Page', type: :feature do
 
-  let!(:nederland) do
-    FactoryGirl.create(:populated_forum,
-                       name: 'nederland')
-  end
-  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
+  let!(:nederland) { create(:populated_forum, name: 'nederland') }
+  let!(:holland) { create(:populated_forum, name: 'holland') }
   let!(:holland_member) { create_member(holland) }
-  let!(:user) { FactoryGirl.create(:user_with_votes, first_name: 'testuser') }
+  let!(:user) { create(:user_with_votes, first_name: 'testuser') }
 
   scenario 'User transfers a page' do
     login_as(holland.page.owner.profileable, :scope => :user)
@@ -27,7 +24,7 @@ RSpec.feature 'Transfer Page', type: :feature do
       input_field.send_keys user.first_name
       find('.Select-option').click
 
-      click_button "I understand the consequences, transfer ownership of this organization."
+      click_button 'I understand the consequences, transfer ownership of this organization.'
     end
 
     expect(find('div.alert', text: 'Organization transferred')).to be_present

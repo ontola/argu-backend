@@ -21,16 +21,16 @@ RSpec.feature 'Access tokens', type: :feature do
     expect(page).to have_content 'helsinki'
 
     click_link motion.title
-    # wait_for_ajax
 
     expect(page).to have_content('content')
 
     click_link 'Neutral'
-    # wait_for_async_modal
     expect(page).to have_content 'Sign up'
 
     click_link 'Sign up with email'
-    expect(current_path).to eq new_user_registration_path
+    expect(page).to have_current_path new_user_registration_path(r: new_motion_vote_path(motion,
+                                                                                         confirm: true,
+                                                                                         vote: {for: :neutral}))
 
     user_attr = attributes_for(:user)
     within('#new_user') do
@@ -40,7 +40,7 @@ RSpec.feature 'Access tokens', type: :feature do
       click_button 'Sign up'
     end
 
-    expect(current_path).to eq setup_users_path
+    expect(page).to have_current_path setup_users_path
     click_button 'Next'
 
     profile_attr = attributes_for(:profile)

@@ -16,6 +16,8 @@ html[class="no-js"]
       =render partial:'external/inspectlet'
     - if Rails.env.production?
       =render partial: 'analytics'
+    - if Rails.env.test?
+      =stylesheet_link_tag 'testing'
   body
     #fb-root
     =render 'guest/navbar', permanent: 'navbar'

@@ -11,7 +11,7 @@ RSpec.feature 'Signup', type: :feature do
 
     visit root_path
     expect(page).to have_content 'default'
-    expect(current_path).to eq forum_path(default)
+    expect(page).to have_current_path forum_path(default)
 
     visit forum_path(freetown)
     expect(page).to have_content 'freetown'
@@ -24,7 +24,7 @@ RSpec.feature 'Signup', type: :feature do
 
     click_link 'Log in with Facebook'
 
-    expect(current_path).to eq setup_users_path
+    expect(page).to have_current_path setup_users_path
     click_button 'Volgende'
 
     click_button 'Geen van beide'
@@ -49,7 +49,7 @@ RSpec.feature 'Signup', type: :feature do
       click_button 'Sign up'
     end
 
-    expect(current_path).to eq setup_users_path
+    expect(page).to have_current_path setup_users_path
     click_button 'Next'
 
     within('#profile_profileable_attributes_home_placement_attributes_country_code_input') do
@@ -59,7 +59,7 @@ RSpec.feature 'Signup', type: :feature do
     end
     click_button 'Next'
 
-    expect(current_path).to eq(user_path(User.last))
+    expect(page).to have_current_path(user_path(User.last))
   end
 
 end
