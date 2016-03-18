@@ -9,6 +9,7 @@ AllCops:
     - 'app/assets/javascripts/_*'
     - 'app/assets/javascripts/_*'
     - 'db/schema.rb'
+    - 'db/migrate/*'
 Metrics/LineLength:
   Max: 100
 Style/IfUnlessModifier:
