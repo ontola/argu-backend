@@ -29,11 +29,17 @@ module MenuHelper
     if resource_policy.update?
       link_items << link_item(t('edit'), polymorphic_url([:edit, resource]), fa: 'pencil')
     end
-    if resource_policy.trash?
-      link_items << link_item(t('trash'), polymorphic_url(resource), data: {confirm: t('trash_confirmation'), method: 'delete', turbolinks: 'false'}, fa: 'trash')
-    end
-    if resource_policy.destroy?
-      link_items << link_item(t('destroy'), polymorphic_url(resource, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', turbolinks: 'false'}, fa: 'close')
+    if resource.is_trashed?
+      if resource_policy.trash?
+        link_items << link_item(t('untrash'), polymorphic_url([:untrash, resource]), data: {confirm: t('untrash_confirmation'), method: 'put', turbolinks: 'false'}, fa: 'eye')
+      end
+      if resource_policy.destroy?
+        link_items << link_item(t('destroy'), polymorphic_url(resource, destroy: true), data: {confirm: t('destroy_confirmation'), method: 'delete', turbolinks: 'false'}, fa: 'close')
+      end
+    else
+      if resource_policy.trash?
+        link_items << link_item(t('trash'), polymorphic_url(resource), data: {confirm: t('trash_confirmation'), method: 'delete', turbolinks: 'false'}, fa: 'trash')
+      end
     end
     dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-gear')
   end
