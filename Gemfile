@@ -12,7 +12,7 @@ gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'
 gem 'logstasher'
 
-##################DB########################
+################## DB ########################
 gem 'pg', '0.18.2'
 
 gem 'jbuilder', '~> 2.2.5'
@@ -21,15 +21,17 @@ gem 'rfc-822', '~> 0.4.0'
 gem 'counter_culture', '~> 0.1.34'
 gem 'rails-i18n', '~> 4.0.3'
 gem 'tzinfo-data'
-gem 'rack-cors', :require => 'rack/cors'
+gem 'rack-cors', require: 'rack/cors'
 gem 'formtastic', '~> 3.1.2'
 gem 'redis', '~> 3.2.0'
 gem 'has_secure_token'
 gem 'rest-client'
-gem 'multimap', git: 'https://github.com/apalmblad/multimap.git', ref: '96eeacc1606ea7f008ce0a50641c31a2c844fd9e'
+gem 'multimap',
+    git: 'https://github.com/apalmblad/multimap.git',
+    ref: '96eeacc1606ea7f008ce0a50641c31a2c844fd9e'
 gem 'squirm_rails', require: 'squirm/rails'
 
-##################Features########################
+################## Features ########################
 gem 'acts-as-taggable-on', '~> 3.4.2'
 gem 'awesome_nested_set', '~> 3.0.1'
 gem 'acts_as_commentable_with_threading', '~> 2.0.0'
@@ -56,33 +58,36 @@ gem 'roadie-rails', '~> 1.1.0'
 gem 'cocoon', '~> 1.2.6'
 gem 'httparty', '~> 0.13.7'
 gem 'acts_as_list', '~> 0.7.2'
-#Pagination
+# Pagination
 gem 'kaminari', '~>0.16.1'
 
-##################Front-end########################
-#gem 'react-rails', '~> 1.6.0'
+################## Front-end ########################
+# gem 'react-rails', '~> 1.6.0'
 gem 'react-rails',
     git: 'https://github.com/reactjs/react-rails',
     branch: 'master',
     ref: '58842d4d06cf4a7f993a112edbd3ef82272a659a'
 
-##################Asset-y########################
+################## Asset-y ########################
 gem 'slim', '~> 3.0.6'
-#gem 'slim-rails'
+# gem 'slim-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete', '~> 1.0.14'
 gem 'carrierwave', '~> 0.10.0'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
 gem 'carrierwave-vips'
-#gem 'rmagick', '2.14.0'
-#gem 'fog', '~> 1.26.0'                                                    # Cloud storage connector for CW
+# gem 'rmagick', '2.14.0'
+# Cloud storage connector for CW
+# gem 'fog', '~> 1.26.0'
 gem 'carrierwave-aws'
 gem 'sidekiq', '~> 4.1.0'
 gem 'sidetiq', '~> 0.7.0'
-gem 'sidekiq-logging-json', git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git', ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
+gem 'sidekiq-logging-json',
+    git: 'https://github.com/st0012/Sidekiq-Logging-JSON.git',
+    ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
 gem 'sinatra', '>= 1.3.0'
-gem 'render_anywhere', :require => false
+gem 'render_anywhere', require: false
 gem 'turbolinks', '>= 5.0.0.beta2'
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.5.2'
@@ -90,9 +95,9 @@ gem 'sprockets-es6', require: 'sprockets/rails'
 gem 'font-awesome-rails'
 gem 'babel-transpiler'
 gem 'redcarpet', '~> 3.3.4'
-#gem 'browserify-rails', '~> 1.4.0', require: 'browserify-rails'
+# gem 'browserify-rails', '~> 1.4.0', require: 'browserify-rails'
 
-##################User management########################
+################## User management ########################
 gem 'devise', '~> 3.5.5'
 gem 'devise_invitable', '~> 1.5.5'
 gem 'omniauth', '~> 1.2.2'
@@ -100,7 +105,7 @@ gem 'omniauth-oauth2', '~> 1.2.0'
 gem 'omniauth-facebook', '~> 2.0.1'
 gem 'koala', '~> 1.11.1'
 gem 'omniauth-twitter', '~> 1.2.0'
-#gem 'omniauth-openid'
+# gem 'omniauth-openid'
 gem 'pundit', '~> 1.0.0'
 gem 'bugsnag', '~> 3.0.0'
 gem 'rolify', '~> 3.4.1'
@@ -142,8 +147,8 @@ end
 group :development do
   gem 'nokogiri', '~> 1.6.7.2'
   gem 'pry'
-  #gem 'byebug'
-  #gem 'pry-byebug'
+  # gem 'byebug'
+  # gem 'pry-byebug'
   gem 'meta_request'
   gem 'better_errors'
   gem 'binding_of_caller', '>= 0.7.3.pre1'            ###!
