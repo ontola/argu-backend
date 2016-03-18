@@ -1,0 +1,28 @@
+@import "variables";
+@import "mixins";
+
+$vote-pie-size: 1.8em;
+
+.vote-pie {
+  width: $vote-pie-size;
+  top: -.2em;
+  left: -1.4em;
+  position: absolute;
+
+  svg {
+    overflow: visible;
+  }
+
+  path, circle {
+    stroke: white;
+    stroke-width: 5px;
+    stroke-linejoin: round;
+  }
+}
+
+.vote-pie-container{
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: .5em;
+}
