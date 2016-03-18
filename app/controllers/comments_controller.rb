@@ -76,7 +76,7 @@ class CommentsController < AuthorizedController
       if @comment.update(comment_params)
         format.html do
           redirect_to comment_url(@comment),
-                      notice: t('comments.notices.updated') }
+                      notice: t('comments.notices.updated')
         end
         format.js { render }
         format.json { head :no_content }
