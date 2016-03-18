@@ -64,7 +64,7 @@ class AuthorizedController < ApplicationController
     if params[:action] == 'destroy' && authenticated_resource!.try(:is_trashable?) && params[:destroy] != 'true'
       action = 'trash'
     end
-    authorize authenticated_resource!, "#{action.chomp('!')}?"
+    authorize authenticated_resource, "#{action.chomp('!')}?"
 end
 
   def authorize_show
