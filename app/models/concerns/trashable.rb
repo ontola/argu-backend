@@ -49,6 +49,10 @@ module Trashable
   end
 
   module ClassMethods
+    def anonymize(collection)
+      collection.update_all(creator_id: 0, publisher_id: 0)
+    end
+
     def is_trashable?
       true
     end

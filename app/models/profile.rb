@@ -7,11 +7,9 @@ class Profile < ActiveRecord::Base
   belongs_to :profileable, polymorphic: true, inverse_of: :profile
   rolify after_remove: :role_removed, before_add: :role_added
 
+  before_destroy :anonymize_or_wipe_dependencies
   has_many :access_tokens, dependent: :destroy
   has_many :activities, as: :owner, dependent: :destroy
-  has_many :arguments, inverse_of: :creator, foreign_key: 'creator_id'
-  has_many :blog_posts, inverse_of: :creator, foreign_key: 'creator_id', dependent: :destroy
-  has_many :comments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :destroy
   has_many :forums, through: :memberships
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships
@@ -19,22 +17,26 @@ class Profile < ActiveRecord::Base
   has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
   has_many :page_memberships, dependent: :destroy
   has_many :page_managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
-  has_many :pages, inverse_of: :owner, foreign_key: :owner_id
-  has_many :projects, inverse_of: :creator, foreign_key: 'creator_id'
+  has_many :pages, inverse_of: :owner, foreign_key: :owner_id, dependent: :restrict_with_exception
   has_many :votes, as: :voter, dependent: :destroy
-  has_many :motions, inverse_of: :creator, foreign_key: 'creator_id'
-  has_many :questions, inverse_of: :creator, foreign_key: 'creator_id'
+  # User content
+  has_many :arguments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :blog_posts, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :comments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :group_responses, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :motions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :projects, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :questions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   accepts_nested_attributes_for :profileable
-
-  mount_uploader :profile_photo, AvatarUploader
-  mount_uploader :cover_photo, CoverUploader
-
-  #pica_pica :profile_photo
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}
+
   auto_strip_attributes :name, :squish => true
   auto_strip_attributes :about, :nullify => false
+
+  mount_uploader :profile_photo, AvatarUploader
+  mount_uploader :cover_photo, CoverUploader
 
   def as_json(options)
     # Hide profileable for the more friendly actor
@@ -128,6 +130,18 @@ class Profile < ActiveRecord::Base
   end
 
 private
+
+  # Sets the dependent foreign relations to a public profile
+  # Except for comments..
+  def anonymize_or_wipe_dependencies
+    %w(comments motions arguments questions blog_posts projects).each do |association|
+      association
+          .classify
+          .constantize
+          .anonymize(self.send(association))
+    end
+    reload
+  end
 
   def role_added(role)
     if self.profile_frozen?

@@ -1,7 +1,12 @@
 FactoryGirl.define do
   factory :argument do
     association :forum, strategy: :build
-    association :creator, factory: :profile
+    creator {
+      passed_in?(:creator) ? creator : create(:profile)
+    }
+    publisher {
+      passed_in?(:publisher) ? publisher : create(:user)
+    }
     motion {
       passed_in?(:motion) ? motion : create(:motion, forum: forum)
     }

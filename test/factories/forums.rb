@@ -11,13 +11,6 @@ FactoryGirl.define do
 
     before(:create) do |forum, evaluator|
       forum.shortname.shortname = forum.name
-      User.create({id:0,
-                   shortname: Shortname.new(shortname: "community"),
-                   email: "community@argu.co",
-                   password: "password",
-                   finished_intro: true,
-                   profile: Profile.create(id:0)
-                  }) unless User.exists?(0)
     end
 
     # Holland (the default)

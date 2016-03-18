@@ -37,7 +37,8 @@ class RegistrationsController < Devise::RegistrationsController
       valid_password = @user.password_required? ? @user.valid_password?(params[:user][:current_password]) : true
       if valid_password && @user.destroy
         Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-        format.html { redirect_to root_path, notice: 'Account verwijderd.' }
+        format.html { redirect_to root_path, notice: t('type_destroy_success',
+                                                       type: 'Account') }
         format.json { head :no_content }
       else
         format.html { render action: 'cancel' }

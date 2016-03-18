@@ -1,8 +1,13 @@
 FactoryGirl.define do
   factory :motion do
     association :forum, strategy: :create
-    association :creator, factory: :profile
-    # association :question, factory: :question
+    creator {
+      passed_in?(:creator) ? creator : create(:profile)
+    }
+    publisher {
+      passed_in?(:publisher) ? publisher : create(:user)
+    }
+    #association :question, factory: :question
 
     sequence(:title) { |n| "fg motion title #{n}" }
     sequence(:content) { |i| "fg motion content #{i}" }

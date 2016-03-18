@@ -24,13 +24,13 @@ class Argument < ActiveRecord::Base
 
   def filtered_threads(show_trashed = nil, page = nil, order = 'created_at ASC')
     i = comment_threads.where(:parent_id => nil).order(order).page(page)
-    i.each(&wipe) unless show_trashed
+    i.each(&shallow_wipe) unless show_trashed
     i
   end
 
   def filtered_comments(show_trashed = nil, page = nil, order = 'created_at ASC')
     i = comment_threads.order(order).page(page)
-    i.each(&wipe) unless show_trashed
+    i.each(&shallow_wipe) unless show_trashed
     i
   end
 
@@ -51,7 +51,7 @@ class Argument < ActiveRecord::Base
     self.motion.arguments.find_by(id: p_id)
   end
 
-  def wipe
+  def shallow_wipe
     Proc.new do |c|
       if c.is_trashed?
         c.body= '[DELETED]'
@@ -59,7 +59,7 @@ class Argument < ActiveRecord::Base
         c.is_processed = true
       end
       if c.children.present?
-        c.children.each(&wipe);
+        c.children.each(&shallow_wipe);
       end
     end
   end

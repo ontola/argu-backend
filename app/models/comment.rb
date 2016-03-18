@@ -82,10 +82,9 @@ class Comment < ActiveRecord::Base
   # Comments can't be deleted since all comments below would be hidden as well
   def wipe
     Comment.transaction do
-      self.decrement_counter_cache unless is_trashed?
-      if self.update_columns creator_id: 0, publisher_id: 0, body: '', is_trashed: true
-        self.activities.destroy_all
-      end
+      self.trash unless self.is_trashed?
+      self.anonymize
+      self.update_column(:body, '')
     end
   end
 end
