@@ -3,9 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
 import OnClickOutside from 'react-onclickoutside';
-import { image } from '../lib/helpers';
 import { Notifications, NotificationTrigger } from './Notifications';
-import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+import { image, safeCredentials, statusSuccess, json } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
 import HyperDropdownMixin from '../mixins/HyperDropdownMixin';
 

@@ -73,7 +73,6 @@ export const CombiBigVote = React.createClass({
         return (
                 <div className="center motion-shr">
                     {voteButtonsComponent}
-                    {voteResultsComponent}
                     {groupResponsesComponent}
                 </div>
         );
