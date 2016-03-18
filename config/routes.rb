@@ -62,8 +62,8 @@ Argu::Application.routes.draw do
     get 'v/:for' => 'votes#new', shallow: true
   end
   concern :destroyable do
-    get :destroy, action: :destroy, path: :destroy, as: :destroy, on: :member
-    delete :destroy, action: :destroy!, on: :member
+    get :delete, action: :delete, path: :delete, as: :delete, on: :member
+    delete :destroy, action: :destroy, on: :member
   end
 
   use_doorkeeper do
@@ -158,9 +158,8 @@ Argu::Application.routes.draw do
 
   resources :pages,
             path: 'o',
-            only: [:new, :create, :show, :update, :delete, :destroy] ,
-            concerns: [:flowable] do
-    get :delete, on: :member
+            only: [:new, :create, :show, :update] ,
+            concerns: [:flowable, :destroyable] do
     get :transfer, on: :member
     put :transfer, on: :member, action: :transfer!
     get :settings, on: :member

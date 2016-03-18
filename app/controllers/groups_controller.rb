@@ -1,5 +1,5 @@
 class GroupsController < ApplicationController
-  before_action :find_forum_and_group, only: [:edit, :update, :destroy, :destroy!]
+  before_action :find_forum_and_group, only: [:edit, :update, :delete, :destroy]
 
   def new
     @forum = Forum.find_via_shortname params[:forum_id]
@@ -53,7 +53,7 @@ class GroupsController < ApplicationController
     end
   end
 
-  def destroy
+  def delete
     authorize @group, :destroy?
 
     locals = {
@@ -67,7 +67,7 @@ class GroupsController < ApplicationController
     end
   end
 
-  def destroy!
+  def destroy
     authorize @group, :destroy?
 
     respond_to do |format|

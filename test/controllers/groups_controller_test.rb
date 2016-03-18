@@ -39,7 +39,7 @@ class GroupsControllerTest < ActionController::TestCase
     sign_in user
 
     assert_no_difference 'Group.count' do
-      delete :destroy!, id: group
+      delete :destroy, id: group
     end
 
     assert_redirected_to root_path
@@ -69,11 +69,11 @@ class GroupsControllerTest < ActionController::TestCase
     assert assigns(:group)
   end
 
-  test 'should delete destroy!' do
+  test 'should delete destroy' do
     sign_in @freetown_owner
 
     assert_difference 'Group.count', -1 do
-      delete :destroy!, id: @group
+      delete :destroy, id: @group
     end
 
     assert_response 303
