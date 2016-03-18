@@ -153,7 +153,7 @@ class Motion < ActiveRecord::Base
   end
 
   def responses_from(profile, group)
-    self.group_responses.where(profile_id: profile.id, group: group).count
+    self.group_responses.where(creator_id: profile.id, group: group).count
   end
 
   def score

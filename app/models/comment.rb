@@ -7,13 +7,13 @@ class Comment < ActiveRecord::Base
 
   belongs_to :forum
   belongs_to :commentable, :polymorphic => true
-  belongs_to :profile
+  belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   after_create :increment_counter_cache, :touch_parent
-  validates_presence_of :profile
+  validates_presence_of :creator
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :forum, presence: true
   auto_strip_attributes :body
@@ -23,7 +23,7 @@ class Comment < ActiveRecord::Base
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.
   scope :find_comments_by_user, lambda { |user|
-    where(:profile_id => user.profile.id).order('created_at DESC')
+    where(:creator_id => user.profile.id).order('created_at DESC')
   }
 
   # Helper class method to look up all comments for
@@ -44,12 +44,8 @@ class Comment < ActiveRecord::Base
     c.commentable_id = obj.id
     c.commentable_type = obj.class.base_class.name
     c.body = comment
-    c.profile_id = profile_id
+    c.creator_id = profile_id
     c
-  end
-
-  def creator
-    self.profile
   end
 
   def display_name
@@ -86,8 +82,8 @@ class Comment < ActiveRecord::Base
   # Comments can't be deleted since all comments below would be hidden as well
   def wipe
     Comment.transaction do
-      if self.update_columns profile_id: nil, body: '', is_trashed: true
       self.decrement_counter_cache unless is_trashed?
+      if self.update_columns creator_id: 0, publisher_id: 0, body: '', is_trashed: true
         self.activities.destroy_all
       end
     end

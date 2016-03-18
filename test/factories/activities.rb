@@ -40,7 +40,7 @@ FactoryGirl.define do
     end
 
     trait :t_comment do
-      trackable { create(:comment, profile: owner) }
+      trackable { create(:comment, creator: owner) }
       recipient {
         passed_in?(:recipient) ?  recipient : create(:argument, forum: tenant)
       }
@@ -57,7 +57,7 @@ FactoryGirl.define do
     end
 
     trait :t_group_response do
-      trackable { create(:group_response, profile: owner) }
+      trackable { create(:group_response, creator: owner) }
     end
   end
 end

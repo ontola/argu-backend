@@ -34,7 +34,7 @@ class GroupResponsePolicy < RestrictivePolicy
     end
 
     def is_creator?
-      creator if record.profile == actor && profile_in_group?
+      creator if record.creator == actor && profile_in_group?
     end
   end
   include Roles

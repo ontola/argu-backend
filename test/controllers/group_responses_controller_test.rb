@@ -16,7 +16,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
   end
   let(:group_response) do
     create(:group_response,
-           profile: group_member.profile,
+           creator: group_member.profile,
            group: group,
            motion: motion,
            forum: freetown)

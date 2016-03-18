@@ -21,7 +21,7 @@ class GroupResponsesController < AuthorizedController
                                    permit_params.merge({
                                      forum: authenticated_context,
                                      publisher: current_user,
-                                     profile: current_profile,
+                                     creator: current_profile,
                                      group: group,
                                      motion: motion,
                                      side: side_param

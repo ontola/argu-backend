@@ -13,7 +13,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
   let(:comment) do
     create(:comment,
-           profile: member.profile,
+           creator: member.profile,
            commentable: argument)
   end
 
@@ -21,7 +21,7 @@ class CommentsControllerTest < ActionController::TestCase
   let(:closed_argument) { create(:argument, forum: cairo) }
   let(:cairo_comment) do
     create(:comment,
-           profile: member.profile,
+           creator: member.profile,
            commentable: closed_argument)
   end
 
@@ -29,7 +29,7 @@ class CommentsControllerTest < ActionController::TestCase
   let(:second_closed_argument) { create(:argument, forum: second_cairo) }
   let(:second_cairo_comment) do
     create(:comment,
-           profile: member.profile,
+           creator: member.profile,
            commentable: second_closed_argument)
   end
 
@@ -246,7 +246,7 @@ class CommentsControllerTest < ActionController::TestCase
     comment = create(:comment,
                      commentable: create(:argument,
                                          forum: freetown),
-                     profile: member.profile)
+                     creator: member.profile)
     create_list(:notification,
                 10,
                 activity: Activity.find_by(trackable: comment))

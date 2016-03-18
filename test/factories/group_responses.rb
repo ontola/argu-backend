@@ -6,7 +6,7 @@ FactoryGirl.define do
       passed_in?(:motion) ? motion : create(:motion,
                                             forum: forum)
     }
-    association :profile, factory: :profile
+    association :creator, factory: :profile
     association :publisher, factory: :user
     side :pro
     sequence(:text) { |i| "fg group response #{i}"  }

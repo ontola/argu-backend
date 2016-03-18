@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160308091020) do
+ActiveRecord::Schema.define(version: 20160318093603) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20160308091020) do
     t.string   "title",            limit: 255, default: ""
     t.text     "body",                         default: ""
     t.string   "subject",          limit: 255, default: ""
-    t.integer  "profile_id",                   default: 0
+    t.integer  "creator_id",                   default: 0
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
@@ -145,7 +145,7 @@ ActiveRecord::Schema.define(version: 20160308091020) do
 
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
-  add_index "comments", ["profile_id"], name: "index_comments_on_profile_id", using: :btree
+  add_index "comments", ["creator_id"], name: "index_comments_on_creator_id", using: :btree
 
   create_table "documents", force: :cascade do |t|
     t.string   "name"
@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(version: 20160308091020) do
   create_table "group_responses", force: :cascade do |t|
     t.integer  "forum_id"
     t.integer  "group_id"
-    t.integer  "profile_id"
+    t.integer  "creator_id"
     t.integer  "motion_id"
     t.text     "text",         default: ""
     t.integer  "publisher_id"

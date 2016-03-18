@@ -8,7 +8,7 @@ class CreateCommentTest < ActiveSupport::TestCase
            forum: freetown)
   end
   let(:comment_attributes) do
-    attributes_for(:comment)
+    attributes_for(:comment, creator: user.profile)
       .merge({commentable: commentable})
   end
 

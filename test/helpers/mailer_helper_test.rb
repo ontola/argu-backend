@@ -63,7 +63,7 @@ class MailerHelperTest < ActionView::TestCase
   let(:comment) do
     _comment = create(:comment,
                      commentable: argument_pro,
-                     profile: creator.profile)
+                     creator: creator.profile)
     create(:notification,
            activity: create(:activity,
                             forum: holland,
@@ -77,7 +77,7 @@ class MailerHelperTest < ActionView::TestCase
                      commentable: argument_pro)
     comment_comment = create(:comment,
                              commentable: argument_pro,
-                             profile: creator.profile)
+                             creator: creator.profile)
     comment_comment.move_to_child_of comment
     create(:notification,
            activity: create(:activity,

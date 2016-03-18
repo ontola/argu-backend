@@ -7,7 +7,7 @@ class GroupResponse < ActiveRecord::Base
   belongs_to :motion
   # The profile under which name the GroupResponse is displayed
   # Same as `creator`
-  belongs_to :profile
+  belongs_to :creator, class_name: 'Profile'
   # Physical creator of the GroupReponse (the one responsible).
   belongs_to :publisher, class_name: 'User'
   has_many :activities, as: :trackable, dependent: :destroy
@@ -17,11 +17,7 @@ class GroupResponse < ActiveRecord::Base
   enum side: {pro: 1, neutral: 0, con: 2}
 
   validates :text, length: {maximum: 5000}
-  validates_presence_of :side, :group, :forum, :motion, :profile
-
-  def creator
-    self.profile
-  end
+  validates_presence_of :side, :group, :forum, :motion, :creator
 
   def self.ordered (coll=[])
     dest = {'pro' => {collection: []}, 'neutral' => {collection: []}, 'con' => {collection: []}}

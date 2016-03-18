@@ -12,7 +12,10 @@ FactoryGirl.define do
         create(:forum)
       end
     }
-    association :profile
+    creator {
+      passed_in?(:creator) ? creator : create(:profile)
+    }
+
     association :publisher, factory: :user
     sequence(:body) { |i| "fg comment body #{i}" }
     is_trashed false
@@ -20,7 +23,7 @@ FactoryGirl.define do
     after(:create) do |comment|
       comment.create_activity action: :create,
                               recipient: comment.commentable,
-                              owner: comment.profile,
+                              owner: comment.creator,
                               forum: comment.forum
     end
   end

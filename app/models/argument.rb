@@ -55,7 +55,7 @@ class Argument < ActiveRecord::Base
     Proc.new do |c|
       if c.is_trashed?
         c.body= '[DELETED]'
-        c.profile = nil
+        c.creator = nil
         c.is_processed = true
       end
       if c.children.present?
