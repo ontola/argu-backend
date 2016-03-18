@@ -2,7 +2,7 @@
 @import "mixins";
 
 .notification-container {
-  width: 25em;
+  min-width: 25em !important;
   @include bp-small{
     position: fixed;
     top: 3em;
@@ -17,9 +17,9 @@
 }
 
 .notifications {
-  width: 25em;
   @include bp-small{
-    width: 100%;
+    width: 100% !important;
+    width: calc(100% - 2em) !important;
   }
 }
 
@@ -28,9 +28,9 @@
   display: block;
   border-bottom: solid 1px $g1;
   cursor: pointer;
-  > a {
-    padding: .6em 1.1em .6em .7em;
-  }
+  //> a {
+  //  padding: .6em 1.1em .6em .7em;
+  //}
   &:hover .notification-settings{
     opacity: 1;
   }
@@ -50,8 +50,7 @@
 
 .notification-avatar {
   display: block;
-  width: 13%;
-  float: left;
+  width: 3em;
   @include border-radius(999px);
 }
 
@@ -60,9 +59,10 @@
   font-size: 1em;
   display: block;
   line-height: 1.4em;
-  float: right;
+  position: relative;
   color: $g4;
-  margin-top: 0;
+  left: 3.5em;
+  margin-top: -3em;
   margin-bottom: 1.3em;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .notification-btn {
-  background-color: $g0;
+  background-color: $g1;
   a, span {
     padding: .3em;
     padding-left: 1em;

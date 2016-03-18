@@ -6,6 +6,8 @@ section.section-info.motion-bg
       span[class="fa fa-#{motion_icon}"]
       span.icon-left= motion_type
     - if local_assigns[:show_vote_results]
+      .vote-pie-container
+        = react_component 'VotePie', {voteCounts: {pro: motion.votes_pro_count, neutral: motion.votes_neutral_count, con: motion.votes_con_count}}, {prerender: true}
       .details-part.details-part--pro[data-title=t('tooltips.motion.vote_pro_count')]
         span.fa.fa-thumbs-up
         span.icon-left= motion.votes_pro_count.to_s
