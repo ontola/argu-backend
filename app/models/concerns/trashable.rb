@@ -30,7 +30,7 @@ module Trashable
       else
         update_column :is_trashed, true
       end
-      refresh_counter_cache if self.respond_to? :refresh_counter_cache
+      decrement_counter_cache if self.respond_to? :decrement_counter_cache
     end
   end
 
@@ -43,6 +43,7 @@ module Trashable
       else
         update_column :is_trashed, false
       end
+      increment_counter_cache if self.respond_to? :increment_counter_cache
     end
     return true
   end

@@ -12,9 +12,7 @@ class Comment < ActiveRecord::Base
   has_many :activities, as: :trackable, dependent: :destroy
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
-  after_save :refresh_counter_cache, :touch_parent, if: Proc.new { |c| c.commentable.persisted? }
-  after_destroy :refresh_counter_cache
-
+  after_create :increment_counter_cache, :touch_parent
   validates_presence_of :profile
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
   validates :forum, presence: true
@@ -77,18 +75,19 @@ class Comment < ActiveRecord::Base
     self.get_parent.model.touch
   end
 
-  def refresh_counter_cache
-    self.commentable.update_columns comments_count: self.commentable.comment_threads
-                                                        .where(is_trashed: false)
-                                                        .where.not(profile: nil)
-                                                        .count
+  def increment_counter_cache
+    self.commentable.increment!(:comments_count)
+  end
+
+  def decrement_counter_cache
+    self.commentable.decrement!(:comments_count)
   end
 
   # Comments can't be deleted since all comments below would be hidden as well
   def wipe
     Comment.transaction do
       if self.update_columns profile_id: nil, body: '', is_trashed: true
-        refresh_counter_cache
+      self.decrement_counter_cache unless is_trashed?
         self.activities.destroy_all
       end
     end
