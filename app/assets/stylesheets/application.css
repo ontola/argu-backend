@@ -19,5 +19,11 @@
  *= require nprogress
  *= require font-awesome
  *= require_self
- *= require_tree .
+ *= require _variables
+ *= require _mixins
+ *= require_tree ./briarcliff
+ *= require_tree ./developers
+ *= require_tree ./portal
+ *= require_tree ./widgets
+ *= require_tree ./app
 */
