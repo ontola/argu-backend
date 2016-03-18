@@ -35,7 +35,7 @@ class NotificationSchedulerWorkersTest < ActiveSupport::TestCase
            created_at: 1.day.ago)
   end
 
-  test 'Should collect direct followers to send notificaitons' do
+  test 'should collect direct followers to send notificaitons' do
     create_notification_pair_for follower
     create_notification_pair_for follower_weekly
 
@@ -45,7 +45,7 @@ class NotificationSchedulerWorkersTest < ActiveSupport::TestCase
     assert_equal follower.id, user_ids.first
   end
 
-  test 'Should collect weekly followers to send notifications' do
+  test 'should collect weekly followers to send notifications' do
     create_notification_pair_for follower
     create_notification_pair_for follower_weekly
 
@@ -55,7 +55,7 @@ class NotificationSchedulerWorkersTest < ActiveSupport::TestCase
     assert_equal follower_weekly.id, user_ids.first
   end
 
-  test 'Should not collect followers that has been mailed already' do
+  test 'should not collect followers that has been mailed already' do
     create_notification_pair_for follower_been_mailed
 
     worker = DirectNotificationsSchedulerWorker.new
