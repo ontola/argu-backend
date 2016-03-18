@@ -3,10 +3,10 @@ require 'test_helper'
 class ForumsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
-  let!(:holland) { FactoryGirl.create(:populated_forum, name: 'holland') }
-  let!(:cologne) { FactoryGirl.create(:closed_populated_forum, name: 'cologne') }
-  let!(:helsinki) { FactoryGirl.create(:hidden_populated_forum, name: 'helsinki') }
+  let(:freetown) { create(:forum, name: 'freetown') }
+  let!(:holland) { create(:populated_forum, name: 'holland') }
+  let!(:cologne) { create(:closed_populated_forum, name: 'cologne') }
+  let!(:helsinki) { create(:hidden_populated_forum, name: 'helsinki') }
 
   let(:project) { create(:project, forum: holland, published_at: nil) }
   let(:q1) { create(:question, forum: holland, project: project) }
@@ -34,7 +34,7 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'user should get show' do
     # Trigger creation of items

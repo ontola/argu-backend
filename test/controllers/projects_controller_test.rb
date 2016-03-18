@@ -3,14 +3,14 @@ require 'test_helper'
 class ProjectsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:owner) { FactoryGirl.create(:user) }
-  let!(:page) { FactoryGirl.create(:page, owner: owner.profile) }
-  let!(:freetown) { FactoryGirl.create(:forum, :with_follower, page: page, name: 'freetown') }
+  let!(:owner) { create(:user) }
+  let!(:page) { create(:page, owner: owner.profile) }
+  let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
   let!(:moderator) { create_member(freetown) }
   let!(:subject) do
-    FactoryGirl.create(:project,
-                       :published,
-                       forum: freetown)
+    create(:project,
+           :published,
+           forum: freetown)
   end
   let(:unpublished) { create(:project, :unpublished, forum: freetown) }
 

@@ -2,7 +2,7 @@ require 'test_helper'
 
 class SecurityTest < ActionDispatch::IntegrationTest
 
-  let!(:freetown) { FactoryGirl.create(:forum) }
+  let!(:freetown) { create(:forum) }
 
   test 'should block referer spam' do
     spammers = %w(

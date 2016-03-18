@@ -4,7 +4,7 @@ class StaticPagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   EXCLUDED_METHODS = [:modern, :how_argu_works, :persist_cookie, :new_discussion]
 
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   ####################################
   # As User
@@ -31,13 +31,13 @@ class StaticPagesControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let!(:freetown) { FactoryGirl.create(:forum) }
-  let(:staff) { FactoryGirl.create(:user, :staff) }
+  let!(:freetown) { create(:forum) }
+  let(:staff) { create(:user, :staff) }
 
   test 'should get activity feed' do
     activities = []
     %i(t_question t_motion t_argument t_comment t_vote).each do |trait|
-      activities << FactoryGirl.create(:activity, trait, forum: freetown)
+      activities << create(:activity, trait, forum: freetown)
     end
     sign_in staff
     create_member(freetown, staff)

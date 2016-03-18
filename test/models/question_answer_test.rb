@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class QuestionAnswerTest < ActiveSupport::TestCase
-  let(:question) { FactoryGirl.create(:question) }
-  let(:motion) { FactoryGirl.create(:motion) }
+  let(:question) { create(:question) }
+  let(:motion) { create(:motion) }
   subject do
     QuestionAnswer.new(question: question,
                        motion: motion)

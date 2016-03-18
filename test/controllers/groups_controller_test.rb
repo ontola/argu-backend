@@ -5,16 +5,16 @@ class GroupsControllerTest < ActionController::TestCase
 
   setup do
     @freetown, @freetown_owner = create_forum_owner_pair
-    @group = FactoryGirl.create(:group, forum: @freetown)
+    @group = create(:group, forum: @freetown)
   end
 
-  let(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
-  let!(:group) { FactoryGirl.create(:group, forum: freetown) }
+  let(:freetown) { create(:forum, name: 'freetown') }
+  let!(:group) { create(:group, forum: freetown) }
 
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'should not show new' do
     sign_in user

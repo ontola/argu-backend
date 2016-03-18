@@ -44,7 +44,7 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'user should get show' do
     sign_in user
@@ -72,10 +72,17 @@ class MotionsControllerTest < ActionController::TestCase
 
   test 'user should show tutorial only on first post create' do
     sign_in user
-    FactoryGirl.create(:membership, profile: user.profile, forum: freetown)
+    create(:membership,
+           profile: user.profile,
+           forum: freetown)
 
     assert_differences create_changes_array do
-      post :create, forum_id: freetown, motion: {title: 'Motion', content: 'Contents'}
+      post :create,
+           forum_id: freetown,
+           motion: {
+             title: 'Motion',
+             content: 'Contents'
+           }
     end
     assert_not_nil assigns(:cm).resource
     assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
@@ -199,22 +206,22 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   let(:no_create_without_question) do
-    forum = FactoryGirl.create(:forum)
-    FactoryGirl.create(:rule,
-                       model_type: 'Motion',
-                       action: 'create_without_question?',
-                       role: 'member',
-                       permit: false,
-                       context_type: 'Forum',
-                       context_id: forum.id,
-                       trickles: Rule.trickles[:trickles_down])
+    forum = create(:forum)
+    create(:rule,
+           model_type: 'Motion',
+           action: 'create_without_question?',
+           role: 'member',
+           permit: false,
+           context_type: 'Forum',
+           context_id: forum.id,
+           trickles: Rule.trickles[:trickles_down])
     forum
   end
   let(:no_create_question) do
-    user = FactoryGirl.create(:user, :follows_email)
-    FactoryGirl.create(:question,
-                       forum: no_create_without_question,
-                       creator: user.profile)
+    user = create(:user, :follows_email)
+    create(:question,
+           forum: no_create_without_question,
+           creator: user.profile)
   end
   let(:no_create_member) { create_member(no_create_without_question) }
 
@@ -261,7 +268,7 @@ class MotionsControllerTest < ActionController::TestCase
     create(:question,
            forum: freetown,
            project: project,
-           creator: FactoryGirl.create(:profile_direct_email))
+           creator: create(:profile_direct_email))
   end
   let(:moderator) { create_moderator(project) }
 
@@ -304,8 +311,7 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Page
   ####################################
-  let(:page) { create_member freetown, FactoryGirl.create(:page) }
-
+  let(:page) { create_member(freetown, create(:page)) }
 
   test 'page should post create' do
     sign_in page.owner.profileable
@@ -314,7 +320,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_differences create_changes_array do
       post :create,
            forum_id: freetown,
-           motion: FactoryGirl.attributes_for(:motion)
+           motion: attributes_for(:motion)
     end
     assert_not_nil assigns(:cm).resource
     assert_redirected_to motion_path(assigns(:cm).resource,
@@ -326,9 +332,9 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   let(:creator) { create_member(freetown) }
   let(:creator_motion) do
-    FactoryGirl.create(:motion,
-                       creator: creator.profile,
-                       forum: freetown)
+    create(:motion,
+           creator: creator.profile,
+           forum: freetown)
   end
 
   test 'creator should get edit' do
@@ -437,15 +443,15 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) { FactoryGirl.create(:user, :staff) }
+  let(:staff) { create(:user, :staff) }
 
-  let(:forum_from) { FactoryGirl.create(:forum) }
-  let(:forum_to) { FactoryGirl.create(:forum) }
+  let(:forum_from) { create(:forum) }
+  let(:forum_to) { create(:forum) }
   let(:motion_move) do
-    FactoryGirl.create(:motion,
-                       :with_arguments,
-                       :with_votes,
-                       forum: forum_from)
+    create(:motion,
+           :with_arguments,
+           :with_votes,
+           forum: forum_from)
   end
 
   # Currently only staffers can convert items

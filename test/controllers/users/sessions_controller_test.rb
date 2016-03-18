@@ -3,8 +3,8 @@ require 'test_helper'
 class Users::SessionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
+  let(:user) { create(:user) }
+  let(:freetown) { create(:forum, name: 'freetown') }
 
   test 'should login' do
     @request.env['devise.mapping'] = Devise.mappings[:user]

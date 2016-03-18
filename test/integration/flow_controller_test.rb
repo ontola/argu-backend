@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class FlowControllerTest < ActionDispatch::IntegrationTest
-  let!(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
-  let(:subject) { FactoryGirl.create(:motion, forum: freetown) }
+  let!(:freetown) { create(:forum, name: 'freetown') }
+  let(:subject) { create(:motion, forum: freetown) }
 
   ####################################
   # As Guest
@@ -18,7 +18,7 @@ class FlowControllerTest < ActionDispatch::IntegrationTest
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'user should get motion/flow' do
     #sign_in user

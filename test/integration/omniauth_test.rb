@@ -3,32 +3,32 @@ require 'test_helper'
 class OmniauthTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
-  let!(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
+  let!(:freetown) { create(:forum, name: 'freetown') }
   let!(:user3) do
-    FactoryGirl.create(:user,
-                       email: 'user3@argu.co',
-                       finished_intro: true,
-                       first_name: 'User3',
-                       last_name: 'Lastname3',
-                       password: 'useruser',
-                       password_confirmation: 'useruser',
-                       confirmed_at: Time.current)
+    create(:user,
+           email: 'user3@argu.co',
+           finished_intro: true,
+           first_name: 'User3',
+           last_name: 'Lastname3',
+           password: 'useruser',
+           password_confirmation: 'useruser',
+           confirmed_at: Time.current)
   end
-  let(:user2) { FactoryGirl.create(:user) }
+  let(:user2) { create(:user) }
   let!(:user_fb_only) do
-    FactoryGirl.create(:user,
-                       email: 'user_fb_only@argu.co',
-                       encrypted_password: '',
-                       finished_intro: true,
-                       first_name: 'First',
-                       last_name: 'Lastname_facebook',
-                       confirmed_at: Time.current)
+    create(:user,
+           email: 'user_fb_only@argu.co',
+           encrypted_password: '',
+           finished_intro: true,
+           first_name: 'First',
+           last_name: 'Lastname_facebook',
+           confirmed_at: Time.current)
   end
   let!(:fb_user_identity) do
-    FactoryGirl.create(:identity,
-                       provider: :facebook,
-                       uid: 111903726898977,
-                       user: user_fb_only)
+    create(:identity,
+           provider: :facebook,
+           uid: 111903726898977,
+           user: user_fb_only)
   end
 
   test 'should sign up with facebook' do

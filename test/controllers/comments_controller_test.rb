@@ -3,35 +3,34 @@ require 'test_helper'
 class CommentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { FactoryGirl.create(:forum) }
+  let!(:freetown) { create(:forum) }
   let(:argument) do
-    FactoryGirl.create(:argument,
-                       forum: freetown,
-                       creator: FactoryGirl
-                                  .create(:user,
-                                          :follows_email)
-                                  .profile)
+    create(:argument,
+           forum: freetown,
+           creator: create(:user,
+                           :follows_email)
+                      .profile)
   end
   let(:comment) do
-    FactoryGirl.create(:comment,
-                       profile: member.profile,
-                       commentable: argument)
+    create(:comment,
+           profile: member.profile,
+           commentable: argument)
   end
 
-  let(:cairo) { FactoryGirl.create(:forum, :closed) }
-  let(:closed_argument) { FactoryGirl.create(:argument, forum: cairo) }
+  let(:cairo) { create(:forum, :closed) }
+  let(:closed_argument) { create(:argument, forum: cairo) }
   let(:cairo_comment) do
-    FactoryGirl.create(:comment,
-                       profile: member.profile,
-                       commentable: closed_argument)
+    create(:comment,
+           profile: member.profile,
+           commentable: closed_argument)
   end
 
-  let(:second_cairo) { FactoryGirl.create(:forum, :closed) }
-  let(:second_closed_argument) { FactoryGirl.create(:argument, forum: second_cairo) }
+  let(:second_cairo) { create(:forum, :closed) }
+  let(:second_closed_argument) { create(:argument, forum: second_cairo) }
   let(:second_cairo_comment) do
-    FactoryGirl.create(:comment,
-                       profile: member.profile,
-                       commentable: second_closed_argument)
+    create(:comment,
+           profile: member.profile,
+           commentable: second_closed_argument)
   end
 
   ####################################
@@ -53,8 +52,8 @@ class CommentsControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown, FactoryGirl.create(:user, :follows_email)) }
-  let(:cairo_member) { create_member(cairo, FactoryGirl.create(:user, :follows_email)) }
+  let(:member) { create_member(freetown, create(:user, :follows_email)) }
+  let(:cairo_member) { create_member(cairo, create(:user, :follows_email)) }
 
   test 'member should get show' do
     sign_in member
@@ -241,15 +240,16 @@ class CommentsControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) { FactoryGirl.create(:user, :staff) }
+  let(:staff) { create(:user, :staff) }
 
   test 'staff should destroy comments' do
-    comment = FactoryGirl.create(:comment,
-                                 commentable: FactoryGirl.create(:argument,
-                                                                 forum: freetown),
-                                 profile: member.profile)
-    FactoryGirl.create_list(:notification, 10,
-                            activity: Activity.find_by(trackable: comment))
+    comment = create(:comment,
+                     commentable: create(:argument,
+                                         forum: freetown),
+                     profile: member.profile)
+    create_list(:notification,
+                10,
+                activity: Activity.find_by(trackable: comment))
     sign_in staff
 
     delete :destroy,

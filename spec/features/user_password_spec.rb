@@ -20,7 +20,7 @@ RSpec.feature 'User Password', type: :feature do
     user
   end
 
-  def log_in_user(user = FactoryGirl.create(:user))
+  def log_in_user(user = create(:user))
     visit new_user_session_path
     within('#new_user') do
       fill_in 'user_email', with: user.email
@@ -127,7 +127,7 @@ RSpec.feature 'User Password', type: :feature do
 
     expect {
       click_link 'send-instructions'
-      expect(page).to have_content("You will receive an email shortly with instructions to reset your password.")
+      expect(page).to have_content('You will receive an email shortly with instructions to reset your password.')
     }.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)

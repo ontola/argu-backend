@@ -2,8 +2,8 @@ require 'test_helper'
 
 class CommentsTest < ActionDispatch::IntegrationTest
 
-  let!(:venice) { FactoryGirl.create(:forum, :vwal) }
-  let(:access_token) { FactoryGirl.create(:access_token, item: venice) }
+  let!(:venice) { create(:forum, :vwal) }
+  let(:access_token) { create(:access_token, item: venice) }
 
   ####################################
   # Not logged in
@@ -14,7 +14,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   ####################################
   # As user
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'should post create a comment' do
     nominatim_netherlands

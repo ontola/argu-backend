@@ -3,14 +3,14 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:freetown) { FactoryGirl.create(:forum) }
+  let(:freetown) { create(:forum) }
 
   ####################################
   # As Guest
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
-  let(:user_non_public) { FactoryGirl.create(:user, profile: FactoryGirl.create(:profile, is_public: false)) }
-  let(:user_hidden_votes) { FactoryGirl.create(:user, profile: FactoryGirl.create(:profile, are_votes_public: false)) }
+  let(:user) { create(:user) }
+  let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
+  let(:user_hidden_votes) { create(:user, profile: create(:profile, are_votes_public: false)) }
 
   test 'guest should get show when public' do
     get :show, id: user
@@ -29,7 +29,7 @@ class UsersControllerTest < ActionController::TestCase
     initialize_user2_votes
     get :show,
         id: user2,
-        at: FactoryGirl.create(:access_token)
+        at: create(:access_token)
 
     assert_response 200
     assert_not_nil assigns(:profile)
@@ -48,7 +48,7 @@ class UsersControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:other_user) { FactoryGirl.create(:user) }
+  let(:other_user) { create(:user) }
 
   test 'user should get show non public' do
     sign_in user
@@ -58,8 +58,8 @@ class UsersControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  let(:amsterdam) { FactoryGirl.create(:forum) }
-  let(:utrecht) { FactoryGirl.create(:forum) }
+  let(:amsterdam) { create(:forum) }
+  let(:utrecht) { create(:forum) }
   let(:user2) { create_member(amsterdam, create_member(utrecht)) }
 
   test 'user should get show' do
@@ -136,14 +136,14 @@ class UsersControllerTest < ActionController::TestCase
   private
 
   def initialize_user2_votes
-    motion1 = FactoryGirl.create(:motion, forum: utrecht)
-    motion3 = FactoryGirl.create(:motion, forum: amsterdam, creator: user2.profile)
-    motion4 = FactoryGirl.create(:motion, forum: freetown, creator: user2.profile, is_trashed: true)
-    argument1 = FactoryGirl.create(:argument, forum: utrecht, motion: motion1)
-    FactoryGirl.create(:vote, voteable: motion1, for: :neutral, forum: utrecht, voter: user2.profile)
-    FactoryGirl.create(:vote, voteable: motion3, for: :pro, forum: amsterdam, voter: user2.profile)
-    FactoryGirl.create(:vote, voteable: argument1, for: :neutral, forum: utrecht, voter: user2.profile)
-    FactoryGirl.create(:vote, voteable: motion4, for: :pro, forum: utrecht, voter: user2.profile)
+    motion1 = create(:motion, forum: utrecht)
+    motion3 = create(:motion, forum: amsterdam, creator: user2.profile)
+    motion4 = create(:motion, forum: freetown, creator: user2.profile, is_trashed: true)
+    argument1 = create(:argument, forum: utrecht, motion: motion1)
+    create(:vote, voteable: motion1, for: :neutral, forum: utrecht, voter: user2.profile)
+    create(:vote, voteable: motion3, for: :pro, forum: amsterdam, voter: user2.profile)
+    create(:vote, voteable: argument1, for: :neutral, forum: utrecht, voter: user2.profile)
+    create(:vote, voteable: motion4, for: :pro, forum: utrecht, voter: user2.profile)
     user2
   end
 

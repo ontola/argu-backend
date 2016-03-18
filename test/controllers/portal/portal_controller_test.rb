@@ -3,8 +3,8 @@ require 'test_helper'
 class Portal::PortalControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:staff) { FactoryGirl.create(:user, :staff) }
+  let(:user) { create(:user) }
+  let(:staff) { create(:user, :staff) }
 
   ####################################
   # As User

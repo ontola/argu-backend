@@ -3,7 +3,7 @@ require 'test_helper'
 class PagesIntegrationTest < ActionDispatch::IntegrationTest
   include ApplicationHelper
 
-  let(:page) { FactoryGirl.create(:page) }
+  let(:page) { create(:page) }
 
   test 'should redirect p to o' do
     get "/p/#{page.url}"

@@ -3,10 +3,10 @@ require 'test_helper'
 class PagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:page) { FactoryGirl.create(:page) }
-  let(:page_non_public) { FactoryGirl.create(:page, visibility: Page.visibilities[:closed]) }
-  let(:freetown) { FactoryGirl.create(:forum, name: 'freetown', page: page_non_public) }
-  let(:access_token) { FactoryGirl.create(:access_token, item: freetown) }
+  let!(:page) { create(:page) }
+  let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
+  let(:freetown) { create(:forum, name: 'freetown', page: page_non_public) }
+  let(:access_token) { create(:access_token, item: freetown) }
 
   ####################################
   # As Guest
@@ -38,7 +38,7 @@ class PagesControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'should get show' do
     sign_in user
@@ -54,8 +54,8 @@ class PagesControllerTest < ActionController::TestCase
            'Votes of closed fora are visible to non-members'
   end
 
-  let(:amsterdam) { FactoryGirl.create(:forum) }
-  let(:utrecht) { FactoryGirl.create(:forum) }
+  let(:amsterdam) { create(:forum) }
+  let(:utrecht) { create(:forum) }
   let(:user2) { create_member(amsterdam, create_member(utrecht)) }
 
   test 'should not show all votes' do
@@ -150,7 +150,7 @@ class PagesControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) { FactoryGirl.create(:user, :staff) }
+  let(:staff) { create(:user, :staff) }
 
   test 'should be able to create a page' do
     sign_in staff
@@ -175,12 +175,12 @@ class PagesControllerTest < ActionController::TestCase
   private
 
   def initialize_user2_votes
-    motion1 = FactoryGirl.create(:motion, forum: utrecht)
-    motion3 = FactoryGirl.create(:motion, forum: amsterdam, creator: user2.profile)
-    argument1 = FactoryGirl.create(:argument, forum: utrecht, motion: motion1)
-    FactoryGirl.create(:vote, voteable: motion1, for: :neutral, forum: utrecht)
-    FactoryGirl.create(:vote, voteable: motion3, for: :pro, forum: amsterdam)
-    FactoryGirl.create(:vote, voteable: argument1, for: :neutral, forum: utrecht)
+    motion1 = create(:motion, forum: utrecht)
+    motion3 = create(:motion, forum: amsterdam, creator: user2.profile)
+    argument1 = create(:argument, forum: utrecht, motion: motion1)
+    create(:vote, voteable: motion1, for: :neutral, forum: utrecht)
+    create(:vote, voteable: motion3, for: :pro, forum: amsterdam)
+    create(:vote, voteable: argument1, for: :neutral, forum: utrecht)
   end
 
 end

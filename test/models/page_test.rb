@@ -3,11 +3,9 @@ require 'test_helper'
 class PageTest < ActiveSupport::TestCase
 
   subject do
-    FactoryGirl.create(:page,
-                       profile: FactoryGirl.create(
-                         :profile,
-                         name: 'test'
-                       ))
+    create(:page,
+           profile: create(:profile,
+                           name: 'test'))
   end
 
   def test_valid
@@ -16,7 +14,7 @@ class PageTest < ActiveSupport::TestCase
 
   test 'should invalidate policy not accepted' do
     begin
-      page = FactoryGirl.create(:page, last_accepted: nil)
+      page = create(:page, last_accepted: nil)
     rescue ActiveRecord::RecordInvalid
       assert true
     else

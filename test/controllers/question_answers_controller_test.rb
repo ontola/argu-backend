@@ -3,11 +3,11 @@ require 'test_helper'
 class QuestionAnswersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:owner) { FactoryGirl.create(:user) }
-  let!(:page) { FactoryGirl.create(:page, owner: owner.profile) }
-  let!(:freetown) { FactoryGirl.create(:forum, page: page, name: 'freetown') }
-  let(:question) { FactoryGirl.create(:question, forum: freetown) }
-  let(:motion) { FactoryGirl.create(:motion, forum: freetown) }
+  let!(:owner) { create(:user) }
+  let!(:page) { create(:page, owner: owner.profile) }
+  let!(:freetown) { create(:forum, page: page, name: 'freetown') }
+  let(:question) { create(:question, forum: freetown) }
+  let(:motion) { create(:motion, forum: freetown) }
 
   ####################################
   # As Guest
@@ -37,7 +37,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'user should not get new' do
     sign_in user
@@ -123,7 +123,7 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) { FactoryGirl.create(:user, :staff) }
+  let(:staff) { create(:user, :staff) }
 
   test 'staff should get new' do
     sign_in staff

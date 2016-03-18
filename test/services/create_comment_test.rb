@@ -1,11 +1,11 @@
 require 'test_helper'
 
 class CreateCommentTest < ActiveSupport::TestCase
-  let!(:freetown) { FactoryGirl.create :forum }
+  let!(:freetown) { create :forum }
   let(:user) { create_member(freetown) }
   let(:commentable) do
-    FactoryGirl.create(:argument,
-                       forum: freetown)
+    create(:argument,
+           forum: freetown)
   end
   let(:comment_attributes) do
     attributes_for(:comment)

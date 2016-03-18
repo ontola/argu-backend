@@ -19,7 +19,7 @@ FactoryGirl.define do
 
     trait :with_arguments do
       forum {
-        passed_in?(:forum) ? forum : FactoryGirl.create(:forum)
+        passed_in?(:forum) ? forum : create(:forum)
       }
       after :create do |motion|
         create_list :argument, 3,

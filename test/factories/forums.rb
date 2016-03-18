@@ -51,9 +51,9 @@ FactoryGirl.define do
 
     trait :with_follower do
       after :create do |forum|
-        FactoryGirl.create(:follow,
-                           follower: create(:user, :follows_email),
-                           followable: forum)
+        create(:follow,
+               follower: create(:user, :follows_email),
+               followable: forum)
       end
     end
   end

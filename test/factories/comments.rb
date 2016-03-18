@@ -10,7 +10,7 @@ FactoryGirl.define do
       elsif passed_in?(:commentable)
         commentable.forum
       else
-        FactoryGirl.create(:forum)
+        create(:forum)
       end
     }
     association :profile

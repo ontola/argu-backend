@@ -72,7 +72,7 @@ class DiscussionsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'user should get new' do
     sign_in user

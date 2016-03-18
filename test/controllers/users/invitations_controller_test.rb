@@ -3,8 +3,8 @@ require 'test_helper'
 class Users::InvitationsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:user) { FactoryGirl.create(:user) }
-  let(:freetown) { FactoryGirl.create(:forum) }
+  let(:user) { create(:user) }
+  let(:freetown) { create(:forum) }
 
   ####################################
   # As User

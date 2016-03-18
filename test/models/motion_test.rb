@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class MotionTest < ActiveSupport::TestCase
-  subject { FactoryGirl.create(:motion, :with_arguments) }
+  subject { create(:motion, :with_arguments) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s

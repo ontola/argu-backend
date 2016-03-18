@@ -5,16 +5,16 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
   setup do
     @holland, @holland_owner = create_forum_owner_pair({type: :populated_forum})
-    @group = FactoryGirl.create(:group, forum: @holland)
+    @group = create(:group, forum: @holland)
   end
 
-  let(:holland) { FactoryGirl.create(:forum, name: 'holland') }
-  let!(:group) { FactoryGirl.create(:group, forum: holland) }
+  let(:holland) { create(:forum, name: 'holland') }
+  let!(:group) { create(:group, forum: holland) }
 
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test 'should not show new' do
     sign_in user
@@ -41,7 +41,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'should not delete destroy' do
     sign_in user
 
-    group_membership = FactoryGirl.create(:group_membership, group: group)
+    group_membership = create(:group_membership,
+                              group: group)
 
     assert_no_difference 'GroupMembership.count' do
       delete :destroy, id: group_membership
@@ -80,7 +81,8 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   test 'owner should delete destroy' do
     sign_in @holland_owner
 
-    group_membership = FactoryGirl.create(:group_membership, group: @group)
+    group_membership = create(:group_membership,
+                              group: @group)
 
     assert_difference 'GroupMembership.count', -1 do
       delete :destroy, id: group_membership

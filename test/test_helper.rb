@@ -137,7 +137,7 @@ class ActionDispatch::IntegrationTest
     end
   end
 
-  def log_in_user(user = FactoryGirl.create(:user))
+  def log_in_user(user = create(:user))
     post user_session_path,
          user: {
            email: user.email,

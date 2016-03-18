@@ -367,7 +367,7 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) { FactoryGirl.create(:user, :staff) }
+  let(:staff) {create(:user, :staff) }
 
   # Currently only staffers can convert items
   test 'should get convert' do
@@ -380,12 +380,12 @@ class QuestionsControllerTest < ActionController::TestCase
   # Currently only staffers can convert items
   test 'should put convert' do
     question = subject
-    vote = FactoryGirl.create(:vote,
-                              forum: freetown,
-                              voteable: question)
-    FactoryGirl.create(:activity,
-                       forum: freetown,
-                       trackable: question)
+    vote = create(:vote,
+                  forum: freetown,
+                  voteable: question)
+    create(:activity,
+           forum: freetown,
+           trackable: question)
 
     sign_in staff
 
@@ -416,7 +416,7 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_response 200
   end
 
-  let(:freetown_to) { FactoryGirl.create(:forum) }
+  let(:freetown_to) { create(:forum) }
 
   # Currently only staffers can convert items
   test 'should put move! without motions' do

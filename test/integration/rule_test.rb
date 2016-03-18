@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class RuleTest < ActionDispatch::IntegrationTest
-  let!(:freetown) { FactoryGirl.create(:forum, name: 'freetown') }
+  let!(:freetown) { create(:forum, name: 'freetown') }
   let!(:freetown_owner) { create_owner(freetown) }
   let(:freetown_manager) { create_manager(freetown) }
 
@@ -26,37 +26,39 @@ class RuleTest < ActionDispatch::IntegrationTest
   # As Member
   ####################################
   let(:member) { create_member(freetown) }
-  let(:member_argument) { FactoryGirl.create(:argument,
-                                             forum: freetown,
-                                             creator: member.profile) }
+  let(:member_argument) do
+    create(:argument,
+           forum: freetown,
+           creator: member.profile)
+  end
   let(:no_show_users) do
-    FactoryGirl.create(:rule,
-                       context: freetown,
-                       action: 'show?',
-                       role: 'member',
-                       model_type: 'Argument',
-                       trickles: Rule.trickles[:trickles_down],
-                       message: 'user not allowed')
+    create(:rule,
+           context: freetown,
+           action: 'show?',
+           role: 'member',
+           model_type: 'Argument',
+           trickles: Rule.trickles[:trickles_down],
+           message: 'user not allowed')
   end
 
   let(:no_show_managers) do
-    FactoryGirl.create(:rule,
-                       context: freetown,
-                       action: 'show?',
-                       role: 'manager',
-                       model_type: 'Argument',
-                       trickles: Rule.trickles[:doesnt_trickle],
-                       message: 'ask your boss to buy')
+    create(:rule,
+           context: freetown,
+           action: 'show?',
+           role: 'manager',
+           model_type: 'Argument',
+           trickles: Rule.trickles[:doesnt_trickle],
+           message: 'ask your boss to buy')
   end
 
   let(:no_show_owners) do
-    FactoryGirl.create(:rule,
-                       context: freetown,
-                       action: 'show?',
-                       role: 'owner',
-                       model_type: 'Argument',
-                       trickles: Rule.trickles[:doesnt_trickle],
-                       message: 'buy this feature')
+    create(:rule,
+           context: freetown,
+           action: 'show?',
+           role: 'owner',
+           model_type: 'Argument',
+           trickles: Rule.trickles[:doesnt_trickle],
+           message: 'buy this feature')
   end
 
   test 'shows custom message' do

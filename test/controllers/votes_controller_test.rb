@@ -3,9 +3,9 @@ require 'test_helper'
 class VotesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { FactoryGirl.create(:forum, name: :freetown) }
-  let(:motion) { FactoryGirl.create(:motion, forum: freetown) }
-  let!(:vote) { FactoryGirl.create(:vote, voteable: motion) }
+  let!(:freetown) { create(:forum, name: :freetown) }
+  let(:motion) { create(:motion, forum: freetown) }
+  let!(:vote) { create(:vote, voteable: motion) }
 
   ####################################
   # As Guest
@@ -24,7 +24,7 @@ class VotesControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { FactoryGirl.create(:user) }
+  let(:user) { create(:user) }
 
   test "should not delete destroy others' vote" do
     sign_in user
@@ -78,10 +78,10 @@ class VotesControllerTest < ActionController::TestCase
   end
 
   test 'should not create new vote when existing one is present' do
-    FactoryGirl.create(:vote,
-                       voteable: motion,
-                       voter: member.profile,
-                       for: 'neutral')
+    create(:vote,
+           voteable: motion,
+           voter: member.profile,
+           for: 'neutral')
     sign_in member
 
     assert_no_difference('Vote.count') do
@@ -99,10 +99,10 @@ class VotesControllerTest < ActionController::TestCase
   end
 
   test 'should delete destroy own vote' do
-    vote = FactoryGirl.create(:vote,
-                              voteable: motion,
-                              voter: member.profile,
-                              for: 'neutral')
+    vote = create(:vote,
+                  voteable: motion,
+                  voter: member.profile,
+                  for: 'neutral')
     sign_in member
 
     assert_difference('Vote.count', -1) do

@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class ProfileTest < ActiveSupport::TestCase
-  let(:freetown) { FactoryGirl.create(:forum) }
-  let(:capetown) { FactoryGirl.create(:forum, name: 'capetown') }
+  let(:freetown) { create(:forum) }
+  let(:capetown) { create(:forum, name: 'capetown') }
   subject { create_member(freetown).profile }
 
   def test_valid

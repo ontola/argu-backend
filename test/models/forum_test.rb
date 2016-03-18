@@ -3,9 +3,9 @@ require 'test_helper'
 class ForumTest < ActiveSupport::TestCase
   include ModelTestBase
 
-  subject { FactoryGirl.create(:populated_forum) }
-  let(:venice) { FactoryGirl.create(:populated_forum_vwal) }
-  let(:user) { FactoryGirl.create(:user) }
+  subject { create(:populated_forum) }
+  let(:venice) { create(:populated_forum_vwal) }
+  let(:user) { create(:user) }
   let(:subject_member) { create_member(subject) }
 
   test 'valid' do
@@ -39,21 +39,21 @@ class ForumTest < ActiveSupport::TestCase
   end
 
   test 'page should accept page or url' do
-    p1 = FactoryGirl.create(:page)
+    p1 = create(:page)
     assert p1.id != subject.page.id
     subject.page = p1
     assert_equal p1.id, subject.page.id
 
-    p2 = FactoryGirl.create(:page)
+    p2 = create(:page)
     assert p2.id != subject.page.id
     subject.page = p2.url
     assert_equal p2.id, subject.page.id
   end
 
   test 'first_public should return a public forum' do
-    FactoryGirl.create(:forum, :closed)
-    FactoryGirl.create(:forum)
-    FactoryGirl.create(:forum, :closed)
+    create(:forum, :closed)
+    create(:forum)
+    create(:forum, :closed)
     forum = Forum.first_public
     assert forum.open?
   end
