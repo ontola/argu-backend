@@ -285,7 +285,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
   test 'manager should delete destroy trash' do
     sign_in manager
-    subject # trigger
+    subject
 
     assert_differences([['Question.trashed(false).count', -1],
                         ['Question.trashed(true).count', 0]]) do
@@ -296,15 +296,28 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_redirected_to freetown
   end
 
-  test 'manager should delete destroy' do
+  test 'manager should delete destroy trashed' do
     sign_in manager
-    subject # trigger
+    subject.trash
 
-    assert_differences([['Question.trashed(false).count', -1],
+    assert_differences([['Question.trashed(false).count', 0],
                         ['Question.trashed(true).count', -1]]) do
       delete :destroy,
              id: subject,
              destroy: 'true'
+    end
+
+    assert_redirected_to freetown
+  end
+
+  test 'manager should not delete destroy trashed without destroy param' do
+    sign_in manager
+    subject.trash
+
+    assert_differences([['Question.trashed(false).count', 0],
+                        ['Question.trashed(true).count', 0]]) do
+      delete :destroy,
+             id: subject
     end
 
     assert_redirected_to freetown
@@ -348,15 +361,28 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_redirected_to @freetown
   end
 
-  test 'owner should delete destroy' do
+  test 'owner should delete destroy trashed' do
     sign_in @freetown_owner
-    owner_forum_question # trigger
+    owner_forum_question.trash
 
-    assert_differences([['Question.trashed(false).count', -1],
-                        ['Question.trashed(true).count', -1]]) do
+    assert_differences([['Question.trashed(false).count', 0],
+    ['Question.trashed(true).count', -1]]) do
       delete :destroy,
-             id: owner_forum_question,
-             destroy: 'true'
+      id: owner_forum_question,
+      destroy: 'true'
+    end
+
+    assert_redirected_to @freetown
+  end
+
+  test 'owner should not delete destroy trashed without destroy param' do
+    sign_in @freetown_owner
+    owner_forum_question.trash
+
+    assert_differences([['Question.trashed(false).count', 0],
+                        ['Question.trashed(true).count', 0]]) do
+      delete :destroy,
+             id: owner_forum_question
     end
 
     assert_redirected_to @freetown

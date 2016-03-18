@@ -279,15 +279,28 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_redirected_to argument.motion
   end
 
-  test 'manager should delete destroy' do
+  test 'manager should delete destroy trashed' do
     sign_in manager
-    argument # trigger
+    argument.trash
 
-    assert_differences([['Argument.trashed(false).count', -1],
+    assert_differences([['Argument.trashed(false).count', 0],
                         ['Argument.trashed(true).count', -1]]) do
       delete :destroy,
              id: argument,
              destroy: 'true'
+    end
+
+    assert_redirected_to argument.motion
+  end
+
+  test 'manager should not delete destroy trashed without destroy param' do
+    sign_in manager
+    argument.trash
+
+    assert_differences([['Argument.trashed(false).count', 0],
+                        ['Argument.trashed(true).count', 0]]) do
+      delete :destroy,
+             id: argument
     end
 
     assert_redirected_to argument.motion
@@ -311,15 +324,28 @@ class ArgumentsControllerTest < ActionController::TestCase
     assert_redirected_to argument.motion
   end
 
-  test 'owner should delete destroy' do
+  test 'owner should delete destroy trashed' do
     sign_in owner
-    argument # trigger
+    argument.trash
 
-    assert_differences([['Argument.trashed(false).count', -1],
+    assert_differences([['Argument.trashed(false).count', 0],
                         ['Argument.trashed(true).count', -1]]) do
       delete :destroy,
              id: argument,
              destroy: 'true'
+    end
+
+    assert_redirected_to argument.motion
+  end
+
+  test 'owner should not delete destroy trashed without destroy param' do
+    sign_in owner
+    argument.trash
+
+    assert_differences([['Argument.trashed(false).count', 0],
+                        ['Argument.trashed(true).count', 0]]) do
+      delete :destroy,
+             id: argument
     end
 
     assert_redirected_to argument.motion
