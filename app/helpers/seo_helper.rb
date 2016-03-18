@@ -1,5 +1,4 @@
 module SeoHelper
-
   def connected_web(options)
     content_for :connected_web, options_hash_to_meta_tags(options)
   end
@@ -67,5 +66,4 @@ module SeoHelper
       'twitter:description' => :description,
       'twitter:image' => :image
   }
-
 end

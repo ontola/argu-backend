@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :blog_post do
     association :forum
     association :creator, factory: :profile

@@ -75,5 +75,4 @@ module ColumnRendererHelper
   def render_collection_if_present(model, key, &block)
     (model[key][:collection] || model[key.to_s][:collection]).each(&block) if (model[key][:collection] || model[key.to_s][:collection])
   end
-
 end

@@ -30,5 +30,4 @@ class ActivityPolicy < RestrictivePolicy
     attributes = super
     attributes
   end
-
 end

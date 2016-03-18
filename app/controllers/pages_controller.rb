@@ -1,5 +1,4 @@
 class PagesController < ApplicationController
-
   def index
     authorize Page, :index?
     @user = User.find_via_shortname params[:id]

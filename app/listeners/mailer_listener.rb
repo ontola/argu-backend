@@ -1,5 +1,4 @@
 class MailerListener
-
   def create_argument_successful(argument)
     recipients = follower_emails_for(argument, argument.motion)
     # TODO: single out the creator and send a different mail

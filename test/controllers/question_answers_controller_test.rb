@@ -148,5 +148,4 @@ class QuestionAnswersControllerTest < ActionController::TestCase
     assert_equal question.id, assigns(:motion).question_id
     assert assigns(:question_answer)
   end
-
 end

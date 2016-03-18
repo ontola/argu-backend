@@ -204,7 +204,6 @@ class ForumsControllerTest < ActionController::TestCase
     # assert_equal 2, assigns(:tags).length
   end
 
-
   ####################################
   # As Manager
   ####################################

@@ -13,5 +13,4 @@ class CreateComment < CreateService
   def resource
     @comment
   end
-
 end

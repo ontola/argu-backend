@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :activity do
     transient do
       tenant {

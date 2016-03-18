@@ -1,5 +1,4 @@
 class QuestionAnswersController < ApplicationController
-
   # GET /question_answers/new
   def new
     @question = Question.find(permit_params[:question_id])

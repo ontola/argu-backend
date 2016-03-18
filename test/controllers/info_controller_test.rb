@@ -77,5 +77,4 @@ class InfoControllerTest < ActionController::TestCase
 
     assert_response 404
   end
-
 end

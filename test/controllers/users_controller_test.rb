@@ -146,5 +146,4 @@ class UsersControllerTest < ActionController::TestCase
     create(:vote, voteable: motion4, for: :pro, forum: utrecht, voter: user2.profile)
     user2
   end
-
 end

@@ -20,5 +20,4 @@ class CreateArgument < CreateService
   def resource
     @argument
   end
-
 end

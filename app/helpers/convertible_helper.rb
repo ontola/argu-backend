@@ -1,6 +1,5 @@
 # Contains argu-specific implementation details of {Convertible}
 module ConvertibleHelper
-
   def convertible_param_to_model(convertible)
     Hash[convertible_classes.map { |a| [a.class_name, a] }][convertible]
   end
@@ -13,6 +12,4 @@ module ConvertibleHelper
   def convertible_classes
     [Question, Motion]
   end
-
-
 end

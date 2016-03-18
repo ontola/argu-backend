@@ -20,5 +20,4 @@ class CreateGroupResponse < CreateService
   def resource
     @group_response
   end
-
 end

@@ -59,7 +59,6 @@ gem 'acts_as_list', '~> 0.7.2'
 #Pagination
 gem 'kaminari', '~>0.16.1'
 
-
 ##################Front-end########################
 #gem 'react-rails', '~> 1.6.0'
 gem 'react-rails',

@@ -1,5 +1,4 @@
 class ReverseBooleanInput < Formtastic::Inputs::BooleanInput
-
   def to_html
     input_wrapping do
       hidden_field_html <<

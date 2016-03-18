@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :phase do
     association :forum, strategy: :create
     association :project, strategy: :create
@@ -7,6 +6,5 @@ FactoryGirl.define do
 
     sequence(:name) { |n| "title#{n}" }
     description 'content'
-
   end
 end

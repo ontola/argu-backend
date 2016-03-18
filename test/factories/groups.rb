@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :group do
     association :forum, strategy: :build
     sequence(:name) { |i| "fg_groups#{i}" }
@@ -11,6 +10,5 @@ FactoryGirl.define do
         visibility vis
       end
     end
-
   end
 end

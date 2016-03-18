@@ -1,5 +1,6 @@
 AllCops:
-  RunRailsCops: true
+  Rails:
+    Enabled: true
   Exclude:
     - 'node_modules/**/*'
     - 'vendor/**/*'
@@ -7,6 +8,7 @@ AllCops:
     - 'doc/**/*'
     - 'app/assets/javascripts/_*'
     - 'app/assets/javascripts/_*'
+    - 'db/schema.rb'
 Metrics/LineLength:
   Max: 100
 Style/IfUnlessModifier:

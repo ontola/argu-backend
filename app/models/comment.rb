@@ -22,7 +22,6 @@ class Comment < ActiveRecord::Base
 
   attr_accessor :is_processed
 
-
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.
   scope :find_comments_by_user, lambda { |user|
@@ -94,5 +93,4 @@ class Comment < ActiveRecord::Base
       end
     end
   end
-
 end

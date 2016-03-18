@@ -30,7 +30,6 @@ class FollowsControllerTest < ActionController::TestCase
     assert_redirected_to motion_path(motion)
   end
 
-
   ####################################
   # As User
   ####################################

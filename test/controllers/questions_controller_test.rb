@@ -407,7 +407,6 @@ class QuestionsControllerTest < ActionController::TestCase
     assert_equal 1, assigns(:result)[:new].activities.count
   end
 
-
   # Currently only staffers can move items
   test 'should get move' do
     sign_in staff
@@ -474,7 +473,6 @@ class QuestionsControllerTest < ActionController::TestCase
     assigns(:question).taggings.pluck(:forum_id).each do |id|
       assert_equal forum_id, id
     end
-
   end
 
   private

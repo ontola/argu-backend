@@ -1,5 +1,4 @@
 class ActivitiesController < ApplicationController
-
   def index
     if params[:from_time].present?
       begin
@@ -19,14 +18,15 @@ class ActivitiesController < ApplicationController
     respond_to do |format|
       if @activities.present?
         format.json { render json: @activities }
-        format.html { render layout: 'layouts/activity',
-                             partial: 'layouts/activity',
-                             collection: @activities }
+        format.html do
+          render layout: 'layouts/activity',
+                 partial: 'layouts/activity',
+                 collection: @activities
+          end
       else
         format.json { head 204 }
         format.html { head 204 }
       end
     end
   end
-
 end

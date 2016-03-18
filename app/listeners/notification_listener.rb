@@ -1,5 +1,4 @@
 class NotificationListener
-
   def create_activity_successful(activity)
     create_notifications_for(activity, activity.recipient.followers)
   end

@@ -6,7 +6,6 @@ class MigratePaperclipToCarrierWave < ActiveRecord::Migration
 
     remove_columns :profiles, :profile_photo_file_name, :profile_photo_content_type, :profile_photo_file_size, :profile_photo_updated_at, :cover_photo_file_name, :cover_photo_content_type, :cover_photo_file_size, :cover_photo_updated_at
 
-
     add_column :organisations, :profile_photo, :string
     add_column :organisations, :cover_photo, :string
 

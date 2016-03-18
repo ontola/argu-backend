@@ -2,7 +2,6 @@
 # Our own wrapper for redis, to make stuff like error handling and host initialisation easier.
 module Argu
   class Redis
-
     # Argu configured redis instance, use this by default.
     def self.redis_instance(host = ENV['REDIS_ADDRESS'], port = ENV['REDIS_PORT'])
       ::Redis.new(host: host, port: port)

@@ -91,5 +91,4 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
       redirect_to after_sign_in_path_for(resource_or_scope)
     end
   end
-
 end

@@ -1,5 +1,4 @@
 class ForumsController < ApplicationController
-
   def index
     authorize Forum, :index?
     @user = User.find_via_shortname params[:id]

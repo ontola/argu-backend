@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :notification do
     transient do
       forum nil

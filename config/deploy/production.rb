@@ -14,7 +14,6 @@ set :unicorn_config_path, '/home/unicorn/unicorn.conf'
 set :deploy_to, '/home/rails/argu'
 set :environment, :production
 
-
 # Extended Server Syntax
 # ======================
 # This can be used to drop a more detailed server definition into the
@@ -24,7 +23,6 @@ set :environment, :production
 server 'app.1.zones.argu.co', user: 'deploy', roles: %w{app}
 
 namespace :deploy do
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do

@@ -15,7 +15,6 @@ module Argu
           js_code << asset_container.find_asset(filename)
         end
 
-
         super(options.merge(code: js_code))
       end
 

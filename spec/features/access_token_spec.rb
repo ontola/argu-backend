@@ -56,5 +56,4 @@ RSpec.feature 'Access tokens', type: :feature do
     expect(page).to have_content motion.title
     expect(page).to have_css 'a.btn-neutral[data-voted-on=true]'
   end
-
 end

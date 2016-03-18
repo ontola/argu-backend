@@ -1,3 +1,2 @@
 module Argu
-
 end

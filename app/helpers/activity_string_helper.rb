@@ -91,5 +91,4 @@ module ActivityStringHelper
       ''
     end
   end
-
 end

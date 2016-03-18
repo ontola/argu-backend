@@ -16,7 +16,6 @@ class ProjectPolicy < RestrictivePolicy
     def resolve
       scope
     end
-
   end
 
   def permitted_attributes
@@ -75,5 +74,4 @@ class ProjectPolicy < RestrictivePolicy
   def forum_policy
     Pundit.policy(context, record.try(:forum) || context.context_model)
   end
-
 end

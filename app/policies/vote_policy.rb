@@ -23,7 +23,6 @@ class VotePolicy < RestrictivePolicy
         scope.joins(:voter).where(profiles[:are_votes_public].eq(true))
       end
     end
-
   end
 
   module Roles
@@ -48,5 +47,4 @@ class VotePolicy < RestrictivePolicy
   def destroy?
     rule is_creator?, super
   end
-
 end

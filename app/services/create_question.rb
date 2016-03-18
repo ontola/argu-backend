@@ -13,5 +13,4 @@ class CreateQuestion < CreateService
   def resource
     @question
   end
-
 end

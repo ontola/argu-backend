@@ -1,5 +1,4 @@
 module ReactHelper
-
   def add_to_state(key, value)
     if initial_js_state[key].is_a?(Hash)
       initial_js_state[key].merge(value)

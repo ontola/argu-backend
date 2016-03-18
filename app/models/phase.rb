@@ -27,5 +27,4 @@ class Phase < ActiveRecord::Base
       .where(published_at: start_date..end_date)
       .order(published_at: :asc)
   end
-
 end

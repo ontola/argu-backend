@@ -1,7 +1,6 @@
 FactoryGirl.define do
-
   factory :shortname do
     sequence(:shortname) { |n| "fg_shortname#{n}" }
-    #association :owner
+    # association :owner
   end
 end

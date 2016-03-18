@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :argument do
     association :forum, strategy: :build
     association :creator, factory: :profile

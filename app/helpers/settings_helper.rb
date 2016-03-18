@@ -1,5 +1,4 @@
 module SettingsHelper
-
   def tab_icon_for(tab)
     case tab
     when :general

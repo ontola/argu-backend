@@ -135,5 +135,4 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert_not_equal user2, assigns(:identity).user
     assert_equal nil, assigns(:identity).user
   end
-
 end

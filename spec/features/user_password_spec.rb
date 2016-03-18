@@ -131,6 +131,5 @@ RSpec.feature 'User Password', type: :feature do
     }.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)
-
   end
 end

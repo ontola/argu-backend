@@ -6,5 +6,4 @@ class AccessToken < ActiveRecord::Base
   belongs_to :profile
 
   has_secure_token :access_token
-
 end

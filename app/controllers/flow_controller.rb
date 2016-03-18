@@ -18,5 +18,4 @@ class FlowController < AuthorizedController
   def authenticated_resource!
     @_authenticated_resource ||= get_parent_resource
   end
-
 end

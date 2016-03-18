@@ -1,6 +1,5 @@
 class AddPublisherToTables < ActiveRecord::Migration
   def up
-
     rename_column :comments, :representative_id, :publisher_id
 
     add_reference :questions, :publisher, references: :users
@@ -20,5 +19,4 @@ class AddPublisherToTables < ActiveRecord::Migration
     end
     add_foreign_key :group_responses, :users, column: :publisher_id
   end
-
 end

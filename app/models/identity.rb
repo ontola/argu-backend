@@ -60,5 +60,4 @@ class Identity < ActiveRecord::Base
   def image_url
     client && client.image_url
   end
-
 end

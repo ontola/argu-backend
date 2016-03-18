@@ -190,5 +190,4 @@ module ApplicationHelper
     _html << url if adjusted_content.length > cutting_point
     _html
   end
-
 end

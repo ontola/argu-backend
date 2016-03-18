@@ -23,5 +23,4 @@ class UpdateBlogPost < UpdateService
     obj.forum ||= @blog_post.forum
     obj.creator ||= @blog_post.creator
   end
-
 end

@@ -37,5 +37,4 @@ module StubbornCookie
   def stubborn_identifier
     current_user && current_user.id
   end
-
 end

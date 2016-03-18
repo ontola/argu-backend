@@ -46,5 +46,4 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response 200
   end
-
 end

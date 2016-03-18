@@ -18,7 +18,6 @@ class ForumPolicy < RestrictivePolicy
       cond = cond.or(t[:id].in(user.profile.memberships_ids)) if user.present?
       scope.where(cond)
     end
-
   end
 
   module Roles

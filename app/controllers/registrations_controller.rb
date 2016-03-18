@@ -1,5 +1,4 @@
 class RegistrationsController < Devise::RegistrationsController
-
   def new
     if within_user_cap?
       super

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class PageTest < ActiveSupport::TestCase
-
   subject do
     create(:page,
            profile: create(:profile,
@@ -23,5 +22,4 @@ class PageTest < ActiveSupport::TestCase
       assert_nil page
     end
   end
-
 end

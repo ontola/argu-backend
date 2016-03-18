@@ -57,7 +57,11 @@ class CommentsController < AuthorizedController
                   notice: t('type_create_success', type: t('comments.type'))
     end
     @cc.on(:create_comment_failed) do |c|
-      redirect_to polymorphic_url([c.commentable], comment: {body: c.body, parent_id: c.parent_id}, anchor: c.id),
+      redirect_to polymorphic_url([c.commentable],
+                                  comment: {
+                                    body: c.body,
+                                    parent_id: c.parent_id
+                                  }, anchor: c.id),
                   notice: c.errors.full_messages.first
     end
     @cc.commit
@@ -70,21 +74,29 @@ class CommentsController < AuthorizedController
 
     respond_to do |format|
       if @comment.update(comment_params)
-        format.html { redirect_to comment_url(@comment),
-                                  notice: t('comments.notices.updated') }
+        format.html do
+          redirect_to comment_url(@comment),
+                      notice: t('comments.notices.updated') }
+        end
         format.js { render }
         format.json { head :no_content }
       else
-        format.html { render 'edit',
-                             locals: {
-                                 resource: @commentable,
-                                 comment: @comment,
-                                 parent_id: nil
-                             }}
-        format.js { render 'failed',
-                           status: 400 }
-        format.json { render json: @comment.errors,
-                             status: :unprocessable_entity }
+        format.html do
+          render 'edit',
+                 locals: {
+                   resource: @commentable,
+                   comment: @comment,
+                   parent_id: nil
+                 }
+        end
+        format.js do
+          render 'failed',
+                 status: 400
+        end
+        format.json do
+          render json: @comment.errors,
+                 status: :unprocessable_entity
+        end
       end
     end
   end

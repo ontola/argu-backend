@@ -1,6 +1,5 @@
 module Omniauth
   class OmniauthFacebook
-
     def self.create_user_without_shortname(auth, identity, r = nil)
       info = auth['info']
       raw = auth['extra']['raw_info']
@@ -49,6 +48,5 @@ module Omniauth
         image_url
       end
     end
-
   end
 end

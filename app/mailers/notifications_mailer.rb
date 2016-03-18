@@ -20,6 +20,4 @@ class NotificationsMailer < ApplicationMailer
       end
     end
   end
-
-
 end

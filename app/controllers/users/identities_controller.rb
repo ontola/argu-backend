@@ -1,5 +1,4 @@
 class Users::IdentitiesController < ApplicationController
-
   def destroy
     @identity = Identity.find params[:id]
     authorize @identity, :destroy?
@@ -13,5 +12,4 @@ class Users::IdentitiesController < ApplicationController
       format.html { redirect_to settings_path }
     end
   end
-
 end

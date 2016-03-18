@@ -10,11 +10,11 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :set_layout
   before_action :set_locale
-  after_action :verify_authorized, :except => :index, :unless => :devise_controller?
-  after_action :verify_policy_scoped, :only => :index
+  after_action :verify_authorized, except: :index, unless: :devise_controller?
+  after_action :verify_policy_scoped, only: :index
   after_action :set_profile_forum
   around_action :set_time_zone
-  #after_action :set_notification_header
+  # after_action :set_notification_header
   if Rails.env.development? || Rails.env.staging?
     before_action do
       if current_user && current_user.profile.has_role?(:staff)
@@ -39,7 +39,8 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  # Combines {ApplicationController#create_activity} with {ApplicationController#destroy_recent_similar_activities}
+  # Combines {ApplicationController#create_activity} with
+  # {ApplicationController#destroy_recent_similar_activities}
   def create_activity_with_cleanup(model, params)
     destroy_recent_similar_activities model, params
     create_activity model, params
@@ -49,7 +50,7 @@ class ApplicationController < ActionController::Base
   # @param [ActiveRecord::Base] model a model to create the {Activity} for
   # @param [Hash] params options for {PublicActivity::Common#create_activity}
   def create_activity(model, params)
-    a = model.create_activity params
+    model.create_activity params
   end
   deprecate :create_activity
 
@@ -79,7 +80,11 @@ class ApplicationController < ActionController::Base
 
   # Deletes all other activities created within 6 hours of the new activity.
   def destroy_recent_similar_activities(model, params)
-    Activity.delete Activity.where('created_at >= :date', :date => 6.hours.ago).where(trackable_id: model.id, owner_id: params[:owner].id, key: "#{model.class.name.downcase}.create").pluck(:id)
+    Activity.delete Activity.where('created_at >= :date', date: 6.hours.ago)
+                            .where(trackable_id: model.id,
+                                   owner_id: params[:owner].id,
+                                   key: "#{model.class.name.downcase}.create")
+                            .pluck(:id)
   end
 
   def forum_by_geocode
@@ -287,7 +292,6 @@ class ApplicationController < ActionController::Base
   def handle_redis_connection_error(exception)
     Redis.rescue_redis_connection_error(exception)
   end
-
 
   # @private
   def intro_urls

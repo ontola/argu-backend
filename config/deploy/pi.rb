@@ -13,7 +13,6 @@ set :deploy_to, '/home/rails/argu_staging'
 set :environment, :staging
 set :branch, :develop
 
-
 # Extended Server Syntax
 # ======================
 # This can be used to drop a more detailed server definition into the
@@ -23,7 +22,6 @@ set :branch, :develop
 server '194.171.10.64', user: 'pi', roles: %w{app}
 
 namespace :deploy do
-
   desc 'Restart application'
   task :restart do
     on roles(:app), in: :sequence, wait: 5 do

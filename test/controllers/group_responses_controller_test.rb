@@ -327,5 +327,4 @@ class GroupResponsesControllerTest < ActionController::TestCase
 
     assert_redirected_to motion
   end
-
 end

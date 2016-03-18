@@ -1,7 +1,6 @@
 require 'test_helper'
 
 module StoredProcedureTests
-
   class HelloWorldTest < ActiveSupport::TestCase
     # def setup
     #   @procedure = Squirm.procedure "hello_world"
@@ -11,5 +10,4 @@ module StoredProcedureTests
     #   assert_equal "hello world!", @procedure.call
     # end
   end
-
 end

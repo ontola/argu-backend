@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-
   def show
     @user = User.preload(:profile).find_via_shortname params[:id]
     @profile = @user.profile

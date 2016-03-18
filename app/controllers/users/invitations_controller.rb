@@ -1,5 +1,4 @@
 class Users::InvitationsController < Devise::InvitationsController
-
   def new
     @forum = Forum.find_via_shortname params[:forum]
     super

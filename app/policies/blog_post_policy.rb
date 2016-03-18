@@ -19,7 +19,6 @@ class BlogPostPolicy < RestrictivePolicy
         scope.where(forum_id: context.forum.id)
       end
     end
-
   end
 
   def permitted_attributes
@@ -65,5 +64,4 @@ class BlogPostPolicy < RestrictivePolicy
   def parent_policy
     Pundit.policy(context, record.blog_postable)
   end
-
 end

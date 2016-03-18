@@ -10,5 +10,4 @@ class CreateActivity < CreateService
   def resource
     @activity
   end
-
 end

@@ -2,7 +2,6 @@ module Gravatar
   extend self
 
   def gravatar_url(email,gravatar_options={})
-
     # Default highest rating.
     # Rating can be one of G, PG, R X.
     # If set to nil, the Gravatar default of X will be used.

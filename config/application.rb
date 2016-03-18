@@ -6,7 +6,6 @@ require 'rails/all'
 require 'devise'
 ROADIE_I_KNOW_ABOUT_VERSION_3 = true
 
-
 if defined?(Bundler)
   # If you precompile assets before deploying to production, use this line
   #Bundler.require(*Rails.groups(:assets => %w(development test)))
@@ -80,7 +79,6 @@ module Argu
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
-
     ############################
     # I18n & locales
     ############################
@@ -94,6 +92,4 @@ module Argu
     config.i18n.default_locale = :nl
     I18n.locale = :nl
   end
-
 end
-

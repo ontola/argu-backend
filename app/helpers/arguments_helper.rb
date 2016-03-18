@@ -1,5 +1,4 @@
 module ArgumentsHelper
-
   def pro_arguments_preview_tooltip(motion)
     arguments_preview_tooltip(motion.top_arguments_pro_light, '+')
   end
@@ -42,5 +41,4 @@ private
       end
     end
   end
-
 end

@@ -86,5 +86,4 @@ RSpec.feature 'Comments', type: :feature do
     expect(page).to have_content argument.title
     expect(page).to have_content comment_args[:body]
   end
-
 end

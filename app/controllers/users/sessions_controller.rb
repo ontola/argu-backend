@@ -74,5 +74,4 @@ private
   def time_in_utc
     Time.current.utc.to_i.to_s
   end
-
 end

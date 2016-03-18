@@ -94,6 +94,4 @@ module TestMocks
       to_return(:body => [].to_json,
       )
   end
-
-
 end

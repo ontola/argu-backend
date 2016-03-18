@@ -1,5 +1,4 @@
 class Activity < PublicActivity::Activity
-
   has_many :notifications, dependent: :destroy
   belongs_to :owner, class_name: 'Profile'
   belongs_to :forum

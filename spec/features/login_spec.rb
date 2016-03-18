@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Login', type: :feature do
-
   let!(:holland) { create(:populated_forum, name: 'holland') }
   let!(:holland_member) { create_member(holland) }
   let(:user) { create(:user_with_votes) }

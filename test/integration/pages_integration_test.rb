@@ -11,5 +11,4 @@ class PagesIntegrationTest < ActionDispatch::IntegrationTest
     assert_redirected_to page_url(page)
     assert_redirected_to "/o/#{page.url}"
   end
-
 end

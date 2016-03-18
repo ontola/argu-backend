@@ -69,7 +69,6 @@ class RuleTest < ActionDispatch::IntegrationTest
     assert_equal flash[:alert], 'user not allowed'
   end
 
-
   test 'shows appropriate message level to users' do
     no_show_users
     no_show_owners
@@ -106,5 +105,4 @@ class RuleTest < ActionDispatch::IntegrationTest
       log_out
     end
   end
-
 end

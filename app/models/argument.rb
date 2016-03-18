@@ -70,5 +70,4 @@ class Argument < ActiveRecord::Base
                       ['pro = ?', true] => 'argument_pro_count',
                       ['pro = ?', false] => 'argument_con_count'
                   }
-
 end

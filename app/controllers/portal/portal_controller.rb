@@ -10,7 +10,6 @@ class Portal::PortalController < Portal::PortalBaseController
     @settings = Setting.all
   end
 
-
   # This routes from portal/settings instead of /portal/settings/:value b/c of jeditable's crappy implementation..
   def setting!
     authorize :portal, :home?
@@ -25,5 +24,4 @@ class Portal::PortalController < Portal::PortalBaseController
       end
     end
   end
-
 end

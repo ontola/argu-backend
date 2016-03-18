@@ -1,5 +1,4 @@
 module DropdownHelper
-
   def dropdown_options(title, sections, opts = {})
     options = {
         title: title,
@@ -26,5 +25,4 @@ module DropdownHelper
   def link_item(title, url, opts= {})
     item('link', title, url, opts)
   end
-
 end

@@ -1,5 +1,4 @@
 class ReactSelectInput < ReactInput
-
   def to_html
     input_wrapping do
       label_html <<

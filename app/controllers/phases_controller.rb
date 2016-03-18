@@ -1,5 +1,4 @@
 class PhasesController < AuthorizedController
-
   def show
     respond_to do |format|
       format.html { render locals: {phase: @resource} }
@@ -7,5 +6,4 @@ class PhasesController < AuthorizedController
       format.js   { render locals: {phase: @resource} }
     end
   end
-
 end

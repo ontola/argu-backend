@@ -21,5 +21,4 @@ class CreateProject < CreateService
     obj.forum ||= @project.forum
     obj.creator ||= @project.creator
   end
-
 end

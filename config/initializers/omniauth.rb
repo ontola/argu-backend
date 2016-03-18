@@ -1,6 +1,5 @@
 #require 'omniauth/oauth'
 Rails.application.config.middleware.use OmniAuth::Builder do
-
   provider :facebook, Rails.application.secrets.facebook_key, Rails.application.secrets.facebook_secret,
            scope: 'email', secure_image_url: true, image_size: 'large', :client_options => { :ssl => { :ca_file => "#{Rails.root}/config/ca-bundle.crt" } }
 

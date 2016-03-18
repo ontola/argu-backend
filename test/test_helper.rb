@@ -55,7 +55,6 @@ class ActiveSupport::TestCase
   # Add more helper methods to be used by all tests here...
 
   def assert_notification_sent
-
   end
 
   def assert_not_a_member
@@ -121,7 +120,6 @@ class ActiveSupport::TestCase
                                 owner: user.profile))
     return forum, user
   end
-
 end
 
 class ActionDispatch::IntegrationTest

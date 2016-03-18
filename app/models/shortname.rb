@@ -11,7 +11,6 @@ class Shortname < ActiveRecord::Base
 
   SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i
 
-
   def self.shortname_for(klass_name, id)
     Shortname.where(owner_type: klass_name, owner_id: id).pluck(:shortname).first
   end
@@ -27,5 +26,4 @@ class Shortname < ActiveRecord::Base
   def self.find_resource(shortname)
     Shortname.find_by(shortname: shortname).owner
   end
-
 end

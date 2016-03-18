@@ -80,8 +80,8 @@ class GroupsController < ApplicationController
     end
   end
 
+  private
 
-private
   def find_forum_and_group
     @group = Group.includes(:forum).find(params[:id])
     @forum = @group.forum

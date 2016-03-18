@@ -14,6 +14,5 @@ class TagPolicy < RestrictivePolicy
     def resolve
       scope
     end
-
   end
 end

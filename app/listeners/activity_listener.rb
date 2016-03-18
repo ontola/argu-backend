@@ -1,5 +1,4 @@
 class ActivityListener
-
   def create_argument_successful(argument)
     a = CreateActivity.new(
       argument.creator,

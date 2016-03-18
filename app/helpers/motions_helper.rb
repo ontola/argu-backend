@@ -1,6 +1,5 @@
 include ActsAsTaggableOn::TagsHelper
 module MotionsHelper
-
   def motion_combi_vote_props(actor, motion, vote)
     groups = policy_scope(motion.forum.groups.discussion).collect do |group|
       {
@@ -207,5 +206,4 @@ module MotionsHelper
       timelineId: 1
     }
   end
-
 end

@@ -43,8 +43,8 @@ class StaticPagesController < ApplicationController
   end
 
   private
+
   def default_forum_path
     current_profile.present? ? preferred_forum : Forum.first_public
   end
-
 end

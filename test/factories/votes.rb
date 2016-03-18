@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :vote do
     association :forum
     add_attribute :for, Vote.fors[:pro]

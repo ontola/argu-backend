@@ -7,5 +7,4 @@ class ApplicationMailer < ActionMailer::Base
   layout 'email'
 
   add_template_helper(MailerHelper)
-
 end

@@ -182,5 +182,4 @@ class PagesControllerTest < ActionController::TestCase
     create(:vote, voteable: motion3, for: :pro, forum: amsterdam)
     create(:vote, voteable: argument1, for: :neutral, forum: utrecht)
   end
-
 end

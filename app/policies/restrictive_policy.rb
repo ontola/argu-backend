@@ -53,7 +53,6 @@ class RestrictivePolicy
       10
     end
 
-
     def is_creator?
       creator if record.creator == actor
     end
@@ -200,6 +199,5 @@ class RestrictivePolicy
   def within_user_cap?
     context.opts[:within_user_cap]
   end
-
 end
 

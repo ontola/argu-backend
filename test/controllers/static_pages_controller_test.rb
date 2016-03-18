@@ -16,7 +16,6 @@ class StaticPagesControllerTest < ActionController::TestCase
       get action
       assert_response 302, "#{action} doesn't redirect"
     end
-
   end
 
   test 'should get how_argu_works' do
@@ -26,7 +25,6 @@ class StaticPagesControllerTest < ActionController::TestCase
 
     assert_response 200
   end
-
 
   ####################################
   # As Staff
@@ -47,5 +45,4 @@ class StaticPagesControllerTest < ActionController::TestCase
     assert_response 200
     assert_equal activities, activities & assigns(:activities)
   end
-
 end

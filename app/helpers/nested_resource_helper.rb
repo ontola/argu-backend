@@ -3,7 +3,6 @@
 # @note Has been designed with a single parent resource in mind (route wise)
 # @author Fletcher91 <thom@argu.co>
 module NestedResourceHelper
-
   def current_resource_is_nested?
     parent_resource_key(request.path_parameters).present?
   end
@@ -46,7 +45,6 @@ module NestedResourceHelper
     parent_resource_type(opts).capitalize.constantize
   end
 
-
   # Extracts the parent resource param from the url to get to its value
   # @return [Symbol] The resource param
   # @see #parent_resource_key
@@ -83,5 +81,4 @@ module NestedResourceHelper
         get_parent_resource.forum
     end
   end
-
 end

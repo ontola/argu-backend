@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Transfer Page', type: :feature do
-
   let!(:nederland) { create(:populated_forum, name: 'nederland') }
   let!(:holland) { create(:populated_forum, name: 'holland') }
   let!(:holland_member) { create_member(holland) }
@@ -29,5 +28,4 @@ RSpec.feature 'Transfer Page', type: :feature do
 
     expect(find('div.alert', text: 'Organization transferred')).to be_present
   end
-
 end

@@ -21,5 +21,4 @@ class CreateCommentTest < ActiveSupport::TestCase
       c.commit
     end
   end
-
 end

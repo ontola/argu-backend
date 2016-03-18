@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :membership do
     transient do
       association :profile

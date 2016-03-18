@@ -93,5 +93,4 @@ module ExceptionToTheRule
   def max_clearance(*array)
     array.flatten.compact.max.presence
   end
-
 end

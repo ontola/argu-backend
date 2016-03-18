@@ -33,5 +33,4 @@ class ActorPolicy < RestrictivePolicy
       owner.owner == user.profile || owner.managerships.where(profile: user.profile).present?
     end
   end
-
 end

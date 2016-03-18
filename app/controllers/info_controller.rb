@@ -1,5 +1,4 @@
 class InfoController < ApplicationController
-
   def show
     begin
       setting = Setting.get(params[:id])

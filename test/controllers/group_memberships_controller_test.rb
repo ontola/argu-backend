@@ -90,6 +90,4 @@ class GroupMembershipsControllerTest < ActionController::TestCase
 
     assert_redirected_to settings_forum_path(@holland.url, tab: :groups)
   end
-
-
 end

@@ -18,5 +18,4 @@ class UpdateProject < UpdateService
     obj.forum ||= @project.forum
     obj.creator ||= @project.creator
   end
-
 end

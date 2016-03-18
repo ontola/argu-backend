@@ -124,7 +124,6 @@ RSpec.configure do |config|
   end
 
   OmniAuth.config.test_mode = true
-
 end
 
 class FactoryGirl::Evaluator

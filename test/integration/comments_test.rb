@@ -1,15 +1,12 @@
 require 'test_helper'
 
 class CommentsTest < ActionDispatch::IntegrationTest
-
   let!(:venice) { create(:forum, :vwal) }
   let(:access_token) { create(:access_token, item: venice) }
 
   ####################################
   # Not logged in
   ####################################
-
-
 
   ####################################
   # As user
@@ -30,7 +27,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
     assert assigns(:resource)
 
     follow_redirect!
-
 
     assert_differences [['User.count', 1],
                         ['Sidekiq::Worker.jobs.size', 1]] do

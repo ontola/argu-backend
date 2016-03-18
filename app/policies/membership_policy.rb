@@ -16,7 +16,6 @@ class MembershipPolicy < RestrictivePolicy
     def resolve
       scope
     end
-
   end
 
   ######CRUD######

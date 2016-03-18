@@ -13,5 +13,4 @@ class CreateMotion < CreateService
   def resource
     @motion
   end
-
 end

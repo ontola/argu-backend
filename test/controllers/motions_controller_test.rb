@@ -493,7 +493,6 @@ class MotionsControllerTest < ActionController::TestCase
 
     assert_equal 0, assigns(:result)[:old].activities.count
     assert_equal 1, assigns(:result)[:new].activities.count
-
   end
 
   # Currently only staffers can move items
@@ -531,7 +530,6 @@ class MotionsControllerTest < ActionController::TestCase
     assigns(:motion).taggings.pluck(:forum_id).each do |id|
       assert_equal forum_id, id
     end
-
   end
 
   protected

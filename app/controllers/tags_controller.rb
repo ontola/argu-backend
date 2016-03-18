@@ -1,5 +1,4 @@
 class TagsController < ApplicationController
-
   def index
     if params[:forum_id].present?
       @forum = Forum.find_via_shortname params[:forum_id]
@@ -43,5 +42,4 @@ class TagsController < ApplicationController
   def taggable_class
     taggable_type.capitalize.constantize
   end
-
 end

@@ -1,5 +1,4 @@
 class ManagersController < ApplicationController
-
   def new
     @forum = Forum.find_via_shortname params[:forum_id]
     authorize @forum, :edit?

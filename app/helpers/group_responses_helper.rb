@@ -1,5 +1,4 @@
 module GroupResponsesHelper
-
   def radio_values_for_sides(model)
     values = []
     model.class.sides.keys.each do |side|
@@ -21,5 +20,4 @@ module GroupResponsesHelper
       Float::INFINITY
     end
   end
-
 end

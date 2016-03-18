@@ -20,7 +20,6 @@ class QuestionPolicy < RestrictivePolicy
     def is_member?
       user.profile.member_of? record.forum
     end
-
   end
 
   def permitted_attributes
@@ -74,5 +73,4 @@ class QuestionPolicy < RestrictivePolicy
   def update?
     rule (is_member? && is_creator?), is_manager?, super
   end
-
 end

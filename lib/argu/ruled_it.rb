@@ -20,7 +20,6 @@ module Argu
 
         true
       end
-
     end
 
     def authorize(record, query=nil)
@@ -39,6 +38,5 @@ module Argu
 
       true
     end
-
   end
 end

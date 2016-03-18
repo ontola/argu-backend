@@ -68,5 +68,4 @@ class Rack::Attack
       end
     end
   end
-
 end

@@ -218,5 +218,4 @@ class Motion < ActiveRecord::Base
       (vote_count.to_f / total_vote_count * 100).round.abs
     end
   end
-
 end

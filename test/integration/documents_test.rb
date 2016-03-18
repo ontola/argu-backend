@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class DocumentsTest < ActionDispatch::IntegrationTest
-
   let!(:policy) do
     create(:document,
            name: 'policy',
@@ -38,7 +37,6 @@ class DocumentsTest < ActionDispatch::IntegrationTest
            name: 'values',
            title: 'Kernwaarden',
            contents: 'lorem ipsum et dolorum est')
-
   end
 
   test 'should get policy' do
@@ -60,5 +58,4 @@ class DocumentsTest < ActionDispatch::IntegrationTest
     get '/values'
     assert_response :success
   end
-
 end

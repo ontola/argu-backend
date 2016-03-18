@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :document do
     name 'also_the_url'
     title 'title of the document'
@@ -17,5 +16,4 @@ FactoryGirl.define do
              1. **Individuele vrijheid**<br />Het individu en haar persoonlijke vrijheid is de beste maatstaf om leed te minimaliseren. Argu ziet een betere toekomst, zonder dwang, door vrijheid van het individu centraal te stellen. '
     end
   end
-
 end

@@ -38,7 +38,6 @@ set :assets_roles, [:web, :app]
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 namespace :deploy do
-
   desc 'Update build number file'
   task :update_build_number do
     on roles(:all) do
@@ -71,8 +70,6 @@ namespace :deploy do
     end
   end
 
-
-
   before :compile_bundles, :npm_install
   before 'deploy:compile_assets', :compile_bundles
   after :updated, :compile_assets
@@ -88,5 +85,4 @@ namespace :deploy do
       # end
     end
   end
-
 end

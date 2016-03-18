@@ -5,7 +5,6 @@ module ForumsHelper
     t("forums.application_form.#{value}")
   end
 
-
   def forum_selector_items(guest= false)
     sections = []
 
@@ -46,7 +45,6 @@ module ForumsHelper
   end
 
   def forum_title_dropdown_items(resource)
-
     sections = []
 
     sections << forum_membership_section if current_user.present?
@@ -95,5 +93,4 @@ module ForumsHelper
   def scope_member_label(value)
     t("forums.scope.#{value}")
   end
-
 end

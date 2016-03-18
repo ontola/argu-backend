@@ -83,5 +83,4 @@ class MotionPolicy < RestrictivePolicy
   def vote?
     rule is_member?, super
   end
-
 end

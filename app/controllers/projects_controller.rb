@@ -32,7 +32,6 @@ class ProjectsController < AuthorizedController
   end
 
   def show
-
     questions = policy_scope(authenticated_resource!.questions.trashed(show_trashed?))
 
     motions_without_questions = policy_scope(Motion.where(forum: authenticated_context,

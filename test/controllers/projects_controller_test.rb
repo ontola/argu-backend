@@ -14,7 +14,6 @@ class ProjectsControllerTest < ActionController::TestCase
   end
   let(:unpublished) { create(:project, :unpublished, forum: freetown) }
 
-
   ####################################
   # Guest, User, Member share features
   ####################################
@@ -83,7 +82,6 @@ class ProjectsControllerTest < ActionController::TestCase
 
     assert_response response
   end
-
 
   ####################################
   # As Guest
@@ -373,5 +371,4 @@ class ProjectsControllerTest < ActionController::TestCase
     sign_in staff
     general_destroy 302, -1
   end
-
 end

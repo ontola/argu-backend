@@ -1,6 +1,5 @@
 class AddProjects < ActiveRecord::Migration
   def up
-
     create_table :places do |t|
       t.string  :licence
       t.string  :osm_type
@@ -22,7 +21,6 @@ class AddProjects < ActiveRecord::Migration
     add_column :forums, :place_id, :bigint
     add_foreign_key :forums, :places
 
-
     create_table :placements do |t|
       t.belongs_to :forum, null: false
       t.belongs_to :place, null: false
@@ -37,7 +35,6 @@ class AddProjects < ActiveRecord::Migration
     add_foreign_key :placements, :forums
     add_foreign_key :placements, :users,    column: :publisher_id
     add_foreign_key :placements, :profiles, column: :creator_id
-
 
     create_table :projects do |t|
       t.belongs_to :forum, null: false
@@ -65,7 +62,6 @@ class AddProjects < ActiveRecord::Migration
     add_foreign_key :projects, :profiles, column: :creator_id
     add_foreign_key :projects, :groups
 
-
     create_table :phases do |t|
       t.belongs_to :forum, null: false
       t.belongs_to :project, null: false
@@ -84,10 +80,8 @@ class AddProjects < ActiveRecord::Migration
     add_foreign_key :phases, :users,    column: :publisher_id
     add_foreign_key :phases, :profiles, column: :creator_id
 
-
     add_column :questions, :project_id, :integer
     add_foreign_key :questions, :projects
-
 
     change_table :motions do |t|
       t.belongs_to :project
@@ -114,14 +108,12 @@ class AddProjects < ActiveRecord::Migration
     add_foreign_key :stepups, :users
     add_foreign_key :stepups, :profiles, column: :creator_id
 
-
     change_table :group_memberships do |t|
       t.string   :title
       t.text     :description
       t.datetime :start_date
       t.datetime :end_date
     end
-
 
     create_table :blog_posts do |t|
       t.belongs_to :forum, null: false
@@ -143,7 +135,6 @@ class AddProjects < ActiveRecord::Migration
     add_index :blog_posts, [:forum_id, :published_at]
     add_index :blog_posts, [:forum_id, :trashed_at]
 
-
     create_table :photos do |t|
       t.belongs_to :forum, null: false
       t.belongs_to :about, polymorphic: true, null: false
@@ -162,7 +153,6 @@ class AddProjects < ActiveRecord::Migration
     add_foreign_key :photos, :users,    column: :publisher_id
     add_foreign_key :photos, :profiles, column: :creator_id
 
-
     add_column :forums, :projects_count, :integer, default: 0, null: false
 
     add_column :comments, :forum_id, :integer
@@ -175,7 +165,6 @@ class AddProjects < ActiveRecord::Migration
       end
     end
     add_foreign_key :comments, :forums
-
   end
 
   def down

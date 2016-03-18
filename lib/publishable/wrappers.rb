@@ -15,7 +15,6 @@ module Publishable
       def cache_response(api_method, response)
         @_request_cache[api_method] = {access_token: @_access_token, response: response}
       end
-
     end
 
     Dir[File.join(File.dirname(__FILE__), "/wrappers/*.rb")].each { |f| require f }

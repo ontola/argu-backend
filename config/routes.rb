@@ -172,7 +172,6 @@ Argu::Application.routes.draw do
             path: 'posts',
             only: [:show, :edit, :update, :destroy]
 
-
   resources :projects,
             path: 'p',
             only: [:show, :edit, :update, :destroy],

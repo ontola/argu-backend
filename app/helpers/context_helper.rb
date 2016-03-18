@@ -1,5 +1,4 @@
 module ContextHelper
-
   # Renders a to_parent breadcrumb block
   def  to_parent(parent = nil)
     if parent.present?
@@ -48,5 +47,4 @@ module ContextHelper
       t('arguments.form.side.con')
     end
   end
-
 end

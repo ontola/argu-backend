@@ -148,7 +148,6 @@ module AlternativeNamesHelper
     end
   end
 
-
   #########################
   #         Other         #
   #########################
@@ -178,6 +177,4 @@ module AlternativeNamesHelper
       I18n.t('comments.type')
     end
   end
-
-
 end

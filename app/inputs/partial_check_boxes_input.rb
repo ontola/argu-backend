@@ -1,5 +1,4 @@
 class PartialCheckBoxesInput < Formtastic::Inputs::CheckBoxesInput
-
   def to_html
     input_wrapping do
       choices_wrapping do

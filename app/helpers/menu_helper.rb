@@ -1,5 +1,4 @@
 module MenuHelper
-
   # Generates a dropdown (cr)Update Delete menu for use in the profile bar.
   # @author Fletcher91 <thom@argu.co>
   # @param resource [Model] The model the actions should be done upon
@@ -38,5 +37,4 @@ module MenuHelper
     end
     dropdown_options(t('menu'), [{items: link_items}], fa: 'fa-gear')
   end
-
 end

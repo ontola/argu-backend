@@ -1,5 +1,4 @@
 module UsersHelper
-
   def forum_from_r_action(user)
     if user.r.present?
       url_options, controller = r_to_url_options(user.r)
@@ -66,6 +65,5 @@ module UsersHelper
       cap = Setting.get('user_cap').try(:to_i)
       instance_variable_set(:@_cap, (cap.present? and cap == -1 || (cap > 0 && Shortname.where(owner_type: 'User').count < cap)))
     end
-
   end
 end

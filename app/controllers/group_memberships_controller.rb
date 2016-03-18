@@ -1,5 +1,4 @@
 class GroupMembershipsController < ApplicationController
-
   def new
     @group = Group.includes(:forum).find(params[:group_id])
     @forum = @group.forum

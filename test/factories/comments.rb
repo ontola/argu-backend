@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :comment do
     commentable {
       passed_in?(:commentable) ? commentable : create(:argument, forum: forum)

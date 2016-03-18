@@ -21,7 +21,6 @@ class PagePolicy < RestrictivePolicy
           page_memberships[:profile_id].eq(user.profile.id).and(page_memberships[:role].eq(PageMembership.roles[:manager]))
       ).distinct
     end
-
   end
 
   module Roles

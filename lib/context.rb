@@ -167,5 +167,4 @@ class Context
     end
     "#{model_string}#{parent_string}"
   end
-
 end

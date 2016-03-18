@@ -33,5 +33,4 @@ class Vote < ActiveRecord::Base
   def voter_type
     'Profile'
   end
-
 end

@@ -52,5 +52,4 @@ class Page < ActiveRecord::Base
       save!
     end
   end
-
 end

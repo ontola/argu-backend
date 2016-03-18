@@ -1,5 +1,4 @@
 class ArgumentsController < AuthorizedController
-
   # GET /arguments/1
   # GET /arguments/1.json
   def show
@@ -11,9 +10,11 @@ class ArgumentsController < AuthorizedController
     @vote = Vote.find_by(voteable: @argument, voter: current_profile)
 
     respond_to do |format|
-      format.html { render locals: {
-                               comment: Comment.new
-                           } }
+      format.html do
+        render locals: {
+          comment: Comment.new
+        }
+      end
       format.widget { render @argument }
       format.json { render json: @argument }
     end

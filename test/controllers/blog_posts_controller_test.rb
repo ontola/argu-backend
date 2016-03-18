@@ -16,7 +16,6 @@ class BlogPostsControllerTest < ActionController::TestCase
   end
   let(:unpublished) { create(:blog_post, :unpublished, blog_postable: project, forum: freetown) }
 
-
   ####################################
   # Guest, User, Member share features
   ####################################
@@ -24,7 +23,6 @@ class BlogPostsControllerTest < ActionController::TestCase
   def general_new(response = 302)
     get :new,
         project_id: project
-
 
     assert_response response
   end
@@ -82,7 +80,6 @@ class BlogPostsControllerTest < ActionController::TestCase
 
     assert_response response
   end
-
 
   ####################################
   # As Guest
@@ -302,5 +299,4 @@ class BlogPostsControllerTest < ActionController::TestCase
     sign_in staff
     general_destroy 302, -1
   end
-
 end

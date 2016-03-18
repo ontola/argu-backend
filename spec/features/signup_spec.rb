@@ -61,5 +61,4 @@ RSpec.feature 'Signup', type: :feature do
 
     expect(page).to have_current_path(user_path(User.last))
   end
-
 end

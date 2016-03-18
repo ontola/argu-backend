@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :follow do
     association :follower, factory: [:user, :follows_email]
 
@@ -8,6 +7,5 @@ FactoryGirl.define do
         association :followable, factory: item
       end
     end
-
   end
 end

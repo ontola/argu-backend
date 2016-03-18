@@ -16,7 +16,6 @@ class QuestionAnswerPolicy < RestrictivePolicy
     def resolve
       scope
     end
-
   end
 
   def permitted_attributes
@@ -50,5 +49,4 @@ class QuestionAnswerPolicy < RestrictivePolicy
   def forum_policy
     Pundit.policy(context, context.forum)
   end
-
 end

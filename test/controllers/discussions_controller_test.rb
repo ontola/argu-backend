@@ -41,7 +41,6 @@ class DiscussionsControllerTest < ActionController::TestCase
     assert_redirected_to root_path
   end
 
-
   ####################################
   # As Spectator
   ####################################
@@ -174,5 +173,4 @@ class DiscussionsControllerTest < ActionController::TestCase
 
     assert_response 200
   end
-
 end

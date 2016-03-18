@@ -20,5 +20,4 @@ module ShareHelper
   def self.googleplus_share_url(url, options= {})
     "https://plus.google.com/share?url=#{CGI.escape(url)}"
   end
-
 end

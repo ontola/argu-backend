@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Voting', type: :feature do
-
   let(:freetown) { create(:forum, name: 'freetown') }
   let(:motion) do
     create(:motion,
@@ -89,5 +88,4 @@ RSpec.feature 'Voting', type: :feature do
     visit motion_path(motion)
     expect(page).to have_css('.btn-con[data-voted-on=true]')
   end
-
 end

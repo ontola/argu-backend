@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.feature 'Dropdown', type: :feature do
-
   # Names need be different since header_helper#public_forum_items checks for those names
   let!(:holland) { create(:populated_forum, name: 'nederland') }
   let!(:other) { create(:populated_forum, name: 'houten') }

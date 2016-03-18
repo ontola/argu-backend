@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class AccessTokenSignupTest < ActionDispatch::IntegrationTest
-
   let(:helsinki) { create(:hidden_populated_forum_vwal) }
   let(:helsinki_at) { helsinki.access_tokens.first }
   let(:hidden_one) { create(:motion, forum: helsinki) }
@@ -101,7 +100,6 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
-
     put profile_path('newuser'),
         {profile: {
             profileable_attributes: {
@@ -146,7 +144,6 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
-
     put profile_path('newuser'),
         {profile: {
             profileable_attributes: {
@@ -173,5 +170,4 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response :success
   end
-
 end

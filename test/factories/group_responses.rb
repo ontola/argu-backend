@@ -1,5 +1,4 @@
 FactoryGirl.define do
-
   factory :group_response do
     association :forum, strategy: :build
     association :group

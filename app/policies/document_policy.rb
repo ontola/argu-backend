@@ -14,7 +14,6 @@ class DocumentPolicy < RestrictivePolicy
     def resolve
       scope
     end
-
   end
 
   ######CRUD######
@@ -37,5 +36,4 @@ class DocumentPolicy < RestrictivePolicy
   def update?
     staff?
   end
-
 end
