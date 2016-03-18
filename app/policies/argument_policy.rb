@@ -44,6 +44,10 @@ class ArgumentPolicy < RestrictivePolicy
     rule is_creator?, is_manager?, is_owner?, super
   end
 
+  def untrash?
+    rule is_creator?, is_manager?, is_owner?, super
+  end
+
   def destroy?
     creator = 1.hour.ago <= record.created_at ? is_creator? : nil
     rule creator, is_manager?, is_owner?, super

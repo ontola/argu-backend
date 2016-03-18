@@ -76,6 +76,21 @@ class ProjectsController < AuthorizedController
     @up.commit
   end
 
+  # PUT /projects/1/untrash
+  # PUT /projects/1/untrash.json
+  def untrash
+    @project = Project.find params[:id]
+    respond_to do |format|
+      if @project.untrash
+        format.html { redirect_to @project, notice: t('type_untrash_success', type: t('projects.type')) }
+        format.json { head :no_content }
+      else
+        format.html { render :form, notice: t('errors.general') }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     @project = Project.find params[:id]
     if params[:destroy].to_s == 'true'

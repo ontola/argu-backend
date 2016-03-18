@@ -34,6 +34,19 @@ module Trashable
     end
   end
 
+  def untrash
+    return false unless self.is_trashed?
+
+    self.class.transaction do
+      if self.respond_to?(:trashed_at)
+        update_column :trashed_at, nil
+      else
+        update_column :is_trashed, false
+      end
+    end
+    return true
+  end
+
   module ClassMethods
     def is_trashable?
       true

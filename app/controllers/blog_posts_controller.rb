@@ -68,6 +68,21 @@ class BlogPostsController < AuthorizedController
     @ubp.commit
   end
 
+  # PUT /blog_posts/1/untrash
+  # PUT /blog_posts/1/untrash.json
+  def untrash
+    blog_post = BlogPost.find params[:id]
+    respond_to do |format|
+      if blog_post.untrash
+        format.html { redirect_to blog_post.blog_postable, notice: t('type_untrash_success', type: t('blog_posts.type')) }
+        format.json { head :no_content }
+      else
+        format.html { render :form, notice: t('errors.general') }
+        format.json { render json: blog_post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def destroy
     blog_post = BlogPost.find params[:id]
     if params[:destroy].to_s == 'true'

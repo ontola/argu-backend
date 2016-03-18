@@ -55,6 +55,10 @@ class BlogPostPolicy < RestrictivePolicy
     rule is_moderator?, is_manager?, is_owner?, super
   end
 
+  def untrash?
+    rule is_moderator?, is_manager?, is_owner?, super
+  end
+
   def update?
     rule is_creator?, is_manager?, is_owner?, super
   end

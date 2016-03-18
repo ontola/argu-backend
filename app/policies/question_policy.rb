@@ -70,6 +70,10 @@ class QuestionPolicy < RestrictivePolicy
     user && record.creator_id == user.profile.id || is_manager? || super
   end
 
+  def untrash?
+    user && record.creator_id == user.profile.id || is_manager? || super
+  end
+
   def update?
     rule (is_member? && is_creator?), is_manager?, super
   end

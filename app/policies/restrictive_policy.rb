@@ -162,6 +162,10 @@ class RestrictivePolicy
     staff?
   end
 
+  def untrash?
+    staff?
+  end
+
   def update?
     staff?
   end

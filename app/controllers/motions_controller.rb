@@ -105,6 +105,20 @@ class MotionsController < AuthorizedController
     end
   end
 
+  # PUT /motions/1/untrash
+  # PUT /motions/1/untrash.json
+  def untrash
+    respond_to do |format|
+      if authenticated_resource!.untrash
+        format.html { redirect_to authenticated_resource!, notice: t('type_untrash_success', type: t('motions.type')) }
+        format.json { head :no_content }
+      else
+        format.html { render :form, notice: t('errors.general') }
+        format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /motions/1
   # DELETE /motions/1.json
   def destroy

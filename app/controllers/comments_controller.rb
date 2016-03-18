@@ -101,6 +101,22 @@ class CommentsController < AuthorizedController
     end
   end
 
+  # PUT /arguments/1/comments/1/untrash
+  # PUT /arguments/1/comments/1/untrash.json
+  def untrash
+    @comment = Comment.find_by_id params[:id]
+    resource = @comment.commentable
+    respond_to do |format|
+      if @comment.untrash
+        format.html { redirect_to resource, notice: t('type_untrash_success', type: t('comments.type')) }
+        format.json { head :no_content }
+      else
+        format.html { render :form, notice: t('errors.general') }
+        format.json { render json: @comment.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   # DELETE /arguments/1/comments/1
   def destroy
     @comment = Comment.find_by_id params[:id]

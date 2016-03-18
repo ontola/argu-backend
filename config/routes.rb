@@ -65,6 +65,9 @@ Argu::Application.routes.draw do
     get :delete, action: :delete, path: :delete, as: :delete, on: :member
     delete :destroy, action: :destroy, on: :member
   end
+  concern :trashable do
+      put :untrash, action: :untrash, on: :member
+  end
 
   use_doorkeeper do
     controllers :applications => 'oauth/applications'
@@ -122,7 +125,7 @@ Argu::Application.routes.draw do
 
   resources :questions,
             path: 'q', except: [:index, :new, :create],
-            concerns: [:moveable, :convertible, :flowable] do
+            concerns: [:moveable, :convertible, :flowable, :trashable] do
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
   end
@@ -132,7 +135,7 @@ Argu::Application.routes.draw do
   resources :motions,
             path: 'm',
             except: [:index, :new, :create],
-            concerns: [:moveable, :convertible, :votable, :flowable] do
+            concerns: [:moveable, :convertible, :votable, :flowable, :trashable] do
     resources :groups, only: [] do
       resources :group_responses, only: [:new, :create]
     end
@@ -142,8 +145,11 @@ Argu::Application.routes.draw do
   resources :arguments,
             path: 'a',
             except: [:index, :new, :create],
-            concerns: [:votable, :flowable] do
-    resources :comments, path: 'c', only: [:new, :index, :show, :create, :update, :edit, :destroy]
+            concerns: [:votable, :flowable, :trashable] do
+    resources :comments,
+              path: 'c',
+              concerns: [:trashable],
+              only: [:new, :index, :show, :create, :update, :edit, :destroy]
     patch 'comments' => 'comments#create'
   end
 
@@ -169,12 +175,13 @@ Argu::Application.routes.draw do
 
   resources :blog_posts,
             path: 'posts',
-            only: [:show, :edit, :update, :destroy]
+            only: [:show, :edit, :update, :destroy],
+            concerns: [:trashable]
 
   resources :projects,
             path: 'p',
             only: [:show, :edit, :update, :destroy],
-            concerns: [:blog_postable, :flowable, :discussable]
+            concerns: [:blog_postable, :flowable, :discussable, :trashable]
 
   resources :phases,
             only: [:show]
