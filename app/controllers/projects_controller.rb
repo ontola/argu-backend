@@ -91,14 +91,22 @@ class ProjectsController < AuthorizedController
     end
   end
 
+  # DELETE /projects/1
+  # DELETE /projects/1.json
   def destroy
     @project = Project.find params[:id]
-    if params[:destroy].to_s == 'true'
-      authorize @project
-      @project.destroy
+    if @project.is_trashed?
+      if params[:destroy].present? && params[:destroy] == 'true'
+        authorize @project
+        @project.destroy
+        flash[:notice] = t('type_destroy_success',
+                           type: t('projects.type'))
+      end
     else
       authorize @project, :trash?
       @project.trash
+      flash[:notice] = t('type_trash_success',
+                         type: t('projects.type'))
     end
 
     respond_to do |format|

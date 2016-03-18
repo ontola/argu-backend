@@ -83,14 +83,22 @@ class BlogPostsController < AuthorizedController
     end
   end
 
+  # DELETE /blog_posts/1
+  # DELETE /blog_posts/1.json
   def destroy
     blog_post = BlogPost.find params[:id]
-    if params[:destroy].to_s == 'true'
-      authorize blog_post
-      blog_post.destroy
+    if blog_post.is_trashed?
+      if params[:destroy].present? && params[:destroy] == 'true'
+        authorize blog_post
+        blog_post.destroy
+        flash[:notice] = t('type_destroy_success',
+                           type: t('blog_posts.type'))
+      end
     else
       authorize blog_post, :trash?
       blog_post.trash
+      flash[:notice] = t('type_trash_success',
+                         type: t('blog_posts.type'))
     end
 
     respond_to do |format|

@@ -121,9 +121,11 @@ class CommentsController < AuthorizedController
   def destroy
     @comment = Comment.find_by_id params[:id]
     resource = @comment.commentable
-    if params[:wipe] == 'true'
-      authorize @comment
-      @comment.wipe
+    if @comment.is_trashed?
+      if params[:destroy].present? && params[:destroy] == 'true'
+        authorize @comment
+        @comment.wipe
+      end
     else
       authorize @comment, :trash?
       @comment.trash

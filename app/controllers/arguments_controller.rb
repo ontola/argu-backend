@@ -105,10 +105,12 @@ class ArgumentsController < AuthorizedController
   # DELETE /arguments/1
   # DELETE /arguments/1.json
   def destroy
-    if params[:destroy].to_s == 'true'
-      authenticated_resource!.destroy
-      flash[:notice] = t('type_destroy_success',
-                         type: t('arguments.type'))
+    if authenticated_resource!.is_trashed?
+      if params[:destroy].present? && params[:destroy] == 'true'
+        authenticated_resource!.destroy
+        flash[:notice] = t('type_destroy_success',
+                           type: t('arguments.type'))
+      end
     else
       authenticated_resource!.trash
       flash[:notice] = t('type_trash_success',

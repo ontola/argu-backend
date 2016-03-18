@@ -122,10 +122,12 @@ class MotionsController < AuthorizedController
   # DELETE /motions/1
   # DELETE /motions/1.json
   def destroy
-    if params[:destroy].to_s == 'true'
-      authenticated_resource!.destroy
-      flash[:notice] = t('type_destroy_success',
-                         type: t('motions.type'))
+    if authenticated_resource!.is_trashed?
+      if params[:destroy].present? && params[:destroy] == 'true'
+        authenticated_resource!.destroy
+        flash[:notice] = t('type_destroy_success',
+                           type: t('motions.type'))
+      end
     else
       authenticated_resource!.trash
       flash[:notice] = t('type_trash_success',
