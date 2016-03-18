@@ -175,6 +175,7 @@ nl:
   users_cancel_howto: "Voer hieronder je gebruikersnaam (jouw unieke Argu URL) om het verwijderen van je account te bevestigen"
   users_cancel_button: "Ik begrijp de consequenties, verwijder mijn account"
   users_cancel_confirm: "Ja, verwijder mijn account."
+  users_cancel_page_owner: "Je bent eigenaar van een of meer pagina's. Om je account te verwijderen zal je eerst deze pagina's moeten overzetten of verwijderen."
 
 #vote
   vote_same_twice_warning: "Je hebt al op dit item gestemd."
