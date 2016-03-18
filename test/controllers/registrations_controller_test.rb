@@ -80,4 +80,20 @@ class RegistrationsControllerTest < ActionController::TestCase
 
     assert_redirected_to root_path
   end
+
+  ####################################
+  # As Owner
+  ####################################
+  test 'owner should not delete destroy' do
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    freetown.page.update(owner: user.profile)
+    sign_in user
+
+    assert_raises(ActiveRecord::DeleteRestrictionError) do
+      delete :destroy,
+             user: {
+                 repeat_name: user.shortname.shortname
+             }
+    end
+  end
 end

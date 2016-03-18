@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160318093603) do
+ActiveRecord::Schema.define(version: 20160318134544) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 20160318093603) do
     t.integer  "votes_pro_count",                 default: 0,     null: false
     t.integer  "comments_count",                  default: 0,     null: false
     t.integer  "votes_abstain_count",             default: 0,     null: false
-    t.integer  "creator_id"
+    t.integer  "creator_id",                                      null: false
     t.integer  "votes_con_count",                 default: 0,     null: false
     t.integer  "forum_id"
     t.integer  "publisher_id"
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(version: 20160318093603) do
     t.string   "title",            limit: 255, default: ""
     t.text     "body",                         default: ""
     t.string   "subject",          limit: 255, default: ""
-    t.integer  "creator_id",                   default: 0
+    t.integer  "creator_id",                   default: 0,     null: false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
@@ -237,7 +237,7 @@ ActiveRecord::Schema.define(version: 20160318093603) do
   create_table "group_responses", force: :cascade do |t|
     t.integer  "forum_id"
     t.integer  "group_id"
-    t.integer  "creator_id"
+    t.integer  "creator_id",                null: false
     t.integer  "motion_id"
     t.text     "text",         default: ""
     t.integer  "publisher_id"
@@ -303,11 +303,9 @@ ActiveRecord::Schema.define(version: 20160318093603) do
     t.integer  "votes_neutral_count",                 default: 0,     null: false
     t.integer  "argument_pro_count",                  default: 0,     null: false
     t.integer  "argument_con_count",                  default: 0,     null: false
-    t.integer  "opinion_pro_count",                   default: 0,     null: false
-    t.integer  "opinion_con_count",                   default: 0,     null: false
     t.integer  "votes_abstain_count",                 default: 0,     null: false
     t.integer  "forum_id"
-    t.integer  "creator_id"
+    t.integer  "creator_id",                                          null: false
     t.string   "cover_photo",                         default: ""
     t.string   "cover_photo_attribution",             default: ""
     t.integer  "publisher_id"
@@ -378,26 +376,6 @@ ActiveRecord::Schema.define(version: 20160318093603) do
   add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
-  create_table "opinions", force: :cascade do |t|
-    t.string   "title",               limit: 255
-    t.text     "content"
-    t.boolean  "is_trashed",                      default: false
-    t.boolean  "pro",                             default: false
-    t.integer  "motion_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "votes_pro_count",                 default: 0,     null: false
-    t.integer  "comments_count",                  default: 0,     null: false
-    t.integer  "votes_abstain_count",             default: 0,     null: false
-    t.integer  "creator_id"
-    t.integer  "forum_id"
-  end
-
-  add_index "opinions", ["id"], name: "index_opinions_on_id", using: :btree
-  add_index "opinions", ["motion_id", "id", "pro"], name: "index_opinions_on_motion_id_and_id_and_pro", using: :btree
-  add_index "opinions", ["motion_id", "id"], name: "index_opinions_on_motion_id_and_id", using: :btree
-  add_index "opinions", ["motion_id", "is_trashed"], name: "index_opinions_on_motion_id_and_is_trashed", using: :btree
-
   create_table "page_memberships", force: :cascade do |t|
     t.integer "profile_id",             null: false
     t.integer "page_id",                null: false
@@ -440,7 +418,7 @@ ActiveRecord::Schema.define(version: 20160318093603) do
     t.integer  "about_id",                 null: false
     t.string   "about_type",               null: false
     t.integer  "used_as",      default: 0
-    t.integer  "creator_id"
+    t.integer  "creator_id",               null: false
     t.integer  "publisher_id"
     t.string   "image_uid"
     t.string   "title"
@@ -551,7 +529,7 @@ ActiveRecord::Schema.define(version: 20160318093603) do
     t.string   "title",                   limit: 255, default: ""
     t.text     "content",                             default: ""
     t.integer  "forum_id"
-    t.integer  "creator_id"
+    t.integer  "creator_id",                                          null: false
     t.boolean  "is_trashed",                          default: false
     t.integer  "motions_count",                       default: 0
     t.integer  "votes_pro_count",                     default: 0
@@ -633,7 +611,7 @@ ActiveRecord::Schema.define(version: 20160318093603) do
     t.string  "record_type", null: false
     t.integer "group_id"
     t.integer "user_id"
-    t.integer "creator_id"
+    t.integer "creator_id",  null: false
     t.string  "title"
     t.text    "description"
   end

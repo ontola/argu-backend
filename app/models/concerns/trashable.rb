@@ -50,7 +50,7 @@ module Trashable
 
   module ClassMethods
     def anonymize(collection)
-      collection.update_all(creator_id: 0, publisher_id: 0)
+      collection.update_all(creator_id: 0, publisher_id: nil)
     end
 
     def is_trashable?
