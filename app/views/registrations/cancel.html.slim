@@ -11,4 +11,4 @@
           - if resource.password_required?
             =f.input :current_password
         =f.actions do
-          =f.action :submit, :as => :button, label: 'Ik begrijp de consequenties, verwijder mijn account', button_html: {class: 'confirm-action', disabled: true}
+          =f.action :submit, :as => :button, label: t('users_cancel_button'), button_html: {class: 'confirm-action', disabled: true}

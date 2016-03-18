@@ -170,7 +170,8 @@ nl:
   #cancel
   users_cancel_title: "Argu account verwijderen"
   users_cancel_info: "Als je jouw account verwijdert, verlies je permanent toegang tot alles wat je geplaatst, gevolgd en gestemd hebt. Weet je zeker dat je jouw account wilt verwijderen?"
-  users_cancer_howto: "Voer hieronder je gebruikersnaam (jouw unieke Argu URL) en wachtwoord in om het verwijderen van je account te bevestigen"
+  users_cancel_howto: "Voer hieronder je gebruikersnaam (jouw unieke Argu URL) om het verwijderen van je account te bevestigen"
+  users_cancel_button: "Ik begrijp de consequenties, verwijder mijn account"
   users_cancel_confirm: "Ja, verwijder mijn account."
 
 #vote
