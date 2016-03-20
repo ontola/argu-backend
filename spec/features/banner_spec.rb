@@ -191,7 +191,7 @@ RSpec.feature 'Banners', type: :feature do
       fill_in :banner_title, with: new_banner[:title]
       fill_in :banner_content, with: new_banner[:content]
       select 'Everyone', from: :banner_audience
-      click_button 'Create banner'
+      click_button 'Create Banner'
     end
     expect(page).to have_content 'Banner created successfully'
     within('#banners-drafts') do
