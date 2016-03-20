@@ -8,11 +8,23 @@ class ProjectsControllerTest < ActionController::TestCase
   let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
   let!(:moderator) { create_member(freetown) }
   let!(:subject) do
-    create(:project,
-           :published,
-           forum: freetown)
+    p = create(:project,
+               :published,
+               forum: freetown)
+    create(:stepup,
+           record: p,
+           forum: freetown,
+           moderator: moderator)
+    p
   end
-  let(:unpublished) { create(:project, :unpublished, forum: freetown) }
+  let(:unpublished) do
+    p = create(:project, :unpublished, forum: freetown)
+    create(:stepup,
+           record: p,
+           forum: freetown,
+           moderator: moderator)
+    p
+  end
 
   ####################################
   # Guest, User, Member share features
@@ -86,7 +98,6 @@ class ProjectsControllerTest < ActionController::TestCase
   ####################################
   # As Guest
   ####################################
-
   test 'guest should not get new' do
     general_new
   end
@@ -131,6 +142,12 @@ class ProjectsControllerTest < ActionController::TestCase
     general_show
   end
 
+  test 'user should not get show unpublished' do
+    sign_in user
+    general_show 302, unpublished
+    assert assigns(:_not_authorized_caught)
+  end
+
   test 'user should not post create' do
     sign_in user
     general_create 403
@@ -166,6 +183,12 @@ class ProjectsControllerTest < ActionController::TestCase
     general_show
   end
 
+  test 'member should not get show unpublished' do
+    sign_in member
+    general_show 302, unpublished
+    assert assigns(:_not_authorized_caught)
+  end
+
   test 'member should not post create' do
     sign_in member
     general_create
@@ -187,44 +210,7 @@ class ProjectsControllerTest < ActionController::TestCase
   end
 
   ####################################
-  # As Owner
-  ####################################
-
-  test 'owner should get new' do
-    sign_in owner
-    general_new 200
-  end
-
-  test 'owner should get show' do
-    sign_in owner
-    general_show
-  end
-
-  test 'owner should post create' do
-    sign_in owner
-    general_create 302,
-                   [['Project.count', 1],
-                    ['Stepup.count', 1],
-                    ['Phase.count', 1]]
-  end
-
-  test 'owner should get edit' do
-    sign_in owner
-    general_edit 200
-  end
-
-  test 'owner should patch update' do
-    sign_in owner
-    general_update 302, true
-  end
-
-  test 'owner should delete destroy trash' do
-    sign_in owner
-    general_destroy 302, -1
-  end
-
-  ####################################
-  # As NetDem (Moderator)
+  # As NetDem member
   # The following tests are specific to the use case of NetDem
   ####################################
   let(:netdem) { create(:group, name: 'Netwerk Democratie', forum: freetown) }
@@ -261,15 +247,15 @@ class ProjectsControllerTest < ActionController::TestCase
     [netdem_membership, discussion_membership, netdem_rule_new, netdem_rule_create]
   end
 
-  test 'netdem should get new project' do
-    netdem_rules # Trigger
+  test 'moderator should get new project' do
+    netdem_rules
     sign_in netdem_member
 
     general_new(200)
   end
 
-  test 'netdem should post create project' do
-    netdem_rules # Trigger
+  test 'moderator should post create project' do
+    netdem_rules
     sign_in netdem_member
     # Test post create
     # Test that the proper stepup is generated
@@ -279,12 +265,41 @@ class ProjectsControllerTest < ActionController::TestCase
                     ['Phase.count', 1]]
   end
 
-  test 'netdem should not cause leaking access' do
+  test 'moderator should not cause leaking access' do
     netdem_rules
     sign_in discussion_member
 
     general_new
     general_create
+  end
+
+  ####################################
+  # As Moderator
+  ####################################
+  test 'moderator should get show' do
+    sign_in moderator
+    general_show
+  end
+
+  test 'moderator should get show unpublished' do
+    sign_in moderator
+
+    general_show 200, unpublished
+  end
+
+  test 'moderator should get edit' do
+    sign_in moderator
+    general_edit 200
+  end
+
+  test 'moderator should patch update' do
+    sign_in moderator
+    general_update 302, true
+  end
+
+  test 'moderator should delete destroy trash' do
+    sign_in moderator
+    general_destroy 302, -1
   end
 
   ####################################
@@ -299,6 +314,11 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'manager should get show' do
     sign_in manager
     general_show 200
+  end
+
+  test 'manager should get show unpublished' do
+    sign_in manager
+    general_show 200, unpublished
   end
 
   test 'manager should post create' do
@@ -325,6 +345,47 @@ class ProjectsControllerTest < ActionController::TestCase
   end
 
   ####################################
+  # As Owner
+  ####################################
+  test 'owner should get new' do
+    sign_in owner
+    general_new 200
+  end
+
+  test 'owner should get show' do
+    sign_in owner
+    general_show
+  end
+
+  test 'owner should get show unpublished' do
+    sign_in owner
+    general_show 200, unpublished
+  end
+
+  test 'owner should post create' do
+    sign_in owner
+    general_create 302,
+                   [['Project.count', 1],
+                    ['Stepup.count', 1],
+                    ['Phase.count', 1]]
+  end
+
+  test 'owner should get edit' do
+    sign_in owner
+    general_edit 200
+  end
+
+  test 'owner should patch update' do
+    sign_in owner
+    general_update 302, true
+  end
+
+  test 'owner should delete destroy trash' do
+    sign_in owner
+    general_destroy 302, -1
+  end
+
+  ####################################
   # As Staff
   ####################################
   let(:staff) { create :user, :staff }
@@ -337,6 +398,11 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'staff should get show' do
     sign_in staff
     general_show 200
+  end
+
+  test 'staff should get show unpublished' do
+    sign_in staff
+    general_show 200, unpublished
   end
 
   test 'staff should post create' do
