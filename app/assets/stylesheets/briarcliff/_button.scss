@@ -121,17 +121,19 @@
   }
 }
 
-
 // The sticky class 'sticks' elements to a corner of a parent. Make sure the parent is relatively positioned.
 
-.sticky, .sticky--top-right {
+.sticky, .sticky--bottom-right, .sticky--center, .sticky--top-left, .sticky--top-right {
   position: absolute !important;
+  z-index: 1;
+}
+
+.sticky, .sticky--top-right {
   top: 0;
   right: 0;
 }
 
 .sticky--bottom-right {
-  position: absolute !important;
   top: auto;
   bottom: 0;
   right: 0;
@@ -139,7 +141,6 @@
 }
 
 .sticky--top-left {
-  position: absolute !important;
   top: 0;
   right: auto;
   left: 0;
