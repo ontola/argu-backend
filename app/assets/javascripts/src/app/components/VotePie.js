@@ -3,44 +3,55 @@ import PieChart from 'react-simple-pie-chart';
 import StylingVars from '../mixins/StylingVars';
 
 export const VotePie = React.createClass({
+    propTypes: {
+        pro: React.PropTypes.number.isRequired,
+        neutral: React.PropTypes.number.isRequired,
+        con: React.PropTypes.number.isRequired
+    },
+
+    votedStyle: function () {
+        let { pro, neutral, con } = this.props;
+
+        return [
+            {
+                color: StylingVars.pro,
+                value: pro
+            },
+            {
+                color: StylingVars.neutral,
+                value: neutral
+            },
+            {
+                color: StylingVars.con,
+                value: con
+            }
+        ];
+    },
+
+    notVoteStyle: function () {
+        return [
+            {
+                color: '#e8e8e8',
+                value: 1
+            }
+        ];
+    },
 
     render: function () {
-        let { pro, neutral, con } = this.props.voteCounts;
+        let { pro, neutral, con } = this.props;
 
-        if (pro !== 0 || con !== 0 || neutral !== 0) {
+        if (pro + con + neutral > 0) {
             return (
                 <div className='vote-pie'>
-                    <PieChart
-                        slices={[
-                        {
-                          color: StylingVars.pro,
-                          value: pro
-                        },
-                        {
-                          color: StylingVars.neutral,
-                          value: neutral
-                        },
-                        {
-                          color: StylingVars.con,
-                          value: con
-                        }
-                    ]}
-                    />
+                    <PieChart slices={this.votedStyle()} />
                 </div>
             );
         } else {
             return (
                 <div className='vote-pie vote-pie--empty'>
-                    <PieChart
-                        slices={[
-                        {
-                          color: '#e8e8e8',
-                          value: 1
-                        }
-                    ]}
-                    />
+                    <PieChart slices={this.notVoteStyle()} />
                 </div>
-            )
+            );
         }
     }
 });
