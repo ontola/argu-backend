@@ -21,7 +21,8 @@
 //= require microplugin
 //= require selectize
 //= require _bundle
-//= require turbolinks
 //= require react_ujs_mount
-//= require react_ujs_turbolinks
+//= require react_ujs_native
 //= require react_ujs_event_setup
+//= require turbolinks
+//= require react_ujs_turbolinks
