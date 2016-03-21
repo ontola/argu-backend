@@ -34,9 +34,7 @@
 
   // Disables tooltips for IE 8,9 and 10
   @media screen\0 {
-    .ie8910 {
-      display: none;
-    }
+    display: none;
   }
 
   @include bp-large {
