@@ -9,7 +9,7 @@ FactoryGirl.define do
 
     sequence(:name) { |n| "fg_forum#{n}" }
 
-    before(:create) do |forum, evaluator|
+    before(:create) do |forum|
       forum.shortname.shortname = forum.name
     end
 
@@ -17,7 +17,7 @@ FactoryGirl.define do
     factory :populated_forum do
       motion_count 6
 
-      after(:create) do |forum, evaluator|
+      after(:create) do |forum|
         create_list :motion, 3, forum: forum
         create_list :motion, 3, forum: forum, is_trashed: true
         create :question, :with_motions, forum: forum

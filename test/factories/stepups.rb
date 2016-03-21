@@ -5,5 +5,6 @@ FactoryGirl.define do
     # association :group
     # association :user
     association :moderator, factory: :user
+    association :creator, factory: :profile
   end
 end

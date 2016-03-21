@@ -121,6 +121,13 @@ RSpec.configure do |config|
 
   config.before(:each) do
     Setting.set('user_cap', '-1')
+    create(:user,
+           id: 0,
+           shortname: build(:shortname, shortname: 'community'),
+           email: 'community@argu.co',
+           password: 'password',
+           finished_intro: true,
+           profile: create(:profile, id: 0))
   end
 
   OmniAuth.config.test_mode = true

@@ -19,7 +19,6 @@ RSpec.feature 'Account deletion', type: :feature do
     argument.update(created_at: 1.day.ago)
     motion.update(created_at: 1.day.ago)
     comment
-    expect(argument.comments_count).to eq(1)
 
     login_as(user, scope: :user)
     visit settings_path
@@ -33,8 +32,9 @@ RSpec.feature 'Account deletion', type: :feature do
     argument.reload
 
     expect(page).to have_content 'Account deleted successfully'
-    expect(Comment.trashed(false).count).to eq(0)
-    expect(argument.comments_count).to eq(0)
+    expect(Comment.anonymous.count).to eq(1)
+    expect(Argument.anonymous.count).to eq(1)
+    expect(Motion.anonymous.count).to eq(1)
   end
 
 end

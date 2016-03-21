@@ -11,7 +11,7 @@ RSpec.feature 'Transfer Page', type: :feature do
 
     visit(settings_page_path(holland.page, tab: :managers))
 
-    click_link('transfer')
+    click_link('Move')
     within('form.page') do
       fill_in 'page_repeat_name', with: holland.page.shortname.shortname
       if Capybara.current_driver == :poltergeist

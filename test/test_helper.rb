@@ -22,6 +22,14 @@ DatabaseCleaner.strategy = :transaction
 module TestHelper
   Sidekiq::Testing.fake!
 
+  User.find_or_create_by(id: 0) do |user|
+    user.shortname = Shortname.new(shortname: 'community')
+    user.email = 'community@argu.co'
+    user.password = 'password'
+    user.finished_intro = true
+    user.profile = Profile.new(id: 0)
+  end
+
   # Runs assert_difference with a number of conditions and varying difference
   # counts.
   #

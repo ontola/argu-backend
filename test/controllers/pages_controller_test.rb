@@ -8,23 +8,40 @@ class PagesControllerTest < ActionController::TestCase
   let(:freetown) { create(:forum, name: 'freetown', page: page_non_public) }
   let(:access_token) { create(:access_token, item: freetown) }
 
+  let(:motion) { create(:motion, forum: freetown, creator: page.profile, publisher: page.owner.profileable) }
+  let(:argument) { create(:argument, forum: freetown, motion: motion, creator: page.profile, publisher: page.owner.profileable) }
+  let(:comment) { create(:comment, forum: freetown, commentable: argument, creator: page.profile, publisher: page.owner.profileable) }
+  let(:project) { create(:project, forum: freetown, creator: page.profile, publisher: page.owner.profileable) }
+  let(:project_motion) { create(:motion, forum: freetown, project: project, creator: page.profile, publisher: page.owner.profileable) }
+  let(:project_argument) do
+    create(:argument,
+           forum: freetown,
+           motion: project_motion,
+           creator: page.profile,
+           publisher: page.owner.profileable)
+  end
+
+  def init_content
+    [freetown, motion, argument, comment, project, project_motion, project_argument]
+  end
+
   ####################################
   # As Guest
   ####################################
-  test 'should get show when public' do
+  test 'guest should get show when public' do
     get :show, id: page
 
     assert_response 200
   end
 
-  test 'should not get show when not public' do
+  test 'guest should not get show when not public' do
     get :show, id: page_non_public
 
     assert_redirected_to root_path
     assert_nil assigns(:collection)
   end
 
-  test 'should get show with platform access' do
+  test 'guest should get show with platform access' do
     get :show, id: page, at: access_token.access_token
 
     assert_response 200
@@ -40,7 +57,7 @@ class PagesControllerTest < ActionController::TestCase
   ####################################
   let(:user) { create(:user) }
 
-  test 'should get show' do
+  test 'user should get show' do
     sign_in user
 
     get :show, id: page
@@ -58,7 +75,7 @@ class PagesControllerTest < ActionController::TestCase
   let(:utrecht) { create(:forum) }
   let(:user2) { create_member(amsterdam, create_member(utrecht)) }
 
-  test 'should not show all votes' do
+  test 'user should not show all votes' do
     initialize_user2_votes
     sign_in user2
 
@@ -72,7 +89,7 @@ class PagesControllerTest < ActionController::TestCase
                  'Not all/too many votes are shown'
   end
 
-  test 'should not get settings when not page owner' do
+  test 'user should not get settings when not page owner' do
     sign_in user
 
     get :settings, id: page.url
@@ -81,7 +98,7 @@ class PagesControllerTest < ActionController::TestCase
     assert_equal page, assigns(:page)
   end
 
-  test 'should not update settings when not page owner' do
+  test 'user should not update settings when not page owner' do
     sign_in user
 
     put :update,
@@ -101,7 +118,7 @@ class PagesControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-  test 'should get settings when page owner' do
+  test 'owner should get settings when page owner' do
     sign_in page.owner.profileable
 
     get :settings, id: page.url
@@ -110,7 +127,7 @@ class PagesControllerTest < ActionController::TestCase
     assert_equal page, assigns(:page)
   end
 
-  test 'should update settings when page owner' do
+  test 'owner should update settings when page owner' do
     sign_in page.owner.profileable
 
     put :update,
@@ -128,7 +145,7 @@ class PagesControllerTest < ActionController::TestCase
     assert_equal 'new_about', assigns(:page).profile.reload.about
   end
 
-  test 'should be able to create only one page' do
+  test 'owner should be able to create only one page' do
     sign_in page.owner.profileable
 
     post :create, page: {
@@ -147,12 +164,42 @@ class PagesControllerTest < ActionController::TestCase
     assert assigns(:page).new_record?, "Page is saved when it shouldn't be"
   end
 
+  test 'owner should delete destroy when page not owns a forum' do
+    init_content
+    sign_in page.owner.profileable
+
+    assert_differences([['Page.count', -1],
+                        ['Argument.anonymous.count', 2],
+                        ['Comment.anonymous.count', 1],
+                        ['Motion.anonymous.count', 2],
+                        ['Project.anonymous.count', 1]]) do
+      delete :destroy,
+             id: page.shortname.shortname,
+             page: {
+                 repeat_name: page.shortname.shortname
+             }
+    end
+  end
+
+  test 'owner should not delete destroy when page owns a forum' do
+    sign_in page_non_public.owner.profileable
+    freetown
+
+    assert_raises(ActiveRecord::DeleteRestrictionError) do
+      delete :destroy,
+             id: page_non_public.shortname.shortname,
+             page: {
+                 repeat_name: page_non_public.shortname.shortname
+             }
+    end
+  end
+
   ####################################
   # As Staff
   ####################################
   let(:staff) { create(:user, :staff) }
 
-  test 'should be able to create a page' do
+  test 'staff should be able to create a page' do
     sign_in staff
 
     post :create,

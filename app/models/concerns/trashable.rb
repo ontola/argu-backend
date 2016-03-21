@@ -9,6 +9,7 @@ module Trashable
         where((trashed === true ? nil : {is_trashed: false}))
       end
     end
+    scope :anonymous, ->{where(creator_id: 0)}
   end
 
   def is_trashable?
