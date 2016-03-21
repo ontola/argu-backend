@@ -68,6 +68,19 @@ section {
   }
 }
 
+.details-part--pro:hover {
+  color: $pro;
+}
+
+
+.details-part--neutral:hover {
+  color: $neutral;
+}
+
+
+.details-part--con:hover {
+  color: $con;
+}
 
 // Use this style when voting with the info bar is possible
 /*

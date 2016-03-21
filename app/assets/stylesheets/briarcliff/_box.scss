@@ -142,6 +142,7 @@
 
   a & {
     &:hover{
+      @include transition(.2s);
       opacity: .8;
     }
     &:active{
