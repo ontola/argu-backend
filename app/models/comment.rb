@@ -83,7 +83,7 @@ class Comment < ActiveRecord::Base
   def wipe
     Comment.transaction do
       self.trash unless self.is_trashed?
-      Comment.anonymize(self)
+      Comment.anonymize(Comment.where(id: self.id))
       self.update_column(:body, '')
     end
   end

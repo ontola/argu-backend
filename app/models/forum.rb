@@ -2,22 +2,23 @@ class Forum < ActiveRecord::Base
   include ArguBase, Attribution, Shortnameable, Flowable
 
   belongs_to :page
-  has_many :access_tokens, inverse_of: :item, foreign_key: :item_id
+  has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
   has_many :activities, as: :trackable, dependent: :destroy
-  has_many :arguments, inverse_of: :forum
-  has_many :groups
+  has_many :groups, dependent: :destroy
   has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
   has_many :managers, through: :managerships, source: :profile
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :members, through: :memberships, source: :profile
   accepts_nested_attributes_for :memberships
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
-  has_many :motions, inverse_of: :forum
-  has_many :projects, inverse_of: :forum
-  has_many :questions, inverse_of: :forum
   has_many :stepups, inverse_of: :forum
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, inverse_of: :forum
+  # User content
+  has_many :arguments, inverse_of: :forum, dependent: :destroy
+  has_many :motions, inverse_of: :forum, dependent: :destroy
+  has_many :projects, inverse_of: :forum, dependent: :destroy
+  has_many :questions, inverse_of: :forum, dependent: :destroy
 
   # @private
   # Used in the forum selector
