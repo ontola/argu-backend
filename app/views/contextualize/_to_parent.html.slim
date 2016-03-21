@@ -11,7 +11,7 @@
         - elsif classname == 'questions'
           =render partial: 'questions/info_bar', locals: {question: parent}
         - elsif classname == 'motions'
-          =render partial: 'motions/info_bar', locals: {motion: parent}
+          =render partial: 'motions/info_bar', locals: {motion: parent, show_vote_results: true}
         - elsif classname == 'projects'
           =render partial: 'projects/info_bar', locals: {project: parent}
         - else
