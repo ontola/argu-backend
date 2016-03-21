@@ -111,7 +111,7 @@ class PagesController < ApplicationController
     authorize @page, :delete?
 
     respond_to do |format|
-      format.html { render }
+      format.html { render 'delete', locals: {resource: @page} }
       format.js { render layout: false}
     end
   end

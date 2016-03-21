@@ -3,7 +3,7 @@
     h1= t('users_cancel_title')
   .box
     section
-      -if @user.profile.pages.count
+      -if @user.profile.pages.count>0
         p.danger= t('users_cancel_page_owner')
         ul
           -@user.profile.pages.each do |page|

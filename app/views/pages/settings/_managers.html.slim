@@ -6,7 +6,7 @@ p= t('pages.settings.managers.about_owner')
 
 - if policy(@page).transfer?
   h3[style="clear: left;"] Overdracht
-  =link_to 'transfer', transfer_page_url(@page), data: {remote: true}, class: 'btn--warning margin-bottom'
+  =link_to t('formtastic.labels.f_move'), transfer_page_url(@page), data: {remote: true}, class: 'btn--warning margin-bottom'
 
 h3[style='clear: left;']= t('pages.settings.managers.title')
 p= t('pages.settings.managers.about_managers')

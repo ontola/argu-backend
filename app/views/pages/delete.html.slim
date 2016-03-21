@@ -2,17 +2,20 @@
   .overlay
   .modal.col-1
     header
-      h1 Weet je het daadwerkelijk zeker?
+      h1=t('pages.settings.advanced.delete.confirm.header')
     .box
       section
-        .form
-          p
-            b HET NIET LEZEN VAN DEZE BOODSCHAP ZAL TOT ONBEDOELD VERLIES VAN INFORMATIE LEIDEN
-          p Het verwijderen van de pagina zal <b>alle content</b> van de pagina en bijbehorende <b>forums</b> verwijderen! Deze actie is <b>NIET</b> ongedaan te maken.
-
-        = semantic_form_for resource, method: :delete, html: {class: 'confirm'} do |f|
-          p Voer de argu url van de pagina in om te bevestigen
-          = f.inputs do
-            = f.input :repeat_name, input_html: {class: 'confirm-text', :'confirm-text' => @page.url}
-          = f.actions do
-            = f.action :submit, :as => :button, label: 'Ik begrijp de consequenties, verwijder deze pagina', button_html: { class: 'confirm-action', disabled: true }
+        -if resource.forums.count>0
+          p.danger= t('pages.settings.advanced.delete.forum_owner')
+          ul
+            - resource.forums.each do |forum|
+              li= link_to forum.display_name, forum_path(forum)
+        -else
+          .form
+            p= t('pages.settings.advanced.delete.confirm.body_html')
+          = semantic_form_for resource, method: :delete, html: {class: 'confirm'} do |f|
+            p=t('pages.settings.advanced.delete.confirm.repeat')
+            = f.inputs do
+              = f.input :repeat_name, input_html: {class: 'confirm-text', :'confirm-text' => @page.url}
+            = f.actions do
+              = f.action :submit, :as => :button, label: t('pages.settings.advanced.delete.confirm.understand'), button_html: { class: 'confirm-action', disabled: true }
