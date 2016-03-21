@@ -4,7 +4,8 @@
                description: seolized_description(question),
                image: question.cover_photo.url || image_url('logo-social.png')
 .cover-behind
-  .cover-image.bg-img[style="background-image: url('#{question.cover_photo.url}'); "]
+  .cover-container
+    .cover-image.cover-image--blur.bg-img[style="background-image: url('#{question.cover_photo.url}'); "]
 .col-1
   div[data-intro= t('intro.question.back')]= to_parent
   =render partial: 'contextualize/context_horizontal', locals: {item: question, type: 'question'}
