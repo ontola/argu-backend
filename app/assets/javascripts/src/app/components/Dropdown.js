@@ -61,15 +61,16 @@ export const HyperDropdown = React.createClass({
                                                {...this.props}
                                                key='required' />;
 
-        return (<div tabIndex="1"
-                    className={dropdownClass}
-                    onMouseEnter={this.onMouseEnter}
-                    onMouseLeave={this.onMouseLeave} >
-            {trigger}
-            <div className="reference-elem" style={{visibility: 'hidden', overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute'}}>{dropdownContent}</div>
-            <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
-                {openState && dropdownContent}
-            </ReactTransitionGroup>
+        return (
+        <div tabIndex="1"
+        className={dropdownClass}
+        onMouseEnter={this.onMouseEnter}
+        onMouseLeave={this.onMouseLeave} >
+        {trigger}
+        <div className="reference-elem" style={{visibility: 'hidden', overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute'}}>{dropdownContent}</div>
+        <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
+            {openState && dropdownContent}
+        </ReactTransitionGroup>
         </div>);
     }
 });

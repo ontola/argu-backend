@@ -17,23 +17,27 @@ module MotionsHelper
     }.merge(motion_vote_props(motion, vote)))
   end
 
-  def motion_vote_props(motion, vote, opts={})
+  def motion_vote_props(motion, vote, opts = {})
     opts.merge({
         object_type: 'motion',
         object_id: motion.id,
         current_vote: vote.for,
         vote_url: motion_show_vote_path(motion),
         total_votes: motion.total_vote_count,
-        distribution: {
-          pro: motion.votes_pro_count,
-          neutral: motion.votes_neutral_count,
-          con: motion.votes_con_count
-        },
+        distribution: motion_vote_counts(motion),
         percent: {
             pro: motion.votes_pro_percentage,
             neutral: motion.votes_neutral_percentage,
             con: motion.votes_con_percentage
         }
+    })
+  end
+
+  def motion_vote_counts(motion, opts = {})
+    opts.merge({
+         pro: motion.votes_pro_count,
+         neutral: motion.votes_neutral_count,
+         con: motion.votes_con_count
     })
   end
 

@@ -41,38 +41,64 @@ section {
   right: 0;
   bottom: 0;
   height: 100%;
+}
 
-  .details-part{
-    display: inline-block;
-    padding: 0 .5em;
-    height: 100%;
-    line-height: 1.3em;
-    &:hover{
-      background-color: $g0;
-      color: $g3;
-    }
-  }
+.details-parts {
+  display: inline-block;
+}
 
-  .details-part--type{
-    color: white;
-    padding-left: 1.2em;
-    padding-right: 1.2em;
-    &:hover{
-      color: white;
-    }
-  }
-
-  .details-part--pro{
-    &:hover{
-      color: $pro;
-    }
-  }
-  .details-part--con{
-    &:hover{
-      color: $con;
-    }
+.details-part{
+  display: inline-block;
+  padding: 0 .5em;
+  height: 100%;
+  line-height: 1.3em;
+  &:hover{
+    background-color: $g0;
+    color: $g3;
   }
 }
+
+.details-part--type{
+  color: white;
+  padding-left: 1.2em;
+  padding-right: 1.2em;
+  margin-right: .6em;
+  &:hover{
+    color: white;
+  }
+}
+
+
+// Use this style when voting with the info bar is possible
+/*
+.details-part--pro, .details-part--con, .details-part--neutral {
+  &:hover {
+    color: white;
+  }
+}
+
+.details-part--pro{
+  color: $pro;
+  &:hover{
+    background-color: $pro;
+  }
+}
+
+.details-part--neutral{
+  color: $neutral;
+  &:hover{
+    background-color: $neutral;
+  }
+}
+
+.details-part--con{
+  color: $con;
+  &:hover{
+    background-color: $con;
+  }
+}
+
+*/
 
 section.unpadded {
   padding: 0;
