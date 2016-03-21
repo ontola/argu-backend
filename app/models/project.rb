@@ -20,7 +20,7 @@ class Project < ActiveRecord::Base
 
   has_many   :motions, inverse_of: :project
   has_many   :phases, inverse_of: :project
-  has_many   :stepups, as: :record
+  has_many   :stepups, as: :record, dependent: :destroy
   has_many   :questions, inverse_of: :project
 
   accepts_nested_attributes_for :phases

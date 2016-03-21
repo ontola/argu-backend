@@ -7,6 +7,14 @@ class User < ActiveRecord::Base
   has_many :notifications
   has_one :home_placement, -> { where title: 'home', placeable_type: 'User' }, class_name: 'Placement', foreign_key: 'placeable_id', inverse_of: :placeable
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
+  # User content
+  has_many :arguments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
+  has_many :blog_posts, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
+  has_many :comments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
+  has_many :group_responses, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
+  has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
+  has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
+  has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
   accepts_nested_attributes_for :profile, :home_placement
 
   # Include default devise modules. Others available are:
