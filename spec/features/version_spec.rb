@@ -17,6 +17,6 @@ RSpec.feature 'Version', type: :feature do
     end
 
     click_link('New idea')
-    expect(page).to have_content('Register or log in')
+    expect(page).to have_content('Create account')
   end
 end
