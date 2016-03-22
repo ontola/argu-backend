@@ -5,18 +5,19 @@ en:
     plural: 'Projects'
     publish_confirmation: 'Publicising will notify forum followers that a project was created. Continue?'
     timeline: 'Timeline'
-    add_manager: 'Add manager'
-    add_phase: 'Add phase'
     back_to: 'Go back to project'
     stepups:
       type: 'Manager'
       title: 'Managers'
       title_singular: 'Manager'
+      info: 'Project managers can edit and delete the project and its discussions.'
+      add: 'Add manager'
     phases:
       type: 'Phase'
       title: 'Phases'
       title_singular: 'Phase'
       info: 'A phase is part in a timeline of a project.'
+      add: 'Add phase'
     call_to_action:
       body: 'Keep people up to date and engage them with your project. You can post new challenges and ideas inside a project.'
       action: 'Start your project.'
