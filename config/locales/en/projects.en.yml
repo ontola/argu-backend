@@ -18,8 +18,7 @@ en:
       title_singular: 'Phase'
       info: 'A phase is part in a timeline of a project.'
     call_to_action:
-      title: '_project cta title_'
-      body: '_project cta body_'
+      body: 'Keep people up to date and engage them with your project. You can post new challenges and ideas inside a project.'
       action: 'Start your project.'
     tooltips:
       info: 'A project is a plan that you can follow and start new discussions about.'
