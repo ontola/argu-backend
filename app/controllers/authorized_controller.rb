@@ -65,10 +65,61 @@ class AuthorizedController < ApplicationController
       action = 'trash'
     end
     authorize authenticated_resource, "#{action.chomp('!')}?"
-end
+  end
 
   def authorize_show
     authorize authenticated_resource, :show?
+  end
+
+  # A version of {authenticated_resource!} that raises if the record cannot be found
+  # @see {authenticated_resource!}
+  # @raise [ActiveRecord::RecordNotFound]
+  def authenticated_resource
+    authenticated_resource! or raise ActiveRecord::RecordNotFound
+  end
+
+  # Searches for the resource of the current controllers' type by `id`
+  # If the action is one where a resource can't exist yet, a new one is created with the tenant set.
+  # @see {NestedResourceHelper} For finding parent resources
+  # @author Fletcher91 <thom@argu.co>
+  # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
+  def authenticated_resource!
+    @resource ||=
+        case params[:action]
+        when 'new'
+          controller_name
+              .classify
+              .constantize
+              .new resource_new_params
+        when 'create'
+          create_service.resource
+        when 'update'
+          update_service.resource
+        when 'untrash'
+          untrash_service.resource
+        when 'destroy'
+          destroy_service.resource
+        when 'trash'
+          trash_service.resource
+        else
+          resource_by_id
+        end
+  end
+
+  # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,
+  # otherwise the result from {resource_tenant} is used.
+  # @author Fletcher91 <thom@argu.co>
+  # @note This function isn't called context_tenant since we might use different scopes in the future (e.g. access to a project)
+  # @note This should be based only on static information and be side-effect free to make memoization possible.
+  # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {resource_tenant}.
+  def authenticated_context
+    if resource_by_id.present?
+      resource_by_id.is_a?(Forum) ?
+          resource_by_id :
+          resource_by_id.forum
+    else
+      resource_tenant
+    end
   end
 
   def check_if_member
@@ -89,52 +140,28 @@ end
     end
   end
 
-  # A version of {authenticated_resource!} that raises if the record cannot be found
-  # @see {authenticated_resource!}
-  # @raise [ActiveRecord::RecordNotFound]
-  def authenticated_resource
-    authenticated_resource! or raise ActiveRecord::RecordNotFound
-  end
-
-  # Searches for the resource of the current controllers' type by `id`
-  # If the action is one where a resource can't exist yet, a new one is created with the tenant set.
-  # @see {NestedResourceHelper} For finding parent resources
-  # @author Fletcher91 <thom@argu.co>
-  # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
-  def authenticated_resource!
-    @resource ||= if params[:action] == 'new' || params[:action] == 'create'
-      controller_name
-          .classify
-          .constantize
-          .new resource_new_params
-    else
-      controller_name
-          .classify
-          .constantize
-          .find_by id: resource_id
-    end
-  end
-
-  # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,
-  # otherwise the result from {resource_tenant} is used.
-  # @author Fletcher91 <thom@argu.co>
-  # @note This function isn't called context_tenant since we might use different scopes in the future (e.g. access to a project)
-  # @note This should be based only on static information and be side-effect free to make memoization possible.
-  # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {resource_tenant}.
-  def authenticated_context
-    if authenticated_resource!.present?
-      authenticated_resource!.is_a?(Forum) ?
-        authenticated_resource! :
-        authenticated_resource!.forum
-    else
-      resource_tenant
-    end
+  # Prepares a memoized {CreateService} for the relevant model for use in controller#create
+  # @return [CreateService] The service, generally initialized with {current_profile} and {resource_new_params}
+  # @example
+  #   create_service # => CreateComment<commentable_id: 6, parent_id: 5>
+  #   create_service.commit # => true (Comment created)
+  def create_service
+    raise 'Required interface method not implemented'
   end
 
   def current_context
     Context.parse_from_uri(nil, authenticated_resource!) do |components|
       components.reject! { |c| !policy(c).show? }
     end
+  end
+
+  # Prepares a memoized {DestroyService} for the relevant model for use in controller#destroy
+  # @return [DestroyService] The service, generally initialized with {resource_id}
+  # @example
+  #   destroy_service # => DestroyComment<commentable_id: 6, parent_id: 5>
+  #   destroy_service.commit # => true (Comment destroyed)
+  def destroy_service
+    raise 'Required interface method not implemented'
   end
 
   # @private
@@ -144,14 +171,28 @@ end
 
   # @private
   def pundit_user
-    UserContext.new(current_user,
-                    current_profile,
-                    session,
-                    authenticated_context,
-                    {
-                      platform_open: platform_open?,
-                      within_user_cap: within_user_cap?
-                    })
+    UserContext.new(
+        current_user,
+        current_profile,
+        session,
+        authenticated_context,
+        {
+            platform_open: platform_open?,
+            within_user_cap: within_user_cap?
+        })
+  end
+
+  def redirect_url
+    [request.path, request.query_string].reject(&:blank?).join('?')
+  end
+
+  # Searches the current primary resource by its id
+  # @return [ActiveRecord::Base, nil] The resource by its id
+  def resource_by_id
+    @_resource_by_id ||= controller_name
+                             .classify
+                             .constantize
+                             .find_by id: resource_id
   end
 
   # Used in {authenticated_resource!} to build a new object. Overwrite this function if the model needs more than just the {Forum}
@@ -167,15 +208,38 @@ end
     Forum.find_via_shortname params[:forum_id]
   end
 
-  def redirect_url
-    [request.path, request.query_string].reject(&:blank?).join('?')
-  end
-
   def resource_id
     params[:id] || params["#{controller_name.singularize}_id"]
   end
 
   def _route?
     ![:new, :create].include? params[:action]
+  end
+
+  # Prepares a memoized {TrashService} for the relevant model for use in controller#trash
+  # @return [TrashService] The service, generally initialized with {resource_id}
+  # @example
+  #   trash_service # => TrashComment<commentable_id: 6, parent_id: 5>
+  #   trash_service.commit # => true (Comment trashed)
+  def trash_service
+    raise 'Required interface method not implemented'
+  end
+
+  # Prepares a memoized {UntrashService} for the relevant model for use in controller#untrash
+  # @return [UntrashService] The service, generally initialized with {resource_id}
+  # @example
+  #   untrash_service # => UntrashComment<commentable_id: 6, parent_id: 5>
+  #   untrash_service.commit # => true (Comment untrashed)
+  def untrash_service
+    raise 'Required interface method not implemented'
+  end
+
+  # Prepares a memoized {UpdateService} for the relevant model for use in controller#update
+  # @return [UpdateService] The service, generally initialized with {resource_by_id} and {permit_params}
+  # @example
+  #   update_service # => UpdateComment<commentable_id: 6, parent_id: 5>
+  #   update_service.commit # => true (Comment updated)
+  def update_service
+    raise 'Required interface method not implemented'
   end
 end

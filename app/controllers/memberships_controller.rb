@@ -47,7 +47,8 @@ class MembershipsController < AuthorizedController
     end
   end
 
-private
+  private
+
   def authenticated_resource
     if params[:action] == 'create'
       authenticated_context or super
