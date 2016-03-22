@@ -64,24 +64,26 @@
       =link_to polymorphic_url([:new, get_parent_resource, :motion]), class: 'btn--motion'
         span.fa.fa-plus
         span.icon-left= t('motions.type_new')
-  -if get_parent_resource.respond_to?(:projects) && policy(Project.new(forum: resource_tenant)).new?
-    .col-2-1
-      .box
+-if get_parent_resource.respond_to?(:projects) && policy(Project.new(forum: resource_tenant)).new?
+  .col-1.col-1--small
+    header
+      h2 Of start een project
+    .box
+      section
+        p
+          span= t('projects.call_to_action.body') + ' '
+          =link_to polymorphic_url([:new, get_parent_resource, :project])
+            b.motion-t= t('projects.call_to_action.action')
+    =link_to polymorphic_url([:new, get_parent_resource, :project])
+      .box.motion
+        .box-image--container
+          /.box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
+        section.section-info.project-bg
+          span.fa.fa-lightbulb-o
+          span.icon-left= t('projects.type')
         section
-          p
-            span= t('projects.call_to_action.body') + ' '
-            =link_to polymorphic_url([:new, get_parent_resource, :project])
-              b.motion-t= t('projects.call_to_action.action')
-      =link_to polymorphic_url([:new, get_parent_resource, :project])
-        .box.motion
-          .box-image--container
-            /.box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
-          section.section-info.project-bg
-            span.fa.fa-lightbulb-o
-            span.icon-left= t('projects.type')
-          section
-            h3.project-t= t('discussions.new.project_title')
-      .center
-        =link_to polymorphic_url([:new, get_parent_resource, :project]), class: 'btn--project'
-          span.fa.fa-plus
-          span.icon-left= t('projects.type_new')
+          h3.project-t= t('discussions.new.project_title')
+    .center
+      =link_to polymorphic_url([:new, get_parent_resource, :project]), class: 'btn--neutral'
+        span.fa.fa-plus
+        span.icon-left= t('projects.type_new')

@@ -52,19 +52,23 @@
 }
 
 .btn--pro {
-  @include button($gre);
+  @include button($pro);
+}
+
+.btn--neutral {
+  @include button($neutral);
 }
 
 .btn--con {
-  @include button($red);
+  @include button($con);
 }
 
 .btn--motion {
-  @include button($blu);
+  @include button($motion);
 }
 
 .btn--question {
-  @include button($bro);
+  @include button($question);
 }
 
 .btn--twitter {
