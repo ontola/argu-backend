@@ -18,12 +18,7 @@
   @include container-width;
 }
 
-.col-1-small {
-  position: relative;
-  clear: both;
-  margin: 0 auto;
-  padding: 0 1em;
-  margin-bottom: 1em;
+.col-1--small {
   max-width: 35em;
 }
 
@@ -50,6 +45,7 @@
   position: relative;
   float: left;
   width: 50%;
+  margin-bottom: 2em;
   padding: 0 1em;
   @include bp-medium(){
     width: 100%;

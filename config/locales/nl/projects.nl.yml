@@ -18,8 +18,7 @@ nl:
       title_singular: 'Fase'
       info: 'Een fase is een onderdeel van de tijdlijn van een project.'
     call_to_action:
-      title: '_project cta titel_'
-      body: '_project cta body_'
-      action: 'Begin jouw project.'
+      body: 'Houd mensen op de hoogte van de ontwikkelingen van een bepaald project en betrek ze bij de beslissingen die er worden genomen. In een project kunnen uitdagingen en ideeën worden geplaatst.'
+      action: 'Start een project.'
     tooltips:
       info: 'Een project is een plan dat je kan volgen en discusises over kan starten. '
