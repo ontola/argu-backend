@@ -38,6 +38,7 @@ module Trashable
       else
         update_column :is_trashed, true
       end
+      destroy_notifications
       decrement_counter_cache if self.respond_to? :decrement_counter_cache
     end
   end
@@ -54,6 +55,12 @@ module Trashable
       increment_counter_cache if self.respond_to? :increment_counter_cache
     end
     return true
+  end
+
+  def destroy_notifications
+    activities.each do |activity|
+      activity.notifications.destroy_all
+    end
   end
 
   module ClassMethods
