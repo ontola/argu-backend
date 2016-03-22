@@ -5,20 +5,21 @@ nl:
     plural: 'Projecten'
     publish_confirmation: 'Publiceren zorgt ervoor dat forum volgers op de hoogte zullen worden gesteld. Verder gaan?'
     timeline: 'Tijdlijn'
-    add_manager: 'Manager toevoegen'
-    add_phase: 'Fase toevoegen'
     back_to: 'Ga terug naar project'
     stepups:
-      type: 'Manager'
-      title: 'Managers'
-      title_singular: 'Manager'
+      type: 'Beheerder'
+      title: 'Beheerders'
+      title_singular: 'Beheerder'
+      info: 'Beheerders van een project kunnen het project en de daarbij horende discussies bewerken en verwijderen.'
+      add: 'Beheerder toevoegen'
     phases:
       type: 'Fase'
       title: 'Fases'
       title_singular: 'Fase'
       info: 'Een fase is een onderdeel van de tijdlijn van een project.'
+      add: 'Fase toevoegen'
     call_to_action:
       body: 'Houd mensen op de hoogte van de ontwikkelingen van een bepaald project en betrek ze bij de beslissingen die er worden genomen. In een project kunnen uitdagingen en ideeën worden geplaatst.'
       action: 'Start een project.'
     tooltips:
-      info: 'Een project is een plan dat je kan volgen en discusises over kan starten. '
+      info: 'Een project is een planning met een tijdlijn en relevante discusises.'
