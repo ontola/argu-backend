@@ -20,6 +20,7 @@ module Argu
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.autoload_paths += %W(#{config.root}/app/services)
+    config.autoload_paths += Dir["#{config.root}/app/services/**/"]
     config.autoload_paths += %W(#{config.root}/app/listeners)
 
     config.paths['app/views'].unshift("#{Rails.root}/lib/app/views")
