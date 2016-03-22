@@ -10,7 +10,7 @@ class Motion < ActiveRecord::Base
   belongs_to :publisher, class_name: 'User'
   belongs_to :question, inverse_of: :motions
 
-  has_many :activities, as: :trackable, dependent: :destroy
+  has_many :activities, as: :trackable
   has_many :arguments, -> { argument_comments }, dependent: :destroy
   has_many :arguments_plain, class_name: 'Argument'
   has_many :group_responses

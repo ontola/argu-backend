@@ -3,7 +3,7 @@ class Vote < ActiveRecord::Base
 
   belongs_to :voteable, polymorphic: true, inverse_of: :votes
   belongs_to :voter, polymorphic: true #class_name: 'Profile'
-  has_many :activities, as: :trackable, dependent: :destroy
+  has_many :activities, as: :trackable
   belongs_to :forum
 
   after_save :update_parentable_counter

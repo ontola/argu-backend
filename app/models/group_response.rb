@@ -10,7 +10,7 @@ class GroupResponse < ActiveRecord::Base
   belongs_to :creator, class_name: 'Profile'
   # Physical creator of the GroupReponse (the one responsible).
   belongs_to :publisher, class_name: 'User'
-  has_many :activities, as: :trackable, dependent: :destroy
+  has_many :activities, as: :trackable
 
   parentable :motion, :forum
 

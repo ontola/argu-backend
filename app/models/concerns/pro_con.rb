@@ -8,7 +8,7 @@ module ProCon
 
     belongs_to :motion, touch: true
     has_many :votes, as: :voteable, :dependent => :destroy, inverse_of: :voteable
-    has_many :activities, as: :trackable, dependent: :destroy
+    has_many :activities, as: :trackable
     belongs_to :creator, class_name: 'Profile'
     belongs_to :forum
 

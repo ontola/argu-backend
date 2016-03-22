@@ -9,7 +9,7 @@ class Profile < ActiveRecord::Base
 
   before_destroy :anonymize_or_wipe_dependencies
   has_many :access_tokens, dependent: :destroy
-  has_many :activities, as: :owner, dependent: :destroy
+  has_many :activities, as: :owner
   has_many :forums, through: :memberships
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships

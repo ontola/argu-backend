@@ -3,7 +3,7 @@ class Forum < ActiveRecord::Base
 
   belongs_to :page
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
-  has_many :activities, as: :trackable, dependent: :destroy
+  has_many :activities, as: :trackable
   has_many :groups, dependent: :destroy
   has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
   has_many :managers, through: :managerships, source: :profile
