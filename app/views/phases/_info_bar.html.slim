@@ -1,9 +1,8 @@
 section.section-info.neutral-bg
-  span[class="fa fa-arrows-h"]
-  span.icon-left= t('projects.phases.title_singular')
   .details
     .details-part.details-part--type.neutral-bg[data-title=t('projects.phases.info')]
       span[class="fa fa-arrows-h"]
       span.icon-left= t('projects.phases.title_singular')
-    .details-part
-      span= start_end_title_short_string(phase)
+    - if phase.start_date.present?
+      .details-part
+        span= start_end_title_short_string(phase)

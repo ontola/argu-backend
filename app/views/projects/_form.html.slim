@@ -21,18 +21,18 @@
                 =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 256px;'}
                 =f.input :remove_cover_photo, as: :reverse_boolean
           =f.inputs
+            hr
+            p= t('projects.stepups.info')
             =f.semantic_fields_for :stepups do |stepup|
               =render 'stepup_fields', f: stepup
-            hr
-            p=t('projects.stepups.info')
             .links
               =link_to_add_association f, :stepups, class: 'btn-subtle' do
                 span.fa.fa-plus
                 span.icon-left=t('projects.stepups.add')
-            =f.semantic_fields_for :phases do |phase|
-              =render 'phase_fields', f: phase
             hr
             p= t('projects.phases.info')
+            =f.semantic_fields_for :phases do |phase|
+              =render 'phase_fields', f: phase
             .links
               =link_to_add_association f, :phases, class: 'btn-subtle' do
                 span.fa.fa-plus

@@ -6,11 +6,11 @@ header
   .timeline-phases
     -project.phases.order(start_date: :asc).each do |phase|
       .timeline-phase
-        =link_to phase_path(phase), data: {remote: true, title: start_end_title_short_string(phase)}, class: 'timeline-phase-title tooltip--top' do
+        =link_to phase_path(phase), data: {remote: true}, class: 'timeline-phase-title tooltip--top' do
           span= phase.display_name
         .timeline-phase-points
           -phase.blog_posts.each do |blog_post|
-            =link_to blog_post_path(blog_post), data: {remote: true, title: "#{t('blog_posts.type')}: #{blog_post.title}"}, class: "tooltip--side-right timeline-point timeline-point-blog-post #{'active' if blog_post == project.latest_blog_post}" do
+            =link_to blog_post_path(blog_post), data: {remote: true}, class: "tooltip--side-right timeline-point timeline-point-blog-post #{'active' if blog_post == project.latest_blog_post}" do
               span.fa.fa-quote-left
             =link_to blog_post_path(blog_post), data: {remote: true}, class: 'timeline-post-title' do
               span= blog_post.title
