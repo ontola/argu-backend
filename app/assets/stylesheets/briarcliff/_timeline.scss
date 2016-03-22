@@ -31,9 +31,11 @@ $timeline-height: .3em;
 .timeline-phases {
   display: flex;
   flex-direction: row;
+  height: 2.8em;
 
   @include bp-small {
     flex-direction: column;
+    height: auto;
   }
 }
 
@@ -68,6 +70,7 @@ $timeline-height: .3em;
   }
 
   &:before {
+    display: none;
     content: "";
     position: absolute;
     left: 0;
