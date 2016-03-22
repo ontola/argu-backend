@@ -386,7 +386,7 @@ class MotionsControllerTest < ActionController::TestCase
     subject # trigger
 
     assert_differences([['Motion.trashed(false).count', -1],
-                        ['Motion.trashed(true).count', 0]]) do
+                        ['Motion.trashed_only.count', 1]]) do
       delete :destroy,
              id: subject
     end
@@ -431,7 +431,7 @@ class MotionsControllerTest < ActionController::TestCase
     subject # trigger
 
     assert_differences([['Motion.trashed(false).count', -1],
-                        ['Motion.trashed(true).count', 0]]) do
+                        ['Motion.trashed_only.count', 1]]) do
       delete :destroy,
              id: subject
     end

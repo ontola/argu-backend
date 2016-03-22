@@ -74,10 +74,20 @@ class ProjectsControllerTest < ActionController::TestCase
     end
   end
 
-  def general_destroy(response = 302, difference = 0)
-    assert_difference('Project.trashed.count', difference) do
+  def general_trash(response = 302, difference = 0)
+    assert_difference('Project.trashed_only.count', difference) do
       delete :destroy,
              id: subject
+    end
+
+    assert_response response
+  end
+
+  def general_destroy(response = 302, difference = 0)
+    assert_difference('Project.count', difference) do
+      delete :destroy,
+             id: subject,
+             destroy: 'true'
     end
 
     assert_response response
@@ -152,6 +162,7 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test 'user should not delete destroy' do
     sign_in user
+    general_trash 200
     general_destroy 200
     assert_equal true, assigns(:_not_a_member_caught)
   end
@@ -188,6 +199,7 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test 'member should not delete destroy' do
     sign_in member
+    general_trash
     general_destroy
   end
 
@@ -223,8 +235,9 @@ class ProjectsControllerTest < ActionController::TestCase
     general_update 302, true
   end
 
-  test 'owner should delete destroy trash' do
+  test 'owner should delete destroy' do
     sign_in owner
+    general_trash 302, 1
     general_destroy 302, -1
   end
 
@@ -324,8 +337,9 @@ class ProjectsControllerTest < ActionController::TestCase
     general_update 302, true
   end
 
-  test 'manager should delete destroy trash' do
+  test 'manager should delete destroy' do
     sign_in manager
+    general_trash 302, 1
     general_destroy 302, -1
   end
 
@@ -362,13 +376,14 @@ class ProjectsControllerTest < ActionController::TestCase
     general_update 302, true
   end
 
-  test 'staff should delete destroy trash' do
+  test 'staff should delete destroy' do
     sign_in staff
+    general_trash 302, 1
     general_destroy 302, -1
   end
 
-  test 'staff should delete destroy' do
+  test 'staff should not delete destroy untrashed' do
     sign_in staff
-    general_destroy 302, -1
+    general_destroy
   end
 end

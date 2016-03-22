@@ -9,6 +9,13 @@ module Trashable
         where((trashed === true ? nil : {is_trashed: false}))
       end
     end
+    scope :trashed_only, -> do
+      if self.column_names.include?('trashed_at')
+        where.not(trashed_at: nil)
+      else
+        where(is_trashed: true)
+      end
+    end
     scope :anonymous, ->{where(creator_id: 0)}
   end
 
