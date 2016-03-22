@@ -1,46 +1,34 @@
 class MailerListener
   def create_argument_successful(argument)
-    recipients = follower_emails_for(argument, argument.motion)
-    # TODO: single out the creator and send a different mail
-    if recipients.present?
-      UserMailer
-          .user_created_argument(argument, recipients, parent: parent_for_resource(argument))
-          .deliver_now
-    end
+    send_followers_mail argument, follower_emails_for(argument, argument.motion)
   end
 
   def create_comment_successful(comment)
-    recipients = follower_emails_for(comment, comment.subscribable)
-    # TODO: single out the creator and send a different mail
-    if recipients.present?
-      UserMailer
-          .user_created_comment(comment, recipients, parent: parent_for_resource(comment))
-          .deliver_now
-    end
+    send_followers_mail comment, follower_emails_for(comment, comment.subscribable)
   end
 
   def create_motion_successful(motion)
     parent = motion.questions.length == 1 ? motion.questions.first : motion.forum
-    recipients = follower_emails_for(motion, parent)
-    # TODO: single out the creator and send a different mail
-    if recipients.present?
-      UserMailer
-          .user_created_motion(motion, recipients, parent: parent_for_resource(motion))
-          .deliver_now
-    end
+    send_followers_mail motion, follower_emails_for(motion, parent)
   end
 
   def create_question_successful(question)
-    recipients = follower_emails_for(question, question.forum)
-    # TODO: single out the creator and send a different mail
-    if recipients.present?
-      UserMailer
-          .user_created_question(question, recipients, parent: parent_for_resource(question))
-          .deliver_now
-    end
+    send_followers_mail question, follower_emails_for(question, question.forum)
   end
 
   private
+
+  def send_followers_mail(resource, recipients)
+    # TODO: single out the creator and send a different mail
+    if recipients.present?
+      UserMailer
+          .public_send("user_created_#{resource.type.to_s}",
+                       question,
+                       recipients,
+                       parent: parent_for_resource(resource))
+          .deliver_now
+    end
+  end
 
   def follower_emails_for(resource, in_response_to)
     in_response_to

@@ -1,85 +1,43 @@
 class ActivityListener
   def create_argument_successful(argument)
-    a = CreateActivity.new(
-      argument.creator,
-      trackable: argument,
-      key: 'argument.create',
-      owner: argument.creator,
-      forum: argument.forum,
-      recipient: argument.motion)
-    a.subscribe(NotificationListener.new)
-    a.commit
+    create_activity(argument, argument.motion, 'create')
   end
 
   def publish_blog_post_successful(blog_post)
-    a = CreateActivity.new(
-      argument.creator,
-      trackable: blog_post,
-      key: 'blog_post.publish',
-      owner: blog_post.creator,
-      forum: blog_post.forum,
-      recipient: blog_post.blog_postable)
-    fdsa
-    a.commit
+    create_activity(blog_post, blog_post.blog_postable, 'publish')
   end
 
   def create_comment_successful(comment)
-    a = CreateActivity.new(
-      comment.creator,
-      trackable: comment,
-      key: 'comment.create',
-      owner: comment.creator,
-      forum: comment.forum,
-      recipient: comment.subscribable)
-    a.subscribe(NotificationListener.new)
-    a.commit
+    create_activity(comment, comment.subscribable, 'create')
   end
 
   def create_group_response_successful(group_response)
-    a = CreateActivity.new(
-      group_response.creator,
-      trackable: group_response,
-      key: 'group_response.create',
-      owner: group_response.creator,
-      forum: group_response.forum,
-      recipient: group_response.motion)
-    a.subscribe(NotificationListener.new)
-    a.commit
+    create_activity(group_response, group_response.motion, 'create')
   end
 
   def create_motion_successful(motion)
     recipient = motion.question || motion.forum
-    a = CreateActivity.new(
-      motion.creator,
-      trackable: motion,
-      key: 'motion.create',
-      owner: motion.creator,
-      forum: motion.forum,
-      recipient: recipient)
-    a.subscribe(NotificationListener.new)
-    a.commit
+    create_activity(motion, recipient, 'create')
   end
 
   def create_question_successful(question)
-    a = CreateActivity.new(
-      question.creator,
-      trackable: question,
-      key: 'question.create',
-      owner: question.creator,
-      forum: question.forum,
-      recipient: question.forum)
-    a.subscribe(NotificationListener.new)
-    a.commit
+    create_activity(question, question.forum, 'create')
   end
 
   def publish_project_successful(project)
+    create_activity(project, project.forum, 'publish')
+  end
+
+  private
+
+  def create_activity(resource, recipient, action)
     a = CreateActivity.new(
-      project.creator,
-      trackable: project,
-      key: 'project.publish',
-      owner: project.creator,
-      forum: project.forum,
-      recipient: project.forum)
+        resource.creator,
+        trackable: resource,
+        key: "#{resource.model_name.singular}.#{action}",
+        owner: resource.creator,
+        forum: resource.forum,
+        recipient: recipient)
     a.subscribe(NotificationListener.new)
     a.commit
   end
