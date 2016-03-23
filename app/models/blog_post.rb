@@ -22,4 +22,8 @@ class BlogPost < ActiveRecord::Base
   validates :blog_postable, presence: true
 
   parentable :blog_postable, :forum
+
+  def display_name
+    title
+  end
 end
