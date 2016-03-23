@@ -12,6 +12,8 @@
           =render partial: 'questions/info_bar', locals: {question: parent}
         - elsif classname == 'motions'
           =render partial: 'motions/info_bar', locals: {motion: parent}
+        - elsif classname == 'projects'
+          =render partial: 'projects/info_bar', locals: {project: parent}
         - else
           section.section-info
             span.fa.fa-arrow-up
