@@ -8,7 +8,7 @@ en:
     header: "Challenges"
     view_all_motions: "View all %{amount} ideas..."
     tooltips:
-      count: "number of challenges"
+      count: "Number of challenges"
       info: "A challange is een problem or question to which people can submit their ideas."
     call_to_action:
       title: "Looking for good ideas?"

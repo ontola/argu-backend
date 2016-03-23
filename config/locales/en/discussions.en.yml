@@ -16,3 +16,5 @@ en:
       motion_argument3: 'High cost'
       project_title: 'Realization of residential area New Garden'
     show_all: 'Show all discussions'
+    info: 'Discussions are ideas or challenges'
+    plural: 'Discussions'
