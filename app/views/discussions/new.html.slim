@@ -33,10 +33,12 @@
               h3.motion-t
                 span.fa.fa-lightbulb-o
                 span.icon-left= t('discussions.new.question_motion2')
-    .center
-      =link_to polymorphic_url([:new, get_parent_resource, :question]), class: 'btn--question'
-        span.fa.fa-plus
-        span.icon-left= t('questions.type_new')
+    .box.box-link[collection_model="Question"]
+      =link_to polymorphic_url([:new, get_parent_resource, :question])
+        section
+          h3
+            span[class="fa fa-#{question_icon}"]
+            span.icon-left= t('questions.type_new')
   .col-2-1
     .box
       section
@@ -48,7 +50,6 @@
       .box.motion
         .box-image--container
           .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
-
         section.section-info
           .details
             .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
@@ -76,10 +77,12 @@
               h3[class="con-t tooltip--wider"]
                 span.fa.fa-minus
                 span.icon-left= t('discussions.new.motion_argument3')
-    .center
-      =link_to polymorphic_url([:new, get_parent_resource, :motion]), class: 'btn--motion'
-        span.fa.fa-plus
-        span.icon-left= t('motions.type_new')
+    .box.box-link[collection_model="Motion"]
+      =link_to polymorphic_url([:new, get_parent_resource, :motion])
+        section
+          h3
+            span[class="fa fa-#{motion_icon}"]
+            span.icon-left= t('motions.type_new')
 -if get_parent_resource.respond_to?(:projects) && policy(Project.new(forum: resource_tenant)).new?
   .col-1.col-1--small
     header
@@ -107,7 +110,9 @@
               span.icon-left= 4
         section
           h3.project-t= t('discussions.new.project_title')
-    .center
-      =link_to polymorphic_url([:new, get_parent_resource, :project]), class: 'btn--project'
-        span.fa.fa-plus
-        span.icon-left= t('projects.type_new')
+    .box.box-link[collection_model="Project"]
+      =link_to polymorphic_url([:new, get_parent_resource, :project])
+        section
+          h3
+            span[class="fa fa-rocket"]
+            span.icon-left= t('projects.type_new')

@@ -69,7 +69,7 @@
     margin-bottom: .8em;
   }
 
-  &[pro="pro"],&[pro="con"],&[collection_model="Motion"] {
+  &[pro="pro"],&[pro="con"],&[collection_model="Motion"],&[collection_model="Question"],&[collection_model="Project"] {
     h3 {
       color: white;
     }
@@ -84,6 +84,12 @@
   }
   &[collection_model="Motion"]{
     background-color: $motion;
+  }
+  &[collection_model="Question"]{
+    background-color: $question;
+  }
+  &[collection_model="Project"]{
+    background-color: $project;
   }
 }
 
