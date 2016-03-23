@@ -1,0 +1,13 @@
+.box.box-grid.project[class="#{'trashed' if project.is_trashed?}" data-created-at=project.created_at  data-updated-at=project.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork" id]
+  /-if project.cover_photo.present?
+    =contextual_link_to project_path(project) do
+      noscript
+        .box-image--container
+          .box-image[style="background-image: url('#{project.cover_photo.url(:box)}'); "]
+      .box-image--container.b-lazy-hide-container
+        .box-image.b-lazy[data-src=project.cover_photo.url(:box)]
+  =contextual_link_to project_path(project) do
+    =render partial: 'projects/info_bar', locals: {project: project}
+    =contextual_link_to project_path(project) do
+      section
+        h2.project-t[itemprop="headline"]= project.title

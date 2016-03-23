@@ -11,7 +11,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
               span.fa.fa-paper-plane
               span.icon-left= t('publish')
       section
-        h1[itemprop="headline"]= project.display_name
+        h1.project-t[itemprop="headline"]= project.display_name
         .markdown[itemprop="text"]
           =markdown_to_html(project.content)
       =render partial: project.creator, locals: {resource: project}
