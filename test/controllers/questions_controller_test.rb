@@ -35,10 +35,9 @@ class QuestionsControllerTest < ActionController::TestCase
 
   test 'guest should not get new' do
     get :new,
-        forum_id: freetown,
-        question_id: subject.id
+        forum_id: freetown
 
-    assert assigns(:_not_a_user_caught)
+    assert_not_a_user
     assert_response 302
   end
 
@@ -79,8 +78,7 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in user
 
     get :new,
-        forum_id: freetown,
-        question_id: subject.id
+        forum_id: freetown
 
     assert assigns(:_not_a_member_caught)
   end

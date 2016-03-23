@@ -1,4 +1,6 @@
 class RegistrationsController < Devise::RegistrationsController
+  include NestedResourceHelper
+
   def new
     if within_user_cap?
       super
