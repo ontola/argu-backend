@@ -7,3 +7,4 @@ nl:
     unpublished: "Concept"
     tooltips:
       info: "Een update is een bericht waarin de voortgang van een project wordt gedeeld."
+      count: "Aantal updates"

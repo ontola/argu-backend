@@ -100,14 +100,17 @@
         section.section-info
           .details
             .details-part.details-part--type.project-bg[data-title=t('projects.tooltips.info')]
-              span.fa.fa-rocket
+              span[class="fa fa-#{blog_post_icon}"]
               span.icon-left= t('projects.type')
+            .details-part[data-title=t('blog_posts.tooltips.count')]
+              span.fa.fa-bullhorn
+              span.icon-left= '_3'
             .details-part[data-title=t('questions.tooltips.count')]
               span.fa.fa-question
-              span.icon-left= 3
+              span.icon-left= '_3'
             .details-part[data-title=t('tooltips.question.motions_count')]
               span.fa.fa-lightbulb-o
-              span.icon-left= 4
+              span.icon-left= '_4'
         section
           h3.project-t= t('discussions.new.project_title')
     .box.box-link[collection_model="Project"]
