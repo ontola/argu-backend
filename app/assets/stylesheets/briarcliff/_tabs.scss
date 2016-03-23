@@ -57,14 +57,14 @@ $triangle-size: .5em;
     //z-index: -1;
     max-height: 0;
     top: 100%;
-    bottom: $triangle-size;
+    bottom: - $triangle-size;
     left: 0;
     width: 0;
     height: 0;
     margin: auto;
     border-left: $triangle-size solid transparent;
     border-right: $triangle-size solid transparent;
-    border-bottom: $triangle-size solid transparent;
+    border-top: $triangle-size solid transparent;
     right: 0;
     @include transition(.2s);
   }
@@ -80,7 +80,7 @@ $triangle-size: .5em;
 
   .tab--current a {
     &:after {
-      border-bottom-color: $g1;
+      border-top-color: white;
     }
   }
 }
