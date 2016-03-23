@@ -15,6 +15,13 @@
         section.section-info.question-bg
           span.fa.fa-question
           span.icon-left= t('questions.type')
+          .details
+            .details-part.details-part--type.question-bg[data-title=t('questions.tooltips.info')]
+              span[class="fa fa-#{question_icon}"]
+              span.icon-left= question_type
+            .details-part[data-title=t('tooltips.question.motions_count')]
+              span.fa.fa-lightbulb-o
+              span.icon-left= 2
         section
           h3.question-t= t('discussions.new.question_title')
           ul.box-list.box-list--icons
@@ -41,9 +48,18 @@
       .box.motion
         .box-image--container
           .box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
-        section.section-info.motion-bg
-          span.fa.fa-lightbulb-o
-          span.icon-left= t('motions.type')
+
+        section.section-info
+          .details
+            .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
+              span[class="fa fa-#{motion_icon}"]
+              span.icon-left= motion_type
+            .details-part.details-part--pro[data-title=t('tooltips.motion.vote_pro_count')]
+              span.fa.fa-thumbs-up
+              span.icon-left= 13
+            .details-part.details-part--con[data-title=t('tooltips.motion.vote_con_count')]
+              span.fa.fa-thumbs-down
+              span.icon-left= 5
         section
           h3.motion-t= t('discussions.new.motion_title')
           ul.box-list.box-list--arguments.box-list--icons
@@ -78,12 +94,20 @@
       .box.motion
         .box-image--container
           /.box-image.bg-img[style="background-image: url('#{asset_path('new-discussion-motion-cover.jpg')}'); "]
-        section.section-info.project-bg
-          span.fa.fa-lightbulb-o
-          span.icon-left= t('projects.type')
+        section.section-info
+          .details
+            .details-part.details-part--type.project-bg[data-title=t('projects.tooltips.info')]
+              span.fa.fa-rocket
+              span.icon-left= t('projects.type')
+            .details-part[data-title=t('questions.tooltips.count')]
+              span.fa.fa-question
+              span.icon-left= 3
+            .details-part[data-title=t('tooltips.question.motions_count')]
+              span.fa.fa-lightbulb-o
+              span.icon-left= 4
         section
           h3.project-t= t('discussions.new.project_title')
     .center
-      =link_to polymorphic_url([:new, get_parent_resource, :project]), class: 'btn--neutral'
+      =link_to polymorphic_url([:new, get_parent_resource, :project]), class: 'btn--project'
         span.fa.fa-plus
         span.icon-left= t('projects.type_new')

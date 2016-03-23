@@ -2,11 +2,11 @@ nl:
   tooltips:
     motion:
       create: "Deel jouw idee door een voorstel te plaatsen."
-      vote_count: "Aantal keer op gestemd."
-      vote_pro_count: "Aantal stemmen voor."
-      vote_con_count: "Aantal stemmen tegen."
-      vote_neutral_count: "Aantal 'geen van beiden' stemmen."
-      vote_abstain_count: "Aantal neutrale stemmen."
+      vote_count: "Aantal keer op gestemd"
+      vote_pro_count: "Aantal stemmen voor"
+      vote_con_count: "Aantal stemmen tegen"
+      vote_neutral_count: "Aantal 'geen van beiden' stemmen"
+      vote_abstain_count: "Aantal neutrale stemmen"
       arguments_pro_count: "Aantal argumenten voor"
       arguments_con_count: "Aantal argumenten tegen"
       date: "Geplaatst op"

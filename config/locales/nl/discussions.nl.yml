@@ -16,3 +16,5 @@ nl:
       motion_argument3: 'Hoge kosten'
       project_title: 'Realisatie woonwijk Parkwijk'
     show_all: 'Alle discussies weergeven'
+    info: 'Discussies zijn ideeën of uitdagingen'
+    plural: 'Discussies'

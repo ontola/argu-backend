@@ -8,7 +8,7 @@ nl:
     header: "uitdagingen"
     view_all_motions: "Bekijk alle %{amount} ideeën..."
     tooltips:
-      count: "aantal uitdagingen"
+      count: "Aantal geplaatste uitdagingen"
       info: "Een uitdaging is een vraagstuk of probleem waaronder ideeën kunnen worden geplaatst."
     call_to_action:
       title: "Oplossing nodig?"
