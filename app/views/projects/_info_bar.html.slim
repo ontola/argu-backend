@@ -3,9 +3,15 @@ section.section-info
     .details-part.details-part--type.project-bg[data-title=t('projects.tooltips.info')]
       span.fa.fa-rocket
       span.icon-left= t('projects.type')
+    .details-part[data-title=t('blog_posts.tooltips.count')]
+      span[class="fa fa-#{blog_post_icon}"]
+      /span.icon-left= project.questions.count
+      span.icon-left= "_1"
     .details-part[data-title=t('questions.tooltips.count')]
-      span.fa.fa-comment
-      span.icon-left= project.questions.count
+      span.fa.fa-question
+      /span.icon-left= project.questions.count
+      span.icon-left= "_3"
     .details-part[data-title=t('tooltips.question.motions_count')]
       span.fa.fa-lightbulb-o
-      span.icon-left= project.questions.count
+      /span.icon-left= project.motions.count
+      span.icon-left= "_2"
