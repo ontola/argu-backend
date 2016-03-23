@@ -21,7 +21,18 @@ class ApplicationService
   # @see {after_save}
   def commit
     ActiveRecord::Base.transaction do
-      @actions[service_action] = resource.save!
+      case service_action
+      when :destroy
+        @actions[service_action] = resource.destroy
+      when :trash
+        @actions[service_action] = resource.trash
+      when :untrash
+        @actions[service_action] = resource.untrash
+      when :wipe
+        @actions[service_action] = resource.wipe
+      else
+        @actions[service_action] = resource.save!
+      end
 
       after_save
 

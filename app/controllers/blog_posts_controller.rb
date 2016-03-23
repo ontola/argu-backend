@@ -60,13 +60,20 @@ class BlogPostsController < AuthorizedController
   # DELETE /blog_posts/1?destroy=true
   # DELETE /blog_posts/1.json?destroy=true
   def destroy
-    blog_post = BlogPost.find params[:id]
-    authorize blog_post
-    blog_post.destroy
-    respond_to do |format|
-      format.html { redirect_to blog_post.blog_postable, notice: t('type_destroy_success', type: t('blog_posts.type')) }
-      format.json { head :no_content }
+    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.on(:destroy_blog_post_successful) do |blog_post|
+      respond_to do |format|
+        format.html { redirect_to blog_post.blog_postable, notice: t('type_destroy_success', type: t('blog_posts.type')) }
+        format.json { head :no_content }
+      end
     end
+    destroy_service.on(:destroy_blog_post_failed) do |blog_post|
+      respond_to do |format|
+        format.html { render :form, notice: t('errors.general') }
+        format.json { render json: blog_post.errors, status: :unprocessable_entity }
+      end
+    end
+    destroy_service.commit
   end
 
   # DELETE /blog_posts/1
@@ -102,6 +109,10 @@ class BlogPostsController < AuthorizedController
     @create_service ||= CreateBlogPost.new(
         current_profile,
         permit_params.merge(resource_new_params))
+  end
+
+  def destroy_service
+    @destroy_service ||= DestroyBlogPost.new(resource_by_id)
   end
 
   def permit_params

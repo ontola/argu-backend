@@ -69,11 +69,20 @@ class QuestionsController < AuthorizedController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
-    authenticated_resource!.destroy
-    respond_to do |format|
-      format.html { redirect_to authenticated_resource!.forum, notice: t('type_destroy_success', type: t('questions.type')) }
-      format.json { head :no_content }
+    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.on(:destroy_question_successful) do |question|
+      respond_to do |format|
+        format.html { redirect_to question.forum, notice: t('type_destroy_success', type: t('questions.type')) }
+        format.json { head :no_content }
+      end
     end
+    destroy_service.on(:destroy_question_failed) do |question|
+      respond_to do |format|
+        format.html { redirect_to question, notice: t('errors.general') }
+        format.json { render json: question.errors, status: :unprocessable_entity }
+      end
+    end
+    destroy_service.commit
   end
 
   # DELETE /questions/1
@@ -176,6 +185,10 @@ class QuestionsController < AuthorizedController
     @create_service ||= CreateQuestion.new(
         current_profile,
         permit_params.merge(resource_new_params))
+  end
+
+  def destroy_service
+    @destroy_service ||= DestroyQuestion.new(resource_by_id)
   end
 
   def permit_params

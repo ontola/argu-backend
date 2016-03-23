@@ -284,7 +284,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     argument.trash
 
     assert_differences([['Argument.trashed(false).count', 0],
-                        ['Argument.trashed(true).count', -1]]) do
+                        ['Argument.trashed_only.count', -1]]) do
       delete :destroy,
              id: argument
     end
@@ -315,7 +315,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     argument.trash
 
     assert_differences([['Argument.trashed(false).count', 0],
-                        ['Argument.trashed(true).count', -1]]) do
+                        ['Argument.trashed_only.count', -1]]) do
       delete :destroy,
              id: argument
     end

@@ -68,13 +68,20 @@ class ProjectsController < AuthorizedController
   # DELETE /projects/1?destroy=true
   # DELETE /projects/1.json?destroy=true
   def destroy
-    @project = Project.find params[:id]
-    authorize @project
-    @project.destroy
-    respond_to do |format|
-      format.html { redirect_to @project.forum, notice: t('type_destroy_success', type: t('projects.type')) }
-      format.json { head :no_content }
+    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.on(:destroy_project_successful) do |project|
+      respond_to do |format|
+        format.html { redirect_to project.forum, notice: t('type_destroy_success', type: t('projects.type')) }
+        format.json { head :no_content }
+      end
     end
+    destroy_service.on(:destroy_project_failed) do |project|
+      respond_to do |format|
+        format.html { redirect_to project, notice: t('errors.general') }
+        format.json { render json: project.errors, status: :unprocessable_entity }
+      end
+    end
+    destroy_service.commit
   end
 
   # DELETE /projects/1
@@ -110,6 +117,10 @@ class ProjectsController < AuthorizedController
     @create_service ||= CreateProject.new(
         current_profile,
         permit_params.merge(resource_new_params))
+  end
+
+  def destroy_service
+    @destroy_service ||= DestroyProject.new(resource_by_id)
   end
 
   def permit_params

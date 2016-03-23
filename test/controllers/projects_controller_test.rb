@@ -94,7 +94,7 @@ class ProjectsControllerTest < ActionController::TestCase
   def general_destroy(response = 302, difference = 0)
     assert_difference('Project.count', difference) do
       delete :destroy,
-             id: trashed_subject,
+             id: trashed_subject
     end
 
     assert_response response

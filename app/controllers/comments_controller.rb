@@ -97,14 +97,20 @@ class CommentsController < AuthorizedController
 
   # DELETE /arguments/1/comments/1?destroy=true
   def destroy
-    @comment = Comment.find_by_id params[:id]
-    resource = @comment.commentable
-    authorize @comment
-    @comment.wipe
-    respond_to do |format|
-      format.html { redirect_to polymorphic_url([resource], anchor: @comment.id) }
-      format.js # destroy_comment.js
+    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.on(:wipe_comment_successful) do |comment|
+      respond_to do |format|
+        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id) }
+        format.js # destroy_comment.js
+      end
     end
+    destroy_service.on(:wipe_comment_failed) do |comment|
+      respond_to do |format|
+        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('errors.general') }
+        format.js # destroy_comment.js
+      end
+    end
+    destroy_service.commit
   end
 
   # DELETE /arguments/1/comments/1
@@ -178,6 +184,10 @@ class CommentsController < AuthorizedController
   def create_service
     @create_service ||= CreateComment.new current_profile,
                                           permit_params.merge(resource_new_params)
+  end
+
+  def destroy_service
+    @destroy_service ||= DestroyComment.new(resource_by_id)
   end
 
   def new_comment_params

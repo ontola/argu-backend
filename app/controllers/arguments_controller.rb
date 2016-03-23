@@ -87,12 +87,21 @@ class ArgumentsController < AuthorizedController
   # DELETE /arguments/1?destroy=true
   # DELETE /arguments/1.json?destroy=true
   def destroy
-    authenticated_resource!.destroy
-    respond_to do |format|
-      format.html { redirect_to motion_path(authenticated_resource!.motion_id), notice: t('type_destroy_success',
-      type: t('arguments.type')) }
-      format.json { head :no_content }
+    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.on(:destroy_argument_successful) do |argument|
+      respond_to do |format|
+        format.html { redirect_to motion_path(argument.motion_id), notice: t('type_destroy_success',
+                                                                             type: t('arguments.type')) }
+        format.json { head :no_content }
+      end
     end
+    destroy_service.on(:destroy_argument_failed) do |argument|
+      respond_to do |format|
+        format.html { render :form, notice: t('errors.general') }
+        format.json { render json: argument.errors, status: :unprocessable_entity }
+      end
+    end
+    destroy_service.commit
   end
 
   # DELETE /arguments/1
@@ -148,13 +157,17 @@ class ArgumentsController < AuthorizedController
         })
   end
 
+  def destroy_service
+    @destroy_service ||= DestroyArgument.new(resource_by_id)
+  end
+
   def permit_params
     params.require(:argument).permit(*policy(@argument || Argument).permitted_attributes)
   end
 
   def resource_new_params
     super.merge(
-      motion_id: params[:motion_id]
+    motion_id: params[:motion_id]
     )
   end
 

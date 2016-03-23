@@ -59,14 +59,20 @@ class GroupResponsesController < AuthorizedController
   end
 
   def destroy
-    respond_to do |format|
-      if authenticated_resource!.destroy
-        format.html { redirect_to motion_path(authenticated_resource!.motion) }
-        format.js { render }
-      else
+    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.on(:destroy_group_response_successful) do |group_response|
+      respond_to do |format|
+          format.html { redirect_to motion_path(group_response.motion) }
+          format.js { render }
+        end
+    end
+    destroy_service.on(:destroy_group_response_failed) do |group_response|
+      respond_to do |format|
+        format.html { redirect_to motion_path(group_response.motion), notice: t('errors.general') }
         format.js { render json: {notifications: [{type: :error, message: 'Kon reponse niet verwijderen.'}]} }
       end
     end
+    destroy_service.commit
   end
 
 private
@@ -104,6 +110,10 @@ private
 
   def resource_tenant
     Motion.find(params[:motion_id]).forum
+  def destroy_service
+    @destroy_service ||= DestroyGroupResponse.new(resource_by_id)
+  end
+
   end
 
   def permit_params
@@ -112,5 +122,11 @@ private
 
   def side_param
     params[:side].presence || params[:group_response][:side]
+  end
+
+  def update_service
+    @update_service ||= UpdateGroupResponse.new(
+        resource_by_id,
+        permit_params)
   end
 end

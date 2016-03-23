@@ -175,19 +175,6 @@ class CommentsControllerTest < ActionController::TestCase
     assert_redirected_to argument_path(argument, anchor: comment.id)
   end
 
-  test 'member should not delete destroy own comment twice affecting counter caches' do
-    sign_in member
-
-    assert_equal 1, comment.commentable.comments_count
-
-    assert_difference('comment.commentable.reload.comments_count', -1) do
-      delete :trash, argument_id: comment.commentable.id, id: comment
-      delete :destroy, argument_id: comment.commentable.id, id: comment
-    end
-
-    assert_redirected_to argument_path(argument, anchor: comment.id)
-  end
-
   test "member should not delete destroy on others' comment" do
     sign_in create_member(freetown)
 
@@ -215,26 +202,6 @@ class CommentsControllerTest < ActionController::TestCase
     get :show, id: comment
 
     assert_redirected_to argument_path(argument, anchor: comment.identifier)
-  end
-
-  test 'owner should not delete wipe own comment twice affecting counter caches' do
-    sign_in freetown.page.owner.profileable
-
-    assert_equal 1, comment.commentable.comments_count
-
-    redirect_path = argument_url(argument, anchor: comment.id)
-    assert_difference('comment.commentable.reload.comments_count', -1) do
-      delete :destroy,
-             argument_id: comment.commentable.id,
-             id: comment,
-             wipe: 'true'
-      assert_redirected_to redirect_path
-      delete :destroy,
-             argument_id: comment.commentable.id,
-             id: comment,
-             wipe: 'true'
-      assert_redirected_to redirect_path
-    end
   end
 
   ####################################

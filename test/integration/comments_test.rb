@@ -3,6 +3,18 @@ require 'test_helper'
 class CommentsTest < ActionDispatch::IntegrationTest
   let!(:venice) { create(:forum, :vwal) }
   let(:access_token) { create(:access_token, item: venice) }
+  let(:argument) do
+    create(:argument,
+           forum: venice,
+           creator: create(:user,
+                           :follows_email)
+                        .profile)
+  end
+  let(:comment) do
+    create(:comment,
+           creator: member.profile,
+           commentable: argument)
+  end
 
   ####################################
   # Not logged in
@@ -55,5 +67,40 @@ class CommentsTest < ActionDispatch::IntegrationTest
     assert assigns(:resource)
     assert assigns(:profile)
     assert_equal 1, assigns(:profile).memberships.count
+  end
+
+  ####################################
+  # As member
+  ####################################
+  let(:member) { create_member(venice, create(:user, :follows_email)) }
+
+  test 'member should not delete wipe own comment twice affecting counter caches' do
+    log_in_user member
+
+    assert_equal 1, comment.commentable.comments_count
+
+    assert_differences([['comment.commentable.reload.comments_count', -1],['member.profile.comments.count', -1]]) do
+      delete trash_argument_comment_path(comment.commentable, comment)
+      delete destroy_argument_comment_path(comment.commentable, comment, destroy: 'true')
+    end
+
+    assert_redirected_to argument_path(argument, anchor: comment.id)
+  end
+
+  ####################################
+  # As owner
+  ####################################
+
+  test 'owner should not delete wipe own comment twice affecting counter caches' do
+    log_in_user venice.page.owner.profileable
+
+    assert_equal 1, comment.commentable.comments_count
+
+    assert_differences([['comment.commentable.reload.comments_count', -1],['member.profile.comments.count', -1]]) do
+      delete trash_argument_comment_path(comment.commentable, comment)
+      delete destroy_argument_comment_path(comment.commentable, comment, destroy: 'true')
+    end
+
+    assert_redirected_to argument_url(argument, anchor: comment.id)
   end
 end

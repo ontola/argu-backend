@@ -105,12 +105,21 @@ class MotionsController < AuthorizedController
   # DELETE /motions/1?destroy=true
   # DELETE /motions/1.json?destroy=true
   def destroy
-    authenticated_resource!.destroy
-    parent = authenticated_resource!.get_parent.model.try(:first) || authenticated_resource!.get_parent.model
-    respond_to do |format|
-      format.html { redirect_to parent, notice: t('type_destroy_success', type: t('motions.type')) }
-      format.json { head :no_content }
+    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.on(:destroy_motion_successful) do |motion|
+      parent = motion.get_parent.model.try(:first) || motion.get_parent.model
+      respond_to do |format|
+        format.html { redirect_to parent, notice: t('type_destroy_success', type: t('motions.type')) }
+        format.json { head :no_content }
+      end
     end
+    destroy_service.on(:destroy_motion_failed) do |motion|
+      respond_to do |format|
+        format.html { redirect_to motion, notice: t('errors.general') }
+        format.json { render json: motion.errors, status: :unprocessable_entity }
+      end
+    end
+    destroy_service.commit
   end
 
   # DELETE /motions/1
@@ -228,6 +237,10 @@ class MotionsController < AuthorizedController
     @create_service ||= CreateMotion.new(
         current_profile,
         permit_params.merge(resource_new_params))
+  end
+
+  def destroy_service
+    @destroy_service ||= DestroyMotion.new(resource_by_id)
   end
 
   def get_context
