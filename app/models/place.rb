@@ -21,6 +21,7 @@ class Place < ActiveRecord::Base
   def self.find_or_fetch_by(opts = {})
     scope = Place.all
     opts[:country_code] = opts[:country_code].downcase if opts[:country_code].present?
+    opts[:postcode] = opts[:postcode].upcase.delete(' ') if opts[:postcode].present?
     opts.each do |key, value|
       if value.present?
         scope = scope.where("address->>? = ?", key, value)
@@ -39,7 +40,8 @@ class Place < ActiveRecord::Base
   def self.fetch(url)
     result = JSON.parse(HTTParty.get(url).body).first
     return nil if result.nil?
-    place = Place.create(
+    return Place.find(result['place_id']) if Place.exists?(result['place_id'])
+    Place.create(
         id: result['place_id'],
         licence: result['licence'],
         osm_type: result['osm_type'],
@@ -56,7 +58,6 @@ class Place < ActiveRecord::Base
         extratags: result['extratags'],
         namedetails: result['namedetails'],
     )
-    return place
   rescue OpenURI::HTTPError => error
     raise StandardError.new(error_message(error))
   end
