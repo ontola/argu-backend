@@ -9,26 +9,20 @@ class BlogPostsController < AuthorizedController
   end
 
   def create
-    @cbp = CreateBlogPost.new(
-      current_profile,
-      permit_params.merge(resource_new_params))
-
-    authorize @cbp.resource, :create?
-    @cbp.subscribe(ActivityListener.new)
-
-    @cbp.on(:create_blog_post_successful) do |blog_post|
+    create_service.subscribe(ActivityListener.new)
+    create_service.on(:create_blog_post_successful) do |blog_post|
       respond_to do |format|
         format.html { redirect_to blog_post }
         format.json { render json: blog_post, status: 201, location: blog_post }
       end
     end
-    @cbp.on(:create_blog_post_failed) do |blog_post|
+    create_service.on(:create_blog_post_failed) do |blog_post|
       respond_to do |format|
         format.html { render :new, locals: {blog_post: blog_post} }
         format.json { render json: blog_post.errors, status: 422 }
       end
     end
-    @cbp.commit
+    create_service.commit
   end
 
   def show
@@ -109,17 +103,23 @@ class BlogPostsController < AuthorizedController
 
   private
 
-  def resource_new_params
-    h = super.merge({
-      published_at: Time.current,
-      blog_postable: get_parent_resource
-    })
-    h.delete(parent_resource_param)
-    h
+  def create_service
+    @create_service ||= CreateBlogPost.new(
+        current_profile,
+        permit_params.merge(resource_new_params))
   end
 
   def permit_params
-    params.require(:blog_post).permit(*policy(authenticated_resource || @blog_post || BlogPost).permitted_attributes)
+    params.require(:blog_post).permit(*policy(@blog_post || new_record_from_params || BlogPost).permitted_attributes)
+  end
+
+  def resource_new_params
+    h = super.merge({
+    published_at: Time.current,
+    blog_postable: get_parent_resource
+    })
+    h.delete(parent_resource_param)
+    h
   end
 
   def resource_tenant

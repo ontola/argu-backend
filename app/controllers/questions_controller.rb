@@ -30,24 +30,20 @@ class QuestionsController < AuthorizedController
   end
 
   def create
-    authorize authenticated_context, :add_question?
-    @cq = CreateQuestion.new current_profile,
-                          permit_params.merge(resource_new_params)
-    authorize @cq.resource, :create?
-    @cq.subscribe(ActivityListener.new)
-    @cq.on(:create_question_successful) do |question|
+    create_service.subscribe(ActivityListener.new)
+    create_service.on(:create_question_successful) do |question|
       respond_to do |format|
         format.html { redirect_to question, notice: t('type_save_success', type: question_type) }
         format.json { render json: question, status: :created, location: question }
       end
     end
-    @cq.on(:create_question_failed) do |question|
+    create_service.on(:create_question_failed) do |question|
       respond_to do |format|
         format.html { render 'form', locals: {question: question} }
         format.json { render json: question.errors, status: :unprocessable_entity }
       end
     end
-    @cq.commit
+    create_service.commit
   end
 
   # PUT /questions/1
@@ -170,6 +166,12 @@ class QuestionsController < AuthorizedController
     else
       super
     end
+  end
+
+  def create_service
+    @create_service ||= CreateQuestion.new(
+        current_profile,
+        permit_params.merge(resource_new_params))
   end
 
   def permit_params

@@ -84,14 +84,14 @@ class MotionsControllerTest < ActionController::TestCase
              content: 'Contents'
            }
     end
-    assert_not_nil assigns(:cm).resource
-    assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
+    assert_not_nil assigns(:create_service).resource
+    assert_redirected_to motion_path(assigns(:create_service).resource, start_motion_tour: true)
 
     assert_differences create_changes_array(false) do
       post :create, forum_id: freetown, motion: {title: 'Motion2', content: 'Contents'}
     end
-    assert_not_nil assigns(:cm).resource
-    assert_redirected_to motion_path(assigns(:cm).resource)
+    assert_not_nil assigns(:create_service).resource
+    assert_redirected_to motion_path(assigns(:create_service).resource)
   end
 
   test 'user should not get convert' do
@@ -148,8 +148,8 @@ class MotionsControllerTest < ActionController::TestCase
              content: 'Contents'
            }
     end
-    assert_not_nil assigns(:cm).resource
-    assert_redirected_to motion_path(assigns(:cm).resource,
+    assert_not_nil assigns(:create_service).resource
+    assert_redirected_to motion_path(assigns(:create_service).resource,
                                      start_motion_tour: true)
   end
 
@@ -165,9 +165,9 @@ class MotionsControllerTest < ActionController::TestCase
              question_id: question.id
            }
     end
-    assert_not_nil assigns(:cm).resource
-    assert_equal question, assigns(:cm).resource.reload.question
-    assert_redirected_to motion_path(assigns(:cm).resource,
+    assert_not_nil assigns(:create_service).resource
+    assert_equal question, assigns(:create_service).resource.reload.question
+    assert_redirected_to motion_path(assigns(:create_service).resource,
                                      start_motion_tour: true)
   end
 
@@ -183,7 +183,7 @@ class MotionsControllerTest < ActionController::TestCase
              question_id: question.id
            }
     end
-    assert_not_nil assigns(:cm).resource
+    assert_not_nil assigns(:create_service).resource
     assert_response 200
 
     assert_select '[name=motion[title]]', 'Motion'
@@ -254,10 +254,10 @@ class MotionsControllerTest < ActionController::TestCase
            }
       puts
     end
-    assert_not_nil assigns(:cm).resource
-    assert assigns(:cm).resource.persisted?
-    assert_equal no_create_question, assigns(:cm).resource.question
-    assert_redirected_to motion_path(assigns(:cm).resource, start_motion_tour: true)
+    assert_not_nil assigns(:create_service).resource
+    assert assigns(:create_service).resource.persisted?
+    assert_equal no_create_question, assigns(:create_service).resource.question
+    assert_redirected_to motion_path(assigns(:create_service).resource, start_motion_tour: true)
   end
 
   ####################################
@@ -288,8 +288,8 @@ class MotionsControllerTest < ActionController::TestCase
            project_id: project,
            motion: attributes_for(:motion)
     end
-    assert_not_nil assigns(:cm).resource
-    assert_redirected_to motion_path(assigns(:cm).resource,
+    assert_not_nil assigns(:create_service).resource
+    assert_redirected_to motion_path(assigns(:create_service).resource,
                                      start_motion_tour: true)
   end
 
@@ -301,10 +301,10 @@ class MotionsControllerTest < ActionController::TestCase
            question_id: project_question,
            motion: attributes_for(:motion)
     end
-    assert_not_nil assigns(:cm).resource
-    assert_equal project, assigns(:cm).resource.reload.project
-    assert_equal project_question, assigns(:cm).resource.reload.question
-    assert_redirected_to motion_path(assigns(:cm).resource,
+    assert_not_nil assigns(:create_service).resource
+    assert_equal project, assigns(:create_service).resource.reload.project
+    assert_equal project_question, assigns(:create_service).resource.reload.question
+    assert_redirected_to motion_path(assigns(:create_service).resource,
                                      start_motion_tour: true)
   end
 
@@ -322,8 +322,8 @@ class MotionsControllerTest < ActionController::TestCase
            forum_id: freetown,
            motion: attributes_for(:motion)
     end
-    assert_not_nil assigns(:cm).resource
-    assert_redirected_to motion_path(assigns(:cm).resource,
+    assert_not_nil assigns(:create_service).resource
+    assert_redirected_to motion_path(assigns(:create_service).resource,
                                      start_motion_tour: true)
   end
 

@@ -87,10 +87,7 @@ class AuthorizedController < ApplicationController
     @resource ||=
         case params[:action]
         when 'new'
-          controller_name
-              .classify
-              .constantize
-              .new resource_new_params
+          new_record_from_params
         when 'create'
           create_service.resource
         when 'update'
@@ -167,6 +164,15 @@ class AuthorizedController < ApplicationController
   # @private
   def naming_context
     authenticated_context
+  end
+
+  # Instantiates a new record of the current controller type initialized with {resource_new_params}
+  # @return [ActiveRecord::Base] A fresh model instance
+  def new_record_from_params
+    controller_name
+        .classify
+        .constantize
+        .new resource_new_params
   end
 
   # @private

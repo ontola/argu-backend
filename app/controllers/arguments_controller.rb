@@ -47,31 +47,22 @@ class ArgumentsController < AuthorizedController
   # POST /arguments
   # POST /arguments.json
   def create
-    @ca = CreateArgument.new current_profile,
-                             argument_params.merge({
-                                 forum: authenticated_context,
-                                 publisher: current_user
-                             }),
-                             {
-                               auto_vote: params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile
-                             }
-    authorize @ca.resource, :create?
-    @ca.subscribe(ActivityListener.new)
-    @ca.on(:create_argument_successful) do |argument|
+    create_service.subscribe(ActivityListener.new)
+    create_service.on(:create_argument_successful) do |argument|
       respond_to do |format|
-        argument = argument_params[:motion_id].blank? ? argument : argument.motion
+        argument = permit_params[:motion_id].blank? ? argument : argument.motion
         format.html { redirect_to argument, notice: t('arguments.notices.created') }
         format.json { render json: argument, status: :created, location: argument }
       end
     end
-    @ca.on(:create_argument_failed) do |argument|
+    create_service.on(:create_argument_failed) do |argument|
       respond_to do |format|
         format.html { render action: 'form',
                              locals: {argument: argument} }
         format.json { render json: argument.errors, status: :unprocessable_entity }
       end
     end
-    @ca.commit
+    create_service.commit
   end
 
   # PUT /arguments/1
@@ -132,20 +123,32 @@ class ArgumentsController < AuthorizedController
     end
   end
 
-private
+  private
+
   def authorize_show
     @argument = Argument.includes(:comment_threads).find params[:id]
     authorize @argument, :show?
   end
 
-  def argument_params
+  def create_service
+    @create_service ||= CreateArgument.new(
+        current_profile,
+        permit_params.merge(
+            forum: authenticated_context,
+            publisher: current_user
+        ),
+        {
+            auto_vote: params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile
+        })
+  end
+
+  def permit_params
     params.require(:argument).permit(*policy(@argument || Argument).permitted_attributes)
   end
 
   def resource_new_params
-    {
-      forum: resource_tenant,
+    super.merge(
       motion_id: params[:motion_id]
-    }
+    )
   end
 end

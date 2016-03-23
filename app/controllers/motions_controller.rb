@@ -60,25 +60,21 @@ class MotionsController < AuthorizedController
   # POST /motions
   # POST /motions.json
   def create
-    @cm = CreateMotion.new current_profile,
-                           permit_params.merge(resource_new_params)
-    action = @cm.resource.question.presence ? :create? : :create_without_question?
-    authorize @cm.resource, action
-    @cm.subscribe(ActivityListener.new)
-    @cm.on(:create_motion_successful) do |motion|
+    create_service.subscribe(ActivityListener.new)
+    create_service.on(:create_motion_successful) do |motion|
       respond_to do |format|
         first = current_profile.motions.count == 1 || nil
         format.html { redirect_to motion_path(motion, start_motion_tour: first), notice: t('type_save_success', type: motion_type) }
         format.json { render json: motion, status: :created, location: motion }
       end
     end
-    @cm.on(:create_motion_failed) do |motion|
+    create_service.on(:create_blog_post_failed) do |motion|
       respond_to do |format|
-        format.html { render 'form', locals: {motion: @cm.resource} }
+        format.html { render 'form', locals: {motion: motion} }
         format.json { render json: motion.errors, status: :unprocessable_entity }
       end
     end
-    @cm.commit
+    create_service.commit
   end
 
   # PUT /motions/1
@@ -216,6 +212,12 @@ class MotionsController < AuthorizedController
   def authorize_show
     @motion = Motion.includes(:arguments).find(params[:id])
     authorize @motion, :show?
+  end
+
+  def create_service
+    @create_service ||= CreateMotion.new(
+        current_profile,
+        permit_params.merge(resource_new_params))
   end
 
   def get_context

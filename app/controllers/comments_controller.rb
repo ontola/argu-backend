@@ -44,19 +44,12 @@ class CommentsController < AuthorizedController
 
   # POST /resource/1/comments
   def create
-    @cc = CreateComment.new current_profile,
-                            comment_params.merge({
-                               commentable: get_parent_resource,
-                               forum: get_parent_resource.forum,
-                               publisher: current_user
-                           })
-    authorize @cc.resource, :create?
-    @cc.subscribe(ActivityListener.new)
-    @cc.on(:create_comment_successful) do |c|
+    create_service.subscribe(ActivityListener.new)
+    create_service.on(:create_comment_successful) do |c|
       redirect_to polymorphic_url(c.commentable, anchor: c.identifier),
                   notice: t('type_create_success', type: t('comments.type'))
     end
-    @cc.on(:create_comment_failed) do |c|
+    create_service.on(:create_comment_failed) do |c|
       redirect_to polymorphic_url([c.commentable],
                                   comment: {
                                     body: c.body,
@@ -64,7 +57,7 @@ class CommentsController < AuthorizedController
                                   }, anchor: c.id),
                   notice: c.errors.full_messages.first
     end
-    @cc.commit
+    create_service.commit
   end
 
   def update
@@ -73,7 +66,7 @@ class CommentsController < AuthorizedController
     authorize @comment, :edit?
 
     respond_to do |format|
-      if @comment.update(comment_params)
+      if @comment.update(permit_params)
         format.html do
           redirect_to comment_url(@comment),
                       notice: t('comments.notices.updated')
@@ -159,7 +152,7 @@ class CommentsController < AuthorizedController
     params[:comment].is_a?(String) ? params[:comment] : params[:comment][:body]
   end
 
-  def comment_params
+  def permit_params
     params.require(:comment).permit(*policy(@comment || Comment).permitted_attributes)
   end
 
@@ -176,15 +169,19 @@ class CommentsController < AuthorizedController
     commentable_type.capitalize.constantize
   end
 
+  def create_service
+    @create_service ||= CreateComment.new current_profile,
+                                          permit_params.merge(resource_new_params)
+  end
 
   def new_comment_params
-    params[:comment].present? ? comment_params : {}
+    params[:comment].present? ? permit_params : {}
   end
 
   def resource_new_params
-    h = super.merge({
+    h = super.merge(
       commentable: get_parent_resource
-    })
+    )
     h.delete(parent_resource_param)
     h
   end

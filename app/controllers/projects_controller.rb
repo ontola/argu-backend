@@ -9,26 +9,20 @@ class ProjectsController < AuthorizedController
   end
 
   def create
-    @cp = CreateProject.new(
-      current_profile,
-      permit_params.merge(resource_new_params))
-
-    authorize @cp.resource, :create?
-    @cp.subscribe(ActivityListener.new)
-
-    @cp.on(:create_project_successful) do |project|
+    create_service.subscribe(ActivityListener.new)
+    create_service.on(:create_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project }
         format.json { render json: project, status: 201, location: project }
       end
     end
-    @cp.on(:create_project_failed) do |project|
+    create_service.on(:create_project_failed) do |project|
       respond_to do |format|
         format.html { render :new, locals: {project: project} }
         format.json { render json: project.errors, status: 422 }
       end
     end
-    @cp.commit
+    create_service.commit
   end
 
   def show
@@ -117,8 +111,14 @@ class ProjectsController < AuthorizedController
 
   private
 
+  def create_service
+    @create_service ||= CreateProject.new(
+        current_profile,
+        permit_params.merge(resource_new_params))
+  end
+
   def permit_params
-    params.require(:project).permit(*policy(authenticated_resource || @project || Project).permitted_attributes)
+    params.require(:project).permit(*policy(@project || new_record_from_params || Project).permitted_attributes)
   end
 
   def redirect_pages

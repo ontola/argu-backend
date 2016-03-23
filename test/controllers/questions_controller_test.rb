@@ -128,8 +128,8 @@ class QuestionsControllerTest < ActionController::TestCase
              content: 'Contents'
            }
     end
-    assert_not_nil assigns(:cq).resource
-    assert_redirected_to question_url(assigns(:cq).resource)
+    assert_not_nil assigns(:create_service).resource
+    assert_redirected_to question_url(assigns(:create_service).resource)
   end
 
   test 'member should put update on own question' do
@@ -212,8 +212,8 @@ class QuestionsControllerTest < ActionController::TestCase
              content: 'Contents'
            }
     end
-    assert_not_nil assigns(:cq).resource
-    assert_redirected_to question_url(assigns(:cq).resource)
+    assert_not_nil assigns(:create_service).resource
+    assert_redirected_to question_url(assigns(:create_service).resource)
   end
 
   test 'moderator should post create with project' do
@@ -227,9 +227,9 @@ class QuestionsControllerTest < ActionController::TestCase
              content: 'Contents'
            }
     end
-    assert_not_nil assigns(:cq).resource
+    assert_not_nil assigns(:create_service).resource
     assert_equal project, assigns(:resource).project
-    assert_redirected_to question_url(assigns(:cq).resource)
+    assert_redirected_to question_url(assigns(:create_service).resource)
   end
 
   ####################################

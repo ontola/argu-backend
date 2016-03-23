@@ -179,7 +179,7 @@ class ArgumentsControllerTest < ActionController::TestCase
       end
     end
 
-    argument = assigns(:ca).resource
+    argument = assigns(:create_service).resource
     assert argument
     assert argument.motion == motion
     assert argument.title == 'Test argument pro', "title isn't assigned"
@@ -205,7 +205,7 @@ class ArgumentsControllerTest < ActionController::TestCase
       end
     end
 
-    argument = assigns(:ca).resource
+    argument = assigns(:create_service).resource
     assert argument
     assert argument.motion == motion
     assert argument.title == 'Test argument con', "title isn't assigned"
