@@ -21,6 +21,7 @@ const ui = {
             .on('turbolinks:load', this.handleDOMChangedFinished)
             .on('turbolinks:load', this.initPlaceholderFallback)
             .on('click', '.box-close-button', this.bannerHide)
+            .on('cocoon:after-insert', this.handleAfterCocoonInstert)
             .ajaxComplete(this.handleAjaxCalls);
 
         window.addEventListener('online', this.handleOnline);
@@ -81,6 +82,10 @@ const ui = {
         setTimeout(function () {
             _this.removeClass("is-loading");
         }, 2500);
+    },
+
+    handleAfterCocoonInstert: function () {
+        ReactRailsUJS.mountComponents()
     },
 
     handleAjaxCalls: function (e, xhr, options) {

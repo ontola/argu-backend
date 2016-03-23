@@ -3,6 +3,7 @@ window.Intl = require('intl');
 window.React = require('react');
 window.ReactDOMServer = require('react-dom/server');
 window.Select = require('react-select');
+window.Datetime = require('react-datetime');
 window.Map = require('es6-map');
 
 var bulk = require('bulk-require');
