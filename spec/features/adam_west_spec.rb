@@ -117,36 +117,21 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).not_to have_css('.btn-neutral[data-voted-on=true]')
     click_link 'Neutral'
 
-    expect(page).to have_content 'Sign up'
-
-    click_link 'Sign up with email'
     redirect_url = new_motion_vote_path(motion_id: motion,
                                         confirm: 'true',
                                         vote: {for: 'neutral'})
-    expect(page).to have_current_path new_user_registration_path(r: redirect_url)
-
-    user_attr = attributes_for(:user)
-    within('#new_user') do
-      fill_in 'user_email', with: user_attr[:email]
-      fill_in 'user_password', with: user_attr[:password]
-      fill_in 'user_password_confirmation', with: user_attr[:password]
-      click_button 'Sign up'
-    end
-
-    expect(page).to have_current_path setup_users_path
-    click_button 'Next'
-
-    profile_attr = attributes_for(:profile)
-    within('form') do
-      fill_in 'profile_profileable_attributes_first_name', with: user_attr[:first_name]
-      fill_in 'profile_profileable_attributes_last_name', with: user_attr[:last_name]
-      fill_in 'profile_about', with: profile_attr[:about]
-      click_button 'Next'
-    end
+    sign_up_and_setup(redirect_url)
 
     click_button 'btn-neutral'
 
     expect(page).to have_css('.btn-neutral[data-voted-on=true]')
+  end
+
+  scenario 'guest should post a new motion' do
+    redirect_url = new_question_motion_path(question_id: question)
+    create_motion_for_question do
+      sign_up_and_setup(redirect_url)
+    end
   end
 
   ####################################
@@ -208,6 +193,14 @@ RSpec.feature 'Adam west', type: :feature do
 
     visit motion_path(motion)
     expect(page).to have_css('.btn-pro[data-voted-on=true]')
+  end
+
+  scenario 'user should post a new motion' do
+    login_as(user, scope: :user)
+
+    create_motion_for_question do
+      click_on 'Add to my forums'
+    end
   end
 
   ####################################
@@ -309,6 +302,12 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_css('.btn-pro[data-voted-on=true]')
   end
 
+  scenario 'member should post a new motion' do
+    login_as(member, scope: :user)
+
+    create_motion_for_question
+  end
+
   ####################################
   # As Manager
   ####################################
@@ -356,5 +355,62 @@ RSpec.feature 'Adam west', type: :feature do
 
     expect(page.body).not_to have_content('Reply')
     expect(page.body).not_to have_content('Comments')
+  end
+
+  scenario 'manager should see motion new button' do
+    login_as(manager, scope: :user)
+
+    visit question_path(question)
+
+    expect(page).to have_content('Add idea')
+  end
+
+  private
+
+  def create_motion_for_question(&block)
+    visit question_path(question)
+    click_on 'Add idea'
+
+    yield if block_given?
+
+    motion_attr = attributes_for(:motion)
+    within('#new_motion') do
+      fill_in 'motion[title]', with: motion_attr[:title]
+      fill_in 'motion[content]', with: motion_attr[:content]
+      click_button 'Save'
+    end
+
+    expect(page).to have_current_path(motion_path(Motion.last, start_motion_tour: true))
+    click_on question.title
+    expect(page).to have_current_path(question_path(question))
+    expect(page).to have_content(question.content)
+  end
+
+  def sign_up_and_setup(redirect_url)
+    nominatim_netherlands
+
+    expect(page).to have_content 'Sign up'
+
+    click_link 'Sign up with email'
+    expect(page).to have_current_path new_user_registration_path(r: redirect_url)
+
+    user_attr = attributes_for(:user)
+    within('#new_user') do
+      fill_in 'user_email', with: user_attr[:email]
+      fill_in 'user_password', with: user_attr[:password]
+      fill_in 'user_password_confirmation', with: user_attr[:password]
+      click_button 'Sign up'
+    end
+
+    expect(page).to have_current_path setup_users_path
+    click_button 'Next'
+
+    profile_attr = attributes_for(:profile)
+    within('form') do
+      fill_in 'profile_profileable_attributes_first_name', with: user_attr[:first_name]
+      fill_in 'profile_profileable_attributes_last_name', with: user_attr[:last_name]
+      fill_in 'profile_about', with: profile_attr[:about]
+      click_button 'Next'
+    end
   end
 end
