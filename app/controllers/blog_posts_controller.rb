@@ -105,7 +105,7 @@ class BlogPostsController < AuthorizedController
   end
 
   def permit_params
-    params.require(:blog_post).permit(*policy(@blog_post || resource_by_id || new_record_from_params || BlogPost).permitted_attributes)
+    params.require(:blog_post).permit(*policy(@blog_post || resource_by_id || new_resource_from_params || BlogPost).permitted_attributes)
   end
 
   def resource_new_params
