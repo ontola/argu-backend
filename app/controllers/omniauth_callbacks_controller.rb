@@ -1,4 +1,6 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  include NestedResourceHelper
+
   def self.provides_callback_for(provider)
     class_eval %Q{
       def #{provider}
