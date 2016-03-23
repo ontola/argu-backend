@@ -74,24 +74,7 @@ RSpec.feature 'Adam west', type: :feature do
   # As Guest
   ####################################
   scenario 'guest should walk from answer up until forum' do
-    visit argument_path(argument)
-    expect(page).to have_content(argument.title)
-    expect(page).to have_content(argument.content)
-
-    click_link motion.title
-    expect(page).to have_current_path motion_path(motion)
-    expect(page).to have_content(motion.title)
-    expect(page).to have_content(motion.content)
-
-    click_link question.title
-    expect(page).to have_current_path question_path(question)
-    expect(page).to have_content(question.title)
-    expect(page).to have_content(question.content)
-
-    click_link freetown.display_name
-    expect(page).to have_current_path forum_path(freetown)
-    expect(page).to have_content(freetown.bio)
-    expect(page).to have_content(question.display_name)
+    walk_up_to_forum
   end
 
   scenario 'guest should visit forum show' do
@@ -142,25 +125,8 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'user should walk from answer up until forum' do
     login_as(user, scope: :user)
 
-    visit argument_path(argument)
-    expect(page).to have_css("img[src*='#{user.profile.profile_photo.url(:icon)}']")
-    expect(page).to have_content(argument.title)
-    expect(page).to have_content(argument.content)
-
-    click_link motion.title
-    expect(page).to have_current_path motion_path(motion)
-    expect(page).to have_content(motion.title)
-    expect(page).to have_content(motion.content)
-
-    click_link question.title
-    expect(page).to have_current_path question_path(question)
-    expect(page).to have_content(question.title)
-    expect(page).to have_content(question.content)
-
-    click_link freetown.display_name
-    expect(page).to have_current_path forum_path(freetown)
-    expect(page).to have_content(freetown.bio)
-    expect(page).to have_content(question.display_name)
+    walk_up_to_forum user
+    expect(page).not_to have_content('New discussion')
   end
 
   scenario 'user should visit forum show' do
@@ -186,6 +152,7 @@ RSpec.feature 'Adam west', type: :feature do
 
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
+    expect(page).not_to have_content('New discussion')
 
     expect(page).not_to have_css('.btn-pro[data-voted-on=true]')
     find('.btn-pro').click
@@ -211,26 +178,8 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'member should walk from answer up until forum' do
     login_as(member, scope: :user)
 
-    visit argument_path(argument)
-    expect(page).to have_css("img[src*='#{member.profile.profile_photo.url(:icon)}']")
-    expect(page).to have_content(argument.title)
-    expect(page).to have_content(argument.content)
-
-    click_link motion.title
-    expect(page).to have_current_path motion_path(motion)
-    expect(page).to have_content(motion.title)
-    expect(page).to have_content(motion.content)
-    expect(page.body).not_to have_content('Start a new discussion')
-
-    click_link question.title
-    expect(page).to have_current_path question_path(question)
-    expect(page).to have_content(question.title)
-    expect(page).to have_content(question.content)
-
-    click_link freetown.display_name
-    expect(page).to have_current_path forum_path(freetown)
-    expect(page).to have_content(freetown.bio)
-    expect(page).to have_content(question.display_name)
+    walk_up_to_forum member
+    expect(page).not_to have_content('New discussion')
   end
 
   scenario 'member should visit forum show' do
@@ -293,6 +242,7 @@ RSpec.feature 'Adam west', type: :feature do
 
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
+    expect(page).not_to have_content('New discussion')
 
     expect(page).not_to have_css('.btn-pro[data-voted-on=true]')
     find('.btn-pro').click
@@ -316,26 +266,9 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'manager should walk from answer up until forum' do
     login_as(manager, scope: :user)
 
-    visit argument_path(argument)
-    expect(page).to have_css("img[src*='#{manager.profile.profile_photo.url(:icon)}']")
-    expect(page).to have_content(argument.title)
-    expect(page).to have_content(argument.content)
-
-    click_link motion.title
-    expect(page).to have_current_path motion_path(motion)
-    expect(page).to have_content(motion.title)
-    expect(page).to have_content(motion.content)
-
-    click_link question.title
-    expect(page).to have_current_path question_path(question)
-    expect(page).to have_content(question.title)
-    expect(page).to have_content(question.content)
-
-    click_link freetown.display_name
-    expect(page).to have_current_path forum_path(freetown)
-    expect(page).to have_content(freetown.display_name)
-    expect(page).to have_content(freetown.bio)
+    walk_up_to_forum manager
     expect(page).to have_content('Forum settings')
+    expect(page).to have_content('New discussion')
   end
 
   scenario 'manager should visit forum show' do
@@ -363,6 +296,7 @@ RSpec.feature 'Adam west', type: :feature do
     visit question_path(question)
 
     expect(page).to have_content('Add idea')
+    expect(page).to have_content('New discussion')
   end
 
   private
@@ -412,5 +346,28 @@ RSpec.feature 'Adam west', type: :feature do
       fill_in 'profile_about', with: profile_attr[:about]
       click_button 'Next'
     end
+  end
+
+  def walk_up_to_forum(role = nil)
+    visit argument_path(argument)
+    expect(page).to have_css("img[src*='#{role.profile.profile_photo.url(:icon)}']") if role.present?
+    expect(page).to have_content(argument.title)
+    expect(page).to have_content(argument.content)
+
+    click_link motion.title
+    expect(page).to have_current_path motion_path(motion)
+    expect(page).to have_content(motion.title)
+    expect(page).to have_content(motion.content)
+
+    click_link question.title
+    expect(page).to have_current_path question_path(question)
+    expect(page).to have_content(question.title)
+    expect(page).to have_content(question.content)
+
+    click_link freetown.display_name
+    expect(page).to have_current_path forum_path(freetown)
+    expect(page).to have_content(freetown.display_name)
+    expect(page).to have_content(freetown.bio)
+    expect(page).to have_content(question.display_name)
   end
 end
