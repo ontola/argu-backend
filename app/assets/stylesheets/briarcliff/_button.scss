@@ -71,6 +71,10 @@
   @include button($question);
 }
 
+.btn--project {
+  @include button($project);
+}
+
 .btn--twitter {
   @include button(#55ACEE);
 }
