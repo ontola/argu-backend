@@ -181,8 +181,8 @@ class CommentsControllerTest < ActionController::TestCase
     assert_equal 1, comment.commentable.comments_count
 
     assert_difference('comment.commentable.reload.comments_count', -1) do
+      delete :trash, argument_id: comment.commentable.id, id: comment
       delete :destroy, argument_id: comment.commentable.id, id: comment
-      delete :destroy, argument_id: comment.commentable.id, id: comment, destroy: 'true'
     end
 
     assert_redirected_to argument_path(argument, anchor: comment.id)

@@ -84,6 +84,28 @@ class ArgumentsController < AuthorizedController
     update_service.commit
   end
 
+  # DELETE /arguments/1?destroy=true
+  # DELETE /arguments/1.json?destroy=true
+  def destroy
+    authenticated_resource!.destroy
+    respond_to do |format|
+      format.html { redirect_to motion_path(authenticated_resource!.motion_id), notice: t('type_destroy_success',
+      type: t('arguments.type')) }
+      format.json { head :no_content }
+    end
+  end
+
+  # DELETE /arguments/1
+  # DELETE /arguments/1.json
+  def trash
+    authenticated_resource!.trash
+    respond_to do |format|
+      format.html { redirect_to motion_path(authenticated_resource!.motion_id), notice: t('type_trash_success',
+      type: t('arguments.type')) }
+      format.json { head :no_content }
+    end
+  end
+
   # PUT /arguments/1/untrash
   # PUT /arguments/1/untrash.json
   def untrash
@@ -95,27 +117,6 @@ class ArgumentsController < AuthorizedController
         format.html { render :form, notice: t('errors.general') }
         format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /arguments/1
-  # DELETE /arguments/1.json
-  def destroy
-    if authenticated_resource!.is_trashed?
-      if params[:destroy].present? && params[:destroy] == 'true'
-        authenticated_resource!.destroy
-        flash[:notice] = t('type_destroy_success',
-                           type: t('arguments.type'))
-      end
-    else
-      authenticated_resource!.trash
-      flash[:notice] = t('type_trash_success',
-                         type: t('arguments.type'))
-    end
-
-    respond_to do |format|
-      format.html { redirect_to motion_path(authenticated_resource!.motion_id) }
-      format.json { head :no_content }
     end
   end
 

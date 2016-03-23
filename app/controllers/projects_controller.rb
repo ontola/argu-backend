@@ -65,6 +65,30 @@ class ProjectsController < AuthorizedController
     update_service.commit
   end
 
+  # DELETE /projects/1?destroy=true
+  # DELETE /projects/1.json?destroy=true
+  def destroy
+    @project = Project.find params[:id]
+    authorize @project
+    @project.destroy
+    respond_to do |format|
+      format.html { redirect_to @project.forum, notice: t('type_destroy_success', type: t('projects.type')) }
+      format.json { head :no_content }
+    end
+  end
+
+  # DELETE /projects/1
+  # DELETE /projects/1.json
+  def trash
+    @project = Project.find params[:id]
+    authorize @project
+    @project.trash
+    respond_to do |format|
+      format.html { redirect_to @project.forum, notice: t('type_trash_success', type: t('projects.type')) }
+      format.json { head :no_content }
+    end
+  end
+
   # PUT /projects/1/untrash
   # PUT /projects/1/untrash.json
   def untrash
@@ -77,30 +101,6 @@ class ProjectsController < AuthorizedController
         format.html { render :form, notice: t('errors.general') }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /projects/1
-  # DELETE /projects/1.json
-  def destroy
-    @project = Project.find params[:id]
-    if @project.is_trashed?
-      if params[:destroy].present? && params[:destroy] == 'true'
-        authorize @project
-        @project.destroy
-        flash[:notice] = t('type_destroy_success',
-                           type: t('projects.type'))
-      end
-    else
-      authorize @project, :trash?
-      @project.trash
-      flash[:notice] = t('type_trash_success',
-                         type: t('projects.type'))
-    end
-
-    respond_to do |format|
-      format.html { redirect_to @project.forum }
-      format.json { head :no_content }
     end
   end
 

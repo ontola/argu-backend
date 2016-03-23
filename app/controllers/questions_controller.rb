@@ -66,6 +66,26 @@ class QuestionsController < AuthorizedController
     update_service.commit
   end
 
+  # DELETE /questions/1
+  # DELETE /questions/1.json
+  def destroy
+    authenticated_resource!.destroy
+    respond_to do |format|
+      format.html { redirect_to authenticated_resource!.forum, notice: t('type_destroy_success', type: t('questions.type')) }
+      format.json { head :no_content }
+    end
+  end
+
+  # DELETE /questions/1
+  # DELETE /questions/1.json
+  def trash
+    authenticated_resource!.trash
+    respond_to do |format|
+      format.html { redirect_to authenticated_resource!.forum, notice: t('type_trash_success', type: t('questions.type')) }
+      format.json { head :no_content }
+    end
+  end
+
   # PUT /arguments/1/untrash
   # PUT /arguments/1/untrash.json
   def untrash
@@ -77,27 +97,6 @@ class QuestionsController < AuthorizedController
         format.html { render :form, notice: t('errors.general') }
         format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /questions/1
-  # DELETE /questions/1.json
-  def destroy
-    if authenticated_resource!.is_trashed?
-      if params[:destroy].present? && params[:destroy] == 'true'
-        authenticated_resource!.destroy
-        flash[:notice] = t('type_destroy_success',
-                           type: t('questions.type'))
-      end
-    else
-      authenticated_resource!.trash
-      flash[:notice] = t('type_trash_success',
-                         type: t('questions.type'))
-    end
-
-    respond_to do |format|
-      format.html { redirect_to authenticated_resource!.forum }
-      format.json { head :no_content }
     end
   end
 

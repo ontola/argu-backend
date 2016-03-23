@@ -102,6 +102,28 @@ class MotionsController < AuthorizedController
     update_service.commit
   end
 
+  # DELETE /motions/1?destroy=true
+  # DELETE /motions/1.json?destroy=true
+  def destroy
+    authenticated_resource!.destroy
+    parent = authenticated_resource!.get_parent.model.try(:first) || authenticated_resource!.get_parent.model
+    respond_to do |format|
+      format.html { redirect_to parent, notice: t('type_destroy_success', type: t('motions.type')) }
+      format.json { head :no_content }
+    end
+  end
+
+  # DELETE /motions/1
+  # DELETE /motions/1.json
+  def trash
+    authenticated_resource!.trash
+    parent = authenticated_resource!.get_parent.model.try(:first) || authenticated_resource!.get_parent.model
+    respond_to do |format|
+      format.html { redirect_to parent, notice: t('type_trash_success', type: t('motions.type')) }
+      format.json { head :no_content }
+    end
+  end
+
   # PUT /motions/1/untrash
   # PUT /motions/1/untrash.json
   def untrash
@@ -113,28 +135,6 @@ class MotionsController < AuthorizedController
         format.html { render :form, notice: t('errors.general') }
         format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /motions/1
-  # DELETE /motions/1.json
-  def destroy
-    if authenticated_resource!.is_trashed?
-      if params[:destroy].present? && params[:destroy] == 'true'
-        authenticated_resource!.destroy
-        flash[:notice] = t('type_destroy_success',
-                           type: t('motions.type'))
-      end
-    else
-      authenticated_resource!.trash
-      flash[:notice] = t('type_trash_success',
-                         type: t('motions.type'))
-    end
-
-    parent = authenticated_resource!.get_parent.model.try(:first) || authenticated_resource!.get_parent.model
-    respond_to do |format|
-      format.html { redirect_to parent }
-      format.json { head :no_content }
     end
   end
 

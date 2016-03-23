@@ -95,6 +95,30 @@ class CommentsController < AuthorizedController
     update_service.commit
   end
 
+  # DELETE /arguments/1/comments/1?destroy=true
+  def destroy
+    @comment = Comment.find_by_id params[:id]
+    resource = @comment.commentable
+    authorize @comment
+    @comment.wipe
+    respond_to do |format|
+      format.html { redirect_to polymorphic_url([resource], anchor: @comment.id) }
+      format.js # destroy_comment.js
+    end
+  end
+
+  # DELETE /arguments/1/comments/1
+  def trash
+    @comment = Comment.find_by_id params[:id]
+    resource = @comment.commentable
+    authorize @comment
+    @comment.trash
+    respond_to do |format|
+      format.html { redirect_to polymorphic_url([resource], anchor: @comment.id) }
+      format.js # destroy_comment.js
+    end
+  end
+
   # PUT /arguments/1/comments/1/untrash
   # PUT /arguments/1/comments/1/untrash.json
   def untrash
@@ -108,25 +132,6 @@ class CommentsController < AuthorizedController
         format.html { render :form, notice: t('errors.general') }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # DELETE /arguments/1/comments/1
-  def destroy
-    @comment = Comment.find_by_id params[:id]
-    resource = @comment.commentable
-    if @comment.is_trashed?
-      if params[:destroy].present? && params[:destroy] == 'true'
-        authorize @comment
-        @comment.wipe
-      end
-    else
-      authorize @comment, :trash?
-      @comment.trash
-    end
-    respond_to do |format|
-      format.html { redirect_to polymorphic_url([resource], anchor: @comment.id) }
-      format.js # destroy_comment.js
     end
   end
 

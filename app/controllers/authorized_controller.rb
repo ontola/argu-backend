@@ -1,9 +1,9 @@
 
 class AuthorizedController < ApplicationController
   before_action :check_if_registered,
-                only: %i(new create delete destroy edit update)
+                except: %i(show move move! convert convert!)
   before_action :check_if_member,
-                only: %i(new create delete destroy edit update)
+                except: %i(show move move! convert convert!)
   before_action :authorize_show, only: :show
   before_action :authorize_action
   helper_method :authenticated_context
@@ -60,11 +60,7 @@ class AuthorizedController < ApplicationController
   def authorize_action
     return nil if params[:controller].eql?('memberships')
 
-    action = params[:action]
-    if params[:action] == 'destroy' && authenticated_resource!.try(:is_trashable?) && params[:destroy] != 'true'
-      action = 'trash'
-    end
-    authorize authenticated_resource, "#{action.chomp('!')}?"
+    authorize authenticated_resource, "#{params[:action].chomp('!')}?"
   end
 
   def authorize_show

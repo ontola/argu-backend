@@ -83,7 +83,7 @@ class BlogPostsControllerTest < ActionController::TestCase
 
   def general_trash(response = 302, difference = 0)
     assert_difference('BlogPost.trashed_only.count', difference) do
-      delete :destroy,
+      delete :trash,
              id: subject
     end
 
@@ -93,8 +93,7 @@ class BlogPostsControllerTest < ActionController::TestCase
   def general_destroy(response = 302, difference = 0)
     assert_difference('BlogPost.count', difference) do
       delete :destroy,
-             id: trashed_subject,
-             destroy: 'true'
+             id: trashed_subject
     end
 
     assert_response response

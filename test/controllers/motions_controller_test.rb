@@ -357,39 +357,25 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   let(:manager) { create_manager(freetown) }
 
-  test 'manager should delete destroy trash' do
+  test 'manager should delete trash' do
     sign_in manager
     subject # trigger
 
     assert_differences([['Motion.trashed(false).count', -1],
                         ['Motion.trashed_only.count', 1]]) do
-      delete :destroy,
+      delete :trash,
              id: subject
     end
 
     assert_redirected_to freetown
   end
 
-  test 'manager should delete destroy trashed' do
+  test 'manager should delete destroy' do
     sign_in manager
     subject.trash
 
     assert_differences([['Motion.trashed(false).count', 0],
                         ['Motion.trashed(true).count', -1]]) do
-      delete :destroy,
-             id: subject,
-             destroy: 'true'
-    end
-
-    assert_redirected_to freetown
-  end
-
-  test 'manager should not delete destroy trashed without destroy param' do
-    sign_in manager
-    subject.trash
-
-    assert_differences([['Motion.trashed(false).count', 0],
-                        ['Motion.trashed(true).count', 0]]) do
       delete :destroy,
              id: subject
     end
@@ -402,39 +388,25 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   let(:owner) { freetown.page.owner.profileable }
 
-  test 'owner should delete destroy trash' do
+  test 'owner should delete trash' do
     sign_in owner
     subject # trigger
 
     assert_differences([['Motion.trashed(false).count', -1],
                         ['Motion.trashed_only.count', 1]]) do
-      delete :destroy,
+      delete :trash,
              id: subject
     end
 
     assert_redirected_to freetown
   end
 
-  test 'owner should delete destroy trashed' do
+  test 'owner should delete destroy' do
     sign_in owner
     subject.trash
 
     assert_differences([['Motion.trashed(false).count', 0],
                         ['Motion.trashed(true).count', -1]]) do
-      delete :destroy,
-             id: subject,
-             destroy: 'true'
-    end
-
-    assert_redirected_to freetown
-  end
-
-  test 'owner should not delete destroy trashed without destroy param' do
-    sign_in owner
-    subject.trash
-
-    assert_differences([['Motion.trashed(false).count', 0],
-                        ['Motion.trashed(true).count', 0]]) do
       delete :destroy,
              id: subject
     end
