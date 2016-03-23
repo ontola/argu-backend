@@ -41,25 +41,20 @@ class BlogPostsController < AuthorizedController
   end
 
   def update
-    @ubp = UpdateBlogPost.new(
-      authenticated_resource!,
-      permit_params)
-
-    authorize @ubp.resource, :update?
-
-    @ubp.on(:update_blog_post_successful) do |blog_post|
+    update_service.subscribe(ActivityListener.new)
+    update_service.on(:update_blog_post_successful) do |blog_post|
       respond_to do |format|
         format.html { redirect_to blog_post }
         format.json { render json: blog_post, status: 200, location: blog_post }
       end
     end
-    @ubp.on(:update_blog_post_failed) do |blog_post|
+    update_service.on(:update_blog_post_failed) do |blog_post|
       respond_to do |format|
         format.html { render :new, locals: {blog_post: blog_post} }
         format.json { render json: blog_post.errors, status: 422 }
       end
     end
-    @ubp.commit
+    update_service.commit
   end
 
   # PUT /blog_posts/1/untrash
@@ -110,7 +105,7 @@ class BlogPostsController < AuthorizedController
   end
 
   def permit_params
-    params.require(:blog_post).permit(*policy(@blog_post || new_record_from_params || BlogPost).permitted_attributes)
+    params.require(:blog_post).permit(*policy(@blog_post || resource_by_id || new_record_from_params || BlogPost).permitted_attributes)
   end
 
   def resource_new_params
@@ -124,5 +119,11 @@ class BlogPostsController < AuthorizedController
 
   def resource_tenant
     get_parent_resource.forum
+  end
+
+  def update_service
+    @update_service ||= UpdateBlogPost.new(
+        resource_by_id,
+        permit_params)
   end
 end

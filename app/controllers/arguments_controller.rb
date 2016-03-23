@@ -68,15 +68,20 @@ class ArgumentsController < AuthorizedController
   # PUT /arguments/1
   # PUT /arguments/1.json
   def update
-    respond_to do |format|
-      if authenticated_resource!.update_attributes(argument_params)
-        format.html { redirect_to authenticated_resource!, notice: t('arguments.notices.updated') }
+    update_service.subscribe(ActivityListener.new)
+    update_service.on(:update_argument_successful) do |argument|
+      respond_to do |format|
+        format.html { redirect_to argument, notice: t('arguments.notices.updated') }
         format.json { head :no_content }
-      else
-        format.html { render :form }
-        format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
       end
     end
+    update_service.on(:update_argument_failed) do |argument|
+      respond_to do |format|
+        format.html { render :form }
+        format.json { render json: argument.errors, status: :unprocessable_entity }
+      end
+    end
+    update_service.commit
   end
 
   # PUT /arguments/1/untrash
@@ -150,5 +155,11 @@ class ArgumentsController < AuthorizedController
     super.merge(
       motion_id: params[:motion_id]
     )
+  end
+
+  def update_service
+    @update_service ||= UpdateArgument.new(
+        resource_by_id,
+        permit_params)
   end
 end

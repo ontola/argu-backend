@@ -49,16 +49,21 @@ class QuestionsController < AuthorizedController
   # PUT /questions/1
   # PUT /questions/1.json
   def update
-    authenticated_resource!.reload if process_cover_photo authenticated_resource!, permit_params
-    respond_to do |format|
-      if authenticated_resource!.update(permit_params)
-        format.html { redirect_to authenticated_resource!, notice: t('type_save_success', type: question_type) }
+    update_service.resource.reload if process_cover_photo update_service.resource, permit_params
+    update_service.subscribe(ActivityListener.new)
+    update_service.on(:update_question_successful) do |question|
+      respond_to do |format|
+        format.html { redirect_to question, notice: t('type_save_success', type: question_type) }
         format.json { head :no_content }
-      else
-        format.html { render 'form', locals: {question: authenticated_resource!} }
-        format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
       end
     end
+    update_service.on(:update_question_failed) do |question|
+      respond_to do |format|
+        format.html { render 'form', locals: {question: question} }
+        format.json { render json: question.errors, status: :unprocessable_entity }
+      end
+    end
+    update_service.commit
   end
 
   # PUT /arguments/1/untrash
@@ -176,5 +181,11 @@ class QuestionsController < AuthorizedController
 
   def permit_params
     params.require(:question).permit(*policy(@question || Question).permitted_attributes)
+  end
+
+  def update_service
+    @update_service ||= UpdateQuestion.new(
+        resource_by_id,
+        permit_params)
   end
 end

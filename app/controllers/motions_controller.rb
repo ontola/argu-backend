@@ -68,7 +68,7 @@ class MotionsController < AuthorizedController
         format.json { render json: motion, status: :created, location: motion }
       end
     end
-    create_service.on(:create_blog_post_failed) do |motion|
+    create_service.on(:create_motion_failed) do |motion|
       respond_to do |format|
         format.html { render 'form', locals: {motion: motion} }
         format.json { render json: motion.errors, status: :unprocessable_entity }
@@ -80,25 +80,26 @@ class MotionsController < AuthorizedController
   # PUT /motions/1
   # PUT /motions/1.json
   def update
-    @motion = Motion.find params[:id]
-    @creator = @motion.creator
-    authorize @motion
-
-    @motion.reload if process_cover_photo @motion, permit_params
-    respond_to do |format|
-      if @motion.update(permit_params)
-        if params[:motion].present? && params[:motion][:tag_id].present? && @motion.tags.reject { |a,b| a.motion == b }.first.present?
-          format.html { redirect_to tag_motions_url(Tag.find_by_id(@motion.tag_id).name)}
+    update_service.resource.reload if process_cover_photo update_service.resource, permit_params
+    update_service.subscribe(ActivityListener.new)
+    update_service.on(:update_motion_successful) do |motion|
+      respond_to do |format|
+        if params[:motion].present? && params[:motion][:tag_id].present? && motion.tags.reject { |a,b| a.motion == b }.first.present?
+          format.html { redirect_to tag_motions_url(Tag.find_by_id(motion.tag_id).name)}
           format.json { head :no_content }
         else
-          format.html { redirect_to @motion, notice: t('type_save_success', type: motion_type) }
+          format.html { redirect_to motion, notice: t('type_save_success', type: motion_type) }
           format.json { head :no_content }
         end
-      else
-        format.html { render 'form', locals: {motion: @motion} }
-        format.json { render json: @motion.errors, status: :unprocessable_entity }
       end
     end
+    update_service.on(:update_motion_failed) do |motion|
+      respond_to do |format|
+        format.html { render 'form', locals: {motion: motion} }
+        format.json { render json: motion.errors, status: :unprocessable_entity }
+      end
+    end
+    update_service.commit
   end
 
   # PUT /motions/1/untrash
@@ -209,6 +210,15 @@ class MotionsController < AuthorizedController
     end
   end
 
+  def authorize_action
+    if params[:action] == 'create'
+      action = create_service.resource.question.presence ? :create? : :create_without_question?
+      authorize create_service.resource, action
+    else
+      super
+    end
+  end
+
   def authorize_show
     @motion = Motion.includes(:arguments).find(params[:id])
     authorize @motion, :show?
@@ -240,5 +250,11 @@ class MotionsController < AuthorizedController
     else
       super
     end
+  end
+
+  def update_service
+    @update_service ||= UpdateMotion.new(
+        resource_by_id,
+        permit_params)
   end
 end

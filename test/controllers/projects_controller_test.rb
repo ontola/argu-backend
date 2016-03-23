@@ -67,13 +67,15 @@ class ProjectsControllerTest < ActionController::TestCase
           project: attributes_for(:project)
 
     assert_response response
-    if assigns(:up).try(:resource).present?
+    if assigns(:update_service).try(:resource).present?
       ch_method.call subject
                        .updated_at
+                       .utc
                        .iso8601(6),
-                     assigns(:up)
+                     assigns(:update_service)
                        .try(:resource)
                        .try(:updated_at)
+                       .try(:utc)
                        .try(:iso8601, 6)
     else
       assert false, "can't be changed" if changed

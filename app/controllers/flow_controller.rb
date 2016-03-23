@@ -1,5 +1,6 @@
 class FlowController < AuthorizedController
   include NestedResourceHelper
+  alias_method :resource_by_id, :get_parent_resource
 
   def show
     authorize authenticated_resource!, :show?

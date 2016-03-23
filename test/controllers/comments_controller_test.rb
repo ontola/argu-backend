@@ -104,8 +104,8 @@ class CommentsControllerTest < ActionController::TestCase
       end
     end
 
-    assert_equal argument, assigns(:cc).resource.commentable
-    assert_redirected_to argument_url(argument, anchor: assigns(:cc).resource.identifier)
+    assert_equal argument, assigns(:create_service).resource.commentable
+    assert_redirected_to argument_url(argument, anchor: assigns(:create_service).resource.identifier)
   end
 
   test 'should post create comment while not logged in rendering register' do
@@ -128,9 +128,9 @@ class CommentsControllerTest < ActionController::TestCase
         id: comment,
         comment: {body: 'new contents'}
 
-    assert_not_nil assigns(:comment)
-    assert_equal 'new contents', assigns(:comment).body
-    assert_redirected_to comment_url(assigns(:comment))
+    assert_not_nil assigns(:update_service).resource
+    assert_equal 'new contents', assigns(:update_service).resource.body
+    assert_redirected_to comment_url(assigns(:update_service).resource)
   end
 
   test 'should put update invalid data on own comment' do
@@ -141,7 +141,7 @@ class CommentsControllerTest < ActionController::TestCase
         id: comment,
         comment: {body: ''}
 
-    assert_not_nil assigns(:comment)
+    assert_not_nil assigns(:update_service).resource
     assert_response 200
   end
 

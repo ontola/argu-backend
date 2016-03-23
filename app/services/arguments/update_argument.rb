@@ -1,8 +1,8 @@
 class UpdateArgument < UpdateService
   include Wisper::Publisher
 
-  def initialize(project, attributes = {}, options = {})
-    @argument = project
+  def initialize(argument, attributes = {}, options = {})
+    @argument = argument
     super
   end
 

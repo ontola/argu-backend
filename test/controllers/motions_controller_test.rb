@@ -70,30 +70,6 @@ class MotionsControllerTest < ActionController::TestCase
     assert_not_a_member
   end
 
-  test 'user should show tutorial only on first post create' do
-    sign_in user
-    create(:membership,
-           profile: user.profile,
-           forum: freetown)
-
-    assert_differences create_changes_array do
-      post :create,
-           forum_id: freetown,
-           motion: {
-             title: 'Motion',
-             content: 'Contents'
-           }
-    end
-    assert_not_nil assigns(:create_service).resource
-    assert_redirected_to motion_path(assigns(:create_service).resource, start_motion_tour: true)
-
-    assert_differences create_changes_array(false) do
-      post :create, forum_id: freetown, motion: {title: 'Motion2', content: 'Contents'}
-    end
-    assert_not_nil assigns(:create_service).resource
-    assert_redirected_to motion_path(assigns(:create_service).resource)
-  end
-
   test 'user should not get convert' do
     sign_in user
 
@@ -356,10 +332,10 @@ class MotionsControllerTest < ActionController::TestCase
           content: 'new contents'
         }
 
-    assert_not_nil assigns(:motion)
-    assert_equal 'New title', assigns(:motion).title
-    assert_equal 'new contents', assigns(:motion).content
-    assert_redirected_to motion_url(assigns(:motion))
+    assert_not_nil assigns(:update_service).resource
+    assert_equal 'New title', assigns(:update_service).resource.title
+    assert_equal 'new contents', assigns(:update_service).resource.content
+    assert_redirected_to motion_url(assigns(:update_service).resource)
   end
 
   test 'creator should render form for faulty put update' do
@@ -373,7 +349,7 @@ class MotionsControllerTest < ActionController::TestCase
         }
 
     assert_response 200
-    assert assigns(:motion).changed?
+    assert assigns(:update_service).resource.changed?
   end
 
   ####################################

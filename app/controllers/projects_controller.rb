@@ -49,25 +49,20 @@ class ProjectsController < AuthorizedController
   end
 
   def update
-    @up = UpdateProject.new(
-      authenticated_resource!,
-      permit_params)
-
-    authorize @up.resource, :update?
-
-    @up.on(:update_project_successful) do |project|
+    update_service.subscribe(ActivityListener.new)
+    update_service.on(:update_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project }
         format.json { render json: project, status: 200, location: project }
       end
     end
-    @up.on(:update_project_failed) do |project|
+    update_service.on(:update_project_failed) do |project|
       respond_to do |format|
         format.html { render :new, locals: {project: project} }
         format.json { render json: project.errors, status: 422 }
       end
     end
-    @up.commit
+    update_service.commit
   end
 
   # PUT /projects/1/untrash
@@ -118,12 +113,18 @@ class ProjectsController < AuthorizedController
   end
 
   def permit_params
-    params.require(:project).permit(*policy(@project || new_record_from_params || Project).permitted_attributes)
+    params.require(:project).permit(*policy(@project || resource_by_id || new_record_from_params || Project).permitted_attributes)
   end
 
   def redirect_pages
     if params[:id].to_i == 0
       redirect_to page_path(params[:id])
     end
+  end
+
+  def update_service
+    @update_service ||= UpdateProject.new(
+        resource_by_id,
+        permit_params)
   end
 end

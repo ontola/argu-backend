@@ -61,24 +61,24 @@ class CommentsController < AuthorizedController
   end
 
   def update
-    @commentable = commentable_class.find params[commentable_param]
-    @comment = @commentable.comment_threads.find params[:id]
-    authorize @comment, :edit?
-
-    respond_to do |format|
-      if @comment.update(permit_params)
+    update_service.subscribe(ActivityListener.new)
+    update_service.on(:update_comment_successful) do |comment|
+      respond_to do |format|
         format.html do
-          redirect_to comment_url(@comment),
+          redirect_to comment_url(comment),
                       notice: t('comments.notices.updated')
         end
         format.js { render }
         format.json { head :no_content }
-      else
+      end
+    end
+    update_service.on(:update_comment_failed) do |comment|
+      respond_to do |format|
         format.html do
           render 'edit',
                  locals: {
-                   resource: @commentable,
-                   comment: @comment,
+                   resource: comment.commentable,
+                   comment: comment,
                    parent_id: nil
                  }
         end
@@ -87,11 +87,12 @@ class CommentsController < AuthorizedController
                  status: 400
         end
         format.json do
-          render json: @comment.errors,
+          render json: comment.errors,
                  status: :unprocessable_entity
         end
       end
     end
+    update_service.commit
   end
 
   # PUT /arguments/1/comments/1/untrash
@@ -213,4 +214,9 @@ class CommentsController < AuthorizedController
     resource.find(id).forum
   end
 
+  def update_service
+    @update_service ||= UpdateComment.new(
+        resource_by_id,
+        permit_params)
+  end
 end

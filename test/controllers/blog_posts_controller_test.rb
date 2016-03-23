@@ -66,13 +66,15 @@ class BlogPostsControllerTest < ActionController::TestCase
           blog_post: attributes_for(:blog_post)
 
     assert_response response
-    if assigns(:ubp).try(:resource).present?
+    if assigns(:update_service).try(:resource).present?
       ch_method.call subject
                        .updated_at
+                       .utc
                        .iso8601(6),
-                     assigns(:ubp)
+                     assigns(:update_service)
                        .try(:resource)
                        .try(:updated_at)
+                       .try(:utc)
                        .try(:iso8601, 6)
     else
       assert false, 'Model changed when it should not have' if changed

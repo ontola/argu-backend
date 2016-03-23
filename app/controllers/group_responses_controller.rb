@@ -14,26 +14,13 @@ class GroupResponsesController < AuthorizedController
   end
 
   def create
-    motion = Motion.find(params[:motion_id])
-    authorize motion, :show?
-    group = policy_scope(motion.forum.groups).discussion.find(params[:group_id])
-    @cgr = CreateGroupResponse.new current_profile,
-                                   permit_params.merge({
-                                     forum: authenticated_context,
-                                     publisher: current_user,
-                                     creator: current_profile,
-                                     group: group,
-                                     motion: motion,
-                                     side: side_param
-                                   })
-    authorize @cgr.resource, :create?
-    @cgr.subscribe(ActivityListener.new)
-    @cgr.on(:create_group_response_successful) do |group_response|
+    create_service.subscribe(ActivityListener.new)
+    create_service.on(:create_group_response_successful) do |group_response|
       respond_to do |format|
         format.html { redirect_to motion_url(group_response.motion) }
       end
     end
-    @cgr.on(:create_group_response_failed) do |group_response|
+    create_service.on(:create_group_response_failed) do |group_response|
       respond_to do |format|
         format.html do
           render 'form',
@@ -43,7 +30,7 @@ class GroupResponsesController < AuthorizedController
         end
       end
     end
-    @cgr.commit
+    create_service.commit
   end
 
   def edit
@@ -55,11 +42,20 @@ class GroupResponsesController < AuthorizedController
   end
 
   def update
-    if authenticated_resource!.update permit_params
-      redirect_to authenticated_resource!.motion
-    else
-      render 'form'
+    update_service.subscribe(ActivityListener.new)
+    update_service.on(:update_group_response_successful) do |group_response|
+      respond_to do |format|
+        format.html { redirect_to group_response.motion }
+      end
     end
+    update_service.on(:update_group_response_failed) do |group_response|
+      respond_to do |format|
+        format.html do
+          render 'form'
+        end
+      end
+    end
+    update_service.commit
   end
 
   def destroy
@@ -92,6 +88,18 @@ private
     else
       super
     end
+  end
+
+  def create_service
+    CreateGroupResponse.new current_profile,
+                            permit_params.merge({
+                                                    forum: authenticated_context,
+                                                    publisher: current_user,
+                                                    creator: current_profile,
+                                                    group: policy_scope(motion.forum.groups).discussion.find(params[:group_id]),
+                                                    motion: Motion.find(params[:motion_id]),
+                                                    side: side_param
+                                                })
   end
 
   def resource_tenant
