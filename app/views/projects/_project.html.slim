@@ -11,3 +11,23 @@
     =contextual_link_to project_path(project) do
       section
         h2.project-t[itemprop="headline"]= project.title
+        - if project.discussions.present?
+          ul.box-list.box-list--icons
+            - discussions.each do |discussion|
+              li= link_to discussion_path(discussion) do
+                - if discussion.class == question
+                  h3.question-t
+                    span[class='fa fa=#{question_icon}']
+                    .list-item
+                      span= question.title
+                - if discussion.class == motion
+                  h3.motion-t
+                    span[class='fa fa=#{motion_icon}']
+                    .list-item
+                      span= motion.title
+            - if discussions.count > 3
+              li= contextual_link_to project_path(project)
+              h3.motion-t
+                span.fa.fa-chevron-right
+                .list-item
+                  span= t('discussions.show_all', amount: discussions.count)
