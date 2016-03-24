@@ -125,26 +125,41 @@ class MotionsController < AuthorizedController
   # DELETE /motions/1
   # DELETE /motions/1.json
   def trash
-    authenticated_resource!.trash
-    parent = authenticated_resource!.get_parent.model.try(:first) || authenticated_resource!.get_parent.model
-    respond_to do |format|
-      format.html { redirect_to parent, notice: t('type_trash_success', type: t('motions.type')) }
-      format.json { head :no_content }
+    trash_service.subscribe(ActivityListener.new)
+    trash_service.on(:trash_motion_successful) do |motion|
+      parent = motion.get_parent.model.try(:first) || motion.get_parent.model
+      respond_to do |format|
+        format.html { redirect_to parent, notice: t('type_trash_success', type: t('motions.type')) }
+        format.json { head :no_content }
+      end
     end
+    trash_service.on(:trash_motion_failed) do |motion|
+      respond_to do |format|
+        format.html { redirect_to motion, notice: t('errors.general') }
+        format.json { render json: motion.errors, status: :unprocessable_entity }
+      end
+    end
+    trash_service.commit
   end
 
   # PUT /motions/1/untrash
   # PUT /motions/1/untrash.json
   def untrash
-    respond_to do |format|
-      if authenticated_resource!.untrash
-        format.html { redirect_to authenticated_resource!, notice: t('type_untrash_success', type: t('motions.type')) }
+    untrash_service.subscribe(ActivityListener.new)
+    untrash_service.on(:untrash_motion_successful) do |motion|
+      parent = motion.get_parent.model.try(:first) || motion.get_parent.model
+      respond_to do |format|
+        format.html { redirect_to parent, notice: t('type_untrash_success', type: t('motions.type')) }
         format.json { head :no_content }
-      else
-        format.html { render :form, notice: t('errors.general') }
-        format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
       end
     end
+    untrash_service.on(:untrash_motion_failed) do |motion|
+      respond_to do |format|
+        format.html { redirect_to motion, notice: t('errors.general') }
+        format.json { render json: motion.errors, status: :unprocessable_entity }
+      end
+    end
+    untrash_service.commit
   end
 
   # GET /motions/1/convert
@@ -263,6 +278,14 @@ class MotionsController < AuthorizedController
     else
       super
     end
+  end
+
+  def trash_service
+    @trash_service ||= TrashMotion.new(resource_by_id)
+  end
+
+  def untrash_service
+    @untrash_service ||= UntrashMotion.new(resource_by_id)
   end
 
   def update_service

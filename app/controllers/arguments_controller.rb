@@ -97,7 +97,7 @@ class ArgumentsController < AuthorizedController
     end
     destroy_service.on(:destroy_argument_failed) do |argument|
       respond_to do |format|
-        format.html { render :form, notice: t('errors.general') }
+        format.html { redirect_to argument, notice: t('errors.general') }
         format.json { render json: argument.errors, status: :unprocessable_entity }
       end
     end
@@ -107,26 +107,40 @@ class ArgumentsController < AuthorizedController
   # DELETE /arguments/1
   # DELETE /arguments/1.json
   def trash
-    authenticated_resource!.trash
-    respond_to do |format|
-      format.html { redirect_to motion_path(authenticated_resource!.motion_id), notice: t('type_trash_success',
-      type: t('arguments.type')) }
-      format.json { head :no_content }
+    trash_service.subscribe(ActivityListener.new)
+    trash_service.on(:trash_argument_successful) do |argument|
+      respond_to do |format|
+        format.html { redirect_to motion_path(argument.motion_id), notice: t('type_trash_success',
+                                                                             type: t('arguments.type')) }
+        format.json { head :no_content }
+      end
     end
+    trash_service.on(:trash_argument_failed) do |argument|
+      respond_to do |format|
+        format.html { redirect_to argument, notice: t('errors.general') }
+        format.json { render json: argument.errors, status: :unprocessable_entity }
+      end
+    end
+    trash_service.commit
   end
 
   # PUT /arguments/1/untrash
   # PUT /arguments/1/untrash.json
   def untrash
-    respond_to do |format|
-      if authenticated_resource!.untrash
-        format.html { redirect_to authenticated_resource!, notice: t('type_untrash_success', type: t('arguments.type')) }
+    untrash_service.subscribe(ActivityListener.new)
+    untrash_service.on(:untrash_argument_successful) do |argument|
+      respond_to do |format|
+        format.html { redirect_to argument, notice: t('type_untrash_success', type: t('arguments.type')) }
         format.json { head :no_content }
-      else
-        format.html { render :form, notice: t('errors.general') }
-        format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
       end
     end
+    untrash_service.on(:untrash_argument_failed) do |argument|
+      respond_to do |format|
+        format.html { redirect_to argument, notice: t('errors.general') }
+        format.json { render json: argument.errors, status: :unprocessable_entity }
+      end
+    end
+    untrash_service.commit
   end
 
   def forum_for(url_options)
@@ -169,6 +183,14 @@ class ArgumentsController < AuthorizedController
     super.merge(
     motion_id: params[:motion_id]
     )
+  end
+
+  def trash_service
+    @trash_service ||= TrashArgument.new(resource_by_id)
+  end
+
+  def untrash_service
+    @untrash_service ||= UntrashArgument.new(resource_by_id)
   end
 
   def update_service

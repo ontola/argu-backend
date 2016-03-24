@@ -15,4 +15,8 @@ class CreateService < ApplicationService
   def service_action
     :create
   end
+
+  def service_action!
+    :save!
+  end
 end

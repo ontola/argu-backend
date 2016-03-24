@@ -88,25 +88,39 @@ class QuestionsController < AuthorizedController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def trash
-    authenticated_resource!.trash
-    respond_to do |format|
-      format.html { redirect_to authenticated_resource!.forum, notice: t('type_trash_success', type: t('questions.type')) }
-      format.json { head :no_content }
+    trash_service.subscribe(ActivityListener.new)
+    trash_service.on(:trash_question_successful) do |question|
+      respond_to do |format|
+        format.html { redirect_to question.forum, notice: t('type_trash_success', type: t('questions.type')) }
+        format.json { head :no_content }
+      end
     end
+    trash_service.on(:trash_question_failed) do |question|
+      respond_to do |format|
+        format.html { redirect_to question, notice: t('errors.general') }
+        format.json { render json: question.errors, status: :unprocessable_entity }
+      end
+    end
+    trash_service.commit
   end
 
   # PUT /arguments/1/untrash
   # PUT /arguments/1/untrash.json
   def untrash
-    respond_to do |format|
-      if authenticated_resource!.untrash
-        format.html { redirect_to authenticated_resource!, notice: t('type_untrash_success', type: t('arguments.type')) }
+    untrash_service.subscribe(ActivityListener.new)
+    untrash_service.on(:untrash_question_successful) do |question|
+      respond_to do |format|
+        format.html { redirect_to question.forum, notice: t('type_untrash_success', type: t('questions.type')) }
         format.json { head :no_content }
-      else
-        format.html { render :form, notice: t('errors.general') }
-        format.json { render json: authenticated_resource!.errors, status: :unprocessable_entity }
       end
     end
+    untrash_service.on(:untrash_question_failed) do |question|
+      respond_to do |format|
+        format.html { redirect_to question, notice: t('errors.general') }
+        format.json { render json: question.errors, status: :unprocessable_entity }
+      end
+    end
+    untrash_service.commit
   end
 
   # GET /motions/1/convert
@@ -193,6 +207,14 @@ class QuestionsController < AuthorizedController
 
   def permit_params
     params.require(:question).permit(*policy(@question || Question).permitted_attributes)
+  end
+
+  def trash_service
+    @trash_service ||= TrashQuestion.new(resource_by_id)
+  end
+
+  def untrash_service
+    @untrash_service ||= UntrashQuestion.new(resource_by_id)
   end
 
   def update_service

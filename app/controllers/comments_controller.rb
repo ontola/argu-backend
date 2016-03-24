@@ -98,13 +98,13 @@ class CommentsController < AuthorizedController
   # DELETE /arguments/1/comments/1?destroy=true
   def destroy
     destroy_service.subscribe(ActivityListener.new)
-    destroy_service.on(:wipe_comment_successful) do |comment|
+    destroy_service.on(:destroy_comment_successful) do |comment|
       respond_to do |format|
         format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id) }
         format.js # destroy_comment.js
       end
     end
-    destroy_service.on(:wipe_comment_failed) do |comment|
+    destroy_service.on(:destroy_comment_failed) do |comment|
       respond_to do |format|
         format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('errors.general') }
         format.js # destroy_comment.js
@@ -115,30 +115,41 @@ class CommentsController < AuthorizedController
 
   # DELETE /arguments/1/comments/1
   def trash
-    @comment = Comment.find_by_id params[:id]
-    resource = @comment.commentable
-    authorize @comment
-    @comment.trash
-    respond_to do |format|
-      format.html { redirect_to polymorphic_url([resource], anchor: @comment.id) }
-      format.js # destroy_comment.js
+    trash_service.subscribe(ActivityListener.new)
+    trash_service.on(:trash_comment_successful) do |comment|
+      respond_to do |format|
+        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('type_trash_success',
+                                                                                                        type: t('comments.type'))  }
+        format.js # destroy_comment.js
+      end
     end
+    trash_service.on(:trash_comment_failed) do |comment|
+      respond_to do |format|
+        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('errors.general') }
+        format.js # destroy_comment.js
+      end
+    end
+    trash_service.commit
   end
 
   # PUT /arguments/1/comments/1/untrash
   # PUT /arguments/1/comments/1/untrash.json
   def untrash
-    @comment = Comment.find_by_id params[:id]
-    resource = @comment.commentable
-    respond_to do |format|
-      if @comment.untrash
-        format.html { redirect_to resource, notice: t('type_untrash_success', type: t('comments.type')) }
-        format.json { head :no_content }
-      else
-        format.html { render :form, notice: t('errors.general') }
-        format.json { render json: @comment.errors, status: :unprocessable_entity }
+    untrash_service.subscribe(ActivityListener.new)
+    untrash_service.on(:untrash_comment_successful) do |comment|
+      respond_to do |format|
+        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('type_untrash_success',
+                                                                                                        type: t('comments.type'))  }
+        format.js # destroy_comment.js
       end
     end
+    untrash_service.on(:untrash_comment_failed) do |comment|
+      respond_to do |format|
+        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('errors.general') }
+        format.js # destroy_comment.js
+      end
+    end
+    untrash_service.commit
   end
 
   def forum_for(url_options)
@@ -227,6 +238,14 @@ class CommentsController < AuthorizedController
       when 'a' then Argument
     end
     resource.find(id).forum
+  end
+
+  def trash_service
+    @trash_service ||= TrashComment.new(resource_by_id)
+  end
+
+  def untrash_service
+    @untrash_service ||= UntrashComment.new(resource_by_id)
   end
 
   def update_service

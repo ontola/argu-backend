@@ -69,7 +69,7 @@ class BlogPostsController < AuthorizedController
     end
     destroy_service.on(:destroy_blog_post_failed) do |blog_post|
       respond_to do |format|
-        format.html { render :form, notice: t('errors.general') }
+        format.html { redirect_to blog_post, notice: t('errors.general') }
         format.json { render json: blog_post.errors, status: :unprocessable_entity }
       end
     end
@@ -79,28 +79,39 @@ class BlogPostsController < AuthorizedController
   # DELETE /blog_posts/1
   # DELETE /blog_posts/1.json
   def trash
-    blog_post = BlogPost.find params[:id]
-    authorize blog_post
-    blog_post.trash
-    respond_to do |format|
-      format.html { redirect_to blog_post.blog_postable, notice: t('type_trash_success', type: t('blog_posts.type')) }
-      format.json { head :no_content }
+    trash_service.subscribe(ActivityListener.new)
+    trash_service.on(:trash_blog_post_successful) do |blog_post|
+      respond_to do |format|
+        format.html { redirect_to blog_post.blog_postable, notice: t('type_trash_success', type: t('blog_posts.type')) }
+        format.json { head :no_content }
+      end
     end
+    trash_service.on(:trash_blog_post_failed) do |blog_post|
+      respond_to do |format|
+        format.html { redirect_to blog_post, notice: t('errors.general') }
+        format.json { render json: blog_post.errors, status: :unprocessable_entity }
+      end
+    end
+    trash_service.commit
   end
 
   # PUT /blog_posts/1/untrash
   # PUT /blog_posts/1/untrash.json
   def untrash
-    blog_post = BlogPost.find params[:id]
-    respond_to do |format|
-      if blog_post.untrash
+    untrash_service.subscribe(ActivityListener.new)
+    untrash_service.on(:untrash_blog_post_successful) do |blog_post|
+      respond_to do |format|
         format.html { redirect_to blog_post.blog_postable, notice: t('type_untrash_success', type: t('blog_posts.type')) }
         format.json { head :no_content }
-      else
-        format.html { render :form, notice: t('errors.general') }
+      end
+    end
+    untrash_service.on(:untrash_blog_post_failed) do |blog_post|
+      respond_to do |format|
+        format.html { redirect_to blog_post, notice: t('errors.general') }
         format.json { render json: blog_post.errors, status: :unprocessable_entity }
       end
     end
+    untrash_service.commit
   end
 
   private
@@ -130,6 +141,14 @@ class BlogPostsController < AuthorizedController
 
   def resource_tenant
     get_parent_resource.forum
+  end
+
+  def trash_service
+    @trash_service ||= TrashBlogPost.new(resource_by_id)
+  end
+
+  def untrash_service
+    @untrash_service ||= UntrashBlogPost.new(resource_by_id)
   end
 
   def update_service

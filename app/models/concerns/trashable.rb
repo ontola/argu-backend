@@ -33,28 +33,25 @@ module Trashable
 
   def trash
     self.class.transaction do
+      decrement_counter_cache if self.respond_to?(:decrement_counter_cache) && !self.is_trashed?
       if self.respond_to?(:trashed_at)
         update_column :trashed_at, DateTime.current
       else
         update_column :is_trashed, true
       end
       destroy_notifications
-      decrement_counter_cache if self.respond_to? :decrement_counter_cache
     end
   end
 
   def untrash
-    return false unless self.is_trashed?
-
     self.class.transaction do
+      increment_counter_cache if self.respond_to?(:increment_counter_cache) && self.is_trashed?
       if self.respond_to?(:trashed_at)
         update_column :trashed_at, nil
       else
         update_column :is_trashed, false
       end
-      increment_counter_cache if self.respond_to? :increment_counter_cache
     end
-    return true
   end
 
   def destroy_notifications

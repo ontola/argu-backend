@@ -1,4 +1,4 @@
-class DestroyComment < DestroyService
+class UntrashComment < UntrashService
   include Wisper::Publisher
 
   def initialize(comment, options = {})
@@ -8,14 +8,5 @@ class DestroyComment < DestroyService
 
   def resource
     @comment
-  end
-
-  private
-  def service_action
-    :destroy
-  end
-
-  def service_action!
-    :wipe
   end
 end

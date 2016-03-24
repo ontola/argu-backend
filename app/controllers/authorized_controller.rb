@@ -82,16 +82,16 @@ class AuthorizedController < ApplicationController
   def authenticated_resource!
     @resource ||=
         case params[:action]
-        when 'new'
-          new_resource_from_params
         when 'create'
           create_service.resource
+        when 'destroy'
+          destroy_service.resource
+        when 'new'
+          new_resource_from_params
         when 'update'
           update_service.resource
         when 'untrash'
           untrash_service.resource
-        when 'destroy'
-          destroy_service.resource
         when 'trash'
           trash_service.resource
         else

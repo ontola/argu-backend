@@ -21,18 +21,7 @@ class ApplicationService
   # @see {after_save}
   def commit
     ActiveRecord::Base.transaction do
-      case service_action
-      when :destroy
-        @actions[service_action] = resource.destroy
-      when :trash
-        @actions[service_action] = resource.trash
-      when :untrash
-        @actions[service_action] = resource.untrash
-      when :wipe
-        @actions[service_action] = resource.wipe
-      else
-        @actions[service_action] = resource.save!
-      end
+      @actions[service_action] = resource.send service_action!
 
       after_save
 
@@ -69,8 +58,15 @@ class ApplicationService
     end
   end
 
+  # The action that called this service
   def service_action
     raise 'Required interface not implemented'
+  end
+
+  # The action that will be send to the resource
+  # @default is {service_action}
+  def service_action!
+    service_action
   end
 
   # Calls set_object_attributes for each association that has been declared as `accepts_nested_attributes_for`

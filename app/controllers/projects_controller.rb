@@ -87,28 +87,39 @@ class ProjectsController < AuthorizedController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def trash
-    @project = Project.find params[:id]
-    authorize @project
-    @project.trash
-    respond_to do |format|
-      format.html { redirect_to @project.forum, notice: t('type_trash_success', type: t('projects.type')) }
-      format.json { head :no_content }
+    trash_service.subscribe(ActivityListener.new)
+    trash_service.on(:trash_project_successful) do |project|
+      respond_to do |format|
+        format.html { redirect_to project.forum, notice: t('type_trash_success', type: t('projects.type')) }
+        format.json { head :no_content }
+      end
     end
+    trash_service.on(:trash_project_failed) do |project|
+      respond_to do |format|
+        format.html { redirect_to project, notice: t('errors.general') }
+        format.json { render json: project.errors, status: :unprocessable_entity }
+      end
+    end
+    trash_service.commit
   end
 
   # PUT /projects/1/untrash
   # PUT /projects/1/untrash.json
   def untrash
-    @project = Project.find params[:id]
-    respond_to do |format|
-      if @project.untrash
-        format.html { redirect_to @project, notice: t('type_untrash_success', type: t('projects.type')) }
+    untrash_service.subscribe(ActivityListener.new)
+    untrash_service.on(:untrash_project_successful) do |project|
+      respond_to do |format|
+        format.html { redirect_to project.forum, notice: t('type_untrash_success', type: t('projects.type')) }
         format.json { head :no_content }
-      else
-        format.html { render :form, notice: t('errors.general') }
-        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
+    untrash_service.on(:untrash_project_failed) do |project|
+      respond_to do |format|
+        format.html { redirect_to project, notice: t('errors.general') }
+        format.json { render json: project.errors, status: :unprocessable_entity }
+      end
+    end
+    untrash_service.commit
   end
 
   private
@@ -131,6 +142,14 @@ class ProjectsController < AuthorizedController
     if params[:id].to_i == 0
       redirect_to page_path(params[:id])
     end
+  end
+
+  def trash_service
+    @trash_service ||= TrashProject.new(resource_by_id)
+  end
+
+  def untrash_service
+    @untrash_service ||= UntrashProject.new(resource_by_id)
   end
 
   def update_service

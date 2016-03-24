@@ -11,4 +11,8 @@ class UpdateService < ApplicationService
   def service_action
     :update
   end
+
+  def service_action!
+    :save!
+  end
 end
