@@ -3,22 +3,23 @@
     section
       .markdown[id=c.id itemprop="text"]= c.is_trashed? ? I18n.t('trashed') : markdown_to_html(c.body) || I18n.t('deleted')
         =markdown_to_html(motion.content)
-    =render partial: 'profiles/profile', locals: {profile: c.creator, resource: c} if c.creator.present?
-    ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
-      - if current_user.present?
-        li= react_component 'ActiveToggle',
-                {url: follows_path(comment_id: c.id, format: :json),
-                        initialState: current_user.following?(c),
-                        true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
-                        false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
-                {prerender: true}
-      - if current_user.present? && policy(c).update? || policy(c).trash? || active_for_user?(:notifications, current_user)
-        li
-          ul= react_component 'HyperDropdown', comment_items(resource, c), {prerender: true}
-      - if !c.is_trashed? && policy(c).create?
-        li= link_to polymorphic_url([resource], parent_id: c.id), {data: { comment_id: c.id, turbolinks: false }, class: 'btn-reply'} do
-          span.fa.fa-reply
-          span.icon-left= t('reply')
+    section.section--footer
+      =render partial: 'profiles/profile', locals: {profile: c.creator, resource: c} if c.creator.present?
+      ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
+        - if current_user.present?
+          li= react_component 'ActiveToggle',
+                  {url: follows_path(comment_id: c.id, format: :json),
+                          initialState: current_user.following?(c),
+                          true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
+                          false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
+                  {prerender: true}
+        - if current_user.present? && policy(c).update? || policy(c).trash? || active_for_user?(:notifications, current_user)
+          li
+            ul= react_component 'HyperDropdown', comment_items(resource, c), {prerender: true}
+        - if !c.is_trashed? && policy(c).create?
+          li= link_to polymorphic_url([resource], parent_id: c.id), {data: { comment_id: c.id, turbolinks: false }, class: 'btn-reply'} do
+            span.fa.fa-reply
+            span.icon-left= t('reply')
   .comment.comment-form
     .box= render partial: 'comments/form', locals: { resource: resource, parent_id: c.id, visible: false, comment: Comment.new(commentable: c) }
   - if c.has_children?

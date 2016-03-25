@@ -325,8 +325,7 @@
     //display: inline-block; // Seems to un-align buttons if div buttons are present (e.g. in motion show box)
     display: block;
     color: $g3;
-    //vertical-align: bottom;
-    height: 2.45em;
+    height: $section-footer-height;
     &:hover {
       text-decoration: none;
 

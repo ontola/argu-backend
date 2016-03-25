@@ -2,11 +2,9 @@
 @import "mixins";
 
 .profile-small {
-  position: relative;
-  padding: 0;
-  height: 2.45em;
-  overflow: hidden;
-  background-color: $g00;
+  // Not sure where and if these are needed for
+  //position: relative;
+  //overflow: hidden;
 
   img {
     //deprecated

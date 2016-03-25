@@ -15,20 +15,21 @@
       .markdown[itemprop="text"]
         =markdown_to_html(question.content)
       span.hidden[itemprop="answerCount"]= question.motions_count
-    =render question.creator, locals= {resource: question}
-    ul.btns-list--subtle.sticky--bottom-right.btns-horizontal.btns-list--grey-background
-      - if current_user.present?
-        li[data-title=I18n.t('tooltips.follow')]
-          =react_component 'ActiveToggle',
-                           {url: follows_path(question_id: question.id, format: :json),
-                            initialState: current_user.following?(question),
-                            true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
-                            false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
-                           {prerender: true}
-      =crud_menu_item(question, question_items(question))
-      - if question.forum.visibility
-        li
-          ul= react_component 'ShareDropdown', share_items(question), {prerender: true}
+    section.section--footer
+      = render question.creator, locals= {resource: question}
+      ul.btns-list--subtle.sticky--bottom-right.btns-horizontal.btns-list--grey-background
+        - if current_user.present?
+          li[data-title=I18n.t('tooltips.follow')]
+            =react_component 'ActiveToggle',
+                             {url: follows_path(question_id: question.id, format: :json),
+                              initialState: current_user.following?(question),
+                              true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
+                              false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
+                             {prerender: true}
+        =crud_menu_item(question, question_items(question))
+        - if question.forum.visibility
+          li
+            ul= react_component 'ShareDropdown', share_items(question), {prerender: true}
 .col-1
   .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
 =render_columns({'' => {collection: @motions}},
