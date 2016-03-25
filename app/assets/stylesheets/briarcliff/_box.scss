@@ -3,10 +3,12 @@
 
 .box {
   position: relative;
-  background-color: white;
   margin: 0 auto;
   margin-bottom: 1em;
   display: block;
+  @include border-radius();
+  @include box-shadow();
+
   .box {
     margin-bottom: 0;
     border: solid 1px $g1;
@@ -175,11 +177,15 @@
   .icon-left {
     margin-left: .4em;
   }
-  &.box-link-fill{
+  &.box-link--fill{
+
+    section {
+      background: none;
+    }
+
     h3 {
       color: white;
     }
-    opacity: 1;
     &:hover h3 {
       text-decoration: underline;
     }
@@ -302,13 +308,15 @@
 }
 
 .back-to-forum {
-  background-color: $blu;
+  background-color: $blu !important;
+
   h3 {
     color: white;
     display: inline-block;
     position: relative;
     left: 1.8em;
   }
+
   .profile-picture {
   width: 2em;
   height: 2em;

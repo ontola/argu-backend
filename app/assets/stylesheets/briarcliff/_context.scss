@@ -22,6 +22,7 @@
   opacity: .5;
   @include transition(opacity .2s ease-in-out);
   z-index: 1;
+  @include border-radius();
 
   span {
     font-size: 1.3em;
