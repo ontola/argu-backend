@@ -110,7 +110,7 @@ class QuestionsController < AuthorizedController
     untrash_service.subscribe(ActivityListener.new)
     untrash_service.on(:untrash_question_successful) do |question|
       respond_to do |format|
-        format.html { redirect_to question.forum, notice: t('type_untrash_success', type: t('questions.type')) }
+        format.html { redirect_to question, notice: t('type_untrash_success', type: t('questions.type')) }
         format.json { head :no_content }
       end
     end

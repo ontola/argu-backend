@@ -101,7 +101,7 @@ class BlogPostsController < AuthorizedController
     untrash_service.subscribe(ActivityListener.new)
     untrash_service.on(:untrash_blog_post_successful) do |blog_post|
       respond_to do |format|
-        format.html { redirect_to blog_post.blog_postable, notice: t('type_untrash_success', type: t('blog_posts.type')) }
+        format.html { redirect_to blog_post, notice: t('type_untrash_success', type: t('blog_posts.type')) }
         format.json { head :no_content }
       end
     end

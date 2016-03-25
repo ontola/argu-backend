@@ -149,7 +149,7 @@ class MotionsController < AuthorizedController
     untrash_service.on(:untrash_motion_successful) do |motion|
       parent = motion.get_parent.model.try(:first) || motion.get_parent.model
       respond_to do |format|
-        format.html { redirect_to parent, notice: t('type_untrash_success', type: t('motions.type')) }
+        format.html { redirect_to motion, notice: t('type_untrash_success', type: t('motions.type')) }
         format.json { head :no_content }
       end
     end

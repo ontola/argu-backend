@@ -109,7 +109,7 @@ class ProjectsController < AuthorizedController
     untrash_service.subscribe(ActivityListener.new)
     untrash_service.on(:untrash_project_successful) do |project|
       respond_to do |format|
-        format.html { redirect_to project.forum, notice: t('type_untrash_success', type: t('projects.type')) }
+        format.html { redirect_to project, notice: t('type_untrash_success', type: t('projects.type')) }
         format.json { head :no_content }
       end
     end
