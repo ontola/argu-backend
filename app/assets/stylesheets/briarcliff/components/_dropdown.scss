@@ -44,6 +44,7 @@
   max-height: 30em;
   overflow-y: auto;
   @include box-shadow-intense;
+  @include border-radius();
   font-size: 16px;
   -webkit-overflow-scrolling: touch;
 

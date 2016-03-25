@@ -1,3 +1,5 @@
+@import "variables";
+
 /*
 @mixin placeholder($color, $opacity: 1) {
   &:-moz-placeholder            { color: $color; opacity: $opacity} // Firefox 4-18
@@ -28,7 +30,7 @@
   -ms-filter: $opts;
 }
 
-@mixin border-radius($opts: 3px){
+@mixin border-radius($opts: $border-radius-size){
   border-radius: $opts;
 }
 
@@ -85,7 +87,7 @@
   }
 }
 
-@mixin box-shadow($opts: 0em 0.2em 0.25em 0em rgba(0, 0, 0, 0.05)) {
+@mixin box-shadow($opts: 0em 0.1em 0.1em 0em rgba(0, 0, 0, 0.05)) {
   box-shadow: $opts;
 }
 

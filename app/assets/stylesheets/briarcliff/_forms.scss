@@ -18,7 +18,7 @@ input[type="text"], textarea, input[type="password"], input[type="email"], input
   -moz-appearance:none;
   appearance:none;
   word-break: normal; //Fixes a bug in chrome where the content in an input glitches between two lines.
-  @include border-radius(0);
+  @include border-radius();
   @include transition(.2s);
   @include placeholder{
     color: $g4;

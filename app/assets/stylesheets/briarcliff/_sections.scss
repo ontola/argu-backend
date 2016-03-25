@@ -2,8 +2,24 @@
 @import "mixins";
 
 section {
-  position: relative;
   padding: 1.1em 1.4em 0.1em 1.4em;
+  background-color: white;
+}
+
+
+// All this wizardry is to make the borders rounder.
+.box > *:first-child {
+  overflow: hidden;
+  display: block;
+  border-top-left-radius: $border-radius-size;
+  border-top-right-radius: $border-radius-size;
+}
+
+.box > *:last-child {
+  overflow: hidden;
+  display: block;
+  border-bottom-left-radius: $border-radius-size;
+  border-bottom-right-radius: $border-radius-size;
 }
 
 .section-info {
@@ -13,6 +29,9 @@ section {
   color: white;
   text-transform: uppercase;
   height: 1.4em;
+
+  // This blocks tooltips, so it should be removed before deploying.
+  position: relative;
 
   span {
     font-size: .8em;
