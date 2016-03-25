@@ -24,13 +24,13 @@ export const CurrentProfile = React.createClass({
 
     render () {
 
-        return (<section className="profile-small inspectlet-sensitive">
+        return (<div className="profile-small inspectlet-sensitive">
             {image({ image: this.state.profile_photo })}
             <div className="info-block">
                 <div className="info">plaatsen als:</div>
                 <div className="profile-name">{this.state.display_name}</div>
             </div>
-        </section>);
+        </div>);
     }
 });
 

@@ -1,12 +1,13 @@
-.activity.box
-  section.profile-small
-    =link_to dual_profile_url(activity.owner) do
-      img[src=activity.owner.profile_photo.url(:icon)]
-    .info-block[style="padding: 0;"]
-      p[style="margin-bottom: 0;"]
-        =markdown_to_html(activity_string_for(activity, true))
-      time[datetime=activity.created_at]
-        small[style="font-size: 0.8em; color: grey;"]= awesome_time_ago_in_words activity.created_at
-  .test
+.activity
+  .activity-header
+    .profile-small
+      =link_to dual_profile_url(activity.owner) do
+        img[src=activity.owner.profile_photo.url(:icon)]
+      .info-block[style="padding: 0;"]
+        p[style="margin-bottom: 0;"]
+          =markdown_to_html(activity_string_for(activity, true))
+        time[datetime=activity.created_at]
+          small[style="font-size: 0.8em; color: grey;"]= awesome_time_ago_in_words activity.created_at
+  .activity-body
     -if activity.action == 'create' && activity.object != 'vote'
       =render partial: "public_activity/#{activity.key.gsub('.','/')}", locals: {activity: activity}

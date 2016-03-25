@@ -5,17 +5,18 @@
     =render partial: 'arguments/shr', locals: {model: @argument, vote: @vote}
     .markdown[itemprop="text"]
       =markdown_to_html(@argument.content)
-  =render partial: @argument.creator, locals: {resource: @argument} if @argument.creator.present?
-  ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey
-    - if current_user.present?
-      li[data-title=I18n.t('tooltips.follow')]
-        =react_component 'ActiveToggle',
-                         {url: follows_path(argument_id: @argument.id, format: :json),
-                          initialState: current_user.following?(@argument),
-                          true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
-                          false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
-                         {prerender: true}
-    =crud_menu_item(@argument)
-    - if @argument.forum.visibility
-      li
-        ul= react_component 'ShareDropdown', share_items(@argument), {prerender: true}
+  section.section--footer
+    =render partial: @argument.creator, locals: {resource: @argument} if @argument.creator.present?
+    ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey
+      - if current_user.present?
+        li[data-title=I18n.t('tooltips.follow')]
+          =react_component 'ActiveToggle',
+                           {url: follows_path(argument_id: @argument.id, format: :json),
+                            initialState: current_user.following?(@argument),
+                            true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
+                            false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
+                           {prerender: true}
+      =crud_menu_item(@argument)
+      - if @argument.forum.visibility
+        li
+          ul= react_component 'ShareDropdown', share_items(@argument), {prerender: true}

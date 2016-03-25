@@ -32,6 +32,7 @@
   @include box-shadow-intense;
   opacity:0;
   max-width: none;
+  @include border-radius();
 
   // Hides tooltips on IE8,9,10, since they ignore pointer events.
   @media screen\0 {
