@@ -5,8 +5,8 @@ $vote-pie-size: 1.8em;
 
 .vote-pie {
   width: $vote-pie-size;
-  top: -0.25em;
-  left: -1.5em;
+  top: -.2em;
+  left: -1.4em;
   position: absolute;
 
   svg {
@@ -33,5 +33,12 @@ $vote-pie-size: 1.8em;
 }
 
 .vote-pie--empty{
-  display: none;
+  position: absolute;
+  display: inline-block;
+  z-index: 1;
+
+  &:after{
+    content: "";
+    width: 1em;
+  }
 }
