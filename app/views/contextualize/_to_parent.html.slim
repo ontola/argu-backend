@@ -5,9 +5,7 @@
       .box.box-link
         - classname = parent.class_name
         - if classname == 'forums'
-          section.section-info.motion-bg
-            span[class="fa fa-arrow-up"]
-            span.icon-left= t('forums.back_to')
+          - nil
         - elsif classname == 'questions'
           =render partial: 'questions/info_bar', locals: {question: parent}
         - elsif classname == 'motions'

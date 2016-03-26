@@ -8,6 +8,7 @@ section.section-info.motion-bg
     - if local_assigns[:show_vote_results]
       .vote-pie-container
         =react_component 'VotePie', motion_vote_counts(motion), {prerender: true}
+      .vote-pie-filler
       .details-parts
         =react_component 'VoteStats', motion_vote_counts(motion), {prerender: true}
     - if local_assigns[:show_total_vote_count]
