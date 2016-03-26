@@ -3,9 +3,7 @@
   .col-3-2
     =to_parent
     .box
-      section.section-info.blog-post-bg
-        span[class="fa fa-#{blog_post_icon}"]
-        span.icon-left= t('blog_posts.type')
+      =render partial: 'blog_posts/info_bar', locals: {blog_post: blog_post}
       =semantic_form_for(blog_post.new_record? ? [get_parent_resource, blog_post] : blog_post, html: {autocomplete: 'off'}) do |f|
         section.smallpadded.form-filled
           =f.inputs
@@ -18,13 +16,14 @@
                 =f.input :trashed_at, as: :reverse_boolean
             - if blog_post.is_published? && policy(blog_post).destroy?
               =f.input :unpublish, as: :reverse_boolean, checked_value: 'true', unchecked_value: 'false'
-        - if blog_post.new_record?
-          =render partial: 'profiles/profile_current'
-        - else
-          =render partial: blog_post.creator, locals: {resource: blog_post}
-        =f.actions
-          .sticky-submit
-            =f.action :submit, as: :button
+        section.section--footer
+          - if blog_post.new_record?
+            =render partial: 'profiles/profile_current'
+          - else
+            =render partial: blog_post.creator, locals: {resource: blog_post}
+          =f.actions
+            .sticky-submit
+              =f.action :submit, as: :button
   /TODO make translations, make content dependent on focus field
   .col-3-1
     =render partial: 'markdown_helper'
