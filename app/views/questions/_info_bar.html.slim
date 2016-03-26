@@ -1,6 +1,4 @@
-section.section-info.question-bg
-  span.fa.fa-question
-  span.icon-left= t('questions.type')
+section.section-info
   =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
   .details
     .details-part.details-part--type.question-bg[data-title=t('questions.tooltips.info')]

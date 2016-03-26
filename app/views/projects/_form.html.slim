@@ -3,9 +3,7 @@
   .col-3-2
     =to_parent(authenticated_context)
     .box
-      section.section-info
-        span[class="fa fa-folder-o"]
-        span.icon-left= t('projects.type')
+      =render partial: 'projects/info_bar', locals: {project: project}
       =semantic_form_for(project.new_record? ? [authenticated_context, project] : project, html: {autocomplete: 'off'}) do |f|
         section.smallpadded.form-filled
           =f.inputs
@@ -43,13 +41,14 @@
                 =f.input :trashed_at, as: :reverse_boolean
             - if project.is_published? && policy(project).destroy?
               =f.input :unpublish, as: :reverse_boolean, checked_value: 'true', unchecked_value: 'false'
-        - if project.new_record?
-          =render partial: 'profiles/profile_current'
-        - else
-          =render partial: project.creator, locals: {resource: project}
-        =f.actions
-          .sticky-submit
-            =f.action :submit, as: :button
+        section.section--footer
+          - if project.new_record?
+            =render partial: 'profiles/profile_current'
+          - else
+            =render partial: project.creator, locals: {resource: project}
+          =f.actions
+            .sticky-submit
+              =f.action :submit, as: :button
   /TODO make translations, make content dependent on focus field
   .col-3-1
     =render partial: 'markdown_helper'
