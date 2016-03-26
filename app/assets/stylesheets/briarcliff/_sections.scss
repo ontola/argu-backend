@@ -25,7 +25,7 @@ section {
 }
 
 //.box > section:last-child, .box > a:last-child > section{
-.box > section:last-child {
+.box > section:last-child, .box > a:last-child {
   overflow: hidden;
   display: block;
   border-bottom-left-radius: $border-radius-size;
