@@ -56,7 +56,7 @@ section {
 
 .details {
   padding: 0;
-  line-height: 1.1em;
+  line-height: $info—bar-height;
   color: $g2a;
   text-transform: uppercase;
   display: block;
@@ -78,7 +78,7 @@ section {
 .details-part{
   padding: 0 .5em;
   height: 100%;
-  line-height: 1.3em;
+  line-height: $info—bar-height;
   &:hover{
     background-color: $g0;
     color: $g3;
