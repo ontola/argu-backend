@@ -79,49 +79,43 @@ class GroupResponsesController < AuthorizedController
   end
 
 private
-  def authenticated_resource!
-    if params[:action] == 'new' || params[:action] == 'create'
-      group = Group.find params[:group_id]
-      unless @_not_authorized_caught || group.discussion?
-        raise Argu::NotAuthorizedError.new(
-          record: group,
-          query: 'edit?',
-          verdict: t('group_responses.errors.must_be_discussion',
-                     group_name: group.name))
-      end
-      motion = Motion.find params[:motion_id]
-      @resource = motion.group_responses.new group: group,
-                                             forum: group.forum,
-                                             publisher: current_user,
-                                             side: side_param
-    else
-      super
-    end
-  end
-
   def create_service
     @create_service ||= CreateGroupResponse.new(
         GroupResponse.new,
-        permit_params.merge({
-                                forum: authenticated_context,
-                                publisher: current_user,
-                                creator: current_profile,
-                                group: policy_scope(motion.forum.groups).discussion.find(params[:group_id]),
-                                motion: Motion.find(params[:motion_id]),
-                                side: side_param
-                            }))
+        permit_params.merge(resource_new_params.merge(publisher: current_user,
+                                                      creator: current_profile)))
   end
 
   def destroy_service
     @destroy_service ||= DestroyGroupResponse.new(resource_by_id)
   end
 
+  def new_resource_from_params
+    group = policy_scope(resource_tenant.groups).discussion.find(params[:group_id])
+    unless @_not_authorized_caught || group.discussion?
+      raise Argu::NotAuthorizedError.new(
+          record: group,
+          query: 'edit?',
+          verdict: t('group_responses.errors.must_be_discussion',
+                     group_name: group.name))
+    end
+    GroupResponse.new resource_new_params
+  end
+
   def resource_tenant
     Motion.find(params[:motion_id]).forum
   end
 
+  def resource_new_params
+    super.merge(
+      group: policy_scope(resource_tenant.groups).discussion.find(params[:group_id]),
+      creator: current_profile,
+      side: side_param,
+      motion: Motion.find(params[:motion_id]))
+  end
+
   def permit_params
-    params.require(:group_response).permit(*policy(@resource || @group_response || GroupResponse).permitted_attributes)
+    params.require(:group_response).permit(*policy(@group_response || resource_by_id || new_resource_from_params).permitted_attributes)
   end
 
   def side_param

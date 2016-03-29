@@ -20,7 +20,7 @@ ul.boxed-list
         span.fa.fa-pencil
         span.icon-left= t('edit_type', type: t('groups.type'))
       - if policy(group).destroy?
-        =link_to destroy_group_path(group), remote: true, class: 'btn--light btn--smaller' do
+        =link_to delete_group_path(group), remote: true, class: 'btn--light btn--smaller' do
           span.fa.fa-close
           span.icon-left= t('destroy_type', type: t('groups.type'))
 - if policy(Group).create?(@forum)

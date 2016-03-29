@@ -136,7 +136,11 @@ class GroupResponsesControllerTest < ActionController::TestCase
 
     assert_no_difference('group_response.updated_at') do
       put :update,
-          id: group_response
+          id: group_response,
+          group_response: {
+              text: 'new text'
+          }
+
     end
 
     assert_not_authorized
@@ -232,7 +236,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
         group_id: visible_group,
         side: :pro
 
-    assert_response 302
+    assert_response 404
   end
 
   test 'group member should not post create on visible' do
@@ -246,7 +250,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
                                           forum: freetown)
     end
 
-    assert_response 302
+    assert_response 404
   end
 
   ## hidden groups ##
@@ -260,7 +264,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
         group_id: hidden_group,
         side: :pro
 
-    assert_not_authorized
+    assert_response 404
   end
 
   test 'group member should not post create on hidden' do
@@ -274,7 +278,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
                                           forum: freetown)
     end
 
-    assert_not_authorized
+    assert_response 404
   end
 
   ####################################
