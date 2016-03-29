@@ -34,7 +34,7 @@
 .introjs-helperLayer {
   border: none;
   box-shadow: none;
-  border-radius: 0;
+  border-radius: $border-radius-size;
   border: solid 3px $blu;
   box-sizing: border-box;
 }
@@ -87,7 +87,7 @@
 
 .introjs-tooltip {
   box-shadow: none;
-  border-radius: 0;
+  border-radius: $border-radius-size;
   border: none;
   padding: 20px;
   width: 300px;
