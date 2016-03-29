@@ -33,7 +33,7 @@ module ColumnRendererHelper
   def button_box(params)
     {
         tag: 'div',
-        class: 'box box-link box-link--fill'
+        class: 'btn--huge'
     }.merge(params.except(:collection))
   end
 

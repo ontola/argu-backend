@@ -70,29 +70,6 @@
     font-size: 1.2em;
     margin-bottom: .8em;
   }
-
-  &[pro="pro"],&[pro="con"],&[collection_model="Motion"],&[collection_model="Question"],&[collection_model="Project"] {
-    h3 {
-      color: white;
-    }
-  }
-
-  &[pro="pro"]{
-    background-color: $pro;
-  }
-
-  &[pro="con"]{
-    background-color: $con;
-  }
-  &[collection_model="Motion"]{
-    background-color: $motion;
-  }
-  &[collection_model="Question"]{
-    background-color: $question;
-  }
-  &[collection_model="Project"]{
-    background-color: $project;
-  }
 }
 
 .box h1, .box h2, .box h3, .box h4 {
@@ -247,11 +224,6 @@
   }
   span.icon-left {
     margin-left: 1em;
-  }
-  .comments-counter{
-    margin-left: .5em;
-    display: inline-block;
-    font-weight: normal;
   }
   .list-item {
     margin-left: 1.3em;

@@ -3,9 +3,11 @@
   .col-3-2
     =to_parent
     .box
-      section.section-info.motion-bg
-        span[class="fa fa-#{motion_icon}"]
-        span.icon-left= motion_type(motion)
+      section.section-info
+        .details
+          .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
+            span[class="fa fa-#{motion_icon}"]
+            span.icon-left= motion_type
       =semantic_form_for((motion.new_record? ? [get_parent_resource, motion] : motion), html: {autocomplete: 'off'}) do |f|
         section.smallpadded.form-filled
           =f.inputs
@@ -36,14 +38,15 @@
                 =f.input :invert_arguments, as: :reverse_boolean
                 /TODO invert arguments only visible when in edit, not in new.
         .hidden=f.input :question_id
-        - if motion.new_record?
-          =render partial: 'profiles/profile_current'
-        - else
-          =render partial: motion.creator, locals: {resource: motion}
+        section.section--footer
+          - if motion.new_record?
+            =render partial: 'profiles/profile_current'
+          - else
+            =render partial: motion.creator, locals: {resource: motion}
 
-        =f.actions
-          .sticky-submit
-            =f.action :submit, as: :button
+          =f.actions
+            .sticky-submit
+              =f.action :submit, as: :button
   - unless alternative_motions?
     /TODO make translations, make content dependent on focus field
     .col-3-1

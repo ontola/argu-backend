@@ -3,10 +3,13 @@
   .col-3-2
     =to_parent
     .box
-      section.section-info.question-bg
-        span[class="fa fa-#{question_icon}"]
-        span.icon-left= questions_type
-      =semantic_form_for((question.new_record? ? [get_parent_resource, question] : question), html: {autocomplete: 'off'}, multipart: true) do |f|
+      section.section-info
+        = render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
+        .details
+          .details-part.details-part--type.question-bg[data-title=t('questions.tooltips.info')]
+            span[class="fa fa-#{question_icon}"]
+            span.icon-left= question_type
+      = semantic_form_for((question.new_record? ? [get_parent_resource, question] : question), html: {autocomplete: 'off'}, multipart: true) do |f|
         section.smallpadded.form-filled
           =f.inputs
             h3= t('questions.form.title_heading')
@@ -42,13 +45,14 @@
               - if policy(question).move?
                 =f.input :f_move, as: :link, url: question_move_url(question), input_html: {data: {remote: true}, class: 'btn--warning'}
                 =f.input :f_convert, as: :link, url: question_convert_url(question), input_html: {data: {remote: true}, class: 'btn--warning'}
-        - if question.new_record?
-          =render partial: 'profiles/profile_current'
-        - else
-          =render partial: question.creator, locals: {resource: question}
-        =f.actions
-          .sticky-submit
-            =f.action :submit, as: :button
+        section.section--footer
+          - if question.new_record?
+            =render partial: 'profiles/profile_current'
+          - else
+            =render partial: question.creator, locals: {resource: question}
+          =f.actions
+            .sticky-submit
+              =f.action :submit, as: :button
   .col-3-1
     .box#question-title-helper
       section

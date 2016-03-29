@@ -45,7 +45,26 @@
   bottom: 0em;
   padding: .5em;
   color: $g2;
+  font-weight: normal;
   @include transition(opacity .2s);
+
+  div {
+    display: inline-block;
+  }
+}
+
+.comments-counter--inline {
+  right: -3em;
+  bottom: -0.5em;
+  display: inline-block;
+  padding: 0;
+  position: initial;
+  padding-left: 0.6em;
+  line-height: 0;
+
+  &:hover {
+    color: $g3;
+  }
 }
 
 .top-comment-container {
@@ -64,6 +83,8 @@
   transition: 0.2s;
   margin-bottom: 1em;
   padding: .9em;
+  @include border-radius();
+
   &:hover {
     background-color: white;
     .comments-counter span{
@@ -77,14 +98,5 @@
   &:active {
     background-color: white;
     transition: none;
-  }
-}
-
-.comments-counter {
-  color: $g3;
-  font-size: .8em;
-
-  div {
-    display: inline-block;
   }
 }

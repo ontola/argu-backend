@@ -3,13 +3,6 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
     =to_parent
     .box[class=status_classes_for(project)]
       =render 'projects/info_bar'
-      - if project.is_draft?
-        section.section-draft
-          p
-            =t('draft_unpublished') + ' '
-            =link_to project_path(project, project: {publish: true}), class: 'btn btn--warning btn--smaller', data: {method: :put, confirm: t('projects.publish_confirmation')}
-              span.fa.fa-paper-plane
-              span.icon-left= t('publish')
       section
         h1.project-t[itemprop="headline"]= project.display_name
         .markdown[itemprop="text"]
@@ -21,6 +14,15 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
           - if project.forum.visibility
             li.share-menu
               ul= react_component 'ShareDropdown', share_items(project), {prerender: true}
+
+    - if project.is_draft?
+      .box
+        section.section-draft
+          p
+            = t('draft_unpublished') + ' '
+            =link_to project_path(project, project: {publish: true}), class: 'btn btn--warning btn--smaller', data: {method: :put, confirm: t('projects.publish_confirmation')}
+              span.fa.fa-paper-plane
+              span.icon-left= t('publish')
     -unless project.phases.blank? && project.latest_blog_post.blank?
       =render partial: 'projects/timeline', locals: {project: project}
     #current-blog-post

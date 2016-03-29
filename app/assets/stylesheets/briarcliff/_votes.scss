@@ -1,6 +1,10 @@
 @import "variables";
 @import "mixins";
 
+.upvote {
+  border-top-right-radius: $border-radius-size;
+}
+
 .side-pro .upvote[data-voted-on="true"]{
   color: white;
   background-color: $gre;
