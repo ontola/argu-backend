@@ -39,10 +39,22 @@ export const VotePie = React.createClass({
 
     render: function () {
         let { pro, neutral, con } = this.props;
-
+        let totalVotesCount = pro + neutral + con;
+        let scaleRatio = 1;
+        if (totalVotesCount < 5) {
+            scaleRatio = .25 + .75 * (totalVotesCount / 5);
+        }
+        let transform = `scale(${scaleRatio})`;
+        let style = {
+            WebkitTransform: transform,
+            MozTransform: transform,
+            msTransform: transform,
+            OTransform: transform,
+            transform: transform
+        };
         if (pro + con + neutral > 0) {
             return (
-                <div className='vote-pie'>
+                <div className='vote-pie' style={style} data-title="">
                     <PieChart slices={this.votedStyle()} />
                 </div>
             );

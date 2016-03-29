@@ -5,8 +5,8 @@ $vote-pie-size: 1.8em;
 
 .vote-pie {
   width: $vote-pie-size;
-  top: -.2em;
-  left: -1.4em;
+  top: -0.25em;
+  left: -1.5em;
   position: absolute;
 
   svg {
@@ -28,6 +28,10 @@ $vote-pie-size: 1.8em;
 
   // Hides the vote pie on IE8,9,10 since the position is weird.
   @media screen\0 {
-    display: none
+    display: none;
   }
+}
+
+.vote-pie--empty{
+  display: none;
 }
