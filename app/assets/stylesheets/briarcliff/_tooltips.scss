@@ -33,7 +33,7 @@
   opacity:0;
   max-width: none;
 
-  // Disables tooltips for IE 8,9 and 10
+  // Hides tooltips on IE8,9,10, since they ignore pointer events.
   @media screen\0 {
     display: none;
   }
