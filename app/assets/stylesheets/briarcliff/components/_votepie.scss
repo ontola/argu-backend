@@ -25,4 +25,9 @@ $vote-pie-size: 1.8em;
   display: inline-block;
   vertical-align: top;
   width: .5em;
+
+  // Hides the vote pie on IE8,9,10 since the position is weird.
+  @media screen\0 {
+    display: none
+  }
 }

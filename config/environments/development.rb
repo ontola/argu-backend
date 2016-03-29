@@ -45,7 +45,7 @@ Rails.application.configure do
   config.assets.compress = false
 
   # Expands the lines which load the assets
-  config.assets.debug = true
+  config.assets.debug = false
 
   config.session_store :cookie_store, key: '_Argu_session', domain: :all #, :tld_length => 2
 
