@@ -2,16 +2,13 @@
 class CreateArgument < CreateService
   include Wisper::Publisher
 
-  def initialize(profile, attributes = {}, options = {})
-    @argument = profile.arguments.new
+  def initialize(argument, attributes = {}, options = {})
+    @argument = argument
     super
-    if attributes[:publisher].blank? && profile.profileable.is_a?(User)
-      @argument.publisher = profile.profileable
-    end
-    if options[:auto_vote] == true && profile.profileable.is_a?(User)
+    if options[:auto_vote]
       @argument
           .votes
-          .build(voter: profile,
+          .build(voter: @argument.creator,
                  forum: @argument.forum,
                  for: :pro)
     end

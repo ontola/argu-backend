@@ -2,8 +2,8 @@
 class CreateActivity < CreateService
   include Wisper::Publisher
 
-  def initialize(profile, attributes = {})
-    @activity = profile.activities.new
+  def initialize(activity, attributes = {})
+    @activity = activity
     super
   end
 

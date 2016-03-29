@@ -100,23 +100,24 @@ private
   end
 
   def create_service
-    CreateGroupResponse.new current_profile,
-                            permit_params.merge({
-                                                    forum: authenticated_context,
-                                                    publisher: current_user,
-                                                    creator: current_profile,
-                                                    group: policy_scope(motion.forum.groups).discussion.find(params[:group_id]),
-                                                    motion: Motion.find(params[:motion_id]),
-                                                    side: side_param
-                                                })
+    @create_service ||= CreateGroupResponse.new(
+        GroupResponse.new,
+        permit_params.merge({
+                                forum: authenticated_context,
+                                publisher: current_user,
+                                creator: current_profile,
+                                group: policy_scope(motion.forum.groups).discussion.find(params[:group_id]),
+                                motion: Motion.find(params[:motion_id]),
+                                side: side_param
+                            }))
   end
 
-  def resource_tenant
-    Motion.find(params[:motion_id]).forum
   def destroy_service
     @destroy_service ||= DestroyGroupResponse.new(resource_by_id)
   end
 
+  def resource_tenant
+    Motion.find(params[:motion_id]).forum
   end
 
   def permit_params

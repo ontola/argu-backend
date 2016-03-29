@@ -131,8 +131,9 @@ class ProjectsController < AuthorizedController
 
   def create_service
     @create_service ||= CreateProject.new(
-        current_profile,
-        permit_params.merge(resource_new_params))
+        Project.new,
+        permit_params.merge(resource_new_params.merge(publisher: current_user,
+                                                      creator: current_profile)))
   end
 
   def destroy_service

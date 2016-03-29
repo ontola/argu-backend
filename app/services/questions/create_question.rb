@@ -2,12 +2,9 @@
 class CreateQuestion < CreateService
   include Wisper::Publisher
 
-  def initialize(profile, attributes = {}, options = {})
-    @question = profile.questions.new
+  def initialize(question, attributes = {}, options = {})
+    @question = question
     super
-    if attributes[:publisher].blank? && profile.profileable.is_a?(User)
-      @question.publisher = profile.profileable
-    end
   end
 
   def resource

@@ -55,7 +55,7 @@ class ActivityListener
 
   def create_activity(resource, recipient, action)
     a = CreateActivity.new(
-        @creator,
+        Activity.new,
         trackable: resource,
         key: "#{resource.model_name.singular}.#{action}",
         owner: @creator,

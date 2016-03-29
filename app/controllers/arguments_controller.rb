@@ -166,10 +166,11 @@ class ArgumentsController < AuthorizedController
 
   def create_service
     @create_service ||= CreateArgument.new(
-        current_profile,
+        Argument.new,
         permit_params.merge(
             forum: authenticated_context,
-            publisher: current_user
+            publisher: current_user,
+            creator: current_profile
         ),
         {
             auto_vote: params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile

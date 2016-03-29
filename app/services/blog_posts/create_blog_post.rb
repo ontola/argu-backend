@@ -2,11 +2,8 @@
 class CreateBlogPost < CreateService
   include Wisper::Publisher
 
-  def initialize(profile, attributes = {}, options = {})
-    @blog_post = profile.blog_posts.new
-    if attributes[:publisher].blank? && profile.profileable.is_a?(User)
-      @blog_post.publisher = profile.profileable
-    end
+  def initialize(blog_post, attributes = {}, options = {})
+    @blog_post = blog_post
     super
   end
 

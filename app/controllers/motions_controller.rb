@@ -255,8 +255,9 @@ class MotionsController < AuthorizedController
 
   def create_service
     @create_service ||= CreateMotion.new(
-        current_profile,
-        permit_params.merge(resource_new_params))
+        Motion.new,
+        permit_params.merge(resource_new_params.merge(publisher: current_user,
+                                                      creator: current_profile)))
   end
 
   def destroy_service
