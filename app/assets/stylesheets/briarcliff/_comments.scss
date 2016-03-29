@@ -44,7 +44,7 @@
   font-size: .8em;
   bottom: 0em;
   padding: .5em;
-  color: $g2;
+  color: $g3;
   font-weight: normal;
   @include transition(opacity .2s);
 
@@ -61,6 +61,7 @@
   position: initial;
   padding-left: 0.6em;
   line-height: 0;
+  color: $g2;
 
   &:hover {
     color: $g3;
