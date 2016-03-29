@@ -9,7 +9,7 @@ class Profile < ActiveRecord::Base
 
   before_destroy :anonymize_or_wipe_dependencies
   has_many :access_tokens, dependent: :destroy
-  has_many :activities, as: :owner
+  has_many :activities, as: :owner, dependent: :restrict_with_exception
   has_many :forums, through: :memberships
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships
@@ -134,7 +134,7 @@ private
   # Sets the dependent foreign relations to a public profile
   # Except for comments..
   def anonymize_or_wipe_dependencies
-    %w(comments motions arguments questions blog_posts projects).each do |association|
+    %w(comments motions arguments questions blog_posts projects activities).each do |association|
       association
           .classify
           .constantize

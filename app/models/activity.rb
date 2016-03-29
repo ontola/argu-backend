@@ -18,6 +18,10 @@ class Activity < PublicActivity::Activity
     key.split('.').last
   end
 
+  def self.anonymize(collection)
+    collection.update_all(owner_id: 0)
+  end
+
   def object
     trackable_type.downcase
   end
