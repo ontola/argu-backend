@@ -14,26 +14,32 @@ let introJsOptions = {
     'showBullets': true,
     'showProgress': false,
     'showStepNumbers': false,
-    'scrollToElement': true
+    'scrollToElement': true,
+    'tooltipPosition': 'bottom-middle-aligned'
 };
 
+// For some weird reason, IntroJS does not listen to default tooltipPosition, so I added the position manually to all steps.
 let introJsMotionTour = introJs().setOptions(introJsOptions).setOptions({
     steps:[
         {
             element: document.querySelector('.motion-body'),
-            intro: I18n.t('intro.motion.posted.body')
+            intro: I18n.t('intro.motion.posted.body'),
+            position: 'bottom-middle-aligned'
         },
         {
             element: document.querySelector('.motion-votes'),
-            intro: I18n.t('intro.motion.posted.vote')
+            intro: I18n.t('intro.motion.posted.vote'),
+            position: 'bottom'
         },
         {
             element: document.querySelector('.argument-columns'),
-            intro: I18n.t('intro.motion.posted.post_argument')
+            intro: I18n.t('intro.motion.posted.post_argument'),
+            position: 'bottom-middle-aligned'
         },
         {
             element: document.querySelector('.share-menu'),
-            intro: I18n.t('intro.motion.posted.share')
+            intro: I18n.t('intro.motion.posted.share'),
+            position: 'bottom-right-aligned'
         }
     ]
 });
