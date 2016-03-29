@@ -314,6 +314,7 @@ RSpec.feature 'Adam west', type: :feature do
     end
 
     expect(page).to have_current_path(motion_path(Motion.last, start_motion_tour: true))
+    click_on 'skip'
     click_on question.title
     expect(page).to have_current_path(question_path(question))
     expect(page).to have_content(question.content)

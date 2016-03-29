@@ -230,6 +230,16 @@
   }
 }
 
+// Used in the column renderer, where only the parent of the link can have a CSS class
+.btn--huge--container {
+  padding: 0;
+  a {
+    padding: .5em 1.4em 0em 1.4em;
+    display: block;
+    height: 100%;
+  }
+}
+
 .box-link {
   &[pro="pro"],&[pro="con"],&[collection_model="Motion"],&[collection_model="Question"],&[collection_model="Project"] {
     h3 {
