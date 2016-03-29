@@ -60,7 +60,6 @@ gem 'httparty', '~> 0.13.7'
 gem 'acts_as_list', '~> 0.7.2'
 # Pagination
 gem 'kaminari', '~>0.16.3'
-gem 'react-i18n', '~> 3.0.0.rc12'
 
 ################## Asset-y ########################
 gem 'slim', '~> 3.0.6'

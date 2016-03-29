@@ -87,6 +87,23 @@
   }
 }
 
+@mixin button--colored ($color: $gre){
+  background-color: $color;
+  border-bottom: solid 3px darken($color, 10%);
+  border-top: solid 3px $color;
+  &:hover {
+    background-color: darken($color, 5%);
+    border-top-color: darken($color, 5%);
+    border-bottom-color: darken($color, 15%);
+  }
+  &:active {
+    background-color: darken($color, 15%);
+    border-bottom-color: darken($color, 15%);
+    border-top-color: darken($color, 20%);
+    transition: none;
+  }
+}
+
 @mixin box-shadow($opts: 0em 0.1em 0.1em 0em rgba(0, 0, 0, 0.05)) {
   box-shadow: $opts;
 }

@@ -7,11 +7,11 @@ section.section-info
       span[class="fa fa-#{blog_post_icon}"]
       /span.icon-left= project.questions.count
       span.icon-left= "_1"
-    .details-part[data-title=t('questions.tooltips.count')]
+    .details-part.details-part--question[data-title=t('questions.tooltips.count')]
       span.fa.fa-question
       /span.icon-left= project.questions.count
       span.icon-left= "_3"
-    .details-part[data-title=t('tooltips.question.motions_count')]
+    .details-part.details-part--motion[data-title=t('tooltips.question.motions_count')]
       span.fa.fa-lightbulb-o
       /span.icon-left= project.motions.count
       span.icon-left= "_2"

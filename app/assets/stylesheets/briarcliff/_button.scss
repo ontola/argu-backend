@@ -191,6 +191,76 @@
   }
 }
 
+.btn--huge {
+  padding: .5em 1.4em 0em 1.4em;
+  border-radius: $border-radius-size;
+  @include box-shadow();
+  width: 100%;
+  text-transform: initial;
+  font-size: 1em;
+  @include transition(background-color .2s linear);
+
+  h3 {
+    color: white;
+  }
+  &:active {
+    @include transition(none);
+  }
+}
+
+.btn--huge {
+  &[pro="pro"]{
+    @include button--colored($pro);
+  }
+
+  &[pro="con"]{
+    @include button--colored($con);
+  }
+
+  &[collection_model="Motion"]{
+    @include button--colored($motion);
+  }
+
+  &[collection_model="Question"]{
+    @include button--colored($question);
+  }
+
+  &[collection_model="Project"]{
+    @include button--colored($project);
+  }
+}
+
+.box-link {
+  &[pro="pro"],&[pro="con"],&[collection_model="Motion"],&[collection_model="Question"],&[collection_model="Project"] {
+    h3 {
+      color: white;
+    }
+  }
+
+  &[pro="pro"]{
+    background-color: $pro;
+    &:hover {
+      background-color: darken($pro, 10);
+    }
+    &:active {
+      background-color: darken($pro, 20);
+    }
+  }
+
+  &[pro="con"]{
+    background-color: $con;
+  }
+  &[collection_model="Motion"]{
+    background-color: $motion;
+  }
+  &[collection_model="Question"]{
+    background-color: $question;
+  }
+  &[collection_model="Project"]{
+    background-color: $project;
+  }
+}
+
 .btn--mini {
   padding: .5em !important;
 }
@@ -289,8 +359,11 @@
 
 }
 
+// Used to make buttons overlap profile text on really small screens.
 .btns-list--grey-background {
   background-color: $g00;
+  border-bottom-right-radius: $border-radius-size;
+  border-top-right-radius: $border-radius-size;
 }
 
 .btns-list--subtle {
@@ -370,9 +443,14 @@
     margin: 0 .5em;
   }
 
-  &[data-voted=true] a {
-    opacity: .4;
-    &[data-voted-on=true]{
+  &[data-voted] a {
+    opacity: .6;
+
+    &:hover {
+      opacity: .8;
+    }
+
+    &[data-voted-on]{
       opacity: 1;
     }
   }
