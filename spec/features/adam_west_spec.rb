@@ -296,7 +296,6 @@ RSpec.feature 'Adam west', type: :feature do
     visit question_path(question)
 
     expect(page).to have_content('Add idea')
-    expect(page).to have_content('New discussion')
   end
 
   private
