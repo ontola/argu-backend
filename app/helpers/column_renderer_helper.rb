@@ -34,11 +34,10 @@ module ColumnRendererHelper
   def button_box(params)
     {
         tag: 'div',
-        class: 'btn--huge'
+        class: 'btn--huge btn--huge--container'
     }.merge(params.except(:collection))
   end
 
-  #
   def header(options)
     if !(defined?(options[:header]) && options[:header] == false)
       content_tag :header do
