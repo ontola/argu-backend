@@ -1,5 +1,12 @@
 class Activity < PublicActivity::Activity
   has_many :notifications, dependent: :destroy
+  # The creator of the activity
+  # @example Create action
+  #   Alice creates an argument against Bob's motion
+  #   activity.owner # => Alice
+  # @example Update
+  #   Moderator updates Alice's argument
+  #   activity.owner # => Moderator
   belongs_to :owner, class_name: 'Profile'
   belongs_to :forum
 

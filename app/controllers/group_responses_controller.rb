@@ -14,7 +14,8 @@ class GroupResponsesController < AuthorizedController
   end
 
   def create
-    create_service.subscribe(ActivityListener.new)
+    create_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                  publisher: current_user))
     create_service.on(:create_group_response_successful) do |group_response|
       respond_to do |format|
         format.html { redirect_to motion_url(group_response.motion) }
@@ -42,7 +43,8 @@ class GroupResponsesController < AuthorizedController
   end
 
   def update
-    update_service.subscribe(ActivityListener.new)
+    update_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                  publisher: current_user))
     update_service.on(:update_group_response_successful) do |group_response|
       respond_to do |format|
         format.html { redirect_to group_response.motion }
@@ -59,7 +61,8 @@ class GroupResponsesController < AuthorizedController
   end
 
   def destroy
-    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                   publisher: current_user))
     destroy_service.on(:destroy_group_response_successful) do |group_response|
       respond_to do |format|
           format.html { redirect_to motion_path(group_response.motion) }

@@ -13,9 +13,8 @@ class Comment < ActiveRecord::Base
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   after_create :increment_counter_cache, :touch_parent
-  validates_presence_of :creator
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}
-  validates :forum, presence: true
+  validates :forum, :creator, presence: true
   auto_strip_attributes :body
 
   attr_accessor :is_processed

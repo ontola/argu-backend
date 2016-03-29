@@ -19,7 +19,7 @@ class BlogPost < ActiveRecord::Base
              polymorphic: true,
              inverse_of: :blog_posts
 
-  validates :blog_postable, presence: true
+  validates :blog_postable, :creator, presence: true
 
   parentable :blog_postable, :forum
 end

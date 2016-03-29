@@ -30,7 +30,8 @@ class QuestionsController < AuthorizedController
   end
 
   def create
-    create_service.subscribe(ActivityListener.new)
+    create_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                  publisher: current_user))
     create_service.on(:create_question_successful) do |question|
       respond_to do |format|
         format.html { redirect_to question, notice: t('type_save_success', type: question_type) }
@@ -50,7 +51,8 @@ class QuestionsController < AuthorizedController
   # PUT /questions/1.json
   def update
     update_service.resource.reload if process_cover_photo update_service.resource, permit_params
-    update_service.subscribe(ActivityListener.new)
+    update_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                  publisher: current_user))
     update_service.on(:update_question_successful) do |question|
       respond_to do |format|
         format.html { redirect_to question, notice: t('type_save_success', type: question_type) }
@@ -69,7 +71,8 @@ class QuestionsController < AuthorizedController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def destroy
-    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                   publisher: current_user))
     destroy_service.on(:destroy_question_successful) do |question|
       respond_to do |format|
         format.html { redirect_to question.forum, notice: t('type_destroy_success', type: t('questions.type')) }
@@ -88,7 +91,8 @@ class QuestionsController < AuthorizedController
   # DELETE /questions/1
   # DELETE /questions/1.json
   def trash
-    trash_service.subscribe(ActivityListener.new)
+    trash_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                 publisher: current_user))
     trash_service.on(:trash_question_successful) do |question|
       respond_to do |format|
         format.html { redirect_to question.forum, notice: t('type_trash_success', type: t('questions.type')) }
@@ -107,7 +111,8 @@ class QuestionsController < AuthorizedController
   # PUT /arguments/1/untrash
   # PUT /arguments/1/untrash.json
   def untrash
-    untrash_service.subscribe(ActivityListener.new)
+    untrash_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                   publisher: current_user))
     untrash_service.on(:untrash_question_successful) do |question|
       respond_to do |format|
         format.html { redirect_to question, notice: t('type_untrash_success', type: t('questions.type')) }

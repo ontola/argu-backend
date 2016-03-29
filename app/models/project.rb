@@ -26,8 +26,7 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :phases
   accepts_nested_attributes_for :stepups
 
-  validates :forum, presence: true
-  validates :creator, presence: true
+  validates :forum, :creator, presence: true
 
   counter_culture :forum
 

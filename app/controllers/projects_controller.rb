@@ -9,7 +9,8 @@ class ProjectsController < AuthorizedController
   end
 
   def create
-    create_service.subscribe(ActivityListener.new)
+    create_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                  publisher: current_user))
     create_service.on(:create_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project }
@@ -49,7 +50,8 @@ class ProjectsController < AuthorizedController
   end
 
   def update
-    update_service.subscribe(ActivityListener.new)
+    update_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                  publisher: current_user))
     update_service.on(:update_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project }
@@ -68,7 +70,8 @@ class ProjectsController < AuthorizedController
   # DELETE /projects/1?destroy=true
   # DELETE /projects/1.json?destroy=true
   def destroy
-    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                   publisher: current_user))
     destroy_service.on(:destroy_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project.forum, notice: t('type_destroy_success', type: t('projects.type')) }
@@ -87,7 +90,8 @@ class ProjectsController < AuthorizedController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def trash
-    trash_service.subscribe(ActivityListener.new)
+    trash_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                 publisher: current_user))
     trash_service.on(:trash_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project.forum, notice: t('type_trash_success', type: t('projects.type')) }
@@ -106,7 +110,8 @@ class ProjectsController < AuthorizedController
   # PUT /projects/1/untrash
   # PUT /projects/1/untrash.json
   def untrash
-    untrash_service.subscribe(ActivityListener.new)
+    untrash_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                   publisher: current_user))
     untrash_service.on(:untrash_project_successful) do |project|
       respond_to do |format|
         format.html { redirect_to project, notice: t('type_untrash_success', type: t('projects.type')) }

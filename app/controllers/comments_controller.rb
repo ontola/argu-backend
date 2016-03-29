@@ -44,7 +44,8 @@ class CommentsController < AuthorizedController
 
   # POST /resource/1/comments
   def create
-    create_service.subscribe(ActivityListener.new)
+    create_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                  publisher: current_user))
     create_service.on(:create_comment_successful) do |c|
       redirect_to polymorphic_url(c.commentable, anchor: c.identifier),
                   notice: t('type_create_success', type: t('comments.type'))
@@ -61,7 +62,8 @@ class CommentsController < AuthorizedController
   end
 
   def update
-    update_service.subscribe(ActivityListener.new)
+    update_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                  publisher: current_user))
     update_service.on(:update_comment_successful) do |comment|
       respond_to do |format|
         format.html do
@@ -97,7 +99,8 @@ class CommentsController < AuthorizedController
 
   # DELETE /arguments/1/comments/1?destroy=true
   def destroy
-    destroy_service.subscribe(ActivityListener.new)
+    destroy_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                   publisher: current_user))
     destroy_service.on(:destroy_comment_successful) do |comment|
       respond_to do |format|
         format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id) }
@@ -115,7 +118,8 @@ class CommentsController < AuthorizedController
 
   # DELETE /arguments/1/comments/1
   def trash
-    trash_service.subscribe(ActivityListener.new)
+    trash_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                 publisher: current_user))
     trash_service.on(:trash_comment_successful) do |comment|
       respond_to do |format|
         format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('type_trash_success',
@@ -135,7 +139,8 @@ class CommentsController < AuthorizedController
   # PUT /arguments/1/comments/1/untrash
   # PUT /arguments/1/comments/1/untrash.json
   def untrash
-    untrash_service.subscribe(ActivityListener.new)
+    untrash_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                   publisher: current_user))
     untrash_service.on(:untrash_comment_successful) do |comment|
       respond_to do |format|
         format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('type_untrash_success',
