@@ -29,5 +29,5 @@
 #translations:
 #  - file: "app/assets/javascripts/i18n/translations.js"
 translations:
-- file: "app/assets/javascripts/i18n/translations.js"
-  only: 'intro.*'
+  - file: "app/assets/javascripts/i18n/translations_%{locale}.js"
+    only: ['*.intro', '*.votes']
