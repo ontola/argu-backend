@@ -12,7 +12,7 @@ class UpdateService < ApplicationService
     :update
   end
 
-  def service_action!
+  def service_method
     :save!
   end
 end

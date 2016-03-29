@@ -3,12 +3,9 @@
 class CreateProject < CreateService
   include Wisper::Publisher
 
-  def initialize(profile, attributes = {}, options = {})
-    @project = profile.projects.new
+  def initialize(project, attributes = {}, options = {})
+    @project = project
     super
-    if attributes[:publisher].blank? && profile.profileable.is_a?(User)
-      @project.publisher = profile.profileable
-    end
   end
 
   def resource

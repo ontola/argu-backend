@@ -15,7 +15,7 @@ class DestroyComment < DestroyService
     :destroy
   end
 
-  def service_action!
+  def service_method
     :wipe
   end
 end

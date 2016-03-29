@@ -21,7 +21,7 @@ class ApplicationService
   # @see {after_save}
   def commit
     ActiveRecord::Base.transaction do
-      @actions[service_action] = resource.send service_action!
+      @actions[service_action] = resource.public_send service_method
 
       after_save
 
@@ -37,7 +37,7 @@ class ApplicationService
 
   # Override this when you need to perform additional actions within
   # the transaction but after the model was saved.
-  # @note This doens't work when {commit} is overridden.
+  # @note This doesn't work when {commit} is overridden.
   def after_save
     # Stub
   end
@@ -58,14 +58,18 @@ class ApplicationService
     end
   end
 
-  # The action that called this service
+  # The action that called this service.
+  #
+  # Used to determine the correct signal name in {signal_base} since controller
+  # actions can differ from their associated model methods
+  # @return [Symbol] The name of the calling controller action
   def service_action
     raise 'Required interface not implemented'
   end
 
-  # The action that will be send to the resource
-  # @default is {service_action}
-  def service_action!
+  # The method that will be called on the resource
+  # @return [Symbol] The method to be called on the model (Defaults to {service_action})
+  def service_method
     service_action
   end
 
