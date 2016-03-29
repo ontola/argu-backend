@@ -22,6 +22,9 @@ section {
   .details-part--type {
     border-top-left-radius: $border-radius-size;
   }
+  .details-part--right {
+    border-top-right-radius: $border-radius-size;
+  }
 }
 
 //.box > section:last-child, .box > a:last-child > section{
@@ -82,6 +85,10 @@ section {
   }
 }
 
+.details-part--right{
+  float: right;
+}
+
 .details-part--type{
   color: white;
   padding-left: 1.2em;
@@ -92,6 +99,15 @@ section {
   }
   &:hover{
     color: white;
+  }
+}
+
+.details-part--filled {
+  color: white;
+
+  &:hover {
+    color: white;
+    background-color: $g3;
   }
 }
 
@@ -113,6 +129,29 @@ section {
 
 .details-part--question:hover {
   color: $question;
+}
+
+.details-part--countdown {
+  background-color: $red-alert;
+  &:hover {
+    background-color: darken($red-alert, 10%);
+  }
+}
+
+.details-part--closed {
+  background-color: $g3;
+}
+
+.details-part--accepted {
+  background-color: $gre;
+}
+
+.details-part--rejected {
+  background-color: $red;
+}
+
+.details-part--contemplating {
+  background-color: $g3;
 }
 
 // Use this style when voting with the info bar is possible
@@ -173,33 +212,6 @@ section.smallpadded {
 
 .section-description {
   background-color: $g00;
-}
-
-.section-info--right {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1;
-}
-
-.section-info--countdown {
-  background-color: $red-alert;
-}
-
-.section-info--closed {
-  background-color: $g3;
-}
-
-.section-info--accepted {
-  background-color: $gre;
-}
-
-.section-info--rejected {
-  background-color: $red;
-}
-
-.section-info--contemplating {
-  background-color: $g3;
 }
 
 .section-video {

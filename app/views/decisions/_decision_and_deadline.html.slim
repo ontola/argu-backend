@@ -1,11 +1,11 @@
 -if deadline.present? && active_for_user?(:expires_at, current_user)
   -if deadline > DateTime.current
-    section.section-info.section-info--right.section-info--countdown
-      span[data-title= t('questions.expires_at.tooltip', date: deadline.to_formatted_s(:short))]= t('time_remaining', time: distance_of_time_in_words(deadline, DateTime.current))
+    .details-part.details-part--filled.details-part--right.details-part--countdown[data-title= t('questions.expires_at.tooltip', date: deadline.to_formatted_s(:short))]
+      span= t('time_remaining', time: distance_of_time_in_words(deadline, DateTime.current))
   -else
-    section.section-info.section-info--right.section-info--closed
+    .details-part.details-part--filled.details-part--right.details-part--closed[data-title= t('questions.expired_at.tooltip', date: deadline.to_formatted_s(:short))]
       span.fa.fa-lock
-      span.icon-left[data-title= t('questions.expired_at.tooltip', date: deadline.to_formatted_s(:short))]= t('closed')
+      span.icon-left= t('closed')
 
 /-if defined?(decision)
   -if decision == 'accepted'
