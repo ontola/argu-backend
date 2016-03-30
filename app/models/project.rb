@@ -29,7 +29,7 @@ class Project < ActiveRecord::Base
   validates :forum, :creator, presence: true
 
   counter_culture :forum
-
+  acts_as_followable
   parentable :forum
 
   def latest_blog_post
