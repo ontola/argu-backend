@@ -13,7 +13,7 @@ class CreateCommentTest < ActiveSupport::TestCase
   end
 
   test 'it creates a comment' do
-    c = CreateComment.new(user.profile,
+    c = CreateComment.new(Comment.new,
                           comment_attributes)
     assert c.resource.valid?
     assert_equal user.profile, c.resource.creator
