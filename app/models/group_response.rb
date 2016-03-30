@@ -19,6 +19,10 @@ class GroupResponse < ActiveRecord::Base
   validates :text, length: {maximum: 5000}
   validates :side, :group, :forum, :motion, :creator, presence: true
 
+  def display_name
+    self.text
+  end
+
   def self.ordered (coll=[])
     dest = {'pro' => {collection: []}, 'neutral' => {collection: []}, 'con' => {collection: []}}
     coll.each { |gr| dest[gr.side][:collection] << gr }
