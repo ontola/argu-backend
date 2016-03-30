@@ -26,9 +26,8 @@ module MenuHelper
     if resource.respond_to?(:blog_posts) # @TODO figure out how to do the authorization nicely
       link_items << link_item(t('blog_posts.type_new'), polymorphic_url([:new, resource, :blog_post]), fa: 'quote-left')
     end
-    if resource_policy.update?
-      link_items << link_item(t('edit'), polymorphic_url([:edit, resource]), fa: 'pencil')
-    end
+    link_items << link_item(t('edit'), polymorphic_url([:edit, resource]), fa: 'pencil') if resource_policy.update?
+    link_items << link_item(t('log'), polymorphic_url([resource, :log]), fa: 'history') if resource_policy.log?
     if resource.is_trashed?
       if resource_policy.trash?
         link_items << link_item(t('untrash'), polymorphic_url([:untrash, resource]), data: {confirm: t('untrash_confirmation'), method: 'put', turbolinks: 'false'}, fa: 'eye')

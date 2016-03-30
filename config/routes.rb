@@ -35,13 +35,12 @@ Argu::Application.routes.draw do
               only: [:index, :new, :create],
               path: 'posts'
   end
-  concern :moveable do
-    get :move, action: :move
-    put :move, action: :move!
-  end
   concern :convertible do
     get :convert, action: :convert
     put :convert, action: :convert!
+  end
+  concern :destroyable do
+    get :delete, action: :delete, path: :delete, as: :delete, on: :member
   end
   concern :discussable do
     resources :discussions, only: [:new]
@@ -51,23 +50,27 @@ Argu::Application.routes.draw do
   concern :flowable do
     get :flow, controller: :flow, action: :show
   end
+  concern :logable do
+    get :log, controller: :log, action: :log
+  end
+  concern :moveable do
+    get :move, action: :move
+    put :move, action: :move!
+  end
   concern :transferable do
     get :transfer, action: :transfer
     put :transfer, action: :transfer!
+  end
+  concern :trashable do
+      put :untrash, action: :untrash, on: :member
+      match action: :destroy, on: :member, as: :destroy, via: :delete, constraints: Argu::DestroyConstraint
+      match action: :trash, on: :member, as: :trash, via: :delete
   end
   concern :votable do
     resources :votes, only: [:new, :create], path: 'v'
     get 'v' => 'votes#show', shallow: true, as: :show_vote
     post 'v/:for' => 'votes#create', shallow: true, as: :vote
     get 'v/:for' => 'votes#new', shallow: true
-  end
-  concern :destroyable do
-    get :delete, action: :delete, path: :delete, as: :delete, on: :member
-  end
-  concern :trashable do
-      put :untrash, action: :untrash, on: :member
-      match action: :destroy, on: :member, as: :destroy, via: :delete, constraints: Argu::DestroyConstraint
-      match action: :trash, on: :member, as: :trash, via: :delete
   end
 
   use_doorkeeper do
@@ -126,7 +129,7 @@ Argu::Application.routes.draw do
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],
-            concerns: [:moveable, :convertible, :flowable, :trashable] do
+            concerns: [:moveable, :convertible, :flowable, :trashable, :logable] do
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
   end
@@ -136,7 +139,7 @@ Argu::Application.routes.draw do
   resources :motions,
             path: 'm',
             except: [:index, :new, :create, :destroy],
-            concerns: [:moveable, :convertible, :votable, :flowable, :trashable] do
+            concerns: [:moveable, :convertible, :votable, :flowable, :trashable, :logable] do
     resources :groups, only: [] do
       resources :group_responses, only: [:new, :create]
     end
@@ -146,7 +149,7 @@ Argu::Application.routes.draw do
   resources :arguments,
             path: 'a',
             except: [:index, :new, :create, :destroy],
-            concerns: [:votable, :flowable, :trashable] do
+            concerns: [:votable, :flowable, :trashable, :logable] do
     resources :comments,
               path: 'c',
               concerns: [:trashable],
@@ -177,12 +180,12 @@ Argu::Application.routes.draw do
   resources :blog_posts,
             path: 'posts',
             only: [:show, :edit, :update],
-            concerns: [:trashable]
+            concerns: [:trashable, :logable]
 
   resources :projects,
             path: 'p',
             only: [:show, :edit, :update],
-            concerns: [:blog_postable, :flowable, :discussable, :trashable]
+            concerns: [:blog_postable, :flowable, :discussable, :trashable, :logable]
 
   resources :phases,
             only: [:show]

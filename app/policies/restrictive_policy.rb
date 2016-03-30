@@ -127,6 +127,10 @@ class RestrictivePolicy
     staff?
   end
 
+  def log?
+    rule is_moderator?, is_owner?, staff?
+  end
+
   def logged_in?
     user.present?
   end
