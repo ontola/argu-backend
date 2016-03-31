@@ -41,6 +41,6 @@
                 buttons_text: t('add_type', type: motion_type(question)),
                 page_param: :page,
                 buttons_icon: 'fa-lightbulb-o',
-                buttons_header: @motions.present? && 'Heb jij een beter idee?',
+                buttons_header: @motions.present? && t('motions.one_up'),
                 buttons_class: 'box-link--motion')
 =render partial: 'discussions/new', locals: {forum: authenticated_context}
