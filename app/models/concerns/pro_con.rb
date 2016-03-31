@@ -26,6 +26,11 @@ module ProCon
     parentable :motion, :forum
 
     delegate :uses_alternative_names, :motions_title, :motions_title_singular, to: :motion
+
+    # Simple method to verify that a model uses {ProCon}
+    def is_pro_con?
+      true
+    end
   end
 
   def creator_follow
@@ -71,4 +76,20 @@ module ProCon
       HashWithIndifferentAccess.new(pro: {collection: grouped[:pro] || []}, con: {collection: grouped[:con] || []})
     end
   end
+
+  module ActiveRecordExtension
+    def self.included(base)
+      base.class_eval do
+        def self.is_pro_con?
+          false
+        end
+      end
+    end
+
+    # Useful to test whether a model uses {ProCon}
+    def is_pro_con?
+      false
+    end
+  end
+  ActiveRecord::Base.send(:include, ActiveRecordExtension)
 end

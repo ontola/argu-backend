@@ -74,4 +74,20 @@ module Parentable
       end
     end
   end
+
+  module ActiveRecordExtension
+    def self.included(base)
+      base.class_eval do
+        def self.is_fertile?
+          false
+        end
+      end
+    end
+
+    # Useful to test whether a model is (not) fertile
+    def is_fertile?
+      false
+    end
+  end
+  ActiveRecord::Base.send(:include, ActiveRecordExtension)
 end
