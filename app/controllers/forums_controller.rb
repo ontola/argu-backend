@@ -24,17 +24,18 @@ class ForumsController < ApplicationController
     authorize @forum, :list?
     current_context @forum
 
-    # @FIXME TODO Remove the unpublished stuff from projects (in the scope)
-    questions = policy_scope(@forum.questions.trashed(show_trashed?))
-
-    motions_without_questions = policy_scope(Motion.where(
-                                               forum: @forum,
-                                               question_id: nil,
-                                               is_trashed: show_trashed?))
+    projects = policy_scope(@forum.projects)
+    orphan_questions = policy_scope(@forum.questions.where(project_id: nil))
+    orphan_motions = Motion.where(
+      forum: @forum,
+      question_id: nil,
+      project_id: nil,
+      is_trashed: show_trashed?)
+    orphan_motions = policy_scope(orphan_motions)
 
     if policy(@forum).show?
       @items = Kaminari
-               .paginate_array((questions + motions_without_questions)
+               .paginate_array((projects + orphan_questions + orphan_motions)
                                    .sort_by(&:updated_at)
                                    .reverse)
                .page(show_params[:page])

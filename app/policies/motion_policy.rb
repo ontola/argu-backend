@@ -17,7 +17,16 @@ class MotionPolicy < RestrictivePolicy
       if context.forum.present?
         scope.where(forum_id: context.forum.id).published
       elsif user.present? && user.profile.memberships.present?
-        scope.where(forum_id: user.profile.memberships.pluck(:forum_id)).published
+        scope.where(forum_id: user.profile.memberships.select(:forum_id)).published
+      end
+    end
+
+    # Includes all the records within the tenant or the users' memberships
+    def broad
+      if context.forum.present?
+        scope.where(forum_id: context.forum.id)
+      elsif user.present? && user.profile.memberships.present?
+        scope.where(forum_id: user.profile.memberships.select(:forum_id))
       end
     end
   end
