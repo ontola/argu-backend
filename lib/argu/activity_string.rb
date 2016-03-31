@@ -76,7 +76,7 @@ class ActivityString
   def type_string
     string =
       if @activity.object == 'vote'
-        'stem' :
+        'stem' 
       else
         I18n.t("#{@activity.object.pluralize}.type").downcase
       end
