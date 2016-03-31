@@ -17,6 +17,7 @@ end
 
 module Argu
   class Application < Rails::Application
+    require_relative '../app/models/concerns/pro_con'
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     config.autoload_paths += %W(#{config.root}/app/services)
