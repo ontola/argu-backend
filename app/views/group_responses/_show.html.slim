@@ -9,8 +9,7 @@
           h3[class="#{model.side}-t"]= model.creator.display_name
         time.info[datetime=model.created_at]= l model.created_at, format: :long
     - if model.text.present?
-      .markdown[itemprop="text"]
-        =markdown_to_html(model.text)
+      =render partial: 'application/markdown_collapsible', locals: {content: model.text, identifier: model.identifier}
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right
       -if policy(model).destroy?
         li= link_to group_response_path(model), data: {method: :delete, remote: true, confirm: t('destroy_confirmation'), turbolinks: 'false'}
