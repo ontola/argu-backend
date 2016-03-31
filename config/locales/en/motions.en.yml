@@ -13,6 +13,7 @@ en:
     no_pros: "no pros yet"
     no_cons: "no cons yet"
     content: "content"
+    one_up: "Do you have a better idea?"
     tooltips:
       count: "number of ideas"
       info: "An idea is a proposal on which people can vote and add pro- or con arguments."
