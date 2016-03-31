@@ -2,28 +2,28 @@
 en:
   activities:
     votes:
-      voted:
-        pro: "is in favour of a %{thing}"
-        pro_your: "is in favour of your %{thing}"
-        neutral: "is neutral about a %{thing}"
-        neutral_your: "is neutral about your %{thing}"
-        con: "opposes a %{thing}"
-        con_your: "opposes your %{thing}"
-    questions:
-      create: "Posted a %{type} on the forum %{thing}"
-      create_your: "Posted a %{type} for your forum %{thing}"
-    motions:
-      create: "Posted an %{type} for a %{thing}"
-      create_your: "Posted an %{type} for your %{thing}"
+      create: "%{owner} %{side} %{parent}"
+      pro: "is in favour of"
+      con: "is against"
+      neutral: "is neutral about"
+    default:
+      create: "%{owner} posted a %{type} in %{parent}"
+      destroy: "%{owner} deleted %{subject}"
+      trash: "%{owner} trashed %{subject}"
+      untrash: "%{owner} untrashed %{subject}"
+      update: "%{owner} updated %{subject}"
     arguments:
-      create: "Posted an %{type} for a %{thing}"
-      create_your: "Posted an %{type} for your %{thing}"
+      create: "%{owner} posted a %{type} %{side} %{parent}"
+      pro: "in favour of"
+      con: "against"
     comments:
-      create: "Replied to a %{thing}"
-      create_your: "Replied to your %{thing}"
+      create: "%{owner} replied to %{parent}"
+      destroy: "%{owner} deleted a %{type} for %{parent}"
+      trash: "%{owner} trashed a %{subject} for %{parent}"
+      untrash: "%{owner} untrashed a %{subject} for %{parent}"
+      update: "%{owner} updated a %{subject} for %{parent}"
     group_responses:
-      create: "Posted a %{type} as a %{group_singular} for a %{thing}"
-      create_your: "Posted a %{type} as a %{group_singular} for your %{thing}"
+      create: "%{owner} posted a %{type} as a %{group_singular} in %{parent}"
     ui:
       load_more: "Load more"
       no_more_artivities: "No more activities"

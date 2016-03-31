@@ -2,28 +2,28 @@
 nl:
   activities:
     votes:
-      voted:
-        pro: "is voor een %{thing}"
-        pro_your: "is voor jouw %{thing}"
-        neutral: "heeft nog geen mening over een %{thing}"
-        neutral_your: "heeft nog geen mening over jouw %{thing}"
-        con: "is tegen een %{thing}"
-        con_your: "is tegen jouw %{thing}"
-    questions:
-      create: "heeft een %{type} geplaatst voor het forum %{thing}"
-      create_your: "heeft een %{type} geplaatst voor jouw forum %{thing}"
-    motions:
-      create: "heeft een %{type} geplaatst voor een %{thing}"
-      create_your: "heeft een %{type} geplaatst voor jouw %{thing}"
+      create: "%{owner} %{side} %{parent}"
+      pro: "is vóór"
+      con: "is tegen"
+      neutral: "heeft nog geen mening over"
+    default:
+      create: "%{owner} heeft een %{type} geplaatst in %{parent}"
+      destroy: "%{owner} heeft %{subject} permanent verwijderd"
+      trash: "%{owner} heeft %{subject} verwijderd"
+      untrash: "%{owner} heeft %{subject} ontverwijderd"
+      update: "%{owner} heeft %{subject} geupdate"
     arguments:
-      create: "heeft een %{type} geplaatst voor een %{thing}"
-      create_your: "heeft een %{type} geplaatst voor jouw %{thing}"
+      create: "%{owner} heeft een %{type} geplaatst %{side} %{parent}"
+      pro: "vóór"
+      con: "tegen"
     comments:
-      create: "heeft gereageerd op een %{thing}"
-      create_your: "heeft gereageerd op jouw %{thing}"
+      create: "%{owner} heeft gereageerd op %{parent}"
+      destroy: "%{owner} heeft een %{type} op %{parent} permanent verwijderd"
+      trash: "%{owner} heeft een %{subject} op %{parent} verwijderd"
+      untrash: "%{owner} heeft een %{subject} op %{parent} ontverwijderd"
+      update: "%{owner} heeft een %{subject} op %{parent} geupdate"
     group_responses:
-      create: "heeft als %{group_singular} een %{type} geplaatst op een %{thing}"
-      create_your: "heeft als %{group_singular} een %{type} geplaatst op jouw %{thing}"
+      create: "%{owner} heeft als %{group_singular} gereageerd op %{parent}"
     ui:
       load_more: "Laad meer"
       no_more_artivities: "Geen oudere activiteiten"

@@ -3,9 +3,9 @@ module ProfilesHelper
   # Either a Page or a User
   def dual_profile_url(profile)
     if profile.profileable.class == User
-      user_url(profile.profileable)
+      user_url(profile.profileable, only_path: true)
     elsif profile.profileable.class == Page
-      page_url(profile.profileable)
+      page_url(profile.profileable, only_path: true)
     else
       'deleted'
     end
