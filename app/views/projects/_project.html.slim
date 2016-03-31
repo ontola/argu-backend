@@ -1,3 +1,4 @@
+- discussions = (policy_scope(project.questions) + policy_scope(project.motions)).sort_by(&:updated_at).reverse
 .box.box-grid.project[class="#{'trashed' if project.is_trashed?}" data-created-at=project.created_at  data-updated-at=project.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork" id]
   /-if project.cover_photo.present?
     =contextual_link_to project_path(project) do
@@ -11,20 +12,14 @@
     =contextual_link_to project_path(project) do
       section
         h2.project-t[itemprop="headline"]= project.title
-        - if project.discussions.present?
+        - if discussions.present?
           ul.box-list.box-list--icons
-            - discussions.each do |discussion|
-              li= link_to discussion_path(discussion) do
-                - if discussion.class == question
-                  h3.question-t
-                    span[class='fa fa=#{question_icon}']
-                    .list-item
-                      span= question.title
-                - if discussion.class == motion
-                  h3.motion-t
-                    span[class='fa fa=#{motion_icon}']
-                    .list-item
-                      span= motion.title
+            - discussions.each do |resource|
+              li= link_to url_for(resource) do
+                h3[class="#{resource.model_name.singular}-t"]
+                  span[class='fa fa-#{public_send("#{resource.model_name.singular}_icon")}']
+                  .list-item
+                    span= resource.title
             - if discussions.count > 3
               li= contextual_link_to project_path(project)
               h3.motion-t

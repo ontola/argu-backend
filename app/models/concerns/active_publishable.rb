@@ -3,18 +3,24 @@ module ActivePublishable
 
   included do
     scope :published, -> do
-      where('published_at <= ?', DateTime.current)
-        .where('ends_at IS NULL OR ends_at > ?',
-               DateTime.current)
+      scope = where('published_at <= ?', DateTime.current)
+      if self.respond_to?(:ends_at)
+        scope = scope.where('ends_at IS NULL OR ends_at > ?',
+                            DateTime.current)
+      end
+      scope
     end
     scope :unpublished, -> do
       where('published_at IS NULL OR published_at > ?',
             DateTime.current)
     end
     scope :ended, -> do
-      where('published_at IS NOT NULL')
-      .where('ends_at IS NOT NULL AND ends_at < ?',
-             DateTime.current)
+      scope = where('published_at IS NOT NULL')
+      if self.respond_to?(:ends_at)
+        scope = scope.where('ends_at IS NOT NULL AND ends_at < ?',
+                            DateTime.current)
+      end
+      scope
     end
 
     attr_accessor :unpublish
