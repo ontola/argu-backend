@@ -13,6 +13,7 @@ nl:
     no_pros: "nog niets voor"
     no_cons: "nog niets tegen"
     content: "inhoud"
+    one_up: "Heb jij een beter idee?"
     tooltips:
       count: "aantal ideeën"
       info: "Een idee is een voorstel waar je voor of tegen kan zijn."
