@@ -1,10 +1,11 @@
 class Vote < ActiveRecord::Base
-  include ArguBase, PublicActivity::Model
+  include ArguBase, Parentable, PublicActivity::Model
 
   belongs_to :voteable, polymorphic: true, inverse_of: :votes
   belongs_to :voter, polymorphic: true #class_name: 'Profile'
   has_many :activities, as: :trackable
   belongs_to :forum
+  parentable :voteable
 
   after_save :update_parentable_counter
   after_destroy :update_parentable_counter
@@ -16,6 +17,14 @@ class Vote < ActiveRecord::Base
   ##########methods###########
   def for?(item)
     self.for.to_s === item.to_s
+  end
+
+  def is_pro_con?
+    true
+  end
+
+  def key
+    self.for.to_sym
   end
 
   delegate :is_trashed?, to: :voteable
