@@ -29,12 +29,17 @@ class ProjectsController < AuthorizedController
   def show
     questions = policy_scope(authenticated_resource!.questions.trashed(show_trashed?))
 
-    motions_without_questions = policy_scope(Motion.where(forum: authenticated_context,
-                                                          project: authenticated_resource!,
-                                                          question_id: nil,
-                                                          is_trashed: show_trashed?))
+    motions = Motion.where(forum: authenticated_context,
+                           project: authenticated_resource!,
+                           question_id: nil,
+                           is_trashed: show_trashed?)
+    orphan_motions = MotionPolicy::Scope.new(pundit_user, motions).broad
 
-    @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(authenticated_resource!).show?
+    if policy(authenticated_resource!).show?
+      @items = (questions + orphan_motions)
+                 .sort_by(&:updated_at)
+                 .reverse
+    end
 
     respond_to do |format|
       format.html { render locals: {project: authenticated_resource!} }

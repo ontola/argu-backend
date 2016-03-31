@@ -46,7 +46,7 @@ class Motion < ActiveRecord::Base
 
   def self.published
     joins('LEFT OUTER JOIN projects ON projects.id = project_id')
-      .where('published_at IS NOT NULL OR project_id IS NULL')
+      .where('published_at <= ? OR project_id IS NULL', DateTime.current)
   end
 
   def assert_tenant
