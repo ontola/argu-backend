@@ -56,19 +56,7 @@ module TestHelper
   end
 end
 
-class ActiveSupport::TestCase
-  include TestHelper
-  include TestMocks
-  ActiveRecord::Migration.check_pending!
-
-  include FactoryGirl::Syntax::Methods
-  # FactoryGirl.lint
-  Setting.set('user_cap', '-1')
-  # Add more helper methods to be used by all tests here...
-
-  def assert_notification_sent
-  end
-
+module AuthorizationAssertions
   def assert_not_a_member
     assert_equal true, assigns(:_not_a_member_caught)
     assert_response 403
@@ -80,6 +68,21 @@ class ActiveSupport::TestCase
 
   def assert_not_authorized
     assert_equal true, assigns(:_not_authorized_caught)
+  end
+end
+
+class ActiveSupport::TestCase
+  include TestHelper
+  include TestMocks
+  include AuthorizationAssertions
+  ActiveRecord::Migration.check_pending!
+
+  include FactoryGirl::Syntax::Methods
+  # FactoryGirl.lint
+  Setting.set('user_cap', '-1')
+  # Add more helper methods to be used by all tests here...
+
+  def assert_notification_sent
   end
 
   def change_actor(actor)
@@ -137,6 +140,7 @@ class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
   include TestMocks
+  include AuthorizationAssertions
 
   def setup_allowed_pages
     Capybara::Webkit.configure do |config|
@@ -146,7 +150,7 @@ class ActionDispatch::IntegrationTest
     end
   end
 
-  def log_in_user(user = create(:user))
+  def sign_in(user = create(:user))
     post user_session_path,
          user: {
            email: user.email,
