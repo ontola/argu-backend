@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class ProjectsControllerTest < ActionController::TestCase
-  include Devise::TestHelpers
+class ProjectsControllerTest < ActionDispatch::IntegrationTest
+  include ApplicationHelper
 
   let!(:owner) { create(:user) }
   let!(:page) { create(:page, owner: owner.profile) }
@@ -32,97 +32,6 @@ class ProjectsControllerTest < ActionController::TestCase
            forum: freetown)
   end
   let(:unpublished) { create(:project, :unpublished, forum: freetown) }
-
-  ####################################
-  # Guest, User, Member share features
-  ####################################
-
-  def general_new(response = 302)
-    get :new,
-        forum_id: freetown
-
-    assert_response response
-  end
-
-  def general_show(response = 200, record = subject)
-    get :show,
-        id: record
-
-    assert_response response
-  end
-
-  def general_create(response = 302, created = false, differences = [['Project.count', 0],
-                                                                     ['Stepup.count', 0],
-                                                                     ['Phase.count', 0],
-                                                                     ['Activity.count', 0]])
-    assert_differences(differences) do
-      post :create,
-           forum_id: freetown,
-           project: attributes_for(:project,
-                                   stepups_attributes: {'12321' => {moderator: moderator.url}},
-                                   phases_attributes: {'12321' => attributes_for(:phase)},
-                                   default_cover_photo_attributes: {
-                                     image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
-                                   })
-    end
-
-    assert_equal 'cover_photo.jpg', assigns(:create_service).resource.default_cover_photo.image_identifier if created
-    assert_equal 1, assigns(:create_service).resource.photos.count if created
-    assert_response response
-  end
-
-  def general_edit(response = 302)
-    get :edit,
-        id: subject
-
-    assert_response response
-  end
-
-  def general_update(response = 302, changed = false)
-    ch_method = method(changed ? :assert_not_equal : :assert_equal)
-    assert_difference('Activity.count', changed ? 1 : 0) do
-      patch :update,
-            id: subject,
-            project: attributes_for(:project,
-                                    default_cover_photo_attributes: {
-                                      image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
-                                    })
-    end
-    assert_response response
-    if assigns(:update_service).try(:resource).present?
-      ch_method.call subject
-                       .updated_at
-                       .utc
-                       .iso8601(6),
-                     assigns(:update_service)
-                       .try(:resource)
-                       .try(:updated_at)
-                       .try(:utc)
-                       .try(:iso8601, 6)
-    else
-      assert false, "can't be changed" if changed
-    end
-    assert_equal 'cover_photo.jpg', assigns(:update_service).resource.default_cover_photo.image_identifier if changed
-    assert_equal 1, assigns(:update_service).resource.photos.count if changed
-  end
-
-  def general_trash(response = 302, difference = 0)
-    assert_differences([['Project.trashed_only.count', difference],['Activity.count', difference.abs]]) do
-      delete :trash,
-             id: subject
-    end
-
-    assert_response response
-  end
-
-  def general_destroy(response = 302, difference = 0)
-    assert_differences([['Project.count', difference],['Activity.count', difference.abs]]) do
-      delete :destroy,
-             id: trashed_subject
-    end
-
-    assert_response response
-  end
 
   ####################################
   # As Guest
@@ -179,7 +88,7 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'user should not get show unpublished' do
     sign_in user
     general_show 302, unpublished
-    assert assigns(:_not_authorized_caught)
+    assert_not_authorized
   end
 
   test 'user should not post create' do
@@ -230,7 +139,7 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'member should not get show unpublished' do
     sign_in member
     general_show 302, unpublished
-    assert assigns(:_not_authorized_caught)
+    assert_not_authorized
   end
 
   test 'member should not post create' do
@@ -531,5 +440,80 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'staff should delete destroy' do
     sign_in staff
     general_destroy 302, -1
+  end
+
+  private
+
+  def general_new(response = 302)
+    get new_forum_project_path(freetown)
+
+    assert_response response
+  end
+
+  def general_show(response = 200, record = subject)
+    get project_path(record)
+
+    assert_response response
+  end
+
+  def general_create(response = 302, differences = [['Project.count', 0],
+                                                    ['Stepup.count', 0],
+                                                    ['Phase.count', 0],
+                                                    ['Activity.count', 0])
+    assert_differences(differences) do
+      post forum_projects_path(freetown),
+           project: attributes_for(:project,
+                                   stepups_attributes: {'12321' => {moderator: moderator.url}},
+                                   phases_attributes: {'12321' => attributes_for(:phase)})
+    end
+
+    assert_response response
+  end
+
+  def general_edit(response = 302)
+    get edit_project_path(subject)
+
+    assert_response response
+  end
+
+  def general_update(response = 302, changed = false)
+    ch_method = method(changed ? :assert_not_equal : :assert_equal)
+
+    assert_difference('Activity.count', changed ? 1 : 0) do
+      patch project_path(subject),
+            project: attributes_for(:project)
+    end
+
+    assert_response response
+    if assigns(:update_service).try(:resource).present?
+      ch_method.call subject
+                       .updated_at
+                       .iso8601(6),
+                     assigns(:up)
+                       .try(:resource)
+                       .try(:updated_at)
+                       .try(:iso8601, 6)
+    else
+      assert false, "can't be changed" if changed
+    end
+  end
+
+
+  def general_trash(response = 302, difference = 0)
+    assert_differences([['Project.trashed_only.count', difference],
+                        ['Activity.count', difference.abs]]) do
+      delete project_path(subject)
+    end
+
+    assert_response response
+  end
+
+  def general_destroy(response = 302, difference = 0)
+    assert_differences([['Project.count', difference],
+                        ['Activity.count', difference.abs]]) do
+      delete project_path(subject)
+    end
+
+    assert_response response
   end
 end

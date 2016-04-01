@@ -359,6 +359,9 @@ GEM
     minitest (5.9.0)
     minitest-bang (1.0.4)
       minitest (>= 4.7.5)
+    minitest-have_tag (0.1.0)
+      minitest
+      nokogiri
     minitest-rails (2.2.0)
       minitest (~> 5.7)
       railties (~> 4.1)
@@ -728,6 +731,7 @@ DEPENDENCIES
   mailgun_rails (= 0.7.0)
   meta_request
   minitest-bang
+  minitest-have_tag (~> 0.1.0)
   minitest-rails (~> 2.2.0)
   minitest-reporters (~> 1.1.8)
   mocha

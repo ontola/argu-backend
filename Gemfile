@@ -114,6 +114,7 @@ group :test do
   gem 'minitest-rails', '~> 2.2.0'
   gem 'minitest-reporters', '~> 1.1.8'
   gem 'minitest-bang'
+  gem 'minitest-have_tag', '~> 0.1.0'
   gem 'rspec-rails', '~> 3.4.2'
   gem 'capybara', '~> 2.6.2'
   gem 'capybara-webkit', '~> 1.8.0'

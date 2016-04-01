@@ -20,7 +20,7 @@ RSpec.feature 'User Password', type: :feature do
     user
   end
 
-  def log_in_user(user = create(:user))
+  def sign_in(user = create(:user))
     visit new_user_session_path
     within('#new_user') do
       fill_in 'user_email', with: user.email
@@ -33,7 +33,7 @@ RSpec.feature 'User Password', type: :feature do
   # As User
   ####################################
   scenario 'user no omni should change their password' do
-    log_in_user user
+    sign_in user
 
     visit settings_path
     expect(page).to have_current_path settings_path
@@ -70,7 +70,7 @@ RSpec.feature 'User Password', type: :feature do
   end
 
   scenario 'user both omni should change their password' do
-    log_in_user user_omni_both
+    sign_in user_omni_both
 
     visit settings_path
     expect(page).to have_current_path settings_path
@@ -96,7 +96,7 @@ RSpec.feature 'User Password', type: :feature do
   end
 
   scenario 'user omni both should not request a password reset email' do
-    log_in_user user_omni_both
+    sign_in user_omni_both
 
     visit settings_path
     expect(page).not_to have_content("You don't have a password yet, because you signed up "\
