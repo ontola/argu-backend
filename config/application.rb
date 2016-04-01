@@ -77,7 +77,7 @@ module Argu
     config.assets.paths << Rails.root.join('node_modules')
 
     # Version of your assets, change this if you want to expire all your assets
-    config.assets.version = '1.0'
+    config.assets.version = ::VERSION
 
     ############################
     # I18n & locales
