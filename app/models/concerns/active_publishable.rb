@@ -4,7 +4,7 @@ module ActivePublishable
   included do
     scope :published, -> do
       scope = where('published_at <= ?', DateTime.current)
-      if self.respond_to?(:ends_at)
+      if self.column_names.include?('ends_at')
         scope = scope.where('ends_at IS NULL OR ends_at > ?',
                             DateTime.current)
       end
@@ -16,7 +16,7 @@ module ActivePublishable
     end
     scope :ended, -> do
       scope = where('published_at IS NOT NULL')
-      if self.respond_to?(:ends_at)
+      if self.column_names.include?('ends_at')
         scope = scope.where('ends_at IS NOT NULL AND ends_at < ?',
                             DateTime.current)
       end
