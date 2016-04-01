@@ -8,15 +8,15 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   let!(:cologne) { create(:closed_populated_forum, name: 'cologne') }
   let!(:helsinki) { create(:hidden_populated_forum, name: 'helsinki') }
 
-  let(:project) { create(:project, :unpublished, forum: freetown) }
-  let(:q1) { create(:question, forum: freetown, project: project) }
-  let(:m0) { create(:motion, forum: freetown, project: project, question: q1) }
-  let(:m1) { create(:motion, forum: freetown, project: project) }
+  let(:project) { create(:project, :unpublished, forum: holland) }
+  let(:q1) { create(:question, forum: holland, project: project) }
+  let(:m0) { create(:motion, forum: holland, project: project, question: q1) }
+  let(:m1) { create(:motion, forum: holland, project: project) }
 
-  let(:published_project) { create(:project, :published, forum: freetown) }
-  let(:q2) { create(:question, forum: freetown, project: published_project) }
-  let(:m2) { create(:motion, forum: freetown, project: published_project, question: q2) }
-  let(:m3) { create(:motion, forum: freetown, project: published_project) }
+  let(:published_project) { create(:project, :published, forum: holland) }
+  let(:q2) { create(:question, forum: holland, project: published_project) }
+  let(:m2) { create(:motion, forum: holland, project: published_project, question: q2) }
+  let(:m3) { create(:motion, forum: holland, project: published_project) }
   def freetown_nested_project_items
     [m0, m1, m2, m3, q1, q2]
   end
@@ -25,16 +25,10 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   # As Guest
   ####################################
 
-  test 'guest should get show when not logged in' do
+  test 'guest should get show' do
     get forum_path(holland)
-    assert_forum_shown(holland)
-    assert_not_nil assigns(:items)
 
-    assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
-    assert_not assigns(:items).map(&:identifier).include?(q1.identifier),
-               "Unpublished projects' questions are visible"
-    assert_not assigns(:items).map(&:identifier).include?(m1.identifier),
-               "Unpublished projects' motions are visible"
+    general_show(holland)
   end
 
   ####################################
@@ -46,27 +40,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     freetown_nested_project_items
     sign_in
 
-    get forum_path(freetown)
-    assert_forum_shown(holland)
-    assert_not_nil assigns(:items)
-
-    assert_not assigns(:items).any?(&:is_trashed?),
-               'Trashed motions are visible'
-    assert_not included_in_items?(project),
-               'Unpublished projects are visible'
-    assert_not included_in_items?(q1),
-               "Unpublished projects' questions are visible"
-    assert_not included_in_items?(m0),
-               "Unpublished projects' nested motions are visible"
-    assert_not included_in_items?(m1),
-               "Unpublished projects' motions are visible"
-
-    assert included_in_items?(published_project),
-           'Published projects are not visible'
-    assert_have_tag response.body, 'h3.question-t .list-item span', q2.title,
-                    "Published projects' questions are not visible"
-    assert_have_tag response.body, "##{published_project.identifier} h3.motion-t .list-item span", m3.title,
-                    "Published projects' motions are not visible"
+    general_show(holland)
   end
 
   test 'user should not show settings' do
@@ -131,14 +105,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     freetown_nested_project_items
     sign_in holland_member
 
-    get forum_path(holland)
-    assert_forum_shown(holland)
-
-    assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
-    assert_not included_in_items?(q1),
-               "Unpublished projects' questions are visible"
-    assert_not included_in_items?(m1),
-               "Unpublished projects' motions are visible"
+    general_show(holland)
   end
 
   test 'member should show closed children to members' do
@@ -248,7 +215,43 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   def assert_forum_shown(forum)
     assert_response 200
     assert_have_tag response.body,
-                    '.cover-switcher span',
+                    '.cover-switcher .dropdown-trigger span:first-child',
                     forum.display_name
+  end
+
+  # @param [Symbol] response The expected visibility in `%w(show list)`
+  def general_show(response = :show, record = freetown)
+    get forum_path(freetown)
+    assert_forum_shown(record)
+    if response == 'show'
+      assert_not_nil assigns(:items)
+
+      assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
+
+      assert_project_children_visible
+      assert_unpublished_content_invisible
+    end
+  end
+
+  def assert_project_children_visible
+    assert_not assigns(:items).any?(&:is_trashed?),
+               'Trashed motions are visible'
+    assert_not included_in_items?(project),
+               'Unpublished projects are visible'
+    assert_not included_in_items?(q1),
+               "Unpublished projects' questions are visible"
+    assert_not included_in_items?(m0),
+               "Unpublished projects' nested motions are visible"
+    assert_not included_in_items?(m1),
+               "Unpublished projects' motions are visible"
+  end
+
+  def assert_unpublished_content_invisible
+    assert included_in_items?(published_project),
+           'Published projects are not visible'
+    assert_have_tag response.body, 'h3.question-t .list-item span', q2.title,
+                    "Published projects' questions are not visible"
+    assert_have_tag response.body, "##{published_project.identifier} h3.motion-t .list-item span", m3.title,
+                    "Published projects' motions are not visible"
   end
 end
