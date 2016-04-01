@@ -142,31 +142,10 @@ $timeline-height: .3em;
     color: white;
     align-self: center;
   }
-
-  &:before{
-    content: "";
-    position: absolute;
-    top: 0;
-    height: 3em;
-    width: $timeline-height;
-    left: $point-size / 2 - $timeline-height / 2;
-    background-color: $g3;
-    opacity: 0;
-    z-index: -1;
-    @include transition(.2s, ease-in-out);
-    @include bp-small {
-      display: none;
-    }
-  }
-
-  &.active:before {
-    opacity: 1;
-  }
 }
 
 .timeline-point.active, .timeline-point:hover {
-  background-color: $g3;
-  border-color: $g3;
+  @include transform(scale(1.2));
 }
 
 .timeline-post-title {
