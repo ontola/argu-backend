@@ -2,7 +2,8 @@
   -if model.cover_photo.present?
     =contextual_link_to motion_path(model)
       .box-image[style="background-image: url('#{model.cover_photo.url(:box)}'); "]
-  =render partial: 'motions/info_bar', locals: {motion: model, show_vote_results: true}
+  =contextual_link_to motion_path(model)
+    =render partial: 'motions/info_bar', locals: {motion: model, show_vote_results: true}
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =contextual_link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title
