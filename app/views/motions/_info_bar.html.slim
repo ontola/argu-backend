@@ -23,7 +23,7 @@ section.section-info.motion-bg
       .details-part[data-title=t('tooltips.motion.vote_count')]
         span.fa.fa-check-square-o
         span.icon-left= motion.total_vote_count.to_s
-    - else
+    - if local_assigns[:show_arguments]
       .details-part[data-title=t('tooltips.motion.vote_count')]
         span.fa.fa-check-square-o
         span.icon-left= motion.total_vote_count.to_s
