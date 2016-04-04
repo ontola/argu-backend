@@ -3,6 +3,9 @@ module CommentsHelper
 
   def comment_items(resource, comment)
     link_items = []
+    if policy(comment).update?
+      link_items << link_item(t('edit'), polymorphic_url_for_action(:edit, [resource, comment], {}), data: {comment_id: comment.id, turbolinks: 'false'}, fa: 'pencil')
+    end
     if comment.is_trashed?
       if policy(comment).trash?
         link_items << link_item(t('untrash'), polymorphic_url([:untrash, resource, comment]), data: {confirm: t('untrash_confirmation'), method: 'put', turbolinks: 'false'}, fa: 'eye')
