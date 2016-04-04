@@ -1,1 +1,1 @@
-VERSION='0.36.0' unless defined?(::VERSION)
+VERSION='0.36.1' unless defined?(::VERSION)
