@@ -47,12 +47,11 @@ AlertIntegration.fadeAll = function () {
 
 AlertIntegration.handleJSONBody = function (event, XMLHttpRequest) {
     try {
-        if (XMLHttpRequest
-                .getResponseHeader('Content-Type')
-                .includes('application/json')) {
+        let contentType = XMLHttpRequest.getResponseHeader('Content-Type');
+        if (contentType && contentType.includes('application/json')) {
             var res = JSON.parse(XMLHttpRequest.responseText);
-            if (res !== undefined &&
-                res.notifications !== undefined) {
+            if (res &&
+                Array.isArray(res.notifications)) {
                 res.notifications.forEach(function (notification) {
                     new Alert(notification.message, notification.type, true);
                 });
