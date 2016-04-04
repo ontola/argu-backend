@@ -36,7 +36,7 @@ class RegistrationsController < Devise::RegistrationsController
     end
     @user.errors.add(:repeat_name, t('errors.messages.should_match')) unless params[:user][:repeat_name] == @user.url
     respond_to do |format|
-      valid_password = @user.password_required? ? @user.valid_password?(params[:user][:current_password]) : true
+      valid_password = @user.has_password? ? @user.valid_password?(params[:user][:current_password]) : true
       if valid_password && @user.destroy
         Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
         format.html { redirect_to root_path, notice: t('type_destroy_success', type: 'Account') }

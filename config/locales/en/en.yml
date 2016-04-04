@@ -173,7 +173,7 @@ en:
   #cancel
   users_cancel_title: "Delete Argu account"
   users_cancel_info: "If you delete your account, you permanently lose access to everything you've posted, folowed and voted. Are you sure you wish to delete your account?"
-  users_cancel_howto: "Enter your username (your unique Argu URL) below to confirm the deletion of your account."
+  users_cancel_howto: "Enter your username (your unique Argu URL) and your password below to confirm the deletion of your account."
   users_cancel_button: "I understand the consequences, delete my account"
   users_cancel_confirm: "Yes, delete my account."
   users_cancel_page_owner: "You are the owner of one or multiple pages. If you want to delete your account, please transfer or delete these pages first."
