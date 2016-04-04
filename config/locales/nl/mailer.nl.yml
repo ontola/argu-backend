@@ -17,6 +17,9 @@ nl:
       user_created_comment:
         subject: "Nieuwe reactie op '%{parent_title}' door %{poster}"
         responded_to: "%{poster} heeft gereageerd op een %{parent_type}: '%{parent_title}'"
+      user_created_group_response:
+        subject: "Nieuwe reactie op '%{parent_title}' door %{poster}"
+        responded_to: "%{poster} heeft gereageerd op een %{parent_type}: '%{parent_title}'"
       user_created_argument:
         subject: "Nieuw argument: '%{parent_title}' door %{poster}"
         responded_to:

@@ -17,6 +17,9 @@ en:
       user_created_comment:
         subject: "New comment on '%{parent_title}' by %{poster}"
         responded_to: "%{poster} replied to %{parent_type}: '%{parent_title}'"
+      user_created_group_response:
+        subject: "New comment on '%{parent_title}' by %{poster}"
+        responded_to: "%{poster} replied to %{parent_type}: '%{parent_title}'"
       user_created_argument:
         subject: "New argument: '%{parent_title}' by %{poster}"
         responded_to:
