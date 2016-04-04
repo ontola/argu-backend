@@ -1,6 +1,8 @@
 FactoryGirl.define do
   factory :motion do
-    association :forum, strategy: :create
+    forum {
+      passed_in?(:forum) ? forum : create(:forum)
+    }
     creator {
       passed_in?(:creator) ? creator : create(:profile)
     }

@@ -126,6 +126,8 @@ RSpec.configure do |config|
            shortname: build(:shortname, shortname: 'community'),
            email: 'community@argu.co',
            password: 'password',
+           first_name: nil,
+           last_name: nil,
            finished_intro: true,
            profile: create(:profile, id: 0))
   end

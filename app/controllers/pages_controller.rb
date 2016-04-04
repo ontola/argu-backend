@@ -121,11 +121,9 @@ class PagesController < ApplicationController
     authorize @page, :destroy?
 
     if @page.destroy
-      flash[:error] = 'Pagina verwijderd'
-      redirect_to root_path
+      redirect_to root_path, notice: t('type_destroy_success', type: t('pages.type'))
     else
-      flash[:error] = 'Error tijdens verwijderen'
-      render :delete, locals: {resource: @page}
+      format.html { redirect_to motion, notice: t('errors.general') }
     end
   end
 

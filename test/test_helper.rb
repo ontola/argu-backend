@@ -25,6 +25,8 @@ module TestHelper
   User.find_or_create_by(id: 0) do |user|
     user.shortname = Shortname.new(shortname: 'community')
     user.email = 'community@argu.co'
+    user.first_name = nil
+    user.last_name = nil
     user.password = 'password'
     user.finished_intro = true
     user.profile = Profile.new(id: 0)
