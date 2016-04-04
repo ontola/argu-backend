@@ -19,6 +19,8 @@ class BlogPost < ActiveRecord::Base
              polymorphic: true,
              inverse_of: :blog_posts
 
+  has_many :activities, as: :trackable
+
   validates :blog_postable, :creator, presence: true
 
   parentable :blog_postable, :forum

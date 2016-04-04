@@ -41,7 +41,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     assert_response response
   end
 
-  def general_create(response = 302, differences = [['BlogPost.count', 0]])
+  def general_create(response = 302, differences = [['BlogPost.count', 0], ['Activity.count', 0]])
     assert_differences(differences) do
       post :create,
            project_id: project,
@@ -61,10 +61,11 @@ class BlogPostsControllerTest < ActionController::TestCase
   def general_update(response = 302, changed = false)
     ch_method = method(changed ? :assert_not_equal : :assert_equal)
 
-    patch :update,
-          id: subject,
-          blog_post: attributes_for(:blog_post)
-
+    assert_difference('Activity.count', changed ? 1 : 0) do
+      patch :update,
+            id: subject,
+            blog_post: attributes_for(:blog_post)
+    end
     assert_response response
     if assigns(:update_service).try(:resource).present?
       ch_method.call subject
@@ -82,7 +83,7 @@ class BlogPostsControllerTest < ActionController::TestCase
   end
 
   def general_trash(response = 302, difference = 0)
-    assert_difference('BlogPost.trashed_only.count', difference) do
+    assert_differences([['BlogPost.trashed_only.count', difference],['Activity.count', difference.abs]]) do
       delete :trash,
              id: subject
     end
@@ -91,7 +92,7 @@ class BlogPostsControllerTest < ActionController::TestCase
   end
 
   def general_destroy(response = 302, difference = 0)
-    assert_difference('BlogPost.count', difference) do
+    assert_differences([['BlogPost.count', difference],['Activity.count', difference.abs]]) do
       delete :destroy,
              id: trashed_subject
     end

@@ -40,7 +40,8 @@ class ProjectsControllerTest < ActionController::TestCase
 
   def general_create(response = 302, differences = [['Project.count', 0],
                                                     ['Stepup.count', 0],
-                                                    ['Phase.count', 0]])
+                                                    ['Phase.count', 0],
+                                                    ['Activity.count', 0]])
     assert_differences(differences) do
       post :create,
            forum_id: freetown,
@@ -61,11 +62,11 @@ class ProjectsControllerTest < ActionController::TestCase
 
   def general_update(response = 302, changed = false)
     ch_method = method(changed ? :assert_not_equal : :assert_equal)
-
-    patch :update,
-          id: subject,
-          project: attributes_for(:project)
-
+    assert_difference('Activity.count', changed ? 1 : 0) do
+      patch :update,
+            id: subject,
+            project: attributes_for(:project)
+    end
     assert_response response
     if assigns(:update_service).try(:resource).present?
       ch_method.call subject
@@ -83,7 +84,7 @@ class ProjectsControllerTest < ActionController::TestCase
   end
 
   def general_trash(response = 302, difference = 0)
-    assert_difference('Project.trashed_only.count', difference) do
+    assert_differences([['Project.trashed_only.count', difference],['Activity.count', difference.abs]]) do
       delete :trash,
              id: subject
     end
@@ -92,7 +93,7 @@ class ProjectsControllerTest < ActionController::TestCase
   end
 
   def general_destroy(response = 302, difference = 0)
-    assert_difference('Project.count', difference) do
+    assert_differences([['Project.count', difference],['Activity.count', difference.abs]]) do
       delete :destroy,
              id: trashed_subject
     end

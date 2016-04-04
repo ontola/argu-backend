@@ -6,19 +6,35 @@ RSpec.feature 'Account deletion', type: :feature do
   let(:motion) { create(:motion,
                         creator: user.profile,
                         publisher: user) }
+  let(:question) { create(:question,
+                          creator: user.profile,
+                          publisher: user) }
   let(:argument) { create(:argument,
                           creator: user.profile,
                           motion: motion,
                           publisher: user) }
+  let(:group_response) { create(:group_response,
+                                creator: user.profile,
+                                motion: motion,
+                                publisher: user) }
+  let(:project) { create(:project,
+                         creator: user.profile,
+                         publisher: user) }
+  let(:blog_post) { create(:blog_post,
+                           creator: user.profile,
+                           blog_postable: project,
+                           publisher: user) }
   let(:comment) { create(:comment,
                          commentable: argument,
                          creator: user.profile,
                          publisher: user) }
+  let (:forum_page) { create(:page,
+                             owner: user.profile)}
 
   scenario 'user should delete destroy' do
-    argument.update(created_at: 1.day.ago)
-    motion.update(created_at: 1.day.ago)
-    comment
+    [argument, motion, question, group_response, project, blog_post, comment].each do |resource|
+      resource.update(created_at: 1.day.ago)
+    end
 
     login_as(user, scope: :user)
     visit settings_path
@@ -32,9 +48,22 @@ RSpec.feature 'Account deletion', type: :feature do
     argument.reload
 
     expect(page).to have_content 'Account deleted successfully'
-    expect(Comment.anonymous.count).to eq(1)
-    expect(Argument.anonymous.count).to eq(1)
-    expect(Motion.anonymous.count).to eq(1)
+    [Comment, Argument, Motion, Question, Project, BlogPost].each do |klass|
+      expect(klass.anonymous.count).to eq(1)
+    end
+    expect(GroupResponse.count).to eq(0)
+    visit motion_path(motion)
+    expect(page).to have_content 'community'
+  end
+
+  scenario 'owner should not delete destroy' do
+    forum_page
+
+    login_as(user, scope: :user)
+    visit settings_path
+    click_link 'Delete Argu account'
+
+    expect(page).to have_content 'You are the owner of one or multiple pages. If you want to delete your account, please transfer or delete these pages first'
   end
 
 end

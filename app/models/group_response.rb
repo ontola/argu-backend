@@ -19,6 +19,14 @@ class GroupResponse < ActiveRecord::Base
   validates :text, length: {maximum: 5000}
   validates :side, :group, :forum, :motion, :creator, presence: true
 
+  before_destroy :destroy_notifications
+
+  def destroy_notifications
+    activities.each do |activity|
+      activity.notifications.destroy_all
+    end
+  end
+
   def display_name
     self.text
   end
