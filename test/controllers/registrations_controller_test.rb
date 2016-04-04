@@ -57,7 +57,8 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_difference('User.count', -1) do
       delete :destroy,
              user: {
-                 repeat_name: user.shortname.shortname
+                 repeat_name: user.shortname.shortname,
+                 current_password: 'password'
              }
     end
 
@@ -74,7 +75,8 @@ class RegistrationsControllerTest < ActionController::TestCase
     assert_differences([['User.count', -1], ['Placement.count', -1], ['Place.count', 0]]) do
       delete :destroy,
              user: {
-                 repeat_name: user.shortname.shortname
+                 repeat_name: user.shortname.shortname,
+                 current_password: 'password'
              }
     end
 
