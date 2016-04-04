@@ -155,7 +155,7 @@ class CommentsControllerTest < ActionController::TestCase
           body: 'new contents'
         }
 
-    assert_not_nil assigns(:_not_authorized_caught)
+    assert_not_authorized
     assert_redirected_to comment.forum
   end
 
@@ -188,7 +188,7 @@ class CommentsControllerTest < ActionController::TestCase
              id: comment
     end
 
-    assert_not_nil assigns(:_not_authorized_caught)
+    assert_not_authorized
     assert_redirected_to comment.forum
   end
 

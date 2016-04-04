@@ -32,7 +32,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
            created_at: 1.day.ago)
   end
 
-  test 'Should send mail to direct follower' do
+  test 'should send mail to direct follower' do
     create_notification_pair_for follower
 
     snw = SendNotificationsWorker.new
@@ -49,7 +49,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
     assert_equal 0, snw.collect_notifications(follower).length, 'Notifications will be send twice'
   end
 
-  test 'Should send mail to weekly follower' do
+  test 'should send mail to weekly follower' do
     create_notification_pair_for follower_weekly
 
     snw = SendNotificationsWorker.new
@@ -66,7 +66,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
     assert_equal 0, snw.collect_notifications(follower_weekly).length, 'Notifications will be send twice'
   end
 
-  test 'Should send multiple notifications as a digest' do
+  test 'should send multiple notifications as a digest' do
     create_list :notification, 10,
                 activity: activity,
                 user: follower
@@ -89,7 +89,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
     assert_equal 0, snw.collect_notifications(follower).length, 'Notifications will be send twice'
   end
 
-  test 'Should not send direct mail to weekly follower' do
+  test 'should not send direct mail to weekly follower' do
     create_notification_pair_for follower_weekly
 
     email_type = User.follows_emails[:direct_follows_email]
@@ -100,7 +100,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
     end
   end
 
-  test 'Should not send weekly mail to direct follower' do
+  test 'should not send weekly mail to direct follower' do
     create_notification_pair_for follower
 
     email_type = User.follows_emails[:weekly_follows_email]

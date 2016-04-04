@@ -115,7 +115,7 @@ class ProjectsControllerTest < ActionController::TestCase
 
   test 'guest should not get show unpublished' do
     general_show 302, unpublished
-    assert assigns(:_not_authorized_caught)
+    assert_not_authorized
   end
 
   test 'guest should not post create' do
@@ -146,7 +146,7 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'user should not get new' do
     sign_in user
     general_new 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    assert_not_a_member
   end
 
   test 'user should get show' do
@@ -157,31 +157,31 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'user should not post create' do
     sign_in user
     general_create 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    assert_not_a_member
   end
 
   test 'user should not get edit' do
     sign_in user
     general_edit 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    assert_not_a_member
   end
 
   test 'user should not patch update' do
     sign_in user
     general_update 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    assert_not_a_member
   end
 
   test 'user should not delete destroy trash' do
     sign_in user
     general_trash 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    assert_not_a_member
   end
 
   test 'user should not delete destroy' do
     sign_in user
     general_destroy 200
-    assert_equal true, assigns(:_not_a_member_caught)
+    assert_not_a_member
   end
 
   ####################################

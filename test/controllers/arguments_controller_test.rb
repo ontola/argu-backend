@@ -63,7 +63,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     get :new, forum_id: freetown, motion_id: motion.id, pro: 'pro'
 
     assert_response 302
-    assert assigns(:_not_a_user_caught)
+    assert_not_a_user
   end
 
   ####################################
@@ -104,7 +104,7 @@ class ArgumentsControllerTest < ActionController::TestCase
 
     get :new, forum_id: freetown, motion_id: motion.id, pro: 'pro'
 
-    assert assigns(:_not_a_member_caught)
+    assert_not_a_member
   end
 
   ####################################
@@ -258,7 +258,7 @@ class ArgumentsControllerTest < ActionController::TestCase
           content: 'new contents'
         }
 
-    assert assigns(:_not_authorized_caught)
+    assert_not_authorized
   end
 
   ####################################

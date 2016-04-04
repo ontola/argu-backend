@@ -3,33 +3,49 @@ require 'rails_helper'
 RSpec.feature 'Account deletion', type: :feature do
   let(:freetown) { create(:forum, name: 'freetown') }
   let(:user) { create(:user) }
-  let(:motion) { create(:motion,
-                        creator: user.profile,
-                        publisher: user) }
-  let(:question) { create(:question,
-                          creator: user.profile,
-                          publisher: user) }
-  let(:argument) { create(:argument,
-                          creator: user.profile,
-                          motion: motion,
-                          publisher: user) }
-  let(:group_response) { create(:group_response,
-                                creator: user.profile,
-                                motion: motion,
-                                publisher: user) }
-  let(:project) { create(:project,
-                         creator: user.profile,
-                         publisher: user) }
-  let(:blog_post) { create(:blog_post,
-                           creator: user.profile,
-                           blog_postable: project,
-                           publisher: user) }
-  let(:comment) { create(:comment,
-                         commentable: argument,
-                         creator: user.profile,
-                         publisher: user) }
-  let (:forum_page) { create(:page,
-                             owner: user.profile)}
+  let(:motion) do
+    create(:motion,
+           creator: user.profile,
+           publisher: user)
+  end
+  let(:question) do
+    create(:question,
+           creator: user.profile,
+           publisher: user)
+  end
+  let(:argument) do
+    create(:argument,
+           creator: user.profile,
+           motion: motion,
+           publisher: user)
+  end
+  let(:group_response) do
+    create(:group_response,
+           creator: user.profile,
+           motion: motion,
+           publisher: user)
+  end
+  let(:project) do
+    create(:project,
+           creator: user.profile,
+           publisher: user)
+  end
+  let(:blog_post) do
+    create(:blog_post,
+           creator: user.profile,
+           blog_postable: project,
+           publisher: user)
+  end
+  let(:comment) do
+    create(:comment,
+           commentable: argument,
+           creator: user.profile,
+           publisher: user)
+  end
+  let(:forum_page) do
+    create(:page,
+           owner: user.profile)
+  end
 
   scenario 'user should delete destroy' do
     [argument, motion, question, group_response, project, blog_post, comment].each do |resource|

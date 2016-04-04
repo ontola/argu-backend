@@ -9,6 +9,7 @@ module Trashable
         where((trashed === true ? nil : {is_trashed: false}))
       end
     end
+
     scope :trashed_only, -> do
       if self.column_names.include?('trashed_at')
         where.not(trashed_at: nil)
@@ -16,6 +17,7 @@ module Trashable
         where(is_trashed: true)
       end
     end
+
     scope :anonymous, ->{where(creator_id: 0)}
   end
 
@@ -61,6 +63,7 @@ module Trashable
   end
 
   module ClassMethods
+    # Hands over ownership of a collection to the Community profile (0)
     def anonymize(collection)
       collection.update_all(creator_id: 0, publisher_id: nil)
     end

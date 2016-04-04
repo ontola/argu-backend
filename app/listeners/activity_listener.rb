@@ -1,13 +1,15 @@
 class ActivityListener
 
   # @param [Hash] opts
-  #   publisher
-  #   creator
+  # @option opts [User] publisher The person that made the action
+  # @option opts [Profile] creator The Profile under whose name it was published
   def initialize(opts = {})
     @publisher = opts[:publisher]
     @creator = opts[:creator]
   end
 
+  # Dynamically declare the listener publication methods
+  # @see {ApplicationService#commit} and {ApplicationService#signal_base} for the naming.
   %w(create destroy trash untrash update).each do |method|
     define_method "#{method}_argument_successful" do |resource|
       create_activity(resource, resource.motion, method)

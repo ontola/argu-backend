@@ -131,7 +131,7 @@ class Profile < ActiveRecord::Base
 
 private
 
-  # Sets the dependent foreign relations to a public profile
+  # Sets the dependent foreign relations to the Community profile
   # Except for comments..
   def anonymize_or_wipe_dependencies
     %w(comments motions arguments questions blog_posts projects activities).each do |association|

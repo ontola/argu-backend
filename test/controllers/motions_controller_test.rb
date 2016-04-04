@@ -178,7 +178,7 @@ class MotionsControllerTest < ActionController::TestCase
         }
 
     assert_redirected_to subject.forum
-    assert assigns(:_not_authorized_caught)
+    assert_not_authorized
   end
 
   let(:no_create_without_question) do

@@ -50,7 +50,7 @@ Argu::Application.routes.draw do
   concern :flowable do
     get :flow, controller: :flow, action: :show
   end
-  concern :logable do
+  concern :loggable do
     get :log, controller: :log, action: :log
   end
   concern :moveable do
@@ -129,7 +129,7 @@ Argu::Application.routes.draw do
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],
-            concerns: [:moveable, :convertible, :flowable, :trashable, :logable] do
+            concerns: [:moveable, :convertible, :flowable, :trashable, :loggable] do
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
   end
@@ -139,7 +139,7 @@ Argu::Application.routes.draw do
   resources :motions,
             path: 'm',
             except: [:index, :new, :create, :destroy],
-            concerns: [:moveable, :convertible, :votable, :flowable, :trashable, :logable] do
+            concerns: [:moveable, :convertible, :votable, :flowable, :trashable, :loggable] do
     resources :groups, only: [] do
       resources :group_responses, only: [:new, :create]
     end
@@ -149,7 +149,7 @@ Argu::Application.routes.draw do
   resources :arguments,
             path: 'a',
             except: [:index, :new, :create, :destroy],
-            concerns: [:votable, :flowable, :trashable, :logable] do
+            concerns: [:votable, :flowable, :trashable, :loggable] do
     resources :comments,
               path: 'c',
               concerns: [:trashable],
@@ -180,12 +180,12 @@ Argu::Application.routes.draw do
   resources :blog_posts,
             path: 'posts',
             only: [:show, :edit, :update],
-            concerns: [:trashable, :logable]
+            concerns: [:trashable, :loggable]
 
   resources :projects,
             path: 'p',
             only: [:show, :edit, :update],
-            concerns: [:blog_postable, :flowable, :discussable, :trashable, :logable]
+            concerns: [:blog_postable, :flowable, :discussable, :trashable, :loggable]
 
   resources :phases,
             only: [:show]

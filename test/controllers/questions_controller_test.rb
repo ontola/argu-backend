@@ -48,7 +48,7 @@ class QuestionsControllerTest < ActionController::TestCase
            question: attributes_for(:question)
     end
 
-    assert assigns(:_not_a_user_caught)
+    assert_not_a_user
   end
 
   ####################################
@@ -80,7 +80,7 @@ class QuestionsControllerTest < ActionController::TestCase
     get :new,
         forum_id: freetown
 
-    assert assigns(:_not_a_member_caught)
+    assert_not_a_member
   end
 
   test 'user should not post create' do
@@ -92,7 +92,7 @@ class QuestionsControllerTest < ActionController::TestCase
            question: attributes_for(:question)
     end
 
-    assert assigns(:_not_a_member_caught)
+    assert_not_a_member
   end
 
   ####################################
@@ -158,14 +158,14 @@ class QuestionsControllerTest < ActionController::TestCase
           content: 'new contents'
         }
 
-    assert_not_nil assigns(:_not_authorized_caught)
+    assert_not_authorized
   end
 
   test 'should not get convert' do
     sign_in member
 
     get :convert, question_id: subject
-    assert_not_nil assigns(:_not_authorized_caught)
+    assert_not_authorized
     assert_redirected_to subject.forum
   end
 
@@ -173,7 +173,7 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in member
 
     put :convert, question_id: subject
-    assert_not_nil assigns(:_not_authorized_caught)
+    assert_not_authorized
     assert_redirected_to subject.forum
   end
 
@@ -182,7 +182,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
     get :move, question_id: subject
 
-    assert_not_nil assigns(:_not_authorized_caught)
+    assert_not_authorized
     assert_redirected_to subject.forum
   end
 
@@ -190,7 +190,7 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in member
 
     put :move, question_id: subject
-    assert_not_nil assigns(:_not_authorized_caught)
+    assert_not_authorized
     assert_redirected_to subject.forum
   end
 

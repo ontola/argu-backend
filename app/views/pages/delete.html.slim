@@ -13,9 +13,9 @@
         -else
           .form
             p= t('pages.settings.advanced.delete.confirm.body_html')
-          = semantic_form_for resource, method: :delete, html: {class: 'confirm'} do |f|
-            p=t('pages.settings.advanced.delete.confirm.repeat')
-            = f.inputs do
-              = f.input :repeat_name, input_html: {class: 'confirm-text', :'confirm-text' => @page.url}
-            = f.actions do
-              = f.action :submit, :as => :button, label: t('pages.settings.advanced.delete.confirm.understand'), button_html: { class: 'confirm-action', disabled: true }
+          =semantic_form_for resource, method: :delete, html: {class: 'confirm'} do |f|
+            p= t('pages.settings.advanced.delete.confirm.repeat')
+            =f.inputs do
+              =f.input :repeat_name, input_html: {class: 'confirm-text', :'confirm-text' => @page.url}
+            =f.actions do
+              =f.action :submit, :as => :button, label: t('pages.settings.advanced.delete.confirm.understand'), button_html: { class: 'confirm-action', disabled: true }
