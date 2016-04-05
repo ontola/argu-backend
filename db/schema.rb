@@ -165,7 +165,6 @@ ActiveRecord::Schema.define(version: 20160526142530) do
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["creator_id"], name: "index_comments_on_profile_id", using: :btree
-  add_index "comments", ["profile_id"], name: "index_comments_on_profile_id", using: :btree
 
   create_table "documents", force: :cascade do |t|
     t.string   "name"

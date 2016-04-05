@@ -75,7 +75,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   let(:member) { create_member(venice, create(:user, :follows_email)) }
 
   test 'member should not delete wipe own comment twice affecting counter caches' do
-    log_in_user member
+    sign_in member
 
     assert_equal 1, comment.commentable.comments_count
 

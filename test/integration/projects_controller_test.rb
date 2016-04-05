@@ -6,7 +6,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   let!(:owner) { create(:user) }
   let!(:page) { create(:page, owner: owner.profile) }
   let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
-  let!(:moderator) { create_member(freetown) }
+  let!(:moderator) { create_moderator(freetown) }
   let!(:subject) do
     p = create(:project,
                :published,
@@ -301,7 +301,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
 
   test 'moderator should delete destroy trash' do
     sign_in moderator
-    general_destroy 302, -1
+    general_trash 302, 1
   end
 
   ####################################
@@ -393,6 +393,11 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     general_destroy 302, -1
   end
 
+  test 'owner should delete destroy' do
+    sign_in owner
+    general_destroy 302, -1
+  end
+
   ####################################
   # As Staff
   ####################################
@@ -459,7 +464,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   def general_create(response = 302, differences = [['Project.count', 0],
                                                     ['Stepup.count', 0],
                                                     ['Phase.count', 0],
-                                                    ['Activity.count', 0])
+                                                    ['Activity.count', 0]])
     assert_differences(differences) do
       post forum_projects_path(freetown),
            project: attributes_for(:project,
@@ -489,7 +494,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
       ch_method.call subject
                        .updated_at
                        .iso8601(6),
-                     assigns(:up)
+                     assigns(:update_service)
                        .try(:resource)
                        .try(:updated_at)
                        .try(:iso8601, 6)
@@ -511,7 +516,8 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   def general_destroy(response = 302, difference = 0)
     assert_differences([['Project.count', difference],
                         ['Activity.count', difference.abs]]) do
-      delete project_path(subject)
+      delete project_path(subject,
+                          destroy: true)
     end
 
     assert_response response

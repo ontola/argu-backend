@@ -27,7 +27,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   let(:group_membership) { create(:group_membership, group: group, member: user.profile) }
 
   test 'should create and destroy motion with notifications' do
-    log_in_user user
+    sign_in user
 
     assert_differences([['Motion.count', 1], ['Notification.count', 1]]) do
       post forum_motions_path(user.profile.memberships.first.forum),
@@ -40,7 +40,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'should create and destroy question with notifications' do
-    log_in_user user
+    sign_in user
 
     assert_differences([['Question.count', 1], ['Notification.count', 1]]) do
       post forum_questions_path(user.profile.memberships.first.forum),
@@ -54,7 +54,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
   test 'should create and destroy project with notifications' do
     Forum.first.page.update(owner_id: user.profile.id)
-    log_in_user user
+    sign_in user
 
     assert_differences([['Project.count', 1], ['Notification.count', 1]]) do
       post forum_projects_path(user.profile.memberships.first.forum),
@@ -68,7 +68,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
   test 'should create and destroy argument with notifications' do
     # Both the motion publisher as the motion follower will receive a notification
-    log_in_user user
+    sign_in user
 
     assert_differences([['Argument.count', 1], ['Notification.count', 2]]) do
       post forum_arguments_path(user.profile.memberships.first.forum),
@@ -83,7 +83,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
   test 'should create and destroy group_response with notifications' do
     # Both the motion publisher as the motion follower will receive a notification
-    log_in_user user
+    sign_in user
     group_membership
 
     assert_differences([['GroupResponse.count', 1], ['Notification.count', 2]]) do
@@ -101,7 +101,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
   test 'should create and destroy comment with notifications' do
     # Both the argument publisher as the argument follower will receive a notification
-    log_in_user user
+    sign_in user
 
     assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
       post argument_comments_path(follow_argument.followable),
@@ -115,7 +115,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
   test 'should create and destroy blog_post with notifications' do
     Forum.first.page.update(owner_id: user.profile.id)
-    log_in_user user
+    sign_in user
 
     assert_differences([['BlogPost.count', 1], ['Notification.count', 1]]) do
       post project_blog_posts_path(follow_project.followable),
