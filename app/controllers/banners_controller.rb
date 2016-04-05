@@ -9,10 +9,9 @@ class BannersController < AuthorizedController
   end
 
   def create
-    @cb = CreateBanner.new(current_user.profile,
-                           banner_params.merge(resource_new_params))
-    authorize @cb.resource, :create?
-    @cb.on(:create_banner_successful) do |banner|
+    create_service.subscribe(ActivityListener.new(creator: current_profile,
+                                                  publisher: current_user))
+    create_service.on(:create_banner_successful) do |banner|
       respond_to do |format|
         format.html do
           redirect_to settings_forum_path(banner.forum, tab: :banners),
@@ -20,7 +19,7 @@ class BannersController < AuthorizedController
         end
       end
     end
-    @cb.on(:create_banner_failed) do |banner|
+    create_service.on(:create_banner_failed) do |banner|
       respond_to do |format|
         format.html { render 'forums/settings',
                              locals: {
@@ -30,7 +29,7 @@ class BannersController < AuthorizedController
                              } }
       end
     end
-    @cb.commit
+    create_service.commit
   end
 
   def edit
@@ -44,7 +43,7 @@ class BannersController < AuthorizedController
 
   def update
     respond_to do |format|
-      if authenticated_resource.update banner_params
+      if authenticated_resource.update permit_params
         format.html { redirect_to settings_forum_path(resource_tenant, tab: 'banners') }
       else
         format.html do
@@ -77,22 +76,12 @@ class BannersController < AuthorizedController
 
   private
 
-  def authenticated_resource!
-    if params[:forum_id].present?
-      super
-    else
-      if params[:action] == 'new' || params[:action] == 'create'
-        controller_name
-            .classify
-            .constantize
-            .new forum: nil
-      else
-        super
-      end
-    end
+  def permit_params
+    params.require(:banner).permit(*policy(resource_by_id || new_resource_from_params || Banner).permitted_attributes)
   end
 
-  def banner_params
-    params.require(:banner).permit(*policy(authenticated_resource || Banner).permitted_attributes)
+  def create_service
+    @create_service ||= CreateBanner.new(current_user.profile,
+                                         permit_params.merge(resource_new_params))
   end
 end

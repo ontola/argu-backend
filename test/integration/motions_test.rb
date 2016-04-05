@@ -10,7 +10,7 @@ class MotionsTest < ActionDispatch::IntegrationTest
   let(:user) { create(:user) }
 
   test 'user should show tutorial only on first post create' do
-    log_in_user user
+    sign_in user
     create(:membership,
            profile: user.profile,
            forum: freetown)
