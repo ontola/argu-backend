@@ -60,6 +60,6 @@ class NotificationSchedulerWorkersTest < ActiveSupport::TestCase
 
     worker = DirectNotificationsSchedulerWorker.new
     user_ids = worker.collect_user_ids
-    assert_equal 0, user_ids.count
+    assert_not user_ids.include?(follower_been_mailed)
   end
 end
