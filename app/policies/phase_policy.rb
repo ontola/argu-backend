@@ -20,7 +20,7 @@ class PhasePolicy < RestrictivePolicy
 
   def permitted_attributes(force = false)
     attributes = super()
-    attributes << %i(id name description integer start_date end_date _destroy) if force || create?
+    attributes << %i(id name description integer end_date finish_phase _destroy) if force || create?
     attributes
   end
 

@@ -1,5 +1,6 @@
 class Phase < ActiveRecord::Base
   include ArguBase, Placeable, Parentable
+  attr_accessor :finish_phase
 
   belongs_to :forum
   belongs_to :project, inverse_of: :phases
@@ -22,9 +23,17 @@ class Phase < ActiveRecord::Base
   counter_culture :project
 
   def blog_posts
-    project
-      .blog_posts
-      .where(published_at: start_date..end_date)
-      .order(published_at: :asc)
+    return [] if start_date.nil?
+    if end_date.present?
+      project
+        .blog_posts
+        .where(published_at: start_date..end_date)
+        .order(published_at: :asc)
+    else
+      project
+          .blog_posts
+          .where('published_at > ?', start_date)
+          .order(published_at: :asc)
+    end
   end
 end

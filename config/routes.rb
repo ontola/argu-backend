@@ -188,7 +188,9 @@ Argu::Application.routes.draw do
             concerns: [:blog_postable, :flowable, :discussable, :trashable, :loggable]
 
   resources :phases,
-            only: [:show]
+            only: [:show, :edit, :update] do
+    put :finish, to: 'phases#finish'
+  end
 
   resources :announcements, only: [] do
     post '/dismissals',

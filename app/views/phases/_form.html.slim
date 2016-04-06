@@ -1,0 +1,24 @@
+=set_title t('edit_type', type: I18n.t('projects.phases.type'))
+.col-3
+  .col-3-2
+    =to_parent(phase.project)
+    .box
+      section.section-info
+        span[class="fa fa-folder-o"]
+        span.icon-left= t('projects.phases.type')
+      =semantic_form_for(phase, html: {autocomplete: 'off'}) do |f|
+        section.smallpadded.form-filled
+          = f.inputs
+            =f.input :name
+            =f.input :description
+            =f.label(:start_date)
+            -if phase.start_date.present?
+              span= "#{l(phase.start_date, format: :date)} (#{phase.start_date == phase.project.start_date ? t('projects.phases.start_date.from_project') : t('projects.phases.start_date.from_previous_phase')})"
+            -else
+              span= t('projects.phases.start_date.none')
+            =f.input :end_date, as: :datetime_picker
+        =render partial: phase.creator, locals: {resource: phase}
+        .sticky-submit
+          =f.action :submit, as: :button
+  .col-3-1
+    =render partial: 'markdown_helper'
