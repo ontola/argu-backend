@@ -52,9 +52,33 @@ RSpec.feature 'Netdem', type: :feature do
         .find("input[name*='[moderator]']")
         .first
         .set(netdem.name)
+      click_link 'Add phase'
+      all("input[name*='project[phases_attributes]']")
+          .find("input[name*='[name]']")
+          .first
+          .set('First phase')
       click_button 'Save'
     end
     expect(page).to have_content project_attributes[:title]
+    expect(page).to have_content 'First phase'
     expect(page).to have_current_path project_path(Project.last)
+
+    visit(edit_project_path(Project.last))
+    within('#new_project') do
+      click_link 'Add phase'
+      all("input[name*='project[phases_attributes]']")
+          .find("input[name*='[name]']")
+          .first
+          .set('Second phase')
+      click_button 'Save'
+    end
+    expect(page).to have_selector('.timeline-phase-title.current.active', text: 'First phase')
+
+    within('form.phase') do
+      click_button 'Finish'
+    end
+    page.accept_confirm 'Finishing this phase will automatically start the next phase' do
+      expect(page).to have_selector('.timeline-phase-title.current.active', text: 'Second phase')
+    end
   end
 end
