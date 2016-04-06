@@ -18,6 +18,13 @@ en:
       title_singular: 'Phase'
       info: 'A phase is part in a timeline of a project.'
       add: 'Add phase'
+      finish: 'Finish'
+      start: 'Start'
+      current: 'current phase'
+      finish_confirmation:
+        last: 'Finishing this last phase will also finish the entire project'
+        other: 'Finishing this phase will automatically start the next phase'
+      start_confirmation: 'Starting this phase will automatically finish the previous phase'
     call_to_action:
       body: 'Keep people up to date and engage them with your project. You can post new challenges and ideas inside a project.'
       action: 'Start your project.'

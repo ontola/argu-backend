@@ -30,6 +30,8 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
     #current-blog-post
       - if project.latest_blog_post.present?
         =render project.latest_blog_post
+      -elsif project.phases.present?
+        =render project.current_phase
   header
     h2 discussies
   .btns-center-container

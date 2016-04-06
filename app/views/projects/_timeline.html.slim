@@ -6,8 +6,8 @@ header
   .timeline-phases
     -project.phases.order(start_date: :asc).each do |phase|
       .timeline-phase
-        =link_to phase_path(phase), data: {remote: true}, class: 'timeline-phase-title tooltip--top' do
-          span= phase.display_name
+        =link_to phase_path(phase), data: {remote: true}, class: "timeline-phase-title tooltip--top #{'current' if phase == project.current_phase}  #{'active' if project.blog_posts.empty? && phase == project.current_phase}" do
+          span=phase.display_name
         .timeline-phase-points
           -phase.blog_posts.each do |blog_post|
             =link_to blog_post_path(blog_post), data: {remote: true}, class: "tooltip--side-right timeline-point timeline-point-blog-post #{'active' if blog_post == project.latest_blog_post}" do

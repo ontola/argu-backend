@@ -18,6 +18,17 @@ nl:
       title_singular: 'Fase'
       info: 'Een fase is een onderdeel van de tijdlijn van een project.'
       add: 'Fase toevoegen'
+      finish: 'Beeindig'
+      start: 'Start'
+      current: 'huidige fase'
+      finish_confirmation:
+        last: 'Het beeindigen van deze laatste fase zal het gehele project beeindigen'
+        other: 'Het beeindigen van deze fase zal de volgende automatisch laten starten'
+      start_confirmation: 'Het starten van deze fase zal de vorige fase automatisch laten beeindigen'
+      start_date:
+        from_project: 'Begindatum van het project'
+        from_previous_phase: 'Einddatum van de vorige fase'
+        none: 'Vorige fase heeft nog geen einddatum'
     call_to_action:
       body: 'Houd mensen op de hoogte van de ontwikkelingen van een bepaald project en betrek ze bij de beslissingen die er worden genomen. In een project kunnen uitdagingen en ideeën worden geplaatst.'
       action: 'Start een project.'
