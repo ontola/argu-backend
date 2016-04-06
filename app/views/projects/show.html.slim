@@ -16,7 +16,10 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
           - if project.forum.visibility
             li.share-menu
               ul= react_component 'ShareDropdown', share_items(project), {prerender: true}
-
+          - if policy(BlogPost).create?
+            li= link_to polymorphic_url([:new, resource, :blog_post]) do
+              span.fa.fa-quote-left
+              span.icon-left= t('blog_posts.type_new')
     - if project.is_draft?
       .box
         section.section-draft
