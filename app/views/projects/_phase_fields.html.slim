@@ -4,6 +4,4 @@
   =f.inputs do
     =f.input :name
     =f.input :description
-    =f.input :start_date, as: :datetime_picker
-    =f.input :end_date, as: :datetime_picker
   =link_to_remove_association "#{t('delete_type', type: f.object.display_name)}", f, class: 'btn btn--light'
