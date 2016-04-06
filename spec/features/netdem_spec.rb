@@ -64,7 +64,7 @@ RSpec.feature 'Netdem', type: :feature do
     expect(page).to have_current_path project_path(Project.last)
 
     visit(edit_project_path(Project.last))
-    within('#new_project') do
+    within("#edit_project_#{Project.last.id}") do
       click_link 'Add phase'
       all("input[name*='project[phases_attributes]']")
           .find("input[name*='[name]']")
