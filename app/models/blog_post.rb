@@ -22,10 +22,17 @@ class BlogPost < ActiveRecord::Base
   has_many :activities, as: :trackable
 
   validates :blog_postable, :creator, presence: true
+  validate :validate_within_project_scope
 
   parentable :blog_postable, :forum
 
   def display_name
     title
+  end
+
+  def validate_within_project_scope
+    if blog_postable.is_a?(Project) && published_at.present?
+      errors.add(:published_at, 'must be published during a phase of the project') if blog_postable.start_date > published_at || (blog_postable.end_date.present? && blog_postable.end_date < published_at)
+    end
   end
 end
