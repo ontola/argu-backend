@@ -16,7 +16,7 @@
         =markdown_to_html(question.content)
       span.hidden[itemprop="answerCount"]= question.motions_count
     section.section--footer
-      = render question.creator, locals= {resource: question}
+      =render question.creator, locals= {resource: question}
       ul.btns-list--subtle.sticky--bottom-right.btns-horizontal.btns-list--grey-background
         - if current_user.present?
           li[data-title=I18n.t('tooltips.follow')]

@@ -19,7 +19,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
       .box
         section.section-draft
           p
-            = t('draft_unpublished') + ' '
+            =>t('draft_unpublished')
             =link_to project_path(project, project: {publish: true}), class: 'btn btn--warning btn--smaller', data: {method: :put, confirm: t('projects.publish_confirmation')}
               span.fa.fa-paper-plane
               span.icon-left= t('publish')

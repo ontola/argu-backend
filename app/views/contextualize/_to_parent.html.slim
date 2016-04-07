@@ -3,20 +3,19 @@
   div[itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem"]
     =link_to parent, itemprop: 'item'
       .box.box-link
-        - classname = parent.class_name
-        - if classname == 'forums'
+        - if parent.is_a?(Forum)
           - nil
-        - elsif classname == 'questions'
+        - elsif parent.is_a?(Question)
           =render partial: 'questions/info_bar', locals: {question: parent}
-        - elsif classname == 'motions'
+        - elsif parent.is_a?(Motion)
           =render partial: 'motions/info_bar', locals: {motion: parent, show_vote_results: true}
-        - elsif classname == 'projects'
+        - elsif parent.is_a?(Project)
           =render partial: 'projects/info_bar', locals: {project: parent}
         - else
           section.section-info
             span.fa.fa-arrow-up
         / This renders the bottom section
-        - if classname == 'forums'
+        - if parent.is_a?(Forum)
           section.back-to-forum
             -if parent.default_profile_photo.url.present?
               .profile-picture[style="background-image: url('#{parent.default_profile_photo.url(:avatar)}')"]
