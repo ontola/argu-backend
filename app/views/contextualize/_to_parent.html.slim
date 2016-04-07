@@ -16,13 +16,13 @@
           section.section-info
             span.fa.fa-arrow-up
         / This renders the bottom section
-        - unless classname == 'forums'
-          section
-            h3[class=(parent.class.to_s.downcase + '-t')]
-              span.fa.fa-arrow-up
-              span.icon-left[itemprop="name"]= parent.display_name
-        - else
+        - if classname == 'forums'
           section.back-to-forum
             -if parent.profile_photo.url.present?
               .profile-picture[style="background-image: url('#{parent.profile_photo.url(:avatar)}')"]
             h3= parent.display_name
+        - else
+          section
+            h3[class="#{parent.model_name.singular}-t"]
+              span.fa.fa-arrow-up
+              span.icon-left[itemprop="name"]= parent.display_name
