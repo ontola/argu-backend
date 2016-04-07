@@ -1,6 +1,13 @@
 import React from 'react';
+import {
+    safeCredentials,
+    json,
+    statusSuccess,
+    tryLogin,
+    errorMessageForStatus
+} from '../lib/helpers';
 
-export const VoteMixin = {
+const VoteMixin = {
 
     createMembership: function (response) {
         return fetch(response.membership_url, safeCredentials({
@@ -34,14 +41,6 @@ export const VoteMixin = {
         } else {
             return Promise.resolve();
         }
-    },
-
-    ifNoActor: function (v) {
-        return this.props.actor === null ? v : undefined;
-    },
-
-    ifActor: function (v) {
-        return this.props.actor === null ? undefined : v;
     },
 
     proHandler: function (e) {
@@ -89,3 +88,6 @@ export const VoteMixin = {
         });
     }
 };
+
+export default VoteMixin;
+window.VoteMixin = VoteMixin;

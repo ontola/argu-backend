@@ -44,6 +44,59 @@ function showNotifications (response) {
  * @export VoteButtons
  * @memberof Vote
  */
+export const VoteButton = React.createClass({
+    mixins: [IntlMixin],
+
+    propTypes: {
+        side: React.PropTypes.string,
+        count: React.PropTypes.number,
+        current: React.PropTypes.bool,
+        object_id: React.PropTypes.number,
+        clickHandler: React.PropTypes.func
+    },
+
+    iconForSide () {
+        switch(this.props.side) {
+            case 'pro':
+                return 'thumbs-up';
+            case 'neutral':
+                return 'pause';
+            case 'con':
+                return 'thumbs-down';
+        }
+    },
+
+    ifNoActor (v) {
+        return this.props.actor === null ? v : undefined;
+    },
+
+    ifActor (v) {
+        return this.props.actor === null ? undefined : v;
+    },
+
+    render () {
+        let { clickHandler, count, current, side } = this.props;
+
+        let voteCountElem;
+        if (count != 0) {
+            voteCountElem = <span className="vote-count">{count}</span>;
+        }
+
+        return (
+            <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/${side}`)} data-method={this.ifNoActor('post')}
+                   onClick={clickHandler} rel="nofollow" className={`btn-${side}`} data-voted-on={current}>
+                <span className={`fa fa-${this.iconForSide()}`} />
+                    <span className="icon-left">
+                        <span className="vote-text">
+                            <FormattedMessage message={this.getIntlMessage(side)} />
+                        </span>
+                        {voteCountElem}
+                    </span>
+            </a></li>
+        );
+    }
+});
+
 export const VoteButtons = React.createClass({
     mixins: [IntlMixin, VoteMixin],
 
@@ -69,39 +122,23 @@ export const VoteButtons = React.createClass({
     },
 
     render () {
+        let voteButtons = ['pro', 'neutral' , 'con']
+            .map((side, i) => {
+                return <VoteButton key={i}
+                                   side={side}
+                                   count={this.state.distribution[side]}
+                                   current={this.state.current_vote === side}
+                                   object_id={this.object_id}
+                                   clickHandler={this[`${side}Handler`]} />;
+            });
+
         return (
-            <ul className={this.buttonsClassName} data-voted={(this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain') || null}>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method={this.ifNoActor('post')} onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote === 'pro' || null}>
-                    <span className="fa fa-thumbs-up" />
-                    <span className="icon-left">
-                        <FormattedMessage message={this.getIntlMessage('pro')} />
-                    </span>
-                </a></li>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/neutral`)} data-method={this.ifNoActor('post')} onClick={this.neutralHandler} rel="nofollow" className="btn-neutral" data-voted-on={this.state.current_vote === 'neutral' || null}>
-                    <span className="fa fa-pause" />
-                    <span className="icon-left"><FormattedMessage message={this.getIntlMessage('neutral')} /></span>
-                </a></li>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/con`)} data-method={this.ifNoActor('post')} onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote === 'con' || null}>
-                    <span className="fa fa-thumbs-down" />
-                    <span className="icon-left"><FormattedMessage message={this.getIntlMessage('con')} /></span>
-                </a></li>
+            <ul className={this.buttonsClassName()} data-voted={(this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain') || null}>
+                {voteButtons}
             </ul>);
     }
 });
 window.VoteButtons = VoteButtons;
-
-export const VoteFormButton = React.createClass({
-
-    render () {
-        return (
-            <a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method="post" rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote === 'pro' || null}>
-                <span className="fa fa-thumbs-up" />
-                <span className="icon-left"><FormattedMessage message={this.getIntlMessage('pro')} /></span>
-            </a>
-        )
-    }
-});
-window.VoteFormButton = VoteFormButton;
 
 const LOWER_DISPLAY_LIMIT = 5;
 
