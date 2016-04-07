@@ -1,12 +1,12 @@
-/*globals Bugsnag*/
 /**
- * BigVote
- * @module BigVote
+ * Vote
+ * @module Vote
  */
 
 import Alert from './Alert';
 import React from 'react';
 import { IntlMixin, FormattedMessage } from 'react-intl';
+import VoteMixin from '../mixins/VoteMixin';
 import {
     safeCredentials,
     json,
@@ -40,12 +40,12 @@ function showNotifications (response) {
 /**
  * Component for the POST-ing of a vote.
  * This component is not pure.
- * @class BigVoteButtons
- * @export BigVoteButtons
- * @memberof BigVote
+ * @class VoteButtons
+ * @export VoteButtons
+ * @memberof Vote
  */
-export const BigVoteButtons = React.createClass({
-    mixins: [IntlMixin],
+export const VoteButtons = React.createClass({
+    mixins: [IntlMixin, VoteMixin],
 
     getInitialState () {
         return {
@@ -58,98 +58,19 @@ export const BigVoteButtons = React.createClass({
         };
     },
 
-    handleNotAMember (response) {
-        if (response.type === 'error' &&
-            response.error_id === 'NOT_A_MEMBER') {
-            return createMembership(response)
-                .then(() => {
-                    return this.vote(response.original_request.for);
-                });
-        } else {
-            return Promise.resolve();
+    buttonsClassName: function () {
+        switch(this.props.buttonsType) {
+            case 'subtle':
+                return 'btns-opinion--subtle';
+            case 'big':
+            default:
+                return 'btns-opinion';
         }
-    },
-
-    ifNoActor (v) {
-        return this.props.actor === null ? v : undefined;
-    },
-
-    ifActor (v) {
-        return this.props.actor === null ? undefined : v;
-    },
-
-    proHandler (e) {
-        if (this.props.actor !== null) {
-            e.preventDefault();
-            this.vote('pro');
-        }
-    },
-    neutralHandler (e) {
-        if (this.props.actor !== null) {
-            e.preventDefault();
-            this.vote('neutral');
-        }
-    },
-    conHandler (e) {
-        if (this.props.actor !== null) {
-            e.preventDefault();
-            this.vote('con');
-        }
-    },
-
-    vote (side) {
-        fetch(`${this.props.vote_url}/${side}.json`, safeCredentials({
-            method: 'POST'
-        })).then(statusSuccess, tryLogin)
-           .then(json)
-           .then(data => {
-               if (typeof data !== 'undefined') {
-                   this.setState(data.vote);
-                   this.props.parentSetVote(data.vote);
-               }
-           }).catch(e => {
-               if (e.status === 403) {
-                   return e.json()
-                       .then(this.handleNotAMember)
-                       .then(() => {
-                           this.vote(side);
-                       });
-               } else {
-                   const message = errorMessageForStatus(e.status).fallback || this.getIntlMessage('errors.general');
-                   new Alert(message, 'alert', true);
-                   Bugsnag.notifyException(e);
-                   throw e;
-               }
-           });
-    },
-
-    vote2 (side) {
-        fetch(`${this.props.vote_url}/${side}.json`, safeCredentials({
-            method: 'POST'
-        })).then(json, tryLogin)
-           .then(this.handleNotAMember)
-           .then(data => {
-               if (typeof data !== 'undefined') {
-                   this.setState(data.vote);
-                   this.props.parentSetVote(data.vote);
-               }
-           }).catch(e => {
-               if (e.status === 403) {
-                   return e
-                     .json()
-                     .then(showNotifications)
-               } else {
-                   const message = errorMessageForStatus(e.status).fallback || this.getIntlMessage('errors.general');
-                   new Alert(message, 'alert', true);
-                   Bugsnag.notifyException(e);
-                   throw e;
-               }
-           });
     },
 
     render () {
         return (
-            <ul className="btns-opinion" data-voted={(this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain') || null}>
+            <ul className={this.buttonsClassName} data-voted={(this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain') || null}>
                 <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method={this.ifNoActor('post')} onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote === 'pro' || null}>
                     <span className="fa fa-thumbs-up" />
                     <span className="icon-left">
@@ -167,9 +88,9 @@ export const BigVoteButtons = React.createClass({
             </ul>);
     }
 });
-window.BigVoteButtons = BigVoteButtons;
+window.VoteButtons = VoteButtons;
 
-export const BigVoteFormButton = React.createClass({
+export const VoteFormButton = React.createClass({
 
     render () {
         return (
@@ -180,16 +101,16 @@ export const BigVoteFormButton = React.createClass({
         )
     }
 });
-window.BigVoteFormButton = BigVoteFormButton;
+window.VoteFormButton = VoteFormButton;
 
 const LOWER_DISPLAY_LIMIT = 5;
 
 /**
  * Component to display voting results
- * @class BigVoteResults
- * @memberof BigVote
+ * @class VoteResults
+ * @memberof Vote
  */
-export const BigVoteResults = React.createClass({
+export const VoteResults = React.createClass({
     voteWidth (side) {
         const supplementedValues = {
             pro: this.props.percent.pro < LOWER_DISPLAY_LIMIT ? LOWER_DISPLAY_LIMIT : this.props.percent.pro,
@@ -225,4 +146,4 @@ export const BigVoteResults = React.createClass({
         return results;
     }
 });
-window.BigVoteResults = BigVoteResults;
+window.VoteResults = VoteResults;

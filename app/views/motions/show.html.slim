@@ -12,7 +12,7 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}
     .col--motion
       .motion-body[data-intro= t('intro.motion.body')]= render partial: 'body', locals: { motion: @motion }
-      .motion-votes= react_component 'CombiBigVote', motion_combi_vote_props(current_profile, @motion, @vote), prerender_options
+      .motion-votes= react_component 'CombiVote', motion_combi_vote_props(current_profile, @motion, @vote), prerender_options
 .col-2
   .intro-filler[data-intro= t('intro.motion.arguments') data-position= "top "]
 .argument-columns= render_columns(@arguments,

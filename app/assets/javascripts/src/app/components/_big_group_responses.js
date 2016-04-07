@@ -5,7 +5,7 @@ import { IntlMixin } from 'react-intl';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 
 /**
- * For making a GroupResponse in a BigVote fashion.
+ * For making a GroupResponse in a Vote fashion.
  * @class
  * @export BigGroupResponse
  */

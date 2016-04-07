@@ -3,20 +3,23 @@ import Alert from './Alert';
 import React from 'react';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
-import { BigVoteButtons, BigVoteResults } from './BigVote';
+import { VoteButtons, VoteResults } from './Vote';
 import BigGroupResponse from './_big_group_responses';
+import VoteMixin from '../mixins/VoteMixin';
+import { IntlMixin, FormattedMessage } from 'react-intl';
 
 /**
  * Component that displays current vote options based on whether the user is member of a group.
  * Also reveals the results if the user has already voted.
  * This component is not pure.
  * @class
- * @exports CombiBigVote
- * @see {@linkcode BigVote.BigVoteButtons}
- * @see {@linkcode BigVote.BigVoteResults}
+ * @exports CombiVote
+ * @see {@linkcode Vote.VoteButtons}
+ * @see {@linkcode Vote.VoteResults}
  * @see {@linkcode BigGroupResponse}
  */
-export const CombiBigVote = React.createClass({
+export const CombiVote = React.createClass({
+    mixins: [IntlMixin, VoteMixin],
 
     getInitialState () {
         return {
@@ -62,12 +65,12 @@ export const CombiBigVote = React.createClass({
     render () {
         let voteButtonsComponent, voteResultsComponent, groupResponsesComponent;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
-            voteButtonsComponent = <BigVoteButtons parentSetVote={this.setVote} {...this.state} {...this.props}/>;
-            voteResultsComponent = <BigVoteResults {...this.state} show_results={this.state.current_vote !== 'abstain'}/>;
+            voteButtonsComponent = <VoteButtons parentSetVote={this.setVote} {...this.state} {...this.props}/>;
+            voteResultsComponent = <VoteResults {...this.state} show_results={this.state.current_vote !== 'abstain'}/>;
             groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.object_type} objectId={this.props.object_id} />;
         } else if (this.state.actor.actor_type === 'Page') {
             groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.object_type} objectId={this.props.object_id} />;
-            voteResultsComponent = <BigVoteResults {...this.state} {...this.props} show_results={true}/>;
+            voteResultsComponent = <VoteResults {...this.state} {...this.props} show_results={true}/>;
         }
 
         return (
@@ -79,4 +82,4 @@ export const CombiBigVote = React.createClass({
         );
     }
 });
-window.CombiBigVote = CombiBigVote;
+window.CombiVote = CombiVote;
