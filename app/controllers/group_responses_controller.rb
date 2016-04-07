@@ -79,10 +79,11 @@ class GroupResponsesController < AuthorizedController
   end
 
   private
+
   def create_service
     @create_service ||= CreateGroupResponse.new(
       GroupResponse.new,
-      permit_params.merge(resource_new_params.merge(publisher: current_user,
+      resource_new_params.merge(permit_params.merge(publisher: current_user,
                                                     creator: current_profile)))
   end
 

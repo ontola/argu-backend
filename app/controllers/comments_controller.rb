@@ -204,7 +204,7 @@ class CommentsController < AuthorizedController
   def create_service
     @create_service ||= CreateComment.new(
       Comment.new,
-      permit_params.merge(resource_new_params.merge(publisher: current_user,
+      resource_new_params.merge(permit_params.merge(publisher: current_user,
                                                     creator: current_profile)))
   end
 
