@@ -36,6 +36,7 @@
               ul
                 -project.phases.each do |phase|
                   li=link_to(phase.display_name, edit_phase_path(phase)) + (project.current_phase == phase ? " - #{t('projects.phases.current')}" : '')
+                  =phase.errors.full_messages.first
             .links
               =link_to_add_association f, :phases, class: 'btn-subtle' do
                 span.fa.fa-plus

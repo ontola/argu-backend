@@ -1,0 +1,240 @@
+require 'test_helper'
+
+class PhasesControllerTest < ActionController::TestCase
+  include Devise::TestHelpers
+
+  let!(:owner) { create(:user) }
+  let!(:page) { create(:page, owner: owner.profile) }
+  let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
+  let!(:project) { create(:project, :published, forum: freetown) }
+  let(:subject) { create(:phase, project: project, forum: freetown) }
+
+  ####################################
+  # Guest, User, Member share features
+  ####################################
+
+  def general_show(response = 200, record = subject)
+    get :show,
+        id: record
+
+    assert_response response
+  end
+
+  def general_edit(response = 302)
+    get :edit,
+        id: subject
+
+    assert_response response
+  end
+
+  def general_update(response = 302, changed = false)
+    ch_method = method(changed ? :assert_not_equal : :assert_equal)
+
+    patch :update,
+          id: subject,
+          phase: attributes_for(:phase)
+
+    assert_response response
+    if assigns(:update_service).try(:resource).present?
+      ch_method.call subject
+                         .updated_at
+                         .utc
+                         .iso8601(6),
+                     assigns(:update_service)
+                         .try(:resource)
+                         .try(:updated_at)
+                         .try(:utc)
+                         .try(:iso8601, 6)
+    else
+      assert false, 'Model changed when it should not have' if changed
+    end
+  end
+
+  def general_finish(response = 302, changed = false)
+    ch_method = method(changed ? :assert_not_equal : :assert_equal)
+
+    patch :update,
+          id: subject,
+          phase: attributes_for(:phase).merge(finish_phase: 'true')
+
+    assert_response response
+    if assigns(:update_service).try(:resource).present?
+      ch_method.call subject
+                         .end_date,
+                     assigns(:update_service)
+                         .try(:resource)
+                         .try(:end_date)
+    else
+      assert false, 'Model changed when it should not have' if changed
+    end
+  end
+
+  ####################################
+  # As Guest
+  ####################################
+
+  test 'guest should get show published' do
+    general_show
+  end
+
+  test 'guest should not get edit' do
+    general_edit
+  end
+
+  test 'guest should not patch update' do
+    general_update
+  end
+
+  ####################################
+  # As User
+  ####################################
+  let(:user) { create(:user) }
+
+  test 'user should get show' do
+    sign_in user
+    general_show
+  end
+
+  test 'user should not get edit' do
+    sign_in user
+    general_edit 403
+  end
+
+  test 'user should not patch update' do
+    sign_in user
+    general_update 403
+  end
+
+  ####################################
+  # As Member
+  ####################################
+  let(:member) { create_member(freetown) }
+
+  test 'member should get show' do
+    sign_in member
+    general_show
+  end
+
+  test 'member should not get edit' do
+    sign_in member
+    general_edit
+  end
+
+  test 'member should not patch update' do
+    sign_in member
+    general_update
+  end
+
+  ####################################
+  # As Owner
+  ####################################
+
+  test 'owner should get show' do
+    sign_in owner
+    general_show
+  end
+
+  test 'owner should get edit' do
+    sign_in owner
+    general_edit 200
+  end
+
+  test 'owner should patch update' do
+    sign_in owner
+    general_update 302, true
+  end
+
+  test 'owner should patch update finish' do
+    sign_in owner
+    general_finish 302, true
+  end
+
+  ####################################
+  # As NetDem member
+  ####################################
+  let(:netdem) { create(:group, name: 'Netwerk Democratie', forum: freetown) }
+  let(:netdem_member) { create_member(freetown) }
+  let!(:netdem_membership) do
+    create(:group_membership,
+           member: netdem_member.profile,
+           group: netdem)
+  end
+  let!(:netdem_rule_new) do
+    create(:rule,
+           context: freetown,
+           model_type: 'Phase',
+           action: 'update?',
+           role: netdem.identifier,
+           permit: true)
+  end
+
+  test 'netdem member should get show' do
+    sign_in netdem_member
+    general_show
+  end
+
+  test 'netdem member should get edit' do
+    sign_in netdem_member
+    general_edit 200
+  end
+
+  test 'netdem member should patch update' do
+    sign_in netdem_member
+    general_update 302, true
+  end
+
+  test 'netdem should patch update finish' do
+    sign_in netdem_member
+    general_finish 302, true
+  end
+
+  ####################################
+  # As Manager
+  ####################################
+  let(:manager) { create_manager freetown }
+
+  test 'manager should get show' do
+    sign_in manager
+    general_show 200
+  end
+
+  test 'manager should get edit' do
+    sign_in manager
+    general_edit 200
+  end
+
+  test 'manager should patch update' do
+    sign_in manager
+    general_update 302, true
+  end
+
+  test 'manager should patch update finish' do
+    sign_in manager
+    general_finish 302, true
+  end
+
+  ####################################
+  # As Staff
+  ####################################
+  let(:staff) { create :user, :staff }
+
+  test 'staff should get show' do
+    sign_in staff
+    general_show 200
+  end
+
+  test 'staff should get edit' do
+    sign_in staff
+    general_edit 200
+  end
+
+  test 'staff should patch update' do
+    sign_in staff
+    general_update 302, true
+  end
+
+  test 'staff should patch update finish' do
+    sign_in staff
+    general_finish 302, true
+  end
+end

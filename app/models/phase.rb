@@ -55,7 +55,6 @@ class Phase < ActiveRecord::Base
   end
 
   def update_date_of_project_or_next_phase
-    next_phase.present? ? next_phase.update(start_date: end_date) : project.update(end_date: end_date) if end_date_changed?
-    project.update(start_date: start_date) if start_date_changed? && !previous_phase.present?
+    next_phase.present? ? next_phase.update!(start_date: end_date) : project.update!(end_date: end_date) if end_date_changed?
   end
 end

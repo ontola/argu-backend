@@ -48,6 +48,12 @@ class Project < ActiveRecord::Base
   end
 
   def update_start_date_of_first_phase
-    phases.first.start_date = start_date if phases.present? && start_date_changed?
+    if phases.present? && start_date_changed?
+      if phases.first.persisted?
+        phases.first.update!(start_date: start_date)
+      else
+        phases.first.start_date = start_date
+      end
+    end
   end
 end
