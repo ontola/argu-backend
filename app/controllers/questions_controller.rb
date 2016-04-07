@@ -2,10 +2,19 @@ class QuestionsController < AuthorizedController
   include NestedResourceHelper
 
   def show
-    @motions = policy_scope(authenticated_resource!
-                              .motions
-                              .trashed(show_trashed?)
-                              .order(votes_pro_count: :desc))
+    scope = authenticated_resource!
+                .motions
+                .trashed(show_trashed?)
+                .order(votes_pro_count: :desc)
+
+    if current_user.present?
+      scope = scope
+                  .includes(:votes)
+                  .votes_for_profile(current_profile)
+                  .references(:votes)
+    end
+
+    @motions = policy_scope(scope)
 
     respond_to do |format|
       format.html { render locals: {question: authenticated_resource!}} # show.html.erb

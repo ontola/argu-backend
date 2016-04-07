@@ -49,6 +49,10 @@ class Motion < ActiveRecord::Base
       .where('published_at IS NOT NULL OR project_id IS NULL')
   end
 
+  scope :votes_for_profile, ->(profile) do
+      where(votes: {voter_type: 'Profile', voter_id: profile.try(:id)})
+  end
+
   def assert_tenant
     if question.present? && question.forum_id != forum_id
       errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))
