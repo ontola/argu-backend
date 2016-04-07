@@ -9,6 +9,33 @@ export const VotePie = React.createClass({
         con: React.PropTypes.number.isRequired
     },
 
+    notVotedStyle: function () {
+        return [
+            {
+                color: '#e8e8e8',
+                value: 1
+            }
+        ];
+    },
+
+    style: function () {
+        let { pro, neutral, con } = this.props;
+
+        let totalVotesCount = pro + neutral + con;
+        let scaleRatio = 1;
+        if (totalVotesCount < 5) {
+            scaleRatio = .25 + .75 * (totalVotesCount / 5);
+        }
+        let transform = `scale(${scaleRatio})`;
+        return {
+            WebkitTransform: transform,
+            MozTransform: transform,
+            msTransform: transform,
+            OTransform: transform,
+            transform: transform
+        };
+    },
+
     votedStyle: function () {
         let { pro, neutral, con } = this.props;
 
@@ -28,40 +55,20 @@ export const VotePie = React.createClass({
         ];
     },
 
-    notVoteStyle: function () {
-        return [
-            {
-                color: '#e8e8e8',
-                value: 1
-            }
-        ];
-    },
 
     render: function () {
         let { pro, neutral, con } = this.props;
-        let totalVotesCount = pro + neutral + con;
-        let scaleRatio = 1;
-        if (totalVotesCount < 5) {
-            scaleRatio = .25 + .75 * (totalVotesCount / 5);
-        }
-        let transform = `scale(${scaleRatio})`;
-        let style = {
-            WebkitTransform: transform,
-            MozTransform: transform,
-            msTransform: transform,
-            OTransform: transform,
-            transform: transform
-        };
+
         if (pro + con + neutral > 0) {
             return (
-                <div className='vote-pie' style={style} data-title="">
+                <div className='vote-pie' style={this.style()} data-title="">
                     <PieChart slices={this.votedStyle()} />
                 </div>
             );
         } else {
             return (
                 <div className='vote-pie vote-pie--empty'>
-                    <PieChart slices={this.notVoteStyle()} />
+                    <PieChart slices={this.notVotedStyle()} />
                 </div>
             );
         }
