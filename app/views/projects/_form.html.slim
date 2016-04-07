@@ -1,4 +1,4 @@
-=set_title project.new_record? ? t('new_type', type: motion_type(project)) : t('edit_type', type: motion_type(project))
+=set_title project.new_record? ? t('new_type', type: I18n.t('projects.type')) : t('edit_type', type: I18n.t('projects.type'))
 .col-3
   .col-3-2
     =to_parent(authenticated_context)
@@ -13,6 +13,9 @@
           =f.inputs
             =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(project, :title, motion_type(project).downcase)
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(project, :content, motion_type(project).downcase)
+            =f.input :start_date, as: :datetime_picker
+            li.form-helper
+              span= t('projects.start_date_info')
             =f.inputs name: t('image') do
               p= t('use_a_high_res_image')
               =f.input :cover_photo, label: t('profiles.edit.upload_picture')

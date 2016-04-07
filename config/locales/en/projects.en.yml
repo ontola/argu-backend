@@ -6,6 +6,7 @@ en:
     publish_confirmation: 'Publicising will notify forum followers that a project was created. Continue?'
     timeline: 'Timeline'
     back_to: 'Go back to project'
+    start_date_info: 'The start date is the same as the start date of the first phase'
     stepups:
       type: 'Manager'
       title: 'Managers'

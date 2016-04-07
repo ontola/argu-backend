@@ -19,7 +19,7 @@ class PhasesController < AuthorizedController
     update_service.subscribe(ActivityListener.new)
     update_service.on(:update_phase_successful) do |phase|
       respond_to do |format|
-        format.html { redirect_to phase.project, notice: t('phases.notices.updated') }
+        format.html { redirect_to phase.project, notice: t('type_save_success', type: t('projects.phases.type')) }
         format.json { head :no_content }
       end
     end
@@ -40,7 +40,7 @@ class PhasesController < AuthorizedController
 
   def update_service
     @update_service ||= UpdatePhase.new(
-        @resource,
+        resource_by_id,
         permit_params)
   end
 end

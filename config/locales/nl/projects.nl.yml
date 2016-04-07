@@ -6,6 +6,7 @@ nl:
     publish_confirmation: 'Publiceren zorgt ervoor dat forum volgers op de hoogte zullen worden gesteld. Verder gaan?'
     timeline: 'Tijdlijn'
     back_to: 'Ga terug naar project'
+    start_date_info: 'De startdatum van het project valt samen met de startdatum van de eerste fase'
     stepups:
       type: 'Beheerder'
       title: 'Beheerders'

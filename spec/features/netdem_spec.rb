@@ -75,10 +75,10 @@ RSpec.feature 'Netdem', type: :feature do
     expect(page).to have_selector('.timeline-phase-title.current.active', text: 'First phase')
 
     within('form.phase') do
-      click_button 'Finish'
+      page.accept_alert 'Finishing this phase will automatically start the next phase' do
+        click_button 'Finish'
+      end
     end
-    page.accept_alert 'Finishing this phase will automatically start the next phase' do
-      expect(page).to have_selector('.timeline-phase-title.current.active', text: 'Second phase')
-    end
+    expect(page).to have_selector('.timeline-phase-title.current.active', text: 'Second phase')
   end
 end
