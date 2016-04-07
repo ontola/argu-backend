@@ -363,7 +363,7 @@
 }
 
 .btns-list {
-  > li > a, {
+  > li > a {
     @include button();
   }
 
