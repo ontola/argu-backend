@@ -464,6 +464,14 @@
     padding-right: 1.2em;
   }
 
+  .vote-count {
+    margin-left: .4em;
+  }
+
+  .vote-text {
+    margin-left: .4em;
+  }
+
   &[data-voted] a {
 
     &[data-voted-on=true] {
@@ -485,7 +493,7 @@
 
   .vote-count {
     &:before{
-      content: " ("
+      content: "("
     }
     &:after {
       content: ")"
@@ -495,6 +503,7 @@
   @include bp-medium {
     .vote-text {
       display: none;
+      margin: 0;
     }
 
     .vote-count {
