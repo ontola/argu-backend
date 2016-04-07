@@ -390,20 +390,121 @@
     }
   }
   .btn-pro {
-    background-color: $gre;
-    @include button($color: $gre);
+    background-color: $pro;
+    @include button($color: $pro);
 
   }
   .btn-neutral {
-    background-color: $g3;
-    @include button($color: $g3);
+    background-color: $neutral;
+    @include button($color: $neutral);
 
   }
   .btn-con {
-    background-color: $red;
-    @include button($color: $red);
+    background-color: $con;
+    @include button($color: $con);
 
     margin-right: 0;
+  }
+}
+
+.btns-opinion--subtle {
+  display: block;
+  margin-bottom: 1em;
+  text-align: center;
+  // Fixes a single white pixel that hides the border
+  padding-top: 0.1em;
+
+  li {
+    display: inline-block;
+    margin: 0 0;
+    margin-bottom: 0.5em;
+  }
+
+  a, button {
+    background-color: $g0;
+    padding: .8em;
+    display: inline-block;
+    @include transition(.2s all linear);
+    box-sizing: border-box;
+    font-size: .8em;
+    text-transform: uppercase;
+
+    .fa {
+      font-size: 1.2em;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: $g1;
+    }
+
+    &:active {
+      @include transition(none);
+      cursor: pointer;
+      background-color: $g1a;
+    }
+  }
+
+  a.btn-pro {
+    color: $pro;
+    border-top-left-radius: 999px;
+    border-bottom-left-radius: 999px;
+    padding-left: 1.2em;
+  }
+
+  a.btn-neutral {
+    color: $neutral;
+    margin: 0 3px;
+  }
+
+  a.btn-con {
+    color: $con;
+    border-top-right-radius: 999px;
+    border-bottom-right-radius: 999px;
+    padding-right: 1.2em;
+  }
+
+  &[data-voted] a {
+
+    &[data-voted-on=true] {
+      color: white;
+    }
+
+    &[data-voted-on=true].btn-pro{
+      background-color: $pro;
+    }
+
+    &[data-voted-on=true].btn-neutral{
+      background-color: $neutral;
+    }
+
+    &[data-voted-on=true].btn-con{
+      background-color: $con;
+    }
+  }
+
+  .vote-count {
+    &:before{
+      content: " ("
+    }
+    &:after {
+      content: ")"
+    }
+  }
+
+  @include bp-medium {
+    .vote-text {
+      display: none;
+    }
+
+    .vote-count {
+      &:before {
+        content: none;
+      }
+      &:after {
+        content: none;
+      }
+    }
   }
 }
 
