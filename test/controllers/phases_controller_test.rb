@@ -171,11 +171,13 @@ class PhasesControllerTest < ActionController::TestCase
   end
 
   test 'netdem member should get edit' do
+    netdem_stepup
     sign_in netdem_member
     general_edit 200
   end
 
   test 'netdem member should patch update' do
+    netdem_stepup
     sign_in netdem_member
     general_update 302, true
   end
