@@ -13,7 +13,6 @@
           =f.inputs
             =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(project, :title, motion_type(project).downcase)
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(project, :content, motion_type(project).downcase)
-          / Todo: make this work
             =f.inputs name: t('image') do
               p= t('use_a_high_res_image')
               =f.input :cover_photo, label: t('profiles.edit.upload_picture')

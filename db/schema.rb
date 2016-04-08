@@ -517,24 +517,26 @@ ActiveRecord::Schema.define(version: 20160526142530) do
   add_index "profiles_roles", ["profile_id", "role_id"], name: "index_profiles_roles_on_profile_id_and_role_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
-    t.integer  "forum_id",                      null: false
-    t.integer  "creator_id",                    null: false
+    t.integer  "forum_id",                             null: false
+    t.integer  "creator_id",                           null: false
     t.integer  "publisher_id"
     t.integer  "group_id"
-    t.integer  "state",             default: 0, null: false
-    t.string   "title",                         null: false
+    t.integer  "state",                   default: 0,  null: false
+    t.string   "title",                                null: false
     t.text     "content"
     t.datetime "start_date"
     t.string   "email"
     t.datetime "end_date"
     t.datetime "achieved_end_date"
-    t.integer  "questions_count",   default: 0, null: false
-    t.integer  "motions_count",     default: 0, null: false
-    t.integer  "phases_count",      default: 0, null: false
+    t.integer  "questions_count",         default: 0,  null: false
+    t.integer  "motions_count",           default: 0,  null: false
+    t.integer  "phases_count",            default: 0,  null: false
     t.datetime "published_at"
     t.datetime "trashed_at"
-    t.datetime "created_at",                    null: false
-    t.datetime "updated_at",                    null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
+    t.string   "cover_photo",             default: ""
+    t.string   "cover_photo_attribution", default: ""
   end
 
   add_index "projects", ["forum_id", "trashed_at"], name: "index_projects_on_forum_id_and_trashed_at", using: :btree
