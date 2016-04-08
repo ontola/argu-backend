@@ -25,14 +25,6 @@ RSpec.feature 'Netdem', type: :feature do
            role: netdem.identifier,
            permit: true)
   end
-  let!(:netdem_rule_update_phase) do
-    create(:rule,
-           context: freetown,
-           model_type: 'Phase',
-           action: 'update?',
-           role: netdem.identifier,
-           permit: true)
-  end
 
   scenario 'Netdem creates a project' do
     visit(forum_path('freetown'))

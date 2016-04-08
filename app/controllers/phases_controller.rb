@@ -1,9 +1,9 @@
 class PhasesController < AuthorizedController
   def show
     respond_to do |format|
-      format.html { render locals: {phase: @resource} }
-      format.json { render json: @resource }
-      format.js   { render locals: {phase: @resource} }
+      format.html { render locals: {phase: authenticated_resource!} }
+      format.json { render json: authenticated_resource! }
+      format.js   { render locals: {phase: authenticated_resource!} }
     end
   end
 
@@ -35,7 +35,7 @@ class PhasesController < AuthorizedController
   private
 
   def permit_params
-    params.require(:phase).permit(*policy(@resource || Phase).permitted_attributes)
+    params.require(:phase).permit(*policy(resource_by_id || Phase).permitted_attributes)
   end
 
   def update_service

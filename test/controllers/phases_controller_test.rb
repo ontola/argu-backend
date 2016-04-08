@@ -159,15 +159,12 @@ class PhasesControllerTest < ActionController::TestCase
            member: netdem_member.profile,
            group: netdem)
   end
-  let!(:netdem_rule_update_phase) do
-    create(:rule,
-           context: freetown,
-           model_type: 'Phase',
-           action: 'update?',
-           role: netdem.identifier,
-           permit: true)
+  let(:netdem_stepup) do
+    create(:stepup,
+           record: project,
+           forum: freetown,
+           moderator: netdem_member)
   end
-
   test 'netdem member should get show' do
     sign_in netdem_member
     general_show
@@ -184,6 +181,7 @@ class PhasesControllerTest < ActionController::TestCase
   end
 
   test 'netdem should patch update finish' do
+    netdem_stepup
     sign_in netdem_member
     general_finish 302, true
   end
