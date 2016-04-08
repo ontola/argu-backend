@@ -25,6 +25,14 @@ RSpec.feature 'Netdem', type: :feature do
            role: netdem.identifier,
            permit: true)
   end
+  let!(:netdem_rule_update_phase) do
+    create(:rule,
+           context: freetown,
+           model_type: 'Phase',
+           action: 'update?',
+           role: netdem.identifier,
+           permit: true)
+  end
 
   scenario 'Netdem creates a project' do
     visit(forum_path('freetown'))
@@ -74,11 +82,12 @@ RSpec.feature 'Netdem', type: :feature do
     end
     expect(page).to have_selector('.timeline-phase-title.current.active', text: 'First phase')
 
-    within('form.phase') do
-      page.accept_alert 'Finishing this phase will automatically start the next phase' do
+    page.accept_confirm 'Finishing this phase will automatically start the next phase' do
+      within('form.phase') do
         click_button 'Finish'
       end
     end
+    expect(page).to have_content 'Phase saved successfully'
     expect(page).to have_selector('.timeline-phase-title.current.active', text: 'Second phase')
   end
 end

@@ -26,6 +26,10 @@ class BlogPost < ActiveRecord::Base
 
   parentable :blog_postable, :forum
 
+  def description
+    self.content
+  end
+
   def display_name
     title
   end

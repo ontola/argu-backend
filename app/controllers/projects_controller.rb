@@ -153,6 +153,10 @@ class ProjectsController < AuthorizedController
     redirect_to page_path(params[:id]) if params[:id].to_i == 0
   end
 
+  def resource_new_params
+    super.merge(start_date: Time.now)
+  end
+
   def trash_service
     @trash_service ||= TrashProject.new(resource_by_id)
   end

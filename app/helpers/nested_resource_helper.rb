@@ -46,7 +46,7 @@ module NestedResourceHelper
   #   m_url = 'argu.co/m/8/v/pro'
   #   parent_resource_param # => Motion
   def parent_resource_klass(opts = request.path_parameters)
-    parent_resource_type(opts).capitalize.constantize
+    parent_resource_type(opts).camelcase.constantize
   end
 
   # Extracts the parent resource param from the url to get to its value

@@ -159,7 +159,7 @@ class PhasesControllerTest < ActionController::TestCase
            member: netdem_member.profile,
            group: netdem)
   end
-  let!(:netdem_rule_new) do
+  let!(:netdem_rule_update_phase) do
     create(:rule,
            context: freetown,
            model_type: 'Phase',

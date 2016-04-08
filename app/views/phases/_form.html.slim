@@ -4,8 +4,10 @@
     =to_parent(phase.project)
     .box
       section.section-info
-        span[class="fa fa-folder-o"]
-        span.icon-left= t('projects.phases.type')
+        .details
+          .details-part.details-part--type.neutral-bg[data-title=t('projects.phases.info')]
+            span.fa.fa-arrows-h
+            span.icon-left= t('projects.phases.type')
       =semantic_form_for(phase, html: {autocomplete: 'off'}) do |f|
         section.smallpadded.form-filled
           = f.inputs
@@ -17,8 +19,13 @@
             -else
               span= t('projects.phases.start_date.none')
             =f.input :end_date, as: :datetime_picker
-        =render partial: phase.creator, locals: {resource: phase}
-        .sticky-submit
-          =f.action :submit, as: :button
+        section.section--footer
+          - if phase.new_record?
+            = render partial: 'profiles/profile_current'
+          - else
+            = render partial: phase.creator, locals: {resource: phase}
+            =f.actions
+              .sticky-submit
+                = f.action :submit, as: :button
   .col-3-1
     =render partial: 'markdown_helper'
