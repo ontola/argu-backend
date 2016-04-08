@@ -1,6 +1,6 @@
 - discussions = (policy_scope(project.questions) + policy_scope(project.motions.where(question_id: nil))).sort_by(&:updated_at).reverse
 .box.box-grid.project[id=project.identifier class="#{'trashed' if project.is_trashed?}" data-created-at=project.created_at  data-updated-at=project.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork"]
-  /-if project.cover_photo.present?
+  -if project.cover_photo.present?
     =contextual_link_to project_path(project) do
       noscript
         .box-image--container

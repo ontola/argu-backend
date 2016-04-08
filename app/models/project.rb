@@ -32,6 +32,7 @@ class Project < ActiveRecord::Base
   counter_culture :forum
   acts_as_followable
   parentable :forum
+  mount_uploader :cover_photo, CoverUploader
 
   def latest_blog_post
     blog_posts.order(published_at: :desc).first
