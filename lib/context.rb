@@ -21,7 +21,7 @@ class Context
       when Context then context
       when String then Context.new parse_from_string(context)
       else nil
-    end
+      end
   end
 
   # Generates a URL to the current object with it's parents as a query string

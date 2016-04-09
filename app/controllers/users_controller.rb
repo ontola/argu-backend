@@ -45,14 +45,15 @@ class UsersController < ApplicationController
     authorize @user
 
     email_changed = @user.email != permit_params[:email]
-    successfully_updated = if email_changed or !permit_params[:password].blank? or @user.invitation_token.present?
-      if @user.update_with_password(permit_params)
-        sign_in(@user, bypass: true)
-        UserMailer.delay.user_password_changed(@user)
+    successfully_updated =
+      if email_changed or !permit_params[:password].blank? or @user.invitation_token.present?
+        if @user.update_with_password(permit_params)
+          sign_in(@user, bypass: true)
+          UserMailer.delay.user_password_changed(@user)
+        end
+      else
+        @user.update_without_password(passwordless_permit_params)
       end
-    else
-      @user.update_without_password(passwordless_permit_params)
-    end
 
     respond_to do |format|
       if successfully_updated
@@ -146,11 +147,12 @@ class UsersController < ApplicationController
     authorize :static_page, :home?
     locale = permit_locale_params
     if I18n.available_locales.include?(locale.to_sym)
-      success = if current_user.blank?
-        cookies['locale'] = locale
-      else
-        current_user.update(language: locale)
-      end
+      success =
+        if current_user.blank?
+          cookies['locale'] = locale
+        else
+          current_user.update(language: locale)
+        end
 
       respond_to do |format|
         flash[:error] = t('errors.general') unless success.present?

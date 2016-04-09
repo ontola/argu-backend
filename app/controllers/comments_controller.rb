@@ -241,9 +241,10 @@ class CommentsController < AuthorizedController
 
     resource, id = request.path.split('/')[1,2]
     # noinspection RubyCaseWithoutElseBlockInspection
-    resource = case resource
+    resource =
+      case resource
       when 'a' then Argument
-    end
+      end
     resource.find(id).forum
   end
 

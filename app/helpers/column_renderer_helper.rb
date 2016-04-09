@@ -8,7 +8,8 @@ module ColumnRendererHelper
   # @option options [ActiveRecord::Base] :collection_model model of the collection, used for translations @todo: fix this hack so this param is obsolete
   # @option options [String] :partial The partial path that should be used to render the individual items
   def render_columns(columns, options = {})
-    partial = case columns
+    partial =
+      case columns
       when Motion then 'motions/show'
       when Argument then 'arguments/show'
       when Vote then 'votes/show'
@@ -17,7 +18,7 @@ module ColumnRendererHelper
       when Comment then 'comments/show'
       when GroupResponse then 'group_responses/show'
       else 'column_renderer/show'
-    end
+      end
     partial = options.fetch(:partial, partial) if columns.is_a?(ActiveRecord::Base)
 
     if partial == 'column_renderer/show'
@@ -39,9 +40,9 @@ module ColumnRendererHelper
   #
   def header(options)
     if !(defined?(options[:header]) && options[:header] == false)
-        content_tag :header do
-          content_tag :h2, options[:header]
-        end
+      content_tag :header do
+        content_tag :h2, options[:header]
+      end
     end
   end
 

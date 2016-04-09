@@ -27,7 +27,6 @@ module WaitForAjax
   end
 
   def modal_opened?
-    save_and_open_screenshot
     page.find('body')[:class].include?('modal-opened')
   end
 

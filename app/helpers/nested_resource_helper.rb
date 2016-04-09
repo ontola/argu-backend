@@ -15,11 +15,12 @@ module NestedResourceHelper
   # @raise [ActiveRecord::RecordNotFound] {http://api.rubyonrails.org/classes/ActiveRecord/RecordNotFound.html Rails docs}
   # @see http://api.rubyonrails.org/classes/ActiveRecord/FinderMethods.html#method-i-find ActiveRecord#find
   def get_parent_resource(opts = request.path_parameters, url_params = params)
-    @parent_resource ||= if parent_resource_class(opts).try(:shortnameable?)
-      parent_resource_class(opts).find_via_shortname! parent_id_from_params(url_params)
-    else
-      parent_resource_class(opts).find parent_id_from_params(url_params)
-    end
+    @parent_resource ||=
+      if parent_resource_class(opts).try(:shortnameable?)
+        parent_resource_class(opts).find_via_shortname! parent_id_from_params(url_params)
+      else
+        parent_resource_class(opts).find parent_id_from_params(url_params)
+      end
   end
 
   # Determines the parent resource's class from the request
