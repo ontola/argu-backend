@@ -7,9 +7,9 @@ class PagesController < ApplicationController
     @_pundit_policy_scoped = true
 
     render locals: {
-               current: current_user.profile.pages.length,
-               max: policy(Page).max_allowed_pages
-           }
+      current: current_user.profile.pages.length,
+      max: policy(Page).max_allowed_pages
+    }
   end
 
   def show
@@ -46,9 +46,9 @@ class PagesController < ApplicationController
     end
 
     render locals: {
-              page: page,
-              errors: errors
-           }
+      page: page,
+      errors: errors
+    }
   end
 
   def create
@@ -61,9 +61,7 @@ class PagesController < ApplicationController
       @page.owner = current_user.profile
       @page.attributes = permit_params
 
-      if permit_params[:last_accepted] == '1'
-        @page.last_accepted = DateTime.current
-      end
+      @page.last_accepted = DateTime.current if permit_params[:last_accepted] == '1'
 
       authorize @page, :create?
       if @page.valid? && @page.profile.valid? && @page.shortname.valid?
@@ -75,9 +73,11 @@ class PagesController < ApplicationController
       redirect_to page_url(@page), status: 303
     else
       respond_to do |format|
-        format.html { render 'new',locals: {
-                                      page: @page
-                                  } , notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}] }
+        format.html do
+          render 'new', locals: {
+            page: @page
+          }, notifications: [{type: :error, message: 'Fout tijdens het aanmaken'}]
+        end
       end
     end
   end
@@ -87,9 +87,9 @@ class PagesController < ApplicationController
     authorize @page, :update?
 
     render locals: {
-               tab: tab,
-               active: tab
-           }
+      tab: tab,
+      active: tab
+    }
   end
 
   def update
@@ -99,10 +99,11 @@ class PagesController < ApplicationController
     if @page.update permit_params
       redirect_to settings_page_path(@page, tab: tab)
     else
-      render 'settings', locals: {
-                           tab: tab,
-                           active: tab
-                       }
+      render 'settings',
+             locals: {
+               tab: tab,
+               active: tab
+             }
     end
   end
 
@@ -159,7 +160,8 @@ class PagesController < ApplicationController
     end
   end
 
-private
+  private
+
   def permit_params
     params.require(:page).permit(*policy(@page || Page).permitted_attributes)
   end

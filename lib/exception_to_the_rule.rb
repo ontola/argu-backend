@@ -3,8 +3,8 @@
 # @see {Argu::RuledIt}
 # @author Fletcher91 <thom@argu.co>
 module ExceptionToTheRule
-  TRICKLE_LOGIC = { 'doesnt_trickle' => :==, 'trickles_down' => :<=, 'trickles_up' => :>= }
-  ROLE_NAMES = %w(open access_token member manager creator moderator owner staff)
+  TRICKLE_LOGIC = {'doesnt_trickle' => :==, 'trickles_down' => :<=, 'trickles_up' => :>=}
+  ROLE_NAMES = %w(open access_token member manager creator moderator owner staff).freeze
 
   attr_reader :last_enacted, :last_verdict
 

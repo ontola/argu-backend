@@ -64,7 +64,7 @@ Argu::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] || 'argu.co' }
+  config.action_mailer.default_url_options = {host: ENV['HOSTNAME'] || 'argu.co'}
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
@@ -74,7 +74,8 @@ Argu::Application.configure do
       user_name:            'info@argu.nl',
       password:             ENV['ARGU_GMAIL_PASS'] || Rails.application.secrets.argu_gmail_pass,
       authentication:       'plain',
-      enable_starttls_auto: true  }
+      enable_starttls_auto: true
+  }
 
   # Enable threaded mode
   # config.threadsafe!

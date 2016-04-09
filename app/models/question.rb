@@ -17,8 +17,8 @@ class Question < ActiveRecord::Base
   convertible :votes, :taggings, :activities
   mount_uploader :cover_photo, CoverUploader
 
-  validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
-  validates :title, presence: true, length: { minimum: 5, maximum: 110 }
+  validates :content, presence: true, length: {minimum: 5, maximum: 5000}
+  validates :title, presence: true, length: {minimum: 5, maximum: 110}
   validates :forum, :creator, presence: true
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
@@ -39,9 +39,7 @@ class Question < ActiveRecord::Base
   end
 
   def creator_follow
-    if self.creator.profileable.is_a?(User)
-      self.creator.profileable.follow self
-    end
+    creator.profileable.follow(self) if creator.profileable.is_a?(User)
   end
 
   def display_name

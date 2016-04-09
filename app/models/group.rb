@@ -10,23 +10,25 @@ class Group < ActiveRecord::Base
   validates :name, length: {maximum: 75}
   validates :visibility, presence: true
 
-  enum visibility: { hidden: 0, visible: 1, discussion: 2 }
+  enum visibility: {hidden: 0, visible: 1, discussion: 2}
 
   def as_json(options)
     super(options.merge(except: [:max_responses_per_member, :created_at, :updated_at, :forum_id]))
   end
 
   def display_name
-    self.name
+    name
   end
 
   def include?(profile)
-    self.members.include?(profile)
+    members.include?(profile)
   end
 
-  def self.ordered_with_meta (coll=[], keys= [], profile, obj)
-    grouped = coll.group_by { |g| g.group }
-    (keys + grouped.keys).map { |g| {g => GroupResponse.ordered_with_meta(grouped[g] || {}, profile, obj, g) } }.reduce(&:merge)
+  def self.ordered_with_meta (coll = [], keys = [], profile, obj)
+    grouped = coll.group_by(&:group)
+    (keys + grouped.keys)
+      .map { |g| {g => GroupResponse.ordered_with_meta(grouped[g] || {}, profile, obj, g)} }
+      .reduce(&:merge)
   end
 
   def responses_left(group_respondable, profile)

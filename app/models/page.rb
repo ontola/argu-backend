@@ -20,16 +20,14 @@ class Page < ActiveRecord::Base
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
 
   def build_profile(*options)
-    if self.profile.nil?
-      super(*options)
-    end
+    super(*options) if profile.nil?
   end
 
   def display_name
-    if self.profile.present?
-      self.profile.name || self.url
+    if profile.present?
+      profile.name || url
     else
-     self.url
+      url
     end
   end
 
@@ -47,7 +45,7 @@ class Page < ActiveRecord::Base
   end
 
   def transfer_to!(repeat_url, new_profile)
-    if self.url.present? && self.url == repeat_url && new_profile.present? && !new_profile.new_record?
+    if url.present? && url == repeat_url && new_profile.present? && !new_profile.new_record?
       self.owner = new_profile
       save!
     end

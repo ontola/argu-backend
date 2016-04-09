@@ -6,9 +6,7 @@ module StubbornCookie
 
   def stubborn_get(key)
     redis_value = stubborn_redis_get(key) if stubborn_identifier.present?
-    if redis_value.present? && cookies.permanent[key].blank?
-      cookies.permanent[key] = redis_value
-    end
+    cookies.permanent[key] = redis_value if redis_value.present? && cookies.permanent[key].blank?
     redis_value || cookies.permanent[key]
   end
 

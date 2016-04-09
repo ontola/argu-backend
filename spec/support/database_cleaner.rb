@@ -45,8 +45,6 @@ RSpec.configure do |config|
       end
     end
 
-    if example.metadata[:clean_db_strategy]
-      DatabaseCleaner.strategy = :deletion
-    end
+    DatabaseCleaner.strategy = :deletion if example.metadata[:clean_db_strategy]
   end
 end

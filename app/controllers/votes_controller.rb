@@ -15,8 +15,8 @@ class VotesController < AuthorizedController
         format.html { redirect_to url_for([:new, @model, :vote, for: for_param]) }
         format.json { render 'create', location: @vote }
       else
-        format.html { render template: 'forums/join', locals: { forum: @model.forum, r: request.fullpath } }
-        format.js { render partial: 'forums/join', layout: false, locals: { forum: @model.forum, r: request.fullpath } }
+        format.html { render template: 'forums/join', locals: {forum: @model.forum, r: request.fullpath} }
+        format.js { render partial: 'forums/join', layout: false, locals: {forum: @model.forum, r: request.fullpath} }
         format.json { render 'create', location: @vote }
       end
     end
@@ -30,9 +30,9 @@ class VotesController < AuthorizedController
                        forum: @model.forum)
 
     render locals: {
-               resource: @model,
-               vote: Vote.new
-           }
+      resource: @model,
+      vote: Vote.new
+    }
   end
 
   # POST /model/:model_id/v/:for
@@ -63,7 +63,7 @@ class VotesController < AuthorizedController
         format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.success') }
       else
         format.json { render json: @vote.errors, status: 400 }
-        #format.js { head :bad_request }
+        # format.js { head :bad_request }
         format.html { redirect_to polymorphic_url(@model), notice: t('votes.alerts.failed') }
       end
     end
@@ -76,9 +76,11 @@ class VotesController < AuthorizedController
     respond_to do |format|
       if vote.destroy
         vote.voteable.reload
-        format.js { render locals: {
-                               vote: vote
-                           } }
+        format.js do
+          render locals: {
+            vote: vote
+          }
+        end
         format.json { head 204 }
       else
         format.js { head :bad_request }
@@ -103,13 +105,13 @@ class VotesController < AuthorizedController
     resource = get_parent_resource
     if current_profile.present? && !current_profile.member_of?(resource.forum)
       options = {
-          forum: resource.forum,
-          r: redirect_url
+        forum: resource.forum,
+        r: redirect_url
       }
       if request.format == 'json'
         options[:body] = {
-            error: 'NO_MEMBERSHIP',
-            membership_url: forum_memberships_url(get_parent_resource.forum, redirect: false)
+          error: 'NO_MEMBERSHIP',
+          membership_url: forum_memberships_url(get_parent_resource.forum, redirect: false)
         }
       end
       raise Argu::NotAMemberError.new(options)
@@ -130,8 +132,6 @@ class VotesController < AuthorizedController
       params[:for]
     elsif params[:vote].is_a?(Hash)
       params[:vote][:for]
-    else
-      nil
     end
   end
 
@@ -140,7 +140,7 @@ class VotesController < AuthorizedController
   end
 
   def query_payload(opts = {})
-    query = opts.merge({vote: {for: for_param}})
+    query = opts.merge(vote: {for: for_param})
     query.to_query
   end
 
@@ -152,6 +152,6 @@ class VotesController < AuthorizedController
 
   # noinspection RubyUnusedLocalVariable
   def save_vote_to_stats(vote)
-    #TODO: @implement this
+    # TODO: @implement this
   end
 end

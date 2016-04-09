@@ -25,12 +25,12 @@ Rails.application.configure do
 
   # Don't care if the mailer can't send
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { host: ENV['HOSTNAME'].presence || 'localhost:3000' }
+  config.action_mailer.default_url_options = {host: ENV['HOSTNAME'].presence || 'localhost:3000'}
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-      address: ENV['MAIL_ADDRESS'].presence || '127.0.0.1',
-      port: ENV['MAIL_PORT'].presence || 1025
+    address: ENV['MAIL_ADDRESS'].presence || '127.0.0.1',
+    port: ENV['MAIL_PORT'].presence || 1025
   }
 
   # Print deprecation notices to the Rails logger

@@ -36,18 +36,22 @@ class User < ActiveRecord::Base
 
   delegate :description, to: :profile
 
-  enum follows_email: { never_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3 } # weekly_follows_email: 1, daily_follows_email: 2,
-  #enum memberships_email: { never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3 }
-  #enum created_email: { never_created_email: 0, weekly_created_email: 1, daily_created_email: 2, direct_created_email: 3 }
+  enum follows_email: {ever_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3} # weekly_follows_email: 1, daily_follows_email: 2,
+  # enum memberships_email: {never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3}
+  # enum created_email: {never_created_email: 0, weekly_created_email: 1, daily_created_email: 2, direct_created_email: 3}
 
   validates :email, allow_blank: false,
-        format: { with: RFC822::EMAIL }
+        format: {with: RFC822::EMAIL}
   validates :profile, presence: true
-  validates :language, inclusion: { in: I18n.available_locales.map(&:to_s), message: '%{value} is not a valid locale' }
-  auto_strip_attributes :first_name, :last_name, :middle_name, :squish => true
+  validates :language,
+            inclusion: {
+              in: I18n.available_locales.map(&:to_s),
+              message: '%{value} is not a valid locale'
+            }
+  auto_strip_attributes :first_name, :last_name, :middle_name, squish: true
 
   def active_at(redis = nil)
-    Argu::Redis.get("user:#{self.id}:active.at", redis)
+    Argu::Redis.get("user:#{id}:active.at", redis)
   end
 
   def active_since?(datetime, redis = nil)
@@ -62,18 +66,18 @@ class User < ActiveRecord::Base
   # The combination of the three is assumed to correctly identify an {User} record
   # created by devise_invitable
   def assign_attributes(new_attributes)
-    if self.new_record? && new_attributes.include?(:access_tokens)
-      self.shortname = nil if self.shortname.try(:shortname).blank?
+    if new_record? && new_attributes.include?(:access_tokens)
+      self.shortname = nil if shortname.try(:shortname).blank?
     end
     super(new_attributes)
   end
 
   def apply_omniauth(omniauth)
-    authentications.build(:provider => omniauth['provider'], :uid => omniauth['uid'])
+    authentications.build(provider: omniauth['provider'], uid: omniauth['uid'])
   end
 
   def display_name
-    [self.first_name, self.middle_name, self.last_name].compact.join(' ').presence || self.url
+    [first_name, middle_name, last_name].compact.join(' ').presence || url
   end
 
   def email_verified?
@@ -86,7 +90,7 @@ class User < ActiveRecord::Base
   end
 
   def greeting
-    self.first_name.presence || self.url.presence || self.email.split('@').first
+    first_name.presence || url.presence || email.split('@').first
   end
 
   def home_placement
@@ -103,7 +107,7 @@ class User < ActiveRecord::Base
 
   def managed_pages
     t = Page.arel_table
-    Page.where(t[:id].in(self.profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id)).or(t[:owner_id].eq(self.profile.id)))
+    Page.where(t[:id].in(self.profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id)).or(t[:owner_id].eq(profile.id)))
   end
 
   def password_required?
@@ -132,7 +136,7 @@ class User < ActiveRecord::Base
   end
 
   def sync_notification_count
-    Argu::Redis.set("user:#{self.id}:notification.count", self.notifications.count)
+    Argu::Redis.set("user:#{id}:notification.count", notifications.count)
   end
 
   def update_acesss_token_counts
@@ -146,7 +150,7 @@ class User < ActiveRecord::Base
     Hash[self.profile.email, self.profile.attributes.slice('id', 'name')]
   end
 
-protected
+  protected
 
   def confirmation_required?
     false

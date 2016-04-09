@@ -1,8 +1,6 @@
 class BaseSerializer < ActiveModel::Serializer
   def tenant
-    if object.respond_to? :forum
-      object.forum.url
-    end
+    object.forum.url if object.respond_to? :forum
   end
-  #alias_method :forum, :tenant
+  # alias_method :forum, :tenant
 end

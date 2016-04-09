@@ -31,7 +31,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Motion.count', 1], ['Notification.count', 1]]) do
       post forum_motions_path(user.profile.memberships.first.forum),
-           { motion: attributes_for(:motion) }
+           motion: attributes_for(:motion)
     end
 
     assert_differences([['Motion.trashed_only.count', 1], ['Notification.count', -1]]) do
@@ -44,7 +44,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Question.count', 1], ['Notification.count', 1]]) do
       post forum_questions_path(user.profile.memberships.first.forum),
-           { question: attributes_for(:question) }
+           question: attributes_for(:question)
     end
 
     assert_differences([['Question.trashed_only.count', 1], ['Notification.count', -1]]) do
@@ -58,7 +58,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Project.count', 1], ['Notification.count', 1]]) do
       post forum_projects_path(user.profile.memberships.first.forum),
-           { project: attributes_for(:project) }
+           project: attributes_for(:project)
     end
 
     assert_differences([['Project.trashed_only.count', 1], ['Notification.count', -1]]) do
@@ -72,7 +72,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Argument.count', 1], ['Notification.count', 2]]) do
       post forum_arguments_path(user.profile.memberships.first.forum),
-           { argument: attributes_for(:argument).merge(motion_id: follow_motion.followable.id) }
+           argument: attributes_for(:argument)
+                       .merge(motion_id: follow_motion.followable.id)
     end
 
     assert_differences([['Argument.trashed_only.count', 1], ['Notification.count', -2]]) do
@@ -86,10 +87,11 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     group_membership
 
     assert_differences([['GroupResponse.count', 1], ['Notification.count', 2]]) do
-      post motion_group_group_responses_path(follow_motion.followable, group), {
-          group_response: {
-               side: :pro,
-               forum_id: user.profile.memberships.first.forum.id }}
+      post motion_group_group_responses_path(follow_motion.followable, group),
+           group_response: {
+             side: :pro,
+             forum_id: user.profile.memberships.first.forum.id
+           }
     end
 
     assert_differences([['GroupResponse.count', -1], ['Notification.count', -2]]) do
@@ -103,7 +105,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
       post argument_comments_path(follow_argument.followable),
-      { comment: attributes_for(:comment) }
+           comment: attributes_for(:comment)
     end
 
     assert_differences([['Comment.trashed_only.count', 1], ['Notification.count', -2]]) do
@@ -117,7 +119,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
 
     assert_differences([['BlogPost.count', 1], ['Notification.count', 1]]) do
       post project_blog_posts_path(follow_project.followable),
-           { blog_post: attributes_for(:blog_post) }
+           blog_post: attributes_for(:blog_post)
     end
 
     assert_differences([['BlogPost.trashed_only.count', 1], ['Notification.count', -1]]) do

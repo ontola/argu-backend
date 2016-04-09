@@ -13,9 +13,8 @@ Argu::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  unless ENV['C66'] == 'true'
-    config.action_controller.asset_host = 'd3hv9pr8szmavn.cloudfront.net'
-  end
+  config.action_controller.asset_host = 'd3hv9pr8szmavn.cloudfront.net' unless ENV['C66'] == 'true'
+
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_files = ENV['C66'] == 'true' ? true : false
 
@@ -49,7 +48,10 @@ Argu::Application.configure do
   # Use a different logger for distributed setups
   # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
 
-  config.session_store :cookie_store, key: '_Argu_session', domain: (ENV['HOSTNAME'] == 'all' && :all || ENV['HOSTNAME'] || 'argu.co'), tld_length: 2
+  config.session_store :cookie_store,
+                       key: '_Argu_session',
+                       domain: (ENV['HOSTNAME'] == 'all' && :all || ENV['HOSTNAME'] || 'argu.co'),
+                       tld_length: 2
 
   # Use a different cache store in production
   # config.cache_store = :mem_cache_store
@@ -60,7 +62,7 @@ Argu::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.default_url_options = { :host => 'https://argu.co' }
+  config.action_mailer.default_url_options = {host: 'https://argu.co'}
   Rails.application.routes.default_url_options[:host] = 'https://argu.co'
   config.roadie.url_options = {host: 'argu.co', scheme: 'https'}
   config.action_mailer.asset_host = nil

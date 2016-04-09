@@ -113,9 +113,7 @@ class UsersController < ApplicationController
   def setup
     get_user_or_redirect
     authorize @user, :setup?
-    if @user.shortname.blank?
-      @user.build_shortname
-    end
+    @user.build_shortname if @user.shortname.blank?
 
     render 'setup_shortname', layout: 'closed'
   end

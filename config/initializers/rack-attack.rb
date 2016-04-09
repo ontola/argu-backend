@@ -43,8 +43,8 @@ class Rack::Attack
 
     throttle('req/ip', limit: 5, period: 20.seconds) do |req|
       if (!Rails.env.test? && req.post? && %w(/oauth /actors /users /connect /setup /move /convert /v/ /c/).any? { |n| req.path.include?(n) }) ||
-         %w(/users/auth).any? { |n| req.path.include?(n) }
-        req.ip
+          %w(/users/auth).any? { |n| req.path.include?(n) }
+          req.ip
       end
     end
   end

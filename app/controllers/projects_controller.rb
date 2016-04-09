@@ -131,9 +131,9 @@ class ProjectsController < AuthorizedController
 
   def create_service
     @create_service ||= CreateProject.new(
-        Project.new,
-        permit_params.merge(resource_new_params.merge(publisher: current_user,
-                                                      creator: current_profile)))
+      Project.new,
+      permit_params.merge(resource_new_params.merge(publisher: current_user,
+                                                    creator: current_profile)))
   end
 
   def destroy_service
@@ -145,9 +145,7 @@ class ProjectsController < AuthorizedController
   end
 
   def redirect_pages
-    if params[:id].to_i == 0
-      redirect_to page_path(params[:id])
-    end
+    redirect_to page_path(params[:id]) if params[:id].to_i == 0
   end
 
   def trash_service
@@ -160,7 +158,7 @@ class ProjectsController < AuthorizedController
 
   def update_service
     @update_service ||= UpdateProject.new(
-        resource_by_id,
-        permit_params)
+      resource_by_id,
+      permit_params)
   end
 end

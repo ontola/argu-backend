@@ -7,9 +7,8 @@ module Publishable
 
       def cached_response_for(api_method)
         cache_item = @_request_cache[api_method]
-        if cache_item.present? && cache_item[:secret] == @_access_token
-          cache_item[:response]
-        end
+        return nil unless cache_item.present? && cache_item[:secret] == @_access_token
+        cache_item[:response]
       end
 
       def cache_response(api_method, response)
@@ -17,6 +16,6 @@ module Publishable
       end
     end
 
-    Dir[File.join(File.dirname(__FILE__), "/wrappers/*.rb")].each { |f| require f }
+    Dir[File.join(File.dirname(__FILE__), '/wrappers/*.rb')].each { |f| require f }
   end
 end

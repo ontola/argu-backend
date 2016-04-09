@@ -15,9 +15,7 @@ class BlogPostPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      if context.forum.present?
-        scope.where(forum_id: context.forum.id)
-      end
+      scope.where(forum_id: context.forum.id) if context.forum.present?
     end
   end
 

@@ -17,9 +17,7 @@ Argu::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = true
-  unless ENV['C66'] == 'true'
-    config.action_controller.asset_host = 'd3hv9pr8szmavn.cloudfront.net'
-  end
+  config.action_controller.asset_host = 'd3hv9pr8szmavn.cloudfront.net' if ENV['C66'] == 'true'
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_files = ENV['C66'] == 'true' ? true : false
 
@@ -43,7 +41,7 @@ Argu::Application.configure do
   # Specifies the header that your server uses for sending files
   # config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
   config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
-  
+
   # See everything in the log (default is :info)
   config.log_level = ENV['LOG_LEVEL'] || :info
 
@@ -67,7 +65,7 @@ Argu::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
-  config.action_mailer.default_url_options = { :host => ENV['HOSTNAME'] || 'argu.co' }
+  config.action_mailer.default_url_options = {host: ENV['HOSTNAME'] || 'argu.co'}
 
   config.action_mailer.delivery_method = :mailgun
   config.action_mailer.mailgun_settings = {

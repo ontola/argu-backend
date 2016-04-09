@@ -15,8 +15,8 @@ module ProCon
     before_save :cap_title
     after_create :creator_follow, :update_vote_counters
 
-    validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
-    validates :title, presence: true, length: { minimum: 5, maximum: 75 }
+    validates :content, presence: true, length: {minimum: 5, maximum: 5000}
+    validates :title, presence: true, length: {minimum: 5, maximum: 75}
     validates :creator, :motion, :forum, presence: true
     auto_strip_attributes :title, squish: true
     auto_strip_attributes :content
@@ -34,14 +34,12 @@ module ProCon
   end
 
   def creator_follow
-    if self.creator.profileable.is_a?(User)
-      self.creator.profileable.follow self
-    end
+    creator.profileable.follow(self) if creator.profileable.is_a?(User)
   end
 
   def cap_title
-    self.title[0] = self.title[0].upcase
-    self.title
+    title[0] = title[0].upcase
+    title
   end
 
   def display_name
@@ -50,7 +48,7 @@ module ProCon
 
   # To facilitate the group_by command
   def key
-    self.pro ? :pro : :con
+    pro ? :pro : :con
   end
 
   # noinspection RubySuperCallWithoutSuperclassInspection
@@ -60,14 +58,14 @@ module ProCon
   end
 
   def root_comments
-    self.comment_threads.where(is_trashed: false, :parent_id => nil)
+    comment_threads.where(is_trashed: false, parent_id: nil)
   end
 
   def update_vote_counters
-    vote_counts = self.votes.group('"for"').count
-    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
-                votes_con_count: vote_counts[Vote.fors[:con]] || 0,
-                votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
+    vote_counts = votes.group('"for"').count
+    update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
+           votes_con_count: vote_counts[Vote.fors[:con]] || 0,
+           votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
   end
 
   module ClassMethods

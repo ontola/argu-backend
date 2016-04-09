@@ -6,7 +6,7 @@ class QuestionAnswer
 
   attr_accessor :question, :motion
 
-  def initialize(question:, motion: nil)
+  def initialize(question: nil, motion: nil)
     @question, @motion = question, motion
   end
 

@@ -29,14 +29,12 @@ module Parentable
 
   # Check if this model is a child of `record`
   def is_child_of?(record)
-    parent = self.get_parent
+    parent = get_parent
     if parent
       if parent.model == record
         true
       elsif parent.has_parent?
-        if parent.model.try(:is_fertile?)
-            parent.model.is_child_of?(record)
-        end
+        parent.model.is_child_of?(record) if parent.model.try(:is_fertile?)
       else
         # This is false since it can't be parent of itself
         false

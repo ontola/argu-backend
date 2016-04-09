@@ -18,9 +18,8 @@ class ApplicationController < ActionController::Base
   # after_action :set_notification_header
   if Rails.env.development? || Rails.env.staging?
     before_action do
-      if current_user && current_user.profile.has_role?(:staff)
-        Rack::MiniProfiler.authorize_request
-      end
+      return unless current_user && current_user.profile.has_role?(:staff)
+      Rack::MiniProfiler.authorize_request
     end
   end
 
@@ -118,31 +117,28 @@ class ApplicationController < ActionController::Base
     else
       forum_id = Argu::Redis.get("session:#{session.id}:last_forum")
       @_preferred_forum = Forum.find_by(id: forum_id) if forum_id.present?
-      if @_preferred_forum.present? && !policy(@_preferred_forum).show?
-        @_preferred_forum = nil
-      end
+      @_preferred_forum = nil if @_preferred_forum.present? && !policy(@_preferred_forum).show?
       @_preferred_forum || Forum.first_public
     end
   end
 
   # @private
   def pundit_user
-    UserContext.new(current_user,
-                    current_profile,
-                    session,
-                    @forum || @_preferred_forum,
-                    {
-                        platform_open: platform_open?,
-                        within_user_cap: within_user_cap?
-                    })
+    UserContext.new(
+      current_user,
+      current_profile,
+      session,
+      @forum || @_preferred_forum,
+      platform_open: platform_open?,
+      within_user_cap: within_user_cap?)
   end
 
   def rescue_stale
     respond_to do |format|
-      format.html {
+      format.html do
         correct_stale_record_version
         stale_record_recovery_action
-      }
+      end
       format.xml  { head :conflict }
       format.json { head :conflict }
     end
@@ -239,20 +235,21 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.js do
         render status: 403,
-               json: error_hash.merge({notifications: [error_hash]})
+               json: error_hash.merge(notifications: [error_hash])
       end
       format.json do
         render status: 403,
-               json: error_hash.merge({notifications: [error_hash]})
+               json: error_hash.merge(notifications: [error_hash])
       end
       format.html do
-        redirect_location = if defined?(authenticated_context) && authenticated_context.present? && policy(authenticated_context).show?
-                              url_for(authenticated_context)
-                            elsif request.env['HTTP_REFERER'].present? && request.env['HTTP_REFERER'] != request.original_url
-                              request.env['HTTP_REFERER']
-                            else
-                              root_path
-                            end
+        redirect_location =
+          if defined?(authenticated_context) && authenticated_context.present? && policy(authenticated_context).show?
+            url_for(authenticated_context)
+          elsif request.env['HTTP_REFERER'].present? && request.env['HTTP_REFERER'] != request.original_url
+            request.env['HTTP_REFERER']
+          else
+            root_path
+          end
         redirect_to redirect_location, alert: error
       end
     end
@@ -261,9 +258,19 @@ class ApplicationController < ActionController::Base
   def handle_not_logged_in_error(exception)
     @_not_logged_in_caught = true
     respond_to do |format|
-      format.js { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
-      format.json { render status: 401, json: { notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}") }] } }
-      format.html {
+      format.js do
+        render status: 401,
+               json: {
+                 notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}")}]
+               }
+      end
+      format.json do
+        render status: 401,
+               json: {
+                 notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}")}]
+               }
+      end
+      format.html do
         @resource ||= User.new r: exception.r
         render 'devise/sessions/new',
                locals: {
@@ -272,7 +279,7 @@ class ApplicationController < ActionController::Base
                  devise_mapping: Devise.mappings[:user],
                  r: exception.r, preview: exception.preview
                }
-      }
+      end
     end
   end
 
@@ -282,7 +289,14 @@ class ApplicationController < ActionController::Base
     respond_to do |format|
       format.html { render 'status/404', status: 404 }
       format.js { head 404 }
-      format.json { render json: { title: t('status.s_404.header'), message: t('status.s_404.body'), quote: @quote}, status: 404 }
+      format.json do
+        render status: 404,
+               json: {
+                 title: t('status.s_404.header'),
+                 message: t('status.s_404.body'),
+                 quote: @quote
+                }
+      end
     end
   end
 
@@ -290,7 +304,14 @@ class ApplicationController < ActionController::Base
     @additional_error_info = exception.to_s
     respond_to do |format|
       format.html { render 'status/400', status: 400 }
-      format.json { render json: { title: t('status.s_400.header'), message: t('status.s_400.body'), quote: @quote}, status: 400 }
+      format.json do
+        render status: 400,
+               json: {
+                 title: t('status.s_400.header'),
+                 message: t('status.s_400.body'),
+                 quote: @quote
+               }
+      end
       format.js { head 400 }
     end
   end
@@ -320,7 +341,7 @@ class ApplicationController < ActionController::Base
 
   def stale_record_recovery_action
     flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
-    render :edit, :status => :conflict
+    render :edit, status: :conflict
   end
 
   # @private

@@ -23,12 +23,12 @@ class ArgumentsController < AuthorizedController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    authenticated_resource!.assign_attributes({pro: %w(con pro).index(params[:pro]) })
+    authenticated_resource!.assign_attributes({pro: %w(con pro).index(params[:pro])})
 
     respond_to do |format|
       if params[:motion_id].present?
         format.js { render js: "window.location = #{request.url.to_json}" }
-        format.html { render :form, locals: { argument: authenticated_resource! } }
+        format.html { render :form, locals: {argument: authenticated_resource!} }
         format.json { render json: @argument }
       else
         format.html { render text: 'Bad request', status: 400 }

@@ -7,7 +7,8 @@ class ReactInput < Formtastic::Inputs::SelectInput
     def initialize
       new_helper = React::Rails::ViewHelper.helper_implementation_class.new
       new_helper.setup(self)
-      @__react_component_helper = new_helper    end
+      @__react_component_helper = new_helper
+    end
 
     def render_react_component(component, props = {}, opts = {})
       react_component(component, props, opts)
@@ -17,16 +18,15 @@ class ReactInput < Formtastic::Inputs::SelectInput
   def to_html
     input_wrapping do
       label_html <<
-          render_react_component(@options[:component], react_render_options, {prerender: true})
+        render_react_component(@options[:component], react_render_options, prerender: true)
     end
   end
 
   def react_render_options
-    input_options.merge({
-        name: react_name,
-        options: react_options,
-        value: react_value
-    })
+    input_options.merge(
+      name: react_name,
+      options: react_options,
+      value: react_value)
   end
 
   def react_name

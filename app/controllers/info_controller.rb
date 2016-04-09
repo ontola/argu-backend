@@ -2,17 +2,13 @@ class InfoController < ApplicationController
   def show
     begin
       setting = Setting.get(params[:id])
-      if setting.blank?
-        raise ActiveRecord::RecordNotFound
-      end
+      raise ActiveRecord::RecordNotFound if setting.blank?
       @document = JSON.parse setting
-      if @document['sections'].blank?
-        raise ActiveRecord::RecordNotFound
-      end
+      raise ActiveRecord::RecordNotFound if @document['sections'].blank?
     rescue JSON::ParserError
       raise ActiveRecord::RecordNotFound
     end
-    # TODO Create InfoPolicy and validate documents accordingly. Don't use settings.
+    # TODO: Create InfoPolicy and validate documents accordingly. Don't use settings.
     authorize :static_page, :about?
   end
 end

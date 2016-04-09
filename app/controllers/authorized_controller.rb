@@ -15,11 +15,10 @@ class AuthorizedController < ApplicationController
 
   def handle_not_a_user_error(exception)
     @_not_a_user_caught = true
-    if @resource.class != User
-      @resource = User.new(r: exception.r, shortname: Shortname.new)
-    end
+    @resource = User.new(r: exception.r, shortname: Shortname.new) if @resource.class != User
+
     respond_to do |format|
-      format.js  do
+      format.js do
         render 'devise/sessions/new',
                layout: false,
                locals: {
@@ -29,9 +28,7 @@ class AuthorizedController < ApplicationController
                  r: exception.r
                }
       end
-      format.html do
-        redirect_to new_user_session_path(r: exception.r)
-      end
+      format.html { redirect_to new_user_session_path(r: exception.r) }
     end
   end
 
@@ -39,8 +36,21 @@ class AuthorizedController < ApplicationController
     @_not_a_member_caught = true
     authorize exception.forum, :join?
     respond_to do |format|
-      format.html { render template: 'forums/join', locals: { forum: exception.forum, r: exception.r } }
-      format.js { render partial: 'forums/join', layout: false, locals: { forum: exception.forum, r: exception.r } }
+      format.html do
+        render template: 'forums/join',
+               locals: {
+                 forum: exception.forum,
+                 r: exception.r
+               }
+      end
+      format.js do
+        render partial: 'forums/join',
+               layout: false,
+               locals: {
+                 forum: exception.forum,
+                 r: exception.r
+               }
+      end
       format.json do
         f = ActionDispatch::Http::ParameterFilter.new(Rails.application.config.filter_parameters)
         error_hash = {
@@ -50,7 +60,7 @@ class AuthorizedController < ApplicationController
           original_request: f.filter(params)
         }.merge(exception.body)
         render status: 403,
-               json: error_hash.merge({notifications: [error_hash] })
+               json: error_hash.merge(notifications: [error_hash])
       end
     end
   end
@@ -81,22 +91,22 @@ class AuthorizedController < ApplicationController
   # @return [ActiveRecord::Base, nil] The model by id, a new model if the action was either `new` or `create`.
   def authenticated_resource!
     @resource ||=
-        case params[:action]
-        when 'create'
-          create_service.resource
-        when 'destroy'
-          destroy_service.resource
-        when 'new'
-          new_resource_from_params
-        when 'update'
-          update_service.resource
-        when 'untrash'
-          untrash_service.resource
-        when 'trash'
-          trash_service.resource
-        else
-          resource_by_id
-        end
+      case params[:action]
+      when 'create'
+        create_service.resource
+      when 'destroy'
+        destroy_service.resource
+      when 'new'
+        new_resource_from_params
+      when 'update'
+        update_service.resource
+      when 'untrash'
+        untrash_service.resource
+      when 'trash'
+        trash_service.resource
+      else
+        resource_by_id
+      end
   end
 
   # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,

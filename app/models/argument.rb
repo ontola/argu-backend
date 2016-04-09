@@ -44,30 +44,28 @@ class Argument < ActiveRecord::Base
   end
 
   def adjacent(direction, show_trashed = nil)
-    ids = self.motion.arguments_plain.order(votes_pro_count: :desc).ids
+    ids = motion.arguments_plain.order(votes_pro_count: :desc).ids
     index = ids.index(self[:id])
     return nil if ids.length < 2
     p_id = ids[index.send(direction ? :- : :+, 1) % ids.count]
-    self.motion.arguments.find_by(id: p_id)
+    motion.arguments.find_by(id: p_id)
   end
 
   def shallow_wipe
-    Proc.new do |c|
+    proc do |c|
       if c.is_trashed?
         c.body= '[DELETED]'
         c.creator = nil
         c.is_processed = true
       end
-      if c.children.present?
-        c.children.each(&shallow_wipe);
-      end
+      c.children.each(&shallow_wipe) if c.children.present?
     end
   end
 
   counter_culture :motion,
-                  column_name: Proc.new { |a| a.is_trashed ? nil : "argument_#{a.pro? ? 'pro' : 'con'}_count" },
+                  column_name: proc { |a| a.is_trashed ? nil : "argument_#{a.pro? ? 'pro' : 'con'}_count" },
                   column_names: {
-                      ['pro = ?', true] => 'argument_pro_count',
-                      ['pro = ?', false] => 'argument_con_count'
+                    ['pro = ?', true] => 'argument_pro_count',
+                    ['pro = ?', false] => 'argument_con_count'
                   }
 end

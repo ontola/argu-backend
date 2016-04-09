@@ -32,9 +32,7 @@ class SendNotificationsWorker
           user.update(notifications_viewed_at: Time.current)
         end
       rescue ActiveRecord::StatementInvalid => e
-        if e.message.include? 'LockNotAvailable'
-          logger.error 'Queue collision occurred'
-        end
+        logger.error 'Queue collision occurred' if e.message.include? 'LockNotAvailable'
         Bugsnag.auto_notify(e) if Rails.env.production?
       end
     end

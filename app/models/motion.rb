@@ -27,8 +27,8 @@ class Motion < ActiveRecord::Base
   resourcify
   mount_uploader :cover_photo, CoverUploader
 
-  validates :content, presence: true, length: { minimum: 5, maximum: 5000 }
-  validates :title, presence: true, length: { minimum: 5, maximum: 110 }
+  validates :content, presence: true, length: {minimum: 5, maximum: 5000}
+  validates :title, presence: true, length: {minimum: 5, maximum: 110}
   validates :forum, :creator, presence: true
   validate :assert_tenant
   auto_strip_attributes :title, squish: true
@@ -36,12 +36,14 @@ class Motion < ActiveRecord::Base
 
   VOTE_OPTIONS = [:pro, :neutral, :con]
 
-  scope :search, ->(q) { where('lower(motions.title) SIMILAR TO lower(?) OR ' +
-                                'lower(motions.content) LIKE lower(?)',
-                                "%#{q}%",
-                                "%#{q}%") }
+  scope :search, lambda do |q|
+    where('lower(motions.title) SIMILAR TO lower(?) OR ' +
+            'lower(motions.content) LIKE lower(?)',
+          "%#{q}%",
+          "%#{q}%")
+  end
 
-  scope :published, -> do
+  scope :published, lambda do
     joins('LEFT OUTER JOIN projects ON projects.id = project_id')
       .where('published_at IS NOT NULL OR project_id IS NULL')
   end
@@ -54,22 +56,21 @@ class Motion < ActiveRecord::Base
 
   def as_json(options = {})
     super(options.merge(
-              {
-                  methods: %i(display_name),
-                  only: %i(id content forum_id created_at cover_photo
-                           updated_at pro_count con_count
-                           votes_pro_count votes_con_count votes_neutral_count
-                           argument_pro_count argument_con_count)
-              }))
+      methods: %i(display_name),
+      only: %i(id content forum_id created_at cover_photo
+               updated_at pro_count con_count
+               votes_pro_count votes_con_count votes_neutral_count
+               argument_pro_count argument_con_count)
+    ))
   end
 
   def cap_title
-    self.title[0] = self.title[0].upcase
-    self.title
+    title[0] = title[0].upcase
+    title
   end
 
   def con_count
-    self.arguments.count(:conditions => ['pro = false'])
+    arguments.count(conditions: ['pro = false'])
   end
 
   def creator
@@ -77,14 +78,12 @@ class Motion < ActiveRecord::Base
   end
 
   def creator_follow
-    if self.creator.profileable.is_a?(User)
-      self.creator.profileable.follow self
-    end
+    creator.profileable.follow(self) if creator.profileable.is_a?(User)
   end
 
   # http://schema.org/description
   def description
-    self.content
+    content
   end
 
   def display_name
@@ -98,7 +97,7 @@ class Motion < ActiveRecord::Base
   def invert_arguments=(invert)
     if invert != '0'
       Motion.transaction do
-        self.arguments.each do |a|
+        arguments.each do |a|
           a.update_attributes pro: !a.pro
         end
       end
@@ -106,13 +105,11 @@ class Motion < ActiveRecord::Base
   end
 
   def motions_title
-    self.question.try(:motions_title) ||
-      self.forum.motions_title
+    question.try(:motions_title) || forum.motions_title
   end
 
   def motions_title_singular
-    self.question.try(:motions_title_singular) ||
-      self.forum.motions_title_singular
+    question.try(:motions_title_singular) || forum.motions_title_singular
   end
 
   def move_to(forum, unlink_question = true)
@@ -120,12 +117,12 @@ class Motion < ActiveRecord::Base
       old_forum = self.forum.lock!
       self.forum = forum.lock!
       self.question_id = nil if unlink_question
-      self.save
-      self.arguments.lock(true).update_all forum_id: forum.id
-      self.votes.lock(true).update_all forum_id: forum.id
-      self.activities.lock(true).update_all forum_id: forum.id
-      self.taggings.lock(true).update_all forum_id: forum.id
-      self.group_responses.lock(true).delete_all
+      save
+      arguments.lock(true).update_all forum_id: forum.id
+      votes.lock(true).update_all forum_id: forum.id
+      activities.lock(true).update_all forum_id: forum.id
+      taggings.lock(true).update_all forum_id: forum.id
+      group_responses.lock(true).delete_all
 
       old_forum.decrement :motions_count
       old_forum.save
@@ -136,28 +133,40 @@ class Motion < ActiveRecord::Base
     end
   end
 
-  def next(show_trashed= false)
-    self.forum.motions.trashed(show_trashed).where('updated_at < :date', date: self.updated_at).order('updated_at').last
+  def next(show_trashed = false)
+    forum
+      .motions
+      .trashed(show_trashed)
+      .where('updated_at < :date',
+             date: self.updated_at)
+      .order('updated_at')
+      .last
   end
 
-  def previous(show_trashed= false)
-    self.forum.motions.trashed(show_trashed).where('updated_at > :date', date: self.updated_at).order('updated_at').first
+  def previous(show_trashed = false)
+    forum
+      .motions
+      .trashed(show_trashed)
+      .where('updated_at > :date',
+             date: self.updated_at)
+      .order('updated_at')
+      .first
   end
 
   def pro_count
-    self.arguments.count(:conditions => ['pro = true'])
+    arguments.count(conditions: ['pro = true'])
   end
 
   def raw_score
-    self.votes_pro_count - self.votes_con_count
+    votes_pro_count - votes_con_count
   end
 
   def responses_from(profile, group)
-    self.group_responses.where(creator_id: profile.id, group: group).count
+    group_responses.where(creator_id: profile.id, group: group).count
   end
 
   def score
-    number_to_human(raw_score, :format => '%n%u', :units => { :thousand => 'K' })
+    number_to_human(raw_score, format: '%n%u', units: {thousand: 'K'})
   end
 
   def tag_list
@@ -170,12 +179,24 @@ class Motion < ActiveRecord::Base
 
   # Same as {Argument#top_arguments_con} but plucks only :id, :title, :pro, and :votes_pro_count
   def top_arguments_con_light
-    self.arguments.where(pro: false).trashed(false).order(votes_pro_count: :desc).uniq.limit(5).pluck(:id, :title, :pro, :votes_pro_count, :content)
+    arguments
+      .where(pro: false)
+      .trashed(false)
+      .order(votes_pro_count: :desc)
+      .uniq
+      .limit(5)
+      .pluck(:id, :title, :pro, :votes_pro_count, :content)
   end
 
   # Same as {Argument#top_arguments_pro} but plucks only :id, :title, :pro, and :votes_pro_count
   def top_arguments_pro_light
-    self.arguments.where(pro: true).trashed(false).order(votes_pro_count: :desc).uniq.limit(5).pluck(:id, :title, :pro, :votes_pro_count, :content)
+    arguments
+      .where(pro: true)
+      .trashed(false)
+      .order(votes_pro_count: :desc)
+      .uniq
+      .limit(5)
+      .pluck(:id, :title, :pro, :votes_pro_count, :content)
   end
 
   def total_vote_count
@@ -183,16 +204,16 @@ class Motion < ActiveRecord::Base
   end
 
   def update_vote_counters
-    vote_counts = self.votes.group('"for"').count
-    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
-                votes_con_count: vote_counts[Vote.fors[:con]] || 0,
-                votes_neutral_count: vote_counts[Vote.fors[:neutral]] || 0,
-                votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
+    vote_counts = votes.group('"for"').count
+    update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
+           votes_con_count: vote_counts[Vote.fors[:con]] || 0,
+           votes_neutral_count: vote_counts[Vote.fors[:neutral]] || 0,
+           votes_abstain_count: vote_counts[Vote.fors[:abstain]] || 0
   end
 
   def uses_alternative_names
-    self.question.try(:uses_alternative_names) ||
-      self.forum.uses_alternative_names
+    question.try(:uses_alternative_names) ||
+      forum.uses_alternative_names
   end
 
   def votes_pro_percentage

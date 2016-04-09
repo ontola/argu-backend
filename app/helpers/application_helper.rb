@@ -3,7 +3,7 @@ require 'bcrypt/engine'
 
 module ApplicationHelper
   include ActivityStringHelper, AlternativeNamesHelper, UsersHelper, StubbornCookie, MarkdownHelper
-  EU_COUNTRIES = %w(BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT AT PL PT RO SI SK FI SE UK ME IS AL RS TR)
+  EU_COUNTRIES = %w(BE BG CZ DK DE EE IE EL ES FR HR IT CY LV LT LU HU MT AT PL PT RO SI SK FI SE UK ME IS AL RS TR).freeze
 
   # Uses Rollout to determine whether a feature is active for a given User
   def active_for_user?(feature, user)
@@ -62,9 +62,7 @@ module ApplicationHelper
   # Merges a URI with a params Hash
   def merge_query_parameter(uri, params)
     uri =  URI.parse(uri)
-    if params.class != Hash
-      params = params.present? ? Hash[*params.split('=')] : Hash.new
-    end
+    params = params.present? ? Hash[*params.split('=')] : {} if params.class != Hash
 
     new_query_ar = URI.decode_www_form(uri.query || '') << params.flatten
     uri.query = URI.encode_www_form(new_query_ar)
@@ -186,8 +184,11 @@ module ApplicationHelper
 
   def safe_truncated_text(contents, url, cutting_point = 220)
     adjusted_content = markdown_to_plaintext(contents)
-    _html = escape_once HTML_Truncator.truncate(adjusted_content, cutting_point, {length_in_chars: true, ellipsis: ('... ') })
-    _html << url if adjusted_content.length > cutting_point
-    _html
+    html = escape_once HTML_Truncator.truncate(adjusted_content,
+                                               cutting_point,
+                                               length_in_chars: true,
+                                               ellipsis: '... ')
+    html << url if adjusted_content.length > cutting_point
+    html
   end
 end

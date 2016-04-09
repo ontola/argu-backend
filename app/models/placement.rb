@@ -8,7 +8,7 @@ class Placement < ActiveRecord::Base
 
   # @return [String] country_code from variable or from associated place
   def country_code
-    @country_code || self.place.try(:country_code)
+    @country_code || place.try(:country_code)
   end
 
   def country_code=(val)
@@ -18,7 +18,7 @@ class Placement < ActiveRecord::Base
 
   # @return [String] postal_code from variable or from associated place
   def postal_code
-    @postal_code || self.place.try(:postal_code)
+    @postal_code || place.try(:postal_code)
   end
 
   def postal_code=(val)
@@ -31,9 +31,7 @@ class Placement < ActiveRecord::Base
 
   # Destroys placement when no country_code and no postal_code is provided
   def destruct_if_unneeded
-    if country_code.blank? && postal_code.blank?
-      self.destroy
-    end
+    destroy if country_code.blank? && postal_code.blank?
   end
 
   # Validate whether the postal_code and country_code values are allowed and whether they match a {Place}

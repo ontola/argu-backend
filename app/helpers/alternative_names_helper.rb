@@ -5,9 +5,8 @@ module AlternativeNamesHelper
   extend ActiveSupport::Concern
 
   included do
-    if respond_to?(:helper_method)
-      helper_method :naming_context
-    end
+    helper_method :naming_context if respond_to?(:helper_method)
+
     if respond_to?(:hide_action)
       hide_action :naming_context
       hide_action :motion_icon
@@ -31,7 +30,7 @@ module AlternativeNamesHelper
   #########################
 
   # Icon substring for blog posts
-  def blog_post_icon(naming_object= nil)
+  def blog_post_icon(naming_object = nil)
     'quote-left'
   end
 
@@ -40,35 +39,39 @@ module AlternativeNamesHelper
   #########################
 
   # Icon substring for motions
-  def motion_icon(naming_object= nil)
+  def motion_icon(naming_object = nil)
     'lightbulb-o'
   end
 
   # Singular translation for {Motion}
-  def motion_type(naming_object= nil)
-    alternative_motions?(naming_object) ?
-      (naming_object || naming_context).motions_title_singular :
+  def motion_type(naming_object = nil)
+    if alternative_motions?(naming_object)
+      (naming_object || naming_context).motions_title_singular
+    else
       I18n.t('motions.type')
+    end
   end
 
   # Plural translation for {Motion}
-  def motions_type(naming_object= nil)
-      alternative_motions?(naming_object) ?
-        (naming_object || naming_context).motions_title :
-        I18n.t('motions.plural')
+  def motions_type(naming_object = nil)
+    if alternative_motions?(naming_object)
+      (naming_object || naming_context).motions_title
+    else
+      I18n.t('motions.plural')
+    end
   end
 
   # Does the {Forum} use alternative names for {Motion}?
   # :nodoc:
-  def alternative_motions?(naming_object= nil)
+  def alternative_motions?(naming_object = nil)
     if naming_object == nil
       @alternative_motions ||= (naming_context.uses_alternative_names &&
-          naming_context.motions_title_singular.present? &&
-          naming_context.motions_title.present?)
+        naming_context.motions_title_singular.present? &&
+        naming_context.motions_title.present?)
     else
       naming_object.try(:uses_alternative_names) &&
-          naming_object.try(:motions_title_singular).present? &&
-          naming_object.try(:motions_title).present?
+        naming_object.try(:motions_title_singular).present? &&
+        naming_object.try(:motions_title).present?
     end
   end
 
@@ -77,35 +80,39 @@ module AlternativeNamesHelper
   #########################
 
   # Icon substring for questions
-  def question_icon(naming_object= nil)
+  def question_icon(naming_object = nil)
     'question'
   end
 
   # Singular translation for {Question}
-  def question_type(naming_object= nil)
-    alternative_questions?(naming_object) ?
-      (naming_object || naming_context).questions_title_singular :
+  def question_type(naming_object = nil)
+    if alternative_questions?(naming_object)
+      (naming_object || naming_context).questions_title_singular
+    else
       I18n.t('questions.type')
+    end
   end
 
   # Plural translation for {Question}
-  def questions_type(naming_object= nil)
-    (naming_object || naming_context).questions_title ?
-      alternative_questions?(naming_object) :
+  def questions_type(naming_object = nil)
+    if (naming_object || naming_context).questions_title
+      alternative_questions?(naming_object)
+    else
       I18n.t('questions.type')
+    end
   end
 
   # @private
   # Does the {Forum} use alternative names for {Question}?
-  def alternative_questions?(naming_object= nil)
+  def alternative_questions?(naming_object = nil)
     if naming_object == nil || !naming_object.is_a?(Forum)
       @alternative_questions ||= naming_context.uses_alternative_names &&
-          naming_context.questions_title_singular.present? &&
-          naming_context.questions_title.present?
+        naming_context.questions_title_singular.present? &&
+        naming_context.questions_title.present?
     else
       naming_object.try(:uses_alternative_names) &&
-          naming_object.try(:questions_title_singular).present? &&
-          naming_object.try(:questions_title).present?
+        naming_object.try(:questions_title_singular).present? &&
+        naming_object.try(:questions_title).present?
     end
   end
 
@@ -114,37 +121,43 @@ module AlternativeNamesHelper
   #########################
 
   # Icon substring for arguments
-  def argument_icon(naming_object= nil)
-    (naming_object || naming_context).arguments_title_singular ?
-      alternative_arguments?(naming_object) :
+  def argument_icon(naming_object = nil)
+    if (naming_object || naming_context).arguments_title_singular
+      alternative_arguments?(naming_object)
+    else
       'argument'
+    end
   end
 
   # Singular translation for {Argument}
-  def argument_type(naming_object= nil)
-    alternative_arguments?(naming_object) ?
-      (naming_object || naming_context).arguments_title_singular :
+  def argument_type(naming_object = nil)
+    if alternative_arguments?(naming_object)
+      (naming_object || naming_context).arguments_title_singular
+    else
       I18n.t('arguments.type')
+    end
   end
 
   # Plural translation for {Argument}
-  def arguments_type(naming_object= nil)
-    (naming_object || naming_context).arguments_title ?
-      alternative_arguments?(naming_object) :
+  def arguments_type(naming_object = nil)
+    if (naming_object || naming_context).arguments_title
+      alternative_arguments?(naming_object)
+    else
       I18n.t('arguments.type')
+    end
   end
 
   # Does the {Forum} use alternative names for {Argument}?
   # :nodoc:
-  def alternative_arguments?(naming_object= nil)
+  def alternative_arguments?(naming_object = nil)
     if naming_object == nil || !naming_object.is_a?(Forum)
       @alternative_arguments ||= naming_context.uses_alternative_names &&
-          naming_context.arguments_title_singular.present? &&
-          naming_context.arguments_title.present?
+        naming_context.arguments_title_singular.present? &&
+        naming_context.arguments_title.present?
     else
       naming_object.try(:uses_alternative_names) &&
-          naming_object.try(:arguments_title_singular).present? &&
-          naming_object.try(:arguments_title).present?
+        naming_object.try(:arguments_title_singular).present? &&
+        naming_object.try(:arguments_title).present?
     end
   end
 
@@ -165,8 +178,8 @@ module AlternativeNamesHelper
 
   private
 
-  #@private
-  def type_for(item, plural=false)
+  # @private
+  def type_for(item, plural = false)
     if item.class == Motion
       motion_type(item.forum)
     elsif item.class == Question
