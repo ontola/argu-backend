@@ -1,7 +1,7 @@
 class ProfilesController < ApplicationController
   def index
-    @resource = Shortname.find_resource 'nederland'  # params[:thing]
-    #authorize @resource, :list_members?
+    @resource = Shortname.find_resource 'nederland' # params[:thing]
+    # authorize @resource, :list_members?
 
     scope = policy_scope(@resource.members)
 

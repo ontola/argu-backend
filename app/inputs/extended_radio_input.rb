@@ -1,4 +1,4 @@
-class ExtendedRadioInput  < Formtastic::Inputs::RadioInput
+class ExtendedRadioInput < Formtastic::Inputs::RadioInput
   include ActionView::Helpers::TranslationHelper
 
   def to_html

@@ -19,7 +19,7 @@ Rails.application.configure do
   config.whiny_nils = true
 
   # Show full error reports and disable caching
-  config.consider_all_requests_local       = true
+  config.consider_all_requests_local = true
   config.action_controller.perform_caching = true
 
   # Generate digests for assets URLs
@@ -31,7 +31,7 @@ Rails.application.configure do
   config.action_dispatch.show_exceptions = false
 
   # Disable request forgery protection in test environment
-  config.action_controller.allow_forgery_protection    = false
+  config.action_controller.allow_forgery_protection = false
 
   config.session_store :cookie_store, key: '_Argu_session', domain: :all
   #config.session_store :active_record_store, key: '_Argu_session', domain: 'logos.argu.nl'

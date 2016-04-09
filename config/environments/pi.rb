@@ -3,7 +3,8 @@ Argu::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   config.epics = ActiveSupport::OrderedOptions.new
-  config.epics.open_auth = true                       # Facebook, twitter, google, openID login & account linking shown in profile
+  # Facebook, twitter, google, openID login & account linking shown in profile
+  config.epics.open_auth = true
 
   config.logstasher.enabled = true
   config.logstasher.log_controller_parameters = true

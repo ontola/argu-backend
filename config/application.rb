@@ -40,8 +40,8 @@ module Argu
     config.filter_parameters += [:password]
 
     config.generators do |g|
-      g.test_framework  :rspec, :fixture => true, :views => false
-      g.integration_tool :rspec, :fixture => true, :views => true
+      g.test_framework :rspec, fixture: true, views: false
+      g.integration_tool :rspec, fixture: true, views: true
     end
 
     config.to_prepare do

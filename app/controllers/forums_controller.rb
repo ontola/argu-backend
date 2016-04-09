@@ -52,7 +52,7 @@ class ForumsController < ApplicationController
       taggings = Tagging.where(forum_id: @forum.id, tag_id: tag_id)
       @tags << {name: Tag.find_by(id: taggings.first.tag_id).try(:name) || '[not found]', count: taggings.length}
     end
-    @tags = @tags.sort  { |x,y| y[:count] <=> x[:count] }
+    @tags = @tags.sort { |x,y| y[:count] <=> x[:count] }
   end
 
   def update
@@ -64,11 +64,13 @@ class ForumsController < ApplicationController
       if @forum.update permit_params
         format.html { redirect_to settings_forum_path(@forum, tab: tab) }
       else
-        format.html { render 'settings', locals: {
-                                           tab: tab,
-                                           active: tab
-                                       }
-        }
+        format.html do
+          render 'settings',
+                 locals: {
+                   tab: tab,
+                   active: tab
+                 }
+        end
       end
     end
   end
@@ -88,7 +90,7 @@ class ForumsController < ApplicationController
     @forums = Forum.public_forums.where('id in (?)', (params[:profile][:membership_ids] || []).reject(&:blank?).map(&:to_i))
     @forums.each { |f| authorize f, :join? }
 
-    @memberships = @forums.map { |f| Membership.find_or_initialize_by forum: f, profile: current_user.profile  }
+    @memberships = @forums.map { |f| Membership.find_or_initialize_by forum: f, profile: current_user.profile }
 
     success = false
     Membership.transaction do

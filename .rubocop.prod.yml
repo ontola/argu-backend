@@ -12,6 +12,8 @@ AllCops:
     - 'bin/*'
 Rails:
   Enabled: true
+Style/ExtraSpacing:
+  Enabled: true
 Style/IfUnlessModifier:
   MaxLineLength: 100
 Style/WhileUntilModifier:

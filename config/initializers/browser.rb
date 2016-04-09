@@ -2,7 +2,7 @@
 # Additional rules to determine which browsers need a polyfill
 #
 Browser.modern_rules.clear
-Browser.modern_rules << labda do  |b|
+Browser.modern_rules << labda do |b|
   (b.mobile? || b.tablet?) && (b.chrome? && b.version.to_i > 41 || b.safari? && b.version.to_i > 7)
 end
 # Browser.modern_rules << -> b { !b.ie? } # IE11 doesn't support Promise/A+
