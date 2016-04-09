@@ -18,9 +18,8 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     get new_project_blog_post_path(project_id: project)
     assert_not_authorized
 
-    post project_blog_posts_path(
-           project_id: project,
-           blog_post: attributes_for(:blog_post))
+    post project_blog_posts_path(project_id: project,
+                                 blog_post: attributes_for(:blog_post))
     assert_not_authorized
   end
 
@@ -39,8 +38,8 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     post project_blog_posts_path(
-           project_id: project,
-           blog_post: attributes_for(:blog_post))
+      project_id: project,
+      blog_post: attributes_for(:blog_post))
     assert_response 302
 
     follow_redirect!

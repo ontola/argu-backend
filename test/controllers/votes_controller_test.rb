@@ -15,9 +15,9 @@ class VotesControllerTest < ActionController::TestCase
     get :new, motion_id: motion
 
     assert_redirected_to new_user_session_path(
-                             r: new_motion_vote_path(
-                                 vote: {for: nil},
-                                 confirm: true))
+      r: new_motion_vote_path(
+        vote: {for: nil},
+        confirm: true))
     assert_not assigns(:model)
   end
 

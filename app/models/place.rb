@@ -42,22 +42,21 @@ class Place < ActiveRecord::Base
     return nil if result.nil?
     return Place.find(result['place_id']) if Place.exists?(result['place_id'])
     Place.create(
-        id: result['place_id'],
-        licence: result['licence'],
-        osm_type: result['osm_type'],
-        osm_id: result['osm_id'],
-        boundingbox: result['boundingbox'],
-        lat: result['lat'],
-        lon: result['lon'],
-        display_name: result['display_name'],
-        osm_category: result['category'],
-        osm_class: result['type'],
-        osm_importance: result['importance'],
-        icon: result['icon'],
-        address: result['address'],
-        extratags: result['extratags'],
-        namedetails: result['namedetails'],
-    )
+      id: result['place_id'],
+      licence: result['licence'],
+      osm_type: result['osm_type'],
+      osm_id: result['osm_id'],
+      boundingbox: result['boundingbox'],
+      lat: result['lat'],
+      lon: result['lon'],
+      display_name: result['display_name'],
+      osm_category: result['category'],
+      osm_class: result['type'],
+      osm_importance: result['importance'],
+      icon: result['icon'],
+      address: result['address'],
+      extratags: result['extratags'],
+      namedetails: result['namedetails'])
   rescue OpenURI::HTTPError => error
     raise StandardError.new(error_message(error))
   end

@@ -117,9 +117,11 @@ class AuthorizedController < ApplicationController
   # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {resource_tenant}.
   def authenticated_context
     if resource_by_id.present?
-      resource_by_id.is_a?(Forum) ?
-          resource_by_id :
-          resource_by_id.forum
+      if resource_by_id.is_a?(Forum)
+        resource_by_id
+      else
+        resource_by_id.forum
+      end
     else
       resource_tenant
     end
@@ -176,22 +178,20 @@ class AuthorizedController < ApplicationController
   # @return [ActiveRecord::Base] A fresh model instance
   def new_resource_from_params
     controller_name
-        .classify
-        .constantize
-        .new resource_new_params
+      .classify
+      .constantize
+      .new resource_new_params
   end
 
   # @private
   def pundit_user
     UserContext.new(
-        current_user,
-        current_profile,
-        session,
-        authenticated_context,
-        {
-            platform_open: platform_open?,
-            within_user_cap: within_user_cap?
-        })
+      current_user,
+      current_profile,
+      session,
+      authenticated_context,
+      platform_open: platform_open?,
+      within_user_cap: within_user_cap?)
   end
 
   def redirect_url
@@ -202,9 +202,9 @@ class AuthorizedController < ApplicationController
   # @return [ActiveRecord::Base, nil] The resource by its id
   def resource_by_id
     @_resource_by_id ||= controller_name
-                             .classify
-                             .constantize
-                             .find_by id: resource_id
+                           .classify
+                           .constantize
+                           .find_by id: resource_id
   end
 
   # Used in {authenticated_resource!} to build a new object. Overwrite this function if the model needs more than just the {Forum}

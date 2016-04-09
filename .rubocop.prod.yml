@@ -22,3 +22,7 @@ Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 Style/MultilineOperationIndentation:
   EnforcedStyle: indented
+Style/InitialIndentation:
+  Enabled: true
+Style/FirstParameterIndentation:
+  Enabled: true

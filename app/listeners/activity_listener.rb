@@ -46,24 +46,24 @@ class ActivityListener
   # @return [Hash] The data to be serialized in JSON
   def audit_data(resource, recipient)
     {
-        user_id: @publisher.id,
-        user_name: @publisher.display_name,
-        recipient_id: "#{recipient.class.to_s}.#{recipient.id}",
-        recipient_name: recipient.display_name,
-        trackable_id: "#{resource.class.to_s}.#{resource.id}",
-        trackable_name: resource.display_name
+      user_id: @publisher.id,
+      user_name: @publisher.display_name,
+      recipient_id: "#{recipient.class.to_s}.#{recipient.id}",
+      recipient_name: recipient.display_name,
+      trackable_id: "#{resource.class.to_s}.#{resource.id}",
+      trackable_name: resource.display_name
     }
   end
 
   def create_activity(resource, recipient, action)
     a = CreateActivity.new(
-        Activity.new,
-        trackable: resource,
-        key: "#{resource.model_name.singular}.#{action}",
-        owner: @creator,
-        forum: resource.forum,
-        recipient: recipient,
-        audit_data: audit_data(resource, recipient))
+      Activity.new,
+      trackable: resource,
+      key: "#{resource.model_name.singular}.#{action}",
+      owner: @creator,
+      forum: resource.forum,
+      recipient: recipient,
+      audit_data: audit_data(resource, recipient))
     a.subscribe(NotificationListener.new)
     a.commit
   end

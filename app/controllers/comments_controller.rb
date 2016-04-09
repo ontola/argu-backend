@@ -199,9 +199,9 @@ class CommentsController < AuthorizedController
 
   def create_service
     @create_service ||= CreateComment.new(
-        Comment.new,
-        permit_params.merge(resource_new_params.merge(publisher: current_user,
-                                                      creator: current_profile)))
+      Comment.new,
+      permit_params.merge(resource_new_params.merge(publisher: current_user,
+                                                    creator: current_profile)))
   end
 
   def destroy_service
@@ -257,7 +257,7 @@ class CommentsController < AuthorizedController
 
   def update_service
     @update_service ||= UpdateComment.new(
-        resource_by_id,
-        permit_params)
+      resource_by_id,
+      permit_params)
   end
 end

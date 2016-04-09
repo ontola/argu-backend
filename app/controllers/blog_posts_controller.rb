@@ -123,9 +123,9 @@ class BlogPostsController < AuthorizedController
 
   def create_service
     @create_service ||= CreateBlogPost.new(
-        BlogPost.new,
-        permit_params.merge(resource_new_params.merge(publisher: current_user,
-                                                      creator: current_profile)))
+      BlogPost.new,
+      permit_params.merge(resource_new_params.merge(publisher: current_user,
+                                                    creator: current_profile)))
   end
 
   def destroy_service
@@ -137,10 +137,9 @@ class BlogPostsController < AuthorizedController
   end
 
   def resource_new_params
-    h = super.merge({
-    published_at: Time.current,
-    blog_postable: get_parent_resource
-    })
+    h = super.merge(
+      published_at: Time.current,
+      blog_postable: get_parent_resource)
     h.delete(parent_resource_param)
     h
   end
@@ -159,7 +158,7 @@ class BlogPostsController < AuthorizedController
 
   def update_service
     @update_service ||= UpdateBlogPost.new(
-        resource_by_id,
-        permit_params)
+      resource_by_id,
+      permit_params)
   end
 end

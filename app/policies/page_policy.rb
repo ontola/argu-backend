@@ -12,13 +12,9 @@ class PagePolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      page = Page.arel_table
       page_memberships = PageMembership.arel_table
-      cond = page[:owner_id].eq(user.profile.id)
-      cond = page.join(page_memberships).on(page[:id].eq(page_memberships[:page])).where(page_memberships[:role].eq(PageMembership.roles[:manager]))
-      #scope.where(cond)
       scope.joins(:managerships).where(
-          page_memberships[:profile_id].eq(user.profile.id).and(page_memberships[:role].eq(PageMembership.roles[:manager]))
+        page_memberships[:profile_id].eq(user.profile.id).and(page_memberships[:role].eq(PageMembership.roles[:manager]))
       ).distinct
     end
   end

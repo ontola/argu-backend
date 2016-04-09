@@ -18,7 +18,7 @@ class ActivityPolicy < RestrictivePolicy
         .where(['forum_id IN (%s)', context.context_model.try(:id) || user.try(:profile).try(:memberships_ids) || 'NULL'])
         .joins(:owner)
         .where(activities[:key].not_eq('vote.create').or(
-               profiles[:are_votes_public].eq(true)))
+                 profiles[:are_votes_public].eq(true)))
     end
   end
 

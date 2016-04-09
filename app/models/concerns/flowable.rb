@@ -11,7 +11,8 @@ module Flowable
     Activity.where(
       activities[:trackable_id].eq(id).and(
         activities[:trackable_type].eq(model_name.to_s))
-        .or(activities[:recipient_id].eq(self).and(
-          activities[:recipient_type].eq(model_name.to_s))))
+        .or(activities[:recipient_id]
+              .eq(self)
+              .and(activities[:recipient_type].eq(model_name.to_s))))
   end
 end

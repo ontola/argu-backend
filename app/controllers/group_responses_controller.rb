@@ -50,7 +50,7 @@ class GroupResponsesController < AuthorizedController
         format.html { redirect_to group_response.motion }
       end
     end
-    update_service.on(:update_group_response_failed) do |group_response|
+    update_service.on(:update_group_response_failed) do
       respond_to do |format|
         format.html do
           render 'form'
@@ -81,9 +81,9 @@ class GroupResponsesController < AuthorizedController
 private
   def create_service
     @create_service ||= CreateGroupResponse.new(
-        GroupResponse.new,
-        permit_params.merge(resource_new_params.merge(publisher: current_user,
-                                                      creator: current_profile)))
+      GroupResponse.new,
+      permit_params.merge(resource_new_params.merge(publisher: current_user,
+                                                    creator: current_profile)))
   end
 
   def destroy_service
@@ -94,10 +94,10 @@ private
     group = policy_scope(resource_tenant.groups).discussion.find(params[:group_id])
     unless @_not_authorized_caught || group.discussion?
       raise Argu::NotAuthorizedError.new(
-          record: group,
-          query: 'edit?',
-          verdict: t('group_responses.errors.must_be_discussion',
-                     group_name: group.name))
+        record: group,
+        query: 'edit?',
+        verdict: t('group_responses.errors.must_be_discussion',
+                   group_name: group.name))
     end
     GroupResponse.new resource_new_params
   end
@@ -124,7 +124,7 @@ private
 
   def update_service
     @update_service ||= UpdateGroupResponse.new(
-        resource_by_id,
-        permit_params)
+      resource_by_id,
+      permit_params)
   end
 end

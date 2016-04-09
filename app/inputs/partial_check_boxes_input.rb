@@ -8,10 +8,10 @@ class PartialCheckBoxesInput < Formtastic::Inputs::CheckBoxesInput
               choice_wrapping(choice_wrapping_html_options(choice)) do
                 template.content_tag :label do
                   template.concat template.check_box_tag(
-                      input_name,
-                      choice.id,
-                      choice.is_checked,
-                      extra_html_options(choice).merge(id: choice_input_dom_id(choice), required: false))
+                    input_name,
+                    choice.id,
+                    choice.is_checked,
+                    extra_html_options(choice).merge(id: choice_input_dom_id(choice), required: false))
                   template.concat template.render partial: (options[:partial].presence ? options[:partial] : 'forums/forum'), object: choice, locals: {forum: choice}
                 end
               end
