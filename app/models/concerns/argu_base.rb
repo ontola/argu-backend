@@ -5,11 +5,11 @@ module ArguBase
   end
 
   def edited?
-    self.updated_at - 2.minutes > self.created_at
+    updated_at - 2.minutes > created_at
   end
 
   def identifier
-    "#{self.class_name}_#{self.id}"
+    "#{class_name}_#{id}"
   end
 
   def class_name
@@ -18,7 +18,7 @@ module ArguBase
 
   module ClassMethods
     def class_name
-      self.name.tableize
+      name.tableize
     end
   end
 end

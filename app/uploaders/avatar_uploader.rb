@@ -17,9 +17,9 @@ class AvatarUploader < CarrierWave::Uploader::Base
       config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
 
       config.aws_credentials = {
-          access_key_id:     Rails.application.secrets.aws_id,
-          secret_access_key: Rails.application.secrets.aws_key,
-          region:            'eu-central-1'
+        access_key_id:     Rails.application.secrets.aws_id,
+        secret_access_key: Rails.application.secrets.aws_key,
+        region:            'eu-central-1'
       }
     end
     storage :aws
@@ -42,12 +42,12 @@ class AvatarUploader < CarrierWave::Uploader::Base
   # Create different versions of your uploaded files:
   version :icon do
     process convert: 'jpeg'
-    process :resize_to_fill => [64, 64]
+    process resize_to_fill: [64, 64]
   end
 
   version :avatar do
     process convert: 'jpeg'
-    process :resize_to_fill => [256, 256]
+    process resize_to_fill: [256, 256]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

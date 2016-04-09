@@ -60,13 +60,14 @@ class ApplicationController < ActionController::Base
 
   # @return [Context] The current context, if a param is given, it will serve as the start of the current context
   def current_context(model=nil)
-    @current_context = if @current_context.present? && (@current_context.try(:has_parent?) || @current_context.single_model.is_a?(Forum))
-                         @current_context
-                       else
-                         Context.parse_from_uri(request.url, model) do |components|
-                           components.reject! { |c| !policy(c).show? }
-                         end
-                       end
+    @current_context =
+      if @current_context.present? && (@current_context.try(:has_parent?) || @current_context.single_model.is_a?(Forum))
+        @current_context
+      else
+        Context.parse_from_uri(request.url, model) do |components|
+          components.reject! { |c| !policy(c).show? }
+        end
+      end
   end
 
   # @return [Profile, nil] The {Profile} the {User} is using to do actions
@@ -104,14 +105,15 @@ class ApplicationController < ActionController::Base
       if @_preferred_forum && policy(@_preferred_forum).show?
         @_preferred_forum
       else
-        mem_forum = profile
-                      .memberships
-                      .map do |f|
-                        @_preferred_forum = f
-                        f if policy(f).show?
-                      end
-                      .compact
-                      .presence
+        mem_forum =
+          profile
+            .memberships
+            .map do |f|
+              @_preferred_forum = f
+              f if policy(f).show?
+            end
+            .compact
+            .presence
         mem_forum || Forum.first_public
       end
     else

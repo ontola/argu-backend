@@ -4,11 +4,11 @@ class Place < ActiveRecord::Base
            through: :placements
 
   def country_code
-    self.address['country_code'].try(:upcase)
+    address['country_code'].try(:upcase)
   end
 
   def postal_code
-    self.address['postcode']
+    address['postcode']
   end
 
   # Find {Place} by provided opts. If {Place} is not found, try to {#fetch} from OSM

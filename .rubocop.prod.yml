@@ -26,3 +26,14 @@ Style/InitialIndentation:
   Enabled: true
 Style/FirstParameterIndentation:
   Enabled: true
+
+Style/GuardClause:
+  Enabled: true
+Style/HashSyntax:
+  Enabled: true
+Style/Lambda:
+  Enabled: true
+Style/SpaceAfterNot:
+  Enabled: true
+Style/RedundantSelf:
+  Enabled: true

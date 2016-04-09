@@ -14,21 +14,21 @@ module Convertible
     if self.class != klass
       ActiveRecord::Base.transaction do
         shared_attributes = klass.column_names.reject { |n| !attribute_names.include?(n) || n == 'id' }
-        new_model = klass.create Hash[shared_attributes.map { |i| [i, self.attributes[i]] }]
+        new_model = klass.create Hash[shared_attributes.map { |i| [i, attributes[i]] }]
         convertible_associations.each do |association|
           klass_association = self.class.reflect_on_association(association)
           # Just to be sure
           if klass_association.macro == :has_many
             remote_association_name = klass_association.options[:as]
-            self.send(association).each do |associated_model|
+            send(association).each do |associated_model|
               associated_model.send("#{remote_association_name}=", new_model)
               associated_model.save!
             end
-            self.send association, :clear
+            send association, :clear
           end
         end
         new_model.save
-        {old: self.destroy, new: new_model}
+        {old: destroy, new: new_model}
       end
     end
   end

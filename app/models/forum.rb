@@ -42,19 +42,19 @@ class Forum < ActiveRecord::Base
   after_validation :check_access_token, if: :visible_with_a_link_changed?
   auto_strip_attributes :name, :cover_photo_attribution, :questions_title,
                         :questions_title_singular, :motions_title, :motions_title_singular,
-                        :arguments_title, :arguments_title_singular, :squish => true
+                        :arguments_title, :arguments_title_singular, squish: true
   auto_strip_attributes :featured_tags, squish: true, nullify: false
-  auto_strip_attributes :bio, :nullify => false
+  auto_strip_attributes :bio, nullify: false
 
   # @!attribute visibility
   # @return [Enum] The visibility of the {Forum}
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
 
   scope :public_forums, -> { where(visibility: Forum.visibilities[:open]) }
-  scope :top_public_forums, ->(limit= 10) { where(visibility: Forum.visibilities[:open]).order('memberships_count DESC').first(limit) }
+  scope :top_public_forums, ->(limit = 10) { where(visibility: Forum.visibilities[:open]).order('memberships_count DESC').first(limit) }
 
   def access_token
-    access_token! if self.visible_with_a_link
+    access_token! if visible_with_a_link
   end
 
   def access_token!
@@ -62,7 +62,7 @@ class Forum < ActiveRecord::Base
   end
 
   def m_access_tokens
-    m_access_tokens! if self.visible_with_a_link
+    m_access_tokens! if visible_with_a_link
   end
 
   def m_access_tokens!
@@ -71,8 +71,8 @@ class Forum < ActiveRecord::Base
 
   def check_access_token
     if visible_with_a_link && access_token!.blank?
-      self.access_tokens.build(item: self, profile: self.page.profile)
-      #AccessToken.create(item: self, profile: self.page.profile)
+      access_tokens.build(item: self, profile: page.profile)
+      # AccessToken.create(item: self, profile: page.profile)
     end
   end
 
@@ -86,12 +86,12 @@ class Forum < ActiveRecord::Base
 
   # http://schema.org/description
   def description
-    self.bio
+    bio
   end
 
   def self.find(*ids)
     shortname = ids.length == 1 && ids.first.instance_of?(String) && ids.first
-    if (shortname && shortname.to_i == 0)
+    if shortname && shortname.to_i == 0
       find_via_shortname(shortname)
     else
       super(*ids)
@@ -107,7 +107,7 @@ class Forum < ActiveRecord::Base
   end
 
   def profile_is_member?(profile)
-    self.memberships.where(profile: profile).present?
+    memberships.where(profile: profile).present?
   end
 
   # @return [Forum] based on the `:default_forum` {Setting}, if not present, the first Forum where {Forum#visibility} is `public`

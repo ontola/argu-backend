@@ -40,8 +40,9 @@ class User < ActiveRecord::Base
   # enum memberships_email: {never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3}
   # enum created_email: {never_created_email: 0, weekly_created_email: 1, daily_created_email: 2, direct_created_email: 3}
 
-  validates :email, allow_blank: false,
-        format: {with: RFC822::EMAIL}
+  validates :email,
+            allow_blank: false,
+            format: {with: RFC822::EMAIL}
   validates :profile, presence: true
   validates :language,
             inclusion: {
@@ -81,7 +82,7 @@ class User < ActiveRecord::Base
   end
 
   def email_verified?
-    self.email && self.email !~ TEMP_EMAIL_REGEX
+    email && email !~ TEMP_EMAIL_REGEX
   end
 
   # Since we're the ones creating activities, we should select them based on us being the owner
@@ -94,7 +95,7 @@ class User < ActiveRecord::Base
   end
 
   def home_placement
-    super || build_home_placement(creator: self.profile)
+    super || build_home_placement(creator: profile)
   end
 
   def is_omni_only
@@ -102,12 +103,12 @@ class User < ActiveRecord::Base
   end
 
   def last_email_sent_at(redis = nil)
-    Argu::Redis.get("user:#{self.id}:email.sent.at", redis)
+    Argu::Redis.get("user:#{id}:email.sent.at", redis)
   end
 
   def managed_pages
     t = Page.arel_table
-    Page.where(t[:id].in(self.profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id)).or(t[:owner_id].eq(profile.id)))
+    Page.where(t[:id].in(profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id)).or(t[:owner_id].eq(profile.id)))
   end
 
   def password_required?
@@ -147,7 +148,7 @@ class User < ActiveRecord::Base
   end
 
   def user_to_recipient_option
-    Hash[self.profile.email, self.profile.attributes.slice('id', 'name')]
+    Hash[profile.email, profile.attributes.slice('id', 'name')]
   end
 
   protected
@@ -156,12 +157,13 @@ class User < ActiveRecord::Base
     false
   end
 
-private
+  private
+
   def cleanup
-    self.identities.destroy_all
-    self.profile.activities.destroy_all
-    self.profile.memberships.destroy_all
-    self.profile.page_memberships.destroy_all
+    identities.destroy_all
+    profile.activities.destroy_all
+    profile.memberships.destroy_all
+    profile.page_memberships.destroy_all
   end
 
   def self.koala(auth)

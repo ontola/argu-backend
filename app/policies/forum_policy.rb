@@ -132,11 +132,12 @@ class ForumPolicy < RestrictivePolicy
   end
 
   def list?
-    level = if @record.hidden?
-      show?.presence || raise(ActiveRecord::RecordNotFound)
-    else
-      [(1 if @record.closed?), show?, is_open?, is_manager?, is_owner?]
-    end
+    level =
+      if @record.hidden?
+        show?.presence || raise(ActiveRecord::RecordNotFound)
+      else
+        [(1 if @record.closed?), show?, is_open?, is_manager?, is_owner?]
+      end
     rule level
   end
 
@@ -194,7 +195,7 @@ class ForumPolicy < RestrictivePolicy
   # @return [String] The tab if it is considered valid
   def verify_tab(tab)
     tab ||= 'general'
-    self.assert! self.permitted_tabs.include?(tab.to_sym), "#{tab}?"
+    assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
     tab
   end
 end

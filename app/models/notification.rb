@@ -24,10 +24,10 @@ class Notification < ActiveRecord::Base
   alias_method :display_name, :title
 
   def url_object
-    if self.activity.present?
-      self.activity.trackable
+    if activity.present?
+      activity.trackable
     else
-      self.url
+      url
     end
   end
 

@@ -3,7 +3,7 @@ class Profile < ActiveRecord::Base
 
   # Currently hardcoded to User (whilst it can also be a Profile)
   # to make the mailer implementation more efficient
-  #has_one :profileable, class_name: 'User'
+  # has_one :profileable, class_name: 'User'
   belongs_to :profileable, polymorphic: true, inverse_of: :profile
   rolify after_remove: :role_removed, before_add: :role_added
 
@@ -32,8 +32,8 @@ class Profile < ActiveRecord::Base
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
   validates :about, length: {maximum: 3000}
 
-  auto_strip_attributes :name, :squish => true
-  auto_strip_attributes :about, :nullify => false
+  auto_strip_attributes :name, squish: true
+  auto_strip_attributes :about, nullify: false
 
   mount_uploader :profile_photo, AvatarUploader
   mount_uploader :cover_photo, CoverUploader
@@ -57,11 +57,11 @@ class Profile < ActiveRecord::Base
 
   # http://schema.org/description
   def description
-    self.about
+    about
   end
 
   def display_name
-    self.profileable.try(:display_name) || self.name.presence
+    profileable.try(:display_name) || name.presence
   end
 
   def email
@@ -77,7 +77,7 @@ class Profile < ActiveRecord::Base
   end
 
   def owner
-    self.profileable
+    profileable
   end
   deprecate :owner
 
@@ -87,12 +87,12 @@ class Profile < ActiveRecord::Base
 
   # TODO Crashes if false
   def finished_intro?
-    self.profileable && self.profileable.finished_intro?
+    profileable && profileable.finished_intro?
   end
 
   #######Methods########
   def voted_on?(item)
-    Vote.where(voter_id: self.id, voter_type: self.class.name,
+    Vote.where(voter_id: id, voter_type: self.class.name,
                voteable_id: item.id, voteable_type: item.class.to_s).last
         .try(:for) == 'pro'
   end
@@ -108,17 +108,17 @@ class Profile < ActiveRecord::Base
 
   # Returns the preffered forum of the user, based on their last forum visit
   def preferred_forum
-    last_forum = Argu::Redis.get("profile:#{self.id}:last_forum")
+    last_forum = Argu::Redis.get("profile:#{id}:last_forum")
 
-    (Forum.find_by(id: last_forum) if last_forum.present?) || self.memberships.first.try(:forum) || Forum.first_public
+    (Forum.find_by(id: last_forum) if last_forum.present?) || memberships.first.try(:forum) || Forum.first_public
   end
 
   def requires_name?
-    self.profileable.class == Page
+    profileable.class == Page
   end
 
   def member_of?(_forum)
-    _forum.present? && self.memberships.where(forum_id: _forum.is_a?(Forum) ? _forum.id : _forum).present?
+    _forum.present? && memberships.where(forum_id: _forum.is_a?(Forum) ? _forum.id : _forum).present?
   end
 
   def owner_of(forum)
@@ -129,29 +129,29 @@ class Profile < ActiveRecord::Base
     remove_role :frozen
   end
 
-private
+  private
 
   # Sets the dependent foreign relations to the Community profile
   # Except for comments..
   def anonymize_or_wipe_dependencies
     %w(comments motions arguments questions blog_posts projects activities).each do |association|
       association
-          .classify
-          .constantize
-          .anonymize(self.send(association))
+        .classify
+        .constantize
+        .anonymize(send(association))
     end
     reload
   end
 
   def role_added(role)
-    if self.profile_frozen?
-      # Send mail or notification to user that he has been unfrozen
-    end
+    # if self.profile_frozen?
+    # Send mail or notification to user that he has been unfrozen
+    # end
   end
 
   def role_removed(role)
-    if self.profile_frozen?
-      # Send mail or notification to user that he has been frozen
-    end
+    # if self.profile_frozen?
+    # Send mail or notification to user that he has been frozen
+    # end
   end
 end

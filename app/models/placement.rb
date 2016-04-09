@@ -42,7 +42,7 @@ class Placement < ActiveRecord::Base
       errors.add(:country_code, I18n.t('placements.blank_country'))
     else
       self.place = Place.find_or_fetch_by(postcode: postal_code, country_code: country_code)
-      errors.add(:postal_code, I18n.t('placements.postal_with_county_not_found')) if self.place.nil?
+      errors.add(:postal_code, I18n.t('placements.postal_with_county_not_found')) if place.nil?
     end
   end
 end

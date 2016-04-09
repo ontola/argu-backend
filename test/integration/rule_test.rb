@@ -98,7 +98,7 @@ class RuleTest < ActionDispatch::IntegrationTest
       [freetown_manager, 'ask your boss to buy'],
       [freetown_owner, 'buy this feature']
     ].each do |user, message|
-      log_in_as(user, :scope => :user)
+      log_in_as(user, scope: :user)
       get argument_path(member_argument)
       assert_not_authorized
       assert_equal message, flash[:alert]

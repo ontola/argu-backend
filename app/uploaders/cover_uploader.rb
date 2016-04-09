@@ -17,9 +17,9 @@ class CoverUploader < CarrierWave::Uploader::Base
       config.aws_authenticated_url_expiration = 60 * 60 * 24 * 365
 
       config.aws_credentials = {
-          access_key_id:     Rails.application.secrets.aws_id,
-          secret_access_key: Rails.application.secrets.aws_key,
-          region:            'eu-central-1'
+        access_key_id:     Rails.application.secrets.aws_id,
+        secret_access_key: Rails.application.secrets.aws_key,
+        region:            'eu-central-1'
       }
     end
     storage :aws
@@ -51,27 +51,27 @@ class CoverUploader < CarrierWave::Uploader::Base
   # Create different versions of your uploaded files:
   version :box do
     process convert: 'jpeg'
-    process :resize_to_fill => [568, 400]
+    process resize_to_fill: [568, 400]
   end
 
   version :cover do
     process convert: 'jpeg'
-    process :resize_to_fill => [1500, 600]
+    process resize_to_fill: [1500, 600]
   end
 
   version :cover_small do
     process convert: 'jpeg'
-    process :resize_to_fill => [600, 300]
+    process resize_to_fill: [600, 300]
   end
 
   version :avatar do
     process convert: 'jpeg'
-    process :resize_to_fill => [256, 256]
+    process resize_to_fill: [256, 256]
   end
 
   version :icon do
     process convert: 'jpeg'
-    process :resize_to_fill => [64, 64]
+    process resize_to_fill: [64, 64]
   end
 
   # Add a white list of extensions which are allowed to be uploaded.

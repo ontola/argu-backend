@@ -74,7 +74,7 @@ Argu::Application.routes.draw do
   end
 
   use_doorkeeper do
-    controllers :applications => 'oauth/applications'
+    controllers applications: 'oauth/applications'
   end
 
   resources :notifications, only: [:index, :show, :update], path: 'n' do
@@ -190,7 +190,7 @@ Argu::Application.routes.draw do
   resources :phases,
             only: [:show]
 
-  authenticate :user, lambda { |p| p.profile.has_role? :staff } do
+  authenticate :user, ->(p) { p.profile.has_role? :staff } do
     resources :documents, only: [:edit, :update, :index, :new, :create]
     resources :notifications, only: :create
     namespace :portal do

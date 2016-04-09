@@ -10,8 +10,8 @@ module ForumTaggable
 
   def mark_taggings_forum_id
     ActiveRecord::Base.transaction do
-      self.taggings.each do |t|
-        t.forum_id = self.forum_id
+      taggings.each do |t|
+        t.forum_id = forum_id
         t.save
       end
     end

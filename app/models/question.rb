@@ -6,7 +6,7 @@ class Question < ActiveRecord::Base
   belongs_to :creator, class_name: 'Profile'
   belongs_to :project, inverse_of: :questions
   belongs_to :publisher, class_name: 'User'
-  has_many :votes, as: :voteable, :dependent => :destroy
+  has_many :votes, as: :voteable, dependent: :destroy
   has_many :motions
   has_many :activities, as: :trackable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
@@ -22,13 +22,13 @@ class Question < ActiveRecord::Base
   validates :forum, :creator, presence: true
   auto_strip_attributes :title, squish: true
   auto_strip_attributes :content
-  #TODO validate expires_at
+  # TODO: validate expires_at
 
   attr_accessor :include_motions
 
   after_save :creator_follow
 
-  scope :published, -> do
+  scope :published, lambda do
     joins('LEFT OUTER JOIN projects ON projects.id = project_id')
       .where('published_at IS NOT NULL OR project_id IS NULL')
   end
@@ -48,22 +48,22 @@ class Question < ActiveRecord::Base
 
   # http://schema.org/description
   def description
-    self.content
+    content
   end
 
   def move_to(forum, include_motions = false)
     Question.transaction do
       old_forum = self.forum.lock!
       self.forum = forum.lock!
-      self.save
-      self.votes.lock(true).update_all forum_id: forum.id
-      self.activities.lock(true).update_all forum_id: forum.id
+      save
+      votes.lock(true).update_all forum_id: forum.id
+      activities.lock(true).update_all forum_id: forum.id
       if include_motions
-        self.motions.lock(true).each do |m|
+        motions.lock(true).each do |m|
           m.move_to forum, false
         end
       else
-        self.motions.update_all question_id: nil
+        motions.update_all question_id: nil
       end
       old_forum.reload.decrement :questions_count
       old_forum.save
@@ -74,11 +74,21 @@ class Question < ActiveRecord::Base
   end
 
   def next(show_trashed = false)
-    self.forum.questions.trashed(show_trashed).where('updated_at < :date', date: self.updated_at).order('updated_at').last
+    forum
+      .questions
+      .trashed(show_trashed)
+      .where('updated_at < :date', date: updated_at)
+      .order('updated_at')
+      .last
   end
 
   def previous(show_trashed = false)
-    self.forum.questions.trashed(show_trashed).where('updated_at > :date', date: self.updated_at).order('updated_at').first
+    forum
+      .questions
+      .trashed(show_trashed)
+      .where('updated_at > :date', date: updated_at)
+      .order('updated_at')
+      .first
   end
 
   def tag_list
@@ -90,9 +100,9 @@ class Question < ActiveRecord::Base
   end
 
   def update_vote_counters
-    vote_counts = self.votes.group('"for"').count
-    self.update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
-                votes_con_count: vote_counts[Vote.fors[:con]] || 0
+    vote_counts = votes.group('"for"').count
+    update votes_pro_count: vote_counts[Vote.fors[:pro]] || 0,
+           votes_con_count: vote_counts[Vote.fors[:con]] || 0
   end
 
   scope :index, ->(trashed, page) { trashed(trashed).page(page) }

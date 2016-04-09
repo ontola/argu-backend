@@ -2,7 +2,7 @@ module StringExtensions
   refine String do
     def constantize_with_care(list_of_klasses=[])
       list_of_klasses.each do |klass|
-        return self.safe_constantize if self == klass.to_s
+        return safe_constantize if self == klass.to_s
       end
       raise "Not allowed to constantize #{self}!"
     end

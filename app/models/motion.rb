@@ -49,7 +49,7 @@ class Motion < ActiveRecord::Base
   end
 
   def assert_tenant
-    if self.question.present? && self.question.forum_id != self.forum_id
+    if question.present? && question.forum_id != forum_id
       errors.add(:forum, I18n.t('activerecord.errors.models.motions.attributes.forum.different'))
     end
   end
@@ -138,7 +138,7 @@ class Motion < ActiveRecord::Base
       .motions
       .trashed(show_trashed)
       .where('updated_at < :date',
-             date: self.updated_at)
+             date: updated_at)
       .order('updated_at')
       .last
   end
@@ -148,7 +148,7 @@ class Motion < ActiveRecord::Base
       .motions
       .trashed(show_trashed)
       .where('updated_at > :date',
-             date: self.updated_at)
+             date: updated_at)
       .order('updated_at')
       .first
   end

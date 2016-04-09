@@ -51,8 +51,6 @@ class MailerListener
 
   def notify_bugnsag(r)
     e = StandardError.new "Resource #{r.identifier} has wrong number of activities"
-    ::Bugsnag.notify(e, {
-                          :severity => 'error',
-                      })
+    ::Bugsnag.notify(e, severity: 'error')
   end
 end

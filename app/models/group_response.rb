@@ -28,7 +28,7 @@ class GroupResponse < ActiveRecord::Base
   end
 
   def display_name
-    self.text
+    text
   end
 
   def self.ordered (coll=[])

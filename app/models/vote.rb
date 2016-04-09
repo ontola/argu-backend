@@ -2,7 +2,7 @@ class Vote < ActiveRecord::Base
   include ArguBase, Parentable, PublicActivity::Model
 
   belongs_to :voteable, polymorphic: true, inverse_of: :votes
-  belongs_to :voter, polymorphic: true #class_name: 'Profile'
+  belongs_to :voter, polymorphic: true # class_name: 'Profile'
   has_many :activities, as: :trackable
   belongs_to :forum
   parentable :voteable
@@ -30,13 +30,16 @@ class Vote < ActiveRecord::Base
   delegate :is_trashed?, to: :voteable
 
   def update_parentable_counter
-    self.voteable.update_vote_counters
+    voteable.update_vote_counters
   end
 
   ##########Class methods###########
   def self.ordered(votes)
     grouped = votes.to_a.group_by(&:for)
-    HashWithIndifferentAccess.new(pro: {collection: grouped['pro'] || []}, neutral: {collection: grouped['neutral'] || []}, con: {collection: grouped['con'] || []})
+    HashWithIndifferentAccess.new(
+      pro: {collection: grouped['pro'] || []},
+      neutral: {collection: grouped['neutral'] || []},
+      con: {collection: grouped['con'] || []})
   end
 
   def voter_type

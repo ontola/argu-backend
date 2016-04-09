@@ -43,7 +43,7 @@ module ExceptionToTheRule
   # @return [Array] Array of the relevant rules
   def filter_trickle(rules, level)
     if level
-      trickled_rules = rules.find_all { |r| level.send(TRICKLE_LOGIC[r.trickles], self.send(r.role)) }
+      trickled_rules = rules.find_all { |r| level.send(TRICKLE_LOGIC[r.trickles], send(r.role)) }
       trickled_rules.present? ?
         trickled_rules.map { |r| r.permit ? level : [nil, r.message] } :
         [level]

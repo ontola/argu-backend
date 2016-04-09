@@ -16,7 +16,8 @@ class Context
 
   def initialize(model = nil, context=nil)
     self.model = (model.class == String) ? parse_from_string(model) : model
-    @parent_context = case context
+    @parent_context =
+      case context
       when Context then context
       when String then Context.new parse_from_string(context)
       else nil
@@ -29,7 +30,7 @@ class Context
   end
 
   def each
-    #return enum_for(:each) unless block_given?
+    # return enum_for(:each) unless block_given?
 
     m = self
     while m.present?
@@ -39,7 +40,7 @@ class Context
   end
 
   def has_parent?
-    self.parent.present?
+    parent.present?
   end
 
   # Whether the parent's contexts' model is present
@@ -97,7 +98,7 @@ class Context
   # Note to reader: take a CS course
   # @return Topmost item that was taken off the stack
   def pop
-    _current_model = self.model
+    _current_model = model
     self.model = @parent_context.model
     _current_model
   end
@@ -118,8 +119,8 @@ class Context
 
   # Recurse up the tree to the topmost parent {Context}
   def root_parent
-    if self.parent.present?
-      self.parent.root_parent
+    if parent.present?
+      parent.root_parent
     else
       self
     end

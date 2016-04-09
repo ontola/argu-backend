@@ -23,7 +23,7 @@ class Stepup < ActiveRecord::Base
   end
 
   def moderator
-    self.group || self.user
+    group || user
   end
 
   # This is a useless comment
@@ -41,7 +41,7 @@ class Stepup < ActiveRecord::Base
     elsif value.is_a?(User)
       self.user = value
       self.group = nil
-    elsif value == nil
+    elsif value.nil?
       nil
     else
       raise 'Unthought clause happened'

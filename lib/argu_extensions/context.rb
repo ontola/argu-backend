@@ -2,14 +2,14 @@ module ArguExtensions
   module Context
     # Descends down the context tree until a forum is found.
     def context_scope(current_profile, default_nil = false)
-      if self.present?
-        if self.model.class == Forum
-          if current_profile && current_profile.memberships.pluck(:forum_id).include?(self.model.id)
-            Argu::Redis.set("profile:#{current_profile.id}:last_forum", self.model.id)
+      if present?
+        if model.class == Forum
+          if current_profile && current_profile.memberships.pluck(:forum_id).include?(model.id)
+            Argu::Redis.set("profile:#{current_profile.id}:last_forum", model.id)
           end
           self
-        elsif self.parent.present?
-          self.parent.context_scope(current_profile)
+        elsif parent.present?
+          parent.context_scope(current_profile)
         end
       else
         if default_nil

@@ -67,9 +67,9 @@ class RegistrationsController < Devise::RegistrationsController
 
   def build_resource(*args)
     super args.first.merge(access_tokens: get_safe_raw_access_tokens)
-    self.resource.shortname = nil if self.resource.shortname.shortname.blank?
-    self.resource.build_profile
-    self.resource.language = I18n.locale
+    resource.shortname = nil if resource.shortname.shortname.blank?
+    resource.build_profile
+    resource.language = I18n.locale
     if session[:omniauth]
       @user.apply_omniauth(session[:omniauth])
       @user.valid?

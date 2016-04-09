@@ -19,12 +19,12 @@ module Shortnameable
     # If it hasn't got a shortname, it will fall back to its id.
     # @return [String, Integer] The shortname of the model, or its id if not present.
     def to_param
-      self.url.to_s.presence || id
+      url.to_s.presence || id
     end
 
     # @return [String, nil] The shortname of the model or nil
     def url
-      Shortname.where(owner_id: self.id, owner_type: self.class.name).pluck(:shortname).first
+      Shortname.where(owner_id: id, owner_type: self.class.name).pluck(:shortname).first
     end
   end
 
@@ -37,14 +37,14 @@ module Shortnameable
 
     # Finds an object via its shortname, returns nil when not found
     def find_via_shortname_nil(url)
-      self.joins(:shortname).where('lower(shortname) = lower(?)', url).first
+      joins(:shortname).where('lower(shortname) = lower(?)', url).first
     end
 
     # Finds an object via its shortname or id, throws an exception when not found
     # @raise [ActiveRecord::RecordNotFound] When the object wasn't found
     def find_via_shortname!(url)
       if url.to_i.to_s == url.to_s
-        self.find url.to_i
+        find url.to_i
       else
         find_via_shortname_nil(url) or raise(ActiveRecord::RecordNotFound)
       end

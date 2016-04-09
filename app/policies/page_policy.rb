@@ -134,7 +134,7 @@ class PagePolicy < RestrictivePolicy
   # @return [String] The tab if it is considered valid
   def verify_tab(tab)
     tab ||= 'general'
-    self.assert! self.permitted_tabs.include?(tab.to_sym), "#{tab}?"
+    assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
     tab
   end
 
@@ -151,6 +151,7 @@ class PagePolicy < RestrictivePolicy
   end
 
   private
+
   def forum_policy
     ForumPolicy.new(context, Forum)
   end

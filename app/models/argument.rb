@@ -8,14 +8,14 @@ class Argument < ActiveRecord::Base
   scope :argument_comments, -> { includes(:comment_threads).order(votes_pro_count: :desc).references(:comment_threads) }
 
   def assert_tenant
-    if self.forum != self.motion.forum
+    if forum != motion.forum
       errors.add(:forum, I18n.t('activerecord.errors.models.arguments.attributes.forum.different'))
     end
   end
 
   # http://schema.org/description
   def description
-    self.content
+    content
   end
 
   def top_comment(show_trashed = nil)
@@ -23,7 +23,7 @@ class Argument < ActiveRecord::Base
   end
 
   def filtered_threads(show_trashed = nil, page = nil, order = 'created_at ASC')
-    i = comment_threads.where(:parent_id => nil).order(order).page(page)
+    i = comment_threads.where(parent_id: nil).order(order).page(page)
     i.each(&shallow_wipe) unless show_trashed
     i
   end

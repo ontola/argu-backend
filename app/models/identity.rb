@@ -14,11 +14,9 @@ class Identity < ActiveRecord::Base
   end
 
   def access_token
-    begin
-      ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base).decrypt_and_verify(super) if super
-    rescue ActiveSupport::MessageVerifier::InvalidSignature => e
-      Bugsnag.notify(e)
-    end
+    ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base).decrypt_and_verify(super) if super
+  rescue ActiveSupport::MessageVerifier::InvalidSignature => e
+    Bugsnag.notify(e)
   end
 
   def access_secret=(value)
@@ -26,11 +24,9 @@ class Identity < ActiveRecord::Base
   end
 
   def access_secret
-    begin
-      ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base).decrypt_and_verify(super) if super
-    rescue ActiveSupport::MessageVerifier::InvalidSignature => e
-      Bugsnag.notify(e)
-    end
+    ActiveSupport::MessageEncryptor.new(Rails.application.secrets.secret_key_base).decrypt_and_verify(super) if super
+  rescue ActiveSupport::MessageVerifier::InvalidSignature => e
+    Bugsnag.notify(e)
   end
 
   def clear_token_connection
@@ -38,11 +34,11 @@ class Identity < ActiveRecord::Base
   end
 
   def client
-    @_wrapper ||= Publishable::Wrappers.const_get(self.provider.classify).new(self.access_token, self.access_secret)
+    @_wrapper ||= Publishable::Wrappers.const_get(provider.classify).new(access_token, access_secret)
   end
 
   def publish(publishable)
-    Publishable::Publishers.const_get(self.provider.classify).publish(self, publishable)
+    Publishable::Publishers.const_get(provider.classify).publish(self, publishable)
   end
 
   def email
