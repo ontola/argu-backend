@@ -1,4 +1,5 @@
 AllCops:
+  DisabledByDefault: true
   Exclude:
     - 'node_modules/**/*'
     - 'vendor/**/*'
@@ -11,8 +12,6 @@ AllCops:
     - 'bin/*'
 Rails:
   Enabled: true
-Metrics/LineLength:
-  Max: 100
 Style/IfUnlessModifier:
   MaxLineLength: 100
 Style/WhileUntilModifier:
@@ -21,5 +20,3 @@ Style/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
 Style/MultilineOperationIndentation:
   EnforcedStyle: indented
-Style/RaiseArgs:
-  EnforcedStyle: compact

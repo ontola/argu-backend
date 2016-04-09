@@ -40,9 +40,18 @@
     "key-spacing": [2, {"beforeColon": false, "afterColon": true}],
     "space-infix-ops": 2,
     "space-in-parens": [2, "never"],
-    "space-after-keywords": [2, "always"],
     "space-unary-ops": [2, { "words": true, "nonwords": false }],
-    "space-return-throw-case": 2,
-    "no-multi-spaces": 2
+    "keyword-spacing": "error",
+    "arrow-spacing": [2, { "before": true, "after": true }],
+    "arrow-parens": ["error", "as-needed"],
+    "arrow-body-style": ["error", "always"],
+    "no-multi-spaces": 2,
+    "no-const-assign": "error",
+    "no-confusing-arrow": ["error", {"allowParens": true}],
+    "no-dupe-class-members": "error",
+    "no-var": 1,
+    "object-shorthand": [1, "always"],
+    "prefer-arrow-callback": 1,
+    "prefer-const": "error"
   }
 }
