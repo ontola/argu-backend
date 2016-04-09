@@ -22,4 +22,3 @@ class NilClassPolicy < RestrictivePolicy
     end
   end
 end
-

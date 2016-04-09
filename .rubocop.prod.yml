@@ -26,7 +26,6 @@ Style/InitialIndentation:
   Enabled: true
 Style/FirstParameterIndentation:
   Enabled: true
-
 Style/GuardClause:
   Enabled: true
 Style/HashSyntax:
@@ -36,4 +35,19 @@ Style/Lambda:
 Style/SpaceAfterNot:
   Enabled: true
 Style/RedundantSelf:
+  Enabled: true
+
+Style/TrailingBlankLines:
+  Enabled: true
+Style/Tab:
+  Enabled: true
+Style/TrailingCommaInArguments:
+  Enabled: true
+Style/TrailingCommaInLiteral:
+  Enabled: true
+Style/TrailingWhitespace:
+  Enabled: true
+Style/TrivialAccessors:
+  Enabled: true
+Style/UnneededCapitalW:
   Enabled: true

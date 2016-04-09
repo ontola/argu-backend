@@ -84,7 +84,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
         SendNotificationsWorker.perform_async(follower.id, email_type)
       end
     end
-    
+
     follower.reload
     assert_equal 0, snw.collect_notifications(follower).length, 'Notifications will be send twice'
   end

@@ -208,4 +208,3 @@ class RestrictivePolicy
     context.opts[:within_user_cap]
   end
 end
-

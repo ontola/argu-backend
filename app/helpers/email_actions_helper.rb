@@ -8,9 +8,9 @@ module EmailActionsHelper
             name: options[:name],
             handler: {
                 '@type' => 'HttpActionHandler',
-                url: options[:url],
-            },
-        },
+                url: options[:url]
+            }
+        }
     }
 
     content_tag :script, type: 'application/ld+json' do
@@ -26,7 +26,7 @@ module EmailActionsHelper
             '@type' => 'ViewAction',
             name: options[:name],
             target: options[:url]
-        },
+        }
     }
 
     content_tag :script, type: 'application/ld+json' do

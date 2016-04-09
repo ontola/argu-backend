@@ -54,9 +54,7 @@ class Context
   end
 
   # Setter (using an instance value)
-  def model=(value)
-    @model = value
-  end
+  attr_writer :model
 
   # @!attribute parent
   # @return [String] Parent {Context} object of the current {Context}

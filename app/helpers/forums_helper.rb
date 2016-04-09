@@ -55,7 +55,7 @@ module ForumsHelper
         title: resource.name,
         fa_after: 'fa-angle-down',
         sections: sections,
-        triggerTag: 'h1',
+        triggerTag: 'h1'
     }
   end
 

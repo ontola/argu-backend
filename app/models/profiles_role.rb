@@ -1,6 +1,6 @@
 class ProfilesRole < ActiveRecord::Base
-	belongs_to :role
-	belongs_to :profile
+  belongs_to :role
+  belongs_to :profile
 
-	validates :profile_id, :role_id, presence: true
+  validates :profile_id, :role_id, presence: true
 end
