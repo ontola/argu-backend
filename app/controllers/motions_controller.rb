@@ -278,9 +278,7 @@ class MotionsController < AuthorizedController
 
   def resource_new_params
     if get_parent_resource.try(:project).present?
-      super.merge({
-        project: get_parent_resource.project
-      })
+      super.merge(project: get_parent_resource.project)
     else
       super
     end

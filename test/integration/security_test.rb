@@ -12,7 +12,7 @@ class SecurityTest < ActionDispatch::IntegrationTest
     )
 
     spammers.each do |spammer|
-      get forum_path(freetown), {}, {'HTTP_REFERER' => spammer}
+      get forum_path(freetown), {}, 'HTTP_REFERER' => spammer
 
       assert_response 403
     end
@@ -48,7 +48,7 @@ class SecurityTest < ActionDispatch::IntegrationTest
     ]
 
     spammers.each do |spammer|
-      get forum_path(freetown), {}, {'HTTP_REFERER' => spammer}
+      get forum_path(freetown), {}, 'HTTP_REFERER' => spammer
 
       assert_response 200
     end

@@ -12,9 +12,7 @@ module UsersHelper
   end
 
   def identity_token(identity)
-    sign_payload({
-                    identity: identity.id
-                })
+    sign_payload(identity: identity.id)
   end
 
   def login_providers_left(user)

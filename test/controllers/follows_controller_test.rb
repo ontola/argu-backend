@@ -51,8 +51,8 @@ class FollowsControllerTest < ActionController::TestCase
     sign_in user
 
     delete :destroy,
-         motion_id: motion,
-         format: :json
+           motion_id: motion,
+           format: :json
 
     assert_response 204
   end
@@ -78,8 +78,8 @@ class FollowsControllerTest < ActionController::TestCase
     sign_in member
 
     delete :destroy,
-         motion_id: motion,
-         format: :json
+           motion_id: motion,
+           format: :json
 
     assert_response 204
   end

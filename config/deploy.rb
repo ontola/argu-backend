@@ -7,11 +7,10 @@ set :repo_url, 'git@bitbucket.org:arguweb/argu.git'
 set :branch, ENV['REVISION'] || ENV['BRANCH_NAME'] || 'master'
 set :scm, :git
 
-set :ssh_options, {
-      forward_agent: true,
-      auth_methods: %w(publickey),
-      port: 22
-    }
+set :ssh_options,
+    forward_agent: true,
+    auth_methods: %w(publickey),
+    port: 22
 
 set :log_level, :debug
 

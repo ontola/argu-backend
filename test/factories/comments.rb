@@ -1,9 +1,7 @@
 FactoryGirl.define do
   factory :comment do
-    commentable {
-      passed_in?(:commentable) ? commentable : create(:argument, forum: forum)
-    }
-    forum {
+    commentable { passed_in?(:commentable) ? commentable : create(:argument, forum: forum) }
+    forum do
       if passed_in?(:forum)
         forum
       elsif passed_in?(:commentable)
@@ -11,10 +9,8 @@ FactoryGirl.define do
       else
         create(:forum)
       end
-    }
-    creator {
-      passed_in?(:creator) ? creator : create(:profile)
-    }
+    end
+    creator { passed_in?(:creator) ? creator : create(:profile) }
 
     association :publisher, factory: :user
     sequence(:body) { |i| "fg comment body #{i}" }

@@ -1,21 +1,15 @@
 FactoryGirl.define do
   factory :motion do
-    forum {
-      passed_in?(:forum) ? forum : create(:forum)
-    }
-    creator {
-      passed_in?(:creator) ? creator : create(:profile)
-    }
-    publisher {
-      passed_in?(:publisher) ? publisher : create(:user)
-    }
+    forum { passed_in?(:forum) ? forum : create(:forum) }
+    creator { passed_in?(:creator) ? creator : create(:profile) }
+    publisher { passed_in?(:publisher) ? publisher : create(:user) }
     #association :question, factory: :question
 
     sequence(:title) { |n| "fg motion title #{n}" }
     sequence(:content) { |i| "fg motion content #{i}" }
     is_trashed false
 
-    after :create do |motion, evaluator|
+    after :create do |motion|
       create :activity,
              trackable: motion,
              forum: motion.forum,
@@ -24,9 +18,9 @@ FactoryGirl.define do
     end
 
     trait :with_arguments do
-      forum {
+      forum do
         passed_in?(:forum) ? forum : create(:forum)
-      }
+      end
       after :create do |motion|
         create_list :argument, 3,
                     motion: motion,

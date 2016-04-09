@@ -50,7 +50,6 @@ Style/TrivialAccessors:
   Enabled: true
 Style/UnneededCapitalW:
   Enabled: true
-
 Style/UnneededInterpolation:
   Enabled: true
 Style/UnneededPercentQ:
@@ -80,4 +79,21 @@ Lint/DuplicateMethods:
 Lint/DeprecatedClassMethods:
   Enabled: true
 Lint/DefEndAlignment:
+  Enabled: true
+
+Style/AccessModifierIndentation:
+  Enabled: true
+Style/AlignArray:
+  Enabled: true
+Style/AlignHash:
+  Enabled: true
+Style/AlignParameters:
+  Enabled: true
+Style/BracesAroundHashParameters:
+  Enabled: true
+Style/CaseIndentation:
+  Enabled: true
+Style/MultilineTernaryOperator:
+  Enabled: true
+Style/BlockDelimiters:
   Enabled: true

@@ -78,7 +78,7 @@ class GroupResponsesController < AuthorizedController
     destroy_service.commit
   end
 
-private
+  private
   def create_service
     @create_service ||= CreateGroupResponse.new(
       GroupResponse.new,

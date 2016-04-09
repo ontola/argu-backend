@@ -11,9 +11,9 @@ RSpec.feature 'User Password', type: :feature do
   end
   let(:user_omni_only) do
     user = build(:user,
-                  encrypted_password: nil,
-                  password: nil,
-                  password_confirmation: nil)
+                 encrypted_password: nil,
+                 password: nil,
+                 password_confirmation: nil)
     user.identities.new uid: '111907595807605',
                         provider: 'facebook'
     user.save!
@@ -43,14 +43,14 @@ RSpec.feature 'User Password', type: :feature do
     expect(page).to have_content('Current password')
 
     new_password = 'new password'
-    expect {
+    expect do
       within("#edit_user_#{user.id}") do
         fill_in 'user_password', with: new_password
         fill_in 'user_password_confirmation', with: new_password
         fill_in 'user_current_password', with: user.password
         click_button 'Save'
       end
-    }.to change {
+    end.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)
     expect(page).to have_current_path settings_path
@@ -79,7 +79,7 @@ RSpec.feature 'User Password', type: :feature do
     expect(page).to have_content('Confirm password')
     expect(page).to have_content('Current password')
 
-    expect {
+    expect do
       new_password = 'new password'
       within("#edit_user_#{user_omni_both.id}") do
         fill_in 'user_password', with: new_password
@@ -87,7 +87,7 @@ RSpec.feature 'User Password', type: :feature do
         fill_in 'user_current_password', with: user_omni_both.password
         click_button 'Save'
       end
-    }.to change {
+    end.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)
 
@@ -125,10 +125,10 @@ RSpec.feature 'User Password', type: :feature do
     expect(page).to have_content('User settings')
     expect(page).to have_content("You don't have a password yet, because you signed up using a linked account. Do you want to set a password?")
 
-    expect {
+    expect do
       click_link 'send-instructions'
       expect(page).to have_content('You will receive an email shortly with instructions to reset your password.')
-    }.to change {
+    end.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)
   end

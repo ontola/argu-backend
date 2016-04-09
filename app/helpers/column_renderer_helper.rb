@@ -27,7 +27,7 @@ module ColumnRendererHelper
       end
     end
 
-    render partial: partial, locals: {model: columns}.merge({options: options})
+    render partial: partial, locals: {model: columns}.merge(options: options)
   end
 
   def button_box(params)
@@ -57,16 +57,16 @@ module ColumnRendererHelper
 
   def show_new_buttons(options, key)
     if options[:buttons_form_on_empty] && options[:collection].blank?
-      render partial: "#{options[:collection_model].name.tableize}/form", locals: options.merge({pro: key, resource: options[:collection_model].new(pro: key, motion: @motion)})
+      render partial: "#{options[:collection_model].name.tableize}/form", locals: options.merge(pro: key, resource: options[:collection_model].new(pro: key, motion: @motion))
     elsif options[:show_new_buttons] != false && options[:buttons_url].present?
-      render partial: 'column_renderer/button', locals: options.merge({pro: key})
+      render partial: 'column_renderer/button', locals: options.merge(pro: key)
     end
   end
 
   # Stitches the url for a button beneath a column together
   def buttons_url(model)
     if model[:buttons_param].present?
-      merge_query_parameter(model[:buttons_url], {model[:buttons_param] => model[:pro]})
+      merge_query_parameter(model[:buttons_url], model[:buttons_param] => model[:pro])
     else
       model[:buttons_url]
     end

@@ -4,9 +4,11 @@ class ArgumentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   let(:freetown) { create(:forum) }
-  let(:motion) { create(:motion,
-                        forum: freetown,
-                        creator: create(:user, :follows_email, :viewed_notifications_hour_ago).profile) }
+  let(:motion) do
+    create(:motion,
+           forum: freetown,
+           creator: create(:user, :follows_email, :viewed_notifications_hour_ago).profile)
+  end
   let!(:follow) do
     create(:follow,
            followable: motion,
@@ -111,10 +113,12 @@ class ArgumentsControllerTest < ActionController::TestCase
   # As Member
   ####################################
   let(:member) { create_member(freetown) }
-  let(:member_argument) { create(:argument,
-                                 forum: freetown,
-                                 motion: motion,
-                                 creator: member.profile) }
+  let(:member_argument) do
+    create(:argument,
+           forum: freetown,
+           motion: motion,
+           creator: member.profile)
+  end
 
   test 'member should not get show nested unpublished' do
     sign_in member

@@ -4,7 +4,7 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   setup do
-    @holland, @holland_owner = create_forum_owner_pair({type: :populated_forum})
+    @holland, @holland_owner = create_forum_owner_pair(type: :populated_forum)
     @group = create(:group, forum: @holland)
   end
 

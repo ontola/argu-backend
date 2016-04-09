@@ -6,12 +6,12 @@ class ExtendedRadioInput < Formtastic::Inputs::RadioInput
       choices_wrapping do
         legend_html <<
           choices_group_wrapping do
-            collection.map { |choice|
+            collection.map do |choice|
               choice_wrapping(choice_wrapping_html_options(choice)) do
                 choice_html(choice) <<
                   extended_hint_html(choice)
               end
-            }.join("\n").html_safe
+            end.join("\n").html_safe
           end
       end
     end

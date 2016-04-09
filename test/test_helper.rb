@@ -80,10 +80,8 @@ class ActiveSupport::TestCase
   end
 
   def change_actor(actor)
-    @controller.instance_variable_set(:@_current_actor,
-                                      actor.respond_to?(:profile) ?
-                                          actor.profile :
-                                          actor)
+    a = actor.respond_to?(:profile) ? actor.profile : actor
+    @controller.instance_variable_set(:@_current_actor, a)
   end
 
   def create_manager(forum, user = nil)

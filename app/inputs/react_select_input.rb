@@ -2,7 +2,7 @@ class ReactSelectInput < ReactInput
   def to_html
     input_wrapping do
       label_html <<
-        render_react_component(react_render_options, {prerender: true})
+        render_react_component(react_render_options, prerender: true)
     end
   end
 

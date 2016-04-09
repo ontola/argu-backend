@@ -122,8 +122,10 @@ class CommentsController < AuthorizedController
                                                  publisher: current_user))
     trash_service.on(:trash_comment_successful) do |comment|
       respond_to do |format|
-        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('type_trash_success',
-                                                                                                        type: t('comments.type'))  }
+        format.html do
+          redirect_to polymorphic_url([comment.commentable], anchor: comment.id),
+                      notice: t('type_trash_success', type: t('comments.type'))
+        end
         format.js # destroy_comment.js
       end
     end
@@ -143,8 +145,10 @@ class CommentsController < AuthorizedController
                                                    publisher: current_user))
     untrash_service.on(:untrash_comment_successful) do |comment|
       respond_to do |format|
-        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('type_untrash_success',
-                                                                                                        type: t('comments.type'))  }
+        format.html do
+          redirect_to polymorphic_url([comment.commentable], anchor: comment.id),
+                      notice: t('type_untrash_success', type: t('comments.type'))
+        end
         format.js # destroy_comment.js
       end
     end
@@ -221,7 +225,7 @@ class CommentsController < AuthorizedController
   end
 
   def query_payload(opts = {})
-    query = opts.merge({comment: {body: comment_body}})
+    query = opts.merge(comment: {body: comment_body})
     query[:comment] << {parent_id: params[:parent_id]} if params[:parent_id].present?
     query.to_query
   end

@@ -33,7 +33,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
     assert_differences [['helsinki_at.reload.sign_ups', 0],
                         ['helsinki_at.reload.usages', 0]],
-                        'Usages or sign_ups counter changed on secondary get w/ token' do
+                       'Usages or sign_ups counter changed on secondary get w/ token' do
       get forum_path(helsinki, at: helsinki_at.access_token)
       assert_response :success
     end
@@ -50,14 +50,15 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_differences [['User.count', 1],
                         ['helsinki_at.reload.sign_ups', 1],
                         ['helsinki_at.reload.usages', 0]] do
-      post user_registration_path, {user: {
-                                     shortname_attributes: {shortname: 'newuser'},
-                                     email: 'newuser@example.com',
-                                     password: 'useruser',
-                                     password_confirmation: 'useruser',
-                                     r: helsinki.url
-                                 },
-                                    at: helsinki_at.access_token}
+      post user_registration_path,
+           user: {
+             shortname_attributes: {shortname: 'newuser'},
+             email: 'newuser@example.com',
+             password: 'useruser',
+             password_confirmation: 'useruser',
+             r: helsinki.url
+           },
+           at: helsinki_at.access_token
     end
   end
 
@@ -88,26 +89,26 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_differences [['User.count', 1],
                         ['Sidekiq::Worker.jobs.size', 1]] do
       post user_registration_path,
-           {user: {
+           user: {
                shortname_attributes: {shortname: 'newuser'},
                email: 'newuser@example.com',
                password: 'useruser',
                password_confirmation: 'useruser',
                r: helsinki.url
            },
-           at: helsinki_at.access_token}
+           at: helsinki_at.access_token
     end
     assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
     put profile_path('newuser'),
-        {profile: {
+        profile: {
             profileable_attributes: {
                 first_name: 'new',
                 last_name: 'user'
             },
             about: 'Something ab'
-        }}
+        }
     assert_redirected_to hidden_forum_path
     assert assigns(:resource)
     assert assigns(:profile)
@@ -132,26 +133,26 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
     assert_difference 'User.count', 1 do
       post user_registration_path,
-           {user: {
+           user: {
                shortname_attributes: {shortname: 'newuser'},
                email: 'newuser@example.com',
                password: 'useruser',
                password_confirmation: 'useruser',
                r: redirect_url
            },
-            at: helsinki_at.access_token}
+           at: helsinki_at.access_token
     end
     assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
     put profile_path('newuser'),
-        {profile: {
+        profile: {
             profileable_attributes: {
                 first_name: 'new',
                 last_name: 'user'
             },
             about: 'Something ab'
-        }}
+        }
     assert_redirected_to redirect_url
     assert assigns(:resource)
     assert assigns(:profile)

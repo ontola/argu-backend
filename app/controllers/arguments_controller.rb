@@ -2,9 +2,6 @@ class ArgumentsController < AuthorizedController
   # GET /arguments/1
   # GET /arguments/1.json
   def show
-    # @forum = @argument.forum
-    # @parent_id = params[:parent_id].to_s
-
     @comments = @argument.filtered_threads(show_trashed?, params[:page])
     @length = @argument.root_comments.length
     @vote = Vote.find_by(voteable: @argument, voter: current_profile)
@@ -23,7 +20,7 @@ class ArgumentsController < AuthorizedController
   # GET /arguments/new
   # GET /arguments/new.json
   def new
-    authenticated_resource!.assign_attributes({pro: %w(con pro).index(params[:pro])})
+    authenticated_resource!.assign_attributes(pro: %w(con pro).index(params[:pro]))
 
     respond_to do |format|
       if params[:motion_id].present?
@@ -58,8 +55,7 @@ class ArgumentsController < AuthorizedController
     end
     create_service.on(:create_argument_failed) do |argument|
       respond_to do |format|
-        format.html { render action: 'form',
-                             locals: {argument: argument} }
+        format.html { render action: 'form', locals: {argument: argument} }
         format.json { render json: argument.errors, status: :unprocessable_entity }
       end
     end
@@ -93,8 +89,10 @@ class ArgumentsController < AuthorizedController
                                                    publisher: current_user))
     destroy_service.on(:destroy_argument_successful) do |argument|
       respond_to do |format|
-        format.html { redirect_to motion_path(argument.motion_id), notice: t('type_destroy_success',
-                                                                             type: t('arguments.type')) }
+        format.html do
+          redirect_to motion_path(argument.motion_id),
+                      notice: t('type_destroy_success', type: t('arguments.type'))
+        end
         format.json { head :no_content }
       end
     end
@@ -114,8 +112,10 @@ class ArgumentsController < AuthorizedController
                                                  publisher: current_user))
     trash_service.on(:trash_argument_successful) do |argument|
       respond_to do |format|
-        format.html { redirect_to motion_path(argument.motion_id), notice: t('type_trash_success',
-                                                                             type: t('arguments.type')) }
+        format.html do
+          redirect_to motion_path(argument.motion_id),
+                      notice: t('type_trash_success', type: t('arguments.type'))
+        end
         format.json { head :no_content }
       end
     end

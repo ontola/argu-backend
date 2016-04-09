@@ -50,11 +50,11 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     assert assigns(:user)
 
     put setup_users_path,
-         user: {
-           shortname_attributes: {
-             shortname: 'test_user'
-           }
-         }
+        user: {
+          shortname_attributes: {
+            shortname: 'test_user'
+          }
+        }
 
     assert_redirected_to root_path
     follow_redirect!

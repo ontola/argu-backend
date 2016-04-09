@@ -1,8 +1,6 @@
 FactoryGirl.define do
   factory :group do
-    forum {
-      passed_in?(:forum) ? forum : create(:forum)
-    }
+    forum { passed_in?(:forum) ? forum : create(:forum) }
     sequence(:name) { |i| "fg_groups#{i}" }
     name_singular 'Group'
     visibility :hidden

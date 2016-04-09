@@ -127,7 +127,7 @@ class ProfilesControllerTest < ActionController::TestCase
                     postal_code: '3583GP',
                     country_code: 'NL'
                   },
-                first_name: 'name'
+                  first_name: 'name'
               }
           }
     end

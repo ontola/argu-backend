@@ -71,7 +71,9 @@ module ForumsHelper
 
     if policy(@forum).is_member?
       membership = current_profile.memberships.find_by(forum: @forum)
-      items << link_item(t('forums.leave'), forum_membership_path(@forum.url, membership), fa: 'sign-out',
+      items << link_item(t('forums.leave'),
+                         forum_membership_path(@forum.url, membership),
+                         fa: 'sign-out',
                          data: {method: :delete, turbolinks: 'false', confirm: t('forums.leave_confirmation')})
     end
   end

@@ -13,7 +13,7 @@ module ArgumentsHelper
     preview
   end
 
-private
+  private
 
   # Generates radio array for a model
   # @param model [Model] instance of the item

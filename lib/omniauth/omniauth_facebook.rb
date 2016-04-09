@@ -7,16 +7,17 @@ module Omniauth
       Identity.transaction do
         image_url = get_image_unless_silhouette(info['image'])
 
-        user = User.new email: info['email'],
-                 first_name: info['first_name'],
-                 middle_name: raw['middle_name'],
-                 last_name: info['last_name'],
-                 gender: raw['gender'],
-                 finished_intro: true,
-                 r: r,
-                 profile_attributes: {
+        user =
+          User.new email: info['email'],
+                   first_name: info['first_name'],
+                   middle_name: raw['middle_name'],
+                   last_name: info['last_name'],
+                   gender: raw['gender'],
+                   finished_intro: true,
+                   r: r,
+                   profile_attributes: {
                      remote_profile_photo_url: image_url
-                 }
+                   }
         user.identities << identity
         user.shortname = nil
         identity.save!

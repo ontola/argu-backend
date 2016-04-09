@@ -6,10 +6,12 @@ FactoryGirl.define do
 
     association :user
     activity do
-      passed_in?(:activity) ?
-        activity :
+      if passed_in?(:activity)
+        activity
+      else
         create(:activity,
                forum: forum)
+      end
     end
   end
 end

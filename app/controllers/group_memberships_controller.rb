@@ -45,7 +45,7 @@ class GroupMembershipsController < ApplicationController
     end
   end
 
-private
+  private
     def permit_params
       params.require(:group).permit(*policy(@group || Group).permitted_attributes)
     end

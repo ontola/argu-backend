@@ -44,9 +44,11 @@ module ExceptionToTheRule
   def filter_trickle(rules, level)
     if level
       trickled_rules = rules.find_all { |r| level.send(TRICKLE_LOGIC[r.trickles], send(r.role)) }
-      trickled_rules.present? ?
-        trickled_rules.map { |r| r.permit ? level : [nil, r.message] } :
+      if trickled_rules.present?
+        trickled_rules.map { |r| r.permit ? level : [nil, r.message] }
+      else
         [level]
+      end
     else
       []
     end
@@ -64,9 +66,11 @@ module ExceptionToTheRule
                             .map(&:identifier)
       if group_identifiers.present?
         trickled_rules = rules.find_all { |r| group_identifiers.include?(r.role) }
-        trickled_rules.present? ?
-          trickled_rules.map { |r| r.permit ? group_grant : [nil, r.message] } :
+        if trickled_rules.present?
+          trickled_rules.map { |r| r.permit ? group_grant : [nil, r.message] }
+        else
           [level]
+        end
       else
         []
       end

@@ -8,13 +8,11 @@ FactoryGirl.define do
                 strategy: :create
     association :shortname,
                 strategy: :build
-    owner {
-      passed_in?(:owner) ? owner : create(:profile_direct_email)
-    }
+    owner { passed_in?(:owner) ? owner : create(:profile_direct_email) }
     last_accepted Time.current
     visibility Page.visibilities[:open]
 
-    before(:create) do |page, evaluator|
+    before(:create) do |page|
       page.profile.update name: generate(:page_name)
     end
   end

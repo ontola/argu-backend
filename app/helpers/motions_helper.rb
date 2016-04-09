@@ -18,23 +18,22 @@ module MotionsHelper
   end
 
   def motion_vote_props(motion, vote, opts={})
-    opts.merge({
-        object_type: 'motion',
-        object_id: motion.id,
-        current_vote: vote.for,
-        vote_url: motion_show_vote_path(motion),
-        total_votes: motion.total_vote_count,
-        distribution: {
-          pro: motion.votes_pro_count,
-          neutral: motion.votes_neutral_count,
-          con: motion.votes_con_count
-        },
-        percent: {
-            pro: motion.votes_pro_percentage,
-            neutral: motion.votes_neutral_percentage,
-            con: motion.votes_con_percentage
-        }
-    })
+    opts.merge(
+      object_type: 'motion',
+      object_id: motion.id,
+      current_vote: vote.for,
+      vote_url: motion_show_vote_path(motion),
+      total_votes: motion.total_vote_count,
+      distribution: {
+        pro: motion.votes_pro_count,
+        neutral: motion.votes_neutral_count,
+        con: motion.votes_con_count
+      },
+      percent: {
+        pro: motion.votes_pro_percentage,
+        neutral: motion.votes_neutral_percentage,
+        con: motion.votes_con_percentage
+      })
   end
 
   def motion_timeline_props(motion)
@@ -93,7 +92,7 @@ module MotionsHelper
     active_point_id = params.fetch(:timeline, {}).fetch(:activePointId, nil).presence.try(:to_i)
     active_point = points[points.find_index { |p| p[:id] === active_point_id }] if active_point_id.present?
 
-    merge_state({
+    merge_state(
       timelines: {
         activeTimelineId: 1,
         collection: {
@@ -199,8 +198,7 @@ module MotionsHelper
           displayName: 'Some creator',
           url: 'https://argu.co/u/someone'
         }
-      ]
-    })
+      ])
 
     {
       timelineId: 1

@@ -24,8 +24,8 @@ class ForumsController < ApplicationController
     questions = policy_scope(@forum.questions.trashed(show_trashed?))
 
     motions_without_questions = policy_scope(Motion.where(forum: @forum,
-                                             question_id: nil,
-                                             is_trashed: show_trashed?))
+                                                          question_id: nil,
+                                                          is_trashed: show_trashed?))
 
     @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(@forum).show?
   end
@@ -107,7 +107,7 @@ class ForumsController < ApplicationController
     end
   end
 
-protected
+  protected
 
   def correct_stale_record_version
     @forum.reload.attributes = permit_params.reject do |attrb, value|

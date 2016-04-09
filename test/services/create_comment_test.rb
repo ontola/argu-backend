@@ -9,7 +9,7 @@ class CreateCommentTest < ActiveSupport::TestCase
   end
   let(:comment_attributes) do
     attributes_for(:comment, creator: user.profile)
-      .merge({commentable: commentable})
+      .merge(commentable: commentable)
   end
 
   test 'it creates a comment' do

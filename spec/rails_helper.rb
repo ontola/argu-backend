@@ -89,25 +89,26 @@ RSpec.configure do |config|
   end
 
   Capybara.register_driver :poltergeist do |app|
-    Capybara::Poltergeist::Driver.new(app, {timeout: 30})
+    Capybara::Poltergeist::Driver.new(app, timeout: 30)
   end
 
-  Capybara.default_driver = case ENV['BROWSER']
-                            when 'chrome'
-                              :selenium_chrome
-                            when 'firefox'
-                              :selenium_firefox
-                            when 'webkit'
-                              :webkit
-                            when 'ie'
-                              :internet_explorer
-                            when 'testingbot'
-                              :testingbot
-                            when 'safari'
-                              :selenium_safari
-                            else
-                              ENV['CI'].present? ? :selenium : :selenium_firefox
-                            end
+  Capybara.default_driver =
+    case ENV['BROWSER']
+    when 'chrome'
+      :selenium_chrome
+    when 'firefox'
+      :selenium_firefox
+    when 'webkit'
+      :webkit
+    when 'ie'
+      :internet_explorer
+    when 'testingbot'
+      :testingbot
+    when 'safari'
+      :selenium_safari
+    else
+      ENV['CI'].present? ? :selenium : :selenium_firefox
+    end
   #Capybara.default_max_wait_time = 5
   Capybara.default_max_wait_time = 10
 

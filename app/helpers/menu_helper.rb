@@ -9,7 +9,7 @@ module MenuHelper
         content_tag :ul do
           react_component 'HyperDropdown',
                           crud_menu_options(resource, additional_items),
-                          {prerender: true}
+                          prerender: true
         end
       end
     end

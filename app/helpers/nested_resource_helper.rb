@@ -70,9 +70,7 @@ module NestedResourceHelper
     if parent_resource_klass(request.path_parameters) == Forum
       super
     else
-      super.merge({
-        parent_resource_param => params[parent_resource_param]
-      })
+      super.merge(parent_resource_param => params[parent_resource_param])
     end
   end
 
@@ -81,9 +79,7 @@ module NestedResourceHelper
   def resource_tenant(opts = request.path_parameters, url_params = params)
     if current_resource_is_nested?(opts)
       parent = get_parent_resource(opts, url_params)
-      parent.is_a?(Forum) ?
-        parent :
-        parent.forum
+      parent.is_a?(Forum) ? parent : parent.forum
     end
   end
 

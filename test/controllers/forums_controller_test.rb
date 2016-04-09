@@ -48,9 +48,9 @@ class ForumsControllerTest < ActionController::TestCase
 
     assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
     assert_not assigns(:items).map(&:identifier).include?(q1.identifier),
-           "Unpublished projects' questions are visible"
+               "Unpublished projects' questions are visible"
     assert_not assigns(:items).map(&:identifier).include?(m1.identifier),
-           "Unpublished projects' motions are visible"
+               "Unpublished projects' motions are visible"
   end
 
   test 'user should not show settings' do
@@ -146,7 +146,7 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-  let(:forum_pair) { create_forum_owner_pair({type: :populated_forum}) }
+  let(:forum_pair) { create_forum_owner_pair(type: :populated_forum) }
 
   test 'owner should show settings and all tabs' do
     forum, owner = forum_pair

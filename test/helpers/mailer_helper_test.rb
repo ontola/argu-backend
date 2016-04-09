@@ -48,9 +48,9 @@ class MailerHelperTest < ActionView::TestCase
 
   let(:argument_con) do
     argument = create(:argument,
-                       forum: holland,
-                       creator: creator.profile,
-                       pro: false)
+                      forum: holland,
+                      creator: creator.profile,
+                      pro: false)
 
     create(:notification,
            activity: create(:activity,
@@ -62,8 +62,8 @@ class MailerHelperTest < ActionView::TestCase
 
   let(:comment) do
     _comment = create(:comment,
-                     commentable: argument_pro,
-                     creator: creator.profile)
+                      commentable: argument_pro,
+                      creator: creator.profile)
     create(:notification,
            activity: create(:activity,
                             forum: holland,

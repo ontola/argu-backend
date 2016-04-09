@@ -41,7 +41,7 @@ class Pages::ManagersController < ApplicationController
     end
   end
 
-private
+  private
     def permit_params
       params.permit(*policy(@page || Page).permitted_attributes)
     end

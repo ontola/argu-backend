@@ -44,8 +44,8 @@ argu = Page
            last_accepted: Time.current)
 
 Forum.create!(name: 'Nederland',
-             page: argu,
-             shortname_attributes: {shortname: 'nederland'})
+              page: argu,
+              shortname_attributes: {shortname: 'nederland'})
 
 Setting.set('user_cap', -1)
 Setting.set('quotes', 'Argumenten moet men wegen, niet tellen.')

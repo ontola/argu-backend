@@ -55,12 +55,12 @@ RSpec.feature 'Account deletion', type: :feature do
     login_as(user, scope: :user)
     visit settings_path
     click_link 'Delete Argu account'
-    expect {
+    expect do
       within("#edit_user_#{user.id}") do
         fill_in 'user_repeat_name', with: user.shortname.shortname
         click_button 'I understand the consequences, delete my account'
       end
-    }.to change { User.count }.by(-1)
+    end.to change { User.count }.by(-1)
     argument.reload
 
     expect(page).to have_content 'Account deleted successfully'

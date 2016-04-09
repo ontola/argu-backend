@@ -236,9 +236,11 @@ class QuestionsControllerTest < ActionController::TestCase
   # As Creator
   ####################################
   let(:creator) { create_member(freetown) }
-  let(:creator_question) { create(:question,
-                                  creator: creator.profile,
-                                  forum: freetown) }
+  let(:creator_question) do
+    create(:question,
+           creator: creator.profile,
+           forum: freetown)
+  end
 
   test 'creator should get edit' do
     sign_in creator
@@ -312,9 +314,11 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-  let(:page_question) { create(:question,
-                               forum: @freetown,
-                               creator: @freetown_owner.profile) }
+  let(:page_question) do
+    create(:question,
+           forum: @freetown,
+           creator: @freetown_owner.profile)
+  end
   let(:owner_forum_question) { create(:question, forum: @freetown) }
 
   test 'owner should put update on page owner own question' do
@@ -352,9 +356,9 @@ class QuestionsControllerTest < ActionController::TestCase
     owner_forum_question.trash
 
     assert_differences([['Question.trashed(false).count', 0],
-    ['Question.trashed(true).count', -1]]) do
+                        ['Question.trashed(true).count', -1]]) do
       delete :destroy,
-      id: owner_forum_question
+             id: owner_forum_question
     end
 
     assert_redirected_to @freetown

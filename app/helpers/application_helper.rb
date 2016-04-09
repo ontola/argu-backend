@@ -36,19 +36,15 @@ module ApplicationHelper
       current_profile,
       session,
       tenant,
-      {
-        platform_open: platform_open?,
-        within_user_cap: within_user_cap?
-      })
+      platform_open: platform_open?,
+      within_user_cap: within_user_cap?)
     Pundit.policy!(uc, record)
   end
 
   def user_identity_token(user)
-    sign_payload({
-                     user: user.id,
-                     exp: 2.days.from_now.to_i,
-                     iss: 'argu.co'
-                 })
+    sign_payload(user: user.id,
+                 exp: 2.days.from_now.to_i,
+                 iss: 'argu.co')
   end
 
   def sign_payload(payload)
@@ -56,7 +52,7 @@ module ApplicationHelper
   end
 
   def decode_token(token, verify = false)
-    JWT.decode(token, Rails.application.secrets.jwt_encryption_token, {algorithm: 'HS256'})[0]
+    JWT.decode(token, Rails.application.secrets.jwt_encryption_token, algorithm: 'HS256')[0]
   end
 
   # Merges a URI with a params Hash
@@ -106,14 +102,14 @@ module ApplicationHelper
     url = url_for([resource, only_path: false])
 
     {
-        title: t('share'),
-        url: url,
-        shareUrls: {
-            facebook: ShareHelper.facebook_share_url(url),
-            linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
-            twitter: ShareHelper.twitter_share_url(url, title: resource.display_name),
-            googlePlus: ShareHelper.googleplus_share_url(url)
-        }
+      title: t('share'),
+      url: url,
+      shareUrls: {
+          facebook: ShareHelper.facebook_share_url(url),
+          linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
+          twitter: ShareHelper.twitter_share_url(url, title: resource.display_name),
+          googlePlus: ShareHelper.googleplus_share_url(url)
+      }
     }
   end
 
@@ -121,11 +117,11 @@ module ApplicationHelper
     link_items = []
 
     link_items = [
-        link_item(t('filtersort.updated_at'), nil, fa: 'fire', data: {'sort-value' => 'updated_at'}),
-        link_item(t('filtersort.created_at'), nil, fa: 'clock-o', data: {'sort-value' => 'created_at'}),
-        link_item(t('filtersort.name'), nil, fa: 'sort-alpha-asc', data: {'sort-value' => 'name'}),
-        link_item(t('filtersort.vote_count'), nil, fa: 'check-square-o', data: {'sort-value' => 'vote_count'}),
-        link_item(t('filtersort.random'), nil, fa: 'gift', data: {'sort-value' => 'random'}, className: 'sort-random')
+      link_item(t('filtersort.updated_at'), nil, fa: 'fire', data: {'sort-value' => 'updated_at'}),
+      link_item(t('filtersort.created_at'), nil, fa: 'clock-o', data: {'sort-value' => 'created_at'}),
+      link_item(t('filtersort.name'), nil, fa: 'sort-alpha-asc', data: {'sort-value' => 'name'}),
+      link_item(t('filtersort.vote_count'), nil, fa: 'check-square-o', data: {'sort-value' => 'vote_count'}),
+      link_item(t('filtersort.random'), nil, fa: 'gift', data: {'sort-value' => 'random'}, className: 'sort-random')
     ]
 
     dropdown_options(t('filtersort.sort'), [{items: link_items}], fa: 'fa-sort')
@@ -135,9 +131,9 @@ module ApplicationHelper
     link_items = []
 
     link_items = [
-        link_item(t('filtersort.all'), nil, fa: 'check', data: {'filter-value' => ''}),
-        link_item(t('filtersort.questions'), nil, fa: 'question', data: {'filter-value' => 'question'}),
-        link_item(t('filtersort.motions'), nil, fa: 'lightbulb-o', data: {'filter-value' => 'motion'})
+      link_item(t('filtersort.all'), nil, fa: 'check', data: {'filter-value' => ''}),
+      link_item(t('filtersort.questions'), nil, fa: 'question', data: {'filter-value' => 'question'}),
+      link_item(t('filtersort.motions'), nil, fa: 'lightbulb-o', data: {'filter-value' => 'motion'})
     ]
 
     dropdown_options(t('filtersort.filter'), [{items: link_items}], fa: 'fa-filter')
@@ -151,12 +147,10 @@ module ApplicationHelper
   end
 
   def display_settings_items
-    link_items = []
-
     link_items = [
-        link_item(t('info_bar'), nil, fa: 'info', data: {'display-setting' => 'info_bar'}),
-        link_item(t('images'), nil, fa: 'image', data: {'display-setting' => 'image'}),
-        link_item(t('columns'), nil, fa: 'columns', data: {'display-setting' => 'columns'})
+      link_item(t('info_bar'), nil, fa: 'info', data: {'display-setting' => 'info_bar'}),
+      link_item(t('images'), nil, fa: 'image', data: {'display-setting' => 'image'}),
+      link_item(t('columns'), nil, fa: 'columns', data: {'display-setting' => 'columns'})
     ]
 
     dropdown_options(t('display'), [{items: link_items}], fa: 'fa-columns')

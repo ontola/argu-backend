@@ -16,21 +16,21 @@ class MotionsTest < ActionDispatch::IntegrationTest
            forum: freetown)
 
     assert_differences create_changes_array do
-      post forum_motions_path(freetown), {
-          motion: {
+      post forum_motions_path(freetown),
+           motion: {
             title: 'Motion',
             content: 'Contents'
-      }}
+           }
     end
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to motion_path(assigns(:create_service).resource, start_motion_tour: true)
 
     assert_differences create_changes_array(false) do
-      post forum_motions_path(freetown), {
-          motion: {
+      post forum_motions_path(freetown),
+           motion: {
               title: 'Motion2',
               content: 'Contents'
-          }}
+           }
     end
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to motion_path(assigns(:create_service).resource)

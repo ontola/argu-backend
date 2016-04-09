@@ -41,7 +41,7 @@ class CommentsControllerTest < ActionController::TestCase
     get :show, id: comment
 
     assert_redirected_to argument_path(argument, anchor: comment.identifier)
-    end
+  end
 
   test 'guest should not get show on cairo' do
     get :show, id: cairo_comment
@@ -228,6 +228,7 @@ class CommentsControllerTest < ActionController::TestCase
   end
 
   private
+
   def create_changes_array
     [['Comment.count', 1],
      ['Activity.count', 1],

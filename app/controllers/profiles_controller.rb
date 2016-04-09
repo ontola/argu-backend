@@ -83,7 +83,7 @@ class ProfilesController < ApplicationController
     end
   end
 
-private
+  private
   def permit_params
     params.require(:profile).permit(*policy(@profile || Profile).permitted_attributes)
   end
