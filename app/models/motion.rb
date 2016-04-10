@@ -36,14 +36,15 @@ class Motion < ActiveRecord::Base
 
   VOTE_OPTIONS = [:pro, :neutral, :con]
 
-  scope :search, lambda do |q|
+  # @return [ActiveRecord::Relation]
+  def self.search(q)
     where('lower(motions.title) SIMILAR TO lower(?) OR ' +
             'lower(motions.content) LIKE lower(?)',
           "%#{q}%",
           "%#{q}%")
   end
 
-  scope :published, lambda do
+  def self.published
     joins('LEFT OUTER JOIN projects ON projects.id = project_id')
       .where('published_at IS NOT NULL OR project_id IS NULL')
   end

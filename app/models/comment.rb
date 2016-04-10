@@ -21,13 +21,15 @@ class Comment < ActiveRecord::Base
 
   # Helper class method to lookup all comments assigned
   # to all commentable types for a given user.
-  scope :find_comments_by_user, lambda do |user|
+  # @return [ActiveRecord::Relation]
+  def self.find_comments_by_user(user)
     where(creator_id: user.profile.id).order('created_at DESC')
   end
 
   # Helper class method to look up all comments for
   # commentable class name and commentable id.
-  scope :find_comments_for_commentable, lambda do |commentable_str, commentable_id|
+  # @return [ActiveRecord::Relation]
+  def self.find_comments_for_commentable(commentable_str, commentable_id)
     where(commentable_type: commentable_str.to_s,
           commentable_id: commentable_id)
       .order('created_at DESC')
