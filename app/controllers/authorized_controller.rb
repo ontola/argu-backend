@@ -210,10 +210,10 @@ class AuthorizedController < ApplicationController
   # Used in {authenticated_resource!} to build a new object. Overwrite this function if the model needs more than just the {Forum}
   # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
   def resource_new_params
-    {
+    HashWithIndifferentAccess.new(
       forum: resource_tenant,
       publisher: current_user
-    }
+    )
   end
 
   def resource_tenant
