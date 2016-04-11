@@ -4,7 +4,7 @@ en:
     type: "Organization"
     show: "Show organization"
     settings:
-      title: "organization settings"
+      title: "Organization settings"
       menu:
         general: 'General'
         advanced: 'Advanced'

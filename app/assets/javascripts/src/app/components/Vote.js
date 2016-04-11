@@ -48,11 +48,12 @@ export const VoteButton = React.createClass({
     mixins: [IntlMixin],
 
     propTypes: {
-        side: React.PropTypes.string,
+        actor: React.PropTypes.string,
+        clickHandler: React.PropTypes.func,
         count: React.PropTypes.number,
         current: React.PropTypes.bool,
         object_id: React.PropTypes.number,
-        clickHandler: React.PropTypes.func
+        side: React.PropTypes.string
     },
 
     iconForSide () {
@@ -98,18 +99,26 @@ export const VoteButton = React.createClass({
 export const VoteButtons = React.createClass({
     mixins: [IntlMixin, VoteMixin],
 
+    propTypes: {
+        actor: React.PropTypes.string,
+        current_vote: React.PropTypes.string,
+        distribution: React.PropTypes.object,
+        object_id: React.PropTypes.number,
+        object_type: React.PropTypes.string,
+        percent: React.PropTypes.object
+    },
+
     getInitialState () {
         return {
-            object_type: this.props.objectType,
             object_id: this.props.object_id,
-            total_votes: this.props.total_votes,
-            current_vote: this.props.current_vote,
+            currentVote: this.props.current_vote,
             distribution: this.props.distribution,
+            objectType: this.props.object_type,
             percent: this.props.percent
         };
     },
 
-    buttonsClassName: function () {
+    buttonsClassName () {
         switch(this.props.buttonsType) {
             case 'subtle':
                 return 'btns-opinion--subtle';
@@ -124,14 +133,15 @@ export const VoteButtons = React.createClass({
             .map((side, i) => {
                 return <VoteButton key={i}
                                    side={side}
+                                   actor={this.props.actor}
                                    count={this.state.distribution[side]}
-                                   current={this.state.current_vote === side}
-                                   object_id={this.object_id}
+                                   current={this.state.currentVote === side}
+                                   object_id={this.props.object_id}
                                    clickHandler={this[`${side}Handler`]} />;
             });
 
         return (
-            <ul className={this.buttonsClassName()} data-voted={(this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain') || null}>
+            <ul className={this.buttonsClassName()} data-voted={(this.state.currentVote.length > 0 && this.state.currentVote !== 'abstain') || null}>
                 {voteButtons}
             </ul>);
     }

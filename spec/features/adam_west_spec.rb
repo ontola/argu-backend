@@ -98,7 +98,7 @@ RSpec.feature 'Adam west', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-neutral[data-voted-on=true]')
-    click_link 'Neutral'
+    find('a', text: 'Neutral').click
 
     redirect_url = new_motion_vote_path(motion_id: motion,
                                         confirm: 'true',
