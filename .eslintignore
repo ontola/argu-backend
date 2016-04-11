@@ -1,4 +1,4 @@
-./app/assets/javascripts/_bundle.js
-./app/assets/javascripts/_globbed_components.js
-./app/assets/javascripts/lib/*
-./app/assets/javascripts/application/*
+/app/assets/javascripts/_bundle.js
+/app/assets/javascripts/_globbed_components.js
+/app/assets/javascripts/lib/*
+/app/assets/javascripts/application/*

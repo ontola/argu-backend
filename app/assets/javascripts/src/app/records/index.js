@@ -5,5 +5,5 @@
 // Prevents a Babel bug as per https://phabricator.babeljs.io/T2763
 import RImage from './RImage';
 
-export {default as RImage} from './RImage';
-export {default as RProfile} from './RProfile';
+export { default as RImage } from './RImage';
+export { default as RProfile } from './RProfile';

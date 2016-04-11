@@ -1,5 +1,7 @@
 /* globals $ */
 
+const ALERT_FADE_TIMEOUT = 2000;
+const ALERT_QUICKFADE_TIMEOUT = 1000;
 
 export default class Alert {
     constructor (message, messageType, instantShow, prependSelector) {
@@ -19,19 +21,19 @@ export default class Alert {
     fade () {
         const fadeNow = function(a) {
             a.addClass('alert-hidden');
-            window.setTimeout(function(a) {
-                a.remove();
-            }, 2000, a);
+            window.setTimeout(elem => {
+                elem.remove();
+            }, ALERT_FADE_TIMEOUT, a);
         };
 
-        var timeoutHandle = window.setTimeout(fadeNow, this._duration, this._alert);
+        let timeoutHandle = window.setTimeout(fadeNow, this._duration, this._alert);
 
-        this._alert[0].addEventListener('mouseover', function () {
+        this._alert[0].addEventListener('mouseover', () => {
             window.clearTimeout(timeoutHandle);
         });
 
-        this._alert[0].addEventListener('mouseout', function () {
-            timeoutHandle = window.setTimeout(fadeNow, 1000, this._alert)
+        this._alert[0].addEventListener('mouseout', () => {
+            timeoutHandle = window.setTimeout(fadeNow, ALERT_QUICKFADE_TIMEOUT, this._alert)
         });
     }
 

@@ -16,15 +16,15 @@ export const Link = React.createClass({
         activeClassName: React.PropTypes.string,
         hash: React.PropTypes.string,
         isButton: React.PropTypes.bool,
-        onlyActiveOnIndex: React.PropTypes.bool, //.isRequired,
+        onlyActiveOnIndex: React.PropTypes.bool,
         onClick: React.PropTypes.func,
         query: React.PropTypes.object,
         state: React.PropTypes.object,
         style: React.PropTypes.object,
-        to: React.PropTypes.string //.isRequired,
+        to: React.PropTypes.string
     },
 
-    href: function href () {
+    href () {
         const { to, query, hash } = this.props;
 
         return url.format({
@@ -34,7 +34,7 @@ export const Link = React.createClass({
         });
     },
 
-    onClick: function (e) {
+    onClick (e) {
         const { onClick } = this.props;
 
         if (typeof onClick !== 'undefined') {
@@ -46,7 +46,7 @@ export const Link = React.createClass({
         }
     },
 
-    className: function () {
+    className () {
         const { className, isButton } = this.props;
         return [
             className,
@@ -54,7 +54,7 @@ export const Link = React.createClass({
         ].join(' ');
     },
 
-    render: function render () {
+    render () {
         const { children, style } = this.props;
 
 

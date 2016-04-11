@@ -1,5 +1,6 @@
 import React from 'react';
-React; // For ESLint, jsx compiles to React.createElement, so React must be imported
+// For ESLint, jsx compiles to React.createElement, so React must be imported
+React && void (0);
 
 /**
  * @module Helpers
@@ -7,9 +8,11 @@ React; // For ESLint, jsx compiles to React.createElement, so React must be impo
 
 
 Object.resolve = function(path, obj) {
-    return [obj || self].concat(path.split('.')).reduce(function(prev, curr) {
-        return prev && prev[curr]
-    });
+    return [obj || self]
+        .concat(path.split('.'))
+        .reduce((prev, curr) => {
+            return prev && prev[curr]
+        });
 };
 
 if (!Object.assign) {
@@ -17,23 +20,23 @@ if (!Object.assign) {
         enumerable: false,
         configurable: true,
         writable: true,
-        value: function(target) {
+        value (target) {
             if (target === undefined || target === null) {
                 throw new TypeError('Cannot convert first argument to object');
             }
 
-            var to = Object(target);
-            for (var i = 1; i < arguments.length; i++) {
-                var nextSource = arguments[i];
+            const to = Object(target);
+            for (let i = 1; i < arguments.length; i++) {
+                let nextSource = arguments[i];
                 if (nextSource === undefined || nextSource === null) {
                     continue;
                 }
                 nextSource = Object(nextSource);
 
-                var keysArray = Object.keys(Object(nextSource));
-                for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
-                    var nextKey = keysArray[nextIndex];
-                    var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+                const keysArray = Object.keys(Object(nextSource));
+                for (let nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
+                    const nextKey = keysArray[nextIndex];
+                    const desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
                     if (desc !== undefined && desc.enumerable) {
                         to[nextKey] = nextSource[nextKey];
                     }
@@ -44,6 +47,10 @@ if (!Object.assign) {
     });
 }
 
+/**
+ * @param {Object} props The props of the imageable element.
+ * @returns {ReactElement|undefined} Proper image element.
+ */
 export function image (props) {
     if (props.image) {
         return <img src={props.image.url} alt={props.image.title} className={props.image.className} />;
@@ -54,7 +61,7 @@ export function image (props) {
 
 export function _url (url, obj) {
     if (typeof url === 'string' && typeof obj === 'object') {
-        var res = decodeURIComponent(url).replace(/{{([^{}]+)}}/, function (match, p1) {
+        const res = decodeURIComponent(url).replace(/{{([^{}]+)}}/, (match, p1) => {
             return Object.resolve(p1, obj);
         });
         return res || decodeURIComponent(url);
@@ -122,17 +129,19 @@ export function getAuthenticityToken () {
 }
 
 export function getMetaContent (name) {
-    let header = document.querySelector(`meta[name="${name}"]`);
+    const header = document.querySelector(`meta[name="${name}"]`);
     return header && header.content;
 }
 
 export function getUserIdentityToken () {
-    return {token: getMetaContent('user-identity-token')};
+    return { token: getMetaContent('user-identity-token') };
 }
 
 
 /**
  * For use with window.fetch
+ * @param {Object} options Object to be merged with jsonHeader options.
+ * @returns {Object} The merged object.
  */
 export function jsonHeader (options) {
     options = options || {};
@@ -145,6 +154,8 @@ export function jsonHeader (options) {
 /**
  * Lets fetch include credentials in the request. This includes cookies and other possibly sensitive data.
  * Note: Never use for requests across (untrusted) domains.
+ * @param {Object} options Object to be merged with safeCredentials options.
+ * @returns {Object} The merged object.
  */
 export function safeCredentials (options) {
     options = options || {};

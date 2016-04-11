@@ -1,4 +1,4 @@
-/*globals ReactRailsUJS*/
+/*globals $, Bugsnag, ga, ReactRailsUJS*/
 import Mine from './windowize';
 Mine();
 
@@ -31,12 +31,12 @@ function init () {
             });
         }
     } catch (error) {
-        console.log('Something went wrong during initialisation', error);
+        console.error('Something went wrong during initialisation', error);
         Bugsnag.notifyException(error);
     }
 
-    if (!("ontouchstart" in document.documentElement)) {
-        document.documentElement.className += " no-touch";
+    if (!('ontouchstart' in document.documentElement)) {
+        document.documentElement.className += ' no-touch';
     }
 }
 

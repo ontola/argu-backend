@@ -1,5 +1,7 @@
 import ReactDOM from 'react-dom';
 
+const CLICK_AND_HOLD_TIMEOUT = 1000;
+
 function isTouchDevice() {
     return (('ontouchstart' in window)
     || (navigator.MaxTouchPoints > 0)
@@ -8,7 +10,7 @@ function isTouchDevice() {
 }
 
 const HyperDropdownMixin = {
-    getInitialState: function () {
+    getInitialState () {
         this.listeningToClick = true;
         this.openedByClick = false;
         return {
@@ -19,35 +21,38 @@ const HyperDropdownMixin = {
         };
     },
 
-    calculateRenderLeft: function () {
+    calculateRenderLeft () {
         this.referenceDropdownElement().style.left = '0';
         this.referenceDropdownElement().style.right = 'auto';
-        var elemRect = this.referenceDropdownElement().getBoundingClientRect();
-        var shouldRenderLeft = (elemRect.width + elemRect.left) > window.innerWidth;
-        this.setState({renderLeft: shouldRenderLeft});
+        const elemRect = this.referenceDropdownElement().getBoundingClientRect();
+        const shouldRenderLeft = (elemRect.width + elemRect.left) > window.innerWidth;
+        this.setState({ renderLeft: shouldRenderLeft });
     },
 
-    close: function () {
+    close () {
         this.listeningToClick = true;
         this.openedByClick = false;
-        this.setState({openState: false});
+        this.setState({ openState: false });
     },
 
-    componentDidMount: function () {
-        let domRef = ReactDOM.findDOMNode(this);
+    componentDidMount () {
+        const domRef = ReactDOM.findDOMNode(this);
+        /* eslint-disable */
         this.setState({
             referenceDropdownElement: domRef.getElementsByClassName('dropdown-content')[0],
-            dropdownElement: domRef.getElementsByClassName('dropdown-content')[1]});
+            dropdownElement: domRef.getElementsByClassName('dropdown-content')[1]
+        });
+        /* eslint-enable*/
         window.addEventListener('resize', this.handleResize);
         this.calculateRenderLeft();
     },
 
-    componentWillUnmount: function () {
+    componentWillUnmount () {
         window.removeEventListener('resize', this.handleResize);
         window.clearTimeout(this.mouseEnterOpenedTimeout);
     },
 
-    handleClick: function (e) {
+    handleClick (e) {
         e.preventDefault();
         e.stopPropagation();
         if (this.listeningToClick) {
@@ -62,26 +67,26 @@ const HyperDropdownMixin = {
         }
     },
 
-    handleClickOutside: function () {
+    handleClickOutside () {
         if (this.state.openState === true) {
             this.close();
         }
     },
 
-    mouseEnterTimeoutCallback: function () {
+    mouseEnterTimeoutCallback () {
         this.listeningToClick = true;
     },
 
-    onMouseEnter: function () {
+    onMouseEnter () {
         if (!isTouchDevice() && !this.state.openState) {
             this.listeningToClick = false;
             // Start timer to prevent a quick close after clicking on the trigger
-            this.mouseEnterOpenedTimeout = window.setTimeout(this.mouseEnterTimeoutCallback, 1000);
+            this.mouseEnterOpenedTimeout = window.setTimeout(this.mouseEnterTimeoutCallback, CLICK_AND_HOLD_TIMEOUT);
             this.open();
         }
     },
 
-    onMouseLeave: function () {
+    onMouseLeave () {
         if (!isTouchDevice() && this.state.openState) {
             if (!this.openedByClick) {
                 this.close();
@@ -91,16 +96,16 @@ const HyperDropdownMixin = {
         }
     },
 
-    handleResize: function () {
+    handleResize () {
         this.calculateRenderLeft();
     },
 
-    open: function () {
-        this.setState({openState: true, opened: true});
+    open () {
+        this.setState({ openState: true, opened: true });
     },
 
     // Used to calculate the width of a dropdown content menu
-    referenceDropdownElement: function () {
+    referenceDropdownElement () {
         let refDropdown;
         if (typeof this.state.referenceDropdownElement !== 'undefined') {
             refDropdown = this.state.referenceDropdownElement;

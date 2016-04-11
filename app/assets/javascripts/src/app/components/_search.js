@@ -1,9 +1,11 @@
-/*global $*/
+/*global $, Bugsnag*/
 import Alert from './Alert';
 import React from 'react';
 import Select from 'react-select';
 import { SingleValue } from './_membership';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+
+const FETCH_TIMEOUT_AMOUNT = 500;
 
 export const MotionOption = React.createClass({
     propTypes: {
@@ -22,8 +24,8 @@ export const MotionOption = React.createClass({
 
     handleMouseEnter (e) {
         this.props.mouseEnter(this.props.option, e);
-    }
-    ,
+    },
+
     handleMouseLeave (e) {
         this.props.mouseLeave(this.props.option, e);
     },
@@ -52,7 +54,7 @@ export const MotionSelect = React.createClass({
         };
     },
 
-    componentWillUnmount: function () {
+    componentWillUnmount () {
         window.clearTimeout(this.currentFetchTimeout);
     },
 
@@ -67,16 +69,16 @@ export const MotionSelect = React.createClass({
 
         window.clearTimeout(this.currentFetchTimeout);
         this.currentFetchTimeout = window.setTimeout(() => {
-            let params = {
+            const params = {
                 q: input,
                 thing: 'motion'
             };
             fetch(`/${this.props.forum}/m.json?${$.param(params)}`, safeCredentials())
                 .then(statusSuccess)
                 .then(json)
-                .then((data) => {
+                .then(data => {
                     callback(null, {
-                        options: data.data.map((motion) => {
+                        options: data.data.map(motion => {
                             return {
                                 id: motion.id.toString(),
                                 value: motion.id.toString(),
@@ -86,20 +88,19 @@ export const MotionSelect = React.createClass({
                         }),
                         complete: false
                     });
-                }).catch((e) => {
+                }).catch(e => {
                     Alert('Server error occured, please try again later', 'alert', true);
                     Bugsnag.notifyException(e);
-                    callback(null, {options: [], complete: false});
+                    callback(null, { options: [], complete: false });
                 });
-        }, 500);
+        }, FETCH_TIMEOUT_AMOUNT);
     },
 
-    filterOptions: function (results, filter, currentValues) {
+    filterOptions (results, filter, currentValues) {
         return results || currentValues;
     },
 
     render () {
-
         return (<Select
             name="question_answer[motion_id]"
             placeholder="Select motion"

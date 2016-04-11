@@ -33,7 +33,7 @@ OrderedMap.prototype.map = function (f) {
 
 
 OrderedMap.prototype.remove = function(key) {
-    var index = this._array.indexOf(key);
+    const index = this._array.indexOf(key);
     if (index === -1) {
         throw new Error('key does not exist');
     }

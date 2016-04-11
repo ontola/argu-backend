@@ -3,7 +3,6 @@ import Immutable from 'immutable';
 import {
     RProfile
 } from '../records/index';
-import popstate from '../actions/popstate';
 
 const types = {
     profile: RProfile
@@ -11,8 +10,8 @@ const types = {
 
 /**
  * Replaces all the fields' values where the key matches /(D|d)ate/ with a Date object.
- * @param object An Immutable-type object.
- * @returns {Immutable/Iterable}
+ * @param {Object} object An Immutable-type object.
+ * @returns {Immutable/Iterable} An immutable object with its date fields replaced by Date objects
  */
 function replaceDateStrings(object) {
     return object
@@ -28,9 +27,9 @@ function replaceDateStrings(object) {
 /**
  * [Reviver function]{@link https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse#Using_the_reviver_parameter}
  * to regenerate Immutable objects for the stores.
- * @param key
- * @param value
- * @returns {Immutable/Iterable}
+ * @param {*} key The key of the object
+ * @param {Iterable<any, any>} value The value of the object
+ * @returns {Immutable/Iterable} Immutable version of the provided tuple
  */
 function reviver (key, value) {
     const isIndexed = Immutable.Iterable.isIndexed(value);
@@ -47,10 +46,10 @@ function reviver (key, value) {
 }
 
 function generateInitialState (state = window.__INITIAL_STATE__) {
-    var immutableInitialState = {};
+    const immutableInitialState = {};
     Object
         .keys(state || {})
-        .forEach((value) => {
+        .forEach(value => {
             immutableInitialState[value] = Immutable.fromJS(state[value], reviver);
         });
     return immutableInitialState;

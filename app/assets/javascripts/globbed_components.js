@@ -14,13 +14,13 @@ for (var obj in components) {
     }
 }
 
-function mineForFunctions(obj) {
-    for (var k in obj)
+function mineForFunctions(subObj) {
+    for (var k in subObj)
     {
-        if (typeof obj[k] == 'object' && obj[k] !== null) {
-            mineForFunctions(obj[k]);
-        } else if (typeof obj[k] == 'function') {
-            window[k] = obj[k]
+        if (typeof subObj[k] == 'object' && subObj[k] !== null) {
+            mineForFunctions(subObj[k]);
+        } else if (typeof subObj[k] == 'function') {
+            window[k] = subObj[k]
         }
     }
 }

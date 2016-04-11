@@ -7,42 +7,43 @@ import { image } from '../lib/helpers';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 import notificationStore from '../stores/notification_store';
 import HyperDropdownMixin from '../mixins/HyperDropdownMixin';
+import { DropdownContent } from './Dropdown';
 window.notification_hyper_mixin = HyperDropdownMixin;
 
 export const ScrollLockMixin = {
-    cancelScrollEvent: function (e) {
+    cancelScrollEvent (e) {
         e.stopImmediatePropagation();
         e.preventDefault();
         e.returnValue = false;
         return false;
     },
 
-    addScrollEventListener: function (elem, handler) {
+    addScrollEventListener (elem, handler) {
         elem.addEventListener('wheel', handler, false);
     },
 
-    removeScrollEventListener: function (elem, handler) {
+    removeScrollEventListener (elem, handler) {
         elem.removeEventListener('wheel', handler, false);
     },
 
-    scrollLock: function (elem) {
+    scrollLock (elem) {
         elem = elem || ReactDOM.findDOMNode(this);
         this.scrollElem = elem;
         ScrollLockMixin.addScrollEventListener(elem, this.onScrollHandler);
     },
 
-    scrollRelease: function (elem) {
+    scrollRelease (elem) {
         elem = elem || this.scrollElem;
         ScrollLockMixin.removeScrollEventListener(elem, this.onScrollHandler);
     },
 
-    onScrollHandler: function (e) {
-        var elem = this.scrollElem;
-        var scrollTop = elem.scrollTop;
-        var scrollHeight = elem.scrollHeight;
-        var height = elem.clientHeight;
-        var wheelDelta = e.deltaY;
-        var isDeltaPositive = wheelDelta > 0;
+    onScrollHandler (e) {
+        const elem = this.scrollElem;
+        const scrollTop = elem.scrollTop;
+        const scrollHeight = elem.scrollHeight;
+        const height = elem.clientHeight;
+        const wheelDelta = e.deltaY;
+        const isDeltaPositive = wheelDelta > 0;
 
         if (isDeltaPositive && wheelDelta > scrollHeight - height - scrollTop) {
             elem.scrollTop = scrollHeight;
@@ -62,7 +63,7 @@ export const NotificationDropdown = React.createClass({
         OnClickOutside
     ],
 
-    onMouseEnterFetch: function () {
+    onMouseEnterFetch () {
         if (!this.state.opened) {
             NotificationActions.fetchNew();
         }
@@ -70,26 +71,26 @@ export const NotificationDropdown = React.createClass({
         this.onMouseEnter();
     },
 
-    render: function () {
+    render () {
         const { openState, renderLeft } = this.state;
         const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass || ''}`;
 
-        let adaptedProps = this.props;
+        const adaptedProps = this.props;
         if (typeof notificationStore.state.notifications.notifications !== 'undefined') {
             adaptedProps.sections[0].notifications = notificationStore.state.notifications.notifications;
         }
-        let dropdownContent = <DropdownContent renderLeft={renderLeft}
-                                               close={this.close}
-                                               notifications={notificationStore.state.notifications.notifications}
-                                               {...adaptedProps}
-                                               key='required' />;
+        const dropdownContent = <DropdownContent renderLeft={renderLeft}
+                                                 close={this.close}
+                                                 notifications={notificationStore.state.notifications.notifications}
+                                                 {...adaptedProps}
+                                                 key='required' />;
 
         return (<div tabIndex="1"
-                    className={dropdownClass}
-                    onMouseEnter={this.onMouseEnterFetch}
-                    onMouseLeave={this.onMouseLeave} >
+                     className={dropdownClass}
+                     onMouseEnter={this.onMouseEnterFetch}
+                     onMouseLeave={this.onMouseLeave} >
             <NotificationTrigger handleClick={this.handleClick} handleTap={this.handleTap} className='navbar-item' {...this.props} />
-            <div className="reference-elem" style={{visibility: 'hidden', overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute'}}>{dropdownContent}</div>
+            <div className="reference-elem" style={{ visibility: 'hidden', overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute' }}>{dropdownContent}</div>
             <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
                 {openState && dropdownContent}
             </ReactTransitionGroup>
@@ -99,31 +100,31 @@ export const NotificationDropdown = React.createClass({
 window.NotificationDropdown = NotificationDropdown;
 
 export const NotificationTrigger = React.createClass({
-    getInitialState: function () {
+    getInitialState () {
         return {
             unread: this.props.sections[0].unread
         };
     },
 
-    onNotificationChange: function (data) {
+    onNotificationChange (data) {
         if (typeof data.unread !== 'undefined') {
-            this.setState({unread: data.unread});
+            this.setState({ unread: data.unread });
         }
     },
 
-    componentDidMount: function () {
+    componentDidMount () {
         this.unsubscribe = notificationStore.listen(this.onNotificationChange);
     },
 
-    componentWillUnmount: function () {
+    componentWillUnmount () {
         this.unsubscribe();
     },
 
-    render: function () {
-        var label = this.state.unread > 0 ? <span className='notification-counter'>{this.state.unread}</span> : null;
+    render () {
+        const label = this.state.unread > 0 ? <span className='notification-counter'>{this.state.unread}</span> : null;
 
         return (<div className="dropdown-trigger navbar-item" rel="nofollow" onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
-            {image({fa: this.state.unread > 0 ? 'fa-bell' : 'fa-bell'})}
+            {image({ fa: this.state.unread > 0 ? 'fa-bell' : 'fa-bell' })}
             {label}
         </div>);
     }
@@ -133,15 +134,15 @@ window.NotificationTrigger = NotificationTrigger;
 export const Notifications = React.createClass({
     mixins: [ScrollLockMixin],
 
-    getInitialState: function () {
+    getInitialState () {
         return this.props;
     },
 
-    markAsRead: function () {
+    markAsRead () {
         NotificationActions.markAllAsRead();
     },
 
-    onNotificationChange: function (notifications) {
+    onNotificationChange (notifications) {
         if (typeof notifications.unread !== 'undefined') {
             this.setState({
                 unread: notifications.unread || this.state.unread,
@@ -151,39 +152,39 @@ export const Notifications = React.createClass({
         }
     },
 
-    loadMore: function () {
+    loadMore () {
         NotificationActions
             .fetchNextPage()
-            .then((data) => {
+            .then(data => {
                 if (typeof data !== 'undefined') {
-                    this.setState({loadMore: data.moreAvailable});
+                    this.setState({ loadMore: data.moreAvailable });
                 }
             });
     },
 
-    componentDidMount: function () {
+    componentDidMount () {
         NotificationActions.notificationUpdate(this.props);
         this.unsubscribe = notificationStore.listen(this.onNotificationChange);
         this.scrollLock(ReactDOM.findDOMNode(this).parentElement);
     },
 
-    componentWillUnmount: function () {
+    componentWillUnmount () {
         this.unsubscribe();
         this.scrollRelease();
     },
 
-    render: function () {
-        var notifications = this
+    render () {
+        const notifications = this
             .state
             .notifications
             .toArray()
-            .sort(function (a, b) {
+            .sort((a, b) => {
                 return new Date(b.created_at) - new Date(a.created_at);
             }).map((item, i) => {
                 return <NotificationItem key={i} read={item.read} done={this.props.done} {...item} />
             });
 
-        var loadMore = <li className="notification-btn">
+        const loadMore = <li className="notification-btn">
                 <a href='#' onMouseDownCapture={this.loadMore} data-turbolinks="false">
                     <span className="fa fa-arrow-down"></span>
                     <span className='icon-left'>{this.state.loadMore ? 'Load more...' : 'No more notifications'}</span>
@@ -205,27 +206,27 @@ export const Notifications = React.createClass({
 window.Notifications = Notifications;
 
 export const NotificationItem = React.createClass({
-    getInitialState: function () {
+    getInitialState () {
         return {};
     },
 
-    handleClick: function (e) {
+    handleClick (e) {
         e.stopPropagation();
         fetch(`/n/${this.props.id}.json`, safeCredentials({
             method: 'PUT'
         })).then(statusSuccess)
            .then(json)
-           .then((data) => {
+           .then(data => {
                NotificationActions.notificationUpdate(data.notifications);
-           }).catch((e) => {
-               throw e;
+           }).catch(err => {
+               throw err;
            });
         this.props.done();
     },
 
-    render: function () {
-        var method, remote, turbolinks,
-            className = [this.props.type, this.props.read ? 'read' : 'unread'].join(' ');
+    render () {
+        let method, remote, turbolinks;
+        const className = [this.props.type, this.props.read ? 'read' : 'unread'].join(' ');
         if (this.props.data) {
             method = this.props.data.method;
             remote = this.props.data.remote;

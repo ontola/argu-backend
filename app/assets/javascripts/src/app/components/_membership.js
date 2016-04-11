@@ -1,7 +1,10 @@
+/*global Bugsnag*/
 import Alert from './Alert';
 import React from 'react';
 import Select from 'react-select';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
+
+const FETCH_TIMEOUT_AMOUNT = 500;
 
 export const ProfileOption = React.createClass({
     propTypes: {
@@ -20,8 +23,8 @@ export const ProfileOption = React.createClass({
 
     handleMouseEnter (e) {
         this.props.mouseEnter(this.props.option, e);
-    }
-    ,
+    },
+
     handleMouseLeave (e) {
         this.props.mouseLeave(this.props.option, e);
     },
@@ -48,7 +51,7 @@ export const SingleValue = React.createClass({
         value: React.PropTypes.object
     },
     render () {
-        var obj = this.props.value;
+        const obj = this.props.value;
 
         const item = obj ? (
             <div>
@@ -69,12 +72,12 @@ export const NewMembership = React.createClass({
     getInitialState () {
         this.currentFetchTimer = 0;
         return {
-            display_name: this.props.display_name,
+            displayName: this.props.display_name,
             image: this.props.image
         };
     },
 
-    componentWillUnmount: function () {
+    componentWillUnmount () {
         window.clearTimeout(this.currentFetchTimeout);
     },
 
@@ -98,9 +101,9 @@ export const NewMembership = React.createClass({
                 })
             })).then(statusSuccess)
                .then(json)
-               .then((data) => {
+               .then(data => {
                    callback(null, {
-                       options: data.profiles.map((profile) => {
+                       options: data.profiles.map(profile => {
                            return {
                                id: profile.id.toString(),
                                value: profile.shortname,
@@ -110,15 +113,15 @@ export const NewMembership = React.createClass({
                        }),
                        complete: false
                    });
-               }).catch((e) => {
+               }).catch(e => {
                    Alert('Server error occured, please try again later', 'alert', true);
                    Bugsnag.notifyException(e);
                    callback();
                });
-        }, 500);
+        }, FETCH_TIMEOUT_AMOUNT);
     },
 
-    filterOptions: function (results, filter, currentValues) {
+    filterOptions (results, filter, currentValues) {
         return results || currentValues;
     },
 

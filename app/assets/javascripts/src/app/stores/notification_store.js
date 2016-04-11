@@ -3,13 +3,14 @@ import { userIdentityToken, statusSuccess, json, safeCredentials } from '../lib/
 import Reflux from 'reflux';
 import { OrderedMap } from 'immutable';
 
+const NOTIFICATION_PAGE_LENGTH = 10;
 
 window.NotificationActions = Reflux.createActions({
     'notificationUpdate': {},
-    'markAllAsRead': {asyncResult: true},
-    'fetchNextPage': {asyncResult: true},
-    'checkForNew': {asyncResult: true},
-    'fetchNew': {asyncResult: true}
+    'markAllAsRead': { asyncResult: true },
+    'fetchNextPage': { asyncResult: true },
+    'checkForNew': { asyncResult: true },
+    'fetchNew': { asyncResult: true }
 });
 
 const notificationStore = Reflux.createStore({
@@ -23,7 +24,7 @@ const notificationStore = Reflux.createStore({
         }
     },
 
-    init: function() {
+    init () {
         // Register statusUpdate action
         this.listenTo(NotificationActions.notificationUpdate, this.output);
         this.listenTo(NotificationActions.markAllAsRead, this.onMarkAllAsRead);
@@ -41,16 +42,16 @@ const notificationStore = Reflux.createStore({
             });
     },
 
-    fetchNextPage: function () {
+    fetchNextPage () {
         return fetch(`/n.json?from_time=${this.state.notifications.oldestNotification.toISOString()}`, safeCredentials())
-            .then(function (response) {
+            .then(response => {
                 if (response.status === 200) {
-                    response.json().then(function (data) {
+                    response.json().then(data => {
                         NotificationActions.notificationUpdate(data.notifications);
                         NotificationActions
                             .fetchNextPage
                             .completed({
-                                moreAvailable: data.notifications.notifications.length === 10
+                                moreAvailable: data.notifications.notifications.length === NOTIFICATION_PAGE_LENGTH
                             });
                     });
                 } else if (response.status === 201) {
@@ -63,24 +64,27 @@ const notificationStore = Reflux.createStore({
             }).catch(NotificationActions.fetchNextPage.failed);
     },
 
-    checkForNew: function () {
-        return fetch('//meta.argu.co/n', userIdentityToken({method: 'post', headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }}))
+    checkForNew () {
+        return fetch('//meta.argu.co/n', userIdentityToken({
+            method: 'post',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }))
             .then(statusSuccess)
             .then(json)
-            .then((response) => {
+            .then(response => {
                 return NotificationActions.checkForNew.completed(parseInt(response.notificationCount) > this.state.notifications.notificationCount ? response.notificationCount : false);
             })
     },
 
-    fetchNew: function (notificationCount) {
-        let from = this.state.notifications.lastNotification.toISOString();
+    fetchNew (notificationCount) {
+        const from = this.state.notifications.lastNotification.toISOString();
         return fetch(`/n.json?lastNotification=${from}`, safeCredentials())
             .then(statusSuccess)
             .then(json)
-            .then(function (data) {
+            .then(data => {
                 if (typeof data !== 'undefined') {
                     data.notifications.notificationCount = notificationCount;
                     NotificationActions.notificationUpdate(data.notifications);
@@ -89,18 +93,18 @@ const notificationStore = Reflux.createStore({
             }).catch(NotificationActions.fetchNew.failed);
     },
 
-    onMarkAllAsRead: function () {
+    onMarkAllAsRead () {
         fetch('/n/read.json', safeCredentials({
             method: 'PATCH'
         })).then(statusSuccess)
            .then(json)
-           .then(function (data) {
+           .then(data => {
                NotificationActions.notificationUpdate(data.notifications);
            }).catch(NotificationActions.markAllAsRead.failed);
     },
 
     // Callback
-    output: function(notifications) {
+    output (notifications) {
         if (notifications) {
             if (notifications.lastNotification) {
                 if (this.state.notifications.lastNotification && Date.parse(notifications.lastNotification) > this.state.notifications.lastNotification && notifications.notifications[0].read === false) {
@@ -111,10 +115,10 @@ const notificationStore = Reflux.createStore({
                     .notifications
                     .notifications
                     .withMutations(mutMap => {
-                        notifications.notifications.map((n) => {
+                        notifications.notifications.map(n => {
                             mutMap.set(n.id, n);
                         });
-                    }).sort(function (a, b) {
+                    }).sort((a, b) => {
                         return new Date(b.created_at) - new Date(a.created_at);
                     });
                 this.setLastNotification(notifications.lastNotification);
@@ -122,7 +126,7 @@ const notificationStore = Reflux.createStore({
                 this.state.notifications.oldestNotification = new Date(this.state
                     .notifications
                     .notifications
-                    .sort(function (a, b) {
+                    .sort((a, b) => {
                         return new Date(b.created_at) - new Date(a.created_at);
                     })
                     .last()
@@ -134,7 +138,7 @@ const notificationStore = Reflux.createStore({
         }
     },
 
-    setLastNotification: function (date) {
+    setLastNotification (date) {
         date = new Date(date);
         if (date > this.state.notifications.lastNotification) {
             this.state.notifications.lastNotification = date;
