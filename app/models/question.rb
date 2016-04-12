@@ -29,7 +29,7 @@ class Question < ActiveRecord::Base
 
   def self.published
     joins('LEFT OUTER JOIN projects ON projects.id = project_id')
-      .where('published_at IS NOT NULL OR project_id IS NULL')
+      .where('is_published = true OR project_id IS NULL')
   end
 
   # Might not be a good idea

@@ -46,7 +46,7 @@ class Motion < ActiveRecord::Base
 
   def self.published
     joins('LEFT OUTER JOIN projects ON projects.id = project_id')
-      .where('published_at <= ? OR project_id IS NULL', DateTime.current)
+      .where('is_published = true OR project_id IS NULL')
   end
 
   # @param [Profile] profile What profile's votes should be included

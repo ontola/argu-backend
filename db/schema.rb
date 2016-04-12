@@ -126,22 +126,22 @@ ActiveRecord::Schema.define(version: 20160526142530) do
   add_index "banners", ["forum_id"], name: "index_banners_on_forum_id", using: :btree
 
   create_table "blog_posts", force: :cascade do |t|
-    t.integer  "forum_id",                       null: false
+    t.integer  "forum_id",                           null: false
     t.integer  "blog_postable_id"
     t.string   "blog_postable_type"
-    t.integer  "creator_id",                     null: false
+    t.integer  "creator_id",                         null: false
     t.integer  "publisher_id"
-    t.integer  "state",              default: 0, null: false
-    t.string   "title",                          null: false
+    t.integer  "state",              default: 0,     null: false
+    t.string   "title",                              null: false
     t.text     "content"
-    t.integer  "comments_count",     default: 0, null: false
-    t.datetime "published_at"
+    t.integer  "comments_count",     default: 0,     null: false
     t.datetime "trashed_at"
-    t.datetime "created_at",                     null: false
-    t.datetime "updated_at",                     null: false
+    t.datetime "created_at",                         null: false
+    t.datetime "updated_at",                         null: false
+    t.boolean  "is_published",       default: false, null: false
   end
 
-  add_index "blog_posts", ["forum_id", "published_at"], name: "index_blog_posts_on_forum_id_and_published_at", using: :btree
+  add_index "blog_posts", ["forum_id", "is_published"], name: "index_blog_posts_on_forum_id_and_is_published", using: :btree
   add_index "blog_posts", ["forum_id", "trashed_at"], name: "index_blog_posts_on_forum_id_and_trashed_at", using: :btree
   add_index "blog_posts", ["id", "forum_id"], name: "index_blog_posts_on_id_and_forum_id", using: :btree
 
@@ -517,28 +517,29 @@ ActiveRecord::Schema.define(version: 20160526142530) do
   add_index "profiles_roles", ["profile_id", "role_id"], name: "index_profiles_roles_on_profile_id_and_role_id", using: :btree
 
   create_table "projects", force: :cascade do |t|
-    t.integer  "forum_id",                             null: false
-    t.integer  "creator_id",                           null: false
+    t.integer  "forum_id",                                null: false
+    t.integer  "creator_id",                              null: false
     t.integer  "publisher_id"
     t.integer  "group_id"
-    t.integer  "state",                   default: 0,  null: false
-    t.string   "title",                                null: false
+    t.integer  "state",                   default: 0,     null: false
+    t.string   "title",                                   null: false
     t.text     "content"
     t.datetime "start_date"
     t.string   "email"
     t.datetime "end_date"
     t.datetime "achieved_end_date"
-    t.integer  "questions_count",         default: 0,  null: false
-    t.integer  "motions_count",           default: 0,  null: false
-    t.integer  "phases_count",            default: 0,  null: false
-    t.datetime "published_at"
+    t.integer  "questions_count",         default: 0,     null: false
+    t.integer  "motions_count",           default: 0,     null: false
+    t.integer  "phases_count",            default: 0,     null: false
     t.datetime "trashed_at"
-    t.datetime "created_at",                           null: false
-    t.datetime "updated_at",                           null: false
+    t.datetime "created_at",                              null: false
+    t.datetime "updated_at",                              null: false
     t.string   "cover_photo",             default: ""
     t.string   "cover_photo_attribution", default: ""
+    t.boolean  "is_published",            default: false, null: false
   end
 
+  add_index "projects", ["forum_id", "is_published"], name: "index_projects_on_forum_id_and_is_published", using: :btree
   add_index "projects", ["forum_id", "trashed_at"], name: "index_projects_on_forum_id_and_trashed_at", using: :btree
   add_index "projects", ["forum_id"], name: "index_projects_on_forum_id", using: :btree
 

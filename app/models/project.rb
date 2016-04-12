@@ -44,7 +44,7 @@ class Project < ActiveRecord::Base
   end
 
   def latest_blog_post
-    blog_posts.order(published_at: :desc).first
+    blog_posts.order(created_at: :desc).first
   end
 
   def update_start_date_of_first_phase

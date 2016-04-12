@@ -7,7 +7,7 @@ module BlogPostsHelper
   end
 
   def blog_post_dateline(blog_post)
-    if blog_post.published_at
+    if blog_post.is_published?
       l(blog_post.published_at, format: :dateline)
     else
       t('blog_posts.unpublished')

@@ -25,21 +25,6 @@ class Phase < ActiveRecord::Base
   parentable :project
   counter_culture :project
 
-  def blog_posts
-    return [] if start_date.nil?
-    if end_date.present?
-      project
-        .blog_posts
-        .where(published_at: start_date..end_date)
-        .order(published_at: :asc)
-    else
-      project
-          .blog_posts
-          .where('published_at > ?', start_date)
-          .order(published_at: :asc)
-    end
-  end
-
   def end_date_after_start_date
     if start_date.present? && end_date.present? && end_date < start_date
       errors.add(:end_date, "can't be before start date")
@@ -56,5 +41,22 @@ class Phase < ActiveRecord::Base
 
   def update_date_of_project_or_next_phase
     next_phase.present? ? next_phase.update!(start_date: end_date) : project.update!(end_date: end_date) if end_date_changed?
+  end
+
+  def blog_posts
+    return [] if start_date.nil?
+    if end_date.present?
+      project
+        .blog_posts
+        .where(created_at: start_date..end_date)
+        .where(is_published: true)
+        .order(created_at: :asc)
+    else
+      project
+        .blog_posts
+        .where('created_at > ?', start_date)
+        .where(is_published: true)
+        .order(created_at: :asc)
+    end
   end
 end
