@@ -7,6 +7,12 @@ module Argu
       ::Redis.new(host: host, port: port)
     end
 
+    def self.exists(key, redis = redis_instance)
+      redis.exists(key)
+    rescue ::Redis::CannotConnectError => e
+      rescue_redis_connection_error(e)
+    end
+
     def self.get(key, redis = redis_instance)
       redis.get(key)
     rescue ::Redis::CannotConnectError => e
