@@ -50,7 +50,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest should not post create' do
-    general_create
+    general_create_draft
   end
 
   test 'guest should not get edit' do
@@ -93,7 +93,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
 
   test 'user should not post create' do
     sign_in user
-    general_create 403
+    general_create_draft 403
     assert_not_a_member
   end
 
@@ -144,7 +144,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
 
   test 'member should not post create' do
     sign_in member
-    general_create
+    general_create_draft
   end
 
   test 'member should not get edit' do
@@ -255,16 +255,28 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     general_new(200)
   end
 
-  test 'moderator should post create project' do
+  test 'moderator should post create project draft' do
     netdem_rules
     sign_in netdem_member
     # Test post create
     # Test that the proper stepup is generated
-    general_create 302,
-                   true,
-                   [['Project.count', 1],
-                    ['Stepup.count', 1],
-                    ['Phase.count', 1]]
+    general_create_draft 302,
+                         [['Project.count', 1],
+                          ['Project.published.count', 0],
+                          ['Stepup.count', 1],
+                          ['Phase.count', 1]]
+  end
+
+  test 'moderator should post create project publish' do
+    netdem_rules
+    sign_in netdem_member
+    # Test post create
+    # Test that the proper stepup is generated
+    general_create_publish 302,
+                           [['Project.count', 1],
+                            ['Project.published.count', 1],
+                            ['Stepup.count', 1],
+                            ['Phase.count', 1]]
   end
 
   test 'moderator should not cause leaking access' do
@@ -272,7 +284,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     sign_in discussion_member
 
     general_new
-    general_create
+    general_create_draft
   end
 
   ####################################
@@ -323,13 +335,22 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     general_show 200, unpublished
   end
 
-  test 'manager should post create' do
+  test 'manager should post create draft' do
     sign_in manager
-    general_create 302,
-                   true,
-                   [['Project.count', 1],
-                    ['Stepup.count', 1],
-                    ['Phase.count', 1]]
+    general_create_draft 302,
+                         [['Project.count', 1],
+                          ['Project.published.count', 0],
+                          ['Stepup.count', 1],
+                          ['Phase.count', 1]]
+  end
+
+  test 'manager should post create publish' do
+    sign_in manager
+    general_create_publish 302,
+                           [['Project.count', 1],
+                            ['Project.published.count', 1],
+                            ['Stepup.count', 1],
+                            ['Phase.count', 1]]
   end
 
   test 'manager should get edit' do
@@ -370,12 +391,23 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     general_show 200, unpublished
   end
 
-  test 'owner should post create' do
+  test 'owner should post create draft' do
     sign_in owner
-    general_create 302,
-                   [['Project.count', 1],
-                    ['Stepup.count', 1],
-                    ['Phase.count', 1]]
+    general_create_draft 302,
+                         [['Project.count', 1],
+                          ['Project.published.count', 0],
+                          ['Stepup.count', 1],
+                          ['Phase.count', 1]]
+  end
+
+
+  test 'owner should post create publish ' do
+    sign_in owner
+    general_create_publish 302,
+                           [['Project.count', 1],
+                            ['Project.published.count', 1],
+                            ['Stepup.count', 1],
+                            ['Phase.count', 1]]
   end
 
   test 'owner should get edit' do
@@ -418,13 +450,22 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     general_show 200, unpublished
   end
 
-  test 'staff should post create' do
+  test 'staff should post create draft' do
     sign_in staff
-    general_create 302,
-                   true,
-                   [['Project.count', 1],
-                    ['Stepup.count', 1],
-                    ['Phase.count', 1]]
+    general_create_draft 302,
+                         [['Project.count', 1],
+                          ['Project.published.count', 0],
+                          ['Stepup.count', 1],
+                          ['Phase.count', 1]]
+  end
+
+  test 'staff should post create publish' do
+    sign_in staff
+    general_create_publish 302,
+                           [['Project.count', 1],
+                            ['Project.published.count', 1],
+                            ['Stepup.count', 1],
+                            ['Phase.count', 1]]
   end
 
   test 'staff should get edit' do
@@ -461,13 +502,29 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_response response
   end
 
-  def general_create(response = 302, differences = [['Project.count', 0],
-                                                    ['Stepup.count', 0],
-                                                    ['Phase.count', 0],
-                                                    ['Activity.count', 0]])
+  def general_create_draft(response = 302, differences = [['Project.count', 0],
+                                                          ['Stepup.count', 0],
+                                                          ['Phase.count', 0],
+                                                          ['Activity.count', 0]])
     assert_differences(differences) do
       post forum_projects_path(freetown),
            project: attributes_for(:project,
+                                   publish_type: :draft,
+                                   stepups_attributes: {'12321' => {moderator: moderator.url}},
+                                   phases_attributes: {'12321' => attributes_for(:phase)})
+    end
+
+    assert_response response
+  end
+
+  def general_create_publish(response = 302, differences = [['Project.count', 0],
+                                                          ['Stepup.count', 0],
+                                                          ['Phase.count', 0],
+                                                          ['Activity.count', 0]])
+    assert_differences(differences) do
+      post forum_projects_path(freetown),
+           project: attributes_for(:project,
+                                   publish_type: :direct,
                                    stepups_attributes: {'12321' => {moderator: moderator.url}},
                                    phases_attributes: {'12321' => attributes_for(:phase)})
     end

@@ -41,11 +41,21 @@ class BlogPostsControllerTest < ActionController::TestCase
     assert_response response
   end
 
-  def general_create(response = 302, differences = [['BlogPost.count', 0], ['Activity.count', 0]])
+  def general_create_draft(response = 302, differences = [['BlogPost.count', 0], ['Activity.count', 0]])
     assert_differences(differences) do
       post :create,
            project_id: project,
-           blog_post: attributes_for(:blog_post)
+           blog_post: attributes_for(:blog_post, publish_type: :draft)
+    end
+
+    assert_response response
+  end
+
+  def general_create_publish(response = 302, differences = [['BlogPost.count', 0], ['Activity.count', 0]])
+    assert_differences(differences) do
+      post :create,
+           project_id: project,
+           blog_post: attributes_for(:blog_post, publish_type: :direct)
     end
 
     assert_response response
@@ -118,7 +128,7 @@ class BlogPostsControllerTest < ActionController::TestCase
   end
 
   test 'guest should not post create' do
-    general_create
+    general_create_draft
   end
 
   test 'guest should not get edit' do
@@ -157,7 +167,7 @@ class BlogPostsControllerTest < ActionController::TestCase
 
   test 'user should not post create' do
     sign_in user
-    general_create 403
+    general_create_draft 403
     assert_not_a_member
   end
 
@@ -202,7 +212,7 @@ class BlogPostsControllerTest < ActionController::TestCase
 
   test 'member should not post create' do
     sign_in member
-    general_create
+    general_create_draft
   end
 
   test 'member should not get edit' do
@@ -239,10 +249,18 @@ class BlogPostsControllerTest < ActionController::TestCase
     general_show
   end
 
-  test 'owner should post create' do
+  test 'owner should post create draft' do
     sign_in owner
-    general_create 302,
-                   [['BlogPost.count', 1]]
+    general_create_draft 302,
+                         [['BlogPost.count', 1],
+                          ['BlogPost.published.count', 0]]
+  end
+
+  test 'owner should post create publish' do
+    sign_in owner
+    general_create_publish 302,
+                           [['BlogPost.count', 1],
+                            ['BlogPost.published.count', 1]]
   end
 
   test 'owner should get edit' do
@@ -279,10 +297,18 @@ class BlogPostsControllerTest < ActionController::TestCase
     general_show 200
   end
 
-  test 'manager should post create' do
+  test 'manager should post create draft' do
     sign_in manager
-    general_create 302,
-                   [['BlogPost.count', 1]]
+    general_create_draft 302,
+                         [['BlogPost.count', 1],
+                          ['BlogPost.published.count', 0]]
+  end
+
+  test 'manager should post create publish' do
+    sign_in manager
+    general_create_publish 302,
+                           [['BlogPost.count', 1],
+                            ['BlogPost.published.count', 1]]
   end
 
   test 'manager should get edit' do
@@ -320,10 +346,18 @@ class BlogPostsControllerTest < ActionController::TestCase
     general_show 200
   end
 
-  test 'staff should post create' do
+  test 'staff should post create draft' do
     sign_in staff
-    general_create 302,
-                   [['BlogPost.count', 1]]
+    general_create_draft 302,
+                         [['BlogPost.count', 1],
+                          ['BlogPost.published.count', 0]]
+  end
+
+  test 'staff should post create publish' do
+    sign_in staff
+    general_create_publish 302,
+                           [['BlogPost.count', 1],
+                            ['BlogPost.published.count', 1]]
   end
 
   test 'staff should get edit' do
