@@ -26,14 +26,23 @@ module ActivePublishable
     end
 
     attr_accessor :unpublish
+    has_many :publications,
+             as: :publishable,
+             inverse_of: :publishable,
+             dependent: :destroy
+    has_one :argu_publication, -> {where(channel: 'argu')}, class_name: 'Publication', as: :publishable
   end
 
   def is_draft?
-    self[:published_at].blank?
+    publications.empty?
   end
 
   def is_published?
-    self[:published_at].present?
+    persisted? && is_published
+  end
+
+  def published_at
+    argu_publication.try(:published_at)
   end
 
   module ClassMethods

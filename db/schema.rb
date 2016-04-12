@@ -542,6 +542,14 @@ ActiveRecord::Schema.define(version: 20160526142530) do
   add_index "projects", ["forum_id", "trashed_at"], name: "index_projects_on_forum_id_and_trashed_at", using: :btree
   add_index "projects", ["forum_id"], name: "index_projects_on_forum_id", using: :btree
 
+  create_table "publications", force: :cascade do |t|
+    t.string   "job_id"
+    t.datetime "published_at"
+    t.integer  "publishable_id"
+    t.string   "publishable_type"
+    t.string   "channel"
+  end
+
   create_table "question_answers", force: :cascade do |t|
     t.integer  "question_id"
     t.integer  "motion_id"
