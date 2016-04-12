@@ -49,8 +49,14 @@ class Motion < ActiveRecord::Base
       .where('published_at IS NOT NULL OR project_id IS NULL')
   end
 
-  scope :votes_for_profile, ->(profile) do
-      where(votes: {voter_type: 'Profile', voter_id: profile.try(:id)})
+  # @param [Profile] profile What profile's votes should be included
+  def self.votes_for_profile(profile)
+    join = "LEFT JOIN votes ON votes.voteable_type = 'Motion'"
+    join << " AND votes.voteable_id = motions.id AND votes.voter_type = 'Profile'"
+    join << " AND votes.voter_id = #{profile.id}"
+    joins(join)
+        .references(:votes)
+        .select('motions.*,votes.*')
   end
 
   def assert_tenant

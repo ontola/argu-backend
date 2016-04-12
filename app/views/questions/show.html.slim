@@ -31,7 +31,7 @@
           ul= react_component 'ShareDropdown', share_items(question), {prerender: true}
 .col-1
   .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
-=render_columns({'' => {collection: policy_scope(@motions)}},
+=render_columns({'' => {collection: @motions}},
                 header: motions_type(question),
                 header_text: 'test',
                 collection_model: Motion,

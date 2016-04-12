@@ -362,9 +362,10 @@
     width: calc(33.3% - 1em);
     margin: 0 .5em;
   }
-  &[data-voted] a {
+
+  &[data-voted=true] a {
     opacity: .4;
-    &[data-voted-on]{
+    &[data-voted-on=true]{
       opacity: 1;
     }
   }
@@ -374,19 +375,6 @@
       font-size: 1.2em;
       vertical-align: center;
       width: auto;
-    }
-    @include bp-medium{
-      span{
-      display: block
-      }
-    }
-    @include bp-small{
-      span{
-        display: none;
-      }
-      span.fa{
-        display: initial;
-      }
     }
   }
   .btn-pro {
@@ -404,6 +392,10 @@
     @include button($color: $con);
 
     margin-right: 0;
+  }
+
+  .vote-text {
+    margin-left: .4em;
   }
 }
 
@@ -463,6 +455,9 @@
     border-bottom-right-radius: 999px;
     padding-right: 1.2em;
   }
+}
+
+.btns-opinion, .btns-opinion--subtle {
 
   .vote-count {
     margin-left: .4em;
@@ -516,6 +511,7 @@
     }
   }
 }
+
 
 .btns-floating {
   display: block;

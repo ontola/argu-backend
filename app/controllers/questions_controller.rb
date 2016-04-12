@@ -8,10 +8,7 @@ class QuestionsController < AuthorizedController
                 .order(votes_pro_count: :desc)
 
     if current_user.present?
-      scope = scope
-                  .includes(:votes)
-                  .votes_for_profile(current_profile)
-                  .references(:votes)
+      @user_votes = Vote.where(voteable: scope, voter: current_profile).eager_load!
     end
 
     @motions = policy_scope(scope)

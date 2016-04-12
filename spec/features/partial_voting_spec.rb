@@ -47,7 +47,7 @@ RSpec.feature 'Voting', type: :feature do
 
     click_button 'Disagree'
 
-    expect(page).to have_current_path(question_path(question))
+    expect(page).to have_current_path(motion_path(subject))
     expect(page).to have_css('.btn-con[data-voted-on=true]')
   end
 

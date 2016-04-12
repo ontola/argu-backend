@@ -8,7 +8,7 @@
     =contextual_link_to motion_path(model)
       h3.motion-t[itemprop="headline"]= model.title
     =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
-    .motion-votes= react_component 'VoteButtons', motion_vote_props(current_user, model, model.votes.loaded? && model.votes.first, buttons_type: 'subtle'), prerender: false
+    .motion-votes= react_component 'VoteButtons', motion_vote_props(current_user, model, user_vote_for(model), buttons_type: 'subtle'), prerender_options
     - if model.arguments.present?
       ul.box-list.box-list--arguments.box-list--icons
         - model.top_arguments_pro_light.each do |argument|
