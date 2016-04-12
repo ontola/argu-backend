@@ -31,6 +31,11 @@ nl:
   draft: "Concept"
   drafts: "Concepten"
   draft_unpublished: "Concept versie, nog niet gepubliceerd."
+  publication_scheduled: "Publicatie staat gepland op %{date}."
+  publish_select:
+    direct: 'Publiceer direct'
+    draft: 'Bewaar als concept'
+    schedule: 'Plan publicatie op:'
   publish: "Publiceer"
   published: "Gepubliceerd"
   publish_confirmation: "Weet je zeker dat je dit object wilt publiceren?"

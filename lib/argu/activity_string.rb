@@ -17,7 +17,7 @@ class ActivityString
                      type: type_string,
                      subject: subject_string,
                      parent: parent_string)
-    I18n.t("activities.#{@activity.object.pluralize}.#{@activity.action}",
+    I18n.t("activities.#{@activity.trackable_type.tableize}.#{@activity.action}",
            owner: owner_string,
            type: type_string,
            subject: subject_string,
@@ -57,7 +57,7 @@ class ActivityString
   # @return [String, nil] Translation of pro, neutral or con
   def side_string
     return nil unless @activity.trackable.is_pro_con?
-    I18n.t("activities.#{@activity.object.pluralize}.#{@activity.trackable.key}",
+    I18n.t("activities.#{@activity.trackable_type.tableize}.#{@activity.trackable.key}",
            default: I18n.t(@activity.trackable.key))
   end
 
@@ -65,7 +65,7 @@ class ActivityString
   def subject_string
     string =
       if @activity.object == 'comment'
-        I18n.t("#{@activity.object.pluralize}.type").downcase
+        I18n.t("#{@activity.trackable_type.tableize}.type").downcase
       else
         @activity.trackable.try(:display_name)
       end
@@ -78,7 +78,7 @@ class ActivityString
       if @activity.object == 'vote'
         'stem'
       else
-        I18n.t("#{@activity.object.pluralize}.type").downcase
+        I18n.t("#{@activity.trackable_type.tableize}.type").downcase
       end
     string.to_s
   end

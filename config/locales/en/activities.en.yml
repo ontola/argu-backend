@@ -8,22 +8,26 @@ en:
       neutral: "is neutral about"
     default:
       create: "%{owner} posted a %{type} in %{parent}"
+      publish: "%{owner} posted a %{type} in %{parent}"
       destroy: "%{owner} deleted %{subject}"
       trash: "%{owner} trashed %{subject}"
       untrash: "%{owner} untrashed %{subject}"
       update: "%{owner} updated %{subject}"
     arguments:
       create: "%{owner} posted a %{type} %{side} %{parent}"
+      publish: "%{owner} posted a %{type} %{side} %{parent}"
       pro: "in favour of"
       con: "against"
     comments:
       create: "%{owner} replied to %{parent}"
+      publish: "%{owner} replied to %{parent}"
       destroy: "%{owner} deleted a %{type} for %{parent}"
       trash: "%{owner} trashed a %{subject} for %{parent}"
       untrash: "%{owner} untrashed a %{subject} for %{parent}"
       update: "%{owner} updated a %{subject} for %{parent}"
     group_responses:
       create: "%{owner} posted a %{type} as a %{group_singular} in %{parent}"
+      publish: "%{owner} posted a %{type} as a %{group_singular} in %{parent}"
     ui:
       load_more: "Load more"
       no_more_artivities: "No more activities"

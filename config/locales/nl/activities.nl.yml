@@ -8,22 +8,26 @@ nl:
       neutral: "heeft nog geen mening over"
     default:
       create: "%{owner} heeft een %{type} geplaatst in %{parent}"
+      publish: "%{owner} heeft een %{type} geplaatst in %{parent}"
       destroy: "%{owner} heeft %{subject} permanent verwijderd"
       trash: "%{owner} heeft %{subject} verwijderd"
       untrash: "%{owner} heeft %{subject} ontverwijderd"
       update: "%{owner} heeft %{subject} geupdate"
     arguments:
       create: "%{owner} heeft een %{type} geplaatst %{side} %{parent}"
+      publish: "%{owner} heeft een %{type} geplaatst %{side} %{parent}"
       pro: "vóór"
       con: "tegen"
     comments:
       create: "%{owner} heeft gereageerd op %{parent}"
+      publish: "%{owner} heeft gereageerd op %{parent}"
       destroy: "%{owner} heeft een %{type} op %{parent} permanent verwijderd"
       trash: "%{owner} heeft een %{subject} op %{parent} verwijderd"
       untrash: "%{owner} heeft een %{subject} op %{parent} ontverwijderd"
       update: "%{owner} heeft een %{subject} op %{parent} geupdate"
     group_responses:
       create: "%{owner} heeft als %{group_singular} gereageerd op %{parent}"
+      publish: "%{owner} heeft als %{group_singular} gereageerd op %{parent}"
     ui:
       load_more: "Laad meer"
       no_more_artivities: "Geen oudere activiteiten"

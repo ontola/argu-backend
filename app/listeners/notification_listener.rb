@@ -1,6 +1,11 @@
 class NotificationListener
   def create_activity_successful(activity)
-    create_notifications_for(activity, collect_followers_for(activity)) if activity.action == 'create'
+    case activity.object
+    when 'blogpost', 'project'
+      create_notifications_for(activity, collect_followers_for(activity)) if activity.action == 'publish'
+    else
+      create_notifications_for(activity, collect_followers_for(activity)) if activity.action == 'create'
+    end
   end
 
   private
