@@ -146,7 +146,8 @@ class BlogPostsController < AuthorizedController
 
   def resource_new_params
     h = super.merge(
-      published_at: Time.current,
+      publish_type: :direct,
+      publish_at: Time.current,
       blog_postable: get_parent_resource)
     h.delete(parent_resource_param)
     h

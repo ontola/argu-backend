@@ -43,18 +43,18 @@ class ApplicationService
   end
 
   def assign_attributes
-    publishable_attributes if resource.respond_to?(:published_at)
     resource.assign_attributes(@attributes)
+    if @attributes.include? :publish_type
+      resource.publish_at = DateTime.current if resource.publish_type == 'direct'
+      resource.publish_at = nil if resource.publish_type == 'draft'
+    end
   end
 
-  def publishable_attributes
-    if @attributes.delete(:publish).to_s == 'true'
-      @attributes[:published_at] = DateTime.current
-      @actions[:published] = true
-    end
-    if @attributes.delete(:unpublish).to_s == 'true'
-      @attributes[:published_at] = nil
-      @actions[:unpublished] = true
+  def create_publication
+    if resource.publish_at.present?
+      publication = resource.build_argu_publication(published_at: resource.publish_at)
+      publication.execute_or_schedule
+      publication.save
     end
   end
 

@@ -9,12 +9,15 @@ module ActivePublishable
       where('is_published = false')
     end
 
-    attr_accessor :unpublish
     has_many :publications,
              as: :publishable,
              inverse_of: :publishable,
              dependent: :destroy
     has_one :argu_publication, -> {where(channel: 'argu')}, class_name: 'Publication', as: :publishable
+
+    attr_accessor :publish_at, :publish_type
+
+    enum publish_type: {direct: 0, draft: 1, schedule: 2}
   end
 
   def is_draft?

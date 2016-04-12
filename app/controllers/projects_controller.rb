@@ -157,6 +157,12 @@ class ProjectsController < AuthorizedController
     super.merge(start_date: Time.current)
   end
 
+  def resource_new_params
+    super.merge(
+        publish_type: :direct,
+        publish_at: Time.current)
+  end
+
   def trash_service
     @trash_service ||= TrashProject.new(resource_by_id)
   end

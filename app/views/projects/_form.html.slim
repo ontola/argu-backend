@@ -48,12 +48,7 @@
               =link_to_add_association f, :phases, class: 'btn-subtle' do
                 span.fa.fa-plus
                 span.icon-left=t('projects.phases.add')
-          - if !project.new_record? && policy(project).trash?
-            =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
-              - if policy(project).trash?
-                =f.input :trashed_at, as: :reverse_boolean
-            - if project.is_published? && policy(project).destroy?
-              =f.input :unpublish, as: :reverse_boolean, checked_value: 'true', unchecked_value: 'false'
+          =render partial: 'application/form_publish', locals: {f: f, resource: project}
         section.section--footer
           - if project.new_record?
             =render partial: 'profiles/profile_current'

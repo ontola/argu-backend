@@ -18,6 +18,9 @@ class BlogPost < ActiveRecord::Base
   belongs_to :blog_postable,
              polymorphic: true,
              inverse_of: :blog_posts
+  belongs_to :project,
+             class_name: 'Project',
+             foreign_key: :blog_postable_id
 
   has_many :activities, as: :trackable
 
