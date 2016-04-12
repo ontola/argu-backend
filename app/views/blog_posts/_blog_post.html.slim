@@ -10,3 +10,5 @@
       - if blog_post.forum.visibility
         li.share-menu
           ul= react_component 'ShareDropdown', share_items(blog_post), {prerender: true}
+- unless blog_post.is_published?
+  = render partial: 'application/publish', locals: {resource: blog_post}

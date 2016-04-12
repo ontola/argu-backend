@@ -1,0 +1,11 @@
+.box
+  section.section-draft
+    p
+      -if resource.argu_publication.present?
+        =>t('publication_scheduled', date: l(resource.argu_publication.published_at, format: :dateline))
+      -else
+        =>t('draft_unpublished')
+      =link_to t('edit'), polymorphic_url([:edit, resource])
+      =semantic_form_for(resource, html: {autocomplete: 'off'}) do |f|
+        =f.input :publish_type, as: :hidden, input_html: {value: :direct}
+        =f.action :submit, as: :button, button_html: {data: {confirm: t('projects.publish_confirmation')}, class: 'fa fa-paper-plane'}, :label => t('publish')

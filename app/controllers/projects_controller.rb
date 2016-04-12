@@ -48,9 +48,18 @@ class ProjectsController < AuthorizedController
   end
 
   def edit
+    resource = authenticated_resource!
+    if resource.argu_publication.present?
+      resource.schedule!
+      resource.publish_at = resource.argu_publication.published_at
+    else
+      resource.draft!
+      resource.publish_at = DateTime.current
+    end
+
     respond_to do |format|
-      format.html { render locals: {project: authenticated_resource!} }
-      format.json { render json: authenticated_resource! }
+      format.html { render locals: {project: resource} }
+      format.json { render json: resource }
     end
   end
 

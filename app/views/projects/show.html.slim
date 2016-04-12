@@ -20,14 +20,8 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
             li= link_to polymorphic_url([:new, resource, :blog_post]) do
               span.fa.fa-quote-left
               span.icon-left= t('blog_posts.type_new')
-    - if project.is_draft?
-      .box
-        section.section-draft
-          p
-            =>t('draft_unpublished')
-            =link_to project_path(project, project: {publish: true}), class: 'btn btn--warning btn--smaller', data: {method: :put, confirm: t('projects.publish_confirmation')}
-              span.fa.fa-paper-plane
-              span.icon-left= t('publish')
+    -unless project.is_published?
+      =render partial: 'application/publish', locals: {resource: project}
     -unless project.phases.blank? && project.latest_blog_post.blank?
       =render partial: 'projects/timeline', locals: {project: project}
     #current-blog-post
