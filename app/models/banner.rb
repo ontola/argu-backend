@@ -1,5 +1,5 @@
-class Banner < ActiveRecord::Base
-  include ArguBase, ActivePublishable
+class Banner < NewsBoy
+  include ArguBase
 
   belongs_to :forum
   belongs_to :publisher, class_name: 'User'

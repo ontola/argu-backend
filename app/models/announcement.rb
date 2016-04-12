@@ -1,5 +1,5 @@
-class Announcement < ActiveRecord::Base
-  include ArguBase, ActivePublishable
+class Announcement < NewsBoy
+  include ArguBase
 
   belongs_to :publisher, class_name: 'Profile'
 
