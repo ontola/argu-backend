@@ -1,7 +1,7 @@
 .col-1
   header
     h1= t('votes.confirm.headline')
-  =render partial: "#{resource.class_name}/show", locals: {model: resource}
+  =render partial: "#{resource.class_name}/show", locals: {model: resource, hide_vote_buttons: true}
   ul.btns-opinion
     =render partial: 'votes/vote_form', locals: { resource: resource, stance: :pro, icon: 'thumbs-up' } if resource.class::VOTE_OPTIONS.include?(:pro)
     =render partial: 'votes/vote_form', locals: { resource: resource, stance: :neutral, icon: 'pause' } if resource.class::VOTE_OPTIONS.include?(:neutral)
