@@ -1,18 +1,16 @@
 class Publication < ActiveRecord::Base
+  include Wisper::Publisher
   belongs_to :publishable, polymorphic: true
+  belongs_to :creator, class_name: 'Profile', inverse_of: :projects
+  belongs_to :publisher, class_name: 'User'
 
-  before_update :reset_published_at, :if => Proc.new {|model| model.published_at_changed? }
+  after_save :re_schedule_or_destroy
   before_destroy :cancel_job
+  after_rollback :cancel_job
 
-  def execute
-    # Increment counter_caches
+  def commit
     publishable.update(is_published: true)
-    ActivityListener.new.send("publish_#{publishable.model_name.singular}_successful", publishable)
-  end
-
-  # Execute the publication or schedule a job to do so
-  def execute_or_schedule
-    published_at <= DateTime.current ? execute : schedule
+    publish("publish_#{publishable.model_name.singular}_successful", publishable)
   end
 
   private
@@ -22,15 +20,17 @@ class Publication < ActiveRecord::Base
     PublicationsWorker.cancel!(job_id) if job_id.present?
   end
 
-  # Cancel a previously scheduled job and either schedule a new jFob, execute the publication or destroy the publication
-  def reset_published_at
-    raise if publishable.is_published?
-    cancel_job
-    published_at.present? ? execute_or_schedule : destroy
+  # Cancel a previously scheduled job and either schedule a new job, or destroy the publication
+  def re_schedule_or_destroy
+    cancel_job if job_id.present? && published_at_changed?
+    return if publishable.is_published?
+    published_at.present? ? schedule : destroy
   end
 
   # Create a PublicationsWorker and save it's job id
   def schedule
-    self.job_id = PublicationsWorker.perform_at(published_at, publishable.id, publishable.model_name.name)
+    self.job_id = PublicationsWorker.perform_at(published_at,
+                                                publishable.id,
+                                                publishable.model_name.name)
   end
 end

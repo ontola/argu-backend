@@ -2,7 +2,11 @@ class PublicationsWorker
   include Sidekiq::Worker
 
   def perform(publishable_id, publishable_type)
-    Publication.find_by(publishable_id: publishable_id, publishable_type: publishable_type).execute unless cancelled?
+    return if cancelled?
+
+    pub = Publication.find_by(publishable_id: publishable_id, publishable_type: publishable_type)
+    pub.subscribe ActivityListener.new(publisher: pub.publisher, creator: pub.creator)
+    pub.commit
   end
 
   def cancelled?

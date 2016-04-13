@@ -6,6 +6,8 @@ class CreatePublications < ActiveRecord::Migration
       t.integer :publishable_id
       t.string :publishable_type
       t.string :channel
+      t.integer :creator_id, null: false
+      t.integer :publisher_id
     end
   end
 end

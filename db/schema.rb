@@ -549,6 +549,8 @@ ActiveRecord::Schema.define(version: 20160526142530) do
     t.integer  "publishable_id"
     t.string   "publishable_type"
     t.string   "channel"
+    t.integer  "publisher_id"
+    t.integer  "creator_id"
   end
 
   create_table "question_answers", force: :cascade do |t|

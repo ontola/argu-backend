@@ -45,16 +45,16 @@ class ApplicationService
   def assign_attributes
     resource.assign_attributes(@attributes)
     if @attributes.include? :publish_type
-      resource.publish_at = DateTime.current if resource.publish_type == 'direct'
+      resource.publish_at = 10.seconds.from_now if resource.publish_type == 'direct'
       resource.publish_at = nil if resource.publish_type == 'draft'
     end
   end
 
   def create_publication
     if resource.publish_at.present?
-      publication = resource.build_argu_publication(published_at: resource.publish_at)
-      publication.execute_or_schedule
-      publication.save
+      resource.create_argu_publication(published_at: resource.publish_at,
+                                       publisher: resource.publisher,
+                                       creator: resource.creator)
     end
   end
 
