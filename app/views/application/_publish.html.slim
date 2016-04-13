@@ -14,4 +14,4 @@
         - if resource.argu_publication.present?
           =semantic_form_for(resource, html: {autocomplete: 'off'}) do |f|
             =f.input :publish_type, as: :hidden, input_html: {value: :draft}
-            =f.action :submit, as: :button, button_html: {data: {class: 'fa fa-remove btn--warning'}}, label: t('cancel')
+            =f.action :submit, as: :button, button_html: {class: 'fa fa-remove btn--warning'}, label: t('cancel')
