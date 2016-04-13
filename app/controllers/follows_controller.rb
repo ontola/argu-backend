@@ -43,7 +43,7 @@ class FollowsController < ApplicationController
   end
 
   def set_thing
-    klass = [Forum, Question, Motion, Argument, Comment].detect { |c| params["#{c.name.underscore}_id"] }
+    klass = [Forum, Question, Motion, Argument, Comment, Project].detect { |c| params["#{c.name.underscore}_id"] }
     method = klass.respond_to?(:friendly) ? klass.friendly : klass
     @thing =
       if method.shortnameable?

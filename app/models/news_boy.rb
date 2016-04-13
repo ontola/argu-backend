@@ -1,3 +1,4 @@
+# TODO: Write class docs
 class NewsBoy < ActiveRecord::Base
   self.abstract_class = true
 
@@ -9,7 +10,8 @@ class NewsBoy < ActiveRecord::Base
 
   def self.unpublished
     where('published_at IS NULL OR published_at > ? OR ends_at < ?',
-          DateTime.current, DateTime.current)
+          DateTime.current,
+          DateTime.current)
   end
 
   def self.ended
@@ -22,8 +24,8 @@ class NewsBoy < ActiveRecord::Base
   end
 
   def is_published?
-    self[:published_at].present? &&
-        self[:published_at] < DateTime.current &&
-        (self[:ends_at].nil? || self[:ends_at] > DateTime.current)
+    published_at.present? &&
+      published_at < DateTime.current &&
+      (ends_at.nil? || ends_at > DateTime.current)
   end
 end

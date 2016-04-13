@@ -2,18 +2,19 @@ module ActivePublishable
   extend ActiveSupport::Concern
 
   included do
-    scope :published, -> do
-      where('is_published = true')
-    end
-    scope :unpublished, -> do
-      where('is_published = false')
-    end
+    scope :published, -> { where('is_published = true') }
+    scope :unpublished, -> { where('is_published = false') }
 
     has_many :publications,
              as: :publishable,
              inverse_of: :publishable,
              dependent: :destroy
-    has_one :argu_publication, -> {where(channel: 'argu')}, class_name: 'Publication', as: :publishable
+
+    has_one :argu_publication,
+            -> { where(channel: 'argu') },
+            class_name: 'Publication',
+            inverse_of: :publishable,
+            as: :publishable
 
     attr_accessor :publish_at, :publish_type
 
