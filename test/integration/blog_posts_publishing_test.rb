@@ -1,8 +1,14 @@
 require 'test_helper'
 
-class AccessTokenSignupTest < ActionDispatch::IntegrationTest
+class BlogPostPublishingTest < ActionDispatch::IntegrationTest
   let(:freetown) { create(:forum) }
   let(:project) { create(:project, :published, forum: freetown) }
+  let!(:follower) { create :user, :follows_email }
+  let!(:follow_project) do
+    create(:follow,
+           followable: project,
+           follower: follower)
+  end
 
   ####################################
   # As Member
@@ -28,7 +34,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
   ####################################
   let(:moderator) { create_moderator(project) }
 
-  test 'should post create blog_post' do
+  test 'should post create draft blog_post' do
     sign_in moderator
 
     get project_path(project)
@@ -38,11 +44,67 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_response 200
 
     post project_blog_posts_path(
-      project_id: project,
-      blog_post: attributes_for(:blog_post))
+           project_id: project,
+           blog_post: attributes_for(:blog_post, publish_type: :draft))
     assert_response 302
 
     follow_redirect!
     assert_response 200
+    assert_equal false, BlogPost.last.is_published?
+    assert_equal 0, Notification.count
   end
+
+  test 'should post create published blog_post' do
+    sign_in moderator
+
+    get project_path(project)
+    assert_response 200
+
+    get new_project_blog_post_path(project_id: project)
+    assert_response 200
+
+    post project_blog_posts_path(
+           project_id: project,
+           blog_post: attributes_for(:blog_post, publish_type: :direct))
+    assert_response 302
+
+    Sidekiq::Testing.inline! do
+      Publication.last.send(:re_schedule_or_destroy)
+    end
+
+    follow_redirect!
+    assert_response 200
+    assert_equal true, BlogPost.last.is_published?
+    assert_equal 1, Notification.count
+  end
+
+  test 'should change schedule to concept' do
+    sign_in moderator
+
+    get project_path(project)
+    assert_response 200
+
+    get new_project_blog_post_path(project_id: project)
+    assert_response 200
+
+    post project_blog_posts_path(
+           project_id: project,
+           blog_post: attributes_for(:blog_post, publish_type: :schedule, publish_at: 1.day.from_now))
+    assert_response 302
+
+    patch blog_post_path(
+           id: BlogPost.last.id,
+           blog_post: {publish_type: :draft})
+    assert_response 302
+
+    Sidekiq::Testing.inline! do
+      Publication.last.send(:re_schedule_or_destroy)
+    end
+
+    follow_redirect!
+    assert_response 200
+    assert_equal false, BlogPost.last.is_published?
+    assert_equal 0, Notification.count
+  end
+
 end

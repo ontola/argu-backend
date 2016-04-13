@@ -527,6 +527,9 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                                    publish_type: :direct,
                                    stepups_attributes: {'12321' => {moderator: moderator.url}},
                                    phases_attributes: {'12321' => attributes_for(:phase)})
+      Sidekiq::Testing.inline! do
+        Publication.last.send(:re_schedule_or_destroy)
+      end
     end
 
     assert_response response
