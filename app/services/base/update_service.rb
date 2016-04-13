@@ -9,7 +9,7 @@ class UpdateService < ApplicationService
   private
 
   def after_save
-    if @attributes[:publish_type].present?
+    if @attributes[:publish_type].present? && !resource.is_published? && !resource.is_trashed?
       if resource.argu_publication.present?
         resource.argu_publication.update(published_at: resource.publish_at)
       else

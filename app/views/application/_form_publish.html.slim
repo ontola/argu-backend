@@ -2,6 +2,6 @@
   -if policy(resource).trash?
      =f.inputs(name: t('forms.danger_zone'), class: 'danger-zone') do
       =f.input :trashed_at, as: :reverse_boolean
--else
+-elsif !resource.is_trashed?
   =f.input(:publish_type, as: :radio, include_other: true, collection: BlogPost.publish_types.map { |type| [t("publish_select.#{type.first.to_s}"), type.first] })
   =f.input(:publish_at, as: :datetime_picker, label: false)

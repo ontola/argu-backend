@@ -13,4 +13,12 @@ module BlogPostsHelper
       t('blog_posts.unpublished')
     end
   end
+
+  def date_for_publication(resource)
+    if resource.argu_publication.published_at < Time.current + 12.hours
+      time_ago_in_words(resource.argu_publication.published_at)
+    else
+      l(resource.argu_publication.published_at, format: :dateline)
+    end
+  end
 end
