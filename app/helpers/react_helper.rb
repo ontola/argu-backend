@@ -17,10 +17,10 @@ module ReactHelper
             errors: {
                 general: t('errors.general'),
                 status: {
-                    :'404' => t('status.404'),
-                    :'401' => t('status.401'),
-                    :'429' => t('status.429'),
-                    :'500' => t('status.500')
+                    '404': t('status.404'),
+                    '401': t('status.401'),
+                    '429': t('status.429'),
+                    '500': t('status.500')
                 }
             }
         }
