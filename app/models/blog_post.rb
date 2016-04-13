@@ -28,6 +28,8 @@ class BlogPost < ActiveRecord::Base
   validate :validate_within_project_scope
 
   parentable :blog_postable, :forum
+  counter_culture :project,
+                  column_name: proc { |model| model.is_published && !model.is_trashed? ? 'blog_posts_count' : nil }
   alias_attribute :description, :content
   alias_attribute :display_name, :title
 

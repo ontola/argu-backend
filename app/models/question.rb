@@ -13,6 +13,9 @@ class Question < ActiveRecord::Base
 
   acts_as_followable
   counter_culture :forum
+  counter_culture :project,
+                  column_name: proc { |model| !model.is_trashed? ? 'questions_count' : nil }
+  parentable :project, :forum
   convertible :votes, :taggings, :activities
   parentable :project, :forum
 

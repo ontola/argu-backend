@@ -4,7 +4,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
   .col-1
     =to_parent
     .box[class=status_classes_for(project)]
-      =render 'projects/info_bar'
+      =render partial: 'projects/info_bar', locals: {project: project}
       section
         h1.project-t[itemprop="headline"]= project.display_name
         .markdown[itemprop="text"]

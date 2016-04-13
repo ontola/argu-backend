@@ -20,6 +20,9 @@ class Motion < ActiveRecord::Base
   before_save :cap_title
   after_save :creator_follow
 
+  counter_culture :forum
+  counter_culture :project,
+                  column_name: proc { |model| !model.is_trashed? ? 'motions_count' : nil }
   acts_as_followable
   convertible :votes, :taggings, :activities
   counter_culture :forum

@@ -5,13 +5,10 @@ section.section-info
       span.icon-left= t('projects.type')
     .details-part[data-title=t('blog_posts.tooltips.count')]
       span[class="fa fa-#{blog_post_icon}"]
-      /span.icon-left= project.questions.count
-      span.icon-left= "_1"
+      span.icon-left= project.blog_posts_count
     .details-part.details-part--question[data-title=t('questions.tooltips.count')]
       span.fa.fa-question
-      /span.icon-left= project.questions.count
-      span.icon-left= "_3"
+      span.icon-left= project.questions_count
     .details-part.details-part--motion[data-title=t('tooltips.question.motions_count')]
       span.fa.fa-lightbulb-o
-      /span.icon-left= project.motions.count
-      span.icon-left= "_2"
+      span.icon-left= project.motions_count

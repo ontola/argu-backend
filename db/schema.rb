@@ -528,6 +528,7 @@ ActiveRecord::Schema.define(version: 20160526142530) do
     t.string   "email"
     t.datetime "end_date"
     t.datetime "achieved_end_date"
+    t.integer  "blog_posts_count",        default: 0,     null: false
     t.integer  "questions_count",         default: 0,     null: false
     t.integer  "motions_count",           default: 0,     null: false
     t.integer  "phases_count",            default: 0,     null: false
