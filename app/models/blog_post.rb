@@ -22,7 +22,9 @@ class BlogPost < ActiveRecord::Base
              class_name: 'Project',
              foreign_key: :blog_postable_id
 
-  has_many :activities, as: :trackable
+  has_many :activities,
+           -> { where("key ~ '*.!happened'") },
+           as: :trackable
 
   has_one :happening,
           -> { where("key ~ '*.happened'") },

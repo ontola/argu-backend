@@ -43,20 +43,19 @@ class Phase < ActiveRecord::Base
     next_phase.present? ? next_phase.update!(start_date: end_date) : project.update!(end_date: end_date) if end_date_changed?
   end
 
-  def blog_posts
+  def happenings(show_unpublished = false)
     return [] if start_date.nil?
     if end_date.present?
-      project
-        .blog_posts
-        .where(created_at: start_date..end_date)
-        .where(is_published: true)
-        .order(created_at: :asc)
+      scope = project
+                .happenings
+                .where(created_at: start_date..end_date)
+                .order(created_at: :asc)
     else
-      project
-        .blog_posts
-        .where('created_at > ?', start_date)
-        .where(is_published: true)
-        .order(created_at: :asc)
+      scope = project
+                .happenings
+                .where('created_at > ?', start_date)
+                .order(created_at: :asc)
     end
+    show_unpublished ? scope : scope.where(is_published: true)
   end
 end

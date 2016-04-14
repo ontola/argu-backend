@@ -9,13 +9,8 @@ header
         =link_to phase_path(phase), data: {remote: true}, class: generate_phase_link_class(project, phase) do
           span= phase.display_name
         .timeline-phase-points
-          -phase.blog_posts.each do |blog_post|
-            =link_to blog_post_path(blog_post), data: {remote: true}, class: "tooltip--side-right timeline-point timeline-point-blog-post #{'active' if blog_post == project.latest_blog_post}" do
+          -phase.happenings(policy(project).update?).each do |happening|
+            =link_to blog_post_path(happening.trackable), data: {remote: true}, class: "tooltip--side-right timeline-point timeline-point-blog-post#{' unpublished' unless happening.trackable.is_published}#{' active' if happening.trackable == project.latest_blog_post}" do
               span[class="fa fa-#{blog_post_icon}"]
-            =link_to blog_post_path(blog_post), data: {remote: true}, class: 'timeline-post-title' do
-              span= blog_post.title
-          /- phase.unpublished_blog_posts.each do |blog_post|
-            =link_to blog_post_path(blog_post), data: {remote: true}, class: "tooltip--side-right timeline-point timeline-point-blog-post unpublished #{'active' if blog_post == project.latest_blog_post}" do
-              span[class="fa fa-#{blog_post_icon}"]
-              =link_to blog_post_path(blog_post), data: {remote: true}, class: 'timeline-post-title' do
-                span= blog_post.title
+            =link_to blog_post_path(happening.trackable), data: {remote: true}, class: 'timeline-post-title' do
+              span= happening.trackable.title
