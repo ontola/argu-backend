@@ -3,12 +3,13 @@
   .col-3-2
     =to_parent(project.forum)
     .box
-      section.section-info
-        .details
-          .details-part.details-part--type.project-bg[data-title=t('projects.tooltips.info')]
-            span.fa.fa-rocket
-            span.icon-left= t('projects.type')
-      =semantic_form_for(project.new_record? ? [project.forum, project] : project, html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
+      =semantic_form_for(project.new_record? ? [project.forum, project] : project, html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
+        =f.input :default_cover_photo, as: :react_cover, label: false
+        section.section-info
+          .details
+            .details-part.details-part--type.project-bg[data-title=t('projects.tooltips.info')]
+              span.fa.fa-rocket
+              span.icon-left= t('projects.type')
         section.smallpadded.form-filled
           =f.inputs
             =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(project, :title, motion_type.downcase)
@@ -16,11 +17,6 @@
             =f.input :start_date, as: :datetime_picker
             li.form-helper
               span= t('projects.start_date_info')
-          =render partial: 'photos/form',
-                  locals: {form: f,
-                          type: :cover_photo,
-                          relation: :default_cover_photo,
-                          preview_style: 'max-height: 256px;'}
           - if policy(project).permitted_attributes.include?(:pinned)
             =f.input :pinned, as: :reverse_boolean
             li.form-helper

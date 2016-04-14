@@ -122,7 +122,7 @@
   background-size: cover;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  height: 10em;
+  height: $box-image-height;
   width: 100%;
 
   a & {
@@ -359,7 +359,7 @@
 
 // Used to hide lazy loaded images. Only shows when the user has JS enabled.
 .no-js .b-lazy-hide-container {
-  display: none;
+  display: none !important;
 }
 
 .box-list-links {

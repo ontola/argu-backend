@@ -3,12 +3,13 @@
   .col-3-2
     =to_parent
     .box
-      section.section-info
-        .details
-          .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
-            span[class="fa fa-#{motion_icon}"]
-            span.icon-left= motion_type
-      =semantic_form_for((motion.new_record? ? [get_parent_resource, motion] : motion), html: {autocomplete: 'off'}, remote: true, authenticity_token: true) do |f|
+      =semantic_form_for((motion.new_record? ? [get_parent_resource, motion] : motion), html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
+        =f.input :default_cover_photo, as: :react_cover, label: false
+        section.section-info
+          .details
+            .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
+              span[class="fa fa-#{motion_icon}"]
+              span.icon-left= motion_type
         section.smallpadded.form-filled
           =f.inputs
             h3= t('motions.form.title_heading')
@@ -17,11 +18,6 @@
             h3= t('motions.form.content_heading')
             p= t('motions.form.content_body_html')
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(motion, :content, motion_type.downcase)
-          =render partial: 'photos/form',
-                  locals: {form: f,
-                          type: :cover_photo,
-                          relation: :default_cover_photo,
-                          preview_style: 'max-height: 256px;'}
           - if policy(resource).permitted_attributes.include?(:mark_as_important)
             =f.input :mark_as_important, as: :reverse_boolean
             li.form-helper

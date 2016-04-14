@@ -264,3 +264,50 @@ section.smallpadded {
 .section--no-top-padding {
   padding-top: 0;
 }
+
+// Drop a picture to upload it
+.section--dropzone {
+  height: 10em;
+  background-color: $g2;
+  padding: .5em;
+  @include transition(.2s background-color);
+
+  &:hover {
+    background-color: $g2a;
+    cursor: pointer;
+  }
+
+  .box-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    @include transition(.2s opacity);
+
+    &:hover {
+      opacity: .5;
+    }
+  }
+}
+
+$dropzone-color: white;
+
+.section--dropzone-borders {
+  border: dashed 3px $dropzone-color;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 1em;
+
+  .fa {
+    color: $dropzone-color;
+    font-size: 2em;
+  }
+
+  .section--dropzone-text {
+    margin-left: 1em;
+    color: $dropzone-color;
+  }
+}

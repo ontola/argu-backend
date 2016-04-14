@@ -377,12 +377,22 @@
   100%  { @include transform(rotate(360deg)); }
 }
 
-@include keyframes(flash) {
-  0%    { opacity: 0; }
-  10%    { opacity: 1; }
-  25%    { opacity: 1; }
-  75%    { opacity: 0; }
-  100%    { opacity: 0; }
+@include keyframes(pulse) {
+  0% {
+    @include transform(scale(1));
+  }
+  25% {
+    @include transform(scale(1.25));
+  }
+  50% {
+    @include transform(scale(1));
+  }
+  75% {
+    @include transform(scale(0.8));
+  }
+  100% {
+    @include transform(scale(1));
+  }
 }
 @include keyframes(shake) {
   0% {

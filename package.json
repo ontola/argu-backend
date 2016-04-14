@@ -20,6 +20,7 @@
     "react": "0.14.8",
     "react-addons-transition-group": "0.14.8",
     "react-dom": "^0.14.8",
+    "react-dropzone": "^3.4.0",
     "react-images": "0.5.4",
     "react-intl": "=1.2.0",
     "react-onclickoutside": "^4.1.0",

@@ -1,0 +1,84 @@
+@import "variables";
+@import "mixins";
+
+// Drop a picture to upload it
+
+$dropzone-color: white;
+
+.dropzone--cover--container {
+
+  &:hover, &.dropzone--cover--hovering {
+
+    .dropzone--cover-delete-image {
+      background-color: $darken3;
+    }
+
+    .dropzone--cover {
+      background-color: $g2a;
+      cursor: pointer;
+      padding: .7em;
+
+      .box-image {
+        opacity: .5;
+      }
+    }
+  }
+
+  &:active {
+    @include transition(none);
+    background-color: $g3;
+  }
+
+  .dropzone--cover {
+    height: $box-image-height;
+    background-color: $g2;
+    padding: .5em;
+    @include transition(.2s background-color, .2s padding);
+
+    .no-js & {
+      display: none;
+    }
+
+    .box-image {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      @include transition(.2s opacity);
+    }
+
+    .dropzone--cover-borders {
+      border: dashed 3px $dropzone-color;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 1em;
+
+      .fa {
+        color: $dropzone-color;
+        font-size: 2em;
+      }
+
+      .dropzone--cover-text {
+        margin-left: 1em;
+        color: $dropzone-color;
+      }
+    }
+  }
+}
+
+.dropzone--cover-delete-image {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  color: white;
+  padding: 0.3em;
+
+  &:hover {
+    background-color: $darken4 !important;
+  }
+}

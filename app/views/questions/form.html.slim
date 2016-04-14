@@ -3,13 +3,14 @@
   .col-3-2
     =to_parent
     .box
-      section.section-info
-        =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
-        .details
-          .details-part.details-part--type.question-bg[data-title=t('questions.tooltips.info')]
-            span[class="fa fa-#{question_icon}"]
-            span.icon-left= question_type
-      =semantic_form_for((question.new_record? ? [get_parent_resource, question] : question), html: {autocomplete: 'off'}, multipart: true, remote: true, authenticity_token: true) do |f|
+      =semantic_form_for((question.new_record? ? [get_parent_resource, question] : question), html: {autocomplete: 'off', multipart: true}, remote: true, authenticity_token: true) do |f|
+        =f.input :default_cover_photo, as: :react_cover, label: false
+        section.section-info
+          =render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}
+          .details
+            .details-part.details-part--type.question-bg[data-title=t('questions.tooltips.info')]
+              span[class="fa fa-#{question_icon}"]
+              span.icon-left= question_type
         section.smallpadded.form-filled
           =f.inputs
             h3= t('questions.form.title_heading')
@@ -18,11 +19,6 @@
             h3= t('questions.form.content_heading')
             p= t('questions.form.content_body_html')
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(question, :content, question_type.downcase)
-          =render partial: 'photos/form',
-                  locals: {form: f,
-                           type: :cover_photo,
-                           relation: :default_cover_photo,
-                           preview_style: 'max-height: 256px;'}
           - if policy(resource).permitted_attributes.include?(:mark_as_important)
             =f.input :mark_as_important, as: :reverse_boolean
             li.form-helper
