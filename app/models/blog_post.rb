@@ -24,6 +24,14 @@ class BlogPost < ActiveRecord::Base
 
   has_many :activities, as: :trackable
 
+  has_one :happening,
+          -> { where("key ~ '*.happened'") },
+          class_name: 'Activity',
+          inverse_of: :trackable,
+          as: :trackable,
+          dependent: :destroy,
+          autosave: true
+
   validates :blog_postable, :creator, presence: true
   validate :validate_within_project_scope
 

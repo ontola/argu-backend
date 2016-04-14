@@ -10,6 +10,7 @@ class Publication < ActiveRecord::Base
 
   def commit
     publishable.update(is_published: true)
+    publishable.happening.update(is_published: true) if publishable.respond_to?(:happening)
     publish("publish_#{publishable.model_name.singular}_successful", publishable)
   end
 
