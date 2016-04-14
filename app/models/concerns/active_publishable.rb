@@ -2,7 +2,7 @@ module ActivePublishable
   extend ActiveSupport::Concern
 
   included do
-    scope :published, ->  { where("#{model_name.collection}.is_published = true") }
+    scope :published, -> { where("#{model_name.collection}.is_published = true") }
     scope :unpublished, -> { where('is_published = false') }
 
     has_many :publications,

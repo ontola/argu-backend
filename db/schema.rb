@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 20160526142530) do
     t.integer  "forum_id"
     t.integer  "owner_id"
     t.string   "owner_type"
-    t.string   "key"
+    t.ltree    "key"
     t.text     "parameters"
     t.integer  "recipient_id"
     t.string   "recipient_type"

@@ -7,11 +7,15 @@ module BlogPostsHelper
   end
 
   def blog_post_dateline(blog_post)
-    if blog_post.is_published?
-      l(blog_post.argu_publication.published_at, format: :dateline)
+    if blog_post.happening.present?
+      l(blog_post.happening.created_at, format: :dateline)
     else
       t('blog_posts.unpublished')
     end
+  end
+
+  def time_in_iso8601(time)
+    time.try(:iso8601)
   end
 
   def date_for_publication(resource)

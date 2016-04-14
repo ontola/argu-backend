@@ -4,4 +4,4 @@ section.section-info.blog-post-bg
       span[class="fa fa-#{blog_post_icon}"]
       span.icon-left= t('blog_posts.type')
     .details-part
-      span= blog_post_dateline(blog_post)
+      time[datetime=time_in_iso8601(blog_post.happened_at)]= blog_post_dateline(blog_post)
