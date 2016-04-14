@@ -31,6 +31,20 @@ module Argu
         end
       end
 
+      # Helper to aid in filling in a markdown text editor
+      def fill_in_markdown(scope = nil, with: nil, selector: nil)
+        select = lambda do
+          input_field = find('.public-DraftEditor-content').native
+          input_field.send_keys with
+          selector ||= /#{with}/
+        end
+        if scope.present?
+          within(scope, &select)
+        else
+          select.call
+        end
+      end
+
       def sign_in(user)
         login_as(user, scope: :user)
       end

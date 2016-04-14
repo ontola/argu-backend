@@ -1,0 +1,28 @@
+@import "variables";
+@import "mixins";
+
+// Since the currently used version of react-rte (rich text editor) does not have any styling, I added some temporary styling below. This will change when upgrading react-rte
+.rte-root {
+  .ui-button-group {
+    display: inline-block;
+  }
+  .ui-button-wrap {
+    display: inline-block;
+    button {
+      padding: 1em;
+    }
+  }
+  .public-DraftEditor-content {
+    background-color: $g0;
+    border: solid 1px $g1;
+    padding: .5em;
+    min-height: 5em;
+  }
+  .rte-paragraph {
+    margin-bottom: 1em;
+  }
+}
+
+.no-js .rte-root {
+  display: none;
+}

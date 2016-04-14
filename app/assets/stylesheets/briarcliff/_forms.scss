@@ -364,3 +364,33 @@ p.inline-hints {
   display: inline-block;
   margin-right: 5px;
 }
+
+.helper-side {
+  position: absolute;
+  display: none;
+  top: 0;
+  left: 105%;
+  left: calc( 100% + 1em );
+  width: 20em;
+  z-index: 1;
+
+  @include bp-large{
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: auto !important;
+  }
+}
+
+.helper-side--left {
+  left: auto;
+  right: 105%;
+  right: calc( 100% + 1em );
+}
+
+.no-js {
+  .helper-side--markdown {
+    display: block;
+  }
+}

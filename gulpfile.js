@@ -51,8 +51,13 @@ var lint = function (paths) {
         .pipe(eslint.failAfterError());
 };
 
-function browserifyBundle(bundleName, entryPoint) {
+function browserifyBundle(bundleName, entryPoint, client) {
     var b = browserify(browserifyOptions(entryPoint));
+    b.transform(envify({
+        CLIENT_SIDE: client
+    }), {
+        global: true
+    });
 
     return b.bundle()
         .pipe(source(bundleName))
@@ -101,7 +106,7 @@ function browserifyBundleProduction(bundleName, entryPoint) {
 }
 
 gulp.task('build', function () {
-    return browserifyBundle('_bundle.js', 'App.js');
+    return browserifyBundle('_bundle.js', 'App.js', true);
 });
 
 gulp.task('build-components', function () {

@@ -16,8 +16,7 @@
             =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'motion-t form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(motion, :title, motion_type.downcase)
             h3= t('motions.form.content_heading')
             p= t('motions.form.content_body_html')
-            =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(motion, :content, motion_type.downcase)
-            /=f.input :tag_list, input_html: {class: 'tag-list'}, label: true
+            =f.input :content, as: :react_markdown, class: 'form-input-content', placeholder: placeholder_for(motion, :content, motion_type.downcase), label: false, hint: false
           =render partial: 'photos/form',
                   locals: {form: f,
                           type: :cover_photo,
@@ -46,5 +45,13 @@
           =f.actions
             .sticky-submit
               =f.action :submit, as: :button
-  .col-3-1
-    =render partial: 'markdown_helper'
+    .helper-side.helper-side--markdown.helper-side--left
+      =render partial: 'markdown_helper'
+    .helper-side.box[data-side-helper='title']
+      section
+        h3= t('motions.form.title_heading', type: motion_type)
+        p= t('motions.form.title_body_html')
+    .helper-side.box[data-side-helper='content']
+      section
+        h3= t('motions.form.content_heading', type: motion_type)
+        p= t('motions.form.content_body_html')
