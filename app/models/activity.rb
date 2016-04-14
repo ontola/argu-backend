@@ -10,6 +10,8 @@ class Activity < PublicActivity::Activity
   belongs_to :owner, class_name: 'Profile'
   belongs_to :forum
 
+  alias_attribute :happened_at, :created_at
+
   validates_presence_of :forum, :key, :trackable, :owner, :recipient
 
   scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }

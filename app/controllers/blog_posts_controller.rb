@@ -146,6 +146,12 @@ class BlogPostsController < AuthorizedController
     @destroy_service ||= DestroyBlogPost.new(resource_by_id)
   end
 
+  def new_resource_from_params
+    blog_post = super
+    blog_post.build_happening(created_at: Time.current)
+    blog_post
+  end
+
   def permit_params
     params
       .require(:blog_post)

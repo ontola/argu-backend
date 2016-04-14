@@ -40,6 +40,8 @@ class BlogPost < ActiveRecord::Base
                   column_name: proc { |model| model.is_published && !model.is_trashed? ? 'blog_posts_count' : nil }
   alias_attribute :description, :content
   alias_attribute :display_name, :title
+  attr_accessor :happened_at
+  delegate :happened_at, to: :happening, allow_nil: true
 
   def validate_within_project_scope
     if blog_postable.is_a?(Project) && published_at.present?

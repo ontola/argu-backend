@@ -21,7 +21,7 @@ class BlogPostPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << %i(title content blog_postable publish_at publish_type trashed_at) if create?
+    attributes << %i(title content blog_postable publish_at publish_type trashed_at happened_at) if create?
     attributes
   end
 

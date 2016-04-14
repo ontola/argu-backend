@@ -16,6 +16,9 @@ class UpdateBlogPost < UpdateService
 
   def assign_attributes
     # TODO Filter out changes to manager, which should only be set on #new
+    if @attributes[:happened_at].present?
+      resource.happening.update(created_at: @attributes[:happened_at])
+    end
     super
   end
 
