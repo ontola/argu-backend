@@ -3,7 +3,7 @@ import Alert from './Alert';
 import React from 'react';
 import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
-import { BigVoteButtons, BigVoteResults } from './BigVote';
+import { BigVoteButtons } from './BigVote';
 import BigGroupResponse from './_big_group_responses';
 
 /**
@@ -30,11 +30,6 @@ export const CombiBigVote = React.createClass({
         };
     },
 
-    onActorChange (actor) {
-        this.refreshGroups();
-        this.setState({ actor });
-    },
-
     componentDidMount () {
         this.unsubscribe = actorStore.listen(this.onActorChange);
     },
@@ -43,8 +38,9 @@ export const CombiBigVote = React.createClass({
         this.unsubscribe();
     },
 
-    setVote (vote) {
-        this.setState(vote);
+    onActorChange (actor) {
+        this.refreshGroups();
+        this.setState({ actor });
     },
 
     refreshGroups () {
@@ -59,15 +55,17 @@ export const CombiBigVote = React.createClass({
                 });
     },
 
+    setVote (vote) {
+        this.setState(vote);
+    },
+
     render () {
-        let voteButtonsComponent, voteResultsComponent, groupResponsesComponent;
+        let voteButtonsComponent, groupResponsesComponent;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
             voteButtonsComponent = <BigVoteButtons parentSetVote={this.setVote} {...this.state} {...this.props}/>;
-            voteResultsComponent = <BigVoteResults {...this.state} show_results={this.state.current_vote !== 'abstain'}/>;
             groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.object_type} objectId={this.props.object_id} />;
         } else if (this.state.actor.actor_type === 'Page') {
             groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.object_type} objectId={this.props.object_id} />;
-            voteResultsComponent = <BigVoteResults {...this.state} {...this.props} show_results={true}/>;
         }
 
         return (

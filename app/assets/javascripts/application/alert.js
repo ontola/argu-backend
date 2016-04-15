@@ -40,7 +40,7 @@ AlertIntegration.fade = function (duration, _alert) {
 };
 
 AlertIntegration.fadeAll = function () {
-    $(".alert").slideDown(function () {
+    $('.alert').slideDown(function () {
         AlertIntegration.fade(3000, $(this));
     });
 };

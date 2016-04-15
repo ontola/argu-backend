@@ -45,27 +45,29 @@ export const ProfileOption = React.createClass({
 });
 window.ProfileOption = ProfileOption;
 
-export const SingleValue = React.createClass({
-    propTypes: {
-        placeholder: React.PropTypes.string,
-        value: React.PropTypes.object
-    },
-    render () {
-        const obj = this.props.value;
+const SingleValue = props => {
+    const obj = props.value;
 
-        const item = obj ? (
-            <div>
-                <img className="Select-item-result-icon" height='25em' src={obj.image} />
-                {obj.label} ({obj.value})
-            </div>
-        ) : (this.props.placeholder);
+    const item = !obj
+        ? props.placeholder
+        : (<div>
+               <img className="Select-item-result-icon" height='25em' src={obj.image} />
+               {obj.label} ({obj.value})
+           </div>);
 
-        return (
-            <div className="Select-placeholder">
-                {item}
-            </div>);
-    }
-});
+    return (
+        <div className="Select-placeholder">
+            {item}
+        </div>);
+};
+
+SingleValue.propTypes = {
+    placeholder: React.PropTypes.string,
+    value: React.PropTypes.object
+};
+
+export { SingleValue };
+
 window.SingleValue = SingleValue;
 
 export const NewMembership = React.createClass({

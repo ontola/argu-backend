@@ -1,4 +1,6 @@
 /app/assets/javascripts/_bundle.js
 /app/assets/javascripts/_globbed_components.js
+translations_*.js
 /app/assets/javascripts/lib/*
 /app/assets/javascripts/application/*
+globbed_components.js

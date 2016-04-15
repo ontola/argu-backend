@@ -57,6 +57,7 @@ export function image (props) {
     } else if (props.fa) {
         return <span className={['fa', props.fa].join(' ')} />;
     }
+    return undefined;
 }
 
 export function _url (url, obj) {

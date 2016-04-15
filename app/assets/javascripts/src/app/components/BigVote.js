@@ -150,17 +150,30 @@ export const BigVoteButtons = React.createClass({
     render () {
         return (
             <ul className="btns-opinion" data-voted={(this.state.current_vote.length > 0 && this.state.current_vote !== 'abstain') || null}>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)} data-method={this.ifNoActor('post')} onClick={this.proHandler} rel="nofollow" className="btn-pro" data-voted-on={this.state.current_vote === 'pro' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/pro`)}
+                       data-method={this.ifNoActor('post')}
+                       onClick={this.proHandler}
+                       rel="nofollow" className="btn-pro"
+                       data-voted-on={this.state.current_vote === 'pro' || null}>
                     <span className="fa fa-thumbs-up" />
                     <span className="icon-left">
                         <FormattedMessage message={this.getIntlMessage('pro')} />
                     </span>
                 </a></li>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/neutral`)} data-method={this.ifNoActor('post')} onClick={this.neutralHandler} rel="nofollow" className="btn-neutral" data-voted-on={this.state.current_vote === 'neutral' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/neutral`)}
+                       data-method={this.ifNoActor('post')}
+                       onClick={this.neutralHandler}
+                       rel="nofollow"
+                       className="btn-neutral"
+                       data-voted-on={this.state.current_vote === 'neutral' || null}>
                     <span className="fa fa-pause" />
                     <span className="icon-left"><FormattedMessage message={this.getIntlMessage('neutral')} /></span>
                 </a></li>
-                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/con`)} data-method={this.ifNoActor('post')} onClick={this.conHandler} rel="nofollow" className="btn-con" data-voted-on={this.state.current_vote === 'con' || null}>
+                <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/con`)}
+                       data-method={this.ifNoActor('post')}
+                       onClick={this.conHandler}
+                       rel="nofollow" className="btn-con"
+                       data-voted-on={this.state.current_vote === 'con' || null}>
                     <span className="fa fa-thumbs-down" />
                     <span className="icon-left"><FormattedMessage message={this.getIntlMessage('con')} /></span>
                 </a></li>

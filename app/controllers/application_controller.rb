@@ -19,8 +19,9 @@ class ApplicationController < ActionController::Base
   # after_action :set_notification_header
   if Rails.env.development? || Rails.env.staging?
     before_action do
-      return unless current_user && current_user.profile.has_role?(:staff)
-      Rack::MiniProfiler.authorize_request
+      unless current_user && current_user.profile.has_role?(:staff)
+        Rack::MiniProfiler.authorize_request
+      end
     end
   end
 

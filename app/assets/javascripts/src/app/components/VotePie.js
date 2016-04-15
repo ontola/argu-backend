@@ -2,14 +2,18 @@ import React from 'react';
 import PieChart from 'react-simple-pie-chart';
 import StylingVars from '../mixins/StylingVars';
 
+const VOTE_INTERCEPT = .25;
+const VOTE_SLOPE = .75;
+const MIN_VOTE_PERC = 5;
+
 export const VotePie = React.createClass({
     propTypes: {
-        pro: React.PropTypes.number.isRequired,
+        con: React.PropTypes.number.isRequired,
         neutral: React.PropTypes.number.isRequired,
-        con: React.PropTypes.number.isRequired
+        pro: React.PropTypes.number.isRequired
     },
 
-    notVotedStyle: function () {
+    notVotedStyle () {
         return [
             {
                 color: '#e8e8e8',
@@ -18,26 +22,26 @@ export const VotePie = React.createClass({
         ];
     },
 
-    style: function () {
-        let { pro, neutral, con } = this.props;
+    style () {
+        const { pro, neutral, con } = this.props;
 
-        let totalVotesCount = pro + neutral + con;
+        const totalVotesCount = pro + neutral + con;
         let scaleRatio = 1;
-        if (totalVotesCount < 5) {
-            scaleRatio = .25 + .75 * (totalVotesCount / 5);
+        if (totalVotesCount < MIN_VOTE_PERC) {
+            scaleRatio = VOTE_INTERCEPT + VOTE_SLOPE * (totalVotesCount / MIN_VOTE_PERC);
         }
-        let transform = `scale(${scaleRatio})`;
+        const transform = `scale(${scaleRatio})`;
         return {
             WebkitTransform: transform,
             MozTransform: transform,
             msTransform: transform,
             OTransform: transform,
-            transform: transform
+            transform
         };
     },
 
-    votedStyle: function () {
-        let { pro, neutral, con } = this.props;
+    votedStyle () {
+        const { pro, neutral, con } = this.props;
 
         return [
             {
@@ -56,22 +60,17 @@ export const VotePie = React.createClass({
     },
 
 
-    render: function () {
-        let { pro, neutral, con } = this.props;
+    render () {
+        const { pro, neutral, con } = this.props;
+        const voted = pro + con + neutral > 0;
+        const style = voted ? this.style() : null;
+        const pieChartStyle = voted ? this.votedStyle() : this.notVotedStyle();
 
-        if (pro + con + neutral > 0) {
-            return (
-                <div className='vote-pie' style={this.style()} data-title="">
-                    <PieChart slices={this.votedStyle()} />
-                </div>
-            );
-        } else {
-            return (
-                <div className='vote-pie vote-pie--empty'>
-                    <PieChart slices={this.notVotedStyle()} />
-                </div>
-            );
-        }
+        return (
+            <div className={`vote-pie ${voted && 'vote-pie--empty'}`} data-title="" style={style}>
+                <PieChart slices={pieChartStyle} />
+            </div>
+        );
     }
 });
 

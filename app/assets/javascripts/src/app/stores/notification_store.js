@@ -39,6 +39,7 @@ const notificationStore = Reflux.createStore({
                 if (count >= 0) {
                     return NotificationActions.fetchNew();
                 }
+                
             });
     },
 
@@ -116,7 +117,7 @@ const notificationStore = Reflux.createStore({
                     .notifications
                     .withMutations(mutMap => {
                         notifications.notifications.map(n => {
-                            mutMap.set(n.id, n);
+                            return mutMap.set(n.id, n);
                         });
                     }).sort((a, b) => {
                         return new Date(b.created_at) - new Date(a.created_at);
