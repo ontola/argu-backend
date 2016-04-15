@@ -7,9 +7,7 @@ FactoryGirl.define do
     end
 
     after(:create) do |profile, evaluator|
-      if (profile.profileable.is_a?(Page))
-        profile.update name: 'page_profile'
-      end
+      profile.update name: 'page_profile' if profile.profileable.is_a?(Page)
     end
 
     factory :profile_with_memberships do

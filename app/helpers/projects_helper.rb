@@ -10,8 +10,8 @@ module ProjectsHelper
 
   def start_end_title_short_string(phase)
     [
-      phase.start_date && "#{l(phase.start_date, format: :date)}",
-      phase.end_date && "#{l(phase.end_date, format: :date)}"
+      phase.start_date && l(phase.start_date, format: :date).to_s,
+      phase.end_date && l(phase.end_date, format: :date).to_s
     ].compact.join(' - ')
   end
 end

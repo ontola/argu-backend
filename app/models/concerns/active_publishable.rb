@@ -2,21 +2,23 @@ module ActivePublishable
   extend ActiveSupport::Concern
 
   included do
-    scope :published, -> do
+    def self.published
       scope = where('published_at <= ?', DateTime.current)
-      if self.column_names.include?('ends_at')
+      if column_names.include?('ends_at')
         scope = scope.where('ends_at IS NULL OR ends_at > ?',
                             DateTime.current)
       end
       scope
     end
-    scope :unpublished, -> do
+
+    def self.unpublished
       where('published_at IS NULL OR published_at > ?',
             DateTime.current)
     end
-    scope :ended, -> do
+
+    def self.ended
       scope = where('published_at IS NOT NULL')
-      if self.column_names.include?('ends_at')
+      if column_names.include?('ends_at')
         scope = scope.where('ends_at IS NOT NULL AND ends_at < ?',
                             DateTime.current)
       end

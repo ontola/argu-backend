@@ -194,7 +194,7 @@ Argu::Application.routes.draw do
     post '/dismissals',
          to: 'static_pages#dismiss_announcement'
     get '/dismissals',
-         to: 'static_pages#dismiss_announcement'
+        to: 'static_pages#dismiss_announcement'
   end
 
   authenticate :user, ->(p) { p.profile.has_role? :staff } do

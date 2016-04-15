@@ -29,12 +29,14 @@ module Portal
       end
       @cb.on(:create_announcement_failed) do |announcement|
         respond_to do |format|
-          format.html { render settings_location,
-                               locals: {
-                                   announcement: announcement,
-                                   tab: 'announcements/new',
-                                   active: 'announcements'
-                               } }
+          format.html do
+            render settings_location,
+                   locals: {
+                     announcement: announcement,
+                     tab: 'announcements/new',
+                     active: 'announcements'
+                   }
+          end
         end
       end
       @cb.commit
