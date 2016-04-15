@@ -15,16 +15,16 @@ export const CurrentProfile = React.createClass({
         };
     },
 
-    onActorChange (data) {
-        this.setState(data);
-    },
-
     componentDidMount () {
         this.unsubscribe = actorStore.listen(this.onActorChange);
     },
 
     componentWillUnmount () {
         this.unsubscribe();
+    },
+
+    onActorChange (data) {
+        this.setState(data);
     },
 
     render () {

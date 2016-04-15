@@ -8,22 +8,20 @@ export function processContentForMetaTags (event, contents, options) {
             }
         }
     });
-    toDelete.forEach(function (i) {
+    toDelete.forEach(i => {
         contents.splice(i, 1);
     });
 }
 
 export function removeMetaContent () {
-    "use strict";
-    let meta = document.getElementById('meta_content');
+    const meta = document.getElementById('meta_content');
     if (meta) {
         typeof meta.remove === 'undefined' ? meta.removeNode() : meta.remove();
     }
 }
 
 export function replaceHeadElement (elem) {
-    "use strict";
-    let documentHeaderElement = document.getElementById(elem.id);
+    const documentHeaderElement = document.getElementById(elem.id);
 
     if (documentHeaderElement == null || (documentHeaderElement) === "undefined") {
         document.head.appendChild(elem);
@@ -41,7 +39,7 @@ export function replaceHeadElement (elem) {
 }
 
 export default {
-    processContentForMetaTags: processContentForMetaTags,
-    removeMetaContent: removeMetaContent,
-    replaceHeadElement: replaceHeadElement
+    processContentForMetaTags,
+    removeMetaContent,
+    replaceHeadElement
 };

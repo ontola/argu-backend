@@ -1,10 +1,10 @@
 /*globals $, Bugsnag, ga */
-import Mine from './windowize';
-Mine();
+import mine from './windowize';
+mine();
 
 import 'whatwg-fetch';
 import './application/meta';
-import activityFeed from './application/activity_feed';
+import './application/activity_feed';
 import alert from './application/alert';
 import ui from './application/ui';
 import n from './application/notifications';

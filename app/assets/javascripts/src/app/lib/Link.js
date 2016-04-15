@@ -12,8 +12,8 @@ import store from '../stores/store';
  */
 export const Link = React.createClass({
     propTypes: {
-        activeStyle: React.PropTypes.object,
         activeClassName: React.PropTypes.string,
+        activeStyle: React.PropTypes.object,
         children: React.PropTypes.oneOfType([
             React.PropTypes.arrayOf(React.PropTypes.node),
             React.PropTypes.node
@@ -21,8 +21,8 @@ export const Link = React.createClass({
         className: React.PropTypes.string,
         hash: React.PropTypes.string,
         isButton: React.PropTypes.bool,
-        onlyActiveOnIndex: React.PropTypes.bool,
         onClick: React.PropTypes.func,
+        onlyActiveOnIndex: React.PropTypes.bool,
         query: React.PropTypes.object,
         state: React.PropTypes.object,
         style: React.PropTypes.object,

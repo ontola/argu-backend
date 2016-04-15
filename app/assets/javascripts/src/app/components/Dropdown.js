@@ -248,6 +248,12 @@ export const DropdownContent = React.createClass({
         };
     },
 
+    componentWillUnmount () {
+        window.clearTimeout(this.enterTimeout);
+        window.clearTimeout(this.leaveTimeout);
+        window.clearTimeout(this.innerLeaveTimeout);
+    },
+
     componentWillEnter (callback) {
         this.setState(
             { appearState: 'dropdown-enter' },
@@ -269,12 +275,6 @@ export const DropdownContent = React.createClass({
                         () => { this.innerLeaveTimeout = window.setTimeout(callback, 200) });
                 }, 0);
             });
-    },
-
-    componentWillUnmount () {
-        window.clearTimeout(this.enterTimeout);
-        window.clearTimeout(this.leaveTimeout);
-        window.clearTimeout(this.innerLeaveTimeout);
     },
 
     render () {
@@ -302,6 +302,7 @@ export const DropdownContent = React.createClass({
                         } else if (item.type === 'fb_share') {
                             return <FBShareItem key={childI} done={close} {...item} />;
                         }
+                        return <div key={childI} />
                     });
 
                     return (
@@ -374,9 +375,17 @@ export const LinkItem = React.createClass({
 
         return (<div className={this.props.type}>
             {divider}
-            <a href={this.props.url} target={target} data-remote={remote} data-method={method} data-confirm={confirm}
-               onMouseDownCapture={this.handleMouseDown} data-turbolinks={turbolinks} data-sort-value={sortValue}
-               data-filter-value={filterValue} data-display-setting={displaySetting} className={className}>
+            <a href={this.props.url}
+               target={target}
+               data-remote={remote}
+               data-method={method}
+               data-confirm={confirm}
+               onMouseDownCapture={this.handleMouseDown}
+               data-turbolinks={turbolinks}
+               data-sort-value={sortValue}
+               data-filter-value={filterValue}
+               data-display-setting={displaySetting}
+               className={className}>
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
@@ -482,8 +491,12 @@ export const ActorItem = React.createClass({
 
         return (<div className={`link ${this.props.type}`}>
             {divider}
-            <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow"
-               onTouchEnd={this.handleTap} onClickCapture={this.handleClick} data-turbolinks={turbolinks}>
+            <a href='#'
+               onMouseDownCapture={this.handleMouseDown}
+               rel="nofollow"
+               onTouchEnd={this.handleTap}
+               onClickCapture={this.handleClick}
+               data-turbolinks={turbolinks}>
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
@@ -516,16 +529,16 @@ export const CurrentUserTrigger = React.createClass({
         };
     },
 
-    onActorChange (data) {
-        this.setState(data);
-    },
-
     componentDidMount () {
         this.unsubscribe = actorStore.listen(this.onActorChange);
     },
 
     componentWillUnmount () {
         this.unsubscribe();
+    },
+
+    onActorChange (data) {
+        this.setState(data);
     },
 
     render () {

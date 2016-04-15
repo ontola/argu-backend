@@ -20,6 +20,7 @@ _bundle.js.map
 _globbed_components.js
 _globbed_components.js.map
 translations_*.js
+translations_*
 app/assets/javascripts/i18n/translations.js
 node_modules
 /vendor/assets/bower_components

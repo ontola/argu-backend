@@ -43,11 +43,6 @@ export const CombiVote = React.createClass({
         };
     },
 
-    onActorChange (actor) {
-        this.refreshGroups();
-        this.setState({ actor });
-    },
-
     componentDidMount () {
         this.unsubscribe = actorStore.listen(this.onActorChange);
     },
@@ -68,8 +63,12 @@ export const CombiVote = React.createClass({
                 });
     },
 
+    setVote (vote) {
+        this.setState(vote);
+    },
+
     render () {
-        let voteButtonsComponent, voteResultsComponent, groupResponsesComponent;
+        let voteButtonsComponent, groupResponsesComponent;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
             voteButtonsComponent = <VoteButtons {...this.state} {...this.props}/>;
             voteResultsComponent = <VoteResults {...this.state} showResults={this.state.currentVote !== 'abstain'}/>;

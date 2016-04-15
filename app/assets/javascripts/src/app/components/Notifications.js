@@ -73,7 +73,7 @@ export const NotificationDropdown = React.createClass({
         };
     },
 
-    onMouseEnterFetch () {
+    handleMouseEnterFetch () {
         if (!this.state.opened) {
             NotificationActions.fetchNew();
         }
@@ -97,7 +97,7 @@ export const NotificationDropdown = React.createClass({
 
         return (<div tabIndex="1"
                      className={dropdownClass}
-                     onMouseEnter={this.onMouseEnterFetch}
+                     onMouseEnter={this.handleMouseEnterFetch}
                      onMouseLeave={this.onMouseLeave} >
             <NotificationTrigger handleClick={this.handleClick} handleTap={this.handleTap} className='navbar-item' {...this.props} />
             <div className="reference-elem" style={{ visibility: 'hidden', overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute' }}>{dropdownContent}</div>
@@ -122,18 +122,18 @@ export const NotificationTrigger = React.createClass({
         };
     },
 
-    onNotificationChange (data) {
-        if (typeof data.unread !== 'undefined') {
-            this.setState({ unread: data.unread });
-        }
-    },
-
     componentDidMount () {
         this.unsubscribe = notificationStore.listen(this.onNotificationChange);
     },
 
     componentWillUnmount () {
         this.unsubscribe();
+    },
+
+    onNotificationChange (data) {
+        if (typeof data.unread !== 'undefined') {
+            this.setState({ unread: data.unread });
+        }
     },
 
     render () {
@@ -161,6 +161,17 @@ export const Notifications = React.createClass({
         return this.props;
     },
 
+    componentDidMount () {
+        NotificationActions.notificationUpdate(this.props);
+        this.unsubscribe = notificationStore.listen(this.onNotificationChange);
+        this.scrollLock(ReactDOM.findDOMNode(this).parentElement);
+    },
+
+    componentWillUnmount () {
+        this.unsubscribe();
+        this.scrollRelease();
+    },
+
     markAsRead () {
         NotificationActions.markAllAsRead();
     },
@@ -183,17 +194,6 @@ export const Notifications = React.createClass({
                     this.setState({ loadMore: data.moreAvailable });
                 }
             });
-    },
-
-    componentDidMount () {
-        NotificationActions.notificationUpdate(this.props);
-        this.unsubscribe = notificationStore.listen(this.onNotificationChange);
-        this.scrollLock(ReactDOM.findDOMNode(this).parentElement);
-    },
-
-    componentWillUnmount () {
-        this.unsubscribe();
-        this.scrollRelease();
     },
 
     render () {

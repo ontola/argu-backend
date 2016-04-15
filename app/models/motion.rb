@@ -196,7 +196,7 @@ class Motion < ActiveRecord::Base
       .order(votes_pro_count: :desc)
       .uniq
       .limit(5)
-      .pluck(:id, :title, :pro, :votes_pro_count, :content)
+      .pluck(:id, :title, :pro, :votes_pro_count, :content, :comments_count)
   end
 
   # Same as {Argument#top_arguments_pro} but plucks only :id, :title, :pro, and :votes_pro_count
@@ -207,7 +207,7 @@ class Motion < ActiveRecord::Base
       .order(votes_pro_count: :desc)
       .uniq
       .limit(5)
-      .pluck(:id, :title, :pro, :votes_pro_count, :content)
+      .pluck(:id, :title, :pro, :votes_pro_count, :content, :comments_count)
   end
 
   def total_vote_count
