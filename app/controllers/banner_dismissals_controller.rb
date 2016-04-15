@@ -8,7 +8,7 @@ class BannerDismissalsController < AuthorizedController
     respond_to do |format|
       if dismissal.save
         # Cookie permeation cannot be done from a model
-        stubborn_hmset *dismissal.stubborn_params
+        stubborn_hmset(*dismissal.stubborn_params)
         format.json { head 204 }
       else
         format.json { head 500 }
@@ -37,10 +37,10 @@ class BannerDismissalsController < AuthorizedController
   def check_if_member
     if authenticated_resource!.present?
       case authenticated_resource!.banner.audience.to_sym
-        when :guests then !current_user
-        when :users then current_user && !current_user.member_of?(authenticated_context)
-        when :members then current_user && current_user.member_of?(authenticated_context)
-        when :everyone then true
+      when :guests then !current_user
+      when :users then current_user && !current_user.member_of?(authenticated_context)
+      when :members then current_user && current_user.member_of?(authenticated_context)
+      when :everyone then true
       end
     else
       super

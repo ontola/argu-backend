@@ -179,7 +179,7 @@ RSpec.feature 'Banners', type: :feature do
   ####################################
 
   scenario 'Manager creates a banner' do
-    login_as(holland.page.owner.profileable, :scope => :user)
+    login_as(holland.page.owner.profileable, scope: :user)
 
     new_banner = attributes_for(:banner, :everyone)
 
@@ -200,7 +200,7 @@ RSpec.feature 'Banners', type: :feature do
   end
 
   scenario 'Manager views banner settings' do
-    login_as(holland.page.owner.profileable, :scope => :user)
+    login_as(holland.page.owner.profileable, scope: :user)
 
     visit settings_forum_path(holland, tab: :banners)
     within('#banners-published') do

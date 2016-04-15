@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
   end
 
   def member_of?(forum)
-    self.profile.member_of?(forum)
+    profile.member_of?(forum)
   end
 
   def password_required?

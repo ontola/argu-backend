@@ -4,8 +4,6 @@ class Portal::PortalBaseController < ApplicationController
   private
 
   def authorize_staff
-    unless current_user && current_user.profile.has_role?(:staff)
-      raise Argu::NotAuthorizedError
-    end
+    raise Argu::NotAuthorizedError unless current_user && current_user.profile.has_role?(:staff)
   end
 end

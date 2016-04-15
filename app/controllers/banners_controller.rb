@@ -21,12 +21,14 @@ class BannersController < AuthorizedController
     end
     create_service.on(:create_banner_failed) do |banner|
       respond_to do |format|
-        format.html { render 'forums/settings',
-                             locals: {
-                                 banner: banner,
-                                 tab: 'banners/new',
-                                 active: 'banners'
-                             } }
+        format.html do
+          render 'forums/settings',
+                 locals: {
+                   banner: banner,
+                   tab: 'banners/new',
+                   active: 'banners'
+                 }
+        end
       end
     end
     create_service.commit
@@ -35,9 +37,9 @@ class BannersController < AuthorizedController
   def edit
     render 'forums/settings',
            locals: {
-               banner: authenticated_resource,
-               tab: 'banners/edit',
-               active: 'banners'
+             banner: authenticated_resource,
+             tab: 'banners/edit',
+             active: 'banners'
            }
   end
 
@@ -49,9 +51,9 @@ class BannersController < AuthorizedController
         format.html do
           render 'forums/settings',
                  locals: {
-                     banner: authenticated_resource,
-                     tab: 'banners/edit',
-                     active: 'banners'
+                   banner: authenticated_resource,
+                   tab: 'banners/edit',
+                   active: 'banners'
                  }
         end
       end
