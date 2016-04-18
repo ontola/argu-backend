@@ -10,8 +10,8 @@ RSpec.feature 'Manager', type: :feature do
 
     visit(settings_forum_path(nederland, tab: :managers))
 
-    click_link('Add manager')
-    within('form.membership') do
+    click_link('Add Manager')
+    within('form.group') do
       selector =
         if Capybara.current_driver == :poltergeist
           '.Select-control .Select-placeholder'
@@ -22,7 +22,7 @@ RSpec.feature 'Manager', type: :feature do
       input_field.send_keys user.first_name
       find('.Select-option').click
 
-      click_button 'Create Membership'
+      click_button 'Save'
     end
 
     expect(
@@ -36,8 +36,8 @@ RSpec.feature 'Manager', type: :feature do
 
     visit(settings_forum_path(nederland, tab: :managers))
 
-    click_link('Add manager')
-    within('form.membership') do
+    click_link('Add Manager')
+    within('form.group') do
       selector =
         if Capybara.current_driver == :poltergeist
           '.Select-control .Select-placeholder'
@@ -48,7 +48,7 @@ RSpec.feature 'Manager', type: :feature do
       input_field.send_keys member.first_name
       find('.Select-option').click
 
-      click_button 'Create Membership'
+      click_button 'Save'
     end
 
     expect(

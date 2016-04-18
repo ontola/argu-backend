@@ -33,9 +33,9 @@ class CommentsTest < ActionDispatch::IntegrationTest
                    at: access_token.access_token)
     assert_response :success
 
-    post forum_memberships_path(venice.url,
-                                r: forum_path(venice.url),
-                                at: access_token.access_token)
+    post group_membership_index_path(venice.members_group,
+                                     r: forum_path(venice.url),
+                                     at: access_token.access_token)
     assert_redirected_to new_user_session_path(r: forum_path(venice.url))
     assert_not_a_user
 

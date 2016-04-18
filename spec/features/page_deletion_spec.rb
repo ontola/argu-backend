@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Page deletion', type: :feature do
+  let!(:default_forum) { create(:setting, key: 'default_forum', value: 'freetown') }
   define_freetown
   let(:user) { create(:user) }
   let(:motion) do
@@ -73,9 +74,9 @@ RSpec.feature 'Page deletion', type: :feature do
   end
 
   scenario 'owner should not delete destroy' do
-    argument.update(created_at: 1.day.ago)
-    motion.update(created_at: 1.day.ago)
-    comment
+    [argument, motion, question, group_response, project, blog_post, comment].each do |resource|
+      resource.update(created_at: 1.day.ago)
+    end
     freetown.update(page_id: forum_page.id)
 
     login_as(user, scope: :user)

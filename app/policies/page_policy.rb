@@ -30,7 +30,7 @@ class PagePolicy < RestrictivePolicy
 
     # Is the user a manager of the page or of the forum?
     def is_manager?
-      (manager if user && user.profile.page_managerships.where(page: record).present?) ||
+      (manager if user && user.profile.managerships.for_pages.where(edges: {owner_id: record.id}).present?) ||
         is_owner? ||
         staff?
     end
@@ -111,18 +111,14 @@ class PagePolicy < RestrictivePolicy
     rule is_owner?, staff?
   end
 
-  # Whether the user can add (a specified) manager(s)
+  # Whether the user can add group_member(s)
   # Only the owner can do this.
-  def add_manager?(user)
+  def add_group_member?
     rule is_owner?
   end
 
   def pages_left?
     member if user && user.profile.pages.length < max_allowed_pages
-  end
-
-  def remove_manager?(user)
-    rule is_owner?
   end
 
   def statistics?

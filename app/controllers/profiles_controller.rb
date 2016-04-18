@@ -64,7 +64,7 @@ class ProfilesController < ApplicationController
         updated = updated && @profile.profileable.update_attributes(user_profileable_params)
         if (!@resource.finished_intro?) && has_valid_token?(@resource)
           get_access_tokens(@resource).compact.each do |at|
-            @profile.memberships.find_or_create_by(forum: at.item) if at.item.class == Forum
+            @profile.memberships.find_or_create_by(group: at.item.members_group) if at.item.class == Forum
           end
         end
         @resource.update_column :finished_intro, true

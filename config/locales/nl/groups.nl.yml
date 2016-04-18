@@ -7,5 +7,3 @@ nl:
     new: "Groep toevoegen"
     destroy:
       body: "%{group_memberships_count} groepsleden met de daarbij behorende %{group_resonses_count} reacties zullen worden verwijderd."
-    member:
-      new: "Groepslid toevoegen"

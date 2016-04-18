@@ -13,13 +13,17 @@ class Profile < ActiveRecord::Base
   before_destroy :anonymize_dependencies
   has_many :access_tokens, dependent: :destroy
   has_many :activities, as: :owner, dependent: :restrict_with_exception
-  has_many :forums, through: :memberships
+  has_many :edges, through: :groups
   has_many :group_memberships, foreign_key: :member_id, inverse_of: :member, dependent: :destroy
   has_many :groups, through: :group_memberships
-  has_many :memberships, dependent: :destroy
-  has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
-  has_many :page_memberships, dependent: :destroy
-  has_many :page_managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
+  has_many :memberships,
+           -> {joins(group: :edge).where(groups: {shortname: 'members'})},
+           foreign_key: :member_id,
+           class_name: 'GroupMembership'
+  has_many :managerships,
+           -> {joins(group: :edge).where(groups: {shortname: 'managers'})},
+           foreign_key: :member_id,
+           class_name: 'GroupMembership'
   has_many :pages, inverse_of: :owner, foreign_key: :owner_id, dependent: :restrict_with_exception
   has_many :votes, inverse_of: :voter, foreign_key: :voter_id, dependent: :destroy
   # User content
@@ -73,12 +77,18 @@ class Profile < ActiveRecord::Base
     profileable.try :email
   end
 
+  def forums
+    Forum
+      .where(id: memberships.for_forums.pluck('edges.owner_id'))
+      .select(:id, :slug, :name, :profile_photo)
+  end
+
   def profile_frozen?
     has_role? 'frozen'
   end
 
   def memberships_ids
-    memberships.pluck(:forum_id).join(',').presence
+    memberships.for_forums.pluck('DISTINCT owner_id').join(',').presence
   end
 
   def owner
@@ -122,12 +132,23 @@ class Profile < ActiveRecord::Base
     profileable.class == Page
   end
 
-  def member_of?(_forum)
-    _forum.present? && memberships.where(forum_id: _forum.is_a?(Forum) ? _forum.id : _forum).present?
+  def member_of?(tenant)
+    tenant.present? &&
+      memberships
+        .where(groups: {
+          edge_id: tenant.edge.id
+        })
+        .present?
   end
 
-  def owner_of(forum)
-    self == forum.page.owner
+  def owner_of(tenant)
+    return false unless tenant.present?
+    case tenant
+    when Forum
+      self == tenant.page.owner
+    when Page
+      self == tenant.owner
+    end
   end
 
   def unfreeze

@@ -41,7 +41,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
 
     assert_differences [['helsinki_at.reload.sign_ups', 0],
                         ['helsinki_at.reload.usages', 0]] do
-      post forum_memberships_path(helsinki, r: forum_path(helsinki), at: helsinki_at.access_token)
+      post group_membership_index_path(helsinki.members_group, r: forum_path(helsinki), at: helsinki_at.access_token)
     end
     assert_redirected_to new_user_session_path(r: forum_path(helsinki))
 
@@ -72,9 +72,9 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     get forum_path(helsinki.url, at: helsinki_at.access_token)
     assert_response :success
 
-    post forum_memberships_path(helsinki.url,
-                                r: hidden_forum_path,
-                                at: helsinki_at.access_token)
+    post group_membership_index_path(helsinki.members_group,
+                                     r: hidden_forum_path,
+                                     at: helsinki_at.access_token)
     assert_redirected_to new_user_session_path(r: hidden_forum_path)
 
     follow_redirect!

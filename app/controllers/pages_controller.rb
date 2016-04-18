@@ -5,7 +5,7 @@ class PagesController < ApplicationController
     authorize @user,:update?
     @pages = Page
                .where(id: @user.profile.pages.pluck(:id)
-                            .concat(@user.profile.page_managerships.pluck(:page_id)))
+                            .concat(@user.profile.managerships.for_pages.pluck('edges.owner_id')))
                .distinct
     @_pundit_policy_scoped = true
 
@@ -132,7 +132,7 @@ class PagesController < ApplicationController
   def transfer!
     @page = Page.find_via_shortname params[:id]
     authorize @page, :transfer?
-    @new_profile = User.find_via_shortname!(params[:profile_id]).profile
+    @new_profile = User.find_via_shortname!(params[:shortname]).profile
 
     respond_to do |format|
       if @page.transfer_to!(params[:page][:repeat_name], @new_profile)

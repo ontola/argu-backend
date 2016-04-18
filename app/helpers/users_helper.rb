@@ -56,9 +56,9 @@ module UsersHelper
         begin
           forum = forum_from_r_action(user) || preferred_forum(user.profile)
           if forum.present? && policy(forum).join?
-            CreateMembership
-              .new(forum.edge,
-                   attributes: {profile_id: user.profile.id},
+            CreateGroupMembership
+              .new(forum.members_group,
+                   attributes: {member: user.profile},
                    options: {creator: user.profile, publisher: user})
               .commit
           end

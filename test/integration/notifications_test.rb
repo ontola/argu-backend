@@ -8,16 +8,16 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   let(:argument) { create(:argument, :with_follower, parent: motion.edge) }
   let(:comment) { create(:comment, parent: argument.edge) }
   let(:group) { create(:group, visibility: :discussion, parent: freetown.edge) }
-  let(:group_membership) { create(:group_membership, group: group, member: user.profile) }
+  let(:group_membership) { create(:group_membership, parent: group, member: user.profile) }
   let!(:random_follow) { create(:follow, followable: create_forum.edge) }
 
   ####################################
-  # As User
+  # As Member
   ####################################
-  let(:user) { create_member(freetown) }
+  let(:member) { create_member(freetown) }
 
-  test 'user should create and destroy motion with notifications' do
-    sign_in user
+  test 'member should create and destroy motion with notifications' do
+    sign_in member
 
     assert_differences([['Motion.count', 1], ['Notification.count', 1]]) do
       post forum_motions_path(freetown),
@@ -29,8 +29,8 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'user should create and destroy question with notifications' do
-    sign_in user
+  test 'member should create and destroy question with notifications' do
+    sign_in member
 
     assert_differences([['Question.count', 1], ['Notification.count', 1]]) do
       post forum_questions_path(freetown),
@@ -42,9 +42,9 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'user should create and destroy argument with notifications' do
+  test 'member should create and destroy argument with notifications' do
     # Both the motion publisher as the motion follower will receive a notification
-    sign_in user
+    sign_in member
     motion
 
     assert_differences([['Argument.count', 1], ['Notification.count', 2]]) do
@@ -58,10 +58,10 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'user should create and destroy group_response with notifications' do
+  test 'member should create and destroy group_response with notifications' do
     # Both the motion publisher as the motion follower will receive a notification
-    sign_in user
-    group_membership
+    sign_in member
+    create(:group_membership, parent: group, shortname: member.url)
     motion
 
     assert_differences([['GroupResponse.count', 1], ['Notification.count', 2]]) do
@@ -77,9 +77,9 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'user should create and destroy comment with notifications' do
+  test 'member should create and destroy comment with notifications' do
     # Both the argument publisher as the argument follower will receive a notification
-    sign_in user
+    sign_in member
     argument
 
     assert_differences([['Comment.count', 1], ['Notification.count', 2]]) do
@@ -95,9 +95,10 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   ####################################
   # As Owner
   ####################################
+  let(:owner) { create_owner(freetown) }
 
   test 'owner should create and destroy project with notifications' do
-    sign_in create_owner(freetown)
+    sign_in owner
 
     assert_differences([['Project.count', 1]]) do
       post forum_projects_path(freetown),
@@ -117,7 +118,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
   end
 
   test 'owner should create and destroy blog_post with notifications' do
-    sign_in create_owner(freetown)
+    sign_in owner
 
     assert_differences([['BlogPost.count', 1]]) do
       post project_blog_posts_path(project),

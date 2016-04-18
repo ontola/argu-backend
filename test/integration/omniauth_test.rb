@@ -41,7 +41,7 @@ class OmniauthTest < ActionDispatch::IntegrationTest
     get user_omniauth_authorize_path(:facebook)
     assert_redirected_to user_omniauth_callback_path(:facebook)
 
-    assert_difference 'Membership.count' do
+    assert_difference 'GroupMembership.count' do
       follow_redirect!
       assert_redirected_to setup_users_path
     end

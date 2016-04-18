@@ -5,12 +5,6 @@ class QuestionsControllerTest < ActionController::TestCase
 
   define_freetown
 
-  setup do
-    @freetown = freetown
-    @freetown_owner = freetown.edge.parent.owner.owner.profileable
-    create(:membership, parent: @freetown.edge, profile: @freetown_owner.profile)
-  end
-
   subject do
     create(:question,
            :with_motions,
@@ -312,16 +306,17 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
+  let(:owner) { create_owner(freetown) }
   let(:page_question) do
     create(:question,
-           parent: @freetown.edge,
-           creator: @freetown_owner.profile)
+           parent: freetown.edge,
+           creator: owner.profile)
   end
-  let(:owner_forum_question) { create(:question, parent: @freetown.edge) }
+  let(:owner_forum_question) { create(:question, parent: freetown.edge) }
 
   test 'owner should put update on page owner own question' do
-    sign_in @freetown_owner
-    @controller.instance_variable_set :@current_profile, @freetown.page.profile
+    sign_in owner
+    @controller.instance_variable_set :@current_profile, freetown.page.profile
 
     put :update,
         id: page_question,
@@ -337,7 +332,7 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   test 'owner should delete trash' do
-    sign_in @freetown_owner
+    sign_in owner
     owner_forum_question # trigger
 
     assert_differences([['Question.trashed(false).count', -1],
@@ -346,11 +341,11 @@ class QuestionsControllerTest < ActionController::TestCase
              id: owner_forum_question
     end
 
-    assert_redirected_to @freetown
+    assert_redirected_to freetown
   end
 
   test 'owner should delete destroy' do
-    sign_in @freetown_owner
+    sign_in owner
     owner_forum_question.trash
 
     assert_differences([['Question.trashed(false).count', 0],
@@ -360,7 +355,7 @@ class QuestionsControllerTest < ActionController::TestCase
              id: owner_forum_question
     end
 
-    assert_redirected_to @freetown
+    assert_redirected_to freetown
   end
 
   ####################################

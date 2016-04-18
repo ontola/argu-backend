@@ -1,18 +1,11 @@
 class Forum < ActiveRecord::Base
-  include ArguBase, Attribution, Edgeable, Shortnameable, Flowable, Parentable, Photoable,
-          ProfilePhotoable
+  include ArguBase, Attribution, Edgeable, Shortnameable, Flowable, Photoable, ProfilePhotoable,
+          Parentable, Groupable
 
   belongs_to :page, inverse_of: :forums
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
   has_many :activities, as: :trackable
   has_many :banners, inverse_of: :forum
-  has_many :groups, dependent: :destroy
-  has_many :managerships, -> { where(role: Membership.roles[:manager]) }, class_name: 'Membership'
-  has_many :managers, through: :managerships, source: :profile
-  has_many :memberships, dependent: :destroy
-  has_many :members, through: :memberships, source: :profile
-  accepts_nested_attributes_for :memberships
-  has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
   has_many :shortnames, inverse_of: :forum
   has_many :stepups, inverse_of: :forum
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
@@ -108,7 +101,7 @@ class Forum < ActiveRecord::Base
   end
 
   def profile_is_member?(profile)
-    memberships.where(profile: profile).present?
+    memberships.where(member: profile).present?
   end
 
   def publisher

@@ -1,0 +1,4 @@
+en:
+  group_memberships:
+    type: "Membership"
+    new: "Add %{singular}"

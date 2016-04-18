@@ -8,6 +8,6 @@ div[class=['.modal-container', !!defined?(no_close) ? 'no-close' : nil ].compact
         .form
           p= t('forums.join.body', forum: forum.display_name)
           .center
-            .margin-bottom=link_to forum_memberships_path(forum.url, r: r||=nil), data: {method: :post, turbolinks: 'false'}, rel: :nofollow, class: 'btn btn-focus', id: 'join-forum'
+            .margin-bottom=link_to group_membership_index_path(forum.members_group, r: r||=nil), data: {method: :post, turbolinks: 'false'}, rel: :nofollow, class: 'btn btn-focus', id: 'join-forum'
               span.fa.fa-plus
               span.icon-left= t('forums.join.title')

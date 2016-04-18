@@ -91,7 +91,7 @@ module HeaderHelper
   end
 
   def profile_membership_items
-    ids = current_profile.present? ? current_profile.memberships.pluck(:forum_id) : []
+    ids = current_profile.present? ? current_profile.memberships.for_forums.pluck('DISTINCT owner_id') : []
     Shortname
       .shortname_owners_for_klass('Forum', ids)
       .includes(owner: :default_profile_photo)

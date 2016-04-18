@@ -12,8 +12,8 @@ module Argu
 
       module InstanceMethods
         include TestResources::InstanceMethods
-        SERVICE_MODELS = %i(argument blog_post comment forum group_response membership motion phase banner group
-                            project question vote).freeze
+        SERVICE_MODELS = %i(argument blog_post comment forum group_response group_membership motion
+                            phase banner group project question vote).freeze
 
         def assert_not_a_member
           assert_equal true, assigns(:_not_a_member_caught)
@@ -77,28 +77,28 @@ module Argu
 
         def create_manager(forum, user = nil)
           user ||= create(:user)
-          create(:membership,
-                 forum: forum,
-                 parent: forum.edge,
-                 role: Membership.roles[:manager],
-                 profile: user.profile)
+          create(:group_membership,
+                 parent: forum.members_group,
+                 shortname: user.url)
+          create(:group_membership,
+                 parent: forum.managers_group,
+                 shortname: user.url)
           user
         end
 
         def create_member(forum, user = nil)
           user ||= create(:user)
-          create(:membership,
-                 parent: forum.edge,
-                 forum: forum,
-                 profile: user.profile)
+          create(:group_membership,
+                 parent: forum.members_group,
+                 shortname: user.url)
           user
         end
 
         def create_group_member(group, user_or_page = nil)
-          user_or_page ||= create_member(group.forum)
+          user_or_page ||= create_member(group.owner)
           create(:group_membership,
-                 group: group,
-                 member: user_or_page.profile)
+                 parent: group,
+                 shortname: user_or_page.url)
           user_or_page
         end
 

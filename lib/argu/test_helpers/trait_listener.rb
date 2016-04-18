@@ -91,11 +91,11 @@ module Argu
         FactoryGirl.create(
           :group,
           visibility: :hidden,
-          forum: @resource.forum)
+          edge: @resource.forum.edge)
         FactoryGirl.create(
           :group,
           visibility: :visible,
-          forum: @resource.forum)
+          edge: @resource.forum.edge)
       end
 
       # Adds 2 published and 2 trashed motions to the resource

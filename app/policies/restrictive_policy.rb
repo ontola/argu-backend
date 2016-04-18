@@ -58,16 +58,21 @@ class RestrictivePolicy
     end
 
     def is_member?
-      member if user && user.profile.member_of?(record.forum || record.forum_id)
+      member if user && user.profile.member_of?(record.forum)
     end
 
     def is_moderator?
       c_model = record.try(:forum) || context.context_model
       if user.present? && c_model.present?
         # Stepups within the forum based if they apply to the user or one of its group memberships
-        forum_stepups = c_model.stepups.where('user_id=? OR group_id=?',
+        forum_stepups = c_model.stepups.where('user_id=? OR group_id IN (?)',
                                               user.id,
-                                              user.profile.groups.where(forum: c_model).pluck(:id))
+                                              user
+                                                .profile
+                                                .groups
+                                                .joins(:edge)
+                                                .where("edges.owner_type = 'Forum' AND edges.owner_id = ?", c_model.id)
+                                                .pluck(:id))
         # Get the tuples of the entire parent chain
         cc =
           if record.is_a?(ActiveRecord::Base)

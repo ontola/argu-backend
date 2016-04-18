@@ -7,7 +7,7 @@
           h2= t('forums.my')
           .group
             ul.box-list-links
-              -current_profile.forums.select(:id, :slug, :name, :profile_photo).each do |o|
+              -current_profile.forums.each do |o|
                 li
                   =link_to forum_path(o)
                     =image_tag o.default_profile_photo.url(:icon), size: '16x16'

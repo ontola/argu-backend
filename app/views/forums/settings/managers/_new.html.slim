@@ -1,5 +1,5 @@
 =set_title t('forums.settings.title')
-=semantic_form_for(@membership, url: url_for([@forum, :managers]), method: :post) do |f|
+=semantic_form_for(@group, url: group_membership_index_path(@group), method: :post) do |f|
   - @membership.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('newe_type', type: t('forums.settings.manager')) do

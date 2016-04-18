@@ -257,8 +257,8 @@ ActiveRecord::Schema.define(version: 20160707114454) do
   add_index "forums", ["visibility"], name: "index_forums_on_visibility", using: :btree
 
   create_table "group_memberships", force: :cascade do |t|
-    t.integer  "group_id"
-    t.integer  "member_id"
+    t.integer  "group_id",    null: false
+    t.integer  "member_id",   null: false
     t.integer  "profile_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -296,10 +296,11 @@ ActiveRecord::Schema.define(version: 20160707114454) do
     t.integer  "visibility",               default: 0
     t.boolean  "deletable",                default: true
     t.text     "description"
+    t.string   "shortname",                               null: false
+    t.integer  "edge_id",                                 null: false
   end
 
-  add_index "groups", ["forum_id", "name"], name: "index_groups_on_forum_id_and_name", unique: true, using: :btree
-  add_index "groups", ["forum_id"], name: "index_groups_on_forum_id", using: :btree
+  add_index "groups", ["edge_id", "shortname"], name: "index_groups_on_edge_id_and_shortname", unique: true, using: :btree
 
   create_table "identities", force: :cascade do |t|
     t.integer  "user_id"
@@ -785,7 +786,11 @@ ActiveRecord::Schema.define(version: 20160707114454) do
   add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "forums", "pages"
   add_foreign_key "forums", "places"
+  add_foreign_key "group_memberships", "groups"
+  add_foreign_key "group_memberships", "profiles"
+  add_foreign_key "group_memberships", "profiles", column: "member_id"
   add_foreign_key "group_responses", "users", column: "publisher_id"
+  add_foreign_key "groups", "edges"
   add_foreign_key "identities", "users"
   add_foreign_key "motions", "forums"
   add_foreign_key "motions", "places"

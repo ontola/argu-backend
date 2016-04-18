@@ -17,6 +17,7 @@ en:
         transferred: "Organization transferred"
         users_only: "Only users can own organizations."
         transfer:
+          header: "Transfer"
           confirm:
             header: "Are you absolutely sure?"
             body_html: "Transferring this organization means that the ownership of all its contents (including forums!) will be transferred to a different user."

@@ -5,17 +5,18 @@ ul.boxed-list
       h3
         =group.display_name
         span[class="fa fa-#{group_visibility_icon_for(group)}"]
-      table.styled
-        tbody
-          -group.group_memberships.each do |member|
-            tr
-              td= member.member.display_name
-              td= link_to group_membership_path(member), data: {method: :delete, turbolinks: 'false', confirm: t('destroy_confirmation')}, class: 'btn--light btn--smaller' do
-                span.fa.fa-close
-                span.icon-left=  t('destroy')
+      -unless %w(members managers).include?(group.shortname)
+        table.styled
+          tbody
+            -group.group_memberships.each do |membership|
+              tr
+                td= membership.member.display_name
+                td= link_to group_membership_path(membership, r: group_redirect_url(group)), data: {method: :delete, turbolinks: 'false', confirm: t('destroy_confirmation')}, class: 'btn--light btn--smaller' do
+                  span.fa.fa-close
+                  span.icon-left=  t('destroy')
       =link_to new_group_membership_path(group), class: 'btn--light btn--smaller' do
         span.fa.fa-plus
-        span.icon-left= t('groups.member.new')
+        span.icon-left= t('group_memberships.new', singular: group.name_singular)
       =link_to edit_forum_group_path(@forum, group), class: 'btn--light btn--smaller' do
         span.fa.fa-pencil
         span.icon-left= t('edit_type', type: t('groups.type'))

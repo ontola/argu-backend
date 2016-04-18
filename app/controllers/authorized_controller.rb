@@ -113,6 +113,8 @@ class AuthorizedController < ApplicationController
     if resource_by_id.present?
       if resource_by_id.is_a?(Forum)
         resource_by_id
+      elsif [Group, GroupMembership].include? resource_by_id.class
+        resource_by_id.owner
       else
         resource_by_id.try(:forum)
       end

@@ -81,7 +81,14 @@ module NestedResourceHelper
   def resource_tenant(opts = request.path_parameters, url_params = params)
     if current_resource_is_nested?(opts)
       parent = get_parent_resource(opts, url_params)
-      parent.is_a?(Forum) ? parent : parent.forum
+      case parent
+      when Forum
+        parent
+      when Group
+        parent.owner
+      else
+        parent.forum
+      end
     end
   end
 

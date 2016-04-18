@@ -118,7 +118,7 @@ class PhasesControllerTest < ActionController::TestCase
   let!(:netdem_membership) do
     create(:group_membership,
            member: netdem_member.profile,
-           group: netdem)
+           parent: netdem)
   end
   let(:netdem_stepup) do
     create(:stepup,

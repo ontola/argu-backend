@@ -70,9 +70,9 @@ module ForumsHelper
     items = []
 
     if policy(@forum).is_member?
-      membership = current_profile.memberships.find_by(forum: @forum)
+      membership = current_profile.memberships.for_forums.find_by(groups: {edge_id: @forum.edge.id})
       items << link_item(t('forums.leave'),
-                         forum_membership_path(@forum.url, membership),
+                         group_membership_path(membership),
                          fa: 'sign-out',
                          data: {method: :delete, turbolinks: 'false', confirm: t('forums.leave_confirmation')})
     end

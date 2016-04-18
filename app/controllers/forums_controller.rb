@@ -9,7 +9,11 @@ class ForumsController < AuthorizedController
     authorize resource_by_id, :update?
     forums = Forum.arel_table
     @forums = Forum.where(forums[:page_id].in(@user.profile.pages.pluck(:id))
-                            .or(forums[:id].in(@user.profile.managerships.pluck(:forum_id))))
+                            .or(forums[:id].in(@user
+                                                 .profile
+                                                 .managerships
+                                                 .for_forums
+                                                 .pluck('edges.owner_id'))))
     @_pundit_policy_scoped = true
   end
 
@@ -81,6 +85,10 @@ class ForumsController < AuthorizedController
              }
     end
     update_service.commit
+  end
+
+  def forum_for(url_options)
+    Forum.find_via_shortname_nil(url_options[:id])
   end
 
   protected

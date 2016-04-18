@@ -137,7 +137,7 @@ export const NewMembership = React.createClass({
     render () {
 
         return (<Select
-                  name="profile_id"
+                  name="shortname"
                   placeholder="Select user"
                   matchProp="any"
                   ignoreCase={true}

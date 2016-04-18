@@ -1,4 +1,4 @@
-class DestroyMembership < DestroyService
+class DestroyGroupMembership < DestroyService
   include Wisper::Publisher
 
   def initialize(membership, attributes: {}, options: {})

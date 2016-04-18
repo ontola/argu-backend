@@ -1,3 +1,4 @@
+# @todo remove after migration
 class Membership < ActiveRecord::Base
   include ArguBase, Parentable
   scope :managers, -> { where(role: Membership::ROLES[:manager]) }

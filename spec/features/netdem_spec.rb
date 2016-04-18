@@ -7,7 +7,7 @@ RSpec.feature 'Netdem', type: :feature do
   let!(:netdem_membership) do
     create(:group_membership,
            member: netdem_member.profile,
-           group: netdem)
+           parent: netdem)
   end
   let!(:netdem_rule_new) do
     create(:rule,

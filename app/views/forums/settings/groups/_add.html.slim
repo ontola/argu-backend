@@ -1,7 +1,7 @@
-=semantic_form_for(@group, url: group_membership_index_path(@group), method: :post) do |f|
+=semantic_form_for(@group, url: group_membership_index_path(@group, r: group_redirect_url(@group)), method: :post) do |f|
   - @membership.errors.full_messages.each do |message|
     =message
-  =f.inputs name: t('groups.member.new') do
+  =f.inputs name: t('group_memberships.new', singular: @group.name_singular) do
     =react_component_store 'NewMembership', props: {things: 'users,pages'}
   =f.actions do
     =f.action :submit, :as => :button

@@ -4,7 +4,7 @@ class CreateGroup < CreateService
 
   def initialize(parent, attributes: {}, options: {})
     @group = resource_klass.new
-    attributes[:forum] = parent.owner
+    attributes[:edge] = parent
     super
   end
 

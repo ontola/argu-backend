@@ -6,5 +6,4 @@ en:
     new: "Add group"
     destroy:
       body: "%{group_memberships_count} members along with their %{group_resonses_count} responses will be destroyed."
-    member:
-      new: "Add group member"
+

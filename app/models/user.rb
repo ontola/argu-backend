@@ -147,7 +147,7 @@ class User < ActiveRecord::Base
   def managed_pages
     t = Page.arel_table
     Page.where(t[:id]
-                 .in(profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id))
+                 .in(profile.managerships.for_pages.pluck('edges.owner_id'))
                  .or(t[:owner_id].eq(profile.id)))
   end
 

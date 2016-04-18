@@ -7,7 +7,7 @@
       .cover-overlay
       - if !policy(forum).is_member? && policy(forum).join? && current_user.present?
         .sticky--top-left
-          = link_to forum_memberships_path(forum.url), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
+          = link_to group_membership_index_path(forum.members_group), data: {method: :post, turbolinks: false}, rel: :nofollow, class: 'btn--transparant'
             span.fa.fa-plus
             span.icon-left= t('forums.join.title')
       - if policy(forum).update?

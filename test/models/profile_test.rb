@@ -23,8 +23,5 @@ class ProfileTest < ActiveSupport::TestCase
   test 'member_of? function' do
     assert subject.member_of?(freetown), 'false negative when forum is passed'
     assert_not subject.member_of?(capetown), 'false positive when forum is passed'
-
-    assert subject.member_of?(freetown.id), 'false negative when forum_id is passed'
-    assert_not subject.member_of?(capetown.id), 'false positive when forum_id is passed'
   end
 end

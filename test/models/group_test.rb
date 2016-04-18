@@ -12,7 +12,7 @@ class GroupTest < ActiveSupport::TestCase
 
   test 'associated memberships and responses should be destroyed' do
     create(:group_membership,
-           group: subject)
+           parent: subject)
     create(:group_response,
            group: subject,
            parent: motion.edge)

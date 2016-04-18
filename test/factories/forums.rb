@@ -10,6 +10,7 @@ FactoryGirl.define do
     sequence(:name) { |n| "fg_forum#{n}end" }
 
     before(:create) do |forum|
+      forum.build_edge
       forum.shortname.shortname = forum.name
     end
 

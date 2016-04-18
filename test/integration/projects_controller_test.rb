@@ -177,7 +177,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   let(:netdem_membership) do
     create(:group_membership,
            member: netdem_member.profile,
-           group: netdem)
+           parent: netdem)
   end
   let(:netdem_rule_new) do
     create(:rule,
@@ -195,12 +195,12 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
            role: netdem.identifier,
            permit: true)
   end
-  let(:discussion) { create(:group, name: 'Politieke Partijen', parent: freetown.edge) }
+  let(:discussion_group) { create(:group, name: 'Politieke Partijen', parent: freetown.edge) }
   let(:discussion_member) { create_member(freetown) }
   let(:discussion_membership) do
     create(:group_membership,
            member: discussion_member.profile,
-           group: discussion)
+           parent: discussion_group)
   end
   def netdem_rules
     [netdem_membership, discussion_membership, netdem_rule_new, netdem_rule_create]

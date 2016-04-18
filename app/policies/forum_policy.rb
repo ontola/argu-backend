@@ -51,14 +51,14 @@ class ForumPolicy < RestrictivePolicy
     # Is the current user a member of the group?
     # @note This tells nothing about whether the user can make edits on the object
     def is_member?
-      member if actor && actor.memberships.where(forum: record).count > 0
+      member if actor && actor.memberships.where(groups: {edge_id: record.edge.id}).count > 0
     end
 
     # Is the user a manager of the page or of the forum?
     # @note Trickles up
     def is_manager?
-      _mems = user.profile if user
-      [(manager if user && user.profile.managerships.where(forum: record).count > 0), is_owner?].compact.presence
+      is_manager = user && user.profile.managerships.where(groups: {edge_id: record.edge.id}).count > 0
+      [(manager if is_manager), is_owner?].compact.presence
     end
 
     # Currently, only the page owner is owner of a forum, managers of a page don't automatically become forum managers.
@@ -172,16 +172,6 @@ class ForumPolicy < RestrictivePolicy
 
   def update?
     rule is_manager?, super
-  end
-
-  # Whether the user can add (a specified) manager(s)
-  # Only the owner can do this.
-  def add_manager?(user)
-    rule is_owner?
-  end
-
-  def remove_manager?(user)
-    rule is_owner?
   end
 
   def add_motion?

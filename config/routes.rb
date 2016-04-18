@@ -171,7 +171,6 @@ Argu::Application.routes.draw do
     put :transfer, on: :member, action: :transfer!
     get :settings, on: :member
     get :edit, to: 'profiles#edit', on: :member
-    resources :managers, only: [:new, :create, :destroy], controller: 'pages/managers'
   end
 
   resources :blog_posts,
@@ -260,10 +259,7 @@ Argu::Application.routes.draw do
     get :discover, on: :collection, action: :discover
     get :settings, on: :member
     get :statistics, on: :member
-    post :memberships, on: :collection
     resources :groups, only: [:create]
-    resources :memberships, only: [:create, :destroy]
-    resources :managers, only: [:new, :create, :destroy]
     resources :shortnames, only: [:new, :create]
     resources :projects, path: 'p', only: [:new, :create]
     resources :arguments, path: 'a', only: [:new, :create]

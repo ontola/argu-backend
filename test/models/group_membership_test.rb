@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class MembershipTest < ActiveSupport::TestCase
+class GroupMembershipTest < ActiveSupport::TestCase
   define_freetown
   let(:user) { create(:user) }
-  subject { create(:membership, profile: user.profile, parent: freetown.edge) }
+  subject { create(:group_membership, parent: freetown.members_group, member: user.profile) }
 
   def test_valid
     assert subject.valid?, subject.errors.to_a.join(',').to_s

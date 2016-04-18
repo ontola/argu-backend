@@ -8,9 +8,7 @@ class GroupResponsesControllerTest < ActionController::TestCase
   define_freetown
   let(:motion) { create(:motion, parent: freetown.edge) }
   let(:group) do
-    create(:group,
-           visibility: :discussion,
-           parent: freetown.edge)
+    create(:group, visibility: :discussion, parent: freetown.edge)
   end
   let(:group_response) do
     create(:group_response,
@@ -19,14 +17,10 @@ class GroupResponsesControllerTest < ActionController::TestCase
            parent: motion.edge)
   end
   let(:visible_group) do
-    create(:group,
-           visibility: :visible,
-           parent: freetown.edge)
+    create(:group, visibility: :visible, parent: freetown.edge)
   end
   let(:hidden_group) do
-    create(:group,
-           visibility: :hidden,
-           parent: freetown.edge)
+    create(:group, visibility: :hidden, parent: freetown.edge)
   end
 
   ####################################

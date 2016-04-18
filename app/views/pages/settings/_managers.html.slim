@@ -5,19 +5,19 @@ p= t('pages.settings.managers.about_owner')
   span= @page.owner.display_name
 
 - if policy(@page).transfer?
-  h3[style="clear: left;"] Overdracht
+  h3[style="clear: left;"]=t('pages.settings.managers.transfer.header')
   =link_to t('formtastic.labels.f_move'), transfer_page_url(@page), data: {remote: true}, class: 'btn--warning margin-bottom'
 
 h3[style='clear: left;']= t('pages.settings.managers.title')
 p= t('pages.settings.managers.about_managers')
 table.styled
   tbody
-    -@page.managers.each do |manager|
+    -@page.managers_group.group_memberships.each do |membership|
       tr
-        =image_tag manager.default_profile_photo.url, class: 'profile-photo'
+        =image_tag membership.member.default_profile_photo.url, class: 'profile-photo'
         span
-          =manager.display_name
+          =membership.member.display_name
           p.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
-            =link_to t('forums.managers.revoke'), page_manager_path(@page, manager.id), data: {method: :delete, turbolinks: 'false', confirmation: t('destroy_confirmation')}
+            =link_to t('forums.managers.revoke'), group_membership_path(membership.id, r: group_redirect_url(@page.managers_group)), data: {method: :delete, turbolinks: 'false', confirmation: t('destroy_confirmation')}
 
-  =link_to t('forums.managers.add'), new_page_manager_path(@page), class: 'btn'
+  =link_to t('group_memberships.new', singular: @page.managers_group.name_singular), new_group_membership_path(@page.managers_group), class: 'btn'

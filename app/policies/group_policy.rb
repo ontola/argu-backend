@@ -31,7 +31,7 @@ class GroupPolicy < RestrictivePolicy
   def create?(forum = nil)
     if forum.present?
       record.present? || raise(SecurityError)
-      record = Group.new(forum: forum)
+      record = Group.new(edge: forum.edge)
     end
     rule is_manager?, super()
   end
@@ -41,6 +41,7 @@ class GroupPolicy < RestrictivePolicy
   end
 
   def destroy?
+    return false unless record.deletable
     rule is_owner?, super
   end
 
@@ -58,5 +59,9 @@ class GroupPolicy < RestrictivePolicy
 
   def remove_member?(member)
     rule is_manager?
+  end
+
+  def forum_policy
+    Pundit.policy(context, record.try(:edge)&.owner || context.context_model)
   end
 end

@@ -1,8 +1,7 @@
 class Portal::ForumsController < ApplicationController
   def new
-    @forum = Forum.new(page: params[:page])
-    authorize @forum, :new?
-    render 'new', locals: {forum: @forum}
+    authorize new_resource_from_params, :new?
+    render 'new', locals: {forum: new_resource_from_params}
   end
 
   def create
@@ -20,12 +19,6 @@ class Portal::ForumsController < ApplicationController
 
   private
 
-  def permit_params
-    params.require(:forum).permit :name, :shortname,
-                                  :profile_photo, :cover_photo, :page_id,
-                                  shortname_attributes: [:shortname]
-  end
-
   def create_service
     @create_service ||= CreateForum.new(
       Page.find(permit_params[:page_id]).edge,
@@ -34,5 +27,19 @@ class Portal::ForumsController < ApplicationController
         creator: current_profile,
         publisher: current_user
       })
+  end
+
+  def new_resource_from_params
+    Shortname.find_resource(params[:page])
+      .edge
+      .children
+      .new(owner: Forum.new(page: params[:page]))
+      .owner
+  end
+
+  def permit_params
+    params.require(:forum).permit :name, :shortname,
+                                  :profile_photo, :cover_photo, :page_id,
+                                  shortname_attributes: [:shortname]
   end
 end

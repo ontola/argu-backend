@@ -24,6 +24,15 @@ module SettingsHelper
     end
   end
 
+  def group_redirect_url(group)
+    case group.owner
+    when Forum
+      settings_forum_path(group.owner, tab: group.shortname == 'managers' ? :managers : :groups)
+    when Page
+      settings_page_path(group.owner, tab: group.shortname == 'managers' ? :managers : :groups)
+    end
+  end
+
   def group_visibility_icon_for(group)
     case group.visibility
     when 'hidden'

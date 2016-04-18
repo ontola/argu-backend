@@ -116,7 +116,9 @@ class VotesController < AuthorizedController
       if request.format == 'json'
         options[:body] = {
           error: 'NO_MEMBERSHIP',
-          membership_url: forum_memberships_url(get_parent_resource.forum, redirect: false)
+          membership_url: group_membership_index_url(
+            get_parent_resource.forum.members_group,
+            redirect: false)
         }
       end
       raise Argu::NotAMemberError.new(options)

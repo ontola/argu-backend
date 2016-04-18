@@ -4,7 +4,7 @@ class GroupsController < AuthorizedController
 
   def new
     @forum = Forum.find_via_shortname params[:forum_id]
-    @group = @forum.groups.new
+    @group = @forum.edge.groups.new
     authorize @group, :create?
 
     render 'forums/settings', locals: {
@@ -16,7 +16,13 @@ class GroupsController < AuthorizedController
   def create
     create_service.on(:create_group_successful) do |group|
       respond_to do |format|
-        format.html { redirect_to settings_forum_path(group.forum, tab: :groups) }
+        format.html do
+          if group.owner.is_a? Forum
+            redirect_to settings_forum_path(group.owner, tab: :groups)
+          else
+            redirect_to settings_page_path(group.owner, tab: :groups)
+          end
+        end
       end
     end
     create_service.on(:create_group_failed) do
@@ -45,7 +51,13 @@ class GroupsController < AuthorizedController
   def update
     update_service.on(:update_group_successful) do |group|
       respond_to do |format|
-        format.html { redirect_to settings_forum_path(group.forum, tab: :groups) }
+        format.html do
+          if group.owner.is_a? Forum
+            redirect_to settings_forum_path(group.owner, tab: :groups)
+          else
+            redirect_to settings_page_path(group.owner, tab: :groups)
+          end
+        end
       end
     end
     update_service.on(:update_group_failed) do
@@ -73,13 +85,13 @@ class GroupsController < AuthorizedController
   def destroy
     destroy_service.on(:destroy_group_successful) do |group|
       respond_to do |format|
-        format.html { redirect_to settings_forum_path(group.forum, tab: :groups), status: 303 }
+        format.html { redirect_to settings_forum_path(group.owner, tab: :groups), status: 303 }
       end
     end
     destroy_service.on(:destroy_group_failed) do
       respond_to do |format|
         flash[:error] = t('error')
-        format.html { redirect_to settings_forum_path(group.forum, tab: :groups) }
+        format.html { redirect_to settings_forum_path(group.owner, tab: :groups) }
       end
     end
     destroy_service.commit
@@ -88,8 +100,8 @@ class GroupsController < AuthorizedController
   private
 
   def find_forum_and_group
-    @group = Group.includes(:forum).find(params[:id])
-    @forum = @group.forum
+    @group = Group.includes(:edge).find(params[:id])
+    @forum = @group.owner
   end
 
   def new_resource_from_params
@@ -102,7 +114,7 @@ class GroupsController < AuthorizedController
 
   def resource_new_params
     {
-      forum: get_parent_resource
+      edge: get_parent_resource.edge
     }
   end
 end

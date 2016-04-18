@@ -18,9 +18,14 @@ class Edge < ActiveRecord::Base
            inverse_of: :followable,
            foreign_key: :followable_id,
            dependent: :destroy
+  has_many :groups, dependent: :destroy
+  has_one :members_group, -> { where(shortname: 'members') }, class_name: 'Group'
+  has_one :managers_group, -> { where(shortname: 'managers') }, class_name: 'Group'
+
   validates :parent, presence: true, unless: :root_object?
 
   before_destroy :update_children
+  before_create :build_default_groups
   before_save :set_user_id
 
   acts_as_followable
@@ -40,6 +45,12 @@ class Edge < ActiveRecord::Base
   # Only returns a value when the model has been saved
   def polymorphic_tuple
     [owner_type, owner_id]
+  end
+
+  def build_default_groups
+    return unless %w(Forum Page).include?(owner_type)
+    groups << Group.new(name: 'Members', shortname: 'members', name_singular: 'Member', deletable: false)
+    groups << Group.new(name: 'Managers', shortname: 'managers', name_singular: 'Manager', deletable: false)
   end
 
   def set_user_id

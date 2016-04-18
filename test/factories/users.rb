@@ -78,7 +78,7 @@ FactoryGirl.define do
             publisher: page.owner.profileable})
         service.commit
         forum = service.resource
-        user.profile.memberships.create(forum: forum)
+        user.profile.memberships.create(group: forum.members_group)
       end
 
       factory :user_with_votes do
