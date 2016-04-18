@@ -1,0 +1,24 @@
+nl:
+  decisions:
+    type: "besluit"
+    take_decision: "Besluit nemen"
+    approved: "Aangenomen"
+    rejected: "Verworpen"
+    forwarded: "Doorgestuurd"
+    forwarded_to: "Doorgestuurd naar %{to}"
+    action:
+      approved: "Aannemen"
+      rejected: "Verwerpen"
+      forwarded: "Doorsturen"
+    explanation: "Licht het besluit toe"
+    forward_to: "Groep of gebruiker"
+    forward_failed: "Doorsturen mislukt"
+    happened_at: "Besluit genomen op"
+    motion:
+      approved: "Motie is aangenomen"
+      rejected: "Motie is verworpen"
+      forwarded: "Besluit is doorgestuurd"
+    assigned:
+      to_user: "Het besluit licht momenteel bij"
+      to_group: "Het besluit licht momenteel bij de groep"
+    find_user_info: "Typ om een gebruiker te zoeken"

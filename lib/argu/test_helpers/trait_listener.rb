@@ -66,12 +66,21 @@ module Argu
       end
 
       # Adds a follower to the edge of the resource
-      # See {Follow}
+      # @see Follow#follow_type
       # @note Adds an extra {Notification} on associated resource creation
       def with_follower
         FactoryGirl.create(
           :follow,
           follower: FactoryGirl.create(:user, :follows_reactions_directly),
+          followable: @resource.edge)
+      end
+
+      # Adds a news_follower to the edge of the resource
+      # @see Follow#follow_type
+      def with_news_follower
+        FactoryGirl.create(
+          :news_follow,
+          follower: FactoryGirl.create(:user, :follows_news_directly),
           followable: @resource.edge)
       end
 
@@ -146,6 +155,22 @@ module Argu
               options: service_options)
             .commit
         end
+      end
+
+      # Sets the decision to approved
+      def approved
+        @resource.last_decision.happening { create(:activity, forum: @resource.forum) }
+        create(:activity,
+               forum: @resource.forum,
+               trackable: @resource.last_decision,
+               key: 'approve.happened')
+        @resource.last_decision.update_columns(state: Decision.states[:approved])
+      end
+
+      # Assigns the decision
+      def assigned(args)
+        @resource.last_decision.update_columns(group_id: args[:assigned_to_group].id,
+                                               user_id: args[:assigned_to_user].id)
       end
 
       private

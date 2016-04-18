@@ -148,7 +148,7 @@ export const ActorSelect = React.createClass({
                                     })
                                     .attributes;
                                 return {
-                                    value: `${gId.toString()}.${uId.toString()}`,
+                                    value: [gId, uId].join('.'),
                                     groupId: gId.toString(),
                                     groupName: gAttrs.displayName,
                                     userId: uId.toString(),

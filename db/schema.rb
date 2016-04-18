@@ -168,6 +168,21 @@ ActiveRecord::Schema.define(version: 20160919093414) do
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
   add_index "comments", ["creator_id"], name: "index_comments_on_creator_id", using: :btree
 
+  create_table "decisions", force: :cascade do |t|
+    t.integer  "forum_id",                       null: false
+    t.integer  "group_id",                       null: false
+    t.integer  "user_id"
+    t.integer  "publisher_id"
+    t.integer  "creator_id"
+    t.text     "content",           default: "", null: false
+    t.integer  "state",                          null: false
+    t.integer  "decisionable_id",                null: false
+    t.string   "decisionable_type",              null: false
+    t.integer  "forwarded_to_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
   create_table "documents", force: :cascade do |t|
     t.string   "name"
     t.string   "title"
@@ -777,6 +792,12 @@ ActiveRecord::Schema.define(version: 20160919093414) do
   add_foreign_key "comments", "forums"
   add_foreign_key "comments", "profiles", column: "creator_id"
   add_foreign_key "comments", "users", column: "publisher_id"
+  add_foreign_key "decisions", "decisions", column: "forwarded_to_id"
+  add_foreign_key "decisions", "forums"
+  add_foreign_key "decisions", "groups"
+  add_foreign_key "decisions", "profiles", column: "creator_id"
+  add_foreign_key "decisions", "users"
+  add_foreign_key "decisions", "users", column: "publisher_id"
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "users"
   add_foreign_key "follows", "edges", column: "followable_id"

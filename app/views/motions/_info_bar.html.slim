@@ -40,3 +40,10 @@ section.section--details
           .fa.fa-clock-o
         .detail__text
           time[datetime=motion.created_at ]= awesome_time_ago_in_words motion.created_at
+    - if motion.state != 'pending'
+      div class="details-part details-part--right details-part--decision details-part--decision-#{motion.state}"
+        =link_to t("decisions.#{motion.state}"), motion_decisions_url(motion)
+    - elsif local_assigns[:show_decision_dropdown]
+      - if policy(motion.last_decision).update?
+        div class="details-part details-part--filled details-part--right details-part--decision details-part--decision-#{motion.state}"
+          =react_component 'HyperDropdown', decision_items(motion), {prerender: true}

@@ -26,9 +26,13 @@ class Motion < ApplicationRecord
       .limit(5)
   end), class_name: 'Argument'
   has_many :arguments_plain, class_name: 'Argument'
+  has_many :decisions, as: :decisionable, dependent: :destroy
+  has_one :last_decision, -> {order(created_at: :desc)}, as: :decisionable, class_name: 'Decision'
   has_many :group_responses
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
+
+  delegate :state, to: :last_decision
 
   before_save :cap_title
 

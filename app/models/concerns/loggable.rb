@@ -1,3 +1,4 @@
+# Concern for Models that use Activities to keep a log of changes
 module Loggable
   extend ActiveSupport::Concern
 
@@ -5,10 +6,6 @@ module Loggable
     has_many :activities,
              -> { where("key ~ '*.!happened'") },
              as: :trackable
-    has_one :created_activity,
-            -> { where("key ~ '*.create'") },
-            class_name: 'Activity',
-            as: :trackable
   end
 
   module Serlializer

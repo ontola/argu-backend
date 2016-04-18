@@ -6,7 +6,7 @@
       "fingerprint": "87cb2d5069b4bf67ffb5a77b67c48beb66060e4337f2ad16aeb96758e1560349",
       "message": "User controlled method execution",
       "file": "lib/argu/ruled_it.rb",
-      "line": 49,
+      "line": 31,
       "link": "http://brakemanscanner.org/docs/warning_types/dangerous_send/",
       "code": "policy(record).public_send((params[:action].to_s + \"?\"))",
       "render_path": null,
@@ -18,6 +18,25 @@
       "user_input": "(params[:action].to_s + \"?\")",
       "confidence": "High",
       "note": "This results from a source copy of the Pundit methods, in practice letting the user call these should be safe since the public methods have no side effects."
+    },
+    {
+      "warning_type": "SQL Injection",
+      "warning_code": 0,
+      "fingerprint": "e2d7281c58192d93f7431e617c7786701049a59b77bd7d6aa5193c7f5594f7ee",
+      "message": "Possible SQL injection",
+      "file": "app/models/decision.rb",
+      "line": 11,
+      "link": "http://brakemanscanner.org/docs/warning_types/sql_injection/",
+      "code": "where(\"key ~ '*.#{Decision.actioned_keys.join(\"|\")}'\")",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Decision",
+        "method": null
+      },
+      "user_input": "Decision.actioned_keys.join(\"|\")",
+      "confidence": "High",
+      "note": "The actioned_keys come straight from the states enum"
     },
     {
       "warning_type": "Session Setting",
@@ -35,6 +54,6 @@
       "note": "We never store actual production secrets locally, they don't even get off the server. These are to test production mode locally (since shit tends to respond differently when class caching is enabled)."
     }
   ],
-  "updated": "2015-12-18 12:55:25 +0100",
-  "brakeman_version": "3.1.3"
+  "updated": "2016-05-03 13:41:38 +0200",
+  "brakeman_version": "3.2.1"
 }

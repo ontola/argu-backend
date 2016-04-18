@@ -6,14 +6,20 @@ nl:
       pro: "is vóór"
       con: "is tegen"
       neutral: "heeft nog geen mening over"
+    decisions:
+      approved: "%{owner} heeft %{parent} aangenomen"
+      forwarded: "%{owner} heeft het besluit over %{parent} doorgestuurd"
+      forwarded_to_you: "%{owner} heeft het besluit over %{parent} doorgestuurd naar jou"
+      rejected: "%{owner} heeft %{parent} verworpen"
+      update: "%{owner} heeft een besluit over %{parent} geüpdatet"
     default:
       convert: "%{owner} heeft %{subject} omgezet in een %{type}"
       create: "%{owner} heeft een %{type} geplaatst in %{parent}"
       publish: "%{owner} heeft een %{type} gepubliceerd in %{parent}"
       destroy: "%{owner} heeft %{subject} permanent verwijderd"
       trash: "%{owner} heeft %{subject} verwijderd"
-      untrash: "%{owner} heeft %{subject} ontverwijderd"
-      update: "%{owner} heeft %{subject} geupdate"
+      untrash: "%{owner} heeft %{subject} teruggeplaatst"
+      update: "%{owner} heeft %{subject} geüpdatet"
     arguments:
       create: "%{owner} heeft een %{type} geplaatst %{side} %{parent}"
       pro: "vóór"
@@ -24,8 +30,8 @@ nl:
       create: "%{owner} heeft gereageerd op %{parent}"
       destroy: "%{owner} heeft een %{type} op %{parent} permanent verwijderd"
       trash: "%{owner} heeft een %{subject} op %{parent} verwijderd"
-      untrash: "%{owner} heeft een %{subject} op %{parent} ontverwijderd"
-      update: "%{owner} heeft een %{subject} op %{parent} geupdate"
+      untrash: "%{owner} heeft een %{subject} op %{parent} teruggeplaatst"
+      update: "%{owner} heeft een %{subject} op %{parent} geüpdatet"
     group_responses:
       create: "%{owner} heeft als %{group_singular} gereageerd op %{parent}"
     projects:

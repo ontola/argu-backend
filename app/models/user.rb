@@ -8,6 +8,7 @@ class User < ApplicationRecord
           foreign_key: 'placeable_id',
           inverse_of: :placeable
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
+  has_many :assigned_decisions, inverse_of: :user, class_name: 'Decision'
   has_many :edges
   has_many :identities, dependent: :destroy
   has_many :notifications
@@ -16,6 +17,7 @@ class User < ApplicationRecord
   has_many :arguments, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :blog_posts, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :comments, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :decisions, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :group_responses, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id'

@@ -1,7 +1,7 @@
 .box[class=status_classes_for(motion)]
   section
     h1.motion-t[itemprop="headline"]= motion.title
-  = render partial: 'motions/info_bar', locals: {motion: motion, show_vote_pie: true}
+  = render partial: 'motions/info_bar', locals: {motion: motion, show_vote_pie: true, show_decision_dropdown: true}
   section
     .markdown[itemprop="text"]
       =markdown_to_html(motion.content)
@@ -10,7 +10,7 @@
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
       - if current_user.present?
         li
-          ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(motion)
+          ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(motion, follow_types: [:decisions, :news, :reactions, :never])
       =crud_menu_item(motion)
       - if motion.forum.visibility
         li.share-menu

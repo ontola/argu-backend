@@ -7,6 +7,7 @@ class Group < ApplicationRecord
   has_many :group_responses, dependent: :destroy
   belongs_to :page, required: true, inverse_of: :groups
   belongs_to :forum
+  has_many :decisions
 
   validates :name, length: {maximum: 75}
   validates :visibility, presence: true

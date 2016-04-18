@@ -38,7 +38,8 @@ class ForumsController < AuthorizedController
       motions = policy_scope(resource_by_id
                                .motions
                                .where(project_id: nil, question_id: nil)
-                               .includes(:edge, :question, :project, :default_cover_photo, :votes)
+                               .includes(:edge, :question, :project, :default_cover_photo, :votes,
+                                         :last_decision)
                                .published
                                .trashed(show_trashed?))
 

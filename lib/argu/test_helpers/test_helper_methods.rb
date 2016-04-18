@@ -49,6 +49,7 @@ module Argu
         def create(model_type, *args)
           attributes = HashWithIndifferentAccess.new
           attributes.merge!(args.pop) if args.last.is_a?(Hash)
+          traits_with_args = attributes.delete(:traits_with_args) || {}
           if SERVICE_MODELS.include?(model_type)
             klass = model_type.to_s.classify.constantize
 
@@ -73,6 +74,9 @@ module Argu
 
             args.each do |trait|
               TraitListener.new(resource).public_send(trait)
+            end
+            traits_with_args.each do |trait|
+              TraitListener.new(resource).public_send(trait[0], trait[1])
             end
 
             if resource.respond_to?(:publications) && resource.publications.present?

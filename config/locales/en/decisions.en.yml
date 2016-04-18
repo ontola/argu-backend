@@ -1,0 +1,24 @@
+en:
+  decisions:
+    type: "decision"
+    take_decision: "Take decision"
+    approved: "Passed"
+    rejected: "Rejected"
+    forwarded: "Forwarded"
+    forwarded_to: "Forwarded to %{to}"
+    action:
+      approved: "Pass"
+      rejected: "Reject"
+      forwarded: "Forward"
+    explanation: "Explain this decision"
+    forward_to: "Group or user"
+    forward_failed: "Can't create forward"
+    happened_at: "Decision taken at"
+    motion:
+      approved: "Motion is passed"
+      rejected: "Motion is rejected"
+      forwarded: "Motion is forwarded"
+    assigned:
+      to_user: "The decision is currently assigned to"
+      to_group: "The decision is currently assigned to the group"
+    find_user_info: "Type to find a user"

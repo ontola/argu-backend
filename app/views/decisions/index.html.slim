@@ -1,0 +1,40 @@
+=set_title decisionable
+=connected_web url: motion_url(decisionable),
+        name: seolized_title(decisionable),
+        description: seolized_description(decisionable),
+        image: decisionable.default_cover_photo&.url || image_url('logo-social.png')
+
+div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
+  .cover-behind
+    .cover-image.bg-img[style="background-image: url('#{decisionable.default_cover_photo&.url(:cover)}'); "]
+  .col-1
+    div[data-intro= t('intro.motion.back')]= to_parent
+    =render partial: 'contextualize/context_horizontal', locals: {item: decisionable, type: 'motion'}
+    .col--motion
+      .motion-body[data-intro= t('intro.motion.body')]= render partial: 'motions/body', locals: { motion: decisionable }
+  .col-1
+    - if decisionable.state == 'pending'
+      .box
+        section
+          - if decisionable.last_decision.user_id.present?
+            p= "#{t('decisions.assigned.to_user')} #{assigned_name(decisionable.last_decision, true)}".html_safe
+          - else
+            p= "#{t('decisions.assigned.to_group')} '#{assigned_name(decisionable.last_decision, true)}'"
+          - if policy(decisionable.last_decision).update?
+            p
+              - if policy(decisionable.last_decision).is_actor?
+                - Decision.actioned_keys.each do |state|
+                  =link_to(t("decisions.action.#{state}"),
+                          edit_decision_path(decisionable.last_decision, state: state),
+                          class: 'btn btn--smaller btn--neutral')
+                  span &nbsp;
+              - else
+                =link_to(t("decisions.forward"),
+                        edit_decision_path(decisionable.last_decision, state: 'forwarded'),
+                        class: 'btn btn--smaller btn--neutral')
+    - decisionable.decisions.order(created_at: :desc).each do |d|
+      .box
+        - if d == decision
+          =render partial: 'decisions/form', locals: { decisionable: decisionable, decision: decision }
+        - elsif !d.pending?
+          =render partial: d

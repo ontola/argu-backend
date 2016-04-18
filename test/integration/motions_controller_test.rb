@@ -286,9 +286,9 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     sign_in manager
     subject.trash
 
-    # Remove the edges of the Motion and it's 6 Arguments
+    # Remove the edges of the Motion, its Decision and its 6 Arguments
     assert_differences([['Motion.trashed(false).count', 0],
-                        ['Edge.count', -7],
+                        ['Edge.count', -8],
                         ['Motion.trashed(true).count', -1]]) do
       delete motion_path(subject, destroy: 'true')
     end
@@ -317,9 +317,9 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
     sign_in owner
     subject.trash
 
-    # Remove the edges of the Motion and it's 6 Arguments
+    # Remove the edges of the Motion, its Decision and its 6 Arguments
     assert_differences([['Motion.trashed(false).count', 0],
-                        ['Edge.count', -7],
+                        ['Edge.count', -8],
                         ['Motion.trashed(true).count', -1]]) do
       delete motion_path(subject, destroy: 'true')
     end
@@ -401,7 +401,8 @@ class MotionsControllerTest < ActionDispatch::IntegrationTest
   # @param notifications [Integer] Amount of notifications to be created
   def create_changes_array(notifications = 1, count = 1)
     c = [['Motion.count', count],
-         ['Edge.count', count],
+         ['Edge.count', count * 2],
+         ['Decision.count', count],
          ['Activity.count', count],
          ['Notification.count', notifications]]
     c

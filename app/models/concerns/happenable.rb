@@ -1,3 +1,4 @@
+# Concern which gives Models the ability to be rendered on the timeline of a Timelineable.
 module Happenable
   extend ActiveSupport::Concern
 

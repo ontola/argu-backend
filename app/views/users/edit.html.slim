@@ -28,6 +28,7 @@
           p= t('notifications.email.beta')
           =f.input :reactions_email, as: :react_select, collection: options_for_reactions_email, required: false, include_blank: false
           =f.input :news_email, as: :react_select, collection: options_for_news_email, required: false, include_blank: false
+          =f.input :decisions_email, as: :react_select, collection: options_for_decisions_email, required: false, include_blank: false
         =f.inputs name: t('users.registrations.categories.privacy') do
           =f.input :has_analytics, as: :reverse_boolean
           li.form-helper

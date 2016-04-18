@@ -5,12 +5,12 @@ class CreateMotion < PublishedCreateService
 
   def initialize(parent, attributes: {}, options: {})
     super
-    if parent.owner_type == 'Question'
-      resource.project_id = parent.parent.owner_id if parent.parent.owner_type == 'Project'
-      resource.question_id = parent.owner_id
-    elsif parent.owner_type == 'Project'
-      resource.project_id = parent.owner_id
-    end
+    resource.decisions << Decision
+                            .pending
+                            .new(
+                              group: resource.forum.managers_group,
+                              forum: resource.forum)
+    resource.decisions.last.build_edge(user: resource.publisher, parent: parent)
   end
 
   private

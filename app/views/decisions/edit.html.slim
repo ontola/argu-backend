@@ -1,0 +1,5 @@
+=set_title decision.new_record? ? t('new_type', type: t('decisions.type')) : t('edit_type', type: t('decisions.type'))
+.col-1
+  =to_parent
+  .box
+    =render partial: 'form', locals: local_assigns

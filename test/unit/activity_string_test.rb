@@ -4,6 +4,7 @@ require 'test_helper'
 class ActivityStringTest < ActiveSupport::TestCase
   define_freetown
   let(:updater) { create_member(freetown) }
+  let(:receiver) { create_member(freetown) }
   let!(:project) { create(:project, parent: freetown.edge) }
   let!(:question) { create(:question, parent: project.edge) }
 
@@ -13,13 +14,13 @@ class ActivityStringTest < ActiveSupport::TestCase
     trash_activity = trash_resource(question, updater).activities.last
     assert_equal "[#{question.publisher.display_name}](/u/#{question.publisher.url}) "\
                   "posted a challenge in [#{project.display_name}](/p/#{project.id})",
-                 Argu::ActivityString.new(create_activity, true).to_s
+                 Argu::ActivityString.new(create_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
                   "updated [#{question.display_name}](/q/#{question.id})",
-                 Argu::ActivityString.new(update_activity, true).to_s
+                 Argu::ActivityString.new(update_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
                   "trashed [#{question.display_name}](/q/#{question.id})",
-                 Argu::ActivityString.new(trash_activity, true).to_s
+                 Argu::ActivityString.new(trash_activity, receiver, true).to_s
   end
 
   test 'string for create of deleted question' do
@@ -30,16 +31,16 @@ class ActivityStringTest < ActiveSupport::TestCase
     destroy_activity = Activity.last
     assert_equal "[#{question.publisher.display_name}](/u/#{question.publisher.url}) "\
                   "posted a challenge in [#{project.display_name}](/p/#{project.id})",
-                 Argu::ActivityString.new(create_activity, true).to_s
+                 Argu::ActivityString.new(create_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
                   "updated #{question.display_name}",
-                 Argu::ActivityString.new(update_activity, true).to_s
+                 Argu::ActivityString.new(update_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
                   "trashed #{question.display_name}",
-                 Argu::ActivityString.new(trash_activity, true).to_s
+                 Argu::ActivityString.new(trash_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
                   "deleted #{question.display_name}",
-                 Argu::ActivityString.new(destroy_activity, true).to_s
+                 Argu::ActivityString.new(destroy_activity, receiver, true).to_s
   end
 
   test 'string for create of question with deleted parent' do
@@ -50,13 +51,13 @@ class ActivityStringTest < ActiveSupport::TestCase
     trash_activity = trash_resource(question, updater).activities.last
     assert_equal "[#{question.publisher.display_name}](/u/#{question.publisher.url}) "\
                   "posted a challenge in #{project.display_name}",
-                 Argu::ActivityString.new(create_activity, true).to_s
+                 Argu::ActivityString.new(create_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
                   "updated [#{question.display_name}](/q/#{question.id})",
-                 Argu::ActivityString.new(update_activity, true).to_s
+                 Argu::ActivityString.new(update_activity, receiver, true).to_s
     assert_equal "[#{updater.display_name}](/u/#{updater.url}) "\
                   "trashed [#{question.display_name}](/q/#{question.id})",
-                 Argu::ActivityString.new(trash_activity, true).to_s
+                 Argu::ActivityString.new(trash_activity, receiver, true).to_s
   end
 
   test 'string for create of question by deleted user' do
@@ -66,12 +67,12 @@ class ActivityStringTest < ActiveSupport::TestCase
     question.publisher.destroy
     assert_equal "#{question.publisher.display_name} "\
                   "posted a challenge in [#{project.display_name}](/p/#{project.id})",
-                 Argu::ActivityString.new(create_activity.reload, true).to_s
+                 Argu::ActivityString.new(create_activity.reload, receiver, true).to_s
     assert_equal "#{question.publisher.display_name} "\
                   "updated [#{question.display_name}](/q/#{question.id})",
-                 Argu::ActivityString.new(update_activity.reload, true).to_s
+                 Argu::ActivityString.new(update_activity.reload, receiver, true).to_s
     assert_equal "#{question.publisher.display_name} "\
                   "trashed [#{question.display_name}](/q/#{question.id})",
-                 Argu::ActivityString.new(trash_activity.reload, true).to_s
+                 Argu::ActivityString.new(trash_activity.reload, receiver, true).to_s
   end
 end

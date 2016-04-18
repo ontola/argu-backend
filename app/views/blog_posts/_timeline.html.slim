@@ -1,14 +1,14 @@
-.box[class=status_classes_for(blog_post)]
-  =render partial: 'blog_posts/info_bar', locals: {blog_post: blog_post}
+.box[class=status_classes_for(resource)]
+  =render partial: 'blog_posts/info_bar', locals: {blog_post: resource}
   section
-    h3[itemprop="headline"]= blog_post.title
-    .markdown[itemprop="text"]= markdown_to_html(blog_post.content)
+    h3[itemprop="headline"]= resource.title
+    .markdown[itemprop="text"]= markdown_to_html(resource.content)
   section.section--footer
-    =render partial: blog_post.creator, locals: {resource: blog_post}
+    =render partial: resource.creator, locals: {resource: resource}
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
-      =crud_menu_item(blog_post)
-      - if blog_post.forum.visibility
+      =crud_menu_item(resource)
+      - if resource.forum.visibility
         li.share-menu
-          ul= react_component_store 'ShareDropdown', props: share_items(blog_post)
-- unless blog_post.is_published?
-  = render partial: 'application/publish', locals: {resource: blog_post}
+          ul= react_component_store 'ShareDropdown', props: share_items(resource)
+- unless resource.is_published?
+  = render partial: 'application/publish', locals: {resource: resource}

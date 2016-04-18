@@ -19,4 +19,4 @@
           =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening == current_happening}
 #current-blog-post
   - if current_happening.present?
-    =render partial: 'blog_posts/timeline', locals: {blog_post: current_happening.trackable}
+    =render partial: "#{current_happening.trackable.class_name}/timeline", locals: {resource: current_happening.trackable}

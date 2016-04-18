@@ -1,0 +1,11 @@
+.box[class=status_classes_for(resource)]
+  section
+    h3
+      span[class="fa fa-#{decision_icon(resource)}"]
+      span.icon-left= decision_state(resource)
+    .markdown[itemprop="text"]= markdown_to_html(resource.content)
+  .section.section--footer
+    - unless resource.pending?
+      =render partial: resource.creator, locals: {resource: resource}
+    ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
+      =crud_menu_item(resource)

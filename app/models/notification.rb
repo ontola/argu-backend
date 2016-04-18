@@ -1,5 +1,5 @@
 class Notification < ApplicationRecord
-  include ActivityStringHelper
+  include ActivityHelper
   belongs_to :user
   belongs_to :activity
   before_create :set_notification_type
@@ -19,7 +19,7 @@ class Notification < ApplicationRecord
 
   def title
     if activity.present?
-      activity_string_for(activity)
+      activity_string_for(activity, user)
     else
       super
     end
@@ -54,6 +54,8 @@ class Notification < ApplicationRecord
     self.notification_type = case activity.trackable
                              when BlogPost
                                :news
+                             when Decision
+                               activity.trackable.forwarded? ? :reaction : :decision
                              else
                                :reaction
                              end

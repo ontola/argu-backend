@@ -1,0 +1,11 @@
+.box[class=status_classes_for(decision)]
+  section
+    h3
+      span[class="fa fa-#{decision_icon(decision)}"]
+      span.icon-left=decision_state(decision)
+    .markdown[itemprop="text"]=markdown_to_html(decision.content)
+  .section.section--footer
+    - unless decision.pending?
+      =render partial: decision.creator, locals: {resource: decision}
+    ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
+      =crud_menu_item(decision)

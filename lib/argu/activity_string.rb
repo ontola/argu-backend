@@ -5,20 +5,22 @@ module Argu
     include Rails.application.routes.url_helpers
 
     # Params:
-    # +activity+:: The Activity to generate the activity_string for
-    # +embedded_link+:: Set to true to embed an anchor link (defaults to false)
-    def initialize(activity, embedded_link = false)
+    # @param [string] activity The Activity to generate the activity_string for
+    # @param [User] user The User to generate the activity_string for
+    # @param [bool] embedded_link Set to true to embed an anchor link (defaults to false)
+    def initialize(activity, user, embedded_link = false)
       @activity = activity
+      @user = user
       @embedded_link = embedded_link
     end
 
     def to_s
-      default = I18n.t("activities.default.#{@activity.action}",
+      default = I18n.t("activities.default.#{action}",
                        owner: owner_string,
                        type: type_string,
                        subject: subject_string,
                        parent: parent_string)
-      I18n.t("activities.#{@activity.trackable_type.tableize}.#{@activity.action}",
+      I18n.t("activities.#{@activity.trackable_type.tableize}.#{action}",
              owner: owner_string,
              type: type_string,
              subject: subject_string,
@@ -29,6 +31,14 @@ module Argu
     end
 
     private
+
+    def action
+      if @activity.trackable_type == 'Decision' && @activity.trackable.forwarded_to&.user == @user
+        :forwarded_to_you
+      else
+        @activity.action
+      end
+    end
 
     # @return [String, nil] Singlar name of activity.trackable.group, as text
     def group_singular_string

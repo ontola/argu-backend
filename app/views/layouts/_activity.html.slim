@@ -5,9 +5,9 @@
         img[src=activity.owner.default_profile_photo.url(:icon)]
       .info-block[style="padding: 0;"]
         p[style="margin-bottom: 0;"]
-          =markdown_to_html(activity_string_for(activity, true))
+          =markdown_to_html(activity_string_for(activity, current_user, true))
         time[datetime=activity.created_at]
           small[style="font-size: 0.8em; color: grey;"]= awesome_time_ago_in_words activity.created_at
-  .activity-body
-    -if ['create', 'publish'].include?(activity.action) && activity.object != 'vote'
+  -if render_body_on_feed?(activity)
+    .activity-body
       =render partial: "public_activity/#{activity.key.gsub('.','/')}", locals: {activity: activity}

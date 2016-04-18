@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ActivityListener
-
   # @param [Hash] opts
   # @option opts [User] publisher The person that made the action
   # @option opts [Profile] creator The Profile under whose name it was published
@@ -41,6 +40,11 @@ class ActivityListener
     define_method "#{method}_question_successful" do |resource|
       recipient = resource.project || resource.forum
       create_activity(resource, recipient, method)
+    end
+
+    define_method "#{method}_decision_successful" do |resource|
+      action = resource.previous_changes[:state].present? ? resource.state : method
+      create_activity(resource, resource.decisionable, action)
     end
   end
 

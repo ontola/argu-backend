@@ -1,16 +1,9 @@
 class GroupMembershipsController < AuthorizedController
   skip_before_action :check_if_member
-  skip_before_action :authorize_action, only: :index
   include NestedResourceHelper
 
   def index
-    authorize(
-      Edge.new(
-        parent: get_parent_resource.members_group.edge,
-        owner: GroupMembership.new).owner,
-      :index?)
-
-    if current_user.present? && params[:q].present?
+    if params[:q].present?
       q = params[:q].tr(' ', '|')
       # Matched groups with members
       @results = policy_scope(
@@ -79,6 +72,14 @@ class GroupMembershipsController < AuthorizedController
   end
 
   private
+
+  def authenticated_resource!
+    return super if action_name != 'index'
+    Edge.new(
+      parent: get_parent_resource.members_group.edge,
+      owner: GroupMembership.new(group: Group.new(page: get_parent_resource))
+    ).owner
+  end
 
   def parent_resource_param(opts)
     action_name == 'index' ? super : :group_id

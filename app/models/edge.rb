@@ -53,7 +53,7 @@ class Edge < ActiveRecord::Base
   end
 
   def set_user_id
-    self.user_id = owner.publisher.id
+    self.user_id = owner.publisher.present? ? owner.publisher.id : 0
   end
 
   def update_children
