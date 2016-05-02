@@ -1,4 +1,6 @@
 class ForumsController < ApplicationController
+  before_action :redirect_generic_shortnames, only: :show
+
   def index
     authorize Forum, :index?
     @user = User.find_via_shortname params[:id]
@@ -131,6 +133,11 @@ class ForumsController < ApplicationController
 
   def permit_params
     params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)
+  end
+
+  def redirect_generic_shortnames
+    resource = Shortname.find_resource params[:id]
+    redirect_to url_for(resource) unless resource.is_a?(Forum)
   end
 
   def tab
