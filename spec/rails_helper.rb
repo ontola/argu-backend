@@ -36,12 +36,19 @@ end
 Capybara.server_port = 42_000
 Capybara.always_include_port = true
 
+module BrowserWrapper
+  def press_key(code)
+    find('body').native.send_keys code
+  end
+end
+
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Capybara::DSL
   config.include TestHelperMethods
   config.include RSpecHelpers
   config.include TestMocks
+  config.include BrowserWrapper
 
   Sidekiq::Testing.fake!
 
