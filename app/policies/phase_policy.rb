@@ -34,7 +34,11 @@ class PhasePolicy < RestrictivePolicy
   end
 
   def show?
-    rule is_open?, has_access_token?, is_member?, is_moderator?, is_manager?, is_owner?, super
+    if record.project.is_published? && !record.project.is_trashed?
+      rule is_open?, has_access_token?, is_member?, is_moderator?, is_manager?, is_owner?, super
+    else
+      rule is_moderator?, is_manager?, is_owner?, super
+    end
   end
 
   def update?
