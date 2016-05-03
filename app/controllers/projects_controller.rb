@@ -154,7 +154,7 @@ class ProjectsController < AuthorizedController
   end
 
   def resource_new_params
-    super.merge(start_date: Time.now)
+    super.merge(start_date: Time.current)
   end
 
   def trash_service

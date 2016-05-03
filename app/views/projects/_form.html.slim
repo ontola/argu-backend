@@ -1,4 +1,4 @@
-=set_title project.new_record? ? t('new_type', type: I18n.t('projects.type')) : t('edit_type', type: I18n.t('projects.type'))
+=set_title project.new_record? ? t('new_type', type: t('projects.type')) : t('edit_type', type: t('projects.type'))
 .col-3
   .col-3-2
     =to_parent(authenticated_context)
@@ -32,19 +32,23 @@
             .links
               =link_to_add_association f, :stepups, class: 'btn-subtle' do
                 span.fa.fa-plus
-                span.icon-left=t('projects.stepups.add')
+                span.icon-left= t('projects.stepups.add')
             hr
             p= t('projects.phases.info')
-            -unless project.new_record?
+            - unless project.new_record?
               ul
-                -project.phases.each do |phase|
-                  li=link_to(phase.display_name, edit_phase_path(phase)) + (project.current_phase == phase ? " - #{t('projects.phases.current')}" : '')
+                - project.phases.each do |phase|
+                  li
+                    =>link_to(phase.display_name, edit_phase_path(phase))
+                    - if project.current_phase == phase
+                      | -
+                      =<t('projects.phases.current')
                   =phase.errors.full_messages.first
             .links
               =link_to_add_association f, :phases, class: 'btn-subtle' do
                 span.fa.fa-plus
                 span.icon-left=t('projects.phases.add')
-          -if !project.new_record? && policy(project).trash?
+          - if !project.new_record? && policy(project).trash?
             =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
               - if policy(project).trash?
                 =f.input :trashed_at, as: :reverse_boolean

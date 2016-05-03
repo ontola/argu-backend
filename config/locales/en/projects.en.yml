@@ -26,6 +26,10 @@ en:
         last: 'Finishing this last phase will also finish the entire project'
         other: 'Finishing this phase will automatically start the next phase'
       start_confirmation: 'Starting this phase will automatically finish the previous phase'
+      start_date:
+        from_project: 'Start date of project'
+        from_previous_phase: 'End date of the previous phase'
+        none: 'Previous phase does not have an end date yet'
     call_to_action:
       body: 'Keep people up to date and engage them with your project. You can post new challenges and ideas inside a project.'
       action: 'Start your project.'

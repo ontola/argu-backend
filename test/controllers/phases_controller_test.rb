@@ -7,67 +7,9 @@ class PhasesControllerTest < ActionController::TestCase
   let!(:page) { create(:page, owner: owner.profile) }
   let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
   let!(:project) { create(:project, :published, forum: freetown) }
+  let!(:unpublished_project) { create(:project, :unpublished, forum: freetown) }
   let(:subject) { create(:phase, project: project, forum: freetown) }
-
-  ####################################
-  # Guest, User, Member share features
-  ####################################
-
-  def general_show(response = 200, record = subject)
-    get :show,
-        id: record
-
-    assert_response response
-  end
-
-  def general_edit(response = 302)
-    get :edit,
-        id: subject
-
-    assert_response response
-  end
-
-  def general_update(response = 302, changed = false)
-    ch_method = method(changed ? :assert_not_equal : :assert_equal)
-
-    patch :update,
-          id: subject,
-          phase: attributes_for(:phase)
-
-    assert_response response
-    if assigns(:update_service).try(:resource).present?
-      ch_method.call subject
-                         .updated_at
-                         .utc
-                         .iso8601(6),
-                     assigns(:update_service)
-                         .try(:resource)
-                         .try(:updated_at)
-                         .try(:utc)
-                         .try(:iso8601, 6)
-    else
-      assert false, 'Model changed when it should not have' if changed
-    end
-  end
-
-  def general_finish(response = 302, changed = false)
-    ch_method = method(changed ? :assert_not_equal : :assert_equal)
-
-    patch :update,
-          id: subject,
-          phase: attributes_for(:phase).merge(finish_phase: 'true')
-
-    assert_response response
-    if assigns(:update_service).try(:resource).present?
-      ch_method.call subject
-                         .end_date,
-                     assigns(:update_service)
-                         .try(:resource)
-                         .try(:end_date)
-    else
-      assert false, 'Model changed when it should not have' if changed
-    end
-  end
+  let(:unpublished_subject) { create(:phase, project: unpublished_project, forum: freetown) }
 
   ####################################
   # As Guest
@@ -75,6 +17,10 @@ class PhasesControllerTest < ActionController::TestCase
 
   test 'guest should get show published' do
     general_show
+  end
+
+  test 'guest should not get show unpublished' do
+    general_show_unpublished
   end
 
   test 'guest should not get edit' do
@@ -90,9 +36,14 @@ class PhasesControllerTest < ActionController::TestCase
   ####################################
   let(:user) { create(:user) }
 
-  test 'user should get show' do
+  test 'user should get show published' do
     sign_in user
     general_show
+  end
+
+  test 'user should not get show unpublished' do
+    sign_in user
+    general_show_unpublished
   end
 
   test 'user should not get edit' do
@@ -110,9 +61,14 @@ class PhasesControllerTest < ActionController::TestCase
   ####################################
   let(:member) { create_member(freetown) }
 
-  test 'member should get show' do
+  test 'member should get show published' do
     sign_in member
     general_show
+  end
+
+  test 'member should not get show unpublished' do
+    sign_in member
+    general_show_unpublished
   end
 
   test 'member should not get edit' do
@@ -129,9 +85,14 @@ class PhasesControllerTest < ActionController::TestCase
   # As Owner
   ####################################
 
-  test 'owner should get show' do
+  test 'owner should get show published' do
     sign_in owner
     general_show
+  end
+
+  test 'owner should get show unpublished' do
+    sign_in owner
+    general_show_unpublished 200
   end
 
   test 'owner should get edit' do
@@ -165,9 +126,21 @@ class PhasesControllerTest < ActionController::TestCase
            forum: freetown,
            moderator: netdem_member)
   end
-  test 'netdem member should get show' do
+  let(:netdem_stepup_unpublished) do
+    create(:stepup,
+           record: unpublished_project,
+           forum: freetown,
+           moderator: netdem_member)
+  end
+  test 'netdem member should get show published' do
     sign_in netdem_member
     general_show
+  end
+
+  test 'netdem member should get show unpublished' do
+    netdem_stepup_unpublished
+    sign_in netdem_member
+    general_show_unpublished 200
   end
 
   test 'netdem member should get edit' do
@@ -193,9 +166,14 @@ class PhasesControllerTest < ActionController::TestCase
   ####################################
   let(:manager) { create_manager freetown }
 
-  test 'manager should get show' do
+  test 'manager should get show published' do
     sign_in manager
     general_show 200
+  end
+
+  test 'manager should get show unpublished' do
+    sign_in manager
+    general_show_unpublished 200
   end
 
   test 'manager should get edit' do
@@ -218,9 +196,14 @@ class PhasesControllerTest < ActionController::TestCase
   ####################################
   let(:staff) { create :user, :staff }
 
-  test 'staff should get show' do
+  test 'staff should get show published' do
     sign_in staff
     general_show 200
+  end
+
+  test 'staff should get show unpublished' do
+    sign_in staff
+    general_show_unpublished 200
   end
 
   test 'staff should get edit' do
@@ -236,5 +219,74 @@ class PhasesControllerTest < ActionController::TestCase
   test 'staff should patch update finish' do
     sign_in staff
     general_finish 302, true
+  end
+
+  private
+
+  ####################################
+  # Guest, User, Member share features
+  ####################################
+
+  def general_show(response = 200, record = subject)
+    get :show,
+        id: record
+
+    assert_response response
+  end
+
+  def general_show_unpublished(response = 302, record = unpublished_subject)
+    get :show,
+        id: record
+
+    assert_response response
+  end
+
+  def general_edit(response = 302)
+    get :edit,
+        id: subject
+
+    assert_response response
+  end
+
+  def general_update(response = 302, changed = false)
+    ch_method = method(changed ? :assert_not_equal : :assert_equal)
+
+    patch :update,
+          id: subject,
+          phase: attributes_for(:phase)
+
+    assert_response response
+    if assigns(:update_service).try(:resource).present?
+      ch_method.call subject
+                       .updated_at
+                       .utc
+                       .iso8601(6),
+                     assigns(:update_service)
+                       .try(:resource)
+                       .try(:updated_at)
+                       .try(:utc)
+                       .try(:iso8601, 6)
+    else
+      assert false, 'Model changed when it should not have' if changed
+    end
+  end
+
+  def general_finish(response = 302, changed = false)
+    ch_method = method(changed ? :assert_not_equal : :assert_equal)
+
+    patch :update,
+          id: subject,
+          phase: attributes_for(:phase).merge(finish_phase: 'true')
+
+    assert_response response
+    if assigns(:update_service).try(:resource).present?
+      ch_method.call subject
+                       .end_date,
+                     assigns(:update_service)
+                       .try(:resource)
+                       .try(:end_date)
+    else
+      assert false, 'Model changed when it should not have' if changed
+    end
   end
 end

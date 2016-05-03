@@ -1,4 +1,12 @@
-module ProjectsHelper
+module TimelineHelper
+  def generate_phase_link_class(project, phase)
+    class_string = "timeline-phase-title tooltip--top"
+    class_string << ' finished' if phase.id < project.current_phase.id
+    class_string << ' current' if phase == project.current_phase
+    class_string << ' active' if project.blog_posts.empty? && phase == project.current_phase
+    class_string
+  end
+
   # Use this to get a string describing the phase's period.
   # TODO: Put into I18n and keep track of the tenses.
   def start_end_title_string(phase)

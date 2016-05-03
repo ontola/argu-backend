@@ -25,14 +25,8 @@ class BlogPost < ActiveRecord::Base
   validate :validate_within_project_scope
 
   parentable :blog_postable, :forum
-
-  def description
-    self.content
-  end
-
-  def display_name
-    title
-  end
+  alias_attribute :description, :content
+  alias_attribute :display_name, :title
 
   def validate_within_project_scope
     if blog_postable.is_a?(Project) && published_at.present?
