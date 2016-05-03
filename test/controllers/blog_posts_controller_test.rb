@@ -54,8 +54,8 @@ class BlogPostsControllerTest < ActionController::TestCase
   def general_create_publish(response = 302, differences = [['BlogPost.count', 0], ['Activity.count', 0]])
       assert_differences(differences) do
           post :create,
-            project_id: project,
-            blog_post: attributes_for(:blog_post, publish_type: :direct)
+               project_id: project,
+               blog_post: attributes_for(:blog_post, publish_type: :direct)
 
       Sidekiq::Testing.inline! do
         Publication.last.send(:re_schedule_or_destroy)

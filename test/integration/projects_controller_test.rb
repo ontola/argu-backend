@@ -518,9 +518,9 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def general_create_publish(response = 302, differences = [['Project.count', 0],
-                                                          ['Stepup.count', 0],
-                                                          ['Phase.count', 0],
-                                                          ['Activity.count', 0]])
+                                                            ['Stepup.count', 0],
+                                                            ['Phase.count', 0],
+                                                            ['Activity.count', 0]])
     assert_differences(differences) do
       post forum_projects_path(freetown),
            project: attributes_for(:project,

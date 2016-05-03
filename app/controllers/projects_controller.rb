@@ -163,13 +163,10 @@ class ProjectsController < AuthorizedController
   end
 
   def resource_new_params
-    super.merge(start_date: Time.current)
-  end
-
-  def resource_new_params
     super.merge(
-        publish_type: :direct,
-        publish_at: Time.current)
+      publish_type: :direct,
+      publish_at: Time.current,
+      start_date: Time.current)
   end
 
   def trash_service

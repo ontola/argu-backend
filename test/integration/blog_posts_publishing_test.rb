@@ -43,9 +43,8 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     get new_project_blog_post_path(project_id: project)
     assert_response 200
 
-    post project_blog_posts_path(
-           project_id: project,
-           blog_post: attributes_for(:blog_post, publish_type: :draft))
+    post project_blog_posts_path(project_id: project,
+                                 blog_post: attributes_for(:blog_post, publish_type: :draft))
     assert_response 302
 
     follow_redirect!
@@ -63,9 +62,8 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     get new_project_blog_post_path(project_id: project)
     assert_response 200
 
-    post project_blog_posts_path(
-           project_id: project,
-           blog_post: attributes_for(:blog_post, publish_type: :direct))
+    post project_blog_posts_path(project_id: project,
+                                 blog_post: attributes_for(:blog_post, publish_type: :direct))
     assert_response 302
 
     Sidekiq::Testing.inline! do
@@ -87,14 +85,14 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     get new_project_blog_post_path(project_id: project)
     assert_response 200
 
-    post project_blog_posts_path(
-           project_id: project,
-           blog_post: attributes_for(:blog_post, publish_type: :schedule, publish_at: 1.day.from_now))
+    post project_blog_posts_path(project_id: project,
+                                 blog_post: attributes_for(:blog_post,
+                                                           publish_type: :schedule,
+                                                           publish_at: 1.day.from_now))
     assert_response 302
 
-    patch blog_post_path(
-           id: BlogPost.last.id,
-           blog_post: {publish_type: :draft})
+    patch blog_post_path(id: BlogPost.last.id,
+                         blog_post: {publish_type: :draft})
     assert_response 302
 
     Sidekiq::Testing.inline! do
