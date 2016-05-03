@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160329060056) do
+ActiveRecord::Schema.define(version: 20160502144425) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,7 +63,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
     t.integer  "votes_pro_count",                 default: 0,     null: false
     t.integer  "comments_count",                  default: 0,     null: false
     t.integer  "votes_abstain_count",             default: 0,     null: false
-    t.integer  "creator_id"
+    t.integer  "creator_id",                                      null: false
     t.integer  "votes_con_count",                 default: 0,     null: false
     t.integer  "forum_id"
     t.integer  "publisher_id"
@@ -133,7 +133,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
     t.string   "title",            limit: 255, default: ""
     t.text     "body",                         default: ""
     t.string   "subject",          limit: 255, default: ""
-    t.integer  "creator_id",                   default: 0
+    t.integer  "creator_id",                   default: 0,     null: false
     t.integer  "parent_id"
     t.integer  "lft"
     t.integer  "rgt"
@@ -146,7 +146,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
 
   add_index "comments", ["commentable_id", "commentable_type", "is_trashed"], name: "index_comments_on_id_and_type_and_trashed", using: :btree
   add_index "comments", ["commentable_id"], name: "index_comments_on_commentable_id", using: :btree
-  add_index "comments", ["creator_id"], name: "index_comments_on_profile_id", using: :btree
+  add_index "comments", ["creator_id"], name: "index_comments_on_creator_id", using: :btree
 
   create_table "documents", force: :cascade do |t|
     t.string   "name"
@@ -216,6 +216,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
     t.integer  "lock_version",                       default: 0
     t.integer  "place_id",                 limit: 8
     t.integer  "projects_count",                     default: 0,     null: false
+    t.integer  "max_shortname_count",                default: 0,     null: false
   end
 
   add_index "forums", ["slug"], name: "index_forums_on_slug", unique: true, using: :btree
@@ -238,7 +239,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
   create_table "group_responses", force: :cascade do |t|
     t.integer  "forum_id"
     t.integer  "group_id"
-    t.integer  "creator_id"
+    t.integer  "creator_id",                null: false
     t.integer  "motion_id"
     t.text     "text",         default: ""
     t.integer  "publisher_id"
@@ -304,11 +305,9 @@ ActiveRecord::Schema.define(version: 20160329060056) do
     t.integer  "votes_neutral_count",                 default: 0,     null: false
     t.integer  "argument_pro_count",                  default: 0,     null: false
     t.integer  "argument_con_count",                  default: 0,     null: false
-    t.integer  "opinion_pro_count",                   default: 0,     null: false
-    t.integer  "opinion_con_count",                   default: 0,     null: false
     t.integer  "votes_abstain_count",                 default: 0,     null: false
     t.integer  "forum_id"
-    t.integer  "creator_id"
+    t.integer  "creator_id",                                          null: false
     t.string   "cover_photo",                         default: ""
     t.string   "cover_photo_attribution",             default: ""
     t.integer  "publisher_id"
@@ -379,26 +378,6 @@ ActiveRecord::Schema.define(version: 20160329060056) do
   add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
-  create_table "opinions", force: :cascade do |t|
-    t.string   "title",               limit: 255
-    t.text     "content"
-    t.boolean  "is_trashed",                      default: false
-    t.boolean  "pro",                             default: false
-    t.integer  "motion_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "votes_pro_count",                 default: 0,     null: false
-    t.integer  "comments_count",                  default: 0,     null: false
-    t.integer  "votes_abstain_count",             default: 0,     null: false
-    t.integer  "creator_id"
-    t.integer  "forum_id"
-  end
-
-  add_index "opinions", ["id"], name: "index_opinions_on_id", using: :btree
-  add_index "opinions", ["motion_id", "id", "pro"], name: "index_opinions_on_motion_id_and_id_and_pro", using: :btree
-  add_index "opinions", ["motion_id", "id"], name: "index_opinions_on_motion_id_and_id", using: :btree
-  add_index "opinions", ["motion_id", "is_trashed"], name: "index_opinions_on_motion_id_and_is_trashed", using: :btree
-
   create_table "page_memberships", force: :cascade do |t|
     t.integer "profile_id",             null: false
     t.integer "page_id",                null: false
@@ -441,7 +420,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
     t.integer  "about_id",                 null: false
     t.string   "about_type",               null: false
     t.integer  "used_as",      default: 0
-    t.integer  "creator_id"
+    t.integer  "creator_id",               null: false
     t.integer  "publisher_id"
     t.string   "image_uid"
     t.string   "title"
@@ -552,7 +531,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
     t.string   "title",                   limit: 255, default: ""
     t.text     "content",                             default: ""
     t.integer  "forum_id"
-    t.integer  "creator_id"
+    t.integer  "creator_id",                                          null: false
     t.boolean  "is_trashed",                          default: false
     t.integer  "motions_count",                       default: 0
     t.integer  "votes_pro_count",                     default: 0
@@ -624,6 +603,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
     t.string   "owner_type", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "forum_id"
   end
 
   add_index "shortnames", ["owner_id", "owner_type"], name: "index_shortnames_on_owner_id_and_owner_type", unique: true, using: :btree
@@ -634,7 +614,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
     t.string  "record_type", null: false
     t.integer "group_id"
     t.integer "user_id"
-    t.integer "creator_id"
+    t.integer "creator_id",  null: false
     t.string  "title"
     t.text    "description"
   end
@@ -771,6 +751,7 @@ ActiveRecord::Schema.define(version: 20160329060056) do
   add_foreign_key "questions", "places"
   add_foreign_key "questions", "projects"
   add_foreign_key "questions", "users", column: "publisher_id"
+  add_foreign_key "shortnames", "forums"
   add_foreign_key "stepups", "forums"
   add_foreign_key "stepups", "groups"
   add_foreign_key "stepups", "profiles", column: "creator_id"

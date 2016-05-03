@@ -213,6 +213,8 @@ Argu::Application.routes.draw do
     delete :destroy, on: :collection
   end
 
+  resources :shortnames, only: %i(edit update destroy)
+
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
   get '/settings', to: 'users#edit', as: 'settings'
@@ -252,6 +254,7 @@ Argu::Application.routes.draw do
     post :memberships, on: :collection
     resources :memberships, only: [:create, :destroy]
     resources :managers, only: [:new, :create, :destroy]
+    resources :shortnames, only: [:new, :create]
     resources :projects, path: 'p', only: [:new, :create]
     resources :arguments, path: 'a', only: [:new, :create]
     resources :tags, path: 't', only: [:show, :index]

@@ -1,13 +1,26 @@
 class Shortname < ActiveRecord::Base
-  belongs_to :owner, polymorphic: true
+  belongs_to :owner,
+             polymorphic: true,
+             required: true
+  belongs_to :forum, inverse_of: :shortnames
 
   # Uniqueness is done in the database (since rails lowercase support sucks,
   # and this is a point where data consistency is critical)
-  validates :shortname, presence: true, length: 3..50
-  validates_uniqueness_of :shortname, allow_nil: true
+  validates :shortname,
+            presence: true,
+            length: 3..50,
+            uniqueness: true,
+            allow_nil: true
 
-  validates :shortname, exclusion: {in: IO.readlines('config/shortname_blacklist.lsv').map!(&:chomp)}, if: :new_record?
-  validates_format_of :shortname, with: /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i, message: I18n.t('profiles.should_start_with_capital')
+  validates :shortname,
+            exclusion: {in: IO.readlines('config/shortname_blacklist.lsv').map!(&:chomp)},
+            if: :new_record?
+  validates :shortname,
+            format: {
+              with: /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i,
+              message: I18n.t('profiles.should_start_with_capital')
+            }
+  validate :forum_id_matches_owner, :within_forum_shortname_bounds
 
   SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i
 
@@ -25,5 +38,19 @@ class Shortname < ActiveRecord::Base
 
   def self.find_resource(shortname)
     Shortname.find_by(shortname: shortname).owner
+  end
+
+  private
+
+  def forum_id_matches_owner
+    if forum.present? && owner.present? && forum != owner.forum
+      errors.add(:owner, I18n.t('activerecord.errors.different_owner_forum'))
+    end
+  end
+
+  def within_forum_shortname_bounds
+    if forum.present? && new_record? && forum.shortnames_depleted?
+      errors.add(:base, I18n.t('shortnames.errors.max_reached'))
+    end
   end
 end

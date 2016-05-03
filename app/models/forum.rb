@@ -11,6 +11,7 @@ class Forum < ActiveRecord::Base
   has_many :members, through: :memberships, source: :profile
   accepts_nested_attributes_for :memberships
   has_many :moderators, -> { where(role: 2) }, class_name: 'Membership'
+  has_many :shortnames, inverse_of: :forum
   has_many :stepups, inverse_of: :forum
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, inverse_of: :forum
@@ -124,5 +125,9 @@ class Forum < ActiveRecord::Base
 
   def featured_tags=(value)
     super(value.downcase.strip)
+  end
+
+  def shortnames_depleted?
+    max_shortname_count < shortnames.count
   end
 end

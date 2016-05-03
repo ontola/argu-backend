@@ -13,6 +13,8 @@ module SettingsHelper
       'rocket'
     when :privacy
       'shield'
+    when :shortnames
+      'external-link'
     end
   end
 

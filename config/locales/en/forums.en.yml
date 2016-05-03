@@ -22,11 +22,13 @@ en:
         projects: "Projects"
         privacy: 'Privacy'
         managers: 'Managers'
+        shortnames: 'Shortnames'
       terminology: "Terminologogy"
       terminology_helper: "You can adjust the names for concepts as 'ideas' and 'challenges'. However, this functionality is not yet fully developed and we recommend that you use the default settings."
       advanced: "Advanced"
       privacy: "Privacy"
       manager: "Manager"
+      shortnames: 'Shortnames'
       managers:
         title: "Managers"
         administrator: "Administrator"

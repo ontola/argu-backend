@@ -38,8 +38,8 @@ class ForumsController < ApplicationController
     current_context @forum
 
     render locals: {
-               tab: tab,
-               active: tab
+             tab: tab,
+             active: tab
            }
   end
 

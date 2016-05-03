@@ -1,0 +1,7 @@
+nl:
+  shortnames:
+    type: 'Argu url'
+    current_out_of_max: 'Er zijn %{current} van de %{max} Argu urls gebruikt.'
+    contact_argu: 'Neem contact op met Argu voor meer Argu urls'
+    errors:
+      max_reached: 'Je hebt het maximum aantal Argu urls bereikt, neem contact op met Argu voor extra Argu urls'

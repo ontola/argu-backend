@@ -1,0 +1,19 @@
+h3= t('shortnames.type').capitalize.pluralize
+p= t('shortnames.current_out_of_max', current: @forum.shortnames.count, max: @forum.max_shortname_count)
+p= t('shortnames.contact_argu')
+table
+  thead
+    tr
+      td Shortname
+      td Object
+      td Actions
+  tbody
+    -@forum.shortnames.each do |shortname|
+      tr
+        td= shortname.shortname
+        td= link_to shortname.owner.display_name, shortname.owner
+        td
+          =link_to t('edit'), edit_shortname_url(shortname), class: 'btn'
+          =link_to t('destroy'), shortname_url(shortname), class: 'btn btn--warning', data: {method: :delete, confirm: t('destroy_confirmation')}
+- if policy(@forum.shortnames.new).create?
+  =link_to t('new_type', type: t('shortnames.type')), new_forum_shortname_path(@forum), class: 'btn'

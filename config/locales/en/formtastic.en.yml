@@ -68,6 +68,9 @@ en:
         naam: "Forum name"
       group:
         name: "Name"
+      shortname:
+        owner_type: "Resource type"
+        owner_id: "Resource id"
       user:
         shortname: "Username"
         first_name: "First name*"

@@ -291,3 +291,7 @@ nl:
     formats:
       dateline: '%A, %d %B %Y'
       date: "%A, %d %B '%y"
+  activerecord:
+    errors:
+      record_not_unique: 'Deze waarde(n) is al bezet.'
+      different_owner_forum: 'Het object hoort niet bij het huidige forum'

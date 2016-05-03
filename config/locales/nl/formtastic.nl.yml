@@ -68,6 +68,9 @@ nl:
         naam: "Naam van forum"
       group:
         name: "Naam"
+      shortname:
+        owner_type: "Object type"
+        owner_id: "Object id"
       user:
         shortname: "Gebruikersnaam"
         first_name: "Voornaam*"
