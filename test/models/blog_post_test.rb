@@ -8,14 +8,14 @@ class BlogPostTest < ActiveSupport::TestCase
   end
 
   test 'Update start_date of next phase' do
-    # don't publish blog_post before start_date of project
-    assert_not subject.update(published_at: 1.month.ago)
-    # don't publish blog_post after end_date of project
-    assert_not subject.update(published_at: 1.month.from_now)
-    # publish blog_post within scope of project
-    assert subject.update(published_at: DateTime.now)
-    # publish blog_post in future when project has no end_Date
+    assert_not subject.update(published_at: 1.month.ago),
+               'blog_post can be published before start_date of project'
+    assert_not subject.update(published_at: 1.month.from_now),
+               'blog_post can be published after end_date of project'
+    assert subject.update(published_at: DateTime.now),
+           "blog_post can't be published while within scope of project"
     subject.blog_postable.update(end_date: nil)
-    assert subject.update(published_at: 1.month.from_now)
+    assert subject.update(published_at: 1.month.from_now),
+           "blog_post can't be published in future while project has no end_date"
   end
 end

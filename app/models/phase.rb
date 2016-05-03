@@ -47,11 +47,11 @@ class Phase < ActiveRecord::Base
   end
 
   def next_phase
-    @next_phase ||= project.phases.where('id > ?', self.id).try(:first)
+    @next_phase ||= project.phases.where('id > ?', id).try(:first)
   end
 
   def previous_phase
-    @previous_phase ||= project.phases.where('id < ?', self.id).try(:last)
+    @previous_phase ||= project.phases.where('id < ?', id).try(:last)
   end
 
   def update_date_of_project_or_next_phase
