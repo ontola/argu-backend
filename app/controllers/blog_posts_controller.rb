@@ -35,18 +35,17 @@ class BlogPostsController < AuthorizedController
   end
 
   def edit
-    resource = authenticated_resource!
-    if resource.argu_publication.present?
-      resource.schedule!
-      resource.publish_at = resource.argu_publication.published_at
+    if authenticated_resource!.argu_publication.present?
+      authenticated_resource!.schedule!
+      authenticated_resource!.publish_at = authenticated_resource!.argu_publication.published_at
     else
-      resource.draft!
-      resource.publish_at = DateTime.current
+      authenticated_resource!.draft!
+      authenticated_resource!.publish_at = DateTime.current
     end
 
     respond_to do |format|
-      format.html { render locals: {blog_post: resource} }
-      format.json { render json: resource }
+      format.html { render locals: {blog_post: authenticated_resource!} }
+      format.json { render json: authenticated_resource! }
     end
   end
 

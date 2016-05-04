@@ -56,9 +56,15 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     Forum.first.page.update(owner_id: user.profile.id)
     sign_in user
 
-    assert_differences([['Project.count', 1], ['Notification.count', 1]]) do
-      post forum_projects_path(user.profile.memberships.first.forum),
+    assert_differences([['Project.count', 1]]) do
+      post forum_projects_path(Forum.first),
            project: attributes_for(:project)
+    end
+
+    assert_differences([['Notification.count', 1]]) do
+      Sidekiq::Testing.inline! do
+        Publication.last.send(:re_schedule_or_destroy)
+      end
     end
 
     assert_differences([['Project.trashed_only.count', 1], ['Notification.count', -1]]) do
@@ -117,9 +123,15 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     Forum.first.page.update(owner_id: user.profile.id)
     sign_in user
 
-    assert_differences([['BlogPost.count', 1], ['Notification.count', 1]]) do
+    assert_differences([['BlogPost.count', 1]]) do
       post project_blog_posts_path(follow_project.followable),
            blog_post: attributes_for(:blog_post)
+    end
+
+    assert_differences([['Notification.count', 1]]) do
+      Sidekiq::Testing.inline! do
+        Publication.last.send(:re_schedule_or_destroy)
+      end
     end
 
     assert_differences([['BlogPost.trashed_only.count', 1], ['Notification.count', -1]]) do

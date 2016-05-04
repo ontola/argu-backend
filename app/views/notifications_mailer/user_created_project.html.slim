@@ -11,5 +11,5 @@ tr
         td.mail-h3.question-t
           = link_to item.display_name, url_for(item)
       tr
-        td.mail-p= HTML_Truncator.truncate(markdown_to_plaintext(item.content), 250, {length_in_chars: true, ellipsis: (' ...')})
+        td.mail-p= safe_truncated_text(item.content, url_for(item))
   td.mail-p

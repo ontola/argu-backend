@@ -72,7 +72,9 @@ RSpec.feature 'Netdem', type: :feature do
           .set('Second phase')
       click_button 'Save'
     end
-    expect(page).to have_selector('.timeline-phase-title.current.active', text: 'First phase')
+    expect(page).to have_selector('.timeline-phase-title.current', text: 'First phase')
+
+    click_link 'First phase'
 
     page.accept_confirm 'Finishing this phase will automatically start the next phase' do
       within('form.phase') do
@@ -80,6 +82,6 @@ RSpec.feature 'Netdem', type: :feature do
       end
     end
     expect(page).to have_content 'Phase saved successfully'
-    expect(page).to have_selector('.timeline-phase-title.current.active', text: 'Second phase')
+    expect(page).to have_selector('.timeline-phase-title.current', text: 'Second phase')
   end
 end

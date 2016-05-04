@@ -14,8 +14,8 @@ header
               span[class="fa fa-#{blog_post_icon}"]
             =link_to blog_post_path(blog_post), data: {remote: true}, class: 'timeline-post-title' do
               span= blog_post.title
-          - phase.unpublished_blog_posts.each do |blog_post|
-            = link_to blog_post_path(blog_post), data: {remote: true}, class: "tooltip--side-right timeline-point timeline-point-blog-post unpublished #{'active' if blog_post == project.latest_blog_post}" do
+          /- phase.unpublished_blog_posts.each do |blog_post|
+            =link_to blog_post_path(blog_post), data: {remote: true}, class: "tooltip--side-right timeline-point timeline-point-blog-post unpublished #{'active' if blog_post == project.latest_blog_post}" do
               span[class="fa fa-#{blog_post_icon}"]
-              = link_to blog_post_path(blog_post), data: {remote: true}, class: 'timeline-post-title' do
+              =link_to blog_post_path(blog_post), data: {remote: true}, class: 'timeline-post-title' do
                 span= blog_post.title

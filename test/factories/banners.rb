@@ -1,5 +1,6 @@
 FactoryGirl.define do
   factory :banner do
+    association :forum
     sequence(:title) { |n| "Banner title #{n}" }
     sequence(:content) { |n| "Banner content #{n}" }
 
@@ -17,6 +18,14 @@ FactoryGirl.define do
 
     trait :ended do
       ends_at { 15.minutes.ago }
+    end
+
+    trait :without_ending do
+      ends_at nil
+    end
+
+    trait :not_yet_ended do
+      ends_at { 15.minutes.from_now }
     end
 
     %i(guests users members everyone).each do |_audience|
