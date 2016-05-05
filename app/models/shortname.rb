@@ -2,7 +2,8 @@ class Shortname < ActiveRecord::Base
   belongs_to :owner,
              polymorphic: true,
              required: true
-  belongs_to :forum, inverse_of: :shortnames
+  belongs_to :forum,
+             inverse_of: :shortnames
 
   # Uniqueness is done in the database (since rails lowercase support sucks,
   # and this is a point where data consistency is critical)
@@ -20,7 +21,7 @@ class Shortname < ActiveRecord::Base
               with: /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i,
               message: I18n.t('profiles.should_start_with_capital')
             }
-  validate :forum_id_matches_owner, :within_forum_shortname_bounds
+  validate :forum_id_matches_owner
 
   SHORTNAME_FORMAT_REGEX = /\A[a-zA-Z]+[_a-zA-Z0-9]*\z/i
 
@@ -45,12 +46,6 @@ class Shortname < ActiveRecord::Base
   def forum_id_matches_owner
     if forum.present? && owner.present? && forum != owner.forum
       errors.add(:owner, I18n.t('activerecord.errors.different_owner_forum'))
-    end
-  end
-
-  def within_forum_shortname_bounds
-    if forum.present? && new_record? && forum.shortnames_depleted?
-      errors.add(:base, I18n.t('shortnames.errors.max_reached'))
     end
   end
 end

@@ -1,0 +1,60 @@
+# frozen_string_literal: true
+require 'rails_helper'
+
+RSpec.feature 'Shortname', type: :feature do
+  let!(:freetown) { create(:forum, name: 'freetown', max_shortname_count: 3) }
+  let(:manager) { create_manager(freetown) }
+  let(:motion) { create(:motion, forum: freetown) }
+
+  scenario 'manager creates a shortname' do
+    sign_in manager
+    general_create
+  end
+
+  scenario 'manager destroys a shortname' do
+    create(:discussion_shortname, forum: freetown)
+    sign_in manager
+    general_destroy
+  end
+
+  private
+
+  def general_create(response = 200)
+    motion
+    visit shortname_settings_path
+    expect(page).to have_content('0 out of 3')
+
+    click_link 'New argu url'
+    expect(page).to have_current_path new_forum_shortname_path(freetown)
+
+    shortname_attrs = attributes_for(:shortname)
+
+    expect do
+      within('#new_shortname') do
+        fill_in 'shortname_shortname', with: shortname_attrs[:shortname]
+        select('Motion', from: 'shortname_owner_type')
+        fill_in 'shortname_owner_id', with: motion.id
+        click_on 'Save'
+      end
+    end.to change { Shortname.count }.by(1)
+    expect(page).to have_current_path shortname_settings_path
+  end
+
+  def general_update(response = 200)
+
+  end
+
+  def general_destroy(response = 200)
+    s = freetown.shortnames.first
+    expect do
+      visit shortname_settings_path
+      click_link 'Delete'
+      page.accept_alert
+      expect(page).not_to have_content(s.shortname)
+    end.to change { freetown.shortnames.count }.by(-1)
+  end
+
+  def shortname_settings_path
+    settings_forum_path(freetown, tab: 'shortnames')
+  end
+end

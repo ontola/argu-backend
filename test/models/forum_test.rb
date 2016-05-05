@@ -62,4 +62,36 @@ class ForumTest < ActiveSupport::TestCase
     assert_not subject.profile_is_member?(user.profile)
     assert subject.profile_is_member?(subject_member.profile)
   end
+
+  test 'shortnames_depleted? should function correctly' do
+    f = create(:populated_forum, max_shortname_count: 0)
+    assert_equal true,
+                 f.shortnames_depleted?,
+                 'zero shortname allowance false negative'
+
+    f.max_shortname_count = 1
+    assert_equal false,
+                 f.shortnames_depleted?,
+                 'in bound shortname allowance false positive'
+
+    m = create(:motion)
+    create(:shortname,
+           forum: m.forum,
+           owner: m)
+    assert_equal false,
+                 f.shortnames_depleted?,
+                 'external shortname creation cross-affects tenants'
+
+    s = create(:shortname,
+               forum: f,
+               owner: f.motions.first)
+    assert_equal true,
+                 f.shortnames_depleted?,
+                 "shortname count doesn't affect limit"
+
+    s.destroy
+    assert_equal false,
+                 f.shortnames_depleted?,
+                 "shortname destruction doesn't free limit"
+  end
 end

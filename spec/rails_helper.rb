@@ -33,12 +33,14 @@ TestingBot::config do |config|
   config.require_tunnel # uncomment if you want to use our Tunnel
 end
 
-Capybara.server_port = 65000
+Capybara.server_port = 42_000
 Capybara.always_include_port = true
 
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Capybara::DSL
+  config.include TestHelperMethods
+  config.include RSpecHelpers
   config.include TestMocks
 
   Sidekiq::Testing.fake!
@@ -67,10 +69,13 @@ RSpec.configure do |config|
     profile = Selenium::WebDriver::Firefox::Profile.new
     profile.native_events = true
     profile['intl.accept_languages'] = 'en-US'
+    client = Selenium::WebDriver::Remote::Http::Default.new
+    client.timeout = 90
     capabilities = Selenium::WebDriver::Remote::Capabilities.firefox('elementScrollBehavior' => 1)
     Capybara::Selenium::Driver.new(app,
                                    browser: :firefox,
                                    profile: profile,
+                                   http_client: client,
                                    desired_capabilities: capabilities)
   end
 
@@ -78,14 +83,21 @@ RSpec.configure do |config|
     capabilities = Selenium::WebDriver::Remote::Capabilities.chrome('elementScrollBehavior' => 1)
     prefs = Selenium::WebDriver::Chrome::Profile.new
     prefs['intl.accept_languages'] = 'en-US'
+    client = Selenium::WebDriver::Remote::Http::Default.new
+    client.timeout = 90
     Capybara::Selenium::Driver.new(app,
                                    browser: :chrome,
                                    prefs: prefs,
+                                   http_client: client,
                                    desired_capabilities: capabilities)
   end
 
   Capybara.register_driver :selenium_safari do |app|
-    Capybara::Selenium::Driver.new(app, browser: :safari)
+    client = Selenium::WebDriver::Remote::Http::Default.new
+    client.timeout = 90
+    Capybara::Selenium::Driver.new(app,
+                                   browser: :safari,
+                                   http_client: client)
   end
 
   Capybara.register_driver :poltergeist do |app|

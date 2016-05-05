@@ -39,6 +39,11 @@ class Forum < ActiveRecord::Base
   validates :page_id, presence: true
   validates :bio, length: {maximum: 90}
   validates :bio_long, length: {maximum: 5000}
+  validate :shortnames_count
+
+  def shortnames_count
+    errors.add(:shortnames, 'bad') if shortnames.count > max_shortname_count
+  end
 
   after_validation :check_access_token, if: :visible_with_a_link_changed?
   auto_strip_attributes :name, :cover_photo_attribution, :questions_title,
@@ -127,7 +132,10 @@ class Forum < ActiveRecord::Base
     super(value.downcase.strip)
   end
 
+  # Is the forum out of its shortname limit
+  # @see {max_shortname_count}
+  # @return [Boolean] True if the forum has reached its maximum shortname count.
   def shortnames_depleted?
-    max_shortname_count < shortnames.count
+    shortnames.count >= max_shortname_count
   end
 end

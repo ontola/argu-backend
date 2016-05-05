@@ -1,6 +1,8 @@
 class ShortnamesController < ApplicationController
+  include NestedResourceHelper
+  before_action :initialize_resource, :filter_lesser_roles
+
   def new
-    @forum = Forum.find_via_shortname params[:forum_id]
     @shortname = @forum.shortnames.new(owner_type: 'Question')
     authorize @shortname, :create?
 
@@ -8,7 +10,6 @@ class ShortnamesController < ApplicationController
   end
 
   def create
-    @forum = Forum.find_via_shortname params[:forum_id]
     @shortname = @forum.shortnames.new(permit_params)
 
     authorize @shortname, :create?
@@ -19,18 +20,12 @@ class ShortnamesController < ApplicationController
   end
 
   def edit
-    @shortname = Shortname.find(params[:id])
-    @forum = @shortname.forum
-
     authorize @shortname, :edit?
 
     render_settings(:edit)
   end
 
   def update
-    @shortname = Shortname.find(params[:id])
-    @forum = @shortname.forum
-
     authorize @shortname, :update?
 
     redirect_or_render(@shortname.update(permit_params), :edit)
@@ -39,9 +34,6 @@ class ShortnamesController < ApplicationController
   end
 
   def destroy
-    @shortname = Shortname.find(params[:id])
-    @forum = @shortname.forum
-
     authorize @shortname, :destroy?
 
     flash[:error] = @shortname.errors.full_messages unless @shortname.destroy
@@ -50,6 +42,10 @@ class ShortnamesController < ApplicationController
 
   private
 
+  def filter_lesser_roles
+    raise Argu::NotAuthorizedError unless policy(@forum).is_manager_up?
+  end
+
   def forum_settings_redirect
     redirect_to settings_forum_path(@forum, tab: 'shortnames')
   end
@@ -57,6 +53,15 @@ class ShortnamesController < ApplicationController
   def handle_record_not_unique(tab = :new)
     @shortname.errors.add :owner, t('activerecord.errors.record_not_unique')
     render_settings(tab)
+  end
+
+  def initialize_resource
+    if %w(new create).include?(params[:action])
+      @forum = get_parent_resource
+    else
+      @shortname = Shortname.find(params[:id])
+      @forum = @shortname.forum
+    end
   end
 
   def redirect_or_render(result, tab = :new)

@@ -8,7 +8,7 @@ class ShortnamePolicy < RestrictivePolicy
   end
 
   def create?
-    r, m = rule super
+    r, m = rule is_manager?, is_owner?, super
     return r, m if r && !record.forum.shortnames_depleted?
   end
 
