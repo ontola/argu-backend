@@ -14,7 +14,7 @@ class UpdateProject < UpdateService
 
   private
 
-  def set_object_attributes(obj)
+  def object_attributes=(obj)
     obj.forum ||= @project.forum
     obj.creator ||= @project.creator
   end

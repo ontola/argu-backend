@@ -57,8 +57,8 @@ module Portal
                          .try(:resource)
                          .try(:updated_at)
                          .try(:iso8601, 6)
-      else
-        assert false, "can't be changed" if changed
+      elsif changed
+        assert false, "can't be changed"
       end
     end
 

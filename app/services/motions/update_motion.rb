@@ -12,7 +12,7 @@ class UpdateMotion < UpdateService
 
   private
 
-  def set_object_attributes(obj)
+  def object_attributes=(obj)
     obj.forum ||= @motion.forum
     obj.creator ||= @motion.creator
   end

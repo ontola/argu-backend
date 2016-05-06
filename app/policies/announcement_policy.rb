@@ -15,13 +15,14 @@ class AnnouncementPolicy < RestrictivePolicy
 
     def resolve
       audience = [Announcement.audiences[:everyone]]
-      if user && user.member_of?(context.forum)
-        audience << Announcement.audiences[:members]
-      elsif user.present?
-        audience << Announcement.audiences[:users]
-      else
-        audience << Announcement.audiences[:guests]
-      end
+      audience <<
+        if user && user.member_of?(context.forum)
+          Announcement.audiences[:members]
+        elsif user.present?
+          Announcement.audiences[:users]
+        else
+          Announcement.audiences[:guests]
+        end
       scope
         .where(audience: audience)
         .published
@@ -56,5 +57,4 @@ class AnnouncementPolicy < RestrictivePolicy
   def update?
     staff?
   end
-
 end

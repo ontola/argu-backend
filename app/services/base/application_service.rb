@@ -73,19 +73,19 @@ class ApplicationService
     service_action
   end
 
-  # Calls set_object_attributes for each association that has been declared as `accepts_nested_attributes_for`
+  # Calls object_attributes= for each association that has been declared as `accepts_nested_attributes_for`
   # @author Fletcher91 <thom@argu.co>
-  # @note Requires the `set_object_attributes` to be overridden in the child class.
+  # @note Requires `object_attributes=` to be overridden in the child class.
   def set_nested_associations
     if resource.nested_attributes_options?
       resource.nested_attributes_options.keys.each do |association|
         association_instance = resource.public_send(association)
         if association_instance.respond_to?(:length)
           association_instance.each do |record|
-            set_object_attributes(record)
+            self.object_attributes = record
           end
         elsif association_instance.respond_to?(:save)
-          set_object_attributes(association_instance)
+          self.object_attributes = association
         end
       end
     end
@@ -95,7 +95,8 @@ class ApplicationService
   # @note This should be used for attributes that are consistent across all the associations.
   # @see {set_nested_associations}
   # @param [ActiveRecord::Base] obj The model on which the attributes should be set
-  def set_object_attributes(obj)
+  def object_attributes=(obj)
+    raise 'Required interface not implemented'
   end
 
   def signal_base

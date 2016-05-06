@@ -266,8 +266,8 @@ class PhasesControllerTest < ActionController::TestCase
                        .try(:updated_at)
                        .try(:utc)
                        .try(:iso8601, 6)
-    else
-      assert false, 'Model changed when it should not have' if changed
+    elsif changed
+      assert false, 'Model changed when it should not have'
     end
   end
 
@@ -285,8 +285,8 @@ class PhasesControllerTest < ActionController::TestCase
                      assigns(:update_service)
                        .try(:resource)
                        .try(:end_date)
-    else
-      assert false, 'Model changed when it should not have' if changed
+    elsif changed
+      assert false, 'Model changed when it should not have'
     end
   end
 end

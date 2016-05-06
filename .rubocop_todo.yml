@@ -115,12 +115,14 @@ Metrics/AbcSize:
 Metrics/BlockNesting:
   Max: 4
 
-# Offense count: 36
+# Offense count: 38
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
   Max: 384
   Exclude:
+    - 'app/helpers/motions_helper.rb'
     - 'test/controllers/motions_controller_test.rb'
+    - 'test/integration/projects_controller_test.rb'
 
 # Offense count: 22
 Metrics/CyclomaticComplexity:

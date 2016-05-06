@@ -12,7 +12,7 @@ class UpdateComment < UpdateService
 
   private
 
-  def set_object_attributes(obj)
+  def object_attributes=(obj)
     obj.forum ||= @comment.forum
     obj.creator ||= @comment.creator
   end

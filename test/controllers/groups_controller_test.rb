@@ -63,7 +63,6 @@ class GroupsControllerTest < ActionController::TestCase
     assert true
 
     # TODO: This test should assert a bit more things.
-
   end
 
   test 'owner should show new' do

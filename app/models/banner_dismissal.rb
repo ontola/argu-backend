@@ -10,8 +10,8 @@ class BannerDismissal
   def initialize(options = {})
     @banner_class = options[:banner_class] || Banner
     @user = options[:user]
-    self.banner_id= options[:banner_id] if options[:banner_id].present?
-    self.banner= options[:banner] if options[:banner].present?
+    self.banner_id = options[:banner_id] if options[:banner_id].present?
+    self.banner = options[:banner] if options[:banner].present?
     @banner_key = @banner_class.model_name.collection
   end
 

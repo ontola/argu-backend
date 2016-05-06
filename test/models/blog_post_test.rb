@@ -12,7 +12,7 @@ class BlogPostTest < ActiveSupport::TestCase
                'blog_post can be published before start_date of project'
     assert_not subject.update(published_at: 1.month.from_now),
                'blog_post can be published after end_date of project'
-    assert subject.update(published_at: DateTime.now),
+    assert subject.update(published_at: DateTime.current),
            "blog_post can't be published while within scope of project"
     subject.blog_postable.update(end_date: nil)
     assert subject.update(published_at: 1.month.from_now),

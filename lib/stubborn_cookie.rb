@@ -19,12 +19,8 @@ module StubbornCookie
     if value.present? #&& cookies.permanent[key].blank?
       if cookies.permanent[key].present?
         if value.is_a?(Hash)
-          #begin
-            json = JSON.parse(cookies.permanent[key])
-            value.merge!(json) if json.present?
-          #rescue JSON::ParserError
-            # Doesn't matter
-          #end
+          json = JSON.parse(cookies.permanent[key])
+          value.merge!(json) if json.present?
         end
       end
       cookies.permanent[key] = value.is_a?(Hash) ? value.to_json : value.to_s
@@ -49,10 +45,8 @@ module StubbornCookie
   end
 
   def possible_json_from_cookie(key)
-    begin
-      JSON.parse(cookies.permanent[key])
-    rescue JSON::ParserError, TypeError
-      cookies.permanent[key]
-    end
+    JSON.parse(cookies.permanent[key])
+  rescue JSON::ParserError, TypeError
+    cookies.permanent[key]
   end
 end

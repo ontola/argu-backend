@@ -12,7 +12,7 @@ class TrashProject < TrashService
 
   private
 
-  def set_object_attributes(obj)
+  def object_attributes=(obj)
     # Following can be ignored in this interface; phases, stepups
   end
 end

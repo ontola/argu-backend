@@ -1,6 +1,5 @@
 module StubbornCookie
   module HashMethods
-
     def stubborn_hgetall(key)
       if stubborn_identifier.present?
         r_hash = stubborn_redis_hgetall(key)

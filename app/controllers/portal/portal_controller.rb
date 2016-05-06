@@ -33,5 +33,4 @@ class Portal::PortalController < Portal::PortalBaseController
   def tab
     policy(:Portal).verify_tab(params[:tab])
   end
-
 end

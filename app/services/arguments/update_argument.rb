@@ -12,7 +12,7 @@ class UpdateArgument < UpdateService
 
   private
 
-  def set_object_attributes(obj)
+  def object_attributes=(obj)
     obj.forum ||= @argument.forum
     obj.creator ||= @argument.creator
   end

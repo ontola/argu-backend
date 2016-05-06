@@ -36,7 +36,7 @@ class PhaseTest < ActiveSupport::TestCase
     assert_not subject.update(end_date: 1.month.from_now),
                'end date of first project can be set after end date of second phase'
 
-    assert_not next_phase.update(end_date: DateTime.now),
+    assert_not next_phase.update(end_date: DateTime.current),
                'end date of second phase can be set before end date of first phase'
 
     next_phase.update(end_date: 1.year.from_now)

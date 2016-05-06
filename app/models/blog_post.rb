@@ -47,7 +47,10 @@ class BlogPost < ActiveRecord::Base
 
   def validate_within_project_scope
     if blog_postable.is_a?(Project) && published_at.present?
-      errors.add(:published_at, 'must be published during a phase of the project') if blog_postable.start_date > published_at || (blog_postable.end_date.present? && blog_postable.end_date < published_at)
+      if blog_postable.start_date > published_at ||
+          (blog_postable.end_date.present? && blog_postable.end_date < published_at)
+        errors.add(:published_at, 'must be published during a phase of the project')
+      end
     end
   end
 end

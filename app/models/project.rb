@@ -41,7 +41,7 @@ class Project < ActiveRecord::Base
   mount_uploader :cover_photo, CoverUploader
 
   def current_phase
-    phases.where('start_date < ?', Time.now).last
+    phases.where('start_date < ?', Time.current).last
   end
 
   def in_last_phase?

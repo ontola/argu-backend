@@ -18,7 +18,7 @@ module Portal
                 .new(current_user.profile,
                      announcement_params)
       authorize @cb.resource, :create?
-      @cb.on(:create_announcement_successful) do |announcement|
+      @cb.on(:create_announcement_successful) do
         respond_to do |format|
           format.html do
             redirect_to announcements_settings_path,
@@ -129,6 +129,5 @@ module Portal
     def tenant_by_param
       portal_request? ? nil : super
     end
-
   end
 end

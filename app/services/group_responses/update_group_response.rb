@@ -12,7 +12,7 @@ class UpdateGroupResponse < UpdateService
 
   private
 
-  def set_object_attributes(obj)
+  def object_attributes=(obj)
     obj.forum ||= @group_response.forum
     obj.creator ||= @group_response.creator
   end

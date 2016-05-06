@@ -18,7 +18,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     create(:blog_post,
            :published,
            blog_postable: project,
-           trashed_at: Time.now,
+           trashed_at: Time.current,
            forum: freetown)
   end
   let(:unpublished) { create(:blog_post, :unpublished, blog_postable: project, forum: freetown) }
@@ -52,10 +52,10 @@ class BlogPostsControllerTest < ActionController::TestCase
   end
 
   def general_create_publish(response = 302, differences = [['BlogPost.count', 0], ['Activity.count', 0]])
-      assert_differences(differences) do
-          post :create,
-               project_id: project,
-               blog_post: attributes_for(:blog_post, publish_type: :direct)
+    assert_differences(differences) do
+      post :create,
+           project_id: project,
+           blog_post: attributes_for(:blog_post, publish_type: :direct)
 
       Sidekiq::Testing.inline! do
         Publication.last.send(:re_schedule_or_destroy)

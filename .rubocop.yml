@@ -25,3 +25,5 @@ Style/MultilineOperationIndentation:
   EnforcedStyle: indented
 Style/RaiseArgs:
   EnforcedStyle: compact
+Metrics/ModuleLength:
+  Max: 300

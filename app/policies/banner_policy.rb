@@ -15,13 +15,14 @@ class BannerPolicy < RestrictivePolicy
 
     def resolve
       audience = [Banner.audiences[:everyone]]
-      if user && user.member_of?(context.forum)
-        audience << Banner.audiences[:members]
-      elsif user.present?
-        audience << Banner.audiences[:users]
-      else
-        audience << Banner.audiences[:guests]
-      end
+      audience <<
+        if user && user.member_of?(context.forum)
+          Banner.audiences[:members]
+        elsif user.present?
+          Banner.audiences[:users]
+        else
+          Banner.audiences[:guests]
+        end
       scope.where(audience: audience)
     end
   end

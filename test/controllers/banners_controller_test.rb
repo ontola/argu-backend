@@ -74,5 +74,4 @@ class BannersControllerTest < ActionController::TestCase
       assert_redirected_to settings_forum_path(holland, tab: :banners)
     end
   end
-
 end

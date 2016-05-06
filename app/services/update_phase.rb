@@ -3,7 +3,7 @@ class UpdatePhase < UpdateService
 
   def initialize(phase, attributes = {}, options = {})
     @phase = phase
-    @phase.end_date = Time.now if attributes[:finish_phase] == 'true'
+    @phase.end_date = Time.current if attributes[:finish_phase] == 'true'
     super
   end
 
@@ -13,7 +13,7 @@ class UpdatePhase < UpdateService
 
   private
 
-  def set_object_attributes(obj)
+  def object_attributes=(obj)
     obj.forum ||= @phase.forum
     obj.creator ||= @phase.creator
   end

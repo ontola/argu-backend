@@ -28,7 +28,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   let!(:trashed_subject) do
     create(:project,
            :published,
-           trashed_at: Time.now,
+           trashed_at: Time.current,
            forum: freetown)
   end
   let(:unpublished) { create(:project, :unpublished, forum: freetown) }
@@ -400,7 +400,6 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                           ['Phase.count', 1]]
   end
 
-
   test 'owner should post create publish ' do
     sign_in owner
     general_create_publish 302,
@@ -558,11 +557,10 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                        .try(:resource)
                        .try(:updated_at)
                        .try(:iso8601, 6)
-    else
-      assert false, "can't be changed" if changed
+    elsif changed
+      assert false, "can't be changed"
     end
   end
-
 
   def general_trash(response = 302, difference = 0)
     assert_differences([['Project.trashed_only.count', difference],

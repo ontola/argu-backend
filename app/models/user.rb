@@ -43,7 +43,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :current_password, :repeat_name
 
-  delegate :description, to: :profile
+  delegate :description, :member_of?, to: :profile
 
   enum follows_email: {never_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3}
 
@@ -118,10 +118,6 @@ class User < ActiveRecord::Base
     Page.where(t[:id]
                  .in(profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id))
                  .or(t[:owner_id].eq(profile.id)))
-  end
-
-  def member_of?(forum)
-    profile.member_of?(forum)
   end
 
   def password_required?

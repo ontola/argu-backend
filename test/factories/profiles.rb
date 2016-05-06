@@ -6,7 +6,7 @@ FactoryGirl.define do
       profile.update profileable: build(:user) if profile.profileable.blank?
     end
 
-    after(:create) do |profile, evaluator|
+    after(:create) do |profile|
       profile.update name: 'page_profile' if profile.profileable.is_a?(Page)
     end
 

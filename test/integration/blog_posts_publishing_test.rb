@@ -104,5 +104,4 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     assert_equal false, BlogPost.last.is_published?
     assert_equal 0, Notification.count
   end
-
 end

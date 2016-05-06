@@ -22,7 +22,7 @@ class UpdateBlogPost < UpdateService
     super
   end
 
-  def set_object_attributes(obj)
+  def object_attributes=(obj)
     obj.forum ||= @blog_post.forum
     obj.creator ||= @blog_post.creator
   end
