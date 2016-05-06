@@ -53,6 +53,6 @@ nl:
     attributes:
       page:
         name: 'Naam'
-        shortname: 'Argu url'
+        shortname: 'Argu URL'
         visibility: 'Zichtbaarheid'
         f_delete: 'Verwijderen'

@@ -54,6 +54,6 @@ en:
     attributes:
       page:
         name: 'Name'
-        shortname: 'Argu url'
+        shortname: 'Argu URL'
         visibility: 'Visibility'
         f_delete: 'Delete'

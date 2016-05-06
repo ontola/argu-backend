@@ -1,4 +1,4 @@
-#Dutch argument translations
+# Dutch argument translations
 
 nl:
   forums:
@@ -22,12 +22,13 @@ nl:
         privacy: 'Privacy'
         projects: 'Projects'
         managers: 'Beheerders'
-        shortnames: 'Snelnamen'
+        shortnames: 'Argu URLs'
       terminology: "Terminologie"
       terminology_helper: "Je kunt de namen van concepten zoals 'idee' of 'uitdaging' aanpassen. Wij raden dit echter af, aangezien deze functionaliteit nog niet volledig ontwikkeld is."
       advanced: "Geavanceerd"
       privacy: "Privacy"
       manager: "Beheerder"
+      shortnames: 'Argu URLs'
       managers:
         title: "Beheerders"
         administrator: "Administrator"
@@ -111,7 +112,7 @@ nl:
     attributes:
       forum:
         name: "Naam"
-        shortname: "argu shortname"
+        shortname: "Argu URL"
         description: "Omschrijving"
         featured_tags: "Uitgelichte thema's"
         website: "Web adres"

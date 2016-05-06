@@ -1,4 +1,4 @@
-#English argument translations
+# English argument translations
 
 en:
   forums:
@@ -22,13 +22,13 @@ en:
         projects: "Projects"
         privacy: 'Privacy'
         managers: 'Managers'
-        shortnames: 'Shortnames'
+        shortnames: 'Argu URLs'
       terminology: "Terminologogy"
       terminology_helper: "You can adjust the names for concepts as 'ideas' and 'challenges'. However, this functionality is not yet fully developed and we recommend that you use the default settings."
       advanced: "Advanced"
       privacy: "Privacy"
       manager: "Manager"
-      shortnames: 'Shortnames'
+      shortnames: 'Argu URLs'
       managers:
         title: "Managers"
         administrator: "Administrator"
@@ -113,7 +113,7 @@ en:
     attributes:
       forum:
         name: "Name"
-        shortname: "argu shortname"
+        shortname: "Argu URL"
         description: "Description"
         featured_tags: "Featured themes"
         website: "Website"
