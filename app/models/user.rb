@@ -5,7 +5,11 @@ class User < ActiveRecord::Base
   has_many :identities, dependent: :destroy
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
   has_many :notifications
-  has_one :home_placement, -> { where title: 'home', placeable_type: 'User' }, class_name: 'Placement', foreign_key: 'placeable_id', inverse_of: :placeable
+  has_one :home_placement,
+          -> { where title: 'home', placeable_type: 'User' },
+          class_name: 'Placement',
+          foreign_key: 'placeable_id',
+          inverse_of: :placeable
   has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   # User content
   has_many :arguments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
@@ -36,9 +40,7 @@ class User < ActiveRecord::Base
 
   delegate :description, to: :profile
 
-  enum follows_email: {ever_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3} # weekly_follows_email: 1, daily_follows_email: 2,
-  # enum memberships_email: {never_memberships_email: 0, weekly_memberships_email: 1, daily_memberships_email: 2, direct_memberships_email: 3}
-  # enum created_email: {never_created_email: 0, weekly_created_email: 1, daily_created_email: 2, direct_created_email: 3}
+  enum follows_email: {ever_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3}
 
   validates :email,
             allow_blank: false,
@@ -108,7 +110,9 @@ class User < ActiveRecord::Base
 
   def managed_pages
     t = Page.arel_table
-    Page.where(t[:id].in(profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id)).or(t[:owner_id].eq(profile.id)))
+    Page.where(t[:id]
+                 .in(profile.page_memberships.where(role: PageMembership.roles[:manager]).pluck(:page_id))
+                 .or(t[:owner_id].eq(profile.id)))
   end
 
   def password_required?

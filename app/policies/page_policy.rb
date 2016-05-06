@@ -14,7 +14,9 @@ class PagePolicy < RestrictivePolicy
     def resolve
       page_memberships = PageMembership.arel_table
       scope.joins(:managerships).where(
-        page_memberships[:profile_id].eq(user.profile.id).and(page_memberships[:role].eq(PageMembership.roles[:manager]))
+        page_memberships[:profile_id]
+          .eq(user.profile.id)
+          .and(page_memberships[:role].eq(PageMembership.roles[:manager]))
       ).distinct
     end
   end
@@ -28,7 +30,9 @@ class PagePolicy < RestrictivePolicy
 
     # Is the user a manager of the page or of the forum?
     def is_manager?
-      (manager if user && user.profile.page_memberships.where(page: record, role: PageMembership.roles[:manager]).present?) || is_owner? || staff?
+      (manager if user && user.profile.page_managerships.where(page: record).present?) ||
+        is_owner? ||
+        staff?
     end
 
     def is_owner?
@@ -43,7 +47,7 @@ class PagePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:bio, :tag_list, :last_accepted, profile_attributes: [:id, :name, :profile_photo]] if create?
+    attributes << [:bio, :tag_list, :last_accepted, profile_attributes: %i(id name profile_photo)] if create?
     attributes << [:visibility, shortname_attributes: [:shortname]] if new_record?
     attributes << :visibility if is_owner?
     attributes << [:page_id, :repeat_name] if change_owner?

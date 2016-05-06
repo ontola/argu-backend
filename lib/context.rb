@@ -9,6 +9,7 @@ class Context
   #include Rails.application.routes.url_helpers
   include ApplicationHelper # For merge_query_parameters
   @parent_context
+  CONSTANTIZABLE_CLASSES = [Forum, Question, Motion, Argument, Comment].freeze
 
   # @!attribute model
   # @return [ActiveRecord::Collection] The current model
@@ -75,7 +76,10 @@ class Context
 
   # Parses a {Context} object chain from a {Context}-string
   def self.parse_from_context_string(value, current=nil, &block)
-    components = value.split('*').map { |c| c.split(/ |\+/) }.map! { |c| c[0].capitalize.constantize_with_care([Forum, Question, Motion, Argument, Comment]).find c[1] }
+    components = value
+                   .split('*')
+                   .map { |c| c.split(/ |\+/) }
+                   .map! { |c| c[0].capitalize.constantize_with_care(CONSTANTIZABLE_CLASSES).find(c[1]) }
 
     yield components if block_given?
 
@@ -87,9 +91,8 @@ class Context
 
   # Only returns a value when the model has been saved
   def polymorphic_tuple
-    if model.present?
-      [model.class.name, model.id.to_s] if model.is_a?(ActiveRecord::Base) && model.persisted?
-    end
+    return unless model.present?
+    [model.class.name, model.id.to_s] if model.is_a?(ActiveRecord::Base) && model.persisted?
   end
 
   # Takes the topmost item off the stack and returns the item

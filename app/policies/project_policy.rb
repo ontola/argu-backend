@@ -24,7 +24,9 @@ class ProjectPolicy < RestrictivePolicy
     phase = record.is_a?(Project) && Phase.new(project: record, forum: record.forum)
     attributes << {phases_attributes: Pundit.policy(context, phase).permitted_attributes} if phase && create?
     stepup = record.is_a?(Project) && Stepup.new(record: record, forum: record.forum)
-    attributes << {stepups_attributes: Pundit.policy(context, stepup).permitted_attributes(true)} if stepup && (record.try(:new_record?) || is_manager_up?)
+    if stepup && (record.try(:new_record?) || is_manager_up?)
+      attributes << {stepups_attributes: Pundit.policy(context, stepup).permitted_attributes(true)}
+    end
     attributes << %i(id title content start_date end_date achieved_end_date email publish unpublish) if update?
     attributes
   end
@@ -34,7 +36,10 @@ class ProjectPolicy < RestrictivePolicy
   end
 
   def destroy?
-    user && (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) || is_manager? || is_owner? || super
+    user && (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) ||
+      is_manager? ||
+      is_owner? ||
+      super
   end
 
   def edit?

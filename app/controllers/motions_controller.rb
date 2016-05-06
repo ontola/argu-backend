@@ -26,7 +26,10 @@ class MotionsController < AuthorizedController
   def show
     @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes))
     discussion_responses = @motion.group_responses.where(group_id: authenticated_context.groups.discussion)
-    @group_responses = Group.ordered_with_meta discussion_responses, authenticated_context.groups.discussion, current_profile, @motion
+    @group_responses = Group.ordered_with_meta discussion_responses,
+                                               authenticated_context.groups.discussion,
+                                               current_profile,
+                                               @motion
     @vote = Vote.where(voteable: @motion, voter: current_profile).last unless current_user.blank?
     @vote ||= Vote.new
 
@@ -65,7 +68,10 @@ class MotionsController < AuthorizedController
     create_service.on(:create_motion_successful) do |motion|
       respond_to do |format|
         first = current_profile.motions.count == 1 || nil
-        format.html { redirect_to motion_path(motion, start_motion_tour: first), notice: t('type_save_success', type: motion_type) }
+        format.html do
+          redirect_to motion_path(motion, start_motion_tour: first),
+                      notice: t('type_save_success', type: motion_type)
+        end
         format.json { render json: motion, status: :created, location: motion }
       end
     end
@@ -86,7 +92,9 @@ class MotionsController < AuthorizedController
                                                   publisher: current_user))
     update_service.on(:update_motion_successful) do |motion|
       respond_to do |format|
-        if params[:motion].present? && params[:motion][:tag_id].present? && motion.tags.reject { |a,b| a.motion == b }.first.present?
+        if params[:motion].present? &&
+            params[:motion][:tag_id].present? &&
+            motion.tags.reject { |a,b| a.motion == b }.first.present?
           format.html { redirect_to tag_motions_url(Tag.find_by_id(motion.tag_id).name)}
           format.json { head :no_content }
         else
@@ -265,15 +273,15 @@ class MotionsController < AuthorizedController
   end
 
   def get_context
-    if params[:question_id].present? || defined?(params[:motion][:question_id]) && params[:motion][:question_id].present?
+    if params[:question_id].present? || defined?(params[:motion][:question_id]) &&
+        params[:motion][:question_id].present?
       @question = Question.find(params[:question_id] || params[:motion][:question_id])
     end
   end
 
   def permit_params
-    if params[:motion].present?
-      params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
-    end
+    return unless params[:motion].present?
+    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
   end
 
   def resource_new_params

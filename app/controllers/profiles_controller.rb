@@ -22,7 +22,10 @@ class ProfilesController < ApplicationController
                                                       .pluck(:owner_id))
 
         if params[:things] && params[:things].split(',').include?('pages')
-          @profiles += Profile.where(is_public: true).where('lower(name) SIMILAR TO lower(?)', "%#{q}%")#.page params[:profile] # Pages
+          @profiles += Profile
+                         .where(is_public: true)
+                         .where('lower(name) SIMILAR TO lower(?)', "%#{q}%")
+          # .page params[:profile] # Pages
         end
       end
     end
@@ -91,7 +94,8 @@ class ProfilesController < ApplicationController
   def user_profileable_params
     params.require(:profile)
           .require(:profileable_attributes)
-          .permit :first_name, :middle_name, :last_name, :birthday, home_placement_attributes: [:postal_code, :country_code, :id]
+          .permit(:first_name, :middle_name, :last_name, :birthday,
+                  home_placement_attributes: %i(postal_code country_code id))
   end
 
   def profile_update_path

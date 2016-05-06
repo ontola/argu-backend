@@ -31,7 +31,9 @@ class RegistrationsController < Devise::RegistrationsController
   def destroy
     @user = User.find current_user.id
     authorize @user, :destroy?
-    @user.errors.add(:current_password, t('errors.messages.should_match')) unless @user.valid_password?(params[:user][:current_password])
+    unless @user.valid_password?(params[:user][:current_password])
+      @user.errors.add(:current_password, t('errors.messages.should_match'))
+    end
     @user.errors.add(:repeat_name, t('errors.messages.should_match')) unless params[:user][:repeat_name] == @user.url
     respond_to do |format|
       valid_password = @user.password_required? ? @user.valid_password?(params[:user][:current_password]) : true

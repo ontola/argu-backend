@@ -45,7 +45,9 @@ class MembershipPolicy < RestrictivePolicy
   end
 
   def destroy?
-    actor && (record.profile == actor || (forum_policy.update? || staff?) && record.forum.memberships.where(role: Membership.roles[:manager]).where.not(id: record.id).present?)
+    actor &&
+      (record.profile == actor || (forum_policy.update? || staff?) &&
+      record.forum.memberships.where(role: Membership.roles[:manager]).where.not(id: record.id).present?)
   end
 
   private

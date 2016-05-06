@@ -24,7 +24,8 @@ class QuestionPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << %i(id title content tag_list forum_id project_id cover_photo remove_cover_photo cover_photo_attribution expires_at) if create?
+    attributes << %i(id title content tag_list forum_id project_id cover_photo
+                     remove_cover_photo cover_photo_attribution expires_at) if create?
     attributes << %i(uses_alternative_names motions_title motions_title_singular) if is_manager_up?
     attributes << %i(include_motions f_convert) if staff?
     attributes
@@ -47,7 +48,10 @@ class QuestionPolicy < RestrictivePolicy
   end
 
   def destroy?
-    user && (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at or record.motions.count == 0) || is_manager? || is_owner? || super
+    user && (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at or record.motions.count == 0) ||
+      is_manager? ||
+      is_owner? ||
+      super
   end
 
   def index?

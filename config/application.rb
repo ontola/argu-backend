@@ -27,7 +27,8 @@ module Argu
     config.paths['app/views'].unshift("#{Rails.root}/lib/app/views")
 
     config.active_job.queue_adapter = :sidekiq
-    ENV['REDIS_URL'] = ENV['REDIS_URL'].presence || "redis://#{ENV['REDIS_ADDRESS'] || 'localhost'}:#{ENV['REDIS_PORT'] || 6379}/12"
+    ENV['REDIS_URL'] = ENV['REDIS_URL'].presence ||
+      "redis://#{ENV['REDIS_ADDRESS'] || 'localhost'}:#{ENV['REDIS_PORT'] || 6379}/12"
 
     config.app_generators.template_engine :slim
 

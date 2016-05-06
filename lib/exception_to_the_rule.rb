@@ -13,7 +13,8 @@ module ExceptionToTheRule
   # @note The permission is determined by the caller's name
   # @author Fletcher91 <thom@argu.co>
   # @param [Array] array An array of clearance levels for the {Context#user}
-  # @return [Integer, [nil, String]] The user's clearance level or nil if it was denied with an additional message as a second return value.
+  # @return [Integer, [nil, String]] The user's clearance level or nil if it was
+  #                                    denied with an additional message as a second return value.
   def rule(*array)
     level = max_clearance(array)
     apply_rules(caller_locations(1,1)[0].label, level)

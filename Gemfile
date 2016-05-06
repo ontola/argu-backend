@@ -61,13 +61,6 @@ gem 'acts_as_list', '~> 0.7.2'
 # Pagination
 gem 'kaminari', '~>0.16.1'
 
-################## Front-end ########################
-# gem 'react-rails', '~> 1.6.0'
-gem 'react-rails',
-    git: 'https://github.com/reactjs/react-rails',
-    branch: 'master',
-    ref: '58842d4d06cf4a7f993a112edbd3ef82272a659a'
-
 ################## Asset-y ########################
 gem 'slim', '~> 3.0.6'
 # gem 'slim-rails'
@@ -110,6 +103,13 @@ gem 'pundit', '~> 1.0.0'
 gem 'bugsnag', '~> 3.0.0'
 gem 'rolify', '~> 3.4.1'
 
+################## Front-end ########################
+# gem 'react-rails', '~> 1.6.0'
+gem 'react-rails',
+    git: 'https://github.com/reactjs/react-rails',
+    branch: 'master',
+    ref: '58842d4d06cf4a7f993a112edbd3ef82272a659a'
+
 group :test do
   gem 'minitest-rails', '~> 2.2.0'
   gem 'minitest-reporters', '~> 1.1.8'
@@ -136,7 +136,7 @@ group :test do
 end
 
 group :development, :test do
-  gem 'rubocop', '~> 0.37.2'
+  gem 'rubocop', '~> 0.39.0'
   gem 'mailcatcher', '~> 0.6.2'
   gem 'spring', '~> 1.6.3'
   gem 'spring-commands-rspec'

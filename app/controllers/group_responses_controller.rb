@@ -116,7 +116,9 @@ class GroupResponsesController < AuthorizedController
   end
 
   def permit_params
-    params.require(:group_response).permit(*policy(@group_response || resource_by_id || new_resource_from_params).permitted_attributes)
+    params
+      .require(:group_response)
+      .permit(*policy(@group_response || resource_by_id || new_resource_from_params).permitted_attributes)
   end
 
   def side_param

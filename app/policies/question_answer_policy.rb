@@ -33,7 +33,10 @@ class QuestionAnswerPolicy < RestrictivePolicy
   end
 
   def destroy?
-    user && (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) || is_manager? || is_owner? || super
+    user && (record.creator_id == user.profile.id && 15.minutes.ago < record.created_at) ||
+      is_manager? ||
+      is_owner? ||
+      super
   end
 
   def new?

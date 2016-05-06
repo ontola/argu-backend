@@ -34,7 +34,11 @@ class ProjectsController < AuthorizedController
                                                           question_id: nil,
                                                           is_trashed: show_trashed?))
 
-    @items = (questions + motions_without_questions).sort_by(&:updated_at).reverse if policy(authenticated_resource!).show?
+    if policy(authenticated_resource!).show?
+      @items = (questions + motions_without_questions)
+                 .sort_by(&:updated_at)
+                 .reverse
+    end
 
     respond_to do |format|
       format.html { render locals: {project: authenticated_resource!} }

@@ -99,7 +99,8 @@ RSpec.feature 'User Password', type: :feature do
     log_in_user user_omni_both
 
     visit settings_path
-    expect(page).not_to have_content("You don't have a password yet, because you signed up using a linked account. Do you want to set a password?")
+    expect(page).not_to have_content("You don't have a password yet, because you signed up "\
+                                       "using a linked account. Do you want to set a password?")
   end
 
   scenario 'user only omni should not change their password' do
@@ -123,7 +124,8 @@ RSpec.feature 'User Password', type: :feature do
     expect(page).to have_selector('.navbar-item.navbar-profile')
     visit settings_path
     expect(page).to have_content('User settings')
-    expect(page).to have_content("You don't have a password yet, because you signed up using a linked account. Do you want to set a password?")
+    expect(page).to have_content("You don't have a password yet, because you signed up using a linked account. "\
+                                   "Do you want to set a password?")
 
     expect do
       click_link 'send-instructions'

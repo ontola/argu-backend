@@ -61,7 +61,7 @@ module TestHelperMethods
     forum = create((forum_opts[:type] || :forum),
                    page: create(:page,
                                 owner: user.profile))
-    return forum, user
+    [forum, user]
   end
 end
 

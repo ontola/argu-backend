@@ -112,7 +112,8 @@ class AuthorizedController < ApplicationController
   # Returns the tenant on which we're currently working. It is taken from {authenticated_resource!} if present,
   # otherwise the result from {resource_tenant} is used.
   # @author Fletcher91 <thom@argu.co>
-  # @note This function isn't called context_tenant since we might use different scopes in the future (e.g. access to a project)
+  # @note This function isn't called context_tenant since we might use different
+  #   scopes in the future (e.g. access to a project)
   # @note This should be based only on static information and be side-effect free to make memoization possible.
   # @return [Forum, nil] The {Forum} of the {authenticated_resource!} or from {resource_tenant}.
   def authenticated_context
@@ -207,7 +208,8 @@ class AuthorizedController < ApplicationController
                            .find_by id: resource_id
   end
 
-  # Used in {authenticated_resource!} to build a new object. Overwrite this function if the model needs more than just the {Forum}
+  # Used in {authenticated_resource!} to build a new object. Overwrite this
+  #   function if the model needs more than just the {Forum}
   # @return [Hash] The parameters to be used in {ActiveRecord::Base#new}
   def resource_new_params
     HashWithIndifferentAccess.new(

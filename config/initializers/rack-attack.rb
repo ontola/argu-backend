@@ -42,7 +42,9 @@ class Rack::Attack
     end
 
     throttle('req/ip', limit: 5, period: 20.seconds) do |req|
-      if (!Rails.env.test? && req.post? && %w(/oauth /actors /users /connect /setup /move /convert /v/ /c/).any? { |n| req.path.include?(n) }) ||
+      if (!Rails.env.test? &&
+          req.post? &&
+          is_throttled_path(req)) ||
           %w(/users/auth).any? { |n| req.path.include?(n) }
           req.ip
       end
@@ -67,5 +69,11 @@ class Rack::Attack
         CGI.unescape(req.query_string) =~ r
       end
     end
+  end
+
+  private
+
+  def is_throttled_path(req)
+    %w(/oauth /actors /users /connect /setup /move /convert /v/ /c/).any? { |n| req.path.include?(n) }
   end
 end

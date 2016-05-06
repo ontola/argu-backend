@@ -7,7 +7,8 @@ module Convertible
   included do
   end
 
-  # Converts an item to another item, the convertible method was used, those relations will be assigned the newly created model
+  # Converts an item to another item, the convertible method was used,
+  # those relations will be assigned the newly created model
   #
   # TODO: check if the receiving model has the same associated_model names before sending them over (else, delete)
   def convert_to(klass)

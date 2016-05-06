@@ -35,7 +35,8 @@ class UsersControllerTest < ActionController::TestCase
     assert_not_nil assigns(:profile)
     assert_not_nil assigns(:collection)
 
-    assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| v.forum.open? } }, 'Votes of closed fora are visible to non-members'
+    assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| v.forum.open? } },
+           'Votes of closed fora are visible to non-members'
   end
 
   test 'guest should put language' do
@@ -73,7 +74,10 @@ class UsersControllerTest < ActionController::TestCase
     assert_not_nil assigns(:collection)
 
     _memberships = assigns(:current_profile).memberships.pluck(:forum_id)
-    assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| _memberships.include?(v.forum_id) || v.forum.open? } }, 'Votes of closed fora are visible to non-members'
+    assert assigns(:collection)
+             .values
+             .all? { |arr| arr[:collection].all? { |v| _memberships.include?(v.forum_id) || v.forum.open? } },
+           'Votes of closed fora are visible to non-members'
   end
 
   test 'user should not show all votes' do

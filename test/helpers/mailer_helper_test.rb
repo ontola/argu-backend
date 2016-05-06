@@ -101,18 +101,22 @@ class MailerHelperTest < ActionView::TestCase
   end
 
   test 'notification_subject should return correct sentences for arguments' do
-    assert_equal "New argument: '#{argument_pro_notification.resource.motion.display_name}' by #{creator.first_name} #{creator.last_name}",
+    assert_equal "New argument: '#{argument_pro_notification.resource.motion.display_name}'"\
+                   " by #{creator.first_name} #{creator.last_name}",
                  notification_subject(argument_pro_notification)
 
-    assert_equal "New argument: '#{argument_con.resource.motion.display_name}' by #{creator.first_name} #{creator.last_name}",
+    assert_equal "New argument: '#{argument_con.resource.motion.display_name}'"\
+                   " by #{creator.first_name} #{creator.last_name}",
                  notification_subject(argument_con)
   end
 
   test 'notification_subject should return correct sentences for comments' do
-    assert_equal "New comment on '#{comment.resource.commentable.display_name}' by #{creator.first_name} #{creator.last_name}",
+    assert_equal "New comment on '#{comment.resource.commentable.display_name}'"\
+                   " by #{creator.first_name} #{creator.last_name}",
                  notification_subject(comment)
 
-    assert_equal "New comment on '#{comment_comment.resource.commentable.display_name}' by #{creator.first_name} #{creator.last_name}",
+    assert_equal "New comment on '#{comment_comment.resource.commentable.display_name}'"\
+                   " by #{creator.first_name} #{creator.last_name}",
                  notification_subject(comment_comment)
   end
 

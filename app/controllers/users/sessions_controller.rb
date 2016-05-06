@@ -5,8 +5,16 @@ class Users::SessionsController < Devise::SessionsController
     self.resource = resource_class.new({r: r_from_url_or_header}.merge(sign_in_params))
     clean_up_passwords(resource)
     respond_to do |format|
-      format.html { render 'devise/sessions/new', layout: 'guest', locals: {resource: resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
-      format.js { render 'devise/sessions/new', layout: false, locals: {resource: resource, resource_name: :user, devise_mapping: Devise.mappings[:user]} }
+      format.html do
+        render 'devise/sessions/new',
+               layout: 'guest',
+               locals: {resource: resource, resource_name: :user, devise_mapping: Devise.mappings[:user]}
+      end
+      format.js do
+        render 'devise/sessions/new',
+               layout: false,
+               locals: {resource: resource, resource_name: :user, devise_mapping: Devise.mappings[:user]}
+      end
     end
   end
 
@@ -51,7 +59,8 @@ class Users::SessionsController < Devise::SessionsController
 
   def freshdesk_redirect_url
     utctime = time_in_utc
-    "#{Rails.application.secrets.freshdesk_url}login/sso?name=#{current_user.url}&email=#{current_user.email}&timestamp=#{utctime}&hash=#{generate_hash_from_params_hash(utctime)}"
+    "#{Rails.application.secrets.freshdesk_url}login/sso?name=#{current_user.url}"\
+      "&email=#{current_user.email}&timestamp=#{utctime}&hash=#{generate_hash_from_params_hash(utctime)}"
   end
 
   def r_from_url_or_header
@@ -68,7 +77,9 @@ class Users::SessionsController < Devise::SessionsController
 
   def generate_hash_from_params_hash(utctime)
     digest = OpenSSL::Digest::Digest.new('MD5')
-    OpenSSL::HMAC.hexdigest(digest, Rails.application.secrets.freshdesk_secret, current_user.url + current_user.email + utctime)
+    OpenSSL::HMAC.hexdigest(digest,
+                            Rails.application.secrets.freshdesk_secret,
+                            current_user.url + current_user.email + utctime)
   end
 
   def time_in_utc

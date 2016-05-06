@@ -65,7 +65,8 @@ module UsersHelper
       @_cap
     else
       cap = Setting.get('user_cap').try(:to_i)
-      instance_variable_set(:@_cap, (cap.present? and cap == -1 || (cap > 0 && Shortname.where(owner_type: 'User').count < cap)))
+      cap_val = cap.present? and cap == -1 || (cap > 0 && Shortname.where(owner_type: 'User').count < cap)
+      instance_variable_set(:@_cap, cap_val)
     end
   end
 end

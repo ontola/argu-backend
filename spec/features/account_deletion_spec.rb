@@ -79,7 +79,8 @@ RSpec.feature 'Account deletion', type: :feature do
     visit settings_path
     click_link 'Delete Argu account'
 
-    expect(page).to have_content 'You are the owner of one or multiple pages. If you want to delete your account, please transfer or delete these pages first'
+    expect(page).to have_content 'You are the owner of one or multiple pages. '\
+                                 'If you want to delete your account, please transfer or delete these pages first'
   end
 
 end

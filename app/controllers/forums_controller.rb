@@ -6,7 +6,8 @@ class ForumsController < ApplicationController
     @user = User.find_via_shortname params[:id]
     authorize @user, :update?
     forums = Forum.arel_table
-    @forums = Forum.where(forums[:page_id].in(@user.profile.pages.pluck(:id)).or(forums[:id].in(@user.profile.managerships.pluck(:forum_id))))
+    @forums = Forum.where(forums[:page_id].in(@user.profile.pages.pluck(:id))
+                            .or(forums[:id].in(@user.profile.managerships.pluck(:forum_id))))
     @_pundit_policy_scoped = true
   end
 
@@ -89,7 +90,12 @@ class ForumsController < ApplicationController
   # POST /forums/memberships
   def memberships
     authorize Forum, :selector?
-    @forums = Forum.public_forums.where('id in (?)', (params[:profile][:membership_ids] || []).reject(&:blank?).map(&:to_i))
+    @forums = Forum
+                .public_forums
+                .where('id in (?)',
+                       (params[:profile][:membership_ids] || [])
+                         .reject(&:blank?)
+                         .map(&:to_i))
     @forums.each { |f| authorize f, :join? }
 
     @memberships = @forums.map { |f| Membership.find_or_initialize_by forum: f, profile: current_user.profile }

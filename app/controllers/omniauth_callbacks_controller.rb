@@ -25,7 +25,8 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
             # so render connect accounts form
             # No identity created for this oauth connection
             if current_user.blank? || current_user == user_with_email
-              identity = Identity.find_or_initialize_by uid: env["omniauth.auth"]["uid"], provider: :#{provider} # TODO Store in Redis when not found to prevent stale records
+              # TODO Store in Redis when not found to prevent stale records
+              identity = Identity.find_or_initialize_by uid: env["omniauth.auth"]["uid"], provider: :#{provider}
               set_#{provider}_fields identity, env["omniauth.auth"]
               if identity.save
                 token = identity_token(identity)

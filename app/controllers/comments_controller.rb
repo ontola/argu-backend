@@ -109,7 +109,10 @@ class CommentsController < AuthorizedController
     end
     destroy_service.on(:destroy_comment_failed) do |comment|
       respond_to do |format|
-        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('errors.general') }
+        format.html do
+          redirect_to polymorphic_url([comment.commentable], anchor: comment.id),
+                      notice: t('errors.general')
+        end
         format.js # destroy_comment.js
       end
     end
@@ -131,7 +134,10 @@ class CommentsController < AuthorizedController
     end
     trash_service.on(:trash_comment_failed) do |comment|
       respond_to do |format|
-        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('errors.general') }
+        format.html do
+          redirect_to polymorphic_url([comment.commentable], anchor: comment.id),
+                      notice: t('errors.general')
+        end
         format.js # destroy_comment.js
       end
     end
@@ -154,7 +160,10 @@ class CommentsController < AuthorizedController
     end
     untrash_service.on(:untrash_comment_failed) do |comment|
       respond_to do |format|
-        format.html { redirect_to polymorphic_url([comment.commentable], anchor: comment.id), notice: t('errors.general') }
+        format.html do
+          redirect_to polymorphic_url([comment.commentable], anchor: comment.id),
+                      notice: t('errors.general')
+        end
         format.js # destroy_comment.js
       end
     end

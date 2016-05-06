@@ -57,7 +57,8 @@ class Forum < ActiveRecord::Base
   enum visibility: {open: 1, closed: 2, hidden: 3} #unrestricted: 0,
 
   scope :public_forums, -> { where(visibility: Forum.visibilities[:open]) }
-  scope :top_public_forums, ->(limit = 10) { where(visibility: Forum.visibilities[:open]).order('memberships_count DESC').first(limit) }
+  scope :top_public_forums,
+        ->(limit = 10) { where(visibility: Forum.visibilities[:open]).order('memberships_count DESC').first(limit) }
 
   def access_token
     access_token! if visible_with_a_link
@@ -76,10 +77,8 @@ class Forum < ActiveRecord::Base
   end
 
   def check_access_token
-    if visible_with_a_link && access_token!.blank?
-      access_tokens.build(item: self, profile: page.profile)
-      # AccessToken.create(item: self, profile: page.profile)
-    end
+    return unless visible_with_a_link && access_token!.blank?
+    access_tokens.build(item: self, profile: page.profile)
   end
 
   def creator
@@ -116,7 +115,8 @@ class Forum < ActiveRecord::Base
     memberships.where(profile: profile).present?
   end
 
-  # @return [Forum] based on the `:default_forum` {Setting}, if not present, the first Forum where {Forum#visibility} is `public`
+  # @return [Forum] based on the `:default_forum` {Setting}, if not present,
+  # the first Forum where {Forum#visibility} is `public`
   def self.first_public
     if (setting = Setting.get(:default_forum))
       forum = Forum.find_via_shortname(setting)

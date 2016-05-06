@@ -37,16 +37,20 @@ class FollowsController < ApplicationController
   private
 
   def check_user
-    unless current_user.present?
-      flash[:error] = t('devise.failure.unauthenticated')
-      redirect_to :back
-    end
+    return if current_user.present?
+    flash[:error] = t('devise.failure.unauthenticated')
+    redirect_to :back
   end
 
   def set_thing
     klass = [Forum, Question, Motion, Argument, Comment].detect { |c| params["#{c.name.underscore}_id"] }
     method = klass.respond_to?(:friendly) ? klass.friendly : klass
-    @thing = method.shortnameable? ? method.find_via_shortname(params["#{klass.name.underscore}_id"]) : method.find(params["#{klass.name.underscore}_id"])
+    @thing =
+      if method.shortnameable?
+        method.find_via_shortname(params["#{klass.name.underscore}_id"])
+      else
+        method.find(params["#{klass.name.underscore}_id"])
+      end
     @forum = @thing.try :forum
   end
 end

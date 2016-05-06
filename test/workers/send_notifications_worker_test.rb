@@ -73,7 +73,7 @@ class SendNotificationsWorkerTest < ActiveSupport::TestCase
     create_list :notification, 10,
                 activity: activity,
                 user: follower,
-                created_at: Time.now - 1.day
+                created_at: Time.current - 1.day
 
     snw = SendNotificationsWorker.new
     assert_equal 10, snw.collect_notifications(follower).length

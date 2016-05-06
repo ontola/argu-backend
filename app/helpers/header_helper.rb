@@ -2,11 +2,23 @@ module HeaderHelper
   include DropdownHelper
 
   def suggested_forums
-    @suggested_forums ||= Forum.where("id NOT IN (#{current_profile.memberships_ids || '0'}) AND visibility = #{Forum.visibilities[:open]}") if current_user.present?
+    return nil if current_user.present?
+    fresh_forums = "id NOT IN (#{current_profile.memberships_ids || '0'}) AND visibility = #{Forum.visibilities[:open]}"
+    @suggested_forums ||= Forum.where(fresh_forums)
   end
 
   def profile_dropdown_items
     @profile = current_profile
+    page_index =
+      if policy(Page).index?
+        link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building')
+      else
+        link_item(t('pages.create'), new_page_path, fa: 'building')
+      end
+    forum_management = policy(Forum).index? &&
+      link_item(t('forums.management.title'),
+                forums_user_url(current_user),
+                fa: 'group')
     {
       defaultAction: dual_profile_url(current_profile),
       trigger: {
@@ -21,12 +33,18 @@ module HeaderHelper
       sections: [
         {
           items: [
-            link_item(t('show_type', type: t("#{current_profile.profileable.class_name}.type")), dual_profile_url(current_profile), fa: 'user'),
+            link_item(t('show_type',
+                        type: t("#{current_profile.profileable.class_name}.type")),
+                      dual_profile_url(current_profile),
+                      fa: 'user'),
             link_item(t('profiles.edit.title'), dual_profile_edit_url(current_profile), fa: 'pencil'),
             link_item(t('users.settings'), settings_url, fa: 'gear'),
-            policy(Page).index? ? link_item(t('pages.management.title').capitalize, pages_user_url(current_user), fa: 'building') : link_item(t('pages.create'), new_page_path, fa: 'building'),
-            (link_item(t('forums.management.title'), forums_user_url(current_user), fa: 'group') if policy(Forum).index? ),
-            link_item(t('sign_out'), destroy_user_session_url, fa: 'sign-out', data: {method: 'delete', turbolinks: 'false'}),
+            page_index,
+            forum_management,
+            link_item(t('sign_out'),
+                      destroy_user_session_url,
+                      fa: 'sign-out',
+                      data: {method: 'delete', turbolinks: 'false'}),
             nil # NotABug Make sure compact! actually returns the array and not nil
           ].compact!
         },
@@ -68,7 +86,9 @@ module HeaderHelper
   def profile_membership_items
     ids = current_profile.present? ? current_profile.memberships.pluck(:forum_id) : []
     Shortname.shortname_owners_for_klass('Forum', ids).map do |shortname|
-      link_item(shortname.owner.display_name, forum_path(shortname.shortname), image: shortname.owner.profile_photo.url(:icon))
+      link_item(shortname.owner.display_name,
+                forum_path(shortname.shortname),
+                image: shortname.owner.profile_photo.url(:icon))
     end
   end
 

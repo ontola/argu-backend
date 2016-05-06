@@ -1,3 +1,4 @@
+inherit_from: .rubocop_todo.yml
 AllCops:
   TargetRubyVersion: 2.3
   Exclude:
@@ -13,7 +14,7 @@ AllCops:
 Rails:
   Enabled: true
 Metrics/LineLength:
-  Max: 100
+  Max: 120
 Style/IfUnlessModifier:
   MaxLineLength: 100
 Style/WhileUntilModifier:

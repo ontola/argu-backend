@@ -1,4 +1,5 @@
-# Provides helpers for the translations and icons for when the {Forum} admin has changed the name of {Argument}, {Motion} or {Question}.
+# Provides helpers for the translations and icons for when the {Forum} admin
+# has changed the name of {Argument}, {Motion} or {Question}.
 #
 # All `foo_*` methods have a parameter `forum` which uses `naming_context` if not passed.
 module AlternativeNamesHelper

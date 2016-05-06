@@ -80,9 +80,16 @@ module ForumsHelper
 
   def manage_button_dropdown_items(resource)
     items = []
-    items << link_item(t('forums.settings.title'), url_for([:settings, resource]), fa: 'gear')
-    items << link_item(t('forums.statistics.title'), url_for([:statistics, resource]), fa: 'pie-chart') if policy(resource).statistics?
-    items << link_item(t('forums.settings.managers.title'), url_for([:settings, resource, tab: :managers]), fa: 'group') if policy(resource).managers?
+    items << link_item(t('forums.settings.title'),
+                       url_for([:settings, resource]), fa: 'gear')
+    if policy(resource).statistics?
+      items << link_item(t('forums.statistics.title'),
+                         url_for([:statistics, resource]), fa: 'pie-chart')
+    end
+    if policy(resource).managers?
+      items << link_item(t('forums.settings.managers.title'),
+                         url_for([:settings, resource, tab: :managers]), fa: 'group')
+    end
 
     dropdown_options(t("#{resource.class_name}.resource_name.management"),
                      [{items: items}], fa: 'fa-gear')

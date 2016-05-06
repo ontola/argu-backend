@@ -8,11 +8,43 @@ class PagesControllerTest < ActionController::TestCase
   let(:freetown) { create(:forum, name: 'freetown', page: page_non_public) }
   let(:access_token) { create(:access_token, item: freetown) }
 
-  let(:motion) { create(:motion, forum: freetown, creator: page.profile, publisher: page.owner.profileable) }
-  let(:argument) { create(:argument, forum: freetown, motion: motion, creator: page.profile, publisher: page.owner.profileable) }
-  let(:comment) { create(:comment, forum: freetown, commentable: argument, creator: page.profile, publisher: page.owner.profileable) }
-  let(:project) { create(:project, forum: freetown, creator: page.profile, publisher: page.owner.profileable) }
-  let(:project_motion) { create(:motion, forum: freetown, project: project, creator: page.profile, publisher: page.owner.profileable) }
+  let(:motion) do
+    create(:motion,
+           forum: freetown,
+           creator: page.profile,
+           publisher: page.owner.profileable)
+  end
+  let(:argument) do
+    create(:argument,
+           forum: freetown,
+           motion: motion,
+           creator: page.profile,
+           publisher: page.owner.profileable)
+  end
+
+  let(:comment) do
+    create(:comment,
+           forum: freetown,
+           commentable: argument,
+           creator: page.profile,
+           publisher: page.owner.profileable)
+  end
+
+  let(:project) do
+    create(:project,
+           forum: freetown,
+           creator: page.profile,
+           publisher: page.owner.profileable)
+  end
+
+  let(:project_motion) do
+    create(:motion,
+           forum: freetown,
+           project: project,
+           creator: page.profile,
+           publisher: page.owner.profileable)
+  end
+
   let(:project_argument) do
     create(:argument,
            forum: freetown,
@@ -67,7 +99,9 @@ class PagesControllerTest < ActionController::TestCase
     assert_not_nil assigns(:collection)
 
     memberships = assigns(:current_profile).memberships.pluck(:forum_id)
-    assert assigns(:collection).values.all? { |arr| arr[:collection].all? { |v| memberships.include?(v.forum_id) || v.forum.open? } },
+    assert assigns(:collection)
+             .values
+             .all? { |arr| arr[:collection].all? { |v| memberships.include?(v.forum_id) || v.forum.open? } },
            'Votes of closed fora are visible to non-members'
   end
 

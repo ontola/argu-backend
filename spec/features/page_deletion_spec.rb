@@ -80,6 +80,7 @@ RSpec.feature 'Page deletion', type: :feature do
     click_link 'Advanced'
     click_link 'f_delete'
 
-    expect(page).to have_content 'This page owns one or multiple forums. Transfer these forum to another page or contact Argu before proceeding.'
+    expect(page).to have_content 'This page owns one or multiple forums. '\
+                                 'Transfer these forum to another page or contact Argu before proceeding.'
   end
 end

@@ -37,13 +37,15 @@ class ForumPolicy < RestrictivePolicy
       7
     end
 
-    # This method exists to make sure that users who are in on an access token can't access other parts during the closed beta
+    # This method exists to make sure that users who are in on an access
+    # token can't access other parts during the closed beta
     def is_open?
       open if @record.open?
     end
 
     def has_access_token?
-      access_token if Set.new(record.m_access_tokens).intersect?(Set.new(session[:a_tokens])) && record.visible_with_a_link?
+      access_token if Set.new(record.m_access_tokens).intersect?(Set.new(session[:a_tokens])) &&
+          record.visible_with_a_link?
     end
 
     # Is the current user a member of the group?

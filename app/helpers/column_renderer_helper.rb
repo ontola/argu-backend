@@ -5,7 +5,8 @@ module ColumnRendererHelper
   # @option options [String] :header title of the main header
   # @option options [String] :buttons_url string for the button beneath a column
   # @option options [Symbol] :buttons_param if present, adds the column name as a parameter to buttons_url
-  # @option options [ActiveRecord::Base] :collection_model model of the collection, used for translations @todo: fix this hack so this param is obsolete
+  # @option options [ActiveRecord::Base] :collection_model model of the collection, used for
+  #   translations @todo: fix this hack so this param is obsolete
   # @option options [String] :partial The partial path that should be used to render the individual items
   def render_columns(columns, options = {})
     partial =
@@ -57,7 +58,8 @@ module ColumnRendererHelper
 
   def show_new_buttons(options, key)
     if options[:buttons_form_on_empty] && options[:collection].blank?
-      render partial: "#{options[:collection_model].name.tableize}/form", locals: options.merge(pro: key, resource: options[:collection_model].new(pro: key, motion: @motion))
+      render partial: "#{options[:collection_model].name.tableize}/form",
+             locals: options.merge(pro: key, resource: options[:collection_model].new(pro: key, motion: @motion))
     elsif options[:show_new_buttons] != false && options[:buttons_url].present?
       render partial: 'column_renderer/button', locals: options.merge(pro: key)
     end
@@ -74,6 +76,8 @@ module ColumnRendererHelper
 
   # Used to render a collection if it contains items
   def render_collection_if_present(model, key, &block)
-    (model[key][:collection] || model[key.to_s][:collection]).each(&block) if (model[key][:collection] || model[key.to_s][:collection])
+    if model[key][:collection] || model[key.to_s][:collection]
+      (model[key][:collection] || model[key.to_s][:collection]).each(&block)
+    end
   end
 end

@@ -88,10 +88,11 @@ class ApplicationController < ActionController::Base
   end
 
   def forum_by_geocode
-    if session[:geo_location].present?
-      forum = Forum.find_via_shortname_nil(session[:geo_location].city.downcase) if session[:geo_location].city.present?
-      forum ||= Forum.find_via_shortname_nil(session[:geo_location].country.downcase) if session[:geo_location].country.present?
-      forum = Forum.find_via_shortname_nil('eu') if forum.blank? && EU_COUNTRIES.include?(session[:geo_location].country_code)
+    geo = session[:geo_location]
+    if geo.present?
+      forum = Forum.find_via_shortname_nil(geo.city.downcase) if geo.city.present?
+      forum ||= Forum.find_via_shortname_nil(geo.country.downcase) if geo.country.present?
+      forum = Forum.find_via_shortname_nil('eu') if forum.blank? && EU_COUNTRIES.include?(geo.country_code)
       forum
     end
   end
@@ -147,13 +148,19 @@ class ApplicationController < ActionController::Base
 
   # @private
   def set_locale
-    I18n.locale = current_user.try(:language) || cookies['locale'] || http_accept_language.compatible_language_from(I18n.available_locales)
+    I18n.locale =
+      current_user.try(:language) ||
+      cookies['locale'] ||
+      http_accept_language.compatible_language_from(I18n.available_locales)
   end
 
   # @private
   def set_notification_header
     if current_user.present?
-      response.headers[:lastNotification] = policy_scope(Notification).order(created_at: :desc).limit(1).pluck(:created_at)[0] || '-1'
+      response.headers[:lastNotification] = policy_scope(Notification)
+                                              .order(created_at: :desc)
+                                              .limit(1)
+                                              .pluck(:created_at)[0] || '-1'
     else
       response.headers[:lastNotification] = '-1'
     end
@@ -262,13 +269,19 @@ class ApplicationController < ActionController::Base
       format.js do
         render status: 401,
                json: {
-                 notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}")}]
+                 notifications: [{
+                   type: :error,
+                   message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}")
+                 }]
                }
       end
       format.json do
         render status: 401,
                json: {
-                 notifications: [{type: :error, message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}")}]
+                 notifications: [{
+                   type: :error,
+                   message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}")
+                 }]
                }
       end
       format.html do

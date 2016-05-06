@@ -40,10 +40,6 @@ RSpec.feature 'Shortname', type: :feature do
     expect(page).to have_current_path shortname_settings_path
   end
 
-  def general_update(response = 200)
-
-  end
-
   def general_destroy(response = 200)
     s = freetown.shortnames.first
     expect do

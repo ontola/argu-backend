@@ -21,7 +21,6 @@ module SeoHelper
 
   def seolized_description(model)
     appendage = t("seo.#{model.class.name.downcase}.description", title: model.display_name.downcase)
-    "#{markdown_to_plaintext(model.description)} | #{t("seo.#{model.class.name.downcase}.description", title: model.display_name)}"
     [
         markdown_to_plaintext(model.description),
         (' | ' if model.description.present? && appendage.present?),

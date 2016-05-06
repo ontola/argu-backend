@@ -40,14 +40,19 @@ namespace :deploy do
   desc 'Update build number file'
   task :update_build_number do
     on roles(:all) do
-      execute :echo, %("BUILD='#{ENV['SEMAPHORE_BUILD_NUMBER'] || '0'}' unless defined?(::BUILD)"), '>', "#{current_path}/config/initializers/build.rb"
+      execute :echo,
+              %("BUILD='#{ENV['SEMAPHORE_BUILD_NUMBER'] || '0'}' unless defined?(::BUILD)"),
+              '>',
+              "#{current_path}/config/initializers/build.rb"
     end
   end
 
-  desc 'Links the assets directory of staging in the public folder of production to make apache serve staging assets safely'
+  desc 'Links the assets directory of staging in the public '\
+         'folder of production to make apache serve staging assets safely'
   task :link_staging_assets do
     on roles(:all) do
-      execute :ln, '-s /home/rails/argu_staging/current/public/ /home/rails/argu/current/public/staging' #@safe kernelmethod
+      execute :ln, '-s /home/rails/argu_staging/current/public/ '\
+                     '/home/rails/argu/current/public/staging' # @safe kernelmethod
     end
   end
 

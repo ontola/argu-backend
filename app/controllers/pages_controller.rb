@@ -3,7 +3,10 @@ class PagesController < ApplicationController
     authorize Page, :index?
     @user = User.find_via_shortname params[:id]
     authorize @user,:update?
-    @pages = Page.where(id: @user.profile.pages.pluck(:id).concat(@user.profile.page_managerships.pluck(:page_id))).distinct
+    @pages = Page
+               .where(id: @user.profile.pages.pluck(:id)
+                            .concat(@user.profile.page_managerships.pluck(:page_id)))
+               .distinct
     @_pundit_policy_scoped = true
 
     render locals: {
@@ -18,7 +21,7 @@ class PagesController < ApplicationController
     authorize @page, :show?
 
     if @profile.are_votes_public?
-      votes = Vote.find_by_sql('SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" WHERE ("votes"."voter_type" = \'Profile\' AND "votes"."voter_id" = '+@profile.id.to_s+') AND ("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') AND ("forums"."visibility" = '+Forum.visibilities[:open].to_s+' OR "forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) ORDER BY created_at DESC')
+      votes = Vote.find_by_sql(voted_select_query)
       @pubic_vote_count = votes.count
       @collection = Vote.ordered votes
     end
@@ -27,12 +30,12 @@ class PagesController < ApplicationController
   end
 
   def new
-    authorize Page, :new?
+    authorize page, :new?
 
-    pa_po = policy(Page)
+    pa_po = policy(page)
     errors = {}
     if pa_po.create?
-      page = Page.new
+      page = page.new
       page.build_shortname
       page.build_profile
     else
@@ -168,5 +171,15 @@ class PagesController < ApplicationController
 
   def tab
     @tab ||= policy(@page || Page).verify_tab(params[:tab])
+  end
+
+  def voted_select_query
+    'SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" '\
+      'WHERE ("votes"."voter_type" = \'Profile\' AND '\
+      '"votes"."voter_id" = ' + @profile.id.to_s + ') AND '\
+      '("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') '\
+      'AND ("forums"."visibility" = ' + Forum.visibilities[:open].to_s + ' OR '\
+      '"forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) '\
+      'ORDER BY created_at DESC'
   end
 end

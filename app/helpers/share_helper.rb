@@ -3,7 +3,8 @@ module ShareHelper
 
   # https://developers.facebook.com/docs/sharing/reference/feed-dialog/v2.3
   def self.facebook_share_url(url, options = {})
-    "https://www.facebook.com/dialog/feed?app_id=#{Rails.application.secrets.facebook_key}&display=popup&link=#{CGI.escape(url)}&redirect_uri=#{CGI.escape(url)}"
+    "https://www.facebook.com/dialog/feed?app_id=#{Rails.application.secrets.facebook_key}"\
+      "&display=popup&link=#{CGI.escape(url)}&redirect_uri=#{CGI.escape(url)}"
   end
 
   # https://dev.twitter.com/web/intents

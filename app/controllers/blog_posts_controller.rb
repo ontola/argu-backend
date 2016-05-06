@@ -66,7 +66,10 @@ class BlogPostsController < AuthorizedController
                                                    publisher: current_user))
     destroy_service.on(:destroy_blog_post_successful) do |blog_post|
       respond_to do |format|
-        format.html { redirect_to blog_post.blog_postable, notice: t('type_destroy_success', type: t('blog_posts.type')) }
+        format.html do
+          redirect_to blog_post.blog_postable,
+                      notice: t('type_destroy_success', type: t('blog_posts.type'))
+        end
         format.json { head :no_content }
       end
     end
@@ -86,7 +89,10 @@ class BlogPostsController < AuthorizedController
                                                  publisher: current_user))
     trash_service.on(:trash_blog_post_successful) do |blog_post|
       respond_to do |format|
-        format.html { redirect_to blog_post.blog_postable, notice: t('type_trash_success', type: t('blog_posts.type')) }
+        format.html do
+          redirect_to blog_post.blog_postable,
+                      notice: t('type_trash_success', type: t('blog_posts.type'))
+        end
         format.json { head :no_content }
       end
     end
@@ -133,7 +139,9 @@ class BlogPostsController < AuthorizedController
   end
 
   def permit_params
-    params.require(:blog_post).permit(*policy(@blog_post || resource_by_id || new_resource_from_params || BlogPost).permitted_attributes)
+    params
+      .require(:blog_post)
+      .permit(*policy(@blog_post || resource_by_id || new_resource_from_params || BlogPost).permitted_attributes)
   end
 
   def resource_new_params

@@ -65,11 +65,13 @@ class RestrictivePolicy
       c_model = record.try(:forum) || context.context_model
       if user.present? && c_model.present?
         # Stepups within the forum based if they apply to the user or one of its group memberships
-        forum_stepups = c_model.stepups.where('user_id=? OR group_id=?', user.id, user.profile.groups.where(forum: c_model).pluck(:id))
+        forum_stepups = c_model.stepups.where('user_id=? OR group_id=?',
+                                              user.id,
+                                              user.profile.groups.where(forum: c_model).pluck(:id))
         # Get the tuples of the entire parent chain
         cc = Context.new(record).map(&:polymorphic_tuple).compact
         # Match them against the set of stepups within the forum
-        moderator if cc.presence && forum_stepups.where("(record_type, record_id) IN #{"(#{cc.map { |t| "('#{t[0]}', #{t[1]})" }.join(', ')})"}").presence
+        moderator if cc.presence && forum_stepups.where(match_record_poly_tuples(cc)).presence
       end
     end
 
@@ -200,11 +202,22 @@ class RestrictivePolicy
   end
 
   protected
+
   def platform_open?
     context.opts[:platform_open]
   end
 
   def within_user_cap?
     context.opts[:within_user_cap]
+  end
+
+  private
+
+  def generate_tuple_in_string(cc)
+    "(#{cc.map { |t| "('#{t[0]}', #{t[1]})" }.join(', ')})"
+  end
+
+  def match_record_poly_tuples(cc)
+    "(record_type, record_id) IN #{generate_tuple_in_string(cc)}"
   end
 end

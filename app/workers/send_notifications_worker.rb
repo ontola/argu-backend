@@ -26,7 +26,8 @@ class SendNotificationsWorker
           logger.info "Preparing to possibly send #{notifications.length} notifications"
         end
         last_viewed = user.reload.notifications_viewed_at
-        if notifications.length > 0 && (last_viewed.blank? || last_viewed && (last_viewed < (Time.current - COOLDOWN_PERIOD)))
+        if notifications.length > 0 &&
+            (last_viewed.blank? || last_viewed && (last_viewed < (Time.current - COOLDOWN_PERIOD)))
           logger.info "Sending #{notifications.length} notification(s) to #{user.email}"
           NotificationsMailer.notifications_email(user, notifications).deliver
           user.update(notifications_viewed_at: Time.current)
