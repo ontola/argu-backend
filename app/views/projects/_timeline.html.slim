@@ -10,7 +10,7 @@ header
           span= phase.display_name
         .timeline-phase-points
           -phase.happenings(policy(project).update?).each do |happening|
-            =link_to blog_post_path(happening.trackable), data: {remote: true}, class: "tooltip--side-right timeline-point timeline-point-blog-post#{' unpublished' unless happening.trackable.is_published}#{' active' if happening.trackable == project.latest_blog_post}" do
+            =link_to blog_post_path(happening.trackable), data: {remote: true}, class: generate_timeline_point_class(project, happening) do
               span[class="fa fa-#{blog_post_icon}"]
             =link_to blog_post_path(happening.trackable), data: {remote: true}, class: 'timeline-post-title' do
               span= happening.trackable.title

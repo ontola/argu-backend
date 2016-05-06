@@ -43,8 +43,11 @@ class Phase < ActiveRecord::Base
     next_phase.present? ? next_phase.update!(start_date: end_date) : project.update!(end_date: end_date) if end_date_changed?
   end
 
+  # Activities with *.happened key that happened during this phase
+  # @param [Boolean] show_unpublished Set to true to include unpublished happenings
+  # @return [ActiveRecord::Relation] Activities with *.happened key
   def happenings(show_unpublished = false)
-    return [] if start_date.nil?
+    return Activity.none if start_date.nil?
     if end_date.present?
       scope = project
                 .happenings

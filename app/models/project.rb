@@ -49,7 +49,7 @@ class Project < ActiveRecord::Base
   end
 
   # Fetches the latest published blog post which already happened.
-  # @return [BlogPost] The latest published blog post
+  # @return [BlogPost, nil] The latest published blog post or nil if none exists
   def latest_blog_post
     blog_posts
       .published
