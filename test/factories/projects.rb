@@ -7,7 +7,10 @@ FactoryGirl.define do
     content 'content'
 
     factory :published_project do
-      published_at Time.current
+      before :create do |project|
+        pp = project.create_argu_publication(published_at: Time.current)
+        pp.commit
+      end
     end
   end
 end
