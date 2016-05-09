@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class ForumsController < ApplicationController
   before_action :redirect_generic_shortnames, only: :show
 
@@ -30,7 +31,14 @@ class ForumsController < ApplicationController
                                                           question_id: nil,
                                                           is_trashed: show_trashed?))
 
-    @items = Kaminari.paginate_array((questions + motions_without_questions).sort_by(&:updated_at).reverse).page(show_params[:page]).per(20) if policy(@forum).show?
+    if policy(@forum).show?
+      @items = Kaminari
+               .paginate_array((questions + motions_without_questions)
+                                   .sort_by(&:updated_at)
+                                   .reverse)
+               .page(show_params[:page])
+               .per(20)
+    end
   end
 
   def settings
@@ -39,9 +47,9 @@ class ForumsController < ApplicationController
     current_context @forum
 
     render locals: {
-             tab: tab,
-             active: tab
-           }
+      tab: tab,
+      active: tab
+    }
   end
 
   def statistics
@@ -55,7 +63,7 @@ class ForumsController < ApplicationController
       taggings = Tagging.where(forum_id: @forum.id, tag_id: tag_id)
       @tags << {name: Tag.find_by(id: taggings.first.tag_id).try(:name) || '[not found]', count: taggings.length}
     end
-    @tags = @tags.sort { |x,y| y[:count] <=> x[:count] }
+    @tags = @tags.sort { |x, y| y[:count] <=> x[:count] }
   end
 
   def update
@@ -91,11 +99,11 @@ class ForumsController < ApplicationController
   def memberships
     authorize Forum, :selector?
     @forums = Forum
-                .public_forums
-                .where('id in (?)',
-                       (params[:profile][:membership_ids] || [])
-                         .reject(&:blank?)
-                         .map(&:to_i))
+              .public_forums
+              .where('id in (?)',
+                     (params[:profile][:membership_ids] || [])
+                       .reject(&:blank?)
+                       .map(&:to_i))
     @forums.each { |f| authorize f, :join? }
 
     @memberships = @forums.map { |f| Membership.find_or_initialize_by forum: f, profile: current_user.profile }
@@ -118,7 +126,7 @@ class ForumsController < ApplicationController
   protected
 
   def correct_stale_record_version
-    @forum.reload.attributes = permit_params.reject do |attrb, value|
+    @forum.reload.attributes = permit_params.reject do |attrb, _value|
       attrb.to_sym == :lock_version
     end
   end
@@ -126,9 +134,9 @@ class ForumsController < ApplicationController
   def stale_record_recovery_action
     flash.now[:error] = 'Another user has made a change to that record since you accessed the edit form.'
     render 'settings', locals: {
-               tab: tab,
-               active: tab
-           }
+      tab: tab,
+      active: tab
+    }
   end
 
   def forum_for(url_options)

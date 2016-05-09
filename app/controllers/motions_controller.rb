@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 class MotionsController < AuthorizedController
   include NestedResourceHelper
   before_action :get_context, only: [:index, :new, :create]
@@ -24,7 +25,9 @@ class MotionsController < AuthorizedController
   # GET /motions/1
   # GET /motions/1.json
   def show
-    @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes)), {pro: show_params[:page_arg_pro], con: show_params[:page_arg_con]}
+    @arguments = Argument.ordered policy_scope(@motion.arguments.trashed(show_trashed?).includes(:votes)),
+                                  pro: show_params[:page_arg_pro],
+                                  con: show_params[:page_arg_con]
     discussion_responses = @motion.group_responses.where(group_id: authenticated_context.groups.discussion)
     @group_responses = Group.ordered_with_meta discussion_responses,
                                                authenticated_context.groups.discussion,
@@ -94,13 +97,12 @@ class MotionsController < AuthorizedController
       respond_to do |format|
         if params[:motion].present? &&
             params[:motion][:tag_id].present? &&
-            motion.tags.reject { |a,b| a.motion == b }.first.present?
-          format.html { redirect_to tag_motions_url(Tag.find_by_id(motion.tag_id).name)}
-          format.json { head :no_content }
+            motion.tags.reject { |a, b| a.motion == b }.first.present?
+          format.html { redirect_to tag_motions_url(Tag.find_by_id(motion.tag_id).name) }
         else
           format.html { redirect_to motion, notice: t('type_save_success', type: motion_type) }
-          format.json { head :no_content }
         end
+        format.json { head :no_content }
       end
     end
     update_service.on(:update_motion_failed) do |motion|
@@ -160,7 +162,6 @@ class MotionsController < AuthorizedController
     untrash_service.subscribe(ActivityListener.new(creator: current_profile,
                                                    publisher: current_user))
     untrash_service.on(:untrash_motion_successful) do |motion|
-      parent = motion.get_parent.model.try(:first) || motion.get_parent.model
       respond_to do |format|
         format.html { redirect_to motion, notice: t('type_untrash_success', type: t('motions.type')) }
         format.json { head :no_content }

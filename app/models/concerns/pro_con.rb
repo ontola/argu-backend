@@ -1,7 +1,8 @@
+# frozen_string_literal: true
 module ProCon
   extend ActiveSupport::Concern
 
-  VOTE_OPTIONS = [:pro]
+  VOTE_OPTIONS = [:pro].freeze
 
   included do
     include ArguBase, Trashable, Parentable, HasLinks, PublicActivity::Common
@@ -25,8 +26,8 @@ module ProCon
     acts_as_followable
     parentable :motion, :forum
 
-    scope :pro, -> {where(pro: true)}
-    scope :con, -> {where(pro: false)}
+    scope :pro, -> { where(pro: true) }
+    scope :con, -> { where(pro: false) }
 
     delegate :uses_alternative_names, :motions_title, :motions_title_singular, to: :motion
 
@@ -72,16 +73,16 @@ module ProCon
   end
 
   module ClassMethods
-    def ordered (coll=[], page={})
+    def ordered(coll = [], page = {})
       HashWithIndifferentAccess.new(
-          pro: {
-              collection: coll.pro.page(page[:pro] || 1) || [],
-              page_param: :page_arg_pro
-          },
-          con: {
-              collection: coll.con.page(page[:con] || 1) || [],
-              page_param: :page_arg_con
-          }
+        pro: {
+          collection: coll.pro.page(page[:pro] || 1) || [],
+          page_param: :page_arg_pro
+        },
+        con: {
+          collection: coll.con.page(page[:con] || 1) || [],
+          page_param: :page_arg_con
+        }
       )
     end
   end
