@@ -71,9 +71,7 @@ class Rack::Attack
     end
   end
 
-  private
-
-  def is_throttled_path(req)
+  def self.is_throttled_path(req)
     %w(/oauth /actors /users /connect /setup /move /convert /v/ /c/).any? { |n| req.path.include?(n) }
   end
 end
