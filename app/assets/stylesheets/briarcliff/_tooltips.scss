@@ -60,8 +60,10 @@
   bottom: 100%;
   top: auto !important;
 }
-.no-touch [data-title]:hover:after, *:focus > [data-title]:after {
+
+// Only show tooltips on non-touch devices. Also, show them when the user has focused by using the keyboard
+.no-touch [data-title]:hover:after, .no-touch *:focus > [data-title]:after, .no-touch [data-title]:focus:after {
   opacity: 1;
   top: 100%;
-  @include transition (.2s ease-in-out);
+  @include transition (opacity .2s ease-in-out, top .2s ease-in-out);
 }
