@@ -27,7 +27,7 @@
     font-size: 1.3em;
   }
 
-  &:hover {
+  &:hover, &:focus {
     opacity: 1;
   }
 }
