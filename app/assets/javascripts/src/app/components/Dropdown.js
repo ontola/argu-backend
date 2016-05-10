@@ -63,15 +63,20 @@ export const HyperDropdown = React.createClass({
         let trigger;
         if (this.props.trigger) {
             if (this.props.trigger.type === 'current_user') {
-                trigger = <CurrentUserTrigger handleClick={this.handleClick} handleTap={this.handleTap} {...this.props.trigger} />
+                trigger = <CurrentUserTrigger handleClick={this.handleClick} defaultAction={this.props.defaultAction} handleTap={this.handleTap} {...this.props.trigger} />
             } else if (this.props.trigger.type === 'notifications') {
                 trigger = <NotificationTrigger handleClick={this.handleClick} handleTap={this.handleTap} {...this.props} />
             }
         } else {
             const image_after = image({ fa: this.props.fa_after });
-            const triggerClass = `dropdown-trigger ${this.props.triggerClass}`;
-            const TriggerContainer = this.props.triggerTag;
-            trigger = (<TriggerContainer href={this.props.defaultAction} className={triggerClass} onClick={this.handleClick} done={this.close} data-turbolinks="false">
+            const triggerClass = 'dropdown-trigger ' + this.props.triggerClass;
+            const TriggerContainer = this.props.triggerTag || 'a';
+            trigger = (<TriggerContainer href={this.props.defaultAction}
+                                         className={triggerClass}
+                                         onClick={this.handleClick}
+                                         done={this.close}
+                                         data-turbolinks="false"
+                                         tabIndex="0">
                           {image(this.props)}
                           <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
                           {image_after}
@@ -84,7 +89,7 @@ export const HyperDropdown = React.createClass({
                                                  {...this.props}
                                                  key='required' />;
 
-        return (<div tabIndex="1"
+        return (<div tabIndex="-1"
                     className={dropdownClass}
                     onMouseEnter={this.onMouseEnter}
                     onMouseLeave={this.onMouseLeave} >
@@ -214,7 +219,7 @@ export const ShareDropdown = React.createClass({
                     fa="fa-google-plus" />
             </DropdownContent>;
 
-        return (<div tabIndex="1"
+        return (<div tabIndex="-1"
                     className={dropdownClass}
                     onMouseEnter={this.onMouseEnter}
                     onMouseLeave={this.onMouseLeave} >
@@ -531,15 +536,13 @@ export const CurrentUserTrigger = React.createClass({
 
     render () {
         const triggerClass = 'dropdown-trigger ' + this.props.triggerClass;
-        const TriggerContainer = this.props.triggerTag;
+        const TriggerContainer = this.props.triggerTag || 'a';
 
         return (<TriggerContainer className={triggerClass}
+                                  href={this.props.defaultAction}
                                   onClick={this.props.handleClick}
                                   onTouchEnd={this.props.handleTap} >
-            {image({ image: {
-                url: this.state.profile_photo.url,
-                title: this.state.profile_photo.title, className: 'profile-picture--navbar' }
-            })}
+            {image({ image: { url: this.state.profile_photo.url, title: this.state.profile_photo.title, className: 'profile-picture--navbar' } })}
             <span className="icon-left">{this.state.display_name}</span>
         </TriggerContainer>);
     }

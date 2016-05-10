@@ -95,7 +95,7 @@ export const NotificationDropdown = React.createClass({
                                                  {...adaptedProps}
                                                  key='required' />;
 
-        return (<div tabIndex="1"
+        return (<div tabIndex="-1"
                      className={dropdownClass}
                      onMouseEnter={this.onMouseEnterFetch}
                      onMouseLeave={this.onMouseLeave} >
