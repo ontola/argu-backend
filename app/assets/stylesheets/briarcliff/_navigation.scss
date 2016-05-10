@@ -236,8 +236,12 @@ input[type="submit"].nav-search-button {
   }
 }
 
-// Hides the ugly focus outline for mouse users
+// Hides the focus outline for mouse users
 *:focus:hover {
   outline: none !important;
 }
 
+// Hides the focus outline
+#start-of-content:focus {
+  outline: none;
+}
