@@ -22,7 +22,6 @@
 //= require selectize
 //= require application/version
 //= require _bundle
-//= require turbolinks
 //= require react_ujs_mount
 //= require react_ujs_turbolinks
 //= require react_ujs_event_setup

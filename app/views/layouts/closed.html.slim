@@ -6,6 +6,8 @@ html[class="no-js"]
     =csrf_meta_tags
     =render 'layouts/meta'
     =render partial: 'application/polyfill'
+    =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
+    =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
 
     / unless current_user.blank?
     =stylesheet_link_tag 'application', :media => 'all'
@@ -24,4 +26,3 @@ html[class="no-js"]
       .container
         =yield
     =render partial: 'initial_state'
-    =javascript_include_tag 'application'

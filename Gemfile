@@ -81,7 +81,6 @@ gem 'sidekiq-logging-json',
     ref: '08098971d5baa75f05bb3b9d53d2d0e811d0ebc1'
 gem 'sinatra', '>= 1.3.0'
 gem 'render_anywhere', require: false
-gem 'turbolinks', '>= 5.0.0.beta2'
 gem 'uglifier', '>= 2.5.3'
 gem 'sprockets', '~>3.5.2'
 gem 'sprockets-es6', require: 'sprockets/rails'

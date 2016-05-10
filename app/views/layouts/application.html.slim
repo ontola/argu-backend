@@ -5,6 +5,8 @@ html[class="no-js"]
     title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
     =csrf_meta_tags
     =render partial: 'polyfill'
+    =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
+    =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
 
     =stylesheet_link_tag 'application', :media => 'all'
     - if request.original_url.include? developers_path
@@ -35,5 +37,4 @@ html[class="no-js"]
       .push-footer
     =render partial: 'footer'
     =render partial: 'initial_state'
-    =javascript_include_tag 'application'
     audio[id="notificationSound" src="/notification.wav" preload="auto"]

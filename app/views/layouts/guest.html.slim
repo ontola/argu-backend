@@ -5,6 +5,8 @@ html[class="no-js"]
     title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
     =csrf_meta_tags
     =render partial: 'polyfill'
+    =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
+    =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
 
     / unless current_user.blank?
     =stylesheet_link_tag 'application', :media => 'all'
@@ -30,6 +32,3 @@ html[class="no-js"]
       .push-footer
     =render 'footer'
     =render partial: 'initial_state'
-    =javascript_include_tag 'application'
-    script[id="motion-template" type="text/x-handlebars-template"]
-      =render partial: 'motions/motion_template'
