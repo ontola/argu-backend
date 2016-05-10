@@ -11,17 +11,17 @@
           li="#{forum.questions_count} #{t('forums.statistics.questions')}"
           li="#{forum.motions_count} #{t('forums.statistics.motions')}"
 .box.box-grid
-  =link_to forum_path(forum) do
-    section.unpadded.cover--small
+  section.unpadded.cover--small
+    = link_to forum_path(forum) do
       .cover-image[style="background-image: url('#{forum.cover_photo.url(:box)}'); "]
         =image_tag forum.profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
         h3= forum.display_name
       .cover-overlay
-      - if policy(forum).update?
-        .sticky--top-right
-          =link_to settings_forum_path(forum), class: ('btn--transparant') do
-            span.fa.fa-gear
-            span.icon-left= t('settings')
+    - if policy(forum).update?
+      .sticky--top-right
+        =link_to settings_forum_path(forum), class: ('btn--transparant') do
+          span.fa.fa-gear
+          span.icon-left= t('settings')
   =render partial: 'forums/info_bar', locals: {forum: forum}
   - if forum.bio.presence
     section.section-description

@@ -6,7 +6,7 @@
           .box-image[style="background-image: url('#{motion.cover_photo.url(:box)}'); "]
       .box-image--container.b-lazy-hide-container
         .box-image.b-lazy[data-src=motion.cover_photo.url(:box)]
-  =link_to(motion_path(motion), 'aria-hidden': true, tabindex: '-1') do
+  =link_to(motion_path(motion), tabindex: '-1') do
     =render partial: 'motions/info_bar', locals: {motion: motion}
   =link_to motion_path(motion) do
     section
