@@ -21,7 +21,7 @@ html[class="no-js"]
   body
     #fb-root
     =render 'guest/navbar', permanent: 'navbar'
-    .wrapper
+    .wrapper#start-of-content[tabindex="-1"]
       /[if lt IE 10]
         p.browsehappy= raw t('outdated_browser')
       =render partial: 'alerts'

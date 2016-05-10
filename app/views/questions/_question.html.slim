@@ -1,6 +1,6 @@
 .box.box-grid.question[itemscope="itemscope" itemtype="http://schema.org/Question" class=status_classes_for(question) data-created-at=question.created_at  data-updated-at=question.updated_at data-vote-count=0]
   - if question.cover_photo.present?
-    =contextual_link_to question_path(question) do
+    =link_to(question_path(question), 'aria-hidden': true, tabindex: '-1') do
       noscript
         .box-image--container
           .box-image[style="background-image: url('#{question.cover_photo.url(:box)}'); "]
@@ -8,7 +8,7 @@
         .box-image.b-lazy[data-src=question.cover_photo.url(:box)]
   =render partial: 'questions/info_bar', locals: {question: question}
   section
-    =contextual_link_to question_path(question) do
+    =link_to question_path(question) do
       h2.question-t[itemprop="headline"]= question.title
     - if question.motions.present?
       ul.box-list.box-list--icons
@@ -18,7 +18,7 @@
               span[class='fa fa-#{motion_icon}']
               span.icon-left= motion.title
         - if question.motions.count > 3
-          li= contextual_link_to question_path(question)
+          li= link_to question_path(question)
             h3.motion-t
               span.fa.fa-chevron-right
               span.icon-left= t('questions.view_all_motions', amount: question.motions.count)
