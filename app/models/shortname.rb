@@ -38,7 +38,7 @@ class Shortname < ActiveRecord::Base
   end
 
   def self.find_resource(shortname)
-    Shortname.find_by(shortname: shortname).owner
+    Shortname.find_by('lower(shortname) = lower(?)', shortname).owner
   end
 
   private

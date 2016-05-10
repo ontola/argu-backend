@@ -5,6 +5,17 @@ RSpec.feature 'Shortname', type: :feature do
   let!(:freetown) { create(:forum, name: 'freetown', max_shortname_count: 3) }
   let(:manager) { create_manager(freetown) }
   let(:motion) { create(:motion, forum: freetown) }
+  let(:upcase_page) do
+    create(:page,
+           shortname: build(:shortname,
+                            shortname: 'PAGE'))
+  end
+
+  scenario 'should resolve uppercase shortnames' do
+    visit forum_path(upcase_page.url.downcase)
+    expect(page).to have_current_path page_path(upcase_page.url)
+    expect(page).to have_content(upcase_page.display_name)
+  end
 
   scenario 'manager creates a shortname' do
     sign_in manager
