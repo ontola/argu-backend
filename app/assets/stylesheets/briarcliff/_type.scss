@@ -55,7 +55,7 @@ br {
   display: block;
 }
 
-p, div, small, ol, ul, li, small, span, blockquote {
+p, div, small, ol, ul, li, small, span, blockquote, a {
   font-family: $font-sans;
   word-break: break-word;
 }
@@ -63,7 +63,6 @@ p, div, small, ol, ul, li, small, span, blockquote {
 a {
   text-decoration: none;
   color: $blus;
-  outline: none;
 }
 
 p a {

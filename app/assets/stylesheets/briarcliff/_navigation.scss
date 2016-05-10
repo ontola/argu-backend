@@ -7,7 +7,7 @@
   right: 0;
   left: 0;
   z-index: 11;
-  height: 3em;
+  height: $navbar-height;
   background-color: $blu;
 }
 
@@ -17,23 +17,23 @@
   padding: 0 0.7em;
   font-size: 1em;
   background-color: $blu;
-  height: 3em;
+  height: $navbar-height;
 
   @include transition(.1s);
 
   span {
-    line-height: 3em;
+    line-height: $navbar-height;
     display: inline-block;
     vertical-align: top;
   }
 
   > .fa {
-    line-height: 3.2em;
+    line-height: $navbar-height + .2em;
     float: none;
     padding: 0;
   }
 
-  &:hover {
+  &:hover, &:focus {
     background-color: $lighten2;
     text-decoration: none;
   }
@@ -143,7 +143,7 @@ input[type="submit"].nav-search-button {
 
 .navbar-below {
   position: fixed;
-  top: 3em;
+  top: $navbar-height;
   left: 0;
   width: 100%;
   background-color: white;
@@ -207,4 +207,41 @@ input[type="submit"].nav-search-button {
   @include bp-medium {
     display: none !important;
   }
+}
+
+// Accessibility here
+
+// For users who rely on keyboard navigation
+.accessibility-link {
+  position: fixed;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+
+  &:focus {
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    text-align: center;
+    height: auto;
+    padding: 0 10px;
+    clip: auto;
+    font-weight: bold;
+    line-height: $navbar-height;
+    color: white;
+    text-decoration: none;
+    background: $blud;
+  }
+}
+
+// Hides the focus outline for mouse users
+*:focus:hover {
+  outline: none !important;
+}
+
+// Hides the focus outline
+#start-of-content:focus {
+  outline: none;
 }

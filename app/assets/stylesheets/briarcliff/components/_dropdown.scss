@@ -64,7 +64,7 @@
     min-width: 100%;
     display: block;
 
-    &:hover {
+    &:hover, &:focus {
       background-color: $darken1;
       color: $g4;
       text-decoration: none;
