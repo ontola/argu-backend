@@ -20,7 +20,7 @@ html[class="no-js"]
   body
     =render partial: 'alerts'
     =render 'closed/navbar'
-    .wrapper
+    .wrapper#start-of-content[tabindex="-1"]
       /[if lt IE 10]
         p.browsehappy= raw t('outdated_browser')
       .container

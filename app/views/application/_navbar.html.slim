@@ -1,11 +1,12 @@
+=render partial: 'application/accessibility_helper'
 nav#navbar.navbar[data-turbolinks-permanent role="navigation"]
   .nav-container
     .navbar-logo data-intro=t('intro.header.logo') data-step=1
-      =link_to root_path
+      =link_to root_path, tabindex: "-1"
         =image_tag('logo-white.svg')
     ul.navbar-links
       li
-        a.navbar-item[href="/"]
+        a.navbar-item[href="/" alt='home']
           span.fa.fa-home
           / TODO: home text shows last visited (or current) forum. Same n guest navbar.
           /span= preferred_forum
