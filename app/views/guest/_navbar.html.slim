@@ -1,19 +1,15 @@
+= render partial: 'application/accessibility_helper'
 nav#navbar.navbar[role="navigation"]
   .nav-container
     .navbar-logo[data-intro=t('intro.header.logo') data-step=15]
-      =link_to(root_path) do
+      =link_to root_path, tabindex: '-1'
         =image_tag('logo-white.svg')
     ul.navbar-links
       li
         a.navbar-item[href="/"]
           span.fa.fa-home
           / TODO: home text shows last visited (or current) forum. Same n guest navbar.
-          /span= preferred_forum
       =react_component_store 'HyperDropdown', props: forum_selector_items(true)
-      /li
-        =link_to new_discussion_path, class: 'navbar-item'
-          span.fa.fa-plus
-          span.icon-left.hide-ml= t('discussions.new.title')
     ul.navbar-links.navbar-links-right
       =react_component_store 'HyperDropdown', props: info_dropdown_items
       li[tabIndex="0"]

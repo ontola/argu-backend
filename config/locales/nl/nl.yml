@@ -5,6 +5,7 @@ nl:
   name: "Argu"
   name_phonetic: "\\\'är-(ˌ)gyü\\"
   language: "Nederlands"
+  set_language: "Taal instellen"
   language_language: "Taal"
   owner: "Thom van Kalkeren & Joep Meindertsma"
   system_not_allowed: "je hebt geen toestemming voor deze actie."
@@ -114,7 +115,8 @@ nl:
     questions: "Uitdagingen"
   site:
     description: "Argu is een online discussieplatform waar argumenten centraal staan."
-    copyright: "Copyright © 2014-2016 Argu v.o.f."#Footer
+    copyright: "Copyright © 2014-2016 Argu v.o.f."
+#Footer
   footer_item_about: "over"
   footer_item_home: :header_menuitem_home
   footer_item_copyright: "Copyright 2014 - "
@@ -124,6 +126,9 @@ nl:
   rejected: "Afgewezen"
   contemplating: "In overweging"
   use_a_high_res_image: "Kies een gepaste afbeelding met een hoge resolutie."
+  accessibility:
+    skip_to_main_content: "Naar hoofdinhoud"
+    send_feedback: "Moeite met navigeren? Stuur ons feedback!"
 #Home
   home_title: "Argu"
   #Not logged in

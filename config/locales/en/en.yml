@@ -4,6 +4,7 @@ en:
 #Application
   name: "Argu"
   language: "English"
+  set_language: "Set language"
   language_language: "Language"
   name_phonetic: "\\\'är-(ˌ)gyü\\"
   owner: "Thom van Kalkeren & Joep Meindertsma"
@@ -124,6 +125,9 @@ en:
   rejected: "Rejected"
   contemplating: "Contemplating"
   use_a_high_res_image: "Use an appropriate image with a high resolution."
+  accessibility:
+    skip_to_main_content: "Skip to main content"
+    send_feedback: "Trouble navigating? Send us feedback!"
 #Home
   home_title: "Argu"
   #Not logged in

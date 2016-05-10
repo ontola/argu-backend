@@ -25,11 +25,11 @@ html[class="no-js"]
     - if Rails.env.test?
       =stylesheet_link_tag 'testing'
   body
-    - if current_user && current_user.profile.has_role?(:staff)
-      =render partial: 'staff_sign'
     #fb-root
     =render partial: 'navbar', permanent: 'navbar'
-    .wrapper
+    - if current_user && current_user.profile.has_role?(:staff)
+      =render partial: 'staff_sign'
+    .wrapper#start-of-content[tabindex="-1"]
       /[if lt IE 10]
         p.browsehappy= raw t('outdated_browser')
       =yield :banners
