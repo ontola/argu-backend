@@ -73,6 +73,7 @@
     &:active {
       background-color: $darken2;
       transition: none;
+      outline: none;
     }
 
     &.is-checked {

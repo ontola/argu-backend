@@ -63,7 +63,11 @@ export const HyperDropdown = React.createClass({
         let trigger;
         if (this.props.trigger) {
             if (this.props.trigger.type === 'current_user') {
-                trigger = <CurrentUserTrigger handleClick={this.handleClick} handleTap={this.handleTap} {...this.props.trigger} />
+                trigger = <CurrentUserTrigger 
+                            defaultAction={this.props.defaultAction} 
+                            handleClick={this.handleClick} 
+                            handleTap={this.handleTap} 
+                            {...this.props.trigger} />
             } else if (this.props.trigger.type === 'notifications') {
                 trigger = <NotificationTrigger handleClick={this.handleClick} handleTap={this.handleTap} {...this.props} />
             }
@@ -71,26 +75,34 @@ export const HyperDropdown = React.createClass({
             const image_after = image({ fa: this.props.fa_after });
             const triggerClass = `dropdown-trigger ${this.props.triggerClass}`;
             const TriggerContainer = this.props.triggerTag;
-            trigger = (<TriggerContainer href={this.props.defaultAction} className={triggerClass} onClick={this.handleClick} done={this.close} data-turbolinks="false">
+            trigger = (<TriggerContainer 
+                        className={triggerClass} 
+                        data-turbolinks="false"
+                        done={this.close} 
+                        href={this.props.defaultAction} 
+                        onClick={this.handleClick} 
+                        tabIndex="0" >
                           {image(this.props)}
                           <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
                           {image_after}
                        </TriggerContainer>);
         }
 
-        const dropdownContent = <DropdownContent renderLeft={renderLeft}
-                                                 close={this.close}
-                                                 currentActor={current_actor}
-                                                 {...this.props}
-                                                 key='required' />;
+        const dropdownContent = <DropdownContent 
+                                 close={this.close}
+                                 currentActor={current_actor}
+                                 key='required' 
+                                 renderLeft={renderLeft}
+                                 {...this.props} />;
 
-        return (<div tabIndex="1"
-                    className={dropdownClass}
-                    onMouseEnter={this.onMouseEnter}
-                    onMouseLeave={this.onMouseLeave} >
+        return (<div 
+                 className={dropdownClass}
+                 onMouseEnter={this.onMouseEnter} 
+                 onMouseLeave={this.onMouseLeave}
+                 tabIndex="1" >
             {trigger}
-            <div className="reference-elem" style={{ visibility: 'hidden', overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute' }}>{dropdownContent}</div>
-            <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
+            <div className="reference-elem" style={{ overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute', visibility: 'hidden' }}>{dropdownContent}</div>
+            <ReactTransitionGroup component="div" transitionAppear={true} transitionName="dropdown">
                 {openState && dropdownContent}
             </ReactTransitionGroup>
         </div>);
@@ -186,44 +198,44 @@ export const ShareDropdown = React.createClass({
 
         const totalSharesCounter = <div className="notification-counter share-counter">{this.totalShares()}</div>;
 
-        const trigger = (<a href={this.props.defaultAction}
-                            className="dropdown-trigger"
-                            onClick={this.handleClick}
-                            done={this.close}
-                            data-turbolinks="false">
+        const trigger = (<a className="dropdown-trigger" 
+                            data-turbolinks="false" 
+                            done={this.close} 
+                            href={this.props.defaultAction} 
+                            onClick={this.handleClick}>
             <span className="fa fa-share-alt" />
             <span className="icon-left">{title}</span>
             {this.totalShares() > 0 && totalSharesCounter}
         </a>);
 
-        const dropdownContent = <DropdownContent renderLeft={renderLeft}
-                                                 close={this.close}
-                                                 {...this.props}
-                                                 key='required' >
+        const dropdownContent = <DropdownContent close={this.close}
+                                                 key='required'
+                                                 renderLeft={renderLeft}
+                                                 {...this.props}>
             <FBShareItem
+                    count={counts.facebook} 
                     shareUrl={url}
-                    type="link"
-                    url={shareUrls.facebook}
                     title={title}
-                    count={counts.facebook} />
-            <LinkItem
                     type="link"
+                    url={shareUrls.facebook} />
+            <LinkItem
+                    fa="fa-twitter" 
                     target="_blank"
                     title={`Twitter ${this.countInParentheses(counts.twitter)}`}
-                    url={shareUrls.twitter}
-                    fa="fa-twitter" />
-            <LinkItem
                     type="link"
+                    url={shareUrls.twitter} />
+            <LinkItem
+                    fa="fa-linkedin"
                     target="_blank"
                     title={`LinkedIn ${this.countInParentheses(counts.linkedIn)}`}
-                    url={shareUrls.linkedIn}
-                    fa="fa-linkedin" />
-            <LinkItem
                     type="link"
+                    url={shareUrls.linkedIn} />
+            <LinkItem
+                    fa="fa-google-plus" 
                     target="_blank"
                     title={'Google+'}
-                    url={shareUrls.googlePlus}
-                    fa="fa-google-plus" />
+                    type="link"
+                    url={shareUrls.googlePlus} />
             {this.whatsappButton()}
             <LinkItem
                     fa="fa-envelope"
@@ -232,13 +244,14 @@ export const ShareDropdown = React.createClass({
                     url={shareUrls.email} />
             </DropdownContent>;
 
-        return (<div tabIndex="1"
+        return (<div 
                     className={dropdownClass}
                     onMouseEnter={this.onMouseEnter}
-                    onMouseLeave={this.onMouseLeave} >
+                    onMouseLeave={this.onMouseLeave}
+                    tabIndex="-1" >
             {trigger}
-            <div className="reference-elem" style={{ visibility: 'hidden', overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute' }}>{dropdownContent}</div>
-            <ReactTransitionGroup transitionName="dropdown" transitionAppear={true} component="div">
+            <div className="reference-elem" style={{ overflow: 'hidden', 'pointerEvents': 'none', position: 'absolute', visibility: 'hidden' }}>{dropdownContent}</div>
+            <ReactTransitionGroup component="div" transitionAppear={true} transitionName="dropdown" >
                 {openState && dropdownContent}
             </ReactTransitionGroup>
         </div>);
@@ -297,7 +310,7 @@ export const DropdownContent = React.createClass({
     },
 
     render () {
-        const { close, sections, contentClassName, currentActor } = this.props;
+        const { close, contentClassName, currentActor, sections } = this.props;
         const collapseClass = this.props.renderLeft ? 'dropdown--left ' : 'dropdown-right ';
 
         let children;
@@ -306,7 +319,7 @@ export const DropdownContent = React.createClass({
         } else {
             children = sections.map((section, i) => {
                 if (typeof section.type === 'string') {
-                    return (<Notifications key={i} done={close} {...section} />);
+                    return (<Notifications done={close} key={i} {...section} />);
                 } else {
                     let title;
                     if (section.title && section.items.length > 0) {
@@ -315,11 +328,11 @@ export const DropdownContent = React.createClass({
 
                     const items = section.items.map((item, childI) => {
                         if (item.type === 'link') {
-                            return <LinkItem key={childI} done={close} current_actor={currentActor} {...item} />;
+                            return <LinkItem current_actor={currentActor} done={close} key={childI} {...item} />;
                         } else if (item.type === 'actor') {
-                            return <ActorItem key={childI} done={close} {...item} />;
+                            return <ActorItem done={close} key={childI} {...item} />;
                         } else if (item.type === 'fb_share') {
-                            return <FBShareItem key={childI} done={close} {...item} />;
+                            return <FBShareItem done={close} key={childI} {...item} />;
                         }
                         return <div key={childI} />
                     });
@@ -394,17 +407,17 @@ export const LinkItem = React.createClass({
 
         return (<div className={this.props.type}>
             {divider}
-            <a href={this.props.url}
-               target={target}
-               data-remote={remote}
-               data-method={method}
+            <a className={className}
                data-confirm={confirm}
-               onMouseDownCapture={this.handleMouseDown}
-               data-turbolinks={turbolinks}
-               data-sort-value={sortValue}
-               data-filter-value={filterValue}
                data-display-setting={displaySetting}
-               className={className}>
+               data-filter-value={filterValue}
+               data-method={method}
+               data-remote={remote}
+               data-sort-value={sortValue}
+               data-turbolinks={turbolinks}
+               href={this.props.url}
+               onMouseDownCapture={this.handleMouseDown}
+               target={target} >
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
@@ -442,7 +455,7 @@ export const FBShareItem = React.createClass({
 
     render () {
         return (<div className={`link ${this.props.type}`}>
-            <a target="_blank" href={this.props.url} data-turbolinks="false" onClick={this.handleClick}>
+            <a data-turbolinks="false" href={this.props.url} onClick={this.handleClick} target="_blank">
                 {image({ fa: 'fa-facebook' })}
                 <span className="icon-left">Facebook {this.countInParentheses()}</span>
             </a>
@@ -510,12 +523,12 @@ export const ActorItem = React.createClass({
 
         return (<div className={`link ${this.props.type}`}>
             {divider}
-            <a href='#'
-               onMouseDownCapture={this.handleMouseDown}
-               rel="nofollow"
-               onTouchEnd={this.handleTap}
+            <a data-turbolinks={turbolinks}
+               href='#'
                onClickCapture={this.handleClick}
-               data-turbolinks={turbolinks}>
+               onMouseDownCapture={this.handleMouseDown}
+               onTouchEnd={this.handleTap}
+               rel="nofollow" >
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
@@ -526,6 +539,7 @@ window.ActorItem = ActorItem;
 
 export const CurrentUserTrigger = React.createClass({
     propTypes: {
+        defaultAction: React.PropTypes.string,
         handleClick: React.PropTypes.func,
         handleTap: React.PropTypes.func,
         profile_photo: React.PropTypes.object,
@@ -565,6 +579,7 @@ export const CurrentUserTrigger = React.createClass({
         const TriggerContainer = this.props.triggerTag;
 
         return (<TriggerContainer className={triggerClass}
+                                  href={this.props.defaultAction}
                                   onClick={this.props.handleClick}
                                   onTouchEnd={this.props.handleTap} >
             {image({ image: {
