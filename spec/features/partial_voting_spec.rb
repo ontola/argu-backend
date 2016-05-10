@@ -18,7 +18,7 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content(subject.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
-    find('span span', text: 'Disagree').click
+    find('a', text: 'Disagree').click
     expect(page).to have_content 'Sign up'
 
     click_link 'Sign up with email'

@@ -1,5 +1,16 @@
 include ActsAsTaggableOn::TagsHelper
 module MotionsHelper
+  def actor_props(actor)
+    return nil unless actor
+    {
+      actor_type: actor.owner.class.name,
+      shortname: actor.url,
+      display_name: actor.display_name,
+      name: actor.name,
+      url: dual_profile_url(actor)
+    }
+  end
+
   def motion_combi_vote_props(actor, motion, vote)
     groups = policy_scope(motion.forum.groups.discussion).collect do |group|
       {
@@ -18,13 +29,13 @@ module MotionsHelper
 
   def motion_vote_props(actor, motion, vote, opts = {})
     localized_react_component opts.merge(
-      object_type: 'motion',
-      object_id: motion.id,
-      current_vote: vote.try(:for) || 'abstain',
+      objectType: 'motion',
+      objectId: motion.id,
+      currentVote: vote.try(:for) || 'abstain',
       vote_url: motion_show_vote_path(motion),
       total_votes: motion.total_vote_count,
       buttons_type: opts.fetch(:buttons_type, 'big'),
-      actor: actor,
+      actor: actor_props(actor),
       distribution: motion_vote_counts(motion),
       percent: {
         pro: motion.votes_pro_percentage,

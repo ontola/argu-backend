@@ -156,6 +156,7 @@ RSpec.feature 'Adam west', type: :feature do
 
     expect(page).not_to have_css('.btn-pro[data-voted-on=true]')
     find('.btn-pro').click
+    expect(page).to have_content(motion.display_name)
     expect(page).to have_css('.btn-pro[data-voted-on=true]')
 
     visit motion_path(motion)

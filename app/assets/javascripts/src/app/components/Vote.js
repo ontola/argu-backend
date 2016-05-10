@@ -17,26 +17,6 @@ import {
 
 const HUNDRED_PERCENT = 100;
 
-function createMembership(response) {
-    return fetch(response.membership_url, safeCredentials({
-        method: 'POST'
-    })).then(statusSuccess);
-}
-
-function showNotifications (response) {
-    if (typeof response !== 'undefined' &&
-        typeof response.notifications !== 'undefined' &&
-        response.notifications.constructor === Array) {
-        for (let i = 0; i < response.notifications.length; i++) {
-            const item = response.notifications[i];
-            if (item.type === 'error') {
-                new Alert(item.message, item.type, true);
-            }
-        }
-    }
-    return Promise.resolve(response);
-}
-
 /**
  * Component for the POST-ing of a vote.
  * This component is not pure.
@@ -48,11 +28,11 @@ export const VoteButton = React.createClass({
     mixins: [IntlMixin],
 
     propTypes: {
-        actor: React.PropTypes.string,
+        actor: React.PropTypes.object,
         clickHandler: React.PropTypes.func,
         count: React.PropTypes.number,
         current: React.PropTypes.bool,
-        object_id: React.PropTypes.number,
+        objectId: React.PropTypes.number,
         side: React.PropTypes.string
     },
 
@@ -84,7 +64,7 @@ export const VoteButton = React.createClass({
         }
 
         return (
-            <li><a href={this.ifNoActor(`/m/${this.props.object_id}/v/${side}`)} data-method={this.ifNoActor('post')}
+            <li><a href={this.ifNoActor(`/m/${this.props.objectId}/v/${side}`)} data-method={this.ifNoActor('post')}
                    onClick={clickHandler} rel="nofollow" className={`btn-${side}`} data-voted-on={current}>
                 <span className={`fa fa-${this.iconForSide()}`} />
                     <span className="vote-text">
@@ -100,21 +80,18 @@ export const VoteButtons = React.createClass({
     mixins: [IntlMixin, VoteMixin],
 
     propTypes: {
-        actor: React.PropTypes.string,
-        current_vote: React.PropTypes.string,
+        actor: React.PropTypes.object,
+        currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
-        object_id: React.PropTypes.number,
-        object_type: React.PropTypes.string,
+        objectId: React.PropTypes.number,
+        objectType: React.PropTypes.string,
         percent: React.PropTypes.object
     },
 
     getInitialState () {
         return {
-            object_id: this.props.object_id,
-            currentVote: this.props.current_vote,
-            distribution: this.props.distribution,
-            objectType: this.props.object_type,
-            percent: this.props.percent
+            currentVote: this.props.currentVote,
+            distribution: this.props.distribution
         };
     },
 
@@ -136,7 +113,7 @@ export const VoteButtons = React.createClass({
                                    actor={this.props.actor}
                                    count={this.state.distribution[side]}
                                    current={this.state.currentVote === side}
-                                   object_id={this.props.object_id}
+                                   objectId={this.props.objectId}
                                    clickHandler={this[`${side}Handler`]} />;
             });
 
@@ -156,6 +133,11 @@ const LOWER_DISPLAY_LIMIT = 5;
  * @memberof Vote
  */
 export const VoteResults = React.createClass({
+    propTypes: {
+        percent: React.PropTypes.object,
+        showResults: React.PropTypes.bool
+    },
+
     voteWidth (side) {
         const supplementedValues = {
             pro: this.props.percent.pro < LOWER_DISPLAY_LIMIT ? LOWER_DISPLAY_LIMIT : this.props.percent.pro,
@@ -177,7 +159,7 @@ export const VoteResults = React.createClass({
     render () {
         let results;
 
-        if (this.props.show_results) {
+        if (this.props.showResults) {
             results = (
                     <ul className="progress-bar progress-bar-stacked">
                         <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.percent.pro + '%'}</span></li>

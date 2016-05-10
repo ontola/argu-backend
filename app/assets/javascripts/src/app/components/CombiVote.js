@@ -21,13 +21,23 @@ import { IntlMixin, FormattedMessage } from 'react-intl';
 export const CombiVote = React.createClass({
     mixins: [IntlMixin, VoteMixin],
 
+    propTypes: {
+        actor: React.PropTypes.object,
+        currentVote: React.PropTypes.string,
+        distribution: React.PropTypes.object,
+        groups: React.PropTypes.array,
+        objectType: React.PropTypes.string,
+        objectId: React.PropTypes.number,
+        percent: React.PropTypes.object
+    },
+
     getInitialState () {
         return {
-            actor: this.props.actor,
+            actor: this.props.actor || null,
             groups: this.props.groups,
-            object_type: this.props.objectType,
-            object_id: this.props.object_id,
-            current_vote: this.props.current_vote,
+            objectType: this.props.objectType,
+            objectId: this.props.objectId,
+            currentVote: this.props.currentVote,
             distribution: this.props.distribution,
             percent: this.props.percent
         };
@@ -51,7 +61,7 @@ export const CombiVote = React.createClass({
     },
 
     refreshGroups () {
-        fetch(`${this.state.object_id}.json`, safeCredentials())
+        fetch(`${this.state.objectId}.json`, safeCredentials())
                 .then(statusSuccess)
                 .then(json)
                 .then(data => {
@@ -66,11 +76,11 @@ export const CombiVote = React.createClass({
         let voteButtonsComponent, voteResultsComponent, groupResponsesComponent;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
             voteButtonsComponent = <VoteButtons parentSetVote={this.setVote} {...this.state} {...this.props}/>;
-            voteResultsComponent = <VoteResults {...this.state} show_results={this.state.current_vote !== 'abstain'}/>;
-            groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.object_type} objectId={this.props.object_id} />;
+            voteResultsComponent = <VoteResults {...this.state} showResults={this.state.currentVote !== 'abstain'}/>;
+            groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.objectType} objectId={this.props.objectId} />;
         } else if (this.state.actor.actor_type === 'Page') {
-            groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.object_type} objectId={this.props.object_id} />;
-            voteResultsComponent = <VoteResults {...this.state} {...this.props} show_results={true}/>;
+            groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.objectType} objectId={this.props.objectId} />;
+            voteResultsComponent = <VoteResults {...this.state} {...this.props} showResults={true}/>;
         }
 
         return (

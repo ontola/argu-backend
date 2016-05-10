@@ -12,11 +12,19 @@ import { safeCredentials, statusSuccess, json } from '../lib/helpers';
 export const BigGroupResponse = React.createClass({
     mixins: [IntlMixin],
 
+    propTypes: {
+        objectType: React.PropTypes.string,
+        objectId: React.PropTypes.number,
+        currentVote: React.PropTypes.string,
+        distribution: React.PropTypes.object,
+        percent: React.PropTypes.object
+    },
+
     getInitialState () {
         return {
             objectType: this.props.objectType,
-            objectId: this.props.object_id,
-            currentVote: this.props.current_vote,
+            objectId: this.props.objectId,
+            currentVote: this.props.currentVote,
             distribution: this.props.distribution,
             percent: this.props.percent
         };
