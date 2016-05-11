@@ -1,5 +1,7 @@
 nl:
   discussions:
+    type: 'Discussie'
+    plural: 'Discussies'
     new:
       title: 'Nieuwe discussie'
       start_header: 'Start een nieuwe discussie'
@@ -16,6 +18,6 @@ nl:
       motion_argument3: 'Hoge kosten'
       or_start_a_project: 'Of start een project'
       project_title: 'Realisatie woonwijk Parkwijk'
+      first_project: 'Be the first to start a discussion on this project!'
     show_all: 'Alle discussies weergeven'
     info: 'Discussies zijn ideeën of uitdagingen'
-    plural: 'Discussies'

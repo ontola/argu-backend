@@ -1,5 +1,7 @@
 en:
   discussions:
+    type: 'Discussion'
+    plural: 'Discussions'
     new:
       title: 'New discussion'
       start_header: 'Start a new discussion'
@@ -16,6 +18,6 @@ en:
       motion_argument3: 'High cost'
       or_start_a_project: 'Or start a project'
       project_title: 'Realization of residential area New Garden'
+      first_project: 'Be the first to start a discussion on this project!'
     show_all: 'Show all discussions'
     info: 'Discussions are ideas or challenges'
-    plural: 'Discussions'

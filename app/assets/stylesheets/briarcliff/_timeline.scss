@@ -3,7 +3,7 @@
 
 $point-size: 1.6em;
 
-$timeline-height: .3em;
+$timeline-height: .4em;
 
 .timeline {
   position: absolute;
@@ -26,6 +26,8 @@ $timeline-height: .3em;
   display: flex;
   flex-direction: column;
   margin-bottom: 1em;
+  // Prevents dropdown menu's from going underneath timeline items.
+  z-index: 0;
 }
 
 .timeline-phases {
@@ -199,10 +201,6 @@ $timeline-height: .3em;
   }
 }
 
-#current-blog-post {
-  z-index: 2;
-  position: relative;
-}
 .point.active{
   &:after{
     content: "";
@@ -231,6 +229,5 @@ $timeline-height: .3em;
 }
 
 #current-blog-post {
-  z-index: 2;
   position: relative;
 }
