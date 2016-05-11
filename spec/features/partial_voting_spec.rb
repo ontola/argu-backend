@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Voting', type: :feature do
+RSpec.feature 'Partial Voting', type: :feature do
   let(:freetown) { create(:forum, name: 'freetown') }
   let(:question) { create(:question, forum: freetown) }
   subject! do
@@ -57,7 +57,7 @@ RSpec.feature 'Voting', type: :feature do
   let(:user) { create(:user) }
 
   scenario 'User should vote on a motion' do
-    login_as(user)
+    sign_in(user)
 
     visit question_path(question)
     expect(page).to have_content(subject.content)
@@ -76,7 +76,7 @@ RSpec.feature 'Voting', type: :feature do
   let(:member) { create_member(freetown) }
 
   scenario 'Member should vote on a motion' do
-    login_as(member, scope: :user)
+    sign_in(member)
 
     visit question_path(question)
     expect(page).to have_content(subject.content)

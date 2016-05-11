@@ -1,6 +1,6 @@
-/* global Bugsnag */
+/* global Bugsnag, fetch */
 import Alert from '../components/Alert';
-
+import React from 'react';
 import {
     safeCredentials,
     json,
@@ -10,6 +10,11 @@ import {
 } from '../lib/helpers';
 
 const VoteMixin = {
+    propTypes: {
+        actor: React.PropTypes.object,
+        vote_url: React.PropTypes.string.isRequired
+    },
+
     createMembership (response) {
         return fetch(response.membership_url, safeCredentials({
             method: 'POST'
@@ -55,7 +60,6 @@ const VoteMixin = {
             .then(data => {
                 if (typeof data !== 'undefined') {
                     this.setState(data.vote);
-                    this.props.parentSetVote(data.vote);
                 }
             }).catch(e => {
                 if (e.status === 403) {

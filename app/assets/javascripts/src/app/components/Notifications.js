@@ -153,6 +153,10 @@ window.NotificationTrigger = NotificationTrigger;
 export const Notifications = React.createClass({
     mixins: [ScrollLockMixin],
 
+    propTypes: {
+        done: React.PropTypes.func
+    },
+
     getInitialState () {
         return this.props;
     },

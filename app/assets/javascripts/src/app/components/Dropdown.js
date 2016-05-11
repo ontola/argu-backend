@@ -240,7 +240,7 @@ export const DropdownContent = React.createClass({
         contentClassName: React.PropTypes.string,
         currentActor: React.PropTypes.object,
         renderLeft: React.PropTypes.bool,
-        sections: React.PropTypes.string
+        sections: React.PropTypes.array
     },
 
     getInitialState () {

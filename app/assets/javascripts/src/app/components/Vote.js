@@ -99,15 +99,15 @@ export const VoteButtons = React.createClass({
     },
 
     render () {
-        let voteButtons = ['pro', 'neutral' , 'con']
+        const voteButtons = ['pro', 'neutral' , 'con']
             .map((side, i) => {
-                return <VoteButton key={i}
-                                   side={side}
-                                   actor={this.props.actor}
+                return <VoteButton actor={this.props.actor}
+                                   clickHandler={this[`${side}Handler`]}
                                    count={this.state.distribution[side]}
                                    current={this.state.currentVote === side}
+                                   key={i}
                                    objectId={this.props.objectId}
-                                   clickHandler={this[`${side}Handler`]} />;
+                                   side={side} />;
             });
 
         return (

@@ -37,13 +37,13 @@
     "no-console": ["error", { "allow": ["error"] }],
     "strict": [2, "never"],
     "curly": [2, "all"],
-    "eqeqeq": [1, "smart"],
+    "eqeqeq": [2, "smart"],
     "no-eval": 2,
     "no-implied-eval": 2,
     "no-redeclare": 2,
     "no-native-reassign": 2,
 
-    "valid-jsdoc": 1,
+    "valid-jsdoc": 2,
 
     // Code style
     "array-bracket-spacing": [2, "never"],
@@ -63,9 +63,9 @@
     "no-const-assign": "error",
     "no-confusing-arrow": ["error", {"allowParens": true}],
     "no-dupe-class-members": "error",
-    "no-var": 1,
-    "object-shorthand": [1, "always"],
-    "prefer-arrow-callback": 1,
+    "no-var": 2,
+    "object-shorthand": [2, "always"],
+    "prefer-arrow-callback": 2,
     "prefer-const": "error",
     "no-unused-vars": "warn",
 
@@ -89,15 +89,15 @@
     "yoda": "error",
     "no-shadow": "error",
     "no-undef-init": "error",
-    "no-inline-comments": "warn",
+    "no-inline-comments": "error",
     "new-cap": "warn",
     "no-nested-ternary": "error",
     "no-multiple-empty-lines": ["error", { "max": 2 }],
     "no-mixed-spaces-and-tabs": "error",
-    "object-curly-spacing": ["warn", "always"],
+    "object-curly-spacing": ["error", "always"],
     "one-var": ["error", { "uninitialized": "always", "initialized": "never" }],
 
     // React
-    "react/prop-types": "warn"
+    "react/prop-types": "error"
   }
 }

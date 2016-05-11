@@ -56,10 +56,6 @@ export const CombiVote = React.createClass({
         this.unsubscribe();
     },
 
-    setVote (vote) {
-        this.setState(vote);
-    },
-
     refreshGroups () {
         fetch(`${this.state.objectId}.json`, safeCredentials())
                 .then(statusSuccess)
@@ -75,7 +71,7 @@ export const CombiVote = React.createClass({
     render () {
         let voteButtonsComponent, voteResultsComponent, groupResponsesComponent;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
-            voteButtonsComponent = <VoteButtons parentSetVote={this.setVote} {...this.state} {...this.props}/>;
+            voteButtonsComponent = <VoteButtons {...this.state} {...this.props}/>;
             voteResultsComponent = <VoteResults {...this.state} showResults={this.state.currentVote !== 'abstain'}/>;
             groupResponsesComponent = <BigGroupResponse groups={this.state.groups || []} actor={this.state.actor} objectType={this.props.objectType} objectId={this.props.objectId} />;
         } else if (this.state.actor.actor_type === 'Page') {
