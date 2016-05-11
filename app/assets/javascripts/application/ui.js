@@ -31,7 +31,11 @@ const ui = {
         this.handleResizeBackground();
 
         modal.init();
-        FastClick.attach(document.body);
+        try {
+            FastClick.attach(document.body);
+        } catch (e) {
+            console.error(e);
+        }
 
         var bLazy = new Blazy({
             offset: 100 // Loads images 100px before they're visible
