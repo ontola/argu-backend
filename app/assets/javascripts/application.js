@@ -22,8 +22,9 @@
 //= require selectize
 //= require application/version
 //= require i18n
-//= require i18n/translations
-//= require _bundle
+//= require i18n/translations_en
+//= require i18n/translations_nl
+// = require _bundle
 //= require react_ujs_mount
 //= require react_ujs_turbolinks
 //= require react_ujs_event_setup
