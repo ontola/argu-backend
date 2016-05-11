@@ -11,9 +11,9 @@
           =semantic_form_for(resource, html: {autocomplete: 'off'}) do |f|
             =f.semantic_fields_for :argu_publication do |pf|
               =pf.input :publish_type, as: :hidden, input_html: {value: :direct}
-              =pf.action :submit, as: :button, button_html: {data: {confirm: t('publications.confirm_publication')}, class: 'fa fa-paper-plane'}, label: t('publish')
+              =pf.action :submit, as: :button, button_html: {data: {confirm: t('publications.confirm_publication')}}, label: t('publish')
         - if resource.argu_publication.try(:published_at).present?
           =semantic_form_for(resource, html: {autocomplete: 'off'}) do |f|
             =f.semantic_fields_for :argu_publication do |pf|
               =pf.input :publish_type, as: :hidden, input_html: {value: :draft}
-              =pf.action :submit, as: :button, button_html: {class: 'fa fa-remove btn--warning'}, label: t('cancel')
+              =pf.action :submit, as: :button, button_html: {class: 'btn--warning'}, label: t('cancel')
