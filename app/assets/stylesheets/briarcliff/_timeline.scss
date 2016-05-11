@@ -90,17 +90,9 @@ $timeline-height: .3em;
   }
 }
 
-
 .timeline-phase-title.active {
   background-color: $g00;
-
-  &:before {
-    opacity: 1;
-  }
-}
-
-.timeline-phase-title.active {
-  background-color: $g00;
+  font-weight: bold;
 
   &:before {
     opacity: 1;
@@ -109,6 +101,39 @@ $timeline-height: .3em;
 
 .timeline-phase-title:hover {
   background-color: $g0;
+}
+
+.timeline-phase-title.finished, .timeline-phase-title.current {
+  &:after {
+    content: "";
+    background-color: $g3;
+    position: absolute;
+    bottom: 0;
+    top: 100%;
+    width: 100%;
+    left: 0;
+    right: 0;
+    height: $timeline-height;
+    z-index: 1;
+  }
+
+  @include bp-small {
+    &:after{
+      height: 100%;
+      width: .3em;
+      top: 0;
+      bottom: 0;
+    }
+  }
+}
+
+.timeline-phase-title.current:after {
+  width: 50%;
+
+  @include bp-small {
+    height: 50%;
+    width: .3em;
+  }
 }
 
 .timeline-points {
