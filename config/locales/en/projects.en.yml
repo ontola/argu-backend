@@ -5,7 +5,7 @@ en:
     plural: 'Projects'
     timeline: 'Timeline'
     back_to: 'Go back to project'
-    start_date_info: 'The start date is the same as the start date of the first phase'
+    start_date_info: 'The start date is the same as the start date of the first phase.'
     stepups:
       type: 'Manager'
       title: 'Managers'
@@ -18,13 +18,13 @@ en:
       title_singular: 'Phase'
       info: 'A phase is part in a timeline of a project.'
       add: 'Add phase'
-      finish: 'Finish'
-      start: 'Start'
-      current: 'current phase'
+      finish: 'Finish this project'
+      start: 'Start this phase'
+      current: 'Current phase'
       finish_confirmation:
-        last: 'Finishing this last phase will also finish the entire project'
-        other: 'Finishing this phase will automatically start the next phase'
-      start_confirmation: 'Starting this phase will automatically finish the previous phase'
+        last: 'Finishing this last phase will also finish the entire project.'
+        other: 'Finishing this phase will automatically start the next phase.'
+      start_confirmation: 'Starting this phase will automatically finish the previous phase.'
       start_date:
         from_project: 'Start date of project'
         from_previous_phase: 'End date of the previous phase'
