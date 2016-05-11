@@ -92,7 +92,7 @@ $timeline-height: .3em;
 
 .timeline-phase-title.active {
   background-color: $g00;
-  font-weight: bold;
+  color: $g4;
 
   &:before {
     opacity: 1;

@@ -18,7 +18,7 @@ en:
       title_singular: 'Phase'
       info: 'A phase is part in a timeline of a project.'
       add: 'Add phase'
-      finish: 'Finish this project'
+      finish: 'Finish this phase'
       start: 'Start this phase'
       current: 'Current phase'
       finish_confirmation:
