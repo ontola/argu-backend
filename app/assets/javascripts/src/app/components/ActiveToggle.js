@@ -4,6 +4,16 @@ import React from 'react';
 import { safeCredentials } from '../lib/helpers';
 
 export const ActiveToggle = React.createClass({
+    propTypes: {
+        initialState: React.PropTypes.bool,
+        label: React.PropTypes.oneOfType([
+            React.PropTypes.bool,
+            React.PropTypes.string
+        ]),
+        tagName: React.PropTypes.string,
+        url: React.PropTypes.string
+    },
+
     getDefaultProps () {
         return {
             tagName: 'div'

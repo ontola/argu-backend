@@ -14,6 +14,11 @@ export const Link = React.createClass({
     propTypes: {
         activeStyle: React.PropTypes.object,
         activeClassName: React.PropTypes.string,
+        children: React.PropTypes.oneOfType([
+            React.PropTypes.arrayOf(React.PropTypes.node),
+            React.PropTypes.node
+        ]),
+        className: React.PropTypes.string,
         hash: React.PropTypes.string,
         isButton: React.PropTypes.bool,
         onlyActiveOnIndex: React.PropTypes.bool,

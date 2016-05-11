@@ -1,17 +1,15 @@
-/*globals $, Bugsnag, ga, ReactRailsUJS*/
+/*globals $, Bugsnag, ga */
 import Mine from './windowize';
 Mine();
 
+import 'whatwg-fetch';
+import './application/meta';
 import activityFeed from './application/activity_feed';
-import fetch from 'whatwg-fetch';
 import alert from './application/alert';
 import ui from './application/ui';
 import n from './application/notifications';
-import activity_feed from './application/activity_feed';
 import m from './application/motions';
 import iso from './application/briarcliff/isotope-briarcliff';
-import Meta from './application/meta';
-import { safeCredentials, statusSuccess } from './src/app/lib/helpers';
 
 function init () {
     // All init functions can rest assured that the document is ready.
@@ -25,7 +23,7 @@ function init () {
         iso();
         if (typeof ga === 'function') {
             let first = true;
-            $(document).on('turbolinks:load', function() {
+            $(document).on('turbolinks:load', () => {
                 ga('set', 'location', window.location.pathname);
                 first ? (first = false) : ga('send', 'pageview');
             });
@@ -42,6 +40,6 @@ function init () {
 
 export default function moduleInit () {
     return {
-        init: init
+        init
     };
 }

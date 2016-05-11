@@ -15,6 +15,29 @@ export const HyperDropdown = React.createClass({
         OnClickOutside
     ],
 
+    propTypes: {
+        current_actor: React.PropTypes.object,
+        defaultAction: React.PropTypes.string,
+        dropdownClass: React.PropTypes.string,
+        fa: React.PropTypes.string,
+        fa_after: React.PropTypes.string,
+        image: React.PropTypes.object,
+        title: React.PropTypes.string,
+        trigger: React.PropTypes.shape({
+            type: React.PropTypes.string
+        }),
+        triggerClass: React.PropTypes.string,
+        triggerTag: React.PropTypes.string,
+        url: React.PropTypes.string
+    },
+
+    getDefaultProps () {
+        return {
+            dropdownClass: '',
+            triggerTag: 'a'
+        };
+    },
+
     getInitialState () {
         return {
             current_actor: this.props.current_actor
@@ -35,7 +58,7 @@ export const HyperDropdown = React.createClass({
 
     render () {
         const { openState, renderLeft, current_actor } = this.state;
-        const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass || ''}`;
+        const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass}`;
 
         let trigger;
         if (this.props.trigger) {
@@ -46,8 +69,8 @@ export const HyperDropdown = React.createClass({
             }
         } else {
             const image_after = image({ fa: this.props.fa_after });
-            const triggerClass = 'dropdown-trigger ' + this.props.triggerClass;
-            const TriggerContainer = this.props.triggerTag || 'a';
+            const triggerClass = `dropdown-trigger ${this.props.triggerClass}`;
+            const TriggerContainer = this.props.triggerTag;
             trigger = (<TriggerContainer href={this.props.defaultAction} className={triggerClass} onClick={this.handleClick} done={this.close} data-turbolinks="false">
                           {image(this.props)}
                           <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
@@ -80,6 +103,20 @@ export const ShareDropdown = React.createClass({
         HyperDropdownMixin,
         OnClickOutside
     ],
+
+    propTypes: {
+        defaultAction: React.PropTypes.string,
+        dropdownClass: React.PropTypes.string,
+        title: React.PropTypes.string,
+        shareUrls: React.PropTypes.object,
+        url: React.PropTypes.string
+    },
+
+    getDefaultProps () {
+        return {
+            dropdownClass: ''
+        };
+    },
 
     getInitialState () {
         return {
@@ -133,7 +170,7 @@ export const ShareDropdown = React.createClass({
     render () {
         const { openState, renderLeft, counts } = this.state;
         const { title, url, shareUrls } = this.props;
-        const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass || ''}`;
+        const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass}`;
 
         const totalSharesCounter = <div className="notification-counter share-counter">{this.totalShares()}</div>;
 
@@ -142,7 +179,7 @@ export const ShareDropdown = React.createClass({
                             onClick={this.handleClick}
                             done={this.close}
                             data-turbolinks="false">
-            <span className="fa fa-share-alt"></span>
+            <span className="fa fa-share-alt" />
             <span className="icon-left">{title}</span>
             {this.totalShares() > 0 && totalSharesCounter}
         </a>);
@@ -194,6 +231,18 @@ window.ShareDropdown = ShareDropdown;
 const ANIMATION_DURATION = 10;
 
 export const DropdownContent = React.createClass({
+    propTypes: {
+        children: React.PropTypes.oneOfType([
+            React.PropTypes.arrayOf(React.PropTypes.node),
+            React.PropTypes.node
+        ]),
+        close: React.PropTypes.func,
+        contentClassName: React.PropTypes.string,
+        currentActor: React.PropTypes.object,
+        renderLeft: React.PropTypes.bool,
+        sections: React.PropTypes.string
+    },
+
     getInitialState () {
         return {
             appearState: ''
@@ -273,6 +322,27 @@ export const DropdownContent = React.createClass({
 window.DropdownContent = DropdownContent;
 
 export const LinkItem = React.createClass({
+    propTypes: {
+        data: React.PropTypes.shape({
+            method: React.PropTypes.string,
+            confirm: React.PropTypes.string,
+            remote: React.PropTypes.string,
+            'turbolinks': React.PropTypes.string,
+            'sort-value': React.PropTypes.string,
+            'filter-value': React.PropTypes.string,
+            'display-setting': React.PropTypes.string
+        }),
+        divider: React.PropTypes.func,
+        done: React.PropTypes.func,
+        className: React.PropTypes.string,
+        fa: React.PropTypes.string,
+        image: React.PropTypes.object,
+        target: React.PropTypes.string,
+        title: React.PropTypes.string,
+        type: React.PropTypes.string,
+        url: React.PropTypes.string
+    },
+
     getInitialState () {
         return {};
     },
@@ -305,7 +375,9 @@ export const LinkItem = React.createClass({
 
         return (<div className={this.props.type}>
             {divider}
-            <a href={this.props.url} target={target} data-remote={remote} data-method={method} data-confirm={confirm} onMouseDownCapture={this.handleMouseDown} data-turbolinks={turbolinks} data-sort-value={sortValue} data-filter-value={filterValue} data-display-setting={displaySetting} className={className}>
+            <a href={this.props.url} target={target} data-remote={remote} data-method={method} data-confirm={confirm}
+               onMouseDownCapture={this.handleMouseDown} data-turbolinks={turbolinks} data-sort-value={sortValue}
+               data-filter-value={filterValue} data-display-setting={displaySetting} className={className}>
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
@@ -315,6 +387,15 @@ export const LinkItem = React.createClass({
 window.LinkItem = LinkItem;
 
 export const FBShareItem = React.createClass({
+    propTypes: {
+        count: React.PropTypes.number,
+        done: React.PropTypes.func,
+        shareUrl: React.PropTypes.string,
+        title: React.PropTypes.string,
+        type: React.PropTypes.string,
+        url: React.PropTypes.string
+    },
+
     handleClick (e) {
         if (typeof FB !== 'undefined') {
             e.preventDefault();
@@ -344,6 +425,19 @@ export const FBShareItem = React.createClass({
 window.FBShareItem = FBShareItem;
 
 export const ActorItem = React.createClass({
+    propTypes: {
+        data: React.PropTypes.shape({
+            'turbolinks': React.PropTypes.string
+        }),
+        done: React.PropTypes.func,
+        divider: React.PropTypes.string,
+        fa: React.PropTypes.string,
+        image: React.PropTypes.object,
+        title: React.PropTypes.string,
+        type: React.PropTypes.string,
+        url: React.PropTypes.string
+    },
+
     getInitialState () {
         return {};
     },
@@ -387,9 +481,10 @@ export const ActorItem = React.createClass({
             turbolinks = this.props.data['turbolinks'];
         }
 
-        return (<div className={'link ' + this.props.type}>
+        return (<div className={`link ${this.props.type}`}>
             {divider}
-            <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow" onTouchEnd={this.handleTap} onClickCapture={this.handleClick} data-turbolinks={turbolinks}>
+            <a href='#' onMouseDownCapture={this.handleMouseDown} rel="nofollow"
+               onTouchEnd={this.handleTap} onClickCapture={this.handleClick} data-turbolinks={turbolinks}>
                 {image(this.props)}
                 <span className={(this.props.image || this.props.fa) ? 'icon-left' : ''}>{this.props.title}</span>
             </a>
@@ -399,6 +494,22 @@ export const ActorItem = React.createClass({
 window.ActorItem = ActorItem;
 
 export const CurrentUserTrigger = React.createClass({
+    propTypes: {
+        handleClick: React.PropTypes.func,
+        handleTap: React.PropTypes.func,
+        profile_photo: React.PropTypes.object,
+        title: React.PropTypes.string,
+        triggerClass: React.PropTypes.string,
+        triggerTag: React.PropTypes.string
+    },
+
+    getDefaultProps () {
+        return {
+            triggerTag: 'div'
+        };
+    },
+
+
     getInitialState () {
         return {
             display_name: this.props.title,
@@ -420,10 +531,15 @@ export const CurrentUserTrigger = React.createClass({
 
     render () {
         const triggerClass = 'dropdown-trigger ' + this.props.triggerClass;
-        const TriggerContainer = this.props.triggerTag || 'div';
+        const TriggerContainer = this.props.triggerTag;
 
-        return (<TriggerContainer className={triggerClass} onClick={this.props.handleClick} onTouchEnd={this.props.handleTap} >
-            {image({ image: { url: this.state.profile_photo.url, title: this.state.profile_photo.title, className: 'profile-picture--navbar' } })}
+        return (<TriggerContainer className={triggerClass}
+                                  onClick={this.props.handleClick}
+                                  onTouchEnd={this.props.handleTap} >
+            {image({ image: {
+                url: this.state.profile_photo.url,
+                title: this.state.profile_photo.title, className: 'profile-picture--navbar' }
+            })}
             <span className="icon-left">{this.state.display_name}</span>
         </TriggerContainer>);
     }

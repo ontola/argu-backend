@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var bulk = require('bulk-require');
-var components = bulk(__dirname, ['./src/app/components/**/*.js']);
+const bulk = require('bulk-require');
+const components = bulk(__dirname, ['./src/app/components/**/*.js']);
 
 function mine () {
     window.React = React;
     window.ReactDOM = ReactDOM;
-    for (var obj in components) {
+    for (const obj in components) {
         if (components.hasOwnProperty(obj)) {
             mineForFunctions(obj);
         }
@@ -15,7 +15,7 @@ function mine () {
 }
 
 function mineForFunctions(obj) {
-    for (var k in obj)
+    for (const k in obj)
     {
         if (typeof obj[k] == 'object' && obj[k] !== null) {
             mineForFunctions(obj[k]);

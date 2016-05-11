@@ -3,17 +3,9 @@
  * @module Vote
  */
 
-import Alert from './Alert';
 import React from 'react';
 import { IntlMixin, FormattedMessage } from 'react-intl';
 import VoteMixin from '../mixins/VoteMixin';
-import {
-    safeCredentials,
-    json,
-    statusSuccess,
-    tryLogin,
-    errorMessageForStatus
-} from '../lib/helpers';
 
 const HUNDRED_PERCENT = 100;
 
@@ -37,13 +29,13 @@ export const VoteButton = React.createClass({
     },
 
     iconForSide () {
-        switch(this.props.side) {
-            case 'pro':
-                return 'thumbs-up';
-            case 'neutral':
-                return 'pause';
-            case 'con':
-                return 'thumbs-down';
+        switch (this.props.side) {
+        case 'pro':
+            return 'thumbs-up';
+        case 'neutral':
+            return 'pause';
+        case 'con':
+            return 'thumbs-down';
         }
     },
 
@@ -56,10 +48,10 @@ export const VoteButton = React.createClass({
     },
 
     render () {
-        let { clickHandler, count, current, side } = this.props;
+        const { clickHandler, count, current, side } = this.props;
 
         let voteCountElem;
-        if (count != 0) {
+        if (count !== 0) {
             voteCountElem = <span className="vote-count">{count}</span>;
         }
 
@@ -81,6 +73,7 @@ export const VoteButtons = React.createClass({
 
     propTypes: {
         actor: React.PropTypes.object,
+        buttonsType: React.PropTypes.string,
         currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
         objectId: React.PropTypes.number,
@@ -96,12 +89,12 @@ export const VoteButtons = React.createClass({
     },
 
     buttonsClassName () {
-        switch(this.props.buttonsType) {
-            case 'subtle':
-                return 'btns-opinion--subtle';
-            case 'big':
-            default:
-                return 'btns-opinion';
+        switch (this.props.buttonsType) {
+        case 'subtle':
+            return 'btns-opinion--subtle';
+        case 'big':
+        default:
+            return 'btns-opinion';
         }
     },
 

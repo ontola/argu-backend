@@ -1,4 +1,6 @@
-import React from 'react';
+/* global Bugsnag */
+import Alert from '../components/Alert';
+
 import {
     safeCredentials,
     json,
@@ -8,7 +10,6 @@ import {
 } from '../lib/helpers';
 
 const VoteMixin = {
-
     createMembership (response) {
         return fetch(response.membership_url, safeCredentials({
             method: 'POST'
@@ -69,7 +70,7 @@ const VoteMixin = {
                     Bugsnag.notifyException(e);
                     throw e;
                 }
-        });
+            });
     }
 };
 

@@ -46,6 +46,12 @@ export const MotionOption = React.createClass({
 window.MotionOption = MotionOption;
 
 export const MotionSelect = React.createClass({
+    propTypes: {
+        display_name: React.PropTypes.string,
+        forum: React.PropTypes.string,
+        image: React.PropTypes.string
+    },
+
     getInitialState () {
         this.currentFetchTimer = 0;
         return {

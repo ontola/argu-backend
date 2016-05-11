@@ -6,7 +6,7 @@ import actorStore from '../stores/actor_store';
 import { VoteButtons, VoteResults } from './Vote';
 import BigGroupResponse from './_big_group_responses';
 import VoteMixin from '../mixins/VoteMixin';
-import { IntlMixin, FormattedMessage } from 'react-intl';
+import { IntlMixin } from 'react-intl';
 
 /**
  * Component that displays current vote options based on whether the user is member of a group.

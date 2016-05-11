@@ -1,4 +1,4 @@
-/* globals NotificationActions */
+/* globals fetch, NotificationActions */
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ReactTransitionGroup from 'react-addons-transition-group';
@@ -63,6 +63,16 @@ export const NotificationDropdown = React.createClass({
         OnClickOutside
     ],
 
+    propTypes: {
+        dropdownClass: React.PropTypes.string
+    },
+
+    getDefaultProps () {
+        return {
+            dropdownClass: ''
+        };
+    },
+
     onMouseEnterFetch () {
         if (!this.state.opened) {
             NotificationActions.fetchNew();
@@ -73,7 +83,7 @@ export const NotificationDropdown = React.createClass({
 
     render () {
         const { openState, renderLeft } = this.state;
-        const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass || ''}`;
+        const dropdownClass = `dropdown ${(openState ? 'dropdown-active' : '')} ${this.props.dropdownClass}`;
 
         const adaptedProps = this.props;
         if (typeof notificationStore.state.notifications.notifications !== 'undefined') {
@@ -100,6 +110,12 @@ export const NotificationDropdown = React.createClass({
 window.NotificationDropdown = NotificationDropdown;
 
 export const NotificationTrigger = React.createClass({
+    propTypes: {
+        handleClick: React.PropTypes.func,
+        handleTap: React.PropTypes.func,
+        sections: React.PropTypes.array
+    },
+
     getInitialState () {
         return {
             unread: this.props.sections[0].unread
@@ -123,7 +139,10 @@ export const NotificationTrigger = React.createClass({
     render () {
         const label = this.state.unread > 0 ? <span className='notification-counter'>{this.state.unread}</span> : null;
 
-        return (<div className="dropdown-trigger navbar-item" rel="nofollow" onClick={this.props.handleClick} onTouchEnd={this.props.handleTap}>
+        return (<div className="dropdown-trigger navbar-item"
+                     rel="nofollow"
+                     onClick={this.props.handleClick}
+                     onTouchEnd={this.props.handleTap}>
             {image({ fa: this.state.unread > 0 ? 'fa-bell' : 'fa-bell' })}
             {label}
         </div>);
@@ -206,6 +225,27 @@ export const Notifications = React.createClass({
 window.Notifications = Notifications;
 
 export const NotificationItem = React.createClass({
+    propTypes: {
+        created_at: React.PropTypes.string,
+        creator: React.PropTypes.shape({
+            avatar: React.PropTypes.object
+        }),
+        data: React.PropTypes.shape({
+            remote: React.PropTypes.string,
+            method: React.PropTypes.string,
+            'turbolinks': React.PropTypes.string,
+            type: React.PropTypes.string
+        }),
+        done: React.PropTypes.func,
+        fa: React.PropTypes.string,
+        id: React.PropTypes.number,
+        image: React.PropTypes.object,
+        read: React.PropTypes.bool,
+        title: React.PropTypes.string,
+        type: React.PropTypes.string,
+        url: React.PropTypes.string
+    },
+
     getInitialState () {
         return {};
     },
@@ -233,7 +273,7 @@ export const NotificationItem = React.createClass({
             turbolinks = this.props.data['turbolinks'];
         }
 
-        return (<li className={'notification-item ' + className}>
+        return (<li className={`notification-item ${className}`}>
             <a href={this.props.url} data-remote={remote} data-method={method} onClick={this.handleClick} data-turbolinks={turbolinks}>
                 <img src={this.props.creator.avatar.url} className="notification-avatar" />
                 <span className='notification-description'>{this.props.title}</span>

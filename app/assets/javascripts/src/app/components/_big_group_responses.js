@@ -13,10 +13,12 @@ export const BigGroupResponse = React.createClass({
     mixins: [IntlMixin],
 
     propTypes: {
-        objectType: React.PropTypes.string,
-        objectId: React.PropTypes.number,
+        actor: React.PropTypes.object,
         currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
+        groups: React.PropTypes.array,
+        objectType: React.PropTypes.string,
+        objectId: React.PropTypes.number,
         percent: React.PropTypes.object
     },
 

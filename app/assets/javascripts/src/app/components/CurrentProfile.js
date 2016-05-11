@@ -3,6 +3,11 @@ import { image } from '../lib/helpers';
 import actorStore from '../stores/actor_store';
 
 export const CurrentProfile = React.createClass({
+    propTypes: {
+        display_name: React.PropTypes.string,
+        profile_photo: React.PropTypes.object
+    },
+
     getInitialState () {
         return {
             display_name: this.props.display_name,
@@ -23,7 +28,6 @@ export const CurrentProfile = React.createClass({
     },
 
     render () {
-
         return (<section className="profile-small inspectlet-sensitive">
             {image({ image: this.state.profile_photo })}
             <div className="info-block">

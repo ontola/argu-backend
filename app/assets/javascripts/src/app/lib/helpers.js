@@ -59,6 +59,11 @@ export function image (props) {
     }
 }
 
+image.propTypes = {
+    image: React.PropTypes.object,
+    fa: React.PropTypes.string
+};
+
 export function _url (url, obj) {
     if (typeof url === 'string' && typeof obj === 'object') {
         const res = decodeURIComponent(url).replace(/{{([^{}]+)}}/, (match, p1) => {

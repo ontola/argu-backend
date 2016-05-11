@@ -69,6 +69,13 @@ export const SingleValue = React.createClass({
 window.SingleValue = SingleValue;
 
 export const NewMembership = React.createClass({
+    propTypes: {
+        display_name: React.PropTypes.string,
+        thing: React.PropTypes.string,
+        things: React.PropTypes.string,
+        image: React.PropTypes.string
+    },
+
     getInitialState () {
         this.currentFetchTimer = 0;
         return {

@@ -1,6 +1,17 @@
 import React from 'react';
 
 const Expander = React.createClass({
+    propTypes: {
+        className: React.PropTypes.string,
+        expanderTarget: React.PropTypes.string,
+        label: React.PropTypes.oneOfType([
+            React.PropTypes.object,
+            React.PropTypes.string
+        ]),
+        showCaret: React.PropTypes.bool,
+        url: React.PropTypes.string
+    },
+
     getInitialState () {
         return {
             openState: false
