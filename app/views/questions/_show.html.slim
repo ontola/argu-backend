@@ -1,8 +1,15 @@
-.box[class=status_classes_for(model) itemscope="itemscope" itemtype="Question"]
+.box[class=status_classes_for(model) data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
+  - if model.cover_photo.present?
+    =contextual_link_to question_path(model) do
+      =render partial: 'application/box_image', locals: {url: model.cover_photo.url(:box), type: 'question'}
+  =render partial: 'questions/info_bar', locals: {question: model}
   section
-    h3[itemprop="headline"]= contextual_link_to model.title, question_path(model), class: 'question-t'
-    p[itemprop="text"]= model.supped_content[0..150] + (model.supped_content[151] ? '...' : '')
-    =contextual_link_to question_path(model), class: 'read-more' do
+    =contextual_link_to question_path(model) do
+      h3.question-t[itemprop="headline"]= model.title
+    .markdown[itemprop="text"]
+      =markdown_to_html(model.content)
+    - if model.motions.present?
+      =render partial: 'questions/motions_list' locals: {question: model}
+    =contextual_link_to question_path(model), class: 'btn-subtle sticky--bottom-right' do
       span.icon-right= t('read_more')
       span.fa.fa-arrow-right
-    .clearfix
