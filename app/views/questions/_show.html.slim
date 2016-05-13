@@ -9,7 +9,7 @@
     .markdown[itemprop="text"]
       =markdown_to_html(model.content)
     - if model.motions.present?
-      =render partial: 'questions/motions_list' locals: {question: model}
+      =render partial: 'questions/motions_list', locals: {question: model}
     =contextual_link_to question_path(model), class: 'btn-subtle sticky--bottom-right' do
       span.icon-right= t('read_more')
       span.fa.fa-arrow-right
