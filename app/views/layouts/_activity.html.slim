@@ -1,4 +1,4 @@
-.activity.box
+.activity
   section.profile-small
     =link_to dual_profile_url(activity.owner) do
       img[src=activity.owner.default_profile_photo.url(:icon)]
@@ -7,6 +7,6 @@
         =markdown_to_html(activity_string_for(activity, true))
       time[datetime=activity.created_at]
         small[style="font-size: 0.8em; color: grey;"]= awesome_time_ago_in_words activity.created_at
-  .test
+  .box
     -if activity.action == 'create' && activity.object != 'vote'
       =render partial: "public_activity/#{activity.key.gsub('.','/')}", locals: {activity: activity}

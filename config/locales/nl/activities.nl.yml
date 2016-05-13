@@ -28,8 +28,5 @@ nl:
       load_more: "Laad meer"
       no_more_artivities: "Geen oudere activiteiten"
       loading: "Bezig.."
-  forums:
-    discover: "Ontdek forums"
-    show_open: "Bekijk de open forums"
-    no_bio: "Geen omschrijving"
-    more_info: "Lees verder."
+    news_feed:
+      title: "Nieuwsoverzicht"

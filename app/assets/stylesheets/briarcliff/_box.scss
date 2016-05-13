@@ -12,6 +12,10 @@
   }
 }
 
+.box-transparant {
+  background-color: initial;
+}
+
 .box h3 a, .box a h1, .box a h2, .box a h3, .box a h4 {
   display: inline-block;
   position: relative;
@@ -317,4 +321,31 @@
 // Used to hide lazy loaded images. Only shows when the user has JS enabled.
 .no-js .b-lazy-hide-container {
   display: none;
+}
+
+.box-list-links {
+  margin-bottom: 1em;
+
+  li a {
+    display: block;
+    padding: 0.3em;
+    color: $g3;
+    @include transition(background-color .2s);
+
+    &:hover, &:focus{
+      background-color: $g0;
+    }
+    &:active {
+      background-color: $g00;
+      @include transition(background-color none);
+    }
+  }
+
+  img {
+    margin-right: .4em;
+    width: 1.3em;
+    height: 1.3em;
+    border-radius: 999px;
+    margin-bottom: -0.3em;
+  }
 }

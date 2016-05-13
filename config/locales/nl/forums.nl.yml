@@ -9,6 +9,10 @@ nl:
     my: "Mijn forums"
     current: "Dit forum"
     back_to: "Ga terug naar forum"
+    discover: "Ontdek forums"
+    show_open: "Bekijk de open forums"
+    no_bio: "Geen omschrijving"
+    more_info: "Lees verder."
     resource_name:
       management: "Forum beheer"
     settings:

@@ -2,25 +2,22 @@
 .col-3.content
   .col-3-1.sidebar
     -if current_user.present?
-      .box
+      .box.box-transparant
         section
-          .profile
-            =link_to profile_path(current_user), class: 'image' do
-              =image_tag current_profile.default_profile_photo.url,  alt: 'Profile picture', size: '45x45', class: 'profilepicture'
-            .info-block
-              p= current_user.display_name
-              =link_to edit_user_path(current_user) do
-                small= t('profiles.edit.title')
+          h2= t('forums.my')
           .group
-            ul
+            ul.box-list-links
               -current_profile.forums.select(:id, :slug, :name, :profile_photo).each do |o|
                 li
                   =link_to forum_path(o)
                     =image_tag o.default_profile_photo.url(:icon), size: '16x16'
                     =o.name
           .group
-            =link_to t('forums.discover'), discover_forums_url
+            =link_to discover_forums_url, class: 'btn--argu' do
+              span.fa.fa-compass
+              span.icon-left=t('forums.show_open')
   .col-3-2.activity-feed
+    h2= t('activities.news_feed.title')
     .activities
       =render_activities(@activities, layout: 'activity')
     .center

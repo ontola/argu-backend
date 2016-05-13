@@ -9,6 +9,10 @@ en:
     my: "My forums"
     current: "This forum"
     back_to: "Go back to forum"
+    discover: "Discover forums"
+    show_open: "Show open forums"
+    no_bio: "No description"
+    more_info: "Read more."
     resource_name:
       management: "forum management"
     settings:

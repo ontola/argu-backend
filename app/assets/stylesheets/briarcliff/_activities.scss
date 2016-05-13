@@ -1,6 +1,24 @@
 @import "variables";
 @import "mixins";
 
+.activity {
+  margin-bottom: 1.4em;
+}
+
 .activity .profile-small{
   height: auto;
+  background: initial;
+  margin-bottom: 0.4em;
+}
+
+.activity .info-block {
+  margin-left: 2.6em;
+}
+
+.activity .box {
+  margin-bottom: 2em;
+}
+
+.activity-feed {
+  margin-top: 1em;
 }
