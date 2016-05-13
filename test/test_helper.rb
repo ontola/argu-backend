@@ -12,6 +12,8 @@ require 'sidekiq/testing'
 require 'minitest/pride'
 require 'webmock/minitest'
 require 'test_mocks'
+require 'minitest/reporters'
+Minitest::Reporters.use!
 
 # To add Capybara feature tests add `gem "minitest-rails-capybara"`
 # to the test group in the Gemfile and uncomment the following:
