@@ -13,7 +13,7 @@ FactoryGirl.define do
     creator { passed_in?(:creator) ? creator : create(:profile) }
 
     association :publisher, factory: :user
-    sequence(:body) { |i| "fg comment body #{i}" }
+    sequence(:body) { |i| "fg comment body #{i}end" }
     is_trashed false
 
     after(:create) do |comment|

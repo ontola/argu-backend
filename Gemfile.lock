@@ -713,7 +713,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   jwt
-  kaminari (~> 0.16.1)
+  kaminari (~> 0.16.3)
   koala (~> 1.11.1)
   libv8 (~> 3.16.14.13)
   license_finder

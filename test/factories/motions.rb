@@ -5,8 +5,8 @@ FactoryGirl.define do
     publisher { passed_in?(:publisher) ? publisher : create(:user) }
     #association :question, factory: :question
 
-    sequence(:title) { |n| "fg motion title #{n}" }
-    sequence(:content) { |i| "fg motion content #{i}" }
+    sequence(:title) { |n| "fg motion title #{n}end" }
+    sequence(:content) { |i| "fg motion content #{i}end" }
     is_trashed false
 
     after :create do |motion|
