@@ -3,12 +3,11 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:freetown) { create(:forum) }
+  define_common_objects :freetown, :user
 
   ####################################
   # As Guest
   ####################################
-  let(:user) { create(:user) }
   let(:user_non_public) { create(:user, profile: create(:profile, is_public: false)) }
   let(:user_hidden_votes) { create(:user, profile: create(:profile, are_votes_public: false)) }
 

@@ -3,14 +3,13 @@ require 'test_helper'
 class VotesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum, name: :freetown) }
+  define_common_objects :freetown!, :user, :member
   let(:motion) { create(:motion, forum: freetown) }
   let!(:vote) { create(:vote, voteable: motion) }
 
   ####################################
   # As Guest
   ####################################
-
   test 'guest shoud not get new' do
     get :new, motion_id: motion
 
@@ -24,8 +23,6 @@ class VotesControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test "should not delete destroy others' vote" do
     sign_in user
 
@@ -51,8 +48,6 @@ class VotesControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
-
   test 'member shoud get new' do
     sign_in member
 

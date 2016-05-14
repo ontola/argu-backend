@@ -3,9 +3,8 @@ require 'test_helper'
 class PagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:page) { create(:page) }
+  define_common_objects :page!, freetown: {page: -> { page_non_public }}
   let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
-  let(:freetown) { create(:forum, name: 'freetown', page: page_non_public) }
   let(:access_token) { create(:access_token, item: freetown) }
 
   let(:motion) do

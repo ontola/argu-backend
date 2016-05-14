@@ -3,8 +3,7 @@ require 'test_helper'
 class Portal::PortalControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:user) { create(:user) }
-  let(:staff) { create(:user, :staff) }
+  define_common_objects :user, :staff
 
   ####################################
   # As User

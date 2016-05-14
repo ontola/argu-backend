@@ -3,7 +3,7 @@ require 'test_helper'
 class NotificationsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown, :user
 
   ####################################
   # As Guest
@@ -18,7 +18,6 @@ class NotificationsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
   let(:user_with_notifications) do
     create(:user,
            :with_notifications)

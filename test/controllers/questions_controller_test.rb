@@ -8,7 +8,8 @@ class QuestionsControllerTest < ActionController::TestCase
     create(:membership, forum: @freetown, profile: @freetown_owner.profile)
   end
 
-  let!(:freetown) { create(:forum, :with_follower, name: 'freetown') }
+  define_common_objects freetown!: [:with_follower]
+  # let!(:freetown) { create(:forum, :with_follower, name: 'freetown') }
   subject do
     q = create(:question, forum: freetown)
     create(:motion, forum: freetown, question: q)

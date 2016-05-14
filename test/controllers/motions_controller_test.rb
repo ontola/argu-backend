@@ -3,7 +3,7 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown, :user, :member, :manager, :owner, :staff
   let!(:follower) { create(:follow, followable: freetown) }
   let(:question) do
     create(:question,
@@ -44,8 +44,6 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should get show' do
     sign_in user
 
@@ -103,8 +101,6 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
-
   test 'member should get new' do
     sign_in member
 
@@ -355,8 +351,6 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Manager
   ####################################
-  let(:manager) { create_manager(freetown) }
-
   test 'manager should delete trash' do
     sign_in manager
     subject # trigger
@@ -386,8 +380,6 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-  let(:owner) { freetown.page.owner.profileable }
-
   test 'owner should delete trash' do
     sign_in owner
     subject # trigger
@@ -417,8 +409,6 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) { create(:user, :staff) }
-
   let(:forum_from) { create(:forum) }
   let(:forum_to) { create(:forum) }
   let(:motion_move) do

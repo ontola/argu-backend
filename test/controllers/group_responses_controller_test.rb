@@ -4,7 +4,7 @@ require 'test_helper'
 class GroupResponsesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:freetown) { create(:forum) }
+  define_common_objects :freetown
   let(:motion) do
     create(:motion,
            forum: freetown)

@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class CommentsTest < ActionDispatch::IntegrationTest
+  define_common_objects :user
   let!(:venice) { create(:forum, :vwal) }
   let(:access_token) { create(:access_token, item: venice) }
   let(:argument) do
@@ -21,10 +22,8 @@ class CommentsTest < ActionDispatch::IntegrationTest
   ####################################
 
   ####################################
-  # As user
+  # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'should post create a comment' do
     nominatim_netherlands
 
@@ -90,7 +89,6 @@ class CommentsTest < ActionDispatch::IntegrationTest
   ####################################
   # As owner
   ####################################
-
   test 'owner should not delete wipe own comment twice affecting counter caches' do
     log_in_user venice.page.owner.profileable
 

@@ -1,16 +1,14 @@
 require 'test_helper'
 
 class MotionsTest < ActionDispatch::IntegrationTest
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown!, :user
   let!(:follower) { create(:follow, followable: freetown) }
 
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should show tutorial only on first post create' do
-    log_in_user user
+    sign_in user
     create(:membership,
            profile: user.profile,
            forum: freetown)

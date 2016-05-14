@@ -31,6 +31,13 @@ module Argu
             arg = arg.to_s
             opts[arg.to_sym] = {preload: true} if arg.chomp!('!')
           end
+          opts.keys.map do |k|
+            key = k.to_s
+            if key.chomp!('!')
+              method = opts[k].is_a?(Array) ? :append : :merge
+              opts[key.to_sym] = opts.delete(k).send(method, preload: true)
+            end
+          end
           [args, opts]
         end
 
@@ -61,6 +68,8 @@ module Argu
         # @param [String] factory_name Name of the factory to be used
         # @param [Array] args Traits to be sent to the factory
         # @param [Hash] opts Parameters for the factory
+        # @option opts [Symbol] :definition_type Use `define_role_object` when set to `:role`
+        # @option opts [Symbol] :preload Will use `let!` when set to `true`
         def define_object(var_name, factory_name, *args, **opts)
           return define_role_object(var_name, **opts) if opts[:definition_type] == :role
           l_opts = opts.deep_dup

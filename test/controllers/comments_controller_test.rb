@@ -3,7 +3,7 @@ require 'test_helper'
 class CommentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum) }
+  define_common_objects :freetown!
   let(:argument) do
     create(:argument,
            forum: freetown,

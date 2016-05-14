@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Page deletion', type: :feature do
-  let(:freetown) { create(:forum, name: 'freetown') }
-  let(:user) { create(:user) }
+  define_common_objects :freetown, :user
   let(:motion) do
     create(:motion,
            creator: forum_page.profile,
@@ -49,7 +48,7 @@ RSpec.feature 'Page deletion', type: :feature do
       resource.update(created_at: 1.day.ago)
     end
 
-    login_as(user, scope: :user)
+    sign_in(user)
     visit pages_user_path(user)
     click_link 'Settings'
     click_link 'Advanced'

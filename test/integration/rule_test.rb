@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class RuleTest < ActionDispatch::IntegrationTest
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown, :member
   let!(:freetown_owner) { create_owner(freetown) }
   let(:freetown_manager) { create_manager(freetown) }
 
@@ -25,7 +25,6 @@ class RuleTest < ActionDispatch::IntegrationTest
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
   let(:member_argument) do
     create(:argument,
            forum: freetown,

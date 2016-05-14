@@ -4,7 +4,7 @@ class StaticPagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
   EXCLUDED_METHODS = [:modern, :how_argu_works, :persist_cookie, :new_discussion]
 
-  let(:user) { create(:user) }
+  define_common_objects :freetown, :user, :staff
 
   ####################################
   # As User
@@ -29,9 +29,6 @@ class StaticPagesControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let!(:freetown) { create(:forum) }
-  let(:staff) { create(:user, :staff) }
-
   test 'should get activity feed' do
     activities = []
     %i(t_question t_motion t_argument t_comment t_vote).each do |trait|

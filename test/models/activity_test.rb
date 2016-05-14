@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class ActivityTest < ActiveSupport::TestCase
-  let(:freetown) { create(:forum) }
+  define_common_objects :freetown
   subject { create(:activity, forum: freetown) }
 
   def test_valid

@@ -8,7 +8,7 @@ class GroupsControllerTest < ActionController::TestCase
     @group = create(:group, forum: @freetown)
   end
 
-  let(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown
   let!(:group) { create(:group, forum: freetown) }
 
   ####################################

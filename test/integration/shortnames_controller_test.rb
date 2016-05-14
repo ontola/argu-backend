@@ -4,7 +4,7 @@ require 'test_helper'
 # Usual controller method tests
 # Additionally tests for shortnames to be routed correctly between forums and dynamic redirects.
 class ShortnamesControllerTest < ActionDispatch::IntegrationTest
-  let!(:freetown) { create(:forum, name: 'freetown', max_shortname_count: 1) }
+  define_common_objects :member, :manager, freetown: {max_shortname_count: 1}
   let(:comment) { create(:comment, forum: freetown) }
   let(:comment_shortname) { create(:shortname, owner: comment) }
   let(:subject) do
@@ -39,8 +39,6 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
-
   test 'member should not post create' do
     sign_in member
     general_create(302, [['Shortname.count', 0]])
@@ -61,8 +59,6 @@ class ShortnamesControllerTest < ActionDispatch::IntegrationTest
   ####################################
   # As Manager
   ####################################
-  let(:manager) { create_manager(freetown) }
-
   test 'manager should post create' do
     sign_in manager
     general_create

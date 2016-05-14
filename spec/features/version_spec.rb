@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Version', type: :feature do
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown!
 
   scenario 'should reload page on version change' do
     visit discover_forums_path

@@ -3,9 +3,7 @@ require 'test_helper'
 class QuestionAnswersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:owner) { create(:user) }
-  let!(:page) { create(:page, owner: owner.profile) }
-  let!(:freetown) { create(:forum, page: page, name: 'freetown') }
+  define_common_objects :user, :manager, :staff, :owner!, :page!, freetown: {page: ->{ page }}
   let(:question) { create(:question, forum: freetown) }
   let(:motion) { create(:motion, forum: freetown) }
 
@@ -37,8 +35,6 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should not get new' do
     sign_in user
 
@@ -66,8 +62,6 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   ####################################
   # As Manager
   ####################################
-  let(:manager) { create_manager(freetown) }
-
   test 'manager should get new' do
     sign_in manager
 
@@ -95,7 +89,6 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-
   test 'owner should get new' do
     sign_in owner
 
@@ -123,8 +116,6 @@ class QuestionAnswersControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) { create(:user, :staff) }
-
   test 'staff should get new' do
     sign_in staff
 

@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Voting', type: :feature do
-  let(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown
   let(:motion) do
     create(:motion,
            forum: freetown)

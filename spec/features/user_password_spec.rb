@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'User Password', type: :feature do
-  let(:user) { create(:user) }
+  define_common_objects :user
   let(:user_omni_both) do
     user = create(:user)
     user.identities.new uid: '111907595807605',

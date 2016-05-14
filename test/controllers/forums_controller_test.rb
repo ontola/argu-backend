@@ -3,7 +3,7 @@ require 'test_helper'
 class ForumsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown
   let!(:holland) { create(:populated_forum, name: 'holland') }
   let!(:cologne) { create(:closed_populated_forum, name: 'cologne') }
   let!(:helsinki) { create(:hidden_populated_forum, name: 'helsinki') }

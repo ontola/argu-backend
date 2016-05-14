@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Pagination', type: :feature do
-  define_common_objects(:freetown, :user)
+  define_common_objects :freetown, :user
 
   let(:overpopulated_motion) do
     m = create(:motion, forum: freetown)

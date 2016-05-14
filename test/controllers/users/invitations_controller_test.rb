@@ -3,8 +3,7 @@ require 'test_helper'
 class Users::InvitationsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:user) { create(:user) }
-  let(:freetown) { create(:forum) }
+  define_common_objects :freetown, :user
 
   ####################################
   # As User
