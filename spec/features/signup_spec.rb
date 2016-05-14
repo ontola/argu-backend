@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.feature 'Signup', type: :feature do
+  define_common_objects :freetown
   let!(:default_forum) { create(:setting, key: 'default_forum', value: 'default') }
   let!(:default) { create(:forum, name: 'default') }
-  let!(:freetown) { create(:forum, name: 'freetown') }
   let!(:motion) { create(:motion, forum: freetown) }
 
   scenario 'should register w/ oauth and preserve vote on non-default forum' do

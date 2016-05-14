@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Collapsible', type: :feature do
   # Names need be different since header_helper#public_forum_items checks for those names
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown
   let!(:motion) { create(:motion, forum: freetown) }
   let!(:argument) do
     create(:argument,
@@ -13,7 +13,7 @@ RSpec.feature 'Collapsible', type: :feature do
            'e visisble **after clicking**')
   end
 
-  scenario 'User expands ' do
+  scenario 'Guest expands ' do
     visit motion_path(motion)
 
     val = page.evaluate_script("document.querySelector('##{argument.identifier}').clientHeight")

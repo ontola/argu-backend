@@ -1,12 +1,9 @@
 require 'rails_helper'
 
 RSpec.feature 'Adam west', type: :feature do
+  define_common_objects :freetown, :user, :member, :manager
   let!(:default_forum) { create(:setting, key: 'default_forum', value: 'default') }
   let!(:default) { create(:forum, name: 'default') }
-  let!(:freetown) do
-    create(:forum,
-           name: 'freetown')
-  end
   let!(:f_rule_c) do
     %w(index? show? create? new?).each do |action|
       create(:rule,
@@ -121,17 +118,15 @@ RSpec.feature 'Adam west', type: :feature do
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   scenario 'user should walk from answer up until forum' do
-    login_as(user, scope: :user)
+    sign_in(user)
 
     walk_up_to_forum user
     expect(page).not_to have_content('New discussion')
   end
 
   scenario 'user should visit forum show' do
-    login_as(user, scope: :user)
+    sign_in(user)
 
     visit forum_path(freetown)
 
@@ -140,7 +135,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'user should not see comment section' do
-    login_as(user, scope: :user)
+    sign_in(user)
 
     visit argument_path(argument)
 
@@ -149,7 +144,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'user should vote on a motion' do
-    login_as(user, scope: :user)
+    sign_in(user)
 
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
@@ -165,7 +160,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'user should post a new motion' do
-    login_as(user, scope: :user)
+    sign_in(user)
 
     create_motion_for_question do
       click_on 'Add to my forums'
@@ -175,17 +170,15 @@ RSpec.feature 'Adam west', type: :feature do
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
-
   scenario 'member should walk from answer up until forum' do
-    login_as(member, scope: :user)
+    sign_in(member)
 
     walk_up_to_forum member
     expect(page).not_to have_content('New discussion')
   end
 
   scenario 'member should visit forum show' do
-    login_as(member, scope: :user)
+    sign_in(member)
 
     visit forum_path(freetown)
 
@@ -194,7 +187,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'member should not see comment section' do
-    login_as(member, scope: :user)
+    sign_in(member)
 
     visit argument_path(argument)
 
@@ -203,7 +196,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'member should not see top comment' do
-    login_as(member, scope: :user)
+    sign_in(member)
 
     visit motion_path(motion)
 
@@ -229,7 +222,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'member should not post create comment' do
-    login_as(member, scope: :user)
+    sign_in(member)
 
     visit argument_path(argument)
 
@@ -240,7 +233,7 @@ RSpec.feature 'Adam west', type: :feature do
   scenario 'member should vote on a motion' do
     nominatim_netherlands
 
-    login_as(member, scope: :user)
+    sign_in(member)
 
     visit motion_path(motion)
     expect(page).to have_content(motion.content)
@@ -255,7 +248,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'member should post a new motion' do
-    login_as(member, scope: :user)
+    sign_in(member)
 
     create_motion_for_question
   end
@@ -263,10 +256,8 @@ RSpec.feature 'Adam west', type: :feature do
   ####################################
   # As Manager
   ####################################
-  let(:manager) { create_manager(freetown) }
-
   scenario 'manager should walk from answer up until forum' do
-    login_as(manager, scope: :user)
+    sign_in(manager)
 
     walk_up_to_forum manager
     expect(page).to have_content('Forum settings')
@@ -275,7 +266,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'manager should visit forum show' do
-    login_as(manager, scope: :user)
+    sign_in(manager)
 
     visit forum_path(freetown)
 
@@ -285,7 +276,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'manager should not see comment section' do
-    login_as(manager, scope: :user)
+    sign_in(manager)
 
     visit argument_path(argument)
 
@@ -294,7 +285,7 @@ RSpec.feature 'Adam west', type: :feature do
   end
 
   scenario 'manager should see motion new button' do
-    login_as(manager, scope: :user)
+    sign_in(manager)
 
     visit question_path(question)
 

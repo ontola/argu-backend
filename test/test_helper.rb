@@ -58,8 +58,7 @@ end
 
 class ActiveSupport::TestCase
   include TestHelper
-  include TestHelperMethods
-  include TestMocks
+  include Argu::Testing
   ActiveRecord::Migration.check_pending!
 
   include FactoryGirl::Syntax::Methods
@@ -74,8 +73,7 @@ end
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
-  include TestMocks
-  include TestHelperMethods
+  include Argu::Testing
 
   def setup_allowed_pages
     Capybara::Webkit.configure do |config|

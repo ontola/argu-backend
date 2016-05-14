@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Account deletion', type: :feature do
-  let(:freetown) { create(:forum, name: 'freetown') }
-  let(:user) { create(:user) }
+  define_common_objects :freetown, :user
   let(:motion) do
     create(:motion,
            creator: user.profile,

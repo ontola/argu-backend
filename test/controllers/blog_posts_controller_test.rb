@@ -4,8 +4,9 @@ class BlogPostsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   let!(:owner) { create(:user) }
-  let!(:page) { create(:page, owner: owner.profile) }
-  let!(:freetown) { create(:forum, :with_follower, page: page, name: 'freetown') }
+  define_common_objects :user, :member, :manager, :staff,
+                        freetown: [:with_follower, page: -> { page }],
+                        page: {owner: -> { owner.profile }}
   let(:project) { create(:project, :published, forum: freetown) }
   let!(:moderator) { create_member(freetown) }
   let!(:subject) do
@@ -142,8 +143,6 @@ class BlogPostsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should not get new' do
     sign_in user
     general_new 200
@@ -188,8 +187,6 @@ class BlogPostsControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
-
   test 'member should not get new' do
     sign_in member
     general_new
@@ -228,7 +225,6 @@ class BlogPostsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-
   test 'owner should get new' do
     sign_in owner
     general_new 200
@@ -268,7 +264,6 @@ class BlogPostsControllerTest < ActionController::TestCase
   ####################################
   # As Manager
   ####################################
-  let(:manager) { create_manager freetown }
   test 'manager should get new' do
     sign_in manager
     general_new 200
@@ -308,8 +303,6 @@ class BlogPostsControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) { create :user, :staff }
-
   test 'staff should get new' do
     sign_in staff
     general_new 200

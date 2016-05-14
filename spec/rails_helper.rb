@@ -39,9 +39,7 @@ Capybara.always_include_port = true
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Capybara::DSL
-  config.include TestHelperMethods
-  config.include RSpecHelpers
-  config.include TestMocks
+  config.include Argu::Testing
 
   Sidekiq::Testing.fake!
 

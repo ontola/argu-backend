@@ -1,16 +1,14 @@
 require 'test_helper'
 
 class AccessTokenSignupTest < ActionDispatch::IntegrationTest
-  let(:freetown) { create(:forum) }
+  define_common_objects :freetown, :member
   let(:project) { create(:project, :published, forum: freetown) }
 
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(project.forum) }
-
   test 'should not post create blog_post' do
-    log_in_user member
+    sign_in member
 
     get project_path(project)
     assert_response 200
@@ -29,7 +27,7 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
   let(:moderator) { create_moderator(project) }
 
   test 'should post create blog_post' do
-    log_in_user moderator
+    sign_in moderator
 
     get project_path(project)
     assert_response 200

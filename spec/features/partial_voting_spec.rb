@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Partial Voting', type: :feature do
-  let(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown, :user, :member
   let(:question) { create(:question, forum: freetown) }
   subject! do
     create(:motion, forum: freetown, question: question)
@@ -54,8 +54,6 @@ RSpec.feature 'Partial Voting', type: :feature do
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   scenario 'User should vote on a motion' do
     sign_in(user)
 
@@ -73,8 +71,6 @@ RSpec.feature 'Partial Voting', type: :feature do
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
-
   scenario 'Member should vote on a motion' do
     sign_in(member)
 

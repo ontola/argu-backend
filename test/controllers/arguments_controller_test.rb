@@ -3,7 +3,7 @@ require 'test_helper'
 class ArgumentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let(:freetown) { create(:forum) }
+  define_common_objects :freetown, :user, :member, :manager, :owner
   let(:motion) do
     create(:motion,
            forum: freetown,
@@ -71,8 +71,6 @@ class ArgumentsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should get show' do
     sign_in user
 
@@ -112,7 +110,6 @@ class ArgumentsControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
   let(:member_argument) do
     create(:argument,
            forum: freetown,
@@ -268,8 +265,6 @@ class ArgumentsControllerTest < ActionController::TestCase
   ####################################
   # As Manager
   ####################################
-  let(:manager) { create_manager(freetown) }
-
   test 'manager should delete trash' do
     sign_in manager
     argument # trigger
@@ -299,8 +294,6 @@ class ArgumentsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-  let(:owner) { freetown.page.owner.profileable }
-
   test 'owner should delete trash' do
     sign_in owner
     argument # trigger

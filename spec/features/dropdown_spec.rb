@@ -2,11 +2,11 @@ require 'rails_helper'
 
 RSpec.feature 'Dropdown', type: :feature do
   # Names need be different since header_helper#public_forum_items checks for those names
-  let!(:holland) { create(:populated_forum, name: 'nederland') }
-  let!(:other) { create(:populated_forum, name: 'houten') }
+  define_common_objects :freetown
+  let!(:other) { create(:forum, name: 'houten') }
 
   scenario 'User switches forum with forum dropdown' do
-    visit forum_path(holland)
+    visit forum_path(freetown)
 
     within('.navbar-forum-selector') do
       click_on 'Forums'

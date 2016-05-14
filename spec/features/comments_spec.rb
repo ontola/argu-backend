@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Comments', type: :feature do
+  define_common_objects :user, member: {forum: :holland}
   let!(:holland) { create(:populated_forum, name: 'holland') }
   let!(:argument) { create(:argument, forum: holland) }
 
@@ -48,8 +49,6 @@ RSpec.feature 'Comments', type: :feature do
   ####################################
   # As user
   ####################################
-  let(:user) { create(:user) }
-
   scenario 'User places a comment' do
     login_as(user, scope: :user)
     visit argument_path(argument)
@@ -70,8 +69,6 @@ RSpec.feature 'Comments', type: :feature do
   ####################################
   # As member
   ####################################
-  let(:member) { create_member(holland) }
-
   scenario 'Member places a comment' do
     login_as(member, scope: :user)
     visit argument_path(argument)

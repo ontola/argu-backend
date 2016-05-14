@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.feature 'Netdem', type: :feature do
-  let!(:freetown) { create(:forum, name: 'freetown') }
+  define_common_objects :freetown
   let!(:netdem) { create(:group, name: 'Netwerk Democratie', forum: freetown) }
   let!(:netdem_member) { create_member(freetown) }
   let!(:netdem_membership) do
