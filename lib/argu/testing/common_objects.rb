@@ -26,8 +26,20 @@ module Argu
           [:page, :page]
         ].freeze
 
+        def bang_to_opt!(*args, **opts)
+          args.reject! do |arg|
+            arg = arg.to_s
+            opts[arg.to_sym] = {preload: true} if arg.chomp!('!')
+          end
+          [args, opts]
+        end
+
         # Shortcut to define the most used objects and roles like `freetown`
+        # @note Declared items should be unique
+        # @param [Array] let
+        # @param [Hash] opts
         def define_common_objects(*let, **opts)
+          let, opts = bang_to_opt!(*let, opts)
           COMMON_OBJECTS
             .select { |var_name, _| mdig?(var_name, let, opts) }
             .map do |var_name, factory_name = nil, *args, **def_opts|
@@ -38,17 +50,22 @@ module Argu
               end
               f_opts = def_opts.merge(merger || a)
               define_object(
-                var_name,
+                var_name.to_s,
                 factory_name,
                 *args,
                 f_opts)
             end
         end
 
+        # @param [String] var_name Name of the declared variable
+        # @param [String] factory_name Name of the factory to be used
+        # @param [Array] args Traits to be sent to the factory
+        # @param [Hash] opts Parameters for the factory
         def define_object(var_name, factory_name, *args, **opts)
           return define_role_object(var_name, **opts) if opts[:definition_type] == :role
           l_opts = opts.deep_dup
-          let var_name do
+          method = l_opts.delete(:preload) ? :let! : :let
+          send(method, var_name) do
             l_opts.each do |k, _v|
               l_opts[k] = instance_exec(&opts[k]) if opts[k].is_a?(Proc)
             end

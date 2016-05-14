@@ -4,14 +4,12 @@ class RegistrationsControllerTest < ActionController::TestCase
   include TestHelper
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum) }
-  let(:user) { create(:user) }
+  define_common_objects :freetown!, :user, :owner
   let(:place) { create(:place) }
 
   ####################################
   # As Guest
   ####################################
-
   test 'should post create' do
     I18n.available_locales.each do |locale|
       cookies[:locale] = locale.to_s
@@ -86,8 +84,6 @@ class RegistrationsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-  let(:owner) { create_owner(freetown) }
-
   test 'owner should not delete destroy' do
     @request.env['devise.mapping'] = Devise.mappings[:user]
     sign_in owner
