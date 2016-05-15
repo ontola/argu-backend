@@ -32,18 +32,28 @@ module Argu
           end
           opts.keys.map do |k|
             key = k.to_s
-            if key.chomp!('!')
-              hash = opts[k].is_a?(Hash) && opts[k] || opts[k].last.is_a?(Hash) && opts[k].last
-              method = hash ? :merge! : :append
-              (hash || opts[k]).send(method, preload: true)
-              opts[key.to_sym] = opts.delete(k)
-            end
+            next unless key.chomp!('!')
+            hash = opts[k].is_a?(Hash) && opts[k] || opts[k].last.is_a?(Hash) && opts[k].last
+            method = hash ? :merge! : :append
+            (hash || opts[k]).send(method, preload: true)
+            opts[key.to_sym] = opts.delete(k)
           end
           [args, opts]
         end
 
         # Shortcut to define the most used factory-based objects and roles like `freetown`.
         # Declare a `common_definitions` method to enable this functionality.
+        #
+        # @example Declare freetown and a member
+        #   define_common_objects :freetown, :member
+        # @example Declare holland and a member
+        #   define_common_objects forum: {name: :holland}, member: :holland
+        # @example Make holland accessible as `holland`
+        #   define_common_objects forum: {var_name: :holland, name: 'holland'}
+        # @example Now make the member a staffer
+        #   define_common_objects forum: {name: :holland}, member: [:holland, :staff]
+        # @example Assign a different owner to the page
+        #   define_Common_objects page: {owner: -> { owner.profile }}
         # @example
         #   The `common_definitions` array should be formatted like the #define_object parameters:
         #   [variable name, factory name, *traits, **opts]
@@ -56,6 +66,7 @@ module Argu
             .select { |var_name, _| mdig?(var_name, let, opts) }
             .map do |var_name, factory_name = nil, *args, **def_opts|
               a = opts.dig(var_name) || {}
+              a = [a] if a.is_a?(Symbol)
               if a.is_a?(Array)
                 def_opts.merge!(a.pop) if a.last.is_a?(Hash)
                 args.concat(a.slice!(0..-1))
@@ -79,7 +90,7 @@ module Argu
         # @option opts [Symbol] :var_name Overrides the declared name
         # @private
         def define_object(var_name, factory_name, *args, **opts)
-          return define_role_object(var_name, **opts) if opts[:definition_type] == :role
+          return define_role_object(var_name, args, **opts) if opts[:definition_type] == :role
           l_opts = opts.deep_dup
           method = l_opts.delete(:preload) ? :let! : :let
           var_name = l_opts.delete(:var_name) || var_name
@@ -91,7 +102,7 @@ module Argu
                 l_opts[k] = send(opts[k])
               end
             end
-            create(*[factory_name, *args, l_opts].flatten)
+            create(*[factory_name, args, l_opts].flatten)
           end
         end
 
@@ -99,10 +110,13 @@ module Argu
         # which are created with the `create_role` methods.
         # @see {Argu::Testing::RoleMethods}
         # @private
-        def define_role_object(var_name, **opts)
+        def define_role_object(var_name, args, **opts)
           let(var_name) do
+            forum = send(args.shift) if args.first && try(args.first).present?
             send("create_#{var_name}".to_sym,
-                 cascaded_forum(var_name, opts))
+                 forum || cascaded_forum(var_name, opts),
+                 nil,
+                 *args)
           end
         end
 

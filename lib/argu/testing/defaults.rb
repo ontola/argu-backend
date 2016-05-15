@@ -24,7 +24,8 @@ module Argu
           [:page, :page],
           [:motion, :motion, forum: :freetown],
           [:question, :question, forum: :freetown],
-          [:argument, :argument, forum: :freetown]
+          [:argument, :argument, forum: :freetown],
+          [:comment, :comment, forum: :freetown]
         ].freeze
 
         def common_definitions

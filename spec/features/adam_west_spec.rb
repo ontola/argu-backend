@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.feature 'Adam west', type: :feature do
   define_common_objects :freetown, :user, :member, :manager, :question!,
-                        motion!: {question: -> { question }}
+                        motion!: {question: -> { question }},
+                        argument!: {motion: -> { motion }},
+                        comment: {commentable: -> { argument }}
   let!(:default_forum) { create(:setting, key: 'default_forum', value: 'default') }
   let!(:default) { create(:forum, name: 'default') }
   let!(:f_rule_c) do
@@ -48,16 +50,6 @@ RSpec.feature 'Adam west', type: :feature do
              context_type: 'Forum',
              context_id: freetown.id)
     end
-  end
-  let!(:argument) do
-    create(:argument,
-           motion: motion,
-           forum: freetown)
-  end
-  let(:comment) do
-    create :comment,
-           commentable: argument,
-           forum: freetown
   end
 
   ####################################

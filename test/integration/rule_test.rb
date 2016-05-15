@@ -1,9 +1,7 @@
 require 'test_helper'
 
 class RuleTest < ActionDispatch::IntegrationTest
-  define_common_objects :freetown, :member
-  let!(:freetown_owner) { create_owner(freetown) }
-  let(:freetown_manager) { create_manager(freetown) }
+  define_common_objects :freetown, :member, :manager, :owner
 
   def log_in_as(user, options = {})
     password    = options[:password]    || 'password'
@@ -39,7 +37,6 @@ class RuleTest < ActionDispatch::IntegrationTest
            trickles: Rule.trickles[:trickles_down],
            message: 'user not allowed')
   end
-
   let(:no_show_managers) do
     create(:rule,
            context: freetown,
@@ -49,7 +46,6 @@ class RuleTest < ActionDispatch::IntegrationTest
            trickles: Rule.trickles[:doesnt_trickle],
            message: 'ask your boss to buy')
   end
-
   let(:no_show_owners) do
     create(:rule,
            context: freetown,
@@ -78,7 +74,7 @@ class RuleTest < ActionDispatch::IntegrationTest
   end
 
   test 'shows appropriate message level to owners' do
-    log_in_as(freetown_manager, scope: :user)
+    sign_in(manager)
     no_show_users
     no_show_managers
 
@@ -94,10 +90,10 @@ class RuleTest < ActionDispatch::IntegrationTest
 
     [
       [member, 'user not allowed'],
-      [freetown_manager, 'ask your boss to buy'],
-      [freetown_owner, 'buy this feature']
+      [manager, 'ask your boss to buy'],
+      [owner, 'buy this feature']
     ].each do |user, message|
-      log_in_as(user, scope: :user)
+      sign_in(user)
       get argument_path(member_argument)
       assert_not_authorized
       assert_equal message, flash[:alert]

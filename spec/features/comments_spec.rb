@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Comments', type: :feature do
-  define_common_objects :user, member: {forum: :holland},
+  define_common_objects :user,
+                        member: :holland,
                         forum: [:populated, var_name: :holland, name: 'holland'],
                         argument!: {forum: :holland}
 

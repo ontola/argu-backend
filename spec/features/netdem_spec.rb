@@ -1,12 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature 'Netdem', type: :feature do
-  define_common_objects :freetown
+  define_common_objects :freetown, :member!
   let!(:netdem) { create(:group, name: 'Netwerk Democratie', forum: freetown) }
-  let!(:netdem_member) { create_member(freetown) }
   let!(:netdem_membership) do
     create(:group_membership,
-           member: netdem_member.profile,
+           member: member.profile,
            group: netdem)
   end
   let!(:netdem_rule_new) do
@@ -31,7 +30,7 @@ RSpec.feature 'Netdem', type: :feature do
 
     click_link('sign_in')
     within('#new_user') do
-      fill_in 'user_email', with: netdem_member.email
+      fill_in 'user_email', with: member.email
       fill_in 'user_password', with: 'password'
       click_button 'log_in'
     end

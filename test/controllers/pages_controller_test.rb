@@ -3,7 +3,8 @@ require 'test_helper'
 class PagesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  define_common_objects :page!, freetown: {page: -> { page_non_public }}
+  define_common_objects :page!, :user, :staff,
+                        freetown: {page: -> { page_non_public }}
   let(:page_non_public) { create(:page, visibility: Page.visibilities[:closed]) }
   let(:access_token) { create(:access_token, item: freetown) }
 
@@ -20,7 +21,6 @@ class PagesControllerTest < ActionController::TestCase
            creator: page.profile,
            publisher: page.owner.profileable)
   end
-
   let(:comment) do
     create(:comment,
            forum: freetown,
@@ -28,14 +28,12 @@ class PagesControllerTest < ActionController::TestCase
            creator: page.profile,
            publisher: page.owner.profileable)
   end
-
   let(:project) do
     create(:project,
            forum: freetown,
            creator: page.profile,
            publisher: page.owner.profileable)
   end
-
   let(:project_motion) do
     create(:motion,
            forum: freetown,
@@ -43,7 +41,6 @@ class PagesControllerTest < ActionController::TestCase
            creator: page.profile,
            publisher: page.owner.profileable)
   end
-
   let(:project_argument) do
     create(:argument,
            forum: freetown,
@@ -86,8 +83,6 @@ class PagesControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should get show' do
     sign_in user
 
@@ -230,8 +225,6 @@ class PagesControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) { create(:user, :staff) }
-
   test 'staff should be able to create a page' do
     sign_in staff
 

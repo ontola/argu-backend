@@ -9,8 +9,7 @@ class QuestionsControllerTest < ActionController::TestCase
            profile: owner.profile)
   end
 
-  define_common_objects :user, :member, :manager, :owner!, freetown!: [:with_follower]
-  # let!(:freetown) { create(:forum, :with_follower, name: 'freetown') }
+  define_common_objects :user, :member, :manager, :owner!, :staff, freetown!: [:with_follower]
   subject do
     q = create(:question, forum: freetown)
     create(:motion, forum: freetown, question: q)
@@ -364,7 +363,6 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) {create(:user, :staff) }
 
   # Currently only staffers can convert items
   test 'should get convert' do

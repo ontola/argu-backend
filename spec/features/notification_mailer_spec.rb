@@ -2,42 +2,32 @@ require 'rails_helper'
 include MailerHelper
 
 RSpec.feature 'Notification mailer' do
+  define_common_objects :freetown!, :argument!,
+                        comment!: {commentable: -> { argument }}
   let(:activity_argument) do
     create(:activity,
            :t_argument,
            trackable: argument,
            forum: argument.forum)
   end
-
   let(:activity_comment) do
     create(:activity,
            :t_comment,
            trackable: comment,
            forum: argument.forum)
   end
-
-  let!(:argument) { create(:argument) }
-
-  let!(:comment) do
-    create(:comment,
-           commentable: argument)
-  end
-
   let!(:follow) do
     create(:follow,
            :t_argument,
            followable: argument,
            follower: follower)
   end
-
   let!(:follower) { create :user, :viewed_notifications_hour_ago, :follows_email }
-
   let(:notification_argument) do
     create(:notification,
            activity: activity_argument,
            user: follower)
   end
-
   let(:notification_comment) do
     create(:notification,
            activity: activity_comment,
