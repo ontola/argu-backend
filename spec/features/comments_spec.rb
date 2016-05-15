@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.feature 'Comments', type: :feature do
-  define_common_objects :user, member: {forum: :holland}
-  let!(:holland) { create(:populated_forum, name: 'holland') }
-  let!(:argument) { create(:argument, forum: holland) }
+  define_common_objects :user, member: {forum: :holland},
+                        forum: [:populated, var_name: :holland, name: 'holland'],
+                        argument!: {forum: :holland}
 
   ####################################
-  # As guest
+  # As Guest
   ####################################
   scenario 'Guest places a comment and signs up' do
     nominatim_netherlands
@@ -47,10 +47,10 @@ RSpec.feature 'Comments', type: :feature do
   end
 
   ####################################
-  # As user
+  # As User
   ####################################
   scenario 'User places a comment' do
-    login_as(user, scope: :user)
+    sign_in(user)
     visit argument_path(argument)
 
     comment_args = attributes_for(:comment)
@@ -67,10 +67,10 @@ RSpec.feature 'Comments', type: :feature do
   end
 
   ####################################
-  # As member
+  # As Member
   ####################################
   scenario 'Member places a comment' do
-    login_as(member, scope: :user)
+    sign_in(member)
     visit argument_path(argument)
 
     comment_args = attributes_for(:comment)

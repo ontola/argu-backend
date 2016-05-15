@@ -13,8 +13,7 @@ FactoryGirl.define do
       forum.shortname.shortname = forum.name
     end
 
-    # Holland (the default)
-    factory :populated_forum do
+    trait :populated do
       motion_count 6
 
       after(:create) do |forum|
@@ -26,7 +25,10 @@ FactoryGirl.define do
         Setting.set('user_cap', -1) unless cap.present?
         forum.page.owner.profileable.follow forum
       end
+    end
 
+    # Holland (the default)
+    factory :populated_forum, traits: [:populated] do
       factory :populated_forum_vwal, traits: [:vwal]
       factory :closed_populated_forum, traits: [:closed]
       factory :closed_populated_forum_vwal, traits: [:closed, :vwal]

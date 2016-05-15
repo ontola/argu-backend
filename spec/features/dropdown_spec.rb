@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.feature 'Dropdown', type: :feature do
   # Names need be different since header_helper#public_forum_items checks for those names
-  define_common_objects :freetown
-  let!(:other) { create(:forum, name: 'houten') }
+  define_common_objects :freetown,
+                        forum!: {var_name: :other, name: 'houten'}
 
   scenario 'User switches forum with forum dropdown' do
     visit forum_path(freetown)

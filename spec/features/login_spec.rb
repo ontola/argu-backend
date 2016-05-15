@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Login', type: :feature do
-  let!(:holland) { create(:populated_forum, name: 'holland') }
-  let!(:holland_member) { create_member(holland) }
+  define_common_objects forum!: [:populated, var_name: :holland, name: 'holland'],
+                        member!: {forum: :holland}
   let(:user) { create(:user_with_votes) }
 
   scenario 'User logs in from a Forum' do
@@ -10,7 +10,7 @@ RSpec.feature 'Login', type: :feature do
     expect(page).to have_current_path forum_path('holland')
     click_link('sign_in')
     within('#new_user') do
-      fill_in 'user_email', with: holland_member.email
+      fill_in 'user_email', with: member.email
       fill_in 'user_password', with: 'password'
       click_button 'log_in'
     end
@@ -24,7 +24,7 @@ RSpec.feature 'Login', type: :feature do
     expect(page).to have_content('Neutral')
     click_link('sign_in')
     within('#new_user') do
-      fill_in 'user_email', with: holland_member.email
+      fill_in 'user_email', with: member.email
       fill_in 'user_password', with: 'password'
       click_button 'log_in'
     end
