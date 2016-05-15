@@ -3,31 +3,22 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  define_common_objects :freetown, :user, :member, :manager, :owner, :staff
+  define_common_objects :freetown, :user, :member, :manager, :owner, :staff,
+                        motion: [:with_arguments, :with_group_responses],
+                        question: {creator: -> { create(:profile_direct_email) }}
   let!(:follower) { create(:follow, followable: freetown) }
-  let(:question) do
-    create(:question,
-           forum: freetown,
-           creator: create(:profile_direct_email))
-  end
-  let(:subject) do
-    create(:motion,
-           :with_arguments,
-           :with_group_responses,
-           forum: freetown)
-  end
 
   ####################################
   # As Guest
   ####################################
   test 'guest should get show when not logged in' do
-    get :show, id: subject
+    get :show, id: motion
 
     assert_response 200
     assert_not_nil assigns(:motion)
     assert_not_nil assigns(:vote)
 
-    assert subject.arguments.where(is_trashed: true).count > 0,
+    assert motion.arguments.where(is_trashed: true).count > 0,
            'No trashed arguments to test on'
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) },
                'Trashed arguments are visible'
@@ -36,9 +27,9 @@ class MotionsControllerTest < ActionController::TestCase
   end
 
   test 'guest should not get edit when not logged in' do
-    get :edit, id: subject
+    get :edit, id: motion
 
-    assert_redirected_to new_user_session_path(r: edit_motion_path(subject))
+    assert_redirected_to new_user_session_path(r: edit_motion_path(motion))
   end
 
   ####################################
@@ -47,13 +38,13 @@ class MotionsControllerTest < ActionController::TestCase
   test 'user should get show' do
     sign_in user
 
-    get :show, id: subject
+    get :show, id: motion
 
     assert_response 200
     assert_not_nil assigns(:motion)
     assert_not_nil assigns(:vote)
 
-    assert subject.arguments.any?(&:is_trashed?),
+    assert motion.arguments.any?(&:is_trashed?),
            'No trashed arguments to test'
     assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) },
                'Trashed arguments are visible'
@@ -71,31 +62,31 @@ class MotionsControllerTest < ActionController::TestCase
   test 'user should not get convert' do
     sign_in user
 
-    get :convert, motion_id: subject
+    get :convert, motion_id: motion
 
     assert_not_authorized
-    assert_redirected_to subject.forum
+    assert_redirected_to motion.forum
   end
 
   test 'user should not put convert' do
     sign_in user
 
-    put :convert, motion_id: subject
-    assert_redirected_to subject.forum
+    put :convert, motion_id: motion
+    assert_redirected_to motion.forum
   end
 
   test 'user should not get move' do
     sign_in user
 
-    get :move, motion_id: subject
-    assert_redirected_to subject.forum
+    get :move, motion_id: motion
+    assert_redirected_to motion.forum
   end
 
   test 'user should not put move' do
     sign_in user
 
-    put :move, motion_id: subject
-    assert_redirected_to subject.forum
+    put :move, motion_id: motion
+    assert_redirected_to motion.forum
   end
 
   ####################################
@@ -167,13 +158,13 @@ class MotionsControllerTest < ActionController::TestCase
     sign_in member
 
     put :update,
-        id: subject,
+        id: motion,
         motion: {
           title: 'New title',
           content: 'new contents'
         }
 
-    assert_redirected_to subject.forum
+    assert_redirected_to motion.forum
     assert_not_authorized
   end
 
@@ -353,12 +344,12 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   test 'manager should delete trash' do
     sign_in manager
-    subject # trigger
+    motion # trigger
 
     assert_differences([['Motion.trashed(false).count', -1],
                         ['Motion.trashed_only.count', 1]]) do
       delete :trash,
-             id: subject
+             id: motion
     end
 
     assert_redirected_to freetown
@@ -366,12 +357,12 @@ class MotionsControllerTest < ActionController::TestCase
 
   test 'manager should delete destroy' do
     sign_in manager
-    subject.trash
+    motion.trash
 
     assert_differences([['Motion.trashed(false).count', 0],
                         ['Motion.trashed(true).count', -1]]) do
       delete :destroy,
-             id: subject
+             id: motion
     end
 
     assert_redirected_to freetown
@@ -382,12 +373,12 @@ class MotionsControllerTest < ActionController::TestCase
   ####################################
   test 'owner should delete trash' do
     sign_in owner
-    subject # trigger
+    motion # trigger
 
     assert_differences([['Motion.trashed(false).count', -1],
                         ['Motion.trashed_only.count', 1]]) do
       delete :trash,
-             id: subject
+             id: motion
     end
 
     assert_redirected_to freetown
@@ -395,12 +386,12 @@ class MotionsControllerTest < ActionController::TestCase
 
   test 'owner should delete destroy' do
     sign_in owner
-    subject.trash
+    motion.trash
 
     assert_differences([['Motion.trashed(false).count', 0],
                         ['Motion.trashed(true).count', -1]]) do
       delete :destroy,
-             id: subject
+             id: motion
     end
 
     assert_redirected_to freetown
@@ -422,7 +413,7 @@ class MotionsControllerTest < ActionController::TestCase
   test 'staff should get convert' do
     sign_in staff
 
-    get :convert, motion_id: subject
+    get :convert, motion_id: motion
     assert_response 200
   end
 
@@ -463,7 +454,7 @@ class MotionsControllerTest < ActionController::TestCase
   test 'staff should get move' do
     sign_in staff
 
-    get :move, motion_id: subject
+    get :move, motion_id: motion
     assert_response 200
   end
 

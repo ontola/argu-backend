@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'testing/assertions'
+require 'testing/object_definitions'
 require 'testing/common_objects'
 require 'testing/r_spec_helpers'
 require 'testing/role_methods'
@@ -11,6 +12,7 @@ module Argu
   module Testing
     def self.included(base)
       base.send(:include, Assertions)
+      base.send(:include, ObjectDefinitions)
       base.send(:include, CommonObjects)
       base.send(:include, RSpecHelpers)
       base.send(:include, RoleMethods)

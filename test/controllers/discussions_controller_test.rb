@@ -3,7 +3,7 @@ require 'test_helper'
 class DiscussionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  define_common_objects :freetown!
+  define_common_objects :freetown!, :user
   let!(:project) { create(:project, :published, forum: freetown) }
   let!(:unpublished_project) { create(:project, forum: freetown) }
   let!(:helsinki) do
@@ -71,8 +71,6 @@ class DiscussionsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should get new' do
     sign_in user
 

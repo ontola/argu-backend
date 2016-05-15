@@ -3,11 +3,7 @@ require 'test_helper'
 class FollowsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  define_common_objects :freetown
-  let(:motion) do
-    create :motion,
-           forum: freetown
-  end
+  define_common_objects :freetown, :user, :member, :motion
 
   ####################################
   # As Guest
@@ -33,8 +29,6 @@ class FollowsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should post create' do
     motion_referer
     sign_in user
@@ -60,8 +54,6 @@ class FollowsControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
-
   test 'member should post create' do
     motion_referer
     sign_in member

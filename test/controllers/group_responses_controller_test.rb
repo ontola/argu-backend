@@ -4,11 +4,7 @@ require 'test_helper'
 class GroupResponsesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  define_common_objects :freetown
-  let(:motion) do
-    create(:motion,
-           forum: freetown)
-  end
+  define_common_objects :freetown, :user, :member, :manager, :owner, :staff, :motion
   let(:group) do
     create(:group,
            :discussion,
@@ -45,8 +41,6 @@ class GroupResponsesControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should not get new' do
     sign_in user
 
@@ -95,8 +89,6 @@ class GroupResponsesControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
-
   test 'member should not get new' do
     sign_in member
 
@@ -284,8 +276,6 @@ class GroupResponsesControllerTest < ActionController::TestCase
   ####################################
   # As Manager
   ####################################
-  let(:manager) { create_manager(freetown) }
-
   test "manager should delete destroy others' response" do
     sign_in manager
 
@@ -301,8 +291,6 @@ class GroupResponsesControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-  let(:owner) { create_owner(freetown) }
-
   test "owner should delete destroy others' response" do
     sign_in owner
 
@@ -318,8 +306,6 @@ class GroupResponsesControllerTest < ActionController::TestCase
   ####################################
   # As Staff
   ####################################
-  let(:staff) { create(:user, :staff) }
-
   test "staff should delete destroy others' response" do
     sign_in staff
 

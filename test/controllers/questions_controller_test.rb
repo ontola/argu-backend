@@ -4,11 +4,12 @@ class QuestionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   setup do
-    @freetown, @freetown_owner = create_forum_owner_pair
-    create(:membership, forum: @freetown, profile: @freetown_owner.profile)
+    create(:membership,
+           forum: freetown,
+           profile: owner.profile)
   end
 
-  define_common_objects freetown!: [:with_follower]
+  define_common_objects :user, :member, :manager, :owner!, freetown!: [:with_follower]
   # let!(:freetown) { create(:forum, :with_follower, name: 'freetown') }
   subject do
     q = create(:question, forum: freetown)
@@ -55,8 +56,6 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should get show' do
     sign_in user
 
@@ -99,7 +98,6 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
   let(:member_question) { create(:question, forum: freetown, creator: member.profile) }
 
   test 'member should get new' do
@@ -284,8 +282,6 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   # As Manager
   ####################################
-  let(:manager) { create_manager(freetown) }
-
   test 'manager should delete trash' do
     sign_in manager
     subject
@@ -317,14 +313,14 @@ class QuestionsControllerTest < ActionController::TestCase
   ####################################
   let(:page_question) do
     create(:question,
-           forum: @freetown,
-           creator: @freetown_owner.profile)
+           forum: freetown,
+           creator: owner.profile)
   end
-  let(:owner_forum_question) { create(:question, forum: @freetown) }
+  let(:owner_forum_question) { create(:question, forum: freetown) }
 
   test 'owner should put update on page owner own question' do
-    sign_in @freetown_owner
-    @controller.instance_variable_set :@current_profile, @freetown.page.profile
+    sign_in owner
+    @controller.instance_variable_set :@current_profile, freetown.page.profile
 
     put :update,
         id: page_question,
@@ -340,7 +336,7 @@ class QuestionsControllerTest < ActionController::TestCase
   end
 
   test 'owner should delete trash' do
-    sign_in @freetown_owner
+    sign_in owner
     owner_forum_question # trigger
 
     assert_differences([['Question.trashed(false).count', -1],
@@ -349,11 +345,11 @@ class QuestionsControllerTest < ActionController::TestCase
              id: owner_forum_question
     end
 
-    assert_redirected_to @freetown
+    assert_redirected_to freetown
   end
 
   test 'owner should delete destroy' do
-    sign_in @freetown_owner
+    sign_in owner
     owner_forum_question.trash
 
     assert_differences([['Question.trashed(false).count', 0],
@@ -362,7 +358,7 @@ class QuestionsControllerTest < ActionController::TestCase
              id: owner_forum_question
     end
 
-    assert_redirected_to @freetown
+    assert_redirected_to freetown
   end
 
   ####################################

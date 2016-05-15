@@ -1,16 +1,11 @@
 require 'rails_helper'
 
 RSpec.feature 'Voting', type: :feature do
-  define_common_objects :freetown
-  let(:motion) do
-    create(:motion,
-           forum: freetown)
-  end
+  define_common_objects :freetown, :user, :member, :motion
 
   ####################################
   # As Guest
   ####################################
-
   scenario 'Guest should vote on a motion' do
     nominatim_netherlands
 
@@ -54,8 +49,6 @@ RSpec.feature 'Voting', type: :feature do
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   scenario 'User should vote on a motion' do
     login_as(user)
 
@@ -73,8 +66,6 @@ RSpec.feature 'Voting', type: :feature do
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown) }
-
   scenario 'Member should vote on a motion' do
     login_as(member, scope: :user)
 

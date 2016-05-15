@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.feature 'Collapsible', type: :feature do
   # Names need be different since header_helper#public_forum_items checks for those names
-  define_common_objects :freetown
-  let!(:motion) { create(:motion, forum: freetown) }
+  define_common_objects :freetown, :motion!
   let!(:argument) do
     create(:argument,
            motion: motion,

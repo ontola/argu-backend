@@ -3,7 +3,7 @@ require 'test_helper'
 class ForumsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  define_common_objects :freetown
+  define_common_objects :freetown, :user
   let!(:holland) { create(:populated_forum, name: 'holland') }
   let!(:cologne) { create(:closed_populated_forum, name: 'cologne') }
   let!(:helsinki) { create(:hidden_populated_forum, name: 'helsinki') }
@@ -34,8 +34,6 @@ class ForumsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'user should get show' do
     # Trigger creation of items
     holland_nested_project_items

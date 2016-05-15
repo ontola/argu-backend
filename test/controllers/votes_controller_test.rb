@@ -3,8 +3,8 @@ require 'test_helper'
 class VotesControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  define_common_objects :freetown!, :user, :member
-  let(:motion) { create(:motion, forum: freetown) }
+  define_common_objects :freetown!, :user, :member,
+                        motion: {forum: :freetown}
   let!(:vote) { create(:vote, voteable: motion) }
 
   ####################################
@@ -26,7 +26,6 @@ class VotesControllerTest < ActionController::TestCase
   test "should not delete destroy others' vote" do
     sign_in user
 
-    vote # Trigger
     assert_no_difference('Vote.count') do
       delete :destroy, id: vote.id, format: :json
     end
@@ -38,7 +37,7 @@ class VotesControllerTest < ActionController::TestCase
     sign_in user
 
     post :create,
-         motion_id: motion,
+         motion_id: motion.id,
          for: :pro,
          format: :json
 

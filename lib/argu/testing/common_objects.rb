@@ -15,17 +15,6 @@ module Argu
       end
 
       module ClassMethods
-        COMMON_OBJECTS = [
-          [:var_name, :factory_name, :def_opts],
-          [:freetown, :forum, {name: 'freetown'}],
-          [:user, :user],
-          [:staff, :user, :staff],
-          [:member, definition_type: :role],
-          [:manager, definition_type: :role],
-          [:owner, definition_type: :role],
-          [:page, :page]
-        ].freeze
-
         def bang_to_opt!(*args, **opts)
           args.reject! do |arg|
             arg = arg.to_s
@@ -47,15 +36,15 @@ module Argu
         # @param [Hash] opts
         def define_common_objects(*let, **opts)
           let, opts = bang_to_opt!(*let, opts)
-          COMMON_OBJECTS
+          common_definitions
             .select { |var_name, _| mdig?(var_name, let, opts) }
             .map do |var_name, factory_name = nil, *args, **def_opts|
               a = opts.dig(var_name) || {}
-              if a.is_a?(Array) && a.last.is_a?(Hash)
-                merger = a.pop
-                args.concat(a)
+              if a.is_a?(Array)
+                def_opts.merge!(a.pop) if a.last.is_a?(Hash)
+                args.concat(a.slice!(0..-1))
               end
-              f_opts = def_opts.merge(merger || a)
+              f_opts = def_opts.merge(a.presence || {})
               define_object(
                 var_name.to_s,
                 factory_name,
@@ -75,8 +64,12 @@ module Argu
           l_opts = opts.deep_dup
           method = l_opts.delete(:preload) ? :let! : :let
           send(method, var_name) do
-            l_opts.each do |k, _v|
-              l_opts[k] = instance_exec(&opts[k]) if opts[k].is_a?(Proc)
+            opts.each do |k, v|
+              if opts[k].is_a?(Proc)
+                l_opts[k] = instance_exec(&opts[k])
+              elsif k == :forum && v.is_a?(Symbol)
+                l_opts[k] = send(opts[k])
+              end
             end
             create(*[factory_name, *args, l_opts].flatten)
           end

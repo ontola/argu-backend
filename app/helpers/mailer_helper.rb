@@ -18,16 +18,18 @@ module MailerHelper
   end
 
   def notification_subject(notification)
-    if notification.renderable?
-      opts = {
-        title: notification.resource.display_name,
-        poster: notification.resource.creator.display_name,
-        parent_title: notification.activity.recipient.display_name
-      }
-      opts[:pro] = I18n.t(notification.resource.pro ? 'pro' : 'con') if notification.resource.respond_to?(:pro)
-      I18n.t("mailer.user_mailer.#{action_path(notification)}.subject", opts)
-    else
-      I18n.t('mailer.notifications_mailer.subject')
+    I18n.with_locale(notification.user.try(:language)) do
+      if notification.renderable?
+        opts = {
+          title: notification.resource.display_name,
+          poster: notification.resource.creator.display_name,
+          parent_title: notification.activity.recipient.display_name
+        }
+        opts[:pro] = I18n.t(notification.resource.pro ? 'pro' : 'con') if notification.resource.respond_to?(:pro)
+        I18n.t("mailer.user_mailer.#{action_path(notification)}.subject", opts)
+      else
+        I18n.t('mailer.notifications_mailer.subject')
+      end
     end
   end
 end

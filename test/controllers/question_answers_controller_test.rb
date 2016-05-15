@@ -3,9 +3,8 @@ require 'test_helper'
 class QuestionAnswersControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  define_common_objects :user, :manager, :staff, :owner!, :page!, freetown: {page: ->{ page }}
-  let(:question) { create(:question, forum: freetown) }
-  let(:motion) { create(:motion, forum: freetown) }
+  define_common_objects :user, :manager, :staff, :owner!, :page!, :motion, :question,
+                        freetown: {page: -> { page }}
 
   ####################################
   # As Guest

@@ -2,9 +2,8 @@
 require 'rails_helper'
 
 RSpec.feature 'Shortname', type: :feature do
-  define_common_objects :manager,
+  define_common_objects :manager, :motion,
                         freetown: {name: 'freetown', max_shortname_count: 3}
-  let(:motion) { create(:motion, forum: freetown) }
   let(:upcase_page) do
     create(:page,
            shortname: build(:shortname,

@@ -2,8 +2,9 @@ require 'rails_helper'
 
 RSpec.describe ApplicationController, type: :controller do
   let!(:holland) { create(:populated_forum, name: 'holland') }
-  let(:motion) { create(:motion, forum: holland) }
-  let(:user) { create_member(holland) }
+  define_common_objects :user,
+                        member: {forum: :holland},
+                        motion: {forum: :holland}
 
   describe '#create_activity' do
     it 'creates an activity' do
@@ -11,7 +12,7 @@ RSpec.describe ApplicationController, type: :controller do
         controller.create_activity(motion,
                                    action: :create,
                                    recipient: holland,
-                                   owner: user.profile,
+                                   owner: member.profile,
                                    forum: holland)
       end.to change { Activity.count }
     end

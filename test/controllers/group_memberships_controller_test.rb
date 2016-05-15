@@ -3,6 +3,7 @@ require 'test_helper'
 class GroupMembershipsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
+  define_common_objects :user
   setup do
     @holland, @holland_owner = create_forum_owner_pair(type: :populated_forum)
     @group = create(:group, forum: @holland)
@@ -14,8 +15,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   ####################################
   # As User
   ####################################
-  let(:user) { create(:user) }
-
   test 'should not show new' do
     sign_in user
 
@@ -54,7 +53,6 @@ class GroupMembershipsControllerTest < ActionController::TestCase
   ####################################
   # As Owner
   ####################################
-
   test 'should show new' do
     sign_in @holland_owner
 

@@ -1,14 +1,13 @@
 require 'test_helper'
 
 class FlowControllerTest < ActionDispatch::IntegrationTest
-  define_common_objects :freetown!, :user
-  let(:subject) { create(:motion, forum: freetown) }
+  define_common_objects :freetown!, :user, :motion
 
   ####################################
   # As Guest
   ####################################
   test 'guest should get motion/flow' do
-    get motion_flow_path(subject),
+    get motion_flow_path(motion),
         format: :json
 
     assert_response 200
@@ -20,8 +19,8 @@ class FlowControllerTest < ActionDispatch::IntegrationTest
   test 'user should get motion/flow' do
     #sign_in user
 
-    get motion_flow_path(subject),
-        motion_id: subject,
+    get motion_flow_path(motion),
+        motion_id: motion,
         format: :json
 
     assert_response 200

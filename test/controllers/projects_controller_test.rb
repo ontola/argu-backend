@@ -20,87 +20,6 @@ class ProjectsControllerTest < ActionController::TestCase
   let(:unpublished) { create(:project, :unpublished, forum: freetown) }
 
   ####################################
-  # Guest, User, Member share features
-  ####################################
-
-  def general_new(response = 302)
-    get :new,
-        forum_id: freetown
-
-    assert_response response
-  end
-
-  def general_show(response = 200, record = subject)
-    get :show,
-        id: record
-
-    assert_response response
-  end
-
-  def general_create(response = 302, differences = [['Project.count', 0],
-                                                    ['Stepup.count', 0],
-                                                    ['Phase.count', 0],
-                                                    ['Activity.count', 0]])
-    assert_differences(differences) do
-      post :create,
-           forum_id: freetown,
-           project: attributes_for(:project,
-                                   stepups_attributes: {'12321' => {moderator: moderator.url}},
-                                   phases_attributes: {'12321' => attributes_for(:phase)})
-    end
-
-    assert_response response
-  end
-
-  def general_edit(response = 302)
-    get :edit,
-        id: subject
-
-    assert_response response
-  end
-
-  def general_update(response = 302, changed = false)
-    ch_method = method(changed ? :assert_not_equal : :assert_equal)
-    assert_difference('Activity.count', changed ? 1 : 0) do
-      patch :update,
-            id: subject,
-            project: attributes_for(:project)
-    end
-    assert_response response
-    if assigns(:update_service).try(:resource).present?
-      ch_method.call subject
-                       .updated_at
-                       .utc
-                       .iso8601(6),
-                     assigns(:update_service)
-                       .try(:resource)
-                       .try(:updated_at)
-                       .try(:utc)
-                       .try(:iso8601, 6)
-    else
-      assert false, "can't be changed" if changed
-    end
-  end
-
-  def general_trash(response = 302, difference = 0)
-    assert_differences([['Project.trashed_only.count', difference],['Activity.count', difference.abs]]) do
-      delete :trash,
-             id: subject
-    end
-
-    assert_response response
-  end
-
-  def general_destroy(response = 302, difference = 0)
-    assert_differences([['Project.count', difference],['Activity.count', difference.abs]]) do
-      delete :destroy,
-             id: trashed_subject
-    end
-
-    assert_response response
-  end
-
-  ####################################
   # As Guest
   ####################################
   test 'guest should not get new' do
@@ -403,5 +322,88 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'staff should delete destroy' do
     sign_in staff
     general_destroy 302, -1
+  end
+
+  private
+
+  ####################################
+  # Guest, User, Member share features
+  ####################################
+
+  def general_new(response = 302)
+    get :new,
+        forum_id: freetown
+
+    assert_response response
+  end
+
+  def general_show(response = 200, record = subject)
+    get :show,
+        id: record
+
+    assert_response response
+  end
+
+  def general_create(response = 302, differences = [['Project.count', 0],
+                                                    ['Stepup.count', 0],
+                                                    ['Phase.count', 0],
+                                                    ['Activity.count', 0]])
+    assert_differences(differences) do
+      post :create,
+           forum_id: freetown,
+           project: attributes_for(:project,
+                                   stepups_attributes: {'12321' => {moderator: moderator.url}},
+                                   phases_attributes: {'12321' => attributes_for(:phase)})
+    end
+
+    assert_response response
+  end
+
+  def general_edit(response = 302)
+    get :edit,
+        id: subject
+
+    assert_response response
+  end
+
+  def general_update(response = 302, changed = false)
+    ch_method = method(changed ? :assert_not_equal : :assert_equal)
+    assert_difference('Activity.count', changed ? 1 : 0) do
+      patch :update,
+            id: subject,
+            project: attributes_for(:project)
+    end
+    assert_response response
+    if assigns(:update_service).try(:resource).present?
+      ch_method.call subject
+                       .updated_at
+                       .utc
+                       .iso8601(6),
+                     assigns(:update_service)
+                       .try(:resource)
+                       .try(:updated_at)
+                       .try(:utc)
+                       .try(:iso8601, 6)
+    else
+      assert false, "can't be changed" if changed
+    end
+  end
+
+  def general_trash(response = 302, difference = 0)
+    assert_differences([['Project.trashed_only.count', difference],['Activity.count', difference.abs]]) do
+      delete :trash,
+             id: subject
+    end
+
+    assert_response response
+  end
+
+  def general_destroy(response = 302, difference = 0)
+    assert_differences([['Project.count', difference],['Activity.count', difference.abs]]) do
+      delete :destroy,
+             id: trashed_subject
+    end
+
+    assert_response response
   end
 end
