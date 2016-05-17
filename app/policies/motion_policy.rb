@@ -50,7 +50,7 @@ class MotionPolicy < RestrictivePolicy
 
   def destroy?
     user && (record.creator_id == user.profile.id &&
-             record.arguments.length < 2 or 15.minutes.ago < record.created_at) ||
+             (record.arguments.length < 2 || 15.minutes.ago < record.created_at)) ||
       is_manager? ||
       is_owner? ||
       super
