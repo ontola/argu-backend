@@ -70,7 +70,7 @@ en:
     call_to_action:
       title: "Do you have a good idea?"
       body: "Do you have a good idea and do you want to convince others?"
-      action: "Share your %{type}!"
+      action: "Share your %{type}"
 
     #motion types
     type_social: "Societal"

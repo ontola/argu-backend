@@ -70,7 +70,7 @@ nl:
     call_to_action:
       title: "Heb jij een goed idee?"
       body: "Heb jij een goed idee en wil je anderen daarvan overtuigen?"
-      action: "Deel jouw %{type}."
+      action: "Deel jouw %{type}"
 
     #motion types
     type_social: "Maatschappelijk"

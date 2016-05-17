@@ -292,14 +292,14 @@ RSpec.feature 'Adam west', type: :feature do
 
     visit question_path(question)
 
-    expect(page).to have_content('Add idea')
+    expect(page).to have_content('Share your idea')
   end
 
   private
 
   def create_motion_for_question(&block)
     visit question_path(question)
-    click_on 'Add idea'
+    click_on 'Share your idea'
 
     yield if block_given?
 
