@@ -4,8 +4,10 @@ html[class="no-js"]
     meta[charset="UTF-8"]
     title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
     =csrf_meta_tags
-    =render 'layouts/meta'
     =render partial: 'application/polyfill'
+
+    =render 'layouts/meta'
+
     =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
     =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
 

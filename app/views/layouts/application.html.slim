@@ -5,15 +5,16 @@ html[class="no-js"]
     title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
     =csrf_meta_tags
     =render partial: 'polyfill'
+
+    =yield :connected_web
+    =render 'layouts/meta'
+
     =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
     =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
 
     =stylesheet_link_tag 'application', :media => 'all'
     - if request.original_url.include? developers_path
       =stylesheet_link_tag 'developers/developers', :media => 'all'
-
-    =yield :connected_web
-    =render 'layouts/meta'
     meta[name="user-identity-token" content="#{user_identity_token(current_user)}"]
 
     link[rel="copyright" content="#{t('site.copyright')}"]

@@ -5,13 +5,14 @@ html[class="no-js"]
     title= (yield(:title).blank? ? '' : yield(:title) + ' | ') + t('name')
     =csrf_meta_tags
     =render partial: 'polyfill'
-    =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
-    =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
 
-    / unless current_user.blank?
-    =stylesheet_link_tag 'application', :media => 'all'
     =yield :connected_web
     =render 'layouts/meta'
+
+    =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
+    =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
+    / unless current_user.blank?
+    =stylesheet_link_tag 'application', :media => 'all'
 
     link[rel="copyright" content="#{t('site.copyright')}"]
     - if active_for_user?('inspectlet', current_user)
