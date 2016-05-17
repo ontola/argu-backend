@@ -2,13 +2,14 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
 User
-  .create(
+  .create!(
     id: 0,
     shortname: Shortname.new(shortname: 'community'),
     email: 'community@argu.co',
-    password: 'password',
+    password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66',
     finished_intro: true,
     profile: Profile.create(id: 0))
+  .update(encrypted_password: '')
 
 User
   .create!(

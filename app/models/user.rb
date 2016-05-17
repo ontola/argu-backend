@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
 
   delegate :description, to: :profile
 
-  enum follows_email: {ever_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3}
+  enum follows_email: {never_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3}
 
   validates :email,
             allow_blank: false,
