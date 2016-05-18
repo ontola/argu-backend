@@ -40,7 +40,7 @@ class ActivityString
     if @embedded_link
       "[#{@activity.owner.display_name}](#{dual_profile_url(@activity.owner)})"
     else
-      "**#{@activity.owner.display_name}**"
+      @activity.owner.display_name.to_s
     end
   end
 
@@ -50,7 +50,7 @@ class ActivityString
     if @embedded_link
       "[#{@activity.trackable.get_parent.model.display_name}](#{url_for(@activity.trackable.get_parent.model)})"
     else
-      "**#{@activity.trackable.get_parent.model.display_name}**"
+      @activity.trackable.get_parent.model.display_name.to_s
     end
   end
 
@@ -69,7 +69,7 @@ class ActivityString
       else
         @activity.trackable.try(:display_name)
       end
-    @embedded_link ? "[#{string}](#{url_for(@activity.trackable)})" : "**#{string}**"
+    @embedded_link ? "[#{string}](#{url_for(@activity.trackable)})" : string.to_s
   end
 
   # @return [String] Type name of activity.trackable as bold text
@@ -80,6 +80,6 @@ class ActivityString
       else
         I18n.t("#{@activity.object.pluralize}.type").downcase
       end
-    "**#{string}**"
+    string.to_s
   end
 end
