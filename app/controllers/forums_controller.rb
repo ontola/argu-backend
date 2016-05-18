@@ -150,7 +150,7 @@ class ForumsController < ApplicationController
   end
 
   def redirect_generic_shortnames
-    resource = Shortname.find_resource params[:id]
+    resource = Shortname.find_resource(params[:id]) || raise(ActiveRecord::RecordNotFound)
     redirect_to url_for(resource) unless resource.is_a?(Forum)
   end
 
