@@ -107,6 +107,14 @@ class UsersControllerTest < ActionController::TestCase
     assert_not assigns(:collection)
   end
 
+  test 'user should show votes when viewing own profile' do
+    sign_in user_hidden_votes
+
+    get :show, id: user_hidden_votes
+    assert_response 200
+    assert assigns(:collection)
+  end
+
   test 'user should not show votes of trashed objects' do
     sign_in create_member(utrecht, create_member(amsterdam))
 

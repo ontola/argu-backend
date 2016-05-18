@@ -25,12 +25,14 @@
           ul.icon-list.margin-bottom
             - @profile.forums.where(visibility: true).each do |forum|
               li
-                = link_to forum_path(forum) do
+                =link_to forum_path(forum) do
                   span= forum.name
 - unless @page.present?
   .boxes-list[data-intro= t('intro.profile.votes') data-position="top"]
-    - if @profile.are_votes_public? && @profile.votes.count > 0
+    - if (@profile.are_votes_public? || current_user == @user) && @profile.votes.count > 0
       .col-1
+        span.fa.fa-lock
+        span.icon-left= t('profiles.votes_are_private')
         .intro-filler[data-intro= t("intro.profile.votes") data-position="top"]
       =render_columns(@collection, collection_model: Vote)
     - elsif @profile.are_votes_public?

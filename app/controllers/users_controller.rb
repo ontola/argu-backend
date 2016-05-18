@@ -4,7 +4,7 @@ class UsersController < ApplicationController
     @profile = @user.profile
     authorize @user, :show?
 
-    if @profile.are_votes_public?
+    if @profile.are_votes_public? || current_user == @user
       @collection = Vote.ordered Vote.find_by_sql(voted_select_query).reject { |v| v.voteable.is_trashed? }
     end
 
