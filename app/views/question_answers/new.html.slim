@@ -2,10 +2,11 @@
 .col-1
   =to_parent
   .box
-    =semantic_form_for(@question_answer, path: question_answers_path(@question.errors), html: {autocomplete: 'off'}) do |f|
+    =semantic_form_for(@question_answer, path: question_answers_path(@question), html: {autocomplete: 'off'}) do |f|
       section
         h1= t('question_answers.couple_motion')
         =f.inputs
+          =f.input :question_id, as: :hidden, value: @question.id
           =f.input :motion, as: :react, component: 'MotionSelect', forum: @forum.url
         =f.actions
           =f.action :submit, as: :button

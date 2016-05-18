@@ -14,6 +14,10 @@ class QuestionAnswer
     false
   end
 
+  def question_id
+    question.try(:id)
+  end
+
   def save
     if same_forum
       Question.transaction do
