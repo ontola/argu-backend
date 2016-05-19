@@ -3,7 +3,6 @@
 en:
   groups:
     type: "Group"
-    empty: "On Argu, %{type} can reply to ideas. No %{type} have replied to this idea yet. Let them know if you'd like to see a reply!"
     new: "Add group"
     destroy:
       body: "%{group_memberships_count} members along with their %{group_resonses_count} responses will be destroyed."
