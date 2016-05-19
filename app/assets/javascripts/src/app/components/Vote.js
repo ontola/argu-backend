@@ -56,14 +56,23 @@ export const VoteButton = React.createClass({
         }
 
         return (
-            <li><a href={this.ifNoActor(`/m/${this.props.objectId}/v/${side}`)} data-method={this.ifNoActor('post')}
-                   onClick={clickHandler} rel="nofollow" className={`btn-${side}`} data-voted-on={current}>
-                <span className={`fa fa-${this.iconForSide()}`} />
+            <li>
+                <button type="button"
+                        href={this.ifNoActor(`/m/${this.props.objectId}/v/${side}`)}
+                        tabIndex='0'
+                        data-method={this.ifNoActor('post')}
+                        onClick={clickHandler}
+                        rel="nofollow"
+                        className={`btn-${side}`}
+                        data-voted-on={current}
+                        title={this.getIntlMessage(side)}>
+                    <span className={`fa fa-${this.iconForSide()}`} />
                     <span className="vote-text">
                         <FormattedMessage message={this.getIntlMessage(side)} />
                     </span>
                     {voteCountElem}
-            </a></li>
+                </button>
+            </li>
         );
     }
 });
