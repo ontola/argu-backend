@@ -317,6 +317,7 @@ RSpec.feature 'Adam west', type: :feature do
       click_button 'Save'
     end
 
+    expect(page).to have_content(motion_attr[:title].capitalize)
     expect(page).to have_current_path(motion_path(Motion.last, start_motion_tour: true))
     click_on question.title
     expect(page).to have_current_path(question_path(question))
