@@ -27,6 +27,8 @@ en:
       header: "%{side} argument for the proposition: "
       header_short: "%{side}: "
       create: "+ %{side} argument"
+      pro: "Add pro"
+      con: "Add con"
     revisions:
       title_wiped: 'Removed replies'
     tooltips:

@@ -248,6 +248,24 @@
   }
 }
 
+.box-list-item--subtle a {
+  color: $g3;
+  margin-bottom: 1em;
+  display: block;
+  @include transition(.2s color);
+}
+
+.no-touch .box-list-item--subtle a {
+  color: transparent;
+}
+
+.no-touch .box:hover .box-list-item--subtle a{
+  color: $g2;
+  &:hover {
+    color: $g4;
+  }
+}
+
 .box--extra-margin{
   margin-bottom: 2em;
 }

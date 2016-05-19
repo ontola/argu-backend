@@ -544,7 +544,7 @@
   }
 }
 
-.btns-opinion, .btns-opinion--subtle {
+.btns-opinion, .btns-opinion--subtle, .btns-opinion--bottom {
 
   .vote-count {
     margin-left: .4em;
@@ -599,6 +599,12 @@
   }
 }
 
+.btns-opinion--subtle {
+  border-top: 1px solid $g1;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
 .btns-floating {
   display: block;
@@ -696,4 +702,91 @@ h1 + .btn {
   @include border-radius(0);
   line-height: 1.3em;
   box-sizing: border-box;
+}
+
+.btns-opinion--bottom, .btns__bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  border-top: solid 1px $g1;
+
+  .fa {
+    margin-right: .5em;
+  }
+  
+  li {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 1em;
+    margin: 0;
+    border: none;
+    display: inline-block;
+    cursor: pointer;
+    background-color: white;
+    border-right: 1px solid $g1;
+    flex-grow: 1;
+    flex-basis: 0;
+    justify-content: center;
+    display: flex;
+
+    a {
+      @include transition(background-color .2s);
+      background-color: $g00;
+      flex-grow: 1;
+      flex-basis: 0;
+      justify-content: center;
+      display: flex;
+      padding: 0.8em;
+      color: $g2;
+
+      &:hover {
+        color: $g4;
+        background-color: $g0;
+      }
+      &:hover {
+        @include transition(none);
+        color: $g5;
+        background-color: $g1;
+      }
+    }
+
+    &:last-child {
+      border-right: 0;
+    }
+  }
+}
+
+.btns-opinion--bottom {
+  .btn-pro {
+    color: $pro;
+    &:hover {
+      color: $pro;
+      background-color: lighten($pro, 50);
+    }
+    &:active {
+      color: $pro;
+      background-color: lighten($pro, 40);
+    }
+  }
+  .btn-neutral {
+    color: $neutral;
+    &:hover {
+      color: $neutral;
+      background-color: lighten($neutral, 45);
+    }
+    &:active {
+      color: $neutral;
+      background-color: lighten($neutral, 30);
+    }
+  }
+  .btn-con {
+    color: $con;
+    &:hover {
+      color: $con;
+      background-color: lighten($con, 50);
+    }
+    &:active {
+      color: $con;
+      background-color: lighten($con, 40);
+    }
+  }
 }

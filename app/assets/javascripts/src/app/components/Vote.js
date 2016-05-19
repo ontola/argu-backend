@@ -93,6 +93,8 @@ export const VoteButtons = React.createClass({
         switch (this.props.buttonsType) {
         case 'subtle':
             return 'btns-opinion--subtle';
+        case 'bottom':
+            return 'btns-opinion--bottom';
         case 'big':
         default:
             return 'btns-opinion';

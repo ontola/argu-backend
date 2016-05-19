@@ -27,6 +27,8 @@ nl:
       header: "Argument %{side} de stelling: "
       header_short: "%{side}: "
       create: "+ argument %{side}"
+      pro: "Argument voor toevoegen"
+      con: "Argument tegen toevoegen"
     tooltips:
       info: "Een argument is een enkele reden voor of tegen een idee."
     revisions:
