@@ -3,6 +3,7 @@
 nl:
   groups:
     type: "Groep"
+    plural: "Groepen"
     empty: "Op Argu kunnen ook %{type} reageren op ideeën. Op dit idee is nog niet gereageerd door %{type}. Laat het ze weten als je een reactie zou willen zien!"
     new: "Groep toevoegen"
     destroy:

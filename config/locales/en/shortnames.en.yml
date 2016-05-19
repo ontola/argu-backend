@@ -1,6 +1,7 @@
 en:
   shortnames:
-    type: 'argu url'
+    type: 'Argu URL'
+    info: 'An Argu URL is a custom link that you can use to redirect to certian discussions. E.g. argu.co/my_discussion can link to argu.co/q/'
     current_out_of_max: 'Used %{current} out of %{max} Argu urls'
     contact_argu: 'Contact Argu to acquire more Argu urls'
     errors:

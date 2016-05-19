@@ -1,3 +1,4 @@
+h3= t('groups.plural')
 p= t('forums.settings.groups.description')
 ul.boxed-list
   - resource.groups.includes(:grants, group_memberships: {member: {profileable: :shortname}}).each do |group|

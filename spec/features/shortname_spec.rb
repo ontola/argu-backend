@@ -35,7 +35,7 @@ RSpec.feature 'Shortname', type: :feature do
     visit shortname_settings_path
     expect(page).to have_content('0 out of 3')
 
-    click_link 'New argu url'
+    click_link 'New Argu URL'
     expect(page).to have_current_path new_forum_shortname_path(freetown)
 
     shortname_attrs = attributes_for(:shortname)
