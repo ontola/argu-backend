@@ -28,6 +28,7 @@
 #
 #translations:
 #  - file: "app/assets/javascripts/i18n/translations.js"
+export_i18n_js: false
 translations:
-- file: "app/assets/javascripts/i18n/translations_%{locale}.js"
+- file: "app/assets/javascripts/dist/translations_%{locale}.js"
   only: ['*.intro', '*.votes']
