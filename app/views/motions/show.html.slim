@@ -34,11 +34,4 @@ div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
                       buttons_param: :side,
                       header: k.name,
                       header_text: header_values(k))
-    - else
-      .col-1
-        header
-          h2= k.name
-        .box
-          section
-            p= t('groups.empty', type: k.name.downcase)
 =render partial: 'discussions/new', locals: {forum: authenticated_context}
