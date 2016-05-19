@@ -2,7 +2,7 @@
   -if model.cover_photo.present?
     =link_to motion_path(model)
       .box-image[style="background-image: url('#{model.cover_photo.url(:box)}'); "]
-  /=link_to(motion_path(model), 'aria-hidden': true, tabindex: '-1')
+  /=contextual_link_to motion_path(model)
     =render partial: 'motions/info_bar', locals: {motion: model, show_vote_results: true}
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
     =link_to(motion_path(model), 'aria-hidden': true, tabindex: '-1')
