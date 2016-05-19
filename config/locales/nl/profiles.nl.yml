@@ -6,7 +6,7 @@ nl:
     switch: "Argu gebruiken als"
     about_me: "Over mij"
     heads_up: "Jouw profiel is zichtbaar voor andere bezoekers van Argu."
-    votes_are_private: "Your votes are private"
+    votes_are_private: "Je stemmen zijn alleen voor jou zichtbaar"
     show:
       title: "Profiel"
       btn:
