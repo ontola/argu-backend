@@ -2,6 +2,7 @@ import Alert from '../src/app/components/Alert';
 import { FastClick } from 'fastclick';
 import Blazy from 'blazy';
 import { safeCredentials, errorMessageForStatus } from '../src/app/lib/helpers';
+import twReplace from '../../../../lib/assets/javascripts/twreplace';
 
 const ui = {
     bg: $(".background"),
@@ -131,6 +132,7 @@ const ui = {
             offset: 100 // Loads images 100px before they're visible
         });
         $('.bg-img').bgLoaded({});
+        twReplace();
     },
 
     handleEditableSettings: function () {

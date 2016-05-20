@@ -12,6 +12,11 @@
             .block--hero-contents
               - if section['header'].present?
                 h2.block-image-header= section['header']
+              - if section['header_carousel'].present?
+                h2.block-image-header.block-image-header--carousel
+                  span= section['header_carousel']['before']
+                  span[data-twreplace=section['header_carousel']['items']]= section['header_carousel']['default_item']
+                  span= section['header_carousel']['after']
               - if section['c2a'].present?
                 =link_to section['c2a']['url'] do
                   .block-c2a= section['c2a']['body']
