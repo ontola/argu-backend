@@ -217,6 +217,10 @@ $grey_light: $g0;
   }
 }
 
+.blocks--full-width {
+  max-width: 100%;
+}
+
 .block--hero-image {
   height: 100%;
   width: 100%;
@@ -245,6 +249,10 @@ $grey_light: $g0;
   max-height: calc(100vh - 8em);
   overflow: hidden;
   min-height: 70vh;
+
+  @include bp-larger {
+    min-height: 85vh;
+  }
 
   [data-twreplace]{
     position: relative;
