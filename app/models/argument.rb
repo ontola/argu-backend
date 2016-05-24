@@ -1,6 +1,8 @@
 class Argument < ActiveRecord::Base
   include ProCon, Flowable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
+  has_many :opinion_arguments, dependent: :nullify
+  has_many :opinions, through: :opinion_arguments
   belongs_to :publisher, class_name: 'User'
 
   paginates_per 10

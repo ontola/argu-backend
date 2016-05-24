@@ -1,0 +1,46 @@
+.opinions {
+  margin: -0.5em 0 0 -0.5em;
+}
+.opinions-box {
+  width: calc(33.3% - 1em);
+  height: 32px;
+  display: inline-block;
+  margin: 0 .5em;
+}
+
+.opinion-profile {
+  float: left;
+  margin-right: 2px;
+}
+.opinion-profile img {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+}
+.opinion-form {
+  background-color: #fff;
+  position: relative;
+}
+.opinion-form:after {
+  content: "";
+  position: absolute;
+  top: -15px;
+  border-width: 0 15px 15px;
+  border-style: solid;
+  border-color: #fff transparent;
+  display: block;
+  width: 0;
+}
+.opinion-form.opinion-form-pro:after {
+  left: 15%;
+}
+.opinion-form.opinion-form-neutral:after {
+  left: 50%;
+}
+.opinion-form.opinion-form-con:after {
+  right: 15%;
+}
+.opinion-form label{
+  width: 100%;
+  text-align: left;
+}

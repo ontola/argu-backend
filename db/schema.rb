@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160502144425) do
+ActiveRecord::Schema.define(version: 20160518085412) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -378,6 +378,26 @@ ActiveRecord::Schema.define(version: 20160502144425) do
   add_index "oauth_applications", ["owner_id", "owner_type"], name: "index_oauth_applications_on_owner_id_and_owner_type", using: :btree
   add_index "oauth_applications", ["uid"], name: "index_oauth_applications_on_uid", unique: true, using: :btree
 
+  create_table "opinion_arguments", force: :cascade do |t|
+    t.integer "opinion_id",           null: false
+    t.integer "argument_id"
+    t.integer "original_argument_id"
+  end
+
+  add_index "opinion_arguments", ["argument_id"], name: "index_opinion_arguments_on_argument_id", using: :btree
+  add_index "opinion_arguments", ["opinion_id"], name: "index_opinion_arguments_on_opinion_id", using: :btree
+  add_index "opinion_arguments", ["original_argument_id"], name: "index_opinion_arguments_on_original_argument_id", using: :btree
+
+  create_table "opinions", force: :cascade do |t|
+    t.integer  "motion_id",    null: false
+    t.integer  "creator_id",   null: false
+    t.integer  "publisher_id", null: false
+    t.integer  "forum_id",     null: false
+    t.text     "body",         null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
   create_table "page_memberships", force: :cascade do |t|
     t.integer "profile_id",             null: false
     t.integer "page_id",                null: false
@@ -732,6 +752,12 @@ ActiveRecord::Schema.define(version: 20160502144425) do
   add_foreign_key "motions", "users", column: "publisher_id"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users", on_delete: :cascade
+  add_foreign_key "opinion_arguments", "arguments"
+  add_foreign_key "opinion_arguments", "opinions"
+  add_foreign_key "opinions", "forums"
+  add_foreign_key "opinions", "motions"
+  add_foreign_key "opinions", "profiles", column: "creator_id"
+  add_foreign_key "opinions", "users", column: "publisher_id"
   add_foreign_key "phases", "forums"
   add_foreign_key "phases", "profiles", column: "creator_id"
   add_foreign_key "phases", "projects"

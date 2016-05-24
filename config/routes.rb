@@ -143,6 +143,7 @@ Argu::Application.routes.draw do
     resources :groups, only: [] do
       resources :group_responses, only: [:new, :create]
     end
+    resources :opinions, only: :create
     resources :tags, path: 't', only: [:index]
   end
 

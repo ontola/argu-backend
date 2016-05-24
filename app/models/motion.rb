@@ -14,6 +14,7 @@ class Motion < ActiveRecord::Base
   has_many :arguments, -> { argument_comments }, dependent: :destroy
   has_many :arguments_plain, class_name: 'Argument'
   has_many :group_responses
+  has_many :opinions
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
 

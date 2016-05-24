@@ -32,6 +32,10 @@ class ActivityListener
       create_activity(resource, recipient, method)
     end
 
+    define_method "#{method}_opinion_successful" do |resource|
+      create_activity(resource, resource.motion, method)
+    end
+
     define_method "#{method}_project_successful" do |resource|
       create_activity(resource, resource.forum, method)
     end
