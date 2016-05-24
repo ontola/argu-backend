@@ -201,11 +201,8 @@ export const Notifications = React.createClass({
             .state
             .notifications
             .toArray()
-            .sort((a, b) => {
-                return new Date(b.created_at) - new Date(a.created_at);
-            }).map((item, i) => {
-                return <NotificationItem key={i} read={item.read} done={this.props.done} {...item} />
-            });
+            .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+            .map((item, i) => <NotificationItem key={i} read={item.read} done={this.props.done} {...item} />);
 
         const loadMore = <li className="notification-btn">
                 <a href='#' onMouseDownCapture={this.loadMore} data-turbolinks="false">

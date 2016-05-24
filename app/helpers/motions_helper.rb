@@ -12,26 +12,22 @@ module MotionsHelper
   end
 
   def motion_combi_vote_props(actor, motion, vote)
-    groups = policy_scope(motion.forum.groups.discussion).collect do |group|
-      {
-          id: group.id,
-          name: group.name,
-          name_singular: group.name_singular,
-          icon: group.icon,
-          responses_left: group.responses_left(motion, actor),
-          actor_group_responses: group.responses_for(motion, actor)
-      }
-    end
     localized_react_component({
-        groups: groups
-    }.merge(motion_vote_props(actor, motion, vote)))
+                                votes: ordered_votes(policy_scope(motion.votes))
+                              }.merge(motion_vote_props(actor, motion, vote)))
+  end
+
+  def motion_partial_vote_props(actor, motion, vote, opts = {})
+    localized_react_component({
+                                votes: ordered_votes(policy_scope(motion.votes.where(voter: actor)))
+                              }.merge(motion_vote_props(actor, motion, vote, opts)))
   end
 
   def motion_vote_props(actor, motion, vote, opts = {})
     localized_react_component opts.merge(
       objectType: 'motion',
       objectId: motion.id,
-      currentVote: vote.try(:for) || 'abstain',
+      currentVoteId: vote.try(:id),
       vote_url: motion_show_vote_path(motion),
       total_votes: motion.total_vote_count,
       buttons_type: opts.fetch(:buttons_type, 'big'),
@@ -51,6 +47,17 @@ module MotionsHelper
       neutral: motion.votes_neutral_count,
       con: motion.votes_con_count
     )
+  end
+
+  def ordered_votes(scope)
+    votes = ActiveModelSerializers::SerializableResource.new(scope, include: '**').as_json
+    ordered_votes = {}
+    votes[:data].each do |v|
+      ordered_votes[v[:id]] = {id: v[:id], type: v[:type]}
+                                .merge(v[:attributes])
+                                .merge(v[:relationships])
+    end
+    ordered_votes
   end
 
   def user_vote_for(motion)

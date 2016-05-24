@@ -6,7 +6,7 @@ gem 'dotenv-rails', require: 'dotenv/rails-now'
 gem 'sass-rails', '~> 5.0.3'
 gem 'sass', '= 3.4.18'
 gem 'rails', '~>4.2.5.2'
-gem 'active_model_serializers', '~> 0.10.0.rc3'
+gem 'active_model_serializers', '~> 0.10.0'
 
 gem 'simple_text', '~> 0.0.23'
 gem 'indefinite_article'

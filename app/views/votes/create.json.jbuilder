@@ -1,7 +1,8 @@
 json.vote do
   json.objectType @model.class_name
   json.objectId @model.id
-  json.currentVote (@vote && @vote.for || '')
+  json.voteId @vote.id
+  json.side (@vote && @vote.for || '')
   json.distribution do
     json.pro @model.try(:votes_pro_count)
     json.neutral @model.try(:votes_neutral_count)

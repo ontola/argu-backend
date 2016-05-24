@@ -29,6 +29,17 @@ class AuthorizedController < ApplicationController
                }
       end
       format.html { redirect_to new_user_session_path(r: exception.r) }
+      format.json do
+        f = ActionDispatch::Http::ParameterFilter.new(Rails.application.config.filter_parameters)
+        error_hash = {
+          type: :error,
+          error_id: 'NOT_A_USER',
+          message: exception.body,
+          original_request: f.filter(params)
+        }.merge(exception.body)
+        render status: 401,
+               json: error_hash.merge(notifications: [error_hash])
+      end
     end
   end
 
@@ -141,8 +152,8 @@ class AuthorizedController < ApplicationController
 
   def check_if_registered
     if current_profile.blank?
-      raise Argu::NotAUserError.new(authenticated_context,
-                                    redirect_url)
+      raise Argu::NotAUserError.new(forum: authenticated_context,
+                                    r: redirect_url)
     end
   end
 

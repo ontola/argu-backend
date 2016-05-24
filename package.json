@@ -26,7 +26,7 @@
     "react-scroll-lock": "^0.1.1",
     "react-select": "^0.9.1",
     "redux": "^3.0.4",
-    "redux-api-middleware": "^1.0.0-beta3",
+    "redux-api-middleware": "^1.0.2",
     "reflux": "^0.2.12",
     "url": "^0.11.0",
     "whatwg-fetch": "^0.10.1"

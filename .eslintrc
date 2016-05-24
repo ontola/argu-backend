@@ -58,7 +58,7 @@
     "keyword-spacing": "error",
     "arrow-spacing": [2, { "before": true, "after": true }],
     "arrow-parens": ["error", "as-needed"],
-    "arrow-body-style": ["error", "always"],
+    "arrow-body-style": ["error", "as-needed"],
     "no-multi-spaces": 2,
     "no-const-assign": "error",
     "no-confusing-arrow": ["error", {"allowParens": true}],

@@ -5,7 +5,6 @@
 
 import React from 'react';
 import { IntlMixin, FormattedMessage } from 'react-intl';
-import VoteMixin from '../mixins/VoteMixin';
 
 const HUNDRED_PERCENT = 100;
 
@@ -39,14 +38,6 @@ export const VoteButton = React.createClass({
         }
     },
 
-    ifNoActor (v) {
-        return this.props.actor === null ? v : undefined;
-    },
-
-    ifActor (v) {
-        return this.props.actor === null ? undefined : v;
-    },
-
     render () {
         const { clickHandler, count, current, side } = this.props;
 
@@ -56,8 +47,8 @@ export const VoteButton = React.createClass({
         }
 
         return (
-            <li><a href={this.ifNoActor(`/m/${this.props.objectId}/v/${side}`)} data-method={this.ifNoActor('post')}
-                   onClick={clickHandler} rel="nofollow" className={`btn-${side}`} data-voted-on={current}>
+            <li><a href={`/m/${this.props.objectId}/v/${side}`}
+                   onClick={clickHandler.bind(null, side)} rel="nofollow" className={`btn-${side}`} data-voted-on={current}>
                 <span className={`fa fa-${this.iconForSide()}`} />
                     <span className="vote-text">
                         <FormattedMessage message={this.getIntlMessage(side)} />
@@ -69,23 +60,17 @@ export const VoteButton = React.createClass({
 });
 
 export const VoteButtons = React.createClass({
-    mixins: [IntlMixin, VoteMixin],
+    mixins: [IntlMixin],
 
     propTypes: {
         actor: React.PropTypes.object,
         buttonsType: React.PropTypes.string,
-        currentVote: React.PropTypes.string,
+        vote: React.PropTypes.object,
         distribution: React.PropTypes.object,
+        onVote: React.PropTypes.func,
         objectId: React.PropTypes.number,
         objectType: React.PropTypes.string,
         percent: React.PropTypes.object
-    },
-
-    getInitialState () {
-        return {
-            currentVote: this.props.currentVote,
-            distribution: this.props.distribution
-        };
     },
 
     buttonsClassName () {
@@ -99,19 +84,21 @@ export const VoteButtons = React.createClass({
     },
 
     render () {
+        const { actor, onVote, distribution, objectId, vote } = this.props;
+
         const voteButtons = ['pro', 'neutral' , 'con']
-            .map((side, i) => {
-                return <VoteButton actor={this.props.actor}
-                                   clickHandler={this[`${side}Handler`]}
-                                   count={this.state.distribution[side]}
-                                   current={this.state.currentVote === side}
+            .map((side, i) => <VoteButton actor={actor}
+                                   clickHandler={onVote}
+                                   count={distribution[side]}
+                                   current={vote && vote.side === side}
                                    key={i}
-                                   objectId={this.props.objectId}
-                                   side={side} />;
-            });
+                                   objectId={objectId}
+                                   side={side} />
+            );
 
         return (
-            <ul className={this.buttonsClassName()} data-voted={(this.state.currentVote.length > 0 && this.state.currentVote !== 'abstain') || null}>
+            <ul className={this.buttonsClassName()}
+                data-voted={typeof (vote) !== 'undefined'}>
                 {voteButtons}
             </ul>);
     }
@@ -127,8 +114,7 @@ const LOWER_DISPLAY_LIMIT = 5;
  */
 export const VoteResults = React.createClass({
     propTypes: {
-        percent: React.PropTypes.object,
-        showResults: React.PropTypes.bool
+        percent: React.PropTypes.object
     },
 
     voteWidth (side) {
@@ -150,20 +136,11 @@ export const VoteResults = React.createClass({
     },
 
     render () {
-        let results;
-
-        if (this.props.showResults) {
-            results = (
-                    <ul className="progress-bar progress-bar-stacked">
-                        <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.percent.pro + '%'}</span></li>
-                        <li style={this.voteWidth('neutral')}><span className="btn-neutral">{this.props.percent.neutral + '%'}</span></li>
-                        <li style={this.voteWidth('con')}><span className="btn-con">{this.props.percent.con + '%'}</span></li>
-                    </ul>);
-        } else {
-            results = null;
-        }
-
-        return results;
+        return (<ul className="progress-bar progress-bar-stacked">
+            <li style={this.voteWidth('pro')}><span className="btn-pro">{this.props.percent.pro + '%'}</span></li>
+            <li style={this.voteWidth('neutral')}><span className="btn-neutral">{this.props.percent.neutral + '%'}</span></li>
+            <li style={this.voteWidth('con')}><span className="btn-con">{this.props.percent.con + '%'}</span></li>
+        </ul>);
     }
 });
 window.VoteResults = VoteResults;

@@ -110,14 +110,12 @@ export const NewMembership = React.createClass({
                .then(json)
                .then(data => {
                    callback(null, {
-                       options: data.profiles.map(profile => {
-                           return {
-                               id: profile.id.toString(),
-                               value: profile.shortname,
-                               label: profile.name,
-                               image: profile.profile_photo.avatar.url
-                           };
-                       }),
+                       options: data.profiles.map(profile => ({
+                           id: profile.id.toString(),
+                           value: profile.shortname,
+                           label: profile.name,
+                           image: profile.profile_photo.avatar.url
+                       })),
                        complete: false
                    });
                }).catch(e => {

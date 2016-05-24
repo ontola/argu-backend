@@ -161,10 +161,8 @@ export const ShareDropdown = React.createClass({
 
     totalShares () {
         return Object.keys(this.state.counts)
-                .map(k => { return this.state.counts[k] })
-                .reduce((a, b) => {
-                    return a + b;
-                });
+                .map(k => this.state.counts[k])
+                .reduce((a, b) => a + b);
     },
 
     render () {

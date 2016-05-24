@@ -16,11 +16,11 @@ const types = {
 function replaceDateStrings(object) {
     return object
         .map((i, k, o) => {
-            return k
-                .toString()
-                .match(/(D|d)ate/)
-                    ? new Date(o.get(k))
-                    : o.get(k)
+            if (k.toString().match(/(D|d)ate/)) {
+                return new Date(o.get(k));
+            } else {
+                return o.get(k);
+            }
         });
 }
 

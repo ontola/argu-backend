@@ -2,7 +2,7 @@ class Vote < ActiveRecord::Base
   include ArguBase, Parentable, PublicActivity::Model
 
   belongs_to :voteable, polymorphic: true, inverse_of: :votes
-  belongs_to :voter, polymorphic: true # class_name: 'Profile'
+  belongs_to :voter, class_name: 'Profile'
   has_many :activities, as: :trackable
   belongs_to :forum
   parentable :voteable

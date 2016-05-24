@@ -1,12 +1,13 @@
 module Argu
   class NotAUserError < StandardError
-    attr_accessor :preview, :forum, :redirect
+    attr_accessor :preview, :forum, :redirect, :body
 
-    def initialize(forum, r, message = nil, preview = nil)
+    def initialize(opts = {})
       super(message)
-      self.preview = preview
-      self.forum = forum
-      self.redirect = r
+      self.preview = opts[:preview]
+      self.forum = opts[:forum]
+      self.redirect = opts[:r]
+      self.body = opts[:body]
     end
 
     def r

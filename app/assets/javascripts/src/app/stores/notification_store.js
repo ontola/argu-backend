@@ -74,9 +74,7 @@ const notificationStore = Reflux.createStore({
         }))
             .then(statusSuccess)
             .then(json)
-            .then(response => {
-                return NotificationActions.checkForNew.completed(parseInt(response.notificationCount) > this.state.notifications.notificationCount ? response.notificationCount : false);
-            })
+            .then(response => NotificationActions.checkForNew.completed(parseInt(response.notificationCount) > this.state.notifications.notificationCount ? response.notificationCount : false))
     },
 
     fetchNew (notificationCount) {
@@ -118,17 +116,13 @@ const notificationStore = Reflux.createStore({
                         notifications.notifications.map(n => {
                             mutMap.set(n.id, n);
                         });
-                    }).sort((a, b) => {
-                        return new Date(b.created_at) - new Date(a.created_at);
-                    });
+                    }).sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
                 this.setLastNotification(notifications.lastNotification);
                 this.state.notifications.unread = notifications.unread;
                 this.state.notifications.oldestNotification = new Date(this.state
                     .notifications
                     .notifications
-                    .sort((a, b) => {
-                        return new Date(b.created_at) - new Date(a.created_at);
-                    })
+                    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
                     .last()
                     .created_at);
                 this.state.notifications.notificationCount = notifications.notificationCount;

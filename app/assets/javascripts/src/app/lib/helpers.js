@@ -10,9 +10,7 @@ React && void (0);
 Object.resolve = function(path, obj) {
     return [obj || self]
         .concat(path.split('.'))
-        .reduce((prev, curr) => {
-            return prev && prev[curr]
-        });
+        .reduce((prev, curr) => prev && prev[curr]);
 };
 
 if (!Object.assign) {
@@ -66,9 +64,7 @@ image.propTypes = {
 
 export function _url (url, obj) {
     if (typeof url === 'string' && typeof obj === 'object') {
-        const res = decodeURIComponent(url).replace(/{{([^{}]+)}}/, (match, p1) => {
-            return Object.resolve(p1, obj);
-        });
+        const res = decodeURIComponent(url).replace(/{{([^{}]+)}}/, (match, p1) => Object.resolve(p1, obj));
         return res || decodeURIComponent(url);
     } else if (url !== null) {
         return decodeURIComponent(url);

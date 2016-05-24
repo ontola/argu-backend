@@ -127,7 +127,17 @@ class VotesController < AuthorizedController
     if current_profile.blank?
       resource = get_parent_resource
       authorize resource, :show?
-      raise Argu::NotAUserError.new(resource.forum, redirect_url)
+      options = {
+        forum: resource.forum,
+        r: redirect_url
+      }
+      if request.format == 'json'
+        options[:body] = {
+          error: 'NO_SESSION',
+          session_url: new_user_session_path(r: redirect_url)
+        }
+      end
+      raise Argu::NotAUserError.new(options)
     end
   end
 
