@@ -12,9 +12,4 @@ class CreateOpinion < CreateService
   def resource
     @opinion
   end
-
-  private
-
-  def set_object_attributes(obj)
-  end
 end

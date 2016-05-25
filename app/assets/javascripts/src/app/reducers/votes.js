@@ -1,4 +1,4 @@
-import { VOTE_SUCCESS } from '../actions';
+import { CLOSE_OPINION_FORM, VOTE_SUCCESS } from '../actions';
 
 const initialState = {};
 
@@ -25,7 +25,12 @@ export default function votes(state = initialState, action) {
             });
         }
         return Object.assign({}, state, updatedState);
+            { opinionFormOpened: true },
     }
+    case CLOSE_OPINION_FORM:
+        return Object.assign({}, state, {
+            opinionFormOpened: false
+        });
     default:
         return state;
     }

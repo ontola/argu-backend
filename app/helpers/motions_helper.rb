@@ -15,6 +15,14 @@ module MotionsHelper
     localized_react_component({
                                 votes: ordered_votes(policy_scope(motion.votes))
                               }.merge(motion_vote_props(actor, motion, vote)))
+    arguments = policy_scope(motion.arguments).collect do |argument|
+      {
+        id: argument.id,
+        displayName: argument.display_name,
+        key: argument.identifier,
+        side: argument.key.to_s
+      }
+    end
   end
 
   def motion_partial_vote_props(actor, motion, vote, opts = {})

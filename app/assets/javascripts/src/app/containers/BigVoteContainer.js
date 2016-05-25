@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect, Provider } from 'react-redux';
 import { VoteButtons, VoteResults } from '../components/Vote';
+import { OpinionForm, OpinionsIndex } from '../components/Opinions';
 import { IntlMixin } from 'react-intl';
 import configureStore from '../stores/configureStore';
-import { createVote } from '../actions/index';
+import { closeOpinionForm, createVote, createOpinion } from '../actions/index';
 
 /**
  * Component that displays current vote options.
