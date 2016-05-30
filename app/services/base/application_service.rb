@@ -23,7 +23,7 @@ class ApplicationService
     ActiveRecord::Base.transaction do
       @actions[service_action] = resource.public_send service_method
 
-      after_save
+      after_save if @actions[service_action]
 
       publish("#{signal_base}_successful".to_sym, resource) if @actions[service_action]
       publish("publish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:published]
@@ -96,7 +96,6 @@ class ApplicationService
   # @see {set_nested_associations}
   # @param [ActiveRecord::Base] obj The model on which the attributes should be set
   def set_object_attributes(obj)
-    raise 'Required interface not implemented'
   end
 
   def signal_base

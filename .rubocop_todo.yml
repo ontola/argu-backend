@@ -119,6 +119,8 @@ Metrics/BlockNesting:
 # Configuration parameters: CountComments.
 Metrics/ClassLength:
   Max: 384
+  Exclude:
+    - 'test/controllers/motions_controller_test.rb'
 
 # Offense count: 22
 Metrics/CyclomaticComplexity:
@@ -219,12 +221,15 @@ Style/AccessorMethodName:
     - 'app/helpers/actors_helper.rb'
     - 'app/services/arguments/update_argument.rb'
     - 'app/services/base/application_service.rb'
+    - 'app/services/base/create_service.rb'
     - 'app/services/blog_posts/update_blog_post.rb'
     - 'app/services/comments/update_comment.rb'
     - 'app/services/group_responses/update_group_response.rb'
+    - 'app/services/motions/create_motion.rb'
     - 'app/services/motions/update_motion.rb'
     - 'app/services/projects/create_project.rb'
     - 'app/services/projects/update_project.rb'
+    - 'app/services/questions/create_question.rb'
     - 'app/services/questions/update_question.rb'
 
 # Offense count: 4

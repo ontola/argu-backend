@@ -10,4 +10,11 @@ class CreateMotion < CreateService
   def resource
     @motion
   end
+
+  private
+
+  def set_object_attributes(obj)
+    obj.forum ||= resource.forum
+    obj.creator ||= resource.creator
+  end
 end

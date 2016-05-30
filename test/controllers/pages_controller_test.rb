@@ -170,13 +170,24 @@ class PagesControllerTest < ActionController::TestCase
           profile_attributes: {
             id: page.profile.id,
             name: 'name',
-            about: 'new_about'
+            about: 'new_about',
+            default_profile_photo_attributes: {
+              id: page.profile.default_profile_photo.id,
+              image: uploaded_file_object(Photo, :image, open_file('profile_photo.png'))
+            },
+            default_cover_photo_attributes: {
+                image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+            }
           }
         }
 
+    assigns(:page).profile.reload
+    assert_equal 2, assigns(:page).profile.photos.count
+    assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.image_identifier
+    assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.image_identifier
     assert_redirected_to settings_page_path(page, tab: :general)
     assert_equal page, assigns(:page)
-    assert_equal 'new_about', assigns(:page).profile.reload.about
+    assert_equal 'new_about', assigns(:page).profile.about
   end
 
   test 'owner should be able to create only one page' do
@@ -194,8 +205,7 @@ class PagesControllerTest < ActionController::TestCase
     }
 
     assert_redirected_to root_path
-    assert assigns(:page)
-    assert assigns(:page).new_record?, "Page is saved when it shouldn't be"
+    assert_not assigns(:page)
   end
 
   test 'owner should delete destroy when page not owns a forum' do
@@ -240,7 +250,13 @@ class PagesControllerTest < ActionController::TestCase
          page: {
            profile_attributes: {
              name: 'Utrecht Two',
-             about: 'Utrecht Two bio'
+             about: 'Utrecht Two bio',
+             default_profile_photo_attributes: {
+               image: uploaded_file_object(Photo, :image, open_file('profile_photo.png'))
+             },
+             default_cover_photo_attributes: {
+               image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+             }
            },
            shortname_attributes: {
              shortname: 'UtrechtNumberTwo'
@@ -248,9 +264,13 @@ class PagesControllerTest < ActionController::TestCase
            last_accepted: '1'
          }
 
+    assigns(:page).profile.reload
     assert_response 303
     assert assigns(:page)
     assert assigns(:page).persisted?
+    assert_equal 2, assigns(:page).profile.photos.count
+    assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.image_identifier
+    assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.image_identifier
   end
 
   private

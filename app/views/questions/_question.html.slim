@@ -1,5 +1,5 @@
 .box.box-grid.question[itemscope="itemscope" itemtype="http://schema.org/Question" class=status_classes_for(question) data-created-at=question.created_at  data-updated-at=question.updated_at data-vote-count=0]
-  - if question.cover_photo.present?
+  - if question.cover_photo.url.present?
     =contextual_link_to question_path(question) do
       noscript
         .box-image--container

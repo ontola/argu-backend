@@ -1,6 +1,6 @@
 class Question < ActiveRecord::Base
   include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, HasLinks, Attribution,
-          PublicActivity::Common, Flowable, Placeable
+          PublicActivity::Common, Flowable, Placeable, Photoable
 
   belongs_to :forum, inverse_of: :questions
   belongs_to :creator, class_name: 'Profile'
@@ -13,9 +13,8 @@ class Question < ActiveRecord::Base
 
   acts_as_followable
   counter_culture :forum
-  parentable :project, :forum
   convertible :votes, :taggings, :activities
-  mount_uploader :cover_photo, CoverUploader
+  parentable :project, :forum
 
   validates :content, presence: true, length: {minimum: 5, maximum: 5000}
   validates :title, presence: true, length: {minimum: 5, maximum: 110}

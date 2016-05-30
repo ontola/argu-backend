@@ -8,7 +8,7 @@ FactoryGirl.define do
                 strategy: :create
     association :shortname,
                 strategy: :build
-    owner { passed_in?(:owner) ? owner : create(:profile_direct_email) }
+    owner { passed_in?(:owner) ? owner : create(:profile) }
     last_accepted Time.current
     visibility Page.visibilities[:open]
 

@@ -33,7 +33,7 @@ class Notification < ActiveRecord::Base
 
   def image
     if activity.present?
-      activity.owner.profile_photo.url(:avatar)
+      activity.owner.profile_photo&.url(:avatar)
     else
       ActionController::Base.helpers.asset_path('favicons/favicon-192x192.png')
     end

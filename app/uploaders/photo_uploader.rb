@@ -1,14 +1,13 @@
 # encoding: utf-8
 
-class CoverUploader < CarrierWave::Uploader::Base
+class PhotoUploader < CarrierWave::Uploader::Base
   include ::CarrierWave::Backgrounder::Delay
 
-  # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
-  # include CarrierWave::MiniMagick
   include CarrierWave::Vips
 
-  unless Rails.env.development? || Rails.env.test?
+  if Rails.env.development? || Rails.env.test?
+    storage :file
+  else
     CarrierWave.configure do |config|
       config.storage    = :aws
       config.aws_bucket = 'argu-logos'
@@ -23,30 +22,19 @@ class CoverUploader < CarrierWave::Uploader::Base
       }
     end
     storage :aws
-  else
-    storage :file
   end
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:
   def store_dir
-    "#{model.class.to_s.pluralize.underscore}/#{model.id}/cover"
+    "photos/#{model.id}"
   end
 
-  # Provide a default URL as a default if there hasn't been a file uploaded:
-  # def default_url
-  #   # For Rails 3.1+ asset pipeline compatibility:
-  #   # ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
-  #
-  #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
-  # end
-
-  # Process files as they are uploaded:
-  # process :scale => [200, 300]
-  #
-  # def scale(width, height)
-  #   # do something
-  # end
+  def default_url
+    if model.profile_photo? && model.about.respond_to?(:email) && model.about.email.present?
+      Gravatar.gravatar_url(model.about.email, size: '128x128', default: 'identicon')
+    end
+  end
 
   # Create different versions of your uploaded files:
   version :box do
@@ -79,10 +67,4 @@ class CoverUploader < CarrierWave::Uploader::Base
   def extension_white_list
     %w(jpg jpeg png webp)
   end
-
-  # Override the filename of the uploaded files:
-  # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
 end

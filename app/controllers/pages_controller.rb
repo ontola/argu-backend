@@ -30,12 +30,12 @@ class PagesController < ApplicationController
   end
 
   def new
-    authorize page, :new?
+    authorize Page, :new?
 
-    pa_po = policy(page)
+    pa_po = policy(Page)
     errors = {}
     if pa_po.create?
-      page = page.new
+      page = Page.new
       page.build_shortname
       page.build_profile
     else
@@ -55,24 +55,10 @@ class PagesController < ApplicationController
   end
 
   def create
-    saved = false
-    Page.transaction do
-      @page = Page.new
-      @page.build_shortname
-      @page.build_profile
-      @page.profile.update permit_params[:profile_attributes]
-      @page.owner = current_user.profile
-      @page.attributes = permit_params
+    authorize Page, :create?
 
-      @page.last_accepted = DateTime.current if permit_params[:last_accepted] == '1'
-
-      authorize @page, :create?
-      if @page.valid? && @page.profile.valid? && @page.shortname.valid?
-        saved = @page.save! && @page.profile.save! && @page.shortname.save!
-      end
-    end
-
-    if saved
+    @page = Page.create(permit_params)
+    if @page.valid?
       redirect_to page_url(@page), status: 303
     else
       respond_to do |format|
@@ -166,7 +152,12 @@ class PagesController < ApplicationController
   private
 
   def permit_params
-    params.require(:page).permit(*policy(@page || Page).permitted_attributes)
+    return @_permit_params if defined?(@_permit_params) && @_permit_params.present?
+    @_permit_params = params.require(:page).permit(*policy(@page || Page).permitted_attributes)
+                        .merge(owner: current_user.profile)
+    merge_photo_params(@_permit_params, Page)
+    @_permit_params[:last_accepted] = DateTime.current if permit_params[:last_accepted] == '1'
+    @_permit_params
   end
 
   def tab

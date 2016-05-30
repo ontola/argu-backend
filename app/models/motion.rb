@@ -2,7 +2,7 @@ include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
   include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks,
-          PublicActivity::Common, Flowable, Placeable
+          PublicActivity::Common, Flowable, Placeable, Photoable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :forum, inverse_of: :motions
@@ -20,13 +20,12 @@ class Motion < ActiveRecord::Base
   before_save :cap_title
   after_save :creator_follow
 
-  counter_culture :forum
   acts_as_followable
-  parentable :question, :project, :forum
   convertible :votes, :taggings, :activities
-  resourcify
-  mount_uploader :cover_photo, CoverUploader
+  counter_culture :forum
   paginates_per 30
+  parentable :question, :project, :forum
+  resourcify
 
   validates :content, presence: true, length: {minimum: 5, maximum: 5000}
   validates :title, presence: true, length: {minimum: 5, maximum: 110}

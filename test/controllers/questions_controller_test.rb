@@ -125,10 +125,15 @@ class QuestionsControllerTest < ActionController::TestCase
            forum_id: freetown,
            question: {
              title: 'Question',
-             content: 'Contents'
+             content: 'Contents',
+             default_cover_photo_attributes: {
+               image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+             }
            }
     end
     assert_not_nil assigns(:create_service).resource
+    assert_equal 'cover_photo.jpg', assigns(:create_service).resource.default_cover_photo.image_identifier
+    assert_equal 1, assigns(:create_service).resource.photos.count
     assert_redirected_to question_url(assigns(:create_service).resource)
   end
 
@@ -139,12 +144,17 @@ class QuestionsControllerTest < ActionController::TestCase
         id: member_question,
         question: {
           title: 'New title',
-          content: 'new contents'
+          content: 'new contents',
+          default_cover_photo_attributes: {
+            image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+          }
         }
 
     assert_not_nil assigns(:resource)
     assert_equal 'New title', assigns(:resource).title
     assert_equal 'new contents', assigns(:resource).content
+    assert_equal 'cover_photo.jpg', assigns(:resource).default_cover_photo.image_identifier
+    assert_equal 1, assigns(:resource).photos.reload.count
     assert_redirected_to question_url(assigns(:resource))
   end
 

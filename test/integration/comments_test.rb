@@ -92,7 +92,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   ####################################
 
   test 'owner should not delete wipe own comment twice affecting counter caches' do
-    log_in_user venice.page.owner.profileable
+    sign_in venice.page.owner.profileable
 
     assert_equal 1, comment.commentable.comments_count
 

@@ -217,6 +217,11 @@ class RestrictivePolicy
     "(#{cc.map { |t| "('#{t[0]}', #{t[1]})" }.join(', ')})"
   end
 
+  def append_default_photo_params(attributes)
+    attributes.append(default_cover_photo_attributes: Pundit.policy(context, Photo.new).permitted_attributes)
+    attributes.append(default_profile_photo_attributes: Pundit.policy(context, Photo.new).permitted_attributes)
+  end
+
   def match_record_poly_tuples(cc)
     "(record_type, record_id) IN #{generate_tuple_in_string(cc)}"
   end

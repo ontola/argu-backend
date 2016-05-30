@@ -27,6 +27,7 @@ class ProjectPolicy < RestrictivePolicy
     if stepup && (record.try(:new_record?) || is_manager_up?)
       attributes << {stepups_attributes: Pundit.policy(context, stepup).permitted_attributes(true)}
     end
+    append_default_photo_params(attributes)
     attributes << %i(id title content start_date end_date achieved_end_date email publish unpublish) if update?
     attributes
   end

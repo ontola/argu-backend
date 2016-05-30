@@ -2,7 +2,11 @@ module Shortnameable
   extend ActiveSupport::Concern
 
   included do
-    has_one :shortname, as: 'owner', dependent: :destroy, inverse_of: :owner
+    has_one :shortname,
+            as: 'owner',
+            dependent: :destroy,
+            inverse_of: :owner,
+            autosave: true
     accepts_nested_attributes_for :shortname
     after_initialize :build_shortname_if, if: :new_record?
 

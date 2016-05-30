@@ -167,20 +167,29 @@ class ForumsControllerTest < ActionController::TestCase
     forum, owner = forum_pair
     sign_in owner
 
-    put :update,
-        id: forum,
-        forum: {
-          name: 'new name',
-          bio: 'new bio',
-          cover_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg'),
-          profile_photo: File.open('test/files/forums_controller_test/forum_update_carrierwave_image.jpg')
-        }
+    assert_difference('forum.reload.lock_version', 1) do
+      put :update,
+          id: forum,
+          forum: {
+            name: 'new name',
+            bio: 'new bio',
+            default_profile_photo_attributes: {
+              id: forum.default_profile_photo.id,
+              image: uploaded_file_object(Photo, :image, open_file('profile_photo.png'))
+            },
+            default_cover_photo_attributes: {
+              image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+            }
+          }
+    end
 
     assert_redirected_to settings_forum_path(forum.url, tab: :general)
     assert assigns(:forum)
     assert_equal 'new name', assigns(:forum).reload.name
     assert_equal 'new bio', assigns(:forum).reload.bio
-    assert_equal 2, assigns(:forum).lock_version, "Lock version didn't increase"
+    assert_equal 'cover_photo.jpg', assigns(:forum).default_cover_photo.image_identifier
+    assert_equal 'profile_photo.png', assigns(:forum).default_profile_photo.image_identifier
+    assert_equal 2, assigns(:forum).photos.count
   end
 
   test 'owner should show settings/groups' do

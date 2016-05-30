@@ -19,6 +19,11 @@ class User < ActiveRecord::Base
   has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
   has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
+  has_many :uploaded_photos,
+           class_name: 'Photo',
+           inverse_of: :publisher,
+           foreign_key: 'publisher_id',
+           dependent: :nullify
   accepts_nested_attributes_for :profile, :home_placement
 
   # Include default devise modules. Others available are:

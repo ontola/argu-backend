@@ -69,6 +69,22 @@ module TestHelperMethods
                                   owner: user.profile))
       [forum, user]
     end
+
+    def open_file(filename)
+      File.open("test/files/#{filename}")
+    end
+
+    def uploaded_file_object(klass, attribute, file, content_type = 'text/plain')
+      filename = File.basename(file.path)
+      klass_label = klass.to_s.underscore
+
+      ActionDispatch::Http::UploadedFile.new(
+        tempfile: file,
+        filename: filename,
+        head: %(Content-Disposition: form-data; name="#{klass_label}[#{attribute}]"; filename="#{filename}"),
+        content_type: content_type
+      )
+    end
   end
 
   module ClassMethods

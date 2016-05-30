@@ -16,7 +16,9 @@ module Omniauth
                    finished_intro: true,
                    r: r,
                    profile_attributes: {
-                     remote_profile_photo_url: image_url
+                     default_profile_photo_attributes: {
+                       remote_image_url: image_url
+                     }
                    }
         user.identities << identity
         user.shortname = nil

@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
   include ArguBase, Placeable, PublicActivity::Common, Flowable, Trashable,
-          BlogPostable, ActivePublishable, Parentable
+          BlogPostable, ActivePublishable, Parentable, Photoable
 
   # For Rails 5 attributes
   # attribute :title, :string
@@ -22,7 +22,7 @@ class Project < ActiveRecord::Base
   has_many   :phases, inverse_of: :project
   has_many   :stepups, as: :record, dependent: :destroy
   has_many   :questions, inverse_of: :project
-  has_many :activities, as: :trackable
+  has_many   :activities, as: :trackable
 
   accepts_nested_attributes_for :phases
   accepts_nested_attributes_for :stepups

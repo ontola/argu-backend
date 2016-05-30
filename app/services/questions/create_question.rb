@@ -10,4 +10,11 @@ class CreateQuestion < CreateService
   def resource
     @question
   end
+
+  private
+
+  def set_object_attributes(obj)
+    obj.forum ||= resource.forum
+    obj.creator ||= resource.creator
+  end
 end

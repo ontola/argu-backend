@@ -1,10 +1,13 @@
 class Profile < ActiveRecord::Base
-  include ArguBase
+  include ArguBase, Photoable, ProfilePhotoable
 
   # Currently hardcoded to User (whilst it can also be a Profile)
   # to make the mailer implementation more efficient
   # has_one :profileable, class_name: 'User'
-  belongs_to :profileable, polymorphic: true, inverse_of: :profile
+  belongs_to :profileable,
+             polymorphic: true,
+             inverse_of: :profile,
+             autosave: true
   rolify after_remove: :role_removed, before_add: :role_added
 
   before_destroy :anonymize_or_wipe_dependencies
@@ -27,6 +30,11 @@ class Profile < ActiveRecord::Base
   has_many :motions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :projects, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :questions, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
+  has_many :uploaded_photos,
+           class_name: 'Photo',
+           inverse_of: :creator,
+           foreign_key: 'creator_id',
+           dependent: :restrict_with_exception
   accepts_nested_attributes_for :profileable
 
   validates :name, presence: true, length: {minimum: 3, maximum: 75}, if: :requires_name?
@@ -34,9 +42,6 @@ class Profile < ActiveRecord::Base
 
   auto_strip_attributes :name, squish: true
   auto_strip_attributes :about, nullify: false
-
-  mount_uploader :profile_photo, AvatarUploader
-  mount_uploader :cover_photo, CoverUploader
 
   def as_json(options)
     # Hide profileable for the more friendly actor
@@ -140,6 +145,7 @@ class Profile < ActiveRecord::Base
         .constantize
         .anonymize(send(association))
     end
+    Photo.anonymize(uploaded_photos)
     reload
   end
 

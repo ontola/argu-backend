@@ -104,6 +104,7 @@ class MotionsControllerTest < ActionController::TestCase
   # As Member
   ####################################
   let(:member) { create_member(freetown) }
+  let(:member_motion) { create(:motion, forum: freetown, creator: member.profile) }
 
   test 'member should get new' do
     sign_in member
@@ -121,10 +122,15 @@ class MotionsControllerTest < ActionController::TestCase
            forum_id: freetown,
            motion: {
              title: 'Motion',
-             content: 'Contents'
+             content: 'Contents',
+             default_cover_photo_attributes: {
+               image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+             }
            }
     end
     assert_not_nil assigns(:create_service).resource
+    assert_equal 'cover_photo.jpg', assigns(:create_service).resource.default_cover_photo.image_identifier
+    assert_equal 1, assigns(:create_service).resource.photos.count
     assert_redirected_to motion_path(assigns(:create_service).resource,
                                      start_motion_tour: true)
   end
@@ -165,6 +171,27 @@ class MotionsControllerTest < ActionController::TestCase
     assert_select '[name=motion[title]]', 'Motion'
     assert_select '[name=motion[content]]', 'C'
     assert_select '[name=motion[question_id]]', question.id.to_s
+  end
+
+  test 'member should put update on own motion' do
+    sign_in member
+
+    put :update,
+        id: member_motion,
+        motion: {
+          title: 'New title',
+          content: 'new contents',
+          default_cover_photo_attributes: {
+            image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+          }
+        }
+
+    assert_not_nil assigns(:update_service)
+    assert_equal 'New title', assigns(:update_service).resource.title
+    assert_equal 'new contents', assigns(:update_service).resource.content
+    assert_equal 'cover_photo.jpg', assigns(:update_service).resource.default_cover_photo.image_identifier
+    assert_equal 1, assigns(:update_service).resource.photos.count
+    assert_redirected_to motion_url(assigns(:update_service).resource)
   end
 
   test 'member should not put update on others motion' do

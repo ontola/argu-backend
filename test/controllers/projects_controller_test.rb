@@ -38,18 +38,23 @@ class ProjectsControllerTest < ActionController::TestCase
     assert_response response
   end
 
-  def general_create(response = 302, differences = [['Project.count', 0],
-                                                    ['Stepup.count', 0],
-                                                    ['Phase.count', 0],
-                                                    ['Activity.count', 0]])
+  def general_create(response = 302, created = false, differences = [['Project.count', 0],
+                                                                     ['Stepup.count', 0],
+                                                                     ['Phase.count', 0],
+                                                                     ['Activity.count', 0]])
     assert_differences(differences) do
       post :create,
            forum_id: freetown,
            project: attributes_for(:project,
                                    stepups_attributes: {'12321' => {moderator: moderator.url}},
-                                   phases_attributes: {'12321' => attributes_for(:phase)})
+                                   phases_attributes: {'12321' => attributes_for(:phase)},
+                                   default_cover_photo_attributes: {
+                                     image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+                                   })
     end
 
+    assert_equal 'cover_photo.jpg', assigns(:create_service).resource.default_cover_photo.image_identifier if created
+    assert_equal 1, assigns(:create_service).resource.photos.count if created
     assert_response response
   end
 
@@ -65,7 +70,10 @@ class ProjectsControllerTest < ActionController::TestCase
     assert_difference('Activity.count', changed ? 1 : 0) do
       patch :update,
             id: subject,
-            project: attributes_for(:project)
+            project: attributes_for(:project,
+                                    default_cover_photo_attributes: {
+                                      image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+                                    })
     end
     assert_response response
     if assigns(:update_service).try(:resource).present?
@@ -81,6 +89,8 @@ class ProjectsControllerTest < ActionController::TestCase
     else
       assert false, "can't be changed" if changed
     end
+    assert_equal 'cover_photo.jpg', assigns(:update_service).resource.default_cover_photo.image_identifier if changed
+    assert_equal 1, assigns(:update_service).resource.photos.count if changed
   end
 
   def general_trash(response = 302, difference = 0)
@@ -241,6 +251,7 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'owner should post create' do
     sign_in owner
     general_create 302,
+                   true,
                    [['Project.count', 1],
                     ['Stepup.count', 1],
                     ['Phase.count', 1]]
@@ -317,6 +328,7 @@ class ProjectsControllerTest < ActionController::TestCase
     # Test post create
     # Test that the proper stepup is generated
     general_create 302,
+                   true,
                    [['Project.count', 1],
                     ['Stepup.count', 1],
                     ['Phase.count', 1]]
@@ -347,6 +359,7 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'manager should post create' do
     sign_in manager
     general_create 302,
+                   true,
                    [['Project.count', 1],
                     ['Stepup.count', 1],
                     ['Phase.count', 1]]
@@ -390,6 +403,7 @@ class ProjectsControllerTest < ActionController::TestCase
   test 'staff should post create' do
     sign_in staff
     general_create 302,
+                   true,
                    [['Project.count', 1],
                     ['Stepup.count', 1],
                     ['Phase.count', 1]]

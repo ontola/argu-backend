@@ -1,5 +1,5 @@
 class Forum < ActiveRecord::Base
-  include ArguBase, Attribution, Shortnameable, Flowable
+  include ArguBase, Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable
 
   belongs_to :page
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
@@ -26,15 +26,9 @@ class Forum < ActiveRecord::Base
   attr_accessor :is_checked, :tab, :active
 
   acts_as_ordered_taggable_on :tags
-  mount_uploader :profile_photo, AvatarUploader
-  process_in_background :profile_photo
-  mount_uploader :cover_photo, CoverUploader
   acts_as_followable
   paginates_per 30
 
-  validates_integrity_of :profile_photo
-  validates_processing_of :profile_photo
-  validates_download_of :profile_photo
   validates :shortname, presence: true, length: {minimum: 4, maximum: 75}
   validates :name, presence: true, length: {minimum: 4, maximum: 75}
   validates :page_id, presence: true

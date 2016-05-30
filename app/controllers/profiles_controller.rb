@@ -58,7 +58,6 @@ class ProfilesController < ApplicationController
     updated = nil
     Profile.transaction do
       updated = @profile.update permit_params
-
       if @profile.profileable.class == User
         updated = updated && @profile.profileable.update_attributes(user_profileable_params)
         if (!@resource.finished_intro?) && has_valid_token?(@resource)
@@ -87,11 +86,19 @@ class ProfilesController < ApplicationController
   end
 
   private
+
   def permit_params
-    params.require(:profile).permit(*policy(@profile || Profile).permitted_attributes)
+    pm = params.require(:profile).permit(*policy(@profile || Profile).permitted_attributes)
+    merge_photo_params(pm, @resource.class)
+    pm
+  end
+
+  def photo_params_nesting_path
+    []
   end
 
   def user_profileable_params
+    return {} unless params[:profile][:profileable_attributes].present?
     params.require(:profile)
           .require(:profileable_attributes)
           .permit(:first_name, :middle_name, :last_name, :birthday,

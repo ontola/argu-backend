@@ -90,7 +90,6 @@ class MotionsController < AuthorizedController
   # PUT /motions/1
   # PUT /motions/1.json
   def update
-    update_service.resource.reload if process_cover_photo update_service.resource, permit_params
     update_service.subscribe(ActivityListener.new(creator: current_profile,
                                                   publisher: current_user))
     update_service.on(:update_motion_successful) do |motion|

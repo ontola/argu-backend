@@ -80,14 +80,11 @@ class ForumPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:name, :bio, :bio_long, :tags, :featured_tags, :profile_photo, :remove_profile_photo,
-                   :cover_photo, :remove_cover_photo, :cover_photo_attribution,
-                   :cover_photo_original_w, {memberships_attributes: [:role, :id, :profile_id, :forum_id]},
-                   :cover_photo_original_h, :cover_photo_box_w, :cover_photo_crop_x, :cover_photo_crop_y,
-                   :cover_photo_crop_w, :cover_photo_crop_h, :cover_photo_aspect,
+    attributes << [:name, :bio, :bio_long, :tags, :featured_tags,
+                   {memberships_attributes: [:role, :id, :profile_id, :forum_id]},
                    :uses_alternative_names, :questions_title, :questions_title_singular, :motions_title,
-                   :motions_title_singular, :arguments_title, :arguments_title_singular,
-                   :profile_id] if update?
+                   :motions_title_singular, :arguments_title, :arguments_title_singular, :profile_id] if update?
+    append_default_photo_params(attributes)
     attributes << [:visibility, :visible_with_a_link, :page_id] if change_owner?
     attributes
   end

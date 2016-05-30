@@ -47,11 +47,11 @@ class PagePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:bio, :tag_list, :last_accepted, profile_attributes: %i(id name profile_photo)] if create?
+    attributes << [:bio, :tag_list, :last_accepted] if create?
     attributes << [:visibility, shortname_attributes: [:shortname]] if new_record?
     attributes << :visibility if is_owner?
     attributes << [:page_id, :repeat_name] if change_owner?
-    attributes << [profile_attributes: ProfilePolicy.new(context, record.profile).permitted_attributes]
+    attributes << [profile_attributes: ProfilePolicy.new(context, record.try(:profile) || Profile).permitted_attributes]
     attributes.flatten
   end
 

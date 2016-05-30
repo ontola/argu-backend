@@ -19,12 +19,8 @@ class ProfilePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    if record.profileable.present?
-      attributes << %i(id name about profile_photo remove_profile_photo cover_photo remove_cover_photo
-                       are_votes_public is_public) if update?
-    else
-      attributes << %i(id name about profile_photo cover_photo are_votes_public is_public) if new?
-    end
+    append_default_photo_params(attributes)
+    attributes << %i(id name about are_votes_public is_public)
     attributes
   end
 

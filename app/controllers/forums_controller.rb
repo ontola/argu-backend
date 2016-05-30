@@ -70,7 +70,6 @@ class ForumsController < ApplicationController
     @forum = Forum.find_via_shortname params[:id]
     authorize @forum, :update?
 
-    @forum.reload if process_cover_photo @forum, permit_params
     respond_to do |format|
       if @forum.update permit_params
         format.html { redirect_to settings_forum_path(@forum, tab: tab) }
@@ -146,7 +145,13 @@ class ForumsController < ApplicationController
   private
 
   def permit_params
-    params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)
+    pm = params.require(:forum).permit(*policy(@forum || Forum).permitted_attributes)
+    merge_photo_params(pm, @resource.class)
+    pm
+  end
+
+  def photo_params_nesting_path
+    []
   end
 
   def redirect_generic_shortnames

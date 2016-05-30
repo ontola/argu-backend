@@ -6,7 +6,7 @@
         section
           .profile
             =link_to profile_path(current_user), class: 'image' do
-              =image_tag current_profile.profile_photo,  alt: 'Profile picture', size: '45x45', class: 'profilepicture'
+              =image_tag current_profile.profile_photo.url,  alt: 'Profile picture', size: '45x45', class: 'profilepicture'
             .info-block
               p= current_user.display_name
               =link_to edit_user_path(current_user) do

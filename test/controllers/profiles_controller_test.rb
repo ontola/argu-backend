@@ -30,6 +30,32 @@ class ProfilesControllerTest < ActionController::TestCase
     assert_equal user2.profile, assigns(:profile)
   end
 
+  test 'user should update profile_photo and cover_photo' do
+    nominatim_postal_code_valid
+    sign_in user
+
+    put :update,
+        id: user.url,
+        profile: {
+          default_profile_photo_attributes: {
+            id: user.profile.default_profile_photo.id,
+            image: uploaded_file_object(Photo, :image, open_file('profile_photo.png'))
+          },
+          default_cover_photo_attributes: {
+            image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+          },
+          profileable_attributes: {
+            first_name: 'name'
+          }
+    }
+    assert_equal 'name', user.reload.first_name
+    assert_equal 2, assigns(:profile).photos.reload.count
+    assert_equal('profile_photo.png', assigns(:profile).default_profile_photo.image_identifier)
+    assert_equal('cover_photo.jpg', assigns(:profile).default_cover_photo.image_identifier)
+
+    assert_redirected_to dual_profile_url(user.profile)
+  end
+
   test 'user should create place and placement on update with postal_code and country code' do
     nominatim_postal_code_valid
     sign_in user
@@ -39,13 +65,13 @@ class ProfilesControllerTest < ActionController::TestCase
       put :update,
           id: user.url,
           profile: {
-              profileable_attributes: {
-                  home_placement_attributes: {
-                      postal_code: '3583GP',
-                      country_code: 'NL'
-                  },
-                  first_name: 'name'
-              }
+            profileable_attributes: {
+              home_placement_attributes: {
+                postal_code: '3583GP',
+                country_code: 'NL'
+              },
+              first_name: 'name'
+            }
           }
     end
     assert_redirected_to dual_profile_url(user.profile)

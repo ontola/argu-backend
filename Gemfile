@@ -67,13 +67,13 @@ gem 'slim', '~> 3.0.6'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rails3-jquery-autocomplete', '~> 1.0.14'
-gem 'carrierwave', '~> 0.10.0'
+gem 'carrierwave', '~> 0.11.2'
 gem 'carrierwave_backgrounder', '~> 0.4.1'
 gem 'carrierwave-vips'
 # gem 'rmagick', '2.14.0'
 # Cloud storage connector for CW
 # gem 'fog', '~> 1.26.0'
-gem 'carrierwave-aws'
+gem 'carrierwave-aws', '~> 1.0.1'
 gem 'sidekiq', '~> 4.1.0'
 gem 'sidetiq', '~> 0.7.0'
 gem 'sidekiq-logging-json',
@@ -127,7 +127,7 @@ group :test do
   gem 'license_finder'
   gem 'database_cleaner'
   gem 'bundler-audit', '~> 0.5.0'
-  gem 'wisper-minitest', require: false
+  gem 'wisper-minitest', '~> 0.0.3', require: false
   gem 'wisper-rspec', require: false
   gem 'fakeredis', require: false
   gem 'simplecov', require: false
@@ -159,8 +159,8 @@ group :development do
   gem 'capistrano-rvm', '~> 0.1.2'
   gem 'yard'
   gem 'yard-activesupport-concern'
-  gem 'web-console', '~> 3.0.0'
-  gem 'puma', platform: :ruby
+  gem 'web-console', '~> 3.1.1'
+  # gem 'puma', platform: :ruby
 end
 
 group :production, :staging do

@@ -28,6 +28,7 @@ class QuestionPolicy < RestrictivePolicy
                      remove_cover_photo cover_photo_attribution expires_at) if create?
     attributes << %i(uses_alternative_names motions_title motions_title_singular) if is_manager_up?
     attributes << %i(include_motions f_convert) if staff?
+    append_default_photo_params(attributes)
     attributes
   end
 

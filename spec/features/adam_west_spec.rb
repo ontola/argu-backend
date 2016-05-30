@@ -354,7 +354,7 @@ RSpec.feature 'Adam west', type: :feature do
 
   def walk_up_to_forum(role = nil)
     visit argument_path(argument)
-    expect(page).to have_css("img[src*='#{role.profile.profile_photo.url(:icon)}']") if role.present?
+    expect(page).to have_css("img[src*='#{role.profile.default_profile_photo.url(:icon)}']") if role.present?
     expect(page).to have_content(argument.title)
     expect(page).to have_content(argument.content)
 
