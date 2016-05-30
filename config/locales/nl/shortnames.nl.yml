@@ -5,3 +5,10 @@ nl:
     contact_argu: 'Neem contact op met Argu voor meer Argu urls'
     errors:
       max_reached: 'Je hebt het maximum aantal Argu urls bereikt, neem contact op met Argu voor extra Argu urls'
+  activerecord:
+    errors:
+      models:
+        shortname:
+          attributes:
+            owner:
+              blank: "Dit object bestaat niet of bevind zich in een ander forum"

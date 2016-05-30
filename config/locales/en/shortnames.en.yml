@@ -5,3 +5,10 @@ en:
     contact_argu: 'Contact Argu to acquire more Argu urls'
     errors:
       max_reached: 'You have used the maximum number of Argu urls, contact Argu for additional Argu urls'
+  activerecord:
+    errors:
+      models:
+        shortname:
+          attributes:
+            owner:
+              blank: "This object doesn't exists or belongs to another forum"
