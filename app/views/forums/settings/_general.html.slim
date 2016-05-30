@@ -9,23 +9,15 @@
     =f.input :bio, input_html: { rows: 2, maxlength: 80}
     =f.input :bio_long, input_html: { rows: 4}
     =f.input :featured_tags, as: :tags
-  =f.inputs name: t('profiles.edit.profile_photo') do
-    =f.input :profile_photo, label: t('profiles.edit.upload_piture')
-    li.form-helper
-      span=t('profiles.edit.file_limit_notice')
-    - if @forum.profile_photo.present?
-      =f.input :profile_photo, as: :preview_image, html_options: {style: 'max-height: 256px'}
-      =f.input :remove_profile_photo, as: :reverse_boolean
-  =f.inputs name: t('profiles.edit.cover_photo') do
-    p= t('use_a_high_res_image')
-    =f.input :cover_photo, label: t('profiles.edit.upload_piture')
-    - if @forum.cover_photo.present?
-      =f.input :cover_photo, as: :preview_image, html_options: { style: 'max-height: 256px;' }
-      =f.input :remove_cover_photo, as: :reverse_boolean
-    =f.input :cover_photo_attribution
-    /- if resource.full_access_token.present?
-      =text_field_tag 'link', forum_url(resource, at: resource.access_token), onClick: 'this.setSelectionRange(0, this.value.length)'
-      p= "Follows: #{resource.full_access_token.usages}"
-      p= "Sign-ups: #{resource.full_access_token.sign_ups}"
+  =render partial: 'photos/form',
+          locals: {form: f,
+                   type: :profile_photo,
+                   relation: :default_profile_photo,
+                   preview_style: 'max-height: 256px;'}
+  =render partial: 'photos/form',
+          locals: {form: f,
+                   type: :cover_photo,
+                   relation: :default_cover_photo,
+                   preview_style: 'max-height: 256px;'}
   =f.actions do
     =f.action :submit, :as => :button

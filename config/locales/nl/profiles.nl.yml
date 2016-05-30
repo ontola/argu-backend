@@ -23,7 +23,7 @@ nl:
       cover_photo: "Omslagfoto"
       cover_photo_helper: "Je omslagfoto is een brede afbeelding die op de achtergrond van jouw profiel verschijnt."
       current_picture: "Huidige afbeelding"
-      upload_piture: "Afbeelding uploaden"
+      upload_picture: "Afbeelding uploaden"
       file_limit_notice: "De afbeelding moet kleiner zijn dan 18MB."
       gravatar_helper_html: "Deze afbeelding is gegenereerd door <a href='https://gravatar.com/' target='_blank'>Gravatar<a>."
       personal_information: "Persoonlijke informatie"

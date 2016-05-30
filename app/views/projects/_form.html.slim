@@ -14,7 +14,7 @@
           / Todo: make this work
             =f.inputs name: t('image') do
               p= t('use_a_high_res_image')
-              =f.input :cover_photo, label: t('profiles.edit.upload_piture')
+              =f.input :cover_photo, label: t('profiles.edit.upload_picture')
               li.form-helper
                 span=t('profiles.edit.file_limit_notice')
               - if project.cover_photo.present?

@@ -16,20 +16,17 @@
             p= t('questions.form.content_body_html')
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(question, :content, question_type.downcase)
             /=f.input :tag_list, input_html: {class: 'tag-list'}
-          =f.inputs name: t('image') do
-            p= t('use_a_high_res_image')
-            =f.input :cover_photo, label: t('profiles.edit.upload_piture')
-            li.form-helper
-              span=t('profiles.edit.file_limit_notice')
-            - if question.cover_photo.present?
-              =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 256px;'}
-              =f.input :remove_cover_photo, as: :reverse_boolean
-            /TODO Add Checkbox for using expires_at.
-            /TODO Hide expires_at input unless checkbox is checked.
-            /TODO Use current datetime as default input.
-            - if active_for_user?(:expires_at, current_user) && policy(question).set_expire_as?
-              =f.inputs name: t('deadline') do
-                =f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
+          =render partial: 'photos/form',
+                  locals: {form: f,
+                           type: :cover_photo,
+                           relation: :default_cover_photo,
+                           preview_style: 'max-height: 256px;'}
+          /TODO Add Checkbox for using expires_at.
+          /TODO Hide expires_at input unless checkbox is checked.
+          /TODO Use current datetime as default input.
+          - if active_for_user?(:expires_at, current_user) && policy(question).set_expire_as?
+            =f.inputs name: t('deadline') do
+              =f.input :expires_at, as: :datetime_picker, input_html: {class: 'tooltip', data: {title: 'Vul alle velden in als je een deadline in wil stellen'} }
           - if policy(question).is_manager_up?
             =f.inputs name: t('forms.admin')
               =f.input :uses_alternative_names, as: :reverse_boolean

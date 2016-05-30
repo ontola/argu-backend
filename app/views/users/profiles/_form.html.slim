@@ -11,21 +11,16 @@
     - elsif @profile.profileable.class == Page
       =f.input :name
     =f.input :about, input_html: { :rows => 5 }, label: t('profiles.about_me')
-  =f.inputs name: t('profiles.edit.profile_photo') do
-    =f.input :profile_photo, label: t('profiles.edit.upload_piture')
-    li.form-helper
-      span=t('profiles.edit.file_limit_notice')
-    =f.input :profile_photo, as: :preview_image, html_options: {style: 'max-height: 96px; margin-bottom: 0.5em;', class: 'avatar-preview'}, label: t('profiles.edit.current_picture'), class: 'avatar-preview'
-    - unless @profile.profile_photo.present?
-      li.form-helper
-        span= t('profiles.edit.gravatar_helper_html')
-  =f.inputs name: t('profiles.edit.cover_photo') do
-    p= t('profiles.edit.cover_photo_helper')
-    =f.input :cover_photo, label: t('profiles.edit.upload_piture')
-    li.form-helper
-      span=t('profiles.edit.file_limit_notice')
-    - if @profile.cover_photo.present?
-      =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 96px; margin-bottom: 0.5em;'}, label: t('profiles.edit.current_picture')
+  =render partial: 'photos/form',
+          locals: {form: f,
+                   type: :profile_photo,
+                   relation: :default_profile_photo,
+                   preview_style: 'max-height: 96px; margin-bottom: 0.5em;'}
+  =render partial: 'photos/form',
+          locals: {form: f,
+                   type: :cover_photo,
+                   relation: :default_cover_photo,
+                   preview_style: 'max-height: 96px; margin-bottom: 0.5em;'}
   =f.inputs name: t('profiles.edit.personal_information') do
     p=t('profiles.edit.personal_information_notice')
     =f.semantic_fields_for :profileable do |uf|

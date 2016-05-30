@@ -16,16 +16,11 @@
             p= t('motions.form.content_body_html') unless motion.uses_alternative_names
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(motion, :content, motion_type(motion).downcase)
             /=f.input :tag_list, input_html: {class: 'tag-list'}, label: true
-
-          =f.inputs name: t('image') do
-            p= t('use_a_high_res_image')
-            =f.input :cover_photo, label: t('profiles.edit.upload_piture')
-            li.form-helper
-              span=t('profiles.edit.file_limit_notice')
-            - if motion.cover_photo.present?
-              =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 256px;'}
-              =f.input :remove_cover_photo, as: :reverse_boolean
-
+          =render partial: 'photos/form',
+                  locals: {form: f,
+                          type: :cover_photo,
+                          relation: :default_cover_photo,
+                          preview_style: 'max-height: 256px;'}
           -if !motion.new_record? && policy(motion).trash?
             =f.inputs name: t('forms.danger_zone'), class: 'danger-zone' do
               - if policy(motion).trash?

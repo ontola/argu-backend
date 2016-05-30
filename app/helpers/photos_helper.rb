@@ -1,9 +1,4 @@
 module PhotosHelper
-  # Used to make sure the image_cached attribute is accessible in the form
-  def photo_for_form(resource, used_as)
-    resource.photos.detect {|photo| photo.persisted? ? photo == resource.send(used_as) : photo.used_as == used_as.to_s}
-  end
-
   # @param [class] type The type of the photo#about
   # @param [Forum] forum The forum the photo should be tenantanized in
   def photo_params(type, forum = nil)
