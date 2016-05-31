@@ -3,12 +3,12 @@ json.user do
   json.name @profile.name
   json.url @profile.owner.class == User ? profile_path(@profile.url) : page_path(@profile.owner.url)
   json.profile_photo do
-    json.url @profile.profile_photo.url
+    json.url @profile.default_profile_photo.url
     json.icon do
-      json.url @profile.profile_photo.url(:icon)
+      json.url @profile.default_profile_photo.url(:icon)
     end
     json.avatar do
-      json.url @profile.profile_photo.url(:avatar)
+      json.url @profile.default_profile_photo.url(:avatar)
     end
   end
   json.memberships @profile.memberships do |membership|

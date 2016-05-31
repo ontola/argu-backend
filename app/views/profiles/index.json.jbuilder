@@ -4,12 +4,12 @@ json.profiles @profiles do |profile|
   json.shortname profile.url
   json.name profile.display_name
   json.profile_photo do
-    json.url profile.profile_photo.url
+    json.url profile.default_profile_photo.url
     json.icon do
-      json.url profile.profile_photo.icon.url
+      json.url profile.default_profile_photo.icon&.url
     end
     json.avatar do
-      json.url profile.profile_photo.avatar.url
+      json.url profile.default_profile_photo.avatar&.url
     end
   end
 end

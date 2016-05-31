@@ -1,8 +1,8 @@
 .box.box-grid.profile-box[itemscope="itemscope" itemprop="creator" itemtype="http://schema.org/Person"]
   =link_to dual_profile_url(profile) do
     section.unpadded.cover--small.cover--light
-      .cover-image[style="background-image: url('#{profile.cover_photo.url(:box)}'); "]
-        =image_tag profile.profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
+      .cover-image[style="background-image: url('#{profile.default_cover_photo&.url(:box)}'); "]
+        =image_tag profile.default_profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
         h3= profile.display_name
       .cover-overlay
       - if policy(profile).update?

@@ -2,7 +2,7 @@
 h3= t('forums.settings.managers.owner')
 p= t('forums.settings.managers.about_owner')
 p= t('forums.settings.managers.about_owner_name', name: @forum.url)
-=image_tag @forum.page.profile.profile_photo, class: 'profile-photo'
+=image_tag @forum.page.profile.default_profile_photo.url, class: 'profile-photo'
 span= link_to @forum.page.profile.display_name, settings_page_url(@forum.page)
 .clear
 br
@@ -10,7 +10,7 @@ br
 h3= t('forums.settings.managers.administrator')
 p= t('forums.settings.managers.about_page_owner')
 p= t('forums.settings.managers.about_page_owner_name', name: @forum.page.url)
-=image_tag @forum.page.owner.profile_photo, class: 'profile-photo'
+=image_tag @forum.page.owner.default_profile_photo.url, class: 'profile-photo'
 span= @forum.page.owner.display_name
 .clear
 br
@@ -20,7 +20,7 @@ p= t('forums.settings.managers.about_managers')
 table.styled
   -@forum.managers.each do |manager|
     tr
-      =image_tag manager.profile_photo, class: 'profile-photo'
+      =image_tag manager.default_profile_photo.url, class: 'profile-photo'
       span
         =manager.display_name
         p.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]

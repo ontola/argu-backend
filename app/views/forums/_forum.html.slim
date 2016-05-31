@@ -13,8 +13,8 @@
 .box.box-grid
   =link_to forum_path(forum) do
     section.unpadded.cover--small
-      .cover-image[style="background-image: url('#{forum.cover_photo.url(:box)}'); "]
-        =image_tag forum.profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
+      .cover-image[style="background-image: url('#{forum.default_cover_photo&.url(:box)}'); "]
+        =image_tag forum.default_profile_photo.url(:avatar), class: 'profile-picture profile-picture--medium'
         h3= forum.display_name
       .cover-overlay
       - if policy(forum).update?

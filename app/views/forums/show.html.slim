@@ -2,19 +2,19 @@
 =connected_web url: forum_url(@forum),
                name: (@forum.bio.present? ? seolized_title(@forum) + ' | '+ @forum.bio : seolized_title(@forum)),
                description: seolized_description(@forum),
-               image: @forum.cover_photo.url
+               image: @forum.default_cover_photo&.url
 div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
   .cover.cover--forum
-    -if @forum.cover_photo.url.present?
-      .cover-image.cover-image--bigger.bg-img[onload="this.style.opacity='1'" style="background-image: url('#{@forum.cover_photo.url(:cover)}')"]
+    -if @forum.default_cover_photo&.url.present?
+      .cover-image.cover-image--bigger.bg-img[onload="this.style.opacity='1'" style="background-image: url('#{@forum.default_cover_photo&.url(:cover)}')"]
       - if @forum.cover_photo_attribution.present?
         span.header-attribution= @forum.cover_photo_attribution
     -else
       .cover-image.cover-image-empty
     .cover-overlay
       .cover-switcher-wrapper
-        -if @forum.profile_photo.url.present?
-          .profile-picture[style="background-image: url('#{@forum.profile_photo.url(:avatar)}')"]
+        -if @forum.default_profile_photo.url.present?
+          .profile-picture[style="background-image: url('#{@forum.default_profile_photo.url(:avatar)}')"]
         .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
         -if @forum.bio.present?
           h2.cover-hero-text= @forum.bio

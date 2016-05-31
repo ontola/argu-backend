@@ -25,7 +25,7 @@ module HeaderHelper
         type: 'current_user',
         title: truncate(current_profile.display_name, length: 20),
         profile_photo: {
-          url: current_profile.profile_photo.url(:icon),
+          url: current_profile.default_profile_photo.url(:icon),
           className: 'profile-picture--navbar'
         },
         triggerClass: 'navbar-item navbar-profile'
@@ -78,7 +78,7 @@ module HeaderHelper
         .select { |f| ['nederland', 'utrecht', 'houten', 'heerenveen', 'feedback'].include?(f.shortname.shortname) }
         .first(limit)
         .each do |forum|
-          items << link_item(forum.display_name, forum_path(forum), image: forum.profile_photo.url(:icon))
+          items << link_item(forum.display_name, forum_path(forum), image: forum.default_profile_photo.url(:icon))
         end
     items
   end
@@ -88,7 +88,7 @@ module HeaderHelper
     Shortname.shortname_owners_for_klass('Forum', ids).map do |shortname|
       link_item(shortname.owner.display_name,
                 forum_path(shortname.shortname),
-                image: shortname.owner.profile_photo.url(:icon))
+                image: shortname.owner.default_profile_photo.url(:icon))
     end
   end
 
@@ -125,12 +125,12 @@ module HeaderHelper
     if managed_pages.present?
       items << actor_item(current_user.display_name,
                           actors_path(na: current_user.profile.id, format: :json),
-                          image: current_user.profile.profile_photo.url(:icon),
+                          image: current_user.profile.default_profile_photo.url(:icon),
                           data: {method: 'put', turbolinks: 'false'})
       managed_pages.each do |p|
         items << actor_item(p.profile.name,
                             actors_path(na: p.profile.id, format: :json),
-                            image: p.profile.profile_photo.url(:icon),
+                            image: p.profile.default_profile_photo.url(:icon),
                             data: {method: 'put', turbolinks: 'false'})
       end
     end

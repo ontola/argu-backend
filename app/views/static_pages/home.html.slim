@@ -6,7 +6,7 @@
         section
           .profile
             =link_to profile_path(current_user), class: 'image' do
-              =image_tag current_profile.profile_photo.url,  alt: 'Profile picture', size: '45x45', class: 'profilepicture'
+              =image_tag current_profile.default_profile_photo.url,  alt: 'Profile picture', size: '45x45', class: 'profilepicture'
             .info-block
               p= current_user.display_name
               =link_to edit_user_path(current_user) do
@@ -16,7 +16,7 @@
               -current_profile.forums.select(:id, :slug, :name, :profile_photo).each do |o|
                 li
                   =link_to forum_path(o)
-                    =image_tag o.profile_photo.url(:icon), size: '16x16'
+                    =image_tag o.default_profile_photo.url(:icon), size: '16x16'
                     =o.name
           .group
             =link_to t('forums.discover'), discover_forums_url

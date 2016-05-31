@@ -1,11 +1,11 @@
 .box.box-grid.motion[class="#{'trashed' if motion.is_trashed?}" data-created-at=motion.created_at  data-updated-at=motion.updated_at data-vote-count=motion.total_vote_count itemscope="itemscope" itemtype="http://schema.org/Answer"]
-  -if motion.cover_photo.url.present?
+  -if motion.default_cover_photo&.url.present?
     =contextual_link_to motion_path(motion) do
       noscript
         .box-image--container
-          .box-image[style="background-image: url('#{motion.cover_photo.url(:box)}'); "]
+          .box-image[style="background-image: url('#{motion.default_cover_photo.url(:box)}'); "]
       .box-image--container.b-lazy-hide-container
-        .box-image.b-lazy[data-src=motion.cover_photo.url(:box)]
+        .box-image.b-lazy[data-src=motion.default_cover_photo.url(:box)]
   =contextual_link_to motion_path(motion) do
     =render partial: 'motions/info_bar', locals: {motion: motion}
   =contextual_link_to motion_path(motion) do

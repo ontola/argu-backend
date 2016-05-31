@@ -1,6 +1,6 @@
 section.profile-small[itemscope="itemscope" itemprop="creator" itemtype="http://schema.org/Person"]
   =link_to dual_profile_url(resource.creator) do
-    img[src=profile.profile_photo.url(:icon) alt="profile-picture profile-picture--small" itemprop="image"]
+    img[src=profile.default_profile_photo.url(:icon) alt="profile-picture profile-picture--small" itemprop="image"]
   .info-block
     =link_to dual_profile_url(resource.creator) do
       span.info

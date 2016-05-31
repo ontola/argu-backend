@@ -1,7 +1,7 @@
 // Deprecated
 .box.selector-profile.profile-box.box-grid
   .header
-    = image_tag forum.profile_photo.url(:avatar), size: '64x64'
+    = image_tag forum.default_profile_photo.url(:avatar), size: '64x64'
     .additional-info
       h3= forum.display_name
       /TODO: change letters for icons

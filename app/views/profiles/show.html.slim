@@ -2,16 +2,16 @@
 =connected_web url: dual_profile_url(@profile),
                name: seolized_title(@user || @page || @profile),
                description: seolized_description(@user || @page || @profile),
-               image: @profile.profile_photo
+               image: @profile.default_profile_photo
 - if @page.present?
   =render partial: 'manage_bar', locals: {resource: @page, active: :show} if policy(@page).update?
 - else
   =render partial: 'profiles/profile_bar', locals: {resource: @profile, active: :show} if policy(@profile).update?
 .cover-behind.cover--profile
-  .cover-image[style="background-image: url('#{@profile.cover_photo.url(:cover)}'); "]
+  .cover-image[style="background-image: url('#{@profile.default_cover_photo&.url(:cover)}'); "]
 .col-1
   .profile-top-container
-    =image_tag @profile.profile_photo.url(:avatar), container_class: 'profile', class: 'profile-picture profile-picture--big'
+    =image_tag @profile.default_profile_photo.url(:avatar), container_class: 'profile', class: 'profile-picture profile-picture--big'
     .profile-header
       h1= @profile.display_name
   .profile[data-intro= t('intro.profile.show', name: @profile.display_name)]

@@ -2,11 +2,11 @@
 =connected_web url: motion_url(@motion),
                name: seolized_title(@motion),
                description: seolized_description(@motion),
-               image: @motion.cover_photo.url || image_url('logo-social.png')
+               image: @motion.default_cover_photo&.url || image_url('logo-social.png')
 
 div[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]
   .cover-behind
-    .cover-image.bg-img[style="background-image: url('#{@motion.cover_photo.url(:cover)}'); "]
+    .cover-image.bg-img[style="background-image: url('#{@motion.default_cover_photo&.url(:cover)}'); "]
   .col-1
     div[data-intro= t('intro.motion.back')]= to_parent
     =render partial: 'contextualize/context_horizontal', locals: {item: @motion, type: 'motion'}

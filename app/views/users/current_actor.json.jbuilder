@@ -7,15 +7,15 @@ json.current_actor do
   json.current_forum do
     json.display_name @profile.preferred_forum.display_name
     json.shortname @profile.preferred_forum.url
-    json.cover_photo @profile.preferred_forum.cover_photo
+    json.cover_photo @profile.preferred_forum.default_cover_photo
   end
   json.profile_photo do
-    json.url @profile.profile_photo.url
+    json.url @profile.default_profile_photo.url
     json.icon do
-      json.url @profile.profile_photo.url(:icon)
+      json.url @profile.default_profile_photo.url(:icon)
     end
     json.avatar do
-      json.url @profile.profile_photo.url(:avatar)
+      json.url @profile.default_profile_photo.url(:avatar)
     end
   end
   json.groups policy_scope(@profile.groups) do |group|
@@ -27,9 +27,9 @@ json.current_actor do
     json.url page_path(page)
     json.update_url actors_path(na: page.profile.id)
     json.profile_photo do
-      json.url page.profile.profile_photo.url
+      json.url page.profile.default_profile_photo.url
       json.icon do
-        json.url page.profile.profile_photo.url(:icon)
+        json.url page.profile.default_profile_photo.url(:icon)
       end
     end
   end

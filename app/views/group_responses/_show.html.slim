@@ -3,7 +3,7 @@
     span= t(model.side)
   section
     .profile-small
-      img[src=model.creator.profile_photo.url(:icon)]
+      img[src=model.creator.default_profile_photo.url(:icon)]
       .info-block
         =link_to dual_profile_url(model.creator)
           h3[class="#{model.side}-t"]= model.creator.display_name

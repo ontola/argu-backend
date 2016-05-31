@@ -1,7 +1,7 @@
 h3= t('pages.settings.managers.owner')
 p= t('pages.settings.managers.about_owner')
 .margin-bottom
-  =image_tag @page.owner.profile_photo, class: 'profile-photo'
+  =image_tag @page.owner.default_profile_photo.url, class: 'profile-photo'
   span= @page.owner.display_name
 
 - if policy(@page).transfer?
@@ -14,7 +14,7 @@ table.styled
   tbody
     -@page.managers.each do |manager|
       tr
-        =image_tag manager.profile_photo, class: 'profile-photo'
+        =image_tag manager.default_profile_photo.url, class: 'profile-photo'
         span
           =manager.display_name
           p.tooltip--right[data-title=t('forums.settings.hints.remove_admin')]
