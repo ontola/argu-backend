@@ -84,8 +84,8 @@ class ApplicationService
           association_instance.each do |record|
             set_object_attributes(record)
           end
-        elsif association.respond_to?(:save)
-          set_object_attributes(association)
+        elsif association_instance.respond_to?(:save)
+          set_object_attributes(association_instance)
         end
       end
     end
