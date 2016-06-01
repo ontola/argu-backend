@@ -26,7 +26,7 @@ class Motion < ActiveRecord::Base
   convertible :votes, :taggings, :activities
   resourcify
   mount_uploader :cover_photo, CoverUploader
-  paginates_per 10
+  paginates_per 30
 
   validates :content, presence: true, length: {minimum: 5, maximum: 5000}
   validates :title, presence: true, length: {minimum: 5, maximum: 110}

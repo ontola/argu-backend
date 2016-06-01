@@ -3,6 +3,7 @@ class Comment < ActiveRecord::Base
 
   acts_as_nested_set scope: [:commentable_id, :commentable_type]
   acts_as_followable
+  paginates_per 30
   parentable :commentable
 
   belongs_to :forum

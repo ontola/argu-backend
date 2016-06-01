@@ -30,7 +30,7 @@ class Forum < ActiveRecord::Base
   process_in_background :profile_photo
   mount_uploader :cover_photo, CoverUploader
   acts_as_followable
-  paginates_per 21
+  paginates_per 30
 
   validates_integrity_of :profile_photo
   validates_processing_of :profile_photo

@@ -37,7 +37,7 @@ class ForumsController < ApplicationController
                                    .sort_by(&:updated_at)
                                    .reverse)
                .page(show_params[:page])
-               .per(20)
+               .per(30)
     end
   end
 
