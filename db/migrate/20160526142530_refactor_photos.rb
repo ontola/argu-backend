@@ -11,7 +11,7 @@ class RefactorPhotos < ActiveRecord::Migration
           resource
             .photos
             .cover_photo
-            .create(photo_params.merge(remote_image_url: cover_url(klass, resource)))
+            .create(photo_params(resource).merge(remote_image_url: cover_url(klass, resource)))
         end
     end
 
@@ -21,7 +21,7 @@ class RefactorPhotos < ActiveRecord::Migration
           resource
             .photos
             .profile_photo
-            .create(photo_params.merge(remote_image_url: profile_url(klass, resource)))
+            .create(photo_params(resource).merge(remote_image_url: profile_url(klass, resource)))
         end
     end
   end
@@ -50,7 +50,7 @@ class RefactorPhotos < ActiveRecord::Migration
       if resource.profileable.is_a?(Page)
         {publisher: resource.profileable.owner.profileable, creator: resource, forum: nil}
       else
-        [publisher: resource.profileable, creator: resource, forum: nil]
+        {publisher: resource.profileable, creator: resource, forum: nil}
       end
     when Forum
       {publisher: resource.page.owner.profileable, creator: resource.page.owner, forum: resource}
