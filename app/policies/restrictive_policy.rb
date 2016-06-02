@@ -1,5 +1,5 @@
 class RestrictivePolicy
-  include AccessTokenHelper
+  include AccessTokenHelper, TuplesHelper
   prepend ExceptionToTheRule
 
   attr_reader :context, :record
@@ -71,7 +71,7 @@ class RestrictivePolicy
         # Get the tuples of the entire parent chain
         cc = Context.new(record).map(&:polymorphic_tuple).compact
         # Match them against the set of stepups within the forum
-        moderator if cc.presence && forum_stepups.where(match_record_poly_tuples(cc)).presence
+        moderator if cc.presence && forum_stepups.where(match_record_poly_tuples(cc, 'record')).presence
       end
     end
 
@@ -104,9 +104,15 @@ class RestrictivePolicy
 
   def permitted_attributes
     attributes = [:lock_version]
-    attributes << :shortname if shortname?
-    attributes << :is_trashed if !record.is_a?(Class) && trash?
+    attributes.append :shortname if shortname?
+    attributes.append :is_trashed if !record.is_a?(Class) && trash?
     attributes
+  end
+
+  # @param parent_key [String, Symbol] Parent key of the wanted subset
+  # @return [Array] Allowed attributes, nested under a parent key
+  def permitted_nested_attributes(parent_key)
+    (permitted_attributes.find { |a| a.is_a?(Hash) && a[parent_key] } || {})[parent_key].flatten
   end
 
   def assert!(assertion, query = nil)

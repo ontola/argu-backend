@@ -80,19 +80,21 @@ class ForumPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:name, :bio, :bio_long, :tags, :featured_tags,
-                   {memberships_attributes: [:role, :id, :profile_id, :forum_id]},
-                   :uses_alternative_names, :questions_title, :questions_title_singular, :motions_title,
-                   :motions_title_singular, :arguments_title, :arguments_title_singular, :profile_id] if update?
+    if update?
+      attributes.concat %i(name bio bio_long tags featured_tags uses_alternative_names
+                           questions_title questions_title_singular motions_title motions_title_singular
+                           arguments_title arguments_title_singular profile_id)
+    end
+    attributes.concat %i(visibility visible_with_a_link page_id) if change_owner?
+    attributes.append(memberships_attributes: %i(role id profile_id forum_id))
     append_default_photo_params(attributes)
-    attributes << [:visibility, :visible_with_a_link, :page_id] if change_owner?
     attributes
   end
 
   def permitted_tabs
     tabs = []
-    tabs << :general << :advanced << :groups << :projects << :shortnames << :banners if is_manager? || staff?
-    tabs << :privacy << :managers if is_owner? || staff?
+    tabs.concat %i(general advanced groups projects shortnames banners) if is_manager? || staff?
+    tabs.concat %i(privacy managers) if is_owner? || staff?
     tabs
   end
 

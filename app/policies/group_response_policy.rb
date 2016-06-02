@@ -41,9 +41,9 @@ class GroupResponsePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:text, :side] if create?
-    attributes << [:text, :side] if update?
-    attributes << [:id] if staff?
+    attributes.concat %i(text side) if create?
+    attributes.concat %i(text side) if update?
+    attributes.append :id if staff?
     attributes
   end
 

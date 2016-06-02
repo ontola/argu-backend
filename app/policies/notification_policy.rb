@@ -27,7 +27,7 @@ class NotificationPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:user_id, :title, :url] if staff?
+    attributes.concat %i(user_id title url) if staff?
     attributes
   end
 

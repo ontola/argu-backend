@@ -3,7 +3,7 @@ class ShortnamePolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << %i(shortname owner_id owner_type) if is_manager_up?
+    attributes.concat %i(shortname owner_id owner_type) if is_manager_up?
     attributes
   end
 

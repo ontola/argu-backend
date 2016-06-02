@@ -213,7 +213,7 @@ Rails/Validation:
     - 'app/models/question_answer.rb'
     - 'app/models/shortname.rb'
 
-# Offense count: 14
+# Offense count: 5
 Style/AccessorMethodName:
   Exclude:
     - 'app/controllers/application_controller.rb'

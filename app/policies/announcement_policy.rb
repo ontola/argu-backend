@@ -31,10 +31,9 @@ class AnnouncementPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:title, :forum, :cited_profile, :content,
-                   :cited_avatar, :cited_name, :audience,
-                   :cited_function, :published_at, :ends_at] if create?
-    attributes << [:id] if staff?
+    attributes.concat %i(title forum cited_profile content cited_avatar
+                         cited_name audience cited_function published_at ends_at) if create?
+    attributes.append :id if staff?
     attributes
   end
 

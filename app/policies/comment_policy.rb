@@ -20,7 +20,7 @@ class CommentPolicy < RestrictivePolicy
 
   def permitted_attributes
     attributes = super
-    attributes << [:body, :parent_id] if create?
+    attributes.concat %i(body parent_id) if create?
     attributes
   end
 
