@@ -8,6 +8,7 @@ html[class="no-js"]
 
     =yield :connected_web
     =render 'layouts/meta'
+    meta[name="user-identity-token" content="#{user_identity_token(current_user)}"]
 
     =javascript_include_tag 'turbolinks/dist/turbolinks', data: {:'turbolinks-permanent' => true}
     =javascript_include_tag 'application', data: {:'turbolinks-permanent' => true}
@@ -15,7 +16,6 @@ html[class="no-js"]
     =stylesheet_link_tag 'application', :media => 'all'
     - if request.original_url.include? developers_path
       =stylesheet_link_tag 'developers/developers', :media => 'all'
-    meta[name="user-identity-token" content="#{user_identity_token(current_user)}"]
 
     link[rel="copyright" content="#{t('site.copyright')}"]
     - if active_for_user?('inspectlet', current_user)

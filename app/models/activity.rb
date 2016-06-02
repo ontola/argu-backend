@@ -13,6 +13,7 @@ class Activity < PublicActivity::Activity
   alias_attribute :happened_at, :created_at
 
   validates_presence_of :forum, :key, :trackable, :owner, :recipient
+  validate :validate_happening_within_project_scope
 
   # Represents the physical event of the trackable.
   # @note A happening is an Activity with '*.happened' as key
@@ -36,5 +37,16 @@ class Activity < PublicActivity::Activity
 
   def object
     trackable_type.underscore
+  end
+
+  private
+
+  def validate_happening_within_project_scope
+    if trackable.try(:project).present? && action == 'happened'
+      if trackable.project.start_date > created_at ||
+          (trackable.project.end_date.present? && trackable.project.end_date < created_at)
+        errors.add(:happened_at, 'must be published during a phase of the project')
+      end
+    end
   end
 end

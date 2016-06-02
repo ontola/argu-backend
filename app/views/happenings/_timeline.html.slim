@@ -1,0 +1,22 @@
+- if render_timeline?(resource, show_unpublished)
+  header
+    h2= t('resources.timeline')
+  .timeline-component
+    .timeline
+      .inner-line[style="{innerStyle}"]
+    -if resource.respond_to?(:phases) && resource.phases.present?
+      .timeline-phases
+        -resource.phases.order(start_date: :asc).each do |phase|
+          .timeline-phase
+            =link_to phase_path(phase), data: {remote: true}, class: generate_phase_link_class(resource, phase) do
+              span= phase.display_name
+            .timeline-points
+              -phase.happenings(show_unpublished).each do |happening|
+                =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening.trackable == current_happening}
+    -else
+      .timeline-points
+        - resource.happenings.published(show_unpublished).each do |happening|
+          =render partial: 'happenings/timeline_point', locals: {happening: happening, active: happening.trackable == current_happening}
+#current-blog-post
+  - if current_happening.present?
+    =render partial: 'blog_posts/blog_post', locals: {blog_post: current_happening}

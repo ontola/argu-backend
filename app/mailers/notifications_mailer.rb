@@ -1,6 +1,7 @@
 
 class NotificationsMailer < ApplicationMailer
   include MailerHelper
+  add_template_helper(ApplicationHelper)
 
   def notifications_email(user, notifications)
     @user = user

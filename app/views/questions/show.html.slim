@@ -30,6 +30,9 @@
         - if question.forum.visibility
           li
             ul= react_component 'ShareDropdown', share_items(question), {prerender: true}
+- if question.blog_posts.present?
+  .col-1
+    = render partial: 'happenings/timeline', locals: {resource: question, show_unpublished: policy(question).update?, current_happening: question.latest_blog_post(policy(question).update?)}
 .col-1
   .intro-filler[data-intro= t('intro.question.motions') data-position= "top"]
 =render_columns({'' => {collection: @motions}},

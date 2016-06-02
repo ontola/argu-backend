@@ -1,0 +1,4 @@
+=link_to blog_post_path(happening.trackable), data: {remote: true}, class: generate_timeline_point_class(happening, active) do
+  span[class="fa fa-#{blog_post_icon}"]
+  =link_to blog_post_path(happening.trackable), data: {remote: true}, class: 'timeline-post-title' do
+    span= happening.trackable.title

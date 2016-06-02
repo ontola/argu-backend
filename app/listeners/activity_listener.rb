@@ -28,7 +28,7 @@ class ActivityListener
     end
 
     define_method "#{method}_motion_successful" do |resource|
-      recipient = resource.question || resource.forum
+      recipient = resource.question || resource.project || resource.forum
       create_activity(resource, recipient, method)
     end
 
@@ -37,7 +37,8 @@ class ActivityListener
     end
 
     define_method "#{method}_question_successful" do |resource|
-      create_activity(resource, resource.forum, method)
+      recipient = resource.project || resource.forum
+      create_activity(resource, recipient, method)
     end
   end
 
@@ -63,7 +64,8 @@ class ActivityListener
       owner: @creator,
       forum: resource.forum,
       recipient: recipient,
-      audit_data: audit_data(resource, recipient))
+      audit_data: audit_data(resource, recipient),
+      is_published: true)
     a.subscribe(NotificationListener.new)
     a.commit
   end

@@ -2,7 +2,7 @@ include ActionView::Helpers::NumberHelper
 
 class Motion < ActiveRecord::Base
   include ArguBase, Trashable, Parentable, Convertible, ForumTaggable, Attribution, HasLinks,
-          PublicActivity::Common, Flowable, Placeable, Photoable
+          BlogPostable, PublicActivity::Common, Flowable, Placeable, Photoable
 
   belongs_to :creator, class_name: 'Profile'
   belongs_to :forum, inverse_of: :motions

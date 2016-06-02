@@ -129,7 +129,7 @@ Argu::Application.routes.draw do
 
   resources :questions,
             path: 'q', except: [:index, :new, :create, :destroy],
-            concerns: [:moveable, :convertible, :flowable, :trashable, :loggable] do
+            concerns: [:blog_postable, :moveable, :convertible, :flowable, :trashable, :loggable] do
     resources :tags, path: 't', only: [:index]
     resources :motions, path: 'm', only: [:index, :new, :create]
   end
@@ -139,7 +139,7 @@ Argu::Application.routes.draw do
   resources :motions,
             path: 'm',
             except: [:index, :new, :create, :destroy],
-            concerns: [:moveable, :convertible, :votable, :flowable, :trashable, :loggable] do
+            concerns: [:blog_postable, :moveable, :convertible, :votable, :flowable, :trashable, :loggable] do
     resources :groups, only: [] do
       resources :group_responses, only: [:new, :create]
     end

@@ -30,13 +30,8 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
               span.icon-left= t('blog_posts.type_new')
     -unless project.is_published?
       =render partial: 'application/publish', locals: {resource: project}
-    -unless project.phases.blank? && project.latest_blog_post.blank?
-      =render partial: 'projects/timeline', locals: {project: project}
-    #current-blog-post
-      - if project.latest_blog_post.present?
-        =render project.latest_blog_post
-      -elsif project.phases.present?
-        =render project.current_phase
+    -unless project.phases.blank? && project.latest_blog_post(policy(project).update?).blank?
+      =render partial: 'happenings/timeline', locals: {resource: project, show_unpublished: policy(project).update?, current_happening: project.latest_blog_post(policy(project).update?)}
   header
     h2 discussies
   .btns-center-container

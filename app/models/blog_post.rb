@@ -34,7 +34,6 @@ class BlogPost < ActiveRecord::Base
           dependent: :destroy,
           autosave: true
 
-  validate :validate_within_project_scope
   counter_culture :project,
                   column_name: proc { |model| model.is_published && !model.is_trashed? ? 'blog_posts_count' : nil }
   parentable :blog_postable, :forum
@@ -45,13 +44,4 @@ class BlogPost < ActiveRecord::Base
   alias_attribute :display_name, :title
   attr_accessor :happened_at
   delegate :happened_at, to: :happening, allow_nil: true
-
-  def validate_within_project_scope
-    if blog_postable.is_a?(Project) && published_at.present?
-      if blog_postable.start_date > published_at ||
-          (blog_postable.end_date.present? && blog_postable.end_date < published_at)
-        errors.add(:published_at, 'must be published during a phase of the project')
-      end
-    end
-  end
 end

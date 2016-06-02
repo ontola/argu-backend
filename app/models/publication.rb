@@ -4,13 +4,14 @@ class Publication < ActiveRecord::Base
   belongs_to :creator, class_name: 'Profile', inverse_of: :projects
   belongs_to :publisher, class_name: 'User'
 
-  after_save :re_schedule_or_destroy
-  before_destroy :cancel_job
-  after_rollback :cancel_job
+  before_save :reset
+  before_destroy :cancel
+  after_rollback :cancel
 
   attr_accessor :publish_type
   enum publish_type: {direct: 0, draft: 1, schedule: 2}
 
+  # @TODO: wrap in transaction
   def commit
     publishable.update(is_published: true)
     publishable.happening.update(is_published: true) if publishable.respond_to?(:happening)
@@ -20,15 +21,16 @@ class Publication < ActiveRecord::Base
   private
 
   # Cancel the scheduled PublishJob
-  def cancel_job
+  def cancel
     PublicationsWorker.cancel!(job_id) if job_id.present?
   end
 
-  # Cancel a previously scheduled job and either schedule a new job, or destroy the publication
-  def re_schedule_or_destroy
-    cancel_job if job_id.present? && published_at_changed?
+  # Cancel a previously scheduled job and schedule a new job if needed
+  def reset
     return if publishable.is_published?
-    published_at.present? ? schedule : destroy
+
+    cancel if job_id.present? && published_at_changed?
+    schedule if published_at.present?
   end
 
   # Create a PublicationsWorker and save it's job id

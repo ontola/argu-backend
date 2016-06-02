@@ -19,9 +19,9 @@
             =f.hidden_field(:motion_id)
             =f.hidden_field(:auto_vote, value: true) if argument.new_record?
     section.section--footer
-      =f.actions
-        .sticky-submit= f.action :submit, as: :button
       - if argument.new_record?
         =render partial: 'profiles/profile_current'
       - else
         =render partial: argument.creator, locals: {resource: argument}
+      =f.actions
+        .sticky-submit= f.action :submit, as: :button

@@ -42,20 +42,8 @@ class Project < ActiveRecord::Base
     phases.where('end_date IS NULL').count == 1
   end
 
-  # Fetches the latest published blog post which already happened.
-  # @return [BlogPost, nil] The latest published blog post or nil if none exists
-  def latest_blog_post
-    blog_posts
-      .published
-      .joins(:happening)
-      .where('activities.created_at < ?', DateTime.current)
-      .order('activities.created_at DESC')
-      .references(:happening)
-      .first
-  end
-
   def update_start_date_of_first_phase
-    if phases.present? && start_date_changed?
+    if phases.present? && (start_date_changed? || phases.first.changed?)
       if phases.first.persisted?
         phases.first.update!(start_date: start_date)
       else
