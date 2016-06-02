@@ -81,6 +81,7 @@ class VotesControllerTest < ActionController::TestCase
     create(:vote,
            voteable: motion,
            voter: member.profile,
+           publisher: member,
            for: 'neutral')
     sign_in member
 

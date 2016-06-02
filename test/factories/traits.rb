@@ -1,4 +1,10 @@
 FactoryGirl.define do
+  trait :set_publisher do
+    after :build do |res|
+      res.publisher = res.creator.profileable if res.publisher.blank?
+    end
+  end
+
   trait :published do
     is_published true
     argu_publication factory: :publication, strategy: :build

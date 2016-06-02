@@ -40,7 +40,7 @@ class VotesController < AuthorizedController
     @model = get_parent_resource
     get_context
 
-    @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile)
+    @vote = Vote.find_or_initialize_by(voteable: @model, voter: current_profile, publisher: current_user)
     @vote.forum ||= @model.forum
 
     if @vote.persisted?

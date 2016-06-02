@@ -73,9 +73,15 @@ FactoryGirl.define do
       factory :user_with_votes do
         after(:create) do |user|
           motion = Motion.find_by(is_trashed: false)
-          user.profile.votes.create(voteable: motion, forum: motion.forum, for: :pro)
+          user.profile.votes.create(voteable: motion,
+                                    forum: motion.forum,
+                                    publisher: user,
+                                    for: :pro)
           trashed = Motion.find_by(is_trashed: true)
-          user.profile.votes.create(voteable: trashed, forum: trashed.forum, for: :pro)
+          user.profile.votes.create(voteable: trashed,
+                                    forum: trashed.forum,
+                                    publisher: user,
+                                    for: :pro)
         end
       end
     end

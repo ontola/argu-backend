@@ -2,9 +2,13 @@ class Vote < ActiveRecord::Base
   include ArguBase, Parentable, PublicActivity::Model
 
   belongs_to :voteable, polymorphic: true, inverse_of: :votes
-  belongs_to :voter, polymorphic: true # class_name: 'Profile'
+  belongs_to :voter, class_name: 'Profile', inverse_of: :votes
+  alias creator voter
+  alias creator= voter=
+  belongs_to :publisher, class_name: 'User', foreign_key: 'publisher_id'
   has_many :activities, as: :trackable
   belongs_to :forum
+
   parentable :voteable
 
   after_save :update_parentable_counter

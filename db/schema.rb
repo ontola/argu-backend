@@ -766,6 +766,7 @@ ActiveRecord::Schema.define(version: 20160526142530) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "forum_id"
+    t.integer  "publisher_id",                          null: false
   end
 
   add_index "votes", ["voteable_id", "voteable_type", "voter_id", "voter_type"], name: "index_votes_on_voter_and_voteable_and_trashed", using: :btree
@@ -813,4 +814,6 @@ ActiveRecord::Schema.define(version: 20160526142530) do
   add_foreign_key "stepups", "groups"
   add_foreign_key "stepups", "profiles", column: "creator_id"
   add_foreign_key "stepups", "users"
+  add_foreign_key "votes", "profiles", column: "voter_id"
+  add_foreign_key "votes", "users", column: "publisher_id"
 end
