@@ -1,4 +1,4 @@
-class TrashBlogPost < TrashService
+class UntrashBlogPost < UntrashService
   include Wisper::Publisher
 
   def initialize(blog_post, options = {})
@@ -8,5 +8,10 @@ class TrashBlogPost < TrashService
 
   def resource
     @blog_post
+  end
+
+  private
+
+  def object_attributes=(obj)
   end
 end

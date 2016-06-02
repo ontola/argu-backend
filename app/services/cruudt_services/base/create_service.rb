@@ -8,11 +8,6 @@ class CreateService < ApplicationService
 
   private
 
-  def after_save
-    create_publication if resource.respond_to?(:publish_at)
-    resource.publisher.follow(resource) if resource.try(:publisher).present?
-  end
-
   def service_action
     :create
   end

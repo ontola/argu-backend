@@ -1,8 +1,8 @@
 
-class CreateComment < CreateService
+class CreateComment < PublishedCreateService
   include Wisper::Publisher
 
-  def initialize(comment, attributes = {})
+  def initialize(comment, attributes = {}, options = {})
     @comment = comment
     super
   end

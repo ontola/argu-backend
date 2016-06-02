@@ -11,6 +11,7 @@ class DestroyComment < DestroyService
   end
 
   private
+
   def service_action
     :destroy
   end

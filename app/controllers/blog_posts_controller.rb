@@ -138,8 +138,8 @@ class BlogPostsController < AuthorizedController
   def create_service
     @create_service ||= CreateBlogPost.new(
       BlogPost.new,
-      permit_params.merge(resource_new_params.merge(publisher: current_user,
-                                                    creator: current_profile)))
+      permit_params.merge(resource_new_params),
+      service_options)
   end
 
   def destroy_service
@@ -182,6 +182,7 @@ class BlogPostsController < AuthorizedController
   def update_service
     @update_service ||= UpdateBlogPost.new(
       resource_by_id,
-      permit_params)
+      permit_params,
+      service_options)
   end
 end

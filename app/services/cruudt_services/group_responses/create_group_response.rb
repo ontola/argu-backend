@@ -1,5 +1,5 @@
 
-class CreateGroupResponse < CreateService
+class CreateGroupResponse < PublishedCreateService
   include Wisper::Publisher
 
   def initialize(group_response, attributes = {}, options = {})

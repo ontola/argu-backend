@@ -41,6 +41,7 @@ class PhasesController < AuthorizedController
   def update_service
     @update_service ||= UpdatePhase.new(
       resource_by_id,
-      permit_params)
+      permit_params,
+      service_options)
   end
 end

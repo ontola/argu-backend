@@ -15,7 +15,9 @@ class UpdateProject < UpdateService
   private
 
   def object_attributes=(obj)
+    return if obj.is_a?(Publication)
     obj.forum ||= @project.forum
     obj.creator ||= @project.creator
+    obj.publisher ||= @project.publisher unless obj.is_a?(Stepup)
   end
 end

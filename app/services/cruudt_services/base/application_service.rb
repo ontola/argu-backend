@@ -7,6 +7,10 @@ class ApplicationService
   def initialize(resource, attributes = {}, options = {})
     @attributes = attributes
     @actions = {}
+    @options = options
+    if @attributes[:argu_publication_attributes].present? && !resource.is_published?
+      prepare_argu_publication_attributes
+    end
     assign_attributes
     set_nested_associations
   end
@@ -29,7 +33,8 @@ class ApplicationService
       publish("publish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:published]
       publish("unpublish_#{resource.model_name.singular}_successful".to_sym, resource) if @actions[:unpublished]
     end
-  rescue ActiveRecord::RecordInvalid, ActiveRecord::ActiveRecordError
+  rescue ActiveRecord::RecordInvalid, ActiveRecord::ActiveRecordError => e
+    raise(e) if e.is_a?(ActiveRecord::StatementInvalid)
     publish("#{signal_base}_failed".to_sym, resource)
   end
 
@@ -44,18 +49,6 @@ class ApplicationService
 
   def assign_attributes
     resource.assign_attributes(@attributes)
-    if @attributes.include? :publish_type
-      resource.publish_at = 10.seconds.from_now if resource.publish_type == 'direct'
-      resource.publish_at = nil if resource.publish_type == 'draft'
-    end
-  end
-
-  def create_publication
-    if resource.publish_at.present?
-      resource.create_argu_publication(published_at: resource.publish_at,
-                                       publisher: resource.publisher,
-                                       creator: resource.creator)
-    end
   end
 
   # The action that called this service.
@@ -85,7 +78,7 @@ class ApplicationService
             self.object_attributes = record
           end
         elsif association_instance.respond_to?(:save)
-          self.object_attributes = association
+          self.object_attributes = association_instance
         end
       end
     end
@@ -97,6 +90,19 @@ class ApplicationService
   # @param [ActiveRecord::Base] obj The model on which the attributes should be set
   def object_attributes=(obj)
     raise 'Required interface not implemented'
+  end
+
+  def prepare_argu_publication_attributes
+    attributes = @attributes[:argu_publication_attributes]
+    attributes[:published_at] = 10.seconds.from_now if attributes[:publish_type] == 'direct'
+    attributes[:published_at] = nil if attributes[:publish_type] == 'draft'
+    if resource.new_record? ||
+        (attributes[:published_at] != resource.argu_publication.published_at ||
+          attributes[:publish_type] != resource.argu_publication.publish_type)
+      attributes[:publisher] ||= @options[:publisher]
+      attributes[:creator] ||= @options[:creator]
+    end
+    @attributes[:argu_publication_attributes] = attributes
   end
 
   def signal_base

@@ -9,4 +9,9 @@ class DestroyBlogPost < DestroyService
   def resource
     @blog_post
   end
+
+  private
+
+  def object_attributes=(obj)
+  end
 end

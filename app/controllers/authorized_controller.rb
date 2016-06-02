@@ -175,6 +175,15 @@ class AuthorizedController < ApplicationController
     end
   end
 
+  # For use with the services options parameter, with sensible defaults
+  # @return [Hash] Defaults with the creator and publisher set to the current profile/user
+  def service_options(options = {})
+    {
+      creator: current_profile,
+      publisher: current_user
+    }.merge(options)
+  end
+
   # Prepares a memoized {DestroyService} for the relevant model for use in controller#destroy
   # @return [DestroyService] The service, generally initialized with {resource_id}
   # @example

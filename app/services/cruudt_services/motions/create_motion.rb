@@ -1,14 +1,14 @@
 
-class CreateQuestion < CreateService
+class CreateMotion < PublishedCreateService
   include Wisper::Publisher
 
-  def initialize(question, attributes = {}, options = {})
-    @question = question
+  def initialize(motion, attributes = {}, options = {})
+    @motion = motion
     super
   end
 
   def resource
-    @question
+    @motion
   end
 
   private

@@ -168,10 +168,8 @@ class ArgumentsController < AuthorizedController
     @create_service ||= CreateArgument.new(
       Argument.new,
       permit_params.merge(
-        forum: authenticated_context,
-        publisher: current_user,
-        creator: current_profile),
-      auto_vote: params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile)
+        forum: authenticated_context),
+      service_options(auto_vote: params[:argument][:auto_vote] == 'true' && current_profile == current_user.profile))
   end
 
   def destroy_service
@@ -197,6 +195,7 @@ class ArgumentsController < AuthorizedController
   def update_service
     @update_service ||= UpdateArgument.new(
       resource_by_id,
-      permit_params)
+      permit_params,
+      service_options)
   end
 end

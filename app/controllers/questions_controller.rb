@@ -209,8 +209,8 @@ class QuestionsController < AuthorizedController
   def create_service
     @create_service ||= CreateQuestion.new(
       Question.new,
-      resource_new_params.merge(permit_params.merge(publisher: current_user,
-                                                    creator: current_profile)))
+      resource_new_params.merge(permit_params),
+      service_options)
   end
 
   def destroy_service
@@ -236,6 +236,7 @@ class QuestionsController < AuthorizedController
   def update_service
     @update_service ||= UpdateQuestion.new(
       resource_by_id,
-      permit_params)
+      permit_params,
+      service_options)
   end
 end
