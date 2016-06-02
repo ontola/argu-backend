@@ -36,7 +36,7 @@ ActiveRecord::Schema.define(version: 20160526142530) do
     t.string   "trackable_type"
     t.integer  "forum_id"
     t.integer  "owner_id"
-    t.string   "owner_type"
+    t.string   "owner_type",     default: "Profile"
     t.ltree    "key"
     t.text     "parameters"
     t.integer  "recipient_id"
@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 20160526142530) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.json     "audit_data"
-    t.boolean  "is_published",   default: false, null: false
+    t.boolean  "is_published",   default: false,     null: false
   end
 
   add_index "activities", ["forum_id", "owner_id", "owner_type"], name: "index_activities_on_forum_id_and_owner_id_and_owner_type", using: :btree
