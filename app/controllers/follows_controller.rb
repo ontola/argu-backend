@@ -5,7 +5,7 @@ class FollowsController < ApplicationController
   def create
     authorize @thing, :follow?
 
-    if current_user.follow @thing
+    if current_user.follow @thing.edge
       respond_to do |format|
         format.html { redirect_to :back, notification: t('followed') }
         format.js { head 201 }
@@ -21,7 +21,7 @@ class FollowsController < ApplicationController
   def destroy
     authorize @thing, :follow?
 
-    resp = current_user.stop_following @thing
+    resp = current_user.stop_following @thing.edge
     if resp == nil || resp
       respond_to do |format|
         format.html { redirect_to :back, notification: t('unfollowed') }

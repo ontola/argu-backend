@@ -208,7 +208,7 @@ class QuestionsControllerTest < ActionController::TestCase
   # As Moderator
   ####################################
   let(:moderator) { create_moderator(freetown) }
-  let(:project) { create(:project, forum: freetown) }
+  let(:project) { create(:project, :with_follower, forum: freetown) }
   let(:project_moderator) { create_moderator(project) }
 
   test 'moderator should post create' do
@@ -229,7 +229,7 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'moderator should post create with project' do
     sign_in project_moderator
 
-    assert_differences create_changes_array do
+    assert_differences create_changes_array(2) do
       post :create,
            project_id: project.id,
            question: {
@@ -487,10 +487,10 @@ class QuestionsControllerTest < ActionController::TestCase
 
   private
 
-  def create_changes_array
+  def create_changes_array(notifications = 1)
     [['Question.count', 1],
      ['Activity.count', 1],
-     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1],
-     ['Notification.count', 1]]
+     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', notifications],
+     ['Notification.count', notifications]]
   end
 end

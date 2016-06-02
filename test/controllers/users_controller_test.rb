@@ -116,7 +116,7 @@ class UsersControllerTest < ActionController::TestCase
   end
 
   test 'user should not show votes of trashed objects' do
-    sign_in create_member(utrecht, create_member(amsterdam))
+    sign_in user2
 
     get :show, id: initialize_user2_votes
 

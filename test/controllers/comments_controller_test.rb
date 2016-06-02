@@ -6,10 +6,9 @@ class CommentsControllerTest < ActionController::TestCase
   let!(:freetown) { create(:forum) }
   let(:argument) do
     create(:argument,
+           :with_follower,
            forum: freetown,
-           creator: create(:user,
-                           :follows_email)
-                      .profile)
+           creator: create(:profile_direct_email))
   end
   let(:comment) do
     create(:comment,
@@ -100,7 +99,6 @@ class CommentsControllerTest < ActionController::TestCase
              comment: {
                body: 'Just å UTF-8 comment.'
              }
-        puts
       end
     end
 
@@ -233,6 +231,6 @@ class CommentsControllerTest < ActionController::TestCase
     [['Comment.count', 1],
      ['Activity.count', 1],
      ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1],
-     ['Notification.count', 1]]
+     ['Notification.count', 2]]
   end
 end

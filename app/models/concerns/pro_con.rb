@@ -16,7 +16,7 @@ module ProCon
     belongs_to :forum
 
     before_save :cap_title
-    after_create :creator_follow, :update_vote_counters
+    after_create :update_vote_counters
 
     validates :content, presence: true, length: {minimum: 5, maximum: 5000}
     validates :title, presence: true, length: {minimum: 5, maximum: 75}
@@ -25,7 +25,6 @@ module ProCon
     auto_strip_attributes :content
 
     acts_as_commentable
-    acts_as_followable
     parentable :motion, :forum
 
     scope :pro, -> { where(pro: true) }
@@ -37,10 +36,6 @@ module ProCon
     def is_pro_con?
       true
     end
-  end
-
-  def creator_follow
-    creator.profileable.follow(self) if creator.profileable.is_a?(User)
   end
 
   def cap_title

@@ -163,7 +163,7 @@ class ProfilesControllerTest < ActionController::TestCase
   test 'user should destroy placement on update with blank postal code and country code' do
     sign_in user
     place
-    placement = user.build_home_placement(creator: user.profile, place: place)
+    placement = user.build_home_placement(creator: user.profile, publisher: user, place: place)
     placement.save
 
     assert_differences [['Place.count', 0],

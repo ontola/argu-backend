@@ -41,24 +41,32 @@ class BlogPostsControllerTest < ActionController::TestCase
     assert_response response
   end
 
-  def general_create_draft(response = 302, differences = [['BlogPost.count', 0], ['Activity.count', 0]])
+  def general_create_draft(response = 302, differences = [['BlogPost.count', 0], ['Activity.loggings.count', 0]])
     assert_differences(differences) do
       post :create,
            project_id: project,
-           blog_post: attributes_for(:blog_post, publish_type: :draft)
+           blog_post: attributes_for(:blog_post,
+                                     forum: subject.forum,
+                                     blog_postable: project,
+                                     happened_at: DateTime.now,
+                                     argu_publication_attributes: {publish_type: :draft})
     end
 
     assert_response response
   end
 
-  def general_create_publish(response = 302, differences = [['BlogPost.count', 0], ['Activity.count', 0]])
+  def general_create_publish(response = 302, differences = [['BlogPost.count', 0], ['Activity.loggings.count', 0]])
     assert_differences(differences) do
       post :create,
            project_id: project,
-           blog_post: attributes_for(:blog_post, publish_type: :direct)
+           blog_post: attributes_for(:blog_post,
+                                     forum: subject.forum,
+                                     blog_postable: project,
+                                     happened_at: DateTime.now,
+                                     argu_publication_attributes: {publish_type: :direct})
 
       Sidekiq::Testing.inline! do
-        Publication.last.send(:re_schedule_or_destroy)
+        Publication.last.send(:reset)
       end
     end
 
@@ -78,8 +86,9 @@ class BlogPostsControllerTest < ActionController::TestCase
     assert_difference('Activity.count', changed ? 1 : 0) do
       patch :update,
             id: subject,
-            blog_post: attributes_for(:blog_post)
+            blog_post: attributes_for(:blog_post, forum: subject.forum, blog_postable: project)
     end
+
     assert_response response
     if assigns(:update_service).try(:resource).present?
       ch_method.call subject
@@ -97,7 +106,7 @@ class BlogPostsControllerTest < ActionController::TestCase
   end
 
   def general_trash(response = 302, difference = 0)
-    assert_differences([['BlogPost.trashed_only.count', difference],['Activity.count', difference.abs]]) do
+    assert_differences([['BlogPost.trashed_only.count', difference],['Activity.loggings.count', difference.abs]]) do
       delete :trash,
              id: subject
     end
@@ -106,7 +115,7 @@ class BlogPostsControllerTest < ActionController::TestCase
   end
 
   def general_destroy(response = 302, difference = 0)
-    assert_differences([['BlogPost.count', difference],['Activity.count', difference.abs]]) do
+    assert_differences([['BlogPost.count', difference],['Activity.loggings.count', difference.abs]]) do
       delete :destroy,
              id: trashed_subject
     end
@@ -189,7 +198,7 @@ class BlogPostsControllerTest < ActionController::TestCase
 
   test 'user should not delete destroy trash' do
     sign_in user
-    general_update 403
+    general_trash 403
     assert_not_a_member
   end
 

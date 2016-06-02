@@ -28,7 +28,6 @@ class Forum < ActiveRecord::Base
 
   acts_as_ordered_taggable_on :tags
   has_ltree_hierarchy polymorphic: true, edge_model: Edge
-  acts_as_followable
   paginates_per 30
 
   validates :shortname, presence: true, length: {minimum: 4, maximum: 75}
@@ -110,6 +109,10 @@ class Forum < ActiveRecord::Base
 
   def profile_is_member?(profile)
     memberships.where(profile: profile).present?
+  end
+
+  def publisher
+    page.owner.profileable
   end
 
   # @return [Forum] based on the `:default_forum` {Setting}, if not present,

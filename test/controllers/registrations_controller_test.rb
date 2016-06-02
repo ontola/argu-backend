@@ -67,7 +67,7 @@ class RegistrationsControllerTest < ActionController::TestCase
 
   test 'user should delete destroy with placement' do
     @request.env['devise.mapping'] = Devise.mappings[:user]
-    placement = user.build_home_placement(creator: user.profile, place: place)
+    placement = user.build_home_placement(creator: user.profile, publisher: user, place: place)
     placement.save
 
     sign_in user

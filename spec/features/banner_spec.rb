@@ -91,6 +91,7 @@ RSpec.feature 'Banners', type: :feature do
     expect(page).to_not have_content(banner_guests.title)
 
     visit question_path(question)
+    expect(page).to have_content(question.content)
     expect(page).to_not have_content(banner_guests.title)
     expect(page).to have_content(banner_everyone.title)
   end

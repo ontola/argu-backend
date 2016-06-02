@@ -4,15 +4,11 @@ class ArgumentsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
   let(:freetown) { create(:forum) }
-  let(:motion) do
+  let!(:motion) do
     create(:motion,
+           :with_follower,
            forum: freetown,
            creator: create(:user, :follows_email, :viewed_notifications_hour_ago).profile)
-  end
-  let!(:follow) do
-    create(:follow,
-           followable: motion,
-           follower: create(:user, :follows_email, :viewed_notifications_hour_ago))
   end
   let(:argument) do
     create(:argument,
@@ -332,7 +328,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   def create_changes_array
     [['Argument.count', 1],
      ['Activity.count', 1],
-     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 2],
+     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1],
      ['Notification.count', 2]]
   end
 end

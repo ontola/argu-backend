@@ -9,7 +9,7 @@
         - if current_user.present?
           li= react_component 'ActiveToggle',
                   {url: follows_path(comment_id: c.id, format: :json),
-                          initialState: current_user.following?(c),
+                          initialState: current_user.following?(c.edge),
                           true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
                           false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                   {prerender: true}

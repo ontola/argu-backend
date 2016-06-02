@@ -1,11 +1,6 @@
 class Comment < ActiveRecord::Base
   include ArguBase, Parentable, Trashable, PublicActivity::Common
 
-  acts_as_nested_set scope: [:commentable_id, :commentable_type]
-  acts_as_followable
-  paginates_per 30
-  parentable :commentable
-
   belongs_to :forum
   belongs_to :commentable, polymorphic: true
   belongs_to :creator, class_name: 'Profile'
@@ -14,6 +9,10 @@ class Comment < ActiveRecord::Base
              -> { where("key ~ '*.!happened'") },
              as: :trackable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
+
+  acts_as_nested_set scope: [:commentable_id, :commentable_type]
+  paginates_per 30
+  parentable :commentable
 
   after_create :increment_counter_cache, :touch_parent
   validates :body, presence: true, allow_nil: false, length: {in: 4..5000}

@@ -1,8 +1,7 @@
 require 'test_helper'
 
 class MotionsTest < ActionDispatch::IntegrationTest
-  let!(:freetown) { create(:forum, name: 'freetown') }
-  let!(:follower) { create(:follow, followable: freetown) }
+  let!(:freetown) { create(:forum, :with_follower, name: 'freetown') }
 
   ####################################
   # As User

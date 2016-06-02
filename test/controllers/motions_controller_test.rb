@@ -3,10 +3,10 @@ require 'test_helper'
 class MotionsControllerTest < ActionController::TestCase
   include Devise::TestHelpers
 
-  let!(:freetown) { create(:forum, name: 'freetown') }
-  let!(:follower) { create(:follow, followable: freetown) }
+  let!(:freetown) { create(:forum, :with_follower, name: 'freetown') }
   let(:question) do
     create(:question,
+           :with_follower,
            forum: freetown,
            creator: create(:profile_direct_email))
   end
@@ -21,23 +21,11 @@ class MotionsControllerTest < ActionController::TestCase
   # As Guest
   ####################################
   test 'guest should get show when not logged in' do
-    get :show, id: subject
-
-    assert_response 200
-    assert_not_nil assigns(:motion)
-    assert_not_nil assigns(:vote)
-
-    assert subject.arguments.where(is_trashed: true).count > 0,
-           'No trashed arguments to test on'
-    assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) },
-               'Trashed arguments are visible'
-    assert assigns(:group_responses).keys.all?(&:discussion?),
-           'Non discussion groups are shown under motions'
+    general_show
   end
 
   test 'guest should not get edit when not logged in' do
     get :edit, id: subject
-
     assert_redirected_to new_user_session_path(r: edit_motion_path(subject))
   end
 
@@ -47,54 +35,35 @@ class MotionsControllerTest < ActionController::TestCase
   let(:user) { create(:user) }
 
   test 'user should get show' do
-    sign_in user
-
-    get :show, id: subject
-
-    assert_response 200
-    assert_not_nil assigns(:motion)
-    assert_not_nil assigns(:vote)
-
-    assert subject.arguments.any?(&:is_trashed?),
-           'No trashed arguments to test'
-    assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) },
-               'Trashed arguments are visible'
+    general_show(user)
   end
 
   test 'user should get new' do
-    sign_in user
-
-    get :new, forum_id: freetown
-
+    general_new(user)
     assert_not_a_member
   end
 
   test 'user should not get convert' do
     sign_in user
-
     get :convert, motion_id: subject
-
     assert_not_authorized
     assert_redirected_to subject.forum
   end
 
   test 'user should not put convert' do
     sign_in user
-
     put :convert, motion_id: subject
     assert_redirected_to subject.forum
   end
 
   test 'user should not get move' do
     sign_in user
-
     get :move, motion_id: subject
     assert_redirected_to subject.forum
   end
 
   test 'user should not put move' do
     sign_in user
-
     put :move, motion_id: subject
     assert_redirected_to subject.forum
   end
@@ -106,64 +75,31 @@ class MotionsControllerTest < ActionController::TestCase
   let(:member_motion) { create(:motion, forum: freetown, creator: member.profile) }
 
   test 'member should get new' do
-    sign_in member
-
-    get :new, forum_id: freetown
-
-    assert_response 200
+    general_new(member, 200)
   end
 
   test 'member should post create' do
-    sign_in member
-
-    assert_differences create_changes_array do
-      post :create,
-           forum_id: freetown,
-           motion: {
-             title: 'Motion',
-             content: 'Contents',
-             default_cover_photo_attributes: {
-               image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
-             }
-           }
-    end
-    assert_not_nil assigns(:create_service).resource
-    assert_equal 'cover_photo.jpg', assigns(:create_service).resource.default_cover_photo.image_identifier
-    assert_equal 1, assigns(:create_service).resource.photos.count
-    assert_redirected_to motion_path(assigns(:create_service).resource,
-                                     start_motion_tour: true)
+    general_create(member)
   end
 
   test 'member should post create with question' do
-    sign_in member
-
-    assert_differences create_changes_array do
-      post :create,
-           forum_id: freetown,
-           motion: {
-             title: 'Motion',
-             content: 'Contents',
-             question_id: question.id
-           }
-    end
-    assert_not_nil assigns(:create_service).resource
+    general_create(
+      member,
+      attrs: attributes_for(:motion).merge(question_id: question.id),
+      changes: create_changes_array(2))
     assert_equal question, assigns(:create_service).resource.reload.question
-    assert_redirected_to motion_path(assigns(:create_service).resource,
-                                     start_motion_tour: true)
   end
 
   test 'member should keep data on erroneous post create' do
-    sign_in member
-
-    assert_differences create_changes_array(nil, 0) do
-      post :create,
-           forum_id: freetown,
-           motion: {
-             title: 'Motion',
-             content: 'C',
-             question_id: question.id
-           }
-    end
+    general_create(
+      member,
+      false,
+      attrs: {
+        title: 'Motion',
+        content: 'C',
+        question_id: question.id
+      },
+      changes: create_changes_array(0, 0))
     assert_not_nil assigns(:create_service).resource
     assert_response 200
 
@@ -228,46 +164,34 @@ class MotionsControllerTest < ActionController::TestCase
   let(:no_create_member) { create_member(no_create_without_question) }
 
   test 'member should not post create without create_without_question' do
-    sign_in no_create_member
+    general_create(
+      no_create_member,
+      false,
+      forum: no_create_without_question,
+      changes: [['Motion.count', 0], ['Activity.count', 0]])
 
-    assert_differences [['Motion.count', 0],
-                        ['Activity.count', 0]] do
-      post :create,
-           forum_id: no_create_without_question,
-           motion: {
-             title: 'Motion',
-             content: 'Contents'
-           }
-    end
     assert_not_authorized
     assert_redirected_to no_create_without_question
   end
 
   test 'member should post create without create_without_question with question' do
-    sign_in no_create_member
+    general_create(
+      no_create_member,
+      forum: no_create_without_question,
+      attrs: attributes_for(:motion).merge(question_id: no_create_question),
+      changes: create_changes_array)
 
-    assert_differences create_changes_array do
-      post :create,
-           forum_id: no_create_without_question,
-           motion: {
-             title: 'Motion',
-             content: 'Contents',
-             question_id: no_create_question
-           }
-      puts
-    end
-    assert_not_nil assigns(:create_service).resource
     assert assigns(:create_service).resource.persisted?
     assert_equal no_create_question, assigns(:create_service).resource.question
-    assert_redirected_to motion_path(assigns(:create_service).resource, start_motion_tour: true)
   end
 
   ####################################
   # As Moderator
   ####################################
-  let(:project) { create(:project, forum: freetown) }
-  let(:project_question) do
+  let(:project) { create(:project, :with_follower, forum: freetown) }
+  let!(:project_question) do
     create(:question,
+           :with_follower,
            forum: freetown,
            project: project,
            creator: create(:profile_direct_email))
@@ -275,17 +199,13 @@ class MotionsControllerTest < ActionController::TestCase
   let(:moderator) { create_moderator(project) }
 
   test 'moderator should get new within project' do
-    sign_in moderator
-
-    get :new, project_id: project
-
-    assert_response 200
+    general_new(moderator, 200, project_id: project)
   end
 
   test 'moderator should post create within project' do
     sign_in moderator
 
-    assert_differences create_changes_array do
+    assert_differences create_changes_array(2) do
       post :create,
            project_id: project,
            motion: attributes_for(:motion)
@@ -298,7 +218,7 @@ class MotionsControllerTest < ActionController::TestCase
   test 'moderator should post create within question within project' do
     sign_in moderator
 
-    assert_differences create_changes_array do
+    assert_differences create_changes_array(2) do
       post :create,
            question_id: project_question,
            motion: attributes_for(:motion)
@@ -454,6 +374,25 @@ class MotionsControllerTest < ActionController::TestCase
            forum: forum_from)
   end
 
+  test "staff should put update others' motion" do
+    sign_in staff
+
+    put :update,
+        id: subject,
+        motion: {
+          title: 'New title',
+          content: 'new contents'
+        }
+
+    updated_resource = assigns(:update_service).resource
+    assert_equal subject.publisher_id, updated_resource.publisher_id
+    assert_equal subject.creator_id, updated_resource.creator_id
+    assert_equal 'New title', updated_resource.title
+    assert_not_equal 'New title', subject.title
+    assert_equal 'new contents', updated_resource.content
+    assert_redirected_to motion_url(updated_resource)
+  end
+
   # Currently only staffers can convert items
   test 'staff should get convert' do
     sign_in staff
@@ -483,9 +422,6 @@ class MotionsControllerTest < ActionController::TestCase
 
     # Test direct relations
     assert_equal 0, assigns(:result)[:old].arguments.count
-
-    # assert_equal 0, assigns(:result)[:old].taggings.count
-    # assert_equal 2, assigns(:result)[:new].taggings.count
 
     assert_equal 0, assigns(:result)[:old].votes.count
     assert_equal vote_count,
@@ -532,15 +468,56 @@ class MotionsControllerTest < ActionController::TestCase
     end
   end
 
-  protected
+  private
 
   # Detect the changes that should go hand in hand with object creation
-  # @param notifications [Boolean] Set to false if an object is created twice for the same follower
-  def create_changes_array(notifications = true, count = 1)
+  # @param notifications [Integer] Amount of notifications to be created
+  def create_changes_array(notifications = 1, count = 1)
     c = [['Motion.count', count],
          ['Activity.count', count],
-         ['Notification.count', count]]
-    c << ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', count] if notifications
+         ['Notification.count', notifications]]
+    c << ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', notifications]
     c
+  end
+
+  def general_create(role = nil,
+                     should = true,
+                     forum: freetown,
+                     attrs: attributes_for(:motion),
+                     changes: create_changes_array)
+    sign_in role if role
+
+    assert_differences changes do
+      post :create,
+           forum_id: forum,
+           motion: attrs
+    end
+    if should
+      assert_not_nil assigns(:create_service).resource
+      assert_redirected_to motion_path(assigns(:create_service).resource, start_motion_tour: true)
+    end
+  end
+
+  def general_new(role = nil, response = 302, params = {forum_id: freetown})
+    sign_in role if role
+    get :new, params
+  end
+
+  def general_show(role = nil, should = true)
+    sign_in role if role
+    get :show, id: subject
+
+    if should
+      assert_response 200
+      assert_not_nil assigns(:motion)
+      assert_not_nil assigns(:vote)
+
+      assert subject.arguments.where(is_trashed: true).count > 0,
+             'No trashed arguments to test on'
+      assert_not assigns(:arguments).any? { |arr| arr[1][:collection].any?(&:is_trashed?) },
+                 'Trashed arguments are visible'
+      assert assigns(:group_responses).keys.all?(&:discussion?),
+             'Non discussion groups are shown under motions'
+    end
   end
 end

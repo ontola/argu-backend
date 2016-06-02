@@ -16,7 +16,7 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
             li[data-title=I18n.t('tooltips.follow')]
               =react_component 'ActiveToggle',
                       {url: follows_path(project_id: project.id, format: :json),
-                              initialState: current_user.following?(project),
+                              initialState: current_user.following?(project.edge),
                               true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
                               false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                       {prerender: true}

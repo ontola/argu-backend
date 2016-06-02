@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :comment do
+  factory :comment, traits: [:set_publisher] do
     commentable { passed_in?(:commentable) ? commentable : create(:argument, forum: forum) }
     forum do
       if passed_in?(:forum)
@@ -12,7 +12,7 @@ FactoryGirl.define do
     end
     creator { passed_in?(:creator) ? creator : create(:profile) }
 
-    association :publisher, factory: :user
+    association :publisher, factory: [:user, :follows_email]
     sequence(:body) { |i| "fg comment body #{i}end" }
     is_trashed false
 
@@ -21,6 +21,7 @@ FactoryGirl.define do
                               recipient: comment.commentable,
                               owner: comment.creator,
                               forum: comment.forum
+      comment.publisher.follow(comment.edge)
     end
   end
 end

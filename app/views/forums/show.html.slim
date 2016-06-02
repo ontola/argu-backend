@@ -38,7 +38,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
             li.float-right.btn--transparant--parent[data-title=I18n.t('tooltips.follow')]
               =react_component 'ActiveToggle',
                                {url: follows_path(forum_id: @forum, format: :json),
-                                initialState: current_user.following?(@forum),
+                                initialState: current_user.following?(@forum.edge),
                                 true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
                                 false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
                                {prerender: true}

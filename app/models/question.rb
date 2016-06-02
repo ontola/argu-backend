@@ -8,15 +8,12 @@ class Question < ActiveRecord::Base
   belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
   has_many :motions
-  has_many :activities, as: :trackable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
-  acts_as_followable
+  convertible :votes, :taggings, :activities
   counter_culture :forum
   counter_culture :project,
                   column_name: proc { |model| !model.is_trashed? ? 'questions_count' : nil }
-  parentable :project, :forum
-  convertible :votes, :taggings, :activities
   parentable :project, :forum
 
   validates :content, presence: true, length: {minimum: 5, maximum: 5000}
@@ -28,8 +25,6 @@ class Question < ActiveRecord::Base
 
   attr_accessor :include_motions
 
-  after_save :creator_follow
-
   def self.published
     joins('LEFT OUTER JOIN projects ON projects.id = project_id')
       .where('is_published = true OR project_id IS NULL')
@@ -38,10 +33,6 @@ class Question < ActiveRecord::Base
   # Might not be a good idea
   def creator
     super || Profile.first_or_initialize(shortname: 'Onbekend')
-  end
-
-  def creator_follow
-    creator.profileable.follow(self) if creator.profileable.is_a?(User)
   end
 
   def display_name

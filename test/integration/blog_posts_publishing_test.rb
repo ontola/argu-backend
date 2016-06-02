@@ -2,13 +2,7 @@ require 'test_helper'
 
 class BlogPostPublishingTest < ActionDispatch::IntegrationTest
   let(:freetown) { create(:forum) }
-  let(:project) { create(:project, :published, forum: freetown) }
-  let!(:follower) { create :user, :follows_email }
-  let!(:follow_project) do
-    create(:follow,
-           followable: project,
-           follower: follower)
-  end
+  let(:project) { create(:project, :with_follower, :published, forum: freetown) }
 
   ####################################
   # As Member
@@ -25,7 +19,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     assert_not_authorized
 
     post project_blog_posts_path(project_id: project,
-                                 blog_post: attributes_for(:blog_post))
+                                 blog_post: attributes_for(:blog_post, forum: project.forum))
     assert_not_authorized
   end
 
@@ -76,7 +70,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     assert_response 302
 
     Sidekiq::Testing.inline! do
-      Publication.last.send(:re_schedule_or_destroy)
+      Publication.last.send(:reset)
     end
 
     follow_redirect!
@@ -103,7 +97,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'should change schedule to concept' do
+  test 'moderator should change schedule to concept' do
     sign_in moderator
 
     get project_path(project)
@@ -126,7 +120,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     assert_response 302
 
     Sidekiq::Testing.inline! do
-      Publication.last.send(:re_schedule_or_destroy)
+      Publication.last.send(:reset)
     end
 
     follow_redirect!

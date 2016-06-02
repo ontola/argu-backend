@@ -11,5 +11,9 @@ FactoryGirl.define do
     before :create do |argument|
       argument.motion.update forum: argument.forum
     end
+
+    after :create do |argument|
+      argument.publisher.follow(argument.edge)
+    end
   end
 end

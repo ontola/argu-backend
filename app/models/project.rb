@@ -26,13 +26,13 @@ class Project < ActiveRecord::Base
   accepts_nested_attributes_for :phases, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :stepups, reject_if: :all_blank, allow_destroy: true
 
-  validates :forum, :creator, :start_date, presence: true
-
   before_save :update_start_date_of_first_phase
+
   counter_culture :forum
-  acts_as_followable
-  parentable :forum
   mount_uploader :cover_photo, CoverUploader
+  parentable :forum
+
+  validates :forum, :creator, :start_date, presence: true
 
   def current_phase
     phases.where('start_date < ?', Time.current).last

@@ -34,12 +34,13 @@ class BlogPost < ActiveRecord::Base
           dependent: :destroy,
           autosave: true
 
-  validates :blog_postable, :creator, presence: true
   validate :validate_within_project_scope
-
-  parentable :blog_postable, :forum
   counter_culture :project,
                   column_name: proc { |model| model.is_published && !model.is_trashed? ? 'blog_posts_count' : nil }
+  parentable :blog_postable, :forum
+
+  validates :blog_postable, :creator, presence: true
+
   alias_attribute :description, :content
   alias_attribute :display_name, :title
   attr_accessor :happened_at

@@ -26,7 +26,7 @@ RSpec.feature 'Notification mailer' do
   let!(:follow) do
     create(:follow,
            :t_argument,
-           followable: argument,
+           followable: argument.edge,
            follower: follower)
   end
 

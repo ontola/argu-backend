@@ -15,6 +15,7 @@ FactoryGirl.define do
              forum: motion.forum,
              owner: motion.creator,
              key: 'motion.create'
+      motion.publisher.follow(motion.edge)
     end
 
     trait :with_arguments do

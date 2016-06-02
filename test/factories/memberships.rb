@@ -1,9 +1,7 @@
 FactoryGirl.define do
   factory :membership do
-    transient do
-      association :profile
-      association :forum
-    end
+    association :profile, strategy: :create
+    association :forum
     role Membership.roles[:member]
 
     factory :managership do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526142530) do
+ActiveRecord::Schema.define(version: 20160531121532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -209,11 +209,11 @@ ActiveRecord::Schema.define(version: 20160526142530) do
   add_index "edits", ["item_type", "item_id"], name: "index_edits_on_item_type_and_item_id", using: :btree
 
   create_table "follows", force: :cascade do |t|
-    t.integer  "followable_id",                   null: false
-    t.string   "followable_type",                 null: false
-    t.integer  "follower_id",                     null: false
-    t.string   "follower_type",                   null: false
-    t.boolean  "blocked",         default: false, null: false
+    t.integer  "followable_id",                    null: false
+    t.string   "followable_type", default: "Edge", null: false
+    t.integer  "follower_id",                      null: false
+    t.string   "follower_type",   default: "User", null: false
+    t.boolean  "blocked",         default: false,  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "send_email",      default: false
@@ -777,6 +777,8 @@ ActiveRecord::Schema.define(version: 20160526142530) do
   add_foreign_key "comments", "users", column: "publisher_id"
   add_foreign_key "edges", "edges", column: "parent_id"
   add_foreign_key "edges", "users"
+  add_foreign_key "follows", "edges", column: "followable_id"
+  add_foreign_key "follows", "users", column: "follower_id"
   add_foreign_key "forums", "pages"
   add_foreign_key "forums", "places"
   add_foreign_key "group_responses", "users", column: "publisher_id"

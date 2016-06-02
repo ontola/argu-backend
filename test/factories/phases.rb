@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :phase do
+  factory :phase, traits: [:set_publisher] do
     association :forum, strategy: :create
     association :project, strategy: :create
     association :creator, factory: :profile

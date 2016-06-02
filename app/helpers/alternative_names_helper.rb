@@ -189,6 +189,10 @@ module AlternativeNamesHelper
       argument_type(item.forum)
     elsif item.class == Comment
       I18n.t('comments.type')
+    elsif item.class == Forum
+      I18n.t('forums.type')
+    elsif item.class == Project
+      I18n.t('projects.type')
     end
   end
 end

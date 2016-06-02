@@ -527,7 +527,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
                                    stepups_attributes: {'12321' => {moderator: moderator.url}},
                                    phases_attributes: {'12321' => attributes_for(:phase)})
       Sidekiq::Testing.inline! do
-        Publication.last.send(:re_schedule_or_destroy)
+        Publication.last.send(:reset)
       end
     end
 

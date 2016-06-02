@@ -17,14 +17,11 @@ class Motion < ActiveRecord::Base
   has_many :votes, as: :voteable, dependent: :destroy
 
   before_save :cap_title
-  after_save :creator_follow
 
+  convertible :votes, :taggings, :activities
   counter_culture :forum
   counter_culture :project,
                   column_name: proc { |model| !model.is_trashed? ? 'motions_count' : nil }
-  acts_as_followable
-  convertible :votes, :taggings, :activities
-  counter_culture :forum
   paginates_per 30
   parentable :question, :project, :forum
   resourcify
@@ -88,10 +85,6 @@ class Motion < ActiveRecord::Base
 
   def creator
     super || Profile.first_or_create(name: 'Onbekend')
-  end
-
-  def creator_follow
-    creator.profileable.follow(self) if creator.profileable.is_a?(User)
   end
 
   # http://schema.org/description

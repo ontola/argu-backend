@@ -24,7 +24,7 @@ FactoryGirl.define do
         create :access_token, item: forum
         cap = Setting.get('user_cap').try(:to_i)
         Setting.set('user_cap', -1) unless cap.present?
-        forum.page.owner.profileable.follow forum
+        forum.page.owner.profileable.follow forum.edge
       end
 
       factory :populated_forum_vwal, traits: [:vwal]
@@ -47,14 +47,6 @@ FactoryGirl.define do
     # Helsinki
     trait :hidden do
       visibility Forum.visibilities[:hidden]
-    end
-
-    trait :with_follower do
-      after :create do |forum|
-        create(:follow,
-               follower: create(:user, :follows_email),
-               followable: forum)
-      end
     end
   end
 end
