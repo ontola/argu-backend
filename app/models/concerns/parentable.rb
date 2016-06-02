@@ -6,6 +6,8 @@ module Parentable
   extend ActiveSupport::Concern
 
   included do
+    has_ltree_hierarchy parent_fragment: :parent, polymorphic: true, edge_model: Edge
+
     # Simple method to verify that a model uses {Parentable}
     def is_fertile?
       true
@@ -44,12 +46,16 @@ module Parentable
     end
   end
 
+  def parent
+    get_parent.model
+  end
+
   # @private
   def reflect_parent(relation_name, options)
     parent = Context.new
     if relation_name == :self
       parent.model = self
-    elsif self.class.reflect_on_association(relation_name).macro == :belongs_to
+    elsif self.class.reflect_on_association(relation_name)&.macro == :belongs_to
       parent.model = send(relation_name)
     else
       begin

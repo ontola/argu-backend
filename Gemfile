@@ -30,6 +30,9 @@ gem 'multimap',
     git: 'https://github.com/apalmblad/multimap.git',
     ref: '96eeacc1606ea7f008ce0a50641c31a2c844fd9e'
 gem 'squirm_rails', require: 'squirm/rails'
+gem 'ltree_hierarchy',
+    git: 'https://github.com/ArthurWD/ltree_hierarchy.git',
+    branch: 'polymorphic-parents'
 
 ################## Features ########################
 gem 'acts-as-taggable-on', '~> 3.4.2'

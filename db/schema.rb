@@ -179,6 +179,20 @@ ActiveRecord::Schema.define(version: 20160526142530) do
 
   add_index "documents", ["name"], name: "index_documents_on_name", using: :btree
 
+  create_table "edges", force: :cascade do |t|
+    t.integer  "user_id",         null: false
+    t.string   "fragment",        null: false
+    t.integer  "parent_id"
+    t.string   "parent_fragment"
+    t.integer  "owner_id",        null: false
+    t.string   "owner_type",      null: false
+    t.ltree    "path"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  add_index "edges", ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true, using: :btree
+
   create_table "edits", force: :cascade do |t|
     t.integer  "by_id"
     t.string   "by_type"
@@ -761,6 +775,8 @@ ActiveRecord::Schema.define(version: 20160526142530) do
   add_foreign_key "comments", "forums"
   add_foreign_key "comments", "profiles", column: "creator_id"
   add_foreign_key "comments", "users", column: "publisher_id"
+  add_foreign_key "edges", "edges", column: "parent_id"
+  add_foreign_key "edges", "users"
   add_foreign_key "forums", "pages"
   add_foreign_key "forums", "places"
   add_foreign_key "group_responses", "users", column: "publisher_id"

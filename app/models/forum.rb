@@ -27,6 +27,7 @@ class Forum < ActiveRecord::Base
   attr_accessor :is_checked, :tab, :active
 
   acts_as_ordered_taggable_on :tags
+  has_ltree_hierarchy polymorphic: true, edge_model: Edge
   acts_as_followable
   paginates_per 30
 

@@ -1,4 +1,13 @@
 GIT
+  remote: https://github.com/ArthurWD/ltree_hierarchy.git
+  revision: 0213f3b3ffd1b9c1ce35d70f43a587886d15f151
+  branch: polymorphic-parents
+  specs:
+    ltree_hierarchy (0.0.8)
+      activerecord (>= 3.1.0)
+      pg
+
+GIT
   remote: https://github.com/apalmblad/multimap.git
   revision: 96eeacc1606ea7f008ce0a50641c31a2c844fd9e
   ref: 96eeacc1606ea7f008ce0a50641c31a2c844fd9e
@@ -724,6 +733,7 @@ DEPENDENCIES
   libv8 (~> 3.16.14.13)
   license_finder
   logstasher
+  ltree_hierarchy!
   mailcatcher (~> 0.6.2)
   mailgun_rails (= 0.7.0)
   meta_request

@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
           foreign_key: 'placeable_id',
           inverse_of: :placeable
   has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
+  has_many :edges
   has_many :identities, dependent: :destroy
   has_many :notifications
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
@@ -38,6 +39,7 @@ class User < ActiveRecord::Base
   TEMP_EMAIL_REGEX = /\Achange@me/
 
   after_create :update_acesss_token_counts
+  before_destroy :pledge_edges
   before_save { |user| user.email = email.downcase unless email.blank? }
 
   attr_accessor :current_password, :repeat_name
@@ -167,6 +169,9 @@ class User < ActiveRecord::Base
 
   private
 
+  def pledge_edges
+    edges.update_all user_id: 0
+  end
 
   def self.koala(auth)
     access_token = auth['token']
