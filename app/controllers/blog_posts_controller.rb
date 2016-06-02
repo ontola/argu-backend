@@ -35,12 +35,11 @@ class BlogPostsController < AuthorizedController
   end
 
   def edit
-    if authenticated_resource!.argu_publication.present?
-      authenticated_resource!.schedule!
-      authenticated_resource!.publish_at = authenticated_resource!.argu_publication.published_at
+    if authenticated_resource!.argu_publication.try(:published_at).present?
+      authenticated_resource!.argu_publication.schedule!
     else
-      authenticated_resource!.draft!
-      authenticated_resource!.publish_at = DateTime.current
+      authenticated_resource!.argu_publication.draft!
+      authenticated_resource!.argu_publication.published_at = DateTime.current
     end
 
     respond_to do |format|
@@ -149,6 +148,8 @@ class BlogPostsController < AuthorizedController
   def new_resource_from_params
     blog_post = super
     blog_post.build_happening(created_at: Time.current)
+    blog_post.build_argu_publication(publish_type: :direct,
+                                     published_at: DateTime.current)
     blog_post
   end
 
@@ -159,10 +160,7 @@ class BlogPostsController < AuthorizedController
   end
 
   def resource_new_params
-    h = super.merge(
-      publish_type: :direct,
-      publish_at: Time.current,
-      blog_postable: get_parent_resource)
+    h = super.merge(blog_postable: get_parent_resource)
     h.delete(parent_resource_param)
     h
   end

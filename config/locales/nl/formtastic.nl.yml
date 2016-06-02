@@ -42,8 +42,6 @@ nl:
       postal_code: "Postcode"
       current_password: "Huidig wachtwoord"
       profile_photo: "Profielfoto"
-      published_at: "Publiceren vanaf"
-      publish_type: "Publiceren"
       questions_title: "Uitdagingen"
       questions_title_singular: "Uitdaging"
       remember_me: "Gegevens onthouden"
@@ -85,6 +83,9 @@ nl:
         last_name: "Achternaam*"
         has_analytics: "Browser diensten"
         follows_email: "Emailberichten"
+      publication:
+        publish_type: "Publicatie"
+        target: 'Breng op de hoogte'
     hints:
       tag_list: "Kies thema's die te maken hebben met jouw ondwerp."
       username: "Minstens 4 karakters. Alleen cijfers, letters en '_'."

@@ -1,0 +1,11 @@
+# Dutch publications translation
+
+nl:
+  publications:
+    type:
+      direct: 'Publiceer direct'
+      draft: 'Bewaar als concept'
+      schedule: 'Plan publicatie op:'
+    is_scheduled: "Publicatie staat gepland op %{date}."
+    is_draft: "Concept versie, nog niet gepubliceerd."
+    confirm_publication: 'Publiceren zorgt ervoor dat forum volgers op de hoogte zullen worden gesteld. Verder gaan?'

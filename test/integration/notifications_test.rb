@@ -123,9 +123,13 @@ class NotificationsTest < ActionDispatch::IntegrationTest
     Forum.first.page.update(owner_id: user.profile.id)
     sign_in user
 
-    assert_differences([['BlogPost.count', 1]]) do
-      post project_blog_posts_path(follow_project.followable),
-           blog_post: attributes_for(:blog_post)
+  test 'owner should create and destroy project with notifications' do
+    sign_in create_owner(freetown)
+
+    assert_differences([['Project.count', 1]]) do
+      post forum_projects_path(freetown),
+           project: attributes_for(:project,
+                                   argu_publication_attributes: {publish_type: :direct})
     end
 
     assert_differences([['Notification.count', 1]]) do

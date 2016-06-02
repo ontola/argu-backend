@@ -16,9 +16,7 @@ module ActivePublishable
             inverse_of: :publishable,
             as: :publishable
 
-    attr_accessor :publish_at, :publish_type
-    alias_attribute :published_at, :publish_at
-    enum publish_type: {direct: 0, draft: 1, schedule: 2}
+    accepts_nested_attributes_for :argu_publication
   end
 
   def is_draft?

@@ -82,7 +82,7 @@
 -if get_parent_resource.respond_to?(:projects) && policy(Project.new(forum: resource_tenant)).new?
   .col-1.col-1--small
     header
-      h2 Of start een project
+      h2=t('discussions.new.or_start_a_project')
     .box
       section
         p
@@ -100,13 +100,13 @@
               span.icon-left= t('projects.type')
             .details-part[data-title=t('blog_posts.tooltips.count')]
               span.fa.fa-bullhorn
-              span.icon-left= '_3'
+              span.icon-left= 3
             .details-part[data-title=t('questions.tooltips.count')]
               span.fa.fa-question
-              span.icon-left= '_3'
+              span.icon-left= 3
             .details-part[data-title=t('tooltips.question.motions_count')]
               span.fa.fa-lightbulb-o
-              span.icon-left= '_4'
+              span.icon-left= 4
         section
           h3.project-t= t('discussions.new.project_title')
     .btn--project.btn--huge[collection_model="Project"]

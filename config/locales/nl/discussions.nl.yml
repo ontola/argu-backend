@@ -14,6 +14,7 @@ nl:
       motion_argument1: 'Schonere mensen'
       motion_argument2: 'Sociale cohesie'
       motion_argument3: 'Hoge kosten'
+      or_start_a_project: 'Of start een project'
       project_title: 'Realisatie woonwijk Parkwijk'
     show_all: 'Alle discussies weergeven'
     info: 'Discussies zijn ideeën of uitdagingen'

@@ -8,7 +8,9 @@ FactoryGirl.define do
 
     factory :published_project do
       before :create do |project|
-        pp = project.create_argu_publication(published_at: Time.current)
+        pp = project.create_argu_publication(
+          published_at: Time.current,
+          creator: project.creator)
         pp.commit
       end
     end

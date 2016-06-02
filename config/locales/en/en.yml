@@ -30,12 +30,6 @@ en:
   not_found_type: "%{type} not found"
   draft: "Draft"
   drafts: "Drafts"
-  draft_unpublished: "Draft version, not yet published."
-  publication_scheduled: "Publication is scheduled for %{date}."
-  publish_select:
-    direct: 'Publish directly'
-    draft: 'Save as draft'
-    schedule: 'Schedule publication:'
   ended: "Ended"
   publish: "Publish"
   published: "Published"

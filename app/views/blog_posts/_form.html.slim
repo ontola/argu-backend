@@ -10,7 +10,7 @@
             =f.input :title, as: :text, input_html: {size: '2', maxlength: '110', class: 'blog-post-t form-input-title', autofocus: :autofocus}, label: false, hint: false, placeholder: placeholder_for(blog_post, :title, motion_type(blog_post).downcase)
             =f.input :content, input_html: {class: 'form-input-content', rows: '8'}, label: false, hint: false, placeholder: placeholder_for(blog_post, :content, motion_type(blog_post).downcase)
             =f.input(:happened_at, as: :datetime_picker)
-            =render partial: 'application/form_publish', locals: {f: f, resource: blog_post}
+            =render partial: 'publications/form', locals: {f: f, resource: blog_post}
         section.section--footer
           - if blog_post.new_record?
             =render partial: 'profiles/profile_current'

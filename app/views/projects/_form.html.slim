@@ -48,7 +48,7 @@
               =link_to_add_association f, :phases, class: 'btn-subtle' do
                 span.fa.fa-plus
                 span.icon-left=t('projects.phases.add')
-          =render partial: 'application/form_publish', locals: {f: f, resource: project}
+          =render partial: 'publications/form', locals: {f: f, resource: project}
         section.section--footer
           - if project.new_record?
             =render partial: 'profiles/profile_current'

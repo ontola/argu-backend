@@ -508,7 +508,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_differences(differences) do
       post forum_projects_path(freetown),
            project: attributes_for(:project,
-                                   publish_type: :draft,
+                                   argu_publication_attributes: {publish_type: :draft},
                                    stepups_attributes: {'12321' => {moderator: moderator.url}},
                                    phases_attributes: {'12321' => attributes_for(:phase)})
     end
@@ -523,7 +523,7 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
     assert_differences(differences) do
       post forum_projects_path(freetown),
            project: attributes_for(:project,
-                                   publish_type: :direct,
+                                   argu_publication_attributes: {publish_type: :direct},
                                    stepups_attributes: {'12321' => {moderator: moderator.url}},
                                    phases_attributes: {'12321' => attributes_for(:phase)})
       Sidekiq::Testing.inline! do

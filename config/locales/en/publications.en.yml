@@ -1,0 +1,11 @@
+# English publications translation
+
+en:
+  publications:
+    type:
+      direct: 'Publish directly'
+      draft: 'Save as draft'
+      schedule: 'Schedule publication:'
+    is_scheduled: "Publication is scheduled for %{date}."
+    is_draft: "Draft version, not yet published."
+    confirm_publication: 'Publicising will notify forum followers that a project was created. Continue?'

@@ -14,6 +14,7 @@ en:
       motion_argument1: 'Cleaner people'
       motion_argument2: 'Social cohesion'
       motion_argument3: 'High cost'
+      or_start_a_project: 'Or start a project'
       project_title: 'Realization of residential area New Garden'
     show_all: 'Show all discussions'
     info: 'Discussions are ideas or challenges'

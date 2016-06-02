@@ -8,6 +8,9 @@ class Publication < ActiveRecord::Base
   before_destroy :cancel_job
   after_rollback :cancel_job
 
+  attr_accessor :publish_type
+  enum publish_type: {direct: 0, draft: 1, schedule: 2}
+
   def commit
     publishable.update(is_published: true)
     publishable.happening.update(is_published: true) if publishable.respond_to?(:happening)

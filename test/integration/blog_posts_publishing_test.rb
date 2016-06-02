@@ -43,9 +43,14 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     get new_project_blog_post_path(project_id: project)
     assert_response 200
 
-    post project_blog_posts_path(project_id: project,
-                                 blog_post: attributes_for(:blog_post, publish_type: :draft))
-    assert_response 302
+    assert_difference('Publication.count', 1) do
+      post project_blog_posts_path(
+        project_id: project,
+        blog_post: attributes_for(:blog_post,
+                                  forum: project.forum,
+                                  argu_publication_attributes: {publish_type: :draft}))
+      assert_response 302
+    end
 
     follow_redirect!
     assert_response 200
@@ -62,8 +67,12 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     get new_project_blog_post_path(project_id: project)
     assert_response 200
 
-    post project_blog_posts_path(project_id: project,
-                                 blog_post: attributes_for(:blog_post, publish_type: :direct))
+    post project_blog_posts_path(
+      project_id: project,
+      blog_post: attributes_for(:blog_post,
+                                forum: project.forum,
+                                happened_at: DateTime.current,
+                                argu_publication_attributes: {publish_type: :direct}))
     assert_response 302
 
     Sidekiq::Testing.inline! do
@@ -73,7 +82,25 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     follow_redirect!
     assert_response 200
     assert_equal true, BlogPost.last.is_published?
-    assert_equal 1, Notification.count
+    # Notification for creator and follower of project
+    assert_equal 2, Notification.count
+  end
+
+  test 'moderator post create scheduled blog_post' do
+    sign_in moderator
+
+    assert_difference('Publication.count', 1) do
+      post project_blog_posts_path(
+        project_id: project,
+        blog_post: attributes_for(
+          :blog_post,
+          forum: project.forum,
+          argu_publication_attributes: {
+            publish_type: :schedule,
+            published_at: 1.day.from_now
+          }))
+      assert_response 302
+    end
   end
 
   test 'should change schedule to concept' do
@@ -85,14 +112,17 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     get new_project_blog_post_path(project_id: project)
     assert_response 200
 
-    post project_blog_posts_path(project_id: project,
-                                 blog_post: attributes_for(:blog_post,
-                                                           publish_type: :schedule,
-                                                           publish_at: 1.day.from_now))
+    post project_blog_posts_path(
+      project_id: project,
+      blog_post: attributes_for(:blog_post,
+                                forum: project.forum,
+                                argu_publication_attributes: {publish_type: :schedule,
+                                                              published_at: 1.day.from_now}))
     assert_response 302
 
-    patch blog_post_path(id: BlogPost.last.id,
-                         blog_post: {publish_type: :draft})
+    patch blog_post_path(
+      id: BlogPost.last.id,
+      blog_post: {argu_publication_attributes: {publish_type: :draft}})
     assert_response 302
 
     Sidekiq::Testing.inline! do

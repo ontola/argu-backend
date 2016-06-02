@@ -48,12 +48,11 @@ class ProjectsController < AuthorizedController
   end
 
   def edit
-    if authenticated_resource!.argu_publication.present?
-      authenticated_resource!.schedule!
-      authenticated_resource!.publish_at = authenticated_resource!.argu_publication.published_at
+    if authenticated_resource!.argu_publication.try(:published_at).present?
+      authenticated_resource!.argu_publication.schedule!
     else
-      authenticated_resource!.draft!
-      authenticated_resource!.publish_at = DateTime.current
+      authenticated_resource!.argu_publication.draft!
+      authenticated_resource!.argu_publication.published_at = DateTime.current
     end
 
     respond_to do |format|
@@ -153,6 +152,12 @@ class ProjectsController < AuthorizedController
     @destroy_service ||= DestroyProject.new(resource_by_id)
   end
 
+  def new_resource_from_params
+    resource = super
+    resource.build_argu_publication(publish_type: 'direct', published_at: DateTime.current)
+    resource
+  end
+
   def permit_params
     params.require(:project).permit(*policy(resource_by_id || new_resource_from_params || Project).permitted_attributes)
   end
@@ -162,10 +167,7 @@ class ProjectsController < AuthorizedController
   end
 
   def resource_new_params
-    super.merge(
-      publish_type: :direct,
-      publish_at: Time.current,
-      start_date: Time.current)
+    super.merge(start_date: DateTime.current)
   end
 
   def trash_service
