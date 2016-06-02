@@ -1,7 +1,7 @@
 /.box.box-grid.motion[class=status_classes_for(motion) data-tags="#{motion.tags.join(',')}" data-date=motion.created_at data-score=motion.raw_score]
-  -if motion.cover_photo.present?
+  -if motion.default_cover_photo.present?
     = contextual_link_to motion_path(motion) do
-      .box-image[style="background-image: url('#{motion.cover_photo.url(:box)}'); "]
+      .box-image[style="background-image: url('#{motion.default_cover_photo.url(:box)}'); "]
   section.section-info.motion-bg
     span voorstel
   section

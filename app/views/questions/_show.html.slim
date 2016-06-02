@@ -1,7 +1,7 @@
 .box[class=status_classes_for(model) data-intro= t('intro.question.body') itemscope="itemscope" itemtype="http://schema.org/Question"]
-  - if model.cover_photo.present?
+  - if model.default_cover_photo.present?
     =contextual_link_to question_path(model) do
-      =render partial: 'application/box_image', locals: {url: model.cover_photo.url(:box), type: 'question'}
+      =render partial: 'application/box_image', locals: {url: model.default_cover_photo.url(:box), type: 'question'}
   =render partial: 'questions/info_bar', locals: {question: model}
   section
     =contextual_link_to question_path(model) do
