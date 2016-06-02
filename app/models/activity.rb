@@ -14,6 +14,16 @@ class Activity < PublicActivity::Activity
 
   validates_presence_of :forum, :key, :trackable, :owner, :recipient
 
+  # Represents the physical event of the trackable.
+  # @note A happening is an Activity with '*.happened' as key
+  # @!attribute r created_at Indicates when the physical event took place.
+  scope :happenings, -> { where("key ~ '*.happened'") }
+  # Represents an activity of a {User} on Argu.
+  # @!attribute r created_at Indicates when the {User}'s action was processed.
+  # @example
+  #     User created a {Motion}: key == 'motion.create'
+  #     User updated an {Argument}: key == 'argument.update'
+  scope :loggings, -> { where("key ~ '*.!happened'") }
   scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }
 
   def action
@@ -25,6 +35,6 @@ class Activity < PublicActivity::Activity
   end
 
   def object
-    trackable_type.downcase
+    trackable_type.underscore
   end
 end

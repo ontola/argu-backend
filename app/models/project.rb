@@ -22,12 +22,6 @@ class Project < ActiveRecord::Base
   has_many   :phases, -> {order(:id)}, inverse_of: :project
   has_many   :stepups, as: :record, dependent: :destroy
   has_many   :questions, inverse_of: :project
-  has_many   :activities, as: :trackable
-  has_many   :happenings,
-             -> { where("key ~ '*.happened'") },
-             class_name: 'Activity',
-             as: :recipient,
-             inverse_of: :recipient
 
   accepts_nested_attributes_for :phases, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :stepups, reject_if: :all_blank, allow_destroy: true

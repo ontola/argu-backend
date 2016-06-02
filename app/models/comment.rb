@@ -10,7 +10,9 @@ class Comment < ActiveRecord::Base
   belongs_to :commentable, polymorphic: true
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
-  has_many :activities, as: :trackable
+  has_many   :activities,
+             -> { where("key ~ '*.!happened'") },
+             as: :trackable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   after_create :increment_counter_cache, :touch_parent
