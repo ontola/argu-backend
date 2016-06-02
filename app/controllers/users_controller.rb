@@ -190,7 +190,7 @@ class UsersController < ApplicationController
 
   def voted_select_query
     'SELECT votes.*, forums.visibility FROM "votes" LEFT OUTER JOIN "forums" ON "votes"."forum_id" = "forums"."id" '\
-      'WHERE ("votes"."voter_type" = \'Profile\' AND "votes"."voter_id" = '+@profile.id.to_s+') AND '\
+      'WHERE "votes"."voter_id" = '+@profile.id.to_s+' AND '\
       '("votes"."voteable_type" = \'Question\' OR "votes"."voteable_type" = \'Motion\') AND '\
       '("forums"."visibility" = '+Forum.visibilities[:open].to_s+' OR '\
       '"forums"."id" IN ('+ (current_profile && current_profile.memberships_ids || 0.to_s) +')) '\

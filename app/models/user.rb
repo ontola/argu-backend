@@ -1,16 +1,16 @@
 class User < ActiveRecord::Base
   include ArguBase, Shortnameable, Flowable, Placeable
 
-  has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
-  has_many :identities, dependent: :destroy
-  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
-  has_many :notifications
+  has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
   has_one :home_placement,
           -> { where title: 'home', placeable_type: 'User' },
           class_name: 'Placement',
           foreign_key: 'placeable_id',
           inverse_of: :placeable
-  has_one :home_address, class_name: 'Place', through: :home_placement, source: :place
+  has_one :profile, as: :profileable, dependent: :destroy, inverse_of: :profileable
+  has_many :identities, dependent: :destroy
+  has_many :notifications
+  has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
   # User content
   has_many :arguments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
   has_many :blog_posts, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
@@ -37,7 +37,6 @@ class User < ActiveRecord::Base
   TEMP_EMAIL_PREFIX = 'change@me'
   TEMP_EMAIL_REGEX = /\Achange@me/
 
-  after_destroy :cleanup
   after_create :update_acesss_token_counts
   before_save { |user| user.email = email.downcase unless email.blank? }
 
@@ -102,7 +101,7 @@ class User < ActiveRecord::Base
   end
 
   def home_placement
-    super || build_home_placement(creator: profile)
+    super || build_home_placement(creator: profile, publisher: self)
   end
 
   def is_omni_only
@@ -168,12 +167,6 @@ class User < ActiveRecord::Base
 
   private
 
-  def cleanup
-    identities.destroy_all
-    profile.activities.destroy_all
-    profile.memberships.destroy_all
-    profile.page_memberships.destroy_all
-  end
 
   def self.koala(auth)
     access_token = auth['token']

@@ -11,4 +11,20 @@ class Membership < ActiveRecord::Base
   parentable :forum
 
   enum role: {member: 0, manager: 2}
+
+  def publisher_id
+    if profile.profileable.is_a?(User)
+      profile.profileable.id
+    else
+      profile.profileable.owner.profileable.id
+    end
+  end
+
+  def publisher
+    if profile.profileable.is_a?(User)
+      profile.profileable
+    else
+      profile.profileable.owner.profileable
+    end
+  end
 end

@@ -1,8 +1,11 @@
 class Placement < ActiveRecord::Base
+  include ArguBase
+
   belongs_to :forum
   belongs_to :place
   belongs_to :placeable, polymorphic: true
   belongs_to :creator, class_name: 'Profile'
+  belongs_to :publisher, class_name: 'User'
   before_validation :destruct_if_unneeded
   validate :validate_place, unless: :destroyed?
 

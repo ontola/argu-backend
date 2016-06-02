@@ -21,7 +21,7 @@ class Profile < ActiveRecord::Base
   has_many :page_memberships, dependent: :destroy
   has_many :page_managerships, -> { where(role: PageMembership.roles[:manager]) }, class_name: 'PageMembership'
   has_many :pages, inverse_of: :owner, foreign_key: :owner_id, dependent: :restrict_with_exception
-  has_many :votes, as: :voter, dependent: :destroy
+  has_many :votes, inverse_of: :voter, foreign_key: :voter_id, dependent: :destroy
   # User content
   has_many :arguments, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
   has_many :blog_posts, inverse_of: :creator, foreign_key: 'creator_id', dependent: :restrict_with_exception
