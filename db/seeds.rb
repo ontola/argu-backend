@@ -1,15 +1,16 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 
-User
-  .create!(
+u1 = User
+  .new(
     id: 0,
     shortname: Shortname.new(shortname: 'community'),
     email: 'community@argu.co',
     password: '11a57b48a5810f09bf7d893174657959df7ecd6d4a055d66',
-    finished_intro: true,
-    profile: Profile.create(id: 0))
-  .update(encrypted_password: '')
+    finished_intro: true)
+u1.build_profile(id: 0, profileable: u1)
+u1.save!
+u1.update(encrypted_password: '')
 
 User
   .create!(
@@ -38,11 +39,12 @@ User
   .add_role :user
 
 argu = Page
-         .create!(
+         .new(
            owner: User.find_via_shortname('staff_account').profile,
            shortname_attributes: {shortname: 'argu'},
-           profile: Profile.new(name: 'Argu'),
            last_accepted: Time.current)
+argu.build_profile(name: 'Argu', profileable: argu)
+argu.save!
 
 Forum.create!(name: 'Nederland',
               page: argu,

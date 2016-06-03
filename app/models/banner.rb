@@ -1,5 +1,5 @@
 class Banner < NewsBoy
-  include ArguBase
+  include ArguBase, Photoable, ProfilePhotoable
 
   belongs_to :forum
   belongs_to :publisher, class_name: 'User'
@@ -8,6 +8,4 @@ class Banner < NewsBoy
 
   validates :forum, :audience, presence: true
   # validates :sample_size, min: 1, max: 100, default: 100
-
-  mount_uploader :cited_avatar, AvatarUploader
 end

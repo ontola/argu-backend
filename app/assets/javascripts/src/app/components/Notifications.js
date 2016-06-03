@@ -58,14 +58,14 @@ export const ScrollLockMixin = {
 window.ScrollLockMixin = ScrollLockMixin;
 
 export const NotificationDropdown = React.createClass({
+    propTypes: {
+        dropdownClass: React.PropTypes.string
+    },
+
     mixins: [
         HyperDropdownMixin,
         OnClickOutside
     ],
-
-    propTypes: {
-        dropdownClass: React.PropTypes.string
-    },
 
     getDefaultProps () {
         return {
@@ -151,11 +151,11 @@ export const NotificationTrigger = React.createClass({
 window.NotificationTrigger = NotificationTrigger;
 
 export const Notifications = React.createClass({
-    mixins: [ScrollLockMixin],
-
     propTypes: {
         done: React.PropTypes.func
     },
+
+    mixins: [ScrollLockMixin],
 
     getInitialState () {
         return this.props;

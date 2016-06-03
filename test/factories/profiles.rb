@@ -2,7 +2,7 @@ FactoryGirl.define do
   factory :profile do
     are_votes_public true
     is_public true
-    after(:create) do |profile|
+    before(:create) do |profile|
       profile.update profileable: build(:user) if profile.profileable.blank?
     end
 

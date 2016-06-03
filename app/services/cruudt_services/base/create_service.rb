@@ -16,7 +16,7 @@ class CreateService < ApplicationService
     :save!
   end
 
-  def set_object_attributes(obj)
+  def object_attributes=(obj)
     raise 'Required interface not implemented'
   end
 end

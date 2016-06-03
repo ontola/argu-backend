@@ -2,7 +2,12 @@
   - banner.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('newe_type', type: t('forums.settings.banner')) do
-    =f.inputs :title, :content, :cited_avatar, :cited_name, :cited_function, :sample_size, :dismissable
+    =f.inputs :title, :content, :cited_name, :cited_function, :sample_size, :dismissable
+    =render partial: 'photos/form',
+        locals: {form: f,
+            type: :profile_photo,
+            relation: :default_profile_photo,
+            preview_style: 'max-height: 96px; margin-bottom: 0.5em;'}
     =f.input :audience, as: :select, collection: options_for_banner_audiences, prompt: ''
     =f.input :published_at, as: :datetime_picker
     =f.input :ends_at, as: :datetime_picker

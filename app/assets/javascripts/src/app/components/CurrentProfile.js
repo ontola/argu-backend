@@ -37,3 +37,5 @@ export const CurrentProfile = React.createClass({
         </div>);
     }
 });
+
+window.CurrentProfile = CurrentProfile;

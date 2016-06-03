@@ -41,8 +41,6 @@ class ForumsController < ApplicationController
                .page(show_params[:page])
                .per(30)
     end
-
-    render
   end
 
   def settings

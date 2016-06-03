@@ -148,17 +148,18 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     sign_in owner
 
     assert_difference('forum.reload.lock_version', 1) do
-      put :update,
-          id: forum,
+      put forum_path(forum),
           forum: {
             name: 'new name',
             bio: 'new bio',
             default_profile_photo_attributes: {
               id: forum.default_profile_photo.id,
-              image: uploaded_file_object(Photo, :image, open_file('profile_photo.png'))
+              image: fixture_file_upload(File.expand_path('test/files/profile_photo.png'), 'image/png'),
+              used_as: 'profile_photo'
             },
             default_cover_photo_attributes: {
-              image: uploaded_file_object(Photo, :image, open_file('cover_photo.jpg'))
+              image: fixture_file_upload(File.expand_path('test/files/cover_photo.jpg'), 'image/jpg'),
+              used_as: 'cover_photo'
             }
           }
     end
@@ -166,8 +167,8 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to settings_forum_path(forum.url, tab: :general)
     assert_equal 'new name', assigns(:forum).reload.name
     assert_equal 'new bio', assigns(:forum).reload.bio
-    assert_equal 'cover_photo.jpg', assigns(:forum).default_cover_photo.image_identifier
     assert_equal 'profile_photo.png', assigns(:forum).default_profile_photo.image_identifier
+    assert_equal 'cover_photo.jpg', assigns(:forum).default_cover_photo.image_identifier
     assert_equal 2, assigns(:forum).photos.count
   end
 

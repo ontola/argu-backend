@@ -73,9 +73,9 @@ window.SingleValue = SingleValue;
 export const NewMembership = React.createClass({
     propTypes: {
         display_name: React.PropTypes.string,
+        image: React.PropTypes.string,
         thing: React.PropTypes.string,
-        things: React.PropTypes.string,
-        image: React.PropTypes.string
+        things: React.PropTypes.string
     },
 
     getInitialState () {

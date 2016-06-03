@@ -168,49 +168,6 @@ class ProjectsControllerTest < ActionDispatch::IntegrationTest
   end
 
   ####################################
-  # As Owner
-  ####################################
-
-  test 'owner should get new' do
-    sign_in owner
-    general_new 200
-  end
-
-  test 'owner should get show' do
-    sign_in owner
-    general_show
-  end
-
-  test 'owner should post create' do
-    sign_in owner
-    general_create 302,
-                   true,
-                   [['Project.count', 1],
-                    ['Stepup.count', 1],
-                    ['Phase.count', 1]]
-  end
-
-  test 'owner should get edit' do
-    sign_in owner
-    general_edit 200
-  end
-
-  test 'owner should patch update' do
-    sign_in owner
-    general_update 302, true
-  end
-
-  test 'owner should delete destroy trash' do
-    sign_in owner
-    general_trash 302, 1
-  end
-
-  test 'owner should delete destroy' do
-    sign_in owner
-    general_destroy 302, -1
-  end
-
-  ####################################
   # As NetDem member
   # The following tests are specific to the use case of NetDem
   ####################################

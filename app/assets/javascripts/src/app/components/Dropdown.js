@@ -9,11 +9,6 @@ import actorStore from '../stores/actor_store';
 import HyperDropdownMixin from '../mixins/HyperDropdownMixin';
 
 export const HyperDropdown = React.createClass({
-    mixins: [
-        HyperDropdownMixin,
-        OnClickOutside
-    ],
-
     propTypes: {
         current_actor: React.PropTypes.object,
         defaultAction: React.PropTypes.string,
@@ -29,6 +24,11 @@ export const HyperDropdown = React.createClass({
         triggerTag: React.PropTypes.string,
         url: React.PropTypes.string
     },
+
+    mixins: [
+        HyperDropdownMixin,
+        OnClickOutside
+    ],
 
     getDefaultProps () {
         return {
@@ -98,18 +98,18 @@ export const HyperDropdown = React.createClass({
 window.HyperDropdown = HyperDropdown;
 
 export const ShareDropdown = React.createClass({
+    propTypes: {
+        defaultAction: React.PropTypes.string,
+        dropdownClass: React.PropTypes.string,
+        shareUrls: React.PropTypes.object,
+        title: React.PropTypes.string,
+        url: React.PropTypes.string
+    },
+
     mixins: [
         HyperDropdownMixin,
         OnClickOutside
     ],
-
-    propTypes: {
-        defaultAction: React.PropTypes.string,
-        dropdownClass: React.PropTypes.string,
-        title: React.PropTypes.string,
-        shareUrls: React.PropTypes.object,
-        url: React.PropTypes.string
-    },
 
     getDefaultProps () {
         return {
@@ -323,6 +323,7 @@ window.DropdownContent = DropdownContent;
 
 export const LinkItem = React.createClass({
     propTypes: {
+        className: React.PropTypes.string,
         data: React.PropTypes.shape({
             method: React.PropTypes.string,
             confirm: React.PropTypes.string,
@@ -334,7 +335,6 @@ export const LinkItem = React.createClass({
         }),
         divider: React.PropTypes.func,
         done: React.PropTypes.func,
-        className: React.PropTypes.string,
         fa: React.PropTypes.string,
         image: React.PropTypes.object,
         target: React.PropTypes.string,
@@ -437,8 +437,8 @@ export const ActorItem = React.createClass({
         data: React.PropTypes.shape({
             'turbolinks': React.PropTypes.string
         }),
-        done: React.PropTypes.func,
         divider: React.PropTypes.string,
+        done: React.PropTypes.func,
         fa: React.PropTypes.string,
         image: React.PropTypes.object,
         title: React.PropTypes.string,

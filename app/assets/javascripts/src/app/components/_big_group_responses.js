@@ -10,17 +10,17 @@ import { safeCredentials, statusSuccess, json } from '../lib/helpers';
  * @export BigGroupResponse
  */
 export const BigGroupResponse = React.createClass({
-    mixins: [IntlMixin],
-
     propTypes: {
         actor: React.PropTypes.object,
         currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
         groups: React.PropTypes.array,
-        objectType: React.PropTypes.string,
         objectId: React.PropTypes.number,
+        objectType: React.PropTypes.string,
         percent: React.PropTypes.object
     },
+
+    mixins: [IntlMixin],
 
     getInitialState () {
         return {

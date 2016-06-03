@@ -57,7 +57,10 @@ class PagePolicy < RestrictivePolicy
     end
     attributes.append :visibility if is_owner?
     attributes.concat %i(page_id repeat_name) if change_owner?
-    attributes.append(profile_attributes: ProfilePolicy.new(context, record.try(:profile) || Profile).permitted_attributes)
+    attributes.append(profile_attributes: ProfilePolicy
+                                            .new(context,
+                                                 record.try(:profile) || Profile)
+                                            .permitted_attributes)
     attributes.flatten
   end
 

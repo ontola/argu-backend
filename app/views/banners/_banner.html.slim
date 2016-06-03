@@ -4,8 +4,8 @@
     .markdown
       =markdown_to_html(banner.content)
     .profile-signed-message
-      - if banner.cited_avatar.present?
-        img.profile-picture[src=banner.cited_avatar.url(:avatar)]
+      - if banner.default_profile_photo.present?
+        img.profile-picture[src=banner.default_profile_photo.url(:avatar)]
       - if banner.cited_name.present?
         .profile-name= banner.cited_name
       - if banner.cited_function.present?

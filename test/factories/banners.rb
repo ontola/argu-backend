@@ -3,6 +3,7 @@ FactoryGirl.define do
     association :forum
     sequence(:title) { |n| "Banner title #{n}" }
     sequence(:content) { |n| "Banner content #{n}" }
+    publisher { passed_in?(:publisher) ? publisher : create(:user) }
 
     trait :published do
       published_at { 1.hour.ago }

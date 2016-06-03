@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :activity do
+  factory :activity, class: Activity do
     transient do
       tenant { passed_in?(:forum) ? forum : build(:forum) }
     end

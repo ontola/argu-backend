@@ -17,8 +17,6 @@ const HUNDRED_PERCENT = 100;
  * @memberof Vote
  */
 export const VoteButton = React.createClass({
-    mixins: [IntlMixin],
-
     propTypes: {
         actor: React.PropTypes.object,
         clickHandler: React.PropTypes.func,
@@ -27,6 +25,8 @@ export const VoteButton = React.createClass({
         objectId: React.PropTypes.number,
         side: React.PropTypes.string
     },
+
+    mixins: [IntlMixin],
 
     iconForSide () {
         switch (this.props.side) {
@@ -69,8 +69,6 @@ export const VoteButton = React.createClass({
 });
 
 export const VoteButtons = React.createClass({
-    mixins: [IntlMixin, VoteMixin],
-
     propTypes: {
         actor: React.PropTypes.object,
         buttonsType: React.PropTypes.string,
@@ -80,6 +78,8 @@ export const VoteButtons = React.createClass({
         objectType: React.PropTypes.string,
         percent: React.PropTypes.object
     },
+
+    mixins: [IntlMixin, VoteMixin],
 
     getInitialState () {
         return {

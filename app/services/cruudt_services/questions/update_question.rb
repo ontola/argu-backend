@@ -15,5 +15,6 @@ class UpdateQuestion < UpdateService
   def object_attributes=(obj)
     obj.forum ||= @question.forum
     obj.creator ||= @question.creator
+    obj.publisher ||= resource.publisher if obj.respond_to?(:publisher)
   end
 end

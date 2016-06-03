@@ -19,17 +19,17 @@ import { IntlMixin } from 'react-intl';
  * @see {@linkcode BigGroupResponse}
  */
 export const CombiVote = React.createClass({
-    mixins: [IntlMixin, VoteMixin],
-
     propTypes: {
         actor: React.PropTypes.object,
         currentVote: React.PropTypes.string,
         distribution: React.PropTypes.object,
         groups: React.PropTypes.array,
-        objectType: React.PropTypes.string,
         objectId: React.PropTypes.number,
+        objectType: React.PropTypes.string,
         percent: React.PropTypes.object
     },
+
+    mixins: [IntlMixin, VoteMixin],
 
     getInitialState () {
         return {
@@ -68,7 +68,7 @@ export const CombiVote = React.createClass({
     },
 
     render () {
-        let voteButtonsComponent, groupResponsesComponent;
+        let voteButtonsComponent, voteResultsComponent, groupResponsesComponent;
         if (!this.state.actor || this.state.actor.actor_type === 'User') {
             voteButtonsComponent = <VoteButtons {...this.state} {...this.props}/>;
             voteResultsComponent = <VoteResults {...this.state} showResults={this.state.currentVote !== 'abstain'}/>;
@@ -81,6 +81,7 @@ export const CombiVote = React.createClass({
         return (
                 <div className="center motion-shr">
                     {voteButtonsComponent}
+                    {voteResultsComponent}
                     {groupResponsesComponent}
                 </div>
         );

@@ -18,10 +18,11 @@ class Project < ActiveRecord::Base
   belongs_to :forum, inverse_of: :projects
   belongs_to :publisher, class_name: 'User'
 
-  has_many   :motions, inverse_of: :project
-  has_many   :phases, -> {order(:id)}, inverse_of: :project
-  has_many   :stepups, as: :record, dependent: :destroy
-  has_many   :questions, inverse_of: :project
+  has_many :motions, inverse_of: :project
+  has_many :phases, -> {order(:id)}, inverse_of: :project
+  has_many :stepups, as: :record, dependent: :destroy
+  has_many :questions, inverse_of: :project
+  has_many :activities, as: :trackable
 
   accepts_nested_attributes_for :phases, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :stepups, reject_if: :all_blank, allow_destroy: true
@@ -29,7 +30,6 @@ class Project < ActiveRecord::Base
   before_save :update_start_date_of_first_phase
 
   counter_culture :forum
-  mount_uploader :cover_photo, CoverUploader
   parentable :forum
 
   validates :forum, :creator, :start_date, presence: true

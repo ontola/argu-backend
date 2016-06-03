@@ -61,8 +61,8 @@ export function image (props) {
 }
 
 image.propTypes = {
-    image: React.PropTypes.object,
-    fa: React.PropTypes.string
+    fa: React.PropTypes.string,
+    image: React.PropTypes.object
 };
 
 export function _url (url, obj) {
