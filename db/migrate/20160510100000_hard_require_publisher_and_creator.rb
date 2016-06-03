@@ -3,6 +3,8 @@ class HardRequirePublisherAndCreator < ActiveRecord::Migration
                          Phase, GroupResponse, Placement].freeze
 
   def up
+    raise('Photos still contains a nil publisher_id') unless Photo.where(publisher_id: nil).count == 0
+
     profile_ids = Profile.pluck(:id)
     community_profile = Profile.find(0)
     # community_user = Profile.find(0)
