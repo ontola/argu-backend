@@ -140,7 +140,9 @@ module ApplicationHelper
           facebook: ShareHelper.facebook_share_url(url),
           linkedIn: ShareHelper.linkedin_share_url(url, title: resource.display_name),
           twitter: ShareHelper.twitter_share_url(url, title: resource.display_name),
-          googlePlus: ShareHelper.googleplus_share_url(url)
+          googlePlus: ShareHelper.googleplus_share_url(url),
+          whatsapp: ShareHelper.whatsapp_share_url(url),
+          email: ShareHelper.email_share_url(url, title: resource.display_name)
       }
     }
   end

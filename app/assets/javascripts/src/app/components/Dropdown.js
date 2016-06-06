@@ -211,6 +211,17 @@ export const ShareDropdown = React.createClass({
                     title={'Google+'}
                     url={shareUrls.googlePlus}
                     fa="fa-google-plus" />
+            <LinkItem
+                    data-action="share/whatsapp/share"
+                    fa="fa-whatsapp"
+                    title={'Whatsapp'}
+                    type="link"
+                    url={shareUrls.whatsapp} />
+            <LinkItem
+                    fa="fa-envelope"
+                    title={'E-Mail'}
+                    type="link"
+                    url={shareUrls.email} />
             </DropdownContent>;
 
         return (<div tabIndex="1"
