@@ -16,14 +16,11 @@
             =f.input :start_date, as: :datetime_picker
             li.form-helper
               span= t('projects.start_date_info')
-            =f.inputs name: t('image') do
-              p= t('use_a_high_res_image')
-              =f.input :cover_photo, label: t('profiles.edit.upload_picture')
-              li.form-helper
-                span=t('profiles.edit.file_limit_notice')
-              - if project.cover_photo.present?
-                =f.input :cover_photo, as: :preview_image, html_options: {style: 'max-height: 256px;'}
-                =f.input :remove_cover_photo, as: :reverse_boolean
+          =render partial: 'photos/form',
+                  locals: {form: f,
+                          type: :cover_photo,
+                          relation: :default_cover_photo,
+                          preview_style: 'max-height: 256px;'}
           =f.inputs
             hr
             p= t('projects.stepups.info')
