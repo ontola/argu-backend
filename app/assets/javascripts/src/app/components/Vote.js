@@ -76,7 +76,8 @@ export const VoteButtons = React.createClass({
         distribution: React.PropTypes.object,
         objectId: React.PropTypes.number,
         objectType: React.PropTypes.string,
-        percent: React.PropTypes.object
+        percent: React.PropTypes.object,
+        vote_url: React.PropTypes.string
     },
 
     mixins: [IntlMixin, VoteMixin],
@@ -102,16 +103,16 @@ export const VoteButtons = React.createClass({
         const voteButtons = ['pro', 'neutral' , 'con']
             .map((side, i) => {
                 return <VoteButton actor={this.props.actor}
-                                   clickHandler={this[`${side}Handler`]}
-                                   count={this.state.distribution[side]}
-                                   current={this.state.currentVote === side}
+                                   clickHandler={this.props[`${side}Handler`]}
+                                   count={this.props.distribution[side]}
+                                   current={this.props.currentVote === side}
                                    key={i}
                                    objectId={this.props.objectId}
                                    side={side} />;
             });
 
         return (
-            <ul className={this.buttonsClassName()} data-voted={(this.state.currentVote.length > 0 && this.state.currentVote !== 'abstain') || null}>
+            <ul className={this.buttonsClassName()} data-voted={(this.props.currentVote.length > 0 && this.props.currentVote !== 'abstain') || null}>
                 {voteButtons}
             </ul>);
     }

@@ -22,9 +22,9 @@ const VoteStats = props => {
 };
 
 VoteStats.propTypes = {
-    con: React.PropTypes.string,
-    neutral: React.PropTypes.string,
-    pro: React.PropTypes.string
+    con: React.PropTypes.number,
+    neutral: React.PropTypes.number,
+    pro: React.PropTypes.number
 };
 
 export default VoteStats;

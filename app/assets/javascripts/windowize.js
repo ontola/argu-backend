@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const bulk = require('bulk-require');
-const components = bulk(__dirname, ['./src/app/components/**/*.js']);
+const components = bulk(__dirname,
+    ['./src/app/components/**/*.js', './src/app/containers/**/*.js']);
 
 function mine () {
     window.React = React;

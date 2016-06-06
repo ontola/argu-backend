@@ -29,13 +29,13 @@ module MotionsHelper
   end
 
   def motion_vote_props(actor, motion, vote, opts = {})
-    localized_react_component opts.merge(
+    localized_react_component({
       objectType: 'motion',
       objectId: motion.id,
       currentVote: vote.try(:for) || 'abstain',
       vote_url: motion_show_vote_path(motion),
       total_votes: motion.total_vote_count,
-      buttons_type: opts.fetch(:buttons_type, 'big'),
+      buttonsType: opts.fetch(:buttons_type, 'big'),
       actor: actor_props(actor),
       distribution: motion_vote_counts(motion),
       percent: {
@@ -43,7 +43,7 @@ module MotionsHelper
         neutral: motion.votes_neutral_percentage,
         con: motion.votes_con_percentage
       }
-    )
+    }.merge(opts))
   end
 
   def motion_vote_counts(motion, opts = {})

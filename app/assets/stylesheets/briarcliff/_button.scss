@@ -460,7 +460,7 @@
       opacity: .8;
     }
 
-    &[data-voted-on]{
+    &[data-voted-on=true]{
       opacity: 1;
     }
   }

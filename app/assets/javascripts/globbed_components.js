@@ -6,7 +6,8 @@ window.Select = require('react-select');
 window.Map = require('es6-map');
 
 const bulk = require('bulk-require');
-const components = bulk(__dirname, ['./src/app/components/**/*.js']);
+const components = bulk(__dirname,
+    ['./src/app/components/**/*.js','./src/app/containers/**/*.js']);
 
 for (const obj in components) {
     if (components.hasOwnProperty(obj)) {
