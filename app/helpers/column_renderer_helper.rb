@@ -9,17 +9,8 @@ module ColumnRendererHelper
   #   translations @todo: fix this hack so this param is obsolete
   # @option options [String] :partial The partial path that should be used to render the individual items
   def render_columns(columns, options = {})
-    partial =
-      case columns
-      when Motion then 'motions/show'
-      when Argument then 'arguments/show'
-      when Vote then 'votes/show'
-      when Question then 'questions/show'
-      when QuestionAnswer then 'question_answers/show'
-      when Comment then 'comments/show'
-      when GroupResponse then 'group_responses/show'
-      else 'column_renderer/show'
-      end
+    included_models = [Motion, Argument, Vote, Question, QuestionAnswer, Comment, GroupResponse, Project, BlogPost]
+    partial = included_models.include?(columns.class) ? "#{columns.class_name}/show" : 'column_renderer/show'
     partial = options.fetch(:partial, partial) if columns.is_a?(ActiveRecord::Base)
 
     if partial == 'column_renderer/show'

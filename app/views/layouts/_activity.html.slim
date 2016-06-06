@@ -9,5 +9,5 @@
         time[datetime=activity.created_at]
           small[style="font-size: 0.8em; color: grey;"]= awesome_time_ago_in_words activity.created_at
   .activity-body
-    -if activity.action == 'create' && activity.object != 'vote'
+    -if ['create', 'publish'].include?(activity.action) && activity.object != 'vote'
       =render partial: "public_activity/#{activity.key.gsub('.','/')}", locals: {activity: activity}

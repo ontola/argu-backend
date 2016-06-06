@@ -23,9 +23,6 @@ module MenuHelper
   def crud_menu_options(resource, additional_items = [])
     link_items = [].concat(additional_items).compact
     resource_policy = policy(resource)
-    if resource.respond_to?(:blog_posts) # @TODO figure out how to do the authorization nicely
-      link_items << link_item(t('blog_posts.type_new'), polymorphic_url([:new, resource, :blog_post]), fa: 'quote-left')
-    end
     link_items << link_item(t('edit'), polymorphic_url([:edit, resource]), fa: 'edit') if resource_policy.update?
     link_items << link_item(t('log'), polymorphic_url([resource, :log]), fa: 'history') if resource_policy.log?
     if resource.is_trashed?

@@ -1,0 +1,11 @@
+.box.box--extra-margin[class=status_classes_for(model)]
+  =contextual_link_to project_path(model)
+    =render partial: 'projects/info_bar', locals: {project: model}
+  section[itemscope="itemscope" itemtype="http://www.schema.org/Thing"]
+    =contextual_link_to project_path(model)
+      h3.blog-post-t[itemprop="headline"]= model.title
+    =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
+  =contextual_link_to project_path(model), class: 'btn-subtle sticky--bottom-right'
+    span.icon-right= t('read_more')
+    span.fa.fa-arrow-right
+  =yield
