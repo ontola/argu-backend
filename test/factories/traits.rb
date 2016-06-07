@@ -21,7 +21,7 @@ FactoryGirl.define do
 
   trait :with_edge do
     after :create do |resource|
-      parent = !resource.is_a?(Forum) && resource.parent
+      parent = !resource.is_a?(Forum) && resource.parent_model
       path = parent && parent.edge.path
       path ||= resource.identifier
       create(

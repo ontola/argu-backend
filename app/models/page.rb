@@ -1,7 +1,7 @@
 class Page < ActiveRecord::Base
   include ArguBase, Shortnameable, Flowable
 
-  has_one :profile, dependent: :destroy, as: :profileable
+  has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile
   belongs_to :owner, class_name: 'Profile', inverse_of: :pages
   has_many :forums, dependent: :restrict_with_exception

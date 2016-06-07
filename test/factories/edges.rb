@@ -3,13 +3,13 @@ FactoryGirl.define do
     association :user
     fragment { owner.identifier }
     parent do
-      passed_in?(:parent) ? parent : owner.parent.edge
+      passed_in?(:parent) ? parent : owner.parent_model.edge
     end
     parent_fragment { parent.owner.identifier }
     path { [parent_fragment, fragment].join('.') }
 
     after :build do |edge|
-      p_edge = edge.owner.parent.edge
+      p_edge = edge.owner.parent_model.edge
       if edge.parent != p_edge
         edge.parent = p_edge
         edge.parent_fragment = p_edge.owner.identifier

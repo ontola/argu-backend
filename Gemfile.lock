@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/ArthurWD/ltree_hierarchy.git
-  revision: 0213f3b3ffd1b9c1ce35d70f43a587886d15f151
+  revision: 8fd1e4e8aed21a4e325572cbf9548024a1c899ad
   branch: polymorphic-parents
   specs:
     ltree_hierarchy (0.0.8)

@@ -50,7 +50,7 @@ RSpec.feature 'Comments', type: :feature do
   ####################################
   let(:user) { create(:user) }
 
-  scenario 'User places a comment' do
+  scenario 'User places nested comments' do
     login_as(user, scope: :user)
     visit argument_path(argument)
 
@@ -63,8 +63,21 @@ RSpec.feature 'Comments', type: :feature do
     expect(page).to have_content 'and participate in the discussion!'
     find('.modal').click_link('join-forum')
 
+    click_button 'Reply'
+
     expect(page).to have_content argument.title
     expect(page).to have_content comment_args[:body]
+
+    comment_args = attributes_for(:comment)
+    within("#comments_#{Comment.last.id}") do
+      click_link 'Reply'
+    end
+
+    within("#cf#{Comment.last.id}") do
+      expect(page).to have_field('comment[body]')
+      fill_in 'comment[body]', with: comment_args[:body]
+      click_button 'Reply'
+    end
   end
 
   ####################################

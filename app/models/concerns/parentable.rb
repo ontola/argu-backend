@@ -6,7 +6,7 @@ module Parentable
   extend ActiveSupport::Concern
 
   included do
-    has_ltree_hierarchy parent_fragment: :parent, polymorphic: true, edge_model: Edge
+    has_ltree_hierarchy parent_fragment: :parent_model, polymorphic: true, edge_model: Edge
 
     # Simple method to verify that a model uses {Parentable}
     def is_fertile?
@@ -46,7 +46,7 @@ module Parentable
     end
   end
 
-  def parent
+  def parent_model
     get_parent.model
   end
 
