@@ -35,13 +35,8 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
               span.fa.fa-gear
               span.icon-left= t('forums.settings.title')
           - if current_user.present?
-            li.float-right.btn--transparant--parent[data-title=I18n.t('tooltips.follow')]
-              =react_component 'ActiveToggle',
-                               {url: follows_path(forum_id: @forum, format: :json),
-                                initialState: current_user.following?(@forum.edge),
-                                true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
-                                false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
-                               {prerender: true}
+            li.float-right
+              ul= react_component 'HyperDropdown', follow_dropdown_items(@forum, follow_types: [:reactions, :never], trigger_class: 'btn--transparant'), {prerender: true}
   - if policy(@forum).show?
     .btns-center-container
       -if can_start_discussion?

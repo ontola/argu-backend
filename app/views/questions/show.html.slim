@@ -19,13 +19,8 @@
       =render question.creator, locals= {resource: question}
       ul.btns-list--subtle.sticky--bottom-right.btns-horizontal.btns-list--grey-background
         - if current_user.present?
-          li[data-title=I18n.t('tooltips.follow')]
-            =react_component 'ActiveToggle',
-                             {url: follows_path(question_id: question.id, format: :json),
-                              initialState: current_user.following?(question.edge),
-                              true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
-                              false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
-                             {prerender: true}
+          li
+            ul=react_component 'HyperDropdown', follow_dropdown_items(question), {prerender: true}
         =crud_menu_item(question, question_items(question))
         - if question.forum.visibility
           li

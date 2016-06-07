@@ -69,15 +69,16 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
                                 argu_publication_attributes: {publish_type: :direct}))
     assert_response 302
 
-    Sidekiq::Testing.inline! do
-      Publication.last.send(:reset)
+    # Notification for creator and follower of project
+    assert_difference('Notification.count', 2) do
+      Sidekiq::Testing.inline! do
+        Publication.last.send(:reset)
+      end
     end
 
     follow_redirect!
     assert_response 200
     assert_equal true, BlogPost.last.is_published?
-    # Notification for creator and follower of project
-    assert_equal 2, Notification.count
   end
 
   test 'moderator post create scheduled blog_post' do

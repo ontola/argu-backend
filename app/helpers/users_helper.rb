@@ -19,8 +19,12 @@ module UsersHelper
     User.omniauth_providers.dup.delete_if { |p| user.identities.pluck(:provider).include?(p.to_s) }
   end
 
-  def options_for_follows_email
-    User.follows_emails.keys.map { |n| [I18n.t("users.follows_email.#{n}"), n] }
+  def options_for_reactions_email
+    User.reactions_emails.keys.map { |n| [I18n.t("users.reactions_email.#{n}"), n] }
+  end
+
+  def options_for_news_email
+    User.news_emails.keys.map { |n| [I18n.t("users.news_email.#{n}"), n] }
   end
 
   def options_for_memberships_email

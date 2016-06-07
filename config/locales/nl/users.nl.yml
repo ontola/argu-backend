@@ -14,11 +14,21 @@ nl:
       confirmed: "E-mail bevestigd"
       unconfirmed: "E-mail nog niet bevestigd"
       unconfirmed_email: "Email in afwachting: %{email}"
-    follows_email:
-      never_follows_email: 'Nooit'
-      direct_follows_email: 'Onmiddelijk'
-      daily_follows_email: 'Dagelijks'
-      weekly_follows_email: 'Wekelijks'
+    reactions_email:
+      never_reactions_email: 'Nooit'
+      direct_reactions_email: 'Onmiddelijk'
+      daily_reactions_email: 'Dagelijks'
+      weekly_reactions_email: 'Wekelijks'
+    news_email:
+      never_news_email: 'Nooit'
+      direct_news_email: 'Onmiddelijk'
+      daily_news_email: 'Dagelijks'
+      weekly_news_email: 'Wekelijks'
+    decisions_email:
+      never_decisions_email: 'Nooit'
+      direct_decisions_email: 'Onmiddelijk'
+      daily_decisions_email: 'Dagelijks'
+      weekly_decisions_email: 'Wekelijks'
     memberships_email:
       never_memberships_email: 'Nooit'
       direct_memberships_email: 'Onmiddelijk'

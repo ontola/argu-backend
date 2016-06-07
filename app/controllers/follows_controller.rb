@@ -5,7 +5,7 @@ class FollowsController < ApplicationController
   def create
     authorize @thing, :follow?
 
-    if current_user.follow @thing.edge
+    if current_user.follow @thing.edge, permit_params[:follow_type] || :reactions
       respond_to do |format|
         format.html { redirect_to :back, notification: t('followed') }
         format.js { head 201 }
@@ -43,14 +43,11 @@ class FollowsController < ApplicationController
   end
 
   def set_thing
-    klass = [Forum, Question, Motion, Argument, Comment, Project].detect { |c| params["#{c.name.underscore}_id"] }
-    method = klass.respond_to?(:friendly) ? klass.friendly : klass
-    @thing =
-      if method.shortnameable?
-        method.find_via_shortname(params["#{klass.name.underscore}_id"])
-      else
-        method.find(params["#{klass.name.underscore}_id"])
-      end
+    @thing = Edge.find_by!(fragment: permit_params[:gid]).owner
     @forum = @thing.try :forum
+  end
+
+  def permit_params
+    params.permit %i(follow_type gid)
   end
 end

@@ -18,9 +18,7 @@ FactoryGirl.define do
     end
 
     factory :profile_direct_email do
-      after(:create) do |profile|
-        profile.update profileable: build(:user, :follows_email)
-      end
+      association :profileable, factory: [:user, :follows_reactions_directly], strategy: :build
     end
   end
 end

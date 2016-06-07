@@ -35,7 +35,7 @@ class MailerListener
         .subscribers
         .where.not(id: resource.creator.id)
         .where.not(confirmed_at: nil)
-        .where(follows_email: User.follows_emails[:direct_follows_email])
+        .where(reactions_email: User.reactions_emails[:direct_reactions_email])
         .pluck(:email)
   end
 

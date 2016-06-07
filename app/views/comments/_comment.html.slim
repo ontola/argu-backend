@@ -7,12 +7,8 @@
       =render partial: 'profiles/profile', locals: {profile: c.creator, resource: c} if c.creator.present?
       ul.sticky--bottom-right.btns-horizontal.btns-list--subtle
         - if current_user.present?
-          li= react_component 'ActiveToggle',
-                  {url: follows_path(comment_id: c.id, format: :json),
-                          initialState: current_user.following?(c.edge),
-                          true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
-                          false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
-                  {prerender: true}
+          li
+            ul= react_component 'HyperDropdown', follow_dropdown_items(c, follow_types: [:reactions, :never]), {prerender: true}
         - if current_user.present? && policy(c).update? || policy(c).trash? || active_for_user?(:notifications, current_user)
           li
             ul= react_component 'HyperDropdown', comment_items(resource, c), {prerender: true}

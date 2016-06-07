@@ -7,7 +7,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
     create(:argument,
            forum: venice,
            creator: create(:user,
-                           :follows_email)
+                           :follows_reactions_directly)
                         .profile)
   end
   let(:comment) do
@@ -72,7 +72,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
   ####################################
   # As member
   ####################################
-  let(:member) { create_member(venice, create(:user, :follows_email)) }
+  let(:member) { create_member(venice, create(:user, :follows_reactions_directly)) }
 
   test 'member should not delete wipe own comment twice affecting counter caches' do
     sign_in member

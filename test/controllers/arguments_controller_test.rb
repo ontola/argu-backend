@@ -8,7 +8,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     create(:motion,
            :with_follower,
            forum: freetown,
-           creator: create(:user, :follows_email, :viewed_notifications_hour_ago).profile)
+           creator: create(:user, :follows_reactions_directly, :viewed_notifications_hour_ago).profile)
   end
   let(:argument) do
     create(:argument,
@@ -328,7 +328,7 @@ class ArgumentsControllerTest < ActionController::TestCase
   def create_changes_array
     [['Argument.count', 1],
      ['Activity.count', 1],
-     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1],
+     ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count', 1],
      ['Notification.count', 2]]
   end
 end

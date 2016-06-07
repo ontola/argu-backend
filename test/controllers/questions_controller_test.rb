@@ -390,12 +390,9 @@ class QuestionsControllerTest < ActionController::TestCase
   # Currently only staffers can convert items
   test 'should put convert' do
     question = subject
-    vote = create(:vote,
-                  forum: freetown,
-                  voteable: question)
-    create(:activity,
+    create(:vote,
            forum: freetown,
-           trackable: question)
+           voteable: question)
 
     sign_in staff
 
@@ -490,7 +487,7 @@ class QuestionsControllerTest < ActionController::TestCase
   def create_changes_array(notifications = 1)
     [['Question.count', 1],
      ['Activity.count', 1],
-     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', notifications],
+     ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count', notifications],
      ['Notification.count', notifications]]
   end
 end

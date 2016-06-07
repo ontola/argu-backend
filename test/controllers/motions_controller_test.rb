@@ -156,7 +156,7 @@ class MotionsControllerTest < ActionController::TestCase
     forum
   end
   let(:no_create_question) do
-    user = create(:user, :follows_email)
+    user = create(:user, :follows_reactions_directly)
     create(:question,
            forum: no_create_without_question,
            creator: user.profile)
@@ -476,7 +476,8 @@ class MotionsControllerTest < ActionController::TestCase
     c = [['Motion.count', count],
          ['Activity.count', count],
          ['Notification.count', notifications]]
-    c << ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', notifications]
+    c << ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count',
+          notifications]
     c
   end
 

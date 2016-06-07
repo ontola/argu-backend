@@ -7,3 +7,8 @@ nl:
     email:
       tooltip: "Email notificaties"
       beta: "Email notificaties zijn nog in bèta, dus het kan zijn dat er dingen nog niet helemaal goed werken."
+    receive:
+      never: 'Geen meldingen'
+      reactions: 'Alle nieuwe reacties'
+      news: 'Belangrijk nieuws'
+      decisions: 'Alleen officiele besluiten'

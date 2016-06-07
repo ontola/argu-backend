@@ -42,7 +42,9 @@ class User < ActiveRecord::Base
 
   delegate :description, :member_of?, to: :profile
 
-  enum follows_email: {never_follows_email: 0, weekly_follows_email: 1, direct_follows_email: 3}
+  enum reactions_email: {never_reactions_email: 0, weekly_reactions_email: 1, direct_reactions_email: 3}
+  enum news_email: {never_news_email: 0, weekly_news_email: 1, direct_news_email: 3}
+  enum decisions_email: {never_decisions_email: 0, weekly_decisions_email: 1, direct_decisions_email: 3}
 
   validates :email,
             allow_blank: false,
@@ -92,6 +94,30 @@ class User < ActiveRecord::Base
   # Since we're the ones creating activities, we should select them based on us being the owner
   def flow
     Activity.where(owner: profile)
+  end
+
+  # Creates a new follow record for this instance to follow the passed object.
+  # Does not allow duplicate records to be created.
+  def follow(followable, type = :reactions)
+    if self != followable
+      follow = follows.find_or_initialize_by(followable_id: followable.id,
+                                             followable_type: parent_class_name(followable))
+      follow.update(follow_type: type)
+    end
+  end
+
+  # The Follow for the followable by this User
+  # @param [Edge] followable The Edge to find the Follow for
+  # @return [Follow]
+  def follow_for(followable)
+    Follow.unblocked.for_follower(self).for_followable(followable)&.first
+  end
+
+  # The follow_type for the followable
+  # @param [Edge] followable The Edge to check the follow_type for
+  # @return [String] the follow_type of the Follow for the followable by this User. 'never' if not following at all
+  def following_type(followable)
+    follow_for(followable).present? ? follow_for(followable).follow_type : 'never'
   end
 
   def greeting

@@ -2,6 +2,7 @@ class Notification < ActiveRecord::Base
   include ActivityStringHelper
   belongs_to :user
   belongs_to :activity
+  before_create :set_notification_type
   after_destroy :sync_notification_count
   after_update :sync_notification_count
 
@@ -9,6 +10,8 @@ class Notification < ActiveRecord::Base
   validates :url, length: {maximum: 512}
 
   scope :renderable, -> { where.not(activity_id: nil) }
+
+  enum notification_type: {link: 0, decision: 1, news: 2, reaction: 3}
 
   def sync_notification_count
     user.try :sync_notification_count
@@ -45,6 +48,15 @@ class Notification < ActiveRecord::Base
 
   def renderable?
     activity.present?
+  end
+
+  def set_notification_type
+    self.notification_type = case activity.trackable
+                             when BlogPost
+                               :news
+                             else
+                               :reaction
+                             end
   end
 
   scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }

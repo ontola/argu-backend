@@ -25,8 +25,8 @@ class RefactorFollowing < ActiveRecord::Migration
     remove_foreign_key :follows, column: :follower_id
 
     Follow.find_each do |f|
-        f.update(followable_type: f.followable.owner.class.to_s,
-                 followable_id: f.followable.owner.id)
-      end
+      f.update(followable_type: f.followable.owner.class.to_s,
+               followable_id: f.followable.owner.id)
+    end
   end
 end

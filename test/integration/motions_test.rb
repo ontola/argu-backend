@@ -43,7 +43,9 @@ class MotionsTest < ActionDispatch::IntegrationTest
     c = [['Motion.count', count],
          ['Activity.count', count],
          ['Notification.count', count]]
-    c << ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', count] if notifications
+    if notifications
+      c << ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count', count]
+    end
     c
   end
 end

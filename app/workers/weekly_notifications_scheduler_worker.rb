@@ -2,30 +2,16 @@ class WeeklyNotificationsSchedulerWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  recurrence { weekly.day(:sunday) }
-  EMAIL_TYPE = User.follows_emails[:weekly_follows_email]
+  recurrence { minutely }
+  EMAIL_FREQUENCY = User.reactions_emails[:weekly_reactions_email]
 
   def perform
-    user_ids = collect_user_ids
+    user_ids = MailReceiversCollector.new(EMAIL_FREQUENCY).call
 
     logger.info 'No notifications to be sent' if user_ids.blank?
     user_ids.each do |user_id|
-      SendNotificationsWorker.perform_async(user_id, EMAIL_TYPE)
+      SendNotificationsWorker.perform_async(user_id, EMAIL_FREQUENCY)
       logger.info "Scheduled a job to send notifications to user #{user_id}"
     end
-  end
-
-  def collect_user_ids
-    t_notifications = Notification.arel_table
-    t_users = User.arel_table
-    User.where.not(confirmed_at: nil)
-        .where(follows_email: EMAIL_TYPE)
-        .joins(:notifications)
-        .where(t_notifications[:read_at].eq(nil))
-        .where(t_users[:notifications_viewed_at].eq(nil)
-                   .or(t_users[:notifications_viewed_at].lt(t_notifications[:created_at])))
-        .where.not(t_notifications[:activity_id].eq(nil))
-        .select('DISTINCT users.id')
-        .map(&:id)
   end
 end

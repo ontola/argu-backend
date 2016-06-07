@@ -63,6 +63,8 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
+    # Click a random dropdown to prevent the follow dropdown from interfering
+    click_link('Info')
     find('span span', text: 'Disagree').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 
@@ -82,6 +84,8 @@ RSpec.feature 'Voting', type: :feature do
     expect(page).to have_content(motion.content)
 
     expect(page).not_to have_css('.btn-con[data-voted-on=true]')
+    # Click a random dropdown to prevent the follow dropdown from interfering
+    click_link('Info')
     find('span span', text: 'Disagree').click
     expect(page).to have_css('.btn-con[data-voted-on=true]')
 

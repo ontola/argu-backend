@@ -10,11 +10,10 @@ FactoryGirl.define do
     is_trashed false
 
     after :create do |motion|
-      create :activity,
-             trackable: motion,
-             forum: motion.forum,
-             owner: motion.creator,
-             key: 'motion.create'
+      motion.create_activity action: :create,
+                             recipient: motion.parent_model,
+                             owner: motion.creator,
+                             forum: motion.forum
       motion.publisher.follow(motion.edge)
     end
 

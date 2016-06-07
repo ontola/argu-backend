@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531121532) do
+ActiveRecord::Schema.define(version: 20160602133025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -217,6 +217,7 @@ ActiveRecord::Schema.define(version: 20160531121532) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "send_email",      default: false
+    t.integer  "follow_type",     default: 30,     null: false
   end
 
   add_index "follows", ["followable_id", "followable_type"], name: "fk_followables", using: :btree
@@ -364,6 +365,7 @@ ActiveRecord::Schema.define(version: 20160531121532) do
     t.datetime "updated_at"
     t.string   "title"
     t.string   "url"
+    t.integer  "notification_type", null: false
   end
 
   add_index "notifications", ["activity_id"], name: "index_notifications_on_activity_id", using: :btree
@@ -561,6 +563,7 @@ ActiveRecord::Schema.define(version: 20160531121532) do
     t.string   "channel"
     t.integer  "creator_id",       null: false
     t.integer  "publisher_id"
+    t.json     "parameters"
   end
 
   create_table "question_answers", force: :cascade do |t|
@@ -739,6 +742,9 @@ ActiveRecord::Schema.define(version: 20160531121532) do
     t.string   "unlock_token"
     t.datetime "locked_at"
     t.datetime "notifications_viewed_at"
+    t.integer  "decisions_email",                     default: 3,     null: false
+    t.integer  "news_email",                          default: 3,     null: false
+    t.integer  "reactions_email",                     default: 3,     null: false
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

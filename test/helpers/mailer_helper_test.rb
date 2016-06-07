@@ -4,125 +4,59 @@ class MailerHelperTest < ActionView::TestCase
   include MailerHelper
 
   let!(:holland) { create(:populated_forum) }
-  let!(:creator) { create(:user) }
+  let!(:creator) { create(:profile) }
+  let!(:publisher) { create(:user, profile: creator) }
 
-  let(:question) do
-    create(:notification,
-           activity: create(:activity,
-                            :t_question,
-                            owner: creator.profile,
-                            forum: holland))
-  end
-
-  let(:motion) do
-    create(:notification,
-           activity: create(:activity,
-                            :t_motion,
-                            owner: creator.profile,
-                            forum: holland))
-  end
-
-  let(:motion_question) do
-    question = create(:question)
-    create(:notification,
-           activity: create(:activity,
-                            :t_motion,
-                            owner: creator.profile,
-                            recipient: question,
-                            forum: holland))
-  end
-
-  let(:argument_pro) do
-    create(:argument,
-           forum: holland,
-           pro: true)
-  end
-
-  let(:argument_pro_notification) do
-    create(:notification,
-           activity: create(:activity,
-                            :t_argument,
-                            owner: creator.profile,
-                            forum: holland))
-  end
-
-  let(:argument_con) do
-    argument = create(:argument,
-                      forum: holland,
-                      creator: creator.profile,
-                      pro: false)
-
-    create(:notification,
-           activity: create(:activity,
-                            :t_argument,
-                            forum: holland,
-                            trackable: argument,
-                            recipient: argument.motion))
-  end
-
-  let(:comment) do
-    _comment = create(:comment,
-                      commentable: argument_pro,
-                      creator: creator.profile)
-    create(:notification,
-           activity: create(:activity,
-                            forum: holland,
-                            trackable: _comment,
-                            recipient: argument_pro,
-                            owner: creator.profile))
-  end
-
+  let(:question) { create(:question, :with_notification, creator: creator, forum: holland) }
+  let(:motion) { create(:motion, :with_notification, creator: creator, forum: holland) }
+  let(:motion_question) { create(:motion, :with_notification, creator: creator, forum: holland, question: question) }
+  let(:argument_pro) { create(:argument, :with_notification, creator: creator, forum: holland, pro: true) }
+  let(:argument_con) { create(:argument, :with_notification, creator: creator, forum: holland, pro: false) }
+  let(:comment) { create(:comment, :with_notification, creator: creator, commentable: argument_pro) }
   let(:comment_comment) do
-    comment = create(:comment,
-                     commentable: argument_pro)
     comment_comment = create(:comment,
+                             :with_notification,
                              commentable: argument_pro,
-                             creator: creator.profile)
+                             creator: creator)
     comment_comment.move_to_child_of comment
-    create(:notification,
-           activity: create(:activity,
-                            forum: holland,
-                            trackable: comment_comment,
-                            recipient: argument_pro,
-                            owner: creator.profile))
   end
 
   test 'notification_subject should return correct sentences for questions' do
-    assert_equal "New challenge: '#{question.resource.display_name}' by #{creator.first_name} #{creator.last_name}",
-                 notification_subject(question)
+    assert_equal "New challenge: '#{question.display_name}' by #{publisher.first_name} #{publisher.last_name}",
+                 notification_subject(question.activities.first.notifications.first)
   end
 
   test 'notification_subject should return correct sentences for motions' do
-    assert_equal "New idea: '#{motion.resource.display_name}' by #{creator.first_name} #{creator.last_name}",
-                 notification_subject(motion)
+    assert_equal "New idea: '#{motion.display_name}' by #{publisher.first_name} #{publisher.last_name}",
+                 notification_subject(motion.activities.first.notifications.first)
 
-    assert_equal "New idea: '#{motion_question.resource.display_name}' by #{creator.first_name} #{creator.last_name}",
-                 notification_subject(motion_question)
+    assert_equal "New idea: '#{motion_question.display_name}' by #{publisher.first_name} #{publisher.last_name}",
+                 notification_subject(motion_question.activities.first.notifications.first)
   end
 
   test 'notification_subject should return correct sentences for arguments' do
-    assert_equal "New argument: '#{argument_pro_notification.resource.motion.display_name}'"\
-                   " by #{creator.first_name} #{creator.last_name}",
-                 notification_subject(argument_pro_notification)
+    assert_equal "New argument: '#{argument_pro.motion.display_name}'"\
+                   " by #{publisher.first_name} #{publisher.last_name}",
+                 notification_subject(argument_pro.activities.first.notifications.first)
 
-    assert_equal "New argument: '#{argument_con.resource.motion.display_name}'"\
-                   " by #{creator.first_name} #{creator.last_name}",
-                 notification_subject(argument_con)
+    assert_equal "New argument: '#{argument_con.motion.display_name}'"\
+                   " by #{publisher.first_name} #{publisher.last_name}",
+                 notification_subject(argument_con.activities.first.notifications.first)
   end
 
   test 'notification_subject should return correct sentences for comments' do
-    assert_equal "New comment on '#{comment.resource.commentable.display_name}'"\
-                   " by #{creator.first_name} #{creator.last_name}",
-                 notification_subject(comment)
+    assert_equal "New comment on '#{comment.commentable.display_name}'"\
+                   " by #{publisher.first_name} #{publisher.last_name}",
+                 notification_subject(comment.activities.first.notifications.first)
 
-    assert_equal "New comment on '#{comment_comment.resource.commentable.display_name}'"\
-                   " by #{creator.first_name} #{creator.last_name}",
-                 notification_subject(comment_comment)
+    assert_equal "New comment on '#{comment_comment.commentable.display_name}'"\
+                   " by #{publisher.first_name} #{publisher.last_name}",
+                 notification_subject(comment_comment.activities.first.notifications.first)
   end
 
   test 'action_path should return paths' do
-    [question, motion, argument_pro_notification, comment].each do |item|
-      assert action_path(item).length > 13
+    [question, motion, argument_pro, comment].each do |item|
+      assert action_path(item.activities.first.notifications.first).length > 13
     end
   end
 end

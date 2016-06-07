@@ -15,7 +15,8 @@ class FollowsControllerTest < ActionController::TestCase
   test 'guest should not post create' do
     motion_referer
     post :create,
-         motion_id: motion,
+         gid: motion.identifier,
+         follow_type: :reactions,
          format: :json
 
     assert_redirected_to motion_path(motion)
@@ -24,7 +25,8 @@ class FollowsControllerTest < ActionController::TestCase
   test 'guest should not delete destroy' do
     motion_referer
     post :create,
-         motion_id: motion,
+         gid: motion.identifier,
+         follow_type: :reactions,
          format: :json
 
     assert_redirected_to motion_path(motion)
@@ -40,7 +42,8 @@ class FollowsControllerTest < ActionController::TestCase
     sign_in user
 
     post :create,
-         motion_id: motion,
+         gid: motion.identifier,
+         follow_type: :reactions,
          format: :json
 
     assert_response 201
@@ -51,7 +54,8 @@ class FollowsControllerTest < ActionController::TestCase
     sign_in user
 
     delete :destroy,
-           motion_id: motion,
+           gid: motion.identifier,
+           follow_type: :reactions,
            format: :json
 
     assert_response 204
@@ -67,7 +71,8 @@ class FollowsControllerTest < ActionController::TestCase
     sign_in member
 
     post :create,
-         motion_id: motion,
+         gid: motion.identifier,
+         follow_type: :reactions,
          format: :json
 
     assert_response 201
@@ -78,7 +83,8 @@ class FollowsControllerTest < ActionController::TestCase
     sign_in member
 
     delete :destroy,
-           motion_id: motion,
+           gid: motion.identifier,
+           follow_type: :reactions,
            format: :json
 
     assert_response 204

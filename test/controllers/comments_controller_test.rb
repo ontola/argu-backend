@@ -51,8 +51,8 @@ class CommentsControllerTest < ActionController::TestCase
   ####################################
   # As Member
   ####################################
-  let(:member) { create_member(freetown, create(:user, :follows_email)) }
-  let(:cairo_member) { create_member(cairo, create(:user, :follows_email)) }
+  let(:member) { create_member(freetown, create(:user, :follows_reactions_directly)) }
+  let(:cairo_member) { create_member(cairo, create(:user, :follows_reactions_directly)) }
 
   test 'member should get show' do
     sign_in member
@@ -230,7 +230,7 @@ class CommentsControllerTest < ActionController::TestCase
   def create_changes_array
     [['Comment.count', 1],
      ['Activity.count', 1],
-     ['DirectNotificationsSchedulerWorker.new.collect_user_ids.count', 1],
+     ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count', 1],
      ['Notification.count', 2]]
   end
 end

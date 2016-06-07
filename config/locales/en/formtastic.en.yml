@@ -82,7 +82,8 @@ en:
         middle_name: "Middele name(s)"
         last_name: "Last name*"
         has_analytics: "Browser services"
-        follows_email: "Email"
+        reactions_email: "For new reactions"
+        news_email: "For important news"
       publication:
         publish_type: "Publication"
         target: 'Notify'

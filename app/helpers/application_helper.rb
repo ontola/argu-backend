@@ -66,6 +66,32 @@ module ApplicationHelper
     uri.to_s
   end
 
+  def follow_dropdown_items(resource, opts = {})
+    opts = {
+      follow_types: [:reactions, :news, :never]
+    }.merge(opts)
+    items = []
+    follow_type = current_user.following_type(resource.edge)
+    opts[:follow_types].each do |type|
+      items << link_item(t("notifications.receive.#{type}"),
+                         follows_path(gid: resource.identifier, follow_type: type),
+                         fa: follow_type == type.to_s ? 'circle' : 'circle-o',
+                         data: {
+                           method: type == :never ? 'DELETE' : 'POST'
+                         })
+    end
+    icon = case follow_type
+           when 'never'
+             'fa-bell-slash-o'
+           when 'reactions'
+             'fa-bell'
+           else
+             'fa-bell-o'
+           end
+    dropdown_options(t("notifications.receive.#{follow_type}"),
+                     [{items: items}], fa: icon, triggerClass: opts[:trigger_class])
+  end
+
   def r_to_url_options(r)
     url_options = Rails.application.routes.recognize_path(Addressable::URI.parse(URI.decode(r)).path)
     return url_options, "#{url_options[:controller]}_controller".camelize.safe_constantize

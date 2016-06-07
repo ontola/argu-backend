@@ -4,7 +4,7 @@ FactoryGirl.define do
     association :group
     motion{ passed_in?(:motion) ? motion : create(:motion, forum: forum) }
     association :creator, factory: :profile
-    association :publisher, factory: [:user, :follows_email]
+    association :publisher, factory: [:user, :follows_reactions_directly]
     side :pro
     sequence(:text) { |i| "fg group response #{i}end" }
   end

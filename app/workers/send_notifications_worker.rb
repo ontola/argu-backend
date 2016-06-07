@@ -11,7 +11,7 @@ class SendNotificationsWorker
       return
     end
 
-    unless delivery_type.present? && User.follows_emails[user.follows_email] == delivery_type
+    unless delivery_type.present? && User.reactions_emails[user.reactions_email] == delivery_type
       logger.warn "Not sending notifications to mismatched delivery type #{delivery_type} for user #{user.id}"
       return
     end

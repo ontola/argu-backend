@@ -82,7 +82,8 @@ nl:
         middle_name: "Middelste naam(en)"
         last_name: "Achternaam*"
         has_analytics: "Browser diensten"
-        follows_email: "Emailberichten"
+        reactions_email: "Bij nieuwe reacties"
+        news_email: "Bij belangrijk nieuws"
       publication:
         publish_type: "Publicatie"
         target: 'Breng op de hoogte'

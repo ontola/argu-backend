@@ -8,13 +8,8 @@
     =render partial: motion.creator, locals: {resource: motion}
     ul.btns-list--subtle.btns-horizontal.sticky--bottom-right.btns-list--grey-background
       - if current_user.present?
-        li[data-title=I18n.t('tooltips.follow')]
-          =react_component 'ActiveToggle',
-                           {url: follows_path(motion_id: motion.id, format: :json),
-                            initialState: current_user.following?(motion.edge),
-                            true_props: {method: 'DELETE', icon: 'bell-slash', label: t('unfollow')},
-                            false_props: {method: 'POST', icon: 'bell', label: t('follow')}},
-                           {prerender: true}
+        li
+          ul= react_component 'HyperDropdown', follow_dropdown_items(motion), {prerender: true}
       =crud_menu_item(motion)
       - if motion.forum.visibility
         li.share-menu

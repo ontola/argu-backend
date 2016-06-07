@@ -14,11 +14,21 @@ en:
       confirmed: "Email confirmed"
       unconfirmed: "Email not yet confirmed"
       unconfirmed_email: "Pending email: %{email}"
-    follows_email:
-      never_follows_email: 'Never'
-      direct_follows_email: 'Immediately'
-      daily_follows_email: 'Daily'
-      weekly_follows_email: 'Weekly'
+    reactions_email:
+      never_reactions_email: 'Never'
+      direct_reactions_email: 'Immediately'
+      daily_reactions_email: 'Daily'
+      weekly_reactions_email: 'Weekly'
+    news_email:
+      never_news_email: 'Never'
+      direct_news_email: 'Immediately'
+      daily_news_email: 'Daily'
+      weekly_news_email: 'Weekly'
+    decisions_email:
+      never_decisions_email: 'Never'
+      direct_decisions_email: 'Immediately'
+      daily_decisions_email: 'Daily'
+      weekly_decisions_email: 'Weekly'
     memberships_email:
       never_memberships_email: 'Never'
       direct_memberships_email: 'Immediately'

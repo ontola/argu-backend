@@ -13,6 +13,10 @@ FactoryGirl.define do
     end
 
     after :create do |argument|
+      argument.create_activity action: :create,
+                               recipient: argument.parent_model,
+                               owner: argument.creator,
+                               forum: argument.forum
       argument.publisher.follow(argument.edge)
     end
   end

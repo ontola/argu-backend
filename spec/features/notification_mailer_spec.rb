@@ -2,26 +2,9 @@ require 'rails_helper'
 include MailerHelper
 
 RSpec.feature 'Notification mailer' do
-  let(:activity_argument) do
-    create(:activity,
-           :t_argument,
-           trackable: argument,
-           forum: argument.forum)
-  end
-
-  let(:activity_comment) do
-    create(:activity,
-           :t_comment,
-           trackable: comment,
-           forum: argument.forum)
-  end
-
   let!(:argument) { create(:argument) }
 
-  let!(:comment) do
-    create(:comment,
-           commentable: argument)
-  end
+  let!(:comment) { create(:comment, commentable: argument) }
 
   let!(:follow) do
     create(:follow,
@@ -30,17 +13,17 @@ RSpec.feature 'Notification mailer' do
            follower: follower)
   end
 
-  let!(:follower) { create :user, :viewed_notifications_hour_ago, :follows_email }
+  let!(:follower) { create :user, :viewed_notifications_hour_ago, :follows_reactions_directly }
 
-  let(:notification_argument) do
+  let(:argument_notification) do
     create(:notification,
-           activity: activity_argument,
+           activity: argument.activities.first,
            user: follower)
   end
 
-  let(:notification_comment) do
+  let(:comment_notification) do
     create(:notification,
-           activity: activity_comment,
+           activity: comment.activities.first,
            user: follower)
   end
 
@@ -49,25 +32,25 @@ RSpec.feature 'Notification mailer' do
   end
 
   scenario 'Send mail with one notification' do
-    email_type = User.follows_emails[:direct_follows_email]
-    notification_argument
+    email_type = User.reactions_emails[:direct_reactions_email]
+    argument_notification
 
     Sidekiq::Testing.inline! do
       SendNotificationsWorker.perform_async(follower.id, email_type)
     end
     open_email(follower.email)
 
-    expect(current_email.subject).to eq notification_subject(notification_argument)
-    expect(current_email).to have_content notification_argument.activity.trackable.content
+    expect(current_email.subject).to eq notification_subject(argument_notification)
+    expect(current_email).to have_content argument_notification.activity.trackable.content
 
     current_email.click_link 'Go to discussion'
-    expect(page).to have_current_path argument_path(notification_argument.activity.trackable)
+    expect(page).to have_current_path argument_path(argument_notification.activity.trackable)
   end
 
   scenario 'Send mail with two notifications' do
-    email_type = User.follows_emails[:direct_follows_email]
-    notification_argument
-    notification_comment
+    email_type = User.reactions_emails[:direct_reactions_email]
+    argument_notification
+    comment_notification
 
     Sidekiq::Testing.inline! do
       SendNotificationsWorker.perform_async(follower.id, email_type)
@@ -75,10 +58,7 @@ RSpec.feature 'Notification mailer' do
     open_email(follower.email)
 
     expect(current_email.subject).to eq 'New Argu notifications'
-    expect(current_email).to have_content notification_argument.activity.trackable.content
-    expect(current_email).to have_content notification_comment.activity.trackable.body
-
-    current_email.click_link notification_argument.activity.trackable.title
-    expect(page).to have_current_path argument_path(notification_argument.activity.trackable)
+    expect(current_email).to have_content argument_notification.activity.trackable.content
+    expect(current_email).to have_content comment_notification.activity.trackable.body
   end
 end

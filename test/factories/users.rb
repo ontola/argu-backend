@@ -36,14 +36,24 @@ FactoryGirl.define do
       notifications_viewed_at DateTime.current
     end
 
-    trait :follows_email do
+    trait :follows_reactions_directly do
       confirmed_at Time.current
-      follows_email User.follows_emails[:direct_follows_email]
+      reactions_email User.reactions_emails[:direct_reactions_email]
     end
 
-    trait :follows_email_weekly do
+    trait :follows_reactions_weekly do
       confirmed_at Time.current
-      follows_email User.follows_emails[:weekly_follows_email]
+      reactions_email User.reactions_emails[:weekly_reactions_email]
+    end
+
+    trait :follows_news_directly do
+      confirmed_at Time.current
+      news_email User.news_emails[:direct_news_email]
+    end
+
+    trait :follows_news_weekly do
+      confirmed_at Time.current
+      news_email User.news_emails[:weekly_news_email]
     end
 
     trait :forum_manager do
