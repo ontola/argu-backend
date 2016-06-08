@@ -56,9 +56,9 @@ Rails.application.routes.draw do
     put :transfer, action: :transfer!
   end
   concern :trashable do
-      put :untrash, action: :untrash, on: :member
-      match '/', action: :destroy, on: :member, as: :destroy, via: :delete, constraints: Argu::DestroyConstraint
-      match '/', action: :trash, on: :member, as: :trash, via: :delete
+    put :untrash, action: :untrash, on: :member
+    match '/', action: :destroy, on: :member, as: :destroy, via: :delete, constraints: Argu::DestroyConstraint
+    match '/', action: :trash, on: :member, as: :trash, via: :delete
   end
   concern :votable do
     resources :votes, only: [:new, :create], path: 'v'
@@ -171,6 +171,9 @@ Rails.application.routes.draw do
             only: [:new, :create, :show, :update, :destroy],
             concerns: [:flowable, :destroyable] do
     resources :groups, path: 'g', only: [:create, :new]
+    resources :group_memberships, only: :index do
+      post :index, action: :index, on: :collection
+    end
     get :transfer, on: :member
     put :transfer, on: :member, action: :transfer!
     get :settings, on: :member

@@ -1,6 +1,35 @@
 class GroupMembershipsController < AuthorizedController
   skip_before_action :check_if_member
+  skip_before_action :authorize_action, only: :index
   include NestedResourceHelper
+
+  def index
+    authorize(
+      Edge.new(
+        parent: get_parent_resource.members_group.edge,
+        owner: GroupMembership.new).owner,
+      :index?)
+
+    if current_user.present? && params[:q].present?
+      q = params[:q].tr(' ', '|')
+      # Matched groups with members
+      @results = policy_scope(
+        GroupMembership
+          .includes(:group, user: [:shortname, profile: :default_profile_photo])
+          .joins('LEFT JOIN grants ON grants.group_id = groups.id AND grants.role = 1')
+          .where('grants.id IS NULL')
+          .where('groups.page_id = ?', get_parent_resource.id)
+          .where('shortnames.owner_type = ?', 'User')
+          .where('lower(groups.name) SIMILAR TO lower(?) OR ' \
+                 'lower(shortnames.shortname) SIMILAR TO lower(?) OR ' \
+                 'lower(users.first_name) SIMILAR TO lower(?) OR ' \
+                 'lower(users.last_name) SIMILAR TO lower(?)',
+                 "%#{q}%", "%#{q}%", "%#{q}%", "%#{q}%")
+          .references(:groups, :users))
+
+      render json: @results, include: %i(group user)
+    end
+  end
 
   def new
     authorize authenticated_resource.page, :add_group_member?
@@ -52,7 +81,7 @@ class GroupMembershipsController < AuthorizedController
   private
 
   def parent_resource_param(opts)
-    :group_id
+    action_name == 'index' ? super : :group_id
   end
 
   def permit_params

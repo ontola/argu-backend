@@ -37,6 +37,10 @@ class GroupMembershipPolicy < RestrictivePolicy
     attributes
   end
 
+  def index?
+    rule is_member?, is_manager?, is_owner?, super
+  end
+
   def new?
     create?
   end

@@ -359,6 +359,10 @@ p.inline-hints {
   }
 }
 
+.Select-input > div {
+  word-break: normal; //Fixes a bug in chrome where the content in an input glitches between two lines.
+}
+
 .sticky-submit {
   text-align: right;
   position: absolute;
