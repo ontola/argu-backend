@@ -43,7 +43,7 @@ class CreateLtreeEdges < ActiveRecord::Migration
 
   def create_edge(owner, user = nil, created_at: nil)
     say owner.identifier
-    parent = !owner.is_a?(Forum) && owner.parent
+    parent = !owner.is_a?(Forum) && owner.parent_model
     path = parent && parent.edge.path
     path ||= owner.identifier
     Edge.create(
