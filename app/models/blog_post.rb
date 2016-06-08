@@ -1,6 +1,6 @@
 class BlogPost < ApplicationRecord
-  include Trashable, PublicActivity::Common, Flowable, Placeable,
-          ActivePublishable, Parentable
+  include Trashable, Flowable, Placeable, HasLinks, Loggable, PublicActivity::Common,
+          ActivePublishable, Parentable, Happenable
 
   # For Rails 5 attributes
   # attribute :state, :enum
@@ -22,18 +22,6 @@ class BlogPost < ApplicationRecord
   belongs_to :project,
              class_name: 'Project',
              foreign_key: :blog_postable_id
-
-  has_many :activities,
-           -> { where("key ~ '*.!happened'").order(:created_at) },
-           as: :trackable
-
-  has_one :happening,
-          -> { where("key ~ '*.happened'").order(:created_at) },
-          class_name: 'Activity',
-          inverse_of: :trackable,
-          as: :trackable,
-          dependent: :destroy,
-          autosave: true
 
   counter_culture :project,
                   column_name: proc { |model| model.is_published && !model.is_trashed? ? 'blog_posts_count' : nil },

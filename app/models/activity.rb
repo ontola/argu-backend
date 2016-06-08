@@ -26,6 +26,7 @@ class Activity < PublicActivity::Activity
   #     User updated an {Argument}: key == 'argument.update'
   scope :loggings, -> { where("key ~ '*.!happened'") }
   scope :since, ->(from_time = nil) { where('created_at < :from_time', from_time: from_time) if from_time.present? }
+  scope :published, ->(show_unpublished = false) { show_unpublished ? all : where(is_published: true) }
 
   def action
     key.split('.').last

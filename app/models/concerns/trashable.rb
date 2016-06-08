@@ -81,4 +81,20 @@ module Trashable
       end
     end
   end
+
+  module ActiveRecordExtension
+    def self.included(base)
+      base.class_eval do
+        def self.is_trashable?
+          false
+        end
+      end
+    end
+
+    # Useful to test whether a model uses {Trashable}
+    def is_trashable?
+      false
+    end
+  end
+  ActiveRecord::Base.send(:include, ActiveRecordExtension)
 end

@@ -48,7 +48,7 @@ class BlogPostsControllerTest < ActionController::TestCase
              project_id: project,
              blog_post: attributes_for(:blog_post,
                                        parent: project.edge,
-                                       happened_at: DateTime.now,
+                                       happening_attributes: {happened_at: DateTime.now},
                                        argu_publication_attributes: {publish_type: :draft})
            }
     end
@@ -66,7 +66,7 @@ class BlogPostsControllerTest < ActionController::TestCase
              project_id: project,
              blog_post: attributes_for(:blog_post,
                                        parent: project.edge,
-                                       happened_at: DateTime.now,
+                                       happening_attributes: {happened_at: DateTime.now},
                                        argu_publication_attributes: {publish_type: :direct})
            }
 

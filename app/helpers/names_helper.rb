@@ -50,6 +50,22 @@ module NamesHelper
   end
 
   #########################
+  #       Decision        #
+  #########################
+
+  # Icon substring for decision
+  def decision_icon(naming_object = nil)
+    case naming_object.state
+    when 'approved'
+      'check-square-o'
+    when 'rejected'
+      'times-circle'
+    when 'forwarded'
+      'share'
+    end
+  end
+
+  #########################
   #        Motions        #
   #########################
 
@@ -116,6 +132,23 @@ module NamesHelper
   end
 
   private
+
+  # @private
+  def icon_for(item)
+    if item.class == BlogPost
+      blog_post_icon
+    elsif item.class == Decision
+      decision_icon(item)
+    elsif item.class == Motion
+      motion_icon
+    elsif item.class == Question
+      question_icon
+    elsif item.class == Argument
+      argument_icon
+    elsif item.class == Comment
+      I18n.t('comments.type')
+    end
+  end
 
   # @private
   def type_for(item, plural = false)

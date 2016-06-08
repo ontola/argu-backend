@@ -1,5 +1,5 @@
 class Vote < ApplicationRecord
-  include Parentable, PublicActivity::Model
+  include Parentable, Loggable, PublicActivity::Model
 
   belongs_to :voteable, polymorphic: true, inverse_of: :votes
   belongs_to :voter, class_name: 'Profile', inverse_of: :votes

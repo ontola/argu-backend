@@ -1,6 +1,6 @@
 class Project < ApplicationRecord
-  include Placeable, PublicActivity::Common, Flowable, Trashable,
-          BlogPostable, ActivePublishable, Parentable, Photoable
+  include Placeable, Flowable, Trashable, HasLinks, BlogPostable, ActivePublishable,
+          Parentable, Photoable, Loggable, Timelineable, PublicActivity::Common
 
   # For Rails 5 attributes
   # attribute :title, :string

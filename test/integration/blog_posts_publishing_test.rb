@@ -73,7 +73,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
          params: {
            blog_post: attributes_for(:blog_post,
                                      parent: project.forum,
-                                     happened_at: DateTime.current,
+                                     happening_attributes: {happened_at: Time.current},
                                      argu_publication_attributes: {publish_type: :direct})
          }
     assert_response 302

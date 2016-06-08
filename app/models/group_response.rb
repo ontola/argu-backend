@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class GroupResponse < ApplicationRecord
-  include Parentable, PublicActivity::Model
+  include Parentable, Loggable, PublicActivity::Model
 
   belongs_to :group
   belongs_to :forum
@@ -11,7 +11,6 @@ class GroupResponse < ApplicationRecord
   belongs_to :creator, class_name: 'Profile'
   # Physical creator of the GroupReponse (the one responsible).
   belongs_to :publisher, class_name: 'User'
-  has_many :activities, -> { order(:created_at) }, as: :trackable
 
   parentable :motion, :forum
 

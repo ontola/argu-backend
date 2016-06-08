@@ -131,7 +131,7 @@ class NotificationsTest < ActionDispatch::IntegrationTest
            params: {
              blog_post: attributes_for(:blog_post,
                                        argu_publication_attributes: {publish_type: :direct},
-                                       happened_at: DateTime.current)
+                                       happening_attributes: {happened_at: Time.current})
            }
     end
 

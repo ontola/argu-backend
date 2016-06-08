@@ -1,13 +1,10 @@
 class Comment < ApplicationRecord
-  include Parentable, Trashable, PublicActivity::Common
+  include Loggable, Parentable, Trashable, PublicActivity::Common
 
   belongs_to :forum
   belongs_to :commentable, polymorphic: true, required: true
   belongs_to :creator, class_name: 'Profile'
   belongs_to :publisher, class_name: 'User'
-  has_many   :activities,
-             -> { where("key ~ '*.!happened'") },
-             as: :trackable
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   acts_as_nested_set scope: [:commentable_id, :commentable_type]

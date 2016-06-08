@@ -27,6 +27,8 @@ class BlogPostPolicy < RestrictivePolicy
     attributes.concat %i(title content blog_postable trashed_at happened_at) if create?
     publication_attributes = %i(id published_at publish_type)
     attributes.append(argu_publication_attributes: publication_attributes)
+    happening_attributes = %i(id happened_at)
+    attributes.append(happening_attributes: happening_attributes)
     attributes
   end
 

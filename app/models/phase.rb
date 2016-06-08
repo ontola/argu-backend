@@ -55,16 +55,17 @@ class Phase < ApplicationRecord
   def happenings(show_unpublished = false)
     return Activity.none if start_date.nil?
     if end_date.present?
-      scope = project
-                .happenings
-                .where(created_at: start_date..end_date)
-                .order(created_at: :asc)
+      project
+        .happenings
+        .published(show_unpublished)
+        .where(created_at: start_date..end_date)
+        .order(created_at: :asc)
     else
-      scope = project
-                .happenings
-                .where('created_at > ?', start_date)
-                .order(created_at: :asc)
+      project
+        .happenings
+        .published(show_unpublished)
+        .where('created_at > ?', start_date)
+        .order(created_at: :asc)
     end
-    show_unpublished ? scope : scope.where(is_published: true)
   end
 end

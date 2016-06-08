@@ -14,17 +14,9 @@ class UpdateBlogPost < UpdateService
 
   private
 
-  def assign_attributes
-    # TODO: Filter out changes to manager, which should only be set on #new
-    if @attributes[:happened_at].present?
-      resource.happening.update(created_at: @attributes[:happened_at])
-    end
-    super
-  end
-
   def object_attributes=(obj)
     return unless obj.is_a?(Activity)
     obj.forum ||= @blog_post.forum
-    obj.creator ||= @blog_post.creator
+    obj.owner ||= @blog_post.creator
   end
 end
