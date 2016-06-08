@@ -4,22 +4,13 @@
 .notification-container {
   min-width: 25em !important;
   @include bp-small{
-    position: fixed;
-    top: 3em;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    .notifications {
-      width: 100%;
-    }
-  }
-}
-
-.notifications {
-  @include bp-small{
+    position: fixed !important;
+    top: 3em !important;
+    right: 1em !important;
+    left: 1em !important;
     width: 100% !important;
     width: calc(100% - 2em) !important;
+    min-width: auto;
   }
 }
 

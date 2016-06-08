@@ -45,13 +45,13 @@
   overflow-y: auto;
   @include box-shadow-intense;
   @include border-radius();
-  font-size: 16px;
+  font-size: 1em;
   -webkit-overflow-scrolling: touch;
 
   @include closed-state();
 
   @include bp-small{
-    font-size: 14px;
+    //font-size: 14px;
   }
 
   li {
