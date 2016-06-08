@@ -149,7 +149,7 @@ group :development, :test do
 end
 
 group :development do
-  gem 'nokogiri', '~> 1.6.7.2'
+  gem 'nokogiri', '~> 1.6.8'
   gem 'pry'
   # gem 'byebug'
   # gem 'pry-byebug'
