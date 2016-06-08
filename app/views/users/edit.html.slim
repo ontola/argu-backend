@@ -16,6 +16,8 @@
           li.form-helper
             - if @user.confirmed_at.present?
               span= t('users.registrations.confirmed')
+              - if @user.unconfirmed_email.present?
+                div= t('users.registrations.unconfirmed_email', email: @user.unconfirmed_email)
             - else
               span
                 =t('users.registrations.unconfirmed')

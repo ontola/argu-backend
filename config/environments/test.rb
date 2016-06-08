@@ -1,6 +1,6 @@
 Rails.application.configure do
-  config.host = ENV['HOSTNAME'] || 'localhost:65000'
-  Rails.application.routes.default_url_options[:host] = ENV['HOSTNAME'] || 'localhost:65000'
+  config.host = ENV['HOSTNAME'] || '127.0.0.1'
+  Rails.application.routes.default_url_options[:host] = ENV['HOSTNAME'] || '127.0.0.1'
   # Settings specified here will take precedence over those in config/application.rb
 
   # The test environment is used exclusively to run your application's

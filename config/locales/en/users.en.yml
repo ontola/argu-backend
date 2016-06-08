@@ -13,6 +13,7 @@ en:
         notifications: "Alerts beta"
       confirmed: "Email confirmed"
       unconfirmed: "Email not yet confirmed"
+      unconfirmed_email: "Pending email: %{email}"
     follows_email:
       never_follows_email: 'Never'
       direct_follows_email: 'Immediately'

@@ -13,6 +13,7 @@ nl:
         notifications: "Meldingen bèta"
       confirmed: "E-mail bevestigd"
       unconfirmed: "E-mail nog niet bevestigd"
+      unconfirmed_email: "Email in afwachting: %{email}"
     follows_email:
       never_follows_email: 'Nooit'
       direct_follows_email: 'Onmiddelijk'

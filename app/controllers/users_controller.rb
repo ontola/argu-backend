@@ -49,7 +49,7 @@ class UsersController < ApplicationController
       if email_changed or !permit_params[:password].blank? or @user.invitation_token.present?
         if @user.update_with_password(permit_params)
           sign_in(@user, bypass: true)
-          UserMailer.delay.user_password_changed(@user)
+          UserMailer.delay.user_password_changed(@user) if @user.valid_password?(permit_params[:password])
         end
       else
         @user.update_without_password(passwordless_permit_params)
