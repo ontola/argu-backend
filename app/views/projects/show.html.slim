@@ -1,3 +1,7 @@
+=set_title project
+=connected_web url: project_url(project),
+    name: seolized_title(project),
+    description: seolized_description(project)
 div[itemscope itemtype="http://www.schema.org/Thing"]
   .cover-behind
     .cover-image.bg-img[style="background-image: url('#{project.default_cover_photo&.url(:cover)}'); "]

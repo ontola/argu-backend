@@ -13,6 +13,7 @@ class Project < ActiveRecord::Base
   # attribute :trashed_at, :datetime
 
   alias_attribute :display_name, :title
+  alias_attribute :description, :content
 
   belongs_to :creator, class_name: 'Profile', inverse_of: :projects
   belongs_to :forum, inverse_of: :projects
