@@ -4,7 +4,7 @@ module Argu
   class StatefulServerRenderer < React::ServerRendering::ExecJSRenderer
     def initialize(options={})
       @replay_console = options.fetch(:replay_console, true)
-      filenames = options.fetch(:files, ["react-server.js", "components.js"])
+      filenames = options.fetch(:files, ["production/react-server.js", "components.js"])
       js_code = CONSOLE_POLYFILL.dup
 
       # filenames.each do |filename|
