@@ -193,7 +193,7 @@ class ApplicationController < ActionController::Base
       if current_user.url.blank?
         redirect_to setup_users_path if request.original_url != setup_users_url
       elsif !current_user.finished_intro? && !request.original_url.in?(intro_urls)
-        redirect_to edit_user_url(current_user.url)
+        redirect_to setup_profiles_url
       end
     end
   end
@@ -300,7 +300,7 @@ class ApplicationController < ActionController::Base
 
   # @private
   def intro_urls
-    [profile_url(current_user), edit_user_url(current_user)]
+    [profile_url(current_user), setup_profiles_url, memberships_forums_url]
   end
 
   # @private

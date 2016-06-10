@@ -20,15 +20,16 @@ class UsersController < ApplicationController
     render
   end
 
-  def edit
+  def settings
     get_user_or_redirect(settings_path)
     authorize @user
 
+    @user.build_home_placement if @user.home_placement.nil?
+
     if @user.present?
-      respond_to do |format|
-        format.html
-        format.json { render json: @user }
-      end
+      prepend_view_path 'app/views/users'
+
+      render 'settings', locals: {tab: tab, active: tab, profile: @user.profile}
     else
       flash[:error]= 'User not found'
       request.env['HTTP_REFERER'] ||= root_path
@@ -44,23 +45,31 @@ class UsersController < ApplicationController
     @user = User.find current_user.try :id
     authorize @user
 
-    email_changed = @user.email != permit_params[:email]
+    email_changed = permit_params[:email].present? && @user.email != permit_params[:email]
     successfully_updated =
-      if email_changed or !permit_params[:password].blank? or @user.invitation_token.present?
+      if email_changed || permit_params[:password].present? || @user.invitation_token.present?
         if @user.update_with_password(permit_params)
           sign_in(@user, bypass: true)
           UserMailer.delay.user_password_changed(@user) if @user.valid_password?(permit_params[:password])
+          true
         end
       else
         @user.update_without_password(passwordless_permit_params)
       end
-
     respond_to do |format|
       if successfully_updated
-        format.html { redirect_to settings_path }
+        notice = if email_changed
+                   t('users.registrations.confirm_mail_change_notice')
+                 else
+                   t('type_save_success', type: t('type_changes'))
+                 end
+        format.html { redirect_to settings_path(tab: tab), notice: notice }
         format.json { head :no_content }
       else
-        format.html { render action: 'edit' }
+        format.html do
+          prepend_view_path 'app/views/users'
+          render 'settings', locals: {tab: tab, active: tab, profile: @user.profile}
+        end
         format.json { render json: @user.errors, status: :unprocessable_entity }
       end
     end
@@ -143,6 +152,10 @@ class UsersController < ApplicationController
     end
   end
 
+  def tab
+    policy(@user || User).verify_tab(params[:tab] || params[:user].try(:[], :tab))
+  end
+
   def language
     authorize :static_page, :home?
     locale = permit_locale_params
@@ -180,11 +193,17 @@ class UsersController < ApplicationController
   end
 
   def permit_params
-    params.require(:user).permit(*policy(@user || User).permitted_attributes(true))
+    pp = params.require(:user).permit(*policy(@user || User).permitted_attributes(true))
+    merge_photo_params(pp, @user.class)
+    merge_placement_params(pp, User)
+    pp
   end
 
   def passwordless_permit_params
-    params.require(:user).permit(*policy(@user || User).permitted_attributes)
+    pp = params.require(:user).permit(*policy(@user || User).permitted_attributes)
+    merge_photo_params(pp, @user.class)
+    merge_placement_params(pp, User)
+    pp
   end
 
   def voted_select_query

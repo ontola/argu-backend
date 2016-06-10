@@ -53,7 +53,7 @@ RSpec.feature 'User Password', type: :feature do
     end.to change {
       Sidekiq::Worker.jobs.size
     }.by(1)
-    expect(page).to have_current_path settings_path
+    expect(page).to have_current_path settings_path(tab: :general)
 
     visit destroy_user_session_path
     expect(page).to have_content 'You have signed out successfully.'
@@ -91,7 +91,7 @@ RSpec.feature 'User Password', type: :feature do
       Sidekiq::Worker.jobs.size
     }.by(1)
 
-    expect(page).to have_current_path settings_path
+    expect(page).to have_current_path settings_path(tab: :general)
     expect(page).to have_content('User settings')
   end
 

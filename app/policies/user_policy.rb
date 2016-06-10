@@ -22,12 +22,20 @@ class UserPolicy < RestrictivePolicy
       attributes.concat %i(email password password_confirmation)
       attributes.append(profile_attributes: %i(name profile_photo))
     end
+    attributes.append(home_placement_attributes: %i(postal_code country_code id))
     attributes.append(shortname_attributes: %i(shortname)) if new_record?
-    attributes.concat %i(reactions_email news_email reactions_mobile memberships_email memberships_mobile created_email
-                         created_mobile has_analytics time_zone language postal_code country_code birthday) if update?
+    attributes.concat %i(first_name middle_name last_name)
+    attributes.concat %i(reactions_email news_email decisions_email memberships_email created_email
+                         has_analytics has_analytics time_zone language birthday) if update?
     attributes.concat %i(current_password password password_confirmation email) if password
     attributes.append(profile_attributes: ProfilePolicy.new(context,record.profile).permitted_attributes)
     attributes
+  end
+
+  def permitted_tabs
+    tabs = []
+    tabs.concat %i(general profile notifications privacy advanced)
+    tabs
   end
 
   def index?
@@ -42,7 +50,7 @@ class UserPolicy < RestrictivePolicy
     platform_open? || within_user_cap? || has_access_to_record? || super
   end
 
-  def edit?
+  def settings?
     record.id == user.id
   end
 
@@ -56,5 +64,13 @@ class UserPolicy < RestrictivePolicy
 
   def destroy?
     record.id == user.id
+  end
+
+  # Make sure that a tab param is actually accounted for
+  # @return [String] The tab if it is considered valid
+  def verify_tab(tab)
+    tab ||= 'general'
+    assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
+    tab
   end
 end

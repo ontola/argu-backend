@@ -3,7 +3,14 @@
 nl:
   users:
     type: "Gebruiker"
-    settings: "Gebruikersinstellingen"
+    settings:
+      title: "Gebruikersinstellingen"
+      menu:
+        general: "Algemeen"
+        profile: "Profiel"
+        notifications: "Meldingen"
+        privacy: "Privacy"
+        advanced: "Geavanceerd"
     edit:
       analytics_helper: "We gebruiken Bugsnag om fouten in je browser te detecteren en op te lossen. We gebruiken Google Analytics om de gebruikerservaring te verbeteren."
     registrations:
@@ -14,6 +21,7 @@ nl:
       confirmed: "E-mail bevestigd"
       unconfirmed: "E-mail nog niet bevestigd"
       unconfirmed_email: "Email in afwachting: %{email}"
+      confirm_mail_change_notice: "We hebben je een mail gestuurd naar het nieuwe adres. Bevestig deze om de wijziging op te slaan."
     reactions_email:
       never_reactions_email: 'Nooit'
       direct_reactions_email: 'Onmiddelijk'
@@ -43,7 +51,7 @@ nl:
     cap_reached_body: "Bedankt voor je interesse in Argu, door overweldigende aanmeldingen hebben we maximum capaciteit bereikt. Aanmeldingen gaan weer open als we onze capaciteit hebben verhoogd."
     authentications:
       cant_decouple_note_provider: "Je kunt je %{provider} account alleen ontkoppelen door een wachtwoord in te stellen of je account te verwijderen."
-      email_mismatch: "E0mail komt niet overeen met de huidige gebruiker, log eerst uit alvorens met een ander account in te loggen."
+      email_mismatch: "Email komt niet overeen met de huidige gebruiker, log eerst uit alvorens met een ander account in te loggen."
     connect:
       title: "Koppel accounts"
       text_html: "Er bestaat al een gebruiker op Argu genaamd <b>%{to_name}</b> met hetzelfde email adres als jouw %{from_type} account. Om het %{from_type} account van <b>%{from_name}</b> te koppelen aan dit Argu account, moet je het wachtwoord van het Argu account invoeren."

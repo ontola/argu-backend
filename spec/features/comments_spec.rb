@@ -33,7 +33,7 @@ RSpec.feature 'Comments', type: :feature do
       click_button 'Next'
     end
 
-    within('.formtastic.profile') do
+    within('.formtastic.user') do
       click_button 'Next'
     end
 

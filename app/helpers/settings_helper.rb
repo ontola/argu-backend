@@ -1,10 +1,8 @@
 module SettingsHelper
   def tab_icon_for(tab)
     case tab
-    when :general
+    when :general, :advanced
       'gear'
-    when :advanced
-      'gears'
     when :managers
       'suitcase'
     when :groups
@@ -21,6 +19,10 @@ module SettingsHelper
       'sliders'
     when :announcements
       'bullhorn'
+    when :profile
+      'user'
+    when :notifications
+      'bell'
     end
   end
 
@@ -55,5 +57,14 @@ module SettingsHelper
                       }
       end
     end
+  end
+
+  def settings_url_for(resource, tab)
+    for_resource = if resource.is_a?(Symbol)
+                     resource.downcase
+                   else
+                     resource.is_a?(User) ? nil : resource
+                   end
+    url_for([:settings, for_resource, tab: tab])
   end
 end

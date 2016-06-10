@@ -27,6 +27,10 @@ module UsersHelper
     User.news_emails.keys.map { |n| [I18n.t("users.news_email.#{n}"), n] }
   end
 
+  def options_for_decisions_email
+    User.decisions_emails.keys.map { |n| [I18n.t("users.decisions_email.#{n}"), n] }
+  end
+
   def options_for_memberships_email
     User.memberships_emails.keys.map { |n| [I18n.t("users.memberships_email.#{n}"), n] }
   end

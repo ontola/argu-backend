@@ -52,7 +52,7 @@ RSpec.feature 'Signup', type: :feature do
     expect(page).to have_current_path setup_users_path
     click_button 'Next'
 
-    within('#profile_profileable_attributes_home_placement_attributes_country_code_input') do
+    within('#user_home_placement_attributes_country_code_input') do
       input_field = find('.Select-control .Select-input input').native
       input_field.send_keys 'Netherlands'
       find('.Select-option', text: /Netherlands$/).click

@@ -212,7 +212,8 @@ Argu::Application.routes.draw do
   resources :profiles, only: [:index, :update] do
     post :index, action: :index, on: :collection
     # This is to make requests POST if the user has an 'r' (which nearly all use POST)
-    post ':id' => 'profiles#update', on: :collection
+    get :setup, to: 'profiles#setup', on: :collection
+    put :setup, to: 'profiles#setup!', on: :collection
   end
 
   resources :banner_dismissals, only: :create
@@ -227,7 +228,7 @@ Argu::Application.routes.draw do
 
   match '/search/' => 'search#show', as: 'search', via: [:get, :post]
 
-  get '/settings', to: 'users#edit', as: 'settings'
+  get '/settings', to: 'users#settings'
   put '/settings', to: 'users#update'
   get '/c_a', to: 'users#current_actor'
   put 'persist_cookie', to: 'static_pages#persist_cookie'

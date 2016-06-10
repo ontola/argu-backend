@@ -6,7 +6,7 @@
         h3= profile.display_name
       .cover-overlay
       - if policy(profile).update?
-        .sticky--bottom-right
+        .sticky--top-right
           /=link_to profile_edit_path(profile), class: ('btn-subtle') do
           =link_to url_for([:settings, profile.owner]), class: ('btn-subtle') do
             span.fa.fa-gear

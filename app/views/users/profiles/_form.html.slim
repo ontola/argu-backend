@@ -1,37 +1,28 @@
-.inspectlet-sensitive=semantic_form_for @profile, url: @resource.url.present? ? profile_path(@resource) : settings_path, method: @resource.r.present? ? :post : :put  do |f|
-  // Code below still used? The setup_shortname page seems to make this obsolete.
-  - if @resource.url.blank?
-    =f.inputs name: t('profiles.edit.shortname') do
-      =f.inputs :shortname, for: :shortname
-      p= t('users.shortname.not_changeable')
+.inspectlet-sensitive= semantic_form_for resource, url: resource.finished_intro? ? settings_path : setup_profiles_path, method: :put  do |f|
   =f.inputs name: t('profiles.edit.general') do
     p= t('profiles.heads_up')
-    - if @profile.profileable.class == User
-      =f.inputs :first_name, :middle_name, :last_name, for: :profileable
-    - elsif @profile.profileable.class == Page
-      =f.input :name
-    =f.input :about, input_html: { :rows => 5 }, label: t('profiles.about_me')
-  =render partial: 'photos/form',
-          locals: {form: f,
-                   type: :profile_photo,
-                   relation: :default_profile_photo,
-                   preview_style: 'max-height: 96px; margin-bottom: 0.5em;'}
-  =render partial: 'photos/form',
-          locals: {form: f,
-                   type: :cover_photo,
-                   relation: :default_cover_photo,
-                   preview_style: 'max-height: 96px; margin-bottom: 0.5em;'}
-  =f.inputs name: t('profiles.edit.personal_information') do
-    p=t('profiles.edit.personal_information_notice')
-    =f.semantic_fields_for :profileable do |uf|
-      =uf.semantic_fields_for :home_placement_attributes, uf.object.home_placement do |ha|
-        =ha.input :id, as: :hidden
-        =ha.input :postal_code, required: false
-        =ha.input :country_code, as: :react_country, priority_countries: %w(NL BE), required: false
-      =uf.input :birthday, label: false, prompt: t('formtastic.labels.birthday'), labels: { year: t('formtastic.labels.birthday') }, start_year: 120.years.ago.year, end_year: 12.years.ago.year, order: [:year], input_html: {class: 'Select-control'}
-  =f.inputs name: t('profiles.edit.privacy') do
-    p= t('profiles.edit.privacy_notice')
-    =f.input :are_votes_public, as: :reverse_boolean
-    =f.input :is_public, as: :reverse_boolean
+    =f.inputs :first_name, :middle_name, :last_name
+    =f.semantic_fields_for :profile do |pf|
+      =pf.input :about, input_html: {rows: 5}, label: t('profiles.about_me')
+      =render partial: 'photos/form',
+              locals: {form: pf,
+                      type: :profile_photo,
+                      relation: :default_profile_photo,
+                      preview_style: 'max-height: 96px; margin-bottom: 0.5em;'}
+      =render partial: 'photos/form',
+              locals: {form: pf,
+                      type: :cover_photo,
+                      relation: :default_cover_photo,
+                      preview_style: 'max-height: 96px; margin-bottom: 0.5em;'}
+    - unless resource.finished_intro?
+      =f.inputs name: t('profiles.edit.personal_information') do
+        p= t('profiles.edit.personal_information_notice')
+        =f.semantic_fields_for :home_placement_attributes, f.object.home_placement do |ha|
+          =ha.input :id, as: :hidden
+          =ha.input :postal_code, required: false
+          =ha.input :country_code, as: :react_country, priority_countries: %w(NL BE), required: false
+        =f.input :birthday, label: false, prompt: t('formtastic.labels.birthday'), labels: { year: t('formtastic.labels.birthday') }, start_year: 120.years.ago.year, end_year: 12.years.ago.year, order: [:year], input_html: {class: 'Select-control'}
+  - if tab.present?
+    =f.input :tab, as: :hidden, input_html: {value: tab}
   =f.actions do
     =f.action :submit, as: :button, label: current_user.finished_intro? ? t('save') : t('next')

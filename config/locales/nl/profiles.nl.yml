@@ -17,7 +17,7 @@ nl:
         unadmin: 'Degradeer admin'
     edit:
       title: "Profiel bewerken"
-      shortname_not_allowed: "Je kunt jouw gebruikersnaam niet wijzigen. Je kan wel de naam die andere gebruikers zien wijzigen bij 'profiel bewerken'."
+      shortname_not_allowed: "Je kunt jouw gebruikersnaam niet wijzigen. Je kan wel de naam wijzigen die andere gebruikers zien bij "
       general: "Algemeen"
       profile_photo: "Profielfoto"
       cover_photo: "Omslagfoto"

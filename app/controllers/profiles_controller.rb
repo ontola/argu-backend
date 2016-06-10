@@ -1,4 +1,6 @@
 class ProfilesController < ApplicationController
+  include SettingsHelper
+
   def index
     authorize Profile, :index?
     @resource = Shortname.find_resource 'nederland' # params[:thing]
@@ -33,42 +35,51 @@ class ProfilesController < ApplicationController
     end
   end
 
-  #GET /1/edit
+  #GET /p/shortname/edit
   def edit
     @resource = Shortname.find_resource(params[:id])
+    authorize @resource, :settings?
+    if @resource.is_a? User
+      redirect_to url_for([:settings, tab: :profile])
+    else
+      redirect_to url_for([:settings, @resource, tab: :profile])
+    end
+  end
+
+  #GET /profiles/setup
+  def setup
+    @resource = user_or_redirect
     @profile = @resource.profile
     authorize @profile, :edit?
 
     if @resource.finished_intro?
-      respond_to do |format|
-        format.html { render profile_edit_view_path(@resource) }
-      end
+      redirect_to settings_url_for(@resource, tab: :profile)
     else
-      @resource.build_home_placement(place: Place.find_or_fetch_by(country_code: 'NL', postcode: nil))
       respond_to do |format|
-        format.html { render profile_edit_view_path(@resource), layout: 'closed' } # edit.html.erb
+        format.html do
+          render 'users/profiles/setup',
+                 locals: {profile: @profile, resource: @resource},
+                 layout: 'closed'
+        end
       end
     end
   end
 
-  #PUT /1
-  def update
-    @resource = Shortname.find_resource(params[:id])
+  #PUT /profiles/setup
+  def setup!
+    @resource = user_or_redirect
     @profile = @resource.profile
     authorize @profile, :update?
 
     updated = nil
     Profile.transaction do
-      updated = @profile.update permit_params
-      if @profile.profileable.class == User
-        updated = updated && @profile.profileable.update_attributes(user_profileable_params)
-        if (!@resource.finished_intro?) && has_valid_token?(@resource)
-          get_access_tokens(@resource).compact.each do |at|
-            @profile.group_memberships.find_or_create_by(group: at.item.members_group) if at.item.class == Forum
-          end
+      updated = @resource.update setup_permit_params
+      if has_valid_token?(@resource)
+        get_access_tokens(@resource).compact.each do |at|
+          @profile.group_memberships.find_or_create_by(group: at.item.members_group) if at.item.class == Forum
         end
-        @resource.update_column :finished_intro, true
       end
+      @resource.update_column :finished_intro, true
     end
 
     respond_to do |format|
@@ -81,7 +92,11 @@ class ProfilesController < ApplicationController
         format.html { redirect_to dual_profile_url(@profile), notice: 'Profile was successfully updated.' }
         format.json { head :no_content }
       else
-        format.html { render profile_edit_view_path(@resource) }
+        format.html do
+          render 'users/profiles/setup',
+                 locals: {profile: @profile, resource: @resource},
+                 layout: 'closed'
+        end
         format.json { render json: @profile.errors, status: :unprocessable_entity }
       end
     end
@@ -99,21 +114,20 @@ class ProfilesController < ApplicationController
     []
   end
 
-  def user_profileable_params
-    return {} unless params[:profile][:profileable_attributes].present?
-    pm = params.require(:profile)
-           .require(:profileable_attributes)
-           .permit(:first_name, :middle_name, :last_name, :birthday,
-                   home_placement_attributes: %i(postal_code country_code id))
-    merge_placement_params(pm, User)
-    pm
+  def setup_permit_params
+    pp = params.require(:user).permit(*policy(@resource || User).permitted_attributes(true))
+    merge_photo_params(pp, @resource.class)
+    merge_placement_params(pp, User)
+    pp
   end
 
-  def profile_update_path
-    profile_path(@user.url)
-  end
-
-  def profile_edit_view_path(resource)
-    "#{resource.class_name}/profiles/edit"
+  def user_or_redirect(redirect = nil)
+    if current_user.blank?
+      flash[:error] = t('devise.failure.unauthenticated')
+      raise Argu::NotLoggedInError.new(t('devise.failure.unauthenticated'),
+                                       redirect: redirect)
+    else
+      current_user
+    end
   end
 end

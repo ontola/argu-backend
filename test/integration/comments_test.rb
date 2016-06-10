@@ -56,13 +56,14 @@ class CommentsTest < ActionDispatch::IntegrationTest
     end
     follow_redirect!
 
-    put profile_path('newuser'),
-        profile: {
-          profileable_attributes: {
-            first_name: 'new',
-            last_name: 'user'
-          },
-          about: 'Something ab'
+    put setup_profiles_path,
+        user: {
+          first_name: 'new',
+          last_name: 'user',
+          profile_attributes: {
+            id: Profile.last.id,
+            about: 'Something ab'
+          }
         }
     assert_redirected_to forum_url(venice.url)
     assert assigns(:resource)

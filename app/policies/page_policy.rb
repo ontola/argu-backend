@@ -68,7 +68,7 @@ class PagePolicy < RestrictivePolicy
 
   def permitted_tabs
     tabs = []
-    tabs.concat %i(general groups) if is_manager? || staff?
+    tabs.concat %i(general profile groups) if is_manager? || staff?
     tabs.concat %i(advanced managers) if is_owner? || staff?
     tabs
   end
@@ -144,7 +144,7 @@ class PagePolicy < RestrictivePolicy
   # Make sure that a tab param is actually accounted for
   # @return [String] The tab if it is considered valid
   def verify_tab(tab)
-    tab ||= 'general'
+    tab ||= 'profile'
     assert! permitted_tabs.include?(tab.to_sym), "#{tab}?"
     tab
   end

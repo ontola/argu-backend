@@ -1,0 +1,13 @@
+=set_title t('users.settings.title')
+=render partial: 'profiles/profile_bar', locals: {active: :settings}
+.col-3
+  header
+    h1= t('users.settings.title')
+  .settings-tabs.col-3-1
+    =render_settings_items_for(current_user, active)
+  .col-3-2
+    .box
+      section
+        / Protects against Directory Traversal Attacks
+        -if local_assigns[:tab] && !tab.gsub(/\\/, '').index('../')
+          =render partial: "users/settings/#{tab}", locals: {resource: current_user, tab: tab, active: active}.merge(local_assigns)

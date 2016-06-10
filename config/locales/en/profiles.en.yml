@@ -17,7 +17,7 @@ en:
         unadmin: 'Demote admin'
     edit:
       title: "Edit profile"
-      shortname_not_allowed: "You can't change your username. However, you can change the name that other users see at 'edit profile'."
+      shortname_not_allowed: "You can't change your username. However, you can change the name that other users see at "
       general: "General"
       profile_photo: "Profile picture"
       cover_photo: "Cover picture"

@@ -339,9 +339,9 @@ RSpec.feature 'Adam west', type: :feature do
 
     profile_attr = attributes_for(:profile)
     within('form') do
-      fill_in 'profile_profileable_attributes_first_name', with: user_attr[:first_name]
-      fill_in 'profile_profileable_attributes_last_name', with: user_attr[:last_name]
-      fill_in 'profile_about', with: profile_attr[:about]
+      fill_in 'user_first_name', with: user_attr[:first_name]
+      fill_in 'user_last_name', with: user_attr[:last_name]
+      fill_in 'user_profile_attributes_about', with: profile_attr[:about]
       click_button 'Next'
     end
   end

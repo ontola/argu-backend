@@ -5,12 +5,9 @@
       li[class=('tab--current' if local_assigns[:active] == :show)]= link_to user_url(current_user) do
         span.fa.fa-user
         span.icon-left= t('show_type', type: t('profiles.type'))
-      li[class=('tab--current' if local_assigns[:active] == :profile)]= link_to url_for([:edit, current_user]) do
-        span.fa.fa-pencil
-        span.icon-left= t('profiles.edit.title')
       li[class=('tab--current' if local_assigns[:active] == :settings)]= link_to settings_url do
         span.fa.fa-gear
-        span.icon-left= t('users.settings')
+        span.icon-left= t('users.settings.title')
       -if current_user.has_drafts?
         li[class=('tab--current' if local_assigns[:active] == :drafts)]= link_to url_for([:drafts, current_user]) do
           span.fa.fa-pencil-square-o

@@ -181,7 +181,7 @@ class PagesControllerTest < ActionController::TestCase
     assert_equal 2, assigns(:page).profile.photos.count
     assert_equal 'profile_photo.png', assigns(:page).profile.default_profile_photo.image_identifier
     assert_equal 'cover_photo.jpg', assigns(:page).profile.default_cover_photo.image_identifier
-    assert_redirected_to settings_page_path(page, tab: :general)
+    assert_redirected_to settings_page_path(page, tab: :profile)
     assert_equal page, assigns(:page)
     assert_equal 'new_about', assigns(:page).profile.about
   end

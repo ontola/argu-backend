@@ -1,0 +1,11 @@
+=semantic_form_for @user, url: settings_path, method: :put do |f|
+  =f.inputs name: t('users.registrations.categories.privacy') do
+    =f.input :has_analytics, as: :reverse_boolean
+    li.form-helper
+      span= t('users.edit.analytics_helper')
+    =f.semantic_fields_for :profile do |profile|
+      =profile.input :are_votes_public, as: :reverse_boolean
+      =profile.input :is_public, as: :reverse_boolean
+  =f.input :tab, as: :hidden, input_html: {value: tab}
+  =f.actions do
+    =f.action :submit, as: :button, label: t('save')

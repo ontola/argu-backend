@@ -102,13 +102,14 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
-    put profile_path('newuser'),
-        profile: {
-            profileable_attributes: {
-                first_name: 'new',
-                last_name: 'user'
-            },
+    put setup_profiles_path,
+        user: {
+          first_name: 'new',
+          last_name: 'user',
+          profile_attributes: {
+            id: Profile.last.id,
             about: 'Something ab'
+          }
         }
     assert_redirected_to hidden_forum_path
     assert assigns(:resource)
@@ -146,13 +147,14 @@ class AccessTokenSignupTest < ActionDispatch::IntegrationTest
     assert_redirected_to edit_user_url('newuser')
     follow_redirect!
 
-    put profile_path('newuser'),
-        profile: {
-            profileable_attributes: {
-                first_name: 'new',
-                last_name: 'user'
-            },
+    put setup_profiles_path,
+        user: {
+          first_name: 'new',
+          last_name: 'user',
+          profile_attributes: {
+            id: Profile.last.id,
             about: 'Something ab'
+          }
         }
     assert_redirected_to redirect_url
     assert assigns(:resource)

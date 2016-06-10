@@ -57,7 +57,7 @@ RSpec.feature 'Account deletion', type: :feature do
     end
 
     sign_in(user)
-    visit settings_path
+    visit settings_path(tab: :advanced)
     click_link 'Delete Argu account'
     expect do
       within("#edit_user_#{user.id}") do
@@ -81,7 +81,7 @@ RSpec.feature 'Account deletion', type: :feature do
     forum_page
 
     login_as(user, scope: :user)
-    visit settings_path
+    visit settings_path(tab: :advanced)
     click_link 'Delete Argu account'
 
     expect(page).to have_content 'You are the owner of one or multiple pages. '\

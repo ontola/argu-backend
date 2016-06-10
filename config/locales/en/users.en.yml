@@ -3,7 +3,14 @@
 en:
   users:
     type: "User"
-    settings: "User settings"
+    settings:
+      title: "User settings"
+      menu:
+        general: "General"
+        profile: "Profile"
+        notifications: "Notifications"
+        privacy: "Privacy"
+        advanced: "Advanced"
     edit:
       analytics_helper: "We use Bugsnag to get notified of and help fix errors in your browser. We use Google Analytics to improve the user experience."
     registrations:
@@ -14,6 +21,7 @@ en:
       confirmed: "Email confirmed"
       unconfirmed: "Email not yet confirmed"
       unconfirmed_email: "Pending email: %{email}"
+      confirm_mail_change_notice: "We have send you a mail to the new address. Please confirm the change by clicking the link in this mail."
     reactions_email:
       never_reactions_email: 'Never'
       direct_reactions_email: 'Immediately'

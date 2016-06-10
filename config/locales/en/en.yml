@@ -215,6 +215,7 @@ en:
   type_destroy_success: "%{type} deleted successfully"
   type_trash_success: "%{type} trashed successfully"
   type_untrash_success: "%{type} successfully removed from trash"
+  type_changes: 'Changes'
   move:
     current_forum: "Current forum:"
     button_label: "Move"

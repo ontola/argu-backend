@@ -1,0 +1,12 @@
+=set_title t('profiles.edit.title')
+.col-1
+  header
+    h1= t('intro.initial.headers.profile')
+  .box
+    section
+      p= raw t('intro.initial.body.profile')
+  header
+    h1= t('profiles.edit.title')
+  .box
+    section
+      =render partial: 'users/profiles/form', locals: {tab: nil, profile: profile, resource: resource}
