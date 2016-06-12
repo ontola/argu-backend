@@ -5,12 +5,6 @@
   margin-bottom: 1.4em;
 }
 
-.activity .profile-small{
-  height: auto;
-  background: initial;
-  margin-bottom: 0.4em;
-}
-
 .activity .info-block {
   margin-left: 2.6em;
 }
@@ -21,4 +15,18 @@
 
 .activity-feed {
   margin-top: 1em;
+}
+
+.activity {
+  margin-bottom: 2em;
+}
+
+.activity-header {
+  margin-bottom: .4em;
+  position: relative;
+}
+
+.activity-body {
+  @include box-shadow;
+  position: relative;
 }

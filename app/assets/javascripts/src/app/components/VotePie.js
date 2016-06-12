@@ -67,7 +67,7 @@ export const VotePie = React.createClass({
         const pieChartStyle = voted ? this.votedStyle() : this.notVotedStyle();
 
         return (
-            <div className={`vote-pie ${voted && 'vote-pie--empty'}`} data-title="" style={style}>
+            <div className={`vote-pie ${voted && 'vote-pie--empty'}`} style={style}>
                 <PieChart slices={pieChartStyle} />
             </div>
         );

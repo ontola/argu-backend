@@ -243,24 +243,3 @@ section.smallpadded {
   padding: 0;
   height: $section-footer-height;
 }
-
-.activity {
-  margin-bottom: 2em;
-}
-
-.activity-header {
-  padding: 0;
-  margin-left: 1em;
-  margin-right: 1em;
-  margin-bottom: 0;
-  background-color: $g0;
-  position: relative;
-  z-index: 0;
-  border-top-left-radius: $border-radius-size;
-  border-top-right-radius: $border-radius-size;
-}
-
-.activity-body {
-  @include box-shadow;
-  position: relative;
-}
