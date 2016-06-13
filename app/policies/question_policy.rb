@@ -14,7 +14,12 @@ class QuestionPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      scope.published
+      if context.forum.present?
+        scope.where(forum_id: context.forum.id).published
+      else
+        ids = user ? user.profile.memberships.select(:forum_id) : []
+        scope.where(forum_id: ids).published
+      end
     end
 
     def is_member?

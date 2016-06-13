@@ -15,6 +15,10 @@ module HeaderHelper
       else
         link_item(t('pages.create'), new_page_path, fa: 'building')
       end
+    drafts_index = current_user.has_drafts? &&
+      link_item(t('users.drafts.title'),
+                drafts_user_url(current_user),
+                fa: 'pencil-square-o')
     forum_management = policy(Forum).index? &&
       link_item(t('forums.management.title'),
                 forums_user_url(current_user),
@@ -39,6 +43,7 @@ module HeaderHelper
                       fa: 'user'),
             link_item(t('profiles.edit.title'), dual_profile_edit_url(current_profile), fa: 'pencil'),
             link_item(t('users.settings'), settings_url, fa: 'gear'),
+            drafts_index,
             page_index,
             forum_management,
             link_item(t('sign_out'),

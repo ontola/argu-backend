@@ -120,6 +120,7 @@ Argu::Application.routes.draw do
 
     get :pages, to: 'pages#index', on: :member
     get :forums, to: 'forums#index', on: :member
+    get :drafts, to: 'drafts#index', on: :member
 
     put 'language/:locale', to: 'users#language', on: :collection, as: :language
   end

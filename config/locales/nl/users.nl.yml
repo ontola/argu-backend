@@ -48,3 +48,6 @@ nl:
       title: "Koppel accounts"
       text_html: "Er bestaat al een gebruiker op Argu genaamd <b>%{to_name}</b> met hetzelfde email adres als jouw %{from_type} account. Om het %{from_type} account van <b>%{from_name}</b> te koppelen aan dit Argu account, moet je het wachtwoord van het Argu account invoeren."
     shortname_helper_html: "https://argu.co/u/<b>jouw_gebruikersnaam</b>"
+    drafts:
+      title: "Mijn concepten"
+      empty: "Je hebt momenteel geen concepten"

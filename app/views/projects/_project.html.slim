@@ -26,3 +26,5 @@
                 span.fa.fa-chevron-right
                 .list-item
                   span= t('discussions.show_all', amount: discussions.count)
+  -unless project.is_published?
+    =render partial: 'application/publish', locals: {resource: project}

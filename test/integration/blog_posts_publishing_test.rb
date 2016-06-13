@@ -30,6 +30,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
 
   test 'should post create draft blog_post' do
     sign_in moderator
+    assert_not moderator.has_drafts?
 
     get project_path(project)
     assert_response 200
@@ -47,6 +48,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     end
 
     follow_redirect!
+    assert moderator.reload.has_drafts?
     assert_response 200
     assert_equal false, BlogPost.last.is_published?
     assert_equal 0, Notification.count
@@ -78,7 +80,8 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
 
     follow_redirect!
     assert_response 200
-    assert_equal true, BlogPost.last.is_published?
+    assert_not moderator.reload.has_drafts?
+    assert BlogPost.last.is_published?
   end
 
   test 'moderator post create scheduled blog_post' do
@@ -98,7 +101,7 @@ class BlogPostPublishingTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test 'moderator should change schedule to concept' do
+  test 'moderator should change schedule to draft' do
     sign_in moderator
 
     get project_path(project)

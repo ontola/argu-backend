@@ -14,7 +14,11 @@ class ProjectPolicy < RestrictivePolicy
     delegate :session, to: :context
 
     def resolve
-      scope.published
+      if context.forum.present?
+        scope.where(forum_id: context.forum.id).published_or_published_by(user&.id)
+      else
+        scope.published_or_published_by(user&.id)
+      end
     end
   end
 

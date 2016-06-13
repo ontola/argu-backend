@@ -24,14 +24,14 @@ class ForumsController < ApplicationController
     authorize @forum, :list?
     current_context @forum
 
-    projects = policy_scope(@forum.projects.trashed(show_trashed?))
-    orphan_questions = policy_scope(@forum.questions.trashed(show_trashed?).where(project_id: nil))
-    orphan_motions = Motion.where(
-      forum: @forum,
-      question_id: nil,
-      project_id: nil,
-      is_trashed: show_trashed?)
-    orphan_motions = policy_scope(orphan_motions)
+    projects = policy_scope(@forum.projects.published.trashed(show_trashed?))
+    orphan_questions = policy_scope(@forum.questions.published.trashed(show_trashed?).where(project_id: nil))
+    orphan_motions = policy_scope(
+      Motion.published.where(
+        forum: @forum,
+        question_id: nil,
+        project_id: nil,
+        is_trashed: show_trashed?))
 
     if policy(@forum).show?
       @items = Kaminari

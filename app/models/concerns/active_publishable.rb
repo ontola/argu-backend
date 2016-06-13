@@ -32,5 +32,8 @@ module ActivePublishable
   end
 
   module ClassMethods
+    def published_or_published_by(user_id)
+      where('is_published = true OR publisher_id = ?', user_id)
+    end
   end
 end

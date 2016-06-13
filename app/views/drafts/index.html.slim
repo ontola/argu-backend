@@ -1,0 +1,11 @@
+=render partial: 'profiles/profile_bar', locals: {resource: @user, active: :drafts}
+header
+  h1= t('users.drafts.title')
+-if @items.present?
+  .grid
+    .box.box-grid-sizer
+    .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
+    =render @items
+  =paginate @items
+-else
+  p.center=t('users.drafts.empty')
