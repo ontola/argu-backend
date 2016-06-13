@@ -7,6 +7,7 @@ nl:
     new_btn: "Uitdaging toevoegen"
     header: "uitdagingen"
     view_all_motions: "Bekijk alle %{amount} ideeën..."
+    go_to_parent: "Ga naar de bovenliggende uitdaging."
     tooltips:
       count: "Aantal geplaatste uitdagingen"
       info: "Een uitdaging is een vraagstuk of probleem waaronder ideeën kunnen worden geplaatst."

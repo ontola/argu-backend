@@ -1,13 +1,11 @@
 @import "variables";
 @import "mixins";
 
-$vote-pie-size: 1.8em;
+$vote-pie-size: 1.4em;
 
 .vote-pie {
   width: $vote-pie-size;
-  top: -.2em;
-  left: -1.4em;
-  position: absolute;
+  position: relative;
 
   svg {
     overflow: visible;
@@ -24,7 +22,6 @@ $vote-pie-size: 1.8em;
   position: relative;
   display: inline-block;
   vertical-align: top;
-  width: .5em;
 
   // Hides the vote pie on IE8,9,10 since the position is weird.
   @media screen\0 {
@@ -33,8 +30,8 @@ $vote-pie-size: 1.8em;
 }
 
 .vote-pie--empty{
-  position: absolute;
-  display: inline-block;
+  //position: absolute;
+  display: none;
   z-index: 1;
 
   &:after{

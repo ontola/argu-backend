@@ -14,6 +14,10 @@ nl:
     no_cons: "nog niets tegen"
     content: "inhoud"
     one_up: "Heb jij een beter idee?"
+    percentage_in_favor:
+      zero: "Nog niemand heeft hier op gestemd."
+      one: "Één persoon heeft hier op gestemd."
+      other: "%{percentage}% of %{count} votes is in favor."
     tooltips:
       count: "aantal ideeën"
       info: "Een idee is een voorstel waar je voor of tegen kan zijn."

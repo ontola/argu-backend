@@ -1,0 +1,5 @@
+= link_to dual_profile_url(resource.creator) do
+  .detail[itemscope="itemscope" itemprop="creator" itemtype="http://schema.org/Person"]
+    img.detail__icon[src=resource.creator.default_profile_photo.url(:icon) alt="profile-picture profile-picture--small" itemprop="image"]
+    .detail__text[itemprop="name"]
+      .span = resource.creator.display_name

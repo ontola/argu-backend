@@ -8,7 +8,7 @@
   margin: 0 auto;
   padding: .01em 1em; //unpadded means margins are negated
   margin-bottom: 1em;
-  max-width: 55em;
+  max-width: 48em;
   @include bp-medium(){
     width: 100%;
   }

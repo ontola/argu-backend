@@ -1,38 +1,42 @@
-section.section-info
-  .details
-    .details-part.details-part--type.motion-bg[data-title=t('motions.tooltips.info')]
-      span[class="fa fa-#{motion_icon}"]
-      span.icon-left= motion_type
+section.section--details
+  .detailsBar
+    .detail[data-title=t('motions.tooltips.info')]
+      .detail__icon.detail__icon--type.motion-bg
+        span[class="fa fa-#{motion_icon}"]
+      .detail__text
+        span= motion_type
+    - if local_assigns[:show_vote_pie] && motion.votes.present?
+      .detail[data-title=t('motions.percentage_in_favor', percentage: motion.votes_pro_percentage, count: motion.total_vote_count)]
+        .detail__icon
+          .vote-pie-container
+            =react_component 'VotePie', motion_vote_counts(motion), {prerender: true}
+        .detail__text
+          .span
+            =motion.total_vote_count
+    - if local_assigns[:show_profile]
+      = render partial: 'profiles/detail_profile', locals: {resource: motion}
     - if local_assigns[:show_vote_results]
-      .vote-pie-container
-        =react_component 'VotePie', motion_vote_counts(motion), {prerender: true}
-      .vote-pie-filler
       .details-parts
         =react_component 'VoteStats', motion_vote_counts(motion), {prerender: true}
-    - if local_assigns[:show_total_vote_count]
-      .details-part[data-title=t('tooltips.motion.vote_count')]
-        span.fa.fa-check-square-o
-        span.icon-left= motion.total_vote_count.to_s
-    - if local_assigns[:show_follows_count]
-      .details-part[data-title=t('tooltips.motion.vote_count')]
-        span.fa.fa-check-square-o
-        span.icon-left= motion.total_vote_count.to_s
-    - if local_assigns[:show_arguments]
-      .details-part[data-title=t('tooltips.motion.vote_count')]
-        span.fa.fa-check-square-o
-        span.icon-left= motion.total_vote_count.to_s
-    - if local_assigns[:show_arguments]
-      - if active_for_user?(:argument_tooltips_list, current_user)
-        .details-part.tooltip--wider[data-title=(motion.argument_pro_count == 0 ? t('tooltips.motion.arguments_pro_count') : pro_arguments_preview_tooltip(motion))]
-          span.fa.fa-plus
-          span.icon-left= motion.argument_pro_count
-        .details-part.tooltip--wider[data-title=(motion.argument_con_count == 0 ? t('tooltips.motion.arguments_con_count') : con_arguments_preview_tooltip(motion))]
-          span.fa.fa-minus
-          span.icon-left= motion.argument_con_count
-      - else
-        .details-part[data-title=t('tooltips.motion.arguments_pro_count')]
-          span.fa.fa-plus
-          span.icon-left= motion.argument_pro_count
-        .details-part[data-title=t('tooltips.motion.arguments_con_count')]
-          span.fa.fa-minus
-          span.icon-left= motion.argument_con_count
+    - if local_assigns[:show_date]
+      .detail
+        .detail__icon
+          .fa.fa-clock-o
+        .detail__text
+          time[datetime=motion.created_at ]= awesome_time_ago_in_words motion.created_at
+    - if local_assigns[:show_parent]
+      - unless params[:controller] == 'projects'
+        - if motion.question_id
+          = link_to motion.question
+            .detail[data-title=t('questions.go_to_parent')]
+              .detail__icon
+                span.question-t.fa.fa-level-up
+              .detail__text
+                span[itemprop="headline"]= motion.question.title
+        - elsif motion.project_id
+          = link_to motion.project
+            .detail
+              .detail__icon
+                span.project-t.fa.fa-level-up
+              .detail__text
+                span[itemprop="headline"]= motion.project.title

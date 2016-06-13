@@ -1,15 +1,3 @@
-/.box.profile-box.box-grid
-  .header
-    =link_to forum_path(forum) do
-      = image_tag forum.profile_photo.url(:avatar), size: '64x64'
-    =link_to forum_path(forum) do
-      .additional-info
-        h3= forum.display_name
-        /TODO: change letters for icons
-        ul.info-block
-          li= "#{forum.memberships_count} #{t('forums.statistics.memberships')}"
-          li="#{forum.questions_count} #{t('forums.statistics.questions')}"
-          li="#{forum.motions_count} #{t('forums.statistics.motions')}"
 .box.box-grid
   =link_to forum_path(forum) do
     section.unpadded.cover--small

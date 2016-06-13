@@ -49,16 +49,12 @@ section {
     font-size: 0.7em;
   }
 
-  .display-hide-details &{
-    display: none;
-  }
 }
 
 .details {
   padding: 0;
   line-height: $info—bar-height;
   color: $g2a;
-  text-transform: uppercase;
   display: block;
   width: 100%;
   // May interfere with overflow:hidden! But if removed, it places the info section always at the top.
@@ -242,4 +238,28 @@ section.smallpadded {
   background-color: $g00;
   padding: 0;
   height: $section-footer-height;
+}
+
+.section--context {
+  padding: 0.7em 1.5em;
+  font-size: 0.8em;
+}
+
+.section--details {
+  overflow: visible !important;
+  margin-top: -0.7em;
+  padding-top: 0.7em;
+  padding-bottom: 0.5em;
+
+  .display-hide-details &{
+    display: none !important;
+  }
+}
+
+.section--details + section {
+  padding-top: 0;
+}
+
+.section--no-top-padding {
+  padding-top: 0;
 }

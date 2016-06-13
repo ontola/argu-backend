@@ -3,17 +3,6 @@
   div[itemprop="itemListElement" itemscope="itemscope" itemtype="http://schema.org/ListItem"]
     =link_to parent, itemprop: 'item'
       .box.box-link
-        - if parent.is_a?(Forum)
-          - nil
-        - elsif parent.is_a?(Question)
-          =render partial: 'questions/info_bar', locals: {question: parent}
-        - elsif parent.is_a?(Motion)
-          =render partial: 'motions/info_bar', locals: {motion: parent, show_vote_results: true}
-        - elsif parent.is_a?(Project)
-          =render partial: 'projects/info_bar', locals: {project: parent}
-        - else
-          section.section-info
-            span.fa.fa-arrow-up
         / This renders the bottom section
         - if parent.is_a?(Forum)
           section.back-to-forum
@@ -23,5 +12,5 @@
         - else
           section
             h3[class="#{parent.model_name.singular}-t"]
-              span.fa.fa-arrow-up
+              span.fa.fa-level-up
               span.icon-left[itemprop="name"]= parent.display_name
