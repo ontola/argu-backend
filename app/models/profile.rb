@@ -10,7 +10,7 @@ class Profile < ActiveRecord::Base
              autosave: true
   rolify after_remove: :role_removed, before_add: :role_added
 
-  before_destroy :anonymize_or_wipe_dependencies
+  before_destroy :anonymize_dependencies
   has_many :access_tokens, dependent: :destroy
   has_many :activities, as: :owner, dependent: :restrict_with_exception
   has_many :forums, through: :memberships
@@ -137,8 +137,7 @@ class Profile < ActiveRecord::Base
   private
 
   # Sets the dependent foreign relations to the Community profile
-  # Except for comments..
-  def anonymize_or_wipe_dependencies
+  def anonymize_dependencies
     %w(comments motions arguments questions blog_posts projects activities).each do |association|
       association
         .classify
@@ -146,7 +145,6 @@ class Profile < ActiveRecord::Base
         .anonymize(send(association))
     end
     Photo.anonymize(uploaded_photos)
-    reload
   end
 
   def role_added(role)

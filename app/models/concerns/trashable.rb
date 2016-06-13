@@ -48,9 +48,14 @@ module Trashable
   end
 
   module ClassMethods
-    # Hands over ownership of a collection to the Community profile (0)
+    # Hands over publication of a collection to the Community profile (0)
     def anonymize(collection)
-      collection.update_all(creator_id: 0, publisher_id: 0)
+      collection.update_all(creator_id: 0)
+    end
+
+    # Hands over ownership of a collection to the Community user (0)
+    def expropriate(collection)
+      collection.update_all(publisher_id: 0)
     end
 
     def is_trashable?

@@ -7,6 +7,7 @@ class RegistrationsControllerTest < ActionController::TestCase
   let!(:freetown) { create(:forum) }
   let(:user) { create(:user) }
   let(:place) { create(:place) }
+  let(:page) { create(:page) }
 
   ####################################
   # As Guest
@@ -77,6 +78,44 @@ class RegistrationsControllerTest < ActionController::TestCase
              user: {
                  repeat_name: user.shortname.shortname,
                  current_password: 'password'
+             }
+    end
+
+    assert_redirected_to root_path
+  end
+
+  test 'user should delete destroy with content' do
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    create :motion, publisher: user, creator: user.profile
+    create :question, publisher: user, creator: user.profile
+    create :argument, motion: Motion.last, publisher: user, creator: user.profile
+
+    sign_in user
+
+    assert_differences([['User.count', -1]]) do
+      delete :destroy,
+             user: {
+               repeat_name: user.shortname.shortname,
+               current_password: 'password'
+             }
+    end
+
+    assert_redirected_to root_path
+  end
+
+  test 'user should delete destroy with content published by page' do
+    @request.env['devise.mapping'] = Devise.mappings[:user]
+    create :motion, publisher: user, creator: page.profile
+    create :question, publisher: user, creator: page.profile
+    create :argument, motion: Motion.last, publisher: user, creator: page.profile
+
+    sign_in user
+
+    assert_differences([['User.count', -1]]) do
+      delete :destroy,
+             user: {
+               repeat_name: user.shortname.shortname,
+               current_password: 'password'
              }
     end
 

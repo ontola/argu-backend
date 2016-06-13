@@ -13,18 +13,14 @@ class User < ActiveRecord::Base
   has_many :notifications
   has_many :oauth_applications, class_name: 'Doorkeeper::Application', as: :owner, dependent: :destroy
   # User content
-  has_many :arguments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
-  has_many :blog_posts, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
-  has_many :comments, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
-  has_many :group_responses, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
-  has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
-  has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
-  has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id', dependent: :nullify
-  has_many :uploaded_photos,
-           class_name: 'Photo',
-           inverse_of: :publisher,
-           foreign_key: 'publisher_id',
-           dependent: :nullify
+  has_many :arguments, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :blog_posts, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :comments, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :group_responses, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :motions, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id'
+  has_many :uploaded_photos, class_name: 'Photo', inverse_of: :publisher, foreign_key: 'publisher_id'
   accepts_nested_attributes_for :profile, :home_placement
 
   # Include default devise modules. Others available are:
@@ -39,7 +35,7 @@ class User < ActiveRecord::Base
   TEMP_EMAIL_REGEX = /\Achange@me/
 
   after_create :update_acesss_token_counts
-  before_destroy :pledge_edges
+  before_destroy :expropriate_dependencies
   before_save { |user| user.email = email.downcase unless email.blank? }
 
   attr_accessor :current_password, :repeat_name
@@ -169,7 +165,15 @@ class User < ActiveRecord::Base
 
   private
 
-  def pledge_edges
+  # Sets the dependent foreign relations to the Community profile
+  def expropriate_dependencies
+    %w(comments motions arguments questions blog_posts projects).each do |association|
+      association
+        .classify
+        .constantize
+        .expropriate(send(association))
+    end
+    Photo.expropriate(uploaded_photos)
     edges.update_all user_id: 0
   end
 

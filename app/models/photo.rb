@@ -14,7 +14,13 @@ class Photo < ActiveRecord::Base
 
   delegate :url, :file, :icon, :avatar, to: :image
 
+  # Hands over publication of a collection to the Community profile (0)
   def self.anonymize(collection)
-    collection.update_all(creator_id: 0, publisher_id: nil)
+    collection.update_all(creator_id: 0)
+  end
+
+  # Hands over ownership of a collection to nil
+  def self.expropriate(collection)
+    collection.update_all(publisher_id: nil)
   end
 end

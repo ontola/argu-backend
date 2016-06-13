@@ -31,6 +31,7 @@ class Activity < PublicActivity::Activity
     key.split('.').last
   end
 
+  # Hands over publication of a collection to the Community profile (0)
   def self.anonymize(collection)
     collection.update_all(owner_id: 0)
   end
