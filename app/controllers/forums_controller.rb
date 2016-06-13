@@ -25,17 +25,12 @@ class ForumsController < ApplicationController
     current_context @forum
 
     projects = policy_scope(@forum.projects.published.trashed(show_trashed?))
-    orphan_questions = policy_scope(@forum.questions.published.trashed(show_trashed?).where(project_id: nil))
-    orphan_motions = policy_scope(
-      Motion.published.where(
-        forum: @forum,
-        question_id: nil,
-        project_id: nil,
-        is_trashed: show_trashed?))
+    questions = policy_scope(@forum.questions.published.trashed(show_trashed?))
+    motions = policy_scope(@forum.motions.published.trashed(show_trashed?))
 
     if policy(@forum).show?
       @items = Kaminari
-               .paginate_array((projects + orphan_questions + orphan_motions)
+               .paginate_array((projects + questions + motions)
                                    .sort_by(&:updated_at)
                                    .reverse)
                .page(show_params[:page])

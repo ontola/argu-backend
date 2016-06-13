@@ -84,6 +84,7 @@ en:
   forum: "Forum"
   share: "Share"
   menu: "Menu"
+  posted_in: "Posted in"
   legal:
     header: "Legal"
     policy: "Terms of use"
@@ -273,6 +274,9 @@ en:
     argument:
       name: 'Argument %{side} %{motiontitle}'
       description: 'Join the debate.'
+    blog_post:
+      name: 'Views & opinions'
+      description: 'All views & opinions of %{title}.'
     forum:
       name: 'Forum for substantive discussions.'
       description: ''
@@ -286,6 +290,9 @@ en:
       name: 'Views & opinions'
       description: 'All views & opinions of %{title}.'
     profile:
+      name: 'Views & opinions'
+      description: 'All views & opinions of %{title}.'
+    project:
       name: 'Views & opinions'
       description: 'All views & opinions of %{title}.'
     question:

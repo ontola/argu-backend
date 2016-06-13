@@ -84,6 +84,7 @@ nl:
   forum: "Forum"
   share: "Delen"
   menu: "Menu"
+  posted_in: "Geplaatst in"
   legal:
     header: "Voorwaarden"
     policy: "Gebruiksvoorwaarden"
@@ -274,6 +275,9 @@ nl:
     argument:
       name: 'Argument %{side} %{motiontitle}'
       description: 'Discussieer mee.'
+    blog_post:
+      name: 'Bekijk argumenten, discussieer mee en stem!'
+      description: 'Alle standpunten van %{title} in één overzicht.'
     forum:
       name: 'Forum voor inhoudelijke discussie'
       description: 'Argu is een discussieplatform waar argumenten centraal staan.'
@@ -287,6 +291,9 @@ nl:
       name: 'Bekijk alle standpunten'
       description: 'Alle standpunten van %{title} in één overzicht.'
     profile:
+      name: 'Bekijk alle standpunten'
+      description: 'Alle standpunten van %{title} in één overzicht.'
+    project:
       name: 'Bekijk alle standpunten'
       description: 'Alle standpunten van %{title} in één overzicht.'
     question:
