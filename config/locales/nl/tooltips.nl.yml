@@ -12,7 +12,6 @@ nl:
       date: "Geplaatst op"
     question:
       create: "Stel een vraag aan alle leden en verzamel nieuwe ideeën."
-      motions_count: "Aantal geplaatste ideeën"
     forum:
       invite: "Nodig anderen uit om in dit forum mee te discussiëren."
     argument:

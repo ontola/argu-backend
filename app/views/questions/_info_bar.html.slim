@@ -6,7 +6,7 @@ section.section--details
       .detail__text
         span= question_type
     - if question.motions.count > 1
-      .detail[data-title=t('tooltips.question.motions_count')]
+      .detail[data-title=t('motions.tooltips.count', count: question.motions.count)]
         .detail__icon.motion-t
           span[class="fa fa-#{motion_icon}"]
         .detail__text

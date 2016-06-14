@@ -12,7 +12,6 @@ en:
       date: "Placed on"
     question:
       create: "Ask a question to all members and gather new motions."
-      motions_count: "Number of placed ideas"
     forum:
       invite: "Invite others to discuss in this forum."
     argument:
