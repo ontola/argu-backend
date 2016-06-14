@@ -3,6 +3,6 @@
     span= t('projects.stepups.add')
   =f.inputs do
     =f.input :moderator
-    =f.input :title
-    =f.input :description
+    =f.input :title, input_html: {placeholder: t('formtastic.placeholders.stepup.title')}
+    =f.input :description, input_html: {rows: 5, placeholder: t('formtastic.placeholders.stepup.description')}
   =link_to_remove_association t('delete_type', type: f.object.display_name), f, class: 'btn btn--light'

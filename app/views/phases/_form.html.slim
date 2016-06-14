@@ -18,7 +18,8 @@
               span= "#{l(phase.start_date, format: :date)} (#{phase_start_date_origin(phase)})"
             -else
               span= t('projects.phases.start_date.none')
-            =f.input :end_date, as: :datetime_picker
+            =f.input :end_date, as: :date_picker
+            =f.input :end_time, as: :time_picker, label: '&nbsp;', input_html: {step: 1}
         section.section--footer
           - if phase.new_record?
             =render partial: 'profiles/profile_current'

@@ -125,6 +125,9 @@ en:
       question:
         title: "Enter the core of your %{type} here"
         content: "Enter details and background information on your %{type} here."
+      stepup:
+        title: "The title of this moderator"
+        description: "Optional description"
       user:
         email: "email@example.com"
     actions:

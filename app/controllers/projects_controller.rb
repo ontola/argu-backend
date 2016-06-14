@@ -151,6 +151,6 @@ class ProjectsController < AuthorizedController
   end
 
   def resource_new_params
-    super.merge(start_date: DateTime.current)
+    super.merge(start_date: Date.current)
   end
 end

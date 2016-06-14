@@ -19,6 +19,7 @@ class Phase < ActiveRecord::Base
   # attribute :start_date, :datetime
   # attribute :end_date, :datetime
   alias_attribute :display_name, :name
+  attr_accessor :end_time
 
   before_save :update_date_of_project_or_next_phase
 
@@ -31,6 +32,10 @@ class Phase < ActiveRecord::Base
     end
   end
 
+  def end_time
+    end_date.present? ? end_date.strftime('%T') : '23:59:59'
+  end
+
   def next_phase
     @next_phase ||= project.phases.where('id > ?', id).try(:first)
   end
@@ -41,7 +46,7 @@ class Phase < ActiveRecord::Base
 
   def update_date_of_project_or_next_phase
     return unless end_date_changed?
-    next_phase.present? ? next_phase.update!(start_date: end_date) : project.update!(end_date: end_date)
+    next_phase.present? ? next_phase.update!(start_date: end_date + 1.second) : project.update!(end_date: end_date)
   end
 
   # Activities with *.happened key that happened during this phase

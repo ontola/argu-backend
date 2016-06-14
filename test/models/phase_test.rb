@@ -26,7 +26,7 @@ class PhaseTest < ActiveSupport::TestCase
     subject.update(end_date: DateTime.tomorrow)
     project.phases.reload
     next_phase.reload
-    assert_equal subject.end_date, next_phase.start_date,
+    assert_equal subject.end_date + 1.second, next_phase.start_date,
                  'start date of second phase is not set to end date of first phase'
 
     assert_not project.update(start_date: 1.month.from_now),
