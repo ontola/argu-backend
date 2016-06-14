@@ -5,6 +5,22 @@ section.section--details
         span[class="fa fa-#{motion_icon}"]
       .detail__text
         span= motion_type
+    - if local_assigns[:show_parent]
+      - unless params[:controller] == 'projects'
+        - if motion.question_id
+          =link_to motion.question
+            .detail[data-title=t('questions.go_to_parent')]
+              .detail__icon
+                span.question-t.fa.fa-question
+              .detail__text
+                span[itemprop="headline"]= motion.question.title
+        - elsif motion.project_id
+          =link_to motion.project
+            .detail
+              .detail__icon
+                span.project-t.fa.fa-question
+              .detail__text
+                span[itemprop="headline"]= motion.project.title
     - if local_assigns[:show_vote_pie] && motion.votes.present?
       .detail[data-title=t('motions.percentage_in_favor', percentage: motion.votes_pro_percentage, count: motion.total_vote_count)]
         .detail__icon
@@ -24,19 +40,3 @@ section.section--details
           .fa.fa-clock-o
         .detail__text
           time[datetime=motion.created_at ]= awesome_time_ago_in_words motion.created_at
-    - if local_assigns[:show_parent]
-      - unless params[:controller] == 'projects'
-        - if motion.question_id
-          = link_to motion.question
-            .detail[data-title=t('questions.go_to_parent')]
-              .detail__icon
-                span.question-t.fa.fa-level-up
-              .detail__text
-                span[itemprop="headline"]= motion.question.title
-        - elsif motion.project_id
-          = link_to motion.project
-            .detail
-              .detail__icon
-                span.project-t.fa.fa-level-up
-              .detail__text
-                span[itemprop="headline"]= motion.project.title

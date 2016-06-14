@@ -5,17 +5,10 @@ section.section--details
         span[class="fa fa-#{question_icon}"]
       .detail__text
         span= question_type
-    .detail[data-title=t('tooltips.question.motions_count')]
-      .detail__icon.motion-t
-        span[class="fa fa-#{motion_icon}"]
-      .detail__text
-        span= question.motions.count
-/section.section-info
-  .details
-    .details-part.details-part--type.question-bg[data-title=t('questions.tooltips.info')]
-      span[class="fa fa-#{question_icon}"]
-      span.icon-left= question_type
-    .details-part.details-part--motion[data-title=t('tooltips.question.motions_count')]
-      span.fa.fa-lightbulb-o
-      span.icon-left= question.motions.count
+    - if question.motions.count > 1
+      .detail[data-title=t('tooltips.question.motions_count')]
+        .detail__icon.motion-t
+          span[class="fa fa-#{motion_icon}"]
+        .detail__text
+          span= question.motions.count
     = render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}

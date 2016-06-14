@@ -32,6 +32,10 @@
   margin-right: .5em;
 }
 
+.detail__icon--alert {
+  color: $red-alert;
+}
+
 .detailsBar {
   display: flex;
   flex-wrap: wrap;

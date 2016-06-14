@@ -1,22 +1,13 @@
 -if deadline.present? && active_for_user?(:expires_at, current_user)
   -if deadline > DateTime.current
-    .details-part.details-part--filled.details-part--right.details-part--countdown[data-title= t('questions.expires_at.tooltip', date: deadline.to_formatted_s(:short))]
-      span= t('time_remaining', time: distance_of_time_in_words(deadline, DateTime.current))
+    .detail[data-title= t('questions.expires_at.tooltip', date: deadline.to_formatted_s(:short))]
+      .detail__icon.detail__icon--alert
+        span[class="fa fa-exclamation"]
+      .detail__text
+        span= t('time_remaining', time: distance_of_time_in_words(deadline, DateTime.current))
   -else
-    .details-part.details-part--filled.details-part--right.details-part--closed[data-title= t('questions.expired_at.tooltip', date: deadline.to_formatted_s(:short))]
-      span.fa.fa-lock
-      span.icon-left= t('closed')
-
-/-if defined?(decision)
-  -if decision == 'accepted'
-    section.section-info.section-info--right.section-info--accepted
-      span.fa.fa-check
-      span.icon-left= t('accepted')
-  -elsif
-    section.section-info.section-info--right.section-info--rejected
-      span.fa.fa-times
-      span.icon-left= t('rejected')
-  -else
-    section.section-info.section-info--right.section-info--contemplating
-      span.fa.fa-ellipsis
-      span.icon-left= t('contemplating')
+    .detail[data-title= t('questions.expired_at.tooltip', date: deadline.to_formatted_s(:short))]
+      .detail__icon
+        span[class="fa fa-lock"]
+      .detail__text
+        span= t('closed')
