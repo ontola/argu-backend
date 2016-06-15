@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
 
   after_create :update_acesss_token_counts
   before_destroy :expropriate_dependencies
+  before_save :adjust_birthday, if: :birthday_changed?
   before_save { |user| user.email = email.downcase unless email.blank? }
 
   attr_accessor :current_password, :repeat_name
@@ -209,6 +210,10 @@ class User < ActiveRecord::Base
     end
     Photo.expropriate(uploaded_photos)
     edges.update_all user_id: 0
+  end
+
+  def adjust_birthday
+    self.birthday = Date.new(birthday.year, 7, 1) if birthday.present?
   end
 
   def self.koala(auth)

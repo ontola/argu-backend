@@ -37,6 +37,11 @@ class UserTest < ActiveSupport::TestCase
     assert_equal user.greeting, 'testmail'
   end
 
+  test 'should adjust birthday' do
+    subject.update('birthday(2i)' => '1', 'birthday(3i)' => '1', 'birthday(1i)' => '1970')
+    assert_equal Date.new(1970, 7, 1), subject.birthday
+  end
+
   def notification_count(user)
     Argu::Redis.get("user:#{user.id}:notification.count").to_i
   end

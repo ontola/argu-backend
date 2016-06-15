@@ -28,10 +28,10 @@
         =ha.input :id, as: :hidden
         =ha.input :postal_code, required: false
         =ha.input :country_code, as: :react_country, priority_countries: %w(NL BE), required: false
-      =uf.input :birthday, as: :date_picker
+      =uf.input :birthday, label: false, prompt: t('formtastic.labels.birthday'), labels: { year: t('formtastic.labels.birthday') }, start_year: 120.years.ago.year, end_year: 12.years.ago.year, order: [:year], input_html: {class: 'Select-control'}
   =f.inputs name: t('profiles.edit.privacy') do
     p= t('profiles.edit.privacy_notice')
     =f.input :are_votes_public, as: :reverse_boolean
     =f.input :is_public, as: :reverse_boolean
   =f.actions do
-    =f.action :submit, :as => :button, label: current_user.finished_intro? ? t('save') : t('next')
+    =f.action :submit, as: :button, label: current_user.finished_intro? ? t('save') : t('next')
