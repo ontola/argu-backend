@@ -116,8 +116,6 @@ en:
     get_one:
       title: "A forum for your organisation?"
       body: "We deliver discussion environments for municipalities, companies, education facilities and other organisations. Read more about <b>%{governments}</b>. <b><a href='mailto:info@argu.co'>Contact us</a></b> for more information."
-    selector:
-      at_least_error: "Choose at least 2 forums"
     tooltips:
       members_count: "number of members"
     visit: "Visit forum"

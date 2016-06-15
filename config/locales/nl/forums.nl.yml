@@ -115,8 +115,6 @@ nl:
     get_one:
       title: "Een forum voor jouw organisatie?"
       body: "Wij leveren discussie omgevingen voor gemeentes, bedrijven, onderwijsinstellingen en andere organisaties. Lees meer over <b>%{governments}</b>. Neem <b><a href='mailto:info@argu.co'>contact</a></b> op voor meer informatie."
-    selector:
-      at_least_error: "Kies ten minste 2 forums"
     tooltips:
       members_count: "aantal leden"
     visit: "Bezoek forum"

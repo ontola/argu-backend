@@ -110,7 +110,7 @@ class ProfilesController < ApplicationController
   end
 
   def profile_update_path
-    @user.finished_intro? ? profile_path(@user.url) : selector_forums_path
+    profile_path(@user.url)
   end
 
   def profile_edit_view_path(resource)

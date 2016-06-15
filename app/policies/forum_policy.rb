@@ -192,10 +192,6 @@ class ForumPolicy < RestrictivePolicy
     rule is_member?, staff?
   end
 
-  def selector?
-    true
-  end
-
   def discover?
     true
   end

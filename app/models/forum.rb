@@ -24,8 +24,7 @@ class Forum < ActiveRecord::Base
   has_many :questions, inverse_of: :forum, dependent: :destroy
 
   # @private
-  # Used in the forum selector
-  attr_accessor :is_checked, :tab, :active
+  attr_accessor :tab, :active
 
   acts_as_ordered_taggable_on :tags
   paginates_per 30

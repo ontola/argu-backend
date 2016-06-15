@@ -18,6 +18,7 @@ class ForumsController < AuthorizedController
                 .public_forums
                 .includes(:default_cover_photo, :default_profile_photo, :shortname, :access_tokens)
                 .page show_params[:page]
+    authorize Forum, :discover?
     render
   end
 
@@ -80,46 +81,6 @@ class ForumsController < AuthorizedController
              }
     end
     update_service.commit
-  end
-
-  def selector
-    @forums = Forum.top_public_forums
-
-    @forums = @forums.map! { |f| f.is_checked = f.profile_is_member?(current_user.profile); f }
-
-    render layout: 'closed'
-  end
-
-  # POST /forums/memberships
-  def memberships
-    authorize Forum, :selector?
-    @forums = Forum
-              .public_forums
-              .where('id in (?)',
-                     (params[:profile][:membership_ids] || [])
-                       .reject(&:blank?)
-                       .map(&:to_i))
-    @forums.each { |f| authorize f, :join? }
-
-    @memberships = @forums.map { |f| Membership.find_or_initialize_by forum: f, profile: current_user.profile }
-
-    success = false
-    Membership.transaction do
-      if @memberships.length >= 2 && @memberships.all?(&:save!)
-        current_user.update_attribute :finished_intro, true
-        success = true
-      end
-    end
-    if success
-      redirect_to root_path
-    else
-      flash[:error] = t('forums.selector.at_least_error')
-      redirect_to selector_forums_path
-    end
-  end
-
-  def forum_for(url_options)
-    Forum.find_via_shortname_nil(url_options[:id])
   end
 
   protected

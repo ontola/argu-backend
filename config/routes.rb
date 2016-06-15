@@ -260,7 +260,6 @@ Argu::Application.routes.draw do
     get :discover, on: :collection, action: :discover
     get :settings, on: :member
     get :statistics, on: :member
-    get :selector, on: :collection
     post :memberships, on: :collection
     resources :groups, only: [:create]
     resources :memberships, only: [:create, :destroy]
