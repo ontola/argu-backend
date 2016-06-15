@@ -24,8 +24,8 @@ class ForumsController < ApplicationController
     authorize @forum, :list?
     current_context @forum
 
-    projects = policy_scope(@forum.projects)
-    orphan_questions = policy_scope(@forum.questions.where(project_id: nil))
+    projects = policy_scope(@forum.projects.trashed(show_trashed?))
+    orphan_questions = policy_scope(@forum.questions.trashed(show_trashed?).where(project_id: nil))
     orphan_motions = Motion.where(
       forum: @forum,
       question_id: nil,

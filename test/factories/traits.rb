@@ -19,6 +19,14 @@ FactoryGirl.define do
     is_published false
   end
 
+  trait :trashed do
+    is_trashed true
+  end
+
+  trait :trashed_at do
+    trashed_at DateTime.current
+  end
+
   trait :with_edge do
     after :create do |resource|
       parent = !resource.is_a?(Forum) && resource.parent_model

@@ -17,8 +17,12 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   let(:q2) { create(:question, forum: holland, project: published_project) }
   let(:m2) { create(:motion, forum: holland, project: published_project, question: q2) }
   let(:m3) { create(:motion, forum: holland, project: published_project) }
-  def freetown_nested_project_items
-    [m0, m1, m2, m3, q1, q2]
+
+  let(:tq) { create(:motion, :trashed, forum: holland) }
+  let(:tm) { create(:question, :trashed, forum: holland) }
+  let(:tp) { create(:project, :trashed_at, forum: holland) }
+  def holland_nested_project_items
+    [m0, m1, m2, m3, q1, q2, tq, tm, tp]
   end
 
   ####################################
@@ -26,6 +30,8 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   ####################################
 
   test 'guest should get show' do
+    # Trigger creation of items
+    holland_nested_project_items
     get forum_path(holland)
 
     general_show(holland)
@@ -37,7 +43,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'user should get show' do
     # Trigger creation of items
-    freetown_nested_project_items
+    holland_nested_project_items
     sign_in
 
     general_show(holland)
@@ -102,7 +108,7 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
 
   test 'member should get show' do
     # Trigger creation of items
-    freetown_nested_project_items
+    holland_nested_project_items
     sign_in holland_member
 
     general_show(holland)
@@ -231,22 +237,20 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   # @param [Symbol] response The expected visibility in `%w(show list)`
-  def general_show(response = :show, record = freetown)
-    get forum_path(freetown)
+  def general_show(record = freetown)
+    get forum_path(record)
     assert_forum_shown(record)
-    if response == 'show'
-      assert_not_nil assigns(:items)
+    assert_not_nil assigns(:items)
 
-      assert_not assigns(:items).any?(&:is_trashed?), 'Trashed motions are visible'
+    assert_not assigns(:items).any?(&:is_trashed?), 'Trashed items are visible'
 
-      assert_project_children_visible
-      assert_unpublished_content_invisible
-    end
+    assert_project_children_visible
+    assert_unpublished_content_invisible
   end
 
   def assert_project_children_visible
     assert_not assigns(:items).any?(&:is_trashed?),
-               'Trashed motions are visible'
+               'Trashed items are visible'
     assert_not included_in_items?(project),
                'Unpublished projects are visible'
     assert_not included_in_items?(q1),
