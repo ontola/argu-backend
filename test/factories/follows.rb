@@ -4,7 +4,7 @@ FactoryGirl.define do
     follower_type 'User'
 
     before :create do |f|
-      f.followable_type = 'Ltree::Models::Edge'
+      f.followable_type = 'Edge'
     end
 
     %i(question motion argument comment vote group_response).each do |item|

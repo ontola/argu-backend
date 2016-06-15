@@ -85,7 +85,7 @@ class MotionsControllerTest < ActionController::TestCase
   test 'member should post create with question' do
     general_create(
       member,
-      attrs: attributes_for(:motion).merge(question_id: question.id),
+      attrs: attributes_for(:motion, forum: freetown).merge(question_id: question.id),
       changes: create_changes_array(2))
     assert_equal question, assigns(:create_service).resource.reload.question
   end
@@ -178,7 +178,7 @@ class MotionsControllerTest < ActionController::TestCase
     general_create(
       no_create_member,
       forum: no_create_without_question,
-      attrs: attributes_for(:motion).merge(question_id: no_create_question),
+      attrs: attributes_for(:motion, forum: freetown).merge(question_id: no_create_question),
       changes: create_changes_array)
 
     assert assigns(:create_service).resource.persisted?
@@ -208,7 +208,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_differences create_changes_array(2) do
       post :create,
            project_id: project,
-           motion: attributes_for(:motion)
+           motion: attributes_for(:motion, forum: freetown)
     end
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to motion_path(assigns(:create_service).resource,
@@ -221,7 +221,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_differences create_changes_array(2) do
       post :create,
            question_id: project_question,
-           motion: attributes_for(:motion)
+           motion: attributes_for(:motion, forum: freetown)
     end
     assert_not_nil assigns(:create_service).resource
     assert_equal project, assigns(:create_service).resource.reload.project
@@ -242,7 +242,7 @@ class MotionsControllerTest < ActionController::TestCase
     assert_differences create_changes_array do
       post :create,
            forum_id: freetown,
-           motion: attributes_for(:motion)
+           motion: attributes_for(:motion, forum: freetown)
     end
     assert_not_nil assigns(:create_service).resource
     assert_redirected_to motion_path(assigns(:create_service).resource,
@@ -320,7 +320,9 @@ class MotionsControllerTest < ActionController::TestCase
     sign_in manager
     subject.trash
 
+    # Remove the edges of the Motion and it's 6 Arguments
     assert_differences([['Motion.trashed(false).count', 0],
+                        ['Edge.count', -7],
                         ['Motion.trashed(true).count', -1]]) do
       delete :destroy,
              id: subject
@@ -351,7 +353,9 @@ class MotionsControllerTest < ActionController::TestCase
     sign_in owner
     subject.trash
 
+    # Remove the edges of the Motion and it's 6 Arguments
     assert_differences([['Motion.trashed(false).count', 0],
+                        ['Edge.count', -7],
                         ['Motion.trashed(true).count', -1]]) do
       delete :destroy,
              id: subject
@@ -474,6 +478,7 @@ class MotionsControllerTest < ActionController::TestCase
   # @param notifications [Integer] Amount of notifications to be created
   def create_changes_array(notifications = 1, count = 1)
     c = [['Motion.count', count],
+         ['Edge.count', count],
          ['Activity.count', count],
          ['Notification.count', notifications]]
     c << ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count',
@@ -484,7 +489,7 @@ class MotionsControllerTest < ActionController::TestCase
   def general_create(role = nil,
                      should = true,
                      forum: freetown,
-                     attrs: attributes_for(:motion),
+                     attrs: attributes_for(:motion, forum: freetown),
                      changes: create_changes_array)
     sign_in role if role
 

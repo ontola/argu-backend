@@ -312,7 +312,9 @@ class QuestionsControllerTest < ActionController::TestCase
     sign_in manager
     subject.trash
 
+    # Remove the edges of the Question and it's 2 Motions
     assert_differences([['Question.trashed(false).count', 0],
+                        ['Edge.count', -3],
                         ['Question.trashed(true).count', -1]]) do
       delete :destroy,
              id: subject
@@ -366,6 +368,7 @@ class QuestionsControllerTest < ActionController::TestCase
     owner_forum_question.trash
 
     assert_differences([['Question.trashed(false).count', 0],
+                        ['Edge.count', -1],
                         ['Question.trashed(true).count', -1]]) do
       delete :destroy,
              id: owner_forum_question
@@ -486,6 +489,7 @@ class QuestionsControllerTest < ActionController::TestCase
 
   def create_changes_array(notifications = 1)
     [['Question.count', 1],
+     ['Edge.count', 1],
      ['Activity.count', 1],
      ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count', notifications],
      ['Notification.count', notifications]]

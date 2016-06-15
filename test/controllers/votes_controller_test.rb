@@ -65,7 +65,7 @@ class VotesControllerTest < ActionController::TestCase
   test 'should post create' do
     sign_in member
 
-    assert_difference('Vote.count', 1) do
+    assert_differences([['Vote.count', 1], ['Edge.count', 1]]) do
       post :create,
            motion_id: motion,
            for: :pro,
@@ -106,7 +106,7 @@ class VotesControllerTest < ActionController::TestCase
                   for: 'neutral')
     sign_in member
 
-    assert_difference('Vote.count', -1) do
+    assert_differences([['Vote.count', -1], ['Edge.count', -1]]) do
       delete :destroy,
              id: vote.id,
              format: :json

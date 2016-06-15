@@ -41,7 +41,9 @@ class BlogPostsControllerTest < ActionController::TestCase
     assert_response response
   end
 
-  def general_create_draft(response = 302, differences = [['BlogPost.count', 0], ['Activity.loggings.count', 0]])
+  def general_create_draft(response = 302, differences = [['BlogPost.count', 0],
+                                                          ['Edge.count', 0],
+                                                          ['Activity.loggings.count', 0]])
     assert_differences(differences) do
       post :create,
            project_id: project,
@@ -55,7 +57,9 @@ class BlogPostsControllerTest < ActionController::TestCase
     assert_response response
   end
 
-  def general_create_publish(response = 302, differences = [['BlogPost.count', 0], ['Activity.loggings.count', 0]])
+  def general_create_publish(response = 302, differences = [['BlogPost.count', 0],
+                                                            ['Edge.count', 0],
+                                                            ['Activity.loggings.count', 0]])
     assert_differences(differences) do
       post :create,
            project_id: project,
@@ -106,7 +110,7 @@ class BlogPostsControllerTest < ActionController::TestCase
   end
 
   def general_trash(response = 302, difference = 0)
-    assert_differences([['BlogPost.trashed_only.count', difference],['Activity.loggings.count', difference.abs]]) do
+    assert_differences([['BlogPost.trashed_only.count', difference], ['Activity.loggings.count', difference.abs]]) do
       delete :trash,
              id: subject
     end
@@ -115,7 +119,10 @@ class BlogPostsControllerTest < ActionController::TestCase
   end
 
   def general_destroy(response = 302, difference = 0)
-    assert_differences([['BlogPost.count', difference],['Activity.loggings.count', difference.abs]]) do
+    assert_differences(
+      [['BlogPost.count', difference],
+       ['Edge.count', difference],
+       ['Activity.loggings.count', difference.abs]]) do
       delete :destroy,
              id: trashed_subject
     end
@@ -266,6 +273,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     sign_in owner
     general_create_draft 302,
                          [['BlogPost.count', 1],
+                          ['Edge.count', 1],
                           ['BlogPost.published.count', 0]]
   end
 
@@ -273,6 +281,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     sign_in owner
     general_create_publish 302,
                            [['BlogPost.count', 1],
+                            ['Edge.count', 1],
                             ['BlogPost.published.count', 1]]
   end
 
@@ -314,6 +323,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     sign_in manager
     general_create_draft 302,
                          [['BlogPost.count', 1],
+                          ['Edge.count', 1],
                           ['BlogPost.published.count', 0]]
   end
 
@@ -321,6 +331,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     sign_in manager
     general_create_publish 302,
                            [['BlogPost.count', 1],
+                            ['Edge.count', 1],
                             ['BlogPost.published.count', 1]]
   end
 
@@ -363,6 +374,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     sign_in staff
     general_create_draft 302,
                          [['BlogPost.count', 1],
+                          ['Edge.count', 1],
                           ['BlogPost.published.count', 0]]
   end
 
@@ -370,6 +382,7 @@ class BlogPostsControllerTest < ActionController::TestCase
     sign_in staff
     general_create_publish 302,
                            [['BlogPost.count', 1],
+                            ['Edge.count', 1],
                             ['BlogPost.published.count', 1]]
   end
 

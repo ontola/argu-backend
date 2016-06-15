@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/ArthurWD/ltree_hierarchy.git
-  revision: 8fd1e4e8aed21a4e325572cbf9548024a1c899ad
-  branch: polymorphic-parents
-  specs:
-    ltree_hierarchy (0.0.8)
-      activerecord (>= 3.1.0)
-      pg
-
-GIT
   remote: https://github.com/apalmblad/multimap.git
   revision: 96eeacc1606ea7f008ce0a50641c31a2c844fd9e
   ref: 96eeacc1606ea7f008ce0a50641c31a2c844fd9e
@@ -348,6 +339,9 @@ GEM
       request_store
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
+    ltree_hierarchy (0.0.8)
+      activerecord (>= 3.1.0)
+      pg
     mail (2.6.4)
       mime-types (>= 1.16, < 4)
     mailcatcher (0.6.2)
@@ -743,7 +737,7 @@ DEPENDENCIES
   libv8 (~> 3.16.14.13)
   license_finder
   logstasher
-  ltree_hierarchy!
+  ltree_hierarchy
   mailcatcher (~> 0.6.2)
   mailgun_rails (= 0.7.0)
   meta_request

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614145422) do
+ActiveRecord::Schema.define(version: 20160615143124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -180,15 +180,13 @@ ActiveRecord::Schema.define(version: 20160614145422) do
   add_index "documents", ["name"], name: "index_documents_on_name", using: :btree
 
   create_table "edges", force: :cascade do |t|
-    t.integer  "user_id",         null: false
-    t.string   "fragment",        null: false
+    t.integer  "user_id",    null: false
     t.integer  "parent_id"
-    t.string   "parent_fragment"
-    t.integer  "owner_id",        null: false
-    t.string   "owner_type",      null: false
+    t.integer  "owner_id",   null: false
+    t.string   "owner_type", null: false
     t.ltree    "path"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_index "edges", ["owner_type", "owner_id"], name: "index_edges_on_owner_type_and_owner_id", unique: true, using: :btree
@@ -796,6 +794,7 @@ ActiveRecord::Schema.define(version: 20160614145422) do
   add_foreign_key "motions", "users", column: "publisher_id"
   add_foreign_key "notifications", "activities"
   add_foreign_key "notifications", "users", on_delete: :cascade
+  add_foreign_key "pages", "profiles", column: "owner_id"
   add_foreign_key "phases", "forums"
   add_foreign_key "phases", "profiles", column: "creator_id"
   add_foreign_key "phases", "projects"

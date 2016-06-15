@@ -7,7 +7,7 @@ class Question < ActiveRecord::Base
   belongs_to :project, inverse_of: :questions
   belongs_to :publisher, class_name: 'User'
   has_many :votes, as: :voteable, dependent: :destroy
-  has_many :motions
+  has_many :motions, dependent: :nullify
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
   convertible :votes, :taggings, :activities

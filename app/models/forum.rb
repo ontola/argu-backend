@@ -1,5 +1,5 @@
 class Forum < ActiveRecord::Base
-  include ArguBase, Attribution, Shortnameable, Flowable, Photoable, ProfilePhotoable
+  include ArguBase, Attribution, Edgeable, Shortnameable, Flowable, Photoable, ProfilePhotoable
 
   belongs_to :page
   has_many :access_tokens, inverse_of: :item, foreign_key: :item_id, dependent: :destroy
@@ -27,7 +27,6 @@ class Forum < ActiveRecord::Base
   attr_accessor :is_checked, :tab, :active
 
   acts_as_ordered_taggable_on :tags
-  has_ltree_hierarchy polymorphic: true, edge_model: Edge
   paginates_per 30
 
   validates :shortname, presence: true, length: {minimum: 4, maximum: 75}
@@ -105,6 +104,10 @@ class Forum < ActiveRecord::Base
 
   def page=(value)
     super value.is_a?(Page) ? value : Page.find_via_shortname(value)
+  end
+
+  def parent_model
+    page
   end
 
   def profile_is_member?(profile)

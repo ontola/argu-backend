@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  include ArguBase, Shortnameable, Flowable
+  include ArguBase, Edgeable, Shortnameable, Flowable
 
   has_one :profile, dependent: :destroy, as: :profileable, inverse_of: :profileable
   accepts_nested_attributes_for :profile
@@ -42,6 +42,10 @@ class Page < ActiveRecord::Base
 
   def email
     'anonymous'
+  end
+
+  def publisher
+    owner.profileable
   end
 
   def transfer_to!(repeat_url, new_profile)

@@ -166,17 +166,15 @@ class ArgumentsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_differences create_changes_array do
-      assert_difference('Vote.count') do
-        post :create,
-             forum_id: freetown,
-             argument: {
-               motion_id: motion.id,
-               pro: 'pro',
-               title: 'Test argument pro',
-               content: 'Test argument pro-tents',
-               auto_vote: 'true'
-             }
-      end
+      post :create,
+           forum_id: freetown,
+           argument: {
+             motion_id: motion.id,
+             pro: 'pro',
+             title: 'Test argument pro',
+             content: 'Test argument pro-tents',
+             auto_vote: 'true'
+           }
     end
 
     argument = assigns(:create_service).resource
@@ -192,17 +190,15 @@ class ArgumentsControllerTest < ActionController::TestCase
     sign_in member
 
     assert_differences create_changes_array do
-      assert_difference('Vote.count') do
-        post :create,
-             forum_id: freetown,
-             argument: {
-               motion_id: motion.id,
-               pro: 'con',
-               title: 'Test argument con',
-               content: 'Test argument con-tents',
-               auto_vote: 'true'
-             }
-      end
+      post :create,
+           forum_id: freetown,
+           argument: {
+             motion_id: motion.id,
+             pro: 'con',
+             title: 'Test argument con',
+             content: 'Test argument con-tents',
+             auto_vote: 'true'
+           }
     end
 
     argument = assigns(:create_service).resource
@@ -217,18 +213,16 @@ class ArgumentsControllerTest < ActionController::TestCase
   test 'member should post create pro without auto_vote' do
     sign_in member
 
-    assert_differences create_changes_array do
-      assert_no_difference('Vote.count') do
-        post :create,
-             forum_id: freetown,
-             argument: {
-               motion_id: motion.id,
-               pro: 'pro',
-               title: 'Test argument pro',
-               content: 'Test argument pro-tents',
-               auto_vote: 'false'
-             }
-      end
+    assert_differences create_changes_array(false) do
+      post :create,
+           forum_id: freetown,
+           argument: {
+             motion_id: motion.id,
+             pro: 'pro',
+             title: 'Test argument pro',
+             content: 'Test argument pro-tents',
+             auto_vote: 'false'
+           }
     end
   end
 
@@ -284,6 +278,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     argument.trash
 
     assert_differences([['Argument.trashed(false).count', 0],
+                        ['Edge.count', -1],
                         ['Argument.trashed_only.count', -1]]) do
       delete :destroy,
              id: argument
@@ -315,6 +310,7 @@ class ArgumentsControllerTest < ActionController::TestCase
     argument.trash
 
     assert_differences([['Argument.trashed(false).count', 0],
+                        ['Edge.count', -1],
                         ['Argument.trashed_only.count', -1]]) do
       delete :destroy,
              id: argument
@@ -325,10 +321,16 @@ class ArgumentsControllerTest < ActionController::TestCase
 
   private
 
-  def create_changes_array
-    [['Argument.count', 1],
-     ['Activity.count', 1],
-     ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count', 1],
-     ['Notification.count', 2]]
+  def create_changes_array(auto_vote = true)
+    c = [['Argument.count', 1],
+         ['Activity.count', 1],
+         ['MailReceiversCollector.new(User.reactions_emails[:direct_reactions_email]).call.count', 1],
+         ['Notification.count', 2]]
+    if auto_vote
+      c.concat([['Edge.count', 2], ['Vote.count', 1]])
+    else
+      c.concat([['Edge.count', 1], ['Vote.count', 0]])
+    end
+    c
   end
 end

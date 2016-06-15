@@ -27,22 +27,6 @@ FactoryGirl.define do
     trashed_at DateTime.current
   end
 
-  trait :with_edge do
-    after :create do |resource|
-      parent = !resource.is_a?(Forum) && resource.parent_model
-      path = parent && parent.edge.path
-      path ||= resource.identifier
-      create(
-        :edge,
-        owner: resource,
-        user: resource.publisher,
-        fragment: resource.identifier,
-        parent: parent && parent.edge,
-        parent_fragment: parent && parent.identifier,
-        path: path)
-    end
-  end
-
   trait :with_notification do
     after :create do |resource|
       follower = create(:user, :viewed_notifications_hour_ago, :follows_reactions_directly)
