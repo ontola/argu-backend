@@ -14,10 +14,10 @@ section.section--details
                 span.project-t.fa.fa-rocket
               .detail__text
                 span[itemprop="headline"]= truncate(question.project.title, length: 30)
-    - if question.motions.count > 0
-      .detail[data-title=t('motions.tooltips.count', count: question.motions.count)]
+    - if question.motions_count > 0
+      .detail[data-title=t('motions.tooltips.count', count: question.motions_count)]
         .detail__icon.motion-t
           span[class="fa fa-#{motion_icon}"]
         .detail__text
-          span= question.motions.count
+          span= question.motions_count
     = render partial: 'decisions/decision_and_deadline', locals: {deadline: question.expires_at}

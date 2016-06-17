@@ -10,10 +10,17 @@ class Question < ActiveRecord::Base
   has_many :motions, dependent: :nullify
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
 
+  def self.counter_culture_opts
+    {
+      column_name: proc { |model| !model.is_trashed? ? 'questions_count' : nil },
+      column_names: {
+        ['questions.is_trashed = ?', false] => 'questions_count'
+      }
+    }
+  end
   convertible :votes, :taggings, :activities
-  counter_culture :forum
-  counter_culture :project,
-                  column_name: proc { |model| !model.is_trashed? ? 'questions_count' : nil }
+  counter_culture :forum, counter_culture_opts
+  counter_culture :project, counter_culture_opts
   parentable :project, :forum
 
   validates :content, presence: true, length: {minimum: 5, maximum: 5000}

@@ -3,6 +3,12 @@ class Argument < ActiveRecord::Base
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
   belongs_to :publisher, class_name: 'User'
 
+  counter_culture :motion,
+                  column_name: proc { |a| a.is_trashed ? nil : "argument_#{a.pro? ? 'pro' : 'con'}_count" },
+                  column_names: {
+                    ['pro = ? AND arguments.is_trashed = ?', true, false] => 'argument_pro_count',
+                    ['pro = ? AND arguments.is_trashed = ?', false, false] => 'argument_con_count'
+                  }
   paginates_per 10
 
   validate :assert_tenant
@@ -63,11 +69,4 @@ class Argument < ActiveRecord::Base
       c.children.each(&shallow_wipe) if c.children.present?
     end
   end
-
-  counter_culture :motion,
-                  column_name: proc { |a| a.is_trashed ? nil : "argument_#{a.pro? ? 'pro' : 'con'}_count" },
-                  column_names: {
-                    ['pro = ?', true] => 'argument_pro_count',
-                    ['pro = ?', false] => 'argument_con_count'
-                  }
 end

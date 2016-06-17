@@ -2,4 +2,4 @@
   = link_to motion.title, motion_url(motion, host: Rails.application.config.host), target: '_blank', class: 'title'
   p= motion.supped_content.html_safe
   .infobar
-    p.info= link_to t('motions.preview.pro', count: motion.pro_count) + ', ' + t('motions.preview.con', count: motion.con_count), motion_url(motion, host: Rails.application.config.host, anchor: :votes), target: '_blank'
+    p.info= link_to t('motions.preview.pro', count: motion.argument_pro_count) + ', ' + t('motions.preview.con', count: motion.argument_con_count), motion_url(motion, host: Rails.application.config.host, anchor: :votes), target: '_blank'

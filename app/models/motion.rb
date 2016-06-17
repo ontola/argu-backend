@@ -18,10 +18,18 @@ class Motion < ActiveRecord::Base
 
   before_save :cap_title
 
+  def self.counter_culture_opts
+    {
+      column_name: proc { |model| !model.is_trashed? ? 'motions_count' : nil },
+      column_names: {
+        ['motions.is_trashed = ?', false] => 'motions_count'
+      }
+    }
+  end
   convertible :votes, :taggings, :activities
-  counter_culture :forum
-  counter_culture :project,
-                  column_name: proc { |model| !model.is_trashed? ? 'motions_count' : nil }
+  counter_culture :forum, counter_culture_opts
+  counter_culture :project, counter_culture_opts
+  counter_culture :question, counter_culture_opts
   paginates_per 30
   parentable :question, :project, :forum
   resourcify
@@ -77,10 +85,6 @@ class Motion < ActiveRecord::Base
   def cap_title
     title[0] = title[0].upcase
     title
-  end
-
-  def con_count
-    arguments.count(conditions: ['pro = false'])
   end
 
   def creator
@@ -157,10 +161,6 @@ class Motion < ActiveRecord::Base
              date: updated_at)
       .order('updated_at')
       .first
-  end
-
-  def pro_count
-    arguments.count(conditions: ['pro = true'])
   end
 
   def raw_score
