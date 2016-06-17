@@ -1,14 +1,33 @@
-section.section-info
-  .details
-    .details-part.details-part--type.project-bg[data-title=t('projects.tooltips.info')]
-      span.fa.fa-rocket
-      span.icon-left= t('projects.type')
-    .details-part[data-title=t('blog_posts.tooltips.count')]
-      span[class="fa fa-#{blog_post_icon}"]
-      span.icon-left= project.blog_posts_count
-    .details-part.details-part--question[data-title=t('questions.tooltips.count')]
-      span.fa.fa-question
-      span.icon-left= project.questions_count
-    .details-part.details-part--motion[data-title=t('motions.tooltips.count')]
-      span.fa.fa-lightbulb-o
-      span.icon-left= project.motions_count
+section.section--details
+  .detailsBar
+    .detail[data-title=t('projects.tooltips.info')]
+      .detail__icon.detail__icon--type.project-bg
+        span[class="fa fa-#{project_icon}"]
+      .detail__text
+        span= project_type
+    - if project.questions_count > 0
+      .detail[data-title=t('questions.tooltips.count', count: project.questions_count)]
+        .detail__icon.question-t
+          span[class="fa fa-#{question_icon}"]
+        .detail__text
+          span= project.questions_count
+    - if project.motions_count > 0
+      .detail[data-title=t('motions.tooltips.count', count: project.motions_count)]
+        .detail__icon.motion-t
+          span[class="fa fa-#{motion_icon}"]
+        .detail__text
+          span= project.motions_count
+    - if project.blog_posts_count > 0
+      .detail[data-title=t('motions.tooltips.count', count: project.blog_posts_count)]
+        .detail__icon.blog_post-t
+          span[class="fa fa-#{blog_post_icon}"]
+        .detail__text
+          span= project.blog_posts_count
+    - if local_assigns[:show_profile]
+      =render partial: 'profiles/detail_profile', locals: {resource: project}
+    - if local_assigns[:show_date]
+      .detail
+        .detail__icon
+          .fa.fa-clock-o
+        .detail__text
+          time[datetime=project.created_at ]= awesome_time_ago_in_words project.created_at

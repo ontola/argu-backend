@@ -6,11 +6,12 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
   .cover-behind
     .cover-image.bg-img[style="background-image: url('#{project.default_cover_photo&.url(:cover)}'); "]
   .col-1
-    =to_parent
+    div[data-intro= t('intro.projects.back')]= to_parent
     .box[class=status_classes_for(project)]
-      =render partial: 'projects/info_bar', locals: {project: project}
       section
         h1.project-t[itemprop="headline"]= project.display_name
+      =render partial: 'projects/info_bar', locals: {project: project}
+      section
         .markdown[itemprop="text"]
           =markdown_to_html(project.content)
       section.section--footer

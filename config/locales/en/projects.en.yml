@@ -5,6 +5,7 @@ en:
     plural: 'Projects'
     timeline: 'Timeline'
     back_to: 'Go back to project'
+    go_to_parent: "Go to parent project."
     start_date_info: 'The start date is the same as the start date of the first phase.'
     stepups:
       type: 'Manager'

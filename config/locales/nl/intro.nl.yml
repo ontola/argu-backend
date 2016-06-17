@@ -65,6 +65,8 @@ nl:
     comments:
       show: 'Hieronder staan de reacties op dit item.'
       form: 'Als je wilt reageren, kan je dat hier doen.'
+    projects:
+      back: 'Klik hier om terug te gaan naar het <b>forum</b>.'
     start: 'Hoe werkt deze pagina?'
     start_short: 'Help'
     profile:

@@ -1,3 +1,4 @@
+import Blazy from 'blazy';
 
 let loading = false;
 let reachedEnd = false;
@@ -27,6 +28,9 @@ const activityFeed = {
                 if (xhr.status == 200 || xhr.status == 304) {
                     feedDOM.append(d);
                     _this.text('activities.ui.load_more');
+                    var bLazy = new Blazy({
+                        offset: 100 // Loads images 100px before they're visible
+                    });
                 } else if (xhr.status == 204) {
                     _this.text('activities.ui.no_more_artivities');
                     reachedEnd = true;

@@ -5,6 +5,7 @@ nl:
     plural: 'Projecten'
     timeline: 'Tijdlijn'
     back_to: 'Ga terug naar project'
+    go_to_parent: "Ga naar het bovenliggende project."
     start_date_info: 'De startdatum van het project valt samen met de startdatum van de eerste fase'
     stepups:
       type: 'Beheerder'

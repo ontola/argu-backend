@@ -1,5 +1,5 @@
 .box.box--extra-margin.motion[class=status_classes_for(model)]
-  -if model.default_cover_photo.present?
+  - if model.default_cover_photo.present?
     =contextual_link_to motion_path(model)
       =render partial: 'application/box_image', locals: {url: model.default_cover_photo.url(:box), type: 'motion'}
   section[itemscope="itemscope" itemtype="http://www.schema.org/Answer"]

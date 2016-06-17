@@ -18,11 +18,14 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   let(:m2) { create(:motion, forum: holland, project: published_project, question: q2) }
   let(:m3) { create(:motion, forum: holland, project: published_project) }
 
+  let(:q3) { create(:question, forum: holland) }
+  let(:m4) { create(:motion, forum: holland, question: q3) }
+
   let(:tq) { create(:motion, :trashed, forum: holland) }
   let(:tm) { create(:question, :trashed, forum: holland) }
   let(:tp) { create(:project, :trashed_at, forum: holland) }
   def holland_nested_project_items
-    [m0, m1, m2, m3, q1, q2, tq, tm, tp]
+    [m0, m1, m2, m3, m4, q1, q2, q3, tq, tm, tp]
   end
 
   ####################################
@@ -249,6 +252,21 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
   end
 
   def assert_project_children_visible
+    assert included_in_items?(published_project),
+           'Published projects are not visible'
+    assert included_in_items?(q3),
+           'Questions are not visible'
+    assert included_in_items?(m4),
+           'Question motions are not visible'
+    assert included_in_items?(m3),
+           'Project motions are not visible'
+    assert included_in_items?(q2),
+           'Project questions are not visible'
+    assert included_in_items?(m3),
+           'Project Question motions are not visible'
+  end
+
+  def assert_unpublished_content_invisible
     assert_not assigns(:items).any?(&:is_trashed?),
                'Trashed items are visible'
     assert_not included_in_items?(project),
@@ -259,14 +277,5 @@ class ForumsControllerTest < ActionDispatch::IntegrationTest
                "Unpublished projects' nested motions are visible"
     assert_not included_in_items?(m1),
                "Unpublished projects' motions are visible"
-  end
-
-  def assert_unpublished_content_invisible
-    assert included_in_items?(published_project),
-           'Published projects are not visible'
-    assert_have_tag response.body, 'h3.question-t .list-item span', q2.title,
-                    "Published projects' questions are not visible"
-    assert_have_tag response.body, "##{published_project.identifier} h3.motion-t .list-item span", m3.title,
-                    "Published projects' motions are not visible"
   end
 end

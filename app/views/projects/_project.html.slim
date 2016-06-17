@@ -1,15 +1,10 @@
 .box.box-grid.project[id=project.identifier class="#{'trashed' if project.is_trashed?}" data-created-at=project.created_at  data-updated-at=project.updated_at itemscope="itemscope" itemtype="http://schema.org/CreativeWork"]
-  -if project.cover_photo.present?
+  -if project.default_cover_photo&.url.present?
     =contextual_link_to project_path(project) do
-      noscript
-        .box-image--container
-          .box-image[style="background-image: url('#{project.cover_photo.url(:box)}'); "]
-      .box-image--container.b-lazy-hide-container
-        .box-image.b-lazy[data-src=project.cover_photo.url(:box)]
-  =contextual_link_to project_path(project) do
-    =render partial: 'projects/info_bar', locals: {project: project}
+      =render partial: 'application/box_image', locals: {url: project.default_cover_photo.url(:box), type: 'project'}
+  section
     =contextual_link_to project_path(project) do
-      section
-        h2.project-t[itemprop="headline"]= project.title
+      h2.project-t[itemprop="headline"]= project.title
+  =render partial: 'projects/info_bar', locals: {project: project, show_parent: true}
   -unless project.is_published?
     =render partial: 'application/publish', locals: {resource: project}

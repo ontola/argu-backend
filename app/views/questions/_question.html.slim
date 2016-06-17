@@ -5,11 +5,4 @@
   section
     =contextual_link_to question_path(question) do
       h2.question-t[itemprop="headline"]= question.title
-  = render partial: 'questions/info_bar', locals: {question: question}
-  -if params[:controller] != 'projects' && question.project_id
-    section
-      span
-        =t('posted_in')
-        span.project-t.fa.fa-rocket
-        =link_to question.project
-          span.project-t[itemprop="headline"]= question.project.title
+  = render partial: 'questions/info_bar', locals: {question: question, show_parent: true}

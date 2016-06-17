@@ -5,7 +5,16 @@ section.section--details
         span[class="fa fa-#{question_icon}"]
       .detail__text
         span= question_type
-    - if question.motions.count > 1
+    - if local_assigns[:show_parent]
+      - unless params[:controller] == 'projects'
+        - if question.project_id
+          =link_to question.project
+            .detail[data-title=t('projects.go_to_parent')]
+              .detail__icon
+                span.project-t.fa.fa-rocket
+              .detail__text
+                span[itemprop="headline"]= truncate(question.project.title, length: 30)
+    - if question.motions.count > 0
       .detail[data-title=t('motions.tooltips.count', count: question.motions.count)]
         .detail__icon.motion-t
           span[class="fa fa-#{motion_icon}"]

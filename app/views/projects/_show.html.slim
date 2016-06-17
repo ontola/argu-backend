@@ -1,9 +1,13 @@
 .box.box--extra-margin[class=status_classes_for(model)]
-  =contextual_link_to project_path(model)
-    =render partial: 'projects/info_bar', locals: {project: model}
+  - if model.default_cover_photo.present?
+    =contextual_link_to motion_path(model)
+      =render partial: 'application/box_image', locals: {url: model.default_cover_photo.url(:box), type: 'project'}
   section[itemscope="itemscope" itemtype="http://www.schema.org/Thing"]
     =contextual_link_to project_path(model)
       h3.blog-post-t[itemprop="headline"]= model.title
+  =contextual_link_to project_path(model)
+    =render partial: 'projects/info_bar', locals: {project: model}
+  section
     =render partial: 'application/markdown_collapsible', locals: {content: model.content, identifier: model.identifier, character_length: 350}
   =contextual_link_to project_path(model), class: 'btn-subtle sticky--bottom-right'
     span.icon-right= t('read_more')

@@ -65,6 +65,8 @@ en:
     comments:
       show: 'Below are replies to this item.'
       form: "If you'd like to reply, you can do so here."
+    projects:
+      back: 'Click here to return to the <b>forum</b>.'
     start: 'How does this page work?'
     start_short: 'Help'
     profile:

@@ -108,7 +108,7 @@ class User < ActiveRecord::Base
 
   # The Follow for the followable by this User
   # @param [Edge] followable The Edge to find the Follow for
-  # @return [Follow]
+  # @return [Follow, nil]
   def follow_for(followable)
     Follow.unblocked.for_follower(self).for_followable(followable)&.first
   end

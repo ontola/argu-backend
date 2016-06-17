@@ -163,6 +163,20 @@ module AlternativeNamesHelper
   end
 
   #########################
+  #        Project        #
+  #########################
+
+  # Icon substring for project
+  def project_icon(naming_object = nil)
+    'rocket'
+  end
+
+  # Singular translation for {Project}
+  def project_type(naming_object = nil)
+    I18n.t('projects.type')
+  end
+
+  #########################
   #         Other         #
   #########################
 

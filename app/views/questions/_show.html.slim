@@ -2,10 +2,11 @@
   - if model.default_cover_photo.present?
     =contextual_link_to question_path(model) do
       =render partial: 'application/box_image', locals: {url: model.default_cover_photo.url(:box), type: 'question'}
-  =render partial: 'questions/info_bar', locals: {question: model}
   section
     =contextual_link_to question_path(model) do
       h3.question-t[itemprop="headline"]= model.title
+  =render partial: 'questions/info_bar', locals: {question: model}
+  section
     .markdown[itemprop="text"]
       =markdown_to_html(model.content)
     - if model.motions.present?
