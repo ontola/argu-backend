@@ -12,6 +12,13 @@ class MotionsControllerTest < ActionController::TestCase
             creator: create(:profile_direct_email)
            })
   end
+  let(:closed_question) do
+    create(:question,
+           :with_follower,
+           expires_at: 1.day.ago,
+           parent: freetown.edge,
+           creator: create(:profile_direct_email))
+  end
   let(:subject) do
     create(:motion,
            :with_arguments,
@@ -77,6 +84,14 @@ class MotionsControllerTest < ActionController::TestCase
       attrs: attributes_for(:motion, parent: question.edge),
       changes: create_changes_array(2))
     assert_equal question, assigns(:create_service).resource.reload.question
+  end
+
+  test 'member should not post create with closed question' do
+    general_create(
+      member,
+      false,
+      attrs: attributes_for(:motion, parent: closed_question.edge),
+      changes: [])
   end
 
   test 'member should keep data on erroneous post create' do

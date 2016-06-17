@@ -4,7 +4,7 @@ class EdgeableCreateService < CreateService
   # @note Call super when overriding.
   # @param [Edge] parent The parent edge or its id
   def initialize(parent, attributes: {}, options: {})
-    @edge = find_edge(parent, options)
+    @edge = initialize_edge(parent, options)
     super
     walk_parents
   end
@@ -15,7 +15,9 @@ class EdgeableCreateService < CreateService
 
   protected
 
-  def find_edge(parent, options)
+  # @param [Edge, Integer] parent The instance or id of the parent edge of the new child
+  # @option options [User] publisher The publisher of the new child
+  def initialize_edge(parent, options)
     parent_edge = parent.is_a?(Edge) ? parent : Edge.find(parent)
     @edge = parent_edge.children.new(
       user: options[:publisher],

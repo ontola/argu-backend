@@ -5,12 +5,15 @@ class CreateVote < PublishedCreateService
   def initialize(parent, attributes: {}, options: {})
     super
     resource.voteable = parent.owner
-    resource.publisher.follow(@edge, nil, :news)
   end
 
   private
 
-  def find_edge(parent, options)
+  def after_save
+    resource.publisher.follow(@edge, nil, :news)
+  end
+
+  def initialize_edge(parent, options)
     existing =
       parent
         .children.where(owner_type: 'Vote')

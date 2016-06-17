@@ -36,7 +36,7 @@
                 header_text: 'test',
                 collection_model: Motion,
                 partial: 'question_answers/show',
-                show_new_buttons: policy_with_tenant!(authenticated_context, Motion).new?,
+                show_new_buttons: policy_with_tenant!(authenticated_context, question.motions.build).new?,
                 buttons_url: polymorphic_url([:new, question, :motion]),
                 buttons_text: t('add_type', type: motion_type(question)),
                 page_param: :page,

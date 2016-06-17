@@ -50,6 +50,10 @@ class Question < ActiveRecord::Base
     content
   end
 
+  def expired?
+    expires_at.present? && expires_at < DateTime.current
+  end
+
   def move_to(forum, include_motions = false)
     Question.transaction do
       self.forum = forum.lock!

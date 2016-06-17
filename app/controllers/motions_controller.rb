@@ -226,7 +226,9 @@ class MotionsController < AuthorizedController
 
   def permit_params
     return {} unless params[:motion].present?
-    params.require(:motion).permit(*policy(@motion || Motion).permitted_attributes)
+    params
+      .require(:motion)
+      .permit(*policy(@motion || resource_by_id || new_resource_from_params || Motion).permitted_attributes)
   end
 
   def show_params
