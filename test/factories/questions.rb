@@ -1,18 +1,19 @@
 FactoryGirl.define do
   factory :question do
     association :forum, strategy: :create
-    association :creator, factory: :profile
     association :publisher, factory: [:user, :follows_reactions_directly]
-
+    creator do
+      if passed_in?(:creator)
+        creator
+      else
+        publisher.present? ? publisher.profile : create(:profile)
+      end
+    end
     sequence(:title) { |n| "fg question title #{n}end" }
     sequence(:content) { |n| "fg question content #{n}end" }
 
     after :create do |question|
-      question.create_activity action: :create,
-                               recipient: question.parent_model,
-                               owner: question.creator,
-                               forum: question.forum
-
+      Argu::TestHelpers::FactoryGirlHelpers.create_activity_for(question)
       question.publisher.follow(question.edge)
     end
 

@@ -12,7 +12,7 @@ require 'sidekiq/testing'
 require 'minitest/pride'
 require 'minitest/reporters'
 require 'webmock/minitest'
-require 'test_mocks'
+require 'argu/test_helpers/test_mocks'
 require 'minitest/reporters'
 Minitest::Reporters.use!
 
@@ -62,11 +62,11 @@ end
 
 class ActiveSupport::TestCase
   include TestHelper
-  include TestHelperMethods
-  include TestMocks
+  include FactoryGirl::Syntax::Methods
+  include Argu::TestHelpers::TestHelperMethods
+  include Argu::TestHelpers::TestMocks
   ActiveRecord::Migration.check_pending!
 
-  include FactoryGirl::Syntax::Methods
   # FactoryGirl.lint
   Setting.set('user_cap', '-1')
   # Add more helper methods to be used by all tests here...
@@ -75,8 +75,8 @@ end
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
-  include TestMocks
-  include TestHelperMethods
+  include Argu::TestHelpers::TestHelperMethods
+  include Argu::TestHelpers::TestMocks
 
   def setup_allowed_pages
     Capybara::Webkit.configure do |config|

@@ -7,14 +7,14 @@ class Edge < ActiveRecord::Base
   has_many :children,
            class_name: 'Edge',
            inverse_of: :parent,
-           foreign_key: :parent_id,
-           dependent: :destroy
+           foreign_key: :parent_id
   has_many :follows,
            class_name: 'Follow',
            inverse_of: :followable,
            foreign_key: :followable_id,
            dependent: :destroy
 
+  before_destroy :update_children
   before_save :set_user_id
 
   acts_as_followable
@@ -24,15 +24,18 @@ class Edge < ActiveRecord::Base
   # The user that has created the edge's owner.
   # attribute :user, User
   # The model the edge belongs to
-  # attribute :owner, :
+  # attribute :owner_id, :integer
+  # attribute :owner_type, :string
   # Refers to the parent edge
   # attribute :parent_id, :integer
-  # The identifier of the owner
-  # attribute :fragment, :string
-  # The identifier of the parent owner
-  # attribute :parent_fragment, :string
 
   def set_user_id
     self.user_id = owner.publisher.id
+  end
+
+  def update_children
+    children.each do |child|
+      child.update(parent: parent)
+    end
   end
 end

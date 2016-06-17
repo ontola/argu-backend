@@ -8,11 +8,7 @@ FactoryGirl.define do
     content 'content'
 
     after :create do |project|
-      project.create_activity action: :create,
-                              recipient: project.parent_model,
-                              owner: project.creator,
-                              forum: project.forum
-
+      Argu::TestHelpers::FactoryGirlHelpers.create_activity_for(project)
       project.publisher.follow(project.edge)
     end
 

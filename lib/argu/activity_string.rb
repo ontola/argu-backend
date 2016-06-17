@@ -38,26 +38,19 @@ module Argu
 
     # @return [String] Display name of activity.owner, as link or bold text
     def owner_string
-      if @embedded_link
-        "[#{@activity.owner.display_name}](#{dual_profile_url(@activity.owner)})"
-      else
-        @activity.owner.display_name.to_s
-      end
+      string = @activity.owner_id > 0 ? @activity.owner.display_name : @activity.audit_data['user_name']
+      @embedded_link && @activity.owner_id > 0 ? "[#{string}](#{dual_profile_url(@activity.owner)})" : string.to_s
     end
 
     # @return [String, nil] Display name of activity.trackable.get_parent, as link or bold text
     def parent_string
-      return nil unless @activity.trackable.try(:get_parent)
-      if @embedded_link
-        "[#{@activity.trackable.get_parent.model.display_name}](#{url_for(@activity.trackable.get_parent.model)})"
-      else
-        @activity.trackable.get_parent.model.display_name.to_s
-      end
+      string = @activity.recipient.present? ? @activity.recipient.display_name : @activity.audit_data['recipient_name']
+      @embedded_link && @activity.recipient.present? ? "[#{string}](#{url_for(@activity.recipient)})" : string.to_s
     end
 
     # @return [String, nil] Translation of pro, neutral or con
     def side_string
-      return nil unless @activity.trackable.is_pro_con?
+      return nil unless @activity.trackable.present? && @activity.trackable.is_pro_con?
       I18n.t("activities.#{@activity.trackable_type.tableize}.#{@activity.trackable.key}",
              default: I18n.t(@activity.trackable.key))
     end
@@ -67,10 +60,12 @@ module Argu
       string =
         if @activity.object == 'comment'
           I18n.t("#{@activity.trackable_type.tableize}.type").downcase
-        else
+        elsif @activity.trackable.present?
           @activity.trackable.try(:display_name)
+        else
+          @activity.audit_data['trackable_name']
         end
-      @embedded_link ? "[#{string}](#{url_for(@activity.trackable)})" : string.to_s
+      @embedded_link && @activity.trackable.present? ? "[#{string}](#{url_for(@activity.trackable)})" : string.to_s
     end
 
     # @return [String] Type name of activity.trackable as bold text

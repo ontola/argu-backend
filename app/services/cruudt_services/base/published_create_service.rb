@@ -1,8 +1,8 @@
 class PublishedCreateService < CreateService
   # @note Call super when overriding.
   def initialize(resource, attributes = {}, options = {})
-    attributes[:publisher] = options[:publisher]
-    attributes[:creator] = options[:creator]
+    attributes[:publisher] = options.fetch(:publisher)
+    attributes[:creator] = options.fetch(:creator)
     super
   end
 

@@ -311,15 +311,16 @@ class QuestionsControllerTest < ActionController::TestCase
   test 'manager should delete destroy' do
     sign_in manager
     subject.trash
+    assert_equal Motion.last.parent_model, subject
 
-    # Remove the edges of the Question and it's 2 Motions
     assert_differences([['Question.trashed(false).count', 0],
-                        ['Edge.count', -3],
+                        ['Edge.count', -1],
                         ['Question.trashed(true).count', -1]]) do
       delete :destroy,
              id: subject
     end
 
+    assert_equal Motion.last.parent_model, freetown
     assert_redirected_to freetown
   end
 

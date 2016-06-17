@@ -13,7 +13,7 @@ require 'capybara/poltergeist'
 require 'testingbot'
 require 'testingbot/capybara'
 require 'webmock/rspec'
-require 'test_mocks'
+require 'argu/test_helpers/test_mocks'
 
 # Checks for pending migrations before tests are run.
 # If you are not using ActiveRecord, you can remove this line.
@@ -45,9 +45,9 @@ end
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
   config.include Capybara::DSL
-  config.include TestHelperMethods
-  config.include RSpecHelpers
-  config.include TestMocks
+  config.include Argu::TestHelpers::TestHelperMethods
+  config.include Argu::TestHelpers::RspecHelpers
+  config.include Argu::TestHelpers::TestMocks
   config.include BrowserWrapper
 
   Sidekiq::Testing.fake!

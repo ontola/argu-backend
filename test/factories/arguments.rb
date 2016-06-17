@@ -1,8 +1,14 @@
 FactoryGirl.define do
   factory :argument do
     forum { passed_in?(:forum) ? forum : create(:forum) }
-    creator { passed_in?(:creator) ? creator : create(:profile) }
     publisher { passed_in?(:publisher) ? publisher : create(:user) }
+    creator do
+      if passed_in?(:creator)
+        creator
+      else
+        publisher.present? ? publisher.profile : create(:profile)
+      end
+    end
     motion { passed_in?(:motion) ? motion : create(:motion, forum: forum) }
     pro true
     sequence(:title) { |i| "fg argument title #{i}end" }
@@ -13,10 +19,7 @@ FactoryGirl.define do
     end
 
     after :create do |argument|
-      argument.create_activity action: :create,
-                               recipient: argument.parent_model,
-                               owner: argument.creator,
-                               forum: argument.forum
+      Argu::TestHelpers::FactoryGirlHelpers.create_activity_for(argument)
       argument.publisher.follow(argument.edge)
     end
   end

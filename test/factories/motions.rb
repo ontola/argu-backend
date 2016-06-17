@@ -1,19 +1,21 @@
 FactoryGirl.define do
   factory :motion do
     forum { passed_in?(:forum) ? forum : create(:forum) }
-    creator { passed_in?(:creator) ? creator : create(:profile) }
     publisher { passed_in?(:publisher) ? publisher : create(:user) }
-    #association :question, factory: :question
+    creator do
+      if passed_in?(:creator)
+        creator
+      else
+        publisher.present? ? publisher.profile : create(:profile)
+      end
+    end
 
     sequence(:title) { |n| "fg motion title #{n}end" }
     sequence(:content) { |i| "fg motion content #{i}end" }
     is_trashed false
 
     after :create do |motion|
-      motion.create_activity action: :create,
-                             recipient: motion.parent_model,
-                             owner: motion.creator,
-                             forum: motion.forum
+      Argu::TestHelpers::FactoryGirlHelpers.create_activity_for(motion)
       motion.publisher.follow(motion.edge)
     end
 
