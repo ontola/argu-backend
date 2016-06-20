@@ -9,7 +9,7 @@ footer
     li
       h4.footer-heading.footer-heading--language= t('language_language')
     .footer-language-dropdown
-      =react_component 'HyperDropdown', language_dropdown_items, {prerender: true}
+      =react_component_store 'HyperDropdown', props: language_dropdown_items
   ul.footer-list
     li
       h3.footer-heading= t('about.info')

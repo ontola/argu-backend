@@ -2,6 +2,6 @@
   - @membership.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('groups.member.new') do
-    =react_component 'NewMembership', things: 'users,pages'
+    =react_component_store 'NewMembership', props: {things: 'users,pages'}
   =f.actions do
     =f.action :submit, :as => :button

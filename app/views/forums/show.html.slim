@@ -15,7 +15,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
       .cover-switcher-wrapper
         -if @forum.default_profile_photo.url.present?
           .profile-picture[style="background-image: url('#{@forum.default_profile_photo.url(:avatar)}')"]
-        .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component 'HyperDropdown', forum_title_dropdown_items(@forum), {prerender: true}
+        .cover-switcher[data-intro=t('intro.forums.switcher') data-step=2]= react_component_store 'HyperDropdown', props: forum_title_dropdown_items(@forum)
         -if @forum.bio.present?
           h2.cover-hero-text= @forum.bio
         -if @forum.bio_long.present?
@@ -36,7 +36,7 @@ div[itemscope="itemscope" itemtype="http://schema.org/Thing"]
               span.icon-left= t('forums.settings.title')
           - if current_user.present?
             li.float-right
-              ul= react_component 'HyperDropdown', follow_dropdown_items(@forum, follow_types: [:reactions, :never], trigger_class: 'btn--transparant'), {prerender: true}
+              ul= react_component_store 'HyperDropdown', props: follow_dropdown_items(@forum, follow_types: [:reactions, :never], trigger_class: 'btn--transparant')
   - if policy(@forum).show?
     .btns-center-container
       -if can_start_discussion?

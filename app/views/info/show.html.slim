@@ -89,7 +89,7 @@
                       li= link_to social['url'] do
                         span.fa[class=('fa-' + social['icon'])]
                 - if section['expand'].present?
-                  =react_component 'Expander', {label: {opened: t('collapse'), closed: t('read_more')}, className: 'block-link', expanderTarget: section['expand']['id'], url: section['expand']['id']}, {prerender: true}
+                  =react_component_store 'Expander', props: {label: {opened: t('collapse'), closed: t('read_more')}, className: 'block-link', expanderTarget: section['expand']['id'], url: section['expand']['id']}
           - if section['expand'].present?
             .blocks.expander-content[id=section['expand']['id'] opened="closed"]
               .block.block--hidden.block--full.block--big-text

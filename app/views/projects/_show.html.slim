@@ -1,4 +1,4 @@
-.box.box--extra-margin[class=status_classes_for(model)]
+.box.box--extra-margin.project[class=status_classes_for(model)]
   - if model.default_cover_photo.present?
     =contextual_link_to motion_path(model)
       =render partial: 'application/box_image', locals: {url: model.default_cover_photo.url(:box), type: 'project'}

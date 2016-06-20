@@ -9,6 +9,6 @@
       =crud_menu_item(blog_post)
       - if blog_post.forum.visibility
         li.share-menu
-          ul= react_component 'ShareDropdown', share_items(blog_post), {prerender: true}
+          ul= react_component_store 'ShareDropdown', props: share_items(blog_post)
 - unless blog_post.is_published?
   = render partial: 'application/publish', locals: {resource: blog_post}

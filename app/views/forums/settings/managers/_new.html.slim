@@ -3,6 +3,6 @@
   - @membership.errors.full_messages.each do |message|
     =message
   =f.inputs name: t('newe_type', type: t('forums.settings.manager')) do
-    =react_component 'NewMembership', things: 'users', forum: @forum.url
+    =react_component_store 'NewMembership', props: {things: 'users', forum: @forum.url}
   =f.actions do
     =f.action :submit, as: :button, label: :save

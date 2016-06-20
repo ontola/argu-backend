@@ -25,7 +25,7 @@ section.section--details
       .detail[data-title=t('motions.percentage_in_favor', percentage: motion.votes_pro_percentage, count: motion.total_vote_count)]
         .detail__icon
           .vote-pie-container
-            =react_component 'VotePie', motion_vote_counts(motion), {prerender: true}
+            =react_component_store 'VotePie', props: motion_vote_counts(motion)
         .detail__text
           .span
             =motion.total_vote_count
@@ -33,7 +33,7 @@ section.section--details
       = render partial: 'profiles/detail_profile', locals: {resource: motion}
     - if local_assigns[:show_vote_results]
       .details-parts
-        =react_component 'VoteStats', motion_vote_counts(motion), {prerender: true}
+        =react_component_store 'VoteStats', props: motion_vote_counts(motion)
     - if local_assigns[:show_date]
       .detail
         .detail__icon

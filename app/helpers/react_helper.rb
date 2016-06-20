@@ -41,6 +41,12 @@ module ReactHelper
     initial_js_state[key] = value
   end
 
+  def react_component_store(name, **opts)
+    props = opts.delete(:props)
+    options = opts.presence || {prerender: true}
+    react_component(name, props, options)
+  end
+
   def render_params_from_props(props)
     return props, prerender_options
   end

@@ -21,11 +21,11 @@
       ul.btns-list--subtle.sticky--bottom-right.btns-horizontal.btns-list--grey-background
         - if current_user.present?
           li
-            ul=react_component 'HyperDropdown', follow_dropdown_items(question), {prerender: true}
+            ul=react_component_store 'HyperDropdown', props: follow_dropdown_items(question)
         =crud_menu_item(question, question_items(question))
         - if question.forum.visibility
           li
-            ul= react_component 'ShareDropdown', share_items(question), {prerender: true}
+            ul= react_component_store 'ShareDropdown', props: share_items(question)
 - if question.blog_posts.present?
   .col-1
     = render partial: 'happenings/timeline', locals: {resource: question, show_unpublished: policy(question).update?, current_happening: question.latest_blog_post(policy(question).update?)}
