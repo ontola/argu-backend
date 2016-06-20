@@ -57,6 +57,14 @@ class MembershipsController < AuthorizedController
     end
   end
 
+  def destroy_service
+    Struct.new('DestroyMembership', :resource).new
+  end
+
+  def create_service
+    Struct.new('CreateMembership', :resource).new
+  end
+
   def permit_params
     params.permit :forum_id, :role, :r
   end
