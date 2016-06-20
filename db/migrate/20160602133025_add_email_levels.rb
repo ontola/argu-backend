@@ -1,13 +1,14 @@
 class AddEmailLevels < ActiveRecord::Migration
   def up
     add_column :follows, :follow_type, :integer, default: 30, null: false
-    add_column :notifications, :notification_type, :integer, null: false
+    add_column :notifications, :notification_type, :integer
     add_column :users, :decisions_email, :integer, default: 3, null: false
     add_column :users, :news_email, :integer, default: 3, null: false
     add_column :users, :reactions_email, :integer, default: 3, null: false
 
     User.update_all('reactions_email=follows_email')
     Notification.update_all(notification_type: Notification.notification_types[:reaction])
+    change_column_null :notifications, :notification_type, false
 
     Follow.find_each do |follow|
       follow
@@ -27,7 +28,6 @@ class AddEmailLevels < ActiveRecord::Migration
               .publisher
               .follow(ancestor, :news)
           end
-        end
       end
     end
   end
