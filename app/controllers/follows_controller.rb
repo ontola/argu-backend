@@ -43,7 +43,8 @@ class FollowsController < ApplicationController
   end
 
   def set_thing
-    @thing = Edge.find_by!(fragment: permit_params[:gid]).owner
+    permitted_classes = %w(Forum Question Motion Argument Comment Project BlogPost)
+    @thing = Edge.where(owner_type: permitted_classes).find(permit_params[:gid]).owner
     @forum = @thing.try :forum
   end
 

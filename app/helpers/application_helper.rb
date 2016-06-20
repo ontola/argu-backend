@@ -74,7 +74,7 @@ module ApplicationHelper
     follow_type = current_user.following_type(resource.edge)
     opts[:follow_types].each do |type|
       items << link_item(t("notifications.receive.#{type}"),
-                         follows_path(gid: resource.identifier, follow_type: type),
+                         follows_path(gid: resource.edge.id, follow_type: type),
                          fa: follow_type == type.to_s ? 'circle' : 'circle-o',
                          data: {
                            method: type == :never ? 'DELETE' : 'POST'
