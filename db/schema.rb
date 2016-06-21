@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160620112912) do
+ActiveRecord::Schema.define(version: 20160621114640) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -480,6 +480,7 @@ ActiveRecord::Schema.define(version: 20160620112912) do
   end
 
   add_index "placements", ["forum_id"], name: "index_placements_on_forum_id", using: :btree
+  add_index "placements", ["placeable_id"], name: "index_placements_on_placeable_id", unique: true, where: "(((title)::text = 'home'::text) AND ((placeable_type)::text = 'User'::text))", using: :btree
 
   create_table "places", id: :bigserial, force: :cascade do |t|
     t.string  "licence"

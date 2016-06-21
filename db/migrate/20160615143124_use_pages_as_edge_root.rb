@@ -62,9 +62,11 @@ class UsePagesAsEdgeRoot < ActiveRecord::Migration
     edge = Follow.where(followable_type: 'Edge').pluck(:followable_id, :follower_id)
     ltree = Follow.where(followable_type: 'Ltree::Models::Edge').pluck(:followable_id, :follower_id)
     intersection = ltree & edge
+    return unless intersection.present?
+    prepared_intersections = intersection.map { |t| "(#{t[0]}, #{t[1]})" }.join(', ')
     Follow
       .where(followable_type: 'Ltree::Models::Edge')
-      .where("(followable_id, follower_id) IN (#{   intersection.map { |t| "(#{t[0]}, #{t[1]})" }.join(', ')  })")
+      .where("(followable_id, follower_id) IN (#{prepared_intersections})")
       .destroy_all
   end
 end
