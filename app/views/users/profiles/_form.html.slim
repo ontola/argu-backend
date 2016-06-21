@@ -24,9 +24,10 @@
   =f.inputs name: t('profiles.edit.personal_information') do
     p=t('profiles.edit.personal_information_notice')
     =f.semantic_fields_for :profileable do |uf|
-      =uf.semantic_fields_for :home_placement do |ha|
-        =ha.input :postal_code
-        =ha.input :country_code, as: :react_country, priority_countries: %w(NL BE)
+      =uf.semantic_fields_for :home_placement_attributes, uf.object.home_placement do |ha|
+        =ha.input :id, as: :hidden
+        =ha.input :postal_code, required: false
+        =ha.input :country_code, as: :react_country, priority_countries: %w(NL BE), required: false
       =uf.input :birthday, as: :date_picker
   =f.inputs name: t('profiles.edit.privacy') do
     p= t('profiles.edit.privacy_notice')

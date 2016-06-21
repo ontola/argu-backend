@@ -38,7 +38,7 @@ class ReactInput < Formtastic::Inputs::SelectInput
   end
 
   def react_value
-    @object.send(@method)
+    @object.send(@method) if @object.present?
   end
 
   def render_react_component(component, props = {}, opts = {})

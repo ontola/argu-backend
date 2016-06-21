@@ -21,7 +21,8 @@ class User < ActiveRecord::Base
   has_many :projects, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :questions, inverse_of: :publisher, foreign_key: 'publisher_id'
   has_many :uploaded_photos, class_name: 'Photo', inverse_of: :publisher, foreign_key: 'publisher_id'
-  accepts_nested_attributes_for :profile, :home_placement
+  accepts_nested_attributes_for :profile
+  accepts_nested_attributes_for :home_placement, reject_if: :all_blank
 
   # Include default devise modules. Others available are:
   # :token_authenticatable,
@@ -122,10 +123,6 @@ class User < ActiveRecord::Base
 
   def greeting
     first_name.presence || url.presence || email.split('@').first
-  end
-
-  def home_placement
-    super || build_home_placement(creator: profile, publisher: self)
   end
 
   def is_omni_only

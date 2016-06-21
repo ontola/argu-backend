@@ -99,10 +99,12 @@ class ProfilesController < ApplicationController
 
   def user_profileable_params
     return {} unless params[:profile][:profileable_attributes].present?
-    params.require(:profile)
-          .require(:profileable_attributes)
-          .permit(:first_name, :middle_name, :last_name, :birthday,
-                  home_placement_attributes: %i(postal_code country_code id))
+    pm = params.require(:profile)
+           .require(:profileable_attributes)
+           .permit(:first_name, :middle_name, :last_name, :birthday,
+                   home_placement_attributes: %i(postal_code country_code id))
+    merge_placement_params(pm, User)
+    pm
   end
 
   def profile_update_path
