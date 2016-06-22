@@ -9,9 +9,4 @@ class UntrashBlogPost < UntrashService
   def resource
     @blog_post
   end
-
-  private
-
-  def object_attributes=(obj)
-  end
 end

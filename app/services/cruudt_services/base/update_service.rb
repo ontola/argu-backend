@@ -15,4 +15,8 @@ class UpdateService < ApplicationService
   def service_method
     :save!
   end
+
+  def object_attributes=
+    raise 'Required interface not implemented'
+  end
 end

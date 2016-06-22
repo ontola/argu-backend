@@ -89,7 +89,6 @@ class ApplicationService
   # @see {set_nested_associations}
   # @param [ActiveRecord::Base] obj The model on which the attributes should be set
   def object_attributes=(obj)
-    raise 'Required interface not implemented'
   end
 
   def prepare_argu_publication_attributes
