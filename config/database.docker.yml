@@ -12,4 +12,4 @@ test:
   database: argu_test
 production:
   <<: *default
-  database: argu_production
+  database: <%= ENV['POSTGRESQL_DATABASE'] %>
