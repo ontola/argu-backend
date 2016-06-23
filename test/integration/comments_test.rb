@@ -36,7 +36,7 @@ class CommentsTest < ActionDispatch::IntegrationTest
                                 r: forum_path(venice.url),
                                 at: access_token.access_token)
     assert_redirected_to new_user_session_path(r: forum_path(venice.url))
-    assert assigns(:resource)
+    assert_not_a_user
 
     follow_redirect!
 

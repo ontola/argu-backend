@@ -1,12 +1,17 @@
 module Argu
   class NotAUserError < StandardError
-    attr_accessor :preview, :forum, :redirect
+    attr_accessor :forum, :redirect
 
-    def initialize(forum, r, message = nil, preview = nil)
+    # @param [Hash] options
+    # @option options [Forum] forum The forum for the request
+    # @option options [String] r The url to redirect to after sign in
+    # @return [String] the message
+    def initialize(options = {})
+      @forum = options[:forum]
+      @redirect = options[:r]
+
+      message = I18n.t('devise.failure.unauthenticated')
       super(message)
-      self.preview = preview
-      self.forum = forum
-      self.redirect = r
     end
 
     def r
@@ -14,7 +19,7 @@ module Argu
     end
 
     def r!
-      redirect
+      @redirect
     end
   end
 end

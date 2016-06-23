@@ -2,7 +2,6 @@ class PortalPolicy < Struct.new(:user, :portal)
   attr_reader :context, :record, :last_verdict, :last_enacted
 
   def initialize(context, record)
-    #raise Pundit::NotAuthorizedError, "must be logged in" unless user
     @context = context
     @record = record
   end
@@ -13,7 +12,7 @@ class PortalPolicy < Struct.new(:user, :portal)
   include RestrictivePolicy::Roles
 
   def assert!(assertion, query = nil)
-    raise Pundit::NotAuthorizedError.new(record: record, query: query) unless assertion
+    raise Argu::NotAuthorizedError.new(record: record, query: query) unless assertion
   end
 
   def permitted_tabs

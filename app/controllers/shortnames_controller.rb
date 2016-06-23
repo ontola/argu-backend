@@ -43,7 +43,7 @@ class ShortnamesController < ApplicationController
   private
 
   def filter_lesser_roles
-    raise Argu::NotAuthorizedError unless policy(@forum).is_manager_up?
+    raise Argu::NotAuthorizedError.new(query: "#{params[:action]}?") unless policy(@forum).is_manager_up?
   end
 
   def forum_settings_redirect

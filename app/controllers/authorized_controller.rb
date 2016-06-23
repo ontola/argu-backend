@@ -8,29 +8,9 @@ class AuthorizedController < ApplicationController
   before_action :authorize_action
   helper_method :authenticated_context, :collect_banners
 
-  rescue_from Argu::NotAUserError, with: :handle_not_a_user_error
   rescue_from Argu::NotAMemberError, with: :handle_not_a_member_error
 
   protected
-
-  def handle_not_a_user_error(exception)
-    @_not_a_user_caught = true
-    @resource = User.new(r: exception.r, shortname: Shortname.new) if @resource.class != User
-
-    respond_to do |format|
-      format.js do
-        render 'devise/sessions/new',
-               layout: false,
-               locals: {
-                 resource: @resource,
-                 resource_name: :user,
-                 devise_mapping: Devise.mappings[:user],
-                 r: exception.r
-               }
-      end
-      format.html { redirect_to new_user_session_path(r: exception.r) }
-    end
-  end
 
   def handle_not_a_member_error(exception)
     @_not_a_member_caught = true
@@ -155,8 +135,8 @@ class AuthorizedController < ApplicationController
 
   def check_if_registered
     if current_profile.blank?
-      raise Argu::NotAUserError.new(authenticated_context,
-                                    redirect_url)
+      raise Argu::NotAUserError.new(forum: authenticated_context,
+                                    r: redirect_url)
     end
   end
 

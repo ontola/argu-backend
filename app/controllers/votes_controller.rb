@@ -127,7 +127,7 @@ class VotesController < AuthorizedController
     if current_profile.blank?
       resource = get_parent_resource
       authorize resource, :show?
-      raise Argu::NotAUserError.new(resource.forum, redirect_url)
+      raise Argu::NotAUserError.new(forum: resource.forum, r: redirect_url)
     end
   end
 

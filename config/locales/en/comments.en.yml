@@ -9,6 +9,5 @@ en:
     notices:
       updated: "The comment has been updated"
   pundit:
-    comments:
-      policy:
-        create?: "You are not allowed to submit a comment with this account."
+    comment_policy:
+      create?: "You are not allowed to submit a comment with this account."

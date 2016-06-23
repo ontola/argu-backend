@@ -22,7 +22,7 @@ class NotificationPolicy < RestrictivePolicy
 
   def initialize(context, record)
     super(context, record)
-    raise Argu::NotLoggedInError.new(nil, record), 'must be logged in' unless user
+    raise Argu::NotLoggedInError.new(record: record), 'must be logged in' unless user
   end
 
   def permitted_attributes

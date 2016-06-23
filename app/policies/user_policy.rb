@@ -51,7 +51,7 @@ class UserPolicy < RestrictivePolicy
   end
 
   def setup?
-    record.id == user.id
+    record.id == user.id && user.url.blank?
   end
 
   def destroy?

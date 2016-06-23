@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from ActiveRecord::RecordNotUnique, with: :handle_record_not_unique
   rescue_from Argu::NotAuthorizedError, with: :handle_not_authorized_error
-  rescue_from Argu::NotLoggedInError, with: :handle_not_logged_in_error
+  rescue_from Argu::NotAUserError, with: :handle_not_a_user_error
   rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
   rescue_from ActionController::ParameterMissing, with: :handle_parameter_missing
   rescue_from ActiveRecord::StaleObjectError, with: :rescue_stale
@@ -249,14 +249,10 @@ class ApplicationController < ActionController::Base
   def handle_not_authorized_error(exception)
     @_not_authorized_caught = true
     Rails.logger.error exception
-    action = exception.query.to_s[0..-2]
-    error = exception.try(:verdict) || t("#{exception.record.try(:class_name)}.pundit.#{action}",
-                                         action: "#{exception.record.class}##{action}",
-                                         default: t('access_denied'))
     error_hash = {
       type: :error,
       error_id: 'NOT_AUTHORIZED',
-      message: error
+      message: exception.message
     }
     respond_to do |format|
       format.js do
@@ -276,21 +272,23 @@ class ApplicationController < ActionController::Base
           else
             root_path
           end
-        redirect_to redirect_location, alert: error
+        redirect_to redirect_location, alert: exception.message
       end
     end
   end
 
-  def handle_not_logged_in_error(exception)
-    @_not_logged_in_caught = true
+  def handle_not_a_user_error(exception)
+    @_not_a_user_caught = true
     respond_to do |format|
       format.js do
-        render status: 401,
-               json: {
-                 notifications: [{
-                   type: :error,
-                   message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}")
-                 }]
+        @resource = User.new(r: exception.r, shortname: Shortname.new) if @resource.class != User
+        render 'devise/sessions/new',
+               layout: false,
+               locals: {
+                 resource: @resource,
+                 resource_name: :user,
+                 devise_mapping: Devise.mappings[:user],
+                 r: exception.r
                }
       end
       format.json do
@@ -298,20 +296,11 @@ class ApplicationController < ActionController::Base
                json: {
                  notifications: [{
                    type: :error,
-                   message: t("pundit.#{exception.policy.class.to_s.underscore}.#{exception.query}")
+                   message: exception.message
                  }]
                }
       end
-      format.html do
-        @resource ||= User.new r: exception.r
-        render 'devise/sessions/new',
-               locals: {
-                 resource: @resource,
-                 resource_name: :user,
-                 devise_mapping: Devise.mappings[:user],
-                 r: exception.r, preview: exception.preview
-               }
-      end
+      format.html { redirect_to new_user_session_path(r: exception.r), alert: exception.message }
     end
   end
 

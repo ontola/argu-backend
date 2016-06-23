@@ -115,7 +115,7 @@ class CommentsControllerTest < ActionController::TestCase
                                              comment: {body: 'Just å UTF-8 comment.'},
                                              confirm: true)
     assert_redirected_to new_user_session_path(r: redirect_url)
-    assert assigns(:resource)
+    assert_not_a_user
   end
 
   test 'should put update on own comment' do

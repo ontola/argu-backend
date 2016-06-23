@@ -1,13 +1,18 @@
 module Argu
   class NotAMemberError < StandardError
-    attr_accessor :preview, :forum, :redirect, :body
+    attr_accessor :forum, :redirect, :body
 
-    def initialize(opts = {})
+    # @param [Hash] options
+    # @option options [Forum] forum The forum lacking a membership
+    # @option options [String] r The url to redirect to after sign in
+    # @option options [Hash] body The body to send with the json response
+    # @return [String] the message
+    def initialize(options = {})
+      @forum = options[:forum]
+      @redirect = options[:r]
+      @body = options[:body]
+
       super(message)
-      self.preview = opts[:preview]
-      self.forum = opts[:forum]
-      self.redirect = opts[:r]
-      self.body = opts[:body]
     end
 
     def r
@@ -15,7 +20,7 @@ module Argu
     end
 
     def r!
-      redirect
+      @redirect
     end
   end
 end

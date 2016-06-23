@@ -9,6 +9,5 @@ nl:
     notices:
       updated: "De reactie is gewijzigd."
   pundit:
-    comments:
-      policy:
-        create?: "Je mag hier met dit account geen reactie plaatsen."
+    comment_policy:
+      create?: "Je mag hier met dit account geen reactie plaatsen."

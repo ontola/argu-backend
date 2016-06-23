@@ -171,8 +171,7 @@ class UsersController < ApplicationController
     @user = current_user
     if current_user.blank?
       flash[:error] = t('devise.failure.unauthenticated')
-      raise Argu::NotLoggedInError.new(t('devise.failure.unauthenticated'),
-                                       redirect: redirect)
+      raise Argu::NotAUserError.new(r: redirect)
     end
   end
 
