@@ -10,11 +10,13 @@ class AddEmailLevels < ActiveRecord::Migration
     Notification.update_all(notification_type: Notification.notification_types[:reaction])
     change_column_null :notifications, :notification_type, false
 
+    destroy_orphan_edges
+
     Follow.find_each do |follow|
       follow
         .followable
         .ancestors
-        .where(owner_type: ['Motion', 'Question', 'Project'])
+        .where(owner_type: %w(Motion Question Project))
         .each do |ancestor|
           current_follow_type = follow
                                   .followable
@@ -40,5 +42,21 @@ class AddEmailLevels < ActiveRecord::Migration
     remove_column :users, :decisions_email
     remove_column :users, :news_email
     remove_column :users, :reactions_email
+  end
+
+  private
+
+  def destroy_orphan_edges
+    Edge
+      .pluck(:owner_type)
+      .uniq
+      .map do |klass|
+        table = klass.underscore.pluralize
+        orphans = Edge.joins("LEFT JOIN #{table} ON edges.owner_id = #{table}.id WHERE owner_type = '#{klass}' AND #{table}.id IS NULL")
+        if orphans.present?
+          puts "Destroying #{orphans.count} edges of type #{klass}"
+          orphans.destroy_all
+        end
+      end
   end
 end
