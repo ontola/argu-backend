@@ -79,7 +79,9 @@ module HeaderHelper
 
   def public_forum_items(limit= 10)
     items = []
-    Forum.top_public_forums(100)
+    Forum
+        .public_forums
+        .includes(:default_profile_photo, :shortname)
         .select { |f| ['nederland', 'utrecht', 'houten', 'heerenveen', 'feedback'].include?(f.shortname.shortname) }
         .first(limit)
         .each do |forum|
@@ -90,11 +92,14 @@ module HeaderHelper
 
   def profile_membership_items
     ids = current_profile.present? ? current_profile.memberships.pluck(:forum_id) : []
-    Shortname.shortname_owners_for_klass('Forum', ids).map do |shortname|
-      link_item(shortname.owner.display_name,
-                forum_path(shortname.shortname),
-                image: shortname.owner.default_profile_photo.url(:icon))
-    end
+    Shortname
+      .shortname_owners_for_klass('Forum', ids)
+      .includes(owner: :default_profile_photo)
+      .map do |shortname|
+        link_item(shortname.owner.display_name,
+                  forum_path(shortname.shortname),
+                  image: shortname.owner.default_profile_photo.url(:icon))
+      end
   end
 
   def info_dropdown_items
@@ -126,7 +131,7 @@ module HeaderHelper
 
   def managed_pages_items
     items = []
-    managed_pages = current_user.managed_pages.includes(:profile)
+    managed_pages = current_user.managed_pages.includes(profile: :default_profile_photo)
     if managed_pages.present?
       items << actor_item(current_user.display_name,
                           actors_path(na: current_user.profile.id, format: :json),

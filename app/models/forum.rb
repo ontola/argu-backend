@@ -62,7 +62,7 @@ class Forum < ActiveRecord::Base
   end
 
   def access_token!
-    AccessToken.where(item: self).first.try(:access_token)
+    access_tokens.first.try(:access_token)
   end
 
   def m_access_tokens
@@ -70,7 +70,7 @@ class Forum < ActiveRecord::Base
   end
 
   def m_access_tokens!
-    AccessToken.where(item: self).pluck(:access_token)
+    access_tokens.map(&:access_token)
   end
 
   def check_access_token

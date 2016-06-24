@@ -49,5 +49,6 @@ div[itemscope itemtype="http://www.schema.org/Thing"]
     .box.box-grid-sizer
     .intro-filler[data-intro=t('intro.forums.grid') data-position="top" data-step=15]
     =render @items
-  h2 _debug moderators_
-  =render partial: 'stepups/stepup', collection: project.stepups
+  - if policy(Project).edit?
+    h2 _debug moderators_
+    =render partial: 'stepups/stepup', collection: project.stepups

@@ -13,7 +13,10 @@ class ForumsController < ApplicationController
   end
 
   def discover
-    @forums = policy_scope(Forum).public_forums.page show_params[:page]
+    @forums = policy_scope(Forum)
+                .public_forums
+                .includes(:default_cover_photo, :default_profile_photo, :shortname, :access_tokens)
+                .page show_params[:page]
     authorize Forum, :selector?
 
     render
@@ -24,9 +27,18 @@ class ForumsController < ApplicationController
     authorize @forum, :list?
     current_context @forum
 
-    projects = policy_scope(@forum.projects.includes(:edge).published.trashed(show_trashed?))
-    questions = policy_scope(@forum.questions.includes(:edge).published.trashed(show_trashed?))
-    motions = policy_scope(@forum.motions.includes(:edge).published.trashed(show_trashed?))
+    projects = policy_scope(@forum.projects
+                              .includes(:edge, :default_cover_photo)
+                              .published
+                              .trashed(show_trashed?))
+    questions = policy_scope(@forum.questions
+                               .includes(:edge, :project, :default_cover_photo)
+                               .published
+                               .trashed(show_trashed?))
+    motions = policy_scope(@forum.motions
+                             .includes(:edge, :question, :project, :default_cover_photo, :votes)
+                             .published
+                             .trashed(show_trashed?))
 
     if policy(@forum).show?
       @items = Kaminari

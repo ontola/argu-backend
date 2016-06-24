@@ -28,7 +28,7 @@ module Shortnameable
 
     # @return [String, nil] The shortname of the model or nil
     def url
-      Shortname.where(owner_id: id, owner_type: self.class.name).pluck(:shortname).first
+      shortname&.shortname
     end
   end
 

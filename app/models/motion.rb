@@ -11,6 +11,20 @@ class Motion < ActiveRecord::Base
   belongs_to :question, inverse_of: :motions
 
   has_many :arguments, -> { argument_comments }, dependent: :destroy
+  has_many :top_arguments_con, (lambda do
+    argument_comments
+      .where(pro: false)
+      .trashed(false)
+      .order(votes_pro_count: :desc)
+      .limit(5)
+  end), class_name: 'Argument'
+  has_many :top_arguments_pro, (lambda do
+    argument_comments
+      .where(pro: true)
+      .trashed(false)
+      .order(votes_pro_count: :desc)
+      .limit(5)
+  end), class_name: 'Argument'
   has_many :arguments_plain, class_name: 'Argument'
   has_many :group_responses
   has_many :subscribers, through: :followings, source: :follower, source_type: 'User'
@@ -174,28 +188,6 @@ class Motion < ActiveRecord::Base
 
   def tag_list=(value)
     super value.class == String ? value.downcase.strip : value.collect(&:downcase).collect(&:strip)
-  end
-
-  # Same as {Argument#top_arguments_con} but plucks only :id, :title, :pro, and :votes_pro_count
-  def top_arguments_con_light
-    arguments
-      .where(pro: false)
-      .trashed(false)
-      .order(votes_pro_count: :desc)
-      .uniq
-      .limit(5)
-      .pluck(:id, :title, :pro, :votes_pro_count, :content, :comments_count)
-  end
-
-  # Same as {Argument#top_arguments_pro} but plucks only :id, :title, :pro, and :votes_pro_count
-  def top_arguments_pro_light
-    arguments
-      .where(pro: true)
-      .trashed(false)
-      .order(votes_pro_count: :desc)
-      .uniq
-      .limit(5)
-      .pluck(:id, :title, :pro, :votes_pro_count, :content, :comments_count)
   end
 
   def total_vote_count

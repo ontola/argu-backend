@@ -10,16 +10,18 @@ class ProfilesController < ApplicationController
       if params[:q].present?
         # This is a working mess.
         q = params[:q].gsub(' ', '|')
-        @profiles = Profile.where(profileable_type: 'User',
-                                  profileable_id: User.where(finished_intro: true)
-                                                      .joins(:shortname)
-                                                      .where('lower(shortname) SIMILAR TO lower(?) OR ' +
-                                                             'lower(first_name) SIMILAR TO lower(?) OR ' +
-                                                             'lower(last_name) SIMILAR TO lower(?)',
-                                                             "%#{q}%",
-                                                             "%#{q}%",
-                                                             "%#{q}%")
-                                                      .pluck(:owner_id))
+        @profiles = Profile
+                      .where(profileable_type: 'User',
+                             profileable_id: User.where(finished_intro: true)
+                                               .joins(:shortname)
+                                               .where('lower(shortname) SIMILAR TO lower(?) OR ' +
+                                                        'lower(first_name) SIMILAR TO lower(?) OR ' +
+                                                        'lower(last_name) SIMILAR TO lower(?)',
+                                                      "%#{q}%",
+                                                      "%#{q}%",
+                                                      "%#{q}%")
+                                               .pluck(:owner_id))
+                      .includes(:default_profile_photo, profileable: :shortname)
 
         if params[:things] && params[:things].split(',').include?('pages')
           @profiles += Profile

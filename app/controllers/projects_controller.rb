@@ -26,16 +26,18 @@ class ProjectsController < AuthorizedController
   end
 
   def show
-    questions = policy_scope(authenticated_resource!.questions.trashed(show_trashed?))
+    questions = policy_scope(authenticated_resource!.questions
+                               .includes(:edge, :default_cover_photo)
+                               .published
+                               .trashed(show_trashed?))
 
-    motions = Motion.where(forum: authenticated_context,
-                           project: authenticated_resource!,
-                           question_id: nil,
-                           is_trashed: show_trashed?)
-    orphan_motions = MotionPolicy::Scope.new(pundit_user, motions).broad
+    motions = policy_scope(authenticated_resource!.motions
+                               .includes(:edge, :default_cover_photo, :votes)
+                               .published
+                               .trashed(show_trashed?))
 
     if policy(authenticated_resource!).show?
-      @items = (questions + orphan_motions)
+      @items = (questions + motions)
                  .sort_by(&:updated_at)
                  .reverse
     end
